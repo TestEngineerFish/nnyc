@@ -12,6 +12,9 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-
+- (void)showMainVC;
+- (void)showSelectVC;
+- (void)showLoginVC;
+- (void)showGuideView;
 @end
 
