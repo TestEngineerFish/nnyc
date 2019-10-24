@@ -42,17 +42,17 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             switch indexPath.row {
             case 0:
                 cell.titleLabel.text = "已学单词"
-                cell.dataLabel.text = "20"
+                cell.dataLabel.text = "--"
                 break
                 
             case 1:
                 cell.titleLabel.text = "收藏夹"
-                cell.dataLabel.text = "20"
+                cell.dataLabel.text = "--"
                 break
                 
             case 2:
                 cell.titleLabel.text = "错词本"
-                cell.dataLabel.text = "20"
+                cell.dataLabel.text = "--"
                 break
                 
             default:
@@ -66,25 +66,25 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             switch indexPath.row {
             case 0:
-                cell.colorView.backgroundColor = UIColor(red: 255, green: 239, blue: 240, alpha: 1)
+                cell.colorView.backgroundColor = UIColor(red: 255/255, green: 239/255, blue: 240/255, alpha: 1)
                 cell.iconView.image = #imageLiteral(resourceName: "homeTask")
                 cell.titleLabel.text = "任务中心"
                 break
                 
             case 1:
-                cell.colorView.backgroundColor = UIColor(red: 240, green: 246, blue: 255, alpha: 1)
+                cell.colorView.backgroundColor = UIColor(red: 240/255, green: 246/255, blue: 255/255, alpha: 1)
                 cell.iconView.image = #imageLiteral(resourceName: "homeReport")
                 cell.titleLabel.text = "学习报告"
                 break
                 
             case 2:
-                cell.colorView.backgroundColor = UIColor(red: 232, green: 246, blue: 234, alpha: 1)
+                cell.colorView.backgroundColor = UIColor(red: 232/255, green: 246/255, blue: 234/255, alpha: 1)
                 cell.iconView.image = #imageLiteral(resourceName: "homeCalendar")
                 cell.titleLabel.text = "打卡日历"
                 break
                 
             case 3:
-                cell.colorView.backgroundColor = UIColor(red: 255, green: 244, blue: 225, alpha: 1)
+                cell.colorView.backgroundColor = UIColor(red: 255/255, green: 244/255, blue: 225/255, alpha: 1)
                 cell.iconView.image = #imageLiteral(resourceName: "homeSelectWords")
                 cell.titleLabel.text = "自选单词"
                 break
@@ -94,6 +94,29 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
             
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            
+            break
+            
+        case 1:
+           
+            break
+            
+        case 2:
+           
+            break
+            
+        case 3:
+           
+            break
+            
+        default:
+            break
         }
     }
     

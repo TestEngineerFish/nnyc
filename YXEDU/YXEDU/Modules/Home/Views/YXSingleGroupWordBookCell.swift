@@ -1,5 +1,5 @@
 //
-//  YXHomeSubItemCell.swift
+//  YXSingleGroupWordBookCell.swift
 //  YXEDU
 //
 //  Created by Jake To on 10/24/19.
@@ -8,11 +8,10 @@
 
 import UIKit
 
-class YXHomeSubItemCell: UICollectionViewCell {
+class YXSingleGroupWordBookCell: UICollectionViewCell {
 
-    @IBOutlet weak var colorView: UIView!
-    @IBOutlet weak var iconView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
