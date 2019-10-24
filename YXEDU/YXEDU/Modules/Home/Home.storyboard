@@ -28,7 +28,7 @@
         <scene sceneID="yYR-rI-Gxx">
             <objects>
                 <navigationController id="y1G-4r-ZDj" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="D96-NT-1dR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" shadowImage="nil" id="D96-NT-1dR">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -46,7 +46,7 @@
             <objects>
                 <viewController id="nnd-vG-UVX" customClass="YXHomeViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VZF-1B-lg5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4M-vc-0er">
@@ -322,5 +322,6 @@
         <image name="homeProgressBar" width="259" height="8"/>
         <image name="homeProgressBarTrack" width="259" height="8"/>
         <image name="homeSearch" width="22" height="22"/>
+        <image name="nil" width="16" height="16"/>
     </resources>
 </document>
