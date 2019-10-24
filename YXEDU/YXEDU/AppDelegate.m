@@ -38,7 +38,7 @@
 #import "YXPersonalBookVC.h"
 #import "YXMyWordBookListVC.h"
 #import "Reachability.h"
-
+ 
 
 @interface AppDelegate ()<YXWordDetailShareViewDelegate>
 @property (nonatomic, strong)NSDate *becomeActiveDate;
