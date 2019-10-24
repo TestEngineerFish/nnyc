@@ -8,9 +8,6 @@
 
 import UIKit
 
-public var screenWidth = UIScreen.main.bounds.size.width
-public var screenHeight = UIScreen.main.bounds.size.height
-
 class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var countOfWaitForStudyWords: YXDesignableLabel!

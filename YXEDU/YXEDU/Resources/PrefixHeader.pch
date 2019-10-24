@@ -48,5 +48,6 @@
 #import "YXCacheKey.h"
 #import "YXAPI.h"
 #import "YXEDU-Swift.h"
+#import "UIFont+IconFont.h"
 
 #endif /* PrefixHeader_pch */

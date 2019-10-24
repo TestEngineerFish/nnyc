@@ -49,6 +49,7 @@ PODS:
     - SDWebImage/Core (= 4.4.7)
   - SDWebImage/Core (4.4.7)
   - SGQRCode (3.0.1)
+  - SnapKit (4.0.1)
   - SSKeychain (1.4.1)
   - SVProgressHUD (2.2.5)
   - TZImagePickerController (3.0.9)
@@ -88,6 +89,7 @@ DEPENDENCIES:
   - SDCycleScrollView (~> 1.75)
   - SDWebImage (~> 4.4.2)
   - SGQRCode
+  - SnapKit (~> 4.0.0)
   - SSKeychain
   - SVProgressHUD
   - TZImagePickerController (~> 3.0.9)
@@ -126,6 +128,7 @@ SPEC REPOS:
     - SDCycleScrollView
     - SDWebImage
     - SGQRCode
+    - SnapKit
     - SSKeychain
     - SVProgressHUD
     - TZImagePickerController
@@ -163,6 +166,7 @@ SPEC CHECKSUMS:
   SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
   SGQRCode: bf02d60e18d6660a9d75ff1c8b9b467f064f054e
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc
@@ -175,6 +179,6 @@ SPEC CHECKSUMS:
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: d2ad162c8b69f0d4fdc19d93322eb2e32a08a9b0
+PODFILE CHECKSUM: 03df3fdfafb11bb954b14b980ca612a76f2e483e
 
 COCOAPODS: 1.8.3

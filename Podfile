@@ -36,6 +36,8 @@ target 'YXEDU' do
      pod 'SDWebImage', '~> 4.4.2'
      pod 'LEEAlert'
      pod 'DACircularProgress', '~> 2.3.1'
+     # 布局约束
+     pod 'SnapKit', '~> 4.0.0'
      
      pod 'UMCCommon'
      pod 'UMCAnalytics'

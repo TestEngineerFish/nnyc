@@ -17,6 +17,16 @@
 		202709BD21DE3A3000E88457 /* oneDrawgameGuide3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 202709B721DE3A3000E88457 /* oneDrawgameGuide3@3x.png */; };
 		202C7A21218FED8E00EFD072 /* FresherGuide in Resources */ = {isa = PBXBuildFile; fileRef = 202C7A20218FED8E00EFD072 /* FresherGuide */; };
 		20C86B9C217873FE00FCAAED /* WaveLoadingImages in Resources */ = {isa = PBXBuildFile; fileRef = 20C86B9B217873FE00FCAAED /* WaveLoadingImages */; };
+		2205A92923619E9200C6E674 /* GapFillingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92823619E9200C6E674 /* GapFillingView.swift */; };
+		2205A92C23619F0A00C6E674 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92B23619F0A00C6E674 /* QuestionView.swift */; };
+		2205A92E23619F7500C6E674 /* ChooseWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92D23619F7500C6E674 /* ChooseWordView.swift */; };
+		2205A9302361A7F900C6E674 /* YXCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92F2361A7F900C6E674 /* YXCustomTextField.swift */; };
+		2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9312361A96000C6E674 /* UIColor+Extension.swift */; };
+		2205A9342361AD5B00C6E674 /* YXMacros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9332361AD5B00C6E674 /* YXMacros.swift */; };
+		2205A9362361B06100C6E674 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9352361B06100C6E674 /* CALayer+Extension.swift */; };
+		2205A9382361BB9500C6E674 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9372361BB9500C6E674 /* UIImage+Extension.swift */; };
+		2205A93A2361C88900C6E674 /* Iconfont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9392361C88900C6E674 /* Iconfont.swift */; };
+		2205A93C2361C92500C6E674 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A93B2361C92500C6E674 /* UIFont+Extension.swift */; };
 		224529042327A82500510507 /* YYDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529032327A82500510507 /* YYDatabase.swift */; };
 		224529072327A85100510507 /* YYDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529062327A85100510507 /* YYDataSourceManager.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
@@ -572,6 +582,16 @@
 		2059176E216AF01400254705 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		20C86B9B217873FE00FCAAED /* WaveLoadingImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WaveLoadingImages; sourceTree = "<group>"; };
 		2167AC0CCD40990E47210822 /* Pods-YXEDU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.release.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.release.xcconfig"; sourceTree = "<group>"; };
+		2205A92823619E9200C6E674 /* GapFillingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GapFillingView.swift; sourceTree = "<group>"; };
+		2205A92B23619F0A00C6E674 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		2205A92D23619F7500C6E674 /* ChooseWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWordView.swift; sourceTree = "<group>"; };
+		2205A92F2361A7F900C6E674 /* YXCustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCustomTextField.swift; sourceTree = "<group>"; };
+		2205A9312361A96000C6E674 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		2205A9332361AD5B00C6E674 /* YXMacros.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMacros.swift; sourceTree = "<group>"; };
+		2205A9352361B06100C6E674 /* CALayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
+		2205A9372361BB9500C6E674 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		2205A9392361C88900C6E674 /* Iconfont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iconfont.swift; sourceTree = "<group>"; };
+		2205A93B2361C92500C6E674 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		224529022327A34300510507 /* YXEDU-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YXEDU-Bridging-Header.h"; sourceTree = "<group>"; };
 		224529032327A82500510507 /* YYDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabase.swift; sourceTree = "<group>"; };
 		224529062327A85100510507 /* YYDataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDataSourceManager.swift; sourceTree = "<group>"; };
@@ -1692,6 +1712,17 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		2205A92A23619EBC00C6E674 /* GapFilling */ = {
+			isa = PBXGroup;
+			children = (
+				2205A92823619E9200C6E674 /* GapFillingView.swift */,
+				2205A92B23619F0A00C6E674 /* QuestionView.swift */,
+				2205A92D23619F7500C6E674 /* ChooseWordView.swift */,
+				2205A92F2361A7F900C6E674 /* YXCustomTextField.swift */,
+			);
+			path = GapFilling;
+			sourceTree = "<group>";
+		};
 		224529052327A84000510507 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -2325,6 +2356,10 @@
 			isa = PBXGroup;
 			children = (
 				EED3D4212331D61B00121218 /* UserDefault+Extension.swift */,
+				2205A9312361A96000C6E674 /* UIColor+Extension.swift */,
+				2205A9352361B06100C6E674 /* CALayer+Extension.swift */,
+				2205A9372361BB9500C6E674 /* UIImage+Extension.swift */,
+				2205A93B2361C92500C6E674 /* UIFont+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2523,6 +2558,7 @@
 				EE5E027923277D0D00655654 /* YXCacheKey.m */,
 				EE5E027B23277D9400655654 /* YXTrace.h */,
 				EE5E027C23277D9400655654 /* YXTrace.m */,
+				2205A9392361C88900C6E674 /* Iconfont.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -2531,6 +2567,7 @@
 			isa = PBXGroup;
 			children = (
 				EE5EF21F23273DBE00655654 /* BSCommon.h */,
+				2205A9332361AD5B00C6E674 /* YXMacros.swift */,
 			);
 			path = Macros;
 			sourceTree = "<group>";
@@ -2740,6 +2777,7 @@
 		EE5EFC9F23274E5500655654 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2205A92A23619EBC00C6E674 /* GapFilling */,
 				EE5EFCA023274E5500655654 /* YXShareView.h */,
 				EE5EFCA123274E5500655654 /* YXPosterShareView.m */,
 				EE5EFCA223274E5500655654 /* YXCycleView.h */,
@@ -4722,6 +4760,7 @@
 				"${BUILT_PRODUCTS_DIR}/SGQRCode/SGQRCode.framework",
 				"${BUILT_PRODUCTS_DIR}/SSKeychain/SSKeychain.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TZImagePickerController/TZImagePickerController.framework",
 				"${BUILT_PRODUCTS_DIR}/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/VTMagic/VTMagic.framework",
@@ -4750,6 +4789,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SGQRCode.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSKeychain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TZImagePickerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICollectionViewLeftAlignedLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VTMagic.framework",
@@ -4818,6 +4858,7 @@
 				EE5E009523274FEB00655654 /* YXArticleDetailAttributionStringModel.m in Sources */,
 				EE5E0163232754FA00655654 /* YXGuideView.m in Sources */,
 				EE5E007F23274FEB00655654 /* YXNinePalaceKeyBoardView.m in Sources */,
+				2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */,
 				EE5E00C423274FEB00655654 /* YXDataSituationView.m in Sources */,
 				EE5E0178232754FA00655654 /* JPushManager.m in Sources */,
 				EE5E00B123274FEB00655654 /* YXMissonTableViewCell.m in Sources */,
@@ -4967,7 +5008,9 @@
 				224529072327A85100510507 /* YYDataSourceManager.swift in Sources */,
 				EE5E002A23274FEB00655654 /* YXShareCodeView.m in Sources */,
 				EED3D41D2331D04B00121218 /* YRRouter.m in Sources */,
+				2205A9362361B06100C6E674 /* CALayer+Extension.swift in Sources */,
 				EE5E00AE23274FEB00655654 /* YXMissionSignModel.m in Sources */,
+				2205A93A2361C88900C6E674 /* Iconfont.swift in Sources */,
 				EE5E002423274FEB00655654 /* YXMyWordBookModel.m in Sources */,
 				EE5EF20723273BAE00655654 /* NSDictionary+YR.m in Sources */,
 				EE5E008B23274FEB00655654 /* YXCalendarStudyMonthData.m in Sources */,
@@ -4978,6 +5021,7 @@
 				EE5E004D23274FEB00655654 /* YXWordDetailTextCell.m in Sources */,
 				EE5EFD5723274F0900655654 /* YXPreviousRankModel.m in Sources */,
 				EE5E004823274FEB00655654 /* YXComNaviView.m in Sources */,
+				2205A9382361BB9500C6E674 /* UIImage+Extension.swift in Sources */,
 				EE5E007423274FEB00655654 /* YXStudyAccomplishView.m in Sources */,
 				EE5E007C23274FEB00655654 /* YXWordLettersView.m in Sources */,
 				EED3D4202331D5D000121218 /* YYCache.swift in Sources */,
@@ -5041,6 +5085,7 @@
 				EE5E010523274FEC00655654 /* YXBadgeIncompleteView.m in Sources */,
 				77F69A7E23617CEE00E55185 /* YXHomeSubItemCell.swift in Sources */,
 				EE5E00EB23274FEC00655654 /* YXReadHistoryModel.m in Sources */,
+				2205A9302361A7F900C6E674 /* YXCustomTextField.swift in Sources */,
 				EE5E00FA23274FEC00655654 /* YXPersonalFeedBackVC.m in Sources */,
 				EE5E006723274FEB00655654 /* YXSpokenResultModel.m in Sources */,
 				EE5E024E232756C100655654 /* XLineContainerView.m in Sources */,
@@ -5057,10 +5102,12 @@
 				EE5EFCD523274E5500655654 /* YXPunchModel.m in Sources */,
 				EE5E009A23274FEB00655654 /* YXKeyPointWordCell.m in Sources */,
 				EE5EFD5B23274F0900655654 /* YXChallengeUserBaseView.m in Sources */,
+				2205A9342361AD5B00C6E674 /* YXMacros.swift in Sources */,
 				EE5E00F023274FEC00655654 /* YXPersonalInformationModel.m in Sources */,
 				EE5E0222232756C000655654 /* TYTextStorage.m in Sources */,
 				7786B6D02361C3820027D0E3 /* YXGroupWordBookCell.swift in Sources */,
 				EE5EFD5023274F0900655654 /* YXUserRankModel.m in Sources */,
+				2205A93C2361C92500C6E674 /* UIFont+Extension.swift in Sources */,
 				EE5EFD4F23274F0900655654 /* YXRankListBaseViewController.m in Sources */,
 				EE5EF20023273BAE00655654 /* YRNetworkManager+Cache.m in Sources */,
 				EE5E001123274FEB00655654 /* YXCareerGuideMaskView.m in Sources */,
@@ -5116,6 +5163,7 @@
 				EE5E00CC23274FEB00655654 /* YXSelectBookVC.m in Sources */,
 				EE5E00BE23274FEB00655654 /* YXDownloadProgressView.m in Sources */,
 				EED3D41B2331D04B00121218 /* YRLocatorProvider.m in Sources */,
+				2205A92E23619F7500C6E674 /* ChooseWordView.swift in Sources */,
 				EE5E006423274FEB00655654 /* YXAnsweredInfo.m in Sources */,
 				EE5EFCE123274E5500655654 /* YXStudyProgressView.m in Sources */,
 				EE5EF258232740B800655654 /* UIFont+IconFont.m in Sources */,
@@ -5166,6 +5214,7 @@
 				EE5E00AC23274FEB00655654 /* YXTaskViewModel.m in Sources */,
 				EE5E0174232754FA00655654 /* SJCall.mm in Sources */,
 				EE5E002523274FEB00655654 /* YXWordListBaseInfo.m in Sources */,
+				2205A92923619E9200C6E674 /* GapFillingView.swift in Sources */,
 				EE5E00A423274FEB00655654 /* YXArticleDetailModel.m in Sources */,
 				EE5E001523274FEB00655654 /* YXCareerBigNaviView.m in Sources */,
 				EE5EF21123273BAE00655654 /* NSString+YR.m in Sources */,
@@ -5245,6 +5294,7 @@
 				EE5EF257232740B800655654 /* UIDevice+YX.m in Sources */,
 				EE5E006823274FEB00655654 /* YXGroupQuestionModel.m in Sources */,
 				EE5EF20523273BAE00655654 /* YRHelper.m in Sources */,
+				2205A92C23619F0A00C6E674 /* QuestionView.swift in Sources */,
 				EE5E00CD23274FEB00655654 /* YXBookCateModel.m in Sources */,
 				EE5E003B23274FEB00655654 /* YXStudyResultCell.m in Sources */,
 				EE5E009923274FEB00655654 /* YXArticleBottomView.m in Sources */,
