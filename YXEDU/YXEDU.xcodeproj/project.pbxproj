@@ -28,6 +28,14 @@
 		23FD6CE722952E5400334321 /* 答题引导2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE322952E5400334321 /* 答题引导2@2x.png */; };
 		23FD6CE822952E5400334321 /* 答题引导2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE422952E5400334321 /* 答题引导2@3x.png */; };
 		23FD6CE922952E5400334321 /* 答题引导1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE522952E5400334321 /* 答题引导1@2x.png */; };
+		77F69A622361495300E55185 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F69A612361495300E55185 /* Home.storyboard */; };
+		77F69A642361496C00E55185 /* YXHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A632361496C00E55185 /* YXHomeViewController.swift */; };
+		77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A652361499E00E55185 /* YXSelectBookViewController.swift */; };
+		77F69A68236149B300E55185 /* YXAddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A67236149B300E55185 /* YXAddBookViewController.swift */; };
+		77F69A6A236149E300E55185 /* YXStudyMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A69236149E300E55185 /* YXStudyMapViewController.swift */; };
+		77F69A7023614D9600E55185 /* YXCornerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A6D23614D9600E55185 /* YXCornerImageView.swift */; };
+		77F69A7223614D9600E55185 /* YXCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A6F23614D9600E55185 /* YXCornerView.swift */; };
+		77F69A74236152BE00E55185 /* YXCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A73236152BE00E55185 /* YXCustomButton.swift */; };
 		BADF1A8A393F92D5A79919AA /* Pods_YXEDU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020CAD61CC280AA1CB6C7253 /* Pods_YXEDU.framework */; };
 		D62C1E2520897EBC002BB11A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2420897EBB002BB11A /* SystemConfiguration.framework */; };
 		D62C1E2720897EC7002BB11A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2620897EC7002BB11A /* CoreLocation.framework */; };
@@ -565,6 +573,14 @@
 		23FD6CE522952E5400334321 /* 答题引导1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "答题引导1@2x.png"; sourceTree = "<group>"; };
 		4FCB6DA42328CBB50038E8F5 /* YXStatusCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXStatusCode.h; sourceTree = "<group>"; };
 		6F3F6E87CCD9D15BB5221A47 /* Pods-YXEDU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.debug.xcconfig"; sourceTree = "<group>"; };
+		77F69A612361495300E55185 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		77F69A632361496C00E55185 /* YXHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeViewController.swift; sourceTree = "<group>"; };
+		77F69A652361499E00E55185 /* YXSelectBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectBookViewController.swift; sourceTree = "<group>"; };
+		77F69A67236149B300E55185 /* YXAddBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAddBookViewController.swift; sourceTree = "<group>"; };
+		77F69A69236149E300E55185 /* YXStudyMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXStudyMapViewController.swift; sourceTree = "<group>"; };
+		77F69A6D23614D9600E55185 /* YXCornerImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXCornerImageView.swift; sourceTree = "<group>"; };
+		77F69A6F23614D9600E55185 /* YXCornerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXCornerView.swift; sourceTree = "<group>"; };
+		77F69A73236152BE00E55185 /* YXCustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXCustomButton.swift; sourceTree = "<group>"; };
 		D62C1E2420897EBB002BB11A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D62C1E2620897EC7002BB11A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D62C1E2820897EDF002BB11A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -1707,6 +1723,36 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		77F69A602361492500E55185 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				77F69A612361495300E55185 /* Home.storyboard */,
+				77F69A6B236149F300E55185 /* ViewControllers */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		77F69A6B236149F300E55185 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				77F69A632361496C00E55185 /* YXHomeViewController.swift */,
+				77F69A652361499E00E55185 /* YXSelectBookViewController.swift */,
+				77F69A67236149B300E55185 /* YXAddBookViewController.swift */,
+				77F69A69236149E300E55185 /* YXStudyMapViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		77F69A6C23614D6300E55185 /* IBDesignableViews */ = {
+			isa = PBXGroup;
+			children = (
+				77F69A73236152BE00E55185 /* YXCustomButton.swift */,
+				77F69A6D23614D9600E55185 /* YXCornerImageView.swift */,
+				77F69A6F23614D9600E55185 /* YXCornerView.swift */,
+			);
+			path = IBDesignableViews;
+			sourceTree = "<group>";
+		};
 		D62D6AA4204FEF7A005E3273 = {
 			isa = PBXGroup;
 			children = (
@@ -2284,6 +2330,8 @@
 		EE5EF13C2327371D00655654 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				77F69A6C23614D6300E55185 /* IBDesignableViews */,
+				77F69A602361492500E55185 /* Home */,
 				EE5EFC8723274E5500655654 /* Comm */,
 				EE5EFCEC23274F0900655654 /* Discovery */,
 				EE5EFC3323274BBB00655654 /* Login */,
@@ -4538,6 +4586,7 @@
 				200338DA21B93A25009165DF /* shareBadgeBG@2x.png in Resources */,
 				202C7A21218FED8E00EFD072 /* FresherGuide in Resources */,
 				202709B821DE3A3000E88457 /* oneDrawgameGuide1@3x.png in Resources */,
+				77F69A622361495300E55185 /* Home.storyboard in Resources */,
 				23FD6CE822952E5400334321 /* 答题引导2@3x.png in Resources */,
 				23FD6CE722952E5400334321 /* 答题引导2@2x.png in Resources */,
 				EE5E0166232754FA00655654 /* KSGuaidProperty.plist in Resources */,
@@ -4879,11 +4928,13 @@
 				EE5E008923274FEB00655654 /* YXCalendarViewController.m in Sources */,
 				EE5E002723274FEB00655654 /* YXSelectedWordsMiniView.m in Sources */,
 				EE5EFCE623274E5500655654 /* YXCycleView.m in Sources */,
+				77F69A7023614D9600E55185 /* YXCornerImageView.swift in Sources */,
 				EE5E003423274FEB00655654 /* YXWordListView.m in Sources */,
 				EE5E009723274FEB00655654 /* YXPlayAudioControllerView.m in Sources */,
 				EE5E00C723274FEB00655654 /* YXReportAblityView.m in Sources */,
 				EE5E000F23274FEB00655654 /* YXBookBrefInfo.m in Sources */,
 				EE5E0241232756C000655654 /* XCycleView.m in Sources */,
+				77F69A68236149B300E55185 /* YXAddBookViewController.swift in Sources */,
 				EE5E001F23274FEB00655654 /* YXCreateWordBookVC.m in Sources */,
 				EE5E00C623274FEB00655654 /* YXReoprtEleView.m in Sources */,
 				EE5E0171232754FA00655654 /* YXCrashReport.m in Sources */,
@@ -4891,12 +4942,14 @@
 				EE5E000723274FEB00655654 /* YXDeleteAnimateView.m in Sources */,
 				EE5E008423274FEB00655654 /* YXReviewAccomplishView.m in Sources */,
 				EE5E007A23274FEB00655654 /* YXSelectLettersView.m in Sources */,
+				77F69A6A236149E300E55185 /* YXStudyMapViewController.swift in Sources */,
 				EE5E016F232754FA00655654 /* YXMediator.m in Sources */,
 				224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */,
 				EE5E00D323274FEB00655654 /* YXSelectBookView.m in Sources */,
 				EE5E002B23274FEB00655654 /* YXChangeWordlistNameView.m in Sources */,
 				EE5EFC4B23274BBB00655654 /* YXLoginVC.m in Sources */,
 				EE5E001923274FEB00655654 /* YXWordDetailModel.m in Sources */,
+				77F69A74236152BE00E55185 /* YXCustomButton.swift in Sources */,
 				EE5E00C223274FEB00655654 /* YXStudySpeedView.m in Sources */,
 				EE5E005B23274FEB00655654 /* YXCompleteGroupView.m in Sources */,
 				EE5EFC4F23274BBB00655654 /* YXReportDeviceModel.m in Sources */,
@@ -4919,6 +4972,7 @@
 				EE5E00DE23274FEC00655654 /* YXRefreshView.m in Sources */,
 				EE5E0249232756C100655654 /* XPieChart.m in Sources */,
 				EE5EF25E232740B800655654 /* NSDate+Extension.m in Sources */,
+				77F69A7223614D9600E55185 /* YXCornerView.swift in Sources */,
 				EE5EFD5C23274F0900655654 /* YXSearchView.m in Sources */,
 				EE5E010523274FEC00655654 /* YXBadgeIncompleteView.m in Sources */,
 				EE5E00EB23274FEC00655654 /* YXReadHistoryModel.m in Sources */,
@@ -5058,9 +5112,11 @@
 				EE5EF22423273DD900655654 /* BSUtils.m in Sources */,
 				EE5EFCD723274E5500655654 /* YXPosterShareView.m in Sources */,
 				EE5E00A623274FEB00655654 /* YXASBookCell.m in Sources */,
+				77F69A642361496C00E55185 /* YXHomeViewController.swift in Sources */,
 				EE5E005723274FEB00655654 /* YXUnitDetailVC.m in Sources */,
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
 				EE5E007523274FEB00655654 /* YXFillWordView.m in Sources */,
+				77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */,
 				EE5E00F423274FEC00655654 /* YXPersonalCenterVC.m in Sources */,
 				EE5E0253232756C100655654 /* XPieItem.m in Sources */,
 				EE5E009B23274FEB00655654 /* YXArticleDetailFresherGuideView.m in Sources */,
