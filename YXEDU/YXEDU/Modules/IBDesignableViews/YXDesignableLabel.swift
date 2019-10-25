@@ -33,9 +33,9 @@ class YXDesignableLabel: UILabel {
     }
     
     @IBInspectable
-    var shadowColorOfLabel: CGColor = UIColor.black.cgColor {
+    var shadowColorOfLabel: UIColor? {
         didSet {
-            layer.shadowColor = shadowColorOfLabel
+            layer.shadowColor = shadowColorOfLabel?.cgColor
         }
     }
 }

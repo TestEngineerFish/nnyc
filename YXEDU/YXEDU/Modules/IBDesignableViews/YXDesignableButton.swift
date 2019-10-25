@@ -55,9 +55,9 @@ class YXDesignableButton: UIButton {
     }
     
     @IBInspectable
-    var shadowColor: CGColor = UIColor.black.cgColor {
+    var shadowColor: UIColor? {
         didSet {
-            layer.shadowColor = shadowColor
+            layer.shadowColor = shadowColor?.cgColor
         }
     }
 

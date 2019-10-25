@@ -46,4 +46,7 @@ target 'YXEDU' do
      pod 'GrowingAutoTrackKit'
      pod 'Reachability', '~> 3.2'
      pod 'FSCalendar'
+     
+     # 闪验
+     pod 'CL_ShanYanSDK'
 end

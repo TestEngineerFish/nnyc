@@ -125,19 +125,20 @@ extension CALayer {
 
 // MARK: - 阴影和遮罩
 extension CALayer {
+    
 
     /// 设置阴影
     /// - parameter opacity: 阴影的透明度, 默认0.8
     /// - parameter shadowRadius: 阴影半径长度,长度越大,阴影越大,默认3.0
     /// - parameter cornerRadius: 阴影圆角,默认当前View的一半
-    func configPathShadow(opacity: Float = 0.8, shadowRadius: CGFloat = 3.0, cornerRadius: CGFloat) {
+    func configPathShadow(opacity: Float = 1, shadowRadius: CGFloat = 10, cornerRadius: CGFloat) {
 
         // 设置阴影Layer
         let shadowLayer           = CALayer()
         shadowLayer.frame         = self.frame
         shadowLayer.shadowOpacity = opacity
         shadowLayer.shadowOffset  = CGSize.zero
-        shadowLayer.shadowColor   = UIColor.black.cgColor
+        shadowLayer.shadowColor   = UIColor.black.withAlphaComponent(0.2).cgColor
         shadowLayer.shadowRadius  = shadowRadius
 
         // 设置阴影路径
@@ -154,7 +155,7 @@ extension CALayer {
         let bottomLeft  = CGPoint(x: x, y: y + height)
 
         // 绘制路径
-        let offset: CGFloat = 20.0
+        let offset: CGFloat = 4
 
         bezierPath.move(to: CGPoint(x: topLeft.x - offset, y: topLeft.y + cornerRadius))
         bezierPath.addArc(withCenter: CGPoint(x: topLeft.x + cornerRadius, y: topLeft.y + cornerRadius), radius: (cornerRadius + offset), startAngle: CGFloat.pi, endAngle: CGFloat.pi*1.5, clockwise: true)

@@ -23,3 +23,6 @@
 #import "YXMediator.h"
 #import "YXNotification.h"
 #import "BSCommon.h"
+
+// 闪验
+#import <CL_ShanYanSDK/CL_ShanYanSDK.h>
