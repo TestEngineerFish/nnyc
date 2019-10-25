@@ -473,14 +473,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lpa-dp-DPk">
-                                        <rect key="frame" x="20" y="162.66666666666669" width="295" height="0.33333333333334281"/>
+                                        <rect key="frame" x="20" y="162.66666666666669" width="295" height="0.66666666666665719"/>
                                         <color key="backgroundColor" red="0.75294117647058822" green="0.75294117647058822" blue="0.75294117647058822" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="tvH-Wx-DLA"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cU8-Q4-UU0">
-                                        <rect key="frame" x="167.33333333333334" y="181" width="0.33333333333334281" height="53"/>
+                                        <rect key="frame" x="167.33333333333334" y="181.33333333333331" width="0.33333333333334281" height="52.666666666666657"/>
                                         <color key="backgroundColor" red="0.75294117650000003" green="0.75294117650000003" blue="0.75294117650000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="0.5" id="W7X-H4-sUk"/>
@@ -615,7 +615,7 @@
         <!-- -->
         <scene sceneID="b2p-GO-JD0">
             <objects>
-                <viewController id="NXD-Ea-pEl" sceneMemberID="viewController">
+                <viewController id="NXD-Ea-pEl" customClass="YXStudyMapViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Spk-Ot-bAX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -623,7 +623,11 @@
                         <viewLayoutGuide key="safeArea" id="HXc-rw-APG"/>
                     </view>
                     <navigationItem key="navigationItem" title=" " id="nzg-1H-YdW">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="XyD-Pv-cxU"/>
+                        <barButtonItem key="leftBarButtonItem" image="back" id="XyD-Pv-cxU">
+                            <connections>
+                                <action selector="back:" destination="NXD-Ea-pEl" id="WiV-1s-cxs"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XK3-RN-KBu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

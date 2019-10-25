@@ -9,7 +9,11 @@
 import UIKit
 
 class YXStudyMapViewController: UIViewController {
-
+    
+    @IBAction func back(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

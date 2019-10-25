@@ -11,7 +11,8 @@ import UIKit
 class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private var groupWordBookModels: [YXGroupWordBookModel] = []
-
+    private var selectGradeView: YXSelectGradeView!
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var seleteGradeViewStateImageView: UIImageView!
     
@@ -20,10 +21,12 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @IBAction func showOrHideSelectGradeView(_ sender: Any) {
-        if seleteGradeViewStateImageView.image == #imageLiteral(resourceName: "showSelectGrade") {
+        if selectGradeView.isHidden == true {
+            selectGradeView.isHidden = false
             seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "hideSelectGrade")
             
         } else {
+            selectGradeView.isHidden = true
             seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "showSelectGrade")
         }
     }
@@ -32,6 +35,13 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: "YXGroupWordBookCell", bundle: nil), forCellReuseIdentifier: "YXGroupWordBookCell")
+        
+        selectGradeView = YXSelectGradeView(frame: CGRect(x: 0, y: 44, width: screenWidth, height: screenHeight), grades: [], selectClosure: { (grade) in
+            self.selectGradeView.isHidden = true
+            self.seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "showSelectGrade")
+        })
+        selectGradeView.isHidden = true
+        self.view.addSubview(selectGradeView)
     }
     
     
