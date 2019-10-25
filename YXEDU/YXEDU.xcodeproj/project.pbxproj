@@ -27,6 +27,7 @@
 		2205A9382361BB9500C6E674 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9372361BB9500C6E674 /* UIImage+Extension.swift */; };
 		2205A93A2361C88900C6E674 /* Iconfont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9392361C88900C6E674 /* Iconfont.swift */; };
 		2205A93C2361C92500C6E674 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A93B2361C92500C6E674 /* UIFont+Extension.swift */; };
+		2205A93E23628FDE00C6E674 /* FindRoutesUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A93D23628FDE00C6E674 /* FindRoutesUtil.swift */; };
 		224529042327A82500510507 /* YYDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529032327A82500510507 /* YYDatabase.swift */; };
 		224529072327A85100510507 /* YYDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529062327A85100510507 /* YYDataSourceManager.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
@@ -597,6 +598,7 @@
 		2205A9372361BB9500C6E674 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		2205A9392361C88900C6E674 /* Iconfont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iconfont.swift; sourceTree = "<group>"; };
 		2205A93B2361C92500C6E674 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		2205A93D23628FDE00C6E674 /* FindRoutesUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindRoutesUtil.swift; sourceTree = "<group>"; };
 		224529022327A34300510507 /* YXEDU-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YXEDU-Bridging-Header.h"; sourceTree = "<group>"; };
 		224529032327A82500510507 /* YYDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabase.swift; sourceTree = "<group>"; };
 		224529062327A85100510507 /* YYDataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDataSourceManager.swift; sourceTree = "<group>"; };
@@ -2454,6 +2456,7 @@
 				EE5EF22323273DD900655654 /* BSUtils.m */,
 				EE5EF1C123273BAD00655654 /* YRNetwork */,
 				EE5EF1D423273BAE00655654 /* YRUtils */,
+				2205A93D23628FDE00C6E674 /* FindRoutesUtil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -5077,6 +5080,7 @@
 				77F69A74236152BE00E55185 /* YXDesignableButton.swift in Sources */,
 				EE5E00C223274FEB00655654 /* YXStudySpeedView.m in Sources */,
 				EE5E005B23274FEB00655654 /* YXCompleteGroupView.m in Sources */,
+				2205A93E23628FDE00C6E674 /* FindRoutesUtil.swift in Sources */,
 				EE5EFC4F23274BBB00655654 /* YXReportDeviceModel.m in Sources */,
 				EE5EFD5623274F0900655654 /* YXRankBaseInfo.m in Sources */,
 				EE5E006D23274FEB00655654 /* YXENTranCHChoiceView.m in Sources */,

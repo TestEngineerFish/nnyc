@@ -42,10 +42,9 @@ class GapFillingView: UIView {
     }
 
     private func bindProperty() {
-        let wordsArray = ["e", "b", "longlong", "ssfasf", "s", "test"]
+        let wordsArray = ["e", "basfas", "longlong", "ssf", "s", "test", "testt", "e"]
         questionView.createUI()
-        chooseView.bindData(wordsArray)
-        chooseView.createUI()
+        chooseView.createUI(wordsArray)
     }
     
 }
