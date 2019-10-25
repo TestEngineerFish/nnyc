@@ -15,7 +15,17 @@ class YXQuestionView: UIView {
     let marginTop    = CGFloat(54)
     let marginBottom = CGFloat(54)
 
-    func createUI() {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.createUI()
+    }
+
+    required init?(coder: NSCoder) {
+        print("???")
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func createUI() {
         self.backgroundColor = UIColor.white
         addSubview(contentView)
         contentView.snp.makeConstraints { (make) in

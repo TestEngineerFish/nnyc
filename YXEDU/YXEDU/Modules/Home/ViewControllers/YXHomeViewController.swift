@@ -105,6 +105,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 charModelsArray.append(model)
             }
 
+            // ==== 添加问题跟视图 ====
             let view = YXQuestionView()
             kWindow.addSubview(view)
             view.snp.makeConstraints { (make) in
@@ -112,17 +113,12 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 make.width.equalTo(332)
                 make.height.equalTo(160)
             }
-            view.createUI()
 
-            let charView0 = YXSpellView()
-            charView0.createUI(charModelsArray)
-            let charView1 = YXSpellView()
-            charView1.createUI(charModelsArray)
-            let charView2 = YXSpellView()
-            charView2.createUI(charModelsArray)
-            let charView3 = YXSpellView()
-            charView3.createUI(charModelsArray)
-            let height = view.addCustomViews([charView0, charView1, charView2, charView3])
+            // ==== 添加子视图 ====
+            let charView = YXSpellView()
+            charView.createUI(charModelsArray)
+
+            let height = view.addCustomViews([charView])
             view.snp.updateConstraints { (make) in
                 make.height.equalTo(height)
             }

@@ -2005,8 +2005,8 @@
 		EE54F7B62362AA3100EC605A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				EE54F7B72362AA3100EC605A /* Answer */,
 				EE54F7BE2362AA3100EC605A /* Question */,
+				EE54F7B72362AA3100EC605A /* Answer */,
 				EE54F7CA2362AA3100EC605A /* YXBaseExerciseView.swift */,
 			);
 			path = View;
@@ -2015,6 +2015,7 @@
 		EE54F7B72362AA3100EC605A /* Answer */ = {
 			isa = PBXGroup;
 			children = (
+				2205A93F2362AB0100C6E674 /* SelectLettersView */,
 				EE54F7B82362AA3100EC605A /* YXBaseAnswerView.swift */,
 				EE54F7BC2362AA3100EC605A /* YXChinseAnswerView.swift */,
 				EE54F7BD2362AA3100EC605A /* YXImageAnswerView.swift */,
@@ -2028,6 +2029,8 @@
 		EE54F7BE2362AA3100EC605A /* Question */ = {
 			isa = PBXGroup;
 			children = (
+				2205A92A23619EBC00C6E674 /* SpellView */,
+				2205A92B23619F0A00C6E674 /* YXQuestionView.swift */,
 				EE54F7C12362AA3100EC605A /* YXBaseQuestionView.swift */,
 				EE54F7C92362AA3100EC605A /* YXChineseQuestionView.swift */,
 				EE54F7C32362AA3100EC605A /* YXConnectWordAndChineseQuestionView.swift */,
@@ -2934,9 +2937,6 @@
 		EE5EFC9F23274E5500655654 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2205A92B23619F0A00C6E674 /* YXQuestionView.swift */,
-				2205A93F2362AB0100C6E674 /* SelectLettersView */,
-				2205A92A23619EBC00C6E674 /* SpellView */,
 				EE5EFCA023274E5500655654 /* YXShareView.h */,
 				EE5EFCA123274E5500655654 /* YXPosterShareView.m */,
 				EE5EFCA223274E5500655654 /* YXCycleView.h */,

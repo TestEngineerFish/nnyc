@@ -22,8 +22,6 @@ class YXCharacterTextField: UITextField {
         self.inputAccessoryView     = UIView()
         self.autocorrectionType     = .no
         self.autocapitalizationType = .none
-
-
     }
 
     required init?(coder: NSCoder) {
