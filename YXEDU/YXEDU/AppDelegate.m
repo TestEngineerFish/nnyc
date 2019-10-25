@@ -49,30 +49,30 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //    NSLog(@"-----------------------%@", NSHomeDirectory());
-//    [YXCrashReport shared];
-//    if (@available(iOS 11.0, *)) {
-//        [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    [YXCrashReport shared];
+    if (@available(iOS 11.0, *)) {
+        [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
+
+    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    //中间件配置
+    [[YXMediator shared] configure];
+    //是否已经登录
+    if ([YXConfigure shared].token.length) {
+        [self showMainVC];
+    } else {
+        [self showLoginVC];
+    }
+
+    [self setUpUmengSDK];
+    //埋点配置
+    [self configGrowingIO];
+    [self.window makeKeyAndVisible];
+    //添加网络监控
+    [[Reachability reachabilityForInternetConnection] startNotifier];
+//    if (![YXConfigure shared].isShowGuideView) {
+//        [self showGuideView];
 //    }
-//
-//    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-//    //中间件配置
-//    [[YXMediator shared] configure];
-//    //是否已经登录
-//    if ([YXConfigure shared].token.length) {
-//        [self showMainVC];
-//    } else {
-//        [self showLoginVC];
-//    }
-//
-//    [self setUpUmengSDK];
-//    //埋点配置
-//    [self configGrowingIO];
-//    [self.window makeKeyAndVisible];
-//    //添加网络监控
-//    [[Reachability reachabilityForInternetConnection] startNotifier];
-////    if (![YXConfigure shared].isShowGuideView) {
-////        [self showGuideView];
-////    }
     return YES;
 }
 
