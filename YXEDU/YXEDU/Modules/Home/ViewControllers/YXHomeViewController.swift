@@ -97,7 +97,35 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            
+
+            // ===== 数据准备 ====
+            var charModelsArray = [YXCharacterModel]()
+            for index in 0..<2 {
+                let model = YXCharacterModel("sam", isBlank: index%2>0)
+                charModelsArray.append(model)
+            }
+
+            let view = YXQuestionView()
+            kWindow.addSubview(view)
+            view.snp.makeConstraints { (make) in
+                make.center.equalToSuperview()
+                make.width.equalTo(332)
+                make.height.equalTo(160)
+            }
+            view.createUI()
+
+            let charView0 = YXSpellView()
+            charView0.createUI(charModelsArray)
+            let charView1 = YXSpellView()
+            charView1.createUI(charModelsArray)
+            let charView2 = YXSpellView()
+            charView2.createUI(charModelsArray)
+            let charView3 = YXSpellView()
+            charView3.createUI(charModelsArray)
+            let height = view.addCustomViews([charView0, charView1, charView2, charView3])
+            view.snp.updateConstraints { (make) in
+                make.height.equalTo(height)
+            }
             break
             
         case 1:

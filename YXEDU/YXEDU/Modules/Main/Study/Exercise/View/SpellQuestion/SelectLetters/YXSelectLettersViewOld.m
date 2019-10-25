@@ -1,23 +1,23 @@
 //
-//  YXSelectLettersView.m
+//  YXSelectLettersViewOld.m
 //  YXEDU
 //
 //  Created by yao on 2019/1/23.
 //  Copyright © 2019年 shiji. All rights reserved.
 //
 
-#import "YXSelectLettersView.h"
+#import "YXSelectLettersViewOld.h"
 #import "YXWordLettersView.h"
 
 #define kLetterDefaultWith 
-@interface YXSelectLettersView ()<YXWordLettersViewDelegate>
+@interface YXSelectLettersViewOld ()<YXWordLettersViewDelegate>
 @property (nonatomic, strong) YXQuestionModel *quesModel;
 @property (nonatomic, copy) NSArray *wordLetters;
 @property (nonatomic, strong) NSArray *blankWordLettersView;
 @property (nonatomic, weak) YXWordLettersView *lastHightlight;
 @end
 
-@implementation YXSelectLettersView
+@implementation YXSelectLettersViewOld
 
 - (instancetype)initWithQuestionModel:(YXQuestionModel *)quesModel {
     if (self = [super init]) {

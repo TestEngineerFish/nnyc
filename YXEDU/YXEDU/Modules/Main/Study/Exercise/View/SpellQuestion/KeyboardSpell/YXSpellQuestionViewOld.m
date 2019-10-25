@@ -7,12 +7,12 @@
 //
 
 #import "YXSpellQuestionView.h"
-#import "YXSpellView.h"
+#import "YXSpellViewOld.h"
 #import "YXResultView.h"
 #import "YXAudioAnimations.h"
 
-@interface YXSpellQuestionView ()<YXSpellViewDelegate>
-@property (nonatomic, weak)YXSpellView *spellView;
+@interface YXSpellQuestionView ()<YXSpellViewOldDelegate>
+@property (nonatomic, weak)YXSpellViewOld *spellView;
 @property (nonatomic, weak)YXAudioAnimations *audioButton;
 @property (nonatomic, weak)UIView *topView;
 @property (nonatomic, assign) BOOL isFullSpellQues;
@@ -84,7 +84,7 @@
     }
     
     NSString *blankLocs = self.wordQuestionModel.question.options.firstObject;
-    YXSpellView *spellView = [YXSpellView spellViewWithOriWord:self.wordDetailModel.word andBlankLocs:blankLocs];
+    YXSpellViewOld *spellView = [YXSpellViewOld spellViewWithOriWord:self.wordDetailModel.word andBlankLocs:blankLocs];
     spellView.delegate = self;
     [self.resultView addSubview:spellView];
     _spellView = spellView;
@@ -194,12 +194,12 @@
     [self.audioButton stopAnimating];
 }
 
-#pragma mark - <YXSpellViewDelegate>
-- (void)spellView:(YXSpellView *)spellView complate:(BOOL)complate {
+#pragma mark - <YXSpellViewOldDelegate>
+- (void)spellView:(YXSpellViewOld *)spellView complate:(BOOL)complate {
     self.confirmButton.enabled = complate;
 }
 
-- (void)spellView:(YXSpellView *)spellView canCheck:(BOOL)canCheck {
+- (void)spellView:(YXSpellViewOld *)spellView canCheck:(BOOL)canCheck {
     if (self.canCheckAnswer) { //self.userInteractionEnabled
         if (canCheck) {
             [self checkSpellResult];
@@ -288,7 +288,7 @@
  }
  
  NSString *blankLocs = self.wordQuestionModel.question.options.firstObject;
- YXSpellView *spellView = [YXSpellView spellViewWithOriWord:self.wordDetailModel.word andBlankLocs:blankLocs];
+ YXSpellViewOld *spellView = [YXSpellViewOld spellViewWithOriWord:self.wordDetailModel.word andBlankLocs:blankLocs];
  spellView.delegate = self;
  [self.resultView addSubview:spellView];
  _spellView = spellView;

@@ -1,5 +1,5 @@
 //
-//  YXSelectLettersView.h
+//  YXSelectLettersViewOld.h
 //  YXEDU
 //
 //  Created by yao on 2019/1/23.
@@ -10,7 +10,7 @@
 #import "YXWordQuestionModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YXSelectLettersView : UIView
+@interface YXSelectLettersViewOld : UIView
 @property (nonatomic, copy) void(^reverseLettersViewBlock) (NSInteger index);
 - (instancetype)initWithQuestionModel:(YXQuestionModel *)quesModel;
 - (void)insertLetters:(NSString *)letters atIndex:(NSInteger)index;

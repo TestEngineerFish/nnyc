@@ -1,5 +1,5 @@
 //
-//  ChooseWordView.swift
+//  YXSelectLettersView.swift
 //  YXEDU
 //
 //  Created by 沙庭宇 on 2019/10/24.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChooseWordView: UIView {
+class YXSelectLettersView: UIView {
     let contentView = UIView()
 
     let itemSize    = CGFloat(60)
@@ -57,6 +57,7 @@ class ChooseWordView: UIView {
         contentView.snp.updateConstraints { (make) in
             make.height.equalTo(contentH)
         }
+        
     }
 
     private func createButtonArray(_ wordsArray: [String]) -> [[UIButton]] {

@@ -8,11 +8,11 @@
 
 #import "YXSelectLettersQuestionView.h"
 #import "YXNinePalaceKeyBoardView.h"
-#import "YXSelectLettersView.h"
+#import "YXSelectLettersViewOld.h"
 
 @interface YXSelectLettersQuestionView ()<YXNinePalaceKeyBoardViewDelegate>
 @property (nonatomic, strong) YXNinePalaceKeyBoardView *customKeyBoard;
-@property (nonatomic, strong) YXSelectLettersView *spellView;
+@property (nonatomic, strong) YXSelectLettersViewOld *spellView;
 @end
 @implementation YXSelectLettersQuestionView
 - (void)setUpSubviews {
@@ -27,7 +27,7 @@
     [self setKeyboardView];
     
     __weak typeof(self) weakSelf = self;
-    self.spellView = [[YXSelectLettersView alloc] initWithQuestionModel:self.wordQuestionModel.question];
+    self.spellView = [[YXSelectLettersViewOld alloc] initWithQuestionModel:self.wordQuestionModel.question];
     self.spellView.reverseLettersViewBlock = ^(NSInteger index) {
         [weakSelf.customKeyBoard reverseKeyButtonAtIndex:index];
     };

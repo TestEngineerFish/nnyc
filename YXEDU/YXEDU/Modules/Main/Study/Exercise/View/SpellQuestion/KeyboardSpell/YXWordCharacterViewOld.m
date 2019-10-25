@@ -1,21 +1,21 @@
 //
-//  YXWordCharacterView.m
+//  YXWordCharacterViewOld.m
 //  1111
 //
 //  Created by yao on 2018/11/1.
 //  Copyright © 2018年 yao. All rights reserved.
 //
 
-#import "YXWordCharacterView.h"
-@implementation YXCharacterModel
+#import "YXWordCharacterViewOld.h"
+@implementation YXCharacterModelOld
 
 @end
 
 
 
-@interface YXCharacterTextField() <UIGestureRecognizerDelegate>
+@interface YXCharacterTextFieldOld() <UIGestureRecognizerDelegate>
 @end
-@implementation YXCharacterTextField
+@implementation YXCharacterTextFieldOld
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.textAlignment = NSTextAlignmentCenter;
@@ -85,14 +85,14 @@
 
 
 static NSString *const kSpellLeagelCharacters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz .-'";
-@interface YXWordCharacterView ()<UITextFieldDelegate,YXCharacterTextFieldDelegate>
+@interface YXWordCharacterViewOld ()<UITextFieldDelegate,YXCharacterTextFieldOldDelegate>
 
 @end
 
-@implementation YXWordCharacterView
+@implementation YXWordCharacterViewOld
 {
     CALayer *_indicator;
-    YXCharacterTextField *_characterTF;
+    YXCharacterTextFieldOld *_characterTF;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -124,7 +124,7 @@ static NSString *const kSpellLeagelCharacters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
     return self.characterTF.text.length;
 }
 
-- (void)setChModel:(YXCharacterModel *)chModel {
+- (void)setChModel:(YXCharacterModelOld *)chModel {
     _chModel = chModel;
     self.characterTF.text = chModel.oriCharacter;
     self.indicator.hidden = !chModel.isBlank;
@@ -163,7 +163,7 @@ static NSString *const kSpellLeagelCharacters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
     return YES;
 }
 
-- (void)characterTextFieldDeleteBackward:(YXCharacterTextField *)characterTF {
+- (void)characterTextFieldDeleteBackward:(YXCharacterTextFieldOld *)characterTF {
     if (characterTF.text.length) { // 删除当前字母
         characterTF.text = @"";
     }else {
@@ -208,9 +208,9 @@ static NSString *const kSpellLeagelCharacters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
     return _indicator;
 }
 
-- (YXCharacterTextField *)characterTF {
+- (YXCharacterTextFieldOld *)characterTF {
     if (!_characterTF) {
-        YXCharacterTextField *characterTF = [[YXCharacterTextField alloc] init];
+        YXCharacterTextFieldOld *characterTF = [[YXCharacterTextFieldOld alloc] init];
         characterTF.delegate = self;
         characterTF.characterTFDelegate = self;
         [self addSubview:characterTF];

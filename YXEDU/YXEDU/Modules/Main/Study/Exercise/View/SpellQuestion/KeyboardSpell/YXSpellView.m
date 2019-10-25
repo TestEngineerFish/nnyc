@@ -1,31 +1,31 @@
 //
-//  YXSpellView.m
+//  YXSpellViewOld.m
 //  1111
 //
 //  Created by yao on 2018/10/31.
 //  Copyright © 2018年 yao. All rights reserved.
 //
 
-#import "YXSpellView.h"
-#import "YXWordCharacterView.h"
+#import "YXSpellViewOld.h"
+#import "YXWordCharacterViewOld.h"
 
-@interface YXSpellView ()<UITextFieldDelegate,YXWordCharacterViewDelegate>
+@interface YXSpellViewOld ()<UITextFieldDelegate,YXWordCharacterViewOldDelegate>
 @property (nonatomic, strong) NSMutableArray *characterModels;
 @property (nonatomic, assign)NSInteger limitCharsNum;
-@property (nonatomic, weak) YXWordCharacterView *lastHightCharacterView;
+@property (nonatomic, weak) YXWordCharacterViewOld *lastHightCharacterView;
 @property (nonatomic, copy)NSArray *wordCharViews;
 @property (nonatomic, copy)NSArray *blankCharViews;
 @property (nonatomic, assign)NSInteger checkTimes;
 @end
 
-@implementation YXSpellView
+@implementation YXSpellViewOld
 {
     NSString *_oriWord;
     NSArray *_blankLocs;
 }
 
-+ (YXSpellView *)spellViewWithOriWord:(NSString *)oriWord andBlankLocs:(NSString *)blakLocs {
-    YXSpellView *spellView = [[self alloc] initWithOriWord:oriWord andBlakLocs:blakLocs];
++ (YXSpellViewOld *)spellViewWithOriWord:(NSString *)oriWord andBlankLocs:(NSString *)blakLocs {
+    YXSpellViewOld *spellView = [[self alloc] initWithOriWord:oriWord andBlakLocs:blakLocs];
     return spellView;
 }
 
@@ -53,7 +53,7 @@
         
         for (NSInteger i = 0; i < oriWord.length; i ++) {
             NSString *character = [oriWord substringWithRange:NSMakeRange(i, 1)];
-            YXCharacterModel *cm = [[YXCharacterModel alloc] init];
+            YXCharacterModelOld *cm = [[YXCharacterModelOld alloc] init];
             
             NSString *indexStr = [NSString stringWithFormat:@"%zd",i];
             BOOL isContain = [self.blankLocs containsObject:indexStr];
@@ -83,10 +83,10 @@
     NSMutableArray *blankCharViews = [NSMutableArray array];
     for (NSInteger i = 0; i < self.characterModels.count; i++) {
         CGFloat x = width * i + leftMargin;
-        YXWordCharacterView *wcv= [[YXWordCharacterView alloc] initWithFrame:CGRectMake(x, 0, width, 35)];
+        YXWordCharacterViewOld *wcv= [[YXWordCharacterViewOld alloc] initWithFrame:CGRectMake(x, 0, width, 35)];
         wcv.delegate = self;
         wcv.tag = i;
-        YXCharacterModel *chModel = self.characterModels[i];
+        YXCharacterModelOld *chModel = self.characterModels[i];
         wcv.chModel = chModel;
         if (chModel.isBlank) {
             wcv.characterTF.text  = @"";
@@ -115,21 +115,21 @@
             
             _lastHightCharacterView.characterType = YXCharacterNormal;
         }
-        YXWordCharacterView *curWCV = [self.blankCharViews objectAtIndex:index];
+        YXWordCharacterViewOld *curWCV = [self.blankCharViews objectAtIndex:index];
         curWCV.characterType = YXCharacterHighlight;
 //        curWCV.characterTF.textColor = kLetterHighLightColor;
         _lastHightCharacterView = curWCV;
     }
 }
 
-#pragma mark - <YXWordCharacterViewDelegate>
-- (void)wordCharacterViewandoverToPreviousResponder:(YXWordCharacterView *)wordCharacterView {
+#pragma mark - <YXWordCharacterViewOldDelegate>
+- (void)wordCharacterViewandoverToPreviousResponder:(YXWordCharacterViewOld *)wordCharacterView {
     NSInteger curIndexOfWCV = [self.blankCharViews indexOfObject:wordCharacterView];
     [self changeFirstResponseToBlankCharViewsAtIndex:curIndexOfWCV - 1];
     self.lastHightCharacterView.characterTF.text = @"";
 }
 
-- (void)wordCharacterViewHandoverToNextResponder:(YXWordCharacterView *)wordCharacterView {
+- (void)wordCharacterViewHandoverToNextResponder:(YXWordCharacterViewOld *)wordCharacterView {
     NSInteger curIndexOfWCV = [self.blankCharViews indexOfObject:wordCharacterView];
     if (curIndexOfWCV + 1 < self.blankCharViews.count) {
         curIndexOfWCV += 1;
@@ -139,13 +139,13 @@
     [self checkSpellComplateState];
 }
 
-- (void)wordCharacterViewBecomeResponder:(YXWordCharacterView *)wordCharacterView {
+- (void)wordCharacterViewBecomeResponder:(YXWordCharacterViewOld *)wordCharacterView {
     NSInteger curIndexOfWCV = [self.blankCharViews indexOfObject:wordCharacterView];
     [self changeFirstResponseToBlankCharViewsAtIndex:curIndexOfWCV];
     [self checkSpellComplateState];
 }
 
-- (void)wordCharacterViewResignResponder:(YXWordCharacterView *)wordCharacterView {
+- (void)wordCharacterViewResignResponder:(YXWordCharacterViewOld *)wordCharacterView {
     return;
     if (_lastHightCharacterView) {
         _lastHightCharacterView.characterType =  YXCharacterNormal;
@@ -153,7 +153,7 @@
     }
 }
 
-- (void)wordCharacterViewClickCheckResult:(YXWordCharacterView *)wordCharacterView {
+- (void)wordCharacterViewClickCheckResult:(YXWordCharacterViewOld *)wordCharacterView {
     BOOL canCheck = [self canCheckResult];
     
     if ([self.delegate respondsToSelector:@selector(spellView:canCheck:)]) {
@@ -169,7 +169,7 @@
 }
 - (BOOL)canCheckResult {
     BOOL canCheck = YES;
-    for (YXWordCharacterView *wcv in self.blankCharViews) {
+    for (YXWordCharacterViewOld *wcv in self.blankCharViews) {
         if (!wcv.hasInput) {
             canCheck = NO;
             break;
@@ -182,7 +182,7 @@
 - (BOOL)result {
     self.checkTimes ++;
     BOOL isCorrect = YES;
-    for (YXWordCharacterView *wcv in self.blankCharViews) {
+    for (YXWordCharacterViewOld *wcv in self.blankCharViews) {
         if (wcv.isCorrect == NO) {
 //            if (self.checkTimes > 1) { // 打错超过一次标红（2.0第一次标红加发音）
                 wcv.characterType = YXCharacterError;
@@ -196,7 +196,7 @@
 
 - (NSString *)resultWord {
     NSMutableString *rWord = [NSMutableString string];
-    for (YXWordCharacterView *wcv in self.wordCharViews) {
+    for (YXWordCharacterViewOld *wcv in self.wordCharViews) {
         [rWord appendString:wcv.curCharacter];
     }
     return [rWord copy];

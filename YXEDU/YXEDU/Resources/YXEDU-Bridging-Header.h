@@ -22,3 +22,4 @@
 #import "YXPersonalViewModel.h"
 #import "YXMediator.h"
 #import "YXNotification.h"
+#import "BSCommon.h"
