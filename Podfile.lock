@@ -16,7 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - BMKLocationKit (1.7.0)
   - Bugly (2.5.0)
-  - CL_ShanYanSDK (2.3.0.0)
+  - CL_ShanYanSDK (2.2.1.1)
   - CocoaLumberjack (3.5.3):
     - CocoaLumberjack/Core (= 3.5.3)
   - CocoaLumberjack/Core (3.5.3)
@@ -148,7 +148,7 @@ SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   BMKLocationKit: cbe7a93bc288465e12961e65aa3f11a8f9da3bb1
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
-  CL_ShanYanSDK: d89eadde39655c33021e7b7f40b23dacf4e90863
+  CL_ShanYanSDK: 1d9b3e0a55339604409b103fedd07bfdd7cb1880
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a

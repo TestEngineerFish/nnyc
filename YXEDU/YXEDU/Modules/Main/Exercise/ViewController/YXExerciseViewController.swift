@@ -10,22 +10,84 @@ import UIKit
 
 /// 练习控制器
 class YXExerciseViewController: UIViewController {
+    
+    
+    var exerciseModelArray: [YXWordExerciseModel] = [YXWordExerciseModel(.lookWordChooseImage),
+                                                     YXWordExerciseModel(.lookExampleChooseImage)]
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    
+    
+    var currentExerciseView: YXBaseExerciseView = YXBaseExerciseView()
+    var nextExerciseView: YXBaseExerciseView = YXBaseExerciseView()
+    
+    
+    private var headerView: YXExerciseHeaderView = YXExerciseHeaderView()
+    
+    private var contentScrollView: UIScrollView = UIScrollView()
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.createSubviews()
+        self.bindProperty()
+        
+        currentExerciseView.exerciseModel = YXWordExerciseModel(.lookWordChooseImage)
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
+    
+    
+    func createSubviews() {
+        self.view.addSubview(headerView)
+        self.view.addSubview(contentScrollView)
+        
+        self.contentScrollView.addSubview(currentExerciseView)
+    }
+    
+    
+    func bindProperty() {
+        
+        self.view.backgroundColor = UIColor.blue
+        
+        
+        self.headerView.backEvent = {[weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        
+        
+        
+        contentScrollView.backgroundColor = UIColor.yellow.withAlphaComponent(0.5)
+        contentScrollView.frame = CGRect(x: 0, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
+        contentScrollView.contentSize = contentScrollView.bounds.size
+        
+        
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        
+        self.headerView.snp.makeConstraints { (make) in
+            make.top.equalTo(YXExerciseConfig.headerViewTop)
+            make.left.right.equalTo(0)
+            make.height.equalTo(28)
+            
+        }
+        
+        currentExerciseView.snp.makeConstraints { (make) in
+            make.top.equalTo(0)
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(0)
+        }
+        
+    }
 
 }

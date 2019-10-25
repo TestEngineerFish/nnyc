@@ -593,6 +593,9 @@
 		EE5EFD6223274F0900655654 /* YXRangeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFD3923274F0900655654 /* YXRangeListCell.m */; };
 		EE5EFD6423274F0900655654 /* YXDescoverBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFD3C23274F0900655654 /* YXDescoverBaseCell.m */; };
 		EE5EFD6523274F0900655654 /* YXPreviousChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFD3F23274F0900655654 /* YXPreviousChallengeCell.m */; };
+		EE7E1D062363678E00600A88 /* YXQuestionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D052363678D00600A88 /* YXQuestionFactory.swift */; };
+		EE7E1D082363679500600A88 /* YXExerciseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D072363679500600A88 /* YXExerciseConfig.swift */; };
+		EE7E1D0A236367A000600A88 /* YXExerciseHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
 		EED3D41B2331D04B00121218 /* YRLocatorProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4142331D04B00121218 /* YRLocatorProvider.m */; };
@@ -1692,6 +1695,9 @@
 		EE5EFFFB23274FEA00655654 /* YXBindModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXBindModel.m; sourceTree = "<group>"; };
 		EE5EFFFE23274FEA00655654 /* YXPersonalMaterialManageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalMaterialManageVC.h; sourceTree = "<group>"; };
 		EE5EFFFF23274FEA00655654 /* YXPersonalMaterialManageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonalMaterialManageVC.m; sourceTree = "<group>"; };
+		EE7E1D052363678D00600A88 /* YXQuestionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXQuestionFactory.swift; sourceTree = "<group>"; };
+		EE7E1D072363679500600A88 /* YXExerciseConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseConfig.swift; sourceTree = "<group>"; };
+		EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseHeaderView.swift; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
 		EED3D4122331D04B00121218 /* YRRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRRouter.h; sourceTree = "<group>"; };
@@ -2010,6 +2016,7 @@
 		EE54F7AF2362AA3100EC605A /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				EE7E1D052363678D00600A88 /* YXQuestionFactory.swift */,
 				EE54F7B02362AA3100EC605A /* YXExerciseViewLayout.swift */,
 				EE54F7B12362AA3100EC605A /* YXExerciseFactory.swift */,
 				EE54F7B22362AA3100EC605A /* YXExerciseEvent.swift */,
@@ -2020,6 +2027,7 @@
 		EE54F7B32362AA3100EC605A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EE7E1D072363679500600A88 /* YXExerciseConfig.swift */,
 				EE54F7B42362AA3100EC605A /* YXWordExerciseModel.swift */,
 				EE54F7B52362AA3100EC605A /* YXExerciseType.swift */,
 			);
@@ -2029,6 +2037,7 @@
 		EE54F7B62362AA3100EC605A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */,
 				EE54F7BE2362AA3100EC605A /* Question */,
 				EE54F7B72362AA3100EC605A /* Answer */,
 				EE54F7CA2362AA3100EC605A /* YXBaseExerciseView.swift */,
@@ -4781,7 +4790,7 @@
 				D62D6AAB204FEF7A005E3273 /* Resources */,
 				80F1C0AB721BA338F359AA78 /* [CP] Embed Pods Frameworks */,
 				20EAF52B21AB9B23008BD364 /* ShellScript */,
-				59B8B3C98AFD29A5CC349204 /* [CP] Copy Pods Resources */,
+				603EFA62B8C72333C6C6D91C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4923,7 +4932,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#!/bin/sh\n#\n# Copyright 2016 Bugly, Tencent. All rights reserved.\n#\n# V1.4.0\n#\n# 2016.08.03\n#\n#\n#\n######################################################\n# 1. 脚本集成到Xcode工程的Target\n######################################################\n#\n# --- Copy the SCRIPT to the Run Script of Build Phases in the Xcode project ---\n#\n# # Debug 环境\nBUGLY_APP_ID=\"7fb30d809a\"\n# #\nBUGLY_APP_KEY=\"dc4fd7e0-63c7-4c2f-8971-f6ddd9b9de4e\"\n\n## Release 环境\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    echo \"Bugly 替换正式环境的 ID 和 Key\"\n    BUGLY_APP_ID=\"8d2147f017\"\n    BUGLY_APP_KEY=\"2134e337-24e7-461c-841d-9b8a7cacba0c\"\nfi\n\n\n# #\nBUNDLE_IDENTIFIER=\"com.yx.nnyc\"\n# #\nUPLOAD_DSYM_ONLY=1\n#\n# # 脚本默认配置的版本格式为CFBundleShortVersionString(CFBundleVersion),  如果你修改默认的版本格式, 请设置此变量, 如果不想修改, 请忽略此设置\n# CUSTOMIZED_APP_VERSION=\"\"\n#\n# # Debug模式编译是否上传，1＝上传 0＝不上传，默认不上传\nUPLOAD_DEBUG_SYMBOLS=1\n#\n# # 模拟器编译是否上传，1=上传 0=不上传，默认不上传\n# UPLOAD_SIMULATOR_SYMBOLS=0\n#\n# #只有Archive操作时上传, 1=支持Archive上传 0=所有Release模式编译都上传\nUPLOAD_ARCHIVE_ONLY=0\n#\n# #\n# source dSYMUpload.sh\n#\n# --- END OF SCRIPT ---\n#\n#\n#\n#\n#######################################################\n# 2. 脚本根据输入参数处理\n#######################################################\n#\n# #命令行下输入应用基本信息, .dSYM文件的父目录路径, 输出文件目录即可\n#\n# sh dSYMUpload.sh <bugly_app_id> <bugly_app_key> <app_bundle_identifier> <app_version> <dSYM_src_dir> <bSYMBOL_dest_dir>\n#\n# #\n#\n# #注意:\n# # 1. dSYMUpload.sh会调用buglySymboliOS.jar进行.dSYM解析，所以依赖Java运行时环境\n# # 2. dSYMUpload.sh和buglySymboliOS.jar的文件路径需一致\n#\n#\n\n#\n# --- CONTENT OF SCRIPT ---\n#\n\n# Bugly服务域名\nBUGLY_DSYM_UPLOAD_DOMAIN=\"api.bugly.qq.com\"\n\n# 注意jar工具的路径跟dSYMUpload.sh脚本路径一致, 请务必保证jar路径的正确性\nBUGLY_SYMBOL_JAR_PATH=\"dsymtool/buglySymboliOS.jar\"\n# 查找添加到系统目录的jar工具\nif [ ! -f \"${BUGLY_SYMBOL_JAR_PATH}\" ]; then\nBUGLY_SYMBOL_JAR_PATH=\"$HOME/bin/buglySymboliOS.jar\"\nfi\n\n# 打印错误信息\nfunction exitWithMessage(){\necho \"--------------------------------\"\necho \"${1}\"\necho \"--------------------------------\"\nexit ${2}\n}\n\n# 上传bSYMBOL文件\nfunction dSYMUpload() {\nP_APP_ID=\"$1\"\nP_APP_KEY=\"$2\"\nP_APP_BUNDLE_ID=\"$3\"\nP_APP_VERSION=\"$4\"\nP_BSYMBOL_ZIP_FILE=\"$5\"\n\n#\nP_BSYMBOL_ZIP_FILE_NAME=${P_BSYMBOL_ZIP_FILE##*/}\nP_BSYMBOL_ZIP_FILE_NAME=${P_BSYMBOL_ZIP_FILE_NAME//&/_}\nP_BSYMBOL_ZIP_FILE_NAME=\"${P_BSYMBOL_ZIP_FILE_NAME// /_}\"\n\nDSYM_UPLOAD_URL=\"https://${BUGLY_DSYM_UPLOAD_DOMAIN}/openapi/file/upload/symbol?app_id=${P_APP_ID}&app_key=${P_APP_KEY}\"\necho \"dSYM upload url: ${DSYM_UPLOAD_URL}\"\n\necho \"-----------------------------\"\nSTATUS=$(/usr/bin/curl -k \"${DSYM_UPLOAD_URL}\" --form \"api_version=1\" --form \"app_id=${P_APP_ID}\" --form \"app_key=${P_APP_KEY}\" --form \"symbolType=2\"  --form \"bundleId=${BUNDLE_IDENTIFIER}\" --form \"productVersion=${BUGLY_APP_VERSION}\" --form \"fileName=${P_BSYMBOL_ZIP_FILE_NAME}\" --form \"file=@${P_BSYMBOL_ZIP_FILE}\" --verbose)\necho \"-----------------------------\"\n\nUPLOAD_RESULT=\"FAILTURE\"\necho \"Bugly server response: ${STATUS}\"\nif [ ! \"${STATUS}\" ]; then\necho \"Error: Failed to upload the zip archive file.\"\nelif [[ \"${STATUS}\" == *\"{\\\"reponseCode\\\":\\\"0\\\"}\"* ]]; then\necho \"Success to upload the dSYM for the app [${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION}]\"\nUPLOAD_RESULT=\"SUCCESS\"\nelse\necho \"Error: Failed to upload the zip archive file to Bugly.\"\nfi\n\n#Remove temp dSYM archive\n#echo \"Remove temporary zip archive: ${DSYM_ZIP_FPATH}\"\n#/bin/rm -f \"${DSYM_ZIP_FPATH}\"\n\nif [ \"$?\" -ne 0 ]; then\nexitWithMessage \"Error: Failed to remove temporary zip archive.\" 0\nfi\n\necho \"--------------------------------\"\necho \"${UPLOAD_RESULT} - dSYM upload complete.\"\n\nif [[ \"${UPLOAD_RESULT}\" == \"FAILTURE\" ]]; then\necho \"--------------------------------\"\necho \"Failed to upload the dSYM\"\necho \"Please check the script and try it again.\"\nfi\n}\n\n# .dSYM解析为bSYMBOL文件\nfunction dSYMParse() {\nDSYM_FILE=\"$1\"\nDSYM_SYMBOL_FILE=\"$2\"\n\necho \"--------------------------------\"\necho \"Extract symbol info from .dSYM file. to ${DSYM_SYMBOL_FILE}\"\n(/usr/bin/java -Xms512m -Xmx1024m -Dfile.encoding=UTF8 -jar \"${BUGLY_SYMBOL_JAR_PATH}\" -i \"${DSYM_FILE}\" -o \"${DSYM_SYMBOL_FILE}\" ) || exitWithMessage \"Error: Failed to extract symbols.\" 1\necho \"--------------------------------\"\n\n}\n\n# 执行\nfunction run() {\n\nCONFIG_BUGLY_APP_ID=\"$1\"\nCONFIG_BUGLY_APP_KEY=\"$2\"\n\nCONFIG_BUGLY_APP_BUNDLE_IDENTIFIER=\"$3\"\nCONFIG_BUGLY_APP_VERSION=\"$4\"\nCONFIG_DSYM_SOURCE_DIR=\"$5\"\nCONFIG_DSYM_DEST_DIR=\"$6\"\nCONFIG_UPLOAD_DSYM_ONLY=\"$7\"\n\n# 检查必须参数是否设置\nif [ ! \"${CONFIG_BUGLY_APP_ID}\" ]; then\nexitWithMessage \"Error: Bugly App ID not defined. Please set 'BUGLY_APP_ID' \" 0\nfi\n\nif [[ \"${CONFIG_BUGLY_APP_ID}\" == *\"App ID\"* ]]; then\nexitWithMessage \"Error: Bugly App ID not defined.\" 0\nfi\n\nif [ ! \"${CONFIG_BUGLY_APP_KEY}\" ]; then\nexitWithMessage \"Error: Bugly App Key not defined.\" 0\nfi\n\nif [ ! \"${CONFIG_BUGLY_APP_BUNDLE_IDENTIFIER}\" ]; then\nexitWithMessage \"Error: Bundle Identifier not defined.\" 0\nfi\n\nif [ ! \"${CONFIG_BUGLY_APP_VERSION}\" ]; then\nexitWithMessage \"Error: App Version not defined.\" 0\nfi\n\nif [ ! -e \"${CONFIG_DSYM_SOURCE_DIR}\" ]; then\nexitWithMessage \"Error: Invalid dir ${CONFIG_DSYM_SOURCE_DIR}\" 0\nfi\n\nif [ ! \"${CONFIG_DSYM_DEST_DIR}\" ]; then\nexitWithMessage \"Error: Invalid dir ${CONFIG_DSYM_DEST_DIR}\" 0\nfi\n\nif [ ! -e \"${CONFIG_DSYM_DEST_DIR}\" ]; then\nmkdir ${CONFIG_DSYM_DEST_DIR}\nfi\n\nDSYM_FOLDER=\"${CONFIG_DSYM_SOURCE_DIR}\"\nIFS=$'\\n'\n\necho \"Scaning dSYM FOLDER: ${DSYM_FOLDER} ...\"\nRET=\"F\"\n\n#\nfor dsymFile in $(find \"$DSYM_FOLDER\" -name '*.dSYM'); do\nRET=\"T\"\necho \"Found dSYM file: $dsymFile\"\n\nDSYM_FILE_NAME=${dsymFile##*/}\nDSYM_SYMBOL_ZIP_FILE_NAME=\"${DSYM_FILE_NAME}.zip\"\nDSYM_SYMBOL_ZIP_FILE_NAME=\"${DSYM_SYMBOL_ZIP_FILE_NAME// /_}\"\nDSYM_SYMBOL_ZIP_FILE=${CONFIG_DSYM_DEST_DIR}/${DSYM_SYMBOL_ZIP_FILE_NAME}\n\nif [ $CONFIG_UPLOAD_DSYM_ONLY -eq 1 ]; then\nif [ -e $DSYM_SYMBOL_ZIP_FILE ]; then\nrm -f $DSYM_SYMBOL_ZIP_FILE\nfi\n# 如果只上传dSYM，直接压缩dSYM目录\nzip -r -j $DSYM_SYMBOL_ZIP_FILE $dsymFile -x *.plist\nelse\n# 使用符号表工具来生成Symbol文件\ndSYMParse $dsymFile $DSYM_SYMBOL_ZIP_FILE\nfi\n\n# 上传\ndSYMUpload $CONFIG_BUGLY_APP_ID $CONFIG_BUGLY_APP_KEY $CONFIG_BUGLY_APP_BUNDLE_IDENTIFIER $CONFIG_BUGLY_APP_VERSION $DSYM_SYMBOL_ZIP_FILE\ndone\n\nif [ $RET = \"F\" ]; then\nexitWithMessage \"No .dSYM found in ${DSYM_FOLDER}\" 0\nfi\n}\n\n# 在Xcode工程中执行\nfunction runInXcode(){\necho \"Uploading dSYM to Bugly in Xcode ...\"\n\necho \"Info.Plist : ${INFOPLIST_FILE}\"\n\nBUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' \"${INFOPLIST_FILE}\")\nBUNDLE_SHORT_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' \"${INFOPLIST_FILE}\")\n\n# 组装Bugly默认识别的版本信息(格式为CFBundleShortVersionString(CFBundleVersion), 例如: 1.0(1))\nif [ ! \"${CUSTOMIZED_APP_VERSION}\" ]; then\nBUGLY_APP_VERSION=\"${BUNDLE_SHORT_VERSION}(${BUNDLE_VERSION})\"\nelse\nBUGLY_APP_VERSION=\"${CUSTOMIZED_APP_VERSION}\"\nfi\n\necho \"--------------------------------\"\necho \"Prepare application information.\"\necho \"--------------------------------\"\n\necho \"Product Name: ${PRODUCT_NAME}\"\necho \"Bundle Identifier: ${BUNDLE_IDENTIFIER}\"\necho \"Version: ${BUNDLE_SHORT_VERSION}\"\necho \"Build: ${BUNDLE_VERSION}\"\n\necho \"Bugly App ID: ${BUGLY_APP_ID}\"\necho \"Bugly App key: ${BUGLY_APP_KEY}\"\necho \"Bugly App Version: ${BUGLY_APP_VERSION}\"\n\necho \"--------------------------------\"\necho \"Check the arguments ...\"\n\n##检查模拟器编译是否允许上传符号\nif [ \"$EFFECTIVE_PLATFORM_NAME\" == \"-iphonesimulator\" ]; then\nif [ $UPLOAD_SIMULATOR_SYMBOLS -eq 0 ]; then\nexitWithMessage \"Warning: Build for simulator and skipping to upload. \\nYou can modify 'UPLOAD_SIMULATOR_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n##检查是否是Release模式编译\nif [ \"${CONFIGURATION=}\" == \"Debug\" ]; then\nif [ $UPLOAD_DEBUG_SYMBOLS -eq 0 ]; then\nexitWithMessage \"Warning: Build for debug mode and skipping to upload. \\nYou can modify 'UPLOAD_DEBUG_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n##检查是否Archive操作\nif [ $UPLOAD_ARCHIVE_ONLY -eq 1 ]; then\nif [[ \"$TARGET_BUILD_DIR\" == *\"/Archive\"* ]]; then\necho \"Archive the package\"\nelse\nexitWithMessage \"Warning: Build for NOT Archive mode and skipping to upload. \\nYou can modify 'UPLOAD_ARCHIVE_ONLY' to 0 in the script.\" 0\nfi\nfi\n\n#\nrun ${BUGLY_APP_ID} ${BUGLY_APP_KEY} ${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION} ${DWARF_DSYM_FOLDER_PATH} ${BUILD_DIR}/BuglySymbolTemp ${UPLOAD_DSYM_ONLY}\n}\n\n# 根据Xcode的环境变量判断是否处于Xcode环境\nINFO_PLIST_FILE=\"${INFOPLIST_FILE}\"\n\nBuildInXcode=\"F\"\nif [ -f \"${INFO_PLIST_FILE}\" ]; then\nBuildInXcode=\"T\"\nfi\n\nif [ $BuildInXcode = \"T\" ]; then\nrunInXcode\nelse\necho \"\\nUsage: dSYMUpload.sh <bugly_app_id> <bugly_app_key> <app_bundle_identifier> <app_version> <dSYM_src_dir> <bSYMBOL_dest_dir> [upload_dsym_only]\\n\"\n# 你可以在此处直接设置BuglyAppID和BuglyAppKey，排除不常变参数的输入\nBUGLY_APP_ID=\"$1\"\nBUGLY_APP_KEY=\"$2\"\nBUNDLE_IDENTIFIER=\"$3\"\nBUGLY_APP_VERSION=\"$4\"\nDWARF_DSYM_FOLDER_PATH=\"$5\"\nSYMBOL_OUTPUT_PATH=\"$6\"\nUPLOAD_DSYM_ONLY=$7\nrun ${BUGLY_APP_ID} ${BUGLY_APP_KEY} ${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION} ${DWARF_DSYM_FOLDER_PATH} ${SYMBOL_OUTPUT_PATH} ${UPLOAD_DSYM_ONLY}\nfi\n";
 		};
-		59B8B3C98AFD29A5CC349204 /* [CP] Copy Pods Resources */ = {
+		603EFA62B8C72333C6C6D91C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -5071,6 +5080,7 @@
 				EE5E00C423274FEB00655654 /* YXDataSituationView.m in Sources */,
 				EE5E0178232754FA00655654 /* JPushManager.m in Sources */,
 				EE5E00B123274FEB00655654 /* YXMissonTableViewCell.m in Sources */,
+				EE7E1D062363678E00600A88 /* YXQuestionFactory.swift in Sources */,
 				EE5E00FD23274FEC00655654 /* YXLogoutModel.m in Sources */,
 				EE5EFCD623274E5500655654 /* YXUserModel.m in Sources */,
 				EE5E00F523274FEC00655654 /* YXPersonalCenterCellModel.m in Sources */,
@@ -5209,6 +5219,7 @@
 				EE5EFCDA23274E5500655654 /* YXNoResourceView.m in Sources */,
 				EE5EFC5323274BBB00655654 /* YXConfigBookModel.m in Sources */,
 				EE5E00FE23274FEC00655654 /* YXPersonalBindModel.m in Sources */,
+				EE7E1D0A236367A000600A88 /* YXExerciseHeaderView.swift in Sources */,
 				EE5EFCE723274E5500655654 /* YXCustomButton.m in Sources */,
 				EE5EFD6423274F0900655654 /* YXDescoverBaseCell.m in Sources */,
 				EE54F7CE2362AA3100EC605A /* YXExerciseFactory.swift in Sources */,
@@ -5552,6 +5563,7 @@
 				EE5E00B923274FEB00655654 /* YXBookMaterialModel.m in Sources */,
 				EE5E00E123274FEC00655654 /* FBYLineGraphBaseView.m in Sources */,
 				EE5EF21323273BAE00655654 /* NSData+YR.m in Sources */,
+				EE7E1D082363679500600A88 /* YXExerciseConfig.swift in Sources */,
 				EE5E00E423274FEC00655654 /* YXNNCareerView.m in Sources */,
 				EE5E0254232756C100655654 /* XLineChartItem.m in Sources */,
 				EE5E008D23274FEB00655654 /* YXCalendarMonthSummaryView.m in Sources */,
@@ -5703,10 +5715,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
-				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -5741,10 +5750,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
-				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";

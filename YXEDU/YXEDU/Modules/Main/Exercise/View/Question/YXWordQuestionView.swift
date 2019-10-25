@@ -16,3 +16,6 @@ class YXWordQuestionView: YXBaseQuestionView {
         self.initTitleLabel()
     }
 }
+
+
+

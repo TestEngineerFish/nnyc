@@ -373,7 +373,7 @@
     [self.headerView animateSwitch:NO];
 }
 - (void)refresh {
-    [self showLoadingView];
+//    [self showLoadingView];
     [self pullDownRefreshData];
 }
 
@@ -470,6 +470,11 @@
 
 // 开始答题
 - (void)beginReciteBtnClicked:(id)sender {
+    
+    YXExerciseViewController *exerciseVC = [[YXExerciseViewController alloc] init];
+    [self.navigationController pushViewController:exerciseVC animated:YES];
+    
+    return;
     //有待复习的单词
     if ([self.mainModel.noteIndex.reviewPlan integerValue]) {
         [self beginToStudy:DOMAIN_REVIEWDATA];

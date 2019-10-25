@@ -11,5 +11,8 @@ import UIKit
 class YXWordExerciseModel: NSObject {
     var type: YXExerciseType = .none
     
-    
+    init(_ type: YXExerciseType = .none) {
+        super.init()
+        self.type = type
+    }
 }
