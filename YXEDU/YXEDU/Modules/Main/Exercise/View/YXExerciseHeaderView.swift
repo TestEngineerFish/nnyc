@@ -13,6 +13,7 @@ import UIKit
 class YXExerciseHeaderView: UIView {
     
     var backEvent: (() -> Void)?
+    var switchEvent: (() -> Void)?
     
     var learningProgress: String? {
         didSet {
@@ -29,6 +30,7 @@ class YXExerciseHeaderView: UIView {
 
     //MARK: - 私有属性
     private var backButton: UIButton = UIButton()
+    private var switchButton: UIButton = UIButton()
     
     private var learningLabel: UILabel = UILabel()
     private var reviewLabel: UILabel = UILabel()
@@ -48,6 +50,7 @@ class YXExerciseHeaderView: UIView {
     
     func createSubviews() {
         self.addSubview(backButton)
+        self.addSubview(switchButton)
         self.addSubview(learningLabel)
         self.addSubview(reviewLabel)
         self.addSubview(learningProgressLabel)
@@ -59,6 +62,13 @@ class YXExerciseHeaderView: UIView {
         
         self.backButton.setBackgroundImage(UIImage(named: "exercise_quit"), for: .normal)
         self.backButton.addTarget(self, action: #selector(clickBackButton), for: .touchUpInside)
+        
+        
+        self.switchButton.setTitle("切换题目", for: .normal)
+        self.switchButton.setTitleColor(UIColor.black3, for: .normal)
+        self.switchButton.setTitleColor(UIColor.black2, for: .highlighted)
+        self.switchButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 12)
+        self.switchButton.addTarget(self, action: #selector(clickSwitchButton), for: .touchUpInside)
         
         
         self.learningLabel.text = "学习"
@@ -89,6 +99,12 @@ class YXExerciseHeaderView: UIView {
             make.left.equalTo(20)
             make.width.equalTo(22)
             make.height.equalTo(25)
+        }
+        
+        self.switchButton.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalTo(49)
+            make.height.equalTo(17)
         }
         
         self.learningLabel.snp.makeConstraints { (make) in
@@ -124,5 +140,9 @@ class YXExerciseHeaderView: UIView {
     
     @objc func clickBackButton() {
         self.backEvent?()
+    }
+    
+    @objc func clickSwitchButton() {
+        self.switchEvent?()
     }
 }

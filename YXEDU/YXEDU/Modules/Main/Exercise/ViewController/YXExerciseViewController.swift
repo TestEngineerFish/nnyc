@@ -24,27 +24,25 @@ protocol YXAnswerEventProtocol {
     func clickWordButton(_ button: UIButton)
 }
 
-/// 练习控制器
-class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol, YXAnswerEventProtocol {
+/// 练习模块，主控制器
+class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
     
     
     // 数据管理器
     var dataManager: YXExerciseDataManager = YXExerciseDataManager()
-
-
-    var currentExerciseView: YXBaseExerciseView = YXBaseExerciseView()
-    var nextExerciseView: YXBaseExerciseView = YXBaseExerciseView()
     
+    /// 学习进度管理器
+    var progressManager: YXExcerciseProgressManager = YXExcerciseProgressManager()
+    
+
+    var exerciseViewArray: [YXExerciseView] = []
     
     
     // 顶部view
     private var headerView: YXExerciseHeaderView = YXExerciseHeaderView()
+    
+    // 底部view
     private var bottomView: YXExerciseBottomView = YXExerciseBottomView()
-    
-    
-    private var contentScrollView: UIScrollView = UIScrollView()
-
-    private var questionView = YXQuestionView()
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,81 +60,105 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol, YXA
         
         self.createSubviews()
         self.bindProperty()
-        
-        currentExerciseView.exerciseModel = YXWordExerciseModel(.lookWordChooseImage)
-
-        contentScrollView.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapView))
-        contentScrollView.addGestureRecognizer(tap)
-        contentScrollView.backgroundColor = UIColor.white
+        self.startStudy()
     }
 
-    @objc private func tapView() {
-        // ===== 数据准备 ====
-        var charModelsArray = [YXCharacterModel]()
-        for index in 0..<2 {
-            let model = YXCharacterModel("sam", isBlank: index%2>0)
-            charModelsArray.append(model)
-        }
-        let wordArray = ["e", "f", "u", "pdsss", "wddesa", "v", "m", "x"]
-
-        // ==== 添加问题根视图 ====
-        let questionView = YXQuestionView()
-        questionView.delegate = self
-        self.contentScrollView.addSubview(questionView)
-        questionView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(kNavHeight)
-            make.width.equalTo(332)
-            make.height.equalTo(160)
-        }
-
-        // ==== 添加子视图 ====
-        let charView = YXQuestionSpellView(charModelsArray)
-        questionView.addCustomViews([charView])
-
-        // ==== 添加选择视图 ====
-        let answerView = YXAnswerSelectLettersView(wordArray)
-        answerView.delegate = self
-        kWindow.addSubview(answerView)
-        answerView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.width.equalTo(270)
-            make.height.equalTo(200)
-            make.bottom.equalToSuperview().offset(-kSafeBottomMargin)
-        }
-    }
-    
-    
-    func createSubviews() {
+   
+    private func createSubviews() {
         self.view.addSubview(headerView)
-        self.view.addSubview(contentScrollView)
         self.view.addSubview(bottomView)
-        
-        self.contentScrollView.addSubview(currentExerciseView)
     }
     
     
-    func bindProperty() {
-        
+    private func bindProperty() {
         self.view.backgroundColor = UIColor.blue
-        
         
         self.headerView.backEvent = {[weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
+        self.headerView.switchEvent = {[weak self] in
+            self?.switchExerciseView()
+        }
+                
         self.bottomView.tipsEvent = {//[weak self] in
             print("提示点击事件")
         }
-        
-        
-        contentScrollView.backgroundColor = UIColor.yellow.withAlphaComponent(0.5)
-        contentScrollView.frame = CGRect(x: 0, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
-        contentScrollView.contentSize = contentScrollView.bounds.size
-        
-        
+
+    }
+    
+    
+    /// 开始学习
+    private func startStudy() {
+        // 存在学完未上报的关卡
+        if YXExcerciseProgressManager.isExistUnReport() {
+            // 先上报关卡
+            dataManager.reportUnit(test: "") {[weak self] (result, msg) in
+                guard let self = self else { return }
+                if result {
+                    self.fetchExerciseData()
+                } else {//
+                    YXUtils.showHUD(self.view, title: "上报失败")
+                }
+            }
+        } else if YXExcerciseProgressManager.isExistUnCompletion() {// 存在未学完的关卡
+            dataManager.fetchUnCompletionExerciseModels()
+            self.switchExerciseView()
+        } else {
+            self.fetchExerciseData()
+        }
         
     }
+    
+    
+    // 加载当天的学习数据
+    func fetchExerciseData() {
+        dataManager.fetchTodayExerciseModels { [weak self] (result, msg) in
+            guard let self = self else { return }
+            if result {
+                self.switchExerciseView()
+            } else {//
+                YXUtils.showHUD(self.view, title: "加载数据失败")
+            }
+        }
+    }
+    
+    
+    /// 切换题目
+    func switchExerciseView() {
+        // 当前关卡是否学完
+        if YXExcerciseProgressManager.isCompletion() {
+            print("显示打卡页面")
+            return
+        }
+        
+        if let model = dataManager.fetchOneExerciseModels() {
+            let exerciseView = YXExerciseViewFactory.buildExerciseView(exerciseModel: model)
+            loadExerciseView(exerciseView: exerciseView)
+        }
+        
+    }
+    
+    
+    /// 加载一个练习
+    /// - Parameter exerciseView: 新的练习view
+    func loadExerciseView(exerciseView: YXExerciseView) {
+        // 是否第一次进来
+        var isFirst = true
+        if let ceview = exerciseViewArray.first {
+            exerciseViewArray.removeFirst()
+            ceview.animateRemove()
+            isFirst = false
+        }
+        
+        exerciseViewArray.append(exerciseView)
+        self.view.addSubview(exerciseView)
+        
+        exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
+        exerciseView.contentSize = CGSize(width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
+        exerciseView.animateAdmission(isFirst, nil)
+        
+    }
+    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -149,29 +171,22 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol, YXA
             
         }
         
-        currentExerciseView.snp.makeConstraints { (make) in
-            make.top.equalTo(0)
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(0)
-        }
-        
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.height.equalTo(18)
             make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
         }
-        
-        
     }
 
     //MARK: YXQuestionViewConstraintsProtocol
     func updateHeight(_ height: CGFloat) {
-        self.questionView.snp.updateConstraints { (make) in
-            make.height.equalTo(height)
-        }
+//        self.questionView.snp.updateConstraints { (make) in
+//            make.height.equalTo(height)
+//        }
     }
 
-    //MARK: YXAnswerEventProtocol
+
+        //MARK: YXAnswerEventProtocol
     func clickWordButton(_ button: UIButton) {
         button.isSelected = !button.isSelected
         button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white

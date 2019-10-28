@@ -13,7 +13,7 @@ class YXExcerciseProgressManager: NSObject {
     
     /// 是否存在学完，未上报的关卡
     class func isExistUnReport() -> Bool {
-        return false
+        return true
     }
     
     /// 是否存在未学完的关卡

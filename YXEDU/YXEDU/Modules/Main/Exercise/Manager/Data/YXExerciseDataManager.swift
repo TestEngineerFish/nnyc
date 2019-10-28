@@ -18,14 +18,25 @@ class YXExerciseDataManager: NSObject {
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        exerciseModelArray = [YXWordExerciseModel(.lookWordChooseImage),
-        YXWordExerciseModel(.lookExampleChooseImage)]
-        
+        exerciseModelArray = [
+            YXWordExerciseModel(.lookWordChooseImage),
+            YXWordExerciseModel(.lookExampleChooseImage)
+        ]
         completion?(true, nil)
     }
     
     
-    /// 获取一个练习对象
+    
+    /// 加载本地未学完的关卡数据
+    func fetchUnCompletionExerciseModels() {
+        exerciseModelArray = [
+            YXWordExerciseModel(.lookWordChooseImage),
+            YXWordExerciseModel(.lookExampleChooseImage)
+        ]
+    }
+    
+    
+    /// 从当前关卡数据中，获取一个练习数据对象
     func fetchOneExerciseModels() -> YXWordExerciseModel? {
         return exerciseModelArray.first
     }

@@ -31,7 +31,6 @@ class YXExerciseBottomView: UIView {
     }
     
     
-    
     func createSubviews() {
         self.addSubview(iconButton)
         self.addSubview(tipsButton)
@@ -45,6 +44,7 @@ class YXExerciseBottomView: UIView {
     
         self.tipsButton.setTitle("提示一下", for: .normal)
         self.tipsButton.setTitleColor(UIColor.black3, for: .normal)
+        self.tipsButton.setTitleColor(UIColor.black2, for: .highlighted)
         self.tipsButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 12)
         self.tipsButton.addTarget(self, action: #selector(clickTipsButton), for: .touchUpInside)
 
@@ -66,7 +66,6 @@ class YXExerciseBottomView: UIView {
             make.width.equalTo(49)
             make.height.equalTo(17)
         }
-
         
     }
     
