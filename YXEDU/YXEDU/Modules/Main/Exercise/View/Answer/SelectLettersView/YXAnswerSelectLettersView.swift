@@ -17,6 +17,7 @@ class YXAnswerSelectLettersView: UIView {
     var verItemNum  = 3
     var wordsArray  = [String]()
     var buttonArray2 = [[UIButton]]()
+    var delegate: YXAnswerEventProtocol?
 
     init(_ wordsArray: [String]) {
         super.init(frame: CGRect.zero)
@@ -54,7 +55,10 @@ class YXAnswerSelectLettersView: UIView {
             var maxX = CGFloat(0)
             for button in buttonArray {
                 cellView.addSubview(button)
-                let width = CGFloat(button.tag) * itemSize
+                let width: CGFloat = {
+                    let w = CGFloat(button.tag) * itemSize
+                    return button.tag > 1 ? w + margin : w
+                }()
                 button.snp.makeConstraints { (make) in
                     make.left.equalTo(maxX)
                     make.top.equalToSuperview()
@@ -110,10 +114,17 @@ class YXAnswerSelectLettersView: UIView {
         button.setTitle(word, for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.setTitleColor(UIColor.white, for: .selected)
+        button.addTarget(self, action: #selector(clickButton(_:)), for: .touchUpInside)
         if word.count > 4 {
             button.tag = 2
         }
         return button
+    }
+
+    // TODO: Event
+
+    @objc func clickButton(_ button: UIButton) {
+        delegate?.clickWordButton(button)
     }
 
     // TODO: Tools

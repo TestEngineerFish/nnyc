@@ -13,8 +13,19 @@ protocol YXViewConstraintsProtocol {
     func updateHeight(_ height: CGFloat)
 }
 
+protocol YXQuestionEventProtocol {
+    func clickSpellView(_ word: String)// 等model确定了,替换成对应的model
+    /// 通过按钮的选中效果来播放和暂停
+    func clickAudioButton(_ button: UIButton)
+}
+
+protocol YXAnswerEventProtocol {
+    /// 点击答题区的按钮事件
+    func clickWordButton(_ button: UIButton)
+}
+
 /// 练习控制器
-class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
+class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol, YXAnswerEventProtocol {
     
     
     // 数据管理器
@@ -67,10 +78,11 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
             let model = YXCharacterModel("sam", isBlank: index%2>0)
             charModelsArray.append(model)
         }
-        let wordArray = ["e", "f", "u", "p", "w", "v", "m", "x"]
+        let wordArray = ["e", "f", "u", "pdsss", "wddesa", "v", "m", "x"]
 
         // ==== 添加问题根视图 ====
         let questionView = YXQuestionView()
+        questionView.delegate = self
         self.contentScrollView.addSubview(questionView)
         questionView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -85,6 +97,7 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
 
         // ==== 添加选择视图 ====
         let answerView = YXAnswerSelectLettersView(wordArray)
+        answerView.delegate = self
         kWindow.addSubview(answerView)
         answerView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -156,6 +169,12 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
         self.questionView.snp.updateConstraints { (make) in
             make.height.equalTo(height)
         }
+    }
+
+    //MARK: YXAnswerEventProtocol
+    func clickWordButton(_ button: UIButton) {
+        button.isSelected = !button.isSelected
+        button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
     }
 
 }

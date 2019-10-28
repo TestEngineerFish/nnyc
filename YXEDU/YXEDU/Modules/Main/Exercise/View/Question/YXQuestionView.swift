@@ -8,12 +8,6 @@
 
 import UIKit
 
-protocol YXQuestionEventProtocol {
-    func clickSpellView(_ word: String)// 等model确定了,替换成对应的model
-    /// 通过按钮的选中效果来播放和暂停
-    func clickAudioButton(_ button: UIButton)
-}
-
 class YXQuestionView: UIView {
     var contentView  = UIView()
     var contentViewH = CGFloat(0)
