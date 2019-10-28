@@ -280,6 +280,9 @@
                                                                 <real key="value" value="0.69999999999999996"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="startExercise:" destination="nnd-vG-UVX" eventType="touchUpInside" id="JBh-gf-B1W"/>
+                                                        </connections>
                                                     </button>
                                                     <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spb-lT-D93" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                                                         <rect key="frame" x="10" y="277" width="315" height="95"/>

@@ -37,6 +37,7 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
         //        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
     }
@@ -66,7 +67,7 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
 
         // ==== 添加问题根视图 ====
         let questionView = YXQuestionView()
-        kWindow.addSubview(questionView)
+        self.contentScrollView.addSubview(questionView)
         questionView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(kNavHeight)
