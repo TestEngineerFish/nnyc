@@ -24,14 +24,8 @@ class YXExerciseHeaderView: UIView {
         }
     }
     
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
+
+    //MARK: - 私有属性
     private var backButton: UIButton = UIButton()
     
     private var learningLabel: UILabel = UILabel()
@@ -59,9 +53,9 @@ class YXExerciseHeaderView: UIView {
     }
     
     func bindProperty() {
-        self.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+        self.backgroundColor = UIColor.white
         
-        self.backButton.setBackgroundImage(UIImage.imageWithColor(UIColor.red), for: .normal)
+        self.backButton.setBackgroundImage(UIImage(named: "exercise_quit"), for: .normal)
         self.backButton.addTarget(self, action: #selector(clickBackButton), for: .touchUpInside)
         
         
@@ -69,8 +63,18 @@ class YXExerciseHeaderView: UIView {
         self.learningLabel.textColor = UIColor.black3
         self.learningLabel.font = UIFont.regularFont(ofSize: 10)
         
-        self.reviewLabel.text = "学习"
-//        self.reviewLabel.textColor = UIColor.black3
+        self.reviewLabel.text = "复习"
+        self.reviewLabel.textColor = UIColor.black3
+        self.reviewLabel.font = UIFont.regularFont(ofSize: 10)
+        
+        
+        self.learningProgressLabel.text = "1/20"
+        self.learningProgressLabel.textColor = UIColor.orange1
+        self.learningProgressLabel.font = UIFont.regularFont(ofSize: 10)
+        
+        self.reviewProgressLabel.text = "1/20"
+        self.reviewProgressLabel.textColor = UIColor.orange1
+        self.reviewProgressLabel.font = UIFont.regularFont(ofSize: 10)
         
     }
     
@@ -82,8 +86,37 @@ class YXExerciseHeaderView: UIView {
             make.centerY.equalToSuperview()
             make.left.equalTo(20)
             make.width.equalTo(22)
-            make.height.equalTo(24)
+            make.height.equalTo(25)
         }
+        
+        self.learningLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(0)
+            make.right.equalTo(-43)
+            make.width.equalTo(21)
+            make.height.equalTo(14)
+        }
+        self.reviewLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(-43)
+            make.width.equalTo(21)
+            make.height.equalTo(14)
+            make.bottom.equalTo(0)
+        }
+        
+        self.learningProgressLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(0)
+            make.left.equalTo(learningLabel.snp.right).offset(2)
+            make.right.equalTo(0)
+            make.height.equalTo(14)
+        }
+        
+        self.reviewProgressLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(reviewLabel.snp.right).offset(2)
+            make.right.equalTo(0)
+            make.height.equalTo(14)
+            make.bottom.equalTo(0)
+        }
+        
+        
     }
     
     

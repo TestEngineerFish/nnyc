@@ -28,7 +28,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     @IBAction func startExercise(_ sender: UIButton) {
         let vc = YXExerciseViewController()
-        self.tabBarController?.hidesBottomBarWhenPushed = true
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
