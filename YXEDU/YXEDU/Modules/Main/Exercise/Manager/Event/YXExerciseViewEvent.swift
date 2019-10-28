@@ -1,5 +1,5 @@
 //
-//  YXExerciseViewLayout.swift
+//  YXExerciseEvent.swift
 //  YXEDU
 //
 //  Created by sunwu on 2019/10/25.
@@ -8,7 +8,8 @@
 
 import UIKit
 
-protocol YXExerciseViewLayout {
+@objc protocol YXExerciseEvent {
     
-    func layout()
+    
+    @objc func testEvent()
 }

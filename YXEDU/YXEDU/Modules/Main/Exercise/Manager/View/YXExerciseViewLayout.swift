@@ -1,5 +1,5 @@
 //
-//  YXQuestionFactory.swift
+//  YXExerciseViewLayout.swift
 //  YXEDU
 //
 //  Created by sunwu on 2019/10/25.
@@ -8,6 +8,11 @@
 
 import UIKit
 
-class YXQuestionFactory: NSObject {
 
+
+
+
+protocol YXExerciseViewLayout {
+    
+    func layout()
 }

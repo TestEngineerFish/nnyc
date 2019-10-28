@@ -1,5 +1,5 @@
 //
-//  YXExerciseEvent.swift
+//  YXQuestionFactory.swift
 //  YXEDU
 //
 //  Created by sunwu on 2019/10/25.
@@ -8,6 +8,8 @@
 
 import UIKit
 
-@objc protocol YXExerciseEvent {
-    func event()
+
+/// 问题子View 工厂
+class YXQuestionViewFactory: NSObject {
+
 }

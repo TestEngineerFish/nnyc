@@ -12,16 +12,18 @@ import UIKit
 class YXExerciseViewController: UIViewController {
     
     
-    var exerciseModelArray: [YXWordExerciseModel] = [YXWordExerciseModel(.lookWordChooseImage),
-                                                     YXWordExerciseModel(.lookExampleChooseImage)]
+    // 数据管理器
+    var dataManager: YXExerciseDataManager = YXExerciseDataManager()
 
-    
-    
+
     var currentExerciseView: YXBaseExerciseView = YXBaseExerciseView()
     var nextExerciseView: YXBaseExerciseView = YXBaseExerciseView()
     
     
+    
+    // 顶部view
     private var headerView: YXExerciseHeaderView = YXExerciseHeaderView()
+    
     
     private var contentScrollView: UIScrollView = UIScrollView()
     

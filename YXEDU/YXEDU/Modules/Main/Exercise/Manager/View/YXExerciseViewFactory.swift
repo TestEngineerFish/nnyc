@@ -8,7 +8,9 @@
 
 import UIKit
 
-struct YXExerciseFactory {
+
+/// 练习子界面工厂
+struct YXExerciseViewFactory {
     
     static func buildExerciseView(type: YXExerciseType) -> YXBaseExerciseView {
         
