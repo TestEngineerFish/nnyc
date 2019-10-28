@@ -8,8 +8,13 @@
 
 import UIKit
 
+/// 更新View的约束
+protocol YXViewConstraintsProtocol {
+    func updateHeight(_ height: CGFloat)
+}
+
 /// 练习控制器
-class YXExerciseViewController: UIViewController {
+class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
     
     
     // 数据管理器
@@ -26,12 +31,13 @@ class YXExerciseViewController: UIViewController {
     
     
     private var contentScrollView: UIScrollView = UIScrollView()
-    
+
+    private var questionView = YXQuestionView()
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        //        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
     }
     
@@ -56,24 +62,31 @@ class YXExerciseViewController: UIViewController {
             let model = YXCharacterModel("sam", isBlank: index%2>0)
             charModelsArray.append(model)
         }
+        let wordArray = ["e", "f", "u", "p", "w", "v", "m", "x"]
 
-        // ==== 添加问题跟视图 ====
-        let view = YXQuestionView()
-        kWindow.addSubview(view)
-        view.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
+        // ==== 添加问题根视图 ====
+        let questionView = YXQuestionView()
+        kWindow.addSubview(questionView)
+        questionView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(kNavHeight)
             make.width.equalTo(332)
             make.height.equalTo(160)
         }
 
         // ==== 添加子视图 ====
-        let charView = YXQuestionSpellView()
-        charView.createUI(charModelsArray)
+        let charView = YXQuestionSpellView(charModelsArray)
+        questionView.addCustomViews([charView])
 
-        let height = view.addCustomViews([charView])
-        view.snp.updateConstraints { (make) in
-            make.height.equalTo(height)
-               }
+        // ==== 添加选择视图 ====
+        let answerView = YXAnswerSelectLettersView(wordArray)
+        kWindow.addSubview(answerView)
+        answerView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(270)
+            make.height.equalTo(200)
+            make.bottom.equalToSuperview().offset(-kSafeBottomMargin)
+        }
     }
     
     
@@ -121,6 +134,13 @@ class YXExerciseViewController: UIViewController {
             make.bottom.equalTo(0)
         }
         
+    }
+
+    //MARK: YXQuestionViewConstraintsProtocol
+    func updateHeight(_ height: CGFloat) {
+        self.questionView.snp.updateConstraints { (make) in
+            make.height.equalTo(height)
+        }
     }
 
 }

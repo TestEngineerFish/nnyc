@@ -22,8 +22,24 @@ class YXQuestionSpellView: UIView {
     let margin = CGFloat(10)
     let charH  = CGFloat(30)
     var maxX = CGFloat(0)
+    var charModelsArray = [YXCharacterModel]()
 
-    func createUI(_ charModelsArray: [YXCharacterModel]) {
+    init(_ charModelsArray: [YXCharacterModel]) {
+        super.init(frame: CGRect.zero)
+        self.bindData(charModelsArray)
+        let width = self.createUI()
+        self.frame = CGRect(x: 0, y: 0, width: width, height: charH)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func bindData(_ charModelsArray: [YXCharacterModel]) {
+        self.charModelsArray = charModelsArray
+    }
+
+    func createUI() -> CGFloat {
         maxX = 0
         for model in charModelsArray {
             let wordWidth = model.character.textWidth(font: UIFont.systemFont(ofSize: 20), height: charH) + margin
@@ -34,6 +50,6 @@ class YXQuestionSpellView: UIView {
             self.addSubview(wordView)
             maxX += wordWidth + margin
         }
-        self.frame = CGRect(x: 0, y: 0, width: maxX - margin, height: charH)
+        return maxX - margin
     }
 }

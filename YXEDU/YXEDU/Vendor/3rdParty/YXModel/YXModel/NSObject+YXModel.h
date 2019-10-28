@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
      @end
  
  */
-@interface NSObject (YYModel)
+@interface NSObject (YXModel)
 
 /**
  Creates and returns a new instance of the receiver from a json.
@@ -260,7 +260,7 @@ NS_ASSUME_NONNULL_BEGIN
  more method in this protocol to change the default key-value transform process.
  There's no need to add '<YYModel>' to your class header.
  */
-@protocol YYModel <NSObject>
+@protocol YXModel <NSObject>
 @optional
 
 /**

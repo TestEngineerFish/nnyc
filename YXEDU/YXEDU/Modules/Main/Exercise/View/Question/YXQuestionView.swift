@@ -9,7 +9,9 @@
 import UIKit
 
 protocol YXQuestionEventProtocol {
-//    @objc func clickSpellView()
+    func clickSpellView(_ word: String)// 等model确定了,替换成对应的model
+    /// 通过按钮的选中效果来播放和暂停
+    func clickAudioButton(_ button: UIButton)
 }
 
 class YXQuestionView: UIView {
@@ -18,6 +20,7 @@ class YXQuestionView: UIView {
     var margin       = CGFloat(5)
     let marginTop    = CGFloat(54)
     let marginBottom = CGFloat(54)
+    var delegate: YXViewConstraintsProtocol?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,8 +44,7 @@ class YXQuestionView: UIView {
     }
 
     /// 动态添加自定自定义的view,添加后记得更新约束
-    /// - returns: 返回最终内容高度
-    func addCustomViews(_ subviews: [UIView]) -> CGFloat {
+    func addCustomViews(_ subviews: [UIView]) {
         for subview in subviews {
             self.contentView.addSubview(subview)
             let subviewH = subview.bounds.height
@@ -59,10 +61,8 @@ class YXQuestionView: UIView {
         contentView.snp.updateConstraints { (make) in
             make.height.equalTo(maxHeight)
         }
-        return maxHeight + marginTop + marginBottom
-    }
-
-    private func bindProperty() {
-        //  设置阴影
+        // 更新高度
+        let finalHeight = maxHeight + marginTop + marginBottom
+        delegate?.updateHeight(finalHeight)
     }
 }

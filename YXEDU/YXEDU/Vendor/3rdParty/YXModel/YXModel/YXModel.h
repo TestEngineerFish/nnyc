@@ -1,6 +1,6 @@
 //
-//  YYModel.h
-//  YYModel <https://github.com/ibireme/YYModel>
+//  YXModel.h
+//  YXModel <https://github.com/ibireme/YYModel>
 //
 //  Created by ibireme on 15/5/10.
 //  Copyright (c) 2015 ibireme.
@@ -11,12 +11,12 @@
 
 #import <Foundation/Foundation.h>
 
-#if __has_include(<YYModel/YYModel.h>)
+#if __has_include(<YXModel/YXModel.h>)
 FOUNDATION_EXPORT double YYModelVersionNumber;
 FOUNDATION_EXPORT const unsigned char YYModelVersionString[];
-#import <YYModel/NSObject+YYModel.h>
-#import <YYModel/YYClassInfo.h>
+#import <YXModel/NSObject+YXModel.h>
+#import <YXModel/YXClassInfo.h>
 #else
-#import "NSObject+YYModel.h"
+#import "NSObject+YXModel.h"
 #import "YYClassInfo.h"
 #endif

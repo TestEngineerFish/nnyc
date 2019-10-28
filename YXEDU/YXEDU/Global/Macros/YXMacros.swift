@@ -11,6 +11,26 @@ import Foundation
 public let screenWidth  = UIScreen.main.bounds.size.width
 public let screenHeight = UIScreen.main.bounds.size.height
 public let screenScale  = UIScreen.main.scale
+/// 状态栏高度
+public var kStatusBarHeight:CGFloat {
+    get {
+        return iPhoneXLater ? 44.0 : 20.0
+    }
+}
+
+/// Navigation Bar 高度
+public var kNavHeight:CGFloat {
+    get {
+        return kStatusBarHeight + 44.0
+    }
+}
+
+// TabBar 高度
+public var kTabBarHeight:CGFloat {
+    get {
+        return 49 + kSafeBottomMargin
+    }
+}
 
 /// 当前Window
 public var kWindow: UIWindow {
@@ -19,6 +39,13 @@ public var kWindow: UIWindow {
             return UIWindow(frame: CGRect.zero)
         }
         return window
+    }
+}
+
+/// 全面屏的底部安全高度
+public var kSafeBottomMargin:CGFloat {
+    get {
+        return iPhoneXLater ? 34.0 : 0.0
     }
 }
 

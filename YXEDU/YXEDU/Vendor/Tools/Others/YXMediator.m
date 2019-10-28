@@ -56,7 +56,7 @@
 - (void)configure {
     
     [[WXApiManager shared] registerWX:wechatId];
-    [[QQApiManager shared] registerQQ:qqId];
+//    [[QQApiManager shared] registerQQ:qqId];
     [NetWorkRechable shared];
     
     [[AVAudioPlayerManger shared] configuration];

@@ -6,7 +6,7 @@
 //  Copyright © 2018 shiji. All rights reserved.
 //
 #import "YXBasePickverView.h"
-#import "YYModel.h"
+#import "YXModel.h"
 #import "NSDate+Extension.h"
 
 @interface YXBasePickverView() <UIPickerViewDelegate, UIPickerViewDataSource>

@@ -7,7 +7,7 @@
 //
 
 #import "NSObject+YR.h"
-#import "YYModel.h"
+#import "YXModel.h"
 
 @implementation NSObject (YR)
 

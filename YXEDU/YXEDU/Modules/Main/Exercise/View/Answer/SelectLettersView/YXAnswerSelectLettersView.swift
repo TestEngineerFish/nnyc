@@ -8,15 +8,32 @@
 
 import UIKit
 
-class YXSelectLettersView: UIView {
+class YXAnswerSelectLettersView: UIView {
     let contentView = UIView()
 
     let itemSize    = CGFloat(60)
     let margin      = CGFloat(10)
     let horItemNum  = 4
     var verItemNum  = 3
+    var wordsArray  = [String]()
+    var buttonArray2 = [[UIButton]]()
 
-    func createUI(_ wordsArray: [String]) {
+    init(_ wordsArray: [String]) {
+        super.init(frame: CGRect.zero)
+        self.bindData(wordsArray)
+        self.createUI()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func bindData(_ wordsArray: [String]) {
+        self.wordsArray = wordsArray
+        self.createButtonArray(wordsArray)
+    }
+
+    private func createUI() {
         addSubview(contentView)
         let contentW = getContentW()
         var contentH = getContentH()//可以不用
@@ -25,7 +42,6 @@ class YXSelectLettersView: UIView {
             make.width.equalTo(contentW)
             make.height.equalTo(contentH)
         }
-        let buttonArray2 = self.createButtonArray(wordsArray)
         var maxY = CGFloat(0)
         for buttonArray in buttonArray2 {
             let cellView = UIView()
@@ -60,7 +76,8 @@ class YXSelectLettersView: UIView {
         
     }
 
-    private func createButtonArray(_ wordsArray: [String]) -> [[UIButton]] {
+    /// 根据单词数组,生成一行一组按钮的二维数组
+    private func createButtonArray(_ wordsArray: [String]) {
         var wordsBtnArray2 = Array(repeating: [UIButton](), count: 3)
         // 1、生成按钮组
         for word in wordsArray {
@@ -79,7 +96,7 @@ class YXSelectLettersView: UIView {
                 }
             }
         }
-        return wordsBtnArray2
+        self.buttonArray2 = wordsBtnArray2
     }
 
     /// 创建单词按钮
