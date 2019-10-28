@@ -12,7 +12,7 @@ import UIKit
 /// 练习子界面工厂
 struct YXExerciseViewFactory {
     
-    static func buildExerciseView(type: YXExerciseType) -> YXBaseExerciseView {
+    static func buildExerciseView(exerciseModel: YXWordExerciseModel) -> YXBaseExerciseView {
         
         return YXBaseExerciseView()
     }

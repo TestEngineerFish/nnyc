@@ -52,6 +52,10 @@ class YXExerciseHeaderView: UIView {
     
     func createSubviews() {
         self.addSubview(backButton)
+        self.addSubview(learningLabel)
+        self.addSubview(reviewLabel)
+        self.addSubview(learningProgressLabel)
+        self.addSubview(reviewProgressLabel)
     }
     
     func bindProperty() {
@@ -59,6 +63,15 @@ class YXExerciseHeaderView: UIView {
         
         self.backButton.setBackgroundImage(UIImage.imageWithColor(UIColor.red), for: .normal)
         self.backButton.addTarget(self, action: #selector(clickBackButton), for: .touchUpInside)
+        
+        
+        self.learningLabel.text = "学习"
+        self.learningLabel.textColor = UIColor.black3
+        self.learningLabel.font = UIFont.regularFont(ofSize: 10)
+        
+        self.reviewLabel.text = "学习"
+//        self.reviewLabel.textColor = UIColor.black3
+        
     }
     
     
