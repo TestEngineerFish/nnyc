@@ -41,6 +41,11 @@ enum YXExerciseType {
     case fillWordGroup                      // 词组填空（词组）
     
     case none
+    
+    
+    
+//    func buildView() -> YXExerciseView
+    
 }
 
 

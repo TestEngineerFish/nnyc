@@ -10,5 +10,7 @@ import UIKit
 
 /// 答案子View 工厂
 class YXAnswerViewFactory: NSObject {
-    
+    func buildView() {
+        
+    }
 }

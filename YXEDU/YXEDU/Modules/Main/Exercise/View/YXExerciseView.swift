@@ -8,13 +8,18 @@
 
 import UIKit
 
+protocol YXExerciseViewProtocol {
+    
+    /// 练习完成
+    /// - Parameter right: 是否答对
+    func exerciseCompletion(right: Bool)
+}
+
+
+
 /// 练习模块：内容主页面，包括题目View、答案View、TipsView
 class YXExerciseView: UIScrollView {
 
-    
-    
-    
-    
     var exerciseModel: YXWordExerciseModel?
 //    var questionView: YXExerciseQuestionView?
 //    var answerView: YXExerciseAnswerView?
@@ -64,6 +69,7 @@ class YXExerciseView: UIScrollView {
 
        // ==== 添加选择视图 ====
        let answerView = YXAnswerSelectLettersView(wordArray)
+//        answerView.delegate = self
        kWindow.addSubview(answerView)
        answerView.snp.makeConstraints { (make) in
            make.centerX.equalToSuperview()
@@ -96,9 +102,28 @@ class YXExerciseView: UIScrollView {
             self.origin.x = -screenWidth
         }) { (finish) in
             if finish {
-//                completion?()
                 self.removeFromSuperview()
             }
         }
     }
+}
+
+
+extension YXExerciseView {
+
+    //MARK: YXQuestionViewConstraintsProtocol
+    func updateHeight(_ height: CGFloat) {
+//        self.questionView.snp.updateConstraints { (make) in
+//            make.height.equalTo(height)
+//        }
+    }
+
+
+        //MARK: YXAnswerEventProtocol
+    func clickWordButton(_ button: UIButton) {
+        button.isSelected = !button.isSelected
+        button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
+    }
+
+
 }

@@ -28,9 +28,9 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     /// 对错判断
-    class func isRight() -> Bool {
-         return false
-    }
+//    class func isRight() -> Bool {
+//         return false
+//    }
     
     /// 当前关卡是否学完
     class func isCompletion() -> Bool {

@@ -8,24 +8,9 @@
 
 import UIKit
 
-/// 更新View的约束
-protocol YXViewConstraintsProtocol {
-    func updateHeight(_ height: CGFloat)
-}
-
-protocol YXQuestionEventProtocol {
-    func clickSpellView(_ word: String)// 等model确定了,替换成对应的model
-    /// 通过按钮的选中效果来播放和暂停
-    func clickAudioButton(_ button: UIButton)
-}
-
-protocol YXAnswerEventProtocol {
-    /// 点击答题区的按钮事件
-    func clickWordButton(_ button: UIButton)
-}
 
 /// 练习模块，主控制器
-class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
+class YXExerciseViewController: UIViewController {
     
     
     // 数据管理器
@@ -34,10 +19,9 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
     /// 学习进度管理器
     var progressManager: YXExcerciseProgressManager = YXExcerciseProgressManager()
     
-
-    var exerciseViewArray: [YXExerciseView] = []
-    
-    
+    // 练习view容器，用于动画切题
+    private var exerciseViewArray: [YXExerciseView] = []
+        
     // 顶部view
     private var headerView: YXExerciseHeaderView = YXExerciseHeaderView()
     
@@ -131,7 +115,12 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
         }
         
         if let model = dataManager.fetchOneExerciseModels() {
-            let exerciseView = YXExerciseViewFactory.buildExerciseView(exerciseModel: model)
+            let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
+            exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
+            exerciseView.contentSize = CGSize(width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
+            
+            exerciseView
+            
             loadExerciseView(exerciseView: exerciseView)
         }
         
@@ -149,11 +138,8 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
             isFirst = false
         }
         
-        exerciseViewArray.append(exerciseView)
         self.view.addSubview(exerciseView)
-        
-        exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
-        exerciseView.contentSize = CGSize(width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
+        exerciseViewArray.append(exerciseView)
         exerciseView.animateAdmission(isFirst, nil)
         
     }
@@ -177,18 +163,18 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
         }
     }
 
-    //MARK: YXQuestionViewConstraintsProtocol
-    func updateHeight(_ height: CGFloat) {
-//        self.questionView.snp.updateConstraints { (make) in
-//            make.height.equalTo(height)
-//        }
-    }
-
-
-        //MARK: YXAnswerEventProtocol
-    func clickWordButton(_ button: UIButton) {
-        button.isSelected = !button.isSelected
-        button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
-    }
+//    //MARK: YXQuestionViewConstraintsProtocol
+//    func updateHeight(_ height: CGFloat) {
+////        self.questionView.snp.updateConstraints { (make) in
+////            make.height.equalTo(height)
+////        }
+//    }
+//
+//
+//        //MARK: YXAnswerEventProtocol
+//    func clickWordButton(_ button: UIButton) {
+//        button.isSelected = !button.isSelected
+//        button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
+//    }
 
 }
