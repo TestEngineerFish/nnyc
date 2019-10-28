@@ -8,8 +8,8 @@
 
 import UIKit
 
-/// 练习页面
-class YXBaseExerciseView: UIView {
+/// 练习模块：题目和答案View
+class YXBaseExerciseView: UIScrollView {
     
     
 

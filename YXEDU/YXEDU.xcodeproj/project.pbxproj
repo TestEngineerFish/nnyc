@@ -2127,8 +2127,8 @@
 			children = (
 				EE54F7BE2362AA3100EC605A /* Question */,
 				EE54F7B72362AA3100EC605A /* Answer */,
-				EE6FB0B32366E95E00E96015 /* YXExerciseBottomView.swift */,
 				EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */,
+				EE6FB0B32366E95E00E96015 /* YXExerciseBottomView.swift */,
 				EE54F7CA2362AA3100EC605A /* YXBaseExerciseView.swift */,
 			);
 			path = View;

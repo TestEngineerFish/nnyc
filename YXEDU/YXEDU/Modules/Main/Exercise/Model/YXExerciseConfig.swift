@@ -17,5 +17,7 @@ struct YXExerciseConfig {
     
     static let answerViewBottom: CGFloat = 86
     
-    static let contentViewTop:CGFloat = 45 + (iPhoneXLater ? 34 : 0)
+    static let contentViewTop: CGFloat = 45 + (iPhoneXLater ? 34 : 0)
+    
+    static let bottomViewBottom: CGFloat = -19 - (iPhoneXLater ? 34 : 0)
 }

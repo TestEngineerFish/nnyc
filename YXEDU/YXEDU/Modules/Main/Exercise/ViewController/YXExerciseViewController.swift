@@ -28,6 +28,7 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
     
     // 顶部view
     private var headerView: YXExerciseHeaderView = YXExerciseHeaderView()
+    private var bottomView: YXExerciseBottomView = YXExerciseBottomView()
     
     
     private var contentScrollView: UIScrollView = UIScrollView()
@@ -97,6 +98,7 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
     func createSubviews() {
         self.view.addSubview(headerView)
         self.view.addSubview(contentScrollView)
+        self.view.addSubview(bottomView)
         
         self.contentScrollView.addSubview(currentExerciseView)
     }
@@ -110,7 +112,9 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
         self.headerView.backEvent = {[weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
-        
+        self.bottomView.tipsEvent = {//[weak self] in
+            print("提示点击事件")
+        }
         
         
         contentScrollView.backgroundColor = UIColor.yellow.withAlphaComponent(0.5)
@@ -137,6 +141,13 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
             make.left.right.equalToSuperview()
             make.bottom.equalTo(0)
         }
+        
+        self.bottomView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.height.equalTo(18)
+            make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
+        }
+        
         
     }
 
