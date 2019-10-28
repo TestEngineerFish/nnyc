@@ -27,7 +27,7 @@
 #import "YXModelArchiverManager.h"
 #import "YXComHttpService.h"
 #import "SJCall.h"
-#import "AppDelegate.h"
+// #import "AppDelegate.h"
 #import "Growing.h"
 @interface YXMediator ()
 @property (nonatomic, weak) UIAlertController *kickedOutAlertVC;
@@ -98,7 +98,7 @@
     [self clearData];
     
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [app showLoginVC];
+//    [app showLoginVC];
 }
 
 - (void)userKickedOut {
@@ -111,7 +111,7 @@
     UIWindow *mainWindow = app.window;
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您的账号已在其他设备登录" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [app showLoginVC];
+//        [app showLoginVC];
     }];
     [alert addAction:cancelAction];
     
@@ -130,7 +130,7 @@
         [self clearData];
         
         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        [app showLoginVC];
+//        [app showLoginVC];
     }
 }
 
@@ -139,7 +139,7 @@
     [self clearData];
     
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [app showLoginVC];
+//    [app showLoginVC];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {

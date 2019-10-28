@@ -18,7 +18,7 @@
 #import "UIDevice+YX.h"
 #import "SVProgressHUD.h"
 #import "YXKeyChain.h"
-#import "AppDelegate.h"
+// #import "AppDelegate.h"
 #define RESOURCE @"RESOURCE"
 #define TMP @"TMP"
 

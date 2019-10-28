@@ -21,7 +21,7 @@
 #import "YXSendSMSModel.h"
 #import "YXComAlertView.h"
 #import "NSString+YX.h"
-#import "AppDelegate.h"
+// #import "AppDelegate.h"
 #import "IQKeyboardManager.h"
 #import "YXLoginVC.h"
 #import "YXComHttpService.h"
@@ -151,7 +151,7 @@ static NSString *const kBindPlatformKey = @"BindPlatformKey";
         [self dismissViewControllerAnimated:YES completion:nil];
     }else {
          AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        [app showLoginVC];
+//        [app showLoginVC];
     }
 }
 
@@ -187,7 +187,7 @@ static NSString *const kBindPlatformKey = @"BindPlatformKey";
                         [weakSelf cancleTimer];
                         [weakSelf.navigationController dismissViewControllerAnimated:NO completion:^{
                             AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                            [app showMainVC];
+//                            [app showMainVC];
                         }];
                     }
                 }

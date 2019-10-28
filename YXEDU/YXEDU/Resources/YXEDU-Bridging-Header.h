@@ -26,3 +26,15 @@
 #import "UIFont+IconFont.h"
 // 闪验
 #import <CL_ShanYanSDK/CL_ShanYanSDK.h>
+
+//
+#import "YXLoginVC.h"
+#import "YXPolicyVC.h"
+#import "YXBindViewModel.h"
+#import "YXLoginSendModel.h"
+#import "YXComAlertView.h"
+#import "QQApiManager.h"
+#import "WXApiManager.h"
+#import "YXDataProcessCenter.h"
+#import "YXStatusCode.h"
+

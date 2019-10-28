@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YXCustomButton.h"
 
 typedef void(^YXFirstBlock)(id obj);
 typedef void(^YXSecondBlock)(id obj);

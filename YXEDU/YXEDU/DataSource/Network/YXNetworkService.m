@@ -14,7 +14,7 @@
 #import "YXMediator.h"
 #import "YXAPI.h"
 #import "YXUtils.h"
-#import "AppDelegate.h"
+// #import "AppDelegate.h"
 
 #define kSault @"NvYP1OeQZqzJdxt8"
 

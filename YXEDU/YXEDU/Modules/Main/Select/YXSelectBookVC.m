@@ -17,7 +17,7 @@
 #import "YXStudyProgressView.h"
 #import "YXConfigModel.h"
 #import "YXBookInfoModel.h"
-#import "AppDelegate.h"
+// #import "AppDelegate.h"
 #import "YXSelectBookVC.h"
 
 #import "YXBookCollectionViewCell.h"

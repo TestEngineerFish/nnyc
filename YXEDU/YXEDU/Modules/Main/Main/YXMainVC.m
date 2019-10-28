@@ -14,7 +14,7 @@
 #import "YXSelectBookVC.h"
 #import "YXConfigure.h"
 #import "YXNavigationController.h"
-#import "AppDelegate.h"
+// #import "AppDelegate.h"
 #import "XJYChart.h"
 #import "YXStudyProgressView.h"
 #import "YXAPI.h"

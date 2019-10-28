@@ -11,7 +11,7 @@
         <!--Navigation Controller-->
         <scene sceneID="HXt-kj-Oyr">
             <objects>
-                <navigationController id="Go0-rq-G8F" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="YXRegistrationAndLoginNavigationController" id="Go0-rq-G8F" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" shadowImage="nil" id="QGd-KK-3a8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -32,13 +32,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="WCc-2n-RWQ">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="WCc-2n-RWQ">
                                 <rect key="frame" x="20" y="30" width="280" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="XoB-SI-7Gz"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nsz-bL-wf4" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nsz-bL-wf4" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                                 <rect key="frame" x="20" y="95" width="280" height="246"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Soa-Pc-TqK">
@@ -73,9 +73,12 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oSW-8X-rVz">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oSW-8X-rVz">
                                         <rect key="frame" x="212" y="31" width="18" height="22"/>
                                         <state key="normal" image="empty"/>
+                                        <connections>
+                                            <action selector="clearphoneNumberTextField:" destination="BM1-f9-pUk" eventType="touchUpInside" id="i45-JR-Spq"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xD3-cB-wBR">
                                         <rect key="frame" x="168" y="82" width="62" height="17"/>
@@ -86,8 +89,11 @@
                                         <state key="normal" title="获取验证码">
                                             <color key="titleColor" red="0.75294117647058822" green="0.75294117647058822" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="sendSMSWithoutAuthCode:" destination="BM1-f9-pUk" eventType="touchUpInside" id="rq8-f5-d5m"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ep-af-AAr" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ep-af-AAr" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
                                         <rect key="frame" x="50" y="147" width="180" height="40"/>
                                         <color key="backgroundColor" red="1" green="0.95686274509803915" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -100,7 +106,11 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="20"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enableGradientBackground" value="YES"/>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="login:" destination="BM1-f9-pUk" eventType="touchUpInside" id="Vjd-xL-hW4"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jsy-Qn-bcY">
                                         <rect key="frame" x="157.5" y="82.5" width="0.5" height="16"/>
@@ -124,6 +134,9 @@
                                         <state key="normal" title="《用户协议》">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="showAgreement:" destination="BM1-f9-pUk" eventType="touchUpInside" id="qcR-iA-8dH"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a1D-UT-bdd">
                                         <rect key="frame" x="144" y="212" width="46" height="0.5"/>
@@ -191,7 +204,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginBackground" translatesAutoresizingMaskIntoConstraints="NO" id="6TE-j8-5dk">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginBackground" translatesAutoresizingMaskIntoConstraints="NO" id="6TE-j8-5dk">
                                 <rect key="frame" x="0.0" y="394" width="320" height="130"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="hVh-2H-iwD"/>
@@ -217,7 +230,10 @@
                                     <constraint firstAttribute="height" constant="40" id="9qB-o5-bp9"/>
                                     <constraint firstAttribute="width" constant="40" id="NsT-Qy-D7v"/>
                                 </constraints>
-                                <state key="normal" image="qq"/>
+                                <state key="normal" image="QQ"/>
+                                <connections>
+                                    <action selector="loginWithQQ:" destination="BM1-f9-pUk" eventType="touchUpInside" id="p2e-X6-jAr"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xaB-jt-wPd">
                                 <rect key="frame" x="182" y="434.5" width="40" height="40"/>
@@ -225,7 +241,10 @@
                                     <constraint firstAttribute="width" constant="40" id="GJ8-qm-vYP"/>
                                     <constraint firstAttribute="height" constant="40" id="hNx-C8-l4g"/>
                                 </constraints>
-                                <state key="normal" image="wechat"/>
+                                <state key="normal" image="Wechat"/>
+                                <connections>
+                                    <action selector="loginWithWechat:" destination="BM1-f9-pUk" eventType="touchUpInside" id="tbV-yx-mqo"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qQ-ga-3x0">
                                 <rect key="frame" x="193" y="402" width="58" height="0.5"/>
@@ -262,6 +281,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="WRY-xy-r4E"/>
                     <connections>
+                        <outlet property="authCodeTextField" destination="5Iy-1d-nE3" id="Sca-dd-Qcs"/>
+                        <outlet property="clearPhoneNumberTextFieldButton" destination="oSW-8X-rVz" id="QJZ-wB-ZFx"/>
+                        <outlet property="loginButton" destination="1ep-af-AAr" id="gqU-eH-z9o"/>
+                        <outlet property="phoneNumberTextField" destination="Soa-Pc-TqK" id="sip-WG-SY0"/>
+                        <outlet property="sendSMSButton" destination="xD3-cB-wBR" id="Bmw-43-TX9"/>
                         <segue destination="2ba-j2-WJv" kind="show" identifier="Register" id="la5-tW-MMz"/>
                     </connections>
                 </viewController>
@@ -287,11 +311,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="LoginBackground" width="375" height="131"/>
+        <image name="Logo" width="150" height="37"/>
+        <image name="QQ" width="41" height="41"/>
+        <image name="Wechat" width="41" height="41"/>
         <image name="empty" width="18" height="18"/>
-        <image name="loginBackground" width="375" height="131"/>
-        <image name="logo" width="150" height="37"/>
         <image name="nil" width="16" height="16"/>
-        <image name="qq" width="41" height="41"/>
-        <image name="wechat" width="41" height="41"/>
     </resources>
 </document>

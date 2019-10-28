@@ -44,6 +44,7 @@
 		23FD6CE722952E5400334321 /* 答题引导2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE322952E5400334321 /* 答题引导2@2x.png */; };
 		23FD6CE822952E5400334321 /* 答题引导2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE422952E5400334321 /* 答题引导2@3x.png */; };
 		23FD6CE922952E5400334321 /* 答题引导1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE522952E5400334321 /* 答题引导1@2x.png */; };
+		770182B32366D80D00070BFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770182B22366D80D00070BFF /* AppDelegate.swift */; };
 		771E885D23628DF0000BFAAD /* YXGradeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E885C23628DF0000BFAAD /* YXGradeModel.swift */; };
 		771E88632362ABC8000BFAAD /* RegisterAndLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771E88622362ABC8000BFAAD /* RegisterAndLogin.storyboard */; };
 		771E88682362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E88672362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift */; };
@@ -77,9 +78,7 @@
 		D62C1E2520897EBC002BB11A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2420897EBB002BB11A /* SystemConfiguration.framework */; };
 		D62C1E2720897EC7002BB11A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2620897EC7002BB11A /* CoreLocation.framework */; };
 		D62C1E2920897EDF002BB11A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2820897EDF002BB11A /* AdSupport.framework */; };
-		D62D6AB2204FEF7A005E3273 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D62D6AB1204FEF7A005E3273 /* AppDelegate.m */; };
 		D62D6ABA204FEF7A005E3273 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D62D6AB9204FEF7A005E3273 /* Assets.xcassets */; };
-		D62D6AC0204FEF7A005E3273 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D62D6ABF204FEF7A005E3273 /* main.m */; };
 		D665A0AC2091A3DB00FBC9D2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D665A0AB2091A3DA00FBC9D2 /* CFNetwork.framework */; };
 		D665A0AE2091A3EA00FBC9D2 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D665A0AD2091A3EA00FBC9D2 /* CoreFoundation.framework */; };
 		D665A0B02091A40200FBC9D2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D665A0AF2091A40100FBC9D2 /* CoreGraphics.framework */; };
@@ -388,7 +387,6 @@
 		EE5E01162327533E00655654 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = EE5E01152327533E00655654 /* location.json */; };
 		EE5E0163232754FA00655654 /* YXGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E012E232754FA00655654 /* YXGuideView.m */; };
 		EE5E0164232754FA00655654 /* KSGuaidViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0130232754FA00655654 /* KSGuaidViewController.m */; };
-		EE5E0165232754FA00655654 /* AppDelegate+Guaid.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0131232754FA00655654 /* AppDelegate+Guaid.m */; };
 		EE5E0166232754FA00655654 /* KSGuaidProperty.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE5E0132232754FA00655654 /* KSGuaidProperty.plist */; };
 		EE5E0167232754FA00655654 /* KSGuaidViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0134232754FA00655654 /* KSGuaidViewCell.m */; };
 		EE5E0168232754FA00655654 /* BaiduLocManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0136232754FA00655654 /* BaiduLocManager.m */; };
@@ -525,7 +523,6 @@
 		EE5EFC4A23274BBB00655654 /* YXLoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3523274BBB00655654 /* YXLoginViewModel.m */; };
 		EE5EFC4B23274BBB00655654 /* YXLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3723274BBB00655654 /* YXLoginVC.m */; };
 		EE5EFC4C23274BBB00655654 /* YXPolicyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3823274BBB00655654 /* YXPolicyVC.m */; };
-		EE5EFC4D23274BBB00655654 /* YXPhoneLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3A23274BBB00655654 /* YXPhoneLoginVC.m */; };
 		EE5EFC4E23274BBB00655654 /* YXConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3C23274BBB00655654 /* YXConfigModel.m */; };
 		EE5EFC4F23274BBB00655654 /* YXReportDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC4023274BBB00655654 /* YXReportDeviceModel.m */; };
 		EE5EFC5023274BBB00655654 /* YXLoginSendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC4123274BBB00655654 /* YXLoginSendModel.m */; };
@@ -656,6 +653,7 @@
 		23FD6CE522952E5400334321 /* 答题引导1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "答题引导1@2x.png"; sourceTree = "<group>"; };
 		4FCB6DA42328CBB50038E8F5 /* YXStatusCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXStatusCode.h; sourceTree = "<group>"; };
 		6F3F6E87CCD9D15BB5221A47 /* Pods-YXEDU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.debug.xcconfig"; sourceTree = "<group>"; };
+		770182B22366D80D00070BFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		771E885C23628DF0000BFAAD /* YXGradeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGradeModel.swift; sourceTree = "<group>"; };
 		771E88622362ABC8000BFAAD /* RegisterAndLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterAndLogin.storyboard; sourceTree = "<group>"; };
 		771E88672362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRegisterAndLoginViewController.swift; sourceTree = "<group>"; };
@@ -689,11 +687,8 @@
 		D62C1E2620897EC7002BB11A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D62C1E2820897EDF002BB11A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		D62D6AAD204FEF7A005E3273 /* YXEDU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YXEDU.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D62D6AB0204FEF7A005E3273 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		D62D6AB1204FEF7A005E3273 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D62D6AB9204FEF7A005E3273 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62D6ABE204FEF7A005E3273 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D62D6ABF204FEF7A005E3273 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D665A09B20902B3D00FBC9D2 /* YXEDU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YXEDU.entitlements; sourceTree = "<group>"; };
 		D665A0AB2091A3DA00FBC9D2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		D665A0AD2091A3EA00FBC9D2 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -737,11 +732,9 @@
 		EE5E01112327528500655654 /* wrong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wrong.mp3; sourceTree = "<group>"; };
 		EE5E01152327533E00655654 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
 		EE5E012C232754FA00655654 /* KSGuaidViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSGuaidViewController.h; sourceTree = "<group>"; };
-		EE5E012D232754FA00655654 /* AppDelegate+Guaid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+Guaid.h"; sourceTree = "<group>"; };
 		EE5E012E232754FA00655654 /* YXGuideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXGuideView.m; sourceTree = "<group>"; };
 		EE5E012F232754FA00655654 /* KSGuaidViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSGuaidViewCell.h; sourceTree = "<group>"; };
 		EE5E0130232754FA00655654 /* KSGuaidViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSGuaidViewController.m; sourceTree = "<group>"; };
-		EE5E0131232754FA00655654 /* AppDelegate+Guaid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+Guaid.m"; sourceTree = "<group>"; };
 		EE5E0132232754FA00655654 /* KSGuaidProperty.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KSGuaidProperty.plist; sourceTree = "<group>"; };
 		EE5E0133232754FA00655654 /* YXGuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXGuideView.h; sourceTree = "<group>"; };
 		EE5E0134232754FA00655654 /* KSGuaidViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSGuaidViewCell.m; sourceTree = "<group>"; };
@@ -1022,8 +1015,6 @@
 		EE5EFC3623274BBB00655654 /* YXLoginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXLoginViewModel.h; sourceTree = "<group>"; };
 		EE5EFC3723274BBB00655654 /* YXLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXLoginVC.m; sourceTree = "<group>"; };
 		EE5EFC3823274BBB00655654 /* YXPolicyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPolicyVC.m; sourceTree = "<group>"; };
-		EE5EFC3923274BBB00655654 /* YXPhoneLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPhoneLoginVC.h; sourceTree = "<group>"; };
-		EE5EFC3A23274BBB00655654 /* YXPhoneLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPhoneLoginVC.m; sourceTree = "<group>"; };
 		EE5EFC3C23274BBB00655654 /* YXConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXConfigModel.m; sourceTree = "<group>"; };
 		EE5EFC3D23274BBB00655654 /* YXLoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXLoginModel.h; sourceTree = "<group>"; };
 		EE5EFC3E23274BBB00655654 /* YXConfigBookModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXConfigBookModel.h; sourceTree = "<group>"; };
@@ -1793,7 +1784,6 @@
 				D665A09B20902B3D00FBC9D2 /* YXEDU.entitlements */,
 				D62D6AB9204FEF7A005E3273 /* Assets.xcassets */,
 				D62D6ABE204FEF7A005E3273 /* Info.plist */,
-				D62D6ABF204FEF7A005E3273 /* main.m */,
 				2059176E216AF01400254705 /* PrefixHeader.pch */,
 				224529022327A34300510507 /* YXEDU-Bridging-Header.h */,
 			);
@@ -2020,8 +2010,7 @@
 				EE5EF13B23265E4B00655654 /* DataSource */,
 				EE5EF13C2327371D00655654 /* Modules */,
 				20591762215F7EC700254705 /* Resources */,
-				D62D6AB0204FEF7A005E3273 /* AppDelegate.h */,
-				D62D6AB1204FEF7A005E3273 /* AppDelegate.m */,
+				770182B22366D80D00070BFF /* AppDelegate.swift */,
 			);
 			path = YXEDU;
 			sourceTree = "<group>";
@@ -2218,11 +2207,9 @@
 			isa = PBXGroup;
 			children = (
 				EE5E012C232754FA00655654 /* KSGuaidViewController.h */,
-				EE5E012D232754FA00655654 /* AppDelegate+Guaid.h */,
 				EE5E012E232754FA00655654 /* YXGuideView.m */,
 				EE5E012F232754FA00655654 /* KSGuaidViewCell.h */,
 				EE5E0130232754FA00655654 /* KSGuaidViewController.m */,
-				EE5E0131232754FA00655654 /* AppDelegate+Guaid.m */,
 				EE5E0132232754FA00655654 /* KSGuaidProperty.plist */,
 				EE5E0133232754FA00655654 /* YXGuideView.h */,
 				EE5E0134232754FA00655654 /* KSGuaidViewCell.m */,
@@ -2941,8 +2928,6 @@
 				EE5EFC3423274BBB00655654 /* ViewModel */,
 				EE5EFC4823274BBB00655654 /* YXLoginVC.h */,
 				EE5EFC3723274BBB00655654 /* YXLoginVC.m */,
-				EE5EFC3923274BBB00655654 /* YXPhoneLoginVC.h */,
-				EE5EFC3A23274BBB00655654 /* YXPhoneLoginVC.m */,
 				EE5EFC4923274BBB00655654 /* YXPolicyVC.h */,
 				EE5EFC3823274BBB00655654 /* YXPolicyVC.m */,
 			);
@@ -5225,7 +5210,6 @@
 				EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */,
 				EE5E010823274FEC00655654 /* YXBindViewModel.m in Sources */,
 				EE5E00BC23274FEB00655654 /* YXBookTitleHeader.m in Sources */,
-				EE5EFC4D23274BBB00655654 /* YXPhoneLoginVC.m in Sources */,
 				EE5E00EE23274FEC00655654 /* YXPersonalInformationVC.m in Sources */,
 				224529042327A82500510507 /* YYDatabase.swift in Sources */,
 				EE5EF25B232740B800655654 /* NSString+YX.m in Sources */,
@@ -5278,6 +5262,7 @@
 				EE5E021C232756BF00655654 /* YXKeyPointTextStorage.m in Sources */,
 				EE5E0240232756C000655654 /* XAnimator.m in Sources */,
 				EE5E00D923274FEC00655654 /* WBQRCodeVC.m in Sources */,
+				770182B32366D80D00070BFF /* AppDelegate.swift in Sources */,
 				EED3D4222331D61C00121218 /* UserDefault+Extension.swift in Sources */,
 				EE5E00B423274FEB00655654 /* UICountingLabel.m in Sources */,
 				EE5E00B523274FEB00655654 /* YXPersonalBookViewModel.m in Sources */,
@@ -5447,7 +5432,6 @@
 				EE5EF20823273BAE00655654 /* NSTimer+YR.m in Sources */,
 				EE5E027123277CD600655654 /* YXIconfont.m in Sources */,
 				EE5E000C23274FEB00655654 /* YXCareerWordListModel.m in Sources */,
-				D62D6AC0204FEF7A005E3273 /* main.m in Sources */,
 				EE5E00C323274FEB00655654 /* YXBarChartView.m in Sources */,
 				EE5EFC5223274BBB00655654 /* YXConfigure3Model.m in Sources */,
 				EE5E004B23274FEB00655654 /* YXWordDetailExamCell.m in Sources */,
@@ -5519,7 +5503,6 @@
 				EE5E005923274FEB00655654 /* YXStudyViewModel.m in Sources */,
 				EE5E007623274FEB00655654 /* YXCheckButton.m in Sources */,
 				EE5EFD4C23274F0900655654 /* YXGameShareView.m in Sources */,
-				EE5E0165232754FA00655654 /* AppDelegate+Guaid.m in Sources */,
 				EE5E0248232756C100655654 /* XLineChartView.m in Sources */,
 				EE5EFD4123274F0900655654 /* YXGameViewController.m in Sources */,
 				EE5E003023274FEB00655654 /* YXMyWordBaseCell.m in Sources */,
@@ -5602,7 +5585,6 @@
 				EE5E003F23274FEB00655654 /* YXGraphConfuseWordCell.m in Sources */,
 				EE5E00D223274FEB00655654 /* YXBookCollectionFooter.m in Sources */,
 				EE5E005123274FEB00655654 /* YXGraphTipThreeViewModel.m in Sources */,
-				D62D6AB2204FEF7A005E3273 /* AppDelegate.m in Sources */,
 				EE5E0218232756BF00655654 /* MDMulticastDelegate.m in Sources */,
 				EE54F7DC2362AA3100EC605A /* YXConnectWordAndChineseQuestionView.swift in Sources */,
 				EE5EFD5D23274F0900655654 /* YXZoomBanner.m in Sources */,
