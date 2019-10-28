@@ -20,7 +20,7 @@ class YXRegisterAndLoginViewController: UIViewController {
     @IBOutlet weak var authCodeTextField: UITextField!
     @IBOutlet weak var sendSMSButton: UIButton!
     @IBOutlet weak var loginButton: YXDesignableButton!
-    
+
     @IBAction func clearphoneNumberTextField(_ sender: UIButton) {
         phoneNumberTextField.text = ""
     }
@@ -30,19 +30,21 @@ class YXRegisterAndLoginViewController: UIViewController {
     }
     
     @IBAction func login(_ sender: UIButton) {
-        let sendModel = YXLoginSendModel()
-        sendModel.pf = "mobile"
-        sendModel.code = authCodeTextField.text
-        sendModel.mobile = phoneNumberTextField.text
-        sendModel.openid = ""
+//        let sendModel = YXLoginSendModel()
+//        sendModel.pf = "mobile"
+//        sendModel.code = authCodeTextField.text
+//        sendModel.mobile = phoneNumberTextField.text
+//        sendModel.openid = ""
+//
+//        YXDataProcessCenter.post("/v1/user/reg", parameters: sendModel.yrModelToDictionary() as! [AnyHashable : Any]) { (response, isSuccess) in
+//            if isSuccess {
+//
+//            } else {
+//
+//            }
+//        }
         
-        YXDataProcessCenter.post("/v1/user/reg", parameters: sendModel.yrModelToDictionary() as! [AnyHashable : Any]) { (response, isSuccess) in
-            if isSuccess {
-
-            } else {
-                
-            }
-        }
+        loadMainPage()
     }
     
     @objc
@@ -84,10 +86,17 @@ class YXRegisterAndLoginViewController: UIViewController {
             phoneNumberTextField.text = phoneNumber.substring(maxIndex: 11)
             phoneNumber = phoneNumberTextField.text!
         }
-                       
+        
         if phoneNumber.substring(maxIndex: 1) == "1", phoneNumber.count == 11  {
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
+            
+            if let authCode = authCodeTextField.text, authCode.isEmpty == false {
+                loginButton.isUserInteractionEnabled = true
+
+            } else {
+                loginButton.isUserInteractionEnabled = false
+            }
             
         } else {
             sendSMSButton.isUserInteractionEnabled = false
@@ -97,6 +106,8 @@ class YXRegisterAndLoginViewController: UIViewController {
     
     @objc
     private func changeAuthCodeTextField() {
+        guard let phoneNumber = phoneNumberTextField.text, phoneNumber.count == 11 else { return }
+
         if let authCode = authCodeTextField.text, authCode.isEmpty == false {
             loginButton.isUserInteractionEnabled = true
             
@@ -174,14 +185,8 @@ class YXRegisterAndLoginViewController: UIViewController {
     }
     
     private func loadMainPage() {
-//        window = UIWindow(frame: UIScreen.main.bounds)
-//        (window?.rootViewController as? YXNavigationController)?.viewControllers.removeAll()
-//        window?.rootViewController = nil
-//
-//        tabBarController = YXTabBarController()
-//        window?.rootViewController = tabBarController
-//
-//        window?.makeKeyAndVisible()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.loadMainPage()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -230,17 +235,19 @@ class YXRegisterAndLoginViewController: UIViewController {
         layoutConfigure.clLayoutLoginBtnCenterX = NSNumber(0)
         layoutConfigure.clLayoutLoginBtnCenterY = NSNumber(16)
         layoutConfigure.clLayoutAppPrivacyCenterX = NSNumber(0)
-        layoutConfigure.clLayoutAppPrivacyCenterY = NSNumber(80)
+        layoutConfigure.clLayoutAppPrivacyCenterY = NSNumber(64)
         layoutConfigure.clLayoutAppPrivacyWidth = NSNumber(value: Float(screenWidth - 80))
         layoutConfigure.clLayoutAppPrivacyHeight = NSNumber(40)
         configure.clOrientationLayOutPortrait = layoutConfigure
         
-        configure.customAreaView = { [unowned self] view in
+        configure.customAreaView = { view in
             let iconImageView = UIImageView()
             iconImageView.contentMode = .scaleAspectFill
             iconImageView.image = #imageLiteral(resourceName: "Logo")
             
             let containerView = UIView()
+            containerView.backgroundColor = .white
+            containerView.layer.setDefaultShadow()
             
 //            let agreementLabel = UILabel()
 //            agreementLabel.text = "登录即同意"
@@ -291,23 +298,13 @@ class YXRegisterAndLoginViewController: UIViewController {
             }
             
             view.addSubview(containerView)
-            containerView.frame = CGRect(x: 20, y: (screenHeight - 246) / 2, width: screenWidth - 40, height: 246)
-//            containerView.snp.makeConstraints { (make) in
-//                make.centerX.equalToSuperview()
-//                make.centerY.equalToSuperview().offset(-16)
-//                make.leading.trailing.equalToSuperview().inset(20)
-//                make.height.equalTo(246)
-//            }
-            
-            containerView.layer.masksToBounds = false
-            containerView.layer.shadowOffset = .zero
-            containerView.layer.shadowOpacity = 1
-            containerView.layer.shadowRadius = 10
-            containerView.layer.shadowColor = UIColor(red: 0.78, green: 0.78, blue: 0.78, alpha: 0.5).cgColor
-            containerView.layer.borderWidth = 0.5
-            containerView.layer.borderColor = UIColor.white.cgColor
-            containerView.layer.cornerRadius = 6
-            
+            containerView.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.centerY.equalToSuperview().offset(-12)
+                make.leading.trailing.equalToSuperview().inset(20)
+                make.height.equalTo(246)
+            }
+
 //            containerView.addSubview(authIconImageView)
 //            authIconImageView.snp.makeConstraints { (make) in
 //                make.centerX.equalToSuperview().offset(-54)

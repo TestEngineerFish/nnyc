@@ -26,37 +26,21 @@ class YXDesignableView: UIView {
     }
     
     @IBInspectable
-    var borderColor: UIColor = .black {
+    var borderColor: UIColor = .white {
         didSet {
             layer.borderColor = borderColor.cgColor
         }
     }
     
     @IBInspectable
-    var shadowOffset: CGSize = CGSize(width: 0, height: 0) {
-        didSet {
-            layer.shadowOffset = shadowOffset
-        }
-    }
+    var enableShadow: Bool = false
     
-    @IBInspectable
-    var shadowOpacity: Float = 1 {
-        didSet {
-            layer.shadowOpacity = shadowOpacity
-        }
-    }
-    
-    @IBInspectable
-    var shadowRadius: CGFloat = 0 {
-        didSet {
-            layer.shadowRadius = shadowRadius
-        }
-    }
-    
-    @IBInspectable
-    var shadowColor: UIColor? {
-        didSet {
-            layer.shadowColor = shadowColor?.cgColor
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if enableShadow {
+            self.layer.setDefaultShadow()
+            self.layer.cornerRadius = cornerRadius
         }
     }
 }

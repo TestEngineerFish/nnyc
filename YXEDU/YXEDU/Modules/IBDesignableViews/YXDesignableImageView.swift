@@ -27,7 +27,7 @@ class YXDesignableImageView: UIImageView {
     }
     
     @IBInspectable
-    var borderColor: UIColor = .black {
+    var borderColor: UIColor = .white {
         didSet {
             layer.borderColor = borderColor.cgColor
         }

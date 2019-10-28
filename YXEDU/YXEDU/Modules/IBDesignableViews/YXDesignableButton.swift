@@ -44,16 +44,18 @@ class YXDesignableButton: UIButton {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-     
-        if enableShadow {
-            
-        }
         
         if canBeDisabled {
             adjustButtonState()
 
         } else {
             self.layer.insertSublayer(enableLayer, at: 0)
+        }
+        
+        if enableShadow {
+            self.layer.setDefaultShadow()
+            self.layer.shadowColor = UIColor.hex(0xE1B267).cgColor
+            self.layer.cornerRadius = cornerRadius
         }
     }
     
@@ -107,7 +109,7 @@ class YXDesignableButton: UIButton {
     }
     
     @IBInspectable
-    var borderColor: UIColor = .black {
+    var borderColor: UIColor = .white {
         didSet {
             layer.borderColor = borderColor.cgColor
         }

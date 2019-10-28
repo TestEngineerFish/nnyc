@@ -122,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KWD-FU-JtB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2972" y="1587"/>
+            <point key="canvasLocation" x="-2972" y="1573"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="8MX-u2-MoF">
@@ -177,7 +177,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fo0-y4-QGD">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="546"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Udq-Hf-n6w">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Udq-Hf-n6w" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="0.0" width="335" height="382"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeBackground" translatesAutoresizingMaskIntoConstraints="NO" id="7ey-RK-d8S">
@@ -209,17 +209,19 @@
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
-                                                        <color key="shadowColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                                <real key="value" value="0.29999999999999999"/>
+                                                                <real key="value" value="0.5"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                                                 <real key="value" value="2"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="size" keyPath="shadowOffsetOfLabel">
                                                                 <size key="value" width="0.0" height="2"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColorOfLabel">
+                                                                <color key="value" red="0.82352941176470584" green="0.396078431372549" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </label>
@@ -249,7 +251,7 @@
                                                                 <real key="value" value="20"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="0.5"/>
+                                                                <real key="value" value="0.10000000000000001"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="enableGradientBackground" value="YES"/>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="gradientColor1">
@@ -261,19 +263,7 @@
                                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                                 <color key="value" red="0.88235294117647056" green="0.69803921568627447" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                                             </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                                                <real key="value" value="12"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                                <real key="value" value="1"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                                <size key="value" width="0.0" height="0.0"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                                                <color key="value" red="0.88235294119999996" green="0.69803921570000005" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="NO"/>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSpeicalButton" value="YES"/>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="canBeDisabled" value="NO"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="gradientColorStartPoint">
@@ -367,6 +357,11 @@
                                                     <constraint firstItem="evR-by-lhD" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="yD6-zq-xa4"/>
                                                     <constraint firstAttribute="bottom" secondItem="spb-lT-D93" secondAttribute="bottom" constant="10" id="yjC-IZ-29k"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="14"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="q7v-mq-Dhk">
                                                 <rect key="frame" x="20" y="402" width="335" height="144"/>
