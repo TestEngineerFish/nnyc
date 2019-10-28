@@ -162,19 +162,4 @@ class YXExerciseViewController: UIViewController {
             make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
         }
     }
-
-//    //MARK: YXQuestionViewConstraintsProtocol
-//    func updateHeight(_ height: CGFloat) {
-////        self.questionView.snp.updateConstraints { (make) in
-////            make.height.equalTo(height)
-////        }
-//    }
-//
-//
-//        //MARK: YXAnswerEventProtocol
-//    func clickWordButton(_ button: UIButton) {
-//        button.isSelected = !button.isSelected
-//        button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
-//    }
-
 }

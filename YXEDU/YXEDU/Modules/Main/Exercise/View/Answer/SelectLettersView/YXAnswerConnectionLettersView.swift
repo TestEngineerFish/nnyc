@@ -10,7 +10,7 @@ import UIKit
 
 class YXAnswerConnectionLettersView: UIView {
 
-    var buttonArray = [UIButton]()
+    var allButtonArray = [UIButton]()
     var selectedBtnArray = [UIButton]() // 选中的按钮
     // 正确的字母路径
     var rightRoutes: [Int]
@@ -32,8 +32,11 @@ class YXAnswerConnectionLettersView: UIView {
         super.init(frame: CGRect(x: 0, y: 0, width: w, height: h))
         self.lettersArray = letters
         self.allLettersArray = self.getAllLetters(rightRoutes)
-        print(allLettersArray)
+
         self.createUI()
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(connectionView(_:)))
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(pan)
     }
 
     required init?(coder: NSCoder) {
@@ -41,7 +44,7 @@ class YXAnswerConnectionLettersView: UIView {
     }
 
     private func createUI() {
-        buttonArray = []
+        allButtonArray = []
         selectedBtnArray = []
         var maxX = CGFloat.zero
         var maxY = CGFloat.zero
@@ -58,14 +61,38 @@ class YXAnswerConnectionLettersView: UIView {
                 maxX = nextX
             }
             self.addSubview(button)
+            allButtonArray.append(button)
         }
     }
 
     // MARK: Event
 
     @objc private func clickButton(_ button: UIButton) {
-        button.isSelected = !button.isSelected
-        button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
+        if !button.isSelected {
+            self.selectedButton(button)
+        } else {
+            self.unselectButton(button)
+        }
+    }
+
+    private func selectedButton(_ button: UIButton) {
+        button.isSelected = true
+        button.backgroundColor = UIColor.orange1
+    }
+
+    private func unselectButton(_ button: UIButton) {
+        button.isSelected = false
+        button.backgroundColor =  UIColor.white
+    }
+
+    /// 连线事件
+    @objc private func connectionView(_ pan: UIPanGestureRecognizer) {
+        let point = pan.location(in: self)
+        if let selectedButton = (self.allButtonArray.filter { (button) -> Bool in
+            return button.frame.contains(point)
+        }).first {
+            self.selectedButton(selectedButton)
+        }
     }
 
     // MARK:Tools

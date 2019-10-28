@@ -124,6 +124,8 @@ class YXAnswerSelectLettersView: UIView {
     // TODO: Event
 
     @objc func clickButton(_ button: UIButton) {
+        button.isSelected = !button.isSelected
+        button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
         delegate?.clickWordButton(button)
     }
 

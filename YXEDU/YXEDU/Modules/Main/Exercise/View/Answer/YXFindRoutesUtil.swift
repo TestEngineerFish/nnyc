@@ -32,7 +32,7 @@ struct YXFindRouteUtil {
     mutating func findRoute(_ index: Int) {
         if !self.routeList.contains(index) {
             self.routeList.append(index)
-            print(self.routeList)
+//            print(self.routeList)
             // 如果找齐了,则直接返回
             if self.routeList.count >= self.wordLength {
                 return
