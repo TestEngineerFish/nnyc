@@ -63,7 +63,6 @@ class YXExerciseViewController: UIViewController, YXViewConstraintsProtocol {
         self.startStudy()
     }
 
-   
     private func createSubviews() {
         self.view.addSubview(headerView)
         self.view.addSubview(bottomView)
