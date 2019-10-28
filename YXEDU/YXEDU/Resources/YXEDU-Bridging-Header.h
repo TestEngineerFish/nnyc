@@ -23,6 +23,6 @@
 #import "YXMediator.h"
 #import "YXNotification.h"
 #import "BSCommon.h"
-
+#import "UIFont+IconFont.h"
 // 闪验
 #import <CL_ShanYanSDK/CL_ShanYanSDK.h>

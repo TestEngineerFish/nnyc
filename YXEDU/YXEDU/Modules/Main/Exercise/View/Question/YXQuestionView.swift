@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol YXQuestionEventProtocol {
+//    @objc func clickSpellView()
+}
+
 class YXQuestionView: UIView {
     var contentView  = UIView()
     var contentViewH = CGFloat(0)
@@ -30,9 +34,10 @@ class YXQuestionView: UIView {
         addSubview(contentView)
         contentView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.equalToSuperview()
+            make.width.equalToSuperview().offset(-10)
             make.height.equalTo(contentViewH)
         }
+        self.layer.setDefaultShadow()
     }
 
     /// 动态添加自定自定义的view,添加后记得更新约束

@@ -41,6 +41,37 @@ class YXExerciseViewController: UIViewController {
         
         currentExerciseView.exerciseModel = YXWordExerciseModel(.lookWordChooseImage)
 
+        contentScrollView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapView))
+        contentScrollView.addGestureRecognizer(tap)
+        contentScrollView.backgroundColor = UIColor.white
+    }
+
+    @objc private func tapView() {
+        // ===== 数据准备 ====
+        var charModelsArray = [YXCharacterModel]()
+        for index in 0..<2 {
+            let model = YXCharacterModel("sam", isBlank: index%2>0)
+            charModelsArray.append(model)
+        }
+
+        // ==== 添加问题跟视图 ====
+        let view = YXQuestionView()
+        kWindow.addSubview(view)
+        view.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalTo(332)
+            make.height.equalTo(160)
+        }
+
+        // ==== 添加子视图 ====
+        let charView = YXQuestionSpellView()
+        charView.createUI(charModelsArray)
+
+        let height = view.addCustomViews([charView])
+        view.snp.updateConstraints { (make) in
+            make.height.equalTo(height)
+               }
     }
     
     

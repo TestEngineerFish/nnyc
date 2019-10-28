@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXCharacterTextField: UITextField {
+class YXCharacterTextField: UITextField, UIGestureRecognizerDelegate {
 
     var isBlank = false
 
@@ -28,7 +28,19 @@ class YXCharacterTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
 
-//    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-//        return false
-//    }
+
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return false
+    }
+
+    // MARK: UIGestureRecognizerDelegate
+    override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+        return
+    }
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+
 }

@@ -60,7 +60,14 @@ class YXWordCharacterView: UIView {
 
     private func bindProperty() {
         baseLineView.backgroundColor = UIColor.hex(0xC0C0C0)
+        self.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapView(_:)))
+        self.addGestureRecognizer(tap)
     }
 
+    // MARK: Event
 
+    @objc private func tapView(_ sender: UITapGestureRecognizer) {
+
+    }
 }

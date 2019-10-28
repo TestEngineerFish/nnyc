@@ -126,6 +126,15 @@ extension CALayer {
 // MARK: - 阴影和遮罩
 extension CALayer {
     
+    /// 设置默认阴影效果
+    func setDefaultShadow() {
+        self.cornerRadius  = 6
+        self.shadowColor   = UIColor.hex(0xc7c7c7).cgColor
+        self.shadowOffset  = CGSize.zero
+        self.shadowOpacity = 1
+        self.shadowRadius  = 10
+        self.masksToBounds = false
+    }
 
     /// 设置阴影
     /// - parameter opacity: 阴影的透明度, 默认0.8

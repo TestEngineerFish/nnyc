@@ -1,5 +1,5 @@
 //
-//  YXSpellView.swift
+//  YXQuestionSpellView.swift
 //  YXEDU
 //
 //  Created by 沙庭宇 on 2019/10/25.
@@ -18,7 +18,7 @@ struct YXCharacterModel {
     }
 }
 
-class YXSpellView: UIView {
+class YXQuestionSpellView: UIView {
     let margin = CGFloat(10)
     let charH  = CGFloat(30)
     var maxX = CGFloat(0)
