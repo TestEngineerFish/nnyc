@@ -362,18 +362,205 @@
                         <viewLayoutGuide key="safeArea" id="iDo-k0-cvx"/>
                     </view>
                     <navigationItem key="navigationItem" id="M2E-eE-5Jo">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="homeSearch" id="ASh-w3-J4T"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="homeSearch" id="ASh-w3-J4T">
+                            <connections>
+                                <segue destination="sQ1-lz-3yL" kind="show" id="zuD-FE-wxO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="countOfWaitForStudyWords" destination="Fae-CO-v6Q" id="vpX-uM-xXg"/>
                         <outlet property="progressBar" destination="rVY-bt-TOH" id="VAW-I3-wze"/>
                         <outlet property="studyDataCollectionView" destination="AZn-be-OuY" id="bW1-sB-B0C"/>
                         <outlet property="subItemCollectionView" destination="q7v-mq-Dhk" id="dcr-FN-BY1"/>
+                        <segue destination="B9h-Rf-GtI" kind="show" identifier="LearnedWords" id="08G-Tq-847"/>
+                        <segue destination="xQW-0F-uLV" kind="show" identifier="FavoritesWords" id="Ikq-pG-ta6"/>
+                        <segue destination="qVz-k4-3Nk" kind="show" identifier="WrongWords" id="Xl4-qR-h5K"/>
+                        <segue destination="LEE-do-1y0" kind="show" identifier="TaskCenter" id="7f4-4r-z67"/>
+                        <segue destination="9r4-wh-Nql" kind="show" identifier="Calendar" id="lgQ-El-97G"/>
+                        <segue destination="ezw-iR-7oA" kind="show" identifier="StudyReport" id="cYG-n7-suK"/>
+                        <segue destination="l6f-D4-3vP" kind="show" identifier="PickUpWords" id="1uu-xw-DtT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5w-Bb-6XP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2133.3333333333335" y="139.95535714285714"/>
+        </scene>
+        <!-- -->
+        <scene sceneID="Fsa-pg-grt">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="l6f-D4-3vP" customClass="YXMyWordBookListVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gRs-ww-ak5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="pxP-EA-zV3"/>
+                    </view>
+                    <navigationItem key="navigationItem" title=" " id="UKX-SU-fLQ">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="I7B-wF-pCE">
+                            <connections>
+                                <action selector="back:" destination="NXD-Ea-pEl" id="osG-g2-wYn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cxr-xy-QP0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1194" y="1643"/>
+        </scene>
+        <!-- -->
+        <scene sceneID="Mjr-7d-dZk">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="B9h-Rf-GtI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KdB-zV-RSQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="XQA-Ah-68f"/>
+                    </view>
+                    <navigationItem key="navigationItem" title=" " id="M9w-sN-RnN">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="zoa-S4-YyE">
+                            <connections>
+                                <action selector="back:" destination="NXD-Ea-pEl" id="ma7-uM-P4u"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d8q-6h-rBC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1307" y="906"/>
+        </scene>
+        <!-- -->
+        <scene sceneID="6pL-bl-kzi">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="LEE-do-1y0" customClass="YXMissionViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fkk-Wd-hK0">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Fjr-c0-p0B"/>
+                    </view>
+                    <navigationItem key="navigationItem" title=" " id="T9J-aj-owk">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="akv-0I-cbx">
+                            <connections>
+                                <action selector="back:" destination="NXD-Ea-pEl" id="iFx-Q0-raO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7r7-ka-elt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1307" y="1643"/>
+        </scene>
+        <!-- -->
+        <scene sceneID="77d-Bv-yF2">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="9r4-wh-Nql" customClass="YXReportViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fis-7r-Vvf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Ggp-1c-jYa"/>
+                    </view>
+                    <navigationItem key="navigationItem" title=" " id="DxF-Lh-Y8e">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="PNy-HI-ghD">
+                            <connections>
+                                <action selector="back:" destination="NXD-Ea-pEl" id="NSq-z8-9Nj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S9D-A4-Fc7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-481" y="1643"/>
+        </scene>
+        <!-- -->
+        <scene sceneID="imG-OT-c0b">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="ezw-iR-7oA" customClass="YXCalendarViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SuX-Ba-W9h">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="C1g-lN-92b"/>
+                    </view>
+                    <navigationItem key="navigationItem" title=" " id="oP5-Qv-mcy">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="Zur-M8-M8p">
+                            <connections>
+                                <action selector="back:" destination="NXD-Ea-pEl" id="Ooo-g6-BS9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BkP-80-nTG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="346" y="1643"/>
+        </scene>
+        <!-- -->
+        <scene sceneID="YFk-qu-BLV">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="xQW-0F-uLV" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="l0v-Ak-wFo">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="pdc-Zh-icm"/>
+                    </view>
+                    <navigationItem key="navigationItem" title=" " id="dzA-dd-cMp">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="fBx-mL-r04">
+                            <connections>
+                                <action selector="back:" destination="NXD-Ea-pEl" id="msw-fG-nvb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RKQ-cU-Pxi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-481" y="905"/>
+        </scene>
+        <!-- -->
+        <scene sceneID="x49-mu-67x">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="qVz-k4-3Nk" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="INZ-eD-znY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="TGX-KH-HYm"/>
+                    </view>
+                    <navigationItem key="navigationItem" title=" " id="Jdj-0d-Nae">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="3BY-Ry-BBh">
+                            <connections>
+                                <action selector="back:" destination="NXD-Ea-pEl" id="K2Z-zj-IkI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uhZ-rC-jrP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="346" y="905"/>
+        </scene>
+        <!-- -->
+        <scene sceneID="5eR-9g-Fah">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="sQ1-lz-3yL" customClass="YXSearchVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YgW-Qa-TJ8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Dc3-N5-jjf"/>
+                    </view>
+                    <navigationItem key="navigationItem" title=" " id="eww-Aw-EqV">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="jrc-FI-QB2">
+                            <connections>
+                                <action selector="back:" destination="NXD-Ea-pEl" id="6we-Lf-kJV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Thr-uP-3nk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1307" y="-596"/>
         </scene>
         <!--选择词书-->
         <scene sceneID="ldB-2r-qVG">
@@ -640,7 +827,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XK3-RN-KBu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="346" y="140"/>
+            <point key="canvasLocation" x="-481" y="-597"/>
         </scene>
     </scenes>
     <resources>

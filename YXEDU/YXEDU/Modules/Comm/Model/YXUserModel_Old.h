@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YXUserModel : NSObject<NSCoding>
+@interface YXUserModel_Old : NSObject<NSCoding>
 
 @property (nonatomic, strong) NSString *nick;
 @property (nonatomic, strong) NSString *sex;

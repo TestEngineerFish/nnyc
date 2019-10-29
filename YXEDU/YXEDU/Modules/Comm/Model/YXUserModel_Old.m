@@ -6,9 +6,9 @@
 //  Copyright © 2018年 shiji. All rights reserved.
 //
 
-#import "YXUserModel.h"
+#import "YXUserModel_Old.h"
 
-@implementation YXUserModel
+@implementation YXUserModel_Old
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.avatar forKey:@"avatar"];
     [aCoder encodeObject:self.nick forKey:@"nick"];

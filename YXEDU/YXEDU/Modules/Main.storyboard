@@ -11,7 +11,7 @@
         <!--挑战-->
         <scene sceneID="2jw-ZT-zJp">
             <objects>
-                <viewController id="mSI-dQ-ykb" sceneMemberID="viewController">
+                <viewController id="mSI-dQ-ykb" customClass="YXGameViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="642-bP-bNf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -22,6 +22,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
     }
@@ -104,25 +106,45 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
+        if collectionView.tag == 1 {
+            switch indexPath.row {
+            case 0:
+                self.performSegue(withIdentifier: "LearnedWords", sender: self)
+                break
+                
+            case 1:
+                self.performSegue(withIdentifier: "FavoritesWords", sender: self)
+                break
+                
+            case 2:
+                self.performSegue(withIdentifier: "WrongWords", sender: self)
+                break
+                
+            default:
+                break
+            }
             
-            break
-            
-        case 1:
-           
-            break
-            
-        case 2:
-           
-            break
-            
-        case 3:
-           
-            break
-            
-        default:
-            break
+        } else {
+            switch indexPath.row {
+            case 0:
+                self.performSegue(withIdentifier: "TaskCenter", sender: self)
+                break
+                
+            case 1:
+                self.performSegue(withIdentifier: "Calendar", sender: self)
+                break
+                
+            case 2:
+                self.performSegue(withIdentifier: "StudyReport", sender: self)
+                break
+                
+            case 3:
+                self.performSegue(withIdentifier: "PickUpWords", sender: self)
+                break
+                
+            default:
+                break
+            }
         }
     }
     

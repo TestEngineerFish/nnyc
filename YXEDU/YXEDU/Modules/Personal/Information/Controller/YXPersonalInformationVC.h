@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YXPersonalInformationVC : UIViewController
 
-@property (nonatomic, strong) YXUserModel *userModel;
+@property (nonatomic, strong) YXUserModel_Old *userModel;
 @property (nonatomic, copy)void(^shouldRefreshInfoBlock)(void);
 @end
 

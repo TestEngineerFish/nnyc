@@ -70,7 +70,7 @@
 
 @property (nonatomic, strong) YXNoNetworkView *noNetworkView;
 
-@property (nonatomic, strong) YXUserModel *userModel;
+@property (nonatomic, strong) YXUserModel_Old *userModel;
 
 @property (nonatomic, strong) YXPersonalViewModel *model;
 @property (nonatomic, assign)BOOL isWechatBind;

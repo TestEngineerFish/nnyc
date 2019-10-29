@@ -102,6 +102,11 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
     [self.navigationController.navigationBar setHidden:YES];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
 - (UIView *)bgView {
     if (!_bgView) {
         UIView *bgView = [[UIView alloc] init];
@@ -145,7 +150,7 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
         _searchTF.returnKeyType = UIReturnKeyDone;
         _searchTF.inputAccessoryView = [[UIView alloc] init];
         _searchTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [_searchTF setValue:UIColorOfHex(0x434a5d) forKeyPath:@"_placeholderLabel.textColor"];
+//        [_searchTF setValue:UIColorOfHex(0x434a5d) forKeyPath:@"_placeholderLabel.textColor"];
         _searchTF.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 16, 1)];
         _searchTF.leftViewMode = UITextFieldViewModeAlways;
         _searchTF.tintColor = UIColorOfHex(0x434a5d);
