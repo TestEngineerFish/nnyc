@@ -9,13 +9,18 @@
 import UIKit
 
 class YXBaseAnswerView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    /// 练习数据模型
+    var exerciseModel: YXWordExerciseModel? {
+        didSet {
+            self.bindData()
+        }
     }
-    */
-
+        
+    /// 答题完成时，对错的结果回调
+    var answerCompletion: ((_ exerciseModel: YXWordExerciseModel?, _ right: Bool) -> Void)?
+    
+    
+    func bindData() { }
+    
 }

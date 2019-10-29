@@ -47,6 +47,22 @@ class YXExerciseViewController: UIViewController {
         self.startStudy()
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+                
+        self.headerView.snp.makeConstraints { (make) in
+            make.top.equalTo(YXExerciseConfig.headerViewTop)
+            make.left.right.equalTo(0)
+            make.height.equalTo(28)
+        }
+        
+        self.bottomView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.height.equalTo(18)
+            make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
+        }
+    }
+    
     private func createSubviews() {
         self.view.addSubview(headerView)
         self.view.addSubview(bottomView)
@@ -94,7 +110,7 @@ class YXExerciseViewController: UIViewController {
     
     
     // 加载当天的学习数据
-    func fetchExerciseData() {
+    private func fetchExerciseData() {
         dataManager.fetchTodayExerciseModels { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
@@ -107,7 +123,7 @@ class YXExerciseViewController: UIViewController {
     
     
     /// 切换题目
-    func switchExerciseView() {
+    private func switchExerciseView() {
         // 当前关卡是否学完
         if YXExcerciseProgressManager.isCompletion() {
             print("显示打卡页面")
@@ -119,8 +135,6 @@ class YXExerciseViewController: UIViewController {
             exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
             exerciseView.contentSize = CGSize(width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
             
-            exerciseView
-            
             loadExerciseView(exerciseView: exerciseView)
         }
         
@@ -129,7 +143,7 @@ class YXExerciseViewController: UIViewController {
     
     /// 加载一个练习
     /// - Parameter exerciseView: 新的练习view
-    func loadExerciseView(exerciseView: YXExerciseView) {
+    private func loadExerciseView(exerciseView: YXExerciseView) {
         // 是否第一次进来
         var isFirst = true
         if let ceview = exerciseViewArray.first {
@@ -145,21 +159,5 @@ class YXExerciseViewController: UIViewController {
     }
     
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        
-        self.headerView.snp.makeConstraints { (make) in
-            make.top.equalTo(YXExerciseConfig.headerViewTop)
-            make.left.right.equalTo(0)
-            make.height.equalTo(28)
-            
-        }
-        
-        self.bottomView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.height.equalTo(18)
-            make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
-        }
-    }
+    
 }

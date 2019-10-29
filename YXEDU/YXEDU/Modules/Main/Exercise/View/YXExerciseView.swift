@@ -8,8 +8,7 @@
 
 import UIKit
 
-protocol YXExerciseViewProtocol {
-    
+protocol YXExerciseViewProtocol: NSObject {
     /// 练习完成
     /// - Parameter right: 是否答对
     func exerciseCompletion(right: Bool)
@@ -25,11 +24,12 @@ class YXExerciseView: UIScrollView {
     //    var answerView: YXExerciseAnswerView?
     private var questionView = YXQuestionView()
     
-    
+    weak var exerciseDelegate: YXExerciseViewProtocol?
     
     deinit {
         print("练习view 释放")
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
