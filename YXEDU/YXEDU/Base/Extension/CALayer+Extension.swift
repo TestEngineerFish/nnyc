@@ -319,4 +319,34 @@ extension CALayer {
         animater.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         self.add(animater, forKey: "jellyAnimation")
     }
+
+    /// 添加闪烁动画
+    /// - description: 切换背景色
+    func addBgFlickerAnimation(with color: UIColor,repeat count: Float) {
+        let animation = CABasicAnimation(keyPath: "backgroundColor")
+        animation.fromValue   = color.cgColor
+        animation.toValue     = UIColor.clear.cgColor
+        animation.duration    = 0.6
+        animation.repeatCount = count
+        self.add(animation, forKey: "bgFlickerAnimation")
+    }
+
+    func removeBgFlickerAnimation() {
+        self.removeAnimation(forKey: "bgFlickerAnimation")
+    }
+
+    /// 添加闪烁动画
+    /// - description: 颜色透明度 10 -> 0
+    func addFlickerAnimation() {
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fromValue   = 1.0
+        animation.toValue     = 0.0
+        animation.duration    = 0.6
+        animation.repeatCount = MAXFLOAT
+        self.add(animation, forKey: "flickerAnimation")
+    }
+
+    func removeFlickerAnimation() {
+        self.removeAnimation(forKey: "flickerAnimation")
+    }
 }

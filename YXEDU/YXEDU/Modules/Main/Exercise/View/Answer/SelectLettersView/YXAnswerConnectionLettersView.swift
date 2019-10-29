@@ -86,16 +86,12 @@ class YXAnswerConnectionLettersView: UIView {
         self.addGestureRecognizer(pan)
     }
 
+    /// 在VC中显示的时候调用!!
     private func showFirstButtonAnimation(_ btnTag: Int?) {
         if let tag = btnTag, tag < self.allButtonArray.count, tag >= 0 {
             let button = self.allButtonArray[tag]
             self.selectedButton(button)
-            let bgColorAnimation = CABasicAnimation(keyPath: "backgroundColor")
-            bgColorAnimation.fromValue = UIColor.orange1.cgColor
-            bgColorAnimation.toValue   = UIColor.clear.cgColor
-            bgColorAnimation.duration  = 0.6
-            bgColorAnimation.repeatCount = 3
-            button.layer.add(bgColorAnimation, forKey: nil)
+            button.layer.addBgFlickerAnimation(with: UIColor.orange1, repeat: 4)
         }
     }
 

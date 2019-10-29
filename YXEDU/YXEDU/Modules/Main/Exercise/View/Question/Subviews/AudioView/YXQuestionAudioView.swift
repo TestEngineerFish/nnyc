@@ -44,31 +44,13 @@ class YXQuestionAudioView: UIView {
 
     @objc func clickAudioBtn(_ button: UIButton) {
         button.isSelected = !button.isSelected
+        if button.isSelected {
+            button.layer.addFlickerAnimation()
+        } else {
+            button.layer.removeFlickerAnimation()
+        }
         delegate?.clickAudioButton(button)
-
-//        if button.isSelected {
-//            self.playAudio()
-//        } else {
-//            self.stopAudio()
-//        }
     }
-
-//    private func playAudio() {
-//        while audioButton.isSelected {
-//            UIView.animate(withDuration: 0.5, animations: {
-//                self.audioButton.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-//            }) { (finished) in
-//                if finished {
-//                    self.audioButton.transform = .identity
-//                }
-//            }
-//        }
-//
-//    }
-//
-//    private func stopAudio() {
-//        audioButton.transform = .identity
-//    }
 
 
 }

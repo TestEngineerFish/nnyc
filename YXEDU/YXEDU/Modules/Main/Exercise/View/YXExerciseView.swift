@@ -46,7 +46,7 @@ class YXExerciseView: UIScrollView {
         let answerView = YXAnswerConnectionLettersView(word, itemNumberH: itemNumberH, itemNumberW: itemNumberW)
         self.addSubview(answerView)
         answerView.center = CGPoint(x: screenWidth/2, y: screenHeight/2)
-
+        
     }
     // ==== 添加选择视图 ====
     //       let answerView = YXAnswerSelectLettersView(wordArray)
