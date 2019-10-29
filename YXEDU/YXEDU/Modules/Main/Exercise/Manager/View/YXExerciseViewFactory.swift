@@ -15,6 +15,24 @@ struct YXExerciseViewFactory {
     static func buildView(exerciseModel: YXWordExerciseModel) -> YXExerciseView {
         
         return YXExerciseView()
+        
+        
+//        switch exerciseModel.type {
+//        case .lookWordChooseImage:
+//            return YXLookWordChooseImageExerciseView(exerciseModel: exerciseModel)
+//
+//
+////            case .lookWordChooseChinese:
+//        default:
+//            return YXLookWordChooseImageExerciseView(exerciseModel: exerciseModel)
+//        }
     }
+    
+    
+    
+    
+    
+    
+    
     
 }

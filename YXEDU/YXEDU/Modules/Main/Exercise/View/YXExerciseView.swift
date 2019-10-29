@@ -8,14 +8,6 @@
 
 import UIKit
 
-protocol YXExerciseViewProtocol: NSObject {
-    /// 练习完成
-    /// - Parameter right: 是否答对
-    func exerciseCompletion(right: Bool)
-}
-
-
-
 /// 练习模块：内容主页面，包括题目View、答案View、TipsView
 class YXExerciseView: UIScrollView {
 
@@ -24,7 +16,7 @@ class YXExerciseView: UIScrollView {
     //    var answerView: YXExerciseAnswerView?
     private var questionView = YXQuestionView()
     
-    weak var exerciseDelegate: YXExerciseViewProtocol?
+    weak var exerciseDelegate: YXExerciseViewDelegate?
     
     deinit {
         print("练习view 释放")

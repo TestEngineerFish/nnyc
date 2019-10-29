@@ -8,6 +8,14 @@
 
 import UIKit
 
+protocol YXBaseAnswerViewDelegate: NSObject {
+    /// 答题完成时，对错的结果回调
+    /// - Parameter right: 是否答对
+    func answerCompletion(_ exerciseModel: YXWordExerciseModel?, _ right: Bool)
+}
+
+
+
 class YXBaseAnswerView: UIView {
     
     /// 练习数据模型
@@ -16,10 +24,9 @@ class YXBaseAnswerView: UIView {
             self.bindData()
         }
     }
-        
-    /// 答题完成时，对错的结果回调
-    var answerCompletion: ((_ exerciseModel: YXWordExerciseModel?, _ right: Bool) -> Void)?
     
+    
+    weak var answerDelegate: YXBaseAnswerViewDelegate?
     
     func bindData() { }
     

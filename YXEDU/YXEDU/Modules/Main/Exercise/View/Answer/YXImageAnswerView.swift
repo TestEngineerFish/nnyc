@@ -88,8 +88,8 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderColor = UIColor.orange1.cgColor        
         collectionViewCell = cell
-                
-        self.answerCompletion?(self.exerciseModel, true)
+    
+        self.answerDelegate?.answerCompletion(self.exerciseModel, true)
     }
     
 }
