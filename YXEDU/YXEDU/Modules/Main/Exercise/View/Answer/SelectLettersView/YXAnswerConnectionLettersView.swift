@@ -10,8 +10,10 @@ import UIKit
 
 class YXAnswerConnectionLettersView: UIView {
 
-    var allButtonArray = [UIButton]()
+    var allButtonArray   = [UIButton]()
     var selectedBtnArray = [UIButton]() // 选中的按钮
+    var lineDictionary   = [Int:CAShapeLayer]()
+    var lastSelectedButton: UIButton? // 最后选中的按钮
     // 正确的字母路径
     var rightRoutes: [Int]
     // 完整的字母
@@ -34,7 +36,7 @@ class YXAnswerConnectionLettersView: UIView {
         self.allLettersArray = self.getAllLetters(rightRoutes)
 
         self.createUI()
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(connectionView(_:)))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
         self.isUserInteractionEnabled = true
         self.addGestureRecognizer(pan)
     }
@@ -85,14 +87,58 @@ class YXAnswerConnectionLettersView: UIView {
         button.backgroundColor =  UIColor.white
     }
 
-    /// 连线事件
-    @objc private func connectionView(_ pan: UIPanGestureRecognizer) {
+    /// 滑动事件
+    @objc private func panEvent(_ pan: UIPanGestureRecognizer) {
         let point = pan.location(in: self)
         if let selectedButton = (self.allButtonArray.filter { (button) -> Bool in
             return button.frame.contains(point)
         }).first {
-            self.selectedButton(selectedButton)
+            self.adjustSelectedStatus(currentSelected: selectedButton)
+            if !self.selectedBtnArray.contains(selectedButton) {
+                self.selectedButton(selectedButton)
+                self.connectionLine(fromButton: self.selectedBtnArray.last, toButton: selectedButton)
+                self.selectedBtnArray.append(selectedButton)
+            }
         }
+    }
+
+    /// 校验是否取消选中最后一个
+    private func adjustSelectedStatus(currentSelected button: UIButton) {
+        let count = self.selectedBtnArray.count
+        if count < 2 { return }
+        let targetBtn = self.selectedBtnArray[count - 2]
+        // 如果当前选中的是上一个,则取消选中最后一个
+        if button.tag == targetBtn.tag {
+            let lastBtn = self.selectedBtnArray.removeLast()
+            self.unselectButton(lastBtn)
+            // 移除连线
+            self.disconectLine(lastBtn)
+        }
+    }
+
+    // 开始连线
+    private func connectionLine(fromButton: UIButton?, toButton: UIButton) {
+        guard let fromButton = fromButton else { return }
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: fromButton.center)
+        bezierPath.addLine(to: toButton.center)
+        let shaperLayer = CAShapeLayer()
+        shaperLayer.path = bezierPath.cgPath
+        shaperLayer.width = 1
+        shaperLayer.strokeColor = UIColor.orange1.cgColor
+        shaperLayer.fillColor = nil
+        self.layer.addSublayer(shaperLayer)
+
+        self.lineDictionary.updateValue(shaperLayer, forKey: toButton.tag)
+    }
+
+    // 取消连线
+    private func disconectLine(_ button: UIButton) {
+        guard let shaperLayer = self.lineDictionary[button.tag] else {
+            return
+        }
+        shaperLayer.removeFromSuperlayer()
+        self.lineDictionary.removeValue(forKey: button.tag)
     }
 
     // MARK:Tools
