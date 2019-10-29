@@ -86,16 +86,17 @@ struct YXFindRouteUtil {
         let right  = num + 1
         let top    = num - itemNumberW
         let bottom = num + itemNumberW
-        if (left % itemNumberW) >= 0 {
+        let amount = itemNumberW * itemNumberH
+        if left/itemNumberW == num/itemNumberW, left >= 0 {
             neighbours.append(left)
         }
-        if (right % itemNumberW) > 0 {
+        if right/itemNumberW == num/itemNumberW, right < amount {
             neighbours.append(right)
         }
         if top >= 0 {
             neighbours.append(top)
         }
-        if bottom < itemNumberW * itemNumberH {
+        if bottom < amount{
             neighbours.append(bottom)
         }
         return neighbours

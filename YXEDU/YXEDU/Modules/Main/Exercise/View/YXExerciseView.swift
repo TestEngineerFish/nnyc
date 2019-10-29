@@ -26,10 +26,10 @@ class YXExerciseView: UIScrollView {
         super.init(frame: frame)
         
         self.backgroundColor = UIColor.white
-
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapView))
-        self.addGestureRecognizer(tap)
-        self.isUserInteractionEnabled = true
+        self.tapView()
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(tapView))
+//        self.addGestureRecognizer(tap)
+//        self.isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,19 +38,14 @@ class YXExerciseView: UIScrollView {
     
     @objc private func tapView() {
 
-        let word = "Coffee"
-        let lettersArray = word.map { (char) -> String in
-            return "\(char)"
-        }
+        let word = "TableView"
+        
         let itemNumberW = 5
         let itemNumberH = 5
-        // 查找最佳路径
-        var util = YXFindRouteUtil(itemNumberH, itemNumberW: itemNumberW)
-        let startIndex = Int(arc4random()) % (itemNumberH * itemNumberW)
-        let routes = util.getRoute(start: startIndex, wordLength: lettersArray.count)
 
-        let answerView = YXAnswerConnectionLettersView(lettersArray, itemNumberH: itemNumberH, itemNumberW: itemNumberW, rightRoutes: routes)
+        let answerView = YXAnswerConnectionLettersView(word, itemNumberH: itemNumberH, itemNumberW: itemNumberW)
         self.addSubview(answerView)
+        answerView.center = CGPoint(x: screenWidth/2, y: screenHeight/2)
 
     }
     // ==== 添加选择视图 ====
