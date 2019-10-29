@@ -40,6 +40,7 @@
 		22ED549823668F3300011B82 /* YXQuestionImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED549723668F3300011B82 /* YXQuestionImageView.swift */; };
 		22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */; };
 		22ED54A92367076B00011B82 /* YXAnswerConnectionLettersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A82367076B00011B82 /* YXAnswerConnectionLettersView.swift */; };
+		22ED54AB2368795B00011B82 /* LearningProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54AA2368795B00011B82 /* LearningProgressView.swift */; };
 		23708FDD2269B6FC0082106A /* sharePosterResultBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23708FDB2269B6FB0082106A /* sharePosterResultBG@2x.png */; };
 		23708FDE2269B6FC0082106A /* sharePosterResultBG@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23708FDC2269B6FB0082106A /* sharePosterResultBG@3x.png */; };
 		23FD6CE622952E5400334321 /* 答题引导1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE222952E5400334321 /* 答题引导1@3x.png */; };
@@ -655,6 +656,7 @@
 		22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YXModel.m"; sourceTree = "<group>"; };
 		22ED54A32366DD6B00011B82 /* NSObject+YXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YXModel.h"; sourceTree = "<group>"; };
 		22ED54A82367076B00011B82 /* YXAnswerConnectionLettersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAnswerConnectionLettersView.swift; sourceTree = "<group>"; };
+		22ED54AA2368795B00011B82 /* LearningProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningProgressView.swift; sourceTree = "<group>"; };
 		23708FDB2269B6FB0082106A /* sharePosterResultBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharePosterResultBG@2x.png"; sourceTree = "<group>"; };
 		23708FDC2269B6FB0082106A /* sharePosterResultBG@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharePosterResultBG@3x.png"; sourceTree = "<group>"; };
 		23FD6CE222952E5400334321 /* 答题引导1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "答题引导1@3x.png"; sourceTree = "<group>"; };
@@ -2033,6 +2035,7 @@
 				77252A6E23628909007D86A0 /* YXSelectGradeView.xib */,
 				77252A7223628940007D86A0 /* YXSelectGradeCell.swift */,
 				77252A7323628940007D86A0 /* YXSelectGradeCell.xib */,
+				22ED54AA2368795B00011B82 /* LearningProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5457,6 +5460,7 @@
 				EE5E001123274FEB00655654 /* YXCareerGuideMaskView.m in Sources */,
 				7786B6CD2361C3350027D0E3 /* YXGroupWordBookModel.swift in Sources */,
 				EE5E008723274FEB00655654 /* YXStudyRecordCenter.m in Sources */,
+				22ED54AB2368795B00011B82 /* LearningProgressView.swift in Sources */,
 				EE5E000423274FEB00655654 /* YXDLModel.m in Sources */,
 				EE5EFCCD23274E5500655654 /* YXSideSlipVC.m in Sources */,
 				EE5EFCE223274E5500655654 /* YXBookPlanModel.m in Sources */,

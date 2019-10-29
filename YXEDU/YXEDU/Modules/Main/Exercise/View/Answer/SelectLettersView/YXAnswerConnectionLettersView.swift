@@ -54,7 +54,6 @@ class YXAnswerConnectionLettersView: UIView {
         self.util        = YXFindRouteUtil(itemNumberH, itemNumberW: itemNumberW)
         let startIndex   = Int(arc4random()) % (itemNumberH * itemNumberW)
         self.rightRoutes = util!.getRoute(start: startIndex, wordLength: lettersArray.count)
-        print("正确路径是: \(rightRoutes)")
         self.allLettersArray = self.getAllLetters(rightRoutes)
     }
 
@@ -288,7 +287,6 @@ class YXAnswerConnectionLettersView: UIView {
                     aroundArray?.forEach({ (index) in
                         // 3.3、获得对应混淆数组中随机数字(排除自己)
                         let letter = self.getArcLetter(array, exclusion: rightLetter)
-                        print("\(rightLetter)的混淆项有:\(letter)")
                         tmpArray[index] = letter
                     })
                 }
