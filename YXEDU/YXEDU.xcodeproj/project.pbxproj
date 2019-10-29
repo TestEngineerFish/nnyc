@@ -47,6 +47,9 @@
 		23FD6CE822952E5400334321 /* 答题引导2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE422952E5400334321 /* 答题引导2@3x.png */; };
 		23FD6CE922952E5400334321 /* 答题引导1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE522952E5400334321 /* 答题引导1@2x.png */; };
 		770182B32366D80D00070BFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770182B22366D80D00070BFF /* AppDelegate.swift */; };
+		771512E02367126800F6D400 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771512DF2367126800F6D400 /* Mine.storyboard */; };
+		771512E22367131500F6D400 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771512E12367131500F6D400 /* Home.storyboard */; };
+		771512E4236713E600F6D400 /* YXMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771512E3236713E600F6D400 /* YXMineViewController.swift */; };
 		771E885D23628DF0000BFAAD /* YXGradeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E885C23628DF0000BFAAD /* YXGradeModel.swift */; };
 		771E88632362ABC8000BFAAD /* RegisterAndLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771E88622362ABC8000BFAAD /* RegisterAndLogin.storyboard */; };
 		771E88682362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E88672362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift */; };
@@ -63,7 +66,7 @@
 		7786B6D42361C4E40027D0E3 /* YXSingleGroupWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6D22361C4E40027D0E3 /* YXSingleGroupWordBookCell.swift */; };
 		7786B6D52361C4E40027D0E3 /* YXSingleGroupWordBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786B6D32361C4E40027D0E3 /* YXSingleGroupWordBookCell.xib */; };
 		77D048FA2361A12000CE95D8 /* YXWordBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D048F92361A12000CE95D8 /* YXWordBookModel.swift */; };
-		77F69A622361495300E55185 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F69A612361495300E55185 /* Home.storyboard */; };
+		77F69A622361495300E55185 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F69A612361495300E55185 /* Main.storyboard */; };
 		77F69A642361496C00E55185 /* YXHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A632361496C00E55185 /* YXHomeViewController.swift */; };
 		77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A652361499E00E55185 /* YXSelectBookViewController.swift */; };
 		77F69A68236149B300E55185 /* YXAddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A67236149B300E55185 /* YXAddBookViewController.swift */; };
@@ -659,6 +662,9 @@
 		4FCB6DA42328CBB50038E8F5 /* YXStatusCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXStatusCode.h; sourceTree = "<group>"; };
 		6F3F6E87CCD9D15BB5221A47 /* Pods-YXEDU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.debug.xcconfig"; sourceTree = "<group>"; };
 		770182B22366D80D00070BFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		771512DF2367126800F6D400 /* Mine.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Mine.storyboard; sourceTree = "<group>"; };
+		771512E12367131500F6D400 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		771512E3236713E600F6D400 /* YXMineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMineViewController.swift; sourceTree = "<group>"; };
 		771E885C23628DF0000BFAAD /* YXGradeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGradeModel.swift; sourceTree = "<group>"; };
 		771E88622362ABC8000BFAAD /* RegisterAndLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterAndLogin.storyboard; sourceTree = "<group>"; };
 		771E88672362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRegisterAndLoginViewController.swift; sourceTree = "<group>"; };
@@ -675,7 +681,7 @@
 		7786B6D22361C4E40027D0E3 /* YXSingleGroupWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSingleGroupWordBookCell.swift; sourceTree = "<group>"; };
 		7786B6D32361C4E40027D0E3 /* YXSingleGroupWordBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXSingleGroupWordBookCell.xib; sourceTree = "<group>"; };
 		77D048F92361A12000CE95D8 /* YXWordBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookModel.swift; sourceTree = "<group>"; };
-		77F69A612361495300E55185 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		77F69A612361495300E55185 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		77F69A632361496C00E55185 /* YXHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeViewController.swift; sourceTree = "<group>"; };
 		77F69A652361499E00E55185 /* YXSelectBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectBookViewController.swift; sourceTree = "<group>"; };
 		77F69A67236149B300E55185 /* YXAddBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAddBookViewController.swift; sourceTree = "<group>"; };
@@ -1920,6 +1926,31 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		771512DC236710F200F6D400 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				771512DF2367126800F6D400 /* Mine.storyboard */,
+				771512E5236717E000F6D400 /* ViewControllers */,
+				771512E62367180E00F6D400 /* Models */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		771512E5236717E000F6D400 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				771512E3236713E600F6D400 /* YXMineViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		771512E62367180E00F6D400 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		771E88612362ABB2000BFAAD /* RegisterAndLogin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1951,7 +1982,7 @@
 		77F69A602361492500E55185 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				77F69A612361495300E55185 /* Home.storyboard */,
+				771512E12367131500F6D400 /* Home.storyboard */,
 				77F69A6B236149F300E55185 /* ViewControllers */,
 				77F69A7723617C9F00E55185 /* Views */,
 				77D048F82361A0FC00CE95D8 /* Model */,
@@ -2683,9 +2714,11 @@
 		EE5EF13C2327371D00655654 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				77F69A612361495300E55185 /* Main.storyboard */,
 				77F69A6C23614D6300E55185 /* IBDesignableViews */,
 				77F69A602361492500E55185 /* Home */,
 				771E88612362ABB2000BFAAD /* RegisterAndLogin */,
+				771512DC236710F200F6D400 /* Mine */,
 				EE5EFC8723274E5500655654 /* Comm */,
 				EE5EFCEC23274F0900655654 /* Discovery */,
 				EE5EFC3323274BBB00655654 /* Login */,
@@ -4947,16 +4980,18 @@
 				200338DA21B93A25009165DF /* shareBadgeBG@2x.png in Resources */,
 				202C7A21218FED8E00EFD072 /* FresherGuide in Resources */,
 				202709B821DE3A3000E88457 /* oneDrawgameGuide1@3x.png in Resources */,
-				77F69A622361495300E55185 /* Home.storyboard in Resources */,
+				77F69A622361495300E55185 /* Main.storyboard in Resources */,
 				7786B6D12361C3820027D0E3 /* YXGroupWordBookCell.xib in Resources */,
 				23FD6CE822952E5400334321 /* 答题引导2@3x.png in Resources */,
 				23FD6CE722952E5400334321 /* 答题引导2@2x.png in Resources */,
 				77F69A7F23617CEE00E55185 /* YXHomeSubItemCell.xib in Resources */,
+				771512E22367131500F6D400 /* Home.storyboard in Resources */,
 				EE5E0166232754FA00655654 /* KSGuaidProperty.plist in Resources */,
 				202709BB21DE3A3000E88457 /* oneDrawgameGuide1@2x.png in Resources */,
 				23708FDD2269B6FC0082106A /* sharePosterResultBG@2x.png in Resources */,
 				202709BD21DE3A3000E88457 /* oneDrawgameGuide3@3x.png in Resources */,
 				7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */,
+				771512E02367126800F6D400 /* Mine.storyboard in Resources */,
 				EE5E01162327533E00655654 /* location.json in Resources */,
 				EE5EFC5923274D0F00655654 /* nnyc_dis.plist in Resources */,
 			);
@@ -5543,6 +5578,7 @@
 				EE5EFCD723274E5500655654 /* YXPosterShareView.m in Sources */,
 				EE5E00A623274FEB00655654 /* YXASBookCell.m in Sources */,
 				77F69A642361496C00E55185 /* YXHomeViewController.swift in Sources */,
+				771512E4236713E600F6D400 /* YXMineViewController.swift in Sources */,
 				EE5E005723274FEB00655654 /* YXUnitDetailVC.m in Sources */,
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
 				EE5E007523274FEB00655654 /* YXFillWordView.m in Sources */,

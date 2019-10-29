@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = nil
 
-        let storyboard = UIStoryboard(name:"Home", bundle: nil)
+        let storyboard = UIStoryboard(name:"Main", bundle: nil)
         let tabBarController = storyboard.instantiateViewController(withIdentifier: "YXTabBarViewController") as? UITabBarController
         window?.rootViewController = tabBarController
 

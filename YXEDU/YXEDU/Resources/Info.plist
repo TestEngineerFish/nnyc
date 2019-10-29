@@ -125,7 +125,7 @@
 		<string>iconfont_back.ttf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
-	<string>Home</string>
+	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
