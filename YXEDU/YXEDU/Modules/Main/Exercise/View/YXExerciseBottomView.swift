@@ -65,8 +65,7 @@ class YXExerciseBottomView: UIView {
             make.left.equalTo(iconButton.snp.right).offset(1)
             make.width.equalTo(49)
             make.height.equalTo(17)
-        }
-        
+        }        
     }
     
     

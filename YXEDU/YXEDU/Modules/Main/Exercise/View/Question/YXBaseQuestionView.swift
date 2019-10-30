@@ -39,7 +39,7 @@ class YXBaseQuestionView: UIView {
     
     
     func createSubviews() {
-        contentView.frame = CGRect(x: 22, y: 80, width: screenWidth - 22 * 2, height: 160)
+        contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 160)
         
         // fillCode
         let bgLayer1 = CALayer()

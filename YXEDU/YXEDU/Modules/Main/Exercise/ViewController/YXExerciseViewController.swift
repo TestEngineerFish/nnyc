@@ -70,7 +70,7 @@ class YXExerciseViewController: UIViewController {
     
     
     private func bindProperty() {
-        self.view.backgroundColor = UIColor.blue
+        self.view.backgroundColor = UIColor.white
         
         self.headerView.backEvent = {[weak self] in
             self?.navigationController?.popViewController(animated: true)

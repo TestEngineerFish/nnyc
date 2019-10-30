@@ -9,8 +9,8 @@
 import UIKit
 
 
-/// 练习子界面工厂
-struct YXExerciseViewFactory {    
+/// 练习子界面工厂类
+struct YXExerciseViewFactory {
     
     /// 工厂方法，构建练习视图
     /// - Parameter exerciseModel: 单词数据模型
@@ -48,7 +48,7 @@ struct YXExerciseViewFactory {
                 return YXListenChooseImageExerciseView(exerciseModel: exerciseModel)
                 
                 
-            //MARK: connect
+            //MARK: connection
             case .connectionWordAndChinese:
                 return YXConnectionWordAndChineseExerciseView(exerciseModel: exerciseModel)
             case .connectionWordAndImage:

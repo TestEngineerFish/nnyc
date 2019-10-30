@@ -21,14 +21,17 @@ class YXLookWordChooseImageExerciseView: YXBaseExerciseView {
         answerView?.exerciseModel = self.exerciseModel
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
+        
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+//        self.
+        
         self.questionView?.snp.makeConstraints { (make) in
-            make.top.equalTo(30)
+            make.top.equalTo(32)
             make.left.right.equalTo(0)
             make.height.equalTo(180)
         }
