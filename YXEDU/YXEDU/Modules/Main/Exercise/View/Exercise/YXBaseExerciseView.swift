@@ -17,14 +17,17 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
 }
 
 
-/// 练习模块：内容主页面，包括题目View、答案View、TipsView
+/// 练习模块基类：内容主页面，包括题目View、答案View、TipsView
 class YXBaseExerciseView: UIScrollView {
 
     var exerciseModel: YXWordExerciseModel? {
         didSet { self.bindData() }
     }
-    
+        
+    /// 题目view
     var questionView: YXBaseQuestionView?
+    
+    /// 答案view
     var answerView: YXBaseAnswerView?
     
     weak var exerciseDelegate: YXExerciseViewDelegate?
@@ -84,10 +87,6 @@ class YXBaseExerciseView: UIScrollView {
         }
     }
     
-    
-    func answerCompletion(right: Bool) {
-        
-    }
 }
 
 

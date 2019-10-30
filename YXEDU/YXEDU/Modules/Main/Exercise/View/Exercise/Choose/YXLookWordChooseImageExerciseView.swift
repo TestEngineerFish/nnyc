@@ -8,8 +8,9 @@
 
 import UIKit
 
+
+/// 看单词选图片
 class YXLookWordChooseImageExerciseView: YXBaseExerciseView {
-    
     
     override func createSubview() {
         answerView = YXImageAnswerView()
