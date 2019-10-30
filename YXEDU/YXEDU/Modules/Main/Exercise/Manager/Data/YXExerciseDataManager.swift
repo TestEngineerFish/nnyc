@@ -19,6 +19,9 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         exerciseModelArray = [
+            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
+            YXWordExerciseModel(.fillWordAccordingToChinese),
+            
             YXWordExerciseModel(.lookWordChooseImage),
             YXWordExerciseModel(.lookExampleChooseImage)
         ]
@@ -30,6 +33,9 @@ class YXExerciseDataManager: NSObject {
     /// 加载本地未学完的关卡数据
     func fetchUnCompletionExerciseModels() {
         exerciseModelArray = [
+            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
+            YXWordExerciseModel(.fillWordAccordingToChinese),
+            
             YXWordExerciseModel(.lookWordChooseImage),
             YXWordExerciseModel(.lookExampleChooseImage)
         ]
@@ -65,5 +71,7 @@ class YXExerciseDataManager: NSObject {
         completion?(true, nil)
     }
     
-
+    
+    
+    
 }

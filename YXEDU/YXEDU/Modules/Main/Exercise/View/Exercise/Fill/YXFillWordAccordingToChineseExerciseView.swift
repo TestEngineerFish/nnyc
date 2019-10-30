@@ -8,15 +8,25 @@
 
 import UIKit
 
-/// 看中文填空
+/// /// 看中文填空，仅点击操作
 class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    override func createSubview() {
+        let wordArray = ["e", "f", "u", "pdsss", "wddesa", "v", "m", "x"]
+        
+        answerView = YXAnswerSelectLettersView(wordArray)
+        answerView?.exerciseModel = self.exerciseModel
+        answerView?.answerDelegate = self
+        self.addSubview(answerView!)
     }
-    */
-
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        answerView?.frame = CGRect(x: (screenWidth - 270) / 2, y: self.size.height - 200, width: 270, height: 200)
+    }
+    
+    override func bindData() {
+        
+    }
+    
 }

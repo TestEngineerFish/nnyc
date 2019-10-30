@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXAnswerSelectLettersView: UIView {
+class YXAnswerSelectLettersView: YXBaseAnswerView {
     let contentView = UIView()
 
     let itemSize    = CGFloat(60)
@@ -127,6 +127,9 @@ class YXAnswerSelectLettersView: UIView {
         button.isSelected = !button.isSelected
         button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
         delegate?.clickWordButton(button)
+        
+        // 做题完成时，调用父类方法
+        answerCompletion(right: true)
     }
 
     // TODO: Tools

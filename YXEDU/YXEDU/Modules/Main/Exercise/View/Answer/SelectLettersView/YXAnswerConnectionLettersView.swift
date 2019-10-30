@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXAnswerConnectionLettersView: UIView {
+class YXAnswerConnectionLettersView: YXBaseAnswerView {
 
     var allButtonArray    = [UIButton]()
     var enableButtonArray = [UIButton]() // 可选按钮列表
