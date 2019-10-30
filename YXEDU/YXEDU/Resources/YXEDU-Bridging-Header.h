@@ -39,4 +39,5 @@
 #import "YXComHttpService.h"
 #import "YXStatusCode.h"
 #import "YXMainModel.h"
+#import "UIImageView+WebCache.h"
 
