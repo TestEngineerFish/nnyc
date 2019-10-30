@@ -9,14 +9,7 @@
 import UIKit
 
 /// 练习模块：内容主页面，包括题目View、答案View、TipsView
-class YXExerciseView: UIScrollView {
-
-    var exerciseModel: YXWordExerciseModel?
-    //    var questionView: YXExerciseQuestionView?
-    //    var answerView: YXExerciseAnswerView?
-    private var questionView = YXQuestionView()
-    
-    weak var exerciseDelegate: YXExerciseViewDelegate?
+class YXExerciseView: YXBaseExerciseView {
     
     deinit {
         print("练习view 释放")
@@ -93,52 +86,5 @@ class YXExerciseView: UIScrollView {
     //        }
 
 
-    
-    
-    
-    
-    /// 动画入场，动画从右边往左边显示出来
-    func animateAdmission(_ first: Bool = false, _ completion: (() -> Void)?) {
-        
-        self.origin.x = screenWidth
-        UIView.animate(withDuration: 0.4, delay: first ? 0.4 : 0.2, options: [], animations: {
-            self.origin.x = 0
-        }) { (finish) in
-            if finish {
-                completion?()
-            }
-        }
-    }
-    
-    
-    /// 动画出场
-    func animateRemove() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.origin.x = -screenWidth
-        }) { (finish) in
-            if finish {
-                self.removeFromSuperview()
-            }
-        }
-    }
 }
 
-
-extension YXExerciseView {
-
-    //MARK: YXQuestionViewConstraintsProtocol
-    func updateHeight(_ height: CGFloat) {
-        //        self.questionView.snp.updateConstraints { (make) in
-        //            make.height.equalTo(height)
-        //        }
-    }
-
-
-    //MARK: YXAnswerEventProtocol
-    func clickWordButton(_ button: UIButton) {
-        //        button.isSelected = !button.isSelected
-        //        button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
-    }
-
-
-}

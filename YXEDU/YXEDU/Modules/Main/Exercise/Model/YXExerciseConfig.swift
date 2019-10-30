@@ -18,6 +18,8 @@ struct YXExerciseConfig {
     static let answerViewBottom: CGFloat = 86
     
     static let contentViewTop: CGFloat = 45 + (iPhoneXLater ? 34 : 0)
+    static let contentViewBottom: CGFloat = 86 + (iPhoneXLater ? 34 : 0)
     
+    /// 底部提示view距离边框底部的间距
     static let bottomViewBottom: CGFloat = -19 - (iPhoneXLater ? 34 : 0)
 }

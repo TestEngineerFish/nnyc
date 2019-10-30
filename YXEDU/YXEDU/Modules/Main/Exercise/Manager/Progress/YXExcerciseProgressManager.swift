@@ -22,8 +22,8 @@ class YXExcerciseProgressManager: NSObject {
     }
         
     
-    /// 记录进度，每学习一个step
-    class func addProgress() {
+    /// 跟新练习进度
+    class func updateProgress(exerciseModel: YXWordExerciseModel) {
         
     }
     

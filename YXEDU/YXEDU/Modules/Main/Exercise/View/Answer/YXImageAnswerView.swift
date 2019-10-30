@@ -39,9 +39,9 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)
-        flowLayout.minimumLineSpacing = 14
-        flowLayout.minimumInteritemSpacing = 9
-        flowLayout.sectionInset = UIEdgeInsets(top: 7, left: 16, bottom: 0, right: 16)
+        flowLayout.minimumLineSpacing = 13
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 35, bottom: 0, right: 35)
                 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = UIColor.white
@@ -77,6 +77,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: idf, for: indexPath)
         cell.backgroundColor = UIColor.gray
         cell.layer.borderWidth = 1.5
+        cell.layer.borderColor = UIColor.clear.cgColor
         return cell
     }
 
@@ -88,8 +89,8 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderColor = UIColor.orange1.cgColor        
         collectionViewCell = cell
-    
-        self.answerDelegate?.answerCompletion(self.exerciseModel, true)
+        
+        self.answerCompletion(right: true)
     }
     
 }

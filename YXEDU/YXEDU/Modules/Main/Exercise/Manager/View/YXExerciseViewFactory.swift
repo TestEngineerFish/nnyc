@@ -12,20 +12,20 @@ import UIKit
 /// 练习子界面工厂
 struct YXExerciseViewFactory {
     
-    static func buildView(exerciseModel: YXWordExerciseModel) -> YXExerciseView {
+    static func buildView(exerciseModel: YXWordExerciseModel) -> YXBaseExerciseView {
         
-        return YXExerciseView()
+//        return YXExerciseView()
         
         
-//        switch exerciseModel.type {
-//        case .lookWordChooseImage:
-//            return YXLookWordChooseImageExerciseView(exerciseModel: exerciseModel)
-//
-//
-////            case .lookWordChooseChinese:
-//        default:
-//            return YXLookWordChooseImageExerciseView(exerciseModel: exerciseModel)
-//        }
+        switch exerciseModel.type {
+        case .lookWordChooseImage:
+            return YXLookWordChooseImageExerciseView(exerciseModel: exerciseModel)
+
+
+//            case .lookWordChooseChinese:
+        default:
+            return YXLookWordChooseImageExerciseView(exerciseModel: exerciseModel)
+        }
     }
     
     

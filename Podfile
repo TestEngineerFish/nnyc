@@ -34,7 +34,7 @@ target 'YXEDU' do
      pod 'JPush'
      pod 'Masonry'
      pod 'SDWebImage', '~> 4.4.2'
-     pod 'LEEAlert'
+     pod 'LEEAlert', '~> 1.2.8'
      pod 'DACircularProgress', '~> 2.3.1'
      # 布局约束
      pod 'SnapKit', '~> 4.0.0'

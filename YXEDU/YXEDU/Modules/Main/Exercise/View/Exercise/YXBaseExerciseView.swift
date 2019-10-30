@@ -9,10 +9,11 @@
 import UIKit
 
 
-protocol YXExerciseViewDelegate: NSObject {
+/// 练习相关的协议
+protocol YXExerciseViewDelegate: NSObjectProtocol {
     /// 练习完成
     /// - Parameter right: 是否答对
-    func exerciseCompletion(right: Bool)
+    func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool)
 }
 
 
@@ -32,12 +33,13 @@ class YXBaseExerciseView: UIScrollView {
         print("练习view 释放")
     }
     
-    convenience init(exerciseModel: YXWordExerciseModel) {
-        self.init(frame: CGRect.zero)
-        self.frame = CGRect(x: screenWidth, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
-        self.contentSize = CGSize(width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
-        
+    init(exerciseModel: YXWordExerciseModel) {
+        super.init(frame: CGRect.zero)
         self.exerciseModel = exerciseModel
+        
+        self.frame = CGRect(x: screenWidth, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - YXExerciseConfig.contentViewBottom)
+        self.contentSize = self.size
+        
         self.createSubview()
     }
     
@@ -81,15 +83,18 @@ class YXBaseExerciseView: UIScrollView {
             }
         }
     }
+    
+    
+    func answerCompletion(right: Bool) {
+        
+    }
 }
 
 
-extension YXBaseExerciseView: YXExerciseViewDelegate {
+extension YXBaseExerciseView: YXAnswerViewDelegate {
     
-    
-    ///答完题
-    /// - Parameter right: 
-    func exerciseCompletion(right: Bool) {
-        self.exerciseDelegate?.exerciseCompletion(right: right)
+    func answerCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
+        self.exerciseDelegate?.exerciseCompletion(exerciseModel, right)
     }
+
 }

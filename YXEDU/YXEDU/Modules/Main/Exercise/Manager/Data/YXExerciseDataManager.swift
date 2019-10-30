@@ -44,15 +44,15 @@ class YXExerciseDataManager: NSObject {
     
     /// 错题数据处理，重做
     /// - Parameter wrongExercise: 练习Model
-    func addWrongExercise(wrongExercise: YXWordExerciseModel) {
-        self.exerciseModelArray.append(wrongExercise)
+    func addWrongExercise(exerciseModel: YXWordExerciseModel) {
+        self.exerciseModelArray.append(exerciseModel)
         
-        self.addWrongBook(wrongExercise: wrongExercise)
+        self.addWrongBook(exerciseModel: exerciseModel)
     }
     
     /// 错题本数据处理
     /// - Parameter wrongExercise: 练习Model
-    func addWrongBook(wrongExercise: YXWordExerciseModel) {
+    func addWrongBook(exerciseModel: YXWordExerciseModel) {
         
     }
     

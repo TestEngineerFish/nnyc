@@ -20,7 +20,7 @@ class YXExerciseViewController: UIViewController {
     var progressManager: YXExcerciseProgressManager = YXExcerciseProgressManager()
     
     // 练习view容器，用于动画切题
-    private var exerciseViewArray: [YXExerciseView] = []
+    private var exerciseViewArray: [YXBaseExerciseView] = []
         
     // 顶部view
     private var headerView: YXExerciseHeaderView = YXExerciseHeaderView()
@@ -132,9 +132,7 @@ class YXExerciseViewController: UIViewController {
         
         if let model = dataManager.fetchOneExerciseModels() {
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
-            exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
-            exerciseView.contentSize = CGSize(width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - 86)
-            
+            exerciseView.exerciseDelegate = self
             loadExerciseView(exerciseView: exerciseView)
         }
         
@@ -143,7 +141,7 @@ class YXExerciseViewController: UIViewController {
     
     /// 加载一个练习
     /// - Parameter exerciseView: 新的练习view
-    private func loadExerciseView(exerciseView: YXExerciseView) {
+    private func loadExerciseView(exerciseView: YXBaseExerciseView) {
         // 是否第一次进来
         var isFirst = true
         if let ceview = exerciseViewArray.first {
@@ -158,6 +156,21 @@ class YXExerciseViewController: UIViewController {
         
     }
     
-    
-    
+}
+
+
+extension YXExerciseViewController: YXExerciseViewDelegate {
+    ///答完题回调处理
+    /// - Parameter right:
+    func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
+        if !right {
+            // 如果回答不对，加入错题本
+            dataManager.addWrongExercise(exerciseModel: exerciseModel)        
+        }
+        // 更新学习进度
+        YXExcerciseProgressManager.updateProgress(exerciseModel: exerciseModel)
+        
+        // 切题
+        self.switchExerciseView()
+    }
 }

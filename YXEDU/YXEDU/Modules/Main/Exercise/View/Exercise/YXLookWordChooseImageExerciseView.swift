@@ -14,15 +14,19 @@ class YXLookWordChooseImageExerciseView: YXBaseExerciseView {
     override func createSubview() {
         answerView = YXImageAnswerView()
         answerView?.exerciseModel = self.exerciseModel
+        answerView?.answerDelegate = self
         self.addSubview(answerView!)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        answerView?.snp.makeConstraints({ (make) in
-            make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(223)
-        })
+//        answerView?.snp.makeConstraints({ (make) in
+//            make.centerX.bottom.equalToSuperview()
+//            make.width.equalTo(screenWidth)
+//            make.height.equalTo(223)
+//        })
+        
+        answerView?.frame = CGRect(x: 0, y: self.size.height - 223, width: screenWidth, height: 223)
     }
 
     
