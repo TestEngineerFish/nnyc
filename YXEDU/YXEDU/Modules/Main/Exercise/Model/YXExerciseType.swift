@@ -52,50 +52,50 @@ enum YXExerciseType {
 
 
 
-/// 练习的问题类型
-enum YXExerciseQuestionType: Int {
-    //MARK: ---- 选择题，题型
-    case word                               // 单词+音标
-    case example                            // 例句
-    case chinese                            // 中文词义
-    case image                              // 图片
-    case wordAndChinese                     // 单词+音标+词义
-    case wordAndImage                       // 图片+单词+音标
-    
-    //MARK: ---- 听力题，题型
-    case listenAndImage                     // 听录音+图片
-    case listenAndWord                      // 听录音+中文
-    
-    //MARK: ---- 连线题，题型
-    case connectWordAndChinese              // 词义连线
-    case connectWordAndImage                // 词图连线
-    
-    //MARK: ---- 填空题，题型
-    case fillByWordAndChinese               // 单词+词义
-    case fillByWordAndListen                // 单词+语音
-    case fillByWordAndImage                 // 单词+图片
-    case fillByChinse                       // 词义
-    case fillByWord                         // 词组
-    
-    case none
-}
+///// 练习的问题类型
+//enum YXExerciseQuestionType: Int {
+//    //MARK: ---- 选择题，题型
+//    case word                               // 单词+音标
+//    case example                            // 例句
+//    case chinese                            // 中文词义
+//    case image                              // 图片
+//    case wordAndChinese                     // 单词+音标+词义
+//    case wordAndImage                       // 图片+单词+音标
+//
+//    //MARK: ---- 听力题，题型
+//    case listenAndImage                     // 听录音+图片
+//    case listenAndWord                      // 听录音+中文
+//
+//    //MARK: ---- 连线题，题型
+//    case connectWordAndChinese              // 词义连线
+//    case connectWordAndImage                // 词图连线
+//
+//    //MARK: ---- 填空题，题型
+//    case fillByWordAndChinese               // 单词+词义
+//    case fillByWordAndListen                // 单词+语音
+//    case fillByWordAndImage                 // 单词+图片
+//    case fillByChinse                       // 词义
+//    case fillByWord                         // 词组
+//
+//    case none
+//}
+//
+//
+///// 练习的答案类型
+//enum YXExerciseAnswerType: Int {
+//    case image                              // 图片选项
+//    case chinese                            // 中文词义选项
+//    case word                               // 单词
+//    case rightOrWrong                       // 对错
+//    case wordMultiLine                      // 单词（多行）
+//
+//    case none
+//}
 
 
-/// 练习的答案类型
-enum YXExerciseAnswerType: Int {
-    case image                              // 图片选项
-    case chinese                            // 中文词义选项
-    case word                               // 单词
-    case rightOrWrong                       // 对错
-    case wordMultiLine                      // 单词（多行）
-    
-    case none
-}
 
-
-
-struct YXExerciseItem {
-    var questionType: YXExerciseQuestionType = .none
-    var answerType: YXExerciseAnswerType = .none
-}
+//struct YXExerciseItem {
+//    var questionType: YXExerciseQuestionType = .none
+//    var answerType: YXExerciseAnswerType = .none
+//}
 

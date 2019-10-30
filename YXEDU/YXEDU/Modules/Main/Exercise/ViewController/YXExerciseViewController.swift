@@ -163,10 +163,9 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     ///答完题回调处理
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
-        if !right {
-            // 如果回答不对，加入错题本
-            dataManager.addWrongExercise(exerciseModel: exerciseModel)        
-        }
+        // 这题做完，需要移除掉
+        dataManager.completionExercise(exerciseModel: exerciseModel, right: right)
+        
         // 更新学习进度
         YXExcerciseProgressManager.updateProgress(exerciseModel: exerciseModel)
         

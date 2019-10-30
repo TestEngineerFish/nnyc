@@ -11,6 +11,8 @@ import UIKit
 /// 问题面板基类
 class YXBaseQuestionView: UIView {
     
+    var exerciseModel: YXWordExerciseModel?
+    
     /// 容器view
     var contentView: UIView = UIView()
     

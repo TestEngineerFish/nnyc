@@ -10,13 +10,17 @@ import UIKit
 
 /// 听录音选图片
 class YXListenChooseImageExerciseView: YXBaseExerciseView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    override func createSubview() {
+        answerView = YXImageAnswerView()
+        answerView?.frame = CGRect(x: 0, y: self.size.height - 223, width: screenWidth, height: 223)
+        answerView?.exerciseModel = self.exerciseModel
+        answerView?.answerDelegate = self
+        self.addSubview(answerView!)
     }
-    */
+    
+    override func bindData() {
+        
+    }
 
 }

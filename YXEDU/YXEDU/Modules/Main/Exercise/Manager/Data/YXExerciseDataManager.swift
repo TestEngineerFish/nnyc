@@ -19,8 +19,9 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         exerciseModelArray = [
-            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
+            YXWordExerciseModel(.lookWordChooseImage),
             YXWordExerciseModel(.fillWordAccordingToChinese),
+            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
             
             YXWordExerciseModel(.lookWordChooseImage),
             YXWordExerciseModel(.lookExampleChooseImage)
@@ -48,17 +49,26 @@ class YXExerciseDataManager: NSObject {
     }
     
     
+    /// 完成一个练习后，答题后删除练习题
+    /// - Parameter exerciseModel:
+    func completionExercise(exerciseModel: YXWordExerciseModel, right: Bool) {
+        self.exerciseModelArray.removeFirst()
+        
+        if !right {
+            self.addWrongExercise(exerciseModel: exerciseModel)
+            self.addWrongBook(exerciseModel: exerciseModel)
+        }
+    }
+    
     /// 错题数据处理，重做
     /// - Parameter wrongExercise: 练习Model
-    func addWrongExercise(exerciseModel: YXWordExerciseModel) {
+    private func addWrongExercise(exerciseModel: YXWordExerciseModel) {
         self.exerciseModelArray.append(exerciseModel)
-        
-        self.addWrongBook(exerciseModel: exerciseModel)
     }
     
     /// 错题本数据处理
     /// - Parameter wrongExercise: 练习Model
-    func addWrongBook(exerciseModel: YXWordExerciseModel) {
+    private func addWrongBook(exerciseModel: YXWordExerciseModel) {
         
     }
     
