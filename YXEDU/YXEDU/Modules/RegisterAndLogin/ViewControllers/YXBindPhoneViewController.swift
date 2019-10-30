@@ -10,6 +10,8 @@ import UIKit
 
 class YXBindPhoneViewController: UIViewController {
 
+    var platform: String!
+    
     private var timer: Timer?
     private var CountingDown = 60
     
@@ -30,7 +32,35 @@ class YXBindPhoneViewController: UIViewController {
     }
     
     @IBAction func login(_ sender: UIButton) {
-        loadMainPage()
+        let bindModel = YXBindModel()
+        bindModel.mobile = phoneNumberTextField.text
+        bindModel.code = authCodeTextField.text
+        bindModel.pf = platform
+        
+        let bindViewModel = YXBindViewModel()
+        bindViewModel.bindPhone(bindModel) { (response, isSuccess) in
+            guard isSuccess else { return }
+            YXUserModel.default.didLogin = true
+            YXConfigure.shared().saveCurrentToken()
+
+            YXComHttpService.shared().requestConfig({ (response, isSuccess) in
+                if isSuccess, let response = response?.responseObject {
+                    let config = response as! YXConfigModel
+                        
+                    guard config.baseConfig.learning else {
+                        let storyboard = UIStoryboard(name:"Home", bundle: nil)
+                        let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
+                        self.navigationController?.pushViewController(addBookViewController, animated: true)
+                        return
+                    }
+                    
+                    YXUserModel.default.login()
+                    
+                } else if let error = response?.error {
+                    print(error.desc)
+                }
+            })
+        }
     }
     
     override func viewDidLoad() {
@@ -53,10 +83,17 @@ class YXBindPhoneViewController: UIViewController {
             phoneNumberTextField.text = phoneNumber.substring(maxIndex: 11)
             phoneNumber = phoneNumberTextField.text!
         }
-                       
+        
         if phoneNumber.substring(maxIndex: 1) == "1", phoneNumber.count == 11  {
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
+            
+            if let authCode = authCodeTextField.text, authCode.isEmpty == false {
+                loginButton.isUserInteractionEnabled = true
+
+            } else {
+                loginButton.isUserInteractionEnabled = false
+            }
             
         } else {
             sendSMSButton.isUserInteractionEnabled = false
@@ -66,6 +103,8 @@ class YXBindPhoneViewController: UIViewController {
     
     @objc
     private func changeAuthCodeTextField() {
+        guard let phoneNumber = phoneNumberTextField.text, phoneNumber.count == 11 else { return }
+
         if let authCode = authCodeTextField.text, authCode.isEmpty == false {
             loginButton.isUserInteractionEnabled = true
             
@@ -103,9 +142,10 @@ class YXBindPhoneViewController: UIViewController {
     
     private func sendSMS(with authCode: String = "") {
         let sendSMSModel = YXSendSMSModel()
-        sendSMSModel.type = "login"
+        sendSMSModel.type = "editMobile"
         sendSMSModel.mobile = phoneNumberTextField.text
         sendSMSModel.captcha = authCode
+        sendSMSModel.pf = platform
         
         let bindViewModel = YXBindViewModel()
         bindViewModel.sendSMS(sendSMSModel) { (code, isSuccess) in
@@ -141,12 +181,7 @@ class YXBindPhoneViewController: UIViewController {
             comAlertView.verifyCodeImage.image = UIImage(data: data as! Data)
         }
     }
-    
-    private func loadMainPage() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.loadMainPage()
-    }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.view.endEditing(true)

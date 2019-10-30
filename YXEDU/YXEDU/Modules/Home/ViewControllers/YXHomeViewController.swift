@@ -10,6 +10,12 @@ import UIKit
 
 class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    private var learnedWordsCount = "--"
+    private var collectedWordsCount = "--"
+    private var wrongWordsCount = "--"
+
+    @IBOutlet weak var bookNameButton: UIButton!
+    @IBOutlet weak var unitNameButton: UIButton!
     @IBOutlet weak var countOfWaitForStudyWords: YXDesignableLabel!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var studyDataCollectionView: UICollectionView!
@@ -26,6 +32,46 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
+        
+        checkLoginState()
+    }
+    private func checkLoginState() {
+        YXComHttpService.shared().requestConfig({ (response, isSuccess) in
+            if isSuccess, let response = response?.responseObject {
+                let config = response as! YXConfigModel
+
+                guard config.baseConfig.learning else {
+                    self.performSegue(withIdentifier: "AddWordsBook", sender: self)
+                    return
+                }
+                
+                self.loadData()
+                
+            } else if let error = response?.error {
+                print(error.desc)
+            }
+        })
+    }
+    
+    private func loadData() {
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/learning/indexinfo", modelClass: YXMainModel.self, parameters: [:]) { (response, isSuccess) in
+            if isSuccess, let response = response?.responseObject {
+                let mainModel = response as! YXMainModel
+                YXConfigure.shared().currLearningBookId = mainModel.noteIndex.bookId
+                
+                self.bookNameButton.setTitle(mainModel.noteIndex.bookName, for: .normal)
+                self.unitNameButton.setTitle("Unit 1", for: .normal)
+                self.countOfWaitForStudyWords.text = mainModel.noteIndex.planRemain
+
+                self.learnedWordsCount = mainModel.noteRecord.learned
+                self.collectedWordsCount = mainModel.noteRecord.fav
+                self.wrongWordsCount = mainModel.noteRecord.wrong
+                self.studyDataCollectionView.reloadData()
+                
+            } else {
+                
+            }
+        }
     }
     
     @IBAction func startExercise(_ sender: UIButton) {
@@ -34,6 +80,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    
+    
+    // MARK: -
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 1 {
             return 3
@@ -50,17 +99,17 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             switch indexPath.row {
             case 0:
                 cell.titleLabel.text = "已学单词"
-                cell.dataLabel.text = "--"
+                cell.dataLabel.text = learnedWordsCount
                 break
                 
             case 1:
                 cell.titleLabel.text = "收藏夹"
-                cell.dataLabel.text = "--"
+                cell.dataLabel.text = collectedWordsCount
                 break
                 
             case 2:
                 cell.titleLabel.text = "错词本"
-                cell.dataLabel.text = "--"
+                cell.dataLabel.text = wrongWordsCount
                 break
                 
             default:

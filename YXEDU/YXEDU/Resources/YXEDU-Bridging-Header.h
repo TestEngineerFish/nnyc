@@ -36,5 +36,7 @@
 #import "QQApiManager.h"
 #import "WXApiManager.h"
 #import "YXDataProcessCenter.h"
+#import "YXComHttpService.h"
 #import "YXStatusCode.h"
+#import "YXMainModel.h"
 

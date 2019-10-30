@@ -95,6 +95,12 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let wordBookModel = groupWordBookModels[collectionView.tag].wordBookModels?[indexPath.row]
         
+        YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/setlearning", parameters: ["bookId": ""]) { (response, isSuccess) in
+            if isSuccess {
+                
+            }
+        }
+        
         navigationController?.popToRootViewController(animated: true)
     }
     

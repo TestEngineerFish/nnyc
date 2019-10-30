@@ -10,6 +10,8 @@ import UIKit
 
 class YXRegisterAndLoginViewController: UIViewController {
     
+    var platform: String!
+
     private var timer: Timer?
     private var CountingDown = 60
     
@@ -23,37 +25,69 @@ class YXRegisterAndLoginViewController: UIViewController {
 
     @IBAction func clearphoneNumberTextField(_ sender: UIButton) {
         phoneNumberTextField.text = ""
+        phoneNumberTextField.becomeFirstResponder()
     }
     
     @IBAction func sendSMSWithoutAuthCode(_ sender: UIButton) {
         sendSMS()
+        authCodeTextField.becomeFirstResponder()
     }
     
     @IBAction func login(_ sender: UIButton) {
-//        let sendModel = YXLoginSendModel()
-//        sendModel.pf = "mobile"
-//        sendModel.code = authCodeTextField.text
-//        sendModel.mobile = phoneNumberTextField.text
-//        sendModel.openid = ""
-//
-//        YXDataProcessCenter.post("/v1/user/reg", parameters: sendModel.yrModelToDictionary() as! [AnyHashable : Any]) { (response, isSuccess) in
-//            if isSuccess {
-//
-//            } else {
-//
-//            }
-//        }
-        
-        loadMainPage()
+        let sendModel = YXLoginSendModel()
+        sendModel.pf = "mobile"
+        sendModel.mobile = phoneNumberTextField.text
+        sendModel.code = authCodeTextField.text
+        sendModel.openid = ""
+
+        let parameters = sendModel.yrModelToDictionary() as! [AnyHashable : Any]
+        YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
+
+            if isSuccess, let response = response?.responseObject {
+                YXUserModel.default.token = (response as! [String: Any])["token"] as? String
+                YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
+                YXConfigure.shared().token = YXUserModel.default.token
+
+                YXComHttpService.shared().requestConfig({ (response, isSuccess) in
+                    if isSuccess, let response = response?.responseObject {
+                        let config = response as! YXConfigModel
+
+                        guard config.baseConfig.bindMobile else {
+                            self.performSegue(withIdentifier: "Bind", sender: self)
+                            return
+                        }
+
+                        YYCache.set(self.phoneNumberTextField.text, forKey: "PhoneNumber")
+                        YXUserModel.default.didLogin = true
+                        YXConfigure.shared().saveCurrentToken()
+
+                        guard config.baseConfig.learning else {
+                            let storyboard = UIStoryboard(name:"Home", bundle: nil)
+                            let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
+                            self.navigationController?.pushViewController(addBookViewController, animated: true)
+                            return
+                        }
+                        
+                        YXUserModel.default.login()
+                        
+                    } else if let error = response?.error {
+                        print(error.desc)
+                    }
+                })
+                
+            } else if let error = response?.error {
+                print(error.desc)
+            }
+        }
     }
     
-    @objc
     @IBAction func loginWithQQ(_ sender: UIButton) {
+        platform = "qq"
         QQApiManager.shared().qqLogin()
     }
     
-    @objc
     @IBAction func loginWithWechat(_ sender: UIButton) {
+        platform = "wechat"
         WXApiManager.shared().wxLogin()
     }
     
@@ -69,8 +103,19 @@ class YXRegisterAndLoginViewController: UIViewController {
         
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
         authCodeTextField.addTarget(self, action: #selector(changeAuthCodeTextField), for: UIControl.Event.editingChanged)
+        
+        if let phoneNumber = YYCache.object(forKey: "PhoneNumber") as? String {
+            phoneNumberTextField.text = phoneNumber
+        }
 
         initShanYan()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Bind" {
+            let controller = segue.destination as! YXBindPhoneViewController
+            controller.platform = platform
+        }
     }
     
     @objc
@@ -184,11 +229,6 @@ class YXRegisterAndLoginViewController: UIViewController {
         }
     }
     
-    private func loadMainPage() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.loadMainPage()
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.view.endEditing(true)
@@ -198,23 +238,39 @@ class YXRegisterAndLoginViewController: UIViewController {
     // MARK: - 闪验
     private func initShanYan() {
         CLShanYanSDKManager.initWithAppId("OoCjBtLT") { (result) in
-            if let error = result.error {
-                print("初始化失败，\(error.localizedDescription)")
+            guard result.error == nil else { return }
+            
+            CLShanYanSDKManager.preGetPhonenumber { (result) in
+                guard result.error == nil else { return }
                 
-            } else {
-                CLShanYanSDKManager.preGetPhonenumber { (result) in
-                    if let error = result.error {
-                        print("预取号失败，\(error.localizedDescription)")
-                        
-                    } else {
-                        self.showShanYanAuthPage()
-                    }
-                }
+                self.showShanYanAuthPage()
             }
         }
     }
     
     private func showShanYanAuthPage() {
+        let configure = customShanYanView()
+        
+        CLShanYanSDKManager.quickAuthLogin(with: configure, openLoginAuthListener: { (resultOfShowAuthPage) in
+            if let error = resultOfShowAuthPage.error {
+                print(error.localizedDescription)
+                
+            }
+            
+        }) { (resultOfLogin) in
+            if let _ = resultOfLogin.error {
+                CLShanYanSDKManager.finishAuthControllerCompletion(nil)
+                
+            } else {
+                print(resultOfLogin.data)
+                CLShanYanSDKManager.finishAuthControllerCompletion {
+                    
+                }
+            }
+        }
+    }
+    
+    private func customShanYanView() -> CLUIConfigure {
         let configure = CLUIConfigure()
         configure.viewController = self
         configure.clNavigationBarHidden = true
@@ -249,19 +305,6 @@ class YXRegisterAndLoginViewController: UIViewController {
             containerView.backgroundColor = .white
             containerView.layer.setDefaultShadow()
             
-//            let agreementLabel = UILabel()
-//            agreementLabel.text = "登录即同意"
-//            agreementLabel.textColor = UIColor(red: 0.53, green: 0.53, blue: 0.53, alpha: 1)
-//            agreementLabel.font = UIFont.systemFont(ofSize: 10)
-            
-//            let agreementButton = UIButton()
-//            agreementButton.setTitle("《用户协议》", for: .normal)
-//            agreementButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1), for: .normal)
-//            agreementButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-            
-//            let underLineView = UIView()
-//            underLineView.backgroundColor = UIColor(red: 79/255, green: 79/255, blue: 79/255, alpha: 1)
-            
             let otherLoginButton = UIButton()
             otherLoginButton.setTitle("其他手机号登录", for: .normal)
             otherLoginButton.setTitleColor(UIColor(red: 0.98, green: 0.64, blue: 0.09, alpha: 1), for: .normal)
@@ -280,11 +323,15 @@ class YXRegisterAndLoginViewController: UIViewController {
             lineView2.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
             
             let qqLoginButton = UIButton()
+            qqLoginButton.tag = 1
             qqLoginButton.setImage(#imageLiteral(resourceName: "QQ"), for: .normal)
-            
+            qqLoginButton.addTarget(self, action: #selector(self.clickOtherLoginButton), for: .touchUpInside)
+
             let wechatLoginButton = UIButton()
+            qqLoginButton.tag = 2
             wechatLoginButton.setImage(#imageLiteral(resourceName: "Wechat"), for: .normal)
-            
+            wechatLoginButton.addTarget(self, action: #selector(self.clickOtherLoginButton), for: .touchUpInside)
+
             let bottomImageView = UIImageView()
             bottomImageView.contentMode = .scaleAspectFill
             bottomImageView.image = #imageLiteral(resourceName: "LoginBackground")
@@ -304,36 +351,6 @@ class YXRegisterAndLoginViewController: UIViewController {
                 make.leading.trailing.equalToSuperview().inset(20)
                 make.height.equalTo(246)
             }
-
-//            containerView.addSubview(authIconImageView)
-//            authIconImageView.snp.makeConstraints { (make) in
-//                make.centerX.equalToSuperview().offset(-54)
-//                make.centerY.equalToSuperview().offset(-36)
-//                make.height.width.equalTo(18)
-//            }
-            
-//            containerView.addSubview(agreementLabel)
-//            agreementLabel.snp.makeConstraints { (make) in
-//                make.centerX.equalToSuperview().offset(-24)
-//                make.centerY.equalToSuperview().offset(80)
-//                make.width.equalTo(54)
-//                make.height.equalTo(14)
-//            }
-            
-//            containerView.addSubview(agreementButton)
-//            agreementButton.snp.makeConstraints { (make) in
-//                make.left.equalTo(agreementLabel.snp.right).offset(-8)
-//                make.centerY.equalTo(agreementLabel)
-//                make.height.equalTo(14)
-//            }
-            
-//            containerView.addSubview(underLineView)
-//            underLineView.snp.makeConstraints { (make) in
-//                make.top.equalTo(agreementButton.snp.bottom)
-//                make.centerX.equalTo(agreementButton)
-//                make.width.equalTo(46)
-//                make.height.equalTo(0.5)
-//            }
             
             view.addSubview(otherLoginButton)
             otherLoginButton.snp.makeConstraints { (make) in
@@ -386,35 +403,17 @@ class YXRegisterAndLoginViewController: UIViewController {
             }
         }
         
-        CLShanYanSDKManager.quickAuthLogin(with: configure, openLoginAuthListener: { (resultOfShowAuthPage) in
-            if let error = resultOfShowAuthPage.error {
-                print(error.localizedDescription)
-                
-            } else {
-                
-            }
-            
-        }) { (resultOfLogin) in
-            if let error = resultOfLogin.error {
-                print(error.localizedDescription)
-                CLShanYanSDKManager.finishAuthControllerCompletion {
-                    self.performSegue(withIdentifier: "Register", sender: nil)
-                }
-                
-            } else {
-                print(resultOfLogin.data)
-                CLShanYanSDKManager.finishAuthControllerCompletion {
-                    
-                }
-            }
-        }
+        return configure
     }
     
     @objc func clickOtherLoginButton(_ sender: UIButton) {
-        DispatchQueue.main.async(execute: {
-            CLShanYanSDKManager.finishAuthControllerCompletion {
+        CLShanYanSDKManager.finishAuthControllerCompletion{
+            if sender.tag == 1 {
+                self.loginWithQQ(sender)
                 
+            } else if sender.tag == 2 {
+                self.loginWithWechat(sender)
             }
-        })
+        }
     }
 }

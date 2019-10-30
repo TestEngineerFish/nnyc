@@ -145,14 +145,14 @@ typealias YYEVC = YYEnvChangeViewController
 
 extension YYEnvChangeViewController {
     @objc public static var apiUrl: String {
-//        #if DEBUG
-//            if let selected = YYCache.object(forKey: envKey) as? Int, let e = EnvType(rawValue: selected) {
-//                return envData[e]?["api"] ?? ""
-//            }
-//            return envData[.test]?["api"] ?? ""
-//        #else
+        #if DEBUG
+            if let selected = YYCache.object(forKey: envKey) as? Int, let e = EnvType(rawValue: selected) {
+                return envData[e]?["api"] ?? ""
+            }
+            return envData[.test]?["api"] ?? ""
+        #else
             return envData[.release]?["api"] ?? ""
-//        #endif
+        #endif
     }
 
     @objc public static var h5Url: String {

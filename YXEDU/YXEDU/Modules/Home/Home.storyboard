@@ -11,7 +11,7 @@
         <!--新增词书-->
         <scene sceneID="Dii-4T-NLR">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="KRx-zx-laN" customClass="YXAddBookViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="YXAddBookViewController" hidesBottomBarWhenPushed="YES" id="KRx-zx-laN" customClass="YXAddBookViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Cmh-Es-I4z">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -369,10 +369,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bookNameButton" destination="2F3-bO-dki" id="fNy-kV-ZJ4"/>
                         <outlet property="countOfWaitForStudyWords" destination="Fae-CO-v6Q" id="vpX-uM-xXg"/>
                         <outlet property="progressBar" destination="rVY-bt-TOH" id="VAW-I3-wze"/>
                         <outlet property="studyDataCollectionView" destination="AZn-be-OuY" id="bW1-sB-B0C"/>
                         <outlet property="subItemCollectionView" destination="q7v-mq-Dhk" id="dcr-FN-BY1"/>
+                        <outlet property="unitNameButton" destination="gMI-oo-EEp" id="38q-y3-OV9"/>
                         <segue destination="B9h-Rf-GtI" kind="show" identifier="LearnedWords" id="08G-Tq-847"/>
                         <segue destination="xQW-0F-uLV" kind="show" identifier="FavoritesWords" id="Ikq-pG-ta6"/>
                         <segue destination="qVz-k4-3Nk" kind="show" identifier="WrongWords" id="Xl4-qR-h5K"/>

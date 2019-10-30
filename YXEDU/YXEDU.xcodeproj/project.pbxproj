@@ -59,6 +59,8 @@
 		77252A7123628909007D86A0 /* YXSelectGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77252A6F23628909007D86A0 /* YXSelectGradeView.swift */; };
 		77252A7423628940007D86A0 /* YXSelectGradeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77252A7223628940007D86A0 /* YXSelectGradeCell.swift */; };
 		77252A7523628940007D86A0 /* YXSelectGradeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77252A7323628940007D86A0 /* YXSelectGradeCell.xib */; };
+		77322CC723687ABB00EAC8B6 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77322CC323687ABB00EAC8B6 /* libWeChatSDK.a */; };
+		775DA334236861A0004D58D3 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 775DA333236861A0004D58D3 /* TencentOpenAPI.framework */; };
 		7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */; };
 		7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */; };
 		7786B6CD2361C3350027D0E3 /* YXGroupWordBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6CC2361C3350027D0E3 /* YXGroupWordBookModel.swift */; };
@@ -416,7 +418,6 @@
 		EE5E0178232754FA00655654 /* JPushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E015E232754FA00655654 /* JPushManager.m */; };
 		EE5E0179232754FA00655654 /* NetWorkRechable.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0161232754FA00655654 /* NetWorkRechable.m */; };
 		EE5E0218232756BF00655654 /* MDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E017C232756BE00655654 /* MDMulticastDelegate.m */; };
-		EE5E0219232756BF00655654 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE5E017F232756BE00655654 /* TencentOpenAPI.framework */; };
 		EE5E021A232756BF00655654 /* TYLinkTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0182232756BE00655654 /* TYLinkTextStorage.m */; };
 		EE5E021B232756BF00655654 /* YXWordTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0183232756BE00655654 /* YXWordTextStorage.m */; };
 		EE5E021C232756BF00655654 /* YXKeyPointTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0184232756BE00655654 /* YXKeyPointTextStorage.m */; };
@@ -469,8 +470,6 @@
 		EE5E0254232756C100655654 /* XLineChartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0205232756BF00655654 /* XLineChartItem.m */; };
 		EE5E0255232756C100655654 /* XNotificationBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E020B232756BF00655654 /* XNotificationBridge.m */; };
 		EE5E0256232756C100655654 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E020F232756BF00655654 /* CAKeyframeAnimation+AHEasing.m */; };
-		EE5E0257232756C100655654 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = EE5E0213232756BF00655654 /* README.txt */; };
-		EE5E0258232756C100655654 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE5E0215232756BF00655654 /* libWeChatSDK.a */; };
 		EE5E02602327793800655654 /* YXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E025A2327793600655654 /* YXNavigationController.m */; };
 		EE5E02612327793800655654 /* BSRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E025E2327793700655654 /* BSRootVC.m */; };
 		EE5E02622327793800655654 /* YXTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E025F2327793700655654 /* YXTabBarViewController.m */; };
@@ -677,6 +676,11 @@
 		77252A6F23628909007D86A0 /* YXSelectGradeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXSelectGradeView.swift; sourceTree = "<group>"; };
 		77252A7223628940007D86A0 /* YXSelectGradeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectGradeCell.swift; sourceTree = "<group>"; };
 		77252A7323628940007D86A0 /* YXSelectGradeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXSelectGradeCell.xib; sourceTree = "<group>"; };
+		77322CC323687ABB00EAC8B6 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		77322CC423687ABB00EAC8B6 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		77322CC523687ABB00EAC8B6 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		77322CC623687ABB00EAC8B6 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		775DA333236861A0004D58D3 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookCell.swift; sourceTree = "<group>"; };
 		7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordBookCell.xib; sourceTree = "<group>"; };
 		7786B6CC2361C3350027D0E3 /* YXGroupWordBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGroupWordBookModel.swift; sourceTree = "<group>"; };
@@ -793,7 +797,6 @@
 		EE5E0162232754FA00655654 /* NetWorkRechable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorkRechable.h; sourceTree = "<group>"; };
 		EE5E017C232756BE00655654 /* MDMulticastDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDMulticastDelegate.m; sourceTree = "<group>"; };
 		EE5E017D232756BE00655654 /* MDMulticastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDMulticastDelegate.h; sourceTree = "<group>"; };
-		EE5E017F232756BE00655654 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		EE5E0181232756BE00655654 /* TYAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYAttributedLabel.h; sourceTree = "<group>"; };
 		EE5E0182232756BE00655654 /* TYLinkTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYLinkTextStorage.m; sourceTree = "<group>"; };
 		EE5E0183232756BE00655654 /* YXWordTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXWordTextStorage.m; sourceTree = "<group>"; };
@@ -901,11 +904,6 @@
 		EE5E020C232756BF00655654 /* XNotificationBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNotificationBridge.h; sourceTree = "<group>"; };
 		EE5E020E232756BF00655654 /* CAKeyframeAnimation+AHEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAKeyframeAnimation+AHEasing.h"; sourceTree = "<group>"; };
 		EE5E020F232756BF00655654 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
-		EE5E0211232756BF00655654 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		EE5E0212232756BF00655654 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
-		EE5E0213232756BF00655654 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		EE5E0214232756BF00655654 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
-		EE5E0215232756BF00655654 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		EE5E025A2327793600655654 /* YXNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXNavigationController.m; sourceTree = "<group>"; };
 		EE5E025B2327793600655654 /* BSRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSRootVC.h; sourceTree = "<group>"; };
 		EE5E025C2327793700655654 /* YXTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTabBarViewController.h; sourceTree = "<group>"; };
@@ -1735,19 +1733,19 @@
 			files = (
 				D665A0B82091A43200FBC9D2 /* libresolv.tbd in Frameworks */,
 				D665A0B62091A42700FBC9D2 /* UserNotifications.framework in Frameworks */,
-				EE5E0258232756C100655654 /* libWeChatSDK.a in Frameworks */,
 				D62C1E2920897EDF002BB11A /* AdSupport.framework in Frameworks */,
 				D665A0B42091A41300FBC9D2 /* libz.tbd in Frameworks */,
 				D665A0B22091A40A00FBC9D2 /* Security.framework in Frameworks */,
-				EE5E0219232756BF00655654 /* TencentOpenAPI.framework in Frameworks */,
 				D665A0B02091A40200FBC9D2 /* CoreGraphics.framework in Frameworks */,
 				D62C1E2520897EBC002BB11A /* SystemConfiguration.framework in Frameworks */,
 				D672C2572064D24D00696828 /* CoreTelephony.framework in Frameworks */,
 				D665A0AE2091A3EA00FBC9D2 /* CoreFoundation.framework in Frameworks */,
+				775DA334236861A0004D58D3 /* TencentOpenAPI.framework in Frameworks */,
 				D665A0AC2091A3DB00FBC9D2 /* CFNetwork.framework in Frameworks */,
 				D62C1E2720897EC7002BB11A /* CoreLocation.framework in Frameworks */,
 				D672C2552064D21800696828 /* libsqlite3.tbd in Frameworks */,
 				BADF1A8A393F92D5A79919AA /* Pods_YXEDU.framework in Frameworks */,
+				77322CC723687ABB00EAC8B6 /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1973,6 +1971,17 @@
 				771E88692362ACFB000BFAAD /* YXBindPhoneViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		77322CC823687AC400EAC8B6 /* WechtSDK1.8.2_NoPay */ = {
+			isa = PBXGroup;
+			children = (
+				77322CC323687ABB00EAC8B6 /* libWeChatSDK.a */,
+				77322CC423687ABB00EAC8B6 /* WechatAuthSDK.h */,
+				77322CC623687ABB00EAC8B6 /* WXApi.h */,
+				77322CC523687ABB00EAC8B6 /* WXApiObject.h */,
+			);
+			path = WechtSDK1.8.2_NoPay;
 			sourceTree = "<group>";
 		};
 		77D048F82361A0FC00CE95D8 /* Model */ = {
@@ -2395,12 +2404,12 @@
 		EE5E017A232756BE00655654 /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				77322CC823687AC400EAC8B6 /* WechtSDK1.8.2_NoPay */,
 				22ED54992366D80400011B82 /* YXModel */,
 				EE5E017B232756BE00655654 /* MDMulticastDelegate */,
 				EE5E017E232756BE00655654 /* TencentAPI */,
 				EE5E0180232756BE00655654 /* TYAttributedLable */,
 				EE5E01B2232756BE00655654 /* XJYChart */,
-				EE5E0210232756BF00655654 /* WechtSDK1.8.2_NoPay */,
 			);
 			path = 3rdParty;
 			sourceTree = "<group>";
@@ -2417,7 +2426,7 @@
 		EE5E017E232756BE00655654 /* TencentAPI */ = {
 			isa = PBXGroup;
 			children = (
-				EE5E017F232756BE00655654 /* TencentOpenAPI.framework */,
+				775DA333236861A0004D58D3 /* TencentOpenAPI.framework */,
 			);
 			path = TencentAPI;
 			sourceTree = "<group>";
@@ -2637,18 +2646,6 @@
 				EE5E020F232756BF00655654 /* CAKeyframeAnimation+AHEasing.m */,
 			);
 			path = AHEasing;
-			sourceTree = "<group>";
-		};
-		EE5E0210232756BF00655654 /* WechtSDK1.8.2_NoPay */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E0215232756BF00655654 /* libWeChatSDK.a */,
-				EE5E0213232756BF00655654 /* README.txt */,
-				EE5E0214232756BF00655654 /* WechatAuthSDK.h */,
-				EE5E0211232756BF00655654 /* WXApi.h */,
-				EE5E0212232756BF00655654 /* WXApiObject.h */,
-			);
-			path = WechtSDK1.8.2_NoPay;
 			sourceTree = "<group>";
 		};
 		EE5EF13323265C4000655654 /* Base */ = {
@@ -4956,7 +4953,6 @@
 				202709BC21DE3A3000E88457 /* oneDrawgameGuide3@2x.png in Resources */,
 				EE5E01132327528600655654 /* wrong.mp3 in Resources */,
 				EE5EFC5823274D0F00655654 /* nnyc_dev.plist in Resources */,
-				EE5E0257232756C100655654 /* README.txt in Resources */,
 				D62D6ABA204FEF7A005E3273 /* Assets.xcassets in Resources */,
 				771E88632362ABC8000BFAAD /* RegisterAndLogin.storyboard in Resources */,
 				EE5EFD4723274F0900655654 /* gameDictionary.json in Resources */,
@@ -5837,6 +5833,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.2_NoPay",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5875,6 +5872,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.2_NoPay",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";

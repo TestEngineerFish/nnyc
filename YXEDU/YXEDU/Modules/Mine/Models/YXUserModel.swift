@@ -9,11 +9,34 @@
 import Foundation
 
 struct YXUserModel: Codable {
-    static let `default` = YXUserModel()
-    private init() {}
+    static var `default` = YXUserModel()
     
+    private init() {
+        if let didLogin = YYCache.object(forKey: "DidLogin") as? Bool {
+            self.didLogin = didLogin
+        }
+    }
+    
+    var didLogin = false {
+        didSet {
+            YYCache.set(didLogin, forKey: "DidLogin")
+        }
+    }
+    
+    var token: String?
+    var uuid: String?
     var username: String?
     var userAvatarPath: String?
+    var phoneNumber: String? 
     var integral: Int?
 
+    func login() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.loadMainPage()
+    }
+    
+    func logout() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.loadRegistrationAndLoginPage()
+    }
 }
