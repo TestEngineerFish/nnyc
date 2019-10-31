@@ -31,7 +31,7 @@ class YXBaseQuestionView: UIView {
     var imageView: UIImageView?
     
     /// 播放器
-    var playerView: UIView?
+    var playerView: YXExerciseAudioPlayerView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,7 +41,6 @@ class YXBaseQuestionView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     func createSubviews() {
         contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 160)
@@ -105,6 +104,14 @@ class YXBaseQuestionView: UIView {
         self.imageView?.backgroundColor = UIColor.orange1
         
         contentView.addSubview(imageView!)
+    }
+    
+    
+    func initPlayerView() {
+        self.playerView = YXExerciseAudioPlayerView()
+        
+        
+        contentView.addSubview(playerView!)
     }
     
     func bindData()  {}

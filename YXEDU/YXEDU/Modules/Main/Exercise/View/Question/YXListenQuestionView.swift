@@ -17,16 +17,19 @@ class YXListenQuestionView: YXBaseQuestionView {
     override func createSubviews() {
         super.createSubviews()
         
-        contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 130)        
+        contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 130)
         self.setShadowColor()
         
         self.contentView.addSubview(audioBackgroundView)
         
         self.audioBackgroundView.backgroundColor = UIColor.orange3
         self.audioBackgroundView.layer.masksToBounds = true
-        self.audioBackgroundView.layer.cornerRadius = 24
+        self.audioBackgroundView.layer.cornerRadius = 26
         self.audioBackgroundView.layer.borderWidth = 3
         self.audioBackgroundView.layer.borderColor = UIColor.orange2.cgColor
+        
+        
+        self.initPlayerView()
         
     }
     
@@ -34,6 +37,11 @@ class YXListenQuestionView: YXBaseQuestionView {
         super.layoutSubviews()
         
         audioBackgroundView.snp.makeConstraints({ (make) in
+            make.center.equalToSuperview()
+            make.width.height.equalTo(52)
+        })
+
+        playerView?.snp.makeConstraints({ (make) in
             make.center.equalToSuperview()
             make.width.height.equalTo(48)
         })

@@ -631,6 +631,7 @@
 		EED3D4202331D5D000121218 /* YYCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D41F2331D5CF00121218 /* YYCache.swift */; };
 		EED3D4222331D61C00121218 /* UserDefault+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4212331D61B00121218 /* UserDefault+Extension.swift */; };
 		EED3D4252331DE2D00121218 /* YXEvnOC.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4242331DE2D00121218 /* YXEvnOC.m */; };
+		EEF29A8B236AC81D00CDC312 /* YXExerciseAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF29A8A236AC81C00CDC312 /* YXExerciseAudioPlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1760,6 +1761,7 @@
 		EED3D4212331D61B00121218 /* UserDefault+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefault+Extension.swift"; sourceTree = "<group>"; };
 		EED3D4232331DE2D00121218 /* YXEvnOC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXEvnOC.h; sourceTree = "<group>"; };
 		EED3D4242331DE2D00121218 /* YXEvnOC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXEvnOC.m; sourceTree = "<group>"; };
+		EEF29A8A236AC81C00CDC312 /* YXExerciseAudioPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseAudioPlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2286,6 +2288,7 @@
 		EE54F7B62362AA3100EC605A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EEF29A89236AC81C00CDC312 /* Common */,
 				EE4C7CD7236816680092751D /* Exercise */,
 				EE54F7BE2362AA3100EC605A /* Question */,
 				EE54F7B72362AA3100EC605A /* Answer */,
@@ -4976,6 +4979,14 @@
 			path = YRRouter;
 			sourceTree = "<group>";
 		};
+		EEF29A89236AC81C00CDC312 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				EEF29A8A236AC81C00CDC312 /* YXExerciseAudioPlayerView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5661,6 +5672,7 @@
 				EE5EFD5A23274F0900655654 /* YXTextBorderLabel.m in Sources */,
 				EE5E000D23274FEB00655654 /* YXCareerModel.m in Sources */,
 				EE5EF21023273BAE00655654 /* UIAlertView+Blocks.m in Sources */,
+				EEF29A8B236AC81D00CDC312 /* YXExerciseAudioPlayerView.swift in Sources */,
 				EE5E002D23274FEB00655654 /* YXSwitchBookView.m in Sources */,
 				EE5E009023274FEB00655654 /* YXCalendarFresherGuideView.m in Sources */,
 				EE5EF2B22327423F00655654 /* YXComHttpService.m in Sources */,
