@@ -1,5 +1,5 @@
 //
-//  YXConnectWordAndImageQuestionView.swift
+//  YXConnectWordAndChineseQuestionView.swift
 //  YXEDU
 //
 //  Created by sunwu on 2019/10/25.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-/// 词图连线题目
-class YXConnectWordAndImageQuestionView: YXBaseQuestionView {
+
+/// 词义连线题目
+class YXConnectWordAndChineseAnswerView: YXBaseQuestionView {
 
     /*
     // Only override draw() if you perform custom drawing.

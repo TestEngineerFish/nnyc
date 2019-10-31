@@ -1,5 +1,5 @@
 //
-//  YXListenAndImageQuestionView.swift
+//  YXConnectWordAndImageQuestionView.swift
 //  YXEDU
 //
 //  Created by sunwu on 2019/10/25.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-/// 听录音+图片题目
-class YXListenAndImageQuestionView: YXBaseQuestionView {
+/// 词图连线题目
+class YXConnectWordAndImageAnswerView: YXBaseQuestionView {
 
     /*
     // Only override draw() if you perform custom drawing.

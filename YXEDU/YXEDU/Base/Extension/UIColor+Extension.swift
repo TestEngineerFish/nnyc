@@ -102,6 +102,12 @@ public extension UIColor {
     
     /// 主色调  0xFBA217
     class var orange1: UIColor { return UIColor.hex(0xFBA217) }
+    
+    /// 边框色 #FFE8C5
+    class var orange2: UIColor { return UIColor.hex(0xFFE8C5) }
+    
+    /// 底色 #FFF4E9
+    class var orange3: UIColor { return UIColor.hex(0xFFF4E9) }
 
     /// 标题文字 0x323232
     class var black1: UIColor { return UIColor.hex(0x323232) }
@@ -112,7 +118,7 @@ public extension UIColor {
     /// 次要信息 0x888888
     class var black3: UIColor { return UIColor.hex(0x888888) }
     
-    /// 风格线 #4F4F4F
+    /// 分割线 #4F4F4F
     class var black4: UIColor { return UIColor.hex(0xDCDCDC) }
     
     /// 蒙层 0x000000  70%

@@ -32,7 +32,7 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
     
 
     override func layoutSubviews() {
-//        super.layoutSubviews()
+
         rightButton.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
             make.left.equalTo(22)

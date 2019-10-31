@@ -11,15 +11,35 @@ import UIKit
 /// 听录音选图片
 class YXListenChooseImageExerciseView: YXBaseExerciseView {
     
+    private let answerHeight: CGFloat = 42 * 4 + 13 * 3
+            
     override func createSubview() {
+        questionView = YXListenQuestionView()
+        questionView?.exerciseModel = self.exerciseModel
+        self.addSubview(questionView!)
+        
         answerView = YXImageAnswerView()
-        answerView?.frame = CGRect(x: 0, y: self.size.height - 223, width: screenWidth, height: 223)
         answerView?.exerciseModel = self.exerciseModel
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
+        
     }
     
-    override func bindData() {
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.questionView?.snp.makeConstraints { (make) in
+            make.top.equalTo(32)
+            make.left.right.equalTo(0)
+            make.height.equalTo(150)
+        }
+        
+//        self.answerView?.snp.makeConstraints({ (make) in
+//            make.left.right.bottom.equalToSuperview()
+//            make.height.equalTo(answerHeight)
+//        })
+        answerView?.frame = CGRect(x: 0, y: self.size.height - 223, width: screenWidth, height: 223)
         
     }
 
