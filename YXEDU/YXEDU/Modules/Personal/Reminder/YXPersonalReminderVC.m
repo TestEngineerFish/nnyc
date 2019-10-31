@@ -103,6 +103,8 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     
+    self.remindDateString = @"已关闭";
+    
     if ([self.remindDateString isEqualToString:@"已关闭"]) {
         [self.isReminderSwitch setOn:NO];
     } else {

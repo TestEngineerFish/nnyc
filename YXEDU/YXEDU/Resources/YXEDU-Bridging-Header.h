@@ -41,4 +41,5 @@
 #import "YXMainModel.h"
 #import "UIImageView+WebCache.h"
 #import "YXCareerViewController.h"
+#import "YXPersonalInformationVC.h"
 

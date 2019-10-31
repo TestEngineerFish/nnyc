@@ -62,7 +62,7 @@
 }
 
 - (void)setReportData:(YXReportDetailInfo *)reportData {
-    [reportData dataSetup];
+//    [reportData dataSetup];
     _reportData = reportData;
 }
 

@@ -33,61 +33,21 @@ class YXRegisterAndLoginViewController: UIViewController {
         authCodeTextField.becomeFirstResponder()
     }
     
-    @IBAction func login(_ sender: UIButton) {
-        let sendModel = YXLoginSendModel()
-        sendModel.pf = "mobile"
-        sendModel.mobile = phoneNumberTextField.text
-        sendModel.code = authCodeTextField.text
-        sendModel.openid = ""
+    @IBAction func phoneLogin(_ sender: UIButton) {
+        let loginModel = YXLoginSendModel()
+        loginModel.pf = "mobile"
+        loginModel.mobile = phoneNumberTextField.text
+        loginModel.code = authCodeTextField.text
+        loginModel.openid = ""
 
-        let parameters = sendModel.yrModelToDictionary() as! [AnyHashable : Any]
-        YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
-
-            if isSuccess, let response = response?.responseObject {
-                YXUserModel.default.token = (response as! [String: Any])["token"] as? String
-                YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
-                YXConfigure.shared().token = YXUserModel.default.token
-
-                YXComHttpService.shared().requestConfig({ (response, isSuccess) in
-                    if isSuccess, let response = response?.responseObject {
-                        let config = response as! YXConfigModel
-
-                        guard config.baseConfig.bindMobile else {
-                            self.performSegue(withIdentifier: "Bind", sender: self)
-                            return
-                        }
-
-                        YYCache.set(self.phoneNumberTextField.text, forKey: "PhoneNumber")
-                        YXUserModel.default.didLogin = true
-                        YXConfigure.shared().saveCurrentToken()
-
-                        guard config.baseConfig.learning else {
-                            let storyboard = UIStoryboard(name:"Home", bundle: nil)
-                            let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
-                            self.navigationController?.pushViewController(addBookViewController, animated: true)
-                            return
-                        }
-                        
-                        YXUserModel.default.login()
-                        
-                    } else if let error = response?.error {
-                        print(error.desc)
-                    }
-                })
-                
-            } else if let error = response?.error {
-                print(error.desc)
-            }
-        }
+        login(loginModel)
     }
     
     @IBAction func loginWithQQ(_ sender: UIButton) {
-        platform = "qq"
         QQApiManager.shared().qqLogin()
     }
     
     @IBAction func loginWithWechat(_ sender: UIButton) {
-        platform = "wechat"
         WXApiManager.shared().wxLogin()
     }
     
@@ -97,9 +57,11 @@ class YXRegisterAndLoginViewController: UIViewController {
     
     
     
-    // MARK: - Custom
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: String.self)
         
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
         authCodeTextField.addTarget(self, action: #selector(changeAuthCodeTextField), for: UIControl.Event.editingChanged)
@@ -229,10 +191,70 @@ class YXRegisterAndLoginViewController: UIViewController {
         }
     }
     
+    private func login(_ loginModel: YXLoginSendModel) {
+        let parameters = loginModel.yrModelToDictionary() as! [AnyHashable : Any]
+        YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
+
+            if isSuccess, let response = response?.responseObject {
+                YXUserModel.default.token = (response as! [String: Any])["token"] as? String
+                YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
+                YXConfigure.shared().token = YXUserModel.default.token
+
+                YXComHttpService.shared().requestConfig({ (response, isSuccess) in
+                    if isSuccess, let response = response?.responseObject {
+                        let config = response as! YXConfigModel
+
+                        guard config.baseConfig.bindMobile else {
+                            self.performSegue(withIdentifier: "Bind", sender: self)
+                            return
+                        }
+
+                        YYCache.set(self.phoneNumberTextField.text, forKey: "PhoneNumber")
+                        YXUserModel.default.didLogin = true
+                        YXConfigure.shared().saveCurrentToken()
+
+                        guard config.baseConfig.learning else {
+                            let storyboard = UIStoryboard(name:"Home", bundle: nil)
+                            let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
+                            self.navigationController?.pushViewController(addBookViewController, animated: true)
+                            return
+                        }
+                        
+                        YXUserModel.default.login()
+                        
+                    } else if let error = response?.error {
+                        print(error.desc)
+                    }
+                })
+                
+            } else if let error = response?.error {
+                print(error.desc)
+            }
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.view.endEditing(true)
     }
+    
+    
+    
+    // MARK: - 第三方登录
+    @objc
+    private func thirdPartLogin(_ notification: Notification) {
+        guard let platform = notification.object as? String, let userInfo = notification.userInfo else { return }
+        
+        let loginModel = YXLoginSendModel()
+        loginModel.pf = platform
+        loginModel.code = userInfo["token"] as? String
+        loginModel.openid = userInfo["openID"] as? String
+
+        self.platform = platform
+        
+        login(loginModel)
+    }
+    
     
     
     // MARK: - 闪验

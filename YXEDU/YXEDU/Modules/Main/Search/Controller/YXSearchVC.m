@@ -191,7 +191,7 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    [self searchWordsWith:textField];
+//    [self searchWordsWith:textField];
     return YES;
 }
 

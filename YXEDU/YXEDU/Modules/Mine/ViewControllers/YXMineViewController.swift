@@ -10,6 +10,8 @@ import UIKit
 
 class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    private var temporaryUserModel: YXUserModel_Old?
+    
     private var badges: [YXBadgeModel] = []
     private var bindInfo: [String] = ["", "", ""]
     
@@ -39,11 +41,19 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Setting" {
+            let destinationViewController = segue.destination as! YXPersonalInformationVC
+            destinationViewController.userModel = temporaryUserModel!
+        }
+    }
+    
     private func loadData() {
         YXComHttpService.shared().requestUserInfo({ (response, isSuccess) in
             if isSuccess, let response = response {
                 let loginModel = response as! YXLoginModel
                 YXConfigure.shared().loginModel = loginModel
+                self.temporaryUserModel = loginModel.user
                 
                 // 徽章
                 self.loadBadgeData()

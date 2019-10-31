@@ -116,7 +116,7 @@
         // 记录登录用户的OpenID、Token以及过期时间
         NSLog(@"%@",_tencentOAuth.accessToken);
 
-//        [[NSNotificationCenter defaultCenter]postNotificationName:@"CompletedBind" object:@"qq" userInfo:@{@"token":_tencentOAuth.accessToken, @"openID":_tencentOAuth.openId}];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"CompletedBind" object:@"qq" userInfo:@{@"token":_tencentOAuth.accessToken, @"openID":_tencentOAuth.openId}];
         
     } else {
         NSLog(@"登录不成功 没有获取accesstoken");

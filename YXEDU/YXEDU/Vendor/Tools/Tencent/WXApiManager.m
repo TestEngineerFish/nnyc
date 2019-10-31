@@ -114,7 +114,7 @@
             [Growing track:kGrowingTracePlatformLoginResult withVariable:@{@"platform_result":resp, @"platform_type":@"WeChat"}];
         }
         self.finishBlock(code, YES);
-//        [[NSNotificationCenter defaultCenter]postNotificationName:@"CompletedBind" object:@"wechat" userInfo:@{@"token":code, @"openID":@""}];
+
     }else if([resp isKindOfClass:[SendMessageToWXResp class]]) {
         NSString *platform = @"";
         if (self.scene == WXSceneSession) {
