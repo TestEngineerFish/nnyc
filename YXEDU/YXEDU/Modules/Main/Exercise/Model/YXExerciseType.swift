@@ -42,10 +42,6 @@ enum YXExerciseType {
     
     case none
     
-    
-    
-//    func buildView() -> YXExerciseView
-    
 }
 
 

@@ -29,6 +29,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
+//        self.viewHeight = 42 * 4 + 13 * 3
     }
     
     required init?(coder: NSCoder) {
@@ -51,6 +52,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         collectionView.alwaysBounceVertical = true
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.isScrollEnabled = false
         self.addSubview(collectionView)
         
         collectionView.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
@@ -60,6 +62,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
     override func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = self.bounds
+        
     }
     
     override func bindData() {
@@ -78,6 +81,9 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         cell.backgroundColor = UIColor.gray
         cell.layer.borderWidth = 1.5
         cell.layer.borderColor = UIColor.clear.cgColor
+        
+//        cell.accessibilityLabel
+        
         return cell
     }
 
@@ -94,3 +100,4 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
     }
     
 }
+

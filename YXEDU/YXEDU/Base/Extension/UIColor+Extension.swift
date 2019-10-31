@@ -118,4 +118,8 @@ public extension UIColor {
     /// 蒙层 0x000000  70%
     class var black5: UIColor { return UIColor.hex(0x000000, alpha: 0.7) }
     
+    /// 选项的边框 0xC0C0C0
+    class var black6: UIColor { return UIColor.hex(0xC0C0C0) }
+    
 }
+

@@ -11,5 +11,18 @@ import UIKit
 /// 图片题目
 class YXImageQuestionView: YXBaseQuestionView {
 
-
+    override func createSubviews() {
+        super.createSubviews()
+        self.initImageView()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        imageView?.snp.makeConstraints({ (make) in
+            make.center.equalToSuperview()
+            make.width.equalTo(130)
+            make.height.equalTo(94)
+        })
+    }
 }

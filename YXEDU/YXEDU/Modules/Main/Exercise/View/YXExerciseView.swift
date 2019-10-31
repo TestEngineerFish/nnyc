@@ -9,7 +9,7 @@
 import UIKit
 
 /// 练习模块：内容主页面，包括题目View、答案View、TipsView
-class YXExerciseView: YXBaseExerciseView {
+class YXExerciseView___Tmp: YXBaseExerciseView {
     
     deinit {
         print("练习view 释放")

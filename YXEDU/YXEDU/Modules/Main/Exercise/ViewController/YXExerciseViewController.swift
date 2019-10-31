@@ -17,7 +17,7 @@ class YXExerciseViewController: UIViewController {
     var dataManager: YXExerciseDataManager = YXExerciseDataManager()
     
     /// 学习进度管理器
-    var progressManager: YXExcerciseProgressManager = YXExcerciseProgressManager()
+//    var progressManager: YXExcerciseProgressManager = YXExcerciseProgressManager()
     
     // 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
@@ -132,6 +132,7 @@ class YXExerciseViewController: UIViewController {
         
         if let model = dataManager.fetchOneExerciseModels() {
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
+            exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.exerciseViewTop, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)
             exerciseView.exerciseDelegate = self
             loadExerciseView(exerciseView: exerciseView)
         }

@@ -10,6 +10,31 @@ import UIKit
 
 /// 中文词义题目
 class YXChineseQuestionView: YXBaseQuestionView {
-
-
+    
+    override func createSubviews() {
+        super.createSubviews()
+        self.initTitleLabel()
+        self.initSubTitleLabel()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        titleLabel?.snp.makeConstraints({ (make) in
+            make.top.equalTo(56)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(28)
+        })
+        
+        subTitleLabel?.snp.makeConstraints({ (make) in
+            make.top.equalTo(titleLabel!.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(20)
+        })
+    }
+    
+    override func bindData() {
+        self.titleLabel?.text = "小船，艇"
+        self.subTitleLabel?.text = "n."
+    }
 }

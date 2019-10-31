@@ -9,7 +9,7 @@
 import UIKit
 
 /// 单词答案
-class YXWordAnswerView: YXBaseAnswerView {
+class YXWordAnswerView: YXChinseAnswerView {
 
     /*
     // Only override draw() if you perform custom drawing.

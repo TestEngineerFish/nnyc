@@ -19,7 +19,13 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         exerciseModelArray = [
-            YXWordExerciseModel(.lookWordChooseImage),
+            YXWordExerciseModel(.validationWordAndChinese),
+            YXWordExerciseModel(.validationImageAndWord),
+            YXWordExerciseModel(.lookImageChooseWord),
+            YXWordExerciseModel(.lookChineseChooseWord),
+            YXWordExerciseModel(.lookWordChooseChinese),
+            YXWordExerciseModel(.lookExampleChooseImage),
+            YXWordExerciseModel(.lookWordChooseImage),            
             YXWordExerciseModel(.fillWordAccordingToChinese),
             YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
             

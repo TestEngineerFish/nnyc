@@ -36,13 +36,9 @@ class YXBaseExerciseView: UIScrollView {
         print("练习view 释放")
     }
     
-    init(exerciseModel: YXWordExerciseModel) {
-        super.init(frame: CGRect.zero)
+    convenience init(exerciseModel: YXWordExerciseModel) {
+        self.init(frame: CGRect.zero)
         self.exerciseModel = exerciseModel
-        
-        self.frame = CGRect(x: screenWidth, y: YXExerciseConfig.contentViewTop, width: screenWidth, height: screenHeight - YXExerciseConfig.contentViewTop - YXExerciseConfig.contentViewBottom)
-        self.contentSize = self.size
-        
         self.createSubview()
     }
     
@@ -55,6 +51,12 @@ class YXBaseExerciseView: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()        
+        self.contentSize = self.bounds.size
+    }
+    
     func createSubview() {}
         
     func bindData() {
