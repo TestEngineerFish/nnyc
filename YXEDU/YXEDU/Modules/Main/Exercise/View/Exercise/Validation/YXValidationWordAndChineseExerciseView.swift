@@ -10,14 +10,14 @@ import UIKit
 
 /// 判断单词和词义对错
 class YXValidationWordAndChineseExerciseView: YXBaseExerciseView {
-    private let answerHeight: CGFloat = 42 * 4 + 13 * 3
+    private let answerHeight: CGFloat = 42
         
         override func createSubview() {
             questionView = YXWordAndChineseQuestionView()
             questionView?.exerciseModel = self.exerciseModel
             self.addSubview(questionView!)
             
-            answerView = YXWordAnswerView()
+            answerView = YXRightOrWrongAnswerView()
             answerView?.exerciseModel = self.exerciseModel
             answerView?.answerDelegate = self
             self.addSubview(answerView!)

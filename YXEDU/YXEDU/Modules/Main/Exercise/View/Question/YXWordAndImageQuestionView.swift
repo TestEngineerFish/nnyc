@@ -14,7 +14,9 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
     
     override func createSubviews() {
         super.createSubviews()
-        self.contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 230)
+        contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 230)
+        
+        self.setShadowColor()
         
         self.initImageView()
         self.initTitleLabel()

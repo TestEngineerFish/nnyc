@@ -36,7 +36,6 @@ class YXBaseQuestionView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
-//        self.setShadowColor()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,8 +44,12 @@ class YXBaseQuestionView: UIView {
     
     
     func createSubviews() {
-        contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 160)
-        
+        contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 160)        
+        self.setShadowColor()
+        self.addSubview(contentView)
+    }
+    
+    func setShadowColor() {
         // fillCode
         let bgLayer1 = CALayer()
         bgLayer1.frame = contentView.bounds
@@ -58,12 +61,6 @@ class YXBaseQuestionView: UIView {
         contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
         contentView.layer.shadowOpacity = 1
         contentView.layer.shadowRadius = 10
-        
-        self.addSubview(contentView)
-    }
-    
-    func setShadowColor() {
-
     }
     
     func initTitleLabel() {
