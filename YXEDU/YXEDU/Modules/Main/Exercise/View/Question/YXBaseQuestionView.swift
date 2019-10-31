@@ -9,14 +9,15 @@
 import UIKit
 
 /// 问题面板基类
-class YXBaseQuestionView: UIView {
+
+class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
+
+    let topPadding    = CGFloat(54)
+    let bottomPadding = CGFloat(54)
     
-    var exerciseModel: YXWordExerciseModel? {
+    var exerciseModel: YXWordExerciseModel {
         didSet { bindData() }
     }
-    
-    /// 容器view
-    var contentView: UIView = UIView()
     
     /// 主标题
     var titleLabel: UILabel?
@@ -32,39 +33,23 @@ class YXBaseQuestionView: UIView {
     
     /// 播放器
     var playerView: YXExerciseAudioPlayerView?
+
+    /// 处理协议
+    var delegate: YXQuestionEventProtocol?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(exerciseModel: YXWordExerciseModel) {
+        self.exerciseModel = exerciseModel
+        super.init(frame: CGRect.zero)
+        self.backgroundColor = UIColor.white
+        self.layer.setDefaultShadow()
         self.createSubviews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func createSubviews() {
-        contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 160)
 
-//        self.contentView.layer.masksToBounds = true
-//        self.contentView.layer.cornerRadius = 16
-        
-        self.setShadowColor()
-        self.addSubview(contentView)
-    }
-    
-    func setShadowColor() {
-        // fillCode
-        let bgLayer1 = CALayer()
-        bgLayer1.frame = contentView.bounds
-        bgLayer1.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
-        contentView.layer.addSublayer(bgLayer1)
-        
-        // shadowCode
-        contentView.layer.shadowColor = UIColor(red: 0.78, green: 0.78, blue: 0.78, alpha: 0.5).cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        contentView.layer.shadowOpacity = 1
-        contentView.layer.shadowRadius = 10
-    }
+    func createSubviews() {}
     
     func initTitleLabel() {
         self.titleLabel = UILabel()
@@ -73,18 +58,16 @@ class YXBaseQuestionView: UIView {
         self.titleLabel?.textAlignment = .center
         self.titleLabel?.text = "coffee"
         
-        contentView.addSubview(titleLabel!)
+        self.addSubview(titleLabel!)
     }
     
     
     func initSubTitleLabel() {
-        self.subTitleLabel = UILabel()
-        self.subTitleLabel?.font = UIFont.pfSCRegularFont(withSize: 14)
-        self.subTitleLabel?.textColor = UIColor.black2
+        self.subTitleLabel                = UILabel()
+        self.subTitleLabel?.font          = UIFont.pfSCRegularFont(withSize: 14)
+        self.subTitleLabel?.textColor     = UIColor.hex(0x888888)
         self.subTitleLabel?.textAlignment = .center
-        self.subTitleLabel?.text = "[ˈkɔːfi]"
-        
-        contentView.addSubview(subTitleLabel!)
+        self.addSubview(subTitleLabel!)
     }
     
     func initDescTitleLabel() {
@@ -93,8 +76,7 @@ class YXBaseQuestionView: UIView {
         self.descTitleLabel?.textColor = UIColor.black2
         self.descTitleLabel?.textAlignment = .center
         self.descTitleLabel?.text = "n.（名词）小船，艇"
-        
-        contentView.addSubview(descTitleLabel!)
+        self.addSubview(descTitleLabel!)
     }
 
     func initImageView() {
@@ -103,16 +85,17 @@ class YXBaseQuestionView: UIView {
         self.imageView?.layer.cornerRadius = 6
         self.imageView?.backgroundColor = UIColor.orange1
         
-        contentView.addSubview(imageView!)
+        self.addSubview(imageView!)
     }
     
     
     func initPlayerView() {
         self.playerView = YXExerciseAudioPlayerView()
-        
-        
-        contentView.addSubview(playerView!)
+        self.addSubview(playerView!)
     }
     
     func bindData()  {}
+
+    // MARK:YXAnswerEventProtocol
+    func clickWordButton(_ button: UIButton) { }
 }

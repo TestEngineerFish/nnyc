@@ -10,31 +10,44 @@ import UIKit
 
 /// 中文词义题目
 class YXChineseQuestionView: YXBaseQuestionView {
-    
+
+    var spellView: YXSpellSubview?
+
     override func createSubviews() {
         super.createSubviews()
-        self.initTitleLabel()
+
+        self.spellView = YXSpellSubview(self.exerciseModel)
+        addSubview(spellView!)
+
         self.initSubTitleLabel()
+        subTitleLabel?.text = self.exerciseModel.subTitle
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        titleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(56)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(28)
-        })
-        
-        subTitleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(titleLabel!.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(20)
-        })
+        if let _spellView = spellView {
+            let w = spellView?.wordViewList.last?.frame.maxX ?? CGFloat.zero
+            _spellView.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview().offset(topPadding)
+                make.width.equalTo(w)
+                make.height.equalTo(30)
+            }
+            subTitleLabel?.snp.makeConstraints({ (make) in
+                make.top.equalTo(_spellView.snp.bottom).offset(4)
+                make.centerX.equalToSuperview()
+                make.width.equalToSuperview()
+            })
+        }
     }
     
-    override func bindData() {
-        self.titleLabel?.text = "小船，艇"
-        self.subTitleLabel?.text = "n."
+    // MARK: YXAnswerEventProtocol
+    override func clickWordButton(_ button: UIButton) {
+        super.clickWordButton(button)
+        if button.isSelected {
+            self.spellView?.insertLetter(button)
+        } else {
+            self.spellView?.removeLetter(button)
+        }
     }
 }

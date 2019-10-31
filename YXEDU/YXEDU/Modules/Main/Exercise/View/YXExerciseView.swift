@@ -15,30 +15,30 @@ class YXExerciseView___Tmp: YXBaseExerciseView {
         print("练习view 释放")
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.backgroundColor = UIColor.white
-        self.tapView()
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(tapView))
-//        self.addGestureRecognizer(tap)
-//        self.isUserInteractionEnabled = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//
+//        self.backgroundColor = UIColor.white
+////        self.tapView()
+////        let tap = UITapGestureRecognizer(target: self, action: #selector(tapView))
+////        self.addGestureRecognizer(tap)
+////        self.isUserInteractionEnabled = true
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//
     @objc private func tapView() {
 
-        let word = "TableView"
-        
-        let itemNumberW = 5
-        let itemNumberH = 5
-
-        let answerView = YXAnswerConnectionLettersView(word, itemNumberH: itemNumberH, itemNumberW: itemNumberW)
-        self.addSubview(answerView)
-        answerView.center = CGPoint(x: screenWidth/2, y: screenHeight/2)
+//        let word = "TableView"
+//
+//        let itemNumberW = 5
+//        let itemNumberH = 5
+//
+//        let answerView = YXAnswerConnectionLettersView(word, itemNumberH: itemNumberH, itemNumberW: itemNumberW)
+//        self.addSubview(answerView)
+//        answerView.center = CGPoint(x: screenWidth/2, y: screenHeight/2)
         
     }
     // ==== 添加选择视图 ====
@@ -71,7 +71,7 @@ class YXExerciseView___Tmp: YXBaseExerciseView {
     //        }
     //
     //        // ==== 添加子视图 ====
-    //        let charView = YXQuestionSpellView(charModelsArray)
+    //        let charView = YXSpellSubview(charModelsArray)
     //        questionView.addCustomViews([charView])
     //
     //        // ==== 添加选择视图 ====

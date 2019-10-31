@@ -11,27 +11,16 @@ import UIKit
 class YXAnswerSelectLettersView: YXBaseAnswerView {
     let contentView = UIView()
 
-    let itemSize    = CGFloat(60)
-    let margin      = CGFloat(10)
-    let horItemNum  = 4
-    var verItemNum  = 3
-    var wordsArray  = [String]()
+    let itemSize     = CGFloat(60)
+    let margin       = CGFloat(10)
+    let horItemNum   = 4
+    var verItemNum   = 3
     var buttonArray2 = [[UIButton]]()
-    var delegate: YXAnswerEventProtocol?
 
-    init(_ wordsArray: [String]) {
-        super.init(frame: CGRect.zero)
-        self.bindData(wordsArray)
+    override func createSubview() {
+        super.createSubview()
+        self.createButtonArray(exerciseModel.wordArray)
         self.createUI()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func bindData(_ wordsArray: [String]) {
-        self.wordsArray = wordsArray
-        self.createButtonArray(wordsArray)
     }
 
     private func createUI() {

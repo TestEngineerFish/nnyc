@@ -14,7 +14,6 @@ class YXQuestionView: UIView {
     var margin       = CGFloat(5)
     let marginTop    = CGFloat(54)
     let marginBottom = CGFloat(54)
-    var delegate: YXViewConstraintsProtocol?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,6 +56,6 @@ class YXQuestionView: UIView {
         }
         // 更新高度
         let finalHeight = maxHeight + marginTop + marginBottom
-        delegate?.updateHeight(finalHeight)
+        self.height = finalHeight
     }
 }

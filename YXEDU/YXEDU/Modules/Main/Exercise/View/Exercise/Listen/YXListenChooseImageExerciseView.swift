@@ -14,11 +14,11 @@ class YXListenChooseImageExerciseView: YXBaseExerciseView {
     private let answerHeight: CGFloat = 42 * 4 + 13 * 3
             
     override func createSubview() {
-        questionView = YXListenQuestionView()
-        questionView?.exerciseModel = self.exerciseModel
+        questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
-        
-        answerView = YXImageAnswerView()
+
+        answerView = YXImageAnswerView(exerciseModel: self.exerciseModel)
+        answerView?.frame = CGRect(x: 0, y: self.size.height - 223, width: screenWidth, height: 223)
         answerView?.exerciseModel = self.exerciseModel
         answerView?.answerDelegate = self
         self.addSubview(answerView!)

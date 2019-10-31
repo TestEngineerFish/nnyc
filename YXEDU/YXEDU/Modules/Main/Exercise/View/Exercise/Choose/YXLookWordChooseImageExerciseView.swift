@@ -13,12 +13,11 @@ import UIKit
 class YXLookWordChooseImageExerciseView: YXBaseExerciseView {
     
     override func createSubview() {
-        questionView = YXWordQuestionView()
-        questionView?.exerciseModel = self.exerciseModel
-        self.addSubview(questionView!)
+//        questionView = YXWordQuestionView()
+//        questionView?.exerciseModel = self.exerciseModel
+//        self.addSubview(questionView!)
         
-        answerView = YXImageAnswerView()
-        answerView?.exerciseModel = self.exerciseModel
+        answerView = YXImageAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
         

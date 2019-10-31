@@ -18,11 +18,24 @@ class YXExerciseDataManager: NSObject {
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+        // --- 测试数据 ----
+        let model = YXWordExerciseModel(.fillWordAccordingToChinese)
+        model.wordArray = ["e", "f", "u", "pdsss", "wddesa", "v", "m", "x"]
+        let charModelArray: [YXCharacterModel] = {
+            var array = [YXCharacterModel]()
+            for index in 0..<2 {
+                let model = YXCharacterModel("sam", isBlank: index%2>0)
+                array.append(model)
+            }
+            return array
+        }()
+        model.charModelArray = charModelArray
+        // ---- ^^^^^ ----
         exerciseModelArray = [
+            model,
             YXWordExerciseModel(.listenChooseWord),
             YXWordExerciseModel(.listenChooseChinese),
             YXWordExerciseModel(.listenChooseImage),
-            
             YXWordExerciseModel(.validationWordAndChinese),
             YXWordExerciseModel(.validationImageAndWord),
             YXWordExerciseModel(.lookImageChooseWord),
@@ -31,9 +44,8 @@ class YXExerciseDataManager: NSObject {
             YXWordExerciseModel(.lookExampleChooseImage),
             YXWordExerciseModel(.lookWordChooseImage),            
             YXWordExerciseModel(.fillWordAccordingToChinese),
-            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
-            
             YXWordExerciseModel(.lookWordChooseImage),
+            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
             YXWordExerciseModel(.lookExampleChooseImage)
         ]
         completion?(true, nil)

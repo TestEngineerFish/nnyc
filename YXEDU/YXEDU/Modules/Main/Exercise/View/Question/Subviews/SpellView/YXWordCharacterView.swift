@@ -26,7 +26,7 @@ class YXWordCharacterView: UIView {
                 self.textField.textColor   = UIColor.hex(0x323232)
                 self.baseLineView.isHidden = true
             case .blank:
-                self.textField.textColor   = UIColor.clear
+                self.textField.textColor   = UIColor.hex(0x323232)
                 self.baseLineView.isHidden = false
             case .error:
                 self.textField.textColor   = UIColor.hex(0xFF532B)

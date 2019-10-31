@@ -12,21 +12,31 @@ import UIKit
 class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        let wordArray = ["e", "f", "u", "pdsss", "wddesa", "v", "m", "x"]
-        
-        answerView = YXAnswerSelectLettersView(wordArray)
-        answerView?.exerciseModel = self.exerciseModel
-        answerView?.answerDelegate = self
+        questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
+        self.addSubview(questionView!)
+
+        answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
         self.addSubview(answerView!)
+
+        questionView?.delegate = answerView
+        answerView?.delegate   = questionView
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        answerView?.frame = CGRect(x: (screenWidth - 270) / 2, y: self.size.height - 200, width: 270, height: 200)
-    }
-    
-    override func bindData() {
-        
+        questionView?.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(37)
+            make.height.equalTo(160)
+            make.width.equalToSuperview().offset(-44)
+        }
+        let topPadding = self.height - 200
+        answerView?.snp.makeConstraints({ (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(topPadding)
+            make.width.equalTo(270)
+            make.height.equalTo(200)
+        })
     }
     
 }

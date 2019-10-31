@@ -20,10 +20,10 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
 /// 练习模块基类：内容主页面，包括题目View、答案View、TipsView
 class YXBaseExerciseView: UIScrollView {
 
-    var exerciseModel: YXWordExerciseModel? {
+    var exerciseModel: YXWordExerciseModel {
         didSet { self.bindData() }
     }
-        
+
     /// 题目view
     var questionView: YXBaseQuestionView?
     
@@ -35,22 +35,17 @@ class YXBaseExerciseView: UIScrollView {
     deinit {
         print("练习view 释放")
     }
-    
-    convenience init(exerciseModel: YXWordExerciseModel) {
-        self.init(frame: CGRect.zero)
+
+    init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
+        super.init(frame: CGRect.zero)
+        self.backgroundColor = UIColor.white
         self.createSubview()
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = UIColor.white
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
     
     override func layoutSubviews() {
         super.layoutSubviews()        
@@ -58,13 +53,10 @@ class YXBaseExerciseView: UIScrollView {
         
         self.questionView?.frame = CGRect(x: 0, y: 32, width: screenWidth, height: 150)
     }
-    
+
+    func bindData() {}
+
     func createSubview() {}
-        
-    func bindData() {
-        
-    }
-    
     
     /// 动画入场，动画从右边往左边显示出来
     func animateAdmission(_ first: Bool = false, _ completion: (() -> Void)?) {
@@ -78,7 +70,6 @@ class YXBaseExerciseView: UIScrollView {
             }
         }
     }
-    
     
     /// 动画出场
     func animateRemove() {
@@ -101,3 +92,4 @@ extension YXBaseExerciseView: YXAnswerViewDelegate {
     }
 
 }
+

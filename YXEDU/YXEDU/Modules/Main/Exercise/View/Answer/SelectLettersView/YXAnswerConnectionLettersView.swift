@@ -30,31 +30,33 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
 
     var util: YXFindRouteUtil?
 
-    init(_ word: String, itemNumberH: Int, itemNumberW: Int) {
-        self.itemNumberH = itemNumberH
-        self.itemNumberW = itemNumberW
-        let w = CGFloat(itemNumberW) * (margin + itemSize) - margin
-        let h = CGFloat(itemNumberH) * (margin + itemSize) - margin
-        super.init(frame: CGRect(x: 0, y: 0, width: w, height: h))
-        self.isCapitalLetter = self.justCapitalLetter(word)
-        self.bindData(word, itemNumberH: itemNumberH, itemNumberW: itemNumberW)
-        self.createUI()
+    override init(exerciseModel: YXWordExerciseModel) {
+        itemNumberH = exerciseModel.matix
+        itemNumberW = exerciseModel.matix
+        super.init(exerciseModel: exerciseModel)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func bindData(_ word: String, itemNumberH: Int, itemNumberW: Int) {
-        let letters = word.map { (char) -> String in
+    override func bindData() {
+        super.bindData()
+        self.lettersArray = self.exerciseModel.word.map { (char) -> String in
             return "\(char)"
         }
-        self.lettersArray   = letters
         // 查找最佳路径
-        self.util        = YXFindRouteUtil(itemNumberH, itemNumberW: itemNumberW)
-        let startIndex   = Int(arc4random()) % (itemNumberH * itemNumberW)
+        let matix = self.exerciseModel.matix
+        self.util        = YXFindRouteUtil(matix, itemNumberW: matix)
+        let startIndex   = Int(arc4random()) % (matix * matix)
         self.rightRoutes = util!.getRoute(start: startIndex, wordLength: lettersArray.count)
         self.allLettersArray = self.getAllLetters(rightRoutes)
+    }
+
+    override func createSubview() {
+        super.createSubview()
+        self.isCapitalLetter = self.justCapitalLetter(self.exerciseModel.word)
+        self.createUI()
     }
 
     private func createUI() {
@@ -257,7 +259,6 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
 
     /// 获得所有字母
     private func getAllLetters(_ rightRoutes: [Int]) -> [String] {
-//        let capitalLetterArray   = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "Y", "V", "W", "X", "Y", "Z"]
         let letterArray  = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "y", "v", "w", "x", "y", "z"]
         let mingleArray2 = [["a", "e", "i", "o", "u"],["b", "p", "d", "g", "q"], ["c", "k", "t"], ["n", "l", "m"], ["f", "v", "w"], ["h", "r", "j", "y"], ["s", "z"]]
         let amount = itemNumberW * itemNumberH

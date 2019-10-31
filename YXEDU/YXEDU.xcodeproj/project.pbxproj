@@ -27,7 +27,7 @@
 		2205A93A2361C88900C6E674 /* Iconfont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9392361C88900C6E674 /* Iconfont.swift */; };
 		2205A93C2361C92500C6E674 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A93B2361C92500C6E674 /* UIFont+Extension.swift */; };
 		2205A93E23628FDE00C6E674 /* YXFindRoutesUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A93D23628FDE00C6E674 /* YXFindRoutesUtil.swift */; };
-		2205A9472362EDCD00C6E674 /* YXQuestionSpellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9462362EDCD00C6E674 /* YXQuestionSpellView.swift */; };
+		2205A9472362EDCD00C6E674 /* YXSpellSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9462362EDCD00C6E674 /* YXSpellSubview.swift */; };
 		2205A9492362F9B800C6E674 /* YXCharacterTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9482362F9B800C6E674 /* YXCharacterTextField.swift */; };
 		2205A94B23630CD900C6E674 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A94A23630CD900C6E674 /* String+Extension.swift */; };
 		224529042327A82500510507 /* YYDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529032327A82500510507 /* YYDatabase.swift */; };
@@ -658,7 +658,7 @@
 		2205A9392361C88900C6E674 /* Iconfont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iconfont.swift; sourceTree = "<group>"; };
 		2205A93B2361C92500C6E674 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		2205A93D23628FDE00C6E674 /* YXFindRoutesUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFindRoutesUtil.swift; sourceTree = "<group>"; };
-		2205A9462362EDCD00C6E674 /* YXQuestionSpellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionSpellView.swift; sourceTree = "<group>"; };
+		2205A9462362EDCD00C6E674 /* YXSpellSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSpellSubview.swift; sourceTree = "<group>"; };
 		2205A9482362F9B800C6E674 /* YXCharacterTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCharacterTextField.swift; sourceTree = "<group>"; };
 		2205A94A23630CD900C6E674 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		224529022327A34300510507 /* YXEDU-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YXEDU-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1841,7 +1841,7 @@
 		2205A92A23619EBC00C6E674 /* SpellView */ = {
 			isa = PBXGroup;
 			children = (
-				2205A9462362EDCD00C6E674 /* YXQuestionSpellView.swift */,
+				2205A9462362EDCD00C6E674 /* YXSpellSubview.swift */,
 				2205A92F2361A7F900C6E674 /* YXWordCharacterView.swift */,
 				2205A9482362F9B800C6E674 /* YXCharacterTextField.swift */,
 			);
@@ -5620,7 +5620,7 @@
 				2205A9492362F9B800C6E674 /* YXCharacterTextField.swift in Sources */,
 				EE5E027A23277D0D00655654 /* YXCacheKey.m in Sources */,
 				EE5EFD4223274F0900655654 /* YXGameResultViewController.m in Sources */,
-				2205A9472362EDCD00C6E674 /* YXQuestionSpellView.swift in Sources */,
+				2205A9472362EDCD00C6E674 /* YXSpellSubview.swift in Sources */,
 				EE5E008823274FEB00655654 /* YXStudyCmdCenter.m in Sources */,
 				EE54F7E42362AA3100EC605A /* YXExerciseViewController.swift in Sources */,
 				EE5E00E523274FEC00655654 /* YXReporAreaView.m in Sources */,

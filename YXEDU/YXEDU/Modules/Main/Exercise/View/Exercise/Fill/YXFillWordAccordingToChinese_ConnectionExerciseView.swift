@@ -13,10 +13,8 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
         let word = "TableView"
-        let itemNumberW = 5
-        let itemNumberH = 5
 
-        answerView = YXAnswerConnectionLettersView(word, itemNumberH: itemNumberH, itemNumberW: itemNumberW)
+        answerView = YXAnswerConnectionLettersView(exerciseModel: exerciseModel)
         answerView?.exerciseModel = self.exerciseModel
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
@@ -24,11 +22,14 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        answerView?.center = CGPoint(x: screenWidth/2, y: screenHeight/2)
-    }
-    
-    override func bindData() {
-        
+        let answerViewW = self.exerciseModel.matix * (8 + 48) - 8
+        let answerViewH = self.exerciseModel.matix * (8 + 48) - 8
+        answerView?.snp.makeConstraints({ (make) in
+            make.width.equalTo(answerViewW)
+            make.height.equalTo(answerViewH)
+            make.bottom.equalToSuperview().offset(-50)
+            make.centerX.equalToSuperview()
+        })
     }
     
 }

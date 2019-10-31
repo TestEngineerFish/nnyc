@@ -12,14 +12,12 @@ import UIKit
 class YXLookExampleChooseImageExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        
-        questionView = YXExampleQuestionView()
-        questionView?.exerciseModel = self.exerciseModel
+
+        questionView = YXExampleQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
         
-        
-        answerView = YXImageAnswerView()
-        answerView?.exerciseModel = self.exerciseModel
+        answerView = YXImageAnswerView(exerciseModel: self.exerciseModel)
+        answerView?.frame = CGRect(x: 0, y: self.size.height - 223, width: screenWidth, height: 223)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
     }
