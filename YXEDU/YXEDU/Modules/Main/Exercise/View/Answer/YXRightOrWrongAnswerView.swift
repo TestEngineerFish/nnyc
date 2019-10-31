@@ -14,22 +14,13 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
 
     var rightButton: UIButton = UIButton()
     var wrongButton: UIButton = UIButton()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.createSubviews()
+
+    override func createSubview() {
+        super.createSubview()
         self.bindProperty()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-        
-    func createSubviews() {
         self.addSubview(rightButton)
         self.addSubview(wrongButton)
     }
-    
 
     override func layoutSubviews() {
 

@@ -14,12 +14,10 @@ class YXLookChineseChooseWordExerciseView: YXBaseExerciseView {
     private let answerHeight: CGFloat = 42 * 4 + 13 * 3
         
         override func createSubview() {
-            questionView = YXChineseQuestionView()
-            questionView?.exerciseModel = self.exerciseModel
+            questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
             self.addSubview(questionView!)
             
-            answerView = YXWordAnswerView()
-            answerView?.exerciseModel = self.exerciseModel
+            answerView = YXWordAnswerView(exerciseModel: exerciseModel)
             answerView?.answerDelegate = self
             self.addSubview(answerView!)
             

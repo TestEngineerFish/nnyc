@@ -14,12 +14,10 @@ class YXListenChooseWordExerciseView: YXBaseExerciseView {
     private let answerHeight: CGFloat = 42 * 4 + 13 * 3
         
     override func createSubview() {
-        questionView = YXListenQuestionView()
-        questionView?.exerciseModel = self.exerciseModel
+        questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
         
-        answerView = YXWordAnswerView()
-        answerView?.exerciseModel = self.exerciseModel
+        answerView = YXWordAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
         

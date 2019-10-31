@@ -14,16 +14,11 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
     
     override func createSubviews() {
         super.createSubviews()
-        contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 230)
-        
-        self.setShadowColor()
-        
         self.initImageView()
         self.initTitleLabel()
         self.initSubTitleLabel()
     }
     
-
     override func layoutSubviews() {
         super.layoutSubviews()
         

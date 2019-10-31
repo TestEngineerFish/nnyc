@@ -13,12 +13,10 @@ class YXValidationWordAndChineseExerciseView: YXBaseExerciseView {
     private let answerHeight: CGFloat = 42
         
         override func createSubview() {
-            questionView = YXWordAndChineseQuestionView()
-            questionView?.exerciseModel = self.exerciseModel
+            questionView = YXWordAndChineseQuestionView(exerciseModel: exerciseModel)
             self.addSubview(questionView!)
             
-            answerView = YXRightOrWrongAnswerView()
-            answerView?.exerciseModel = self.exerciseModel
+            answerView = YXRightOrWrongAnswerView(exerciseModel: exerciseModel)
             answerView?.answerDelegate = self
             self.addSubview(answerView!)
             

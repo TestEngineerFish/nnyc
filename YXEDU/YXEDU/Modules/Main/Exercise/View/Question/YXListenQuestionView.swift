@@ -17,10 +17,7 @@ class YXListenQuestionView: YXBaseQuestionView {
     override func createSubviews() {
         super.createSubviews()
         
-        contentView.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: 130)
-        self.setShadowColor()
-        
-        self.contentView.addSubview(audioBackgroundView)
+        self.addSubview(audioBackgroundView)
         
         self.audioBackgroundView.backgroundColor = UIColor.orange3
         self.audioBackgroundView.layer.masksToBounds = true
