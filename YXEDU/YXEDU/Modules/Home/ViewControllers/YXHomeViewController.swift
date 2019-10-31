@@ -21,11 +21,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var studyDataCollectionView: UICollectionView!
     @IBOutlet weak var subItemCollectionView: UICollectionView!
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
+    @IBAction func startExercise(_ sender: UIButton) {
+        let vc = YXExerciseViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    
+    
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
@@ -35,6 +39,39 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         checkLoginState()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let careerModel = YXCareerModel(item: "learn", bookId: 0, sort: 1)
+        
+        if segue.identifier == "LearnedWords" {
+            let destinationViewController = segue.destination as! YXCareerViewController
+            destinationViewController.selectedIndex = 0
+            destinationViewController.careerModel = careerModel
+            
+        } else if segue.identifier == "FavoritesWords" {
+            let destinationViewController = segue.destination as! YXCareerViewController
+            destinationViewController.selectedIndex = 1
+            destinationViewController.careerModel = careerModel
+            
+        } else if segue.identifier == "WrongWords" {
+            let destinationViewController = segue.destination as! YXCareerViewController
+            destinationViewController.selectedIndex = 2
+            destinationViewController.careerModel = careerModel
+        }
+    }
+    
     private func checkLoginState() {
         YXComHttpService.shared().requestConfig({ (response, isSuccess) in
             if isSuccess, let response = response?.responseObject {
@@ -72,12 +109,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 
             }
         }
-    }
-    
-    @IBAction func startExercise(_ sender: UIButton) {
-        let vc = YXExerciseViewController()
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     
@@ -205,5 +236,4 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             return CGSize(width: (screenWidth - 40 - 12) / 2, height: 66)
         }
     }
-
 }

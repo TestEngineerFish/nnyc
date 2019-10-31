@@ -118,7 +118,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4M-vc-0er">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q4M-vc-0er">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fo0-y4-QGD">
@@ -413,7 +413,7 @@
         <!-- -->
         <scene sceneID="Mjr-7d-dZk">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="B9h-Rf-GtI" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="B9h-Rf-GtI" customClass="YXCareerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KdB-zV-RSQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -501,7 +501,7 @@
         <!-- -->
         <scene sceneID="YFk-qu-BLV">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="xQW-0F-uLV" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="xQW-0F-uLV" customClass="YXCareerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="l0v-Ak-wFo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -523,7 +523,7 @@
         <!-- -->
         <scene sceneID="x49-mu-67x">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="qVz-k4-3Nk" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="qVz-k4-3Nk" customClass="YXCareerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="INZ-eD-znY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

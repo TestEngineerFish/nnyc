@@ -11,7 +11,7 @@ import UIKit
 class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
 
     private var badges: [YXBadgeModel] = []
-    private var bindInfo: [String] = []
+    private var bindInfo: [String] = ["", "", ""]
     
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -31,7 +31,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -45,22 +45,35 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let loginModel = response as! YXLoginModel
                 YXConfigure.shared().loginModel = loginModel
                 
+                // 徽章
                 self.loadBadgeData()
                 
+                // 个人信息
                 self.avatarImageView.sd_setImage(with: URL(string: loginModel.user.avatar), completed: nil)
                 self.nameLabel.text = loginModel.user.nick
                 self.myIntegralLabel.text = "\(loginModel.user.punchDays ?? 0)"
                 self.calendarLabel.text = "\(loginModel.user.punchDays ?? 0)"
                 
+                // 账户信息
                 let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as! UILabel
-                self.bindInfo = loginModel.user.userBind.components(separatedBy: ",")
-                self.bindInfo.insert(loginModel.user.mobile, at: 0)
+                self.bindInfo[0] = loginModel.user.mobile
+
+                let userBind = loginModel.user.userBind.components(separatedBy: ",")
+                if userBind.count > 0, userBind[0] == "1" {
+                    self.bindInfo[1] = "1"
+                }
+                
+                if userBind.count > 1, userBind[1] == "2" {
+                    self.bindInfo[2] = "2"
+                }
+                
                 if self.bindInfo[1] == "1", self.bindInfo[2] == "2" {
                     
                 } else {
                     bindLabel.text = "去绑定"
                 }
 
+                // 发音
                 let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as! UILabel
                 if loginModel.user.speech == "0" {
                     speechLabel.text = "英式"
@@ -69,9 +82,11 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     speechLabel.text = "美式"
                 }
                 
+                // 素材包管理
                 let materailLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as! UILabel
                 materailLabel.text = "0.00M"
                 
+                // 每日提醒
                 let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0))?.viewWithTag(2) as! UILabel
                 if let date = YYCache.object(forKey: "Reminder") as? Date {
                     let dateFormatter = DateFormatter()
@@ -98,16 +113,21 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 
-//                guard let badgeStatus = (response as! [String: Any])["badgesInfo"] as? [[String:Any]] else { return }
-//                for badge in badgeStatus {
-//                    let badgeId = badge["badgeId"] as? Int ?? 0
-//                    let done = badge["done"] as? Int ?? 0
-//                    let status = badge["status"] as? Int ?? 0
-//                    let total = badge["total"] as? Int ?? 0
-//                    print(badgeId)
-//                }
+                guard let badgeStatus = (response as! [String: Any])["badgesInfo"] as? [[String:Any]] else { return }
+                
+                var earnedBadgeCount = 0
+                for badge in badgeStatus {
+                    let badgeId = badge["badgeId"] as? Int ?? 0
+                    let done = badge["done"] as? Int ?? 0
+                    let status = badge["status"] as? Int ?? 0
+                    let total = badge["total"] as? Int ?? 0
+                    
+                    if done == 1 {
+                        earnedBadgeCount = earnedBadgeCount + 1
+                    }
+                }
 
-                self.ownedMedalLabel.text = "--"
+                self.ownedMedalLabel.text = "\(earnedBadgeCount)"
                 self.totalMedalLabel.text = "/\(self.badges.count)"
                 self.collectionView.reloadData()
             }
@@ -141,8 +161,13 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        
         switch indexPath.row {
         case 0:
+            let accountInfoView = YXAccountInfoView(frame: self.view.bounds)
+            accountInfoView.bindInfo = bindInfo
+            self.view.addSubview(accountInfoView)
             break
 
         case 1:
@@ -184,5 +209,9 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         imageView.sd_setImage(with: URL(string: badge.realize), completed: nil)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
     }
 }

@@ -60,6 +60,8 @@
 		77252A7423628940007D86A0 /* YXSelectGradeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77252A7223628940007D86A0 /* YXSelectGradeCell.swift */; };
 		77252A7523628940007D86A0 /* YXSelectGradeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77252A7323628940007D86A0 /* YXSelectGradeCell.xib */; };
 		77322CC723687ABB00EAC8B6 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77322CC323687ABB00EAC8B6 /* libWeChatSDK.a */; };
+		773452CA236A7EFA00801FDD /* YXAccountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */; };
+		773452CC236A7F1A00801FDD /* YXAccountInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */; };
 		775DA334236861A0004D58D3 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 775DA333236861A0004D58D3 /* TencentOpenAPI.framework */; };
 		7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */; };
 		7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */; };
@@ -696,6 +698,8 @@
 		77322CC423687ABB00EAC8B6 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
 		77322CC523687ABB00EAC8B6 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		77322CC623687ABB00EAC8B6 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAccountInfoView.swift; sourceTree = "<group>"; };
+		773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAccountInfoView.xib; sourceTree = "<group>"; };
 		775DA333236861A0004D58D3 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookCell.swift; sourceTree = "<group>"; };
 		7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordBookCell.xib; sourceTree = "<group>"; };
@@ -1966,6 +1970,7 @@
 			children = (
 				771512DF2367126800F6D400 /* Mine.storyboard */,
 				771512E5236717E000F6D400 /* ViewControllers */,
+				773452C8236A7E9A00801FDD /* Views */,
 				771512E62367180E00F6D400 /* Models */,
 			);
 			path = Mine;
@@ -2014,6 +2019,15 @@
 				77322CC523687ABB00EAC8B6 /* WXApiObject.h */,
 			);
 			path = WechtSDK1.8.2_NoPay;
+			sourceTree = "<group>";
+		};
+		773452C8236A7E9A00801FDD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */,
+				773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		77D048F82361A0FC00CE95D8 /* Model */ = {
@@ -5065,6 +5079,7 @@
 				202709B821DE3A3000E88457 /* oneDrawgameGuide1@3x.png in Resources */,
 				77F69A622361495300E55185 /* Main.storyboard in Resources */,
 				7786B6D12361C3820027D0E3 /* YXGroupWordBookCell.xib in Resources */,
+				773452CC236A7F1A00801FDD /* YXAccountInfoView.xib in Resources */,
 				23FD6CE822952E5400334321 /* 答题引导2@3x.png in Resources */,
 				23FD6CE722952E5400334321 /* 答题引导2@2x.png in Resources */,
 				77F69A7F23617CEE00E55185 /* YXHomeSubItemCell.xib in Resources */,
@@ -5417,6 +5432,7 @@
 				EE7E1D0A236367A000600A88 /* YXExerciseHeaderView.swift in Sources */,
 				EE5EFCE723274E5500655654 /* YXCustomButton.m in Sources */,
 				EE5EFD6423274F0900655654 /* YXDescoverBaseCell.m in Sources */,
+				773452CA236A7EFA00801FDD /* YXAccountInfoView.swift in Sources */,
 				EE54F7CE2362AA3100EC605A /* YXExerciseViewFactory.swift in Sources */,
 				EE5E00DD23274FEC00655654 /* YXMainItemsView.m in Sources */,
 				EE5EFCD023274E5500655654 /* YXNOSignalVC.m in Sources */,

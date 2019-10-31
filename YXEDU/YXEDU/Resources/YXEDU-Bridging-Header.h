@@ -40,4 +40,5 @@
 #import "YXStatusCode.h"
 #import "YXMainModel.h"
 #import "UIImageView+WebCache.h"
+#import "YXCareerViewController.h"
 
