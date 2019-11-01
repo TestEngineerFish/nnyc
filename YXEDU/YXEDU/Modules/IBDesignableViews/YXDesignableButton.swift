@@ -51,12 +51,6 @@ class YXDesignableButton: UIButton {
         } else {
             self.layer.insertSublayer(enableLayer, at: 0)
         }
-        
-        if enableShadow {
-            self.layer.setDefaultShadow()
-            self.layer.shadowColor = UIColor.hex(0xE1B267).cgColor
-            self.layer.cornerRadius = cornerRadius
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -126,9 +120,6 @@ class YXDesignableButton: UIButton {
     
     @IBInspectable
     var gradientColorStartPoint: CGFloat = 0.5
-    
-    @IBInspectable
-    var enableShadow: Bool = false
     
     @IBInspectable
     var canBeDisabled: Bool = true

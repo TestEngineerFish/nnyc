@@ -14,7 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        if YXUserModel.default.didLogin != false {
+        
+        if YXUserModel.default.didLogin == false {
             loadRegistrationAndLoginPage()
         }
         
@@ -25,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return YXMediator.shared().handleOpen(url)
     }
     
-    func loadRegistrationAndLoginPage() {
+    func loadRegistrationAndLoginPage(shouldShowShanYan: Bool = true) {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = nil
 
@@ -33,6 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = storyboard.instantiateViewController(withIdentifier: "YXRegistrationAndLoginNavigationController") as? UINavigationController
         window?.rootViewController = navigationController
 
+        let registerAndLoginViewController = navigationController?.viewControllers.first as! YXRegisterAndLoginViewController
+        registerAndLoginViewController.shouldShowShanYan = shouldShowShanYan
+        
         window?.makeKeyAndVisible()
     }
 

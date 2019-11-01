@@ -90,6 +90,26 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     private func loadData() {
+//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/learning/indexinfo", modelClass: YXHomeModel.self, parameters: [:]) { (response, isSuccess) in
+//            if isSuccess, let response = response?.responseObject {
+//                guard let homeModel = response as? YXHomeModel, let bookID = homeModel.bookID, let bookName = homeModel.bookName, let unitName = homeModel.unitName, let remainWords = homeModel.remainWords, let unitProgress = homeModel.unitProgress, let learnedWords = homeModel.learnedWords, let collectedWords = homeModel.collectedWords, let wrongWords = homeModel.wrongWords else { return }
+//                YXConfigure.shared().currLearningBookId = "\(bookID)"
+//
+//                self.bookNameButton.setTitle(bookName, for: .normal)
+//                self.unitNameButton.setTitle(unitName, for: .normal)
+//                self.countOfWaitForStudyWords.text = "\(remainWords)"
+//                self.progressBar.progress = Float(unitProgress)
+//
+//                self.learnedWordsCount = "\(learnedWords)"
+//                self.collectedWordsCount = "\(collectedWords)"
+//                self.wrongWordsCount = "\(wrongWords)"
+//                self.studyDataCollectionView.reloadData()
+//
+//            } else if let error = response?.error {
+//                print(error.desc)
+//            }
+//        }
+        
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/learning/indexinfo", modelClass: YXMainModel.self, parameters: [:]) { (response, isSuccess) in
             if isSuccess, let response = response?.responseObject {
                 let mainModel = response as! YXMainModel

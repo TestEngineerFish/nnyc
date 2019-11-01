@@ -10,10 +10,12 @@ import UIKit
 
 class YXRegisterAndLoginViewController: UIViewController {
     
+    var shouldShowShanYan = true
     var platform: String!
 
     private var timer: Timer?
     private var CountingDown = 60
+
     
     
     // MARK: - Interface Builder
@@ -60,8 +62,10 @@ class YXRegisterAndLoginViewController: UIViewController {
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-        QQApiManager.shared().registerQQ("101475072")
-        WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
+        if shouldShowShanYan {
+            initShanYan()
+        }
+
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
         
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
@@ -69,9 +73,17 @@ class YXRegisterAndLoginViewController: UIViewController {
         
         if let phoneNumber = YYCache.object(forKey: "PhoneNumber") as? String {
             phoneNumberTextField.text = phoneNumber
+            clearPhoneNumberTextFieldButton.isHidden = false
+            sendSMSButton.isUserInteractionEnabled = true
+            sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
         }
-
-        initShanYan()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        
+        timer?.invalidate()
+        timer = nil
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -249,7 +261,7 @@ class YXRegisterAndLoginViewController: UIViewController {
         let loginModel = YXLoginSendModel()
         loginModel.pf = userInfo["platfrom"] as? String
         loginModel.code = userInfo["token"] as? String
-        loginModel.openid = userInfo["openID"] as? String
+        loginModel.openid = (userInfo["openID"] as? String == nil) ? "" : userInfo["openID"] as? String
 
         self.platform = loginModel.pf
         
@@ -277,7 +289,6 @@ class YXRegisterAndLoginViewController: UIViewController {
         CLShanYanSDKManager.quickAuthLogin(with: configure, openLoginAuthListener: { (resultOfShowAuthPage) in
             if let error = resultOfShowAuthPage.error {
                 print(error.localizedDescription)
-                
             }
             
         }) { (resultOfLogin) in
@@ -334,6 +345,7 @@ class YXRegisterAndLoginViewController: UIViewController {
     private func customShanYanView() -> CLUIConfigure {
         let configure = CLUIConfigure()
         configure.viewController = self
+        configure.clAuthWindowPresentingAnimate = false
         configure.clNavigationBarHidden = true
         configure.clPhoneNumberFont = UIFont.systemFont(ofSize: 20, weight: .regular)
         configure.clLoginBtnTextColor = .white
@@ -389,7 +401,7 @@ class YXRegisterAndLoginViewController: UIViewController {
             qqLoginButton.addTarget(self, action: #selector(self.clickOtherLoginButton), for: .touchUpInside)
 
             let wechatLoginButton = UIButton()
-            qqLoginButton.tag = 2
+            wechatLoginButton.tag = 2
             wechatLoginButton.setImage(#imageLiteral(resourceName: "Wechat"), for: .normal)
             wechatLoginButton.addTarget(self, action: #selector(self.clickOtherLoginButton), for: .touchUpInside)
 

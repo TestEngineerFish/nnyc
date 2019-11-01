@@ -35,8 +35,8 @@ struct YXUserModel: Codable {
         appDelegate.loadMainPage()
     }
     
-    func logout() {
+    func logout() {        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.loadRegistrationAndLoginPage()
+        appDelegate.loadRegistrationAndLoginPage(shouldShowShanYan: false)
     }
 }

@@ -65,6 +65,7 @@
 		773452CA236A7EFA00801FDD /* YXAccountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */; };
 		773452CC236A7F1A00801FDD /* YXAccountInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */; };
 		775DA334236861A0004D58D3 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 775DA333236861A0004D58D3 /* TencentOpenAPI.framework */; };
+		777C1E2A236BDF380097A822 /* YXHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C1E29236BDF380097A822 /* YXHomeModel.swift */; };
 		7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */; };
 		7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */; };
 		7786B6CD2361C3350027D0E3 /* YXGroupWordBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6CC2361C3350027D0E3 /* YXGroupWordBookModel.swift */; };
@@ -706,6 +707,7 @@
 		773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAccountInfoView.swift; sourceTree = "<group>"; };
 		773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAccountInfoView.xib; sourceTree = "<group>"; };
 		775DA333236861A0004D58D3 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		777C1E29236BDF380097A822 /* YXHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeModel.swift; sourceTree = "<group>"; };
 		7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookCell.swift; sourceTree = "<group>"; };
 		7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordBookCell.xib; sourceTree = "<group>"; };
 		7786B6CC2361C3350027D0E3 /* YXGroupWordBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGroupWordBookModel.swift; sourceTree = "<group>"; };
@@ -2043,6 +2045,7 @@
 				77D048F92361A12000CE95D8 /* YXWordBookModel.swift */,
 				7786B6CC2361C3350027D0E3 /* YXGroupWordBookModel.swift */,
 				771E885C23628DF0000BFAAD /* YXGradeModel.swift */,
+				777C1E29236BDF380097A822 /* YXHomeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5813,6 +5816,7 @@
 				EE1E4AA823694D8B007D248F /* YXFillWordGroupExerciseView.swift in Sources */,
 				EE5E0254232756C100655654 /* XLineChartItem.m in Sources */,
 				EE5E008D23274FEB00655654 /* YXCalendarMonthSummaryView.m in Sources */,
+				777C1E2A236BDF380097A822 /* YXHomeModel.swift in Sources */,
 				EE5EFD5E23274F0900655654 /* YXChallengeUserCell.m in Sources */,
 				EE5E0167232754FA00655654 /* KSGuaidViewCell.m in Sources */,
 			);

@@ -28,6 +28,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
+        NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
+
         loadData()
     }
     
@@ -39,6 +41,10 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -113,6 +119,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func loadBadgeData() {
+        self.badges = []
+        
         YXComHttpService.shared().requestBadgesInfo({ (response, isSuccess) in
             if isSuccess, let response = response {
                 guard let badgesList = YXConfigure.shared().confModel.badgeList else { return }
@@ -177,6 +185,30 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         case 0:
             let accountInfoView = YXAccountInfoView(frame: self.view.bounds)
             accountInfoView.bindInfo = bindInfo
+            accountInfoView.bindQQClosure = {
+                if self.bindInfo[1] == "1" {
+                    YXPersonalViewModel().unbindSO("qq") { (response, isSuccess) in
+                        guard isSuccess, let _ = response else { return }
+                        self.loadData()
+                    }
+                    
+                } else {
+                    QQApiManager.shared().qqLogin()
+                }
+            }
+            
+            accountInfoView.bindWechatClosure = {
+                if self.bindInfo[2] == "2" {
+                    YXPersonalViewModel().unbindSO("wechat") { (response, isSuccess) in
+                        guard isSuccess, let _ = response else { return }
+                        self.loadData()
+                    }
+                    
+                } else {
+                    WXApiManager.shared().wxLogin()
+                }
+            }
+            
             self.view.addSubview(accountInfoView)
             break
 
@@ -197,6 +229,11 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         case 5:
             self.performSegue(withIdentifier: "FeedBack", sender: self)
+            break
+            
+        case 6:
+            YXUserModel.default.didLogin = false
+            YXUserModel.default.logout()
             break
             
         default:
@@ -223,5 +260,23 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath)
+    }
+    
+    
+    
+    // MARK: - 第三方登录
+    @objc
+    private func thirdPartLogin(_ notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        
+        let personalBindModel = YXPersonalBindModel()
+        personalBindModel.bind_pf = userInfo["platfrom"] as? String
+        personalBindModel.code = userInfo["token"] as? String
+        personalBindModel.openid = (userInfo["openID"] as? String == nil) ? "" : userInfo["openID"] as? String
+        
+        YXPersonalViewModel().bindSO(personalBindModel) { (response, isSuccess) in
+            guard isSuccess, let _ = response else { return }
+            self.loadData()
+        }
     }
 }
