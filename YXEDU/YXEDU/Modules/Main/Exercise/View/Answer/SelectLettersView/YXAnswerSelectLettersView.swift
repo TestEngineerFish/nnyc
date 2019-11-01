@@ -162,6 +162,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
             self.selectedBtnArray.forEach { (button) in
                 button.status = .right
             }
+            self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
             for tag in tags {
                 if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
@@ -170,6 +171,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
                     button.status = .error
                 }
             }
+            self.answerDelegate?.answerCompletion(self.exerciseModel, false)
         }
     }
 

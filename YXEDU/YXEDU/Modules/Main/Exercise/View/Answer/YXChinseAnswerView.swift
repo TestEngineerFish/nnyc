@@ -25,15 +25,15 @@ class YXChinseAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollecti
     func itemSize() -> CGSize {
         return CGSize(width: Config.itemWidth, height: Config.itemHeight)
     }
-  
-    func createSubviews() {
+
+    override func createSubview() {
         flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)
         flowLayout.minimumLineSpacing = Config.itemInterval
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 35, bottom: 0, right: 35)
-                
+
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = UIColor.white
         collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
@@ -44,9 +44,8 @@ class YXChinseAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollecti
         collectionView.delegate = self
         collectionView.dataSource = self
         self.addSubview(collectionView)
-        
+
         collectionView.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
-        
     }
     
     override func layoutSubviews() {
@@ -71,7 +70,6 @@ class YXChinseAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollecti
         cell.backgroundColor = UIColor.clear
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor.black6.cgColor
-        cell
         return cell
     }
 

@@ -27,6 +27,8 @@ class YXExerciseViewController: UIViewController {
     
     // 底部view
     private var bottomView: YXExerciseBottomView = YXExerciseBottomView()
+
+    private var resultView = UIImageView()
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +49,10 @@ class YXExerciseViewController: UIViewController {
         self.startStudy()
     }
 
+    deinit {
+        self.resultView.removeAllSubviews()
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
                 
@@ -61,11 +67,18 @@ class YXExerciseViewController: UIViewController {
             make.height.equalTo(18)
             make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
         }
+
+        self.resultView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: 120, height: 120))
+        }
     }
     
     private func createSubviews() {
         self.view.addSubview(headerView)
         self.view.addSubview(bottomView)
+        kWindow.addSubview(resultView)
+        self.resultView.isHidden = true
     }
     
     
@@ -156,21 +169,54 @@ class YXExerciseViewController: UIViewController {
         exerciseView.animateAdmission(isFirst, nil)
         
     }
-    
 }
 
 
-extension YXExerciseViewController: YXExerciseViewDelegate {
+extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate {
     ///答完题回调处理
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
         // 这题做完，需要移除掉
-        dataManager.completionExercise(exerciseModel: exerciseModel, right: right)
-        
+        self.dataManager.completionExercise(exerciseModel: exerciseModel, right: right)
         // 更新学习进度
         YXExcerciseProgressManager.updateProgress(exerciseModel: exerciseModel)
-        
-        // 切题
-        self.switchExerciseView()
+        if right {
+            self.showRightAnimation()
+        } else {
+            self.showErrorAnimation()
+        }
+    }
+
+    /// 显示正确动画
+    private func showRightAnimation() {
+        self.view.isUserInteractionEnabled = false
+        self.resultView.isHidden = false
+        self.resultView.image = UIImage(named: "playAudioIcon")
+        let animation = YXExerciseAnimation.zoomInHideAnimation()
+        animation.delegate = self
+        animation.setValue(true, forKey: "isRight")
+        self.resultView.layer.add(animation, forKey: nil)
+    }
+
+    /// 显示错误动画
+    private func showErrorAnimation() {
+        self.view.isUserInteractionEnabled = false
+        self.resultView.isHidden = false
+        self.resultView.image = UIImage(named: "playAudioIcon")
+        let animation = YXExerciseAnimation.zoomInHideAnimation()
+        animation.delegate = self
+        animation.setValue(false, forKey: "isRight")
+        self.resultView.layer.add(animation, forKey: nil)
+    }
+
+    // TODO: CAAnimationDelegate
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        self.resultView.isHidden = true
+        self.view.isUserInteractionEnabled = true
+        self.resultView.layer.removeAllAnimations()
+        if let isRight = anim.value(forKey: "isRight") as? Bool, isRight{
+            // 切题
+            self.switchExerciseView()
+        }
     }
 }

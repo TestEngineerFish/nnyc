@@ -349,4 +349,6 @@ extension CALayer {
     func removeFlickerAnimation() {
         self.removeAnimation(forKey: "flickerAnimation")
     }
+
+
 }

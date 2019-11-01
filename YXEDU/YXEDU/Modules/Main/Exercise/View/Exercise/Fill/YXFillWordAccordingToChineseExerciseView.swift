@@ -18,8 +18,9 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
         self.addSubview(answerView!)
 
-        questionView?.delegate = answerView
-        answerView?.delegate   = questionView
+        questionView?.delegate     = answerView
+        answerView?.delegate       = questionView
+        answerView?.answerDelegate = self
     }
     
     override func layoutSubviews() {
