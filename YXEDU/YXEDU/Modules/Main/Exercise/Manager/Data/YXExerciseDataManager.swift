@@ -20,10 +20,10 @@ class YXExerciseDataManager: NSObject {
     func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         // --- 测试数据 ----
         let model = YXWordExerciseModel(.fillWordAccordingToChinese)
-        model.wordArray = ["e", "f", "u", "pdsss", "wddesa", "v", "m", "x"]
+        model.wordArray = ["e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x"]
         let charModelArray: [YXCharacterModel] = {
             var array = [YXCharacterModel]()
-            for index in 0..<2 {
+            for index in 0..<4 {
                 let model = YXCharacterModel("sam", isBlank: index%2>0)
                 array.append(model)
             }

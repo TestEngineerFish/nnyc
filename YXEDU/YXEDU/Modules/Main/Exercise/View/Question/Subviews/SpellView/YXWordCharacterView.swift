@@ -11,25 +11,32 @@ import SnapKit
 
 enum YXCharTextFieldStatus: Int {
     case normal
-    case blank
     case error
+    case right
+}
+
+enum YXCharTextFiledType: Int {
+    case normal
+    case blank
 }
 
 class YXWordCharacterView: UIView {
     let baseLineView = UIView()
     let textField    = YXCharacterTextField()
 
+    var type: YXCharTextFiledType = .normal
+
     var status: YXCharTextFieldStatus = .normal {
         willSet(value) {
             switch value {
             case .normal:
-                self.textField.textColor   = UIColor.hex(0x323232)
+                self.textField.textColor   = UIColor.black6
                 self.baseLineView.isHidden = true
-            case .blank:
-                self.textField.textColor   = UIColor.hex(0x323232)
-                self.baseLineView.isHidden = false
             case .error:
-                self.textField.textColor   = UIColor.hex(0xFF532B)
+                self.textField.textColor   = UIColor.red1
+                self.baseLineView.isHidden = false
+            case .right:
+                self.textField.textColor   = UIColor.green1
                 self.baseLineView.isHidden = false
             }
         }

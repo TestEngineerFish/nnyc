@@ -17,6 +17,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     var verItemNum   = 3
     var buttonArray2 = [[YXLetterButton]]()
     var selectedBtnArray = [YXLetterButton]()
+    let offsetTag    = 100
 
     override func createSubview() {
         super.createSubview()
@@ -77,7 +78,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
         for index in 0..<wordsArray.count {
             let word = wordsArray[index]
             let button = self.createWordButton(word)
-            button.tag = index
+            button.tag = index + offsetTag
             // 1.1、遍历二维数组中,是否需要插入对应单词
             for index in 0..<wordsBtnArray2.count {
                 let btnArray = wordsBtnArray2[index]
@@ -161,15 +162,12 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
             self.selectedBtnArray.forEach { (button) in
                 button.status = .right
             }
-            print("恭喜")
         } else {
             for tag in tags {
                 if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
                     return button.tag == tag
                 }) {
-                    // 显示红色
                     button.status = .error
-                    print("\(button.tag)错了")
                 }
             }
         }

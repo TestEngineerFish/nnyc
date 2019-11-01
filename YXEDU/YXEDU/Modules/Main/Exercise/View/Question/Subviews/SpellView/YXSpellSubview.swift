@@ -47,13 +47,12 @@ class YXSpellSubview: UIView {
             let wordWidth = model.character.textWidth(font: UIFont.pfSCSemiboldFont(withSize: 20), height: charH) + margin
             let wordFrame = CGRect(x: maxX, y: 0, width: wordWidth, height: charH)
             let wordView  = YXWordCharacterView(frame: wordFrame)
-            wordView.tag = index
             if model.isBlank {
-               wordView.textField.text = ""
-                wordView.status = .blank
+                wordView.textField.text = ""
+                wordView.type          = .blank
             } else {
                 wordView.textField.text = model.character
-                wordView.status = .normal
+                wordView.type           = .normal
             }
             self.addSubview(wordView)
             self.wordViewList.append(wordView)
@@ -68,9 +67,8 @@ class YXSpellSubview: UIView {
         guard let wordCharView = tap.view as? YXWordCharacterView else {
             return
         }
-        if wordCharView.status != .normal, !wordCharView.text.isNilOrEmpty {
+        if wordCharView.type != .normal, !wordCharView.text.isNilOrEmpty {
             wordCharView.text = ""
-            wordCharView.status = .blank
             self.removeLetter?(wordCharView.tag)
         }
     }
@@ -94,7 +92,6 @@ class YXSpellSubview: UIView {
         for wordView in self.wordViewList {
             if wordView.tag == button.tag {
                 wordView.text = ""
-                wordView.status = .blank
             }
         }
     }
@@ -120,6 +117,13 @@ class YXSpellSubview: UIView {
             if rightWord.character != (currentWord.text ?? "") {
                 errorTags.append(currentWord.tag)
                 currentWord.status = .error
+            }
+        }
+        if errorTags.isEmpty {
+            self.wordViewList.forEach { (wordView) in
+                if wordView.type == .blank {
+                    wordView.status = .right
+                }
             }
         }
         self.result?(errorTags)
