@@ -14,7 +14,6 @@ class YXLookWordChooseImageExerciseView: YXBaseExerciseView {
     
     override func createSubview() {
 //        questionView = YXWordQuestionView()
-//        questionView?.exerciseModel = self.exerciseModel
 //        self.addSubview(questionView!)
         
         answerView = YXImageAnswerView(exerciseModel: self.exerciseModel)

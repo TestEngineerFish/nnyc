@@ -24,20 +24,26 @@ class YXWordCharacterView: UIView {
     let baseLineView = UIView()
     let textField    = YXCharacterTextField()
 
-    var type: YXCharTextFiledType = .normal
+    var type: YXCharTextFiledType = .normal {
+        willSet(newValue) {
+            switch newValue {
+            case .normal:
+                self.baseLineView.isHidden = true
+            case .blank:
+                self.baseLineView.isHidden = false
+            }
+        }
+    }
 
     var status: YXCharTextFieldStatus = .normal {
         willSet(value) {
             switch value {
             case .normal:
                 self.textField.textColor   = UIColor.black6
-                self.baseLineView.isHidden = true
             case .error:
                 self.textField.textColor   = UIColor.red1
-                self.baseLineView.isHidden = false
             case .right:
                 self.textField.textColor   = UIColor.green1
-                self.baseLineView.isHidden = false
             }
         }
     }

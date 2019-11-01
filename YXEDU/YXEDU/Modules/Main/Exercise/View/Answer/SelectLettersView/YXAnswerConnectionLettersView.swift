@@ -64,13 +64,14 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         selectedBtnArray = []
         var maxX = CGFloat.zero
         var maxY = CGFloat.zero
+        let viewWidth = CGFloat(self.exerciseModel.matix) * (itemSize + margin) - margin
         for index in 0..<allLettersArray.count {
             let letter = self.allLettersArray[index]
             let button = self.createButton(letter)
             button.tag = index
             button.frame = CGRect(x: maxX, y: maxY, width: itemSize, height: itemSize)
             let nextX = maxX + margin + itemSize
-            if nextX > self.bounds.width {
+            if nextX > viewWidth {
                 maxX = 0
                 maxY += itemSize + margin
             } else {

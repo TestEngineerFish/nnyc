@@ -20,17 +20,14 @@ protocol YXAnswerViewDelegate: NSObjectProtocol {
 class YXBaseAnswerView: UIView, YXQuestionEventProtocol {
 
     /// 练习数据模型
-    var exerciseModel: YXWordExerciseModel {
-        didSet {
-            self.bindData()
-        }
-    }
+    var exerciseModel: YXWordExerciseModel
 
     var delegate: YXAnswerEventProtocol?
 
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
+        self.bindData()
         self.backgroundColor = UIColor.white
         self.createSubview()
     }

@@ -50,8 +50,6 @@ class YXBaseExerciseView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()        
         self.contentSize = self.bounds.size
-        
-        self.questionView?.frame = CGRect(x: 0, y: 32, width: screenWidth, height: 150)
     }
 
     func bindData() {}

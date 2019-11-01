@@ -15,7 +15,7 @@ class YXWordExerciseModel: NSObject {
     // 答案: 填空题
     var wordArray = [String]()
     // 答题: 连词
-    var matix: Int = 0
+    var matix: Int = 4
     var word: String = "Notification"
     var score: Int = 0
     var subTitle = "n.咖啡"

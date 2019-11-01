@@ -136,6 +136,11 @@ extension CALayer {
         self.masksToBounds = false
     }
 
+    /// 隐藏阴影效果
+    func removeShadow() {
+        self.shadowColor = UIColor.clear.cgColor
+    }
+
     /// 设置阴影
     /// - parameter opacity: 阴影的透明度, 默认0.8
     /// - parameter shadowRadius: 阴影半径长度,长度越大,阴影越大,默认3.0

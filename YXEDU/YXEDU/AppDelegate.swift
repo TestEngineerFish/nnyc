@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
         
-        if YXUserModel.default.didLogin == false {
+        if YXUserModel.default.didLogin != false {
             loadRegistrationAndLoginPage()
         }
         

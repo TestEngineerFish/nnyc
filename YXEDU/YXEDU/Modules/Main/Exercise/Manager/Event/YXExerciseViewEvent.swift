@@ -28,12 +28,6 @@ import UIKit
     @objc func connectAnswer()
 }
 
-
-/// 更新View的约束
-protocol YXViewConstraintsProtocol {
-    func updateHeight(_ height: CGFloat)
-}
-
 protocol YXQuestionEventProtocol {
     func removeQuestionWord(_ tag: Int)
     func checkQuestionResult(errorList tags: [Int])

@@ -19,7 +19,6 @@ class YXListenChooseImageExerciseView: YXBaseExerciseView {
 
         answerView = YXImageAnswerView(exerciseModel: self.exerciseModel)
         answerView?.frame = CGRect(x: 0, y: self.size.height - 223, width: screenWidth, height: 223)
-        answerView?.exerciseModel = self.exerciseModel
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
         

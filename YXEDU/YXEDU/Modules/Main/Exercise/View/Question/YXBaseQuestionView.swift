@@ -15,9 +15,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     let topPadding    = CGFloat(54)
     let bottomPadding = CGFloat(54)
     
-    var exerciseModel: YXWordExerciseModel {
-        didSet { bindData() }
-    }
+    var exerciseModel: YXWordExerciseModel
     
     /// 主标题
     var titleLabel: UILabel?
@@ -40,6 +38,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
+        self.bindData()
         self.backgroundColor = UIColor.white
         self.layer.setDefaultShadow()
         self.createSubviews()
