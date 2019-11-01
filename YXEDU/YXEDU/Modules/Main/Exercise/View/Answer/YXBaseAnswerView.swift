@@ -51,7 +51,7 @@ class YXBaseAnswerView: UIView, YXQuestionEventProtocol {
     }
 
     // MARK: YXQuestionEventProtocol
-    func clickSpellView(_ word: String) { }
-
-    func clickAudioButton(_ button: UIButton) { }
+    func removeQuestionWord(_ tag: Int) {}
+    func checkQuestionResult(errorList tags: [Int]) {}
+    func clickAudioButton(_ button: UIButton) {}
 }

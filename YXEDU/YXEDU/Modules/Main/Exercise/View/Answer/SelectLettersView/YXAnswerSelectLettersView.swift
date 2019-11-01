@@ -15,7 +15,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     let margin       = CGFloat(10)
     let horItemNum   = 4
     var verItemNum   = 3
-    var buttonArray2 = [[UIButton]]()
+    var buttonArray2 = [[YXLetterButton]]()
+    var selectedBtnArray = [YXLetterButton]()
 
     override func createSubview() {
         super.createSubview()
@@ -45,8 +46,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
             for button in buttonArray {
                 cellView.addSubview(button)
                 let width: CGFloat = {
-                    let w = CGFloat(button.tag) * itemSize
-                    return button.tag > 1 ? w + margin : w
+                    let w = CGFloat(button.widthUnit) * itemSize
+                    return button.widthUnit > 1 ? w + margin : w
                 }()
                 button.snp.makeConstraints { (make) in
                     make.left.equalTo(maxX)
@@ -71,19 +72,22 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
 
     /// 根据单词数组,生成一行一组按钮的二维数组
     private func createButtonArray(_ wordsArray: [String]) {
-        var wordsBtnArray2 = Array(repeating: [UIButton](), count: 3)
+        var wordsBtnArray2 = Array(repeating: [YXLetterButton](), count: 3)
         // 1、生成按钮组
-        for word in wordsArray {
+        for index in 0..<wordsArray.count {
+            let word = wordsArray[index]
             let button = self.createWordButton(word)
+            button.tag = index
             // 1.1、遍历二维数组中,是否需要插入对应单词
             for index in 0..<wordsBtnArray2.count {
                 let btnArray = wordsBtnArray2[index]
                 var cellCount = 0
                 for btn in btnArray {
-                    cellCount += btn.tag
+                    cellCount += btn.widthUnit
                 }
                 // 1.2、补齐数组
-                if button.tag + cellCount <= horItemNum {
+
+                if button.widthUnit + cellCount <= horItemNum {
                     wordsBtnArray2[index].append(button)
                     break
                 }
@@ -93,32 +97,36 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     }
 
     /// 创建单词按钮
-    private func createWordButton(_ word: String) -> UIButton {
-        let button = UIButton()
-        button.tag = 1
-        button.backgroundColor   = UIColor.white
-        button.layer.borderColor = UIColor.hex(0xC0C0C0).cgColor
-        button.layer.borderWidth = 0.5
+    private func createWordButton(_ word: String) -> YXLetterButton {
+        let button = YXLetterButton()
+        button.text               = word
+        button.isSelected         = false
+        button.layer.borderColor  = UIColor.hex(0xC0C0C0).cgColor
+        button.layer.borderWidth  = 0.5
         button.layer.cornerRadius = 8
-        button.setTitle(word, for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.setTitleColor(UIColor.white, for: .selected)
         button.addTarget(self, action: #selector(clickButton(_:)), for: .touchUpInside)
-        if word.count > 4 {
-            button.tag = 2
-        }
         return button
     }
 
     // TODO: Event
 
-    @objc func clickButton(_ button: UIButton) {
-        button.isSelected = !button.isSelected
-        button.backgroundColor = button.isSelected ? UIColor.orange1 : UIColor.white
-        delegate?.clickWordButton(button)
-        
-        // 做题完成时，调用父类方法
-        answerCompletion(right: true)
+    @objc func clickButton(_ button: YXLetterButton) {
+        if button.isSelected {
+            if let index = self.selectedBtnArray.firstIndex(of: button) {
+                self.selectedBtnArray.remove(at: index)
+                button.isSelected = false
+            }
+            delegate?.unselectAnswerButton(button)
+        } else {
+            // 通过回调更新选中状态,防止同时选中多个
+            let success = delegate?.selectedAnswerButton(button) ?? false
+            if success && !self.selectedBtnArray.contains(button) {
+                button.isSelected = true
+                self.selectedBtnArray.append(button)
+                // 检查结果
+                self.delegate?.checkAnserResult()
+            }
+        }
     }
 
     // TODO: Tools
@@ -133,5 +141,39 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
         let height = CGFloat(verItemNum) * (itemSize + margin) - margin
         return height
     }
+
+    // MARK: YXQuestionEventProtocol
+    override func removeQuestionWord(_ tag: Int) {
+        super.removeQuestionWord(tag)
+        for index in 0..<self.selectedBtnArray.count {
+            let button = self.selectedBtnArray[index]
+            if button.tag == tag {
+                button.isSelected = false
+                self.selectedBtnArray.remove(at: index)
+                return
+            }
+        }
+    }
+
+    override func checkQuestionResult(errorList tags: [Int]) {
+        if tags.isEmpty {
+            // 答题正确
+            self.selectedBtnArray.forEach { (button) in
+                button.status = .right
+            }
+            print("恭喜")
+        } else {
+            for tag in tags {
+                if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
+                    return button.tag == tag
+                }) {
+                    // 显示红色
+                    button.status = .error
+                    print("\(button.tag)错了")
+                }
+            }
+        }
+    }
+
 
 }

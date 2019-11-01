@@ -35,12 +35,15 @@ protocol YXViewConstraintsProtocol {
 }
 
 protocol YXQuestionEventProtocol {
-    func clickSpellView(_ word: String)// 等model确定了,替换成对应的model
+    func removeQuestionWord(_ tag: Int)
+    func checkQuestionResult(errorList tags: [Int])
     /// 通过按钮的选中效果来播放和暂停
     func clickAudioButton(_ button: UIButton)
 }
 
 protocol YXAnswerEventProtocol {
     /// 点击答题区的按钮事件
-    func clickWordButton(_ button: UIButton)
+    func selectedAnswerButton(_ button: YXLetterButton) -> Bool
+    func unselectAnswerButton(_ button: YXLetterButton)
+    func checkAnserResult()
 }

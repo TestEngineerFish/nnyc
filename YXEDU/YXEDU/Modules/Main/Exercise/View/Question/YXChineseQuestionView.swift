@@ -18,6 +18,12 @@ class YXChineseQuestionView: YXBaseQuestionView {
 
         self.spellView = YXSpellSubview(self.exerciseModel)
         addSubview(spellView!)
+        self.spellView?.removeLetter = { (tag) in
+            self.delegate?.removeQuestionWord(tag)
+        }
+        self.spellView?.result = { (tagsList) in
+            self.delegate?.checkQuestionResult(errorList: tagsList)
+        }
 
         self.initSubTitleLabel()
         subTitleLabel?.text = self.exerciseModel.subTitle
@@ -42,12 +48,15 @@ class YXChineseQuestionView: YXBaseQuestionView {
     }
     
     // MARK: YXAnswerEventProtocol
-    override func clickWordButton(_ button: UIButton) {
-        super.clickWordButton(button)
-        if button.isSelected {
-            self.spellView?.insertLetter(button)
-        } else {
-            self.spellView?.removeLetter(button)
-        }
+    override func selectedAnswerButton(_ button: YXLetterButton) -> Bool {
+        return self.spellView?.insertLetter(button) ?? false
+    }
+
+    override func unselectAnswerButton(_ button: YXLetterButton) {
+        self.spellView?.removeLetter(button)
+    }
+
+    override func checkAnserResult() {
+        self.spellView?.startCheckResult()
     }
 }

@@ -97,5 +97,13 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     func bindData()  {}
 
     // MARK:YXAnswerEventProtocol
-    func clickWordButton(_ button: UIButton) { }
+    /// 选中按钮,添加单词/字母
+    /// - returns: 是否添加成功
+    func selectedAnswerButton(_ button: YXLetterButton) -> Bool {
+        return false
+    }
+    /// 取消按钮,移除单词/字母
+    func unselectAnswerButton(_ button: YXLetterButton) {}
+    /// 检验答题结果
+    func checkAnserResult() {}
 }

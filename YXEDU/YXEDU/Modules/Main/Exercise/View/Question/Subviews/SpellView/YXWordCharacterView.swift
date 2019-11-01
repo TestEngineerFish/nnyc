@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-enum YXCharTextFieldType: Int {
+enum YXCharTextFieldStatus: Int {
     case normal
     case blank
     case error
@@ -19,7 +19,7 @@ class YXWordCharacterView: UIView {
     let baseLineView = UIView()
     let textField    = YXCharacterTextField()
 
-    var type: YXCharTextFieldType = .normal {
+    var status: YXCharTextFieldStatus = .normal {
         willSet(value) {
             switch value {
             case .normal:
@@ -32,6 +32,15 @@ class YXWordCharacterView: UIView {
                 self.textField.textColor   = UIColor.hex(0xFF532B)
                 self.baseLineView.isHidden = false
             }
+        }
+    }
+
+    var text: String? {
+        get {
+            return self.textField.text ?? ""
+        }
+        set {
+            self.textField.text = newValue
         }
     }
 
@@ -61,13 +70,7 @@ class YXWordCharacterView: UIView {
     private func bindProperty() {
         baseLineView.backgroundColor = UIColor.hex(0xC0C0C0)
         self.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapView(_:)))
-        self.addGestureRecognizer(tap)
-    }
-
-    // MARK: Event
-
-    @objc private func tapView(_ sender: UITapGestureRecognizer) {
-
+        self.textField.isUserInteractionEnabled = false
+        self.baseLineView.isUserInteractionEnabled = false
     }
 }

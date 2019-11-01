@@ -38,5 +38,4 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
             make.height.equalTo(200)
         })
     }
-    
 }
