@@ -43,14 +43,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
-
         tabBarController?.tabBar.isHidden = false
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(true)
+//        navigationController?.setNavigationBarHidden(true, animated: true)
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let careerModel = YXCareerModel(item: "learn", bookId: 0, sort: 1)

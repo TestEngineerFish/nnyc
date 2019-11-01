@@ -112,11 +112,11 @@
 - (void)tencentDidLogin {
     [Growing track:kGrowingTracePlatformLoginResult withVariable:@{@"platform_result":@"", @"platform_type":@"QQ"}];
     if (_tencentOAuth.accessToken && 0 != [_tencentOAuth.accessToken length]) {
-        self.finishBlock(_tencentOAuth.accessToken,_tencentOAuth.openId, YES);
+//        self.finishBlock(_tencentOAuth.accessToken,_tencentOAuth.openId, YES);
         // 记录登录用户的OpenID、Token以及过期时间
         NSLog(@"%@",_tencentOAuth.accessToken);
 
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"CompletedBind" object:@"qq" userInfo:@{@"token":_tencentOAuth.accessToken, @"openID":_tencentOAuth.openId}];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"CompletedBind" object:nil userInfo:@{@"platfrom":@"qq", @"token":_tencentOAuth.accessToken, @"openID":_tencentOAuth.openId}];
         
     } else {
         NSLog(@"登录不成功 没有获取accesstoken");

@@ -60,8 +60,9 @@ class YXRegisterAndLoginViewController: UIViewController {
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: String.self)
+        QQApiManager.shared().registerQQ("101475072")
+        WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
+        NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
         
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
         authCodeTextField.addTarget(self, action: #selector(changeAuthCodeTextField), for: UIControl.Event.editingChanged)
@@ -243,14 +244,14 @@ class YXRegisterAndLoginViewController: UIViewController {
     // MARK: - 第三方登录
     @objc
     private func thirdPartLogin(_ notification: Notification) {
-        guard let platform = notification.object as? String, let userInfo = notification.userInfo else { return }
+        guard let userInfo = notification.userInfo else { return }
         
         let loginModel = YXLoginSendModel()
-        loginModel.pf = platform
+        loginModel.pf = userInfo["platfrom"] as? String
         loginModel.code = userInfo["token"] as? String
         loginModel.openid = userInfo["openID"] as? String
 
-        self.platform = platform
+        self.platform = loginModel.pf
         
         login(loginModel)
     }
@@ -284,9 +285,47 @@ class YXRegisterAndLoginViewController: UIViewController {
                 CLShanYanSDKManager.finishAuthControllerCompletion(nil)
                 
             } else {
-                print(resultOfLogin.data)
-                CLShanYanSDKManager.finishAuthControllerCompletion {
-                    
+                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/mobile/\(resultOfLogin.data?["token"] ?? "")", parameters: [:]) { (response, isSuccess) in
+                    guard isSuccess, let response = response else { return }
+                    let phoneNumber = response.responseObject as! [String]
+                         
+                    YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/login/\(phoneNumber[0])", parameters: [:]) { (response, isSuccess) in
+                        if isSuccess, let response = response?.responseObject {
+                            YXUserModel.default.token = (response as! [String: Any])["token"] as? String
+                            YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
+                            YXConfigure.shared().token = YXUserModel.default.token
+
+                            YXComHttpService.shared().requestConfig({ (response, isSuccess) in
+                                if isSuccess, let response = response?.responseObject {
+                                    let config = response as! YXConfigModel
+
+                                    YYCache.set(phoneNumber[0], forKey: "PhoneNumber")
+                                    YXUserModel.default.didLogin = true
+                                    YXConfigure.shared().saveCurrentToken()
+
+                                    guard config.baseConfig.learning else {
+                                        let storyboard = UIStoryboard(name:"Home", bundle: nil)
+                                        let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
+                                       
+                                        CLShanYanSDKManager.finishAuthControllerCompletion {
+                                            self.navigationController?.pushViewController(addBookViewController, animated: true)
+                                        }
+                                        return
+                                    }
+                                    
+                                    CLShanYanSDKManager.finishAuthControllerCompletion {
+                                        YXUserModel.default.login()
+                                    }
+                                    
+                                } else if let error = response?.error {
+                                    print(error.desc)
+                                }
+                            })
+                            
+                        } else if let error = response?.error {
+                            print(error.desc)
+                        }
+                    }
                 }
             }
         }

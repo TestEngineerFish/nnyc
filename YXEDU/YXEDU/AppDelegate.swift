@@ -14,11 +14,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        if YXUserModel.default.didLogin != false {
+        if YXUserModel.default.didLogin == false {
             loadRegistrationAndLoginPage()
         }
         
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return YXMediator.shared().handleOpen(url)
     }
     
     func loadRegistrationAndLoginPage() {
