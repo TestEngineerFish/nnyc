@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        QQApiManager.shared().registerQQ("101475072")
+        WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
+        
         if YXUserModel.default.didLogin == false {
             loadRegistrationAndLoginPage()
         }
