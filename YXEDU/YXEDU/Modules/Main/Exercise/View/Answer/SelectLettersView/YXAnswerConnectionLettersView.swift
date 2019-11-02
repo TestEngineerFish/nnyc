@@ -10,11 +10,11 @@ import UIKit
 
 class YXAnswerConnectionLettersView: YXBaseAnswerView {
 
-    var allButtonArray    = [UIButton]()
-    var enableButtonArray = [UIButton]() // 可选按钮列表
-    var selectedBtnArray  = [UIButton]() // 选中的按钮
+    var allButtonArray    = [YXLetterButton]()
+    var enableButtonArray = [YXLetterButton]() // 可选按钮列表
+    var selectedBtnArray  = [YXLetterButton]() // 选中的按钮
     var lineDictionary    = [Int:CAShapeLayer]()
-    var lastSelectedButton: UIButton? // 最后选中的按钮
+    var lastSelectedButton: YXLetterButton? // 最后选中的按钮
     // 正确的字母路径
     var rightRoutes = [Int]()
     // 完整的字母
@@ -99,12 +99,12 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
 
     // MARK: Event
 
-    @objc private func clickButton(_ button: UIButton) {
+    @objc private func clickButton(_ button: YXLetterButton) {
         if button.isEqual(self.selectedBtnArray.first) {
             return
         }
         if button.isEnabled {
-            if button.isSelected {
+            if button.status == .selected {
                 let reversedArray = self.selectedBtnArray.reversed()
                 for btn in reversedArray {
                     self.unselectButton(btn)
@@ -118,12 +118,8 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         }
     }
 
-    private func selectedButton(_ button: UIButton) {
-        button.isSelected = true
-        button.isEnabled  = true
-        button.backgroundColor = UIColor.orange1
-        button.layer.borderColor = UIColor.orange1.cgColor
-        button.setTitleColor(UIColor.white, for: .selected)
+    private func selectedButton(_ button: YXLetterButton) {
+        button.status = .selected
         // 添加选中按钮
         if !self.selectedBtnArray.contains(button) {
             self.connectionLine(fromButton: self.selectedBtnArray.last, toButton: button)
@@ -138,12 +134,8 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         self.updateEnableButton(current: button)
     }
 
-    private func unselectButton(_ button: UIButton) {
-        button.isEnabled  = false
-        button.isSelected = false
-        button.backgroundColor =  UIColor.white
-        button.layer.borderColor = UIColor.hex(0xC0C0C0).cgColor
-        button.setTitleColor(UIColor.hex(0xC0C0C0), for: .normal)
+    private func unselectButton(_ button: YXLetterButton) {
+        button.status = .disable
         // 移除选中按钮
         guard let index = self.selectedBtnArray.firstIndex(of: button) else {
             return
@@ -160,7 +152,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         self.updateEnableButton(current: self.selectedBtnArray.last)
     }
 
-    private func updateEnableButton(current button: UIButton?){
+    private func updateEnableButton(current button: YXLetterButton?){
         guard let _button = button else {
             return
         }
@@ -174,7 +166,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         self.enableButtonArray = []
         // 获得最新的位置周边按钮
         let aroundButtons = util?.aroundIndexList(_button.tag)
-        let newArray = aroundButtons?.compactMap({ (tag) -> UIButton? in
+        let newArray = aroundButtons?.compactMap({ (tag) -> YXLetterButton? in
             let targetBtn = self.allButtonArray[tag]
             if self.selectedBtnArray.contains(targetBtn) {
                 return nil
@@ -215,7 +207,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     }
 
     /// 开始连线
-    private func connectionLine(fromButton: UIButton?, toButton: UIButton) {
+    private func connectionLine(fromButton: YXLetterButton?, toButton: YXLetterButton) {
         guard let fromButton = fromButton else { return }
         let bezierPath = UIBezierPath()
         bezierPath.move(to: fromButton.center)
@@ -232,7 +224,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     }
 
     // 取消连线
-    private func disconectLine(_ button: UIButton) {
+    private func disconectLine(_ button: YXLetterButton) {
         guard let shaperLayer = self.lineDictionary[button.tag] else {
             return
         }
@@ -240,20 +232,12 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         self.lineDictionary.removeValue(forKey: button.tag)
     }
 
-    //    private func showAroundButton(origin button: UIButton) ->
-
     // MARK:Tools
-    private func createButton(_ letter: String) -> UIButton {
-        let button = UIButton()
-        button.backgroundColor   = UIColor.white
+    private func createButton(_ letter: String) -> YXLetterButton {
+        let button = YXLetterButton()
         button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 19.2)
-        button.layer.borderColor = UIColor.hex(0xC0C0C0).cgColor
-        button.layer.borderWidth = 0.5
-        button.layer.cornerRadius = 8
-        button.isEnabled = false
+        button.status = .disable
         button.setTitle(letter, for: .normal)
-        button.setTitleColor(UIColor.hex(0xC0C0C0), for: .normal)
-        button.setTitleColor(UIColor.white, for: .selected)
         button.addTarget(self, action: #selector(clickButton(_:)), for: .touchUpInside)
         return button
     }

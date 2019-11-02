@@ -100,11 +100,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     /// 创建单词按钮
     private func createWordButton(_ word: String) -> YXLetterButton {
         let button = YXLetterButton()
-        button.text               = word
-        button.isSelected         = false
-        button.layer.borderColor  = UIColor.hex(0xC0C0C0).cgColor
-        button.layer.borderWidth  = 0.5
-        button.layer.cornerRadius = 8
+        button.text   = word
+        button.status = .normal
         button.addTarget(self, action: #selector(clickButton(_:)), for: .touchUpInside)
         return button
     }
@@ -112,17 +109,17 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     // TODO: Event
 
     @objc func clickButton(_ button: YXLetterButton) {
-        if button.isSelected {
+        if button.status == .selected {
             if let index = self.selectedBtnArray.firstIndex(of: button) {
                 self.selectedBtnArray.remove(at: index)
-                button.isSelected = false
+                button.status = .normal
             }
             delegate?.unselectAnswerButton(button)
         } else {
             // 通过回调更新选中状态,防止同时选中多个
             let success = delegate?.selectedAnswerButton(button) ?? false
             if success && !self.selectedBtnArray.contains(button) {
-                button.isSelected = true
+                button.status = .selected
                 self.selectedBtnArray.append(button)
                 // 检查结果
                 self.delegate?.checkAnserResult()
@@ -149,7 +146,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
         for index in 0..<self.selectedBtnArray.count {
             let button = self.selectedBtnArray[index]
             if button.tag == tag {
-                button.isSelected = false
+                button.status = .normal
                 self.selectedBtnArray.remove(at: index)
                 return
             }

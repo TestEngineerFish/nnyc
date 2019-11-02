@@ -13,6 +13,7 @@ enum YXLetterButtonStatus {
     case selected
     case error
     case right
+    case disable
 }
 
 class YXLetterButton: UIButton {
@@ -33,38 +34,40 @@ class YXLetterButton: UIButton {
 
     var status: YXLetterButtonStatus = .normal {
         willSet {
+
             switch newValue {
             case .normal:
-                self.backgroundColor = UIColor.white
-                self.setTitleColor(UIColor.black1, for: .normal)
+                self.isEnabled         = true
+                self.backgroundColor   = UIColor.white
                 self.layer.borderColor = UIColor.black6.cgColor
-                self.layer.borderWidth = 0.5
+                self.setTitleColor(UIColor.black1, for: .normal)
             case .selected:
-                self.backgroundColor = UIColor.orange1
-                self.setTitleColor(UIColor.white, for: .selected)
+                self.isEnabled         = true
+                self.backgroundColor   = UIColor.orange1
                 self.layer.borderColor = UIColor.orange1.cgColor
-                self.layer.borderWidth = 0.5
+                self.setTitleColor(UIColor.white, for: .normal)
             case .error:
-                self.backgroundColor = UIColor.white
-                self.setTitleColor(UIColor.red1, for: .selected)
+                self.isEnabled         = false
+                self.backgroundColor   = UIColor.white
                 self.layer.borderColor = UIColor.red1.cgColor
-                self.layer.borderWidth = 0.5
+                self.setTitleColor(UIColor.red1, for: .normal)
             case .right:
-                self.backgroundColor = UIColor.white
-                self.setTitleColor(UIColor.green1, for: .selected)
+                self.isEnabled         = false
+                self.backgroundColor   = UIColor.white
                 self.layer.borderColor = UIColor.green1.cgColor
-                self.layer.borderWidth = 0.5
+                self.setTitleColor(UIColor.green1, for: .normal)
+            case .disable:
+                self.isEnabled         = false
+                self.backgroundColor   = UIColor.white
+                self.layer.borderColor = UIColor.black6.cgColor
+                self.setTitleColor(UIColor.black6, for: .normal)
             }
         }
     }
 
-    override var isSelected: Bool {
-        willSet(value) {
-            if value {
-                self.status = .selected
-            } else {
-                self.status = .normal
-            }
-        }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.borderWidth  = 0.5
+        self.layer.cornerRadius = 8.0
     }
 }
