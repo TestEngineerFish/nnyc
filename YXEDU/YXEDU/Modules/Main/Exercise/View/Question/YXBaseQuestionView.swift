@@ -81,7 +81,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     func initImageView() {
         self.imageView = UIImageView()
         self.imageView?.layer.masksToBounds = true
-        self.imageView?.layer.cornerRadius = 6
+        self.imageView?.layer.cornerRadius = 3.78
         self.imageView?.backgroundColor = UIColor.orange1
         
         self.addSubview(imageView!)

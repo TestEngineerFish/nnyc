@@ -12,7 +12,7 @@ import UIKit
 class YXFillWordAccordingToImageExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
+        questionView = YXWordAndImageQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)

@@ -1,17 +1,18 @@
 //
-//  YXChineseQuestionView.swift
+//  YXListenAndLackWordQuestionView.swift
 //  YXEDU
 //
-//  Created by sunwu on 2019/10/25.
+//  Created by 沙庭宇 on 2019/11/2.
 //  Copyright © 2019 shiji. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-/// 中文词义题目
-class YXChineseQuestionView: YXBaseQuestionView {
+/// 填词 + 语音
+class YXListenAndLackWordQuestionView: YXBaseQuestionView {
 
     var spellView: YXSpellSubview?
+    var audioView: YXQuestionAudioSubview?
 
     override func createSubviews() {
         super.createSubviews()
@@ -25,8 +26,8 @@ class YXChineseQuestionView: YXBaseQuestionView {
             self.delegate?.checkQuestionResult(errorList: tagsList)
         }
 
-        self.initSubTitleLabel()
-        subTitleLabel?.text = self.exerciseModel.subTitle
+        audioView = YXQuestionAudioSubview(exerciseModel: self.exerciseModel)
+        addSubview(audioView!)
     }
 
     override func layoutSubviews() {
@@ -39,14 +40,14 @@ class YXChineseQuestionView: YXBaseQuestionView {
                 make.width.equalTo(w)
                 make.height.equalTo(30)
             }
-            subTitleLabel?.snp.makeConstraints({ (make) in
+            audioView?.snp.makeConstraints({ (make) in
                 make.top.equalTo(_spellView.snp.bottom).offset(10)
                 make.centerX.equalToSuperview()
                 make.width.equalToSuperview()
             })
         }
     }
-    
+
     // MARK: YXAnswerEventProtocol
     override func selectedAnswerButton(_ button: YXLetterButton) -> Bool {
         return self.spellView?.insertLetter(button) ?? false

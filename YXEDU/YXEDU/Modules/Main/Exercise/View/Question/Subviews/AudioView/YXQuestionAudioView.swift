@@ -8,22 +8,23 @@
 
 import UIKit
 
-class YXQuestionAudioView: UIView {
-    let audioButton: UIButton
+class YXQuestionAudioSubview: UIView {
+    let audioButton = UIButton()
+    var exerciseModel: YXWordExerciseModel
     var delegate: YXQuestionEventProtocol?
 
-    init(_ isShowBg: Bool = false) {
-        audioButton = UIButton()
+    init(exerciseModel: YXWordExerciseModel,isShowBg: Bool = false) {
+        self.exerciseModel = exerciseModel
+
         var width   = CGFloat(22)
         var height  = CGFloat(22)
-
         if isShowBg {
             width  = 52
             height = 52
-            audioButton.backgroundColor    = UIColor.hex(0xFFF4E9)
+            audioButton.backgroundColor    = UIColor.orange3
             audioButton.layer.cornerRadius = width/2
             audioButton.layer.borderWidth  = 3
-            audioButton.layer.borderColor  = UIColor.hex(0xFFE8C5).cgColor
+            audioButton.layer.borderColor  = UIColor.orange2.cgColor
         } else {
             audioButton.backgroundColor = UIColor.white
         }
@@ -46,8 +47,10 @@ class YXQuestionAudioView: UIView {
         button.isSelected = !button.isSelected
         if button.isSelected {
             button.layer.addFlickerAnimation()
+            print("开始播放音频")
         } else {
             button.layer.removeFlickerAnimation()
+            print("停止播放音频")
         }
         delegate?.clickAudioButton(button)
     }

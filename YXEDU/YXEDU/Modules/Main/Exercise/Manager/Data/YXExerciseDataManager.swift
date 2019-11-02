@@ -19,7 +19,7 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         // --- 测试数据 ----
-        let model = YXWordExerciseModel(.fillWordAccordingToImage)
+        let model = YXWordExerciseModel(.fillWordAccordingToListen)
         let strArray = ["e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x"]
         model.wordArray = strArray
         let charModelArray: [YXCharacterModel] = {

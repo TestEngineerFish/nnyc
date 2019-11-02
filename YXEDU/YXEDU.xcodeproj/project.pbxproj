@@ -34,10 +34,11 @@
 		224529072327A85100510507 /* YYDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529062327A85100510507 /* YYDataSourceManager.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
 		2245290C2327AE0D00510507 /* YXFMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245290B2327AE0D00510507 /* YXFMDBManager.swift */; };
+		2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */; };
+		2279F255236D32D00080A0B2 /* YXQuestionAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F254236D32D00080A0B2 /* YXQuestionAudioView.swift */; };
 		227C6EEC228A5AA800282EA1 /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 227C6EEB228A5AA800282EA1 /* iconfont.ttf */; };
 		22A5AFB8236C53E900FBFABD /* YXExerciseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A5AFB7236C53E900FBFABD /* YXExerciseAnimation.swift */; };
 		22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */; };
-		22ED549523668B8100011B82 /* YXQuestionAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED549423668B8100011B82 /* YXQuestionAudioView.swift */; };
 		22ED549823668F3300011B82 /* YXQuestionImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED549723668F3300011B82 /* YXQuestionImageView.swift */; };
 		22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */; };
 		22ED54A92367076B00011B82 /* YXAnswerConnectionLettersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A82367076B00011B82 /* YXAnswerConnectionLettersView.swift */; };
@@ -668,10 +669,11 @@
 		224529062327A85100510507 /* YYDataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDataSourceManager.swift; sourceTree = "<group>"; };
 		224529082327A86A00510507 /* YYDatabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabaseConfig.swift; sourceTree = "<group>"; };
 		2245290B2327AE0D00510507 /* YXFMDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFMDBManager.swift; sourceTree = "<group>"; };
+		2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXListenAndLackWordQuestionView.swift; sourceTree = "<group>"; };
+		2279F254236D32D00080A0B2 /* YXQuestionAudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXQuestionAudioView.swift; sourceTree = "<group>"; };
 		227C6EEB228A5AA800282EA1 /* iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iconfont.ttf; sourceTree = "<group>"; };
 		22A5AFB7236C53E900FBFABD /* YXExerciseAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseAnimation.swift; sourceTree = "<group>"; };
 		22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionMeaningView.swift; sourceTree = "<group>"; };
-		22ED549423668B8100011B82 /* YXQuestionAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionAudioView.swift; sourceTree = "<group>"; };
 		22ED549723668F3300011B82 /* YXQuestionImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionImageView.swift; sourceTree = "<group>"; };
 		22ED549C2366D80400011B82 /* YXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXModel.h; sourceTree = "<group>"; };
 		22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YXModel.m"; sourceTree = "<group>"; };
@@ -1901,7 +1903,7 @@
 		22ED549323668B4A00011B82 /* AudioView */ = {
 			isa = PBXGroup;
 			children = (
-				22ED549423668B8100011B82 /* YXQuestionAudioView.swift */,
+				2279F254236D32D00080A0B2 /* YXQuestionAudioView.swift */,
 			);
 			path = AudioView;
 			sourceTree = "<group>";
@@ -2333,6 +2335,7 @@
 				EE1E4AA9236AA455007D248F /* YXListenQuestionView.swift */,
 				EE54F7C62362AA3100EC605A /* YXWordAndChineseQuestionView.swift */,
 				EE54F7C02362AA3100EC605A /* YXWordAndImageQuestionView.swift */,
+				2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */,
 			);
 			path = Question;
 			sourceTree = "<group>";
@@ -5523,7 +5526,6 @@
 				EE5E002B23274FEB00655654 /* YXChangeWordlistNameView.m in Sources */,
 				EE5EFC4B23274BBB00655654 /* YXLoginVC.m in Sources */,
 				EE5E001923274FEB00655654 /* YXWordDetailModel.m in Sources */,
-				22ED549523668B8100011B82 /* YXQuestionAudioView.swift in Sources */,
 				77F69A74236152BE00E55185 /* YXDesignableButton.swift in Sources */,
 				EE5E00C223274FEB00655654 /* YXStudySpeedView.m in Sources */,
 				EE5E005B23274FEB00655654 /* YXCompleteGroupView.m in Sources */,
@@ -5638,6 +5640,7 @@
 				EE5E0231232756C000655654 /* XAreaLineChartConfiguration.m in Sources */,
 				EE5E0232232756C000655654 /* XNormalLineChartConfiguration.m in Sources */,
 				EE5E002F23274FEB00655654 /* YXMyWordBookCell.m in Sources */,
+				2279F255236D32D00080A0B2 /* YXQuestionAudioView.swift in Sources */,
 				EE5E008223274FEB00655654 /* YXWordCharacterViewOld.m in Sources */,
 				EE5EFD5223274F0900655654 /* YXMyGradeModel.m in Sources */,
 				EE5E003223274FEB00655654 /* YXSelectMyWordCell.m in Sources */,
@@ -5742,6 +5745,7 @@
 				EE5E0239232756C000655654 /* CALayer+XLayerSelectHelper.m in Sources */,
 				EE5E00AA23274FEB00655654 /* YXASRecommendCell.m in Sources */,
 				EE6FB0B62367129700E96015 /* UIVIew+Extension.swift in Sources */,
+				2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */,
 				22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */,
 				EE5EFD5423274F0900655654 /* YXMyPreGradeModel.m in Sources */,
 				EE5E0250232756C100655654 /* OrdinateView.m in Sources */,
