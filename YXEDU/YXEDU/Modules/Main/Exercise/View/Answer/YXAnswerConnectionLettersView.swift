@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// 滑动(点击)连接字母答题页面
 class YXAnswerConnectionLettersView: YXBaseAnswerView {
 
     var allButtonArray    = [YXLetterButton]()
@@ -77,7 +78,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
             } else {
                 maxX = nextX
             }
-            self.addSubview(button)
+            self.contentScrollView?.addSubview(button)
             allButtonArray.append(button)
         }
         // 显示首个字母的动画
@@ -86,6 +87,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
         self.isUserInteractionEnabled = true
         self.addGestureRecognizer(pan)
+        self.contentScrollView?.contentSize = CGSize(width: viewWidth, height: viewWidth)
     }
 
     /// 在VC中显示的时候调用!!
@@ -223,7 +225,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         shaperLayer.strokeColor = UIColor.orange1.cgColor
         shaperLayer.fillColor = nil
         shaperLayer.zPosition = -1
-        self.layer.addSublayer(shaperLayer)
+        self.contentScrollView?.layer.addSublayer(shaperLayer)
 
         self.lineDictionary.updateValue(shaperLayer, forKey: toButton.tag)
         // 震动效果

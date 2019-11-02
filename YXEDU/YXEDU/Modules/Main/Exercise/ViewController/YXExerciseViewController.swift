@@ -149,7 +149,7 @@ class YXExerciseViewController: UIViewController {
             exerciseView.exerciseDelegate = self
             loadExerciseView(exerciseView: exerciseView)
         }
-        
+
     }
     
     

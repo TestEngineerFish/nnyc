@@ -11,12 +11,43 @@ import UIKit
 /// 词组填空
 class YXFillWordGroupExerciseView: YXBaseExerciseView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    override func createSubview() {
+        super.createSubview()
+        questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
+        self.addSubview(questionView!)
 
+        remindView = YXRemindView(exerciseModel: exerciseModel)
+        self.addSubview(remindView!)
+        remindView?.backgroundColor = UIColor.orange1
+
+        answerView = YXWordAnswerView(exerciseModel: exerciseModel)
+        self.addSubview(answerView!)
+
+        questionView?.delegate     = answerView
+        answerView?.delegate       = questionView
+        answerView?.answerDelegate = self
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        questionView?.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(37)
+            make.height.equalTo(160)
+            make.width.equalToSuperview().offset(-44)
+        }
+
+        remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(questionView!.snp.bottom).offset(15)
+            make.left.width.equalTo(questionView!)
+            make.height.equalTo(150)
+        })
+
+        answerView?.snp.makeConstraints({ (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(remindView!.snp.bottom)
+            make.width.equalTo(300)
+            make.bottom.equalToSuperview()
+        })
+    }
 }

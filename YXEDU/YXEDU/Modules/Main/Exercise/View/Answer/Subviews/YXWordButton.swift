@@ -1,40 +1,17 @@
 //
-//  YXLetterButton.swift
+//  YXWordButton.swift
 //  YXEDU
 //
-//  Created by 沙庭宇 on 2019/10/31.
+//  Created by 沙庭宇 on 2019/11/2.
 //  Copyright © 2019 shiji. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-enum YXLetterButtonStatus {
-    case normal
-    case selected
-    case error
-    case right
-    case disable
-}
+class YXWordButton: UIButton {
 
-class YXLetterButton: UIButton {
-    /// 默认占一个单元位置
-    var widthUnit = 1
-
-    /// 按钮上显示文案赋值,如果超过4个字符,则占位2个单元
-    var text: String? {
-        willSet(value) {
-            self.setTitle(value, for: .normal)
-            if (value ?? "").count > 4 {
-                widthUnit = 2
-            } else {
-                widthUnit = 1
-            }
-        }
-    }
-
-    var status: YXLetterButtonStatus = .normal {
+    var status: YXButtonStatus = .normal {
         willSet {
-
             switch newValue {
             case .normal:
                 self.isEnabled         = true
@@ -63,6 +40,17 @@ class YXLetterButton: UIButton {
                 self.setTitleColor(UIColor.black6, for: .normal)
             }
         }
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.titleLabel?.adjustsFontSizeToFitWidth = true
+        self.titleLabel?.minimumScaleFactor = CGFloat(14/20)
+        self.titleLabel?.numberOfLines = 2
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func layoutSubviews() {

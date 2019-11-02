@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// 中文词义题目
+/// 中文+填词词义题目
 class YXChineseQuestionView: YXBaseQuestionView {
 
     var spellView: YXSpellSubview?

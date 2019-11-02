@@ -17,6 +17,7 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         self.addSubview(questionView!)
 
         answerView = YXAnswerConnectionLettersView(exerciseModel: exerciseModel)
+        answerView?.contentScrollView?.isScrollEnabled = false
         self.addSubview(answerView!)
 
         questionView?.delegate     = answerView

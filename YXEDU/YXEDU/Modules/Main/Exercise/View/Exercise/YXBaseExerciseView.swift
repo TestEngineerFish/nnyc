@@ -18,7 +18,7 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
 
 
 /// 练习模块基类：内容主页面，包括题目View、答案View、TipsView
-class YXBaseExerciseView: UIScrollView {
+class YXBaseExerciseView: UIView {
 
     var exerciseModel: YXWordExerciseModel {
         didSet { self.bindData() }
@@ -26,6 +26,9 @@ class YXBaseExerciseView: UIScrollView {
 
     /// 题目view
     var questionView: YXBaseQuestionView?
+
+    /// 提醒view
+    var remindView: YXRemindView?
     
     /// 答案view
     var answerView: YXBaseAnswerView?
@@ -45,11 +48,6 @@ class YXBaseExerciseView: UIScrollView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()        
-        self.contentSize = self.bounds.size
     }
 
     func bindData() {}

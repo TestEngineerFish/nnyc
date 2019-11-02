@@ -15,6 +15,10 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
         questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
+        remindView = YXRemindView(exerciseModel: exerciseModel)
+        self.addSubview(remindView!)
+        remindView?.backgroundColor = UIColor.orange1
+
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
         self.addSubview(answerView!)
 
@@ -31,10 +35,16 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
             make.height.equalTo(160)
             make.width.equalToSuperview().offset(-44)
         }
-        let topPadding = self.height - 200
+
+        remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(questionView!.snp.bottom).offset(15)
+            make.left.width.equalTo(questionView!)
+            make.height.equalTo(150)
+        })
+
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(topPadding)
+            make.top.equalTo(remindView!.snp.bottom)
             make.width.equalTo(270)
             make.height.equalTo(200)
         })

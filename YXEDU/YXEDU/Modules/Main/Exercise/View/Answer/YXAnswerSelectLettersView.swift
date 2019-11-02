@@ -8,8 +8,8 @@
 
 import UIKit
 
+/// 选择字母答题页面
 class YXAnswerSelectLettersView: YXBaseAnswerView {
-    let contentView = UIView()
 
     let itemSize     = CGFloat(60)
     let margin       = CGFloat(10)
@@ -26,18 +26,10 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     }
 
     private func createUI() {
-        addSubview(contentView)
-        let contentW = getContentW()
-        var contentH = getContentH()//可以不用
-        contentView.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.width.equalTo(contentW)
-            make.height.equalTo(contentH)
-        }
         var maxY = CGFloat(0)
         for buttonArray in buttonArray2 {
             let cellView = UIView()
-            contentView.addSubview(cellView)
+            contentScrollView?.addSubview(cellView)
             cellView.snp.makeConstraints { (make) in
                 make.top.equalToSuperview().offset(maxY)
                 make.centerX.equalToSuperview()
@@ -64,11 +56,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
             }
             maxY += itemSize + margin
         }
-        contentH = maxY - margin
-        contentView.snp.updateConstraints { (make) in
-            make.height.equalTo(contentH)
-        }
-        
+        let contentH = maxY - margin
+        contentScrollView?.contentSize = CGSize(width: 270, height: contentH)
     }
 
     /// 根据单词数组,生成一行一组按钮的二维数组
@@ -125,19 +114,6 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
                 self.delegate?.checkAnserResult()
             }
         }
-    }
-
-    // TODO: Tools
-    /// 获取内容视图宽
-    private func getContentW() -> CGFloat {
-        let width = CGFloat(horItemNum) * (itemSize + margin) - margin
-        return width
-    }
-
-     /// 获取内容视图高
-    private func getContentH() -> CGFloat {
-        let height = CGFloat(verItemNum) * (itemSize + margin) - margin
-        return height
     }
 
     // MARK: YXQuestionEventProtocol
