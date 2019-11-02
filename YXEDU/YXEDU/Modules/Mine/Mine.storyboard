@@ -13,7 +13,7 @@
         <scene sceneID="M1e-9l-YrO">
             <objects>
                 <navigationController id="HHy-oc-jhr" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" shadowImage="nil" backIndicatorImage="back" id="doY-P9-MUk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" shadowImage="nil" id="doY-P9-MUk">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -223,6 +223,7 @@
                                                     </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="jLf-FL-uxB" secondAttribute="bottom" constant="18" id="4BD-uP-jIS"/>
                                                     <constraint firstAttribute="height" constant="80" id="7Nw-eM-cAj"/>
@@ -246,6 +247,9 @@
                                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="zwc-Z2-oqK" appends="YES" id="rXg-ol-Cef"/>
+                                                </connections>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的勋章" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVR-Vz-uaZ">
                                                 <rect key="frame" x="20" y="184" width="57.5" height="17"/>
@@ -314,7 +318,7 @@
                                                 </constraints>
                                                 <state key="normal" image="go"/>
                                                 <connections>
-                                                    <segue destination="Kmr-3i-3ce" kind="show" id="90S-Ki-QBb"/>
+                                                    <segue destination="Kmr-3i-3ce" kind="show" identifier="Badge" id="90S-Ki-QBb"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXr-TQ-XFQ">
@@ -806,9 +810,7 @@
                         <viewLayoutGuide key="safeArea" id="chs-8F-nsO"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="我的" image="tabMine" id="pgn-xh-kty"/>
-                    <navigationItem key="navigationItem" id="DcW-aT-f7d">
-                        <barButtonItem key="backBarButtonItem" title=" " id="SM3-BT-3AF"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="DcW-aT-f7d"/>
                     <connections>
                         <outlet property="avatarImageView" destination="ZxI-93-Dkk" id="kwZ-qI-Ehg"/>
                         <outlet property="calendarLabel" destination="jLf-FL-uxB" id="j0A-1X-p8w"/>
@@ -825,6 +827,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KWD-FU-JtB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="zwc-Z2-oqK">
+                    <connections>
+                        <action selector="tapCalendar:" destination="Dnk-I2-j8M" id="nsw-Ka-BHS"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-3774" y="1562"/>
         </scene>

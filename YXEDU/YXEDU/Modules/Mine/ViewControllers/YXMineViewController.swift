@@ -24,18 +24,22 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBAction func tapCalendar(_ sender: UITapGestureRecognizer) {
+        navigationController?.pushViewController(YXCalendarViewController(), animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
-
-        loadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        loadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -51,6 +55,10 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if segue.identifier == "Setting" {
             let destinationViewController = segue.destination as! YXPersonalInformationVC
             destinationViewController.userModel = temporaryUserModel!
+            
+        } else if segue.identifier == "Badge" {
+            let destinationViewController = segue.destination as! YXPersonalMyBadgesVC
+//            destinationViewController.badges = badges
         }
     }
     
@@ -131,21 +139,21 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 
-                guard let badgeStatus = (response as! [String: Any])["badgesInfo"] as? [[String:Any]] else { return }
-                
-                var earnedBadgeCount = 0
-                for badge in badgeStatus {
-                    let badgeId = badge["badgeId"] as? Int ?? 0
-                    let done = badge["done"] as? Int ?? 0
-                    let status = badge["status"] as? Int ?? 0
-                    let total = badge["total"] as? Int ?? 0
-                    
-                    if done == 1 {
-                        earnedBadgeCount = earnedBadgeCount + 1
-                    }
-                }
+//                guard let badgeStatus = (response as! [String: Any])["badgesInfo"] as? [[String:Any]] else { return }
+//
+//                var earnedBadgeCount = 0
+//                for badge in badgeStatus {
+//                    let badgeId = badge["badgeId"] as? Int ?? 0
+//                    let done = badge["done"] as? Int ?? 0
+//                    let status = badge["status"] as? Int ?? 0
+//                    let total = badge["total"] as? Int ?? 0
+//
+//                    if done == 1 {
+//                        earnedBadgeCount = earnedBadgeCount + 1
+//                    }
+//                }
 
-                self.ownedMedalLabel.text = "\(earnedBadgeCount)"
+                self.ownedMedalLabel.text = "0"
                 self.totalMedalLabel.text = "/\(self.badges.count)"
                 self.collectionView.reloadData()
             }
@@ -213,6 +221,31 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             break
 
         case 1:
+            let alertController = UIAlertController(title: "选择音标和发音", message: nil, preferredStyle: .actionSheet)
+            
+            let englishAction = UIAlertAction(title: "英式音标和发音", style: .default) { (action) in
+                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/setup", parameters: ["speech": "0"]) { (response, isSuccess) in
+                    guard isSuccess, let _ = response else { return }
+                    YXConfigure.shared().isUSVoice = false
+                    self.loadData()
+                }
+            }
+            
+            let usAction = UIAlertAction(title: "美式音标和发音", style: .default) { (action) in
+                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/setup", parameters: ["speech": "1"]) { (response, isSuccess) in
+                    guard isSuccess, let _ = response else { return }
+                    YXConfigure.shared().isUSVoice = true
+                    self.loadData()
+                }
+            }
+            
+            let cancleAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+            alertController.addAction(englishAction)
+            alertController.addAction(usAction)
+            alertController.addAction(cancleAction)
+
+            self.present(alertController, animated: true, completion: nil)
             break
 
         case 2:
@@ -253,13 +286,13 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let badge = badges[indexPath.row]
         
         let imageView = cell.viewWithTag(1) as! UIImageView
-        imageView.sd_setImage(with: URL(string: badge.realize), completed: nil)
+        imageView.sd_setImage(with: URL(string: badge.unRealized), completed: nil)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        self.performSegue(withIdentifier: "Badge", sender: self)
     }
     
     

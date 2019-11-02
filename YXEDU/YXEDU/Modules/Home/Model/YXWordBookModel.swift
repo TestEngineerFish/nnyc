@@ -11,8 +11,12 @@ import UIKit
 class YXWordBookModel: NSObject {
     var isSelected = false
     var isCurrentStudy = false
-
-    var bookName: String?
     var coverImage: UIImage?
-    var countOfWords: Int?    
+
+    var bookID: Int?
+    var bookName: String?
+    var coverImagePath: String?
+    var countOfWords: Int?
+    var hashCode: String?
+    var unitList: [String]?
 }

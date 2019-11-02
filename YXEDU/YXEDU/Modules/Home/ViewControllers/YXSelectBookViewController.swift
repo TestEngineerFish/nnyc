@@ -43,7 +43,6 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func fetchWordBooks() {
-        
         let newWordBook = YXWordBookModel()
         newWordBook.bookName = "添加词书"
         newWordBook.coverImage = #imageLiteral(resourceName: "newBook")
@@ -61,7 +60,11 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXWordBookCell", for: indexPath) as! YXWordBookCell
         let wordBook = wordBookModels[indexPath.row]
 
-        cell.bookCover.image = wordBook.coverImage
+        if let coverImagePath = wordBook.coverImagePath {
+            cell.bookCover.sd_setImage(with: URL(string: coverImagePath), completed: nil)
+        } else {
+            cell.bookCover.image = wordBook.coverImage
+        }
         cell.bookNameLabel.text = wordBook.bookName
         
         if let countOfWords = wordBook.countOfWords {

@@ -75,6 +75,8 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+//    UIView *navView = [[UIView alloc] init];
+//    navView.backgroundColor = [UIColor hexStringToColor:@"F4F4F4"];
     UIImageView *navView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"com_top_nav_ipx"]];
     [navView setFrame:CGRectMake(0, 0, SCREEN_WIDTH,kNavHeight + 10)];
     [self.view addSubview:navView];

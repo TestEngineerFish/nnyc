@@ -183,9 +183,12 @@
         [dateFormatter setDateFormat:@"HH:mm"];
         NSString *remindDateString = [dateFormatter stringFromDate:date];
         
+        [[NSUserDefaults standardUserDefaults] setObject:date forKey:@"Reminder"];
+
         self.returnRemindDateStringBlock(remindDateString);
         
     } else {
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"Reminder"];
         self.returnRemindDateStringBlock(@"已关闭");
     }
     

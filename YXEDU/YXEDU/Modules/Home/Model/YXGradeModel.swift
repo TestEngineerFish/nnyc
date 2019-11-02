@@ -9,6 +9,8 @@
 import UIKit
 
 class YXGradeModel: NSObject {
-    var gradeName: String?
     var isSelect = false
+
+    var gradeName: String?
+    var wordBooks: [YXWordBookModel]?
 }

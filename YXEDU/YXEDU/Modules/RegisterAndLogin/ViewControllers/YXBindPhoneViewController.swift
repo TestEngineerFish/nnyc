@@ -50,6 +50,10 @@ class YXBindPhoneViewController: UIViewController {
                     guard config.baseConfig.learning else {
                         let storyboard = UIStoryboard(name:"Home", bundle: nil)
                         let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
+                        addBookViewController.finishClosure = {
+                            YXUserModel.default.login()
+                        }
+                        
                         self.navigationController?.pushViewController(addBookViewController, animated: true)
                         return
                     }

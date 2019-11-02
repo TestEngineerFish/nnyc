@@ -26,6 +26,8 @@ class YXRegisterAndLoginViewController: UIViewController {
     @IBOutlet weak var loginButton: YXDesignableButton!
 
     @IBAction func clearphoneNumberTextField(_ sender: UIButton) {
+        clearPhoneNumberTextFieldButton.isHidden = true
+        
         phoneNumberTextField.text = ""
         phoneNumberTextField.becomeFirstResponder()
     }
@@ -229,6 +231,10 @@ class YXRegisterAndLoginViewController: UIViewController {
                         guard config.baseConfig.learning else {
                             let storyboard = UIStoryboard(name:"Home", bundle: nil)
                             let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
+                            addBookViewController.finishClosure = {
+                                YXUserModel.default.login()
+                            }
+                            
                             self.navigationController?.pushViewController(addBookViewController, animated: true)
                             return
                         }
@@ -299,25 +305,28 @@ class YXRegisterAndLoginViewController: UIViewController {
                 YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/mobile/\(resultOfLogin.data?["token"] ?? "")", parameters: [:]) { (response, isSuccess) in
                     guard isSuccess, let response = response else { return }
                     let phoneNumber = response.responseObject as! [String]
-                         
+                    
                     YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/login/\(phoneNumber[0])", parameters: [:]) { (response, isSuccess) in
                         if isSuccess, let response = response?.responseObject {
                             YXUserModel.default.token = (response as! [String: Any])["token"] as? String
                             YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
                             YXConfigure.shared().token = YXUserModel.default.token
-
+                            
                             YXComHttpService.shared().requestConfig({ (response, isSuccess) in
                                 if isSuccess, let response = response?.responseObject {
                                     let config = response as! YXConfigModel
-
+                                    
                                     YYCache.set(phoneNumber[0], forKey: "PhoneNumber")
                                     YXUserModel.default.didLogin = true
                                     YXConfigure.shared().saveCurrentToken()
-
+                                    
                                     guard config.baseConfig.learning else {
                                         let storyboard = UIStoryboard(name:"Home", bundle: nil)
                                         let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
-                                       
+                                        addBookViewController.finishClosure = {
+                                            YXUserModel.default.login()
+                                        }
+                                        
                                         CLShanYanSDKManager.finishAuthControllerCompletion {
                                             self.navigationController?.pushViewController(addBookViewController, animated: true)
                                         }

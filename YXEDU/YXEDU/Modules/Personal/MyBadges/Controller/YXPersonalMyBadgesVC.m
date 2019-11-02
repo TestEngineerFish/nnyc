@@ -90,8 +90,8 @@
             
             sectionModel.color = allColor[i];
             sectionModel.name = allName[i];
-            sectionModel.badges = self.badges[i];
-            
+            sectionModel.badges = badgeList[i];
+                        
             [sections addObject:sectionModel];
         }
 
@@ -134,69 +134,72 @@
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     YXPersonalSectionModel *sectionModel = self.sections[collectionView.tag];
-    return sectionModel.badges.count;
+    YXBadgeListModel *badgesList = sectionModel.badges;
+    return badgesList.options.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YXPersonalBadgeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"YXPersonalBadgeCell" forIndexPath:indexPath];
-    YXPersonalBadgeModel *badge = self.badges[collectionView.tag][indexPath.row];
+    YXPersonalSectionModel *sectionModel = self.sections[collectionView.tag];
+    YXBadgeListModel *badgesList = sectionModel.badges;
+    YXBadgeModel *badge = badgesList.options[indexPath.row];
     
     cell.badgeNameLabel.text = badge.badgeName;
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *finishDate = [formatter dateFromString:badge.finishDate];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *finishDateString = [formatter stringFromDate:finishDate];
-
-    cell.dateLabel.text = finishDateString;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate *finishDate = [formatter dateFromString:badge.finishDate];
+//    [formatter setDateFormat:@"yyyy-MM-dd"];
+//    NSString *finishDateString = [formatter stringFromDate:finishDate];
+//
+//    cell.dateLabel.text = finishDateString;
     
-    if ([badge.finishDate isEqualToString:@""]) {
-        [cell.badgeImageView sd_setImageWithURL:[NSURL URLWithString:badge.incompleteBadgeImageUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    } else {
-        [cell.badgeImageView sd_setImageWithURL:[NSURL URLWithString:badge.completedBadgeImageUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    }
+//    if ([badge.finishDate isEqualToString:@""]) {
+        [cell.badgeImageView sd_setImageWithURL:[NSURL URLWithString:badge.unRealized] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+//    } else {
+//        [cell.badgeImageView sd_setImageWithURL:[NSURL URLWithString:badge.completedBadgeImageUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+//    }
     
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [collectionView reloadData];
-    
+
     YXPersonalBadgeModel *badge = self.badges[collectionView.tag][indexPath.row];
-    
+
     if ([badge.finishDate isEqualToString:@""]) {
         self.badgeDetailView = [YXBadgeIncompleteView showIncompletedViewWithBadge:badge];
     } else {
         self.badgeDetailView = [YXBadgeCompletedView showCompletedViewWithBadge:badge];
     }
-    
+
     self.badgeDetailBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeDetail)];
     [self.badgeDetailBackgroundView addGestureRecognizer:tap];
     self.badgeDetailBackgroundView.backgroundColor = UIColor.blackColor;
-    
+
     self.closeButton = [[UIButton alloc] init];
     [self.closeButton setImage:[UIImage imageNamed:@"关闭"] forState:UIControlStateNormal];
     [self.closeButton addTarget:self action:@selector(closeDetail) forControlEvents:UIControlEventTouchUpInside];
-    
+
     UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
     [currentWindow addSubview:self.badgeDetailBackgroundView];
     [currentWindow addSubview:self.badgeDetailView];
     [currentWindow addSubview: self.closeButton];
-    
+
     [self.badgeDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(280);
         make.height.mas_equalTo([badge.finishDate isEqualToString:@""] ? 346 : 324);//346 : 386
         make.center.equalTo(currentWindow);
     }];
-    
+
     [self.closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(36);
         make.top.equalTo(self.badgeDetailView.mas_bottom).offset([badge.finishDate isEqualToString:@""] ? 20 : 28);
         make.centerX.equalTo(currentWindow);
     }];
-    
+
     self.closeButton.alpha = 0;
     self.badgeDetailBackgroundView.alpha = 0;
     self.badgeDetailView.alpha = 0;

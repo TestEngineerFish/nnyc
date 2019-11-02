@@ -43,3 +43,5 @@
 #import "YXCareerViewController.h"
 #import "YXPersonalInformationVC.h"
 
+#import "YXCalendarViewController.h"
+#import "YXPersonalMyBadgesVC.h"
