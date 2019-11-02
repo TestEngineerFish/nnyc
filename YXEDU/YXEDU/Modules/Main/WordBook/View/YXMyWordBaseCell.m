@@ -39,7 +39,7 @@
         UILabel *wordL = [[UILabel alloc] init];
         wordL.adjustsFontSizeToFitWidth=YES;
 //        wordL.text = @"franddaughter";
-        wordL.textColor = UIColorOfHex(0x485461);
+        wordL.textColor = UIColorOfHex(0x323232);
         wordL.font = [UIFont pfSCRegularFontWithSize:AdaptSize(16)];
         [self.contentView addSubview:wordL];
         _wordL = wordL;
@@ -51,7 +51,7 @@
     if (!_explanationL) {
         UILabel *explanationL = [[UILabel alloc] init];
 //        explanationL.text = @"n. 咖啡豆; 咖啡粉; ";
-        explanationL.textColor = UIColorOfHex(0x849EC5);
+        explanationL.textColor = UIColorOfHex(0x888888);
         explanationL.font = [UIFont pfSCRegularFontWithSize:AdaptSize(14)];
         [self.contentView addSubview:explanationL];
         _explanationL = explanationL;

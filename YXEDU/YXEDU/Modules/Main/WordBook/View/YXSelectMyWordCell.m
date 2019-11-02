@@ -132,7 +132,7 @@
 //        descLabel.text = @"在234个词单中";
         descLabel.textAlignment = NSTextAlignmentRight;
         descLabel.font = [UIFont pfSCRegularFontWithSize:AdaptSize(14)];
-        descLabel.textColor = UIColorOfHex(0x849EC5);
+        descLabel.textColor = UIColorOfHex(0x888888);
         [self.contentView addSubview:descLabel];
         _descLabel = descLabel;
     }

@@ -56,7 +56,7 @@ static NSString *const kYXMyWordBookCellID = @"YXMyWordBookCellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = UIColorOfHex(0xF3F8FB);
+    self.view.backgroundColor = UIColorOfHex(0xFFFFFF);
     self.title = @"我的词单";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.manageBtn];
@@ -380,8 +380,8 @@ static NSString *const kYXMyWordBookCellID = @"YXMyWordBookCellID";
 - (UIButton *)createBtn {
     if (!_createBtn) {
         UIButton *createBtn = [[UIButton alloc] init];
-        [createBtn setImage:[UIImage imageNamed:@"create_word_book"] forState:UIControlStateNormal];
-        [createBtn setImage:[UIImage imageNamed:@"create_word_book"] forState:UIControlStateSelected];
+//        [createBtn setImage:[UIImage imageNamed:@"create_word_book"] forState:UIControlStateNormal];
+//        [createBtn setImage:[UIImage imageNamed:@"create_word_book"] forState:UIControlStateSelected];
 //        createBtn.titleLabel.font = [UIFont pfSCRegularFontWithSize:17];
 //        [createBtn setTitle:@"管理" forState:UIControlStateNormal];
 //        [createBtn setTitle:@"完成"forState:UIControlStateSelected];

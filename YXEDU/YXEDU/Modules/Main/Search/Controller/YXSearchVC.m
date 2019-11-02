@@ -75,9 +75,9 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-//    UIView *navView = [[UIView alloc] init];
-//    navView.backgroundColor = [UIColor hexStringToColor:@"F4F4F4"];
-    UIImageView *navView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"com_top_nav_ipx"]];
+    UIView *navView = [[UIView alloc] init];
+    navView.backgroundColor = [UIColor hexStringToColor:@"FFFFFF"];
+//    UIImageView *navView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"com_top_nav_ipx"]];
     [navView setFrame:CGRectMake(0, 0, SCREEN_WIDTH,kNavHeight + 10)];
     [self.view addSubview:navView];
     
@@ -145,7 +145,6 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
     if (!_searchTF) {
         _searchTF = [[UITextField alloc] initWithFrame:CGRectMake(15, kStatusBarHeight+10, kSCREEN_WIDTH-30-50, 32)];
         _searchTF.font = [UIFont systemFontOfSize:15];
-        _searchTF.backgroundColor = [UIColor whiteColor];
         _searchTF.placeholder = @"请输入要查询的单词或中文";
         _searchTF.delegate = self;
         _searchTF.layer.cornerRadius = 16;
@@ -155,8 +154,8 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
 //        [_searchTF setValue:UIColorOfHex(0x434a5d) forKeyPath:@"_placeholderLabel.textColor"];
         _searchTF.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 16, 1)];
         _searchTF.leftViewMode = UITextFieldViewModeAlways;
-        _searchTF.tintColor = UIColorOfHex(0x434a5d);
-        _searchTF.backgroundColor = [UIColor whiteColor];
+//        _searchTF.tintColor = UIColorOfHex(0x434a5d);
+        _searchTF.backgroundColor = [UIColor hexStringToColor:@"F4F4F4"];
         [_searchTF addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
         [self.view addSubview:_searchTF];
         
@@ -167,9 +166,11 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
 - (UIButton *)rightBarItemBtn {
     if (!_rightBarItemBtn) {
         UIButton *rightBarItemBtn = [[UIButton alloc] initWithFrame:CGRectMake(kSCREEN_WIDTH-60, kStatusBarHeight+5, 44, 44)];
-        [rightBarItemBtn setImage:[[UIImage alloc] init] forState:UIControlStateSelected];
+//        [rightBarItemBtn setImage:[[UIImage alloc] init] forState:UIControlStateSelected];
         [rightBarItemBtn setTitle:@"取消" forState:UIControlStateNormal];
-        rightBarItemBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        [rightBarItemBtn setTintColor:[UIColor hexStringToColor:@"FFFFFF"]];
+        [rightBarItemBtn setTitleColor:[UIColor hexStringToColor:@"FFFFFF"] forState:UIControlStateNormal];
+//        rightBarItemBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [rightBarItemBtn addTarget:self
                             action:@selector(rightBarItemClick:)
                   forControlEvents:UIControlEventTouchUpInside];
@@ -433,13 +434,13 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (self.currentShowBook.content.count == 1) {
-        return CGFLOAT_MIN;
-    }else {
-        return AdaptSize(50);
-    }
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    if (self.currentShowBook.content.count == 1) {
+//        return CGFLOAT_MIN;
+//    }else {
+//        return AdaptSize(50);
+//    }
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     YXMyWordBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];

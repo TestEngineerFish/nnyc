@@ -122,8 +122,8 @@ static CGFloat const kPickViewHeight = 272.f;
     if (!_naview) {
         _naview = [YXComNaviView comNaviViewWithLeftButtonType:YXNaviviewLeftButtonWhite];
         _naview.backgroundColor = UIColor.clearColor;
-        UIImage *bgImage = [UIImage imageNamed:@"calendar_nav_bg"];
-        UIImageView *naviBGImageView = [[UIImageView alloc] initWithImage:bgImage];
+        UIView *naviBGImageView = [[UIView alloc] init];
+        naviBGImageView.backgroundColor = [UIColor hexStringToColor:@"FFFFFF"];
         naviBGImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH, kNavHeight);
         [_naview insertSubview:naviBGImageView atIndex:0];
         [_naview.leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
@@ -364,6 +364,11 @@ static CGFloat const kPickViewHeight = 272.f;
     [UIView animateWithDuration:1 animations:^{
         self.shareImageIcon.transform = CGAffineTransformTranslate(self.shareImageIcon.transform, 45, 0);
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear: animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)_initUI {
