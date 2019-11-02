@@ -45,3 +45,5 @@
 
 #import "YXCalendarViewController.h"
 #import "YXPersonalMyBadgesVC.h"
+#import "YXBaseWebViewController.h"
+#import "YXLearnReportModel.h"

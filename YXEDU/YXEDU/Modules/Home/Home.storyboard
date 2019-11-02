@@ -382,6 +382,7 @@
                         <viewLayoutGuide key="safeArea" id="iDo-k0-cvx"/>
                     </view>
                     <navigationItem key="navigationItem" id="M2E-eE-5Jo">
+                        <barButtonItem key="backBarButtonItem" title=" " id="EAK-EO-eoG"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="homeSearch" id="ASh-w3-J4T">
                             <connections>
                                 <segue destination="sQ1-lz-3yL" kind="show" id="zuD-FE-wxO"/>
@@ -399,36 +400,30 @@
                         <segue destination="xQW-0F-uLV" kind="show" identifier="FavoritesWords" id="Ikq-pG-ta6"/>
                         <segue destination="qVz-k4-3Nk" kind="show" identifier="WrongWords" id="Xl4-qR-h5K"/>
                         <segue destination="LEE-do-1y0" kind="show" identifier="TaskCenter" id="7f4-4r-z67"/>
-                        <segue destination="9r4-wh-Nql" kind="show" identifier="Calendar" id="lgQ-El-97G"/>
-                        <segue destination="ezw-iR-7oA" kind="show" identifier="StudyReport" id="cYG-n7-suK"/>
-                        <segue destination="l6f-D4-3vP" kind="show" identifier="PickUpWords" id="1uu-xw-DtT"/>
+                        <segue destination="tQ4-Ah-3Gu" kind="show" identifier="Calendar" id="fSi-bJ-cQk"/>
+                        <segue destination="N4y-4U-KXc" kind="show" identifier="StudyReport" id="f6j-pj-jMh"/>
+                        <segue destination="xWi-kI-jZm" kind="show" identifier="PickUpWords" id="Ah7-hX-NCL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5w-Bb-6XP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2133.3333333333335" y="139.95535714285714"/>
         </scene>
-        <!-- -->
-        <scene sceneID="Fsa-pg-grt">
+        <!--My Word Book ListVC-->
+        <scene sceneID="mtK-Au-Hw8">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="l6f-D4-3vP" customClass="YXMyWordBookListVC" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gRs-ww-ak5">
+                <viewController hidesBottomBarWhenPushed="YES" id="xWi-kI-jZm" customClass="YXMyWordBookListVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WRG-hW-siD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="pxP-EA-zV3"/>
+                        <viewLayoutGuide key="safeArea" id="mfh-Zp-1Sj"/>
                     </view>
-                    <navigationItem key="navigationItem" title=" " id="UKX-SU-fLQ">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="I7B-wF-pCE">
-                            <connections>
-                                <action selector="back:" destination="NXD-Ea-pEl" id="osG-g2-wYn"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="8I8-72-fCe"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Cxr-xy-QP0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="79f-Yn-87C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1194" y="1643"/>
+            <point key="canvasLocation" x="1181" y="1643"/>
         </scene>
         <!-- -->
         <scene sceneID="Mjr-7d-dZk">
@@ -452,7 +447,7 @@
             </objects>
             <point key="canvasLocation" x="-1307" y="906"/>
         </scene>
-        <!-- -->
+        <!--Mission View Controller-->
         <scene sceneID="6pL-bl-kzi">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="LEE-do-1y0" customClass="YXMissionViewController" sceneMemberID="viewController">
@@ -462,61 +457,26 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Fjr-c0-p0B"/>
                     </view>
-                    <navigationItem key="navigationItem" title=" " id="T9J-aj-owk">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="akv-0I-cbx">
-                            <connections>
-                                <action selector="back:" destination="NXD-Ea-pEl" id="iFx-Q0-raO"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7r7-ka-elt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1307" y="1643"/>
         </scene>
-        <!-- -->
-        <scene sceneID="77d-Bv-yF2">
+        <!--Calendar View Controller-->
+        <scene sceneID="8gZ-iZ-cWm">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="9r4-wh-Nql" customClass="YXReportViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fis-7r-Vvf">
+                <viewController hidesBottomBarWhenPushed="YES" id="tQ4-Ah-3Gu" customClass="YXCalendarViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nUB-a5-BH2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="Ggp-1c-jYa"/>
+                        <viewLayoutGuide key="safeArea" id="tpL-j1-kLx"/>
                     </view>
-                    <navigationItem key="navigationItem" title=" " id="DxF-Lh-Y8e">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="PNy-HI-ghD">
-                            <connections>
-                                <action selector="back:" destination="NXD-Ea-pEl" id="NSq-z8-9Nj"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="2km-WQ-QA5"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S9D-A4-Fc7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qJE-VG-fgS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-481" y="1643"/>
-        </scene>
-        <!-- -->
-        <scene sceneID="imG-OT-c0b">
-            <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="ezw-iR-7oA" customClass="YXCalendarViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="SuX-Ba-W9h">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="C1g-lN-92b"/>
-                    </view>
-                    <navigationItem key="navigationItem" title=" " id="oP5-Qv-mcy">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="Zur-M8-M8p">
-                            <connections>
-                                <action selector="back:" destination="NXD-Ea-pEl" id="Ooo-g6-BS9"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BkP-80-nTG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="346" y="1643"/>
         </scene>
         <!-- -->
         <scene sceneID="YFk-qu-BLV">
@@ -561,6 +521,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhZ-rC-jrP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="346" y="905"/>
+        </scene>
+        <!--Report View Controller-->
+        <scene sceneID="xuf-Ul-yqQ">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="N4y-4U-KXc" customClass="YXReportViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="byY-nV-fYN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="DkU-qf-7AE"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="c5O-HD-WA7"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A50-CF-bF8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="345" y="1643"/>
         </scene>
         <!-- -->
         <scene sceneID="5eR-9g-Fah">

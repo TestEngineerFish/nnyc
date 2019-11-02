@@ -128,7 +128,7 @@ static CGFloat const kPickViewHeight = 272.f;
         [_naview insertSubview:naviBGImageView atIndex:0];
         [_naview.leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [_naview setRightButtonView:self.rightView];
-        _naview.titleLabel.textColor = UIColor.whiteColor;
+        _naview.titleLabel.textColor = UIColor.blackColor;
         _naview.arrowIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_down_white"]];
         __weak typeof(self) weakSelf = self;
         _naview.clickBlock = ^{

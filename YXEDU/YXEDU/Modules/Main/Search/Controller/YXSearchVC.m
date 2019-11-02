@@ -168,8 +168,8 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
         UIButton *rightBarItemBtn = [[UIButton alloc] initWithFrame:CGRectMake(kSCREEN_WIDTH-60, kStatusBarHeight+5, 44, 44)];
 //        [rightBarItemBtn setImage:[[UIImage alloc] init] forState:UIControlStateSelected];
         [rightBarItemBtn setTitle:@"取消" forState:UIControlStateNormal];
-        [rightBarItemBtn setTintColor:[UIColor hexStringToColor:@"FFFFFF"]];
-        [rightBarItemBtn setTitleColor:[UIColor hexStringToColor:@"FFFFFF"] forState:UIControlStateNormal];
+        [rightBarItemBtn setTintColor:[UIColor hexStringToColor:@"000000"]];
+        [rightBarItemBtn setTitleColor:[UIColor hexStringToColor:@"000000"] forState:UIControlStateNormal];
 //        rightBarItemBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [rightBarItemBtn addTarget:self
                             action:@selector(rightBarItemClick:)

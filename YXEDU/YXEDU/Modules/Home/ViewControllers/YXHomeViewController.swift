@@ -179,15 +179,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 break
                 
             case 1:
-                cell.colorView.backgroundColor = UIColor(red: 240/255, green: 246/255, blue: 255/255, alpha: 1)
-                cell.iconView.image = #imageLiteral(resourceName: "homeReport")
-                cell.titleLabel.text = "学习报告"
-                break
-                
-            case 2:
                 cell.colorView.backgroundColor = UIColor(red: 232/255, green: 246/255, blue: 234/255, alpha: 1)
                 cell.iconView.image = #imageLiteral(resourceName: "homeCalendar")
                 cell.titleLabel.text = "打卡日历"
+                break
+                
+            case 2:
+                cell.colorView.backgroundColor = UIColor(red: 240/255, green: 246/255, blue: 255/255, alpha: 1)
+                cell.iconView.image = #imageLiteral(resourceName: "homeReport")
+                cell.titleLabel.text = "学习报告"
                 break
                 
             case 3:
@@ -234,7 +234,16 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 break
                 
             case 2:
-                self.performSegue(withIdentifier: "StudyReport", sender: self)
+                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/user/learnreport", parameters: [:]) { (response, isSuccess) in
+                    guard isSuccess, let response = response?.responseObject else { return }
+                    let data = (response as! [String: Any])["learnReport"] as? [String: Any]
+                    
+                    guard data?.count != nil, let learnReportModel = YXLearnReportModel.mj_object(withKeyValues: data), learnReportModel.reportUrl != "" else { return }
+                    let baseWebViewController = YXBaseWebViewController(link: learnReportModel.reportUrl, title: "学习报告")
+                    self.navigationController?.pushViewController(baseWebViewController!, animated: true)
+                }
+                
+//                self.performSegue(withIdentifier: "StudyReport", sender: self)
                 break
                 
             case 3:

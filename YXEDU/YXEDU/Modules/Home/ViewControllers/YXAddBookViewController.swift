@@ -22,9 +22,8 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @IBAction func showOrHideSelectGradeView(_ sender: Any) {
-        guard createGradeSelectView != nil else { return }
-        
         if selectGradeView.isHidden == true {
+            selectGradeView.grades = grades
             selectGradeView.isHidden = false
             seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "hideSelectGrade")
             
@@ -39,6 +38,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
 
         tableView.register(UINib(nibName: "YXGroupWordBookCell", bundle: nil), forCellReuseIdentifier: "YXGroupWordBookCell")
         
+        createGradeSelectView()
         loadData()
     }
     
@@ -53,12 +53,14 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func createGradeSelectView() {
-        selectGradeView = YXSelectGradeView(frame: CGRect(x: 0, y: 44, width: screenWidth, height: screenHeight), grades: grades, selectClosure: { (grade) in
+        selectGradeView = YXSelectGradeView(frame: CGRect(x: 0, y: 44, width: screenWidth, height: screenHeight), selectClosure: { (grade) in
             self.selectGradeView.isHidden = true
             self.seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "showSelectGrade")
         })
         selectGradeView.isHidden = true
         self.view.addSubview(selectGradeView)
+        
+        seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "showSelectGrade")
     }
     
     

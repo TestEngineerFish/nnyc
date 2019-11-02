@@ -10,30 +10,34 @@ import UIKit
 
 class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private var grades: [YXGradeModel] = []
+    var grades: [YXGradeModel] = [] {
+        didSet {
+            let allGrade = YXGradeModel()
+            allGrade.gradeName = "全部"
+            allGrade.isSelect = true
+            grades.insert(allGrade, at: 0)
+            
+            var countOfRow = Int(grades.count / 3) + ((grades.count % 3) != 0 ? 1 : 0)
+            countOfRow = countOfRow == 0 ? 1 : countOfRow
+            let baseHeight = 48 + ((countOfRow - 1) * 14)
+            let allRowHeight = 28 * countOfRow
+            collectionViewHeight.constant = CGFloat(baseHeight + allRowHeight)
+            
+            collectionView.reloadData()
+        }
+    }
+    
     private var selectClosure: ((_ grade: String) -> Void)!
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     
-    init(frame: CGRect, grades: [YXGradeModel], selectClosure: @escaping (_ grade: String) -> Void) {
+    init(frame: CGRect, selectClosure: @escaping (_ grade: String) -> Void) {
         super.init(frame: frame)
         initializationFromNib()
         
         self.selectClosure = selectClosure
-
-        self.grades = grades
-        let allGrade = YXGradeModel()
-        allGrade.gradeName = "全部"
-        allGrade.isSelect = true
-        self.grades.insert(allGrade, at: 0)
-        
-        var countOfRow = Int(self.grades.count / 3) + ((self.grades.count % 3) != 0 ? 1 : 0)
-        countOfRow = countOfRow == 0 ? 1 : countOfRow
-        let baseHeight = 48 + ((countOfRow - 1) * 14)
-        let allRowHeight = 28 * countOfRow
-        collectionViewHeight.constant = CGFloat(baseHeight + allRowHeight)
     }
     
     required init?(coder: NSCoder) {
