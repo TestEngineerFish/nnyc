@@ -116,7 +116,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/setlearning", parameters: ["bookId": "\(bookID)", "unit": unit]) { (response, isSuccess) in
                 guard isSuccess else { return }
                 
-                if let finishClosure = finishClosure {
+                if let finishClosure = self.finishClosure {
                     finishClosure()
                     
                 } else {
