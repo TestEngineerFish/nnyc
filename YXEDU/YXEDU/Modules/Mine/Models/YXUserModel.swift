@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct YXUserModel: Codable {
-    static var `default` = YXUserModel()
-    
-    private init() {
+class YXUserModel: NSObject {
+    @objc static var `default` = YXUserModel()
+
+    private override init() {
         if let didLogin = YYCache.object(forKey: "DidLogin") as? Bool {
             self.didLogin = didLogin
         }
@@ -35,6 +35,7 @@ struct YXUserModel: Codable {
         appDelegate.loadMainPage()
     }
     
+    @objc
     func logout() {        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.loadRegistrationAndLoginPage(shouldShowShanYan: false)

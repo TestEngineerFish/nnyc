@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--挑战-->
+        <!--Descovery View Controller-->
         <scene sceneID="2jw-ZT-zJp">
             <objects>
                 <viewController id="mSI-dQ-ykb" customClass="YXDescoveryViewController" sceneMemberID="viewController">
@@ -18,11 +18,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="oZE-Bv-jAZ"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="挑战" image="tabChallenge" id="ggj-B0-24Y"/>
+                    <navigationItem key="navigationItem" id="IHV-T2-byI"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GZu-Mz-FY4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3895" y="1863"/>
+            <point key="canvasLocation" x="-3895" y="2608"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="8MX-u2-MoF">
@@ -37,7 +37,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="Bvn-Jb-bkz" kind="relationship" relationship="viewControllers" id="7sV-qD-Gcw"/>
-                        <segue destination="mSI-dQ-ykb" kind="relationship" relationship="viewControllers" id="lcK-4c-IVY"/>
+                        <segue destination="GHL-ss-xco" kind="relationship" relationship="viewControllers" id="lcK-4c-IVY"/>
                         <segue destination="bSa-1o-uJX" kind="relationship" relationship="viewControllers" id="g1g-ts-WVD"/>
                     </connections>
                 </tabBarController>
@@ -53,7 +53,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuY-8E-SfB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3048" y="1572"/>
+            <point key="canvasLocation" x="-3099" y="1572"/>
         </scene>
         <!--Home-->
         <scene sceneID="a57-dz-k8Q">
@@ -64,6 +64,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zXZ-AH-BR5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4702" y="1572"/>
+        </scene>
+        <!--挑战-->
+        <scene sceneID="zDv-hQ-POC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GHL-ss-xco" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="挑战" image="tabChallenge" id="ggj-B0-24Y"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ERP-cu-kV6">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mSI-dQ-ykb" kind="relationship" relationship="rootViewController" id="saD-sj-kmM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hp9-YS-h5d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3895" y="1862"/>
         </scene>
     </scenes>
     <resources>

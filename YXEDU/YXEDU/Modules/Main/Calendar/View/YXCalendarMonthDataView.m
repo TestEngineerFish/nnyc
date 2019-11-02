@@ -39,7 +39,7 @@
         calendarView.backgroundColor = UIColor.clearColor;
         calendarView.appearance.weekdayTextColor = UIColor.whiteColor;
         calendarView.appearance.titleDefaultColor = UIColor.whiteColor;
-        calendarView.appearance.titleTodayColor = UIColorOfHex(0x59C6F3);
+        calendarView.appearance.titleTodayColor = UIColorOfHex(0xA86600);
         calendarView.appearance.todayColor = UIColor.whiteColor;
         calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
         calendarView.appearance.selectionColor = UIColor.clearColor;

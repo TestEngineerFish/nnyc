@@ -403,6 +403,7 @@
                         <segue destination="tQ4-Ah-3Gu" kind="show" identifier="Calendar" id="fSi-bJ-cQk"/>
                         <segue destination="N4y-4U-KXc" kind="show" identifier="StudyReport" id="f6j-pj-jMh"/>
                         <segue destination="xWi-kI-jZm" kind="show" identifier="PickUpWords" id="Ah7-hX-NCL"/>
+                        <segue destination="KRx-zx-laN" kind="show" identifier="AddWordsBook" id="iXC-Hp-gIV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5w-Bb-6XP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -840,4 +841,7 @@
         <image name="tabLearn" width="22" height="22"/>
         <image name="unitIndicator" width="18" height="18"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="iXC-Hp-gIV"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -69,13 +69,15 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 YXConfigure.shared().loginModel = loginModel
                 self.temporaryUserModel = loginModel.user
                 
+                // 积分
+                self.loadIntegralData()
+                
                 // 徽章
                 self.loadBadgeData()
                 
                 // 个人信息
                 self.avatarImageView.sd_setImage(with: URL(string: loginModel.user.avatar), completed: nil)
                 self.nameLabel.text = loginModel.user.nick
-                self.myIntegralLabel.text = "\(loginModel.user.punchDays ?? 0)"
                 self.calendarLabel.text = "\(loginModel.user.punchDays ?? 0)"
                 
                 // 账户信息
@@ -124,6 +126,13 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.tableView.reloadData()
             }
         })
+    }
+    
+    private func loadIntegralData() {
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/user/credits", parameters: [:]) { (response, isSuccess) in
+            guard isSuccess, let response = response?.responseObject else { return }
+            self.myIntegralLabel.text = "\((response as! [String: Any])["userCredits"] as? Int ?? 0)"
+        }
     }
     
     private func loadBadgeData() {

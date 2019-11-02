@@ -32,7 +32,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
@@ -68,6 +69,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let destinationViewController = segue.destination as! YXCareerViewController
             destinationViewController.selectedIndex = 2
             destinationViewController.careerModel = careerModel
+            
+        } else if segue.identifier == "AddWordsBook" {
+            let destinationViewController = segue.destination as! YXAddBookViewController
+            destinationViewController.navigationItem.leftBarButtonItems = []
+            destinationViewController.navigationItem.hidesBackButton = true
         }
     }
     
@@ -81,6 +87,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                     return
                 }
                 
+                self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
                 self.loadData()
                 
             } else if let error = response?.error {

@@ -231,6 +231,8 @@ class YXRegisterAndLoginViewController: UIViewController {
                         guard config.baseConfig.learning else {
                             let storyboard = UIStoryboard(name:"Home", bundle: nil)
                             let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
+                            addBookViewController.navigationItem.leftBarButtonItems = []
+                            addBookViewController.navigationItem.hidesBackButton = true
                             addBookViewController.finishClosure = {
                                 YXUserModel.default.login()
                             }
@@ -323,6 +325,8 @@ class YXRegisterAndLoginViewController: UIViewController {
                                     guard config.baseConfig.learning else {
                                         let storyboard = UIStoryboard(name:"Home", bundle: nil)
                                         let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
+                                        addBookViewController.navigationItem.leftBarButtonItems = []
+                                        addBookViewController.navigationItem.hidesBackButton = true
                                         addBookViewController.finishClosure = {
                                             YXUserModel.default.login()
                                         }

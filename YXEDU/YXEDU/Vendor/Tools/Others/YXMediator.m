@@ -29,6 +29,7 @@
 #import "SJCall.h"
 // #import "AppDelegate.h"
 #import "Growing.h"
+
 @interface YXMediator ()
 @property (nonatomic, weak) UIAlertController *kickedOutAlertVC;
 @end
@@ -97,8 +98,7 @@
     [[YXConfigure shared] loginOut];
     [self clearData];
     
-    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//    [app showLoginVC];
+    [[YXUserModel default] logout];
 }
 
 - (void)userKickedOut {
@@ -111,7 +111,7 @@
     UIWindow *mainWindow = app.window;
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您的账号已在其他设备登录" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-//        [app showLoginVC];
+        [[YXUserModel default] logout];
     }];
     [alert addAction:cancelAction];
     
@@ -129,17 +129,13 @@
     if ([YXConfigure shared].token.length) { //  防止被挤掉同时发请求报token失效
         [self clearData];
         
-        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//        [app showLoginVC];
+        [[YXUserModel default] logout];
     }
 }
 
 
 - (void)loginOut {
     [self clearData];
-    
-    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//    [app showLoginVC];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
