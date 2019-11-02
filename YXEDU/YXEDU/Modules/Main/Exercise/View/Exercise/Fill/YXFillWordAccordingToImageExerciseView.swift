@@ -11,12 +11,32 @@ import UIKit
 /// 看图片填空
 class YXFillWordAccordingToImageExerciseView: YXBaseExerciseView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    override func createSubview() {
+        questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
+        self.addSubview(questionView!)
 
+        answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
+        self.addSubview(answerView!)
+
+        questionView?.delegate     = answerView
+        answerView?.delegate       = questionView
+        answerView?.answerDelegate = self
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        questionView?.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(37)
+            make.height.equalTo(230)
+            make.width.equalToSuperview().offset(-44)
+        }
+        let topPadding = self.height - 200
+        answerView?.snp.makeConstraints({ (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(topPadding)
+            make.width.equalTo(270)
+            make.height.equalTo(200)
+        })
+    }
 }

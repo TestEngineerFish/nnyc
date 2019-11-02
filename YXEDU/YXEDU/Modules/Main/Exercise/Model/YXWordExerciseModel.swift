@@ -19,6 +19,8 @@ class YXWordExerciseModel: NSObject {
     var word: String = "Notification"
     var score: Int = 0
     var subTitle = "n.咖啡"
+    // 填空- 图片地址
+    var imageUrl: String = "http://e.hiphotos.baidu.com/image/h%3D300/sign=907f6e689ddda144c5096ab282b6d009/dc54564e9258d1092f7663c9db58ccbf6c814d30.jpg"
     init(_ type: YXExerciseType = .none) {
         super.init()
         self.type = type

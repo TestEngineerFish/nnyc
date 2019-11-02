@@ -17,7 +17,6 @@
 		202709BD21DE3A3000E88457 /* oneDrawgameGuide3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 202709B721DE3A3000E88457 /* oneDrawgameGuide3@3x.png */; };
 		202C7A21218FED8E00EFD072 /* FresherGuide in Resources */ = {isa = PBXBuildFile; fileRef = 202C7A20218FED8E00EFD072 /* FresherGuide */; };
 		20C86B9C217873FE00FCAAED /* WaveLoadingImages in Resources */ = {isa = PBXBuildFile; fileRef = 20C86B9B217873FE00FCAAED /* WaveLoadingImages */; };
-		2205A92C23619F0A00C6E674 /* YXQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92B23619F0A00C6E674 /* YXQuestionView.swift */; };
 		2205A92E23619F7500C6E674 /* YXAnswerSelectLettersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92D23619F7500C6E674 /* YXAnswerSelectLettersView.swift */; };
 		2205A9302361A7F900C6E674 /* YXWordCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92F2361A7F900C6E674 /* YXWordCharacterView.swift */; };
 		2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9312361A96000C6E674 /* UIColor+Extension.swift */; };
@@ -651,7 +650,6 @@
 		2059176E216AF01400254705 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		20C86B9B217873FE00FCAAED /* WaveLoadingImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WaveLoadingImages; sourceTree = "<group>"; };
 		2167AC0CCD40990E47210822 /* Pods-YXEDU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.release.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.release.xcconfig"; sourceTree = "<group>"; };
-		2205A92B23619F0A00C6E674 /* YXQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionView.swift; sourceTree = "<group>"; };
 		2205A92D23619F7500C6E674 /* YXAnswerSelectLettersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAnswerSelectLettersView.swift; sourceTree = "<group>"; };
 		2205A92F2361A7F900C6E674 /* YXWordCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordCharacterView.swift; sourceTree = "<group>"; };
 		2205A9312361A96000C6E674 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -2327,7 +2325,6 @@
 			isa = PBXGroup;
 			children = (
 				22ED548F2366837300011B82 /* Subviews */,
-				2205A92B23619F0A00C6E674 /* YXQuestionView.swift */,
 				EE54F7C12362AA3100EC605A /* YXBaseQuestionView.swift */,
 				EE54F7C82362AA3100EC605A /* YXWordQuestionView.swift */,
 				EE54F7BF2362AA3100EC605A /* YXExampleQuestionView.swift */,
@@ -5791,7 +5788,6 @@
 				EE5E006823274FEB00655654 /* YXGroupQuestionModel.m in Sources */,
 				771E886A2362ACFB000BFAAD /* YXBindPhoneViewController.swift in Sources */,
 				EE5EF20523273BAE00655654 /* YRHelper.m in Sources */,
-				2205A92C23619F0A00C6E674 /* YXQuestionView.swift in Sources */,
 				EE5E00CD23274FEB00655654 /* YXBookCateModel.m in Sources */,
 				EE5E003B23274FEB00655654 /* YXStudyResultCell.m in Sources */,
 				EE5E009923274FEB00655654 /* YXArticleBottomView.m in Sources */,

@@ -92,7 +92,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     private func showFirstButtonAnimation(_ btnTag: Int?) {
         if let tag = btnTag, tag < self.allButtonArray.count, tag >= 0 {
             let button = self.allButtonArray[tag]
-            self.selectedButton(button)
+            self.selectedButton(button, insert: false)
             button.layer.addBgFlickerAnimation(with: UIColor.orange1, repeat: 4)
         }
     }
@@ -118,23 +118,33 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         }
     }
 
-    private func selectedButton(_ button: YXLetterButton) {
-        button.status = .selected
-        // 添加选中按钮
-        if !self.selectedBtnArray.contains(button) {
+
+    /// 选中按钮
+    /// - Parameters:
+    ///   - button: 目标按钮
+    ///   - insert: 是否添加到问题区域
+    /// - description:设置选中效果,需要满足,1、问题区域有空缺可填充(排除第一个字母);2、不在已选中列表中
+    private func selectedButton(_ button: YXLetterButton, insert: Bool = true) {
+        var result = true
+        if insert {
+            // 判断是否成功添加到问题区域
+            result = self.delegate?.selectedAnswerButton(button) ?? false && !self.selectedBtnArray.contains(button)
+        }
+        // 添加按钮到已选按钮列表
+        if result {
             self.connectionLine(fromButton: self.selectedBtnArray.last, toButton: button)
             self.selectedBtnArray.append(button)
-            // 震动效果
-            if #available(iOS 10.0, *) {
-                let shock = UIImpactFeedbackGenerator(style: .medium)
-                shock.impactOccurred()
-            }
+            button.status = .selected
+            // 更新周围可选按钮
+            self.updateEnableButton(current: button)
+            // 检查结果
+            self.delegate?.checkAnserResult()
         }
-        // 更新周围可选按钮
-        self.updateEnableButton(current: button)
     }
 
+    /// 取消选中
     private func unselectButton(_ button: YXLetterButton) {
+        self.delegate?.unselectAnswerButton(button)
         button.status = .disable
         // 移除选中按钮
         guard let index = self.selectedBtnArray.firstIndex(of: button) else {
@@ -143,11 +153,6 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         self.selectedBtnArray.remove(at: index)
         // 移除连线
         self.disconectLine(button)
-        // 震动效果
-        if #available(iOS 10.0, *) {
-            let shock = UIImpactFeedbackGenerator(style: .medium)
-            shock.impactOccurred()
-        }
         // 更新周围可选按钮
         self.updateEnableButton(current: self.selectedBtnArray.last)
     }
@@ -221,6 +226,11 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         self.layer.addSublayer(shaperLayer)
 
         self.lineDictionary.updateValue(shaperLayer, forKey: toButton.tag)
+        // 震动效果
+        if #available(iOS 10.0, *) {
+            let shock = UIImpactFeedbackGenerator(style: .medium)
+            shock.impactOccurred()
+        }
     }
 
     // 取消连线
@@ -230,6 +240,11 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         }
         shaperLayer.removeFromSuperlayer()
         self.lineDictionary.removeValue(forKey: button.tag)
+        // 震动效果
+        if #available(iOS 10.0, *) {
+            let shock = UIImpactFeedbackGenerator(style: .medium)
+            shock.impactOccurred()
+        }
     }
 
     // MARK:Tools
@@ -304,5 +319,41 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         let regex = "^[A-Z]+$"
         let predicateRe = NSPredicate(format: "self matches %@", regex)
         return predicateRe.evaluate(with: text)
+    }
+
+    // TODO: YXQuestionEventProtocol
+    override func removeQuestionWord(_ tag: Int) {
+        // 找到目标按钮
+        let button = self.selectedBtnArray.filter { (button) -> Bool in
+            return button.tag == tag
+        }.first
+        // 找到目标按钮在数组中的起始位置
+        guard let _button = button, let startIndex = self.selectedBtnArray.firstIndex(of: _button) else {
+            return
+        }
+        // 删除该按钮及之后所有按钮
+        for index in startIndex..<self.selectedBtnArray.count {
+            let button = self.selectedBtnArray[index]
+            self.unselectButton(button)
+        }
+    }
+
+    override func checkQuestionResult(errorList tags: [Int]) {
+        if tags.isEmpty {
+            // 答题正确
+            self.selectedBtnArray.forEach { (button) in
+                button.status = .right
+            }
+            self.answerDelegate?.answerCompletion(self.exerciseModel, true)
+        } else {
+            for tag in tags {
+                if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
+                    return button.tag == tag
+                }) {
+                    button.status = .error
+                }
+            }
+            self.answerDelegate?.answerCompletion(self.exerciseModel, false)
+        }
     }
 }
