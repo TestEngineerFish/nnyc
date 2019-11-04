@@ -345,7 +345,7 @@
                                             <action selector="clearphoneNumberTextField:" destination="Js3-Wc-5eS" eventType="touchUpInside" id="G0M-Cr-Ddh"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qw-ZE-9LG">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qw-ZE-9LG">
                                         <rect key="frame" x="262" y="82" width="62" height="17"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="17" id="46G-sK-7Kz"/>
@@ -485,7 +485,11 @@
                         <viewLayoutGuide key="safeArea" id="ODC-8e-8vm"/>
                     </view>
                     <navigationItem key="navigationItem" id="mcw-5L-vy4">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="Wqi-HW-52A"/>
+                        <barButtonItem key="leftBarButtonItem" image="back" id="Wqi-HW-52A">
+                            <connections>
+                                <action selector="back:" destination="Js3-Wc-5eS" id="r8F-aY-unj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="authCodeTextField" destination="da7-re-DpG" id="n3y-7t-UGg"/>
