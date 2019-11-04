@@ -15,9 +15,10 @@ class YXListenChooseChineseExerciseView: YXBaseExerciseView {
         
     override func createSubview() {
         questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)
+        
         self.addSubview(questionView!)
         
-        answerView = YXChinseAnswerView(exerciseModel: self.exerciseModel)
+        answerView = YXItemAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
         

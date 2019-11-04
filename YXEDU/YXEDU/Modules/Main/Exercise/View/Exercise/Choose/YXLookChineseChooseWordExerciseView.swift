@@ -17,7 +17,7 @@ class YXLookChineseChooseWordExerciseView: YXBaseExerciseView {
             questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
             self.addSubview(questionView!)
             
-            answerView = YXWordAnswerView(exerciseModel: exerciseModel)
+            answerView = YXItemAnswerView(exerciseModel: exerciseModel)
             answerView?.answerDelegate = self
             self.addSubview(answerView!)
             

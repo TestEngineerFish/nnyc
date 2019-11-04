@@ -20,7 +20,7 @@ class YXFillWordGroupExerciseView: YXBaseExerciseView {
         self.addSubview(remindView!)
         remindView?.backgroundColor = UIColor.orange1
 
-        answerView = YXWordAnswerView(exerciseModel: exerciseModel)
+        answerView = YXItemAnswerView(exerciseModel: exerciseModel)
         self.addSubview(answerView!)
 
         questionView?.delegate     = answerView

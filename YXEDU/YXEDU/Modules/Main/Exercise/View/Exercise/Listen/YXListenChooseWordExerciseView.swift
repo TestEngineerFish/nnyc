@@ -17,7 +17,7 @@ class YXListenChooseWordExerciseView: YXBaseExerciseView {
         questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
         
-        answerView = YXWordAnswerView(exerciseModel: self.exerciseModel)
+        answerView = YXItemAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
         

@@ -1,5 +1,5 @@
 //
-//  YXChinseAnswerView.swift
+//  YXItemAnswerView.swift
 //  YXEDU
 //
 //  Created by sunwu on 2019/10/25.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-/// 中文答案
-class YXChinseAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
+/// 中文或单词答案
+class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     enum Config {
         static var itemHeight: CGFloat = 42
@@ -17,15 +17,18 @@ class YXChinseAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollecti
         static var itemInterval: CGFloat = 13
     }
     
-
     private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
     private var collectionViewCell: UICollectionViewCell!
     
-    func itemSize() -> CGSize {
-        return CGSize(width: Config.itemWidth, height: Config.itemHeight)
+    
+    private var titleLabel: UILabel {
+        let label = UILabel()
+        label.textColor = UIColor.black2
+        label.font = UIFont.pfSCRegularFont(withSize: 14)
+        return label
     }
-
+    
     override func createSubview() {
         flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -46,6 +49,9 @@ class YXChinseAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollecti
         self.addSubview(collectionView)
 
         collectionView.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
+        
+        
+        self.collectionView.reloadData()
     }
     
     override func layoutSubviews() {
@@ -55,7 +61,7 @@ class YXChinseAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollecti
     }
     
     override func bindData() {
-        self.collectionView.reloadData()
+//        self.collectionView.reloadData()
     }
     
         
@@ -67,24 +73,49 @@ class YXChinseAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let idf = "UICollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: idf, for: indexPath)
-        cell.backgroundColor = UIColor.clear
+        cell.backgroundColor = UIColor.white
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor.black6.cgColor
+        
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = itemSize().height / 2
+        
+        let label = self.titleLabel
+        label.text = "book"
+        
+        cell.contentView.addSubview(label)
+        label.snp.makeConstraints { (make) in
+            make.left.equalTo(21)
+            make.right.equalTo(-21)
+            make.top.bottom.equalToSuperview()
+        }
+        
         return cell
     }
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionViewCell {
-            cell.layer.borderColor = UIColor.clear.cgColor
+            cell.backgroundColor = UIColor.white
+            cell.layer.borderColor = UIColor.black6.cgColor
+            if let label = cell.contentView.subviews.first as? UILabel {
+                label.textColor = UIColor.black2
+            }
         }
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderColor = UIColor.orange1.cgColor
+        cell?.backgroundColor = UIColor.orange1
+        if let label = cell?.contentView.subviews.first as? UILabel {
+            label.textColor = UIColor.white
+        }
         collectionViewCell = cell
         
         self.answerCompletion(right: true)
     }
 
     
-
+    private func itemSize() -> CGSize {
+        return CGSize(width: Config.itemWidth, height: Config.itemHeight)
+    }
+    
 }

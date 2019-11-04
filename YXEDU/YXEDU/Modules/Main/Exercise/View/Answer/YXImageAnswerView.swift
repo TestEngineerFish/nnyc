@@ -26,6 +26,11 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         return CGSize(width: Config.itemWidth, height: Config.itemHeight)
     }
     
+    private var imageView: UIImageView {
+        let imageView = UIImageView()
+        return imageView
+    }
+    
     override func createSubview() {
         super.createSubview()
         flowLayout = UICollectionViewFlowLayout()
@@ -47,6 +52,8 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         self.addSubview(collectionView)
 
         collectionView.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
+        
+        self.collectionView.reloadData()
     }
     
     override func layoutSubviews() {
@@ -56,7 +63,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
     }
     
     override func bindData() {
-        self.collectionView.reloadData()
+//        self.collectionView.reloadData()
     }
     
         
@@ -65,15 +72,29 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         return 4
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let idf = "UICollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: idf, for: indexPath)
-        cell.backgroundColor = UIColor.gray
+        
         cell.layer.borderWidth = 1.5
         cell.layer.borderColor = UIColor.clear.cgColor
         
-//        cell.accessibilityLabel
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 5.5
         
+        let iv = self.imageView
+        iv.image = UIImage(named: "personalBGImage")
+        
+        
+        cell.contentView.addSubview(iv)
+        iv.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    
         return cell
     }
 
@@ -89,5 +110,12 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         self.answerCompletion(right: true)
     }
     
+    
+    
+    
+    
 }
+
+
+
 

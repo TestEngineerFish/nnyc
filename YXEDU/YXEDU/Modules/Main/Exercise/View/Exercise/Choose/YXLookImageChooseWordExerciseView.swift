@@ -17,7 +17,7 @@ class YXLookImageChooseWordExerciseView: YXBaseExerciseView {
             questionView = YXImageQuestionView(exerciseModel: exerciseModel)
             self.addSubview(questionView!)
             
-            answerView = YXWordAnswerView(exerciseModel: exerciseModel)
+            answerView = YXItemAnswerView(exerciseModel: exerciseModel)
             answerView?.answerDelegate = self
             self.addSubview(answerView!)
             
