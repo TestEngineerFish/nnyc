@@ -28,6 +28,9 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     @IBAction func clearphoneNumberTextField(_ sender: UIButton) {
         clearPhoneNumberTextFieldButton.isHidden = true
         
+        sendSMSButton.isUserInteractionEnabled = false
+        sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
+        
         phoneNumberTextField.text = ""
         phoneNumberTextField.becomeFirstResponder()
     }
@@ -132,9 +135,14 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     @objc
     private func changeAuthCodeTextField() {
         guard let phoneNumber = phoneNumberTextField.text, phoneNumber.count == 11 else { return }
-
-        if let authCode = authCodeTextField.text, authCode.isEmpty == false {
+        
+        if var authCode = authCodeTextField.text, authCode.isEmpty == false {
             loginButton.isUserInteractionEnabled = true
+            
+            if authCode.count >= 6  {
+                authCodeTextField.text = authCode.substring(maxIndex: 6)
+                authCode = authCodeTextField.text!
+            }
             
         } else {
             loginButton.isUserInteractionEnabled = false
@@ -157,13 +165,13 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             timer = nil
             
             sendSMSButton.isUserInteractionEnabled = true
-            sendSMSButton.setTitle("获取验证码", for: .normal)
+            sendSMSButton.setTitle("重新获取", for: .normal)
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
             
         } else {
             CountingDown = CountingDown - 1
             sendSMSButton.isUserInteractionEnabled = false
-            sendSMSButton.setTitle("\(CountingDown)", for: .normal)
+            sendSMSButton.setTitle("\(CountingDown)秒", for: .normal)
             sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
         }
     }

@@ -45,7 +45,7 @@ static NSString *const USER_MOBILE_BOUND_MSG = @"用户已绑定过手机";
 static NSInteger const USER_MOBILE_NO_BIND_CODE = 11002;
 static NSString *const USER_MOBILE_NO_BIND_MSG = @"用户还未绑定过手机";
 static NSInteger const USER_MOBILE_FORMAT_ERR_CODE = 11003;
-static NSString *const USER_MOBILE_FORMAT_ERR_MSG = @"手机号不合法";
+static NSString *const USER_MOBILE_FORMAT_ERR_MSG = @"请输入正确的手机号";
 static NSInteger const USER_MOBILE_BIND_OTHER_ERR_CODE = 11004;
 
 static NSInteger const USER_PF_BOUND_CODE = 11009;

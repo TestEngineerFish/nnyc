@@ -384,7 +384,10 @@ static NSInteger const kNonBlankDefultRows = 3;
                           YXGameViewController *gameVC =[[YXGameViewController alloc] init];
                           gameVC.gameModel = self.descoverModel.game;
                           gameVC.gameDetail = response.responseObject;
+                        
+                          self.hidesBottomBarWhenPushed = YES;
                           [self.navigationController pushViewController:gameVC animated:YES];
+                          self.hidesBottomBarWhenPushed = NO;
                       }
                       [YXUtils hideHUD:self.view];
                   }];

@@ -45,7 +45,7 @@
 #import "UIImageView+WebCache.h"
 #import "YXCareerViewController.h"
 #import "YXPersonalInformationVC.h"
-
+#import "YXPersonalBadgeModel.h"
 #import "YXCalendarViewController.h"
 #import "YXPersonalMyBadgesVC.h"
 #import "YXBaseWebViewController.h"

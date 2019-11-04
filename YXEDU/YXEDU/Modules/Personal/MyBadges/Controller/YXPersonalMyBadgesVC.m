@@ -90,7 +90,7 @@
             
             sectionModel.color = allColor[i];
             sectionModel.name = allName[i];
-            sectionModel.badges = badgeList[i];
+            sectionModel.badges = self.badges[i];
                         
             [sections addObject:sectionModel];
         }
@@ -134,31 +134,31 @@
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     YXPersonalSectionModel *sectionModel = self.sections[collectionView.tag];
-    YXBadgeListModel *badgesList = sectionModel.badges;
-    return badgesList.options.count;
+    return sectionModel.badges.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YXPersonalBadgeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"YXPersonalBadgeCell" forIndexPath:indexPath];
-    YXPersonalSectionModel *sectionModel = self.sections[collectionView.tag];
-    YXBadgeListModel *badgesList = sectionModel.badges;
-    YXBadgeModel *badge = badgesList.options[indexPath.row];
+    YXPersonalBadgeModel *badge = self.badges[collectionView.tag][indexPath.row];
     
     cell.badgeNameLabel.text = badge.badgeName;
     
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSDate *finishDate = [formatter dateFromString:badge.finishDate];
-//    [formatter setDateFormat:@"yyyy-MM-dd"];
-//    NSString *finishDateString = [formatter stringFromDate:finishDate];
-//
-//    cell.dateLabel.text = finishDateString;
+//    NSDate *finishDate = [formatter dateFromString: [NSDate dateWithTimeIntervalSince1970: [badge.finishDate doubleValue]]];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *finishDateString = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970: [badge.finishDate doubleValue]]];
+
     
-//    if ([badge.finishDate isEqualToString:@""]) {
-        [cell.badgeImageView sd_setImageWithURL:[NSURL URLWithString:badge.unRealized] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-//    } else {
-//        [cell.badgeImageView sd_setImageWithURL:[NSURL URLWithString:badge.completedBadgeImageUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-//    }
+    if ([badge.finishDate isEqualToString:@"0"]) {
+        [cell.badgeImageView sd_setImageWithURL:[NSURL URLWithString:badge.incompleteBadgeImageUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        cell.dateLabel.text = @"";
+
+    } else {
+        [cell.badgeImageView sd_setImageWithURL:[NSURL URLWithString:badge.completedBadgeImageUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        cell.dateLabel.text = finishDateString;
+
+    }
     
     return cell;
 }
@@ -168,7 +168,7 @@
 
     YXPersonalBadgeModel *badge = self.badges[collectionView.tag][indexPath.row];
 
-    if ([badge.finishDate isEqualToString:@""]) {
+    if ([badge.finishDate isEqualToString:@"0"]) {
         self.badgeDetailView = [YXBadgeIncompleteView showIncompletedViewWithBadge:badge];
     } else {
         self.badgeDetailView = [YXBadgeCompletedView showCompletedViewWithBadge:badge];

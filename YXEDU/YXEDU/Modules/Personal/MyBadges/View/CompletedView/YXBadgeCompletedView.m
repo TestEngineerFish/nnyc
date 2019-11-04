@@ -79,10 +79,10 @@
         UILabel *dateLabel = [[UILabel alloc] init];
         dateLabel.font = [UIFont systemFontOfSize:12];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSDate *finishDate = [formatter dateFromString:badge.finishDate];
+//        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//        NSDate *finishDate = [formatter dateFromString:badge.finishDate];
         [formatter setDateFormat:@"yyyy-MM-dd"];
-        NSString *finishDateString = [formatter stringFromDate:finishDate];
+        NSString *finishDateString = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970: [badge.finishDate doubleValue]]];
         self.finishDate = finishDateString;
         dateLabel.text = [NSString stringWithFormat:@"已获得：%@",finishDateString];
         dateLabel.textColor = UIColorOfHex(0x849EC5);

@@ -81,7 +81,7 @@
                                             <action selector="clearphoneNumberTextField:" destination="BM1-f9-pUk" eventType="touchUpInside" id="i45-JR-Spq"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xD3-cB-wBR">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xD3-cB-wBR">
                                         <rect key="frame" x="262" y="82" width="62" height="17"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="17" id="WBU-ig-cbq"/>

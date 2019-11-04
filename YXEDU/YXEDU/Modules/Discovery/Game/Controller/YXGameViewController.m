@@ -72,7 +72,6 @@ static NSString *const kOneDrawGameGuidedKey = @"OneDrawGameGuidedKey";
 //    gameView.frame = CGRectMake(0, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
 //    [self.view addSubview:gameView];
     
-    self.navigationController.hidesBottomBarWhenPushed = YES;
     [kNotificationCenter addObserver:self selector:@selector(loginOut) name:kLogoutNotify object:nil];
     [self naviView];
     self.squareView = self.gameView.squareView;
