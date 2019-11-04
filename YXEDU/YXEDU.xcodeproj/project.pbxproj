@@ -77,6 +77,9 @@
 		7786B6D52361C4E40027D0E3 /* YXSingleGroupWordBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786B6D32361C4E40027D0E3 /* YXSingleGroupWordBookCell.xib */; };
 		7786D61E236C66A800741DCE /* YXSeleceUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786D61D236C66A800741DCE /* YXSeleceUnitView.swift */; };
 		7786D620236C66B100741DCE /* YXSeleceUnitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786D61F236C66B100741DCE /* YXSeleceUnitView.xib */; };
+		778FAE52236FBFF700DE0133 /* YXHandWriteAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */; };
+		778FAE54236FC00300DE0133 /* YXHandWriteAnswerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */; };
+		778FAE56236FD98100DE0133 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 778FAE55236FD98100DE0133 /* tessdata */; };
 		77D048FA2361A12000CE95D8 /* YXWordBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D048F92361A12000CE95D8 /* YXWordBookModel.swift */; };
 		77D2150C2367D7BA00E5FBF1 /* YXUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D2150B2367D7BA00E5FBF1 /* YXUserModel.swift */; };
 		77F69A622361495300E55185 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F69A612361495300E55185 /* Main.storyboard */; };
@@ -722,6 +725,9 @@
 		7786B6D32361C4E40027D0E3 /* YXSingleGroupWordBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXSingleGroupWordBookCell.xib; sourceTree = "<group>"; };
 		7786D61D236C66A800741DCE /* YXSeleceUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSeleceUnitView.swift; sourceTree = "<group>"; };
 		7786D61F236C66B100741DCE /* YXSeleceUnitView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXSeleceUnitView.xib; sourceTree = "<group>"; };
+		778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHandWriteAnswerView.swift; sourceTree = "<group>"; };
+		778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHandWriteAnswerView.xib; sourceTree = "<group>"; };
+		778FAE55236FD98100DE0133 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		77D048F92361A12000CE95D8 /* YXWordBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookModel.swift; sourceTree = "<group>"; };
 		77D2150B2367D7BA00E5FBF1 /* YXUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserModel.swift; sourceTree = "<group>"; };
 		77F69A612361495300E55185 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -2141,6 +2147,7 @@
 		D62D6AAF204FEF7A005E3273 /* YXEDU */ = {
 			isa = PBXGroup;
 			children = (
+				778FAE55236FD98100DE0133 /* tessdata */,
 				EE5EF13323265C4000655654 /* Base */,
 				EE5EF1452327397D00655654 /* Global */,
 				D6570F702063B63A00DC8158 /* Vendor */,
@@ -2335,6 +2342,8 @@
 				EE54F7BB2362AA3100EC605A /* YXWordAnswerView.swift */,
 				EE54F7C32362AA3100EC605A /* YXConnectWordAndChineseAnswerView.swift */,
 				EE54F7C22362AA3100EC605A /* YXConnectWordAndImageAnswerView.swift */,
+				778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */,
+				778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */,
 			);
 			path = Answer;
 			sourceTree = "<group>";
@@ -5111,6 +5120,7 @@
 				23FD6CE922952E5400334321 /* 答题引导1@2x.png in Resources */,
 				227C6EEC228A5AA800282EA1 /* iconfont.ttf in Resources */,
 				202709BA21DE3A3000E88457 /* oneDrawgameGuide2@2x.png in Resources */,
+				778FAE56236FD98100DE0133 /* tessdata in Resources */,
 				200338DA21B93A25009165DF /* shareBadgeBG@2x.png in Resources */,
 				202C7A21218FED8E00EFD072 /* FresherGuide in Resources */,
 				202709B821DE3A3000E88457 /* oneDrawgameGuide1@3x.png in Resources */,
@@ -5119,6 +5129,7 @@
 				7786B6D12361C3820027D0E3 /* YXGroupWordBookCell.xib in Resources */,
 				773452CC236A7F1A00801FDD /* YXAccountInfoView.xib in Resources */,
 				23FD6CE822952E5400334321 /* 答题引导2@3x.png in Resources */,
+				778FAE54236FC00300DE0133 /* YXHandWriteAnswerView.xib in Resources */,
 				23FD6CE722952E5400334321 /* 答题引导2@2x.png in Resources */,
 				77F69A7F23617CEE00E55185 /* YXHomeSubItemCell.xib in Resources */,
 				771512E22367131500F6D400 /* Home.storyboard in Resources */,
@@ -5217,6 +5228,7 @@
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TZImagePickerController/TZImagePickerController.framework",
+				"${BUILT_PRODUCTS_DIR}/TesseractOCRiOS/TesseractOCR.framework",
 				"${BUILT_PRODUCTS_DIR}/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/VTMagic/VTMagic.framework",
 				"${BUILT_PRODUCTS_DIR}/WMPageController/WMPageController.framework",
@@ -5246,6 +5258,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TZImagePickerController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TesseractOCR.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICollectionViewLeftAlignedLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VTMagic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WMPageController.framework",
@@ -5448,6 +5461,7 @@
 				EE5E00B423274FEB00655654 /* UICountingLabel.m in Sources */,
 				EE5E00B523274FEB00655654 /* YXPersonalBookViewModel.m in Sources */,
 				EE5E023A232756C000655654 /* CAShapeLayer+XLayerHelper.m in Sources */,
+				778FAE52236FBFF700DE0133 /* YXHandWriteAnswerView.swift in Sources */,
 				220E6747236BE1F5001C794A /* Optional+Extension.swift in Sources */,
 				EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */,
 				EE5E00E723274FEC00655654 /* YXMainBGView.m in Sources */,
@@ -5897,6 +5911,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -5953,6 +5968,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -5992,7 +6008,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6032,7 +6048,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -28,6 +28,9 @@
 #import <CL_ShanYanSDK/CL_ShanYanSDK.h>
 
 //
+#import "G8Tesseract.h"
+
+//
 #import "YXLoginVC.h"
 #import "YXPolicyVC.h"
 #import "YXBindViewModel.h"

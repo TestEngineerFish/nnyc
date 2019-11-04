@@ -53,6 +53,7 @@ PODS:
   - SnapKit (4.0.1)
   - SSKeychain (1.4.1)
   - SVProgressHUD (2.2.5)
+  - TesseractOCRiOS (5.0.1)
   - TZImagePickerController (3.0.9)
   - UICollectionViewLeftAlignedLayout (1.0.2)
   - UMCAnalytics (6.0.5):
@@ -94,6 +95,7 @@ DEPENDENCIES:
   - SnapKit (~> 4.0.0)
   - SSKeychain
   - SVProgressHUD
+  - TesseractOCRiOS
   - TZImagePickerController (~> 3.0.9)
   - UICollectionViewLeftAlignedLayout
   - UMCAnalytics
@@ -134,6 +136,7 @@ SPEC REPOS:
     - SnapKit
     - SSKeychain
     - SVProgressHUD
+    - TesseractOCRiOS
     - TZImagePickerController
     - UICollectionViewLeftAlignedLayout
     - UMCAnalytics
@@ -173,6 +176,7 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  TesseractOCRiOS: 2c189465f86abb030d0c5141c90da9705b647854
   TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
   UMCAnalytics: 045be2cd1ec05aa95ad62405a850757f932e2d59
@@ -183,6 +187,6 @@ SPEC CHECKSUMS:
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 8f2d3ca9c52835aeb108e33948f4dcdfd16267f5
+PODFILE CHECKSUM: 727f01794d7db41eaf587d2d90341c4647bf1408
 
 COCOAPODS: 1.8.4

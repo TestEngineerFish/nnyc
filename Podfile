@@ -8,7 +8,7 @@ project 'YXEDU/YXEDU.project'
 
 #################################
 target 'YXEDU' do 
-     platform :ios, '8.0'
+     platform :ios, '10.0'
      pod 'MBProgressHUD'
      pod 'SSKeychain'
      pod 'CocoaLumberjack'
@@ -49,4 +49,7 @@ target 'YXEDU' do
      
      # 闪验
      pod 'CL_ShanYanSDK'
+     
+     # 文字识别
+     pod 'TesseractOCRiOS'
 end

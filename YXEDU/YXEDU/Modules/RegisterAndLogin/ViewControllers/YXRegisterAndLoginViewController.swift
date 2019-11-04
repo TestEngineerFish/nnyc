@@ -89,6 +89,9 @@ class YXRegisterAndLoginViewController: BSRootVC {
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
         }
+        
+//        let handWriteAnswerView = YXHandWriteAnswerView(frame: self.view.bounds)
+//        self.view.addSubview(handWriteAnswerView)
     }
     
     deinit {
