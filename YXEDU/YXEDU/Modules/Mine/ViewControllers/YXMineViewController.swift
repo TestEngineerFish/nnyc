@@ -82,7 +82,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 // 账户信息
                 let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as! UILabel
-                self.bindInfo[0] = loginModel.user.mobile
+                self.bindInfo = [loginModel.user.mobile, "", ""]
 
                 let userBind = loginModel.user.userBind.components(separatedBy: ",")
                 if userBind.count > 0, userBind[0] == "1" {
@@ -274,8 +274,6 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             break
             
         case 6:
-            YXUserModel.default.didLogin = false
-            YXUserModel.default.logout()
             break
             
         default:

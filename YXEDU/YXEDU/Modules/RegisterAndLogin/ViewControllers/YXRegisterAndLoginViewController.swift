@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXRegisterAndLoginViewController: BSRootVC {
+class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     var shouldShowShanYan = true
     var platform: String!
@@ -62,16 +62,6 @@ class YXRegisterAndLoginViewController: BSRootVC {
     
     
     // MARK: -
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         if shouldShowShanYan {
@@ -80,12 +70,12 @@ class YXRegisterAndLoginViewController: BSRootVC {
 
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
         
+        phoneNumberTextField.delegate = self
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
         authCodeTextField.addTarget(self, action: #selector(changeAuthCodeTextField), for: UIControl.Event.editingChanged)
         
         if let phoneNumber = YYCache.object(forKey: "PhoneNumber") as? String {
             phoneNumberTextField.text = phoneNumber
-            clearPhoneNumberTextFieldButton.isHidden = false
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
         }
@@ -270,6 +260,15 @@ class YXRegisterAndLoginViewController: BSRootVC {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard let text = textField.text, text.isEmpty == false else { return }
+        clearPhoneNumberTextFieldButton.isHidden = false
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        clearPhoneNumberTextFieldButton.isHidden = true
     }
     
     

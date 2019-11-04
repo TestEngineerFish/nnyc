@@ -42,9 +42,9 @@
 - (void)setUpDataSource {
     NSMutableArray *dataSource = [NSMutableArray array];
         
-    NSArray *allTitles = @[@[@"头像",@"昵称",@"性别"],@[@"生日",@"地区",@"年级"]];
-    NSArray *isShowAccseeories = @[@[@"1",@"1",@"1"],@[@"1",@"1",@"1"]];
-    NSArray *isShowBottomLines = @[@[@"1",@"1",@"0"],@[@"1",@"1",@"1"]];
+    NSArray *allTitles = @[@[@"头像",@"昵称",@"性别"],@[@"生日",@"地区",@"年级"], @[@"退出登录"]];
+    NSArray *isShowAccseeories = @[@[@"1",@"1",@"1"],@[@"1",@"1",@"1"],@[@"1"]];
+    NSArray *isShowBottomLines = @[@[@"1",@"1",@"0"],@[@"1",@"1",@"1"],@[@"1"]];
 
     for (NSInteger i = 0; i < allTitles.count; i++) {
             
@@ -130,7 +130,7 @@
         grade = @"其他";
     }
     
-    self.allRightDetails = @[@[@"", name, sex],@[birthday, area, grade]];
+    self.allRightDetails = @[@[@"", name, sex],@[birthday, area, grade], @[@""]];
 
     [self setUpDataSource];
     [self.tableView reloadData];
@@ -280,6 +280,7 @@
             }
             break;
         default:
+            [[YXUserModel default] logout];
             break;
     }
     

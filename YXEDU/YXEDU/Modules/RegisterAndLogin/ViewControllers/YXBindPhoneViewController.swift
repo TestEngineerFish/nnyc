@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXBindPhoneViewController: BSRootVC {
+class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
 
     var platform: String!
     
@@ -24,11 +24,15 @@ class YXBindPhoneViewController: BSRootVC {
     @IBOutlet weak var loginButton: YXDesignableButton!
     
     @IBAction func clearphoneNumberTextField(_ sender: UIButton) {
+        clearPhoneNumberTextFieldButton.isHidden = true
+        
         phoneNumberTextField.text = ""
+        phoneNumberTextField.becomeFirstResponder()
     }
     
     @IBAction func sendSMSWithoutAuthCode(_ sender: UIButton) {
         sendSMS()
+        authCodeTextField.becomeFirstResponder()
     }
     
     @IBAction func login(_ sender: UIButton) {
@@ -67,19 +71,10 @@ class YXBindPhoneViewController: BSRootVC {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        phoneNumberTextField.delegate = self
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
         authCodeTextField.addTarget(self, action: #selector(changeAuthCodeTextField), for: UIControl.Event.editingChanged)
     }
@@ -199,5 +194,14 @@ class YXBindPhoneViewController: BSRootVC {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard let text = textField.text, text.isEmpty == false else { return }
+        clearPhoneNumberTextFieldButton.isHidden = false
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        clearPhoneNumberTextFieldButton.isHidden = true
     }
 }

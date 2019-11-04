@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = UIColorOfHex(0xf0f0f0);
+//    self.view.backgroundColor = UIColorOfHex(0xf0f0f0);
     
 #if DEBUG
     // 摇一摇功能

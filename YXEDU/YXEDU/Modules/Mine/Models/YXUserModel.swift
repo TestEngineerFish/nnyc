@@ -36,7 +36,9 @@ class YXUserModel: NSObject {
     }
     
     @objc
-    func logout() {        
+    func logout() {
+        YXUserModel.default.didLogin = false
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.loadRegistrationAndLoginPage(shouldShowShanYan: false)
     }
