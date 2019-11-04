@@ -51,5 +51,5 @@ target 'YXEDU' do
      pod 'CL_ShanYanSDK'
      
      # 文字识别
-     pod 'TesseractOCRiOS'
+     
 end
