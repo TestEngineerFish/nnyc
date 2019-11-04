@@ -132,6 +132,8 @@ public extension UIColor {
 
     /// 正确颜色 0xFF532B
     class var green1: UIColor { return UIColor.hex(0x6DB353)}
+
+    class var gray1: UIColor { return UIColor.hex(0x888888) }
     
 }
 

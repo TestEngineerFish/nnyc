@@ -9,8 +9,21 @@
 import Foundation
 
 class YXRemindView: UIView {
+
+    var exerciseModel: YXWordExerciseModel
+    var remindLabel = UILabel()
+
     init(exerciseModel: YXWordExerciseModel) {
+        self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
+        self.createSubview()
+    }
+
+    private func createSubview() {
+        remindLabel.font          = UIFont.pfSCRegularFont(withSize: 12)
+        remindLabel.text          = "提示:"
+        remindLabel.textColor     = UIColor.gray1
+        remindLabel.textAlignment = .center
     }
     
     required init?(coder: NSCoder) {
