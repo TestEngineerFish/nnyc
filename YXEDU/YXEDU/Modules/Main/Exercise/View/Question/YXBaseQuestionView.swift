@@ -105,4 +105,5 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     func unselectAnswerButton(_ button: YXLetterButton) {}
     /// 检验答题结果
     func checkAnserResult() {}
+    func switchQuestion() {}
 }

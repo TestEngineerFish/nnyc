@@ -219,12 +219,12 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         let bezierPath = UIBezierPath()
         bezierPath.move(to: fromButton.center)
         bezierPath.addLine(to: toButton.center)
-        let shaperLayer = CAShapeLayer()
-        shaperLayer.path = bezierPath.cgPath
-        shaperLayer.width = 1
-        shaperLayer.strokeColor = UIColor.orange1.cgColor
-        shaperLayer.fillColor = nil
-        shaperLayer.zPosition = -1
+        let shaperLayer         = CAShapeLayer()
+        shaperLayer.path        = bezierPath.cgPath
+        shaperLayer.lineWidth   = 6
+        shaperLayer.fillColor   = nil
+        shaperLayer.zPosition   = -1
+        shaperLayer.strokeColor = UIColor.orange4.cgColor
         self.contentScrollView?.layer.addSublayer(shaperLayer)
 
         self.lineDictionary.updateValue(shaperLayer, forKey: toButton.tag)

@@ -134,7 +134,6 @@ class YXExerciseViewController: UIViewController {
         }
     }
     
-    
     /// 切换题目
     private func switchExerciseView() {
         // 当前关卡是否学完
@@ -144,6 +143,12 @@ class YXExerciseViewController: UIViewController {
         }
         
         if let model = dataManager.fetchOneExerciseModels() {
+            //切换到时候.有空加个隐藏显示动画哈😄
+            if model.type == .newLearnPrimarySchool {
+                self.bottomView.showSkipButton()
+            } else {
+                self.bottomView.showTipsButton()
+            }
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
             exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.exerciseViewTop, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)
             exerciseView.exerciseDelegate = self
@@ -151,7 +156,6 @@ class YXExerciseViewController: UIViewController {
         }
 
     }
-    
     
     /// 加载一个练习
     /// - Parameter exerciseView: 新的练习view

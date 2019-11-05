@@ -40,4 +40,5 @@ protocol YXAnswerEventProtocol {
     func selectedAnswerButton(_ button: YXLetterButton) -> Bool
     func unselectAnswerButton(_ button: YXLetterButton)
     func checkAnserResult()
+    func switchQuestion()
 }
