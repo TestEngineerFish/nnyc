@@ -15,12 +15,14 @@ class YXLearnResultAnimationSubview: UIView {
     var secondStar = UIImageView()
     var thirdStar  = UIImageView()
 
+    var animationComplete:(()->Void)?
+
     init(_ level: Int) {
         super.init(frame: CGRect(x: 0, y: 0, width: 60, height: 85))
         self.firstStar.image      = UIImage(named: "star_enable")
         if level > 1 {
             self.secondStar.image = UIImage(named: "star_enable")
-            self.imageView.image  = UIImage(named: "star_enable")
+            self.imageView.image  = UIImage(named: "upper_result")
         } else {
             self.secondStar.image = UIImage(named: "star_disable")
             self.imageView.image  = UIImage(named: "lower_result")
@@ -91,50 +93,58 @@ class YXLearnResultAnimationSubview: UIView {
             self.thirdStar.isHidden = false
             self.thirdStar.layer.add(animation, forKey: nil)
         }
-
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration*3 + 1) {
+            self.hideAnimation()
+        }
     }
 
     func hideAnimation() {
-        let duration  = Double(0.75)
-        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
-        animation.values         = [1.0, 1.2, 0.0]
-        animation.duration       = duration
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        let duration  = Double(0.25)
+        let starAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+        starAnimation.values         = [1.0, 1.2, 0.0]
+        starAnimation.duration       = duration
+        starAnimation.repeatCount    = 1
+        starAnimation.fillMode       = .forwards
+        starAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        starAnimation.isRemovedOnCompletion = false
 
-        let imgAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
-        animation.values         = [1.0, 1.0, 0.0]
-        animation.duration       = duration
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+        scaleAnimation.fromValue = 1
+        scaleAnimation.toValue   = 0
+
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotateAnimation.fromValue = Float.zero
-        rotateAnimation.toValue   = Float.pi
-        rotateAnimation.duration  = duration
-        rotateAnimation.autoreverses = false
-        rotateAnimation.fillMode = .forwards
-        rotateAnimation.repeatCount = 1
+        rotateAnimation.fromValue    = Float.zero
+        rotateAnimation.toValue      = Float.pi
 
         let groupAnimation = CAAnimationGroup()
-        groupAnimation.animations = [imgAnimation, rotateAnimation]
-        groupAnimation.duration = duration
-
+        groupAnimation.animations     = [scaleAnimation, rotateAnimation]
+        groupAnimation.duration       = duration * 2
+        groupAnimation.fillMode       = .forwards
+        groupAnimation.autoreverses   = false
+        groupAnimation.repeatCount    = 1
+        groupAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        groupAnimation.isRemovedOnCompletion = false
 
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
             self.imageView.isHidden = false
-            self.imageView.layer.add(groupAnimation, forKey: nil)
             self.firstStar.isHidden = false
-            self.firstStar.layer.add(animation, forKey: nil)
             self.secondStar.isHidden = false
-            self.secondStar.layer.add(animation, forKey: nil)
             self.thirdStar.isHidden = false
-            self.thirdStar.layer.add(animation, forKey: nil)
+            self.imageView.layer.add(groupAnimation, forKey: nil)
+            self.firstStar.layer.add(starAnimation, forKey: nil)
+            self.secondStar.layer.add(starAnimation, forKey: nil)
+            self.thirdStar.layer.add(starAnimation, forKey: nil)
         }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration - 0.1) {
+        // 移除视图
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration * 2) {
             self.imageView.isHidden  = true
             self.firstStar.isHidden  = true
             self.secondStar.isHidden = true
             self.thirdStar.isHidden  = true
+            print("runing")
+            self.animationComplete?()
+            self.animationComplete = nil
             self.removeFromSuperview()
         }
-
     }
 }

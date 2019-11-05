@@ -25,22 +25,40 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         questionView?.delegate     = answerView
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
+        (questionView as! YXNewLearnPrimarySchoolQuestionView).firstView?.audioView.delegate  = answerView
+        (questionView as! YXNewLearnPrimarySchoolQuestionView).secondView?.audioView.delegate = answerView
+        (questionView as! YXNewLearnPrimarySchoolQuestionView).thirdView?.audioView.delegate  = answerView
+        // 延迟播放.(因为在切题的时候会有动画)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+            self.playerAudio()
+        }
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         questionView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(37)
-            make.height.equalTo(250)
-            make.width.equalToSuperview().offset(-44)
+            make.top.equalToSuperview().offset(AdaptSize(37))
+            make.height.equalTo(AdaptSize(250))
+            make.width.equalToSuperview().offset(AdaptSize(-44))
         })
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(questionView!.snp.bottom).offset(90)
-            make.width.equalToSuperview().offset(-44)
-            make.height.equalTo(200)
+            make.bottom.equalToSuperview()
+            make.width.equalToSuperview().offset(AdaptSize(-44))
+            make.height.equalTo(AdaptSize(200))
         })
+    }
+
+    private func playerAudio() {
+        guard let _questionview = questionView as? YXNewLearnPrimarySchoolQuestionView, let currentView = _questionview.currentView else {
+            return
+        }
+        currentView.audioView.clickAudioBtn()
+    }
+
+    private func reportAudioData() {
+
     }
 
 }

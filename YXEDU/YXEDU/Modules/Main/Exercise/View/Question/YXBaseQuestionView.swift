@@ -106,4 +106,5 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     /// 检验答题结果
     func checkAnserResult() {}
     func switchQuestion() {}
+    func playAudio() {}
 }

@@ -143,11 +143,10 @@ class YXExerciseViewController: UIViewController {
         }
         
         if let model = dataManager.fetchOneExerciseModels() {
-            //切换到时候.有空加个隐藏显示动画哈😄
             if model.type == .newLearnPrimarySchool {
-                self.bottomView.showSkipButton()
+                self.bottomView.tipsButton.isHidden = true
             } else {
-                self.bottomView.showTipsButton()
+                self.bottomView.tipsButton.isHidden = false
             }
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
             exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.exerciseViewTop, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)

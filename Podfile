@@ -49,4 +49,8 @@ target 'YXEDU' do
      
      # 闪验
      pod 'CL_ShanYanSDK'
+
+     # 加载、解析动图
+     pod 'lottie-ios'
+
 end

@@ -13,6 +13,7 @@ class YXQuestionImageView: UIView {
 
     init(url urlStr: String) {
         imageView = UIImageView()
+        imageView.layer.cornerRadius = 4
         super.init(frame: CGRect(x: 0, y: 0, width: 130, height: 94))
         addSubview(imageView)
         imageView.snp.makeConstraints { (make) in

@@ -56,7 +56,6 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
         self.layer.removeShadow()
         self.currentView = firstView
-        firstView?.audioView.clickAudioBtn(firstView!.audioView.audioButton)
     }
 
     override func switchQuestion() {
@@ -69,12 +68,12 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         case firstView:
             offsetX = -self.width * 1
             if let view = secondView {
-                view.audioView.clickAudioBtn(view.audioView.audioButton)
+                view.audioView.clickAudioBtn()
             }
         case secondView:
             offsetX = -self.width * 2
             if let view = thirdView {
-                view.audioView.clickAudioBtn(view.audioView.audioButton)
+                view.audioView.clickAudioBtn()
             }
         default:
             return
@@ -82,6 +81,10 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         UIView.animate(withDuration: 0.25) {
             self.contentView.transform = CGAffineTransform(translationX: offsetX, y: 0)
         }
+    }
+
+    override func playAudio() {
+        self.currentView?.audioView.clickAudioBtn()
     }
     
 }

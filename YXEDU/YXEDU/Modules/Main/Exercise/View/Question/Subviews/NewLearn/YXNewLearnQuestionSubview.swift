@@ -59,13 +59,13 @@ class YXNewLearnQuestionSubview: UIView {
             imageView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview()
-                make.width.equalTo(150)
-                make.height.equalTo(108)
+                make.width.equalTo(AdaptSize(150))
+                make.height.equalTo(AdaptSize(108))
             }
             audioView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(imageView.snp.bottom).offset(10)
-                make.width.height.equalTo(40)
+                make.width.height.equalTo(AdaptSize(40))
             }
 
         case .wordAndAudio:

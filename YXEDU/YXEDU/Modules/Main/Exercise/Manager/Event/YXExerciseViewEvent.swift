@@ -32,7 +32,7 @@ protocol YXQuestionEventProtocol {
     func removeQuestionWord(_ tag: Int)
     func checkQuestionResult(errorList tags: [Int])
     /// 通过按钮的选中效果来播放和暂停
-    func clickAudioButton(_ button: UIButton)
+    func endPlayAudio()
 }
 
 protocol YXAnswerEventProtocol {
@@ -41,4 +41,5 @@ protocol YXAnswerEventProtocol {
     func unselectAnswerButton(_ button: YXLetterButton)
     func checkAnserResult()
     func switchQuestion()
+    func playAudio()
 }
