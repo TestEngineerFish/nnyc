@@ -38,7 +38,9 @@ class YXUserModel: NSObject {
     
     @objc
     func logout() {
-        YXUserModel.default.didLogin = false
+        self.didLogin = false
+        
+        YXMediator().loginOut()
         
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)
         let navigationController = storyboard.instantiateViewController(withIdentifier: "YXRegistrationAndLoginNavigationController") as? UINavigationController

@@ -96,7 +96,8 @@ class YXHandWriteAnswerView: UIView {
                     print("Found this candidate: \(bestCandidate.string)")
                 }
             }
-            request.recognitionLevel = .fast
+            request.recognitionLevel = .accurate
+            request.recognitionLanguages = ["eng"]
 
             DispatchQueue.global(qos: .userInitiated).async {
                 let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])

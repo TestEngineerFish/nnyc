@@ -244,10 +244,19 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             accountInfoView.bindInfo = bindInfo
             accountInfoView.bindQQClosure = {
                 if self.bindInfo[1] == "1" {
-                    YXPersonalViewModel().unbindSO("qq") { (response, isSuccess) in
-                        guard isSuccess, let _ = response else { return }
-                        self.loadData()
+                    let alert = UIAlertController(title: "解绑后将无法使用QQ进行登录", message: "", preferredStyle: .alert)
+                    let action1 = UIAlertAction(title: "确定", style: .default) { action in
+                        YXPersonalViewModel().unbindSO("qq") { (response, isSuccess) in
+                            guard isSuccess, let _ = response else { return }
+                            self.loadData()
+                        }
                     }
+                    alert.addAction(action1)
+
+                    let action2 = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+                    alert.addAction(action2)
+                    
+                    self.present(alert, animated: true)
                     
                 } else {
                     QQApiManager.shared().qqLogin()
@@ -256,10 +265,19 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             accountInfoView.bindWechatClosure = {
                 if self.bindInfo[2] == "2" {
-                    YXPersonalViewModel().unbindSO("wechat") { (response, isSuccess) in
-                        guard isSuccess, let _ = response else { return }
-                        self.loadData()
+                    let alert = UIAlertController(title: "解绑后将无法使用微信进行登录", message: "", preferredStyle: .alert)
+                    let action1 = UIAlertAction(title: "确定", style: .default) { action in
+                        YXPersonalViewModel().unbindSO("wechat") { (response, isSuccess) in
+                            guard isSuccess, let _ = response else { return }
+                            self.loadData()
+                        }
                     }
+                    alert.addAction(action1)
+
+                    let action2 = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+                    alert.addAction(action2)
+                    
+                    self.present(alert, animated: true)
                     
                 } else {
                     WXApiManager.shared().wxLogin()

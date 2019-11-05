@@ -17,9 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
-        return true
+
         if YXUserModel.default.didLogin == false {
-            YXUserModel.default.logout()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = nil
+
+            let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)
+            let navigationController = storyboard.instantiateViewController(withIdentifier: "YXRegistrationAndLoginNavigationController") as? UINavigationController
+            window?.rootViewController = navigationController
+            
+            window?.makeKeyAndVisible()
         }
         
         return true
