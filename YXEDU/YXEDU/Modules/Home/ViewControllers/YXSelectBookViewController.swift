@@ -43,7 +43,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func fetchWordBooks() {
-        let newWordBook = YXWordBookModel()
+        var newWordBook = YXWordBookModel()
         newWordBook.bookName = "添加词书"
         newWordBook.coverImage = #imageLiteral(resourceName: "newBook")
         wordBookModels.append(newWordBook)
@@ -89,7 +89,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             self.performSegue(withIdentifier: "AddBook", sender: nil)
             
         } else {
-            let wordBook = wordBookModels[indexPath.row]
+            var wordBook = wordBookModels[indexPath.row]
 
             bookNameLabel.text = "--"
             unitLabel.text = "--"
@@ -108,7 +108,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             attributedText2.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index2))
             countOfWordsForStudyLabel.attributedText = attributedText2
             
-            for wordBook in wordBookModels {
+            for var wordBook in wordBookModels {
                 wordBook.isSelected = false
             }
             wordBook.isSelected = true

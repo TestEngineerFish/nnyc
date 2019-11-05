@@ -109,7 +109,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         if var phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false {
             clearPhoneNumberTextFieldButton.isHidden = false
 
-            if phoneNumber.substring(maxIndex: 1) == "1", phoneNumber.count >= 11 {
+            if phoneNumber.count >= 11 {
                 phoneNumberTextField.text = phoneNumber.substring(maxIndex: 11)
                 phoneNumber = phoneNumberTextField.text!
                 

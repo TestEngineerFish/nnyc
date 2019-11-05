@@ -93,7 +93,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.loadBadgeData()
                 
                 // 个人信息
-                self.avatarImageView.sd_setImage(with: URL(string: loginModel.user.avatar), completed: nil)
+                self.avatarImageView.sd_setImage(with: URL(string: loginModel.user.avatar), placeholderImage: #imageLiteral(resourceName: "userPlaceHolder"), completed: nil)
                 self.nameLabel.text = loginModel.user.nick
                 self.calendarLabel.text = "\(loginModel.user.punchDays ?? 0)"
                 

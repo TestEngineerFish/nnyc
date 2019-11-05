@@ -62,7 +62,6 @@
 		771512E02367126800F6D400 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771512DF2367126800F6D400 /* Mine.storyboard */; };
 		771512E22367131500F6D400 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771512E12367131500F6D400 /* Home.storyboard */; };
 		771512E4236713E600F6D400 /* YXMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771512E3236713E600F6D400 /* YXMineViewController.swift */; };
-		771E885D23628DF0000BFAAD /* YXGradeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E885C23628DF0000BFAAD /* YXGradeModel.swift */; };
 		771E88632362ABC8000BFAAD /* RegisterAndLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771E88622362ABC8000BFAAD /* RegisterAndLogin.storyboard */; };
 		771E88682362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E88672362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift */; };
 		771E886A2362ACFB000BFAAD /* YXBindPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E88692362ACFB000BFAAD /* YXBindPhoneViewController.swift */; };
@@ -712,7 +711,6 @@
 		771512DF2367126800F6D400 /* Mine.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Mine.storyboard; sourceTree = "<group>"; };
 		771512E12367131500F6D400 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		771512E3236713E600F6D400 /* YXMineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMineViewController.swift; sourceTree = "<group>"; };
-		771E885C23628DF0000BFAAD /* YXGradeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGradeModel.swift; sourceTree = "<group>"; };
 		771E88622362ABC8000BFAAD /* RegisterAndLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterAndLogin.storyboard; sourceTree = "<group>"; };
 		771E88672362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRegisterAndLoginViewController.swift; sourceTree = "<group>"; };
 		771E88692362ACFB000BFAAD /* YXBindPhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBindPhoneViewController.swift; sourceTree = "<group>"; };
@@ -2091,7 +2089,6 @@
 			isa = PBXGroup;
 			children = (
 				77D048F92361A12000CE95D8 /* YXWordBookModel.swift */,
-				771E885C23628DF0000BFAAD /* YXGradeModel.swift */,
 				777C1E29236BDF380097A822 /* YXHomeModel.swift */,
 			);
 			path = Model;
@@ -5870,7 +5867,6 @@
 				EE5E008C23274FEB00655654 /* YXCalendarWordCell.m in Sources */,
 				EE5E00DC23274FEC00655654 /* YXRefreshNormalHeader.m in Sources */,
 				EE5E024A232756C100655654 /* XStackAreaLineContainerView.m in Sources */,
-				771E885D23628DF0000BFAAD /* YXGradeModel.swift in Sources */,
 				EE5E010D23274FEC00655654 /* YXPersonalMaterialCell.m in Sources */,
 				EE5E00A823274FEB00655654 /* YXArticleUnitView.m in Sources */,
 				EE5E00A123274FEB00655654 /* YXUnitIdModel.m in Sources */,
@@ -6035,7 +6031,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -6072,7 +6071,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";

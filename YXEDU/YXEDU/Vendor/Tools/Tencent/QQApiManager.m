@@ -67,8 +67,15 @@
                               //                              kOPEN_PERMISSION_GET_INTIMATE_FRIENDS_WEIBO,
                               //                              kOPEN_PERMISSION_MATCH_NICK_TIPS_WEIBO,
                               nil];
-    //调用SDK登录
-    [_tencentOAuth authorize:_permissions inSafari:YES];
+
+    if (TencentOAuth.iphoneQQInstalled || TencentOAuth.iphoneTIMInstalled) {
+        // 调用SDK登录
+        [_tencentOAuth authorize:_permissions inSafari:YES];
+        
+    } else {
+        [YXUtils showHUD: nil title: @"还没有安装QQ，请安装后再使用QQ登录"];
+    }
+    
 }
 
 // qq 分享

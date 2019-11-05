@@ -86,25 +86,25 @@ class YXHandWriteAnswerView: UIView {
                 guard let observations = request.results as? [VNRecognizedTextObservation] else {
                     fatalError("Received invalid observations")
                 }
-                
+
                 for observation in observations {
                     guard let bestCandidate = observation.topCandidates(1).first else {
                         print("No candidate")
                         continue
                     }
-                    
+
                     print("Found this candidate: \(bestCandidate.string)")
                 }
             }
             request.recognitionLevel = .fast
-            
+
             DispatchQueue.global(qos: .userInitiated).async {
                 let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
                 try? handler.perform([request])
             }
-            
+
         } else {
-            // Fallback on earlier versions
+
         }
     }
 }

@@ -797,7 +797,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="chs-8F-nsO"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="我的" image="tabMine" id="pgn-xh-kty"/>
+                    <tabBarItem key="tabBarItem" title="我的" image="tabMine" selectedImage="tabMineSelected" id="pgn-xh-kty"/>
                     <navigationItem key="navigationItem" id="DcW-aT-f7d">
                         <barButtonItem key="backBarButtonItem" title=" " id="XPy-3c-SHc"/>
                     </navigationItem>
@@ -872,5 +872,6 @@
         <image name="mineSettings" width="22" height="22"/>
         <image name="nil" width="16" height="16"/>
         <image name="tabMine" width="22" height="22"/>
+        <image name="tabMineSelected" width="22" height="22"/>
     </resources>
 </document>

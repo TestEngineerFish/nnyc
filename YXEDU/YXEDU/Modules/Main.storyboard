@@ -69,7 +69,7 @@
         <scene sceneID="zDv-hQ-POC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GHL-ss-xco" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="挑战" image="tabChallenge" id="ggj-B0-24Y"/>
+                    <tabBarItem key="tabBarItem" title="挑战" image="tabChallenge" selectedImage="tabChallengeSelected" id="ggj-B0-24Y"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ERP-cu-kV6">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -87,5 +87,6 @@
     </scenes>
     <resources>
         <image name="tabChallenge" width="22" height="22"/>
+        <image name="tabChallengeSelected" width="22" height="22"/>
     </resources>
 </document>

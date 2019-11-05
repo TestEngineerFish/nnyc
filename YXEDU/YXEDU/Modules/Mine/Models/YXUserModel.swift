@@ -31,15 +31,17 @@ class YXUserModel: NSObject {
     var integral: Int?
 
     func login() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.loadMainPage()
+        let storyboard = UIStoryboard(name:"Main", bundle: nil)
+        let tabBarController = storyboard.instantiateViewController(withIdentifier: "YXTabBarViewController") as? UITabBarController
+        UIApplication.shared.keyWindow?.rootViewController = tabBarController
     }
     
     @objc
     func logout() {
         YXUserModel.default.didLogin = false
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.loadRegistrationAndLoginPage(shouldShowShanYan: false)
+        let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)
+        let navigationController = storyboard.instantiateViewController(withIdentifier: "YXRegistrationAndLoginNavigationController") as? UINavigationController
+        UIApplication.shared.keyWindow?.rootViewController = navigationController
     }
 }

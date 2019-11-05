@@ -43,12 +43,25 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func loadData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/indexinfo", modelClass: YXGradeModel.self, parameters: [:]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject else { return }
-            let grades = response as! [YXGradeModel]
+//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/booklist", parameters: [:]) { (response, isSuccess) in
+        
+        YXDataProcessCenter.get("http://lihongwei.api.xstudyedu.com/api/v1/book/booklist?debug_uid=2", parameters: [:]) { (response, isSuccess) in
+            guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
-            self.grades = grades
-            self.createGradeSelectView()
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(YXBookListModel.self, from: jsonData)
+                let grades = result.bookList
+
+                print(grades)
+                
+            } catch {
+                print(error)
+            }
+            
+//            self.grades = grades
+//            self.createGradeSelectView()
         }
     }
     
