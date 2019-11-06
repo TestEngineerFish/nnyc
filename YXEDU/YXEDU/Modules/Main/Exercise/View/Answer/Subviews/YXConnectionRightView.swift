@@ -1,15 +1,14 @@
 //
-//  YXConnectWordAndImageQuestionView.swift
+//  YXConnectionRightView.swift
 //  YXEDU
 //
-//  Created by sunwu on 2019/10/25.
+//  Created by sunwu on 2019/11/4.
 //  Copyright © 2019 shiji. All rights reserved.
 //
 
 import UIKit
 
-/// 词图连线题目
-class YXConnectWordAndImageAnswerView: YXBaseAnswerView {
+class YXConnectionRightView: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.

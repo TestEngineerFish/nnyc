@@ -10,13 +10,36 @@ import UIKit
 
 /// 连接单词和中文
 class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    private let answerHeight: CGFloat = YXConnectionView.Config.itemHeight * 4 + YXConnectionView.Config.interval * 3
+            
+    override func createSubview() {
+        questionView = YXBaseQuestionView(exerciseModel: self.exerciseModel)
+        self.addSubview(questionView!)
+        
+        answerView = YXConnectWordAndChineseAnswerView(exerciseModel: self.exerciseModel)
+        answerView?.answerDelegate = self
+        self.addSubview(answerView!)
+        
     }
-    */
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.questionView?.snp.makeConstraints { (make) in
+            make.top.equalTo(32)
+            make.left.right.equalTo(0)
+            make.height.equalTo(380)
+        }
+        
+//        self.answerView?.snp.makeConstraints({ (make) in
+//            make.left.right.bottom.equalToSuperview()
+//            make.height.equalTo(answerHeight)
+//        })
+        answerView?.frame = CGRect(x: 22, y: 108 + 32, width: screenWidth, height: answerHeight)
+        
+    }
+
 
 }

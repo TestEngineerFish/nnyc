@@ -129,6 +129,9 @@ public extension UIColor {
 
     /// 错误颜色 0xFF532B
     class var red1: UIColor { return UIColor.hex(0xFF532B)}
+    
+    /// 错误底色颜色 0xFFF0EC
+    class var red2: UIColor { return UIColor.hex(0xFFF0EC)}
 
     /// 正确颜色 0xFF532B
     class var green1: UIColor { return UIColor.hex(0x6DB353)}
