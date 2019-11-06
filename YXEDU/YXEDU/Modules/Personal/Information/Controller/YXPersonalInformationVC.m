@@ -74,7 +74,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"个人资料";
+//    self.title = @"个人资料";
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(removePickerView:) name:@"RemovePickerView" object:nil];
 

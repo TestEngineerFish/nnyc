@@ -239,8 +239,8 @@
                                                     <outletCollection property="gestureRecognizers" destination="zwc-Z2-oqK" appends="YES" id="rXg-ol-Cef"/>
                                                 </connections>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的勋章" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVR-Vz-uaZ">
-                                                <rect key="frame" x="20" y="184" width="57.5" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的徽章" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVR-Vz-uaZ">
+                                                <rect key="frame" x="20" y="184" width="58" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -825,10 +825,10 @@
             </objects>
             <point key="canvasLocation" x="-3774" y="1562"/>
         </scene>
-        <!--Personal InformationVC-->
+        <!--个人资料-->
         <scene sceneID="TRJ-8b-hal">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="4eU-3G-WP4" customClass="YXPersonalInformationVC" sceneMemberID="viewController">
+                <viewController title="个人资料" hidesBottomBarWhenPushed="YES" id="4eU-3G-WP4" customClass="YXPersonalInformationVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0nj-II-Bp4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -840,10 +840,10 @@
             </objects>
             <point key="canvasLocation" x="-2959" y="1562"/>
         </scene>
-        <!--Personal My BadgesVC-->
+        <!--我的徽章-->
         <scene sceneID="vt1-aC-weC">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="Kmr-3i-3ce" customClass="YXPersonalMyBadgesVC" sceneMemberID="viewController">
+                <viewController title="我的徽章" hidesBottomBarWhenPushed="YES" id="Kmr-3i-3ce" customClass="YXPersonalMyBadgesVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OmR-0w-JXN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

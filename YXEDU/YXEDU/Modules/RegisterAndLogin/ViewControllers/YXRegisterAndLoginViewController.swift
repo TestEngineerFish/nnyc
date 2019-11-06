@@ -162,6 +162,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             timer?.invalidate()
             timer = nil
             
+            CountingDown = 60
+            
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitle("重新获取", for: .normal)
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)

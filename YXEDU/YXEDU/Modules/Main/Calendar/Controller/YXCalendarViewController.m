@@ -122,13 +122,14 @@ static CGFloat const kPickViewHeight = 272.f;
     if (!_naview) {
         _naview = [YXComNaviView comNaviViewWithLeftButtonType:YXNaviviewLeftButtonWhite];
         _naview.backgroundColor = UIColor.clearColor;
-        UIView *naviBGImageView = [[UIView alloc] init];
-        naviBGImageView.backgroundColor = [UIColor hexStringToColor:@"FFFFFF"];
+        UIImage *bgImage = [UIImage imageNamed:@"calendar_bg"];
+        UIImageView *naviBGImageView = [[UIImageView alloc] initWithImage:bgImage];
         naviBGImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH, kNavHeight);
+        naviBGImageView.contentMode = UIViewContentModeTop;
         [_naview insertSubview:naviBGImageView atIndex:0];
         [_naview.leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [_naview setRightButtonView:self.rightView];
-        _naview.titleLabel.textColor = UIColor.blackColor;
+        _naview.titleLabel.textColor = UIColor.whiteColor;
         _naview.arrowIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_down_white"]];
         __weak typeof(self) weakSelf = self;
         _naview.clickBlock = ^{

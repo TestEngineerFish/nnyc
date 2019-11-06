@@ -51,11 +51,7 @@
         req.state = kWechatLogin;
         [WXApi sendReq:req];
     } else {
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[WXApi getWXAppInstallUrl]]];
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请先安装微信客户端" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionConfirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
-        [alert addAction:actionConfirm];
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+        [YXUtils showHUD: nil title: @"还没有安装微信，请安装后再使用微信登录"];
     }
 }
 

@@ -101,12 +101,11 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as! UILabel
                 self.bindInfo = [loginModel.user.mobile, "", ""]
 
-                let userBind = loginModel.user.userBind.components(separatedBy: ",")
-                if userBind.count > 0, userBind[0] == "1" {
+                if loginModel.user.userBind.contains(",1") {
                     self.bindInfo[1] = "1"
                 }
                 
-                if userBind.count > 1, userBind[1] == "2" {
+                if loginModel.user.userBind.contains(",2") {
                     self.bindInfo[2] = "2"
                 }
                 
@@ -131,9 +130,9 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 // 每日提醒
                 let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0))?.viewWithTag(2) as! UILabel
-                if let date = YYCache.object(forKey: "Reminder") as? Date {
+                if let date = UserDefaults.standard.object(forKey: "Reminder") as? Date {
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateStyle = .short
+                    dateFormatter.timeStyle = .short
                     remindLabel.text = dateFormatter.string(from: date)
                     
                 } else {
@@ -180,8 +179,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         } else {
                             personalBadgeModel.finishDate = "0"
                         }
-                        personalBadgeModel.done = badgeState["done"] as? String ?? ""
-                        personalBadgeModel.total = badgeState["total"] as? String ?? ""
+                        personalBadgeModel.done = "\(badgeState["done"] as? Int ?? 0)"
+                        personalBadgeModel.total = "\(badgeState["total"] as? Int ?? 0)"
                             
                         currentIndex = currentIndex + 1
                         if personalBadgeModel.finishDate != "0" {
