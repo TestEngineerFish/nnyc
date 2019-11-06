@@ -38,7 +38,13 @@
     }];
 }
 + (void)quardWithWordIds:(NSArray *)wordIds completeBlock:(finishBlock)block{
-    [YXFMDBManager.share queryWordsDetailWithWordIds:wordIds completeBlock:^(id obj, BOOL result) {
+    NSMutableArray *stringWordIds = [NSMutableArray arrayWithCapacity:wordIds.count];
+    
+    for (int i = 0; i < wordIds.count; i++) {
+        [stringWordIds addObject: [NSString stringWithFormat:@"%@", wordIds[i]]];
+    }
+    
+    [YXFMDBManager.share queryWordsDetailWithWordIds:stringWordIds completeBlock:^(id obj, BOOL result) {
         NSMutableArray  *words = nil;
         if (result) {
             //YXWordDetailModel模型解析
