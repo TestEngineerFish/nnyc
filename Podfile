@@ -39,6 +39,14 @@ target 'YXEDU' do
      # 布局约束
      pod 'SnapKit', '~> 4.0.0'
      
+     # 网络及数据模型转换
+     pod 'Alamofire', '~> 4.7.3'
+     pod 'ObjectMapper', '~> 3.3.0'
+     pod 'AlamofireObjectMapper', '~> 5.0'
+     
+#     pod 'SSZipArchive'
+     pod 'CocoaLumberjack/Swift'
+     
      pod 'UMCCommon'
      pod 'UMCAnalytics'
      pod 'UMCSecurityPlugins'

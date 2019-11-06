@@ -12,7 +12,6 @@ import UIKit
 /// 词义连线题目
 class YXConnectWordAndChineseAnswerView: YXBaseAnswerView {
 
-    
     var connectionView: YXConnectionView?
 
     override func createSubview() {
@@ -27,7 +26,7 @@ class YXConnectWordAndChineseAnswerView: YXBaseAnswerView {
     }
     
 //    override func layoutSubviews() {
-//        
+//
 //    }
     
     func bindProperty() {

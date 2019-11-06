@@ -119,6 +119,13 @@
 		EE04BDBA2366C45100D6713C /* YXExerciseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE04BDB92366C45100D6713C /* YXExerciseDataManager.swift */; };
 		EE04BDBC2366C48200D6713C /* YXExcerciseProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE04BDBB2366C48100D6713C /* YXExcerciseProgressManager.swift */; };
 		EE04BDBE2366C51D00D6713C /* YXAnswerViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE04BDBD2366C51D00D6713C /* YXAnswerViewFactory.swift */; };
+		EE08F3662372E06B00FA3FDF /* YXWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F3652372E06B00FA3FDF /* YXWordModel.swift */; };
+		EE08F3742372E3C200FA3FDF /* YYNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36A2372E3C200FA3FDF /* YYNetworkService.swift */; };
+		EE08F3752372E3C200FA3FDF /* YYBaseResopnse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36C2372E3C200FA3FDF /* YYBaseResopnse.swift */; };
+		EE08F3762372E3C200FA3FDF /* YYBaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36E2372E3C200FA3FDF /* YYBaseRequest.swift */; };
+		EE08F3772372E3C200FA3FDF /* YYTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36F2372E3C200FA3FDF /* YYTaskRequest.swift */; };
+		EE08F3782372E3C200FA3FDF /* YYNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F3712372E3C200FA3FDF /* YYNetworkError.swift */; };
+		EE08F3792372E3C200FA3FDF /* Mappable+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F3732372E3C200FA3FDF /* Mappable+Transform.swift */; };
 		EE1E4A832369428F007D248F /* YXLookExampleChooseImageExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E4A822369428F007D248F /* YXLookExampleChooseImageExerciseView.swift */; };
 		EE1E4A8A23694343007D248F /* YXLookWordChooseChineseExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E4A8923694343007D248F /* YXLookWordChooseChineseExerciseView.swift */; };
 		EE1E4A8C23694371007D248F /* YXLookExampleChooseChineseExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E4A8B23694371007D248F /* YXLookExampleChooseChineseExerciseView.swift */; };
@@ -637,6 +644,7 @@
 		EE7E1D062363678E00600A88 /* YXQuestionViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D052363678D00600A88 /* YXQuestionViewFactory.swift */; };
 		EE7E1D082363679500600A88 /* YXExerciseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D072363679500600A88 /* YXExerciseConfig.swift */; };
 		EE7E1D0A236367A000600A88 /* YXExerciseHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */; };
+		EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB147242372E6F400AC329C /* YYFileManager.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
 		EED3D41B2331D04B00121218 /* YRLocatorProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4142331D04B00121218 /* YRLocatorProvider.m */; };
@@ -777,6 +785,13 @@
 		EE04BDB92366C45100D6713C /* YXExerciseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseDataManager.swift; sourceTree = "<group>"; };
 		EE04BDBB2366C48100D6713C /* YXExcerciseProgressManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExcerciseProgressManager.swift; sourceTree = "<group>"; };
 		EE04BDBD2366C51D00D6713C /* YXAnswerViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAnswerViewFactory.swift; sourceTree = "<group>"; };
+		EE08F3652372E06B00FA3FDF /* YXWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordModel.swift; sourceTree = "<group>"; };
+		EE08F36A2372E3C200FA3FDF /* YYNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYNetworkService.swift; sourceTree = "<group>"; };
+		EE08F36C2372E3C200FA3FDF /* YYBaseResopnse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYBaseResopnse.swift; sourceTree = "<group>"; };
+		EE08F36E2372E3C200FA3FDF /* YYBaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYBaseRequest.swift; sourceTree = "<group>"; };
+		EE08F36F2372E3C200FA3FDF /* YYTaskRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYTaskRequest.swift; sourceTree = "<group>"; };
+		EE08F3712372E3C200FA3FDF /* YYNetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYNetworkError.swift; sourceTree = "<group>"; };
+		EE08F3732372E3C200FA3FDF /* Mappable+Transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Mappable+Transform.swift"; sourceTree = "<group>"; };
 		EE1E4A822369428F007D248F /* YXLookExampleChooseImageExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLookExampleChooseImageExerciseView.swift; sourceTree = "<group>"; };
 		EE1E4A8923694343007D248F /* YXLookWordChooseChineseExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLookWordChooseChineseExerciseView.swift; sourceTree = "<group>"; };
 		EE1E4A8B23694371007D248F /* YXLookExampleChooseChineseExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLookExampleChooseChineseExerciseView.swift; sourceTree = "<group>"; };
@@ -1779,6 +1794,7 @@
 		EE7E1D052363678D00600A88 /* YXQuestionViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXQuestionViewFactory.swift; sourceTree = "<group>"; };
 		EE7E1D072363679500600A88 /* YXExerciseConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseConfig.swift; sourceTree = "<group>"; };
 		EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseHeaderView.swift; sourceTree = "<group>"; };
+		EEB147242372E6F400AC329C /* YYFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYFileManager.swift; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
 		EED3D4122331D04B00121218 /* YRRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRRouter.h; sourceTree = "<group>"; };
@@ -2270,6 +2286,74 @@
 			path = Event;
 			sourceTree = "<group>";
 		};
+		EE08F3672372E36900FA3FDF /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				EE5EF29D2327423F00655654 /* YXComHttpService.h */,
+				EE5EF2A12327423F00655654 /* YXComHttpService.m */,
+				EE5EF29F2327423F00655654 /* YXDataProcessCenter.h */,
+				EE5EF2A42327423F00655654 /* YXDataProcessCenter.m */,
+				EE5EF2A22327423F00655654 /* YXHttpService.h */,
+				EE5EF29E2327423F00655654 /* YXHttpService.m */,
+				EE5EF2A32327423F00655654 /* YXNetworkService.h */,
+				EE5EF2A02327423F00655654 /* YXNetworkService.m */,
+			);
+			path = Old;
+			sourceTree = "<group>";
+		};
+		EE08F3682372E39700FA3FDF /* New */ = {
+			isa = PBXGroup;
+			children = (
+				EE08F3692372E3C200FA3FDF /* Network */,
+			);
+			path = New;
+			sourceTree = "<group>";
+		};
+		EE08F3692372E3C200FA3FDF /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				EE08F3702372E3C200FA3FDF /* Error */,
+				EE08F36D2372E3C200FA3FDF /* Request */,
+				EE08F36B2372E3C200FA3FDF /* Response */,
+				EE08F3722372E3C200FA3FDF /* Transform */,
+				EE08F36A2372E3C200FA3FDF /* YYNetworkService.swift */,
+				EE08F36F2372E3C200FA3FDF /* YYTaskRequest.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		EE08F36B2372E3C200FA3FDF /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				EE08F36C2372E3C200FA3FDF /* YYBaseResopnse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		EE08F36D2372E3C200FA3FDF /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				EE08F36E2372E3C200FA3FDF /* YYBaseRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		EE08F3702372E3C200FA3FDF /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				EE08F3712372E3C200FA3FDF /* YYNetworkError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		EE08F3722372E3C200FA3FDF /* Transform */ = {
+			isa = PBXGroup;
+			children = (
+				EE08F3732372E3C200FA3FDF /* Mappable+Transform.swift */,
+			);
+			path = Transform;
+			sourceTree = "<group>";
+		};
 		EE1E4A8423694298007D248F /* Choose */ = {
 			isa = PBXGroup;
 			children = (
@@ -2366,6 +2450,7 @@
 				EE7E1D072363679500600A88 /* YXExerciseConfig.swift */,
 				EE54F7B42362AA3100EC605A /* YXWordExerciseModel.swift */,
 				EE54F7B52362AA3100EC605A /* YXExerciseType.swift */,
+				EE08F3652372E06B00FA3FDF /* YXWordModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2459,6 +2544,7 @@
 		EE5E012A232754FA00655654 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				EEB147232372E6F400AC329C /* FileManager */,
 				EED3D40C2331C75B00121218 /* Env */,
 				EE5E014D232754FA00655654 /* AVPlayer */,
 				EE5E0135232754FA00655654 /* Baidu */,
@@ -3128,14 +3214,8 @@
 		EE5EF29C2327423F00655654 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				EE5EF29D2327423F00655654 /* YXComHttpService.h */,
-				EE5EF2A12327423F00655654 /* YXComHttpService.m */,
-				EE5EF29F2327423F00655654 /* YXDataProcessCenter.h */,
-				EE5EF2A42327423F00655654 /* YXDataProcessCenter.m */,
-				EE5EF2A22327423F00655654 /* YXHttpService.h */,
-				EE5EF29E2327423F00655654 /* YXHttpService.m */,
-				EE5EF2A32327423F00655654 /* YXNetworkService.h */,
-				EE5EF2A02327423F00655654 /* YXNetworkService.m */,
+				EE08F3682372E39700FA3FDF /* New */,
+				EE08F3672372E36900FA3FDF /* Old */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -5043,6 +5123,14 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		EEB147232372E6F400AC329C /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+				EEB147242372E6F400AC329C /* YYFileManager.swift */,
+			);
+			path = FileManager;
+			sourceTree = "<group>";
+		};
 		EED3D40C2331C75B00121218 /* Env */ = {
 			isa = PBXGroup;
 			children = (
@@ -5264,6 +5352,8 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-YXEDU/Pods-YXEDU-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
@@ -5276,6 +5366,7 @@
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/MagicalRecord/MagicalRecord.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCycleScrollView/SDCycleScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
@@ -5294,6 +5385,8 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DACircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
@@ -5306,6 +5399,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MagicalRecord.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDCycleScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
@@ -5366,6 +5460,7 @@
 				EE5E0164232754FA00655654 /* KSGuaidViewController.m in Sources */,
 				EE5E002823274FEB00655654 /* YXSelectMyWordHeaderView.m in Sources */,
 				EE5E016A232754FA00655654 /* YXShareImageGenerator.m in Sources */,
+				EE08F3782372E3C200FA3FDF /* YYNetworkError.swift in Sources */,
 				EE54F7D52362AA3100EC605A /* YXWordAnswerView.swift in Sources */,
 				EE5EFC4C23274BBB00655654 /* YXPolicyVC.m in Sources */,
 				EE5EF25D232740B800655654 /* UIColor+YXCustom.m in Sources */,
@@ -5453,6 +5548,7 @@
 				EE5E006E23274FEB00655654 /* YXSpellGuideView.m in Sources */,
 				EE5EF20A23273BAE00655654 /* YRDevice.m in Sources */,
 				EE5E003523274FEB00655654 /* YXMyWordDetailCell.m in Sources */,
+				EE08F3742372E3C200FA3FDF /* YYNetworkService.swift in Sources */,
 				EE54F7D72362AA3100EC605A /* YXImageAnswerView.swift in Sources */,
 				EE5EFCE523274E5500655654 /* YXWaveView.m in Sources */,
 				22A5AFB8236C53E900FBFABD /* YXExerciseAnimation.swift in Sources */,
@@ -5500,6 +5596,7 @@
 				EE5E0244232756C000655654 /* XAreaLineContainerView.m in Sources */,
 				EE5EFCD423274E5500655654 /* YXVersionModel.m in Sources */,
 				EE1E4A96236946D5007D248F /* YXListenChooseWordExerciseView.swift in Sources */,
+				EE08F3762372E3C200FA3FDF /* YYBaseRequest.swift in Sources */,
 				EE5EFD4523274F0900655654 /* YXGameAnswerModel.m in Sources */,
 				EE5E005323274FEB00655654 /* YXWordDetailToolkitView.m in Sources */,
 				EE5E0169232754FA00655654 /* YXRouteManager.m in Sources */,
@@ -5584,6 +5681,7 @@
 				EE5E007C23274FEB00655654 /* YXWordLettersView.m in Sources */,
 				EED3D4202331D5D000121218 /* YYCache.swift in Sources */,
 				EE5E00D123274FEB00655654 /* YXBookCollectionHeader.m in Sources */,
+				EE08F3772372E3C200FA3FDF /* YYTaskRequest.swift in Sources */,
 				EE5E021E232756BF00655654 /* TYViewStorage.m in Sources */,
 				EE5E002C23274FEB00655654 /* YXWordBookBaseManageView.m in Sources */,
 				EE5E001423274FEB00655654 /* YXCareerWordListTableViewCell.m in Sources */,
@@ -5757,6 +5855,7 @@
 				EE5E003723274FEB00655654 /* YXLeftTitleButton.m in Sources */,
 				EE5E016E232754FA00655654 /* YXUserSaveTool.m in Sources */,
 				EE5E00FC23274FEC00655654 /* YXFeedBackSelectImageView.m in Sources */,
+				EE08F3792372E3C200FA3FDF /* Mappable+Transform.swift in Sources */,
 				2290EACD236FDA6D000BCA47 /* YXNewLearnQuestionSubview.swift in Sources */,
 				EE5EFCD923274E5500655654 /* YXBlankView.m in Sources */,
 				EE5E024D232756C100655654 /* XBarContainerView.m in Sources */,
@@ -5819,6 +5918,7 @@
 				EE1E4AA623694D59007D248F /* YXFillWordAccordingToChinese_ConnectionExerciseView.swift in Sources */,
 				EE5E005723274FEB00655654 /* YXUnitDetailVC.m in Sources */,
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
+				EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */,
 				EE5E007523274FEB00655654 /* YXFillWordView.m in Sources */,
 				77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */,
 				EE5E00F423274FEC00655654 /* YXPersonalCenterVC.m in Sources */,
@@ -5866,8 +5966,10 @@
 				EE5E0218232756BF00655654 /* MDMulticastDelegate.m in Sources */,
 				EE54F7DC2362AA3100EC605A /* YXConnectWordAndChineseAnswerView.swift in Sources */,
 				EE5EFD5D23274F0900655654 /* YXZoomBanner.m in Sources */,
+				EE08F3662372E06B00FA3FDF /* YXWordModel.swift in Sources */,
 				EE5EFCDF23274E5500655654 /* YXHightlightControlButton.m in Sources */,
 				EE5EF2B12327423F00655654 /* YXNetworkService.m in Sources */,
+				EE08F3752372E3C200FA3FDF /* YYBaseResopnse.swift in Sources */,
 				EE5E00FF23274FEC00655654 /* YXPersonalMyBadgesVC.m in Sources */,
 				2205A94B23630CD900C6E674 /* String+Extension.swift in Sources */,
 				EE5E0176232754FA00655654 /* WXApiManager.m in Sources */,
@@ -6065,10 +6167,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
-				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -6105,10 +6204,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
-				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";

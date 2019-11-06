@@ -47,3 +47,5 @@
 #import "YXPersonalMyBadgesVC.h"
 #import "YXBaseWebViewController.h"
 #import "YXLearnReportModel.h"
+
+#import "ZipArchive.h"
