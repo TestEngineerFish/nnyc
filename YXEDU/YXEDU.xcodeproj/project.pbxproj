@@ -646,6 +646,9 @@
 		EED3D4222331D61C00121218 /* UserDefault+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4212331D61B00121218 /* UserDefault+Extension.swift */; };
 		EED3D4252331DE2D00121218 /* YXEvnOC.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4242331DE2D00121218 /* YXEvnOC.m */; };
 		EEF29A8B236AC81D00CDC312 /* YXExerciseAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF29A8A236AC81C00CDC312 /* YXExerciseAudioPlayerView.swift */; };
+		EEFBABA323729BA1001A6302 /* YXConnectionRightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFBABA023729BA0001A6302 /* YXConnectionRightView.swift */; };
+		EEFBABA423729BA1001A6302 /* YXConnectionLeftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFBABA123729BA0001A6302 /* YXConnectionLeftView.swift */; };
+		EEFBABA523729BA1001A6302 /* YXConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFBABA223729BA1001A6302 /* YXConnectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1790,6 +1793,9 @@
 		EED3D4232331DE2D00121218 /* YXEvnOC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXEvnOC.h; sourceTree = "<group>"; };
 		EED3D4242331DE2D00121218 /* YXEvnOC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXEvnOC.m; sourceTree = "<group>"; };
 		EEF29A8A236AC81C00CDC312 /* YXExerciseAudioPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseAudioPlayerView.swift; sourceTree = "<group>"; };
+		EEFBABA023729BA0001A6302 /* YXConnectionRightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXConnectionRightView.swift; sourceTree = "<group>"; };
+		EEFBABA123729BA0001A6302 /* YXConnectionLeftView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXConnectionLeftView.swift; sourceTree = "<group>"; };
+		EEFBABA223729BA1001A6302 /* YXConnectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXConnectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1897,6 +1903,9 @@
 		2279F258236D57C40080A0B2 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				EEFBABA123729BA0001A6302 /* YXConnectionLeftView.swift */,
+				EEFBABA023729BA0001A6302 /* YXConnectionRightView.swift */,
+				EEFBABA223729BA1001A6302 /* YXConnectionView.swift */,
 				22ED54BF236B23AD00011B82 /* YXLetterButton.swift */,
 				2279F256236D544F0080A0B2 /* YXWordButton.swift */,
 				2290EAD023705884000BCA47 /* YXLearnResultAnimationSubview.swift */,
@@ -5592,6 +5601,7 @@
 				EE5E000F23274FEB00655654 /* YXBookBrefInfo.m in Sources */,
 				EE04BDBA2366C45100D6713C /* YXExerciseDataManager.swift in Sources */,
 				EE5E0241232756C000655654 /* XCycleView.m in Sources */,
+				EEFBABA423729BA1001A6302 /* YXConnectionLeftView.swift in Sources */,
 				EE54F7D02362AA3100EC605A /* YXWordExerciseModel.swift in Sources */,
 				77F69A68236149B300E55185 /* YXAddBookViewController.swift in Sources */,
 				EE5E001F23274FEB00655654 /* YXCreateWordBookVC.m in Sources */,
@@ -5872,8 +5882,10 @@
 				EE5EF20323273BAE00655654 /* NSArray+YR.m in Sources */,
 				EE5E023F232756C000655654 /* XAnimation.m in Sources */,
 				EE5EFCE923274E5500655654 /* YXTipsBaseView.m in Sources */,
+				EEFBABA523729BA1001A6302 /* YXConnectionView.swift in Sources */,
 				EE5EFD4923274F0900655654 /* YXSquareView.m in Sources */,
 				EE5E00CA23274FEB00655654 /* YXBookListViewModel.m in Sources */,
+				EEFBABA323729BA1001A6302 /* YXConnectionRightView.swift in Sources */,
 				EE5EF256232740B800655654 /* NSMutableArray+Safe.m in Sources */,
 				EE5EF257232740B800655654 /* UIDevice+YX.m in Sources */,
 				EE5E006823274FEB00655654 /* YXGroupQuestionModel.m in Sources */,
