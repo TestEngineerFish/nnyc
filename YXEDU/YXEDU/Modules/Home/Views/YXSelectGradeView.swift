@@ -12,7 +12,7 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     
     var grades: [YXGradeModel] = [] {
         didSet {
-            let allGrade = YXGradeModel()
+            var allGrade = YXGradeModel()
             allGrade.gradeName = "全部"
             allGrade.isSelect = true
             grades.insert(allGrade, at: 0)
@@ -78,7 +78,7 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        for grade in grades {
+        for var grade in grades {
             grade.isSelect = false
         }
         grades[indexPath.row].isSelect = true

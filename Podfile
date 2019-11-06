@@ -49,7 +49,8 @@ target 'YXEDU' do
      
      # 闪验
      pod 'CL_ShanYanSDK'
-     
-     # 文字识别
-     pod 'TesseractOCRiOS'
+
+     # 加载、解析动图
+     pod 'lottie-ios'
+
 end

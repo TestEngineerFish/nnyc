@@ -11,13 +11,19 @@ import UIKit
 class YXQuestionImageView: UIView {
     let imageView: UIImageView
 
-    init(_ image: UIImage) {
+    init(url urlStr: String) {
         imageView = UIImageView()
+        imageView.layer.cornerRadius = 4
         super.init(frame: CGRect(x: 0, y: 0, width: 130, height: 94))
         addSubview(imageView)
         imageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        self.bindData(urlStr)
+    }
+
+    private func bindData(_ urlStr: String) {
+        imageView.sd_setImage(with: URL(string: urlStr), completed: nil)
     }
 
     required init?(coder: NSCoder) {

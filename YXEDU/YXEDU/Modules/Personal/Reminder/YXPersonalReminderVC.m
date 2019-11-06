@@ -25,7 +25,7 @@
 
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [button setTitle:@"保存" forState:UIControlStateNormal];
-    [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     [button addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     
@@ -184,12 +184,11 @@
         NSString *remindDateString = [dateFormatter stringFromDate:date];
         
         [[NSUserDefaults standardUserDefaults] setObject:date forKey:@"Reminder"];
-
-        self.returnRemindDateStringBlock(remindDateString);
+//        self.returnRemindDateStringBlock(remindDateString);
         
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"Reminder"];
-        self.returnRemindDateStringBlock(@"已关闭");
+//        self.returnRemindDateStringBlock(@"已关闭");
     }
     
     [self.navigationController popViewControllerAnimated:YES];

@@ -186,7 +186,6 @@
     
     switch (indexPath.section) {
         case 0:
-            
             switch (indexPath.row) {
                 case 0:
                 {
@@ -243,7 +242,7 @@
                         
                         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                     };
-
+                    
                     NSString *userName = model.rightDetail;
                     if (userName.length > 10) {
                         userName = [userName substringToIndex:10];
@@ -263,8 +262,8 @@
                     break;
             }
             break;
-        case 1:
             
+        case 1:
             switch (indexPath.row) {
                 case 0:
                     self.pickerView = [YXBasePickverView showBirthdayPickerViewOn:model.rightDetail withDelegate:self];
@@ -278,10 +277,21 @@
                 default:
                     break;
             }
+            
+        case 2:
+        {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *actionConfirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [[YXUserModel default] logout];
+            }];
+            
+            UIAlertAction *actionCancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                    
+            [alert addAction:actionConfirm];
+            [alert addAction:actionCancle];
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
             break;
-        default:
-            [[YXUserModel default] logout];
-            break;
+        }
     }
     
     if (self.pickerView) {

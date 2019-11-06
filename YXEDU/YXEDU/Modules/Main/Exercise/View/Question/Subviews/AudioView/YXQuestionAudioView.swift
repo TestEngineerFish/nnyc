@@ -27,10 +27,14 @@ class YXQuestionAudioSubview: UIView {
             audioButton.layer.borderColor  = UIColor.orange2.cgColor
         } else {
             audioButton.backgroundColor = UIColor.white
+            audioButton.imageView?.snp.makeConstraints({ (make) in
+                make.left.top.equalToSuperview().offset(3)
+                make.bottom.right.equalToSuperview().offset(-3)
+            })
         }
         super.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
         audioButton.setImage(UIImage(named: "playAudioIcon"), for: .normal)
-        audioButton.addTarget(self, action: #selector(clickAudioBtn(_:)), for: .touchUpInside)
+        audioButton.addTarget(self, action: #selector(clickAudioBtn), for: .touchUpInside)
         self.addSubview(audioButton)
         audioButton.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
@@ -43,17 +47,21 @@ class YXQuestionAudioSubview: UIView {
 
     // TODO: Event
 
-    @objc func clickAudioBtn(_ button: UIButton) {
-        button.isSelected = !button.isSelected
-        if button.isSelected {
-            button.layer.addFlickerAnimation()
-            print("开始播放音频")
+    @objc func clickAudioBtn() {
+        if YXAVPlayerManager.share.isPlaying {
+            YXAVPlayerManager.share.pauseAudio()
+            self.audioButton.layer.removeFlickerAnimation()
         } else {
-            button.layer.removeFlickerAnimation()
-            print("停止播放音频")
+            guard let path = Bundle.main.path(forResource: "right", ofType: "mp3") else {
+                return
+            }
+            let url = URL(fileURLWithPath: path)
+            self.audioButton.layer.addFlickerAnimation()
+            YXAVPlayerManager.share.playerAudio(url) {
+                self.delegate?.endPlayAudio()
+                self.audioButton.layer.removeFlickerAnimation()
+            }
         }
-        delegate?.clickAudioButton(button)
     }
-
 
 }

@@ -109,6 +109,9 @@ public extension UIColor {
     /// 底色 #FFF4E9
     class var orange3: UIColor { return UIColor.hex(0xFFF4E9) }
 
+    /// 底色 #FFD086
+    class var orange4: UIColor { return UIColor.hex(0xFFD086) }
+
     /// 标题文字 0x323232
     class var black1: UIColor { return UIColor.hex(0x323232) }
     
@@ -136,6 +139,7 @@ public extension UIColor {
     /// 正确颜色 0xFF532B
     class var green1: UIColor { return UIColor.hex(0x6DB353)}
 
+    /// 提示 0x888888
     class var gray1: UIColor { return UIColor.hex(0x888888) }
     
 }

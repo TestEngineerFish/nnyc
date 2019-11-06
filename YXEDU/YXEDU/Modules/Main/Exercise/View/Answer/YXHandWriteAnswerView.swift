@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Vision
 
 class YXHandWriteAnswerView: UIView {
     
@@ -62,7 +63,7 @@ class YXHandWriteAnswerView: UIView {
         
         imageView.image = UIGraphicsImageRenderer(size: self.size).image{ context in
             context.cgContext.setStrokeColor(UIColor.orange.cgColor)
-            context.cgContext.setLineWidth(44)
+            context.cgContext.setLineWidth(24)
             context.cgContext.setLineCap(.round)
             context.cgContext.addPath(path.cgPath)
             
@@ -70,22 +71,41 @@ class YXHandWriteAnswerView: UIView {
         }
         
         if timer == nil {
-            timer = Timer(fire: Date().addingTimeInterval(1), interval: 0, repeats: false, block: { (time) in
+            let timer = Timer(fire: Date().addingTimeInterval(1), interval: 0, repeats: false, block: { (time) in
                 self.recognizeText(in: self.imageView.image!)
             })
+            
+            RunLoop.current.add(timer, forMode: .common)
+            self.timer = timer
         }
     }
     
     private func recognizeText(in image: UIImage) {
-        print("---------")
+        if #available(iOS 13.0, *) {
+            let request = VNRecognizeTextRequest { request, error in
+                guard let observations = request.results as? [VNRecognizedTextObservation] else {
+                    fatalError("Received invalid observations")
+                }
 
-        if let tesseract = G8Tesseract(language: "eng") {
-            tesseract.engineMode = .tesseractCubeCombined
-            tesseract.pageSegmentationMode = .auto
-            tesseract.image = imageView.image!
-            tesseract.recognize()
-            
-            print(tesseract.recognizedText)
+                for observation in observations {
+                    guard let bestCandidate = observation.topCandidates(1).first else {
+                        print("No candidate")
+                        continue
+                    }
+
+                    print("Found this candidate: \(bestCandidate.string)")
+                }
+            }
+            request.recognitionLevel = .accurate
+            request.recognitionLanguages = ["eng"]
+
+            DispatchQueue.global(qos: .userInitiated).async {
+                let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+                try? handler.perform([request])
+            }
+
+        } else {
+
         }
     }
 }

@@ -23,11 +23,20 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
     @IBOutlet weak var sendSMSButton: UIButton!
     @IBOutlet weak var loginButton: YXDesignableButton!
     
+    @IBAction func back(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+    }
+    
     @IBAction func clearphoneNumberTextField(_ sender: UIButton) {
         clearPhoneNumberTextFieldButton.isHidden = true
         
         phoneNumberTextField.text = ""
         phoneNumberTextField.becomeFirstResponder()
+        
+        sendSMSButton.isUserInteractionEnabled = false
+        sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
+        
+        loginButton.isUserInteractionEnabled = false
     }
     
     @IBAction func sendSMSWithoutAuthCode(_ sender: UIButton) {
@@ -81,42 +90,42 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
     
     @objc
     private func changePhoneNumberTextField() {
-        guard var phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false else {
-            clearPhoneNumberTextFieldButton.isHidden = true
-            return
-        }
-        
-        clearPhoneNumberTextFieldButton.isHidden = false
-        
-        if phoneNumber.count >= 11  {
-            phoneNumberTextField.text = phoneNumber.substring(maxIndex: 11)
-            phoneNumber = phoneNumberTextField.text!
-        }
-        
-        if phoneNumber.substring(maxIndex: 1) == "1", phoneNumber.count == 11  {
-            sendSMSButton.isUserInteractionEnabled = true
-            sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
-            
-            if let authCode = authCodeTextField.text, authCode.isEmpty == false {
-                loginButton.isUserInteractionEnabled = true
+        if var phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false {
+            clearPhoneNumberTextFieldButton.isHidden = false
 
+            if phoneNumber.count >= 11 {
+                phoneNumberTextField.text = phoneNumber.substring(maxIndex: 11)
+                phoneNumber = phoneNumberTextField.text!
+                
+                sendSMSButton.isUserInteractionEnabled = true
+                sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
+                
+                if let authCode = authCodeTextField.text, authCode.count == 6 {
+                    loginButton.isUserInteractionEnabled = true
+                }
+                
             } else {
+                sendSMSButton.isUserInteractionEnabled = false
+                sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
+                
                 loginButton.isUserInteractionEnabled = false
             }
             
         } else {
-            sendSMSButton.isUserInteractionEnabled = false
-            sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
+            clearPhoneNumberTextFieldButton.isHidden = true
         }
     }
     
     @objc
     private func changeAuthCodeTextField() {
-        guard let phoneNumber = phoneNumberTextField.text, phoneNumber.count == 11 else { return }
-
-        if let authCode = authCodeTextField.text, authCode.isEmpty == false {
-            loginButton.isUserInteractionEnabled = true
+        if var authCode = authCodeTextField.text, authCode.count >= 6 {
+            authCodeTextField.text = authCode.substring(maxIndex: 6)
+            authCode = authCodeTextField.text!
             
+            if let phoneNumber = phoneNumberTextField.text, phoneNumber.count == 11 {
+                loginButton.isUserInteractionEnabled = true
+            }
+
         } else {
             loginButton.isUserInteractionEnabled = false
         }
@@ -138,13 +147,13 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
             timer = nil
             
             sendSMSButton.isUserInteractionEnabled = true
-            sendSMSButton.setTitle("获取验证码", for: .normal)
+            sendSMSButton.setTitle("重新获取", for: .normal)
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
             
         } else {
             CountingDown = CountingDown - 1
             sendSMSButton.isUserInteractionEnabled = false
-            sendSMSButton.setTitle("\(CountingDown)", for: .normal)
+            sendSMSButton.setTitle("\(CountingDown)秒", for: .normal)
             sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
         }
     }
