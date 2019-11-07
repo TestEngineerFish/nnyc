@@ -75,6 +75,7 @@
 		773452CA236A7EFA00801FDD /* YXAccountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */; };
 		773452CC236A7F1A00801FDD /* YXAccountInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */; };
 		775DA334236861A0004D58D3 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 775DA333236861A0004D58D3 /* TencentOpenAPI.framework */; };
+		77706E402372EBCF00149D09 /* YXAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77706E3F2372EBCF00149D09 /* YXAlertView.swift */; };
 		777C1E2A236BDF380097A822 /* YXHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C1E29236BDF380097A822 /* YXHomeModel.swift */; };
 		7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */; };
 		7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */; };
@@ -86,7 +87,7 @@
 		7786D620236C66B100741DCE /* YXSeleceUnitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786D61F236C66B100741DCE /* YXSeleceUnitView.xib */; };
 		778FAE52236FBFF700DE0133 /* YXHandWriteAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */; };
 		778FAE54236FC00300DE0133 /* YXHandWriteAnswerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */; };
-		778FAE56236FD98100DE0133 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 778FAE55236FD98100DE0133 /* tessdata */; };
+		77CBFD6F2372EBF000A670D7 /* YXAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */; };
 		77D048FA2361A12000CE95D8 /* YXWordBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D048F92361A12000CE95D8 /* YXWordBookModel.swift */; };
 		77D2150C2367D7BA00E5FBF1 /* YXUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D2150B2367D7BA00E5FBF1 /* YXUserModel.swift */; };
 		77F69A622361495300E55185 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F69A612361495300E55185 /* Main.storyboard */; };
@@ -739,6 +740,7 @@
 		773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAccountInfoView.swift; sourceTree = "<group>"; };
 		773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAccountInfoView.xib; sourceTree = "<group>"; };
 		775DA333236861A0004D58D3 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		77706E3F2372EBCF00149D09 /* YXAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAlertView.swift; sourceTree = "<group>"; };
 		777C1E29236BDF380097A822 /* YXHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeModel.swift; sourceTree = "<group>"; };
 		7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookCell.swift; sourceTree = "<group>"; };
 		7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordBookCell.xib; sourceTree = "<group>"; };
@@ -750,7 +752,7 @@
 		7786D61F236C66B100741DCE /* YXSeleceUnitView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXSeleceUnitView.xib; sourceTree = "<group>"; };
 		778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHandWriteAnswerView.swift; sourceTree = "<group>"; };
 		778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHandWriteAnswerView.xib; sourceTree = "<group>"; };
-		778FAE55236FD98100DE0133 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
+		77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAlertView.xib; sourceTree = "<group>"; };
 		77D048F92361A12000CE95D8 /* YXWordBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookModel.swift; sourceTree = "<group>"; };
 		77D2150B2367D7BA00E5FBF1 /* YXUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserModel.swift; sourceTree = "<group>"; };
 		77F69A612361495300E55185 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -2129,6 +2131,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		77706E3E2372EBA200149D09 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				77F69A6C23614D6300E55185 /* IBDesignableViews */,
+				77706E3F2372EBCF00149D09 /* YXAlertView.swift */,
+				77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		77D048F82361A0FC00CE95D8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -2217,7 +2229,6 @@
 		D62D6AAF204FEF7A005E3273 /* YXEDU */ = {
 			isa = PBXGroup;
 			children = (
-				778FAE55236FD98100DE0133 /* tessdata */,
 				EE5EF13323265C4000655654 /* Base */,
 				EE5EF1452327397D00655654 /* Global */,
 				D6570F702063B63A00DC8158 /* Vendor */,
@@ -3010,7 +3021,7 @@
 			isa = PBXGroup;
 			children = (
 				77F69A612361495300E55185 /* Main.storyboard */,
-				77F69A6C23614D6300E55185 /* IBDesignableViews */,
+				77706E3E2372EBA200149D09 /* Common */,
 				77F69A602361492500E55185 /* Home */,
 				771E88612362ABB2000BFAAD /* RegisterAndLogin */,
 				771512DC236710F200F6D400 /* Mine */,
@@ -5263,7 +5274,6 @@
 				23FD6CE922952E5400334321 /* 答题引导1@2x.png in Resources */,
 				227C6EEC228A5AA800282EA1 /* iconfont.ttf in Resources */,
 				202709BA21DE3A3000E88457 /* oneDrawgameGuide2@2x.png in Resources */,
-				778FAE56236FD98100DE0133 /* tessdata in Resources */,
 				200338DA21B93A25009165DF /* shareBadgeBG@2x.png in Resources */,
 				202C7A21218FED8E00EFD072 /* FresherGuide in Resources */,
 				202709B821DE3A3000E88457 /* oneDrawgameGuide1@3x.png in Resources */,
@@ -5278,6 +5288,7 @@
 				2290EAD423714AD2000BCA47 /* readAnimation.json in Resources */,
 				771512E22367131500F6D400 /* Home.storyboard in Resources */,
 				EE5E0166232754FA00655654 /* KSGuaidProperty.plist in Resources */,
+				77CBFD6F2372EBF000A670D7 /* YXAlertView.xib in Resources */,
 				202709BB21DE3A3000E88457 /* oneDrawgameGuide1@2x.png in Resources */,
 				23708FDD2269B6FC0082106A /* sharePosterResultBG@2x.png in Resources */,
 				202709BD21DE3A3000E88457 /* oneDrawgameGuide3@3x.png in Resources */,
@@ -5956,6 +5967,7 @@
 				EE5EFCEA23274E5500655654 /* YXBaseMaskView.m in Sources */,
 				EE5E00ED23274FEC00655654 /* YXPersonalViewModel.m in Sources */,
 				EE5E007023274FEB00655654 /* YXRecoderHelper.m in Sources */,
+				77706E402372EBCF00149D09 /* YXAlertView.swift in Sources */,
 				EE5EFD5123274F0900655654 /* YXDescoverModel.m in Sources */,
 				EE5E0247232756C100655654 /* XAbscissaView.m in Sources */,
 				EE5E001723274FEB00655654 /* YXCareerNoteWordListCell.m in Sources */,
