@@ -34,10 +34,10 @@ protocol YYBaseRequest {
 extension YYBaseRequest {
 
     public var header: [String : String] {
-        let _header = ["NNYC-TOKEN" : YXConfigure.shared()!.token!,
-                       "NNYC-REQUESTTIME" : YXConfigure.shared()!.time!,
+        let _header = ["NNYC-TOKEN" : YXConfigure.shared()?.token ?? "",
+                       "NNYC-REQUESTTIME" : YXConfigure.shared()?.time ?? "",
                        "NNYC-PLATFORM" : kPlatformValue,
-                       "NNYC-VERSION" : UIDevice().appVersion()!.replacingOccurrences(of: ".", with: "")]
+                       "NNYC-VERSION" : UIDevice().appVersion()?.replacingOccurrences(of: ".", with: "") ?? ""]
         
         return _header
     }
