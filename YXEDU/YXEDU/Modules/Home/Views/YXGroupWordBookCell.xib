@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,11 +30,11 @@
                             <constraint firstAttribute="height" constant="6" id="flz-G8-Jy2"/>
                         </constraints>
                     </view>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="qCU-1i-PVL">
-                        <rect key="frame" x="36" y="52" width="248" height="173"/>
+                    <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="qCU-1i-PVL">
+                        <rect key="frame" x="24" y="52" width="272" height="188"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="20" id="att-Rp-xsX">
-                            <size key="itemSize" width="50" height="50"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="24" minimumInteritemSpacing="24" id="att-Rp-xsX">
+                            <size key="itemSize" width="0.0" height="0.0"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -44,13 +44,13 @@
                 <constraints>
                     <constraint firstItem="O6P-Xy-moc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="1M2-5e-hII"/>
                     <constraint firstItem="qCU-1i-PVL" firstAttribute="top" secondItem="O6P-Xy-moc" secondAttribute="bottom" constant="46" id="50E-xI-Zgo"/>
-                    <constraint firstItem="qCU-1i-PVL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="KJE-2g-kVy"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="qCU-1i-PVL" secondAttribute="bottom" constant="20" id="O7Q-ak-tdL"/>
+                    <constraint firstItem="qCU-1i-PVL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="KJE-2g-kVy"/>
+                    <constraint firstAttribute="bottom" secondItem="qCU-1i-PVL" secondAttribute="bottom" constant="16" id="O7Q-ak-tdL"/>
                     <constraint firstAttribute="trailing" secondItem="O6P-Xy-moc" secondAttribute="trailing" id="UBD-3b-jFx"/>
                     <constraint firstItem="KYz-Ud-c3D" firstAttribute="top" secondItem="O6P-Xy-moc" secondAttribute="bottom" constant="16" id="cSW-QH-JSh"/>
                     <constraint firstItem="O6P-Xy-moc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="g32-Cn-Bca"/>
                     <constraint firstItem="KYz-Ud-c3D" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="hf5-gT-n2K"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="qCU-1i-PVL" secondAttribute="trailing" constant="20" id="myP-PV-2ea"/>
+                    <constraint firstAttribute="trailing" secondItem="qCU-1i-PVL" secondAttribute="trailing" constant="24" id="myP-PV-2ea"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

@@ -44,7 +44,6 @@ target 'YXEDU' do
      pod 'ObjectMapper', '~> 3.3.0'
      pod 'AlamofireObjectMapper', '~> 5.0'
      
-#     pod 'SSZipArchive'
      pod 'CocoaLumberjack/Swift'
      
      pod 'UMCCommon'
@@ -60,5 +59,9 @@ target 'YXEDU' do
 
      # 加载、解析动图
      pod 'lottie-ios'
+     
+     # 解压
+     pod 'Zip'
+
 
 end

@@ -84,6 +84,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="filterButton" destination="xuM-da-ekt" id="5Qk-Dw-388"/>
                         <outlet property="seleteGradeViewStateImageView" destination="7a7-r9-LZL" id="G6R-2E-93L"/>
                         <outlet property="tableView" destination="uVU-qD-ytE" id="IoR-Oj-sRw"/>
                     </connections>

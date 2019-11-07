@@ -9,13 +9,13 @@
 import UIKit
 
 class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
-    private var units: [String] = []
+    private var units: [YXWordBookUnitModel] = []
     private var doneClosure: ((_ string: String) -> Void)?
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
 
-    init(frame: CGRect, units: [String], doneClosure: ((_ string: String) -> Void)?) {
+    init(frame: CGRect, units: [YXWordBookUnitModel], doneClosure: ((_ string: String) -> Void)?) {
         super.init(frame: frame)
         self.units = units
         self.doneClosure = doneClosure
@@ -37,7 +37,7 @@ class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBAction func done(_ sender: UIButton) {
         let row = pickerView.selectedRow(inComponent: 0)
         let unit = units[row]
-        doneClosure?(unit)
+        doneClosure?(unit.unitName ?? "")
         self.removeFromSuperview()
     }
 
@@ -51,6 +51,6 @@ class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return units[row]
+        return "\(units[row].unitID ?? 0)"
     }
 }

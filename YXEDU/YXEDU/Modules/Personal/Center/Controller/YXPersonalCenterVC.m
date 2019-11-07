@@ -700,7 +700,7 @@
                         [self.tableView reloadData];
                     };
                     
-                    personalReminder.remindDateString = cellModel.rightDetail;
+                    personalReminder.remindDate = cellModel.rightDetail;
                     
                     [self.navigationController pushViewController:personalReminder animated:YES];
                 }

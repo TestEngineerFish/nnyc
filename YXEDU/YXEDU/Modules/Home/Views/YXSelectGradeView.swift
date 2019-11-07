@@ -12,11 +12,6 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     
     var grades: [YXGradeModel] = [] {
         didSet {
-            var allGrade = YXGradeModel()
-            allGrade.gradeName = "全部"
-            allGrade.isSelect = true
-            grades.insert(allGrade, at: 0)
-            
             var countOfRow = Int(grades.count / 3) + ((grades.count % 3) != 0 ? 1 : 0)
             countOfRow = countOfRow == 0 ? 1 : countOfRow
             let baseHeight = 48 + ((countOfRow - 1) * 14)
@@ -50,6 +45,11 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
         addSubview(contentView)
         contentView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         
+        var allGrade = YXGradeModel()
+        allGrade.gradeName = "全部"
+        allGrade.isSelect = true
+        grades.append(allGrade)
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "YXSelectGradeCell", bundle: nil), forCellWithReuseIdentifier: "YXSelectGradeCell")
@@ -78,10 +78,12 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        for var grade in grades {
-            grade.isSelect = false
+        for index in 0..<grades.count {
+            grades[index].isSelect = false
         }
+        
         grades[indexPath.row].isSelect = true
+        collectionView.reloadData()
         
         guard let gradeName = grades[indexPath.row].gradeName else { return }
         selectClosure(gradeName)

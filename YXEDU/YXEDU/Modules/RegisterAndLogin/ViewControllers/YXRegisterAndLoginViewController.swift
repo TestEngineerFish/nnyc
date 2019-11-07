@@ -351,16 +351,12 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                             YXUserModel.default.login()
                                         }
                                         
-                                        CLShanYanSDKManager.finishAuthControllerCompletion {
-                                            self.navigationController?.pushViewController(addBookViewController, animated: true)
-                                        }
+                                        self.navigationController?.pushViewController(addBookViewController, animated: true)
                                         return
                                     }
                                     
-                                    CLShanYanSDKManager.finishAuthControllerCompletion {
-                                        YXUserModel.default.login()
-                                    }
-                                    
+                                    YXUserModel.default.login()
+                            
                                 } else if let error = response?.error {
                                     print(error.desc)
                                 }
@@ -513,7 +509,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     @objc func clickOtherLoginButton(_ sender: UIButton) {
-        CLShanYanSDKManager.finishAuthControllerCompletion{
+        CLShanYanSDKManager.finishAuthController(animated: false) {
             if sender.tag == 1 {
                 self.loginWithQQ(sender)
                 

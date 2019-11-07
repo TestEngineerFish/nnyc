@@ -74,6 +74,7 @@ PODS:
   - YYKit (1.0.9):
     - YYKit/no-arc (= 1.0.9)
   - YYKit/no-arc (1.0.9)
+  - Zip (1.1.0)
   - ZipArchive (1.4.0)
 
 DEPENDENCIES:
@@ -115,6 +116,7 @@ DEPENDENCIES:
   - VTMagic
   - WMPageController
   - YYKit
+  - Zip
   - ZipArchive
 
 SPEC REPOS:
@@ -159,6 +161,7 @@ SPEC REPOS:
     - VTMagic
     - WMPageController
     - YYKit
+    - Zip
     - ZipArchive
 
 SPEC CHECKSUMS:
@@ -202,8 +205,9 @@ SPEC CHECKSUMS:
   VTMagic: b49e5f456dbcbfd9a3588ba92417233a105bc193
   WMPageController: 0c7624d2b48e4f1ab92371688cf6744ed701575d
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
+  Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 176aba0e598fc3034e15cf98f7d3723bc370da01
+PODFILE CHECKSUM: 49019269982582886a85ed7ab2adc78a193149bf
 
 COCOAPODS: 1.8.4

@@ -49,3 +49,5 @@
 #import "YXLearnReportModel.h"
 
 #import "ZipArchive.h"
+
+#import "YXPersonalReminderVC.h"

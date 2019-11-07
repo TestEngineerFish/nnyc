@@ -88,6 +88,7 @@
 		778FAE52236FBFF700DE0133 /* YXHandWriteAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */; };
 		778FAE54236FC00300DE0133 /* YXHandWriteAnswerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */; };
 		77CBFD6F2372EBF000A670D7 /* YXAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */; };
+		77CBFD712373B48000A670D7 /* YXWordBookResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBFD702373B48000A670D7 /* YXWordBookResourceManager.swift */; };
 		77D048FA2361A12000CE95D8 /* YXWordBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D048F92361A12000CE95D8 /* YXWordBookModel.swift */; };
 		77D2150C2367D7BA00E5FBF1 /* YXUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D2150B2367D7BA00E5FBF1 /* YXUserModel.swift */; };
 		77F69A622361495300E55185 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F69A612361495300E55185 /* Main.storyboard */; };
@@ -753,6 +754,7 @@
 		778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHandWriteAnswerView.swift; sourceTree = "<group>"; };
 		778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHandWriteAnswerView.xib; sourceTree = "<group>"; };
 		77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAlertView.xib; sourceTree = "<group>"; };
+		77CBFD702373B48000A670D7 /* YXWordBookResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookResourceManager.swift; sourceTree = "<group>"; };
 		77D048F92361A12000CE95D8 /* YXWordBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookModel.swift; sourceTree = "<group>"; };
 		77D2150B2367D7BA00E5FBF1 /* YXUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserModel.swift; sourceTree = "<group>"; };
 		77F69A612361495300E55185 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -2137,6 +2139,7 @@
 				77F69A6C23614D6300E55185 /* IBDesignableViews */,
 				77706E3F2372EBCF00149D09 /* YXAlertView.swift */,
 				77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */,
+				77CBFD702373B48000A670D7 /* YXWordBookResourceManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -5390,6 +5393,7 @@
 				"${BUILT_PRODUCTS_DIR}/VTMagic/VTMagic.framework",
 				"${BUILT_PRODUCTS_DIR}/WMPageController/WMPageController.framework",
 				"${BUILT_PRODUCTS_DIR}/YYKit/YYKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
 				"${BUILT_PRODUCTS_DIR}/ZipArchive/ZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 			);
@@ -5423,6 +5427,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VTMagic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WMPageController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 			);
@@ -5591,6 +5596,7 @@
 				EE5E008123274FEB00655654 /* YXSpellQuestionViewOld.m in Sources */,
 				EE5EF20423273BAE00655654 /* UIImage+YR.m in Sources */,
 				EE5E003123274FEB00655654 /* YXMyBookFooterView.m in Sources */,
+				77CBFD712373B48000A670D7 /* YXWordBookResourceManager.swift in Sources */,
 				EE5E00B323274FEB00655654 /* YXMissionToReceiveView.m in Sources */,
 				7786B6D42361C4E40027D0E3 /* YXSingleGroupWordBookCell.swift in Sources */,
 				EE5E006323274FEB00655654 /* YXStudyProgressModel.m in Sources */,
