@@ -7,13 +7,21 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
+class AppDelegate: UIResponder, UIApplicationDelegate { //}, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+            authored, error in
+            
+            guard authored else { return }
+//            application.registerForRemoteNotifications()
+        }
         
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")

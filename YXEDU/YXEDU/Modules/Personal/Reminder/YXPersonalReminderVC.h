@@ -13,6 +13,6 @@ typedef void(^ReturnRemindDateStringBlock) (NSString *reminderDateString);
 @interface YXPersonalReminderVC : BSRootVC
 
 @property(nonatomic, strong) ReturnRemindDateStringBlock returnRemindDateStringBlock;
-@property(nonatomic, strong) NSString *remindDateString;
+@property(nonatomic, strong) NSDate *remindDate;
 
 @end

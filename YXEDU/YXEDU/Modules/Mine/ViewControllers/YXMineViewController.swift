@@ -13,6 +13,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     private var temporaryUserModel: YXUserModel_Old?
     
     private var badges: [YXPersonalBadgeModel] = []
+    private var innerBadges: [YXPersonalBadgeModel] = []
     private var bindInfo: [String] = ["", "", ""]
     
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
@@ -68,7 +69,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 var newBadges: [YXPersonalBadgeModel] = []
                 
                 for _ in (badges.options as! [YXBadgeModel]) {
-                    newBadges.append(self.badges[currentIndex])
+                    newBadges.append(self.innerBadges[currentIndex])
                     currentIndex = currentIndex + 1
                 }
                 
@@ -110,6 +111,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
                 
                 if self.bindInfo[1] == "1", self.bindInfo[2] == "2" {
+                    bindLabel.text = ""
                     
                 } else {
                     bindLabel.text = "去绑定"
@@ -190,6 +192,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.badges.append(personalBadgeModel)
                     }
                 }
+                
+                self.innerBadges = self.badges
                 
                 var newBadge = self.badges
                 for index in 0..<self.badges.count {

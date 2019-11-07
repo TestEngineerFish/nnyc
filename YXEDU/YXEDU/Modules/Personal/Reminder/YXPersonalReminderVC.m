@@ -103,11 +103,12 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     
-    self.remindDateString = @"已关闭";
-    
-    if ([self.remindDateString isEqualToString:@"已关闭"]) {
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"Reminder"] == nil) {
+        self.remindDate = nil;
         [self.isReminderSwitch setOn:NO];
+        
     } else {
+        self.remindDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"Reminder"];
         [self.isReminderSwitch setOn:YES];
     }
     
@@ -125,7 +126,7 @@
         [self.datePicker setDatePickerMode:UIDatePickerModeTime];
         [self.datePicker setValue:UIColorOfHex(0x485461) forKey:@"textColor"];
         
-        if ([self.remindDateString isEqualToString:@"已关闭"]) {
+        if (self.remindDate == nil) {
             NSString *remindDateString = @"20:00";
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -135,7 +136,7 @@
         } else {
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"HH:mm"];
-            self.datePicker.date = [dateFormatter dateFromString:self.remindDateString];
+            self.datePicker.date = self.remindDate;
         }
         
         [self.bottomView addSubview:self.timeLabel];

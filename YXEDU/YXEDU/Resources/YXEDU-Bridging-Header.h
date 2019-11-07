@@ -53,3 +53,6 @@
 #import "YXCacheKey.h"
 #import "UIDevice+YX.h"
 #import "NSData+YR.h"
+
+#import "YXPersonalReminderVC.h"
+

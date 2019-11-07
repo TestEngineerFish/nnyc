@@ -277,7 +277,8 @@
                 default:
                     break;
             }
-            
+            break;
+
         case 2:
         {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
@@ -290,8 +291,8 @@
             [alert addAction:actionConfirm];
             [alert addAction:actionCancle];
             [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
-            break;
         }
+            break;
     }
     
     if (self.pickerView) {
