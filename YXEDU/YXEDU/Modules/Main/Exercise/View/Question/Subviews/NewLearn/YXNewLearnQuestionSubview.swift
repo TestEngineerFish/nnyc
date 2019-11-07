@@ -27,7 +27,7 @@ class YXNewLearnQuestionSubview: UIView {
         self.viewType      = type
         wordLabel          = UILabel()
         chineseLabel       = UILabel()
-        imageView          = YXQuestionImageView(url: exerciseModel.imageUrl)
+        imageView          = YXQuestionImageView(url: exerciseModel.question!.imageUrl!)
         audioView        = YXQuestionAudioSubview(exerciseModel: exerciseModel)
         super.init(frame: CGRect.zero)
         self.createSubviews(type)
@@ -44,10 +44,10 @@ class YXNewLearnQuestionSubview: UIView {
         addSubview(audioView)
 
         wordLabel.font             = UIFont.pfSCSemiboldFont(withSize: 26)
-        wordLabel.text             = self.exerciseModel.word
+//        wordLabel.text             = self.exerciseModel.word
         wordLabel.textColor        = UIColor.black1
         wordLabel.textAlignment    = .center
-        chineseLabel.text          = self.exerciseModel.subTitle
+//        chineseLabel.text          = self.exerciseModel.subTitle
         chineseLabel.font          = UIFont.pfSCRegularFont(withSize: 14)
         chineseLabel.textColor     = UIColor.black1
         chineseLabel.textAlignment = .center

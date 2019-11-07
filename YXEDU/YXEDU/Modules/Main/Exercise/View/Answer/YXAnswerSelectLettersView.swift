@@ -21,7 +21,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
 
     override func createSubview() {
         super.createSubview()
-        self.createButtonArray(exerciseModel.wordArray)
+//        self.createButtonArray(exerciseModel.wordArray)
         self.createUI()
     }
 

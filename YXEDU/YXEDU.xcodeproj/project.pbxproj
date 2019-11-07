@@ -260,7 +260,6 @@
 		EE5E005F23274FEB00655654 /* YXExerciseSubmitErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFE4723274FE900655654 /* YXExerciseSubmitErrorView.m */; };
 		EE5E006023274FEB00655654 /* YXExerciseFloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFE4823274FE900655654 /* YXExerciseFloatView.m */; };
 		EE5E006123274FEB00655654 /* YXLearnProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFE4923274FE900655654 /* YXLearnProgressView.m */; };
-		EE5E006223274FEB00655654 /* YXExerciseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFE4A23274FE900655654 /* YXExerciseModel.m */; };
 		EE5E006323274FEB00655654 /* YXStudyProgressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFE4D23274FE900655654 /* YXStudyProgressModel.m */; };
 		EE5E006423274FEB00655654 /* YXAnsweredInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFE4F23274FE900655654 /* YXAnsweredInfo.m */; };
 		EE5E006523274FEB00655654 /* YXStudyBatchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFE5023274FE900655654 /* YXStudyBatchModel.m */; };
@@ -1424,7 +1423,6 @@
 		EE5EFE2D23274FE900655654 /* YXUnitDownLoadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXUnitDownLoadView.m; sourceTree = "<group>"; };
 		EE5EFE2E23274FE900655654 /* YXUnitDownLoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXUnitDownLoadView.h; sourceTree = "<group>"; };
 		EE5EFE2F23274FE900655654 /* YXUnitDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXUnitDetailVC.m; sourceTree = "<group>"; };
-		EE5EFE3123274FE900655654 /* YXExerciseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXExerciseModel.h; sourceTree = "<group>"; };
 		EE5EFE3323274FE900655654 /* YXQuestionGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXQuestionGenerator.h; sourceTree = "<group>"; };
 		EE5EFE3423274FE900655654 /* YXStudyViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXStudyViewModel.h; sourceTree = "<group>"; };
 		EE5EFE3523274FE900655654 /* YXQuestionGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXQuestionGenerator.m; sourceTree = "<group>"; };
@@ -1444,7 +1442,6 @@
 		EE5EFE4723274FE900655654 /* YXExerciseSubmitErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXExerciseSubmitErrorView.m; sourceTree = "<group>"; };
 		EE5EFE4823274FE900655654 /* YXExerciseFloatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXExerciseFloatView.m; sourceTree = "<group>"; };
 		EE5EFE4923274FE900655654 /* YXLearnProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXLearnProgressView.m; sourceTree = "<group>"; };
-		EE5EFE4A23274FE900655654 /* YXExerciseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXExerciseModel.m; sourceTree = "<group>"; };
 		EE5EFE4C23274FE900655654 /* YXWordQuestionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXWordQuestionModel.h; sourceTree = "<group>"; };
 		EE5EFE4D23274FE900655654 /* YXStudyProgressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXStudyProgressModel.m; sourceTree = "<group>"; };
 		EE5EFE4E23274FE900655654 /* YXSpokenResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXSpokenResultModel.h; sourceTree = "<group>"; };
@@ -4011,8 +4008,6 @@
 				EE5EFE3823274FE900655654 /* VC */,
 				EE5EFE5823274FE900655654 /* View */,
 				EE5EFE3223274FE900655654 /* ViewModel */,
-				EE5EFE3123274FE900655654 /* YXExerciseModel.h */,
-				EE5EFE4A23274FE900655654 /* YXExerciseModel.m */,
 				EE5EFEA023274FE900655654 /* YXExerciseVC.h */,
 				EE5EFE3723274FE900655654 /* YXExerciseVC.m */,
 			);
@@ -5618,7 +5613,6 @@
 				EE5E008023274FEB00655654 /* YXResultView.m in Sources */,
 				EE5E004023274FEB00655654 /* YXGraphTranslateCell.m in Sources */,
 				EE54F7D82362AA3100EC605A /* YXExampleQuestionView.swift in Sources */,
-				EE5E006223274FEB00655654 /* YXExerciseModel.m in Sources */,
 				EE5E00AD23274FEB00655654 /* YXMissionViewController.m in Sources */,
 				EE5E021C232756BF00655654 /* YXKeyPointTextStorage.m in Sources */,
 				EE5E0240232756C000655654 /* XAnimator.m in Sources */,
@@ -6179,7 +6173,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -6216,7 +6213,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";

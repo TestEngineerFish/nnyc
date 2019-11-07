@@ -26,7 +26,7 @@ class YXChineseQuestionView: YXBaseQuestionView {
         }
 
         self.initSubTitleLabel()
-        subTitleLabel?.text = self.exerciseModel.subTitle
+//        subTitleLabel?.text = self.exerciseModel.subTitle
     }
 
     override func layoutSubviews() {

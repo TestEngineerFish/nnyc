@@ -72,7 +72,10 @@ struct YXExerciseViewFactory {
             return YXNewLearnPrimarySchoolExerciseView(exerciseModel: exerciseModel)
         case .newLearnJuniorHighSchool:
             return YXNewLearnJuniorHighSchoolExerciseView(exerciseModel: exerciseModel)
+        default:
+            return YXBaseExerciseView(exerciseModel: exerciseModel)
         }
+        
     }
     
 }

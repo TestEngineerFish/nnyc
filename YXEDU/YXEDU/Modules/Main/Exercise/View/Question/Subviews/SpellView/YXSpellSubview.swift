@@ -42,24 +42,24 @@ class YXSpellSubview: UIView {
     func createUI() {
         var maxX = CGFloat(0)
         wordViewList = []
-        for index in 0..<self.exerciseModel.charModelArray.count {
-            let model = self.exerciseModel.charModelArray[index]
-            let wordWidth = model.character.textWidth(font: UIFont.pfSCSemiboldFont(withSize: 20), height: charH) + margin
-            let wordFrame = CGRect(x: maxX, y: 0, width: wordWidth, height: charH)
-            let wordView  = YXWordCharacterView(frame: wordFrame)
-            if model.isBlank {
-                wordView.textField.text = ""
-                wordView.type          = .blank
-            } else {
-                wordView.textField.text = model.character
-                wordView.type           = .normal
-            }
-            self.addSubview(wordView)
-            self.wordViewList.append(wordView)
-            maxX += wordWidth + margin
-            let tap = UITapGestureRecognizer(target: self, action: #selector(tapWordView(_:)))
-            wordView.addGestureRecognizer(tap)
-        }
+//        for index in 0..<self.exerciseModel.charModelArray.count {
+//            let model = self.exerciseModel.charModelArray[index]
+//            let wordWidth = model.character.textWidth(font: UIFont.pfSCSemiboldFont(withSize: 20), height: charH) + margin
+//            let wordFrame = CGRect(x: maxX, y: 0, width: wordWidth, height: charH)
+//            let wordView  = YXWordCharacterView(frame: wordFrame)
+//            if model.isBlank {
+//                wordView.textField.text = ""
+//                wordView.type          = .blank
+//            } else {
+//                wordView.textField.text = model.character
+//                wordView.type           = .normal
+//            }
+//            self.addSubview(wordView)
+//            self.wordViewList.append(wordView)
+//            maxX += wordWidth + margin
+//            let tap = UITapGestureRecognizer(target: self, action: #selector(tapWordView(_:)))
+//            wordView.addGestureRecognizer(tap)
+//        }
         return
     }
 
@@ -100,32 +100,32 @@ class YXSpellSubview: UIView {
     /// 检查结果
     /// - description: 如果有错误的单词,则通过tag传递给答题视图
     func startCheckResult() {
-        let lackWord = self.wordViewList.filter { (wordView) -> Bool in
-            return wordView.text.isNilOrEmpty
-        }
-        // 如果有未填写完整的内容,则不检查
-        if !lackWord.isEmpty {
-            return
-        }
-        var errorTags = [Int]()
-        for index in 0..<self.wordViewList.count {
-            if index >= self.exerciseModel.charModelArray.count {
-                return
-            }
-            let rightWord   = self.exerciseModel.charModelArray[index]
-            let currentWord = self.wordViewList[index]
-            if rightWord.character != (currentWord.text ?? "") {
-                errorTags.append(currentWord.tag)
-                currentWord.status = .error
-            }
-        }
-        if errorTags.isEmpty {
-            self.wordViewList.forEach { (wordView) in
-                if wordView.type == .blank {
-                    wordView.status = .right
-                }
-            }
-        }
-        self.result?(errorTags)
+//        let lackWord = self.wordViewList.filter { (wordView) -> Bool in
+//            return wordView.text.isNilOrEmpty
+//        }
+//        // 如果有未填写完整的内容,则不检查
+//        if !lackWord.isEmpty {
+//            return
+//        }
+//        var errorTags = [Int]()
+//        for index in 0..<self.wordViewList.count {
+//            if index >= self.exerciseModel.charModelArray.count {
+//                return
+//            }
+//            let rightWord   = self.exerciseModel.charModelArray[index]
+//            let currentWord = self.wordViewList[index]
+//            if rightWord.character != (currentWord.text ?? "") {
+//                errorTags.append(currentWord.tag)
+//                currentWord.status = .error
+//            }
+//        }
+//        if errorTags.isEmpty {
+//            self.wordViewList.forEach { (wordView) in
+//                if wordView.type == .blank {
+//                    wordView.status = .right
+//                }
+//            }
+//        }
+//        self.result?(errorTags)
     }
 }

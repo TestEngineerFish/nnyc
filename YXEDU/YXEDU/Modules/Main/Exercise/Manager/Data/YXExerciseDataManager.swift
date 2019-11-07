@@ -17,40 +17,52 @@ class YXExerciseDataManager: NSObject {
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
-    func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+    func fetchTodayExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         // --- 测试数据 ----
-        let model = YXWordExerciseModel(.newLearnPrimarySchool)
-        let strArray = ["e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x", "e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x", "e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x"]
-        model.wordArray = strArray
-        let charModelArray: [YXCharacterModel] = {
-            var array = [YXCharacterModel]()
-            var index = 0
-            for str in model.word {
-                let model = YXCharacterModel(str.description, isBlank: index != 0)
-                array.append(model)
-                index += 1
-            }
-            return array
-        }()
-        model.charModelArray = charModelArray
+        
         // ---- ^^^^^ ----
         exerciseModelArray = [
-            model,
-            YXWordExerciseModel(.listenChooseWord),
-            YXWordExerciseModel(.listenChooseChinese),
-            YXWordExerciseModel(.listenChooseImage),
-            YXWordExerciseModel(.validationWordAndChinese),
-            YXWordExerciseModel(.validationImageAndWord),
-            YXWordExerciseModel(.lookImageChooseWord),
-            YXWordExerciseModel(.lookChineseChooseWord),
-            YXWordExerciseModel(.lookWordChooseChinese),
-            YXWordExerciseModel(.lookExampleChooseImage),
-            YXWordExerciseModel(.lookWordChooseImage),            
-            YXWordExerciseModel(.fillWordAccordingToChinese),
-            YXWordExerciseModel(.lookWordChooseImage),
-            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
-            YXWordExerciseModel(.lookExampleChooseImage)
         ]
+        completion?(true, nil)
+    }
+    
+    
+    /// 获取今天要学习的练习数据
+    /// - Parameter completion: 数据加载成功后的回调
+    func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+        // --- 测试数据 ----
+//        var model = YXWordExerciseModel(.newLearnPrimarySchool)
+//        let strArray = ["e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x", "e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x", "e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x"]
+//        model.wordArray = strArray
+//        let charModelArray: [YXCharacterModel] = {
+//            var array = [YXCharacterModel]()
+//            var index = 0
+//            for str in model.word {
+//                let model = YXCharacterModel(str.description, isBlank: index != 0)
+//                array.append(model)
+//                index += 1
+//            }
+//            return array
+//        }()
+//        model.charModelArray = charModelArray
+//        // ---- ^^^^^ ----
+//        exerciseModelArray = [
+//            model,
+//            YXWordExerciseModel(.listenChooseWord),
+//            YXWordExerciseModel(.listenChooseChinese),
+//            YXWordExerciseModel(.listenChooseImage),
+//            YXWordExerciseModel(.validationWordAndChinese),
+//            YXWordExerciseModel(.validationImageAndWord),
+//            YXWordExerciseModel(.lookImageChooseWord),
+//            YXWordExerciseModel(.lookChineseChooseWord),
+//            YXWordExerciseModel(.lookWordChooseChinese),
+//            YXWordExerciseModel(.lookExampleChooseImage),
+//            YXWordExerciseModel(.lookWordChooseImage),
+//            YXWordExerciseModel(.fillWordAccordingToChinese),
+//            YXWordExerciseModel(.lookWordChooseImage),
+//            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
+//            YXWordExerciseModel(.lookExampleChooseImage)
+//        ]
         completion?(true, nil)
     }
     
@@ -59,17 +71,17 @@ class YXExerciseDataManager: NSObject {
     /// 加载本地未学完的关卡数据
     func fetchUnCompletionExerciseModels() {
         exerciseModelArray = [
-            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
-            YXWordExerciseModel(.fillWordAccordingToChinese),
-            
-            YXWordExerciseModel(.lookWordChooseImage),
-            YXWordExerciseModel(.lookExampleChooseImage)
+//            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
+//            YXWordExerciseModel(.fillWordAccordingToChinese),
+//
+//            YXWordExerciseModel(.lookWordChooseImage),
+//            YXWordExerciseModel(.lookExampleChooseImage)
         ]
     }
     
     
     /// 从当前关卡数据中，获取一个练习数据对象
-    func fetchOneExerciseModels() -> YXWordExerciseModel? {
+    func fetchOneExerciseModel() -> YXWordExerciseModel? {
         return exerciseModelArray.first
     }
     

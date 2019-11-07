@@ -32,8 +32,10 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     var util: YXFindRouteUtil?
 
     override init(exerciseModel: YXWordExerciseModel) {
-        itemNumberH = exerciseModel.matix
-        itemNumberW = exerciseModel.matix
+//        itemNumberH = exerciseModel.matix
+//        itemNumberW = exerciseModel.matix
+        itemNumberH = 4
+        itemNumberW = 4
         super.init(exerciseModel: exerciseModel)
     }
 
@@ -43,51 +45,51 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
 
     override func bindData() {
         super.bindData()
-        self.lettersArray = self.exerciseModel.word.map { (char) -> String in
-            return "\(char)"
-        }
-        // 查找最佳路径
-        let matix = self.exerciseModel.matix
-        self.util        = YXFindRouteUtil(matix, itemNumberW: matix)
-        let startIndex   = Int(arc4random()) % (matix * matix)
-        self.rightRoutes = util!.getRoute(start: startIndex, wordLength: lettersArray.count)
-        self.allLettersArray = self.getAllLetters(rightRoutes)
+//        self.lettersArray = self.exerciseModel.word.map { (char) -> String in
+//            return "\(char)"
+//        }
+//        // 查找最佳路径
+//        let matix = self.exerciseModel.matix
+//        self.util        = YXFindRouteUtil(matix, itemNumberW: matix)
+//        let startIndex   = Int(arc4random()) % (matix * matix)
+//        self.rightRoutes = util!.getRoute(start: startIndex, wordLength: lettersArray.count)
+//        self.allLettersArray = self.getAllLetters(rightRoutes)
     }
 
     override func createSubview() {
         super.createSubview()
-        self.isCapitalLetter = self.justCapitalLetter(self.exerciseModel.word)
-        self.createUI()
+//        self.isCapitalLetter = self.justCapitalLetter(self.exerciseModel.word)
+//        self.createUI()
     }
 
     private func createUI() {
-        allButtonArray = []
-        selectedBtnArray = []
-        var maxX = CGFloat.zero
-        var maxY = CGFloat.zero
-        let viewWidth = CGFloat(self.exerciseModel.matix) * (itemSize + margin) - margin
-        for index in 0..<allLettersArray.count {
-            let letter = self.allLettersArray[index]
-            let button = self.createButton(letter)
-            button.tag = index
-            button.frame = CGRect(x: maxX, y: maxY, width: itemSize, height: itemSize)
-            let nextX = maxX + margin + itemSize
-            if nextX > viewWidth {
-                maxX = 0
-                maxY += itemSize + margin
-            } else {
-                maxX = nextX
-            }
-            self.contentScrollView?.addSubview(button)
-            allButtonArray.append(button)
-        }
-        // 显示首个字母的动画
-        self.showFirstButtonAnimation(rightRoutes.first)
-        // 添加手势事件
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
-        self.isUserInteractionEnabled = true
-        self.addGestureRecognizer(pan)
-        self.contentScrollView?.contentSize = CGSize(width: viewWidth, height: viewWidth)
+//        allButtonArray = []
+//        selectedBtnArray = []
+//        var maxX = CGFloat.zero
+//        var maxY = CGFloat.zero
+//        let viewWidth = CGFloat(self.exerciseModel.matix) * (itemSize + margin) - margin
+//        for index in 0..<allLettersArray.count {
+//            let letter = self.allLettersArray[index]
+//            let button = self.createButton(letter)
+//            button.tag = index
+//            button.frame = CGRect(x: maxX, y: maxY, width: itemSize, height: itemSize)
+//            let nextX = maxX + margin + itemSize
+//            if nextX > viewWidth {
+//                maxX = 0
+//                maxY += itemSize + margin
+//            } else {
+//                maxX = nextX
+//            }
+//            self.contentScrollView?.addSubview(button)
+//            allButtonArray.append(button)
+//        }
+//        // 显示首个字母的动画
+//        self.showFirstButtonAnimation(rightRoutes.first)
+//        // 添加手势事件
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
+//        self.isUserInteractionEnabled = true
+//        self.addGestureRecognizer(pan)
+//        self.contentScrollView?.contentSize = CGSize(width: viewWidth, height: viewWidth)
     }
 
     /// 在VC中显示的时候调用!!

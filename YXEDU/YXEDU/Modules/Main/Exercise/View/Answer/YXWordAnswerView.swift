@@ -21,21 +21,21 @@ class YXWordAnswerView: YXBaseAnswerView {
 
     override func createSubview() {
         super.createSubview()
-        for index in 0..<self.exerciseModel.wordArray.count {
-            let word = self.exerciseModel.wordArray[index]
-            let x = (index % 2 > 0) ? itemW + marginH : 0
-            let y = CGFloat(index / 2) * (marginV + itemH)
-            let button = YXWordButton()
-            button.frame = CGRect(x: x, y: y, width: itemW, height: itemH)
-            button.status = .normal
-            button.setTitle(word, for: .normal)
-            button.tag = index
-            button.addTarget(self, action: #selector(clickBtn(_:)), for: .touchUpInside)
-            self.contentScrollView?.addSubview(button)
-            self.allBtnArray.append(button)
-        }
-        self.maxX = self.allBtnArray.last?.frame.maxY ?? 0
-        self.contentScrollView?.contentSize = CGSize(width: 300, height: self.maxX)
+//        for index in 0..<self.exerciseModel.wordArray.count {
+//            let word = self.exerciseModel.wordArray[index]
+//            let x = (index % 2 > 0) ? itemW + marginH : 0
+//            let y = CGFloat(index / 2) * (marginV + itemH)
+//            let button = YXWordButton()
+//            button.frame = CGRect(x: x, y: y, width: itemW, height: itemH)
+//            button.status = .normal
+//            button.setTitle(word, for: .normal)
+//            button.tag = index
+//            button.addTarget(self, action: #selector(clickBtn(_:)), for: .touchUpInside)
+//            self.contentScrollView?.addSubview(button)
+//            self.allBtnArray.append(button)
+//        }
+//        self.maxX = self.allBtnArray.last?.frame.maxY ?? 0
+//        self.contentScrollView?.contentSize = CGSize(width: 300, height: self.maxX)
     }
 
     @objc private func clickBtn(_ button: YXWordButton) {

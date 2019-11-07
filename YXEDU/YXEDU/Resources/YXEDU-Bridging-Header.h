@@ -49,3 +49,7 @@
 #import "YXLearnReportModel.h"
 
 #import "ZipArchive.h"
+
+#import "YXCacheKey.h"
+#import "UIDevice+YX.h"
+#import "NSData+YR.h"

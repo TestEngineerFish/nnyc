@@ -10,40 +10,42 @@ import UIKit
 
 
 /// 单词练习类型
-enum YXExerciseType {
+enum YXExerciseType: Int {
     //MARK: ---- 选择题
-    case lookWordChooseImage                    // 看单词选图片
-    case lookExampleChooseImage                 // 看例句选图片
-    case lookWordChooseChinese                  // 看单词选中文
-    case lookExampleChooseChinese               // 看例句选中文
-    case lookChineseChooseWord                  // 看中文选单词
-    case lookImageChooseWord                    // 看图片选单词
+    case lookWordChooseImage = 10                    // 看单词选图片
+    case lookExampleChooseImage = 11                 // 看例句选图片
+    case lookWordChooseChinese = 12                  // 看单词选中文
+    case lookExampleChooseChinese = 13               // 看例句选中文
+    case lookChineseChooseWord = 14                  // 看中文选单词
+    case lookImageChooseWord = 15                    // 看图片选单词
     
     //MARK: ---- 判断题
-    case validationWordAndChinese               // 判断单词和词义对错
-    case validationImageAndWord                 // 判断图片和单词对错
+    case validationWordAndChinese = 20               // 判断单词和词义对错
+    case validationImageAndWord = 21                 // 判断图片和单词对错
     
     //MARK: ---- 听力题
-    case listenChooseWord                       // 听录音选单词
-    case listenChooseChinese                    // 听录音选词义
-    case listenChooseImage                      // 听录音选图片
+    case listenChooseWord = 30                       // 听录音选单词
+    case listenChooseChinese = 31                    // 听录音选词义
+    case listenChooseImage = 32                      // 听录音选图片
     
     //MARK: ---- 连线题
-    case connectionWordAndChinese               // 连接单词和中文
-    case connectionWordAndImage                 // 连接单词和图片
+    case connectionWordAndChinese = 40               // 连接单词和中文
+    case connectionWordAndImage = 41                 // 连接单词和图片
     
     //MARK: ---- 填空题
-    case fillWordAccordingToChinese             // 看中文填空（附加中文，仅点击）
-    case fillWordAccordingToListen              // 听录音填空（附加听录音，仅点击）
-    case fillWordAccordingToImage               // 看图片填空（附加图片，仅点击）
+    case fillWordAccordingToChinese = 50             // 看中文填空（附加中文，仅点击）
+    case fillWordAccordingToListen = 51              // 听录音填空（附加听录音，仅点击）
+    case fillWordAccordingToImage = 52               // 看图片填空（附加图片，仅点击）
     
-    case fillWordAccordingToChinese_Connection  // 看中文填空（点击or连线）
-    case fillWordGroup                          // 词组填空（词组）
+    case fillWordAccordingToChinese_Connection = 53  // 看中文填空（点击or连线）
+    case fillWordGroup = 54                          // 词组填空（词组）
 
     //MARK: ---- 新学流程
-    case newLearnPrimarySchool                  // 小学新学
-    case newLearnJuniorHighSchool               // 初中新学
+    case newLearnPrimarySchool = 60                  // 小学新学
+    case newLearnPrimarySchool_Group = 61            // 小学新学(词组)
+    case newLearnJuniorHighSchool = 62               // 初中新学
     
+    case none = 0
 }
 
 

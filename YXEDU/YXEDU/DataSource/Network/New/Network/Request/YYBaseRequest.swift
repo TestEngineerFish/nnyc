@@ -8,8 +8,7 @@
 
 import Foundation
 
-let kClientSecret: String = "VQ-(,eTRZ(?8" + "\\" + "wyPZC,7"
-//let kClientSecret: String = "rew@#44$%fds"
+let kSault = "NvYP1OeQZqzJdxt8"
 
 public enum YYHTTPMethod: String {
     case options = "OPTIONS"
@@ -35,19 +34,10 @@ protocol YYBaseRequest {
 extension YYBaseRequest {
 
     public var header: [String : String] {
-        let _header = ["Content-Type" : "application/json",
-                       "Connection" : "keep-alive",
-//                       "YY-OS-VERSION" : UIDevice.OSVersion,
-//                       "YY-APP-VERSION" : Bundle.appVersion,
-//                       "YY-CHANNEL-ID" : "AppStore",
-//                       "YY-CLIENT-ID" : "100",
-//                       "YY-BUNDLE-ID" : Bundle.bundleIdentifier,
-//                       "YY-UDID" : UIDevice.openUDID,
-//                       "YY-MODEL" : UIDevice.deviceName,
-//                       "YY-GPS-LNG" : YYLocationManager.default.longitude,
-//                       "YY-GPS-LAT" : YYLocationManager.default.latitude,
-//                       "YY-GPS-ALT" : YYLocationManager.default.altitude,
-                       "YY-TIMESTAMP" : "\(Int(Date().timeIntervalSince1970))"]
+        let _header = ["NNYC-TOKEN" : YXConfigure.shared()!.token!,
+                       "NNYC-REQUESTTIME" : YXConfigure.shared()!.time!,
+                       "NNYC-PLATFORM" : kPlatformValue,
+                       "NNYC-VERSION" : UIDevice().appVersion()!.replacingOccurrences(of: ".", with: "")]
         
         return _header
     }
@@ -77,39 +67,39 @@ extension YYBaseRequest {
         var _header: [String : String] = self.header
         if headers != nil { _header = headers!}
         
-        let token: String? = UserDefaults.standard["user_token"] as? String
-        if token?.isEmpty ?? false {
-            _header["PYYX-SESSID"] = token
-        }
-        
-        if let sessID = UserDefaults.standard.unarchivedObject(forkey: "YY-SESSID") as? String {
-            _header["YY-SESSID"] = sessID
-        }
-        
-        
-        var sign: String = ""
+        var kv: [String] = []
         let sortKeys: [String] = parameters?.keys.sorted() ?? []
         for key in sortKeys {
-            if key == "file" || key == "file_info" { continue }
-            var value: String = ""
-            if parameters?[key] is Int {
-                value = String(parameters?[key] as! Int)
-            }else if parameters?[key] is String {
-                value = (parameters?[key] as? String ?? "")
+            if let value = parameters?[key] {
+                kv.append("\(key)=\(value)")
             }
-            sign += (key + "=" + value + "&")
         }
         
-        sign += _header["YY-TIMESTAMP"] ?? ""
-        
-        if sign.last == "&" {
-           sign += kClientSecret
-        }else{
-            sign += "&" + kClientSecret
+        var sign = ""
+        if kv.count > 0 {
+            let array = kv as NSArray
+            sign.append(array.componentsJoined(by: "&"))
+        }
+                
+        if let time = _header["NNYC-REQUESTTIME"], time.count > 0 {
+            sign.append("#\(time)#")
+        } else {
+            sign.append("#0#")
         }
         
-        _header["YY-SIGN"] = sign.sha1()
+        sign.append("\(kSault)@")
         
+        if let token = _header["NNYC-TOKEN"], token.count > 0 {
+            sign.append("#\(token)#")
+        }
+                
+        if let data = sign.data(using: .utf8) as NSData? {
+            _header["NNYC-SIGN"] = data.md5String()
+        }
+
         return _header
     }
+    
 }
+
+
