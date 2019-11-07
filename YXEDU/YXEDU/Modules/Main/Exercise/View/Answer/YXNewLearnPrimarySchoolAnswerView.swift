@@ -9,12 +9,23 @@
 import UIKit
 import Lottie
 
-class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate {
+class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizerDelegate {
 
     var resultView: YXLearnResultAnimationSubview?
     var titleLabel: UILabel?
     var readView: AnimationView?
     let showRead   = "ShowReadAnimation"
+    var enginer: USCRecognizer?
+
+    override init(exerciseModel: YXWordExerciseModel) {
+        super.init(exerciseModel: exerciseModel)
+        self.enginer = USCRecognizer.sharedManager()
+        self.enginer?.delegate = self
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     //MARK: TOOL
     /// 显示跟读动画
@@ -54,7 +65,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate {
         titleLabel?.layer.add(scaleAnimation, forKey: nil)
         self.readView?.play()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
-            self.titleLabel?.text = "打分中……"
+            self.enginer?.stop()
         }
     }
 
@@ -73,13 +84,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate {
         scaleAnimation.delegate = self
         self.readView?.layer.add(scaleAnimation, forKey: nil)
         titleLabel?.layer.add(scaleAnimation, forKey: nil)
-        // 移除视图
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.titleLabel?.removeFromSuperview()
-            self.readView?.removeFromSuperview()
-            self.titleLabel = nil
-            self.readView   = nil
-        }
     }
 
     /// 显示结果动画
@@ -106,20 +110,82 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate {
     }
 
     override func endPlayAudio() {
-        super.endPlayAudio()
+        self.enginer?.oralText = "Hello word"
+        self.enginer?.start()
+    }
+
+    // MARK: USCRecognizerDelegate
+    func oralEngineDidInit(_ error: Error!) {
+        print("初始化结束,错误内容: " + String(describing: error))
+    }
+
+    func onBeginOral() {
+        // 显示录音动画
         self.showReadAnaimtion()
     }
 
-    // MARK: CAAnimationDelegate
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if let showRead = anim.value(forKey: showRead) as? Bool {
-            if showRead {
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
-                    self.hideReadAnimation()
-                }
-            } else {
-                self.showResultAnimation(Int(arc4random()%3 + 1))
+    func onStopOral() {
+        self.titleLabel?.text = "打分中……"
+    }
+
+    func onResult(_ result: String!, isLast: Bool) {
+        print("录音结果: " + result)
+        if isLast {
+            let resultDict = result.convertToDictionary()
+            guard let score = resultDict["score"] as? Double else {
+                return
             }
-        } 
+            let starNum: Int = {
+                if score > 80 {
+                    return 3
+                } else if score > 60 {
+                    return 2
+                } else {
+                    return 1
+                }
+            }()
+            self.hideReadAnimation()
+            // 移除视图
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                self.titleLabel?.removeFromSuperview()
+                self.readView?.removeFromSuperview()
+                self.titleLabel = nil
+                self.readView   = nil
+                // 显示结果动画
+                self.showResultAnimation(starNum)
+            }
+        }
+    }
+
+    func onEndOral(_ error: Error!) {
+        print("录音完成,错误: " + String(describing: error))
+    }
+
+    func onVADTimeout() {
+        print("VAD超时啦")
+    }
+
+    func onUpdateVolume(_ volume: Int32) {
+        print("onUpdateVolume: \(volume)")
+    }
+
+    func onRecordingBuffer(_ recordingData: Data!) {
+        print("录音数据: " + String(describing: recordingData))
+    }
+
+    func onRecordingOpusBuffer(_ opusData: Data!) {
+        print("音频编码数据: " + String(describing: opusData))
+    }
+
+    func audioFileDidRecord(_ url: String!) {
+        print("audio file url" + url)
+    }
+
+    func onAsyncResult(_ url: String!) {
+        print("result url: " + url)
+    }
+
+    func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
+        print("lifecycle: \(lifecycle)")
     }
 }

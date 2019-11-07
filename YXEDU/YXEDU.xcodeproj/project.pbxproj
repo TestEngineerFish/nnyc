@@ -34,6 +34,7 @@
 		224529072327A85100510507 /* YYDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529062327A85100510507 /* YYDataSourceManager.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
 		2245290C2327AE0D00510507 /* YXFMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245290B2327AE0D00510507 /* YXFMDBManager.swift */; };
+		22659061237432D5006C9925 /* libusc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2265905F237432D5006C9925 /* libusc.a */; };
 		2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */; };
 		2279F255236D32D00080A0B2 /* YXQuestionAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F254236D32D00080A0B2 /* YXQuestionAudioView.swift */; };
 		2279F257236D544F0080A0B2 /* YXWordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F256236D544F0080A0B2 /* YXWordButton.swift */; };
@@ -692,6 +693,8 @@
 		224529062327A85100510507 /* YYDataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDataSourceManager.swift; sourceTree = "<group>"; };
 		224529082327A86A00510507 /* YYDatabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabaseConfig.swift; sourceTree = "<group>"; };
 		2245290B2327AE0D00510507 /* YXFMDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFMDBManager.swift; sourceTree = "<group>"; };
+		2265905F237432D5006C9925 /* libusc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libusc.a; sourceTree = "<group>"; };
+		22659060237432D5006C9925 /* USCRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCRecognizer.h; sourceTree = "<group>"; };
 		2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXListenAndLackWordQuestionView.swift; sourceTree = "<group>"; };
 		2279F254236D32D00080A0B2 /* YXQuestionAudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXQuestionAudioView.swift; sourceTree = "<group>"; };
 		2279F256236D544F0080A0B2 /* YXWordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordButton.swift; sourceTree = "<group>"; };
@@ -1829,6 +1832,7 @@
 				D62C1E2520897EBC002BB11A /* SystemConfiguration.framework in Frameworks */,
 				D672C2572064D24D00696828 /* CoreTelephony.framework in Frameworks */,
 				D665A0AE2091A3EA00FBC9D2 /* CoreFoundation.framework in Frameworks */,
+				22659061237432D5006C9925 /* libusc.a in Frameworks */,
 				775DA334236861A0004D58D3 /* TencentOpenAPI.framework in Frameworks */,
 				D665A0AC2091A3DB00FBC9D2 /* CFNetwork.framework in Frameworks */,
 				D62C1E2720897EC7002BB11A /* CoreLocation.framework in Frameworks */,
@@ -1915,6 +1919,15 @@
 				2245290B2327AE0D00510507 /* YXFMDBManager.swift */,
 			);
 			path = Dao;
+			sourceTree = "<group>";
+		};
+		2265905E23743282006C9925 /* Unisound */ = {
+			isa = PBXGroup;
+			children = (
+				2265905F237432D5006C9925 /* libusc.a */,
+				22659060237432D5006C9925 /* USCRecognizer.h */,
+			);
+			path = Unisound;
 			sourceTree = "<group>";
 		};
 		2279F258236D57C40080A0B2 /* Subviews */ = {
@@ -2695,6 +2708,7 @@
 		EE5E017A232756BE00655654 /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				2265905E23743282006C9925 /* Unisound */,
 				77322CC823687AC400EAC8B6 /* WechtSDK1.8.2_NoPay */,
 				22ED54992366D80400011B82 /* YXModel */,
 				EE5E017B232756BE00655654 /* MDMulticastDelegate */,
@@ -6192,6 +6206,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.2_NoPay",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/Unisound",
 				);
 				MARKETING_VERSION = 2.4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
@@ -6232,6 +6247,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.2_NoPay",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/Unisound",
 				);
 				MARKETING_VERSION = 2.4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
