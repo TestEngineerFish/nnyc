@@ -12,6 +12,7 @@ import CocoaLumberjack
 enum YYDataSourceType: String {
     /** App内通用数据库 */
     case normal = "YX.sqlite"
+    case word = "YX_Word.sqlite"
 }
 
 
@@ -42,6 +43,8 @@ class YYDataSourceManager: NSObject {
         switch type {
         case .normal:
             return try! normalRunner()
+        case .word:
+            return try! wordRunner()
         }
     }
 
@@ -75,6 +78,11 @@ extension YYDataSourceManager {
     private func normalRunner() throws -> FMDatabaseQueue {
         let filePath: String = self.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
         return try createRunner(type: .normal, filePath: filePath, sqls: YYSQLManager.CreateNormalTables)
+    }
+    
+    private func wordRunner() throws -> FMDatabaseQueue {
+        let filePath: String = self.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
+        return try createRunner(type: .normal, filePath: filePath, sqls: YYSQLManager.CreateWordTables)
     }
 
     /**

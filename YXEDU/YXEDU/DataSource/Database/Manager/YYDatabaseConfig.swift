@@ -16,6 +16,11 @@ struct YYSQLManager {
                                                CreateNormalTableSQLs.CreateStudyRecordTable.rawValue,
                                                CreateNormalTableSQLs.CreateWordsDetailTable.rawValue,
                                                CreateNormalTableSQLs.CreateBookMaterialTable.rawValue]
+    
+    // 创建词书数据表
+    static let CreateWordTables: [String] = [CreateWordTableSQLs.bookTable.rawValue,
+                                             CreateWordTableSQLs.wordTable.rawValue]
+                                               
 }
 
 extension YYSQLManager {
@@ -68,6 +73,51 @@ extension YYSQLManager {
         )
         """
     }
+    
+    
+    enum  CreateWordTableSQLs: String {
+        case bookTable =
+        """
+            CREATE TABLE IF NOT EXISTS book (
+                book_id integer PRIMARY KEY NOT NULL,
+                book_name text NOT NULL,
+                grade_id integer NOT NULL,
+                grade_name varchar(128) NOT NULL,
+                grade_type integer NOT NULL,
+                cover text NOT NULL,
+                hash char(64) NOT NULL,
+                word_num integer,
+                unit_num integer
+            );
+        """
+        case wordTable =
+        """
+            CREATE TABLE IF NOT EXISTS word (
+                word_id integer PRIMARY KEY NOT NULL,
+                unit_id integer NOT NULL,
+                unit_name varchar(128) NOT NULL,
+                book_id integer NOT NULL,
+                grade_id integer NOT NULL,
+                is_ext_unit integer NOT NULL,
+                word char(64) NOT NULL,
+                image varchar(512) NOT NULL,
+                property char(128) NOT NULL,
+                paraphrase varchar(512) NOT NULL,
+                us char(128),
+                us_voice varchar(128),
+                uk char(128),
+                uk_voice varchar(128),
+                example text,
+                synonym varchar(256),
+                antonym varchar(256),
+                usage text
+            );
+        """
+    }
+    
+    
+    
+    
 
     // MARK: Update & Select
 

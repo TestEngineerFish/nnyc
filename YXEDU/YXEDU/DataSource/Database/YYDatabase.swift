@@ -13,11 +13,13 @@ import FMDB
  * 数据源协议，定义多个不同的数据库执行器
  */
 protocol YYDataSource {
-    /**
-     * 普通数据库执行器
-     */
+    
+    /// 普通数据库执行器
     var normalRunner: FMDatabaseQueue { get }
-
+        
+    /// 词书数据可执行器
+    var wordRunner: FMDatabaseQueue { get }
+    
 }
 
 
@@ -28,6 +30,10 @@ protocol YYDataSource {
 extension YYDataSource {
     var normalRunner: FMDatabaseQueue {
         return YYDataSourceManager.default.createRunner(type: .normal)
+    }
+    
+    var wordRunner: FMDatabaseQueue {
+        return YYDataSourceManager.default.createRunner(type: .word)
     }
 }
 

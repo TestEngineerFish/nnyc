@@ -24,6 +24,10 @@ struct YXWordModel: Mappable {
     var antonym: String?            // 反义词
     var usage: [String]?
     
+    // ext
+    var gradeId: Int = -1
+    var unitName: String?
+    
     init?(map: Map) {
     }
     
@@ -41,6 +45,10 @@ struct YXWordModel: Mappable {
         synonym <- map["synonym"]
         antonym <- map["antonym"]
         usage <- map["usage"]
+        
+        
+        gradeId <- map["grade_id"]
+        unitName <- map["unit_name"]
     }
 }
 

@@ -32,6 +32,7 @@ public struct YYStructResponse<T: Mappable> : YYBaseResopnse {
     private var status: Int = 0
     private var message: String?
     private var warning: String?
+    private var time: Int?
     
     public var data:T?
     
@@ -42,8 +43,8 @@ public struct YYStructResponse<T: Mappable> : YYBaseResopnse {
     
     public mutating func mapping(map: Map) {
         status <- map["code"]
-        message <- map["message"]
-        warning <- map["warning"]
+        message <- map["msg"]
+        time <- map["time"]
         data <- map["data"]
     }
 }
@@ -56,6 +57,7 @@ public struct YYStructDataArrayResponse<T: Mappable> : YYBaseResopnse {
     private var status: Int = 0
     private var message: String?
     private var warning: String?
+    private var time: Int?
     
     public var dataArray:[T]?
     /** 时间戳 */
@@ -65,8 +67,8 @@ public struct YYStructDataArrayResponse<T: Mappable> : YYBaseResopnse {
     
     public mutating func mapping(map: Map) {
         status <- map["code"]
-        message <- map["message"]
-        warning <- map["warning"]
+        message <- map["msg"]
+        time <- map["time"]
         dataArray <- map["data"]
     }
     
