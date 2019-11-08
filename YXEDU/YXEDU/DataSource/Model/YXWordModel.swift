@@ -17,7 +17,15 @@ struct YXWordModel: Mappable {
     var word: String?
     var property: String?           // 词性，例如 adj.
     var paraphrase: String?         // 词义
-    var pronunciations: [YXWordPronunciationModel]?          // 发音
+    
+    // 音标
+    var symbolUK: String?
+    var symbolUS: String?
+        
+    // 发音
+    var voiceUK: String?
+    var voiceUS: String?
+    
     var examples: [YXWordExampleModel]?                      // 例句
     var imageUrl: String?
     var synonym: String?            // 同义词
@@ -39,7 +47,10 @@ struct YXWordModel: Mappable {
         word <- map["word"]
         property <- map["property"]
         paraphrase <- map["paraphrase"]
-        pronunciations <- map["pronunciation"]
+        symbolUK <- map["symbol_uk"]
+        voiceUS <- map["symbol_us"]
+        voiceUK <- map["voice_uk"]
+        voiceUS <- map["symbol_us"]
         examples <- map["example"]
         imageUrl <- map["image"]
         synonym <- map["synonym"]
@@ -50,26 +61,6 @@ struct YXWordModel: Mappable {
         gradeId <- map["grade_id"]
         unitName <- map["unit_name"]
     }
-}
-
-
-
-/// 发音数据模型
-struct YXWordPronunciationModel: Mappable {
-    
-    var type: String?
-    var symbol: String?
-    var voiceUrl: String?
-    
-    init?(map: Map) {
-    }
-    
-    mutating func mapping(map: Map) {
-        type <- map["type"]
-        symbol <- map["symbol"]
-        voiceUrl <- map["voice"]
-    }
-    
 }
 
 
@@ -91,3 +82,29 @@ struct YXWordExampleModel: Mappable {
     
 }
 
+
+
+
+
+
+
+
+
+//
+///// 发音数据模型
+//struct YXWordPronunciationModel: Mappable {
+//
+//    var type: String?
+//    var symbol: String?
+//    var voiceUrl: String?
+//
+//    init?(map: Map) {
+//    }
+//
+//    mutating func mapping(map: Map) {
+////        type <- map["type"]
+//        symbol <- map["symbol"]
+//        voiceUrl <- map["voice"]
+//    }
+//
+//}
