@@ -47,6 +47,7 @@
 #import "YXPersonalMyBadgesVC.h"
 #import "YXBaseWebViewController.h"
 #import "YXLearnReportModel.h"
+#import "YXBookMaterialManager.h"
 
 #import "ZipArchive.h"
 #import "YXCacheKey.h"

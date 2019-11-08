@@ -244,7 +244,7 @@
                                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AZn-be-OuY">
                                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="95"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="eZg-wp-HEa">
+                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="eZg-wp-HEa">
                                                                     <size key="itemSize" width="98" height="86"/>
                                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -337,7 +337,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="144" id="8rc-ny-2CG"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="12" minimumInteritemSpacing="12" id="IUX-7z-DGG">
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="12" minimumInteritemSpacing="12" id="IUX-7z-DGG">
                                                     <size key="itemSize" width="50" height="50"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -570,13 +570,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uLc-Pb-8Fk">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uLc-Pb-8Fk">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="124"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="124" id="Exs-lg-Ch2"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="12" minimumInteritemSpacing="12" id="XnE-of-vLg">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="12" minimumInteritemSpacing="12" id="XnE-of-vLg">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -766,6 +766,7 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="gradientColor2">
                                         <color key="value" red="0.98431372549019602" green="0.51764705882352935" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="canBeDisabled" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="startStudy:" destination="Ya4-tm-uHn" eventType="touchUpInside" id="kCW-1n-Yqb"/>
@@ -799,6 +800,8 @@
                         <outlet property="bookNameLabel" destination="HDr-t4-dya" id="xRE-b5-ZwE"/>
                         <outlet property="countOfDaysForStudyLabel" destination="cGX-xW-xgL" id="XHB-mS-GXd"/>
                         <outlet property="countOfWordsForStudyLabel" destination="LBE-z2-CqE" id="pBU-dp-bmA"/>
+                        <outlet property="deleteWordBookButton" destination="XDG-i9-7E1" id="brM-Cv-o9p"/>
+                        <outlet property="startStudyButton" destination="QWh-Bm-blK" id="Axu-R5-I3T"/>
                         <outlet property="unitLabel" destination="P9i-EW-1nQ" id="ku2-yo-HCe"/>
                         <segue destination="KRx-zx-laN" kind="show" identifier="AddBook" id="kVR-sK-4gc"/>
                     </connections>
@@ -844,6 +847,6 @@
         <image name="unitIndicator" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iXC-Hp-gIV"/>
+        <segue reference="kVR-sK-4gc"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -13,7 +13,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var learnedWordsCount = "--"
     private var collectedWordsCount = "--"
     private var wrongWordsCount = "--"
-
+    private var isCheckingLoginState = true
+    
     @IBOutlet weak var bookNameButton: UIButton!
     @IBOutlet weak var unitNameButton: UIButton!
     @IBOutlet weak var countOfWaitForStudyWords: YXDesignableLabel!
@@ -45,6 +46,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = false
+        
+        if isCheckingLoginState == false {
+            loadData()
+        }
     }
     
 //    override func viewWillDisappear(_ animated: Bool) {
@@ -79,60 +84,44 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     private func checkLoginState() {
         YXComHttpService.shared().requestConfig({ (response, isSuccess) in
-            if isSuccess, let response = response?.responseObject {
-                let config = response as! YXConfigModel
-
-                guard config.baseConfig.learning else {
-                    self.performSegue(withIdentifier: "AddWordsBook", sender: self)
-                    return
-                }
-                
-                self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-                self.loadData()
-                
-            } else if let error = response?.error {
-                print(error.desc)
+            guard isSuccess, let response = response?.responseObject else { return }
+            
+            let config = response as! YXConfigModel
+            self.isCheckingLoginState = false
+            
+            guard config.baseConfig.learning else {
+                self.performSegue(withIdentifier: "AddWordsBook", sender: self)
+                return
             }
+            
+            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+            self.loadData()
         })
     }
     
     private func loadData() {
-//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/learning/indexinfo", modelClass: YXHomeModel.self, parameters: [:]) { (response, isSuccess) in
-//            if isSuccess, let response = response?.responseObject {
-//                guard let homeModel = response as? YXHomeModel, let bookID = homeModel.bookID, let bookName = homeModel.bookName, let unitName = homeModel.unitName, let remainWords = homeModel.remainWords, let unitProgress = homeModel.unitProgress, let learnedWords = homeModel.learnedWords, let collectedWords = homeModel.collectedWords, let wrongWords = homeModel.wrongWords else { return }
-//                YXConfigure.shared().currLearningBookId = "\(bookID)"
-//
-//                self.bookNameButton.setTitle(bookName, for: .normal)
-//                self.unitNameButton.setTitle(unitName, for: .normal)
-//                self.countOfWaitForStudyWords.text = "\(remainWords)"
-//                self.progressBar.progress = Float(unitProgress)
-//
-//                self.learnedWordsCount = "\(learnedWords)"
-//                self.collectedWordsCount = "\(collectedWords)"
-//                self.wrongWordsCount = "\(wrongWords)"
-//                self.studyDataCollectionView.reloadData()
-//
-//            } else if let error = response?.error {
-//                print(error.desc)
-//            }
-//        }
-        
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/learning/indexinfo", modelClass: YXMainModel.self, parameters: [:]) { (response, isSuccess) in
-            if isSuccess, let response = response?.responseObject {
-                let mainModel = response as! YXMainModel
-                YXConfigure.shared().currLearningBookId = mainModel.noteIndex.bookId
-                
-                self.bookNameButton.setTitle(mainModel.noteIndex.bookName, for: .normal)
-                self.unitNameButton.setTitle("Unit 1", for: .normal)
-                self.countOfWaitForStudyWords.text = mainModel.noteIndex.planRemain
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/learning/indexinfo", parameters: [:]) { (response, isSuccess) in
+            guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
+            
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(YXHomeModel.self, from: jsonData)
 
-                self.learnedWordsCount = mainModel.noteRecord.learned
-                self.collectedWordsCount = mainModel.noteRecord.fav
-                self.wrongWordsCount = mainModel.noteRecord.wrong
+                YXConfigure.shared().currLearningBookId = "\(result.bookID ?? 0)"
+                
+                self.bookNameButton.setTitle(result.bookName, for: .normal)
+                self.unitNameButton.setTitle(result.unitName, for: .normal)
+                self.countOfWaitForStudyWords.text = "\(result.remainWords ?? 0)"
+                self.progressBar.setProgress(Float(result.unitProgress ?? 0), animated: true)
+                
+                self.learnedWordsCount = "\(result.learnedWords ?? 0)"
+                self.collectedWordsCount = "\(result.collectedWords ?? 0)"
+                self.wrongWordsCount = "\(result.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
                 
-            } else {
-                
+            } catch {
+                print(error)
             }
         }
     }

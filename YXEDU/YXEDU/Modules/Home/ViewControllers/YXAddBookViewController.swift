@@ -44,8 +44,8 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func loadData() {
-//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/booklist", parameters: [:]) { (response, isSuccess) in
-        YXDataProcessCenter.get("http://lihongwei.api.xstudyedu.com/api/v1/book/booklist?debug_uid=2", parameters: [:]) { (response, isSuccess) in
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/booklist", parameters: [:]) { (response, isSuccess) in
+//        YXDataProcessCenter.get("http://lihongwei.api.xstudyedu.com/api/v1/book/booklist?debug_uid=2", parameters: [:]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
             do {

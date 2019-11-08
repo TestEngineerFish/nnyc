@@ -8,6 +8,9 @@
 
 import UIKit
 
+
+
+// MARK: - 新增词书
 struct YXGradeListModel: Codable {
     var gradeList: [YXGradeModel]?
     
@@ -60,5 +63,44 @@ struct YXWordBookUnitModel: Codable {
     enum CodingKeys: String, CodingKey {
         case unitID = "unit_id"
         case unitName = "unit_name"
+    }
+}
+
+
+
+// MARK: - 选择词书
+struct YXAllWordBookModel: Codable {
+    var currentLearnWordBook: YXSelectWordBookModel?
+    var learnedWordBooks: [YXSelectWordBookModel]?
+
+    enum CodingKeys: String, CodingKey {
+        case currentLearnWordBook = "learning"
+        case learnedWordBooks = "learned"
+    }
+}
+
+struct YXSelectWordBookModel: Codable {
+    var isSelected = false
+    var isNewWordBook = false
+    var isCurrentStudy = false
+
+    var bookID: Int?
+    var bookName: String?
+    var bookSource: String?
+    var countOfTotalWords: Int?
+    var countOfLearnedWords: Int?
+    var countOfLearnedDays: Int?
+    var unitID: Int?
+    var unitName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case bookID = "bookId"
+        case bookName = "bookName"
+        case bookSource = "resUrl"
+        case countOfTotalWords = "wordCount"
+        case countOfLearnedWords = "learnCount"
+        case countOfLearnedDays = "countOfLearnedDays"
+        case unitID = "unit"
+        case unitName = "unitName"
     }
 }
