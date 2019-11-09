@@ -124,10 +124,12 @@ class YXExerciseViewController: UIViewController {
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        dataManager.fetchTodayExerciseModels { [weak self] (result, msg) in
+        dataManager.fetchTodayExerciseResultModels { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
-                self.switchExerciseView()
+                DispatchQueue.main.async {
+                    self.switchExerciseView()
+                }                
             } else {//
                 YXUtils.showHUD(self.view, title: "加载数据失败")
             }

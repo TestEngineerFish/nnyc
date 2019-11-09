@@ -29,3 +29,15 @@ class YYNetworkError: NSObject {
     }
 }
 
+extension NSError {
+    
+    /**
+     * 错误内容
+     */
+    var message: String {
+        if let msg = self.userInfo[NSLocalizedDescriptionKey] as? String {
+            return msg
+        }
+        return self.domain
+    }
+}

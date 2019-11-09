@@ -41,48 +41,12 @@ import ObjectMapper
 
 
 
-/// 当天学习数据总j模型
-struct YXExerciseResultModel: Mappable {
-
-    var bookId: Int?
-    var newWords: [Int]?
-    var reviewWords: [YXReviewWordModel]?
-    
-    init?(map: Map) {
-    }
-    
-    mutating func mapping(map: Map) {
-        bookId <- map["book_id"]
-        newWords <- map["new_word_list"]
-        reviewWords <- map["review_word_list"]
-    }
-}
-
-
-/// 复习单词数据模型
-struct YXReviewWordModel: Mappable {
-    var wordId: Int?
-    /// 是否新单词
-    var isNewWord: Bool?
-    /// 练习模型
-    var exercises: [YXWordExerciseModel]?
-    
-    init?(map: Map) {
-    }
-    
-    mutating func mapping(map: Map) {
-        wordId <- map["word_id"]
-        isNewWord <- map["is_new_word"]
-        exercises <- map["exercise_list"]
-    }
-}
-
 
 /// 练习数据模型
 struct YXWordExerciseModel: Mappable {
     
     var type: YXExerciseType = .none
-    var word: YXWordModel?
+//    var word: YXWordModel?
     /// 问题
     var question: YXWordModel?
     /// 选项
@@ -105,20 +69,3 @@ struct YXWordExerciseModel: Mappable {
     }
     
 }
-
-
-/// 练习选项数据模型
-struct YXExerciseOptionModel: Mappable {
-    
-    var optionId: Int = -1
-    var content: String?
-        
-    init?(map: Map) {
-    }
-    
-    mutating func mapping(map: Map) {
-        optionId <- map["option_id"]
-        content <- map["content"]
-    }
-}
-

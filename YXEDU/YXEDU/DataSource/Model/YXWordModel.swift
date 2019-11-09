@@ -19,8 +19,8 @@ struct YXWordModel: Mappable {
     var paraphrase: String?         // 词义
     
     // 音标
-    var symbolUK: String?
-    var symbolUS: String?
+    var soundmarkUK: String?
+    var soundmarkUS: String?
         
     // 发音
     var voiceUK: String?
@@ -36,6 +36,9 @@ struct YXWordModel: Mappable {
     var gradeId: Int = -1
     var unitName: String?
     
+    init() {
+        
+    }
     init?(map: Map) {
     }
     
@@ -47,10 +50,10 @@ struct YXWordModel: Mappable {
         word <- map["word"]
         property <- map["property"]
         paraphrase <- map["paraphrase"]
-        symbolUK <- map["symbol_uk"]
-        voiceUS <- map["symbol_us"]
+        soundmarkUK <- map["soundmark_uk"]
+        soundmarkUS <- map["soundmark_us"]
         voiceUK <- map["voice_uk"]
-        voiceUS <- map["symbol_us"]
+        voiceUS <- map["voice_us"]
         examples <- map["example"]
         imageUrl <- map["image"]
         synonym <- map["synonym"]

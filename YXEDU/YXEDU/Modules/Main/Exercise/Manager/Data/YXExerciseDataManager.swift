@@ -17,13 +17,15 @@ class YXExerciseDataManager: NSObject {
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
-    func fetchTodayExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        // --- 测试数据 ----
+    func fetchTodayExerciseResultModels(completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
         
-        // ---- ^^^^^ ----
-        exerciseModelArray = [
-        ]
-        completion?(true, nil)
+        let request = YXExerciseRequest.exercise
+        YYNetworkService.default.httpRequestTask(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
+            self.processExerciseData(result: response.data)
+            completion(true, nil)
+        }) { (error) in
+            completion(false, error.message)
+        }
     }
     
     
@@ -121,4 +123,18 @@ class YXExerciseDataManager: NSObject {
     
     
     
+    //MARK: - private
+    private func processExerciseData(result: YXExerciseResultModel?) {
+        
+        
+        
+        
+        
+        
+        
+    }
 }
+
+
+
+

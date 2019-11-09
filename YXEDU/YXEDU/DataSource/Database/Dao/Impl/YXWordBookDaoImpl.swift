@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ObjectMapper
 
 class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
@@ -32,7 +33,13 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     
     
     func selectWord(wordId: Int) -> YXWordModel? {
-        return nil
+        let json = ""                
+        var word = YXWordModel()
+        if let examples = Mapper<YXWordExampleModel>().map(JSONString: json) {
+            word.examples = [examples]
+        }
+        
+        return word
     }
     
 
