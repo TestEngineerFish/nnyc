@@ -29,9 +29,9 @@ struct YXExerciseResultModel: Mappable {
 
 /// 复习单词数据模型
 struct YXReviewWordModel: Mappable {
-    var wordId: Int?
+    var wordId: Int = -1
     /// 是否新单词
-    var isNewWord: Bool?
+    var isNewWord: Bool = false
     /// 步骤模型
     var steps: [[YXWordStepModel]]?
     init?(map: Map) {
@@ -56,7 +56,7 @@ struct YXWordStepModel: Mappable {
         /// 问题
     var question: YXWordModel?
     /// 选项
-    var options: [YXExerciseOptionModel]?
+    var option: YXExerciseOptionModel?
     /// 答案
     var answers: [Int]?
     
@@ -67,7 +67,7 @@ struct YXWordStepModel: Mappable {
         stepNum <- map["step_num"]
         type <- map["type"]
         question <- map["question"]
-        options <- map["option_list"]
+        option <- map["option"]
         answers <- map["answer_list"]
         score <- map["score"]
     }
@@ -78,6 +78,22 @@ struct YXWordStepModel: Mappable {
 /// 练习选项数据模型
 struct YXExerciseOptionModel: Mappable {
     
+    var firstItems: [YXOptionItemModel]?
+    var secondItems: [YXOptionItemModel]?
+        
+    init?(map: Map) {
+    }
+    
+    mutating func mapping(map: Map) {
+        firstItems <- map["first"]
+        secondItems <- map["second"]
+    }
+}
+
+
+
+
+struct YXOptionItemModel: Mappable {
     var optionId: Int = -1
     var content: String?
         

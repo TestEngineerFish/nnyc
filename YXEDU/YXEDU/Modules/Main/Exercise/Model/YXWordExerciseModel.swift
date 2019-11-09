@@ -46,24 +46,28 @@ import ObjectMapper
 struct YXWordExerciseModel: Mappable {
     
     var type: YXExerciseType = .none
-//    var word: YXWordModel?
+
     /// 问题
     var question: YXWordModel?
     /// 选项
-    var options: [YXExerciseOptionModel]?
+    var option: YXExerciseOptionModel?
     /// 答案
     var answers: [Int]?
         
     /// 得分
     var score: Int?
+    
+    var isNewWord: Bool = true
 
+    init() {}
+    
     init?(map: Map) {
     }
         
     mutating func mapping(map: Map) {
         type <- map["type"]
         question <- map["question"]
-        options <- map["option_list"]
+        option <- map["option"]
         answers <- map["answer_list"]
         score <- map["score"]
     }

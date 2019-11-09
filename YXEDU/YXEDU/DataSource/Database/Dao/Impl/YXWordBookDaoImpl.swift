@@ -33,12 +33,19 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     
     
     func selectWord(wordId: Int) -> YXWordModel? {
-        let json = ""                
+        let json = """
+            [{
+                "en": "You have such a good chance.",
+                "cn": "你有这么一个好的机会。",
+                "voice": "/speech/a00c5c2830ffc50a68f820164827f356.mp3"
+            }]
+        """
         var word = YXWordModel()
-        if let examples = Mapper<YXWordExampleModel>().map(JSONString: json) {
-            word.examples = [examples]
+        if let examples = Array<YXWordExampleModel>(JSONString: json){
+            word.examples = examples
         }
-        
+        word.wordId = wordId
+        word.gardeType = 2
         return word
     }
     

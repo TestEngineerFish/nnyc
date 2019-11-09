@@ -35,11 +35,12 @@ struct YXWordModel: Mappable {
     // ext
     var gradeId: Int = -1
     var unitName: String?
-    
+    var gardeType: Int = 1   //年级类型
     init() {
         
     }
     init?(map: Map) {
+        self.mapping(map: map)
     }
     
     mutating func mapping(map: Map) {
@@ -54,7 +55,7 @@ struct YXWordModel: Mappable {
         soundmarkUS <- map["soundmark_us"]
         voiceUK <- map["voice_uk"]
         voiceUS <- map["voice_us"]
-        examples <- map["example"]
+        examples <- map["example_list"]
         imageUrl <- map["image"]
         synonym <- map["synonym"]
         antonym <- map["antonym"]
@@ -75,6 +76,7 @@ struct YXWordExampleModel: Mappable {
     var voiceUrl: String?
     
     init?(map: Map) {
+        self.mapping(map: map)
     }
     
     mutating func mapping(map: Map) {
