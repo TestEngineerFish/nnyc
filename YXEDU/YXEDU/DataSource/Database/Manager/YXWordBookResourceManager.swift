@@ -40,9 +40,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             word?.imageUrl = coreWord.imageURL
             word?.synonym = coreWord.synonyms
             word?.antonym = coreWord.antonyms
-            word?.symbolUS = coreWord.americanPhoneticSymbol
+            word?.soundmarkUS = coreWord.americanPhoneticSymbol
             word?.voiceUS = coreWord.americanPronunciationURL
-            word?.symbolUK = coreWord.englishPhoneticSymbol
+            word?.soundmarkUK = coreWord.englishPhoneticSymbol
             word?.voiceUK = coreWord.englishPronunciationURL
             word?.usage = coreWord.usages
             word?.examples = [YXWordExampleModel](JSONString: coreWord.examplesJsonString ?? "")
@@ -137,9 +137,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                     coreWord.imageURL = word.imageUrl
                     coreWord.synonyms = word.synonym
                     coreWord.antonyms = word.antonym
-                    coreWord.americanPhoneticSymbol = word.symbolUS
+                    coreWord.americanPhoneticSymbol = word.soundmarkUS
                     coreWord.americanPronunciationURL = word.voiceUS
-                    coreWord.englishPhoneticSymbol = word.symbolUK
+                    coreWord.englishPhoneticSymbol = word.soundmarkUK
                     coreWord.englishPronunciationURL = word.voiceUK
                     coreWord.usages = word.usage
                     coreWord.examplesJsonString = word.examples?.toJSONString(prettyPrint: true)
