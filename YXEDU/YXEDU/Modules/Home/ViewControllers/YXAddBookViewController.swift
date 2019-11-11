@@ -150,7 +150,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/setlearning", parameters: ["bookId": "\(bookID)", "unitId": unitId]) { (response, isSuccess) in
                 guard isSuccess else { return }
                 
-                YXWordBookResourceManage.shared.downloadWordBook(with: URL(string: bookSource)!, and: bookID) { (isSucess) in
+                YXWordBookResourceManager.shared.download(wordBook, with: URL(string: bookSource)!) { (isSucess) in
                     guard isSucess else { return }
                     
                     if let finishClosure = self.finishClosure {

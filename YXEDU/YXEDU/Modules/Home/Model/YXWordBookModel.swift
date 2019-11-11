@@ -43,7 +43,7 @@ struct YXWordBookModel: Codable {
     var bookSource: String?
     var coverImagePath: String?
     var countOfWords: Int?
-    var hashCode: Double?
+    var hashString: String?
     var unitList: [YXWordBookUnitModel]?
     
     enum CodingKeys: String, CodingKey {
@@ -51,7 +51,7 @@ struct YXWordBookModel: Codable {
         case bookName = "book_name"
         case bookSource = "book_url"
         case coverImagePath = "cover"
-        case hashCode = "hash"
+        case hashString = "hash"
         case unitList = "unit_list"
     }
 }

@@ -31,9 +31,21 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             
             YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": wordBook.bookID ?? 0]) { (response, isSuccess) in
                 guard isSuccess else { return }
+                                
+                if index == 0 {
+                    self.fetchWordBookDetail(self.wordBookModels[1])
+
+                } else if index == self.wordBookModels.count - 1 {
+                    self.fetchWordBookDetail(self.wordBookModels[index - 1])
+
+                } else {
+                    self.fetchWordBookDetail(self.wordBookModels[index + 1])
+                }
                 
                 self.wordBookModels.remove(at: index)
                 self.bookCollectionView.reloadData()
+                                
+                YXWordBookResourceManager.shared.deleteWordBook(by: wordBook.bookID ?? 0)
             }
             break
         }

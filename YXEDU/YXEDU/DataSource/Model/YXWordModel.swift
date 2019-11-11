@@ -61,7 +61,6 @@ struct YXWordModel: Mappable {
         antonym <- map["antonym"]
         usage <- map["usage"]
         
-        
         gradeId <- map["grade_id"]
         unitName <- map["unit_name"]
     }
@@ -84,32 +83,4 @@ struct YXWordExampleModel: Mappable {
         cn <- map["cn"]
         voiceUrl <- map["voice"]
     }
-    
 }
-
-
-
-
-
-
-
-
-
-//
-///// 发音数据模型
-//struct YXWordPronunciationModel: Mappable {
-//
-//    var type: String?
-//    var symbol: String?
-//    var voiceUrl: String?
-//
-//    init?(map: Map) {
-//    }
-//
-//    mutating func mapping(map: Map) {
-////        type <- map["type"]
-//        symbol <- map["symbol"]
-//        voiceUrl <- map["voice"]
-//    }
-//
-//}
