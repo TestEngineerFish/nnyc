@@ -26,8 +26,8 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         return CGSize(width: Config.itemWidth, height: Config.itemHeight)
     }
     
-    private var imageView: UIImageView {
-        let imageView = UIImageView()
+    private var imageView: YXKVOImageView {
+        let imageView = YXKVOImageView()
         return imageView
     }
     
@@ -63,13 +63,13 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
     }
     
     override func bindData() {
-//        self.collectionView.reloadData()
+        self.collectionView.reloadData()
     }
     
         
     //MARK:- delegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return self.exerciseModel.option?.firstItems?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -87,8 +87,9 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         cell.layer.cornerRadius = 5.5
         
         let iv = self.imageView
-        iv.image = UIImage(named: "personalBGImage")
-        
+        if let url = exerciseModel.option?.firstItems?[indexPath.row].content {
+            iv.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange4))
+        }
         
         cell.contentView.addSubview(iv)
         iv.snp.makeConstraints { (make) in

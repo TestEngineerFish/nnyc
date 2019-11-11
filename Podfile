@@ -62,6 +62,8 @@ target 'YXEDU' do
      
      # 解压
      pod 'Zip'
+     
+     pod 'Kingfisher', '~> 5.9.0'
 
 
 end

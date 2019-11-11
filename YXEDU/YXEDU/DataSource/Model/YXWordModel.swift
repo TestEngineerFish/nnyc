@@ -59,7 +59,7 @@ struct YXWordModel: Mappable {
         imageUrl <- map["image"]
         synonym <- map["synonym"]
         antonym <- map["antonym"]
-        usage <- map["usage"]
+        usage <- map["usage_list"]
         
         gradeId <- map["grade_id"]
         unitName <- map["unit_name"]

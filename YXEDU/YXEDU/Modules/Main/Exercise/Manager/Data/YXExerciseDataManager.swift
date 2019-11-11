@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ObjectMapper
 
 
 /// 练习的数据管理器
@@ -204,9 +205,11 @@ class YXExerciseDataManager: NSObject {
             }],
             "synonym": "great,helpful",
             "antonym": "poor,bad",
-            "usage_list": "[\"adj.+n.  good health 身体健康\",\"v.+adj.  look good 看起来不错\"]"
+            "usage_list": ["adj. + n.good health 身体健康 ", "v. + adj.look good 看起来不错 "]
         }
         """
+        
+        
         var word = YXWordModel(JSONString: json)
         word?.wordId = wordId
 //        word?.word = (word?.word ?? "") + "\(wordId)"

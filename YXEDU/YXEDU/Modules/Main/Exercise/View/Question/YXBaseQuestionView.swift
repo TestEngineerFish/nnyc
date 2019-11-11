@@ -38,10 +38,10 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
-        self.bindData()
         self.backgroundColor = UIColor.white
         self.layer.setDefaultShadow()
         self.createSubviews()
+        self.bindData()
     }
     
     required init?(coder aDecoder: NSCoder) {

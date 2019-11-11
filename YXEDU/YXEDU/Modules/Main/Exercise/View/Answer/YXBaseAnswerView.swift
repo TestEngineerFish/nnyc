@@ -28,9 +28,9 @@ class YXBaseAnswerView: UIView, YXQuestionEventProtocol {
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
-        self.bindData()
         self.backgroundColor = UIColor.white
         self.createSubview()
+        self.bindData()
     }
 
     required init?(coder: NSCoder) {

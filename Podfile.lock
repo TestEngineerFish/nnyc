@@ -41,6 +41,9 @@ PODS:
   - JCore (2.1.4)
   - JPush (3.2.6):
     - JCore (< 3.0.0, >= 2.0.0)
+  - Kingfisher (5.9.0):
+    - Kingfisher/Core (= 5.9.0)
+  - Kingfisher/Core (5.9.0)
   - LEEAlert (1.2.8)
   - lottie-ios (3.1.3)
   - MagicalRecord (2.3.2):
@@ -93,6 +96,7 @@ DEPENDENCIES:
   - HWWeakTimer
   - IQKeyboardManager (~> 6.2.0)
   - JPush
+  - Kingfisher
   - LEEAlert (~> 1.2.8)
   - lottie-ios
   - MagicalRecord
@@ -138,6 +142,7 @@ SPEC REPOS:
     - IQKeyboardManager
     - JCore
     - JPush
+    - Kingfisher
     - LEEAlert
     - lottie-ios
     - MagicalRecord
@@ -182,6 +187,7 @@ SPEC CHECKSUMS:
   IQKeyboardManager: 964638372b4a61892cc74fdfa6fd26de8c9464a2
   JCore: d345c049141877eb61c33011455fdb5fcab1673f
   JPush: 41dd48a69bd8c08abc692dc7f2b23c0fb281471f
+  Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   LEEAlert: 3b8e27b120b9e076274f4083c7cffd6f58257c07
   lottie-ios: 496ac5cea1bbf1a7bd1f1f472f3232eb1b8d744b
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
@@ -208,6 +214,6 @@ SPEC CHECKSUMS:
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 49019269982582886a85ed7ab2adc78a193149bf
+PODFILE CHECKSUM: 56e788cf34a3437037c3206ae640350cbde54982
 
 COCOAPODS: 1.8.4

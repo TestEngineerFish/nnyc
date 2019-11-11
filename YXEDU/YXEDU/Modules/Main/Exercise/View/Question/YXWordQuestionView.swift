@@ -33,6 +33,10 @@ class YXWordQuestionView: YXBaseQuestionView {
         })
     }
     
+    override func bindData() {
+        titleLabel?.text = exerciseModel.question?.word
+        subTitleLabel?.text = exerciseModel.question?.soundmarkUS        
+    }
 }
 
 
