@@ -12,7 +12,7 @@ import UIKit
 class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
+        questionView = YXChineseFillQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
         remindView = YXRemindView(exerciseModel: exerciseModel)
@@ -30,10 +30,10 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
     override func layoutSubviews() {
         super.layoutSubviews()
         questionView?.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(37)
-            make.height.equalTo(160)
-            make.width.equalToSuperview().offset(-44)
+            make.top.equalTo(32)
+            make.left.equalTo(22)
+            make.right.equalTo(-22)
+            make.height.equalTo(180)
         }
 
         remindView?.snp.makeConstraints({ (make) in

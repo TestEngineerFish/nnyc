@@ -29,15 +29,17 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
 
         self.questionView?.snp.makeConstraints { (make) in
             make.top.equalTo(32)
-            make.left.right.equalTo(0)
+            make.left.equalTo(22)
+            make.right.equalTo(-22)
             make.height.equalTo(380)
         }
         
-//        self.answerView?.snp.makeConstraints({ (make) in
-//            make.left.right.bottom.equalToSuperview()
-//            make.height.equalTo(answerHeight)
-//        })
-        answerView?.frame = CGRect(x: 22, y: 108 + 32, width: screenWidth, height: answerHeight)
+        self.answerView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(140)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(answerHeight)
+        })
+//        answerView?.frame = CGRect(x: 22, y: 108 + 32, width: screenWidth, height: answerHeight)
         
     }
 

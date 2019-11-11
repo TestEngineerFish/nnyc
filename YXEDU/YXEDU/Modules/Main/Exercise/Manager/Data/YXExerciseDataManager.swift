@@ -86,6 +86,8 @@ class YXExerciseDataManager: NSObject {
     
     /// 从当前关卡数据中，获取一个练习数据对象
     func fetchOneExerciseModel() -> YXWordExerciseModel? {
+//        let first = exerciseModelArray.first
+//        exerciseModelArray.removeFirst()
         return exerciseModelArray.first
     }
     
