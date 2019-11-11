@@ -88,7 +88,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         
         let iv = self.imageView
         if let url = exerciseModel.option?.firstItems?[indexPath.row].content {
-            iv.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange4))
+            iv.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
         }
         
         cell.contentView.addSubview(iv)

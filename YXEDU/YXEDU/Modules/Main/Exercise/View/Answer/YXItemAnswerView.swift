@@ -67,7 +67,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         
     //MARK:- delegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return self.exerciseModel.option?.firstItems?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -81,7 +81,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         cell.layer.cornerRadius = itemSize().height / 2
         
         let label = self.titleLabel
-        label.text = "book"
+        label.text = exerciseModel.option?.firstItems?[indexPath.row].content
         
         cell.contentView.addSubview(label)
         label.snp.makeConstraints { (make) in

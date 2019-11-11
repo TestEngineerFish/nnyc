@@ -26,19 +26,20 @@ class YXExampleQuestionView: YXBaseQuestionView {
     }
 
     override func bindData() {
-        let str = "coffee"
-        let question = "Would you like a cup of coffee?"
         
-        if let range = question.range(of: str) {
-            let location = question.distance(from: question.startIndex, to: range.lowerBound)
+        guard let word = self.exerciseModel.question?.word, let example = exerciseModel.question?.examples?.first?.en else {
+            return
+        }
+        
+        if let range = example.range(of: word) {
+            let location = example.distance(from: example.startIndex, to: range.lowerBound)
             
-            let attrString = NSMutableAttributedString(string: question)
+            let attrString = NSMutableAttributedString(string: example)
             
             let attr: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.black2]
             attrString.addAttributes(attr, range: NSRange(location: 0, length: attrString.length))
             let attr2: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.orange1]
-            attrString.addAttributes(attr2, range: NSRange(location: location, length: str.count))
-
+            attrString.addAttributes(attr2, range: NSRange(location: location, length: word.count))
             
             self.subTitleLabel?.attributedText = attrString
         }

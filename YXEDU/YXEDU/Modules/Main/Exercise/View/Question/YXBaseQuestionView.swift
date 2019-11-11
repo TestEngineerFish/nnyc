@@ -27,7 +27,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     var descTitleLabel: UILabel?
     
     
-    var imageView: UIImageView?
+    var imageView: YXKVOImageView?
     
     /// 播放器
     var playerView: YXExerciseAudioPlayerView?
@@ -79,7 +79,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     }
 
     func initImageView() {
-        self.imageView = UIImageView()
+        self.imageView = YXKVOImageView()
         self.imageView?.layer.masksToBounds = true
         self.imageView?.layer.cornerRadius = 3.78
         self.imageView?.backgroundColor = UIColor.orange1

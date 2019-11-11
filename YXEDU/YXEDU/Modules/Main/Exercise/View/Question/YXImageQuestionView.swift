@@ -25,4 +25,11 @@ class YXImageQuestionView: YXBaseQuestionView {
             make.height.equalTo(94)
         })
     }
+    
+    override func bindData() {
+        if let url = self.exerciseModel.question?.imageUrl {
+            self.imageView?.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
+        }
+    }
+    
 }

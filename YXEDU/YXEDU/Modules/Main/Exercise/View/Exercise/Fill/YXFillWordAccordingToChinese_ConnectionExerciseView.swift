@@ -12,7 +12,7 @@ import UIKit
 class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
+        questionView = YXChineseFillQuestionView(exerciseModel: exerciseModel)
         questionView?.layer.removeShadow()
         self.addSubview(questionView!)
 

@@ -13,7 +13,7 @@ class YXFillWordGroupExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
         super.createSubview()
-        questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
+        questionView = YXChineseFillQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
         remindView = YXRemindView(exerciseModel: exerciseModel)

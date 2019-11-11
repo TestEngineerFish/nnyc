@@ -111,6 +111,10 @@ public extension UIColor {
 
     /// 底色 #FFD086
     class var orange4: UIColor { return UIColor.hex(0xFFD086) }
+    
+    
+    /// 图片 placeholder
+    class var orange7: UIColor { return UIColor.hex(0xFFF4E9) }
 
     /// 标题文字 0x323232
     class var black1: UIColor { return UIColor.hex(0x323232) }
@@ -129,6 +133,8 @@ public extension UIColor {
     
     /// 选项的边框 0xC0C0C0
     class var black6: UIColor { return UIColor.hex(0xC0C0C0) }
+    
+
 
     /// 错误颜色 0xFF532B
     class var red1: UIColor { return UIColor.hex(0xFF532B)}
@@ -139,6 +145,8 @@ public extension UIColor {
     /// 正确颜色 0xFF532B
     class var green1: UIColor { return UIColor.hex(0x6DB353)}
 
+
+    
     /// 提示 0x888888
     class var gray1: UIColor { return UIColor.hex(0x888888) }
     

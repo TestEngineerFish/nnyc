@@ -18,7 +18,6 @@ class YXListenChooseImageExerciseView: YXBaseExerciseView {
         self.addSubview(questionView!)
 
         answerView = YXImageAnswerView(exerciseModel: self.exerciseModel)
-        answerView?.frame = CGRect(x: 0, y: self.size.height - 223, width: screenWidth, height: 223)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
         
@@ -30,15 +29,15 @@ class YXListenChooseImageExerciseView: YXBaseExerciseView {
 
         self.questionView?.snp.makeConstraints { (make) in
             make.top.equalTo(32)
-            make.left.right.equalTo(0)
+            make.left.equalTo(22)
+            make.right.equalTo(-22)
             make.height.equalTo(150)
         }
         
-//        self.answerView?.snp.makeConstraints({ (make) in
-//            make.left.right.bottom.equalToSuperview()
-//            make.height.equalTo(answerHeight)
-//        })
-        answerView?.frame = CGRect(x: 0, y: self.size.height - 223, width: screenWidth, height: 223)
+        self.answerView?.snp.makeConstraints({ (make) in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(223)
+        })
         
     }
 
