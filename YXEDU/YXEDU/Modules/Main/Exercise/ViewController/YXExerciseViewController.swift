@@ -92,8 +92,9 @@ class YXExerciseViewController: UIViewController {
             self?.switchExerciseView()
         }
                 
-        self.bottomView.tipsEvent = {//[weak self] in
+        self.bottomView.tipsEvent = {[weak self] in
             print("提示点击事件")
+            self?.exerciseViewArray.first?.remindView?.show()
         }
 
     }
@@ -129,7 +130,7 @@ class YXExerciseViewController: UIViewController {
             if result {
                 DispatchQueue.main.async {
                     self.switchExerciseView()
-                }                
+                }
             } else {//
                 YXUtils.showHUD(self.view, title: "加载数据失败")
             }

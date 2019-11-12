@@ -47,7 +47,7 @@ class YXWordQuestionView: YXBaseQuestionView {
         titleLabel?.text = exerciseModel.question?.word
         subTitleLabel?.text = exerciseModel.question?.soundmarkUS
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {[weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
             self?.audioPlayerView?.play()
         }
         

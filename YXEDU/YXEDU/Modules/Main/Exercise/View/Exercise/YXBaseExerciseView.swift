@@ -44,6 +44,7 @@ class YXBaseExerciseView: UIView {
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.white
         self.createSubview()
+        self.bindData()
     }
     
     required init?(coder: NSCoder) {
