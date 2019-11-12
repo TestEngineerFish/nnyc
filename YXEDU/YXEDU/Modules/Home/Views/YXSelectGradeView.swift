@@ -10,7 +10,7 @@ import UIKit
 
 class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var grades: [YXGradeModel] = [] {
+    var grades: [YXGradeWordBookListModel] = [] {
         didSet {
             var countOfRow = Int(grades.count / 3) + ((grades.count % 3) != 0 ? 1 : 0)
             countOfRow = countOfRow == 0 ? 1 : countOfRow
@@ -45,7 +45,7 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
         addSubview(contentView)
         contentView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         
-        var allGrade = YXGradeModel()
+        var allGrade = YXGradeWordBookListModel()
         allGrade.gradeName = "全部"
         allGrade.isSelect = true
         grades.append(allGrade)

@@ -11,15 +11,13 @@ import UIKit
 
 
 // MARK: - 新增词书
-struct YXGradeModel: Codable {
+struct YXGradeWordBookListModel: Codable {
     var isSelect = false
 
-    var gradeID: Int?
     var gradeName: String?
     var wordBooks: [YXWordBookModel]?
     
     enum CodingKeys: String, CodingKey {
-        case gradeID = "grade_id"
         case gradeName = "grade_name"
         case wordBooks = "book_list"
     }
@@ -28,8 +26,10 @@ struct YXGradeModel: Codable {
 struct YXWordBookModel: Codable {
     var isSelected = false
     var isCurrentStudy = false
+    var isNewWordBook = false
     var coverImage: UIImage?
-
+    
+    var grade: Int?
     var bookID: Int?
     var bookName: String?
     var bookSource: String?
@@ -45,6 +45,7 @@ struct YXWordBookModel: Codable {
         case coverImagePath = "cover"
         case hashString = "hash"
         case unitList = "unit_list"
+        case grade = "book_grade"
     }
 }
 
@@ -61,38 +62,26 @@ struct YXWordBookUnitModel: Codable {
 
 
 // MARK: - 选择词书
-struct YXAllWordBookModel: Codable {
-    var currentLearnWordBook: YXSelectWordBookModel?
-    var learnedWordBooks: [YXSelectWordBookModel]?
+struct YXUserWordBookListModel: Codable {
+    var currentLearnWordBookStatus: YXWordBookStatusModel?
+    var learnedWordBooks: [YXWordBookModel]?
 
     enum CodingKeys: String, CodingKey {
-        case currentLearnWordBook = "learning"
-        case learnedWordBooks = "learned"
+        case currentLearnWordBookStatus = "user_current_book_status"
+        case learnedWordBooks = "user_book_list"
     }
 }
 
-struct YXSelectWordBookModel: Codable {
-    var isSelected = false
-    var isNewWordBook = false
-    var isCurrentStudy = false
-
+struct YXWordBookStatusModel: Codable {
     var bookID: Int?
-    var bookName: String?
-    var bookSource: String?
-    var countOfTotalWords: Int?
-    var countOfLearnedWords: Int?
-    var countOfLearnedDays: Int?
-    var unitID: Int?
-    var unitName: String?
-
+    var learnedDays: Int?
+    var learnedWordsCount: Int?
+    var learningUnit: String?
+    
     enum CodingKeys: String, CodingKey {
-        case bookID = "bookId"
-        case bookName = "bookName"
-        case bookSource = "resUrl"
-        case countOfTotalWords = "wordCount"
-        case countOfLearnedWords = "learnCount"
-        case countOfLearnedDays = "countOfLearnedDays"
-        case unitID = "unit"
-        case unitName = "unitName"
+        case bookID = "book_id"
+        case learnedDays = "learned_days"
+        case learnedWordsCount = "learned_words"
+        case learningUnit = "learning_unit"
     }
 }

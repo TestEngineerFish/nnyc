@@ -48,6 +48,8 @@
 #import "YXBaseWebViewController.h"
 #import "YXLearnReportModel.h"
 #import "YXBookMaterialManager.h"
+#import "YXWordModelManager.h"
+#import "YXReportErrorView.h"
 
 #import "ZipArchive.h"
 #import "YXCacheKey.h"

@@ -60,11 +60,11 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
     
     
     // MARK: - 下载词书
-    func download(_ wordBook: YXWordBookModel, with url: URL, closure: ((_ isSuccess: Bool) -> Void)?) {
+    func download(_ wordBook: YXWordBookModel, _ closure: ((_ isSuccess: Bool) -> Void)?) {
         self.currentDownloadWordBook = wordBook
         self.closure = closure
 
-        let downloadTask = urlSession.downloadTask(with: url)
+        let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
         downloadTask.resume()
     }
     

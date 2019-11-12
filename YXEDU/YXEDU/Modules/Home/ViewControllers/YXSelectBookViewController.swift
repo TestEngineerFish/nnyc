@@ -10,7 +10,8 @@ import UIKit
 
 class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private var wordBookModels: [YXSelectWordBookModel] = []
+    private var wordBookStateModels: YXWordBookStatusModel!
+    private var wordBookModels: [YXWordBookModel] = []
     
     @IBOutlet weak var bookCollectionView: UICollectionView!
     @IBOutlet weak var deleteWordBookButton: YXDesignableButton!
@@ -29,49 +30,45 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let wordBook = wordBookModels[index]
             guard wordBook.isSelected else { continue }
             
-            YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": wordBook.bookID ?? 0]) { (response, isSuccess) in
-                guard isSuccess else { return }
-                                
+            YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": wordBook.bookID ?? 0]) { [weak self] (response, isSuccess) in
+                guard let self = self, isSuccess else { return }
+                
                 if index == 0 {
                     self.fetchWordBookDetail(self.wordBookModels[1])
-
+                    
                 } else if index == self.wordBookModels.count - 1 {
                     self.fetchWordBookDetail(self.wordBookModels[index - 1])
-
+                    
                 } else {
                     self.fetchWordBookDetail(self.wordBookModels[index + 1])
                 }
                 
                 self.wordBookModels.remove(at: index)
                 self.bookCollectionView.reloadData()
-                                
+                
                 YXWordBookResourceManager.shared.deleteWordBook(by: wordBook.bookID ?? 0)
             }
             break
         }
-     }
+    }
     
-     @IBAction func downloadWordBook(_ sender: UIButton) {
-        navigationController?.present(YXWordDetailViewController(), animated: true, completion: nil)
-     }
+    @IBAction func downloadWordBook(_ sender: UIButton) {
+        
+    }
      
      @IBAction func startStudy(_ sender: UIButton) {
         for index in 0..<wordBookModels.count {
             let wordBook = wordBookModels[index]
             guard wordBook.isSelected else { continue }
             
-//            let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: wordBook.units) { (unitID) in
-//                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/unit/change", parameters: ["bookId": "\(bookID)", "unitId": "\(unitID)"]) { (response, isSuccess) in
-//                    guard isSuccess else { return }
-//
-//                    YXWordBookResourceManage.shared.downloadWordBook(with: URL(string: bookSource)!, and: bookID) { (isSucess) in
-//                        guard isSucess else { return }
-//                        self.navigationController?.popToRootViewController(animated: true)
-//                    }
-//                }
-//            }
-//            
-//            self.view.addSubview(seleceUnitView)
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/unit/change", parameters: ["bookId": "\(wordBook.bookID ?? 0)"]) { [weak self] (response, isSuccess) in
+                guard let self = self, isSuccess else { return }
+
+                YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
+                    guard isSucess else { return }
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+            }
             
             break
         }
@@ -87,32 +84,31 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func fetchWordBooks() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/book/indexinfo", parameters: [:]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
+        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/book/getuserbooklist", parameters: ["user_id": YXConfigure.shared().uuid]) { [weak self] (response, isSuccess) in
+//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbooklist", parameters: ["user_id": YXConfigure.shared().uuid]) { [weak self] (response, isSuccess) in
+            guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 let decoder = JSONDecoder()
-                let result = try decoder.decode(YXAllWordBookModel.self, from: jsonData)
+                let result = try decoder.decode(YXUserWordBookListModel.self, from: jsonData)
                 
-                guard var currentLearnWordBook = result.currentLearnWordBook else { return }
-                currentLearnWordBook.isSelected = true
-                currentLearnWordBook.isCurrentStudy = true
-                self.wordBookModels = [currentLearnWordBook]
-                self.fetchWordBookDetail(currentLearnWordBook)
+                guard let wordBookStateModels = result.currentLearnWordBookStatus, var learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 else { return }
+                self.wordBookStateModels = wordBookStateModels
+                self.fetchWordBookDetail(learnedWordBooks[0])
+
+                learnedWordBooks[0].isSelected = true
+                learnedWordBooks[0].isCurrentStudy = true
+                self.wordBookModels = learnedWordBooks
                 
-                if let learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 {
-                    self.wordBookModels.append(contentsOf: learnedWordBooks)
-                    
-                } else {
+                if learnedWordBooks.count == 1 {
                     self.deleteWordBookButton.isHidden = true
                 }
                 
-                var newWordBook = YXSelectWordBookModel()
+                var newWordBook = YXWordBookModel()
                 newWordBook.bookName = "添加词书"
                 newWordBook.isNewWordBook = true
                 self.wordBookModels.append(newWordBook)
-                
                 self.bookCollectionView.reloadData()
                 
             } catch {
@@ -121,23 +117,37 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         }
     }
     
-    private func fetchWordBookDetail(_ wordBook: YXSelectWordBookModel) {
+    private func fetchWordBookDetail(_ wordBook: YXWordBookModel) {
         bookNameLabel.text = wordBook.bookName
-        unitLabel.text = wordBook.unitName
-        
-        let countOfDaysForStudyString = "\(wordBook.countOfLearnedDays ?? 0)天"
-        let index1 = countOfDaysForStudyString.distance(from: countOfDaysForStudyString.startIndex, to: countOfDaysForStudyString.firstIndex(of: "天")!)
-        let attributedText1 = NSMutableAttributedString(string: countOfDaysForStudyString)
-        attributedText1.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index1))
-        attributedText1.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index1))
-        countOfDaysForStudyLabel.attributedText = attributedText1
-        
-        let countOfWordsForStudyString = "\(wordBook.countOfLearnedWords ?? 0)个"
-        let index2 = countOfWordsForStudyString.distance(from: countOfWordsForStudyString.startIndex, to: countOfWordsForStudyString.firstIndex(of: "个")!)
-        let attributedText2 = NSMutableAttributedString(string: countOfWordsForStudyString)
-        attributedText2.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index2))
-        attributedText2.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index2))
-        countOfWordsForStudyLabel.attributedText = attributedText2
+        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookID ?? 0)"]) { [weak self] (response, isSuccess) in
+//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookID ?? 0)"]) { [weak self] (response, isSuccess) in
+            guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
+            
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(YXWordBookStatusModel.self, from: jsonData)
+                
+                self.unitLabel.text = result.learningUnit
+                
+                let countOfDaysForStudyString = "\(result.learnedDays ?? 0)天"
+                let index1 = countOfDaysForStudyString.distance(from: countOfDaysForStudyString.startIndex, to: countOfDaysForStudyString.firstIndex(of: "天")!)
+                let attributedText1 = NSMutableAttributedString(string: countOfDaysForStudyString)
+                attributedText1.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index1))
+                attributedText1.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index1))
+                self.countOfDaysForStudyLabel.attributedText = attributedText1
+                
+                let countOfWordsForStudyString = "\(result.learnedWordsCount ?? 0)个"
+                let index2 = countOfWordsForStudyString.distance(from: countOfWordsForStudyString.startIndex, to: countOfWordsForStudyString.firstIndex(of: "个")!)
+                let attributedText2 = NSMutableAttributedString(string: countOfWordsForStudyString)
+                attributedText2.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index2))
+                attributedText2.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index2))
+                self.countOfWordsForStudyLabel.attributedText = attributedText2
+                
+            } catch {
+                print(error)
+            }
+        }
     }
     
     
@@ -169,12 +179,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         }
         cell.bookNameLabel.text = wordBook.bookName
         
-        if let countOfWords = wordBook.countOfTotalWords {
-            cell.countOfWordsLabel.text = "\(countOfWords)词"
-            
-        } else {
-            cell.countOfWordsLabel.text = ""
-        }
+        cell.countOfWordsLabel.text = ""
         
         if wordBook.isSelected {
             cell.indicatorIcon.isHidden = false

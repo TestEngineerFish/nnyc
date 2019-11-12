@@ -11,8 +11,8 @@ import UIKit
 class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     var finishClosure: (() -> Void)?
     
-    private var grades: [YXGradeModel] = []
-    private var filterGrades: [YXGradeModel] = []
+    private var grades: [YXGradeWordBookListModel] = []
+    private var filterGrades: [YXGradeWordBookListModel] = []
     private var selectGradeView: YXSelectGradeView!
     
     @IBOutlet weak var filterButton: UIButton!
@@ -51,7 +51,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 let decoder = JSONDecoder()
-                self.grades = try decoder.decode([YXGradeModel].self, from: jsonData)
+                self.grades = try decoder.decode([YXGradeWordBookListModel].self, from: jsonData)
                 self.filterGrades = self.grades
                 
                 self.createGradeSelectView()
@@ -144,7 +144,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookID = wordBook.bookID, let units = wordBook.unitList, let bookSource = wordBook.bookSource else { return }
+        guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookID = wordBook.bookID, let units = wordBook.unitList else { return }
         
         let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: units) { (unitID) in
             guard let unitID = unitID else { return }
@@ -152,7 +152,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/unit/change", parameters: ["bookId": "\(bookID)", "unitId": "\(unitID)"]) { (response, isSuccess) in
                 guard isSuccess else { return }
                 
-                YXWordBookResourceManager.shared.download(wordBook, with: URL(string: bookSource)!) { (isSucess) in
+                YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
                     guard isSucess else { return }
                     
                     if let finishClosure = self.finishClosure {
