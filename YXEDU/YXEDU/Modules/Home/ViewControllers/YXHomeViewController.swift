@@ -100,7 +100,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     private func loadData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/learning/indexinfo", parameters: [:]) { (response, isSuccess) in
+        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
+//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learning/indexinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
             do {
@@ -112,7 +113,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 
                 self.bookNameButton.setTitle(result.bookName, for: .normal)
                 self.unitNameButton.setTitle(result.unitName, for: .normal)
-                self.countOfWaitForStudyWords.text = "\(result.remainWords ?? 0)"
+                self.countOfWaitForStudyWords.text = "\((result.newWords ?? 0) + (result.reviewWords ?? 0))"
                 self.progressBar.setProgress(Float(result.unitProgress ?? 0), animated: true)
                 
                 self.learnedWordsCount = "\(result.learnedWords ?? 0)"

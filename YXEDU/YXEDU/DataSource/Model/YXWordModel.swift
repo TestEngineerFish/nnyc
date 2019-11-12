@@ -15,8 +15,7 @@ struct YXWordModel: Mappable {
     var bookId: Int = -1
     var isExtUnit: Bool = false
     var word: String?
-    var property: String?           // 词性，例如 adj.
-    var paraphrase: String?         // 词义
+    var property: [YXWordPartOfSpeechAndSenseModel]?
     
     // 音标
     var soundmarkUK: String?
@@ -36,9 +35,9 @@ struct YXWordModel: Mappable {
     var gradeId: Int = -1
     var unitName: String?
     var gardeType: Int = 1   //年级类型
-    init() {
-        
-    }
+    
+    init() {}
+    
     init?(map: Map) {
         self.mapping(map: map)
     }
@@ -50,7 +49,6 @@ struct YXWordModel: Mappable {
         isExtUnit <- map["is_ext_unit"]
         word <- map["word"]
         property <- map["property"]
-        paraphrase <- map["paraphrase"]
         soundmarkUK <- map["soundmark_uk"]
         soundmarkUS <- map["soundmark_us"]
         voiceUK <- map["voice_uk"]
@@ -67,9 +65,26 @@ struct YXWordModel: Mappable {
 }
 
 
+
+/// 词性词义数据模型
+struct YXWordPartOfSpeechAndSenseModel: Mappable {
+    var name: String?
+    var paraphrase: String?
+    
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        name <- map["name"]
+        paraphrase <- map["paraphrase"]
+    }
+}
+
+
+
 /// 例句数据模型
 struct YXWordExampleModel: Mappable {
-    
     var en: String?
     var cn: String?
     var voiceUrl: String?

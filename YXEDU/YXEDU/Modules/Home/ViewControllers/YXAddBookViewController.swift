@@ -146,8 +146,8 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookID = wordBook.bookID, let units = wordBook.unitList, let bookSource = wordBook.bookSource else { return }
         
-        let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: units) { (unitId) in
-            YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/setlearning", parameters: ["bookId": "\(bookID)", "unitId": unitId]) { (response, isSuccess) in
+        let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: units) { (unitID) in
+            YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/unit/change", parameters: ["bookId": "\(bookID)", "unitId": unitID]) { (response, isSuccess) in
                 guard isSuccess else { return }
                 
                 YXWordBookResourceManager.shared.download(wordBook, with: URL(string: bookSource)!) { (isSucess) in

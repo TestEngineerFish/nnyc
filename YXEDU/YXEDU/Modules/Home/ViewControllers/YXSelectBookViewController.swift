@@ -60,11 +60,18 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let wordBook = wordBookModels[index]
             guard wordBook.isSelected else { continue }
             
-            YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/setlearning", parameters: ["bookId": wordBook.bookID ?? 0]) { (response, isSuccess) in
-                guard isSuccess else { return }
-                
-                self.navigationController?.popViewController(animated: true)
-            }
+//            let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: wordBook.units) { (unitID) in
+//                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/unit/change", parameters: ["bookId": "\(bookID)", "unitId": unitID]) { (response, isSuccess) in
+//                    guard isSuccess else { return }
+//
+//                    YXWordBookResourceManage.shared.downloadWordBook(with: URL(string: bookSource)!, and: bookID) { (isSucess) in
+//                        guard isSucess else { return }
+//                        self.navigationController?.popToRootViewController(animated: true)
+//                    }
+//                }
+//            }
+//            
+//            self.view.addSubview(seleceUnitView)
             break
         }
      }

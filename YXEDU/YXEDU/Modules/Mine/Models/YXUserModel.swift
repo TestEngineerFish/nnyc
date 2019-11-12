@@ -15,11 +15,21 @@ class YXUserModel: NSObject {
         if let didLogin = YYCache.object(forKey: "DidLogin") as? Bool {
             self.didLogin = didLogin
         }
+        
+        if let didUseAmericanPronunciation = YYCache.object(forKey: "DidUseAmericanPronunciation") as? Bool {
+            self.didUseAmericanPronunciation = didUseAmericanPronunciation
+        }
     }
     
     var didLogin = false {
         didSet {
             YYCache.set(didLogin, forKey: "DidLogin")
+        }
+    }
+    
+    var didUseAmericanPronunciation = false {
+        didSet {
+            YYCache.set(didLogin, forKey: "DidUseAmericanPronunciation")
         }
     }
     

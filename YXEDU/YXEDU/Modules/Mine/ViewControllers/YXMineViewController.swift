@@ -121,9 +121,11 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as! UILabel
                 if loginModel.user.speech == "0" {
                     speechLabel.text = "英式"
+                    YXUserModel.default.didUseAmericanPronunciation = false
                     
                 } else {
                     speechLabel.text = "美式"
+                    YXUserModel.default.didUseAmericanPronunciation = true
                 }
                 
                 // 素材包管理

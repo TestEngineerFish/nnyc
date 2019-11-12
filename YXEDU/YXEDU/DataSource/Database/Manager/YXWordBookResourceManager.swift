@@ -35,8 +35,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             
             var word = YXWordModel(map: Map(mappingType: .fromJSON, JSON: ["word_id": coreWord.wordID]))
             word?.word = coreWord.word
-            word?.property = coreWord.partOfSpeech
-            word?.paraphrase = coreWord.wordSense
+            word?.property = [YXWordPartOfSpeechAndSenseModel](JSONString: coreWord.partOfSpeechAndSense ?? "")
             word?.imageUrl = coreWord.imageURL
             word?.synonym = coreWord.synonyms
             word?.antonym = coreWord.antonyms
@@ -114,7 +113,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             
             let coreWordBook = YXCoreWordBookModel(context: YXCoreDataManager.shared.viewContext)
             coreWordBook.bookID = Int16(currentDownloadWordBook.bookID!)
-            coreWordBook.bookName = currentDownloadWordBook.bookName
+//            coreWordBook.gradeID = currentDownloadWordBook.
             coreWordBook.hashString = currentDownloadWordBook.hashString
 
             for unit in units {
@@ -130,10 +129,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                 for word in words {
                     let coreWord = YXCoreWordModel(context: YXCoreDataManager.shared.viewContext)
                     coreWord.wordBook = coreWordBook
+                    
                     coreWord.wordID = Int16(word.wordId)
                     coreWord.word = word.word
-                    coreWord.partOfSpeech = word.property
-                    coreWord.wordSense = word.paraphrase
+                    coreWord.partOfSpeechAndSense = word.property?.toJSONString(prettyPrint: true)
                     coreWord.imageURL = word.imageUrl
                     coreWord.synonyms = word.synonym
                     coreWord.antonyms = word.antonym
