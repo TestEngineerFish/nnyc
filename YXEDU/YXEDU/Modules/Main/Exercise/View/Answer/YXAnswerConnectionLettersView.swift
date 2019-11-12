@@ -129,20 +129,18 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     ///   - insert: 是否添加到问题区域
     /// - description:设置选中效果,需要满足,1、问题区域有空缺可填充(排除第一个字母);2、不在已选中列表中
     private func selectedButton(_ button: YXLetterButton, insert: Bool = true) {
-        var result = true
-        if insert {
-            // 判断是否成功添加到问题区域
-            result = self.delegate?.selectedAnswerButton(button) ?? false && !self.selectedBtnArray.contains(button)
-        }
+        let index = self.delegate?.selectedAnswerButton(button) ?? 0
         // 添加按钮到已选按钮列表
-        if result {
+        if !self.selectedBtnArray.contains(button) {
             self.connectionLine(fromButton: self.selectedBtnArray.last, toButton: button)
             self.selectedBtnArray.append(button)
+            self.selectedBtnArray.insert(button, at: index)
             button.status = .selected
             // 更新周围可选按钮
             self.updateEnableButton(current: button)
             // 检查结果
-            self.delegate?.checkAnserResult()
+//            self.delegate?.checkAnserResult()
+
         }
     }
 
@@ -326,31 +324,17 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     }
 
     // TODO: YXQuestionEventProtocol
-    override func removeQuestionWord(_ tag: Int) {
-        // 找到目标按钮
-        let button = self.selectedBtnArray.filter { (button) -> Bool in
-            return button.tag == tag
-        }.first
-        // 找到目标按钮在数组中的起始位置
-        guard let _button = button, let startIndex = self.selectedBtnArray.firstIndex(of: _button) else {
-            return
-        }
-        // 删除该按钮及之后所有按钮
-        for index in startIndex..<self.selectedBtnArray.count {
-            let button = self.selectedBtnArray[index]
-            self.unselectButton(button)
-        }
-    }
 
-    override func checkQuestionResult(errorList tags: [Int]) {
-        if tags.isEmpty {
+
+    private func showResultView(errorList list: [Int]) {
+        if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in
                 button.status = .right
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
-            for tag in tags {
+            for tag in list {
                 if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
                     return button.tag == tag
                 }) {

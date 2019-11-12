@@ -17,12 +17,6 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
 
         self.spellView = YXSpellSubview(self.exerciseModel)
         addSubview(spellView!)
-        self.spellView?.removeLetter = { (tag) in
-            self.delegate?.removeQuestionWord(tag)
-        }
-        self.spellView?.result = { (tagsList) in
-            self.delegate?.checkQuestionResult(errorList: tagsList)
-        }
 
         self.initSubTitleLabel()
     }
@@ -30,7 +24,7 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
     override func layoutSubviews() {
         super.layoutSubviews()
         if let _spellView = spellView {
-            let w = _spellView.wordViewList.last?.frame.maxX ?? CGFloat.zero
+            let w = _spellView.maxX - _spellView.margin
             _spellView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview().offset(topPadding)
@@ -51,16 +45,16 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
     }
     
     // MARK: YXAnswerEventProtocol
-    override func selectedAnswerButton(_ button: YXLetterButton) -> Bool {
-        return self.spellView?.insertLetter(button) ?? false
+    override func selectedAnswerButton(_ button: YXLetterButton) -> Int {
+        return self.spellView?.insertLetter(button) ?? 0
     }
 
     override func unselectAnswerButton(_ button: YXLetterButton) {
         self.spellView?.removeLetter(button)
     }
 
-    override func checkAnserResult() {
-        self.spellView?.startCheckResult()
+    override func showResult(errorList list: [Int]) {
+        self.spellView?.showResultView(errorList: list)
     }
 
 }

@@ -22,9 +22,9 @@ struct YXExerciseAnimation {
            let zoomInHideAnimation = CAAnimationGroup()
            zoomInHideAnimation.animations = [zoomInAnimation, hideAnimation]
            zoomInHideAnimation.duration = 2
-           zoomInHideAnimation.isRemovedOnCompletion = true
+           zoomInHideAnimation.isRemovedOnCompletion = false
            zoomInHideAnimation.repeatCount = 1
-           zoomInHideAnimation.fillMode = .removed
+           zoomInHideAnimation.fillMode = .forwards
            zoomInHideAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
            return zoomInHideAnimation
        }

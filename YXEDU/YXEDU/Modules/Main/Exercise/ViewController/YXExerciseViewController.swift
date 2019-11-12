@@ -197,7 +197,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
     private func showRightAnimation() {
         self.view.isUserInteractionEnabled = false
         self.resultView.isHidden = false
-        self.resultView.image = UIImage(named: "playAudioIcon")
+        self.resultView.image = UIImage(named: "success")
         let animation = YXExerciseAnimation.zoomInHideAnimation()
         animation.delegate = self
         animation.setValue(true, forKey: "isRight")
@@ -208,7 +208,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
     private func showErrorAnimation() {
         self.view.isUserInteractionEnabled = false
         self.resultView.isHidden = false
-        self.resultView.image = UIImage(named: "playAudioIcon")
+        self.resultView.image = UIImage(named: "error")
         let animation = YXExerciseAnimation.zoomInHideAnimation()
         animation.delegate = self
         animation.setValue(false, forKey: "isRight")

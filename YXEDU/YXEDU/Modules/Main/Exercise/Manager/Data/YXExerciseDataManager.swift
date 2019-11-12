@@ -20,6 +20,21 @@ class YXExerciseDataManager: NSObject {
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseResultModels(completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
+
+        let jsonPath = Bundle.main.path(forResource: "fill.json", ofType: nil) ?? ""
+        do {
+
+            guard let data = try? Data(contentsOf: URL(fileURLWithPath: jsonPath)), let objcDict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:Any], let _data = objcDict["data"] as? [String:Any] else {
+                return
+            }
+            let model = YXExerciseResultModel(JSON: _data)
+            self.processExerciseData(result: model)
+            completion(true, nil)
+        } catch {
+
+        }
+
+        return
         
         let request = YXExerciseRequest.exercise
         YYNetworkService.default.httpRequestTask(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
@@ -152,7 +167,6 @@ class YXExerciseDataManager: NSObject {
                     exerciseModelArray.append(exercise)
                 }
             }
-            
         }
         
         // 处理复习单词

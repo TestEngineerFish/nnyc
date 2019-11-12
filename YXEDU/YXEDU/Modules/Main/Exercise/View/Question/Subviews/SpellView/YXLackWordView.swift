@@ -20,7 +20,7 @@ enum YXCharTextFiledType: Int {
     case blank
 }
 
-class YXWordCharacterView: UIView {
+class YXLackWordView: UIView {
     let baseLineView = UIView()
     let textField    = YXCharacterTextField()
 

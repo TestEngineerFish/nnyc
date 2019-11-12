@@ -44,7 +44,7 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
 
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(remindView!.snp.bottom)
+            make.bottom.equalToSuperview()
             make.width.equalTo(270)
             make.height.equalTo(200)
         })

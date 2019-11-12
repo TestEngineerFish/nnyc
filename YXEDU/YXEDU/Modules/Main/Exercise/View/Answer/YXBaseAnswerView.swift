@@ -73,7 +73,5 @@ class YXBaseAnswerView: UIView, YXQuestionEventProtocol, YXAudioPlayerViewDelega
     }
 
     // MARK: YXQuestionEventProtocol
-    func removeQuestionWord(_ tag: Int) {}
-    func checkQuestionResult(errorList tags: [Int]) {}
     func endPlayAudio() {}
 }

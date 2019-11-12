@@ -96,15 +96,12 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     func bindData()  {}
 
     // MARK:YXAnswerEventProtocol
-    /// 选中按钮,添加单词/字母
-    /// - returns: 是否添加成功
-    func selectedAnswerButton(_ button: YXLetterButton) -> Bool {
-        return false
+    func selectedAnswerButton(_ button: YXLetterButton) -> Int {
+        return 0
     }
     /// 取消按钮,移除单词/字母
     func unselectAnswerButton(_ button: YXLetterButton) {}
-    /// 检验答题结果
-    func checkAnserResult() {}
+    func showResult(errorList list: [Int]) {}
     func switchQuestion() {}
     func playAudio() {}
 }

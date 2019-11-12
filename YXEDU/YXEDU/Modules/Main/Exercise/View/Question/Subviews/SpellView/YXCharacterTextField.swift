@@ -15,7 +15,7 @@ class YXCharacterTextField: UITextField, UIGestureRecognizerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.tag                    = 999// 用户响应底部答题事件
-        self.font                   = UIFont.boldSystemFont(ofSize: 20)
+        self.font                   = UIFont.boldSystemFont(ofSize: AdaptSize(20))
         self.textColor              = UIColor.hex(0x323232)
         self.borderStyle            = .none
         self.returnKeyType          = .done

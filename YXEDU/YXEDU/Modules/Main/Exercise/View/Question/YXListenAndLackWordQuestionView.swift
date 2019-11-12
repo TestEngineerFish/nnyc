@@ -19,12 +19,6 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
 
         self.spellView = YXSpellSubview(self.exerciseModel)
         addSubview(spellView!)
-        self.spellView?.removeLetter = { (tag) in
-            self.delegate?.removeQuestionWord(tag)
-        }
-        self.spellView?.result = { (tagsList) in
-            self.delegate?.checkQuestionResult(errorList: tagsList)
-        }
 
         audioView = YXAudioPlayerView(url: exerciseModel.question?.voiceUS)
         addSubview(audioView!)
@@ -49,15 +43,12 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
     }
 
     // MARK: YXAnswerEventProtocol
-    override func selectedAnswerButton(_ button: YXLetterButton) -> Bool {
-        return self.spellView?.insertLetter(button) ?? false
+    override func selectedAnswerButton(_ button: YXLetterButton) -> Int {
+        return self.spellView?.insertLetter(button) ?? 0
     }
 
     override func unselectAnswerButton(_ button: YXLetterButton) {
         self.spellView?.removeLetter(button)
     }
 
-    override func checkAnserResult() {
-        self.spellView?.startCheckResult()
-    }
 }

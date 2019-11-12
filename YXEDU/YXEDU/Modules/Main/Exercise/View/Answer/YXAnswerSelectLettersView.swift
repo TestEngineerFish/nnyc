@@ -21,7 +21,10 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
 
     override func createSubview() {
         super.createSubview()
-//        self.createButtonArray(exerciseModel.wordArray)
+        guard let itemList = self.exerciseModel.option?.firstItems else {
+            return
+        }
+        self.createButtonArray(itemList)
         self.createUI()
     }
 
@@ -61,13 +64,12 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     }
 
     /// 根据单词数组,生成一行一组按钮的二维数组
-    private func createButtonArray(_ wordsArray: [String]) {
+    private func createButtonArray(_ itemList: [YXOptionItemModel]) {
         var wordsBtnArray2 = Array(repeating: [YXLetterButton](), count: 3)
         // 1、生成按钮组
-        for index in 0..<wordsArray.count {
-            let word = wordsArray[index]
-            let button = self.createWordButton(word)
-            button.tag = index + offsetTag
+        for item in itemList {
+            let button = self.createWordButton(item.content)
+            button.tag = item.optionId + offsetTag
             // 1.1、遍历二维数组中,是否需要插入对应单词
             for index in 0..<wordsBtnArray2.count {
                 let btnArray = wordsBtnArray2[index]
@@ -76,7 +78,6 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
                     cellCount += btn.widthUnit
                 }
                 // 1.2、补齐数组
-
                 if button.widthUnit + cellCount <= horItemNum {
                     wordsBtnArray2[index].append(button)
                     break
@@ -87,7 +88,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     }
 
     /// 创建单词按钮
-    private func createWordButton(_ word: String) -> YXLetterButton {
+    private func createWordButton(_ word: String?) -> YXLetterButton {
         let button = YXLetterButton()
         button.text   = word
         button.status = .normal
@@ -98,48 +99,59 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     // TODO: Event
 
     @objc func clickButton(_ button: YXLetterButton) {
-        if button.status == .selected {
+        if button.status == .selected || button.status == .error {
             if let index = self.selectedBtnArray.firstIndex(of: button) {
                 self.selectedBtnArray.remove(at: index)
                 button.status = .normal
             }
             delegate?.unselectAnswerButton(button)
         } else {
-            // 通过回调更新选中状态,防止同时选中多个
-            let success = delegate?.selectedAnswerButton(button) ?? false
-            if success && !self.selectedBtnArray.contains(button) {
+            // 通过回调更新选中顺序,也可防止同时选中多个
+            let index = delegate?.selectedAnswerButton(button) ?? 0
+            if !self.selectedBtnArray.contains(button) {
                 button.status = .selected
-                self.selectedBtnArray.append(button)
-                // 检查结果
-                self.delegate?.checkAnserResult()
+                self.selectedBtnArray.insert(button, at: index)
+                if self.selectedBtnArray.count >= self.exerciseModel.answers?.count ?? 0 {
+                    // 检查结果
+                    let errList = self.checkAnserResult()
+                    // 更新UI
+                    self.showResultView(errorList: errList)
+                    // 更新问题UI
+                    self.delegate?.showResult(errorList: errList)
+                }
             }
         }
     }
 
-    // MARK: YXQuestionEventProtocol
-    override func removeQuestionWord(_ tag: Int) {
-        super.removeQuestionWord(tag)
-        for index in 0..<self.selectedBtnArray.count {
-            let button = self.selectedBtnArray[index]
-            if button.tag == tag {
-                button.status = .normal
-                self.selectedBtnArray.remove(at: index)
-                return
+    /// 检查结果.如果有错误的则返回对应错误的ID数组,否则返回空数组
+    private func checkAnserResult() -> [Int] {
+        var errList = [Int]()
+        guard let answers = self.exerciseModel.answers else {
+            return errList
+        }
+        for (index, button) in self.selectedBtnArray.enumerated() {
+            if index >= answers.count { break }
+            let rightId   = answers[index]
+            let currentId = button.tag - offsetTag
+            if rightId != currentId {
+                errList.append(currentId + offsetTag)
             }
         }
+        return errList
     }
 
-    override func checkQuestionResult(errorList tags: [Int]) {
-        if tags.isEmpty {
+    /// 显示结果页
+    private func showResultView(errorList list: [Int]) {
+        if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in
                 button.status = .right
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
-            for tag in tags {
+            for id in list {
                 if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
-                    return button.tag == tag
+                    return button.tag == id
                 }) {
                     button.status = .error
                 }

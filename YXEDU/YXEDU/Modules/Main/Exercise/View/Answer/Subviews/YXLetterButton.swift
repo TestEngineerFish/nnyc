@@ -47,7 +47,7 @@ class YXLetterButton: UIButton {
                 self.layer.borderColor = UIColor.orange1.cgColor
                 self.setTitleColor(UIColor.white, for: .normal)
             case .error:
-                self.isEnabled         = false
+                self.isEnabled         = true
                 self.backgroundColor   = UIColor.white
                 self.layer.borderColor = UIColor.red1.cgColor
                 self.setTitleColor(UIColor.red1, for: .normal)

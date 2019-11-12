@@ -21,70 +21,124 @@ struct YXCharacterModel {
 class YXSpellSubview: UIView {
     let margin = CGFloat(10)
     let charH  = CGFloat(30)
+    var maxX   = CGFloat(0)
 
     var exerciseModel: YXWordExerciseModel
-    var wordViewList = [YXWordCharacterView]()
-
-    /// 点击已填充字母的空.回调闭包
-    var removeLetter: ((Int)->Void)?
-    var result: (([Int])->Void)?
+    var wordViewList = [YXLackWordView]()
+    var resultArrary: [NSTextCheckingResult]?
 
     init(_ model: YXWordExerciseModel) {
         self.exerciseModel = model
         super.init(frame: CGRect.zero)
+        self.bindData()
         self.createUI()
+        self.resetConstraints()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createUI() {
-        var maxX = CGFloat(0)
-        wordViewList = []
-//        for index in 0..<self.exerciseModel.charModelArray.count {
-//            let model = self.exerciseModel.charModelArray[index]
-//            let wordWidth = model.character.textWidth(font: UIFont.pfSCSemiboldFont(withSize: 20), height: charH) + margin
-//            let wordFrame = CGRect(x: maxX, y: 0, width: wordWidth, height: charH)
-//            let wordView  = YXWordCharacterView(frame: wordFrame)
-//            if model.isBlank {
-//                wordView.textField.text = ""
-//                wordView.type          = .blank
-//            } else {
-//                wordView.textField.text = model.character
-//                wordView.type           = .normal
-//            }
-//            self.addSubview(wordView)
-//            self.wordViewList.append(wordView)
-//            maxX += wordWidth + margin
-//            let tap = UITapGestureRecognizer(target: self, action: #selector(tapWordView(_:)))
-//            wordView.addGestureRecognizer(tap)
-//        }
-        return
-    }
-
-    @objc private func tapWordView(_ tap: UITapGestureRecognizer) {
-        guard let wordCharView = tap.view as? YXWordCharacterView else {
+    private func bindData() {
+        guard let question = self.exerciseModel.question, let word = question.word else {
             return
         }
-        if wordCharView.type != .normal, !wordCharView.text.isNilOrEmpty {
-            wordCharView.text = ""
-            self.removeLetter?(wordCharView.tag)
+        do {
+            let regular = "(\\[\\w+\\])"
+            let regex = try NSRegularExpression(pattern: regular, options: .caseInsensitive)
+            resultArrary = regex.matches(in: word, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: word.count))
+
+        } catch {
+
+        }
+    }
+
+    private func createUI() {
+        guard let array = resultArrary, let question = self.exerciseModel.question, let word = question.word  else {
+            return
+        }
+        var offset = 0
+        for (index, _result) in array.enumerated() {
+            // 添加可见字母
+            let lackWord = word.substring(fromIndex: offset, length: _result.range.location - offset)
+            if !lackWord.isEmpty {
+                let wordView = YXLackWordView()
+                wordView.textField.text = lackWord
+                wordView.type = .normal
+                self.addSubview(wordView)
+                self.wordViewList.append(wordView)
+            }
+            // 添加不可见字母
+            var letter2 = word.substring(fromIndex: _result.range.location, length: _result.range.length)
+            letter2.removeFirst()
+            letter2.removeLast()
+            if !letter2.isEmpty {
+                let wordView = YXLackWordView()
+                wordView.textField.text = ""
+                wordView.type = .blank
+                self.addSubview(wordView)
+                self.wordViewList.append(wordView)
+            }
+            offset = _result.range.location + _result.range.length
+            if index >= array.count - 1 {
+                // 添加可见字母
+                let lackWord = word.substring(fromIndex: offset, length: word.count - offset)
+                if !lackWord.isEmpty {
+                    let wordView = YXLackWordView()
+                    wordView.textField.text = lackWord
+                    wordView.type = .normal
+                    self.addSubview(wordView)
+                    self.wordViewList.append(wordView)
+                }
+            }
+        }
+    }
+
+    ///  重新设定约束
+    private func resetConstraints() {
+        maxX = 0
+        self.wordViewList.forEach { (view) in
+            var _width = CGFloat(AdaptSize(20))
+            if let text = view.text, !text.isEmpty {
+                let w = text.textWidth(font: view.textField.font!, height: charH)
+                _width = w > _width ? w : _width
+            }
+            view.snp.remakeConstraints { (make) in
+                make.left.equalToSuperview().offset(maxX)
+                make.top.equalToSuperview()
+                make.width.equalTo(_width)
+                make.height.equalTo(charH)
+            }
+            maxX += _width + margin
+        }
+        if self.superview != nil {
+            self.snp.remakeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview().offset(CGFloat(54))
+                make.width.equalTo(maxX - margin)
+                make.height.equalTo(30)
+            }
         }
     }
 
     // TODO: Event
 
     /// 添加单词
-    func insertLetter(_ button: YXLetterButton) -> Bool {
+    func insertLetter(_ button: YXLetterButton) -> Int {
+        var index = 0
         for wordView in self.wordViewList {
             if wordView.text.isNilOrEmpty {
                 wordView.text = button.currentTitle
                 wordView.tag  = button.tag
-                return true
+                // 修改宽度
+                self.resetConstraints()
+                return index
+            }
+            if wordView.type == .blank {
+                index += 1
             }
         }
-        return false
+        return 0
     }
 
     /// 移除单词
@@ -92,40 +146,22 @@ class YXSpellSubview: UIView {
         for wordView in self.wordViewList {
             if wordView.tag == button.tag {
                 wordView.text = ""
+                // 修改宽度
+                self.resetConstraints()
             }
         }
     }
 
-    // TODO: Tools
-    /// 检查结果
-    /// - description: 如果有错误的单词,则通过tag传递给答题视图
-    func startCheckResult() {
-//        let lackWord = self.wordViewList.filter { (wordView) -> Bool in
-//            return wordView.text.isNilOrEmpty
-//        }
-//        // 如果有未填写完整的内容,则不检查
-//        if !lackWord.isEmpty {
-//            return
-//        }
-//        var errorTags = [Int]()
-//        for index in 0..<self.wordViewList.count {
-//            if index >= self.exerciseModel.charModelArray.count {
-//                return
-//            }
-//            let rightWord   = self.exerciseModel.charModelArray[index]
-//            let currentWord = self.wordViewList[index]
-//            if rightWord.character != (currentWord.text ?? "") {
-//                errorTags.append(currentWord.tag)
-//                currentWord.status = .error
-//            }
-//        }
-//        if errorTags.isEmpty {
-//            self.wordViewList.forEach { (wordView) in
-//                if wordView.type == .blank {
-//                    wordView.status = .right
-//                }
-//            }
-//        }
-//        self.result?(errorTags)
+    /// 显示结果
+    func showResultView(errorList list: [Int]) {
+        self.wordViewList.forEach { (lackWord) in
+            if lackWord.type == .blank {
+                if list.contains(lackWord.tag) {
+                    lackWord.status = .error
+                } else {
+                    lackWord.status = .right
+                }
+            }
+        }
     }
 }
