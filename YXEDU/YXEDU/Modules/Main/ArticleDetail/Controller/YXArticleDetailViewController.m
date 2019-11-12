@@ -11,7 +11,7 @@
 #import "YXArticleContentView.h"
 #import "YXArticleBottomView.h"
 #import "AVAudioPlayerManger.h"
-#import "YXWordDetailViewController.h"
+#import "YXWordDetailViewControllerOld.h"
 #import "YXRemotePlayer.h"
 #import <AVFoundation/AVFoundation.h>
 #import "YXPlayAudioControllerView.h"
@@ -263,7 +263,7 @@
             if (result) {
                 [self stopArticleAudio];
                 YXWordDetailModel *wordModel = obj;//词单列表
-                YXWordDetailViewController *detailVC = [YXWordDetailViewController wordDetailWith:wordModel bookId:wordModel.bookId withBackBlock:^{
+                YXWordDetailViewControllerOld *detailVC = [YXWordDetailViewControllerOld wordDetailWith:wordModel bookId:wordModel.bookId withBackBlock:^{
                     [self.navigationController setNavigationBarHidden:NO];
                 }];
                 [self.navigationController pushViewController:detailVC animated:YES];
@@ -384,7 +384,7 @@
 }
 
 - (void)showWordDetailView:(YXWordDetailModel *)wordModel bookId:(NSString *)bookId {
-    YXWordDetailViewController *detailVC = [YXWordDetailViewController wordDetailWith:wordModel bookId:bookId withBackBlock:^{
+    YXWordDetailViewControllerOld *detailVC = [YXWordDetailViewControllerOld wordDetailWith:wordModel bookId:bookId withBackBlock:^{
         [self.navigationController setNavigationBarHidden:NO];
     }];
     [self.navigationController pushViewController:detailVC animated:YES];

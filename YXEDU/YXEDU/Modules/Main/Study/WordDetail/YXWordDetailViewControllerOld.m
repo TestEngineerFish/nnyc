@@ -1,12 +1,12 @@
 //
-//  YXWordDetailViewController.m
+//  YXWordDetailViewControllerOld.m
 //  YXEDU
 //
 //  Created by yao on 2018/10/24.
 //  Copyright © 2018年 shiji. All rights reserved.
 //
 
-#import "YXWordDetailViewController.h"
+#import "YXWordDetailViewControllerOld.h"
 #import "YXWordDetailSectionHeader.h"
 #import "YXWordDetailTextCell.h"
 #import "YXReportErrorView.h"
@@ -34,7 +34,7 @@ static NSString *const kYXUnVipNormalCellID = @"YXUnVipNormalCellID";
 
 
 //单词详情
-@interface YXWordDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface YXWordDetailViewControllerOld ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, weak)UITableView *tableView;
 @property (nonatomic, strong)UIView *bottomView;
 @property (nonatomic, weak)UIView *tableHeadView;
@@ -72,14 +72,14 @@ static NSString *const kYXUnVipNormalCellID = @"YXUnVipNormalCellID";
 
 @end
 
-@implementation YXWordDetailViewController
-+ (YXWordDetailViewController *)wordDetailWith:(YXWordDetailModel *)wordDetailModel bookId:(NSString *)bookId {
+@implementation YXWordDetailViewControllerOld
++ (YXWordDetailViewControllerOld *)wordDetailWith:(YXWordDetailModel *)wordDetailModel bookId:(NSString *)bookId {
     return [self wordDetailWith:wordDetailModel bookId:bookId withBackBlock:nil];
 }
 
-+ (YXWordDetailViewController *)wordDetailWith:(YXWordDetailModel *)wordDetailModel bookId:(NSString *)bookId withBackBlock:(void (^)(void))backActionBlock
++ (YXWordDetailViewControllerOld *)wordDetailWith:(YXWordDetailModel *)wordDetailModel bookId:(NSString *)bookId withBackBlock:(void (^)(void))backActionBlock
 {
-    YXWordDetailViewController *wordDetailVC = [[self alloc] init];
+    YXWordDetailViewControllerOld *wordDetailVC = [[self alloc] init];
     wordDetailVC.wordDetailModel = wordDetailModel;
     wordDetailVC.bookId = bookId;
     if (backActionBlock) {

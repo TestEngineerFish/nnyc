@@ -14,7 +14,7 @@
 #import "YXCareerNoteWordListCell.h"
 #import "YXCareerNoteWordInfoModel.h"
 #import "YXCareerWordInfo.h"
-#import "YXWordDetailViewController.h"
+#import "YXWordDetailViewControllerOld.h"
 #import "YXDeleteAnimateView.h"
 #import "YXExerciseVC.h"
 static NSString *const kYXCareerNoteWordListCellID = @"kYXCareerNoteWordListCellID";
@@ -416,7 +416,7 @@ static NSString *const kYXCareerNoteWordListCellID = @"kYXCareerNoteWordListCell
     wordInfo.bookId = cellInfoModel.book_id;
     wordInfo.wordId = cellInfoModel.word_id;
     wordInfo.wordDetail = cellInfoModel.wordModel;
-    YXWordDetailViewController *wdvc = [[YXWordDetailViewController alloc] init];
+    YXWordDetailViewControllerOld *wdvc = [[YXWordDetailViewControllerOld alloc] init];
     wdvc.careerWordInfo = wordInfo;
     wdvc.isFavWord = (self.wordListViewType == kYXWordListCollection);
     [self.navigationController pushViewController:wdvc animated:YES];

@@ -27,8 +27,10 @@ class YXWordDetailHeaderView: UIView {
     }
     
     private func initializationFromNib() {
-        Bundle.main.loadNibNamed("YXWordDetailCommonView", owner: self, options: nil)
+        Bundle.main.loadNibNamed("YXWordDetailHeaderView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.frame
+        
+        headerLabel.text = headerTitle
     }
 }

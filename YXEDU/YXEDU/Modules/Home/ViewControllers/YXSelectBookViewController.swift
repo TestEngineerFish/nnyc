@@ -52,7 +52,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
      }
     
      @IBAction func downloadWordBook(_ sender: UIButton) {
-         
+        navigationController?.present(YXWordDetailViewController(), animated: true, completion: nil)
      }
      
      @IBAction func startStudy(_ sender: UIButton) {

@@ -1,5 +1,5 @@
 //
-//  YXWordDetailViewController.h
+//  YXWordDetailViewControllerOld.h
 //  YXEDU
 //
 //  Created by yao on 2018/10/24.
@@ -8,11 +8,11 @@
 
 #import "BSRootVC.h"
 #import "YXCareerWordInfo.h"
-@interface YXWordDetailViewController : BSRootVC
-+ (YXWordDetailViewController *)wordDetailWith:(YXWordDetailModel *)wordDetailModel
+@interface YXWordDetailViewControllerOld : BSRootVC
++ (YXWordDetailViewControllerOld *)wordDetailWith:(YXWordDetailModel *)wordDetailModel
                                         bookId:(NSString *)bookId;
 
-+ (YXWordDetailViewController *)wordDetailWith:(YXWordDetailModel *)wordDetailModel
++ (YXWordDetailViewControllerOld *)wordDetailWith:(YXWordDetailModel *)wordDetailModel
                                         bookId:(NSString *)bookId
                                  withBackBlock:(void(^)(void))backActionBlock;
 

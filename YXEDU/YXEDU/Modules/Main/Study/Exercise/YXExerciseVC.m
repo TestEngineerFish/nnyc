@@ -32,7 +32,7 @@
 #import "YXStudyViewModel.h"
 #import "YXGroupQuestionModel.h"
 #import "AVAudioPlayerManger.h"
-#import "YXWordDetailViewController.h"
+#import "YXWordDetailViewControllerOld.h"
 #import "YXReportErrorView.h"
 #import "YXQuestionGenerator.h"
 #import "AFHTTPSessionManager.h"
@@ -666,7 +666,7 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 }
 
 - (void)showWordDetailWith:(YXWordQuestionModel *)wordQuestion withBackBlock:(void(^)(void))backActionBlock {
-    YXWordDetailViewController *wordDetailVC = [YXWordDetailViewController wordDetailWith:wordQuestion.wordDetail
+    YXWordDetailViewControllerOld *wordDetailVC = [YXWordDetailViewControllerOld wordDetailWith:wordQuestion.wordDetail
                                                                                    bookId:wordQuestion.bookId
                                                                             withBackBlock:backActionBlock];
     wordDetailVC.isFavWord = wordQuestion.wordDetail.isFav;

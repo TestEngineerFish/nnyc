@@ -17,7 +17,7 @@
 #import "YXWordListUsedWordModel.h"
 #import "YXSelectedWordsMiniView.h"
 #import "YXWordListGuideView.h"
-#import "YXWordDetailViewController.h"
+#import "YXWordDetailViewControllerOld.h"
 #import "YXLoadingView.h"
 
 static NSString *const kYXSelectMyWordCellID = @"YXSelectMyWordCellID";
@@ -445,7 +445,7 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     YXMyWordBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     YXMyWordCellBaseModel *wordModel = cell.wordModel;
-    YXWordDetailViewController *detailVC = [YXWordDetailViewController wordDetailWith:wordModel.wordDetail bookId:wordModel.bookId];
+    YXWordDetailViewControllerOld *detailVC = [YXWordDetailViewControllerOld wordDetailWith:wordModel.wordDetail bookId:wordModel.bookId];
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 

@@ -1,7 +1,7 @@
 
 #import "BSRootVC.h"
 #import "YXLoadingView.h"
-#import "YXWordDetailViewController.h"
+#import "YXWordDetailViewControllerOld.h"
 #import "BSUtils.h"
 #import "YXUserSaveTool.h"
 #import "YXBookSettingViewController.h"

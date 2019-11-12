@@ -7,7 +7,7 @@
 //
 
 #import "YXMyWordBookBaseVC.h"
-#import "YXWordDetailViewController.h"
+#import "YXWordDetailViewControllerOld.h"
 
 
 static NSString *const kYXMyWordBaseCellID = @"YXMyWordBaseCellID";
@@ -107,7 +107,7 @@ static NSString *const kYXMyWordBaseHeaderViewID = @"YXMyWordBaseHeaderViewID";
     YXMyWordBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     YXMyWordCellBaseModel *wordModel = cell.wordModel;
     
-    YXWordDetailViewController *detailVC = [YXWordDetailViewController wordDetailWith:wordModel.wordDetail bookId:wordModel.bookId];
+    YXWordDetailViewControllerOld *detailVC = [YXWordDetailViewControllerOld wordDetailWith:wordModel.wordDetail bookId:wordModel.bookId];
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 

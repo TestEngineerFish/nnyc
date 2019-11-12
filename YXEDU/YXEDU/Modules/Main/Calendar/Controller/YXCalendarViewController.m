@@ -23,7 +23,7 @@
 #import "Reachability.h"
 #import "YXCareerNoteWordInfoModel.h"
 #import "YXCareerWordInfo.h"
-#import "YXWordDetailViewController.h"
+#import "YXWordDetailViewControllerOld.h"
 
 static NSString *const kYXCalendarCellID = @"YXCalendarCellID";
 static NSString *const kYXCalendarHeaderViewID = @"YXCalendarHeaderViewID";
@@ -801,7 +801,7 @@ static CGFloat const kPickViewHeight = 272.f;
     if (!model || !model.wordModel) {
         return;
     }
-    YXWordDetailViewController *wdvc = [YXWordDetailViewController wordDetailWith:model.wordModel bookId:model.wordModel.bookId];
+    YXWordDetailViewControllerOld *wdvc = [YXWordDetailViewControllerOld wordDetailWith:model.wordModel bookId:model.wordModel.bookId];
     [self.navigationController pushViewController:wdvc animated:YES];
 }
 

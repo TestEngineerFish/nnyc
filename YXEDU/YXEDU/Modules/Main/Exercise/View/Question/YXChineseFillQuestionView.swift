@@ -47,7 +47,7 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
     
     
     override func bindData() {
-        self.subTitleLabel?.text = exerciseModel.question?.paraphrase
+//        self.subTitleLabel?.text = exerciseModel.question?.paraphrase
     }
     
     // MARK: YXAnswerEventProtocol

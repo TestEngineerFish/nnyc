@@ -18,7 +18,7 @@
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/QQApiInterfaceObject.h>
 #import "YXWordModelManager.h"
-#import "YXWordDetailViewController.h"
+#import "YXWordDetailViewControllerOld.h"
 #import "YXShareView.h"
 #import "YXBadgeView.h"
 #import "YXPosterShareView.h"
@@ -484,7 +484,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     YXStudiedWordBrefInfo *swbInfo = [self.studiedWords objectAtIndex:indexPath.row];
-    YXWordDetailViewController *wordDetailVC = [YXWordDetailViewController wordDetailWith:swbInfo.wordDetailModel
+    YXWordDetailViewControllerOld *wordDetailVC = [YXWordDetailViewControllerOld wordDetailWith:swbInfo.wordDetailModel
                                                                                    bookId:swbInfo.bookId
                                                                             withBackBlock:nil];
     [self.navigationController pushViewController:wordDetailVC animated:YES];

@@ -96,7 +96,7 @@ DEPENDENCIES:
   - HWWeakTimer
   - IQKeyboardManager (~> 6.2.0)
   - JPush
-  - Kingfisher
+  - Kingfisher (~> 5.9.0)
   - LEEAlert (~> 1.2.8)
   - lottie-ios
   - MagicalRecord
