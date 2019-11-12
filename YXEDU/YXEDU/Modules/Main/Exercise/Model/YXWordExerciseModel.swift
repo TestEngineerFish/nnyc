@@ -39,15 +39,15 @@ import ObjectMapper
 //}
 //
 
-
-
-
 /// 练习数据模型
 struct YXWordExerciseModel: Mappable {
     
     var type: YXExerciseType = .none
-
-    /// 问题
+        
+    /// 对应的单词数据
+    var word: YXWordModel?
+    
+    /// 问题（使用 word 模型）
     var question: YXWordModel?
     /// 选项
     var option: YXExerciseOptionModel?

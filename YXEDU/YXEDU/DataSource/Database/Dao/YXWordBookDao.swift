@@ -13,7 +13,9 @@ protocol YXWordBookDao {
     
     /// 添加词书
     /// - Parameter book: 词书对象
-    func insertBook(book: YXWordBookModel) -> Bool
+//    func insertBook(book: YXWordBookModel) -> Bool
+    func insertBook(book: YXWordBookModel,  completion: finishBlock)
+    
     
     /// 删除词书
     /// - Parameter bookId: 词书 id

@@ -42,6 +42,11 @@ public extension String {
         return trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
     
+    /// 是否为空
+    var isEmpty: Bool {
+        return 0 == trimed.count
+    }
+    
     /// 是否不为空
     var isNotEmpty: Bool {
         return !isEmpty

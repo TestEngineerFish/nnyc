@@ -12,7 +12,7 @@ import Foundation
 class YXListenAndLackWordQuestionView: YXBaseQuestionView {
 
     var spellView: YXSpellSubview?
-    var audioView: YXQuestionAudioSubview?
+    var audioView: YXAudioPlayerView?
 
     override func createSubviews() {
         super.createSubviews()
@@ -26,7 +26,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
             self.delegate?.checkQuestionResult(errorList: tagsList)
         }
 
-        audioView = YXQuestionAudioSubview(exerciseModel: self.exerciseModel)
+        audioView = YXAudioPlayerView(url: exerciseModel.question?.voiceUS)
         addSubview(audioView!)
     }
 

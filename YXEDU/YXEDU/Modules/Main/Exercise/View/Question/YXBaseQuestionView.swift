@@ -30,7 +30,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     var imageView: YXKVOImageView?
     
     /// 播放器
-    var playerView: YXExerciseAudioPlayerView?
+    var audioPlayerView: YXAudioPlayerView?
 
     /// 处理协议
     var delegate: YXQuestionEventProtocol?
@@ -88,9 +88,9 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     }
     
     
-    func initPlayerView() {
-        self.playerView = YXExerciseAudioPlayerView()
-        self.addSubview(playerView!)
+    func initAudioPlayerView() {
+        self.audioPlayerView = YXAudioPlayerView()
+        self.addSubview(audioPlayerView!)
     }
     
     func bindData()  {}

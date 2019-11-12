@@ -15,14 +15,17 @@ class YXWordQuestionView: YXBaseQuestionView {
         super.createSubviews()
         self.initTitleLabel()
         self.initSubTitleLabel()
+        self.initAudioPlayerView()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        let titleWidth = self.exerciseModel.question?.word?.textWidth(font: titleLabel!.font, height: 28) ?? 0
         titleLabel?.snp.makeConstraints({ (make) in
             make.top.equalTo(56)
-            make.left.right.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalTo(titleWidth)
             make.height.equalTo(28)
         })
         
@@ -31,11 +34,23 @@ class YXWordQuestionView: YXBaseQuestionView {
             make.left.right.equalToSuperview()
             make.height.equalTo(20)
         })
+        
+        
+        audioPlayerView?.snp.makeConstraints({ (make) in
+            make.centerY.equalTo(titleLabel!)
+            make.left.equalTo(titleLabel!.snp.right).offset(3)
+            make.width.height.equalTo(22)
+        })
     }
     
     override func bindData() {
         titleLabel?.text = exerciseModel.question?.word
-        subTitleLabel?.text = exerciseModel.question?.soundmarkUS        
+        subTitleLabel?.text = exerciseModel.question?.soundmarkUS
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {[weak self] in
+            self?.audioPlayerView?.play()
+        }
+        
     }
 }
 

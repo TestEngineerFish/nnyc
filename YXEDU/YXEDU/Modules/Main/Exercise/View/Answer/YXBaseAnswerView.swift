@@ -17,7 +17,7 @@ protocol YXAnswerViewDelegate: NSObjectProtocol {
 }
 
 /// 答案视图基类，所有的答案区都需要继承自该类
-class YXBaseAnswerView: UIView, YXQuestionEventProtocol {
+class YXBaseAnswerView: UIView, YXQuestionEventProtocol, YXAudioPlayerViewDelegate {
 
     var contentScrollView: UIScrollView?
     /// 练习数据模型

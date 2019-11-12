@@ -11,8 +11,17 @@ import ObjectMapper
 
 class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
-    func insertBook(book: YXWordBookModel) -> Bool {
-        return true
+    func insertBook(book: YXWordBookModel,  completion: finishBlock) {
+        let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
+        let params: [Any] = []
+        self.wordRunner.inDatabase { (db) in
+            do {//sql, values: params) ?? false
+                let result = try db.executeUpdate(sql, withArgumentsIn: params)
+                completion(nil, result)
+            } catch {
+                completion(nil, false)
+            }
+        }
     }
     
     func selectBookHash(bookId: Int) -> String {

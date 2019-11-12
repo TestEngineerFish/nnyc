@@ -18,7 +18,7 @@ class YXNewLearnQuestionSubview: UIView {
     var wordLabel: UILabel
     var chineseLabel: UILabel
     var imageView: YXQuestionImageView
-    var audioView: YXQuestionAudioSubview
+    var audioView: YXAudioPlayerView
     var exerciseModel: YXWordExerciseModel
     var viewType: NewLearnSubviewType
 
@@ -28,7 +28,7 @@ class YXNewLearnQuestionSubview: UIView {
         wordLabel          = UILabel()
         chineseLabel       = UILabel()
         imageView          = YXQuestionImageView(url: exerciseModel.question?.imageUrl ?? "https://www.baidu.com/s?wd=%E4%BB%8A%E6%97%A5%E6%96%B0%E9%B2%9C%E4%BA%8B&tn=SE_PclogoS_8whnvm25&sa=ire_dl_gh_logo&rsv_dl=igh_logo_pcs")
-        audioView        = YXQuestionAudioSubview(exerciseModel: exerciseModel)
+        audioView        = YXAudioPlayerView(url: exerciseModel.question?.voiceUS)
         super.init(frame: CGRect.zero)
         self.createSubviews(type)
     }

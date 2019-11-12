@@ -26,7 +26,7 @@ class YXListenQuestionView: YXBaseQuestionView {
         self.audioBackgroundView.layer.borderColor = UIColor.orange2.cgColor
         
         
-        self.initPlayerView()
+        self.initAudioPlayerView()
         
     }
     
@@ -38,7 +38,7 @@ class YXListenQuestionView: YXBaseQuestionView {
             make.width.height.equalTo(52)
         })
 
-        playerView?.snp.makeConstraints({ (make) in
+        audioPlayerView?.snp.makeConstraints({ (make) in
             make.center.equalToSuperview()
             make.width.height.equalTo(48)
         })

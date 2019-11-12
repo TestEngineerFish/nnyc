@@ -215,5 +215,14 @@ extension YYSQLManager {
             DELETE FROM STUDYPROGRESS_INFO
         """
     }
+    
+    
+    
+    enum WordBookSQL: String {
+        case insertBook =
+        """
+        """
+        
+    }
 
 }

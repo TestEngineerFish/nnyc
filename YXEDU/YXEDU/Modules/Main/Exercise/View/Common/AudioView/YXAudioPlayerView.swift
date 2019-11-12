@@ -8,14 +8,19 @@
 
 import UIKit
 
-class YXQuestionAudioSubview: UIView {
-    let audioButton = UIButton()
-    var exerciseModel: YXWordExerciseModel
-    var delegate: YXQuestionEventProtocol?
 
-    init(exerciseModel: YXWordExerciseModel,isShowBg: Bool = false) {
-        self.exerciseModel = exerciseModel
+protocol YXAudioPlayerViewDelegate {
+    /// 通过按钮的选中效果来播放和暂停
+    func endPlayAudio()
+}
 
+class YXAudioPlayerView: UIView {
+    var delegate: YXAudioPlayerViewDelegate?
+    
+    private let audioButton = UIButton()
+    private var url: String?
+
+    init(url: String? = nil, isShowBg: Bool = false) {
         var width   = CGFloat(22)
         var height  = CGFloat(22)
         if isShowBg {
@@ -44,10 +49,14 @@ class YXQuestionAudioSubview: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // TODO: Event
-
-    @objc func clickAudioBtn() {
+    
+    
+    
+    func play() {
+//        guard let _url = self.url else {
+//            return
+//        }
+        
         if YXAVPlayerManager.share.isPlaying {
             YXAVPlayerManager.share.pauseAudio()
             self.audioButton.layer.removeFlickerAnimation()
@@ -62,6 +71,12 @@ class YXQuestionAudioSubview: UIView {
                 self.audioButton.layer.removeFlickerAnimation()
             }
         }
+    }
+
+    // TODO: Event
+
+    @objc func clickAudioBtn() {
+        self.play()
     }
 
 }
