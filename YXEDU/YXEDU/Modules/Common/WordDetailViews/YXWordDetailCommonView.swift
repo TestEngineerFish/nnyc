@@ -62,15 +62,15 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     private func initializationFromNib() {
         Bundle.main.loadNibNamed("YXWordDetailCommonView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.frame
+        contentView.frame = self.bounds
         
         wordLabel.text = word.word
         
         if YXUserModel.default.didUseAmericanPronunciation {
-            phoneticSymbolLabel.text = "美" + (word.soundmarkUS ?? "")
+            phoneticSymbolLabel.text = word.soundmarkUS
             
         } else {
-            phoneticSymbolLabel.text = "英" + (word.soundmarkUK ?? "")
+            phoneticSymbolLabel.text = word.soundmarkUK
         }
         
         if let propertys = word.property {
@@ -170,8 +170,28 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         }
         switch indexPath.section {
         case 0:
-            if let example = word.examples?[indexPath.row] {
-                cell.label.text = "\(example.en ?? "")\n\(example.cn ?? "")"
+            if let example = word.examples?[indexPath.row], let englishExample = example.en, let chineseExample = example.cn {
+//                let hashtagIndex = englishExample.firstIndex(of: "#")!
+//                let startColorIndex = englishExample.index(hashtagIndex, offsetBy: 1)
+//                let endColorIndex = englishExample.index(startColorIndex, offsetBy: 6)
+//                let colorString = String(englishExample[startColorIndex..<endColorIndex])
+                
+                let firstRightBracket = englishExample.firstIndex(of: ">")!
+                let startHighLightIndex = englishExample.index(firstRightBracket, offsetBy: 1)
+                let lastLeftBracket = englishExample.lastIndex(of: "<")!
+                let highLightString = String(englishExample[startHighLightIndex..<lastLeftBracket])
+                
+                let firstLeftBracket = englishExample.firstIndex(of: "<")!
+                let lastRightBracket = englishExample.lastIndex(of: ">")!
+                let endHighLightIndex = englishExample.index(lastRightBracket, offsetBy: 1)
+                let string = String(englishExample[englishExample.startIndex..<firstLeftBracket]) + highLightString + String(englishExample[endHighLightIndex..<englishExample.endIndex]) + "\n\(chineseExample)"
+                
+                let attrString = NSMutableAttributedString(string: string)
+                let highLightRange = string.range(of: highLightString)!
+                let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
+                attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
+                
+                cell.label.attributedText = attrString
             }
             
             cell.playAuoidButton.isHidden = false

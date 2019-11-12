@@ -89,6 +89,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             self.saveWordBook(with: unzipWordBooksJsonURL)
             
         } catch {
+            print(error)
+            
             DispatchQueue.main.async {
                 self.closure?(false)
             }
@@ -114,7 +116,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             let coreWordBook = YXCoreWordBookModel(context: YXCoreDataManager.shared.viewContext)
             coreWordBook.bookID = Int16(currentDownloadWordBook.bookID!)
 //            coreWordBook.gradeID = currentDownloadWordBook.
-            coreWordBook.hashString = currentDownloadWordBook.hashString
+            coreWordBook.hashString = "\(currentDownloadWordBook.hashString ?? 0)"
 
             for unit in units {
                 guard let words = unit.words else {
@@ -154,6 +156,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             }
             
         } catch {
+            print(error)
+
             DispatchQueue.main.async {
                 self.closure?(false)
             }

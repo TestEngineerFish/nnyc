@@ -61,7 +61,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             guard wordBook.isSelected else { continue }
             
 //            let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: wordBook.units) { (unitID) in
-//                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/unit/change", parameters: ["bookId": "\(bookID)", "unitId": unitID]) { (response, isSuccess) in
+//                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/unit/change", parameters: ["bookId": "\(bookID)", "unitId": "\(unitID)"]) { (response, isSuccess) in
 //                    guard isSuccess else { return }
 //
 //                    YXWordBookResourceManage.shared.downloadWordBook(with: URL(string: bookSource)!, and: bookID) { (isSucess) in
@@ -72,6 +72,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
 //            }
 //            
 //            self.view.addSubview(seleceUnitView)
+            
             break
         }
      }

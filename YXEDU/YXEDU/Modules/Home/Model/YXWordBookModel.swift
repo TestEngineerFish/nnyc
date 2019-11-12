@@ -11,14 +11,6 @@ import UIKit
 
 
 // MARK: - 新增词书
-struct YXGradeListModel: Codable {
-    var gradeList: [YXGradeModel]?
-    
-    enum CodingKeys: String, CodingKey {
-        case gradeList = "grade_list"
-    }
-}
-
 struct YXGradeModel: Codable {
     var isSelect = false
 
@@ -43,7 +35,7 @@ struct YXWordBookModel: Codable {
     var bookSource: String?
     var coverImagePath: String?
     var countOfWords: Int?
-    var hashString: String?
+    var hashString: Int?
     var unitList: [YXWordBookUnitModel]?
     
     enum CodingKeys: String, CodingKey {

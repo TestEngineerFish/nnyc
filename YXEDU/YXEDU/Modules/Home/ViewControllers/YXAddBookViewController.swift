@@ -44,15 +44,14 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func loadData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/booklist", parameters: [:]) { (response, isSuccess) in
-//        YXDataProcessCenter.get("http://lihongwei.api.xstudyedu.com/api/v1/book/booklist?debug_uid=2", parameters: [:]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
+//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in
+        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in
+            guard isSuccess, let response = response?.responseObject as? [Any] else { return }
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 let decoder = JSONDecoder()
-                let result = try decoder.decode(YXGradeListModel.self, from: jsonData)
-                self.grades = result.gradeList ?? []
+                self.grades = try decoder.decode([YXGradeModel].self, from: jsonData)
                 self.filterGrades = self.grades
                 
                 self.createGradeSelectView()
@@ -92,6 +91,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         tableView.reloadData()
+        tableView.scrollsToTop = true
     }
     
     
@@ -147,7 +147,9 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookID = wordBook.bookID, let units = wordBook.unitList, let bookSource = wordBook.bookSource else { return }
         
         let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: units) { (unitID) in
-            YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/unit/change", parameters: ["bookId": "\(bookID)", "unitId": unitID]) { (response, isSuccess) in
+            guard let unitID = unitID else { return }
+
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/unit/change", parameters: ["bookId": "\(bookID)", "unitId": "\(unitID)"]) { (response, isSuccess) in
                 guard isSuccess else { return }
                 
                 YXWordBookResourceManager.shared.download(wordBook, with: URL(string: bookSource)!) { (isSucess) in

@@ -69,7 +69,7 @@ class YXWordDetailViewController: UIViewController {
         }
         """)
         
-        wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 40, width: screenWidth, height: self.view.height - 120), word: word!)
+        wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 40, width: screenWidth, height: screenHeight - 120), word: word!)
         self.view.addSubview(wordDetailView)
     }
 
