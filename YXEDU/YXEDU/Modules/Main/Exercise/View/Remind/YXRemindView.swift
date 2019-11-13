@@ -37,6 +37,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     /// 等待播放的语音列表（某一步提示，可能会播放多个语音，需要使用队列顺序播放，例如：单词语音+例句语音）
     private var audioList: [String] = []
+    private var playIndex = 0
     
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
@@ -98,6 +99,8 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         titleLabel.font             = UIFont.pfSCRegularFont(withSize: 14)
         titleLabel.textColor        = UIColor.black3
         titleLabel.isHidden         = true
+        
+        audioPlayerView.delegate    = self
     }
     
     
@@ -111,6 +114,9 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
             return
         }
         
+        self.audioList.removeAll()
+        self.playIndex = 0
+        
         let step = remindSteps[currentRemindIndex]
         self.processRedmine(remindStep: step)
         
@@ -122,7 +128,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func processRedmine(remindStep: [YXRemindType]) {
         
-        for type in remindStep {            
+        for type in remindStep {
             switch type {
                 case .word:
                     remindWord()
@@ -148,64 +154,125 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
         
 
-
+    private func remindWord() {
+        titleLabel.text = exerciseModel.word?.word
+        setAllSubviewStatus()
+    }
     
     private func remindExample() {
-        titleLabel.isHidden = false
         titleLabel.text = exerciseModel.word?.englishExample
+        setAllSubviewStatus()
     }
 
     private func remindImage() {
-        imageView.isHidden = false
         if let url = exerciseModel.word?.imageUrl {
             imageView.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
         }
+        setAllSubviewStatus()
     }
     
     private func remindSoundmark() {
-        titleLabel.isHidden = false
-        titleLabel.text = exerciseModel.word?.americanPhoneticSymbol
+        titleLabel.text = exerciseModel.word?.soundmark
+        setAllSubviewStatus()
     }
     
     private func remindWordAudio() {
-//        if let url = exerciseModel.word?.soundmarkUS
-//        audioList.append(exerciseModel.)
+        if let url = exerciseModel.word?.voice {
+            audioList.append(url)
+            
+            if remindSteps[currentRemindIndex].last == .wordAudio {
+                playAudio()
+                setAllSubviewStatus()
+            }
+        }
     }
     
     private func remindExampleAudio() {
-        
+        if let url = exerciseModel.word?.examplePronunciation {
+            audioList.append(url)
+            if remindSteps[currentRemindIndex].last == .exampleAudio {
+                playAudio()
+                setAllSubviewStatus()
+            }
+        }
     }
     
     private func remindWordChinese() {
-        titleLabel.isHidden = false
         titleLabel.text = exerciseModel.word?.meaning
+        setAllSubviewStatus()
     }
     
     private func remindExampleChinese() {
-        titleLabel.isHidden = false
         titleLabel.text = exerciseModel.word?.chineseExample
-    }
-    
-
-    private func remindWord() {
-        titleLabel.isHidden = false
-        titleLabel.text = exerciseModel.word?.word
+        setAllSubviewStatus()
     }
     
     
     private func remindDetail() {
         
-    }
-    
-    
-    
-    private func hiddenTitleLabel() {
         
+        
+        self.setAllSubviewStatus()
+    }
+    
+    private func setAllSubviewStatus() {
+        
+        if remindSteps.count == 0 {
+            return
+        }
+        
+        titleLabel.isHidden = !hasText()
+        imageView.isHidden = !hasImage()
+        audioPlayerView.isHidden = !hasAudio()
+        
+        self.layoutIfNeeded()
     }
     
     
-    //MARK: -
+    /// 是否有文本提示
+    private func hasText() -> Bool {
+        let step = remindSteps[currentRemindIndex]
+        for type in step {
+            if (type == .word || type == .example || type == .soundmark
+            || type == .wordChinese || type == . exampleChinese) {
+                return true
+            }
+        }
+        return false
+    }
+    /// 是否有图片提示
+    private func hasImage() -> Bool {
+        let step = remindSteps[currentRemindIndex]
+        for type in step {
+            if type == .image {
+                return true
+            }
+        }
+        return false
+    }
+    /// 是否有语音提示
+    private func hasAudio() -> Bool {
+        let step = remindSteps[currentRemindIndex]
+        for type in step {
+            if (type == .wordAudio || type == .exampleAudio) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    /// 播放语音
+    private func playAudio() {
+        if let url = audioList.first {
+            audioList.removeFirst()
+            self.audioPlayerView.urlStr = url
+            self.audioPlayerView.play()
+        }
+    }
+    
+    //MARK: - 语音播放结束
     func endPlayAudio() {
-        
+        self.playAudio()
     }
 }
+

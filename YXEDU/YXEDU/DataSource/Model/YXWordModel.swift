@@ -15,13 +15,20 @@ struct YXWordModel: Mappable {
     var partOfSpeech: String?
     var meaning: String?
     var imageUrl: String?
+    
+    /// 音标
     var americanPhoneticSymbol: String?
     var englishPhoneticSymbol: String?
+    
+    /// 发音
     var americanPronunciation: String?
     var englishPronunciation: String?
+    
+    /// 例句
     var englishExample: String?
     var chineseExample: String?
     var examplePronunciation: String?
+    
     var synonym: String?
     var antonym: String?
     var usage: [String]?
