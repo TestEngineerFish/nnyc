@@ -28,12 +28,15 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private var remindLabel = UILabel()
         
-//    private var titleLabel = UILabel()
-    /// 播放器
+    private var titleLabel = UILabel()
+    private var imageView = YXKVOImageView()
     private var audioPlayerView = YXAudioPlayerView()
     
     /// 当前提示到哪一步了，默认从第一个开始提示
     private var currentRemindIndex = 0
+    
+    /// 等待播放的语音列表（某一步提示，可能会播放多个语音，需要使用队列顺序播放，例如：单词语音+例句语音）
+    private var audioList: [String] = []
     
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
@@ -44,26 +47,57 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
 
     private func createSubview() {
         self.addSubview(self.remindLabel)
+        self.addSubview(self.titleLabel)
+        self.addSubview(self.imageView)
+        self.addSubview(self.audioPlayerView)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.remindLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(0)
-            make.left.equalTo(22)
-            make.right.equalTo(-22)
+        self.remindLabel.snp.remakeConstraints { (make) in
+            make.top.left.equalTo(0)
+            make.width.equalTo(37)
             make.height.equalTo(20)
         }
+        
+        self.titleLabel.snp.remakeConstraints { (make) in
+            make.top.equalTo(0)
+            make.left.equalTo(remindLabel.snp.right)
+            make.right.equalTo(audioPlayerView.snp.left)
+            
+            let width = screenWidth - 22 * 2 - 37 - 5 - 22
+            let height = titleLabel.text?.textHeight(font: titleLabel.font, width: width) ?? 20
+            make.height.equalTo(height)
+        }
+        
+        self.audioPlayerView.snp.remakeConstraints { (make) in
+            make.top.equalTo(0)
+            make.width.height.equalTo(22)
+        }
+        
+        self.imageView.snp.remakeConstraints { (make) in
+            if titleLabel.isHidden {
+                make.top.equalTo(0)
+            } else {
+                make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            }
+            
+            make.left.equalTo(remindLabel.snp.right)
+            make.width.equalTo(89)
+            make.height.equalTo(70)
+        }
+        
     }
     
     private func bindProperty() {
-        remindLabel.font          = UIFont.pfSCRegularFont(withSize: 12)
-        remindLabel.text          = "提示:"
-        remindLabel.textColor     = UIColor.gray1
-        remindLabel.textAlignment = .center
-        remindLabel.isHidden = true
-        
+        remindLabel.font            = UIFont.pfSCRegularFont(withSize: 12)
+        remindLabel.text            = "提示:"
+        remindLabel.textColor       = UIColor.black3
+                
+        titleLabel.font             = UIFont.pfSCRegularFont(withSize: 14)
+        titleLabel.textColor        = UIColor.black3
+        titleLabel.isHidden         = true
     }
     
     
@@ -113,25 +147,29 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         
     }
         
-    private func remindWord() {
-        
-    }
-    
-    private func remindImage() {
-        
-    }
+
+
     
     private func remindExample() {
-        remindLabel.isHidden = false
-        remindLabel.text = "提示：" + (exerciseModel.question?.examples?.first?.en ?? "")
+        titleLabel.isHidden = false
+        titleLabel.text = exerciseModel.word?.examples?.first?.en
     }
 
+    private func remindImage() {
+        imageView.isHidden = false
+        if let url = exerciseModel.word?.imageUrl {
+            imageView.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
+        }
+    }
+    
     private func remindSoundmark() {
-        
+        titleLabel.isHidden = false
+        titleLabel.text = exerciseModel.word?.soundmarkUS
     }
     
     private func remindWordAudio() {
-        
+//        if let url = exerciseModel.word?.soundmarkUS
+//        audioList.append(exerciseModel.)
     }
     
     private func remindExampleAudio() {
@@ -139,19 +177,31 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     private func remindWordChinese() {
-        
+        titleLabel.isHidden = false
+        titleLabel.text = exerciseModel.word?.property?.first?.paraphrase
     }
     
     private func remindExampleChinese() {
-        remindLabel.isHidden = false
-        remindLabel.text = "提示：" + (exerciseModel.question?.examples?.first?.cn ?? "")
+        titleLabel.isHidden = false
+        titleLabel.text = exerciseModel.word?.examples?.first?.cn
     }
     
 
+    private func remindWord() {
+        titleLabel.isHidden = false
+        titleLabel.text = exerciseModel.word?.word
+    }
+    
+    
     private func remindDetail() {
         
     }
     
+    
+    
+    private func hiddenTitleLabel() {
+        
+    }
     
     
     //MARK: -

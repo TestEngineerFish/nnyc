@@ -68,6 +68,19 @@ struct YXWordModel: Mappable {
         column <- map["column"]
         row <- map["row"]
     }
+    
+    
+    ///根据本地设置，获取音标
+    var soundmark: String? {
+        return YXUserModel.default.didUseAmericanPronunciation ? soundmarkUS : soundmarkUK
+    }
+    
+    ///根据本地设置，获取语音
+    var voice: String? {
+        return YXUserModel.default.didUseAmericanPronunciation ? voiceUS : voiceUK
+    }
+    
+    
 }
 
 
