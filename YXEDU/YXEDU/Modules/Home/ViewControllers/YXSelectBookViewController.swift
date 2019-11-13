@@ -28,26 +28,29 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
      @IBAction func deleteWordBook(_ sender: UIButton) {
         for index in 0..<wordBookModels.count {
             let wordBook = wordBookModels[index]
-            guard wordBook.isSelected else { continue }
+            guard wordBook.isSelected, let bookID = wordBook.bookID else { continue }
             
-            YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": wordBook.bookID ?? 0]) { [weak self] (response, isSuccess) in
+            YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": bookID]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
                 
-                if index == 0 {
-                    self.fetchWordBookDetail(self.wordBookModels[1])
+                YXWordBookDaoImpl().deleteBook(bookId: bookID) { [weak self] (result, isSuccess) in
+                    guard let self = self, isSuccess else { return }
+
+                    if index == 0 {
+                        self.fetchWordBookDetail(self.wordBookModels[1])
+                        
+                    } else if index == self.wordBookModels.count - 1 {
+                        self.fetchWordBookDetail(self.wordBookModels[index - 1])
+                        
+                    } else {
+                        self.fetchWordBookDetail(self.wordBookModels[index + 1])
+                    }
                     
-                } else if index == self.wordBookModels.count - 1 {
-                    self.fetchWordBookDetail(self.wordBookModels[index - 1])
-                    
-                } else {
-                    self.fetchWordBookDetail(self.wordBookModels[index + 1])
+                    self.wordBookModels.remove(at: index)
+                    self.bookCollectionView.reloadData()
                 }
-                
-                self.wordBookModels.remove(at: index)
-                self.bookCollectionView.reloadData()
-                
-                YXWordBookResourceManager.shared.deleteWordBook(by: wordBook.bookID ?? 0)
             }
+            
             break
         }
     }
@@ -61,7 +64,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let wordBook = wordBookModels[index]
             guard wordBook.isSelected else { continue }
             
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/unit/change", parameters: ["bookId": "\(wordBook.bookID ?? 0)"]) { [weak self] (response, isSuccess) in
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "bookId": "\(wordBook.bookID ?? 0)"]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
 
                 YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
@@ -90,10 +93,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                let decoder = JSONDecoder()
-                let result = try decoder.decode(YXUserWordBookListModel.self, from: jsonData)
-                
-                guard let wordBookStateModels = result.currentLearnWordBookStatus, var learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 else { return }
+                guard let jsonString = String(data: jsonData, encoding: .unicode), let result = YXUserWordBookListModel(JSONString: jsonString), let wordBookStateModels = result.currentLearnWordBookStatus, var learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 else { return }
                 self.wordBookStateModels = wordBookStateModels
                 self.fetchWordBookDetail(learnedWordBooks[0])
 

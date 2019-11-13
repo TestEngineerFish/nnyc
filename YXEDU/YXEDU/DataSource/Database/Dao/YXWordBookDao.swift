@@ -13,28 +13,25 @@ protocol YXWordBookDao {
     
     /// 添加词书
     /// - Parameter book: 词书对象
-//    func insertBook(book: YXWordBookModel) -> Bool
     func insertBook(book: YXWordBookModel,  completion: finishBlock)
-    
     
     /// 删除词书
     /// - Parameter bookId: 词书 id
-    func deleteBook(bookId: Int) -> Bool
+    func deleteBook(bookId: Int,  completion: finishBlock)
     
-    /// 查询词书hash值，判断版本
+    /// 查询词书
     /// - Parameter bookId: 词书 id
-    func selectBookHash(bookId: Int) -> String
-    
+    func selectBook(bookId: Int,  completion: finishBlock)
     
     /// 插入单词
     /// - Parameter word: 单词对象
-    func insertWord(word: YXWordModel) -> Bool
+    func insertWord(word: YXWordModel,  completion: finishBlock)
     
     /// 删除单词
     /// - Parameter bookId: 词书 id
-    func deleteWord(bookId: Int) -> Bool
+    func deleteWord(bookId: Int,  completion: finishBlock)
     
     /// 查询单词
     /// - Parameter wordId: 单词 id
-    func selectWord(wordId: Int) -> YXWordModel?
+    func selectWord(wordId: Int,  completion: finishBlock)
 }

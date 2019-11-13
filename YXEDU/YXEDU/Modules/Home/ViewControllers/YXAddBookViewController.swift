@@ -50,8 +50,8 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                let decoder = JSONDecoder()
-                self.grades = try decoder.decode([YXGradeWordBookListModel].self, from: jsonData)
+                guard let jsonString = String(data: jsonData, encoding: .unicode), let grades = [YXGradeWordBookListModel](JSONString: jsonString) else { return }
+                self.grades = grades
                 self.filterGrades = self.grades
                 
                 self.createGradeSelectView()
@@ -144,13 +144,13 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookID = wordBook.bookID, let units = wordBook.unitList else { return }
+        guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookID = wordBook.bookID, let units = wordBook.units else { return }
         
         let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: units) { (unitID) in
             guard let unitID = unitID else { return }
 
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/unit/change", parameters: ["bookId": "\(bookID)", "unitId": "\(unitID)"]) { (response, isSuccess) in
-                guard isSuccess else { return }
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "bookId": "\(bookID)", "unitId": "\(unitID)"]) { [weak self] (response, isSuccess) in
+                guard let self = self, isSuccess else { return }
                 
                 YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
                     guard isSucess else { return }

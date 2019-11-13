@@ -221,8 +221,28 @@ extension YYSQLManager {
     enum WordBookSQL: String {
         case insertBook =
         """
+        1
         """
         
+        case selectBook =
+        """
+        2
+        """
+        
+        case deleteBook =
+        """
+        3
+        """
+        
+        case insertWord =
+        """
+        4
+        """
+        
+        case selectWord =
+        """
+        5
+        """
     }
 
 }

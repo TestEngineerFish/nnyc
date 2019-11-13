@@ -11,52 +11,57 @@ import ObjectMapper
 
 class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
-    func insertBook(book: YXWordBookModel,  completion: finishBlock) {
+    func insertBook(book: YXWordBookModel, completion: finishBlock) {
         let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
         let params: [Any] = []
+        
         self.wordRunner.inDatabase { (db) in
-            do {//sql, values: params) ?? false
-                let result = try db.executeUpdate(sql, withArgumentsIn: params)
-                completion(nil, result)
-            } catch {
-                completion(nil, false)
-            }
+            let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
+            completion(nil, isSuccess)
         }
     }
     
-    func selectBookHash(bookId: Int) -> String {
-        return ""
-    }
-    
-    func deleteBook(bookId: Int) -> Bool {
-        return true
-    }
-    
-    func insertWord(word: YXWordModel) -> Bool {
-        return true
-    }
-    
-    func deleteWord(bookId: Int) -> Bool {
-        return true
-    }
-    
-    
-    func selectWord(wordId: Int) -> YXWordModel? {
-        let json = """
-            [{
-                "en": "You have such a good chance.",
-                "cn": "你有这么一个好的机会。",
-                "voice": "/speech/a00c5c2830ffc50a68f820164827f356.mp3"
-            }]
-        """
-        var word = YXWordModel()
-        if let examples = Array<YXWordExampleModel>(JSONString: json){
-            word.examples = examples
+    func selectBook(bookId: Int, completion: finishBlock) {
+        let sql = YYSQLManager.WordBookSQL.selectBook.rawValue
+        let params: [Any] = []
+        
+        self.wordRunner.inDatabase { (db) in
+            let result = db.executeQuery(sql, withArgumentsIn: params)
+            completion(result, result != nil)
         }
-        word.wordId = wordId
-        word.gardeType = 2
-        return word
     }
     
+    func deleteBook(bookId: Int, completion: finishBlock) {
+        let sql = YYSQLManager.WordBookSQL.deleteBook.rawValue
+        let params: [Any] = []
+        
+        self.wordRunner.inDatabase { (db) in
+            let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
+            completion(nil, isSuccess)
+        }
+    }
+    
+    func insertWord(word: YXWordModel, completion: finishBlock) {
+        let sql = YYSQLManager.WordBookSQL.insertWord.rawValue
+        let params: [Any] = []
+        
+        self.wordRunner.inDatabase { (db) in
+            let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
+            completion(nil, isSuccess)
+        }
+    }
+    
+    func selectWord(wordId: Int, completion: finishBlock) {
+        let sql = YYSQLManager.WordBookSQL.selectWord.rawValue
+        let params: [Any] = []
+        
+        self.wordRunner.inDatabase { (db) in
+            let result = db.executeQuery(sql, withArgumentsIn: params)
+            completion(result, result != nil)
+        }
+    }
+    
+    func deleteWord(bookId: Int, completion: finishBlock) {
 
+    }
 }

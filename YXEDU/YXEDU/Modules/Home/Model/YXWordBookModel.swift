@@ -6,24 +6,30 @@
 //  Copyright © 2019 shiji. All rights reserved.
 //
 
-import UIKit
+import ObjectMapper
 
 
 
 // MARK: - 新增词书
-struct YXGradeWordBookListModel: Codable {
+struct YXGradeWordBookListModel: Mappable {
     var isSelect = false
 
     var gradeName: String?
     var wordBooks: [YXWordBookModel]?
     
-    enum CodingKeys: String, CodingKey {
-        case gradeName = "grade_name"
-        case wordBooks = "book_list"
+    init() {}
+
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        gradeName <- map["grade_name"]
+        wordBooks <- map["book_list"]
     }
 }
 
-struct YXWordBookModel: Codable {
+struct YXWordBookModel: Mappable {
     var isSelected = false
     var isCurrentStudy = false
     var isNewWordBook = false
@@ -36,39 +42,58 @@ struct YXWordBookModel: Codable {
     var coverImagePath: String?
     var countOfWords: Int?
     var hashString: Int?
-    var unitList: [YXWordBookUnitModel]?
+    var units: [YXWordBookUnitModel]?
     
-    enum CodingKeys: String, CodingKey {
-        case bookID = "book_id"
-        case bookName = "book_name"
-        case bookSource = "book_url"
-        case coverImagePath = "cover"
-        case hashString = "hash"
-        case unitList = "unit_list"
-        case grade = "book_grade"
+    init() {}
+
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        grade <- map["book_grade"]
+        bookID <- map["book_id"]
+        bookName <- map["book_name"]
+        bookSource <- map["book_url"]
+        coverImagePath <- map["cover"]
+        countOfWords <- map["?"]
+        hashString <- map["hash"]
+        units <- map["unit_list"]
     }
 }
 
-struct YXWordBookUnitModel: Codable {
+struct YXWordBookUnitModel: Mappable {
     var unitID: Int?
     var unitName: String?
+    var isExtensionUnit: Int?
+    var words: [YXWordModel]?
     
-    enum CodingKeys: String, CodingKey {
-        case unitID = "unit_id"
-        case unitName = "unit_name"
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        unitID <- map["unit_id"]
+        unitName <- map["unit_name"]
+        isExtensionUnit <- map["is_ext_unit"]
+        words <- map["word_list"]
     }
 }
 
 
 
 // MARK: - 选择词书
-struct YXUserWordBookListModel: Codable {
+struct YXUserWordBookListModel: Mappable {
     var currentLearnWordBookStatus: YXWordBookStatusModel?
     var learnedWordBooks: [YXWordBookModel]?
 
-    enum CodingKeys: String, CodingKey {
-        case currentLearnWordBookStatus = "user_current_book_status"
-        case learnedWordBooks = "user_book_list"
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        currentLearnWordBookStatus <- map["user_current_book_status"]
+        learnedWordBooks <- map["user_book_list"]
     }
 }
 
@@ -78,10 +103,14 @@ struct YXWordBookStatusModel: Codable {
     var learnedWordsCount: Int?
     var learningUnit: String?
     
-    enum CodingKeys: String, CodingKey {
-        case bookID = "book_id"
-        case learnedDays = "learned_days"
-        case learnedWordsCount = "learned_words"
-        case learningUnit = "learning_unit"
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        bookID <- map["book_id"]
+        learnedDays <- map["learned_days"]
+        learnedWordsCount <- map["learned_words"]
+        learningUnit <- map["learning_unit"]
     }
 }
