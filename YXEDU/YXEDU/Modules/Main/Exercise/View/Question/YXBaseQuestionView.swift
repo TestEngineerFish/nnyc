@@ -91,7 +91,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     
     
     func initAudioPlayerView() {
-        self.audioPlayerView = YXAudioPlayerView()
+        self.audioPlayerView = YXAudioPlayerView(url: nil)
         self.addSubview(audioPlayerView!)
     }
     

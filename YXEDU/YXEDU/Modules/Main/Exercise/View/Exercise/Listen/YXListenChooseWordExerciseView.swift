@@ -16,7 +16,10 @@ class YXListenChooseWordExerciseView: YXBaseExerciseView {
     override func createSubview() {
         questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
-        
+
+        remindView = YXRemindView(exerciseModel: exerciseModel)
+        self.addSubview(remindView!)
+
         answerView = YXItemAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
@@ -33,6 +36,12 @@ class YXListenChooseWordExerciseView: YXBaseExerciseView {
             make.right.equalTo(-22)
             make.height.equalTo(150)
         }
+
+        remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(questionView!.snp.bottom).offset(15)
+            make.left.width.equalTo(questionView!)
+            make.height.equalTo(150)
+        })
         
         self.answerView?.snp.makeConstraints({ (make) in
             make.left.right.bottom.equalToSuperview()
