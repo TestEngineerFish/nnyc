@@ -50,4 +50,8 @@ class YXFillWordGroupExerciseView: YXBaseExerciseView {
             make.bottom.equalToSuperview()
         })
     }
+    
+    override func bindData() {
+        self.remindView?.remindSteps = [[.example], [.image], [.detail]]
+    }
 }

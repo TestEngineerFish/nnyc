@@ -12,33 +12,32 @@ import UIKit
 class YXValidationWordAndChineseExerciseView: YXBaseExerciseView {
     private let answerHeight: CGFloat = 42
         
-        override func createSubview() {
-            questionView = YXWordAndChineseQuestionView(exerciseModel: exerciseModel)
-            self.addSubview(questionView!)
-            
-            answerView = YXRightOrWrongAnswerView(exerciseModel: exerciseModel)
-            answerView?.answerDelegate = self
-            self.addSubview(answerView!)
-            
+    override func createSubview() {
+        questionView = YXWordAndChineseQuestionView(exerciseModel: exerciseModel)
+        self.addSubview(questionView!)
+        
+        answerView = YXRightOrWrongAnswerView(exerciseModel: exerciseModel)
+        answerView?.answerDelegate = self
+        self.addSubview(answerView!)
+        
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.questionView?.snp.makeConstraints { (make) in
+            make.top.equalTo(32)
+            make.left.right.equalTo(0)
+            make.height.equalTo(180)
         }
         
+//        self.answerView?.snp.makeConstraints({ (make) in
+//            make.left.right.bottom.equalToSuperview()
+//            make.height.equalTo(answerHeight)
+//        })
+        answerView?.frame = CGRect(x: 0, y: self.size.height - answerHeight, width: screenWidth, height: answerHeight)
         
-        override func layoutSubviews() {
-            super.layoutSubviews()
-
-            self.questionView?.snp.makeConstraints { (make) in
-                make.top.equalTo(32)
-                make.left.right.equalTo(0)
-                make.height.equalTo(180)
-            }
-            
-    //        self.answerView?.snp.makeConstraints({ (make) in
-    //            make.left.right.bottom.equalToSuperview()
-    //            make.height.equalTo(answerHeight)
-    //        })
-            answerView?.frame = CGRect(x: 0, y: self.size.height - answerHeight, width: screenWidth, height: answerHeight)
-            
-        }
-
+    }
     
 }

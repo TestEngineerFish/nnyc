@@ -9,7 +9,9 @@
 import Foundation
 
 enum YXRemindType: Int {
+    case word                   // 单词拼写
     case example                // 例句
+    case soundmark              // 音标
     case wordAudio              // 单词读音
     case exampleAudio           // 例句读音
     case wordChinese            // 单词中文意思
@@ -88,6 +90,10 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         
         for type in remindStep {            
             switch type {
+                case .word:
+                    remindWord()
+                case .soundmark:
+                    remindSoundmark()
                 case .example:
                     remindExample()
                 case .image:
@@ -100,20 +106,27 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
                     remindWordChinese()
                 case .exampleChinese:
                     remindExampleChinese()
-                case .detail:
+                default:
                     remindDetail()
             }
         }
         
     }
+        
+    private func remindWord() {
+        
+    }
     
+    private func remindImage() {
+        
+    }
     
     private func remindExample() {
         remindLabel.isHidden = false
         remindLabel.text = "提示：" + (exerciseModel.question?.examples?.first?.en ?? "")
     }
-    
-    private func remindImage() {
+
+    private func remindSoundmark() {
         
     }
     
@@ -138,7 +151,6 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     private func remindDetail() {
         
     }
-    
     
     
     

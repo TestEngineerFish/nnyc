@@ -40,4 +40,7 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
         })
     }
 
+    override func bindData() {
+        self.remindView?.remindSteps = [[.example, .image, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
+    }
 }

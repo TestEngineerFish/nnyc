@@ -39,4 +39,8 @@ class YXFillWordAccordingToImageExerciseView: YXBaseExerciseView {
             make.height.equalTo(200)
         })
     }
+    
+    override func bindData() {
+        self.remindView?.remindSteps = [[.example, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
+    }
 }

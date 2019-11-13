@@ -40,5 +40,9 @@ class YXListenChooseWordExerciseView: YXBaseExerciseView {
         })
         
     }
+    
+    override func bindData() {
+        self.remindView?.remindSteps = [[.image], [.wordChinese], [.example, .exampleAudio], [.detail]]
+    }
 
 }

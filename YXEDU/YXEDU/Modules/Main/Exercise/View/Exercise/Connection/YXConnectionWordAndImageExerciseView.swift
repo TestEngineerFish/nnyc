@@ -19,4 +19,7 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
     }
     */
 
+    override func bindData() {
+        self.remindView?.remindSteps = [[.example], [.wordChinese], [.detail]]
+    }
 }

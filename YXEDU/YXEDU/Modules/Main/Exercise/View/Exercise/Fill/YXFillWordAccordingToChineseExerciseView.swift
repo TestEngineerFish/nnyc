@@ -49,4 +49,9 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
             make.height.equalTo(200)
         })
     }
+    
+    
+    override func bindData() {
+        self.remindView?.remindSteps = [[.example, .image, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
+    }
 }

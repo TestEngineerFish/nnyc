@@ -16,6 +16,9 @@ class YXLookExampleChooseImageExerciseView: YXBaseExerciseView {
         questionView = YXExampleQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
         
+        remindView = YXRemindView(exerciseModel: self.exerciseModel)
+        self.addSubview(remindView!)
+        
         answerView = YXImageAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
@@ -32,6 +35,12 @@ class YXLookExampleChooseImageExerciseView: YXBaseExerciseView {
             make.height.equalTo(180)
         }
         
+        self.remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(questionView!.snp.bottom).offset(15)
+            make.left.width.equalTo(questionView!)
+            make.height.equalTo(150)
+        })
+        
         self.answerView?.snp.makeConstraints({ (make) in
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(223)
@@ -40,5 +49,6 @@ class YXLookExampleChooseImageExerciseView: YXBaseExerciseView {
     }
     
     override func bindData() {
+        self.remindView?.remindSteps = [[.exampleChinese, .wordAudio], [.wordChinese, .wordAudio], [.detail]]
     }
 }
