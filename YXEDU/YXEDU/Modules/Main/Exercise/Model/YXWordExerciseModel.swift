@@ -65,11 +65,12 @@ struct YXWordExerciseModel: Mappable {
     }
         
     mutating func mapping(map: Map) {
-        type <- map["type"]
+        type     <- map["type"]
         question <- map["question"]
-        option <- map["option"]
-        answers <- map["answer_list"]
-        score <- map["score"]
+        option   <- map["option"]
+        answers  <- map["answer_list"]
+        score    <- map["score"]
+        word     <- map["word"]
     }
     
 }

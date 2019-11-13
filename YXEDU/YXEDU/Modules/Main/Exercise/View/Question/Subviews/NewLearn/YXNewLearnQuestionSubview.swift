@@ -17,7 +17,7 @@ enum NewLearnSubviewType: Int {
 class YXNewLearnQuestionSubview: UIView {
     var wordLabel: UILabel
     var chineseLabel: UILabel
-    var imageView: YXQuestionImageView
+    var questionImageView: YXQuestionImageView
     var audioView: YXAudioPlayerView
     var exerciseModel: YXWordExerciseModel
     var viewType: NewLearnSubviewType
@@ -27,7 +27,10 @@ class YXNewLearnQuestionSubview: UIView {
         self.viewType      = type
         wordLabel          = UILabel()
         chineseLabel       = UILabel()
-        imageView          = YXQuestionImageView(url: exerciseModel.question?.imageUrl ?? "https://www.baidu.com/s?wd=%E4%BB%8A%E6%97%A5%E6%96%B0%E9%B2%9C%E4%BA%8B&tn=SE_PclogoS_8whnvm25&sa=ire_dl_gh_logo&rsv_dl=igh_logo_pcs")
+        questionImageView  = YXQuestionImageView()
+        if let urlStr = exerciseModel.question?.imageUrl {
+            questionImageView.imageView.showImage(with: urlStr)
+        }
         audioView        = YXAudioPlayerView()
         audioView.urlStr = exerciseModel.question?.voice
         
@@ -42,7 +45,7 @@ class YXNewLearnQuestionSubview: UIView {
     private func createSubviews(_ type: NewLearnSubviewType) {
         addSubview(wordLabel)
         addSubview(chineseLabel)
-        addSubview(imageView)
+        addSubview(questionImageView)
         addSubview(audioView)
 
         wordLabel.font             = UIFont.pfSCSemiboldFont(withSize: 26)
@@ -58,7 +61,7 @@ class YXNewLearnQuestionSubview: UIView {
         case .imageAndAudio:
             wordLabel.isHidden    = true
             chineseLabel.isHidden = true
-            imageView.snp.makeConstraints { (make) in
+            questionImageView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview()
                 make.width.equalTo(AdaptSize(150))
@@ -66,12 +69,12 @@ class YXNewLearnQuestionSubview: UIView {
             }
             audioView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(imageView.snp.bottom).offset(10)
+                make.top.equalTo(questionImageView.snp.bottom).offset(10)
                 make.width.height.equalTo(AdaptSize(40))
             }
 
         case .wordAndAudio:
-            imageView.isHidden = true
+            questionImageView.isHidden = true
             wordLabel.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview()
@@ -103,7 +106,7 @@ class YXNewLearnQuestionSubview: UIView {
                 make.width.equalToSuperview()
                 make.height.equalTo(20)
             }
-            imageView.snp.makeConstraints { (make) in
+            questionImageView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(chineseLabel.snp.bottom).offset(30)
                 make.width.equalTo(150)
@@ -111,7 +114,7 @@ class YXNewLearnQuestionSubview: UIView {
             }
             audioView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(imageView.snp.bottom).offset(10)
+                make.top.equalTo(questionImageView.snp.bottom).offset(10)
                 make.width.height.equalTo(40)
             }
         }

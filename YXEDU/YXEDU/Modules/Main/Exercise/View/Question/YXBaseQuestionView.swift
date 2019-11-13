@@ -85,7 +85,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
         self.imageView?.backgroundColor = UIColor.orange1
         self.addSubview(imageView!)
         if let urlStr = self.exerciseModel.question?.imageUrl {
-            self.imageView?.sd_setImage(with: URL(string: urlStr), completed: nil)
+            self.imageView?.showImage(with: urlStr)
         }
     }
 

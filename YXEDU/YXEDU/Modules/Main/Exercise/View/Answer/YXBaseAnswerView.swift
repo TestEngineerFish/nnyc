@@ -29,8 +29,8 @@ class YXBaseAnswerView: UIView, YXQuestionEventProtocol, YXAudioPlayerViewDelega
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.white
-        self.bindData()
         self.createSubview()
+        self.bindData()
     }
 
     required init?(coder: NSCoder) {

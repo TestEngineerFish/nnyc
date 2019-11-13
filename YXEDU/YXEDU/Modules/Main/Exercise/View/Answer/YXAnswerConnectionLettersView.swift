@@ -42,27 +42,26 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func bindData() {
-        super.bindData()
-        guard let _word = self.exerciseModel.question?.word else {
-            return
-        }
-        word = _word.replacingOccurrences(of: "[", with: "")
-        word = word.replacingOccurrences(of: "]", with: "")
-        self.lettersArray = word.map { (char) -> String in
-            return "\(char)"
-        }
-        // 查找最佳路径
-        self.util        = YXFindRouteUtil(itemNumberH, itemNumberW: itemNumberW)
-        let startIndex   = Int.random(in: 0..<(itemNumberH * itemNumberW))
-        self.rightRoutes = util!.getRoute(start: startIndex, wordLength: lettersArray.count)
-        self.allLettersArray = self.getAllLetters(rightRoutes)
-    }
-
     override func createSubview() {
         super.createSubview()
+        self.setPath()
         self.isCapitalLetter = self.justCapitalLetter(self.word)
         self.createUI()
+    }
+
+    private func setPath() {
+        guard let word = self.exerciseModel.word?.word else {
+             return
+         }
+         self.lettersArray = word.map { (char) -> String in
+             return "\(char)"
+         }
+
+         // 查找最佳路径
+         self.util        = YXFindRouteUtil(itemNumberH, itemNumberW: itemNumberW)
+         let startIndex   = Int.random(in: 0..<(itemNumberH * itemNumberW))
+         self.rightRoutes = util!.getRoute(start: startIndex, wordLength: lettersArray.count)
+         self.allLettersArray = self.getAllLetters(rightRoutes)
     }
 
     private func createUI() {
