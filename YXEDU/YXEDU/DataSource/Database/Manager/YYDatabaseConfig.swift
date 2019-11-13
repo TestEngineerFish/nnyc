@@ -221,27 +221,34 @@ extension YYSQLManager {
     enum WordBookSQL: String {
         case insertBook =
         """
-        1
+            INSERT OR REPLACE INTO T_BOOKMATERIAL
+            (grade, bookID, bookName, bookSource, hashString)
+            VALUES (?, ?, ?, ?, ?)
         """
         
         case selectBook =
         """
-        2
+            SELECT * FROM T_BOOKMATERIAL
+            WHERE bookID IN (%@)
         """
         
         case deleteBook =
         """
-        3
+            DELETE FROM T_BOOKMATERIAL
+            WHERE bookID IN (%@)
         """
         
         case insertWord =
         """
-        4
+            INSERT OR REPLACE INTO T_WORDSDETAIL_INFO
+            (wordId, word, property, soundmarkUK, soundmarkUS, voiceUK, voiceUS, examples, imageUrl, synonym, antonym, gradeId, gardeType, bookId, unitId, unitName, isExtUnit)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
         
         case selectWord =
         """
-        5
+            SELECT * FROM T_WORDSDETAIL_INFO
+            WHERE wordId IN (%@)
         """
     }
 
