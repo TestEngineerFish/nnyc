@@ -36,6 +36,7 @@ struct YXWordBookModel: Mappable {
     var coverImage: UIImage?
     
     var grade: Int?
+    var gradeType: Int?
     var bookID: Int?
     var bookName: String?
     var bookSource: String?
@@ -65,7 +66,7 @@ struct YXWordBookModel: Mappable {
 struct YXWordBookUnitModel: Mappable {
     var unitID: Int?
     var unitName: String?
-    var isExtensionUnit: Int?
+    var isExtensionUnit: Bool = false
     var words: [YXWordModel]?
     
     init?(map: Map) {

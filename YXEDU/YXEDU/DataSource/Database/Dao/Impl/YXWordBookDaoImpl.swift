@@ -47,23 +47,28 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     
     func insertWord(word: YXWordModel, completion: finishBlock) {
         let sql = YYSQLManager.WordBookSQL.insertWord.rawValue
-        let params: [Any?] = [word.wordId,
-                            word.word,
-                            word.property?.toJSONString(),
-                            word.soundmarkUK,
-                            word.soundmarkUS,
-                            word.voiceUK,
-                            word.voiceUS,
-                            word.examples?.toJSONString(),
-                            word.imageUrl,
-                            word.synonym,
-                            word.antonym,
-                            word.gradeId,
-                            word.gardeType,
-                            word.bookId,
-                            word.unitId ,
-                            word.unitName,
-                            word.isExtUnit]
+        let params: [Any?] = [word.wordID,
+                              word.word,
+                              word.partOfSpeech,
+                              word.meaning,
+                              word.imageUrl,
+                              word.englishPhoneticSymbol,
+                              word.americanPhoneticSymbol,
+                              word.englishPronunciation,
+                              word.americanPronunciation,
+                              word.englishExample,
+                              word.chineseExample,
+                              word.examplePronunciation,
+                              word.synonym,
+                              word.antonym,
+                              word.usage,
+
+                              word.gradeId,
+                              word.gardeType,
+                              word.bookId,
+                              word.unitId ,
+                              word.unitName,
+                              word.isExtensionUnit]
         
         self.wordRunner.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)

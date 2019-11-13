@@ -25,7 +25,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             playAuoidButton.layer.removeFlickerAnimation()
             
         } else {
-            guard let americanPronunciationUrl = word.voiceUS, let englishPronunciationUrl = word.voiceUK else { return }
+            guard let americanPronunciationUrl = word.americanPronunciation, let englishPronunciationUrl = word.englishPronunciation else { return }
             playAuoidButton.layer.addFlickerAnimation()
             
             var pronunciationUrl: URL!
@@ -67,21 +67,14 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         wordLabel.text = word.word
         
         if YXUserModel.default.didUseAmericanPronunciation {
-            phoneticSymbolLabel.text = word.soundmarkUS
+            phoneticSymbolLabel.text = word.americanPhoneticSymbol
             
         } else {
-            phoneticSymbolLabel.text = word.soundmarkUK
+            phoneticSymbolLabel.text = word.englishPhoneticSymbol
         }
         
-        if let propertys = word.property {
-            var propertyString = ""
-            for index in 0..<propertys.count {
-                let property = propertys[index]
-                guard let partOfSpeech = property.name, let sense = property.paraphrase else { continue }
-                propertyString = propertyString + "\(index == 0 ? "" : "\n")" + partOfSpeech + sense
-            }
-            
-            partOfSpeechAndSenseLabel.text = propertyString
+        if let partOfSpeech = word.partOfSpeech, let meaning = word.meaning {
+            partOfSpeechAndSenseLabel.text = partOfSpeech + meaning
         }
         
         if let imageUrl = word.imageUrl {
@@ -122,7 +115,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         var count = 0
         
-        if let _ = word.examples {
+        if let _ = word.englishExample {
             count = count + 1
             
         }
@@ -147,7 +140,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return word.examples?.count ?? 0
+            return 1
             
         case 1:
             return word.usage?.count ?? 0
@@ -170,7 +163,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         }
         switch indexPath.section {
         case 0:
-            if let example = word.examples?[indexPath.row], let englishExample = example.en, let chineseExample = example.cn {
+            if let englishExample = word.englishExample, let chineseExample = word.chineseExample {
 //                let hashtagIndex = englishExample.firstIndex(of: "#")!
 //                let startColorIndex = englishExample.index(hashtagIndex, offsetBy: 1)
 //                let endColorIndex = englishExample.index(startColorIndex, offsetBy: 6)
@@ -195,7 +188,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             }
             
             cell.playAuoidButton.isHidden = false
-            if let americanPronunciationUrl = word.voiceUS, let englishPronunciationUrl = word.voiceUK {
+            if let americanPronunciationUrl = word.americanPronunciation, let englishPronunciationUrl = word.englishPronunciation {
                 if YXUserModel.default.didUseAmericanPronunciation {
                     cell.pronunciationUrl = URL(string: americanPronunciationUrl)
                     

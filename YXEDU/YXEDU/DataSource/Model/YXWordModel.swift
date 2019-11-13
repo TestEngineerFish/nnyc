@@ -10,35 +10,32 @@ import ObjectMapper
 
 /// 单词数据模型
 struct YXWordModel: Mappable {
-    var wordId: Int = -1
-    var unitId: Int = -1
-    var bookId: Int = -1
-    var isExtUnit: Bool = false
+    var wordID: Int? = -1
     var word: String?
-    var property: [YXWordPartOfSpeechAndSenseModel]?
-    
-    // 音标
-    var soundmarkUK: String?
-    var soundmarkUS: String?
-        
-    // 发音
-    var voiceUK: String?
-    var voiceUS: String?
-    
-    var examples: [YXWordExampleModel]?                      // 例句
+    var partOfSpeech: String?
+    var meaning: String?
     var imageUrl: String?
-    var synonym: String?            // 同义词
-    var antonym: String?            // 反义词
+    var americanPhoneticSymbol: String?
+    var englishPhoneticSymbol: String?
+    var americanPronunciation: String?
+    var englishPronunciation: String?
+    var englishExample: String?
+    var chineseExample: String?
+    var examplePronunciation: String?
+    var synonym: String?
+    var antonym: String?
     var usage: [String]?
-    
-    // ext
-    var gradeId: Int = -1
+
+    var gradeId: Int? = -1
+    var gardeType: Int? = 1
+    var bookId: Int? = -1
+    var unitId: Int? = -1
     var unitName: String?
-    var gardeType: Int = 1   //年级类型
+    var isExtensionUnit: Bool = false
 
     // Matrix
     var column: Int = 0
-    var row: Int    = 0
+    var row: Int = 0
 
     init() {}
     
@@ -47,74 +44,32 @@ struct YXWordModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        wordId <- map["word_id"]
-        unitId <- map["unit_id"]
-        bookId <- map["book_id"]
-        isExtUnit <- map["is_ext_unit"]
+        wordID <- map["word_id"]
         word <- map["word"]
-        property <- map["property"]
-        soundmarkUK <- map["symbol_uk"]
-        soundmarkUS <- map["symbol_us"]
-        voiceUK <- map["voice_uk"]
-        voiceUS <- map["voice_us"]
-        examples <- map["example_list"]
-        imageUrl <- map["image"]
+        partOfSpeech <- map["word_property"]
+        meaning <- map["word_paraphrase"]
+        imageUrl <- map["word_image"]
+        americanPhoneticSymbol <- map["symbol_us"]
+        englishPhoneticSymbol <- map["symbol_uk"]
+        americanPronunciation <- map["voice_us"]
+        englishPronunciation <- map["voice_uk"]
+        englishExample <- map["example_en"]
+        chineseExample <- map["example_cn"]
+        examplePronunciation <- map["example_voice"]
         synonym <- map["synonym"]
         antonym <- map["antonym"]
         usage <- map["usage_list"]
-        
-        gradeId <- map["grade_id"]
-        unitName <- map["unit_name"]
         column <- map["column"]
         row <- map["row"]
     }
     
-    
     ///根据本地设置，获取音标
     var soundmark: String? {
-        return YXUserModel.default.didUseAmericanPronunciation ? soundmarkUS : soundmarkUK
+        return YXUserModel.default.didUseAmericanPronunciation ? americanPhoneticSymbol : englishPhoneticSymbol
     }
     
     ///根据本地设置，获取语音
     var voice: String? {
-        return YXUserModel.default.didUseAmericanPronunciation ? voiceUS : voiceUK
-    }
-    
-    
-}
-
-
-
-/// 词性词义数据模型
-struct YXWordPartOfSpeechAndSenseModel: Mappable {
-    var name: String?
-    var paraphrase: String?
-    
-    init?(map: Map) {
-        self.mapping(map: map)
-    }
-    
-    mutating func mapping(map: Map) {
-        name <- map["name"]
-        paraphrase <- map["paraphrase"]
-    }
-}
-
-
-
-/// 例句数据模型
-struct YXWordExampleModel: Mappable {
-    var en: String?
-    var cn: String?
-    var voiceUrl: String?
-    
-    init?(map: Map) {
-        self.mapping(map: map)
-    }
-    
-    mutating func mapping(map: Map) {
-        en <- map["en"]
-        cn <- map["cn"]
-        voiceUrl <- map["voice"]
+        return YXUserModel.default.didUseAmericanPronunciation ? americanPronunciation : englishPronunciation
     }
 }

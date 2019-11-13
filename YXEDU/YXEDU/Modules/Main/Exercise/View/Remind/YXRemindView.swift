@@ -152,7 +152,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindExample() {
         titleLabel.isHidden = false
-        titleLabel.text = exerciseModel.word?.examples?.first?.en
+        titleLabel.text = exerciseModel.word?.englishExample
     }
 
     private func remindImage() {
@@ -164,7 +164,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindSoundmark() {
         titleLabel.isHidden = false
-        titleLabel.text = exerciseModel.word?.soundmarkUS
+        titleLabel.text = exerciseModel.word?.americanPhoneticSymbol
     }
     
     private func remindWordAudio() {
@@ -178,12 +178,12 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindWordChinese() {
         titleLabel.isHidden = false
-        titleLabel.text = exerciseModel.word?.property?.first?.paraphrase
+        titleLabel.text = exerciseModel.word?.meaning
     }
     
     private func remindExampleChinese() {
         titleLabel.isHidden = false
-        titleLabel.text = exerciseModel.word?.examples?.first?.cn
+        titleLabel.text = exerciseModel.word?.chineseExample
     }
     
 

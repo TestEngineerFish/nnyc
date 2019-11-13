@@ -27,7 +27,7 @@ class YXExampleQuestionView: YXBaseQuestionView {
 
     override func bindData() {
         
-        guard let word = self.exerciseModel.question?.word, let example = exerciseModel.question?.examples?.first?.en else {
+        guard let word = self.exerciseModel.question?.word, let example = exerciseModel.question?.englishExample else {
             return
         }
         

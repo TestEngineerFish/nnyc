@@ -92,7 +92,14 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             
             for unit in units {
                 guard let words = unit.words else { continue }
-                for word in words {
+                for var word in words {
+                    word.gradeId = wordBook.grade
+                    word.gardeType = wordBook.gradeType
+                    word.bookId = wordBook.bookID
+                    word.unitId = unit.unitID
+                    word.unitName = unit.unitName
+                    word.isExtensionUnit = unit.isExtensionUnit
+
                     YXWordBookDaoImpl().insertWord(word: word) { (result, isSuccess) in
                         
                     }

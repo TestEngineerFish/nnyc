@@ -35,6 +35,6 @@ class YXChineseQuestionView: YXBaseQuestionView {
     
     override func bindData() {
 //        titleLabel?.text = exerciseModel.question?.paraphrase
-        subTitleLabel?.text = exerciseModel.question?.soundmarkUS
+        subTitleLabel?.text = exerciseModel.question?.americanPhoneticSymbol
     }
 }

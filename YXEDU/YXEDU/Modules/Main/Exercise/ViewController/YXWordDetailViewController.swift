@@ -17,7 +17,7 @@ class YXWordDetailViewController: UIViewController {
     @IBOutlet weak var collectionButton: UIButton!
     
     @IBAction func collectWord(_ sender: UIButton) {
-        YXWordModelManager.keepWordId("\(word.wordId)", bookId: "\(word.bookId)", isFav: collectionButton.currentImage == UIImage(named: "collectWord")) { [weak self] (response, isSuccess) in
+        YXWordModelManager.keepWordId("\(word.wordID)", bookId: "\(word.bookId)", isFav: collectionButton.currentImage == UIImage(named: "collectWord")) { [weak self] (response, isSuccess) in
             guard let self = self, isSuccess == false else { return }
             self.collectionButton.setImage(self.collectionButton.currentImage == UIImage(named: "collectWord") ? UIImage(named: "unCollectWord"): UIImage(named: "collectWord"), for: .normal)
         }

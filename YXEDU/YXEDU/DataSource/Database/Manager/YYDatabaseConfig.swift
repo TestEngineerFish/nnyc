@@ -241,8 +241,8 @@ extension YYSQLManager {
         case insertWord =
         """
             INSERT OR REPLACE INTO T_WORDSDETAIL_INFO
-            (wordId, word, property, soundmarkUK, soundmarkUS, voiceUK, voiceUS, examples, imageUrl, synonym, antonym, gradeId, gardeType, bookId, unitId, unitName, isExtUnit)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (wordId, word, partOfSpeech, meaning, englishPhoneticSymbol, americanPhoneticSymbol, englishPronunciation, americanPronunciation, englishExample, chineseExample, examplePronunciation, imageUrl, synonym, antonym, gradeId, gardeType, bookId, unitId, unitName, isExtensionUnit)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
         
         case selectWord =

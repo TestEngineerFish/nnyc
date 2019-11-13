@@ -212,7 +212,7 @@ class YXExerciseDataManager: NSObject {
         
         
         var word = YXWordModel(JSONString: json)
-        word?.wordId = wordId
+        word?.wordID = wordId
 //        word?.word = (word?.word ?? "") + "\(wordId)"
         return word
         
