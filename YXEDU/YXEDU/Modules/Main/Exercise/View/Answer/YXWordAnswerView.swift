@@ -45,6 +45,9 @@ class YXWordAnswerView: YXBaseAnswerView {
         if button.status == .selected || button.status == .error {
             button.status = .normal
             self.delegate?.unselectAnswerButton(button)
+            if let index = self.selectedBtnArray.firstIndex(of: button) {
+                self.selectedBtnArray.remove(at: index)
+            }
         } else {
             let index = delegate?.selectedAnswerButton(button)
             if let _index = index, !self.selectedBtnArray.contains(button) {
