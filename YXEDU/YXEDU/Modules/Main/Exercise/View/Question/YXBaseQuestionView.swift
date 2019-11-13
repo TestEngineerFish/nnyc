@@ -55,7 +55,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
         self.titleLabel?.font = UIFont.pfSCSemiboldFont(withSize: 20)
         self.titleLabel?.textColor = UIColor.black1
         self.titleLabel?.textAlignment = .center
-        self.titleLabel?.text = "coffee"
+        self.titleLabel?.text = ""
         
         self.addSubview(titleLabel!)
     }
@@ -74,7 +74,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
         self.descTitleLabel?.font = UIFont.pfSCRegularFont(withSize: 14)
         self.descTitleLabel?.textColor = UIColor.black2
         self.descTitleLabel?.textAlignment = .center
-        self.descTitleLabel?.text = "n.（名词）小船，艇"
+        self.descTitleLabel?.text = ""
         self.addSubview(descTitleLabel!)
     }
 
@@ -88,10 +88,9 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
             self.imageView?.sd_setImage(with: URL(string: urlStr), completed: nil)
         }
     }
-    
-    
+
     func initAudioPlayerView() {
-        self.audioPlayerView = YXAudioPlayerView(url: nil)
+        self.audioPlayerView = YXAudioPlayerView()
         self.addSubview(audioPlayerView!)
     }
     

@@ -18,10 +18,9 @@ class YXAudioPlayerView: UIView {
     var delegate: YXAudioPlayerViewDelegate?
     
     private let audioButton: UIButton
-    private var urlStr: String?
+    var urlStr: String?
 
-    init(url: String?) {
-        self.urlStr = url
+    init() {
         self.audioButton = UIButton()
         self.audioButton.imageView?.snp.makeConstraints({ (make) in
             make.left.top.equalToSuperview().offset(3)
@@ -43,7 +42,7 @@ class YXAudioPlayerView: UIView {
     /// 播放当前音频
     func play() {
         guard let _urlStr = self.urlStr, let url = URL(string: _urlStr) else {
-            print("无效的音频地址")
+            print("无效的音频地址: \(String(describing: self.urlStr))")
             return
         }
         self.audioButton.layer.addFlickerAnimation()

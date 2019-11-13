@@ -20,7 +20,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
         self.spellView = YXSpellSubview(self.exerciseModel)
         addSubview(spellView!)
 
-        audioView = YXAudioPlayerView(url: exerciseModel.question?.voiceUS)
+        audioView = YXAudioPlayerView()
         addSubview(audioView!)
     }
 
