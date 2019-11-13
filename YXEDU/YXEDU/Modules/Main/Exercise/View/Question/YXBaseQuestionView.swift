@@ -83,8 +83,10 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
         self.imageView?.layer.masksToBounds = true
         self.imageView?.layer.cornerRadius = 3.78
         self.imageView?.backgroundColor = UIColor.orange1
-        
         self.addSubview(imageView!)
+        if let urlStr = self.exerciseModel.question?.imageUrl {
+            self.imageView?.sd_setImage(with: URL(string: urlStr), completed: nil)
+        }
     }
     
     
@@ -96,8 +98,8 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     func bindData()  {}
 
     // MARK:YXAnswerEventProtocol
-    func selectedAnswerButton(_ button: YXLetterButton) -> Int {
-        return 0
+    func selectedAnswerButton(_ button: YXLetterButton) -> Int? {
+        return nil
     }
     /// 取消按钮,移除单词/字母
     func unselectAnswerButton(_ button: YXLetterButton) {}

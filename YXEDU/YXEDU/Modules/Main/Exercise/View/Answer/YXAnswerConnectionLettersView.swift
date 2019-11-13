@@ -28,14 +28,13 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     let itemSize     = CGFloat(48)
     // 是否大写
     var isCapitalLetter = false
+    var word = ""
 
     var util: YXFindRouteUtil?
 
     override init(exerciseModel: YXWordExerciseModel) {
-//        itemNumberH = exerciseModel.matix
-//        itemNumberW = exerciseModel.matix
-        itemNumberH = 4
-        itemNumberW = 4
+        itemNumberH = exerciseModel.question?.row ?? 0
+        itemNumberW = exerciseModel.question?.column ?? 0
         super.init(exerciseModel: exerciseModel)
     }
 
@@ -45,58 +44,65 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
 
     override func bindData() {
         super.bindData()
-//        self.lettersArray = self.exerciseModel.word.map { (char) -> String in
-//            return "\(char)"
-//        }
-//        // 查找最佳路径
-//        let matix = self.exerciseModel.matix
-//        self.util        = YXFindRouteUtil(matix, itemNumberW: matix)
-//        let startIndex   = Int(arc4random()) % (matix * matix)
-//        self.rightRoutes = util!.getRoute(start: startIndex, wordLength: lettersArray.count)
-//        self.allLettersArray = self.getAllLetters(rightRoutes)
+        guard let _word = self.exerciseModel.question?.word else {
+            return
+        }
+        word = _word.replacingOccurrences(of: "[", with: "")
+        word = word.replacingOccurrences(of: "]", with: "")
+        self.lettersArray = word.map { (char) -> String in
+            return "\(char)"
+        }
+        // 查找最佳路径
+        self.util        = YXFindRouteUtil(itemNumberH, itemNumberW: itemNumberW)
+        let startIndex   = Int.random(in: 0..<(itemNumberH * itemNumberW))
+        self.rightRoutes = util!.getRoute(start: startIndex, wordLength: lettersArray.count)
+        self.allLettersArray = self.getAllLetters(rightRoutes)
     }
 
     override func createSubview() {
         super.createSubview()
-//        self.isCapitalLetter = self.justCapitalLetter(self.exerciseModel.word)
-//        self.createUI()
+        self.isCapitalLetter = self.justCapitalLetter(self.word)
+        self.createUI()
     }
 
     private func createUI() {
-//        allButtonArray = []
-//        selectedBtnArray = []
-//        var maxX = CGFloat.zero
-//        var maxY = CGFloat.zero
-//        let viewWidth = CGFloat(self.exerciseModel.matix) * (itemSize + margin) - margin
-//        for index in 0..<allLettersArray.count {
-//            let letter = self.allLettersArray[index]
-//            let button = self.createButton(letter)
-//            button.tag = index
-//            button.frame = CGRect(x: maxX, y: maxY, width: itemSize, height: itemSize)
-//            let nextX = maxX + margin + itemSize
-//            if nextX > viewWidth {
-//                maxX = 0
-//                maxY += itemSize + margin
-//            } else {
-//                maxX = nextX
-//            }
-//            self.contentScrollView?.addSubview(button)
-//            allButtonArray.append(button)
-//        }
-//        // 显示首个字母的动画
-//        self.showFirstButtonAnimation(rightRoutes.first)
-//        // 添加手势事件
-//        let pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
-//        self.isUserInteractionEnabled = true
-//        self.addGestureRecognizer(pan)
-//        self.contentScrollView?.contentSize = CGSize(width: viewWidth, height: viewWidth)
+        allButtonArray = []
+        selectedBtnArray = []
+        var maxX = CGFloat.zero
+        var maxY = CGFloat.zero
+        let viewWidth = CGFloat(itemNumberW) * (itemSize + margin) - margin
+        for index in 0..<allLettersArray.count {
+            let letter = self.allLettersArray[index]
+            let button = self.createButton(letter)
+            button.tag = index
+            button.frame = CGRect(x: maxX, y: maxY, width: itemSize, height: itemSize)
+            let nextX = maxX + margin + itemSize
+            if nextX > viewWidth {
+                maxX = 0
+                maxY += itemSize + margin
+            } else {
+                maxX = nextX
+            }
+            self.contentScrollView?.addSubview(button)
+            allButtonArray.append(button)
+        }
+        // 显示首个字母的动画
+        self.showFirstButtonAnimation(rightRoutes.first)
+        // 添加手势事件
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(pan)
+        self.contentScrollView?.contentSize = CGSize(width: viewWidth, height: viewWidth)
     }
 
     /// 在VC中显示的时候调用!!
     private func showFirstButtonAnimation(_ btnTag: Int?) {
         if let tag = btnTag, tag < self.allButtonArray.count, tag >= 0 {
             let button = self.allButtonArray[tag]
-            self.selectedButton(button, insert: false)
+            self.selectedBtnArray.append(button)
+            button.status = .selected
+            // 更新周围可选按钮
+            self.updateEnableButton(current: button)
             button.layer.addBgFlickerAnimation(with: UIColor.orange1, repeat: 4)
         }
     }
@@ -108,7 +114,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
             return
         }
         if button.isEnabled {
-            if button.status == .selected {
+            if button.status == .selected || button.status == .error {
                 let reversedArray = self.selectedBtnArray.reversed()
                 for btn in reversedArray {
                     self.unselectButton(btn)
@@ -122,26 +128,41 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         }
     }
 
-
     /// 选中按钮
     /// - Parameters:
     ///   - button: 目标按钮
     ///   - insert: 是否添加到问题区域
     /// - description:设置选中效果,需要满足,1、问题区域有空缺可填充(排除第一个字母);2、不在已选中列表中
-    private func selectedButton(_ button: YXLetterButton, insert: Bool = true) {
-        let index = self.delegate?.selectedAnswerButton(button) ?? 0
+    private func selectedButton(_ button: YXLetterButton) {
+
+        let index = self.delegate?.selectedAnswerButton(button)
         // 添加按钮到已选按钮列表
-        if !self.selectedBtnArray.contains(button) {
+        if index != nil, !self.selectedBtnArray.contains(button) {
             self.connectionLine(fromButton: self.selectedBtnArray.last, toButton: button)
             self.selectedBtnArray.append(button)
-            self.selectedBtnArray.insert(button, at: index)
             button.status = .selected
             // 更新周围可选按钮
             self.updateEnableButton(current: button)
-            // 检查结果
-//            self.delegate?.checkAnserResult()
-
+            if self.selectedBtnArray.count >= self.word.count {
+                // 检查结果
+                let errList = self.checkAnserResult()
+                // 更新UI
+                self.showResultView(errorList: errList)
+                // 更新问题UI
+                self.delegate?.showResult(errorList: errList)
+            }
         }
+    }
+    /// 检查结果.如果有错误的则返回对应错误的ID数组,否则返回空数组
+    private func checkAnserResult() -> [Int]{
+        var errList = [Int]()
+        for (index, letter) in word.enumerated() {
+            let button = self.selectedBtnArray[index]
+            if let text = button.currentTitle, text != "\(letter)" {
+                errList.append(button.tag)
+            }
+        }
+        return errList
     }
 
     /// 取消选中

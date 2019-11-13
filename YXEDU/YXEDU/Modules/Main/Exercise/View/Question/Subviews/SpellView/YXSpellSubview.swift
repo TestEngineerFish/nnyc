@@ -124,7 +124,7 @@ class YXSpellSubview: UIView {
     // TODO: Event
 
     /// 添加单词
-    func insertLetter(_ button: YXLetterButton) -> Int {
+    func insertLetter(_ button: YXLetterButton) -> Int? {
         var index = 0
         for wordView in self.wordViewList {
             if wordView.text.isNilOrEmpty {
@@ -138,7 +138,7 @@ class YXSpellSubview: UIView {
                 index += 1
             }
         }
-        return 0
+        return nil
     }
 
     /// 移除单词

@@ -60,4 +60,22 @@ class YXAVPlayerManager: NSObject {
         self.finishBlock?()
     }
 
+    /// 播放答题正确音效
+    func playRightAudio() {
+        guard let path = Bundle.main.path(forResource: "right", ofType: "mp3") else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        YXAVPlayerManager.share.playerAudio(url)
+    }
+
+    /// 播放答题错误音效
+    func playWrongAudio() {
+        guard let path = Bundle.main.path(forResource: "wrong", ofType: "mp3") else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        YXAVPlayerManager.share.playerAudio(url)
+    }
+
 }

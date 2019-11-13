@@ -34,7 +34,6 @@ class YXLetterButton: UIButton {
 
     var status: YXButtonStatus = .normal {
         willSet {
-
             switch newValue {
             case .normal:
                 self.isEnabled         = true
@@ -63,6 +62,17 @@ class YXLetterButton: UIButton {
                 self.setTitleColor(UIColor.black6, for: .normal)
             }
         }
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.titleLabel?.adjustsFontSizeToFitWidth = true
+        self.titleLabel?.minimumScaleFactor = CGFloat(14/20)
+        self.titleLabel?.numberOfLines = 2
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func layoutSubviews() {

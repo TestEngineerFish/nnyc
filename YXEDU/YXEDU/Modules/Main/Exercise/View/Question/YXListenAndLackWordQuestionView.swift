@@ -27,7 +27,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
     override func layoutSubviews() {
         super.layoutSubviews()
         if let _spellView = spellView {
-            let w = _spellView.wordViewList.last?.frame.maxX ?? CGFloat.zero
+            let w = _spellView.maxX - _spellView.margin
             _spellView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview().offset(topPadding)
@@ -37,7 +37,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
             audioView?.snp.makeConstraints({ (make) in
                 make.top.equalTo(_spellView.snp.bottom).offset(10)
                 make.centerX.equalToSuperview()
-                make.width.equalToSuperview()
+                make.width.height.equalTo(AdaptSize(22))
             })
         }
     }
@@ -49,6 +49,10 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
 
     override func unselectAnswerButton(_ button: YXLetterButton) {
         self.spellView?.removeLetter(button)
+    }
+
+    override func showResult(errorList list: [Int]) {
+        self.spellView?.showResultView(errorList: list)
     }
 
 }

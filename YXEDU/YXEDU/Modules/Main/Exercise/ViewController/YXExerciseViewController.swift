@@ -188,8 +188,15 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
         YXExcerciseProgressManager.updateProgress(exerciseModel: exerciseModel)
         if right {
             self.showRightAnimation()
+            YXAVPlayerManager.share.playRightAudio()
         } else {
-            self.showErrorAnimation()
+            self.showWrongAnimation()
+            YXAVPlayerManager.share.playWrongAudio()
+        }
+        // 震动效果
+        if #available(iOS 10.0, *) {
+            let shock = UIImpactFeedbackGenerator(style: .medium)
+            shock.impactOccurred()
         }
     }
 
@@ -205,7 +212,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
     }
 
     /// 显示错误动画
-    private func showErrorAnimation() {
+    private func showWrongAnimation() {
         self.view.isUserInteractionEnabled = false
         self.resultView.isHidden = false
         self.resultView.image = UIImage(named: "error")

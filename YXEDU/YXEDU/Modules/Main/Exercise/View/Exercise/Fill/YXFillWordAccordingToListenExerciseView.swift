@@ -15,6 +15,9 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
         questionView = YXListenAndLackWordQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
+        remindView = YXRemindView(exerciseModel: exerciseModel)
+        self.addSubview(remindView!)
+
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
         self.addSubview(answerView!)
 
@@ -31,6 +34,13 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
             make.right.equalTo(-22)
             make.height.equalTo(180)
         }
+        remindView?.snp.makeConstraints({ (make) in
+            make.left.equalTo(questionView!)
+            make.top.equalTo(questionView!.snp.bottom)
+            make.width.equalTo(questionView!)
+            make.height.equalTo(AdaptSize(120))
+        })
+
         let topPadding = self.height - 200
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()

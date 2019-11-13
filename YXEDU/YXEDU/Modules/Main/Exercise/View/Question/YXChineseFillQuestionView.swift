@@ -39,14 +39,9 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
         }
     }
     
-    
-    override func bindData() {
-//        self.subTitleLabel?.text = exerciseModel.question?.paraphrase
-    }
-    
     // MARK: YXAnswerEventProtocol
-    override func selectedAnswerButton(_ button: YXLetterButton) -> Int {
-        return self.spellView?.insertLetter(button) ?? 0
+    override func selectedAnswerButton(_ button: YXLetterButton) -> Int? {
+        return self.spellView?.insertLetter(button)
     }
 
     override func unselectAnswerButton(_ button: YXLetterButton) {

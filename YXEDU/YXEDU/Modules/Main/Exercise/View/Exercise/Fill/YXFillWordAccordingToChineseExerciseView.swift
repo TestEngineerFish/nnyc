@@ -17,7 +17,6 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
 
         remindView = YXRemindView(exerciseModel: exerciseModel)
         self.addSubview(remindView!)
-        remindView?.backgroundColor = UIColor.orange1
 
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
         self.addSubview(answerView!)

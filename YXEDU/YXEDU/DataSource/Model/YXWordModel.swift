@@ -35,7 +35,11 @@ struct YXWordModel: Mappable {
     var gradeId: Int = -1
     var unitName: String?
     var gardeType: Int = 1   //年级类型
-    
+
+    // Matrix
+    var column: Int = 0
+    var row: Int    = 0
+
     init() {}
     
     init?(map: Map) {
@@ -61,6 +65,8 @@ struct YXWordModel: Mappable {
         
         gradeId <- map["grade_id"]
         unitName <- map["unit_name"]
+        column <- map["column"]
+        row <- map["row"]
     }
 }
 
