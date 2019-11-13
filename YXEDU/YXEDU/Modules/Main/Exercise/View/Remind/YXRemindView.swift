@@ -33,7 +33,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     private var audioPlayerView = YXAudioPlayerView()
     
     /// 当前提示到哪一步了，默认从第一个开始提示
-    private var currentRemindIndex = 0
+    private var currentRemindIndex = -1
     
     /// 等待播放的语音列表（某一步提示，可能会播放多个语音，需要使用队列顺序播放，例如：单词语音+例句语音）
     private var audioList: [String] = []
@@ -65,15 +65,12 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         self.titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(0)
             make.left.equalTo(remindLabel.snp.right)
-            make.right.equalTo(audioPlayerView.snp.left)
-            
-            let width = screenWidth - 22 * 2 - 37 - 5 - 22
-            let height = titleLabel.text?.textHeight(font: titleLabel.font, width: width) ?? 20
-            make.height.equalTo(height)
+            make.size.equalTo(titleSize())
         }
         
         self.audioPlayerView.snp.remakeConstraints { (make) in
             make.top.equalTo(0)
+            make.left.equalTo(titleLabel.snp.right).offset(5)
             make.width.height.equalTo(22)
         }
         
@@ -95,12 +92,17 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         remindLabel.font            = UIFont.pfSCRegularFont(withSize: 12)
         remindLabel.text            = "提示:"
         remindLabel.textColor       = UIColor.black3
+        remindLabel.isHidden         = true
                 
         titleLabel.font             = UIFont.pfSCRegularFont(withSize: 14)
-        titleLabel.textColor        = UIColor.black3
+        titleLabel.textColor        = UIColor.black1
+        titleLabel.numberOfLines    = 0
         titleLabel.isHidden         = true
         
+        audioPlayerView.isHidden    = true
         audioPlayerView.delegate    = self
+        
+        imageView.isHidden          = true
     }
     
     
@@ -108,10 +110,15 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    //MARK: 外部调用方法
     public func show() {
         if remindSteps.count == 0 {
             return
+        }
+        
+        // 下标必须要放在前面，由于layout布局有延迟，如果放后面，会有取值错误
+        if currentRemindIndex < remindSteps.count - 1 {
+            currentRemindIndex += 1
         }
         
         self.audioList.removeAll()
@@ -119,13 +126,11 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         
         let step = remindSteps[currentRemindIndex]
         self.processRedmine(remindStep: step)
-        
-        if currentRemindIndex < step.count - 1 {
-            currentRemindIndex += 1
-        }
     }
     
-    
+    //MARK: 提示实现
+    /// 处理每一步的提示
+    /// - Parameter remindStep: 类型集合
     private func processRedmine(remindStep: [YXRemindType]) {
         
         for type in remindStep {
@@ -152,8 +157,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         }
         
     }
-        
-
+    
     private func remindWord() {
         titleLabel.text = exerciseModel.word?.word
         setAllSubviewStatus()
@@ -179,7 +183,6 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     private func remindWordAudio() {
         if let url = exerciseModel.word?.voice {
             audioList.append(url)
-            
             if remindSteps[currentRemindIndex].last == .wordAudio {
                 playAudio()
                 setAllSubviewStatus()
@@ -209,23 +212,24 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     
     private func remindDetail() {
-        
-        
-        
+        // 显示详情页
         self.setAllSubviewStatus()
+        remindLabel.isHidden = true
     }
     
+    //MARK: - 辅助方法
     private func setAllSubviewStatus() {
         
         if remindSteps.count == 0 {
             return
         }
         
+        remindLabel.isHidden = false
         titleLabel.isHidden = !hasText()
         imageView.isHidden = !hasImage()
         audioPlayerView.isHidden = !hasAudio()
         
-        self.layoutIfNeeded()
+        self.setNeedsLayout()
     }
     
     
@@ -270,6 +274,26 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         }
     }
     
+    
+    private func titleSize() -> CGSize {
+        if currentRemindIndex == -1 {
+            return CGSize.zero
+        }
+        
+        var maxWidth = screenWidth - 22 * 2 - 37
+        if hasAudio() {
+            maxWidth -= 25
+        }
+        let realWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: 20) ?? 0
+                    
+        if realWidth > maxWidth {
+            let height = titleLabel.text?.textHeight(font: titleLabel.font, width: maxWidth) ?? 20
+            return CGSize(width: maxWidth, height: height)
+        } else {
+            return CGSize(width: realWidth, height: 20)
+        }
+
+    }
     //MARK: - 语音播放结束
     func endPlayAudio() {
         self.playAudio()

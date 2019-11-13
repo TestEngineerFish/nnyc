@@ -192,6 +192,11 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
         } else {
             self.showWrongAnimation()
             YXAVPlayerManager.share.playWrongAudio()
+            
+            // 等待错误提示音播放完后，再进行提示
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {[weak self] in
+                self?.exerciseViewArray.first?.remindView?.show()
+            }
         }
         // 震动效果
         if #available(iOS 10.0, *) {

@@ -142,12 +142,14 @@ class YXExerciseDataManager: NSObject {
                     var exercise = YXWordExerciseModel()
                     exercise.type = .newLearnPrimarySchool
                     exercise.question = word
+                    exercise.word = word
                     
                     exerciseModelArray.append(exercise)
                 } else if word.gardeType == 3 { // 初中
                     var exercise = YXWordExerciseModel()
                     exercise.type = .newLearnJuniorHighSchool
                     exercise.question = word
+                    exercise.word = word
                     
                     exerciseModelArray.append(exercise)
                 }
@@ -162,7 +164,8 @@ class YXExerciseDataManager: NSObject {
                     // 新学单词，需要根据打分来判断，再选择哪个
                     for subStep in step {
                         if subStep.score == self.fetchWordScore(wordId: review.wordId) {
-                            let exercise = createExerciseModel(step: subStep)
+                            var exercise = createExerciseModel(step: subStep)
+                            exercise.word = fetchWord(wordId: exercise.question?.wordID ?? 0)
                             exerciseModelArray.append(exercise)
                             break
                         }
@@ -170,9 +173,9 @@ class YXExerciseDataManager: NSObject {
                 } else {
                     // 不是新学，只有一个题型
                     if let sp = step.first {
-                        let exercise = createExerciseModel(step: sp)
+                        var exercise = createExerciseModel(step: sp)
+                        exercise.word = fetchWord(wordId: exercise.question?.wordID ?? 0)
                         exerciseModelArray.append(exercise)
-                        
                     }
                 }
             }
@@ -187,26 +190,21 @@ class YXExerciseDataManager: NSObject {
 //        return dao.selectWord(wordId: wordId)
         let json = """
         {
-            "word_id": 1,
-            "unit_id": 1,
-            "is_ext_unit": 0,
-            "book_id": 1,
-            "property": "adj.",
-            "paraphrase": "好的",
-            "word": "good",
-            "soundmark_us": "美/ɡʊd/",
-            "soundmark_uk": "英/ɡʊd/",
-            "voice_us": "voice/good_us.mp3",
-            "voice_uk": "voice/good_uk.mp3",
-            "image": "/middle/good/1570699002.jpg",
-            "example_list": [{
-                "en": "You have such a good chance.",
-                "cn": "你有这么一个好的机会。",
-                "voice": "/speech/a00c5c2830ffc50a68f820164827f356.mp3"
-            }],
+            "word_id" : 1,
+            "word" : "good",
+            "word_property" : "adj.",
+            "word_paraphrase" : "好的;优质的;",
+            "word_image" : "http://cdn.xstudyedu.com/middle/good/1570699002.jpg",
+            "symbol_us" : "美/ɡʊd/",
+            "symbol_uk" : "英/ɡʊd/",
+            "voice_us" : "voice/good_us.mp3",
+            "voice_uk" : "voice/good_uk.mp3",
+            "example_en" : "You have such a <font color='#55a7fd'>good</font> chance.",
+            "example_cn" : "你有这么一个好的机会。",
+            "example_voice": "http://cdn.xstudyedu.com/speech/a00c5c2830ffc50a68f820164827f356.mp3",
             "synonym": "great,helpful",
             "antonym": "poor,bad",
-            "usage_list": ["adj. + n.good health 身体健康 ", "v. + adj.look good 看起来不错 "]
+            "usage":  ["adj.+n.  early morning 清晨","n.+n.  morning exercise早操"]
         }
         """
         
