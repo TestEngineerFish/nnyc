@@ -25,8 +25,9 @@ class YXAVPlayerManager: NSObject {
     /// 播放音频
     func playerAudio(_ url: URL, finish block: FinishBlock? = nil) {
         self.finishBlock = block
-        let asset = AVAsset(url: url)
-        let playerItem = AVPlayerItem(asset: asset)
+//        let asset = AVAsset(url: url)
+//        let playerItem = AVPlayerItem(asset: asset)
+        let playerItem = YYMediaCache.default.playerItem(url)
         self.player.replaceCurrentItem(with: playerItem)
         self.player.play()
         self.isPlaying = true

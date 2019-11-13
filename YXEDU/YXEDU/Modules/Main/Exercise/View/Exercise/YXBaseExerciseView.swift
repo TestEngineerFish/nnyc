@@ -20,9 +20,10 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
 /// 练习模块基类：内容主页面，包括题目View、答案View、TipsView
 class YXBaseExerciseView: UIView {
 
-    var exerciseModel: YXWordExerciseModel {
-        didSet { self.bindData() }
-    }
+    var exerciseModel: YXWordExerciseModel
+    
+    /// 是否做错
+    var isWrong: Bool = false
 
     /// 题目view
     var questionView: YXBaseQuestionView?

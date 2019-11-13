@@ -108,7 +108,20 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         cell?.layer.borderColor = UIColor.orange1.cgColor        
         collectionViewCell = cell
         
-        self.answerCompletion(right: true)
+        
+        if exerciseModel.answers?.first == exerciseModel.option?.firstItems?[indexPath.row].optionId {
+            self.answerCompletion(right: true)
+        } else {
+            self.answerCompletion(right: false)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                cell?.layer.borderColor = UIColor.clear.cgColor
+            }
+            
+        }
+        
+        
+        
     }
     
     

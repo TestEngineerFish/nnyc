@@ -26,7 +26,7 @@ class YXLookExampleChooseImageExerciseView: YXBaseExerciseView {
     
     
     override func layoutSubviews() {
-            super.layoutSubviews()
+        super.layoutSubviews()
                         
         self.questionView?.snp.makeConstraints { (make) in
             make.top.equalTo(32)

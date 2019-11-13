@@ -16,6 +16,9 @@ class YXValidationWordAndChineseExerciseView: YXBaseExerciseView {
         questionView = YXWordAndChineseQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
         
+        remindView = YXRemindView(exerciseModel: exerciseModel)
+        self.addSubview(remindView!)
+        
         answerView = YXRightOrWrongAnswerView(exerciseModel: exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
@@ -32,12 +35,15 @@ class YXValidationWordAndChineseExerciseView: YXBaseExerciseView {
             make.height.equalTo(180)
         }
         
-//        self.answerView?.snp.makeConstraints({ (make) in
-//            make.left.right.bottom.equalToSuperview()
-//            make.height.equalTo(answerHeight)
-//        })
-        answerView?.frame = CGRect(x: 0, y: self.size.height - answerHeight, width: screenWidth, height: answerHeight)
+        self.answerView?.snp.makeConstraints({ (make) in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(answerHeight)
+        })
+//        answerView?.frame = CGRect(x: 0, y: self.size.height - answerHeight, width: screenWidth, height: answerHeight)
         
     }
     
+    override func bindData() {
+        self.remindView?.remindSteps = [[.detail]]
+    }
 }

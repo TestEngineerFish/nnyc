@@ -17,6 +17,9 @@ class YXLookImageChooseWordExerciseView: YXBaseExerciseView {
         questionView = YXImageQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
         
+        remindView = YXRemindView(exerciseModel: self.exerciseModel)
+        self.addSubview(remindView!)
+        
         answerView = YXItemAnswerView(exerciseModel: exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
@@ -33,6 +36,12 @@ class YXLookImageChooseWordExerciseView: YXBaseExerciseView {
             make.right.equalTo(-22)
             make.height.equalTo(180)
         }
+        
+        self.remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(questionView!.snp.bottom).offset(15)
+            make.left.width.equalTo(questionView!)
+            make.height.equalTo(150)
+        })
         
         self.answerView?.snp.makeConstraints({ (make) in
             make.left.right.bottom.equalToSuperview()

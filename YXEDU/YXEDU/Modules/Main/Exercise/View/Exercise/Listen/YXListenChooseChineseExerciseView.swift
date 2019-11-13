@@ -17,6 +17,9 @@ class YXListenChooseChineseExerciseView: YXBaseExerciseView {
         questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)        
         self.addSubview(questionView!)
         
+        remindView = YXRemindView(exerciseModel: exerciseModel)
+        self.addSubview(remindView!)
+        
         answerView = YXItemAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)

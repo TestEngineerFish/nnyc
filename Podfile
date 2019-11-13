@@ -65,5 +65,6 @@ target 'YXEDU' do
      
      pod 'Kingfisher', '~> 5.9.0'
 
-
+     # 音视频缓存库
+     pod 'KTVHTTPCache'
 end

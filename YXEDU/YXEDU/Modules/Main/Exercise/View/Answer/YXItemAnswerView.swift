@@ -110,7 +110,20 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         }
         collectionViewCell = cell
         
-        self.answerCompletion(right: true)
+        if exerciseModel.answers?.first == exerciseModel.option?.firstItems?[indexPath.row].optionId {
+            self.answerCompletion(right: true)
+        } else {
+            self.answerCompletion(right: false)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                cell?.backgroundColor = UIColor.white
+                cell?.layer.borderColor = UIColor.black6.cgColor
+                if let label = cell?.contentView.subviews.first as? UILabel {
+                    label.textColor = UIColor.black2
+                }
+            }
+            
+        }
     }
 
     

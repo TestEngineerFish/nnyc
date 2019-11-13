@@ -193,8 +193,9 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
             self.showWrongAnimation()
             YXAVPlayerManager.share.playWrongAudio()
             
+            self.exerciseViewArray.first?.isWrong = true
             // 等待错误提示音播放完后，再进行提示
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {[weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
                 self?.exerciseViewArray.first?.remindView?.show()
             }
         }
@@ -233,8 +234,12 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
         self.view.isUserInteractionEnabled = true
         self.resultView.layer.removeAllAnimations()
         if let isRight = anim.value(forKey: "isRight") as? Bool, isRight{
+            if self.exerciseViewArray.first?.isWrong ?? false {
+                self.exerciseViewArray.first?.remindView?.remindDetail()
+            }
             // 切题
             self.switchExerciseView()
+            
         }
     }
 }

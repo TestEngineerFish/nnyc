@@ -100,9 +100,9 @@ class YXExerciseDataManager: NSObject {
             return
         }
         
-        self.exerciseModelArray.removeFirst()
-        
-        if !right {
+        if right {
+            self.exerciseModelArray.removeFirst()
+        } else {
             self.addWrongExercise(exerciseModel: exerciseModel)
             self.addWrongBook(exerciseModel: exerciseModel)
         }
@@ -111,7 +111,13 @@ class YXExerciseDataManager: NSObject {
     /// 错题数据处理，重做
     /// - Parameter wrongExercise: 练习Model
     private func addWrongExercise(exerciseModel: YXWordExerciseModel) {
-        self.exerciseModelArray.append(exerciseModel)
+
+        if !exerciseModelArray.contains { (model) -> Bool in
+            return model.question?.wordID == exerciseModel.question?.wordID && model.type == exerciseModel.type
+            } {
+            self.exerciseModelArray.append(exerciseModel)
+        }
+        
     }
     
     /// 错题本数据处理
@@ -197,11 +203,11 @@ class YXExerciseDataManager: NSObject {
             "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
             "symbol_us" : "美/ɡʊd/",
             "symbol_uk" : "英/ɡʊd/",
-            "voice_us" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
-            "voice_uk" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
+            "voice_us" : "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
+            "voice_uk" : "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
             "example_en" : "You have such a <font color='#55a7fd'>good</font> chance.",
             "example_cn" : "你有这么一个好的机会。",
-            "example_voice": "http://m7.music.126.net/20191113193045/42af8f12d0fee1a60790262c7c33b7de/ymusic/a8d0/fde6/d7e2/6dda69cbd4f421d9f1e11f1de0ebf4a4.mp3",
+            "example_voice": "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
             "synonym": "great,helpful",
             "antonym": "poor,bad",
             "usage":  ["adj.+n.  early morning 清晨","n.+n.  morning exercise早操"]
