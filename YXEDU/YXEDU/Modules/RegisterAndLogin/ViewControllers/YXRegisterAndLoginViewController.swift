@@ -54,6 +54,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     @IBAction func loginWithQQ(_ sender: UIButton) {
+        navigationController?.pushViewController(YXWordDetailViewController(), animated: true)
+        return
         QQApiManager.shared().qqLogin()
     }
     

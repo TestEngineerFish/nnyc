@@ -113,7 +113,7 @@ class YXExerciseDataManager: NSObject {
     private func addWrongExercise(exerciseModel: YXWordExerciseModel) {
 
         if !exerciseModelArray.contains { (model) -> Bool in
-            return model.question?.wordID == exerciseModel.question?.wordID && model.type == exerciseModel.type
+            return model.question?.wordId == exerciseModel.question?.wordId && model.type == exerciseModel.type
             } {
             self.exerciseModelArray.append(exerciseModel)
         }
@@ -171,7 +171,7 @@ class YXExerciseDataManager: NSObject {
                     for subStep in step {
                         if subStep.score == self.fetchWordScore(wordId: review.wordId) {
                             var exercise = createExerciseModel(step: subStep)
-                            exercise.word = fetchWord(wordId: exercise.question?.wordID ?? 0)
+                            exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
                             exerciseModelArray.append(exercise)
                             break
                         }
@@ -180,7 +180,7 @@ class YXExerciseDataManager: NSObject {
                     // 不是新学，只有一个题型
                     if let sp = step.first {
                         var exercise = createExerciseModel(step: sp)
-                        exercise.word = fetchWord(wordId: exercise.question?.wordID ?? 0)
+                        exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
                         exerciseModelArray.append(exercise)
                     }
                 }
