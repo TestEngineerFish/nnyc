@@ -31,8 +31,8 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         return imageView
     }
     
-    override func createSubview() {
-        super.createSubview()
+    override func createSubviews() {
+        super.createSubviews()
         flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)

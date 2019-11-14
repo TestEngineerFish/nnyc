@@ -21,7 +21,7 @@ protocol YXAnswerViewDelegate: NSObjectProtocol {
 }
 
 /// 答案视图基类，所有的答案区都需要继承自该类
-class YXBaseAnswerView: UIView, YXAudioPlayerViewDelegate {
+class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
 
     var contentScrollView: UIScrollView?
     /// 练习数据模型
@@ -33,7 +33,7 @@ class YXBaseAnswerView: UIView, YXAudioPlayerViewDelegate {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.white
-        self.createSubview()
+        self.createSubviews()
         self.bindData()
     }
 
@@ -43,15 +43,14 @@ class YXBaseAnswerView: UIView, YXAudioPlayerViewDelegate {
 
     weak var answerDelegate: YXAnswerViewDelegate?
 
-    func createSubview() {
+    override func createSubviews() {
         self.contentScrollView = UIScrollView()
         self.addSubview(contentScrollView!)
         self.contentScrollView?.snp.makeConstraints({ (make) in
             make.edges.equalToSuperview()
         })
     }
-    
-    func bindData() {}
+
 
     override func layoutSubviews() {
         super.layoutSubviews()

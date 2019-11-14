@@ -42,8 +42,8 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func createSubview() {
-        super.createSubview()
+    override func createSubviews() {
+        super.createSubviews()
         self.setPath()
         self.isCapitalLetter = self.justCapitalLetter(self.word)
         self.createUI()

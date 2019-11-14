@@ -29,7 +29,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         return label
     }
     
-    override func createSubview() {
+    override func createSubviews() {
         flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)

@@ -17,6 +17,9 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
         questionView = YXBaseQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
         
+        remindView = YXRemindView(exerciseModel: exerciseModel)
+        self.addSubview(remindView!)
+        
         answerView = YXConnectWordAndChineseAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
@@ -33,6 +36,12 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
             make.right.equalTo(-22)
             make.height.equalTo(380)
         }
+        
+        remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(questionView!.snp.bottom).offset(15)
+            make.left.width.equalTo(questionView!)
+            make.height.equalTo(150)
+        })
         
         self.answerView?.snp.makeConstraints({ (make) in
             make.top.equalTo(140)

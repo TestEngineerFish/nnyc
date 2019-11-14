@@ -29,8 +29,8 @@ class YXConnectionView: UIView {
     }
 
     
-    var questionArray = ["book", "good", "coffee", "cat"]
-    var answerArray = ["书", "good", "coffee", "cat"]
+    var questionArray: [String] = []
+    var answerArray: [String] = []
     
     private var leftItemArray: [YXConnectionItemView] = []
     private var rightItemArray: [YXConnectionItemView] = []
@@ -98,9 +98,24 @@ class YXConnectionView: UIView {
     }
     
     func bindData() {
+        self.processData()
         self.createSubview()
     }
 
+    
+    func processData() {
+        if let items = exerciseModel?.option?.firstItems {
+            for item in items {
+                questionArray.append(item.content ?? "")
+            }
+        }
+        
+        if let items = exerciseModel?.option?.secondItems {
+            for item in items {
+                answerArray.append(item.content ?? "")
+            }
+        }
+    }
 }
 
 

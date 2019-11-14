@@ -19,8 +19,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     var selectedBtnArray = [YXLetterButton]()
     let offsetTag    = 100
 
-    override func createSubview() {
-        super.createSubview()
+    override func createSubviews() {
+        super.createSubviews()
         guard let itemList = self.exerciseModel.option?.firstItems else {
             return
         }

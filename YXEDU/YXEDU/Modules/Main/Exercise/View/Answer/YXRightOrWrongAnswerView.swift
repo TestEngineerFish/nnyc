@@ -15,8 +15,8 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
     var rightButton: UIButton = UIButton()
     var wrongButton: UIButton = UIButton()
 
-    override func createSubview() {
-        super.createSubview()
+    override func createSubviews() {
+        super.createSubviews()
         self.bindProperty()
         self.addSubview(rightButton)
         self.addSubview(wrongButton)
@@ -39,7 +39,7 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
         }
     }
     
-    func bindProperty() {
+    override func bindProperty() {
         self.rightButton.addTarget(self, action: #selector(clickRightButton), for: .touchUpInside)
         self.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .normal)
         self.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .selected)
