@@ -37,6 +37,12 @@ class YXListenChooseImageExerciseView: YXBaseExerciseView {
             make.height.equalTo(150)
         }
         
+        remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(questionView!.snp.bottom).offset(15)
+            make.left.width.equalTo(questionView!)
+            make.height.equalTo(150)
+        })
+        
         self.answerView?.snp.makeConstraints({ (make) in
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(223)

@@ -10,7 +10,7 @@ import UIKit
 
 /// 问题面板基类
 
-class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
+class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
 
     let topPadding    = CGFloat(54)
     let bottomPadding = CGFloat(54)
@@ -41,6 +41,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
         self.backgroundColor = UIColor.white
         self.layer.setDefaultShadow()
         self.createSubviews()
+        self.bindProperty()
         self.bindData()
     }
     
@@ -48,7 +49,6 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createSubviews() {}
     
     func initTitleLabel() {
         self.titleLabel = UILabel()
@@ -66,6 +66,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
         self.subTitleLabel?.font          = UIFont.pfSCRegularFont(withSize: 14)
         self.subTitleLabel?.textColor     = UIColor.hex(0x888888)
         self.subTitleLabel?.textAlignment = .center
+        self.subTitleLabel?.numberOfLines = 0
         self.addSubview(subTitleLabel!)
     }
     
@@ -93,8 +94,7 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
         self.audioPlayerView = YXAudioPlayerView()
         self.addSubview(audioPlayerView!)
     }
-    
-    func bindData()  {}
+
 
     // MARK:YXAnswerEventProtocol
     func selectedAnswerButton(_ button: YXLetterButton) -> Int? {

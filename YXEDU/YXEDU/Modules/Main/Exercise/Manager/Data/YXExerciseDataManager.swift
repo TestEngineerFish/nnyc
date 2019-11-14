@@ -86,9 +86,10 @@ class YXExerciseDataManager: NSObject {
     
     /// 从当前关卡数据中，获取一个练习数据对象
     func fetchOneExerciseModel() -> YXWordExerciseModel? {
-//        let first = exerciseModelArray.first
-//        exerciseModelArray.removeFirst()
-        return exerciseModelArray.first
+        if exerciseModelArray.count == 0 {
+            return nil
+        }
+        return exerciseModelArray.removeFirst()
     }
     
     
@@ -96,12 +97,10 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter exerciseModel:
     func completionExercise(exerciseModel: YXWordExerciseModel, right: Bool) {
         
-        if exerciseModelArray.count == 0 {
-            return
-        }
+
         
         if right {
-            self.exerciseModelArray.removeFirst()
+//            self.exerciseModelArray.removeFirst()
         } else {
             self.addWrongExercise(exerciseModel: exerciseModel)
             self.addWrongBook(exerciseModel: exerciseModel)
@@ -111,10 +110,12 @@ class YXExerciseDataManager: NSObject {
     /// 错题数据处理，重做
     /// - Parameter wrongExercise: 练习Model
     private func addWrongExercise(exerciseModel: YXWordExerciseModel) {
-
-        if !exerciseModelArray.contains { (model) -> Bool in
-            return model.question?.wordID == exerciseModel.question?.wordID && model.type == exerciseModel.type
-            } {
+        guard let model = exerciseModelArray.last else {
+            self.exerciseModelArray.append(exerciseModel)
+            return
+        }
+            
+        if !(model.question?.wordID == exerciseModel.question?.wordID && model.type == exerciseModel.type) {
             self.exerciseModelArray.append(exerciseModel)
         }
         

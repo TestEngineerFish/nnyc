@@ -155,6 +155,10 @@ class YXExerciseViewController: UIViewController {
             exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.exerciseViewTop, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)
             exerciseView.exerciseDelegate = self
             loadExerciseView(exerciseView: exerciseView)
+        } else {
+            
+            print("学完")
+            self.navigationController?.popViewController(animated: true)
         }
 
     }

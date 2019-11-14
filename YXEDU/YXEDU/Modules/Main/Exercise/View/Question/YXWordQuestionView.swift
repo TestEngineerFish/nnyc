@@ -48,6 +48,7 @@ class YXWordQuestionView: YXBaseQuestionView {
         subTitleLabel?.text = exerciseModel.question?.americanPhoneticSymbol
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
+            self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.americanPronunciation
             self?.audioPlayerView?.play()
         }
         

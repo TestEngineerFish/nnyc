@@ -14,17 +14,25 @@ class YXExampleQuestionView: YXBaseQuestionView {
     override func createSubviews() {
         super.createSubviews()
         self.initSubTitleLabel()
+        self.initAudioPlayerView()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        
         subTitleLabel?.snp.makeConstraints({ (make) in
-            make.centerY.left.right.equalToSuperview()
-            make.height.equalTo(22)
+            let height = self.subTitleLabel?.attributedText?.string.textHeight(font: subTitleLabel!.font, width: screenWidth - 64) ?? 0
+            make.centerY.equalToSuperview()
+            make.left.equalTo(10)
+            make.right.equalTo(-10)
+            make.height.equalTo(height)
         })
     }
-
+    
+    override func bindProperty() {
+        self.audioPlayerView?.isHidden = true
+    }
     override func bindData() {
         
         guard let word = self.exerciseModel.question?.word, let example = exerciseModel.question?.englishExample else {
@@ -42,6 +50,12 @@ class YXExampleQuestionView: YXBaseQuestionView {
             attrString.addAttributes(attr2, range: NSRange(location: location, length: word.count))
             
             self.subTitleLabel?.attributedText = attrString
+        }
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
+            self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.americanPronunciation
+            self?.audioPlayerView?.play()
         }
         
     }

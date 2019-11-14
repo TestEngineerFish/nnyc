@@ -16,18 +16,16 @@ class YXListenQuestionView: YXBaseQuestionView {
     
     override func createSubviews() {
         super.createSubviews()
-        
         self.addSubview(audioBackgroundView)
-        
+        self.initAudioPlayerView()
+    }
+    
+    override func bindProperty() {
         self.audioBackgroundView.backgroundColor = UIColor.orange3
         self.audioBackgroundView.layer.masksToBounds = true
         self.audioBackgroundView.layer.cornerRadius = 26
         self.audioBackgroundView.layer.borderWidth = 3
         self.audioBackgroundView.layer.borderColor = UIColor.orange2.cgColor
-        
-        
-        self.initAudioPlayerView()
-        
     }
     
     override func layoutSubviews() {
@@ -44,4 +42,10 @@ class YXListenQuestionView: YXBaseQuestionView {
         })
     }
     
+    override func bindData() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
+            self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.americanPronunciation
+            self?.audioPlayerView?.play()
+        }
+    }
 }
