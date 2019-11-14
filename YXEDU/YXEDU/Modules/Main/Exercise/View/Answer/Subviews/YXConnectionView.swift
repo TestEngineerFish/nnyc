@@ -15,11 +15,25 @@ class YXConnectionView: UIView {
     
     struct Config {
         static let itemLeft: CGFloat = 24
-        static let interval: CGFloat = 34
-        
+            
         static let itemWidth: CGFloat = 120
         static let itemHeight: CGFloat = 30
-        
+    }
+    
+    var leftInterval: CGFloat {
+        if exerciseModel?.type == .connectionWordAndChinese {
+            return 34
+        } else {
+            return 54
+        }
+    }
+    
+    var rightInterval: CGFloat {
+        if exerciseModel?.type == .connectionWordAndChinese {
+            return 34
+        } else {
+            return 24
+        }
     }
     
     var exerciseModel: YXWordExerciseModel? {
@@ -46,7 +60,7 @@ class YXConnectionView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.black5.withAlphaComponent(0.2)
+//        self.backgroundColor = UIColor.black5.withAlphaComponent(0.2)
         self.addGesture()
         self.clipsToBounds = true
     }
@@ -60,7 +74,7 @@ class YXConnectionView: UIView {
             
         for (index, title) in questionArray.enumerated() {
             
-            let y = (Config.itemHeight + Config.interval) * CGFloat(index)
+            let y = (Config.itemHeight + leftInterval) * CGFloat(index)
             let ivFrame = CGRect(x: left, y: y, width: Config.itemWidth, height: Config.itemHeight)
             
             let itemView = YXConnectionItemView(frame: ivFrame)
@@ -68,6 +82,7 @@ class YXConnectionView: UIView {
             itemView.index = index
             itemView.itemType = .left
             itemView.itemStatus = .normal
+            itemView.itemModel = exerciseModel?.option?.firstItems?[index]
             itemView.clickEvent = {[weak self] (index, type) in
                 self?.itemEvent(index: index, type: type)
             }
@@ -79,7 +94,7 @@ class YXConnectionView: UIView {
         for (index, title) in answerArray.enumerated() {
             
             let x = self.width - Config.itemWidth
-            let y = (Config.itemHeight + Config.interval) * CGFloat(index)
+            let y = (Config.itemHeight + rightInterval) * CGFloat(index)
             let ivFrame = CGRect(x: x , y: y, width: Config.itemWidth, height: Config.itemHeight)
             
             let itemView = YXConnectionItemView(frame: ivFrame)
@@ -87,6 +102,7 @@ class YXConnectionView: UIView {
             itemView.index = index
             itemView.itemType = .right
             itemView.itemStatus = .normal
+            itemView.itemModel = exerciseModel?.option?.secondItems?[index]
             itemView.clickEvent = {[weak self] (index, type) in
                 self?.itemEvent(index: index, type: type)
             }
@@ -194,7 +210,11 @@ extension YXConnectionView {
     
     /// 连接是否正确
     private func isConnectionRight() -> Bool {
-        return false
+        let selectedItems = self.leftAndRightItems()
+        guard let leftId = selectedItems.0.itemModel?.optionId, let rightId = selectedItems.1.itemModel?.optionId, leftId == rightId else {
+            return false
+        }
+        return true
     }
     
     

@@ -11,8 +11,8 @@ import UIKit
 class YXNewLearnJuniorHighSchool: YXBaseAnswerView {
     let masteredButton = YXButton()
     let unknownButton  = YXButton()
-    override func createSubview() {
-        super.createSubview()
+    override func createSubviews() {
+        super.createSubviews()
         let defaultH = AdaptSize(42)
         masteredButton.backgroundColor    = UIColor.hex(0xFFE9C7)
         unknownButton.backgroundColor     = UIColor.hex(0xFFF7DC)

@@ -18,11 +18,17 @@ class YXConnectWordAndChineseAnswerView: YXBaseAnswerView {
         super.createSubviews()
         
         connectionView = YXConnectionView()
-        let connectionHeight = YXConnectionView.Config.itemHeight * 4 + YXConnectionView.Config.interval * 3
+//        self.connectionView?.exerciseModel = self.exerciseModel
+        let connectionHeight = YXConnectionView.Config.itemHeight * 4 + 34 * 3
         connectionView?.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: connectionHeight)
         self.addSubview(connectionView!)
     }
     
+    override func bindProperty() {
+        connectionView?.connectionCompletion = {[weak self] in
+            self?.answerCompletion(right: true)
+        }
+    }
     
     override func bindData() {
         self.connectionView?.exerciseModel = self.exerciseModel

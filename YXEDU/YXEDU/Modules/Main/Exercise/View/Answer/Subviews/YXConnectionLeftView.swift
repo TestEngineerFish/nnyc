@@ -39,6 +39,7 @@ class YXConnectionItemView: UIButton {
     
     public var index: Int = 0
     public var itemType: YXConnectionItemType = .left
+    public var itemModel: YXOptionItemModel?
     public var itemStatus: YXConnectionItemStatus = .normal {
         didSet { self.setItemStatus() }
     }

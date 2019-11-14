@@ -34,6 +34,7 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.white
         self.createSubviews()
+        self.bindProperty()
         self.bindData()
     }
 

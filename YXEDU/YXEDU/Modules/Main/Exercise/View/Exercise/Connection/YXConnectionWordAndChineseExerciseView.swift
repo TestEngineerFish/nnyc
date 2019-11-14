@@ -11,7 +11,7 @@ import UIKit
 /// 连接单词和中文
 class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
     
-    private let answerHeight: CGFloat = YXConnectionView.Config.itemHeight * 4 + YXConnectionView.Config.interval * 3
+    private let answerHeight: CGFloat = YXConnectionView.Config.itemHeight * 4 + 34 * 3
             
     override func createSubview() {
         questionView = YXBaseQuestionView(exerciseModel: self.exerciseModel)
