@@ -31,9 +31,6 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
     
     /// 播放器
     var audioPlayerView: YXAudioPlayerView?
-
-    /// 处理协议
-    var delegate: YXQuestionEventProtocol?
     
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
@@ -59,7 +56,6 @@ class YXBaseQuestionView: UIView, YXAnswerEventProtocol {
         
         self.addSubview(titleLabel!)
     }
-    
     
     func initSubTitleLabel() {
         self.subTitleLabel                = UILabel()

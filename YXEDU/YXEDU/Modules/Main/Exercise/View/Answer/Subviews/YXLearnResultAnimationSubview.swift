@@ -19,19 +19,10 @@ class YXLearnResultAnimationSubview: UIView {
 
     init(_ level: Int) {
         super.init(frame: CGRect(x: 0, y: 0, width: 60, height: 85))
-        self.firstStar.image      = UIImage(named: "star_enable")
-        if level > 1 {
-            self.secondStar.image = UIImage(named: "star_enable")
-            self.imageView.image  = UIImage(named: "upper_result")
-        } else {
-            self.secondStar.image = UIImage(named: "star_disable")
-            self.imageView.image  = UIImage(named: "lower_result")
-        }
-        if level > 2 {
-            self.thirdStar.image  = UIImage(named: "star_enable")
-        } else {
-            self.thirdStar.image  = UIImage(named: "star_disable")
-        }
+        self.firstStar.image  = UIImage(named: level > 0 ? "star_enable" : "star_disable")
+        self.secondStar.image = UIImage(named: level > 1 ? "star_enable" : "star_disable")
+        self.thirdStar.image  = UIImage(named: level > 2 ? "star_enable" : "star_disable")
+        self.imageView.image  = UIImage(named: level > 1 ? "upper_result" : "lower_result")
         self.createUI()
     }
 

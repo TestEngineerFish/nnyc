@@ -10,8 +10,10 @@ import UIKit
 
 
 protocol YXAudioPlayerViewDelegate {
-    /// 通过按钮的选中效果来播放和暂停
-    func endPlayAudio()
+    ///  播放开始
+    func playAudioStart()
+    /// 播放结束
+    func playAudioFinished()
 }
 
 class YXAudioPlayerView: UIView {
@@ -45,9 +47,12 @@ class YXAudioPlayerView: UIView {
             print("无效的音频地址: \(String(describing: self.urlStr))")
             return
         }
-        self.audioButton.layer.addFlickerAnimation()
+        if !YXAVPlayerManager.share.isPlaying {
+            self.audioButton.layer.addFlickerAnimation()
+        }
+        self.delegate?.playAudioStart()
         YXAVPlayerManager.share.playerAudio(url) {
-            self.delegate?.endPlayAudio()
+            self.delegate?.playAudioFinished()
             self.audioButton.layer.removeFlickerAnimation()
         }
     }

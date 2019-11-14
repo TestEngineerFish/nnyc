@@ -16,14 +16,19 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
     var thirdQuestionView: YXNewLearnPrimarySchoolQuestionView?
     var currentQuestionView: YXNewLearnPrimarySchoolQuestionView?
 
+    var contentView = UIScrollView()
+    let contentViewW = screenWidth - AdaptSize(44)
+
     override func createSubview() {
         super.createSubview()
+        self.addSubview(contentView)
+
         firstQuestionView  = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel, type: .imageAndAudio)
         secondQuestionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel, type: .wordAndAudio)
         thirdQuestionView  = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel, type: .wordAndImageAndAudio)
-        self.addSubview(firstQuestionView!)
-        self.addSubview(secondQuestionView!)
-        self.addSubview(thirdQuestionView!)
+        self.contentView.addSubview(firstQuestionView!)
+        self.contentView.addSubview(secondQuestionView!)
+        self.contentView.addSubview(thirdQuestionView!)
         self.currentQuestionView = firstQuestionView
 
         remindView = YXRemindView(exerciseModel: exerciseModel)
@@ -32,13 +37,11 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         answerView = YXNewLearnAnswerView(exerciseModel: self.exerciseModel)
         self.addSubview(answerView!)
 
-        firstQuestionView?.delegate = answerView
         answerView?.delegate        = firstQuestionView
         answerView?.answerDelegate  = self
 
-//        (questionView as! YXNewLearnPrimarySchoolQuestionView).firstView?.audioView.delegate  = answerView
-//        (questionView as! YXNewLearnPrimarySchoolQuestionView).secondView?.audioView.delegate = answerView
-//        (questionView as! YXNewLearnPrimarySchoolQuestionView).thirdView?.audioView.delegate  = answerView
+        firstQuestionView?.audioPlayerView?.delegate = answerView
+
         // 延迟播放.(因为在切题的时候会有动画)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
             self.playerAudio()
@@ -47,12 +50,34 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        questionView?.snp.makeConstraints({ (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(37))
+        contentView.frame = CGRect(x: AdaptSize(22), y: AdaptSize(37), width: contentViewW, height: AdaptSize(250))
+
+        firstQuestionView?.snp.makeConstraints({ (make) in
+            make.left.top.bottom.equalToSuperview()
             make.height.equalTo(AdaptSize(250))
-            make.width.equalToSuperview().offset(AdaptSize(-44))
+            make.width.equalTo(contentViewW)
         })
+
+        secondQuestionView?.snp.makeConstraints({ (make) in
+            make.left.equalTo(firstQuestionView!.snp.right)
+            make.top.equalToSuperview()
+            make.width.height.equalTo(firstQuestionView!)
+        })
+
+        thirdQuestionView?.snp.makeConstraints({ (make) in
+            make.left.equalTo(secondQuestionView!.snp.right)
+            make.top.equalToSuperview()
+            make.width.height.equalTo(firstQuestionView!)
+        })
+
+        contentView.contentSize = CGSize(width: contentViewW*3, height: AdaptSize(250))
+
+        remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(contentView.snp.bottom).offset(15)
+            make.left.width.equalTo(contentView)
+            make.height.equalTo(150)
+        })
+
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -61,41 +86,46 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         })
     }
 
+    /// 播放音频
     private func playerAudio() {
         guard let currentQuestionView = currentQuestionView else {
             return
         }
-        currentQuestionView.audioView.clickAudioBtn()
+        currentQuestionView.audioPlayerView?.clickAudioBtn()
     }
 
-    private func reportAudioData() {
+    // MARK: YXAnswerViewDelegate
 
+    override func switchQuestionView() -> Bool {
+        guard let currentQuestionView = self.currentQuestionView else {
+            return false
+        }
+        var offsetX = CGFloat.zero
+        switch currentQuestionView {
+        case firstQuestionView:
+            offsetX = contentViewW * 1
+            // 更新当前视图
+            self.currentQuestionView = secondQuestionView
+            // 重新指定Delegate
+            secondQuestionView?.audioPlayerView?.delegate = answerView
+            answerView?.delegate = secondQuestionView
+        case secondQuestionView:
+            offsetX = contentViewW * 2
+            // 更新当前视图
+            self.currentQuestionView = thirdQuestionView
+            // 重新指定Delegate
+            thirdQuestionView?.audioPlayerView?.delegate = answerView
+            answerView?.delegate = thirdQuestionView
+        case thirdQuestionView:
+            return false
+        default:
+            break
+        }
+        self.contentView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
+        if let _answerView = answerView as? YXNewLearnAnswerView {
+            _answerView.alreadyCount = 0
+        }
+        return true
     }
-
-    /// 切换问题
-//    override func switchQuestion() {
-//        super.switchQuestion()
-//        guard let currentView = self.currentView else {
-//            return
-//        }
-//        var offsetX = CGFloat.zero
-//        switch currentView {
-//        case firstView:
-//            offsetX = -self.width * 1
-//            if let view = secondView {
-//                view.audioView.clickAudioBtn()
-//            }
-//        case secondView:
-//            offsetX = -self.width * 2
-//            if let view = thirdView {
-//                view.audioView.clickAudioBtn()
-//            }
-//        default:
-//            return
-//        }
-//        UIView.animate(withDuration: 0.25) {
-//            self.contentView.transform = CGAffineTransform(translationX: offsetX, y: 0)
-//        }
-//    }
 
 }

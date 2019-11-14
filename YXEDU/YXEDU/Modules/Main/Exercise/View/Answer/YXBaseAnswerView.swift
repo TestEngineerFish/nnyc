@@ -14,10 +14,14 @@ protocol YXAnswerViewDelegate: NSObjectProtocol {
     /// 答题完成时，对错的结果回调
     /// - Parameter right: 是否答对
     func answerCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool)
+
+    ///  切换问题
+    /// - returns: 是否切题成功,如果是最后一题,则切题失败
+    func switchQuestionView() -> Bool
 }
 
 /// 答案视图基类，所有的答案区都需要继承自该类
-class YXBaseAnswerView: UIView, YXQuestionEventProtocol, YXAudioPlayerViewDelegate {
+class YXBaseAnswerView: UIView, YXAudioPlayerViewDelegate {
 
     var contentScrollView: UIScrollView?
     /// 练习数据模型
@@ -72,6 +76,7 @@ class YXBaseAnswerView: UIView, YXQuestionEventProtocol, YXAudioPlayerViewDelega
         self.answerDelegate?.answerCompletion(exerciseModel, right)
     }
 
-    // MARK: YXQuestionEventProtocol
-    func endPlayAudio() {}
+    // MARK: YXAudioPlayerViewDelegate
+    func playAudioStart() {}
+    func playAudioFinished() {}
 }

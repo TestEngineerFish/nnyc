@@ -23,7 +23,6 @@ class YXFillWordGroupExerciseView: YXBaseExerciseView {
         answerView = YXWordAnswerView(exerciseModel: exerciseModel)
         self.addSubview(answerView!)
 
-        questionView?.delegate     = answerView
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
     }

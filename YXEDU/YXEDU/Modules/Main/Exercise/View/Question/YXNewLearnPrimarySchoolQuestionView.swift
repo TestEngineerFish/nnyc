@@ -19,20 +19,19 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
     var wordLabel: UILabel
     var chineseLabel: UILabel
-    var audioView: YXAudioPlayerView
     var viewType: NewLearnSubviewType
 
     init(exerciseModel: YXWordExerciseModel, type: NewLearnSubviewType) {
         self.viewType = type
         wordLabel     = UILabel()
         chineseLabel  = UILabel()
-        audioView     = YXAudioPlayerView()
         super.init(exerciseModel: exerciseModel)
         self.initImageView()
+        self.initAudioPlayerView()
         if let urlStr = exerciseModel.question?.imageUrl {
             imageView?.showImage(with: urlStr)
         }
-        audioView.urlStr = exerciseModel.question?.voice
+        audioPlayerView?.urlStr = exerciseModel.question?.voice
         self.layer.removeShadow()
         self.clipsToBounds = true
         self.createSubviews(type)
@@ -47,13 +46,12 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         addSubview(wordLabel)
         addSubview(chineseLabel)
         addSubview(imageView!)
-        addSubview(audioView)
 
         wordLabel.font             = UIFont.pfSCSemiboldFont(withSize: 26)
-        //        wordLabel.text             = self.exerciseModel.word
+        wordLabel.text             = self.exerciseModel.word?.word ?? ""
         wordLabel.textColor        = UIColor.black1
         wordLabel.textAlignment    = .center
-        //        chineseLabel.text          = self.exerciseModel.subTitle
+        chineseLabel.text          = self.exerciseModel.question?.soundmark ?? ""
         chineseLabel.font          = UIFont.pfSCRegularFont(withSize: 14)
         chineseLabel.textColor     = UIColor.black1
         chineseLabel.textAlignment = .center
@@ -68,7 +66,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
                 make.width.equalTo(AdaptSize(150))
                 make.height.equalTo(AdaptSize(108))
             }
-            audioView.snp.makeConstraints { (make) in
+            audioPlayerView?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(imageView!.snp.bottom).offset(10)
                 make.width.height.equalTo(AdaptSize(40))
@@ -88,7 +86,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
                 make.width.equalToSuperview()
                 make.height.equalTo(20)
             }
-            audioView.snp.makeConstraints { (make) in
+            audioPlayerView?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(chineseLabel.snp.bottom).offset(10)
                 make.width.height.equalTo(40)
@@ -113,7 +111,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
                 make.width.equalTo(150)
                 make.height.equalTo(108)
             }
-            audioView.snp.makeConstraints { (make) in
+            audioPlayerView?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(imageView!.snp.bottom).offset(10)
                 make.width.height.equalTo(40)
@@ -121,10 +119,8 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         }
     }
 
-
-
     override func playAudio() {
-//        self.currentView?.audioView.clickAudioBtn()
+        self.audioPlayerView?.play()
     }
     
 }

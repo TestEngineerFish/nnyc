@@ -343,9 +343,6 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         return predicateRe.evaluate(with: text)
     }
 
-    // TODO: YXQuestionEventProtocol
-
-
     private func showResultView(errorList list: [Int]) {
         if list.isEmpty {
             // 答题正确

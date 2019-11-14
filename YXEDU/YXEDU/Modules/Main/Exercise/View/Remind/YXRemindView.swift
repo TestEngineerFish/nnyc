@@ -301,8 +301,10 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
 
     }
     //MARK: - 语音播放结束
-    func endPlayAudio() {
+    func playAudioStart() { }
+    func playAudioFinished() {
         self.playAudio()
     }
+
 }
 
