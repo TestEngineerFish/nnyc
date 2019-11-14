@@ -149,7 +149,7 @@ class YXExerciseViewController: UIViewController {
         }
         
         if let model = dataManager.fetchOneExerciseModel() {
-            if model.type == .newLearnPrimarySchool {
+            if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {
                 self.bottomView.tipsButton.isHidden = true
             } else {
                 self.bottomView.tipsButton.isHidden = false

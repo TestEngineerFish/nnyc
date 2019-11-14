@@ -30,6 +30,9 @@
 		2205A9492362F9B800C6E674 /* YXCharacterTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A9482362F9B800C6E674 /* YXCharacterTextField.swift */; };
 		2205A94B23630CD900C6E674 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A94A23630CD900C6E674 /* String+Extension.swift */; };
 		220E6747236BE1F5001C794A /* Optional+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220E6746236BE1F5001C794A /* Optional+Extension.swift */; };
+		22298BF8237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */; };
+		22298BFA237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BF9237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift */; };
+		22298BFC237D52FC00F24786 /* YXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BFB237D52FC00F24786 /* YXButton.swift */; };
 		224529042327A82500510507 /* YYDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529032327A82500510507 /* YYDatabase.swift */; };
 		224529072327A85100510507 /* YYDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529062327A85100510507 /* YYDataSourceManager.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
@@ -707,6 +710,9 @@
 		2205A9482362F9B800C6E674 /* YXCharacterTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCharacterTextField.swift; sourceTree = "<group>"; };
 		2205A94A23630CD900C6E674 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		220E6746236BE1F5001C794A /* Optional+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extension.swift"; sourceTree = "<group>"; };
+		22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnJuniorHighSchoolQuestionView.swift; sourceTree = "<group>"; };
+		22298BF9237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnJuniorHighSchoolAnswerView.swift; sourceTree = "<group>"; };
+		22298BFB237D52FC00F24786 /* YXButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXButton.swift; sourceTree = "<group>"; };
 		224529022327A34300510507 /* YXEDU-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YXEDU-Bridging-Header.h"; sourceTree = "<group>"; };
 		224529032327A82500510507 /* YYDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabase.swift; sourceTree = "<group>"; };
 		224529062327A85100510507 /* YYDataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDataSourceManager.swift; sourceTree = "<group>"; };
@@ -2547,6 +2553,7 @@
 				778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */,
 				778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */,
 				2290EAC7236FCCFE000BCA47 /* YXNewLearnPrimarySchoolAnswerView.swift */,
+				22298BF9237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift */,
 			);
 			path = Answer;
 			sourceTree = "<group>";
@@ -2567,6 +2574,7 @@
 				EE77210F237D3EF700CD632E /* YXWordAndImage_FillQuestionView.swift */,
 				2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */,
 				2290EAC5236FCB72000BCA47 /* YXNewLearnPrimarySchoolQuestionView.swift */,
+				22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */,
 			);
 			path = Question;
 			sourceTree = "<group>";
@@ -3030,6 +3038,7 @@
 				EE5E025C2327793700655654 /* YXTabBarViewController.h */,
 				EE5E025F2327793700655654 /* YXTabBarViewController.m */,
 				EE77210D237C2B6E00CD632E /* YXView.swift */,
+				22298BFB237D52FC00F24786 /* YXButton.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -5604,6 +5613,7 @@
 				EE5EFD4623274F0900655654 /* YXGameAnswer.m in Sources */,
 				EE5E005223274FEB00655654 /* YXWordDetailViewControllerOld.m in Sources */,
 				EE5E021D232756BF00655654 /* TYDrawStorage.m in Sources */,
+				22298BFC237D52FC00F24786 /* YXButton.swift in Sources */,
 				EE5E00D623274FEB00655654 /* YXSelectBookContentVC.m in Sources */,
 				EE5E027D23277D9400655654 /* YXTrace.m in Sources */,
 				EE5E003323274FEB00655654 /* YXWordListGuideView.m in Sources */,
@@ -5890,6 +5900,7 @@
 				22ED54AB2368795B00011B82 /* LearningProgressView.swift in Sources */,
 				EE5E000423274FEB00655654 /* YXDLModel.m in Sources */,
 				EE1E4A9223694691007D248F /* YXConnectionWordAndChineseExerciseView.swift in Sources */,
+				22298BFA237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift in Sources */,
 				EE5EFCCD23274E5500655654 /* YXSideSlipVC.m in Sources */,
 				EE5EFCE223274E5500655654 /* YXBookPlanModel.m in Sources */,
 				EE5E000823274FEB00655654 /* YXDisperseCloudView.m in Sources */,
@@ -6104,6 +6115,7 @@
 				EE5E00CD23274FEB00655654 /* YXBookCateModel.m in Sources */,
 				EE5E003B23274FEB00655654 /* YXStudyResultCell.m in Sources */,
 				EE5E009923274FEB00655654 /* YXArticleBottomView.m in Sources */,
+				22298BF8237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift in Sources */,
 				EE5EFD5F23274F0900655654 /* YXShareChallengeRankView.m in Sources */,
 				EE5E00DA23274FEC00655654 /* YXMainModel.m in Sources */,
 				22ED54C0236B23AD00011B82 /* YXLetterButton.swift in Sources */,
