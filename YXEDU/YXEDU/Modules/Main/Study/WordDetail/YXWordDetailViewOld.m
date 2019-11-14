@@ -6,7 +6,7 @@
 //  Copyright © 2018年 shiji. All rights reserved.
 //
 
-#import "YXWordDetailView.h"
+#import "YXWordDetailViewOld.h"
 #import "YXGraphConfuseWordCell.h"
 #import "YXGraphExampleSentenceCell.h"
 #import "YXGraphIllustationCell.h"
@@ -21,7 +21,7 @@
 #import "NSString+YX.h"
 #import "YXAPI.h"
 
-@interface YXWordDetailView ()<UITableViewDelegate, UITableViewDataSource>
+@interface YXWordDetailViewOld ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UITableView *accountTalbe;
 @property (nonatomic, strong) UIView *bottomHeadView;
@@ -31,7 +31,7 @@
 @property (nonatomic, strong) YXGraphTipThreeViewModel *viewModel;
 @end
 
-@implementation YXWordDetailView
+@implementation YXWordDetailViewOld
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

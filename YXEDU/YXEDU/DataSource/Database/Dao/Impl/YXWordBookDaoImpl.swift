@@ -14,10 +14,10 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     func insertBook(book: YXWordBookModel, completion: finishBlock) {
         let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
         let params: [Any?] = [book.grade,
-                             book.bookID,
+                             book.bookId,
                              book.bookName,
                              book.bookSource,
-                             book.hashString]
+                             book.bookHash]
         
         self.wordRunner.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
@@ -47,7 +47,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     
     func insertWord(word: YXWordModel, completion: finishBlock) {
         let sql = YYSQLManager.WordBookSQL.insertWord.rawValue
-        let params: [Any?] = [word.wordID,
+        let params: [Any?] = [word.wordId,
                               word.word,
                               word.partOfSpeech,
                               word.meaning,

@@ -144,7 +144,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookID = wordBook.bookID, let units = wordBook.units else { return }
+        guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookID = wordBook.bookId, let units = wordBook.units else { return }
         
         let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: units) { (unitID) in
             guard let unitID = unitID else { return }

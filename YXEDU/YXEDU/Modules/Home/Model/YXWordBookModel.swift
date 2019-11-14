@@ -37,12 +37,12 @@ struct YXWordBookModel: Mappable {
     
     var grade: Int?
     var gradeType: Int?
-    var bookID: Int?
+    var bookId: Int?
     var bookName: String?
     var bookSource: String?
     var coverImagePath: String?
     var countOfWords: Int?
-    var hashString: Int?
+    var bookHash: String?
     var units: [YXWordBookUnitModel]?
     
     init() {}
@@ -53,18 +53,18 @@ struct YXWordBookModel: Mappable {
     
     mutating func mapping(map: Map) {
         grade <- map["book_grade"]
-        bookID <- map["book_id"]
+        bookId <- map["book_id"]
         bookName <- map["book_name"]
         bookSource <- map["book_url"]
         coverImagePath <- map["cover"]
         countOfWords <- map["?"]
-        hashString <- map["hash"]
+        bookHash <- map["hash"]
         units <- map["unit_list"]
     }
 }
 
 struct YXWordBookUnitModel: Mappable {
-    var unitID: Int?
+    var unitId: Int?
     var unitName: String?
     var isExtensionUnit: Bool = false
     var words: [YXWordModel]?
@@ -74,7 +74,7 @@ struct YXWordBookUnitModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        unitID <- map["unit_id"]
+        unitId <- map["unit_id"]
         unitName <- map["unit_name"]
         isExtensionUnit <- map["is_ext_unit"]
         words <- map["word_list"]
@@ -99,7 +99,7 @@ struct YXUserWordBookListModel: Mappable {
 }
 
 struct YXWordBookStatusModel: Codable {
-    var bookID: Int?
+    var bookId: Int?
     var learnedDays: Int?
     var learnedWordsCount: Int?
     var learningUnit: String?
@@ -109,7 +109,7 @@ struct YXWordBookStatusModel: Codable {
     }
     
     mutating func mapping(map: Map) {
-        bookID <- map["book_id"]
+        bookId <- map["book_id"]
         learnedDays <- map["learned_days"]
         learnedWordsCount <- map["learned_words"]
         learningUnit <- map["learning_unit"]

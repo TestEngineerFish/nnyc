@@ -12,26 +12,7 @@ class YXWordDetailViewController: UIViewController {
     var word: YXWordModel!
     var dismissClosure: (() -> Void)?
 
-    private var wordDetailView: YXWordDetailCommonView!
-
-    @IBOutlet weak var collectionButton: UIButton!
-    
-    @IBAction func collectWord(_ sender: UIButton) {
-        YXWordModelManager.keepWordId("\(word.wordID)", bookId: "\(word.bookId)", isFav: collectionButton.currentImage == UIImage(named: "collectWord")) { [weak self] (response, isSuccess) in
-            guard let self = self, isSuccess == false else { return }
-            self.collectionButton.setImage(self.collectionButton.currentImage == UIImage(named: "collectWord") ? UIImage(named: "unCollectWord"): UIImage(named: "collectWord"), for: .normal)
-        }
-    }
-    
-    @IBAction func feedbackWord(_ sender: UIButton) {
-        YXReportErrorView.show(to: self.view)
-    }
-    
-    @IBAction func continueStudy(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: {
-            self.dismissClosure?()
-        })
-    }
+    private var wordDetailView: YXWordDetailView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +41,8 @@ class YXWordDetailViewController: UIViewController {
         }
         """)
         
-        wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 40, width: screenWidth, height: screenHeight - 120), word: word!)
+        wordDetailView = YXWordDetailView(frame: CGRect(x: 0, y: 40, width: screenWidth, height: screenHeight - 120), word: word!)
+        wordDetailView.dismissClosure = dismissClosure
         self.view.addSubview(wordDetailView)
     }
 

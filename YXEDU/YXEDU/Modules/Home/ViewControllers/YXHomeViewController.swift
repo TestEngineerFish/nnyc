@@ -108,8 +108,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 let decoder = JSONDecoder()
                 let result = try decoder.decode(YXHomeModel.self, from: jsonData)
-
-                YXConfigure.shared().currLearningBookId = "\(result.bookID ?? 0)"
+                YXConfigure.shared().currLearningBookId = "\(result.bookId ?? 0)"
                 
                 self.bookNameButton.setTitle(result.bookName, for: .normal)
                 self.unitNameButton.setTitle(result.unitName, for: .normal)
@@ -120,6 +119,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.collectedWordsCount = "\(result.collectedWords ?? 0)"
                 self.wrongWordsCount = "\(result.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
+                
+//                var wordBook = YXWordBookModel()
+//                wordBook.bookId = result.bookId
+//                wordBook.bookSource = result.bookSource
+//                wordBook.bookHash = result.bookHash
+//                YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
+//                    guard isSuccess else { return }
+//                }
                 
             } catch {
                 print(error)

@@ -37,7 +37,7 @@ class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBAction func done(_ sender: UIButton) {
         let row = pickerView.selectedRow(inComponent: 0)
         let unit = units[row]
-        doneClosure?(unit.unitID)
+        doneClosure?(unit.unitId)
         self.removeFromSuperview()
     }
 
