@@ -35,7 +35,7 @@ struct YXWordBookModel: Mappable {
     var isNewWordBook = false
     var coverImage: UIImage?
     
-    var grade: Int?
+    var gradeId: Int?
     var gradeType: Int?
     var bookId: Int?
     var bookName: String?
@@ -52,7 +52,7 @@ struct YXWordBookModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        grade <- map["book_grade"]
+        gradeId <- map["book_grade"]
         bookId <- map["book_id"]
         bookName <- map["book_name"]
         bookSource <- map["book_url"]

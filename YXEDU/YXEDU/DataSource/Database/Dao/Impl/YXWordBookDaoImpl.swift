@@ -13,11 +13,12 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
     func insertBook(book: YXWordBookModel, completion: finishBlock) {
         let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
-        let params: [Any?] = [book.grade,
-                             book.bookId,
+        let params: [Any?] = [book.bookId,
                              book.bookName,
                              book.bookSource,
-                             book.bookHash]
+                             book.bookHash,
+                             book.gradeId,
+                             book.gradeType]
         
         self.wordRunner.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
@@ -59,10 +60,11 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                               word.englishExample,
                               word.chineseExample,
                               word.examplePronunciation,
+                              word.usages,
                               word.synonym,
                               word.antonym,
-                              word.usage,
-
+                              word.testCenter,
+                              word.deformation,
                               word.gradeId,
                               word.gardeType,
                               word.bookId,

@@ -82,7 +82,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             imageView.sd_setImage(with: URL(string: imageUrl), completed: nil)
         }
                 
-        if let usage = word.usage {
+        if let usage = word.usages {
             partsOfWord.append(["常用用法": usage])
         }
         

@@ -93,7 +93,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             for unit in units {
                 guard let words = unit.words else { continue }
                 for var word in words {
-                    word.gradeId = wordBook.grade
+                    word.gradeId = wordBook.gradeId
                     word.gardeType = wordBook.gradeType
                     word.bookId = wordBook.bookId
                     word.unitId = unit.unitId

@@ -30,7 +30,7 @@ struct YXWordModel: Mappable {
     var examplePronunciation: String?
     
     // 常用用法
-    var usage: [String]?
+    var usages: [String]?
 
     // 同反义词
     var synonym: String?
@@ -74,7 +74,7 @@ struct YXWordModel: Mappable {
         examplePronunciation <- map["example_voice"]
         synonym <- map["synonym"]
         antonym <- map["antonym"]
-        usage <- map["usage_list"]
+        usages <- map["usage_list"]
         column <- map["column"]
         row <- map["row"]
     }

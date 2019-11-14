@@ -79,39 +79,42 @@ extension YYSQLManager {
         case bookTable =
         """
             CREATE TABLE IF NOT EXISTS book (
-                book_id integer PRIMARY KEY NOT NULL,
-                book_name text NOT NULL,
-                grade_id integer NOT NULL,
-                grade_name varchar(128) NOT NULL,
-                grade_type integer NOT NULL,
-                cover text NOT NULL,
-                hash char(64) NOT NULL,
-                word_num integer,
-                unit_num integer
-            );
+                bookId integer PRIMARY KEY NOT NULL,
+                bookName text,
+                bookSource text,
+                bookHash char(64),
+                gradeId integer,
+                gradeType integer
+            )
         """
+        
         case wordTable =
         """
             CREATE TABLE IF NOT EXISTS word (
-                word_id integer PRIMARY KEY NOT NULL,
-                unit_id integer NOT NULL,
-                unit_name varchar(128) NOT NULL,
-                book_id integer NOT NULL,
-                grade_id integer NOT NULL,
-                is_ext_unit integer NOT NULL,
-                word char(64) NOT NULL,
-                image varchar(512) NOT NULL,
-                property char(128) NOT NULL,
-                paraphrase varchar(512) NOT NULL,
-                us char(128),
-                us_voice varchar(128),
-                uk char(128),
-                uk_voice varchar(128),
-                example text,
+                wordId integer PRIMARY KEY NOT NULL,
+                word char(64),
+                partOfSpeech char(128),
+                meaning varchar(512),
+                imageUrl varchar(512),
+                americanPhoneticSymbol char(128),
+                englishPhoneticSymbol char(128),
+                americanPronunciation varchar(128),
+                englishPronunciation varchar(128),
+                englishExample text,
+                chineseExample text,
+                examplePronunciation varchar(128),
+                usages text,
                 synonym varchar(256),
                 antonym varchar(256),
-                usage text
-            );
+                testCenter text,
+                deformation text,
+                gradeId integer,
+                gardeType integer,
+                bookId integer,
+                unitId integer,
+                unitName varchar(512),
+                isExtensionUnit integer
+            )
         """
     }
     
@@ -221,33 +224,41 @@ extension YYSQLManager {
     enum WordBookSQL: String {
         case insertBook =
         """
-            INSERT OR REPLACE INTO T_BOOKMATERIAL
-            (grade, bookID, bookName, bookSource, hashString)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT OR REPLACE book
+            (bookId, bookName, bookSource, bookHash, gradeId, gradeType)
+            VALUES (?, ?, ?, ?, ?, ?)
         """
         
         case selectBook =
         """
-            SELECT * FROM T_BOOKMATERIAL
-            WHERE bookID IN (%@)
+            SELECT * FROM book
+            WHERE bookId IN (%@)
         """
         
         case deleteBook =
         """
-            DELETE FROM T_BOOKMATERIAL
-            WHERE bookID IN (%@)
+            DELETE FROM book
+            WHERE bookId IN (%@)
         """
         
         case insertWord =
         """
-            INSERT OR REPLACE INTO T_WORDSDETAIL_INFO
-            (wordId, word, partOfSpeech, meaning, englishPhoneticSymbol, americanPhoneticSymbol, englishPronunciation, americanPronunciation, englishExample, chineseExample, examplePronunciation, imageUrl, synonym, antonym, gradeId, gardeType, bookId, unitId, unitName, isExtensionUnit)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT OR REPLACE INTO word
+            (wordId, word, partOfSpeech, meaning, imageUrl,
+            englishPhoneticSymbol, americanPhoneticSymbol, englishPronunciation, americanPronunciation, englishExample,
+            chineseExample, examplePronunciation, usages, synonym, antonym,
+            testCenter, deformation, gradeId, gardeType, bookId,
+            unitId, unitName, isExtensionUnit)
+            VALUES (?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?,
+                    ?, ?, ?)
         """
         
         case selectWord =
         """
-            SELECT * FROM T_WORDSDETAIL_INFO
+            SELECT * FROM word
             WHERE wordId IN (%@)
         """
     }
