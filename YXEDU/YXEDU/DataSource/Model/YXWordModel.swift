@@ -10,7 +10,7 @@ import ObjectMapper
 
 /// 单词数据模型
 struct YXWordModel: Mappable {
-    var wordID: Int? = -1
+    var wordId: Int? = -1
     var word: String?
     var partOfSpeech: String?
     var meaning: String?
@@ -51,7 +51,7 @@ struct YXWordModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        wordID <- map["word_id"]
+        wordId <- map["word_id"]
         word <- map["word"]
         partOfSpeech <- map["word_property"]
         meaning <- map["word_paraphrase"]

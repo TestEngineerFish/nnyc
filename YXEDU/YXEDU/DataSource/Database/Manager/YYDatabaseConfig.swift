@@ -251,5 +251,4 @@ extension YYSQLManager {
             WHERE wordId IN (%@)
         """
     }
-
 }

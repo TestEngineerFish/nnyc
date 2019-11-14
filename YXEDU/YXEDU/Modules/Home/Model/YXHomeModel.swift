@@ -9,10 +9,12 @@
 import UIKit
 
 struct YXHomeModel: Codable {
-    var userID: Int?
-    var bookID: Int?
+    var userId: Int?
+    var bookId: Int?
     var bookName: String?
-    var unitID: Int?
+    var bookSource: String?
+    var bookHash: String?
+    var unitId: Int?
     var unitName: String?
     var unitProgress: Double?
     var newWords: Int?
@@ -22,10 +24,12 @@ struct YXHomeModel: Codable {
     var learnedWords: Int?
     
     enum CodingKeys: String, CodingKey {
-        case userID = "user_id"
-        case bookID = "book_id"
+        case userId = "user_id"
+        case bookId = "book_id"
         case bookName = "book_name"
-        case unitID = "unit_id"
+        case bookSource = "book_url"
+        case bookHash = "hash"
+        case unitId = "unit_id"
         case unitName = "unit_name"
         case unitProgress = "learn_rate"
         case newWords = "new_num"

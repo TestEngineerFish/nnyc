@@ -18,7 +18,7 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
 
 
 /// 练习模块基类：内容主页面，包括题目View、答案View、TipsView
-class YXBaseExerciseView: UIView {
+class YXBaseExerciseView: UIView, YXAnswerViewDelegate {
 
     var exerciseModel: YXWordExerciseModel
     
@@ -79,15 +79,13 @@ class YXBaseExerciseView: UIView {
             }
         }
     }
-    
-}
 
+    // MARK: ==== XAnswerViewDelegate ==== 
 
-extension YXBaseExerciseView: YXAnswerViewDelegate {
-    
     func answerCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
         self.exerciseDelegate?.exerciseCompletion(exerciseModel, right)
     }
 
+    func switchQuestionView() -> Bool { return true }
+    
 }
-

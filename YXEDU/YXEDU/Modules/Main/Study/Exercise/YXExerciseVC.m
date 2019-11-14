@@ -17,7 +17,7 @@
 #import "YXStudyBookUnitModel.h"
 #import "YXConfigure.h"
 #import "YXGraphSelectView.h"
-#import "YXWordDetailView.h"
+#import "YXWordDetailViewOld.h"
 #import "YXCompleteUnitView.h"
 #import "YXCompleteGroupView.h"
 #import "YXConfigure.h"
@@ -56,7 +56,7 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 @property (nonatomic, strong) YXENTranCHChoiceView *enTranChView;
 @property (nonatomic, strong) YXCHTranENChoiceView *chTranEnView;
 @property (nonatomic, strong) YXStudySpellView *spellView;
-@property (nonatomic, strong) YXWordDetailView *wordDetailView;
+@property (nonatomic, strong) YXWordDetailViewOld *wordDetailView;
 @property (nonatomic, strong) YXExerciseSubmitErrorView *submitView;
 @property (nonatomic, strong) YXExerciseFloatView *floatView;
 @property (nonatomic, strong) UIButton *reportBtn;

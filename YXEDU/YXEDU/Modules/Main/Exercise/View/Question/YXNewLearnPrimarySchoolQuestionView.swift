@@ -8,83 +8,119 @@
 
 import UIKit
 
+
+enum NewLearnSubviewType: Int {
+    case imageAndAudio
+    case wordAndAudio
+    case wordAndImageAndAudio
+}
+
 class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
-    let contentView = UIView()
-    var firstView: YXNewLearnQuestionSubview?
-    var secondView: YXNewLearnQuestionSubview?
-    var thirdView: YXNewLearnQuestionSubview?
-    var currentView: YXNewLearnQuestionSubview?
+    var wordLabel: UILabel
+    var chineseLabel: UILabel
+    var viewType: NewLearnSubviewType
 
-    override func createSubviews() {
-        super.createSubviews()
-        self.clipsToBounds = true
-        firstView  = YXNewLearnQuestionSubview(exerciseModel: exerciseModel, type: .imageAndAudio)
-        secondView = YXNewLearnQuestionSubview(exerciseModel: exerciseModel, type: .wordAndAudio)
-        thirdView  = YXNewLearnQuestionSubview(exerciseModel: exerciseModel, type: .wordAndImageAndAudio)
-
-        self.addSubview(contentView)
-        self.contentView.addSubview(firstView!)
-        self.contentView.addSubview(secondView!)
-        self.contentView.addSubview(thirdView!)
-
-        contentView.snp.makeConstraints { (make) in
-            make.left.top.bottom.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(3.0)
+    init(exerciseModel: YXWordExerciseModel, type: NewLearnSubviewType) {
+        self.viewType = type
+        wordLabel     = UILabel()
+        chineseLabel  = UILabel()
+        super.init(exerciseModel: exerciseModel)
+        self.initImageView()
+        self.initAudioPlayerView()
+        if let urlStr = exerciseModel.question?.imageUrl {
+            imageView?.showImage(with: urlStr)
         }
-
-        firstView?.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.width.equalTo(self)
-            make.height.equalTo(158)
-        }
-
-        secondView?.snp.makeConstraints { (make) in
-            make.left.equalTo(firstView!.snp.right)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(self)
-            make.height.equalTo(110)
-        }
-
-        thirdView?.snp.makeConstraints { (make) in
-            make.left.equalTo(secondView!.snp.right)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(self)
-            make.height.equalTo(250)
-        }
-
+        audioPlayerView?.urlStr = exerciseModel.question?.voice
         self.layer.removeShadow()
-        self.currentView = firstView
+        self.clipsToBounds = true
+        self.createSubviews(type)
     }
 
-    override func switchQuestion() {
-        super.switchQuestion()
-        guard let currentView = self.currentView else {
-            return
-        }
-        var offsetX = CGFloat.zero
-        switch currentView {
-        case firstView:
-            offsetX = -self.width * 1
-            if let view = secondView {
-                view.audioView.clickAudioBtn()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func createSubviews(_ type: NewLearnSubviewType) {
+        super.createSubviews()
+        addSubview(wordLabel)
+        addSubview(chineseLabel)
+        addSubview(imageView!)
+
+        wordLabel.font             = UIFont.pfSCSemiboldFont(withSize: 26)
+        wordLabel.text             = self.exerciseModel.word?.word ?? ""
+        wordLabel.textColor        = UIColor.black1
+        wordLabel.textAlignment    = .center
+        chineseLabel.text          = self.exerciseModel.question?.soundmark ?? ""
+        chineseLabel.font          = UIFont.pfSCRegularFont(withSize: 14)
+        chineseLabel.textColor     = UIColor.black1
+        chineseLabel.textAlignment = .center
+
+        switch type {
+        case .imageAndAudio:
+            wordLabel.isHidden    = true
+            chineseLabel.isHidden = true
+            imageView?.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview()
+                make.width.equalTo(AdaptSize(150))
+                make.height.equalTo(AdaptSize(108))
             }
-        case secondView:
-            offsetX = -self.width * 2
-            if let view = thirdView {
-                view.audioView.clickAudioBtn()
+            audioPlayerView?.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(imageView!.snp.bottom).offset(10)
+                make.width.height.equalTo(AdaptSize(40))
             }
-        default:
-            return
-        }
-        UIView.animate(withDuration: 0.25) {
-            self.contentView.transform = CGAffineTransform(translationX: offsetX, y: 0)
+
+        case .wordAndAudio:
+            imageView?.isHidden = true
+            wordLabel.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview()
+                make.width.equalToSuperview()
+                make.height.equalTo(40)
+            }
+            chineseLabel.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(wordLabel.snp.bottom)
+                make.width.equalToSuperview()
+                make.height.equalTo(20)
+            }
+            audioPlayerView?.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(chineseLabel.snp.bottom).offset(10)
+                make.width.height.equalTo(40)
+            }
+
+        case .wordAndImageAndAudio:
+            wordLabel.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview()
+                make.width.equalToSuperview()
+                make.height.equalTo(40)
+            }
+            chineseLabel.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(wordLabel.snp.bottom)
+                make.width.equalToSuperview()
+                make.height.equalTo(20)
+            }
+            imageView?.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(chineseLabel.snp.bottom).offset(30)
+                make.width.equalTo(150)
+                make.height.equalTo(108)
+            }
+            audioPlayerView?.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(imageView!.snp.bottom).offset(10)
+                make.width.height.equalTo(40)
+            }
         }
     }
 
     override func playAudio() {
-        self.currentView?.audioView.clickAudioBtn()
+        self.audioPlayerView?.play()
     }
     
 }

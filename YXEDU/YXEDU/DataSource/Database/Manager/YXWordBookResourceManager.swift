@@ -30,13 +30,13 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
         self.currentDownloadWordBook = wordBook
         self.closure = closure
         
-        guard let bookID = wordBook.bookID else {
+        guard let bookID = wordBook.bookId else {
             DispatchQueue.main.async { self.closure?(false) }
             return
         }
         
         YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
-            if isSuccess, let result = result as? YXWordBookModel, wordBook.hashString == result.hashString {
+            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
                DispatchQueue.main.async { self.closure?(true) }
 
             } else {
@@ -52,7 +52,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        guard let url = downloadTask.originalRequest?.url, let bookID = currentDownloadWordBook.bookID else { return }
+        guard let url = downloadTask.originalRequest?.url, let bookID = currentDownloadWordBook.bookId else { return }
         
         let downloadedZipURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent(url.lastPathComponent)
         let unzipWordBooksJsonURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("\(bookID)")
@@ -95,8 +95,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                 for var word in words {
                     word.gradeId = wordBook.grade
                     word.gardeType = wordBook.gradeType
-                    word.bookId = wordBook.bookID
-                    word.unitId = unit.unitID
+                    word.bookId = wordBook.bookId
+                    word.unitId = unit.unitId
                     word.unitName = unit.unitName
                     word.isExtensionUnit = unit.isExtensionUnit
 

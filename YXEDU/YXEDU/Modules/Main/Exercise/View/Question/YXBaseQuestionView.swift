@@ -31,9 +31,6 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     
     /// 播放器
     var audioPlayerView: YXAudioPlayerView?
-
-    /// 处理协议
-    var delegate: YXQuestionEventProtocol?
     
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
@@ -59,7 +56,6 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
         
         self.addSubview(titleLabel!)
     }
-    
     
     func initSubTitleLabel() {
         self.subTitleLabel                = UILabel()
@@ -103,6 +99,5 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     /// 取消按钮,移除单词/字母
     func unselectAnswerButton(_ button: YXLetterButton) {}
     func showResult(errorList list: [Int]) {}
-    func switchQuestion() {}
     func playAudio() {}
 }

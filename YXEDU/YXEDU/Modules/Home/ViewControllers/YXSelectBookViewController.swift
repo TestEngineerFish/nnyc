@@ -28,7 +28,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
      @IBAction func deleteWordBook(_ sender: UIButton) {
         for index in 0..<wordBookModels.count {
             let wordBook = wordBookModels[index]
-            guard wordBook.isSelected, let bookID = wordBook.bookID else { continue }
+            guard wordBook.isSelected, let bookID = wordBook.bookId else { continue }
             
             YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": bookID]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
@@ -64,7 +64,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let wordBook = wordBookModels[index]
             guard wordBook.isSelected else { continue }
             
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "bookId": "\(wordBook.bookID ?? 0)"]) { [weak self] (response, isSuccess) in
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "bookId": "\(wordBook.bookId ?? 0)"]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
 
                 YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
@@ -119,7 +119,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     
     private func fetchWordBookDetail(_ wordBook: YXWordBookModel) {
         bookNameLabel.text = wordBook.bookName
-        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookID ?? 0)"]) { [weak self] (response, isSuccess) in
+        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookId ?? 0)"]) { [weak self] (response, isSuccess) in
 //        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookID ?? 0)"]) { [weak self] (response, isSuccess) in
             guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             

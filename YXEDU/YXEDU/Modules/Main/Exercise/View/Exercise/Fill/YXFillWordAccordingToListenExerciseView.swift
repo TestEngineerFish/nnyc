@@ -21,7 +21,6 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
         self.addSubview(answerView!)
 
-        questionView?.delegate     = answerView
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
     }

@@ -8,5 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YXWordDetailView : UIView
+@interface YXWordDetailViewOld : UIView
 @end
