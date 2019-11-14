@@ -48,9 +48,9 @@ class YXWordDetailView: UIView {
     private func initializationFromNib() {
         Bundle.main.loadNibNamed("YXWordDetailView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.frame
+        contentView.frame = self.bounds
         
-        wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 40, width: frame.width, height: frame.height - 120), word: word!)
+        wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 40, width: self.frame.width, height: self.frame.height - 120), word: word!)
         self.addSubview(wordDetailView)
     }
 }

@@ -29,9 +29,18 @@ struct YXWordModel: Mappable {
     var chineseExample: String?
     var examplePronunciation: String?
     
+    // 常用用法
+    var usage: [String]?
+
+    // 同反义词
     var synonym: String?
     var antonym: String?
-    var usage: [String]?
+    
+    // 考点
+    var testCenter: String?
+    
+    // 单词联想、变形
+    var deformation: String?
 
     var gradeId: Int? = -1
     var gardeType: Int? = 1

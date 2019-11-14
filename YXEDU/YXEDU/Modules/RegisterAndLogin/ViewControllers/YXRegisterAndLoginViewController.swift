@@ -54,8 +54,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     @IBAction func loginWithQQ(_ sender: UIButton) {
-        navigationController?.pushViewController(YXWordDetailViewController(), animated: true)
-        return
         QQApiManager.shared().qqLogin()
     }
     
@@ -87,9 +85,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
         }
-        
-//        let handWriteAnswerView = YXHandWriteAnswerView(frame: self.view.bounds)
-//        self.view.addSubview(handWriteAnswerView)
     }
     
     deinit {

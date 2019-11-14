@@ -10,7 +10,8 @@ import UIKit
 
 class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource {
     private var word: YXWordModel!
-
+    private var partsOfWord: [[String: Any]] = [["例句": ""]]
+    
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var phoneticSymbolLabel: UILabel!
@@ -80,6 +81,26 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         if let imageUrl = word.imageUrl {
             imageView.sd_setImage(with: URL(string: imageUrl), completed: nil)
         }
+                
+        if let usage = word.usage {
+            partsOfWord.append(["常用用法": usage])
+        }
+        
+        if let synonym = word.synonym {
+            partsOfWord.append(["同义词": synonym])
+        }
+        
+        if let antonym = word.antonym {
+            partsOfWord.append(["反义词": antonym])
+        }
+        
+        if let testCenter = word.testCenter {
+            partsOfWord.append(["考点": testCenter])
+        }
+        
+        if let deformation = word.deformation {
+            partsOfWord.append(["联想": deformation])
+        }
         
         tableView.register(UINib(nibName: "YXWordDetialCell", bundle: nil), forCellReuseIdentifier: "YXWordDetialCell")
     }
@@ -87,82 +108,32 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     
     
     // MARK: -
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return partsOfWord.count
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let boundsOfTableHeaderView = CGRect(x: 0, y: 0, width: screenWidth, height: 54)
-        
-        switch section {
-        case 0:
-            return YXWordDetailHeaderView(frame: boundsOfTableHeaderView, headerTitle: "例句")
-            
-        case 1:
-            return YXWordDetailHeaderView(frame: boundsOfTableHeaderView, headerTitle: "常用用法")
-            
-        case 2:
-            return YXWordDetailHeaderView(frame: boundsOfTableHeaderView, headerTitle: "同义词")
-            
-        case 3:
-            return YXWordDetailHeaderView(frame: boundsOfTableHeaderView, headerTitle: "反义词")
-            
-        default:
-            return nil
-        }
+        return YXWordDetailHeaderView(frame: boundsOfTableHeaderView, headerTitle: partsOfWord[section].keys.first!)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 54
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        var count = 0
-        
-        if let _ = word.englishExample {
-            count = count + 1
-            
-        }
-        
-        if let _ = word.usage {
-            count = count + 1
-
-        }
-    
-        if let _ = word.synonym {
-            count = count + 1
-
-        }
-        
-        if let _ = word.antonym {
-            count = count + 1
-        }
-        
-        return count
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
+        if let strings = partsOfWord[section].values.first as? [String], strings.count > 1 {
+            return strings.count
+            
+        } else {
             return 1
-            
-        case 1:
-            return word.usage?.count ?? 0
-            
-        case 2:
-            return 1
-            
-        case 3:
-            return 1
-            
-        default:
-            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetialCell", for: indexPath) as! YXWordDetialCell
-        cell.contentView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-        switch indexPath.section {
-        case 0:
+      
+        if indexPath.section == 0 {
             if let englishExample = word.englishExample, let chineseExample = word.chineseExample {
 //                let hashtagIndex = englishExample.firstIndex(of: "#")!
 //                let startColorIndex = englishExample.index(hashtagIndex, offsetBy: 1)
@@ -196,36 +167,18 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                     cell.pronunciationUrl = URL(string: englishPronunciationUrl)
                 }
             }
-            break
             
-        case 1:
-            if let usage = word.usage?[indexPath.row] {
-                cell.label.text = usage
+        } else {
+            if let strings = partsOfWord[indexPath.section].values.first as? [String] {
+                cell.label.text = strings[indexPath.row]
+                
+            } else if let string = partsOfWord[indexPath.section].values.first as? String {
+                cell.label.text = string
             }
-            
-            cell.playAuoidButton.isHidden = true
-            break
-            
-        case 2:
-            if let synonym = word.synonym {
-                cell.label.text = synonym
-            }
-            
-            cell.playAuoidButton.isHidden = true
-            break
-            
-        case 3:
-            if let antonym = word.antonym {
-                cell.label.text = antonym
-            }
-            
-            cell.playAuoidButton.isHidden = true
-            break
 
-        default:
-            break
+            cell.playAuoidButton.isHidden = true
         }
-    
+        
         return cell
     }
 }

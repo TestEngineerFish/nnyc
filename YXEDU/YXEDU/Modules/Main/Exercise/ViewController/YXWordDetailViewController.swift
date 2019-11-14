@@ -41,7 +41,7 @@ class YXWordDetailViewController: UIViewController {
         }
         """)
         
-        wordDetailView = YXWordDetailView(frame: CGRect(x: 0, y: 40, width: screenWidth, height: screenHeight - 120), word: word!)
+        wordDetailView = YXWordDetailView(frame: self.view.bounds, word: word!)
         wordDetailView.dismissClosure = dismissClosure
         self.view.addSubview(wordDetailView)
     }

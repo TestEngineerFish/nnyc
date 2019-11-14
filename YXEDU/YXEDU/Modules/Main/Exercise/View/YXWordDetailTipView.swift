@@ -18,9 +18,33 @@ class YXWordDetailTipView: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet var backgroundView: UIView!
 
-    init(frame: CGRect, word: YXWordModel) {
-        super.init(frame: frame)
+    init(word: YXWordModel) {
+        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         self.word = word
+        
+        self.word = YXWordModel(JSONString:
+        """
+        {
+            "word_id" : 1,
+            "unit_id" : 1,
+            "is_ext_unit" : 0,
+            "book_id" : 1,
+            "word" : "good",
+            "word_property" : "adj.",
+            "word_paraphrase" : "好的;优质的;",
+            "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
+            "symbol_us" : "美/ɡʊd/",
+            "symbol_uk" : "英/ɡʊd/",
+            "voice_us" : "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
+            "voice_uk" : "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
+            "example_en" : "You have such a <font color='#55a7fd'>good</font> chance.",
+            "example_cn" : "你有这么一个好的机会。",
+            "example_voice": "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
+            "synonym": "great,helpful",
+            "antonym": "poor,bad",
+            "usage": ["adj.+n.  early morning 清晨", "n.+n.  morning exercise早操"]
+        }
+        """)
         
         initializationFromNib()
     }
@@ -31,11 +55,13 @@ class YXWordDetailTipView: UIView {
     }
     
     private func initializationFromNib() {
-        Bundle.main.loadNibNamed("YXWordDetailView", owner: self, options: nil)
+        Bundle.main.loadNibNamed("YXWordDetailTipView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.frame
+        contentView.frame = self.bounds
         
-        wordDetailView = YXWordDetailView(frame: CGRect(x: 0, y: 44, width: screenWidth, height: screenHeight - 44), word: word!)
+        wordDetailView = YXWordDetailView(frame: CGRect(x: 0, y: 40, width: screenWidth, height: screenHeight - 40), word: word!)
+        wordDetailView.layer.cornerRadius = 6
+        wordDetailView.layer.masksToBounds = true
         wordDetailView.dismissClosure = {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                 self.backgroundView.alpha = 0
@@ -48,14 +74,20 @@ class YXWordDetailTipView: UIView {
             self.dismissClosure?()
         }
         
+        let maskPath = UIBezierPath(roundedRect: wordDetailView.bounds, byRoundingCorners: [UIRectCorner.topLeft, UIRectCorner.topRight], cornerRadii: CGSize(width: 6, height: 6))
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = wordDetailView.bounds
+        maskLayer.path = maskPath.cgPath
+        wordDetailView.layer.mask = maskLayer
+        
         self.addSubview(wordDetailView)
     }
     
-    func addAndShowWithAnimation(in superView: UIView) {
-        superView.addSubview(self)
+    func showWithAnimation() {
+        UIApplication.shared.keyWindow?.addSubview(self)
         
         backgroundView.alpha = 0
-        wordDetailView.transform = CGAffineTransform(translationX: 0, y: screenHeight - 44)
+        wordDetailView.transform = CGAffineTransform(translationX: 0, y: screenHeight - 40)
 
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             self.backgroundView.alpha = 0.7
