@@ -53,6 +53,10 @@ class YXAVPlayerManager: NSObject {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
 
+    deinit {
+        self.removeObservers()
+    }
+
     // MARK: Event
     /// 播放结束事件
     @objc private func playFinished() {

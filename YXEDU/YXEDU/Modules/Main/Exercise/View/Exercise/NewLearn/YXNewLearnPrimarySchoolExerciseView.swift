@@ -43,7 +43,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         firstQuestionView?.audioPlayerView?.delegate = answerView
 
         // 延迟播放.(因为在切题的时候会有动画)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.2) {
             self.playerAudio()
         }
     }
@@ -91,7 +91,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         guard let currentQuestionView = currentQuestionView else {
             return
         }
-        currentQuestionView.audioPlayerView?.clickAudioBtn()
+        currentQuestionView.playAudio()
     }
 
     // MARK: YXAnswerViewDelegate

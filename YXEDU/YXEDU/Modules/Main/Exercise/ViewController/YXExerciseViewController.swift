@@ -86,6 +86,9 @@ class YXExerciseViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         
         self.headerView.backEvent = {[weak self] in
+            // 暂停播放和取消录音监听
+            YXAVPlayerManager.share.pauseAudio()
+            USCRecognizer.sharedManager()?.cancel()
             self?.navigationController?.popViewController(animated: true)
         }
         self.headerView.switchEvent = {[weak self] in

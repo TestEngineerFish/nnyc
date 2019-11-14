@@ -9,7 +9,7 @@
 import UIKit
 import Lottie
 
-class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizerDelegate {
+class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 答题区状态
     enum AnswerStatus {
@@ -22,20 +22,36 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
     var resultView: YXLearnResultAnimationSubview?
     var titleLabel: UILabel?
     var listenView: AnimationView?
-    let showRead   = "ShowReadAnimation"
     var enginer: USCRecognizer?
     var status: AnswerStatus
     var alreadyCount = 0 // 当题学习次数,再次学习,无论成绩,都切题
     var lastLevel    = 0 // 最近一次跟读评分
-
-    let kShowReadAnaimtion = "showReadAnaimtion"
-    let kHideReadAnimation = "hideReadAnimation"
 
     override init(exerciseModel: YXWordExerciseModel) {
         self.status = .normal
         super.init(exerciseModel: exerciseModel)
         self.enginer = USCRecognizer.sharedManager()
         self.enginer?.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    /// 进入后台, 停止播放音频和语音监听
+    @objc private func didEnterBackgroundNotification() {
+        print("进入后台, 停止播放音频和语音监听")
+        YXAVPlayerManager.share.pauseAudio()
+        self.enginer?.cancel()
+        if self.status == .listening {
+            // 置灰显示
+            self.listenView?.pause()
+            self.listenView?.alpha = 0.35
+            self.enginer?.cancel()
+            self.status = .normal
+        }
+    }
+    /// 从后台进入前台,
+    @objc private func didBecomeActiveNotification() {
+        // 该做啥呢?问问产品吧
+        print("该做啥呢?问问产品吧")
     }
 
     required init?(coder: NSCoder) {
@@ -45,6 +61,10 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
     //MARK: TOOL
     /// 显示跟读动画
     func showReadAnaimtion() {
+        self.listenView?.removeFromSuperview()
+        self.titleLabel?.removeFromSuperview()
+        self.listenView = nil
+        self.titleLabel = nil
         self.listenView = AnimationView(name: "readAnimation")
         self.addSubview(listenView!)
         listenView?.snp.makeConstraints({ (make) in
@@ -60,9 +80,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
         scaleAnimation.repeatCount    = 1
         scaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         scaleAnimation.isRemovedOnCompletion = false
-        scaleAnimation.setValue(true, forKey: showRead)
-        scaleAnimation.delegate = self
-
 
         self.titleLabel = UILabel()
         self.titleLabel?.text = "请跟读"
@@ -76,12 +93,13 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
             make.width.equalToSuperview()
             make.height.equalTo(AdaptSize(15))
         })
-        listenView?.layer.add(scaleAnimation, forKey: kShowReadAnaimtion)
-        titleLabel?.layer.add(scaleAnimation, forKey: kShowReadAnaimtion)
-        self.listenView?.play()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
-            self.enginer?.stop()
-        }
+        listenView?.layer.add(scaleAnimation, forKey: nil)
+        titleLabel?.layer.add(scaleAnimation, forKey: nil)
+        self.listenView?.play(completion: { (finished) in
+            if finished {
+                self.enginer?.stop()
+            }
+        })
     }
 
     /// 隐藏跟读动画
@@ -95,10 +113,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
         scaleAnimation.repeatCount    = 1
         scaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         scaleAnimation.isRemovedOnCompletion = false
-        scaleAnimation.setValue(false, forKey: showRead)
-        scaleAnimation.delegate = self
-        self.listenView?.layer.add(scaleAnimation, forKey: kHideReadAnimation)
-        titleLabel?.layer.add(scaleAnimation, forKey: kHideReadAnimation)
+        self.listenView?.layer.add(scaleAnimation, forKey: nil)
+        titleLabel?.layer.add(scaleAnimation, forKey: nil)
     }
 
     /// 显示结果动画
@@ -112,6 +128,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
         })
         resultView?.animationComplete = {
             var isPlay = true
+            self.status = .normal
             self.alreadyCount += 1
             /// 如果已学习次数达到次,或者评分超弱1星,则切题
             if self.alreadyCount > 1 || self.lastLevel > 1 {
@@ -132,6 +149,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
         resultView = nil
         self.status = .normal
     }
+
     // MARK: YXAudioPlayerViewDelegate
 
     override func playAudioStart() {
@@ -143,7 +161,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
             self.listenView?.pause()
             self.listenView?.alpha = 0.35
             self.enginer?.cancel()
-            break
+            self.status = .normal
         case .reporting:
             // 重播
             break
@@ -154,6 +172,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
     }
 
     override func playAudioFinished() {
+        if self.status != .normal {
+            return
+        }
         guard let word = self.exerciseModel.question?.word else {
             return
         }
@@ -163,7 +184,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
 
     // MARK: ==== 云知声SDK: USCRecognizerDelegate ====
     func oralEngineDidInit(_ error: Error!) {
-        print("初始化结束,错误内容: " + String(describing: error))
+//        print("初始化结束,错误内容: " + String(describing: error))
+        return
     }
 
     func onBeginOral() {
@@ -199,7 +221,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
                     return 0
                 }
             }()
-            print("当题得分: \(self.lastLevel)!!!")
             self.hideReadAnimation()
             // 移除录音视图
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
@@ -215,15 +236,18 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
     }
 
     func onEndOral(_ error: Error!) {
-        print("录音完成,错误: " + String(describing: error))
+//        print("录音完成,错误: " + String(describing: error))
+        return
     }
 
     func onVADTimeout() {
-        print("VAD超时啦")
+//        print("VAD超时啦")
+        return
     }
 
     func onUpdateVolume(_ volume: Int32) {
-        print("onUpdateVolume: \(volume)")
+//        print("onUpdateVolume: \(volume)")
+        return
     }
 
     func onRecordingBuffer(_ recordingData: Data!) {
@@ -237,14 +261,17 @@ class YXNewLearnAnswerView: YXBaseAnswerView, CAAnimationDelegate, USCRecognizer
     }
 
     func audioFileDidRecord(_ url: String!) {
-        print("audio file url" + url)
+//        print("audio file url" + url)
+        return
     }
 
     func onAsyncResult(_ url: String!) {
-        print("result url: " + url)
+//        print("result url: " + url)
+        return
     }
 
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
-        print("lifecycle: \(lifecycle)")
+//        print("lifecycle: \(lifecycle)")
+        return
     }
 }
