@@ -1,22 +1,14 @@
 //
-//  YXNewLearnPrimarySchoolQuestionView.swift
+//  YXNewLearnPrimarySchoolWordGroupQuestionView.swift
 //  YXEDU
 //
-//  Created by 沙庭宇 on 2019/11/4.
+//  Created by 沙庭宇 on 2019/11/14.
 //  Copyright © 2019 shiji. All rights reserved.
 //
 
 import UIKit
 
-
-enum NewLearnSubviewType: Int {
-    case imageAndAudio
-    case wordAndAudio
-    case wordAndImageAndAudio
-}
-
-class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
-
+class YXNewLearnPrimarySchoolWordGroupQuestionView: YXBaseQuestionView {
     var viewType: NewLearnSubviewType
 
     init(exerciseModel: YXWordExerciseModel, type: NewLearnSubviewType) {
@@ -45,32 +37,19 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
     private func createSubviews(_ type: NewLearnSubviewType) {
         super.createSubviews()
-
+        let titleW = self.getTitleWidth()
         switch type {
         case .imageAndAudio:
-            titleLabel?.isHidden    = true
-            subTitleLabel?.isHidden = true
-            imageView?.isHidden     = false
-            imageView?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalToSuperview()
-                make.width.equalTo(AdaptSize(150))
-                make.height.equalTo(AdaptSize(108))
-            }
-            audioPlayerView?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(imageView!.snp.bottom).offset(10)
-                make.width.height.equalTo(AdaptSize(40))
-            }
-
+            break
         case .wordAndAudio:
             titleLabel?.isHidden    = false
             subTitleLabel?.isHidden = false
             imageView?.isHidden     = true
+
             titleLabel?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview()
-                make.width.equalToSuperview()
+                make.width.equalTo(titleW)
                 make.height.equalTo(40)
             }
             subTitleLabel?.snp.makeConstraints { (make) in
@@ -80,11 +59,10 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
                 make.height.equalTo(20)
             }
             audioPlayerView?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(subTitleLabel!.snp.bottom).offset(10)
-                make.width.height.equalTo(40)
+                make.left.equalTo(titleLabel!.snp.right)
+                make.centerY.equalTo(titleLabel!)
+                make.width.height.equalTo(AdaptSize(25))
             }
-
         case .wordAndImageAndAudio:
             titleLabel?.isHidden    = false
             subTitleLabel?.isHidden = false
@@ -92,7 +70,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
             titleLabel?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview()
-                make.width.equalToSuperview()
+                make.width.equalTo(titleW)
                 make.height.equalTo(40)
             }
             subTitleLabel?.snp.makeConstraints { (make) in
@@ -108,9 +86,9 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
                 make.height.equalTo(108)
             }
             audioPlayerView?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(imageView!.snp.bottom).offset(10)
-                make.width.height.equalTo(40)
+                make.left.equalTo(titleLabel!.snp.right)
+                make.centerY.equalTo(titleLabel!)
+                make.width.height.equalTo(AdaptSize(25))
             }
         }
     }
@@ -118,5 +96,4 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     override func playAudio() {
         self.audioPlayerView?.play()
     }
-    
 }

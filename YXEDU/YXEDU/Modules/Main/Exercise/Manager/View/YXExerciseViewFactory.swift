@@ -70,6 +70,8 @@ struct YXExerciseViewFactory {
         //MARK: new learn
         case .newLearnPrimarySchool:
             return YXNewLearnPrimarySchoolExerciseView(exerciseModel: exerciseModel)
+        case .newLearnPrimarySchool_Group:
+            return YXNewLearnPrimarySchoolWordGroupExerciseView(exerciseModel: exerciseModel)
         case .newLearnJuniorHighSchool:
             return YXNewLearnJuniorHighSchoolExerciseView(exerciseModel: exerciseModel)
         default:

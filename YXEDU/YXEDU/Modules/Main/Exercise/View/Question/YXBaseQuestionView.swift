@@ -100,4 +100,12 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     func unselectAnswerButton(_ button: YXLetterButton) {}
     func showResult(errorList list: [Int]) {}
     func playAudio() {}
+
+    // MARK: Tools
+    func getTitleWidth() -> CGFloat {
+        guard let label = self.titleLabel, let text = label.text else {
+            return 0
+        }
+        return text.textWidth(font: label.font, height: label.height)
+    }
 }

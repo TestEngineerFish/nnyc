@@ -33,6 +33,8 @@
 		22298BF8237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */; };
 		22298BFA237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BF9237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift */; };
 		22298BFC237D52FC00F24786 /* YXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BFB237D52FC00F24786 /* YXButton.swift */; };
+		22298BFE237D7B5100F24786 /* YXNewLearnPrimarySchoolWordGroupExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BFD237D7B5100F24786 /* YXNewLearnPrimarySchoolWordGroupExerciseView.swift */; };
+		22298C00237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BFF237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift */; };
 		224529042327A82500510507 /* YYDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529032327A82500510507 /* YYDatabase.swift */; };
 		224529072327A85100510507 /* YYDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529062327A85100510507 /* YYDataSourceManager.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
@@ -713,6 +715,8 @@
 		22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnJuniorHighSchoolQuestionView.swift; sourceTree = "<group>"; };
 		22298BF9237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnJuniorHighSchoolAnswerView.swift; sourceTree = "<group>"; };
 		22298BFB237D52FC00F24786 /* YXButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXButton.swift; sourceTree = "<group>"; };
+		22298BFD237D7B5100F24786 /* YXNewLearnPrimarySchoolWordGroupExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnPrimarySchoolWordGroupExerciseView.swift; sourceTree = "<group>"; };
+		22298BFF237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnPrimarySchoolWordGroupQuestionView.swift; sourceTree = "<group>"; };
 		224529022327A34300510507 /* YXEDU-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YXEDU-Bridging-Header.h"; sourceTree = "<group>"; };
 		224529032327A82500510507 /* YYDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabase.swift; sourceTree = "<group>"; };
 		224529062327A85100510507 /* YYDataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDataSourceManager.swift; sourceTree = "<group>"; };
@@ -2003,6 +2007,7 @@
 			isa = PBXGroup;
 			children = (
 				2290EAC3236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift */,
+				22298BFD237D7B5100F24786 /* YXNewLearnPrimarySchoolWordGroupExerciseView.swift */,
 				2290EACE23701210000BCA47 /* YXNewLearnJuniorHighSchoolExerciseView.swift */,
 			);
 			path = NewLearn;
@@ -2575,6 +2580,7 @@
 				2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */,
 				2290EAC5236FCB72000BCA47 /* YXNewLearnPrimarySchoolQuestionView.swift */,
 				22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */,
+				22298BFF237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift */,
 			);
 			path = Question;
 			sourceTree = "<group>";
@@ -5762,6 +5768,7 @@
 				EE5E0223232756C000655654 /* TYAttributedLabel.m in Sources */,
 				EE1E4A832369428F007D248F /* YXLookExampleChooseImageExerciseView.swift in Sources */,
 				EE1E4A9A23694796007D248F /* YXListenChooseImageExerciseView.swift in Sources */,
+				22298BFE237D7B5100F24786 /* YXNewLearnPrimarySchoolWordGroupExerciseView.swift in Sources */,
 				EE54F7CF2362AA3100EC605A /* YXExerciseViewEvent.swift in Sources */,
 				EE5E016D232754FA00655654 /* YXConfigure.m in Sources */,
 				EE5E009223274FEB00655654 /* YXCalendarShareView.m in Sources */,
@@ -5812,6 +5819,7 @@
 				EE5E0241232756C000655654 /* XCycleView.m in Sources */,
 				EE77210E237C2B6E00CD632E /* YXView.swift in Sources */,
 				EEFBABA423729BA1001A6302 /* YXConnectionLeftView.swift in Sources */,
+				22298C00237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift in Sources */,
 				EE54F7D02362AA3100EC605A /* YXWordExerciseModel.swift in Sources */,
 				77F69A68236149B300E55185 /* YXAddBookViewController.swift in Sources */,
 				EE5E001F23274FEB00655654 /* YXCreateWordBookVC.m in Sources */,

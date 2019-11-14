@@ -52,6 +52,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     @objc private func didBecomeActiveNotification() {
         // 该做啥呢?问问产品吧
         print("该做啥呢?问问产品吧")
+        self.delegate?.playAudio()
     }
 
     required init?(coder: NSCoder) {
