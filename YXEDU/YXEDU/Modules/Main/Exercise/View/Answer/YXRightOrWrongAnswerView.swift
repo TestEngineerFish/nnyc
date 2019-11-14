@@ -62,25 +62,25 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
         self.wrongButton.layer.borderColor = UIColor.black6.cgColor
     }
     
-    override func bindData() {
-        
-        
-        
-    }
-    
     
     @objc func clickRightButton() {
         self.rightButton.isSelected = true
         self.wrongButton.isSelected = false
         
-        answerCompletion(right: true)
+        let result = exerciseModel.option?.firstItems?.first?.optionId == exerciseModel.answers?.first
+        answerCompletion(right: result)
     }
     
     @objc func clickWrongButton() {
         self.rightButton.isSelected = false
         self.wrongButton.isSelected = true
         
-        answerCompletion(right: true)
+        let result = exerciseModel.option?.firstItems?.last?.optionId == exerciseModel.answers?.first
+        answerCompletion(right: result)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
+            self?.wrongButton.isSelected = false
+        }
     }
 
 }

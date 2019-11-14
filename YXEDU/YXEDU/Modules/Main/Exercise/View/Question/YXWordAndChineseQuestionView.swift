@@ -15,14 +15,17 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
         self.initTitleLabel()
         self.initSubTitleLabel()
         self.initDescTitleLabel()
+        self.initAudioPlayerView()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        let titleWidth = self.exerciseModel.question?.word?.textWidth(font: titleLabel!.font, height: 28) ?? 0
         titleLabel?.snp.makeConstraints({ (make) in
             make.top.equalTo(40)
-            make.left.right.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalTo(titleWidth)
             make.height.equalTo(28)
         })
         
@@ -38,5 +41,22 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
             make.height.equalTo(20)
         })
         
+        audioPlayerView?.snp.makeConstraints({ (make) in
+            make.centerY.equalTo(titleLabel!)
+            make.left.equalTo(titleLabel!.snp.right).offset(3)
+            make.width.height.equalTo(22)
+        })
+        
+    }
+    
+    override func bindData() {
+        self.titleLabel?.text = exerciseModel.question?.word
+        self.subTitleLabel?.text = exerciseModel.question?.soundmark
+        self.descTitleLabel?.text = (exerciseModel.question?.partOfSpeech ?? "") + " " + (exerciseModel.question?.meaning ?? "")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
+            self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice
+            self?.audioPlayerView?.play()
+        }
     }
 }

@@ -12,45 +12,60 @@ import UIKit
 /// 图片+单词+音标题目
 class YXWordAndImageQuestionView: YXBaseQuestionView {
 
-    var spellView: YXSpellSubview?
-
     override func createSubviews() {
         super.createSubviews()
+        
         self.initImageView()
-        self.spellView = YXSpellSubview(self.exerciseModel)
-        addSubview(spellView!)
+        self.initTitleLabel()
+        self.initSubTitleLabel()
+        self.initAudioPlayerView()
     }
     
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        if let _spellView = spellView {
-            let w = _spellView.maxX - _spellView.margin
-            _spellView.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalToSuperview().offset(topPadding)
-                make.width.equalTo(w)
-                make.height.equalTo(30)
-            }
-            imageView?.snp.makeConstraints({ (make) in
-                make.top.equalTo(_spellView.snp.bottom).offset(10)
-                make.centerX.equalToSuperview()
-                make.width.equalTo(130)
-                make.height.equalTo(94)
-            })
+        
+        imageView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(38)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(130)
+            make.height.equalTo(94)
+        })
+        
+        let titleWidth = self.exerciseModel.question?.word?.textWidth(font: titleLabel!.font, height: 28) ?? 0
+        titleLabel?.snp.makeConstraints({ (make) in
+            make.top.equalTo(imageView!.snp.bottom).offset(12)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(titleWidth)
+            make.height.equalTo(28)
+        })
+        
+        subTitleLabel?.snp.makeConstraints({ (make) in
+            make.top.equalTo(titleLabel!.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(20)
+        })
+        
+        audioPlayerView?.snp.makeConstraints({ (make) in
+            make.centerY.equalTo(titleLabel!)
+            make.left.equalTo(titleLabel!.snp.right).offset(3)
+            make.width.height.equalTo(22)
+        })
+        
+    }
+    
+    override func bindData() {
+        self.titleLabel?.text = exerciseModel.question?.word
+        self.subTitleLabel?.text = exerciseModel.question?.soundmark
+        
+        if let url = self.exerciseModel.question?.imageUrl {
+            self.imageView?.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
         }
-    }
-
-    // MARK: YXAnswerEventProtocol
-    override func selectedAnswerButton(_ button: YXLetterButton) -> Int {
-        return self.spellView?.insertLetter(button) ?? 0
-    }
-
-    override func unselectAnswerButton(_ button: YXLetterButton) {
-        self.spellView?.removeLetter(button)
-    }
-
-    override func showResult(errorList list: [Int]) {
-        self.spellView?.showResultView(errorList: list)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
+            self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice
+            self?.audioPlayerView?.play()
+        }
     }
 }
 

@@ -44,7 +44,7 @@ class YXListenQuestionView: YXBaseQuestionView {
     
     override func bindData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
-            self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.americanPronunciation
+            self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice
             self?.audioPlayerView?.play()
         }
     }

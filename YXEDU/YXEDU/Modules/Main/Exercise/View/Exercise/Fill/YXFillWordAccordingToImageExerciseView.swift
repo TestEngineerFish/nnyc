@@ -12,7 +12,7 @@ import UIKit
 class YXFillWordAccordingToImageExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        questionView = YXWordAndImageQuestionView(exerciseModel: exerciseModel)
+        questionView = YXWordAndImage_FillQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
         remindView = YXRemindView(exerciseModel: exerciseModel)

@@ -60,7 +60,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     func initSubTitleLabel() {
         self.subTitleLabel                = UILabel()
         self.subTitleLabel?.font          = UIFont.pfSCRegularFont(withSize: 14)
-        self.subTitleLabel?.textColor     = UIColor.hex(0x888888)
+        self.subTitleLabel?.textColor     = UIColor.black3
         self.subTitleLabel?.textAlignment = .center
         self.subTitleLabel?.numberOfLines = 0
         self.addSubview(subTitleLabel!)
@@ -69,7 +69,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     func initDescTitleLabel() {
         self.descTitleLabel = UILabel()
         self.descTitleLabel?.font = UIFont.pfSCRegularFont(withSize: 14)
-        self.descTitleLabel?.textColor = UIColor.black2
+        self.descTitleLabel?.textColor = UIColor.black3
         self.descTitleLabel?.textAlignment = .center
         self.descTitleLabel?.text = ""
         self.addSubview(descTitleLabel!)
