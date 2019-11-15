@@ -10,6 +10,7 @@
 
 @implementation YXEvnOC
 +(NSString *)baseUrl {
+//    return @"http://liuhaitao.api.xstudyedu.com";
     return [YYEnvChangeViewController apiUrl];
 }
 @end

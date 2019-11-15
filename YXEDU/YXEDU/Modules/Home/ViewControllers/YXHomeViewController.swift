@@ -100,8 +100,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     private func loadData() {
-        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
-//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learning/indexinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
             do {

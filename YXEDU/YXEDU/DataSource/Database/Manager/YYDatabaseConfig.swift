@@ -261,5 +261,11 @@ extension YYSQLManager {
             SELECT * FROM word
             WHERE wordId IN (%@)
         """
+        
+        case deleteWord =
+        """
+            DELETE * FROM word
+            WHERE bookId IN (%@)
+        """
     }
 }

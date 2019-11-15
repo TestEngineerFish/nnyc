@@ -98,10 +98,11 @@ struct YXUserWordBookListModel: Mappable {
     }
 }
 
-struct YXWordBookStatusModel: Codable {
+struct YXWordBookStatusModel: Mappable {
     var bookId: Int?
     var learnedDays: Int?
     var learnedWordsCount: Int?
+    var unitId: Int?
     var learningUnit: String?
     
     init?(map: Map) {
@@ -112,6 +113,7 @@ struct YXWordBookStatusModel: Codable {
         bookId <- map["book_id"]
         learnedDays <- map["learned_days"]
         learnedWordsCount <- map["learned_words"]
+        unitId <- map["unit_id"]
         learningUnit <- map["learning_unit"]
     }
 }

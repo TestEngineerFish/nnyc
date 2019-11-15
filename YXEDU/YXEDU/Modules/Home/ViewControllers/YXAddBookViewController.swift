@@ -44,13 +44,12 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func loadData() {
-//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in
-        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [Any] else { return }
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                guard let jsonString = String(data: jsonData, encoding: .unicode), let grades = [YXGradeWordBookListModel](JSONString: jsonString) else { return }
+                guard let jsonString = String(data: jsonData, encoding: .utf8), let grades = [YXGradeWordBookListModel](JSONString: jsonString) else { return }
                 self.grades = grades
                 self.filterGrades = self.grades
                 
@@ -149,7 +148,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: units) { (unitID) in
             guard let unitID = unitID else { return }
 
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "bookId": "\(bookID)", "unitId": "\(unitID)"]) { [weak self] (response, isSuccess) in
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(bookID)", "unit_id": "\(unitID)"]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
                 
                 YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in

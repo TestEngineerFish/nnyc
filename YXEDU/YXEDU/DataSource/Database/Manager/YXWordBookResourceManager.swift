@@ -78,7 +78,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
         do {
             let data = try Data(contentsOf: wordBooksJsonUrl)
             let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
-            guard let jsonString = String(data: jsonData, encoding: .unicode), let wordBook = YXWordBookModel(JSONString: jsonString), let units = wordBook.units else {
+            guard let jsonString = String(data: jsonData, encoding: .utf8), let wordBook = YXWordBookModel(JSONString: jsonString), let units = wordBook.units else {
                 DispatchQueue.main.async { self.closure?(false) }
                 return
             }

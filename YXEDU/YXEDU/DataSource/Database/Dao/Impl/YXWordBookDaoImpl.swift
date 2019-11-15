@@ -42,7 +42,14 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         
         self.wordRunner.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
-            completion(nil, isSuccess)
+            guard isSuccess else {
+                completion(nil, false)
+                return
+            }
+            
+            deleteWord(bookId: bookId) { (result, isSuccess) in
+                completion(nil, isSuccess)
+            }
         }
     }
     
@@ -89,6 +96,12 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
     
     func deleteWord(bookId: Int, completion: finishBlock) {
-
+        let sql = YYSQLManager.WordBookSQL.deleteWord.rawValue
+        let params: [Any] = [bookId]
+        
+        self.wordRunner.inDatabase { (db) in
+            let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
+            completion(nil, isSuccess)
+        }
     }
 }

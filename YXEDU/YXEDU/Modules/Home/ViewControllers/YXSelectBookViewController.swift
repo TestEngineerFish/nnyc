@@ -64,7 +64,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let wordBook = wordBookModels[index]
             guard wordBook.isSelected else { continue }
             
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "bookId": "\(wordBook.bookId ?? 0)"]) { [weak self] (response, isSuccess) in
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookId ?? 0)", "unit_id": "\(wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
 
                 YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
@@ -87,13 +87,12 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func fetchWordBooks() {
-        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/book/getuserbooklist", parameters: ["user_id": YXConfigure.shared().uuid]) { [weak self] (response, isSuccess) in
-//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbooklist", parameters: ["user_id": YXConfigure.shared().uuid]) { [weak self] (response, isSuccess) in
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbooklist", parameters: ["user_id": YXConfigure.shared().uuid]) { [weak self] (response, isSuccess) in
             guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                guard let jsonString = String(data: jsonData, encoding: .unicode), let result = YXUserWordBookListModel(JSONString: jsonString), let wordBookStateModels = result.currentLearnWordBookStatus, var learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 else { return }
+                guard let jsonString = String(data: jsonData, encoding: .utf8), let result = YXUserWordBookListModel(JSONString: jsonString), let wordBookStateModels = result.currentLearnWordBookStatus, var learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 else { return }
                 self.wordBookStateModels = wordBookStateModels
                 self.fetchWordBookDetail(learnedWordBooks[0])
 
@@ -119,15 +118,14 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     
     private func fetchWordBookDetail(_ wordBook: YXWordBookModel) {
         bookNameLabel.text = wordBook.bookName
-        YXDataProcessCenter.get("http://liuhaitao.api.xstudyedu.com/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookId ?? 0)"]) { [weak self] (response, isSuccess) in
-//        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookID ?? 0)"]) { [weak self] (response, isSuccess) in
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookId ?? 0)"]) { [weak self] (response, isSuccess) in
             guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                let decoder = JSONDecoder()
-                let result = try decoder.decode(YXWordBookStatusModel.self, from: jsonData)
-                
+                guard let jsonString = String(data: jsonData, encoding: .utf8), let result = YXWordBookStatusModel(JSONString: jsonString) else { return }
+                self.wordBookStateModels = result
+    
                 self.unitLabel.text = result.learningUnit
                 
                 let countOfDaysForStudyString = "\(result.learnedDays ?? 0)天"
