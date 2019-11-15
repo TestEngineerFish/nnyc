@@ -30,20 +30,22 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
         self.currentDownloadWordBook = wordBook
         self.closure = closure
         
-        guard let bookID = wordBook.bookId else {
-            DispatchQueue.main.async { self.closure?(false) }
-            return
-        }
+        DispatchQueue.main.async { self.closure?(true) }
         
-        YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
-            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
-               DispatchQueue.main.async { self.closure?(true) }
-
-            } else {
-                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
-                downloadTask.resume()
-            }
-        }
+//        guard let bookID = wordBook.bookId else {
+//            DispatchQueue.main.async { self.closure?(false) }
+//            return
+//        }
+//
+//        YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
+//            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
+//               DispatchQueue.main.async { self.closure?(true) }
+//
+//            } else {
+//                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
+//                downloadTask.resume()
+//            }
+//        }
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {

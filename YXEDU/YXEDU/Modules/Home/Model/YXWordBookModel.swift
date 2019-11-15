@@ -104,7 +104,8 @@ struct YXWordBookStatusModel: Mappable {
     var learnedWordsCount: Int?
     var unitId: Int?
     var learningUnit: String?
-    
+    var gradeId: Int?
+
     init?(map: Map) {
         self.mapping(map: map)
     }
@@ -115,5 +116,6 @@ struct YXWordBookStatusModel: Mappable {
         learnedWordsCount <- map["learned_words"]
         unitId <- map["unit_id"]
         learningUnit <- map["learning_unit"]
+        gradeId <- map["grade_id"]
     }
 }

@@ -64,7 +64,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let wordBook = wordBookModels[index]
             guard wordBook.isSelected else { continue }
             
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookId ?? 0)", "unit_id": "\(wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBookStateModels.bookId ?? 0)", "unit_id": "\(wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
 
                 YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
@@ -126,16 +126,16 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 guard let jsonString = String(data: jsonData, encoding: .utf8), let result = YXWordBookStatusModel(JSONString: jsonString) else { return }
                 self.wordBookStateModels = result
     
-                self.unitLabel.text = result.learningUnit
+                self.unitLabel.text = self.wordBookStateModels.learningUnit
                 
-                let countOfDaysForStudyString = "\(result.learnedDays ?? 0)天"
+                let countOfDaysForStudyString = "\(self.wordBookStateModels.learnedDays ?? 0)天"
                 let index1 = countOfDaysForStudyString.distance(from: countOfDaysForStudyString.startIndex, to: countOfDaysForStudyString.firstIndex(of: "天")!)
                 let attributedText1 = NSMutableAttributedString(string: countOfDaysForStudyString)
                 attributedText1.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index1))
                 attributedText1.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index1))
                 self.countOfDaysForStudyLabel.attributedText = attributedText1
                 
-                let countOfWordsForStudyString = "\(result.learnedWordsCount ?? 0)个"
+                let countOfWordsForStudyString = "\(self.wordBookStateModels.learnedWordsCount ?? 0)个"
                 let index2 = countOfWordsForStudyString.distance(from: countOfWordsForStudyString.startIndex, to: countOfWordsForStudyString.firstIndex(of: "个")!)
                 let attributedText2 = NSMutableAttributedString(string: countOfWordsForStudyString)
                 attributedText2.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index2))
