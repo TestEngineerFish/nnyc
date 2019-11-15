@@ -14,8 +14,8 @@ import ObjectMapper
 class YXExerciseDataManager: NSObject {
     
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
-    var exerciseModelArray: [YXWordExerciseModel] = []
-    
+    private var exerciseModelArray: [YXWordExerciseModel] = []
+    private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
@@ -31,56 +31,10 @@ class YXExerciseDataManager: NSObject {
     }
     
     
-    /// 获取今天要学习的练习数据
-    /// - Parameter completion: 数据加载成功后的回调
-    func fetchTodayExerciseModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        // --- 测试数据 ----
-//        var model = YXWordExerciseModel(.newLearnPrimarySchool)
-//        let strArray = ["e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x", "e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x", "e", "sam", "u", "pdsss", "wddesa", "sam", "m", "x"]
-//        model.wordArray = strArray
-//        let charModelArray: [YXCharacterModel] = {
-//            var array = [YXCharacterModel]()
-//            var index = 0
-//            for str in model.word {
-//                let model = YXCharacterModel(str.description, isBlank: index != 0)
-//                array.append(model)
-//                index += 1
-//            }
-//            return array
-//        }()
-//        model.charModelArray = charModelArray
-//        // ---- ^^^^^ ----
-//        exerciseModelArray = [
-//            model,
-//            YXWordExerciseModel(.listenChooseWord),
-//            YXWordExerciseModel(.listenChooseChinese),
-//            YXWordExerciseModel(.listenChooseImage),
-//            YXWordExerciseModel(.validationWordAndChinese),
-//            YXWordExerciseModel(.validationImageAndWord),
-//            YXWordExerciseModel(.lookImageChooseWord),
-//            YXWordExerciseModel(.lookChineseChooseWord),
-//            YXWordExerciseModel(.lookWordChooseChinese),
-//            YXWordExerciseModel(.lookExampleChooseImage),
-//            YXWordExerciseModel(.lookWordChooseImage),
-//            YXWordExerciseModel(.fillWordAccordingToChinese),
-//            YXWordExerciseModel(.lookWordChooseImage),
-//            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
-//            YXWordExerciseModel(.lookExampleChooseImage)
-//        ]
-        completion?(true, nil)
-    }
-    
-    
     
     /// 加载本地未学完的关卡数据
     func fetchUnCompletionExerciseModels() {
-        exerciseModelArray = [
-//            YXWordExerciseModel(.fillWordAccordingToChinese_Connection),
-//            YXWordExerciseModel(.fillWordAccordingToChinese),
-//
-//            YXWordExerciseModel(.lookWordChooseImage),
-//            YXWordExerciseModel(.lookExampleChooseImage)
-        ]
+
     }
     
     
@@ -96,8 +50,6 @@ class YXExerciseDataManager: NSObject {
     /// 完成一个练习后，答题后删除练习题
     /// - Parameter exerciseModel:
     func completionExercise(exerciseModel: YXWordExerciseModel, right: Bool) {
-        
-
         
         if right {
 //            self.exerciseModelArray.removeFirst()
@@ -140,19 +92,24 @@ class YXExerciseDataManager: NSObject {
     
     //MARK: - private
     private func processExerciseData(result: YXExerciseResultModel?) {
-        
+//        self.processNewWord(result: result)
+        self.processReviewWord(result: result)
+    }
+    
+    
+    private func processNewWord(result: YXExerciseResultModel?) {
         // 处理新学单词
         for wordId in result?.newWords ?? [] {
             
             if let word = self.fetchWord(wordId: wordId) {
-                if word.gardeType == 2 {// 小学
+                if (word.gradeId ?? 0) <= 6 {// 小学
                     var exercise = YXWordExerciseModel()
                     exercise.type = .newLearnPrimarySchool
                     exercise.question = word
                     exercise.word = word
                     
                     exerciseModelArray.append(exercise)
-                } else if word.gardeType == 3 { // 初中
+                } else if (word.gradeId ?? 0) <= 9 { // 初中
                     var exercise = YXWordExerciseModel()
                     exercise.type = .newLearnJuniorHighSchool
                     exercise.question = word
@@ -162,38 +119,63 @@ class YXExerciseDataManager: NSObject {
                 }
             }
         }
-        
+    }
+    
+    private func processReviewWord(result: YXExerciseResultModel?) {
         // 处理复习单词
-        for review in result?.reviewWords ?? [] {
+        for step in result?.steps ?? [] {
             
-            for step in review.steps ?? [] {
-                if review.isNewWord {
-                    // 新学单词，需要根据打分来判断，再选择哪个
-                    for subStep in step {
-                        if subStep.score == self.fetchWordScore(wordId: review.wordId) {
-                            var exercise = createExerciseModel(step: subStep)
-                            exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
-                            exerciseModelArray.append(exercise)
-                            break
-                        }
-                    }
-                } else {
-                    // 不是新学，只有一个题型
-                    if let sp = step.first {
-                        var exercise = createExerciseModel(step: sp)
+            for subStep in step {
+                
+                if subStep.isBackup {
+                    var exercise = createExerciseModel(step: subStep)
+                    exercise.word = fetchWord(wordId: subStep.wordId)
+                    
+                    let key = "\(subStep.wordId)-" + (subStep.type ?? "")
+                    backupExerciseModelArray[key] = exercise
+                    continue
+                }
+                                
+                if subStep.isCareScore {//是否关注分数
+                    if subStep.score == self.fetchWordScore(wordId: subStep.wordId) {
+                        var exercise = createExerciseModel(step: subStep)
                         exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
                         exerciseModelArray.append(exercise)
                     }
+                } else {
+                    var exercise = createExerciseModel(step: subStep)
+                    exercise.word = fetchWord(wordId: subStep.wordId)
+                    exerciseModelArray.append(exercise)
                 }
+                                
             }
             
         }
-        
-        
     }
     
+    /*
+     
+     if review.isNewWord {
+         // 新学单词，需要根据打分来判断，再选择哪个
+         for subStep in step {
+             if subStep.score == self.fetchWordScore(wordId: review.wordId) {
+                 var exercise = createExerciseModel(step: subStep)
+                 exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
+                 exerciseModelArray.append(exercise)
+                 break
+             }
+         }
+     } else {
+         // 不是新学，只有一个题型
+         if let sp = step.first {
+             var exercise = createExerciseModel(step: sp)
+             exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
+             exerciseModelArray.append(exercise)
+         }
+     }
+     */
     
-    private func fetchWord(wordId: Int) -> YXWordModel? {
+    public func fetchWord(wordId: Int) -> YXWordModel? {
 //        return dao.selectWord(wordId: wordId)
         let json = """
         {
@@ -218,6 +200,7 @@ class YXExerciseDataManager: NSObject {
         
         var word = YXWordModel(JSONString: json)
         word?.wordId = wordId
+        word?.gradeId = 1
 //        word?.word = (word?.word ?? "") + "\(wordId)"
         return word
         
@@ -233,7 +216,7 @@ class YXExerciseDataManager: NSObject {
     
     private func createExerciseModel(step: YXWordStepModel) -> YXWordExerciseModel {
         var exercise = YXWordExerciseModel()
-        exercise.type = YXExerciseType(rawValue: step.type) ?? .none
+        exercise.type = YXExerciseType(rawValue: step.type ?? "") ?? .none
         exercise.question = step.question
         exercise.option = step.option
         exercise.answers = step.answers

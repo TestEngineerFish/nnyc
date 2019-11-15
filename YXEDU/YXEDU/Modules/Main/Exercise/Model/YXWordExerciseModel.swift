@@ -56,12 +56,17 @@ struct YXWordExerciseModel: Mappable {
         
     /// 得分
     var score: Int?
-    
-    var isNewWord: Bool = true
+        
+    /// 是否根据得分选择题型
+    var isCareScore: Bool = false
+        
+    /// 第几步
+    var step: Int = 0
 
     init() {}
     
     init?(map: Map) {
+        self.mapping(map: map)
     }
         
     mutating func mapping(map: Map) {

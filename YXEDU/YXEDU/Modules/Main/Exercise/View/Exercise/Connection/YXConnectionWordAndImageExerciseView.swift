@@ -11,7 +11,10 @@ import UIKit
 /// 连接单词和图片
 class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
 
-    private let answerHeight: CGFloat = YXConnectionView.Config.itemHeight * 4 + 54 * 3
+    private var answerHeight: CGFloat {
+        let itemConfig = YXConnectionWordAndImageConfig()
+        return itemConfig.rightItemHeight * 4 + itemConfig.rightInterval * 3
+    }
             
     override func createSubview() {
         questionView = YXBaseQuestionView(exerciseModel: self.exerciseModel)
@@ -34,7 +37,7 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
             make.top.equalTo(32)
             make.left.equalTo(22)
             make.right.equalTo(-22)
-            make.height.equalTo(380)
+            make.height.equalTo(442)
         }
         
         remindView?.snp.makeConstraints({ (make) in

@@ -91,6 +91,10 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         
         self.wordRunner.inDatabase { (db) in
             let result = db.executeQuery(sql, withArgumentsIn: params)
+            
+//            result?.next()
+            
+            
             completion(result, result != nil)
         }
     }

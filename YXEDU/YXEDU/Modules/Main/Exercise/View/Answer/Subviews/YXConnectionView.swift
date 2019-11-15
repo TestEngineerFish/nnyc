@@ -8,43 +8,65 @@
 
 import UIKit
 
+/// 连线题，选项size大小
+protocol YXConnectionItemConfigProtocol {
+    var leftItemWidth: CGFloat {get}
+    var leftItemHeight: CGFloat {get}
+    var leftInterval: CGFloat {get}
+    
+    var rightItemWidth: CGFloat {get}
+    var rightItemHeight: CGFloat {get}
+    var rightInterval: CGFloat {get}
+    
+    var leftPardding: CGFloat {get}
+}
+extension YXConnectionItemConfigProtocol {
+    var leftPardding: CGFloat {return 46}
+}
+
+/// 单词 + 中文
+struct YXConnectionWordAndChineseConfig: YXConnectionItemConfigProtocol {
+    var leftItemWidth: CGFloat { return 102}
+    var leftItemHeight: CGFloat { return 30}
+    var leftInterval: CGFloat { return 34}
+    
+    var rightItemWidth: CGFloat { return leftItemWidth}
+    var rightItemHeight: CGFloat { return leftItemHeight}
+    var rightInterval: CGFloat { return leftInterval}
+}
+/// 单词 + 图片
+struct YXConnectionWordAndImageConfig: YXConnectionItemConfigProtocol {
+    var leftItemWidth: CGFloat { return 102}
+    var leftItemHeight: CGFloat { return 30}
+    var leftInterval: CGFloat { return 54}
+    
+    var rightItemWidth: CGFloat { return 89}
+    var rightItemHeight: CGFloat { return 59}
+    var rightInterval: CGFloat { return 24}
+}
+
 
 class YXConnectionView: UIView {
     
     var connectionCompletion: (() -> ())?
     
-    struct Config {
-        static let itemLeft: CGFloat = 24
-            
-        static let itemWidth: CGFloat = 120
-        static let itemHeight: CGFloat = 30
-    }
-    
-    var leftInterval: CGFloat {
+    var itemConfig: YXConnectionItemConfigProtocol {
         if exerciseModel?.type == .connectionWordAndChinese {
-            return 34
+            return YXConnectionWordAndChineseConfig()
         } else {
-            return 54
+            return YXConnectionWordAndImageConfig()
         }
     }
     
-    var rightInterval: CGFloat {
-        if exerciseModel?.type == .connectionWordAndChinese {
-            return 34
-        } else {
-            return 24
-        }
-    }
     
     var exerciseModel: YXWordExerciseModel? {
-        didSet {
-            bindData()
-        }
+        didSet { bindData() }
     }
 
+    private var audioPlayerView = YXAudioPlayerView()
     
-    var questionArray: [String] = []
-    var answerArray: [String] = []
+    private var questionArray: [String] = []
+    private var answerArray: [String] = []
     
     private var leftItemArray: [YXConnectionItemView] = []
     private var rightItemArray: [YXConnectionItemView] = []
@@ -58,12 +80,22 @@ class YXConnectionView: UIView {
     private var movingPoint: CGPoint?
     private var shapeLayer: CAShapeLayer?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-//        self.backgroundColor = UIColor.black5.withAlphaComponent(0.2)
+    private var dataManager = YXExerciseDataManager()
+    
+    init(exerciseModel: YXWordExerciseModel) {
+        self.exerciseModel = exerciseModel
+        super.init(frame: CGRect.zero)
         self.addGesture()
         self.clipsToBounds = true
+        self.backgroundColor = UIColor.clear
+        
+        self.audioPlayerView.isHidden = true
     }
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        self.addGesture()
+//        self.clipsToBounds = true
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -71,17 +103,25 @@ class YXConnectionView: UIView {
 
 
     func createSubview() {
-            
+        self.addSubview(audioPlayerView)
+        
+        self.createLeftItems()
+        self.createRightItems()
+    }
+    
+    func createLeftItems() {
         for (index, title) in questionArray.enumerated() {
             
-            let y = (Config.itemHeight + leftInterval) * CGFloat(index)
-            let ivFrame = CGRect(x: left, y: y, width: Config.itemWidth, height: Config.itemHeight)
+            let x = self.left + itemConfig.leftPardding
+            let y = (itemConfig.leftItemHeight + itemConfig.leftInterval) * CGFloat(index) + (itemConfig.rightItemHeight - itemConfig.leftItemHeight) / 2
+            let ivFrame = CGRect(x: x, y: y, width: itemConfig.leftItemWidth, height: itemConfig.leftItemHeight)
             
             let itemView = YXConnectionItemView(frame: ivFrame)
-            itemView.itemTitle = title
             itemView.index = index
             itemView.itemType = .left
+            itemView.rightItemType = .text
             itemView.itemStatus = .normal
+            itemView.itemTitle = title
             itemView.itemModel = exerciseModel?.option?.firstItems?[index]
             itemView.clickEvent = {[weak self] (index, type) in
                 self?.itemEvent(index: index, type: type)
@@ -90,18 +130,23 @@ class YXConnectionView: UIView {
             leftItemArray.append(itemView)
             self.addSubview(itemView)
         }
-                
+        
+      
+    }
+    
+    func createRightItems() {
         for (index, title) in answerArray.enumerated() {
             
-            let x = self.width - Config.itemWidth
-            let y = (Config.itemHeight + rightInterval) * CGFloat(index)
-            let ivFrame = CGRect(x: x , y: y, width: Config.itemWidth, height: Config.itemHeight)
+            let x = self.width - itemConfig.rightItemWidth - itemConfig.leftPardding
+            let y = (itemConfig.rightItemHeight + itemConfig.rightInterval) * CGFloat(index)
+            let ivFrame = CGRect(x: x , y: y, width: itemConfig.rightItemWidth, height: itemConfig.rightItemHeight)
             
             let itemView = YXConnectionItemView(frame: ivFrame)
-            itemView.itemTitle = title
             itemView.index = index
             itemView.itemType = .right
+            itemView.rightItemType = (exerciseModel?.type == .connectionWordAndChinese) ? .text : .image
             itemView.itemStatus = .normal
+            itemView.itemTitle = title
             itemView.itemModel = exerciseModel?.option?.secondItems?[index]
             itemView.clickEvent = {[weak self] (index, type) in
                 self?.itemEvent(index: index, type: type)
@@ -110,7 +155,6 @@ class YXConnectionView: UIView {
             rightItemArray.append(itemView)
             self.addSubview(itemView)
         }
-        
     }
     
     func bindData() {
@@ -138,8 +182,15 @@ class YXConnectionView: UIView {
 //MARK: - 处理点击事件相关的
 extension YXConnectionView {
     private func itemEvent(index: Int, type: YXConnectionItemType) {
+//        let item = leftItemArray[index]
+//        if item.itemStatus == .selected {
+//            self.audioPlayerView.isHidden = true
+//            return
+//        }
+        
         if type == .left {
             self.leftItemEvent(index: index )
+            self.playAudio(index: index)
         } else {
             self.rightItemEvent(index: index)
         }
@@ -166,6 +217,20 @@ extension YXConnectionView {
         }
     }
     
+    private func playAudio(index: Int) {
+        let item = leftItemArray[index]
+        self.audioPlayerView.snp.remakeConstraints { (make) in
+            make.top.equalTo(item.snp.bottom)
+            make.left.equalTo(item.snp.left)
+            make.width.equalTo(22)
+            make.height.equalTo(22)
+        }
+
+        let word = dataManager.fetchWord(wordId: leftItemArray[index].itemModel?.optionId ?? 0)
+        self.audioPlayerView.isHidden = false
+        self.audioPlayerView.urlStr = word?.voice
+        self.audioPlayerView.play()
+    }
     
     /// 是否有选中的
     /// - Parameter type: 类型

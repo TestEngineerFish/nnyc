@@ -9,15 +9,6 @@
 import UIKit
 
 
-
-
-class YXConnectionLeftView: UIView {
-
-    
-
-}
-
-
 /// 选择状态枚举
 enum YXConnectionItemStatus {
     case normal
@@ -33,32 +24,38 @@ enum YXConnectionItemType {
     case right
 }
 
+enum YXConnectionRightItemType {
+    case text
+    case image
+}
+
+
 class YXConnectionItemView: UIButton {
     
     public var clickEvent: ((_ index: Int, _ itemType: YXConnectionItemType) -> Void)?
     
     public var index: Int = 0
-    public var itemType: YXConnectionItemType = .left
     public var itemModel: YXOptionItemModel?
-    public var itemStatus: YXConnectionItemStatus = .normal {
-        didSet { self.setItemStatus() }
-    }
+    public var itemType: YXConnectionItemType = .left
+    
+    public var rightItemType: YXConnectionRightItemType = .text { didSet { self.bindProperty() }}
+    public var itemStatus: YXConnectionItemStatus = .normal { didSet { self.setItemStatus() } }
     
     public var itemTitle: String? {
-        didSet { self.setTitle(self.itemTitle, for: .normal) }
+        didSet { self.setContent() }
     }
     
-    public var itemImageUrl: String? {
-        didSet { self.setBackgroundImage(UIImage.imageWithColor(UIColor.gray), for: .normal) }
-    }
+//    public var itemImageUrl: String? {
+//        didSet { self.setBackgroundImage(UIImage.imageWithColor(UIColor.gray), for: .normal) }
+//    }
     
     public var locationPoint: CGPoint { return self._locationPoint() }
     
+    private var subImageView: YXKVOImageView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.addGesture()
-        self.bindProperty()
+//        self.bindProperty()
     }
         
     required init?(coder: NSCoder) {
@@ -72,7 +69,26 @@ class YXConnectionItemView: UIButton {
     private func bindProperty() {
         self.addTarget(self, action: #selector(clickButton), for: .touchUpInside)
         self.layer.masksToBounds = true
-        self.layer.cornerRadius = self.height / 2
+        self.layer.cornerRadius = rightItemType == .text ? self.height / 2 : 4
+    }
+    
+    private func setContent() {
+        if rightItemType == .text {
+            self.setTitle(self.itemTitle, for: .normal)
+        } else {
+            subImageView = YXKVOImageView()
+            self.addSubview(subImageView!)
+            
+            subImageView?.layer.masksToBounds = true
+            subImageView?.layer.cornerRadius = rightItemType == .text ? self.height / 2 : 4
+            if let url = itemTitle {
+                subImageView?.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
+            }
+            subImageView?.snp.makeConstraints({ (make) in
+                make.top.left.equalTo(1)
+                make.right.bottom.equalTo(-1)
+            })
+        }
     }
     
     private func setItemStatus() {
@@ -118,11 +134,6 @@ class YXConnectionItemView: UIButton {
             self.clickEvent?(self.index, self.itemType)
         }
     }
-    
-    
 }
-
-
-
 
 

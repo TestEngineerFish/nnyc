@@ -53,6 +53,7 @@ struct YXWordModel: Mappable {
     var column: Int = 0
     var row: Int = 0
 
+    
     init() {}
     
     init?(map: Map) {

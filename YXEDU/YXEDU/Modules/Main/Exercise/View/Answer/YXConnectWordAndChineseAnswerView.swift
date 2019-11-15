@@ -13,19 +13,19 @@ import UIKit
 class YXConnectWordAndChineseAnswerView: YXBaseAnswerView {
 
     var connectionView: YXConnectionView?
-
+ 
     override func createSubviews() {
         super.createSubviews()
-        
-        connectionView = YXConnectionView()
-//        self.connectionView?.exerciseModel = self.exerciseModel
-        let connectionHeight = YXConnectionView.Config.itemHeight * 4 + 34 * 3
-        connectionView?.frame = CGRect(x: 22, y: 0, width: screenWidth - 22 * 2, height: connectionHeight)
+        self.connectionView = YXConnectionView(exerciseModel: self.exerciseModel)
+        let connectionHeight = connectionView!.itemConfig.rightItemHeight * 4 + connectionView!.itemConfig.rightInterval * 3
+        connectionView?.frame = CGRect(x: 0, y: 0, width: screenWidth, height: connectionHeight)
         self.addSubview(connectionView!)
     }
     
     override func bindProperty() {
-        connectionView?.connectionCompletion = {[weak self] in
+        self.backgroundColor = UIColor.clear
+        
+        connectionView!.connectionCompletion = {[weak self] in
             self?.answerCompletion(right: true)
         }
     }
@@ -33,5 +33,5 @@ class YXConnectWordAndChineseAnswerView: YXBaseAnswerView {
     override func bindData() {
         self.connectionView?.exerciseModel = self.exerciseModel
     }
-
+    
 }

@@ -17,7 +17,7 @@ extension YXExerciseRequest {
     var method: YYHTTPMethod {
         switch self {
             case .exercise:
-                    return .post
+                    return .get
             default:
                 return .get
         }

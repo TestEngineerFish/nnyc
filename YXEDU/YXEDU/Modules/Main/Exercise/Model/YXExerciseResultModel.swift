@@ -13,8 +13,9 @@ import ObjectMapper
 struct YXExerciseResultModel: Mappable {
 
     var bookId: Int?
+    var unitId: Int?
     var newWords: [Int]?
-    var reviewWords: [YXReviewWordModel]?
+    var steps: [[YXWordStepModel]]?
     
     init?(map: Map) {
     }
@@ -22,37 +23,42 @@ struct YXExerciseResultModel: Mappable {
     mutating func mapping(map: Map) {
         bookId <- map["book_id"]
         newWords <- map["new_word_list"]
-        reviewWords <- map["review_word_list"]
-    }
-}
-
-
-/// 复习单词数据模型
-struct YXReviewWordModel: Mappable {
-    var wordId: Int = -1
-    /// 是否新单词
-    var isNewWord: Bool = false
-    /// 步骤模型
-    var steps: [[YXWordStepModel]]?
-    init?(map: Map) {
-    }
-    
-    mutating func mapping(map: Map) {
-        wordId <- map["word_id"]
-        isNewWord <- map["is_new_word"]
         steps <- map["step_list"]
     }
 }
 
 
+///// 复习单词数据模型
+//struct YXReviewWordModel: Mappable {
+//    var wordId: Int = -1
+//    /// 是否新单词
+//    var isNewWord: Bool = false
+//    /// 步骤模型
+//    var steps: [[YXWordStepModel]]?
+//    init?(map: Map) {
+//    }
+//
+//    mutating func mapping(map: Map) {
+//        wordId <- map["word_id"]
+//        isNewWord <- map["is_new_word"]
+//        steps <- map["step_list"]
+//    }
+//}
+
+
 
 struct YXWordStepModel: Mappable {
-    
-    /// 第几步
-    var stepNum: Int = -1
+    var wordId: Int = -1
+    /// 是否根据得分选择题型
+    var isCareScore: Bool = true
     /// 打分，用于选择哪个题型
     var score: Int = -1
-    var type: Int = -1
+    /// 题型
+    var type: String?
+    /// 第几步
+    var step: Int = -1
+    var isBackup: Bool = false
+    
         /// 问题
     var question: YXWordModel?
     /// 选项
@@ -64,12 +70,16 @@ struct YXWordStepModel: Mappable {
     }
         
     mutating func mapping(map: Map) {
-        stepNum <- map["step_num"]
+        wordId <- map["word_id"]
         type <- map["type"]
+        isCareScore <- map["is_care_score"]
+        score <- map["score"]
+        step <- map["step"]
+        isBackup <- map["is_backup"]
+        
         question <- map["question"]
         option <- map["option"]
         answers <- map["answer_list"]
-        score <- map["score"]
     }
     
 }
