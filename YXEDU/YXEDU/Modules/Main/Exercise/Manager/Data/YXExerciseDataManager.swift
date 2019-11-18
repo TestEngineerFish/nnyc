@@ -12,6 +12,88 @@ import ObjectMapper
 
 /// 练习的数据管理器
 class YXExerciseDataManager: NSObject {
+//    let testJson = """
+//        {"book_id": 1,
+//        "new_word_list": [
+//            1
+//        ],
+//        "review_word_list": [
+//            {
+//                "word_id": 1,
+//                "is_new_word": 0,
+//                "step_list": [
+//                    [
+//                        {
+//
+//                            "score": 0,
+//                            "type": 60,
+//                            "question": {
+//                                "word_id": 1,
+//                                "unit_id": 1,
+//                                "is_ext_unit": 0,
+//                                "book_id": 1,
+//                                "word" : "good",
+//                                "word_property" : "adj.",
+//                                "word_paraphrase" : "好的;优质的;",
+//                                "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
+//                                "symbol_us" : "美/ɡʊd/",
+//                                "symbol_uk" : "英/ɡʊd/",
+//                                "voice_us" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
+//                                "voice_uk" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
+//                                "example_en" : "You have such a <font color='#55a7fd'>good</font> chance.",
+//                                "example_cn" : "你有这么一个好的机会。",
+//                                "example_voice": "http://m7.music.126.net/20191113193045/42af8f12d0fee1a60790262c7c33b7de/ymusic/a8d0/fde6/d7e2/6dda69cbd4f421d9f1e11f1de0ebf4a4.mp3",
+//                                "synonym": "great,helpful",
+//                                "antonym": "poor,bad",
+//                                "usage":  ["adj.+n.  early morning 清晨","n.+n.  morning exercise早操"]
+//                            },
+//                            "option": {
+//                                "first": [],
+//                                "second": []
+//                            },
+//                            "answer_list": []
+//                        }
+//                    ],
+//
+//                    [
+//                         {
+//
+//                            "score": 0,
+//                            "type": 62,
+//                            "question": {
+//                                "word_id": 1,
+//                                "unit_id": 1,
+//                                "is_ext_unit": 0,
+//                                "book_id": 1,
+//                                "word" : "good",
+//                                "word_property" : "adj.",
+//                                "word_paraphrase" : "好的;优质的;",
+//                                "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
+//                                "symbol_us" : "美/ɡʊd/",
+//                                "symbol_uk" : "英/ɡʊd/",
+//                                "voice_us" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
+//                                "voice_uk" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
+//                                "example_en" : "You have such a <font color='#55a7fd'>good</font> chance.",
+//                                "example_cn" : "你有这么一个好的机会。",
+//                                "example_voice": "http://m7.music.126.net/20191113193045/42af8f12d0fee1a60790262c7c33b7de/ymusic/a8d0/fde6/d7e2/6dda69cbd4f421d9f1e11f1de0ebf4a4.mp3",
+//                                "synonym": "great,helpful",
+//                                "antonym": "poor,bad",
+//                                "usage":  ["adj.+n.  early morning 清晨","n.+n.  morning exercise早操"]
+//                            },
+//                            "option": {
+//                                "first": [],
+//                                "second": []
+//                            },
+//                            "answer_list": []
+//                        }
+//                    ]
+//
+//                ]
+//            }
+//
+//        ]
+//    }
+//    """
     
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
     private var exerciseModelArray: [YXWordExerciseModel] = []
@@ -20,10 +102,16 @@ class YXExerciseDataManager: NSObject {
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseResultModels(completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
-        
+//        let json = self.testJson.convertToDictionary()
+//        let model = YXExerciseResultModel(JSON: json)
+//        self.processExerciseData(result: model)
+//        completion(true, nil)
+//        return
         let request = YXExerciseRequest.exercise
         YYNetworkService.default.httpRequestTask(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
-            self.processExerciseData(result: response.data)
+            let json = self.testJson.convertToDictionary()
+            let model = YXExerciseResultModel(JSON: json)
+            self.processExerciseData(result: model)
             completion(true, nil)
         }) { (error) in
             completion(false, error.message)
@@ -52,7 +140,7 @@ class YXExerciseDataManager: NSObject {
     func completionExercise(exerciseModel: YXWordExerciseModel, right: Bool) {
         
         if right {
-//            self.exerciseModelArray.removeFirst()
+            //            self.exerciseModelArray.removeFirst()
         } else {
             self.addWrongExercise(exerciseModel: exerciseModel)
             self.addWrongBook(exerciseModel: exerciseModel)
@@ -66,7 +154,7 @@ class YXExerciseDataManager: NSObject {
             self.exerciseModelArray.append(exerciseModel)
             return
         }
-            
+
         if !(model.question?.wordId == exerciseModel.question?.wordId && model.type == exerciseModel.type) {
             self.exerciseModelArray.append(exerciseModel)
         }
@@ -92,8 +180,8 @@ class YXExerciseDataManager: NSObject {
     
     //MARK: - private
     private func processExerciseData(result: YXExerciseResultModel?) {
-//        self.processNewWord(result: result)
-        self.processReviewWord(result: result)
+        self.processNewWord(result: result)
+        //        self.processReviewWord(result: result)
     }
     
     
@@ -135,7 +223,7 @@ class YXExerciseDataManager: NSObject {
                     backupExerciseModelArray[key] = exercise
                     continue
                 }
-                                
+
                 if subStep.isCareScore {//是否关注分数
                     if subStep.score == self.fetchWordScore(wordId: subStep.wordId) {
                         var exercise = createExerciseModel(step: subStep)
@@ -147,7 +235,7 @@ class YXExerciseDataManager: NSObject {
                     exercise.word = fetchWord(wordId: subStep.wordId)
                     exerciseModelArray.append(exercise)
                 }
-                                
+
             }
             
         }
@@ -156,33 +244,33 @@ class YXExerciseDataManager: NSObject {
     /*
      
      if review.isNewWord {
-         // 新学单词，需要根据打分来判断，再选择哪个
-         for subStep in step {
-             if subStep.score == self.fetchWordScore(wordId: review.wordId) {
-                 var exercise = createExerciseModel(step: subStep)
-                 exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
-                 exerciseModelArray.append(exercise)
-                 break
-             }
-         }
+     // 新学单词，需要根据打分来判断，再选择哪个
+     for subStep in step {
+     if subStep.score == self.fetchWordScore(wordId: review.wordId) {
+     var exercise = createExerciseModel(step: subStep)
+     exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
+     exerciseModelArray.append(exercise)
+     break
+     }
+     }
      } else {
-         // 不是新学，只有一个题型
-         if let sp = step.first {
-             var exercise = createExerciseModel(step: sp)
-             exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
-             exerciseModelArray.append(exercise)
-         }
+     // 不是新学，只有一个题型
+     if let sp = step.first {
+     var exercise = createExerciseModel(step: sp)
+     exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
+     exerciseModelArray.append(exercise)
+     }
      }
      */
     
     public func fetchWord(wordId: Int) -> YXWordModel? {
-//        return dao.selectWord(wordId: wordId)
+        //        return dao.selectWord(wordId: wordId)
         let json = """
         {
             "word_id" : 1,
-            "word" : "good",
-            "word_property" : "adj.",
-            "word_paraphrase" : "好的;优质的;",
+            "word" : "overnight",
+            "word_property" : "adv",
+            "word_paraphrase" : "在晚上, 在夜里",
             "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
             "symbol_us" : "美/ɡʊd/",
             "symbol_uk" : "英/ɡʊd/",
@@ -201,7 +289,7 @@ class YXExerciseDataManager: NSObject {
         var word = YXWordModel(JSONString: json)
         word?.wordId = wordId
         word?.gradeId = 1
-//        word?.word = (word?.word ?? "") + "\(wordId)"
+        //        word?.word = (word?.word ?? "") + "\(wordId)"
         return word
         
     }

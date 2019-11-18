@@ -18,8 +18,6 @@ extension YXExerciseRequest {
         switch self {
             case .exercise:
                     return .get
-            default:
-                return .get
         }
     }
 }

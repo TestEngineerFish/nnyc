@@ -86,6 +86,13 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         })
     }
 
+    deinit {
+        guard let _answerView = answerView else {
+            return
+        }
+        NotificationCenter.default.removeObserver(_answerView)
+    }
+
     /// 播放音频
     private func playerAudio() {
         guard let currentQuestionView = currentQuestionView else {

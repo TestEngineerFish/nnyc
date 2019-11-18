@@ -133,6 +133,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
+    // MARK: Event
+
+    @IBAction func showLearnMap(_ sender: UIButton) {
+        self.hidesBottomBarWhenPushed = true
+        let vc = YXLearnMapViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        self.hidesBottomBarWhenPushed = false
+    }
+
     
     
     // MARK: -
