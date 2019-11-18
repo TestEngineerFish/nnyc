@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 
 /// 练习模块，主控制器
@@ -29,6 +30,9 @@ class YXExerciseViewController: UIViewController {
     private var bottomView: YXExerciseBottomView = YXExerciseBottomView()
 
     private var resultView = UIImageView()
+
+    // Load视图
+    var animationView = UIView()
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,10 +44,15 @@ class YXExerciseViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.hideLoadAnimation()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.showLoadAnimation()
         self.createSubviews()
         self.bindProperty()
         self.startStudy()
@@ -142,6 +151,7 @@ class YXExerciseViewController: UIViewController {
     
     /// 切换题目
     private func switchExerciseView() {
+        self.hideLoadAnimation()
         // 当前关卡是否学完
         if YXExcerciseProgressManager.isCompletion() {
             print("显示打卡页面")
@@ -181,6 +191,28 @@ class YXExerciseViewController: UIViewController {
         exerciseViewArray.append(exerciseView)
         exerciseView.animateAdmission(isFirst, nil)
         
+    }
+
+    /// 显示loading动画
+    private func showLoadAnimation() {
+        kWindow.addSubview(animationView)
+        let loadAnimation = AnimationView(name: "learnLoading")
+        animationView.addSubview(loadAnimation)
+
+        animationView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+
+        loadAnimation.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalTo(200)
+            make.height.equalTo(300)
+        }
+        loadAnimation.play()
+    }
+
+    private func hideLoadAnimation() {
+        self.animationView.removeFromSuperview()
     }
 }
 
