@@ -13,7 +13,7 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
     
     private var answerHeight: CGFloat {
         let itemConfig = YXConnectionWordAndChineseConfig()
-        return itemConfig.rightItemHeight * 4 + itemConfig.rightInterval * 3
+        return itemConfig.rightItemHeight * 4 + itemConfig.rightInterval * 3 + 30
     }
             
     override func createSubview() {
@@ -23,7 +23,7 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
         remindView = YXRemindView(exerciseModel: exerciseModel)
         self.addSubview(remindView!)
         
-        answerView = YXConnectWordAndChineseAnswerView(exerciseModel: self.exerciseModel)
+        answerView = YXConnectionAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
         

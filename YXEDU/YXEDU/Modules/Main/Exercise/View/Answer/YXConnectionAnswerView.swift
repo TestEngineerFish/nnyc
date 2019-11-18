@@ -9,15 +9,15 @@
 import UIKit
 
 
-/// 词义连线题目
-class YXConnectWordAndChineseAnswerView: YXBaseAnswerView {
+/// 连线题目， 1. 词义连线，2. 词图连线
+class YXConnectionAnswerView: YXBaseAnswerView {
 
     var connectionView: YXConnectionView?
  
     override func createSubviews() {
         super.createSubviews()
         self.connectionView = YXConnectionView(exerciseModel: self.exerciseModel)
-        let connectionHeight = connectionView!.itemConfig.rightItemHeight * 4 + connectionView!.itemConfig.rightInterval * 3
+        let connectionHeight = connectionView!.itemConfig.rightItemHeight * 4 + connectionView!.itemConfig.rightInterval * 3 + 30
         connectionView?.frame = CGRect(x: 0, y: 0, width: screenWidth, height: connectionHeight)
         self.addSubview(connectionView!)
     }

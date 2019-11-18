@@ -23,7 +23,7 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
         remindView = YXRemindView(exerciseModel: exerciseModel)
         self.addSubview(remindView!)
         
-        answerView = YXConnectWordAndImageAnswerView(exerciseModel: self.exerciseModel)
+        answerView = YXConnectionAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.addSubview(answerView!)
         
