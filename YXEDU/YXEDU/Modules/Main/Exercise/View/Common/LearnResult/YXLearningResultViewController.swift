@@ -12,31 +12,9 @@ import UIKit
 class YXLearningResultViewController: UIViewController {
 
     let model: YXLearingResultModel = YXLearingResultModel(star: 1, unitStr: "Unit 2", newLearn: 32, review: 20, unlockUnit: "拓展词汇")
-    let modelArray: [YXLearningPathModel] = {
-        var array = [YXLearningPathModel]()
-        for index in 0..<2 {
-            var model = YXLearningPathModel()
-            model.unit_id = index
-            model.name = "Unit \(index + 1)"
-            if index > 0 {
-                model.rate = 0.0
-                model.start = 0
-                model.isLearning = false
-                model.isLearned  = false
-                model.type = .uniteUnstart
-            } else {
-                model.rate = 1.0
-                model.start = Int(arc4random()%4)
-                model.isLearned = false
-                model.isLearned = true
-                model.type = .uniteIng
-            }
-            array.append(model)
-        }
-        return array
-    }()
     var backButton = UIButton()
     var punchButton = YXButton()
+    var mapModelList: [YXLearnMapUnitModel]?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -70,6 +48,24 @@ class YXLearningResultViewController: UIViewController {
             make.top.equalToSuperview().offset(kNavHeight)
         }
 
+        // 打卡按钮
+        let punchSize = CGSize(width: screenWidth - AdaptSize(100), height: AdaptSize(42))
+        punchButton.setTitle("打卡", for: .normal)
+        punchButton.setTitleColor(UIColor.white, for: .normal)
+        punchButton.size = punchSize
+        punchButton.cornerRadius = punchButton.size.height/2
+        punchButton.layer.setGradient(colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
+        punchButton.addTarget(self, action: #selector(punchEvent), for: .touchUpInside)
+        self.view.addSubview(punchButton)
+        punchButton.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-30 - kSafeBottomMargin)
+            make.size.equalTo(punchSize)
+        }
+    }
+
+    /// 设置任务地图
+    private func createTaskMap(_ modelArray: [YXLearnMapUnitModel]) {
         // 任务地图视图
         let taskMapViewSize = CGSize(width: AdaptSize(307), height: AdaptSize(245))
         let taskMapView = YXTaskMapView(modelArray, frame: CGRect(origin: CGPoint.zero, size: taskMapViewSize))
@@ -77,7 +73,7 @@ class YXLearningResultViewController: UIViewController {
         taskMapView.layer.cornerRadius = 6
         self.view.addSubview(taskMapView)
         taskMapView.snp.makeConstraints { (make) in
-            make.top.equalTo(headerView.snp.bottom).offset(57)
+            make.top.equalToSuperview().offset(kNavHeight + AdaptSize(300))
             make.size.equalTo(taskMapViewSize)
             make.centerX.equalToSuperview()
         }
@@ -94,22 +90,13 @@ class YXLearningResultViewController: UIViewController {
             make.width.equalTo(48)
             make.height.equalTo(12)
         }
-
-        // 打卡按钮
-        let punchSize = CGSize(width: screenWidth - AdaptSize(100), height: AdaptSize(42))
-        punchButton.setTitle("打卡", for: .normal)
-        punchButton.setTitleColor(UIColor.white, for: .normal)
-        punchButton.size = punchSize
-        punchButton.cornerRadius = punchButton.size.height/2
-        punchButton.layer.setGradient(colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
-        punchButton.addTarget(self, action: #selector(punchEvent), for: .touchUpInside)
-        self.view.addSubview(punchButton)
-        punchButton.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-30 - kSafeBottomMargin)
-            make.size.equalTo(punchSize)
-        }
     }
+
+    private func bindData() {
+        
+    }
+
+    // MARK: Event
 
     @objc private func backClick() {
         self.navigationController?.popViewController(animated: true)

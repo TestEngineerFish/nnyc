@@ -10,7 +10,7 @@ import UIKit
 
 class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
 
-    var modelArray: [YXLearningPathModel]
+    var modelArray: [YXLearnMapUnitModel]
     var avatarPinView: YXAvatarPinView?
 
     // 间距
@@ -32,7 +32,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
     // 路径
     let proShapeLayer = CAShapeLayer()
 
-    init(units modelArray: [YXLearningPathModel], frame: CGRect) {
+    init(units modelArray: [YXLearnMapUnitModel], frame: CGRect) {
         self.modelArray = modelArray
         let tmpAmount = modelArray.count - 1
         sectorAmount = tmpAmount / Int(sectorUnits)
@@ -52,7 +52,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         // 获得当前学习单元对象
         for (index, model) in self.modelArray.enumerated() {
             // 默认获取第一个学习中的单元
-            if model.isLearning && index < self.unitViewArray.count {
+            if model.status == .uniteIng && index < self.unitViewArray.count {
                 let unitView = self.unitViewArray[index]
                 // 创建用户头像
                 self.avatarPinView = YXAvatarPinView()
@@ -93,7 +93,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
             c.x = index % 2 > 0 ? self.contentSize.width/2 + centerOffset : self.contentSize.width/2 - centerOffset
             p1.y -= arcHeight
         }
-        let totalLength = CGFloat(sectorAmount) * sectorUnits + 1
+        let totalLength = CGFloat(sectorAmount) * sectorUnits + 2
         let scaleValue  = CGFloat(self.unitAmount) / totalLength
         proShapeLayer.path        = bezierPath.cgPath
         proShapeLayer.lineWidth   = 10
@@ -122,7 +122,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         for (index, point) in self.unitPointArray.enumerated() {
             if index < self.modelArray.count {
                 let model = self.modelArray[index]
-                let sexangleView = YXSexangleView(model)
+                let sexangleView = YXSexangleView(model, isExtension: false)
                 sexangleView.center = point
                 sexangleView.delegate = self
                 self.addSubview(sexangleView)

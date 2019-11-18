@@ -10,41 +10,11 @@ import UIKit
 
 class YXLearnMapViewController: UIViewController {
 
-    var mapModel: YXLearnMapModel?
+    var mapModelList: [YXLearnMapUnitModel]?
 
     var backButton = UIButton()
     var leftCloud  = UIImageView()
     var rightCloud = UIImageView()
-
-    let modelArray: [YXLearningPathModel] = {
-        var array = [YXLearningPathModel]()
-        for index in 0..<14 {
-            var model = YXLearningPathModel()
-            model.unit_id = index
-            model.name = "Unit \(index + 1)"
-            if index == 4 {
-                model.rate = 0.8
-                model.start = 0
-                model.isLearning = true
-                model.isLearned  = false
-                model.type = .uniteIng
-            } else if index > 4 {
-                model.rate = 0.0
-                model.start = 0
-                model.isLearning = false
-                model.isLearned  = false
-                model.type = .uniteUnstart
-            } else {
-                model.rate = 1.0
-                model.start = Int(arc4random()%4)
-                model.isLearning = false
-                model.isLearned  = true
-                model.type = .uniteEnd
-            }
-            array.append(model)
-        }
-        return array
-    }()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -54,6 +24,7 @@ class YXLearnMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
+        self.bindData()
         self.createSubviews()
         self.startAnimation()
     }
@@ -66,12 +37,6 @@ class YXLearnMapViewController: UIViewController {
             make.height.equalTo(AdaptSize(358))
             make.left.right.equalToSuperview()
             make.centerY.equalToSuperview()
-        }
-        // 学习路径
-        let learningPath = LearningMapView(units: self.modelArray, frame: self.view.bounds)
-        self.view.addSubview(learningPath)
-        learningPath.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
         }
         // 返回按钮
         backButton.setImage(UIImage(named: "back"), for: .normal)
@@ -109,16 +74,30 @@ class YXLearnMapViewController: UIViewController {
         }
     }
 
+    /// 设置学习地图
+    private func createMapView() {
+        guard let modelList = self.mapModelList else {
+            return
+        }
+        // 学习路径
+        let learningPath = LearningMapView(units: modelList, frame: self.view.bounds)
+        self.view.addSubview(learningPath)
+        learningPath.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+
     @objc private func backClick() {
         self.navigationController?.popViewController(animated: true)
     }
 
 
     private func bindData() {
-        YYNetworkService.default.httpRequestTask(YYStructResponse<YXLearnMapModel>.self, request: YXExerciseRequest.learnMap, success: { (response) in
-            self.mapModel = response.data
+        YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: YXExerciseRequest.learnMap, success: { (response) in
+            self.mapModelList = response.dataArray
+            self.createMapView()
         }) { (error) in
-            YXUtils.showHUD(self.view, title: String())
+            YXUtils.showHUD(self.view, title: "\(error)")
         }
     }
 
