@@ -10,6 +10,8 @@ import UIKit
 
 class YXLearnMapViewController: UIViewController {
 
+    var mapModel: YXLearnMapModel?
+
     var backButton = UIButton()
     var leftCloud  = UIImageView()
     var rightCloud = UIImageView()
@@ -109,6 +111,15 @@ class YXLearnMapViewController: UIViewController {
 
     @objc private func backClick() {
         self.navigationController?.popViewController(animated: true)
+    }
+
+
+    private func bindData() {
+        YYNetworkService.default.httpRequestTask(YYStructResponse<YXLearnMapModel>.self, request: YXExerciseRequest.learnMap, success: { (response) in
+            self.mapModel = response.data
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: String())
+        }
     }
 
     // TODO: Animation

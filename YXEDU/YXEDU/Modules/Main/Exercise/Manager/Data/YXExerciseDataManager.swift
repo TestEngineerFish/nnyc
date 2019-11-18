@@ -12,89 +12,7 @@ import ObjectMapper
 
 /// 练习的数据管理器
 class YXExerciseDataManager: NSObject {
-//    let testJson = """
-//        {"book_id": 1,
-//        "new_word_list": [
-//            1
-//        ],
-//        "review_word_list": [
-//            {
-//                "word_id": 1,
-//                "is_new_word": 0,
-//                "step_list": [
-//                    [
-//                        {
-//
-//                            "score": 0,
-//                            "type": 60,
-//                            "question": {
-//                                "word_id": 1,
-//                                "unit_id": 1,
-//                                "is_ext_unit": 0,
-//                                "book_id": 1,
-//                                "word" : "good",
-//                                "word_property" : "adj.",
-//                                "word_paraphrase" : "好的;优质的;",
-//                                "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
-//                                "symbol_us" : "美/ɡʊd/",
-//                                "symbol_uk" : "英/ɡʊd/",
-//                                "voice_us" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
-//                                "voice_uk" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
-//                                "example_en" : "You have such a <font color='#55a7fd'>good</font> chance.",
-//                                "example_cn" : "你有这么一个好的机会。",
-//                                "example_voice": "http://m7.music.126.net/20191113193045/42af8f12d0fee1a60790262c7c33b7de/ymusic/a8d0/fde6/d7e2/6dda69cbd4f421d9f1e11f1de0ebf4a4.mp3",
-//                                "synonym": "great,helpful",
-//                                "antonym": "poor,bad",
-//                                "usage":  ["adj.+n.  early morning 清晨","n.+n.  morning exercise早操"]
-//                            },
-//                            "option": {
-//                                "first": [],
-//                                "second": []
-//                            },
-//                            "answer_list": []
-//                        }
-//                    ],
-//
-//                    [
-//                         {
-//
-//                            "score": 0,
-//                            "type": 62,
-//                            "question": {
-//                                "word_id": 1,
-//                                "unit_id": 1,
-//                                "is_ext_unit": 0,
-//                                "book_id": 1,
-//                                "word" : "good",
-//                                "word_property" : "adj.",
-//                                "word_paraphrase" : "好的;优质的;",
-//                                "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
-//                                "symbol_us" : "美/ɡʊd/",
-//                                "symbol_uk" : "英/ɡʊd/",
-//                                "voice_us" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
-//                                "voice_uk" : "http://m7.music.126.net/20191113192817/5997ad25dc4fd148937deaedffbbec7e/ymusic/9095/5df1/7c46/dc5216da15d59c163bae90266b68f182.mp3",
-//                                "example_en" : "You have such a <font color='#55a7fd'>good</font> chance.",
-//                                "example_cn" : "你有这么一个好的机会。",
-//                                "example_voice": "http://m7.music.126.net/20191113193045/42af8f12d0fee1a60790262c7c33b7de/ymusic/a8d0/fde6/d7e2/6dda69cbd4f421d9f1e11f1de0ebf4a4.mp3",
-//                                "synonym": "great,helpful",
-//                                "antonym": "poor,bad",
-//                                "usage":  ["adj.+n.  early morning 清晨","n.+n.  morning exercise早操"]
-//                            },
-//                            "option": {
-//                                "first": [],
-//                                "second": []
-//                            },
-//                            "answer_list": []
-//                        }
-//                    ]
-//
-//                ]
-//            }
-//
-//        ]
-//    }
-//    """
-    
+
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
     private var exerciseModelArray: [YXWordExerciseModel] = []
     private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
@@ -102,16 +20,9 @@ class YXExerciseDataManager: NSObject {
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseResultModels(completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
-//        let json = self.testJson.convertToDictionary()
-//        let model = YXExerciseResultModel(JSON: json)
-//        self.processExerciseData(result: model)
-//        completion(true, nil)
-//        return
         let request = YXExerciseRequest.exercise
         YYNetworkService.default.httpRequestTask(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
-            let json = self.testJson.convertToDictionary()
-            let model = YXExerciseResultModel(JSON: json)
-            self.processExerciseData(result: model)
+            self.processExerciseData(result: response.data)
             completion(true, nil)
         }) { (error) in
             completion(false, error.message)
