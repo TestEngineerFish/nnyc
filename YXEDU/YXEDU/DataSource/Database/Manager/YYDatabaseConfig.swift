@@ -224,7 +224,7 @@ extension YYSQLManager {
     enum WordBookSQL: String {
         case insertBook =
         """
-            INSERT OR REPLACE book
+            INSERT OR REPLACE INTO book
             (bookId, bookName, bookSource, bookHash, gradeId, gradeType)
             VALUES (?, ?, ?, ?, ?, ?)
         """
