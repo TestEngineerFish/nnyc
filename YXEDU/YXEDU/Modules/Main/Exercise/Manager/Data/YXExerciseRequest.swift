@@ -10,7 +10,7 @@ import UIKit
 
 public enum YXExerciseRequest: YYBaseRequest {
     case exercise
-    case learnMap
+    case learnMap(bookID: Int)
 }
 
 
@@ -38,14 +38,12 @@ extension YXExerciseRequest {
 
 
 extension YXExerciseRequest {
-    //    var parameters: [String : Any?]? {
-    //        switch self {
-    //        case .recommend:
-    //
-    //        default:
-    //            return nil
-    //        }
-    //    }
-    
-    //    var postJson: Any? {  }
+    var parameters: [String : Any]? {
+        switch self {
+        case .learnMap(let bookID):
+            return ["book_id" : bookID]
+        default:
+            return nil
+        }
+    }
 }

@@ -93,7 +93,8 @@ class YXLearnMapViewController: UIViewController {
 
 
     private func bindData() {
-        YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: YXExerciseRequest.learnMap, success: { (response) in
+        let request = YXExerciseRequest.learnMap(bookID: 1)
+        YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { (response) in
             self.mapModelList = response.dataArray
             self.createMapView()
         }) { (error) in

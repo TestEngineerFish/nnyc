@@ -25,7 +25,7 @@ struct YXAPI {
         /// 练习接口
         static let exercise = "/api/v1/learn/exercise"
         /// 学习地图
-        static let learnMap = "api/v1/learn/getbookunitstatus/book_id=1"
+        static let learnMap = "/api/v1/learn/getbookunitstatus"
     }
 
     
