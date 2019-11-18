@@ -10,12 +10,12 @@ import UIKit
 
 class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
 
-    let modelArray: [YXLearningPathModel]
+    let modelArray: [YXLearnMapUnitModel]
     var unitViewArray = [UIView]()
     var unitPointArray = [CGPoint]()
     var avatarPinView: YXAvatarPinView?
 
-    init(_ modelArray: [YXLearningPathModel], frame: CGRect) {
+    init(_ modelArray: [YXLearnMapUnitModel], frame: CGRect) {
         self.modelArray = modelArray
         super.init(frame: frame)
         self.createSubviews()
@@ -60,14 +60,14 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
         for (index, point) in self.unitPointArray.enumerated() {
             if index < self.modelArray.count {
                 let model = self.modelArray[index]
-                let sexangleView = YXSexangleView(model)
+                let sexangleView = YXSexangleView(model, isExtension: false)
                 sexangleView.tag = index
                 sexangleView.center = point
                 sexangleView.delegate = self
                 self.insertSubview(sexangleView, at: 1)
                 self.unitViewArray.append(sexangleView)
                 // 如果是当前学习的单元,则添加小图钉头像
-                if model.isLearning {
+                if model.status == .uniteIng {
                     self.addAvatarPinView(sexangleView)
                 }
             }

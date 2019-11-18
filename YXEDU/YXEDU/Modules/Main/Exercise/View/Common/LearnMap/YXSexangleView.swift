@@ -8,94 +8,6 @@
 
 import UIKit
 
-enum YXSexangleType: Int {
-    case uniteUnstart
-    case uniteIng
-    case uniteEnd
-    case extendLock
-    case extendUniteUnstart
-    case extendUniteIng
-    case extendUniteEnd
-
-    /// 获取外边框填充颜色
-    func getOutSideColor() -> UIColor {
-        switch self {
-        case .uniteUnstart:
-            return UIColor.hex(0xE5DDD7)
-        case .uniteIng:
-            return UIColor.hex(0xF5F5F5)
-        case .uniteEnd:
-            return UIColor.hex(0xFFE1B3)
-        case .extendLock:
-            return UIColor.hex(0xDCDCDC)
-        case .extendUniteUnstart:
-            return UIColor.hex(0xE5DDD7)
-        case .extendUniteIng:
-            return UIColor.hex(0xF5F5F5)
-        case .extendUniteEnd:
-            return UIColor.hex(0xFFE1B3)
-        }
-    }
-
-    /// 获取内部填充颜色
-    func getInSideFillColor() -> UIColor {
-        switch self {
-        case .uniteUnstart:
-            return UIColor.hex(0xE5DDD7)
-        case .uniteIng:
-            return UIColor.hex(0xFFE9C7)
-        case .uniteEnd:
-            return UIColor.hex(0xFFE9C7)
-        case .extendLock:
-            return UIColor.hex(0xDCDCDC)
-        case .extendUniteUnstart:
-            return UIColor.hex(0xE5DDD7)
-        case .extendUniteIng:
-            return UIColor.hex(0xFFE9C7)
-        case .extendUniteEnd:
-            return UIColor.hex(0xFFE1B3)
-        }
-    }
-
-    /// 获取文字颜色
-    func getTitleColor() -> UIColor {
-        switch self {
-        case .uniteUnstart:
-            return UIColor.hex(0xB78F58)
-        case .uniteIng:
-            return UIColor.hex(0xFB6617)
-        case .uniteEnd:
-            return UIColor.hex(0xB78F58)
-        case .extendLock:
-            return UIColor.hex(0x888888)
-        case .extendUniteUnstart:
-            return UIColor.hex(0xB78F58)
-        case .extendUniteIng:
-            return UIColor.hex(0xE38B03)
-        case .extendUniteEnd:
-            return UIColor.hex(0xE38B03)
-        }
-    }
-}
-
-struct YXLearningPathModel {
-    var unit_id: Int     = 0
-    var name: String     = "Unit 1"
-    var rate: CGFloat    = 0.75
-    var start: Int       = 1
-    var isLearning: Bool = true
-    var isLearned: Bool  = false
-    var ext: YXLearingPathExtendModel = YXLearingPathExtendModel()
-    var type: YXSexangleType = .uniteIng
-
-    struct YXLearingPathExtendModel {
-        var name: String     = "拓展词汇"
-        var ext_id: Int      = 1
-        var isLocked: Bool   = true
-        var isLearning: Bool = false
-        var star: Int        = 0
-    }
-}
 
 protocol YXSexangleViewClickProcotol {
     func clickSexangleView(_ view: YXSexangleView)
@@ -103,19 +15,21 @@ protocol YXSexangleViewClickProcotol {
 
 class YXSexangleView: UIView {
 
-    var model: YXLearningPathModel
+    var model: YXLearnMapUnitModel
     var progressLabel: YXLabel?
     var delegate: YXSexangleViewClickProcotol?
+    var isExtension: Bool
 
     var avatarView: UIView?
 
-    init(_ model: YXLearningPathModel) {
+    init(_ model: YXLearnMapUnitModel, isExtension: Bool) {
         self.model = model
+        self.isExtension = isExtension
         super.init(frame: CGRect(origin: .zero, size: CGSize(width: 81, height: 81)))
         self.createSubview(progress: 0.8)
-        if model.type == .uniteEnd {
+        if model.status == .uniteEnd {
             // 设置星星等级
-            self.setScoreStarView(model.start)
+            self.setScoreStarView(model.stars)
         }
         self.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(clickEvent))
@@ -128,10 +42,10 @@ class YXSexangleView: UIView {
 
     private func createSubview(progress rate: CGFloat = 1.0) {
         // 最外部的六边形
-        let outSideColor = model.type.getOutSideColor()
+        let outSideColor = self.getOutSideColor()
         let outSideLayer = self.getSexangleLayer(self.width, strokeColor: outSideColor.cgColor)
         self.layer.addSublayer(outSideLayer)
-        if model.type == .uniteIng {
+        if model.status == .uniteIng {
             // 设置渐变
             let maskLayer = self.getSexangleLayer(81, strokeColor: UIColor.red.cgColor)
             let gradientLayer = self.getGradientLayer()
@@ -154,7 +68,7 @@ class YXSexangleView: UIView {
         // 内部的六边形
         let inSideSexangleView = UIView()
         inSideSexangleView.frame  = CGRect(origin: CGPoint.zero, size: CGSize(width: 70, height: 70))
-        let inSideFillColor = model.type.getInSideFillColor()
+        let inSideFillColor = self.getInSideFillColor()
         let inSideLayer     = self.getSexangleLayer(inSideSexangleView.width, strokeColor: UIColor.white.cgColor, fillColor: inSideFillColor.cgColor)
         inSideSexangleView.layer.addSublayer(inSideLayer)
         inSideLayer.frame = inSideSexangleView.bounds
@@ -174,16 +88,16 @@ class YXSexangleView: UIView {
     /// 获得内容视图
     private func createContentView() -> UIView {
 
-        if model.type == .extendUniteIng || model.type == .uniteIng {
+        if  model.status == .uniteIng || model.status == .uniteStop {
             let view = UIView()
             let unitLabel = UILabel()
-            unitLabel.text          = model.name
+            unitLabel.text          = model.unitName
             unitLabel.textColor     = UIColor.hex(0xE38B03)
             unitLabel.textAlignment = .center
             unitLabel.font          = UIFont.boldSystemFont(ofSize: 12)
             self.progressLabel = YXLabel()
             progressLabel?.text          = "0"
-            progressLabel?.textColor     = model.type.getTitleColor()
+            progressLabel?.textColor     = self.getTitleColor()
             progressLabel?.textAlignment = .center
             progressLabel?.font          = UIFont.boldSystemFont(ofSize: 12)
             progressLabel?.maxNum        = Int(model.rate * 100)
@@ -209,9 +123,9 @@ class YXSexangleView: UIView {
             let view = UIView()
             let imageView = UIImageView()
             imageView.image = {
-                if model.type == .uniteEnd {
+                if model.status == .uniteEnd {
                     return UIImage(named: "fruit_enable")
-                } else if model.type == .uniteUnstart {
+                } else if model.status == .uniteUnstart {
                     return UIImage(named: "fruit_disable")
                 } else {
                     return nil
@@ -219,8 +133,8 @@ class YXSexangleView: UIView {
             }()
             let label = UILabel()
             label.textAlignment = .center
-            label.text = model.name
-            label.textColor = model.type.getTitleColor()
+            label.text = model.unitName
+            label.textColor = self.getTitleColor()
             label.font = UIFont.boldSystemFont(ofSize: 12)
             view.addSubview(imageView)
             imageView.snp.makeConstraints { (make) in
@@ -240,8 +154,8 @@ class YXSexangleView: UIView {
     }
 
     /// 设置星星等级
-    /// - Parameter score: 分数,也代表星星数
-    private func setScoreStarView(_ score: Int) {
+    /// - Parameter stars: 分数,也代表星星数
+    private func setScoreStarView(_ stars: Int) {
         let firstStar  = UIImageView()
         let secondStar = UIImageView()
         let thirdStar  = UIImageView()
@@ -264,17 +178,17 @@ class YXSexangleView: UIView {
             make.width.height.equalTo(25)
         }
 
-        if score > 1 {
+        if stars > 1 {
             firstStar.image = UIImage(named: "star_enable")
         } else {
             firstStar.image = UIImage(named: "star_disable")
         }
-        if score > 1 {
+        if stars > 1 {
             secondStar.image = UIImage(named: "star_enable")
         } else {
             secondStar.image = UIImage(named: "star_disable")
         }
-        if score > 2 {
+        if stars > 2 {
             thirdStar.image = UIImage(named: "star_enable")
         } else {
             thirdStar.image = UIImage(named: "star_disable")
@@ -357,9 +271,51 @@ class YXSexangleView: UIView {
     // MARK: Event
 
     @objc private func clickEvent(_ tap: UITapGestureRecognizer) {
-        let enableArray = [YXSexangleType.uniteIng, YXSexangleType.uniteEnd, YXSexangleType.extendUniteEnd, YXSexangleType.extendUniteIng, YXSexangleType.extendUniteUnstart]
-        if enableArray.contains(self.model.type) {
+        if self.model.status != .uniteUnstart {
             self.delegate?.clickSexangleView(self)
+        }
+    }
+
+    // MARK: Tools
+    /// 获取外边框填充颜色
+    func getOutSideColor() -> UIColor {
+        switch self.model.status {
+        case .uniteUnstart:
+            return self.isExtension ? UIColor.hex(0xE5DDD7) : UIColor.hex(0xE5DDD7)
+        case .uniteStop:
+            return self.isExtension ? UIColor.hex(0xFFE1B3) : UIColor.hex(0xF5F5F5)
+        case .uniteIng:
+            return self.isExtension ? UIColor.hex(0xF5F5F5) : UIColor.hex(0xF5F5F5)
+        case .uniteEnd:
+            return self.isExtension ? UIColor.hex(0xFFE1B3) : UIColor.hex(0xFFE1B3)
+        }
+    }
+
+    /// 获取内部填充颜色
+    func getInSideFillColor() -> UIColor {
+        switch self.model.status {
+        case .uniteUnstart:
+            return self.isExtension ? UIColor.hex(0xE5DDD7) : UIColor.hex(0xE5DDD7)
+        case .uniteStop:
+            return self.isExtension ? UIColor.hex(0xFFE1B3) : UIColor.hex(0xFFE9C7)
+        case .uniteIng:
+            return self.isExtension ? UIColor.hex(0xFFE9C7) : UIColor.hex(0xFFE9C7)
+        case .uniteEnd:
+            return self.isExtension ? UIColor.hex(0xFFE1B3) : UIColor.hex(0xFFE9C7)
+        }
+    }
+
+    /// 获取文字颜色
+    func getTitleColor() -> UIColor {
+        switch self.model.status {
+        case .uniteUnstart:
+            return self.isExtension ? UIColor.hex(0xB78F58) : UIColor.hex(0xB78F58)
+        case .uniteStop:
+            return self.isExtension ? UIColor.hex(0xE38B03) : UIColor.hex(0xFB6617)
+        case .uniteIng:
+            return self.isExtension ? UIColor.hex(0xE38B03) : UIColor.hex(0xFB6617)
+        case .uniteEnd:
+            return self.isExtension ? UIColor.hex(0xE38B03) : UIColor.hex(0xB78F58)
         }
     }
 

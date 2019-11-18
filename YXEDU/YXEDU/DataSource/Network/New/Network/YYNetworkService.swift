@@ -243,7 +243,7 @@ struct YYNetworkService {
         let request = Alamofire.request(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: requestParametersReduceValueNil(request.parameters), encoding: encoding, headers: header).responseObject { (response: DataResponse <T>) in
             
             self.saveSessID(response: response.response)
-            var result = self
+//            var result = self
             switch response.result {
             case .success(var x):
                 x.response = response.response
