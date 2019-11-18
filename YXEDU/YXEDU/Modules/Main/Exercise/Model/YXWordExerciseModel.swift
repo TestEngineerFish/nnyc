@@ -26,6 +26,7 @@ struct YXWordExerciseModel: Mappable {
     /// 得分
     var score: Int?
         
+    //MARK: - 以下几个属性用于本地记录进度时使用
     /// 是否根据得分选择题型
     var isCareScore: Bool = false
         
@@ -33,6 +34,9 @@ struct YXWordExerciseModel: Mappable {
     var step: Int = 0
     
     var isNewWord: Bool = false
+        
+    var isFinish: Bool = false
+    
 
     init() {}
     
@@ -47,6 +51,11 @@ struct YXWordExerciseModel: Mappable {
         answers  <- map["answer_list"]
         score    <- map["score"]
         word     <- map["word"]
+        
+        isCareScore <- map["is_care_score"]
+        step <- map["step"]
+        isNewWord <- map["is_new_word"]
+        isFinish <- map["is_finish"]
     }
     
 }

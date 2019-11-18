@@ -10,16 +10,17 @@ import UIKit
 
 public enum YXExerciseRequest: YYBaseRequest {
     case exercise
+    case learnMap
 }
 
 
 extension YXExerciseRequest {
     var method: YYHTTPMethod {
         switch self {
-            case .exercise:
-                    return .get
-            default:
-                return .get
+        case .exercise:
+            return .get
+        case .learnMap:
+            return .get
         }
     }
 }
@@ -29,20 +30,22 @@ extension YXExerciseRequest {
         switch self {
         case .exercise:
             return YXAPI.Word.exercise
+        case .learnMap:
+            return YXAPI.Word.learnMap
         }
     }
 }
 
 
 extension YXExerciseRequest {
-//    var parameters: [String : Any?]? {
-//        switch self {
-//        case .recommend:
-//            
-//        default:
-//            return nil
-//        }
-//    }
+    //    var parameters: [String : Any?]? {
+    //        switch self {
+    //        case .recommend:
+    //
+    //        default:
+    //            return nil
+    //        }
+    //    }
     
-//    var postJson: Any? {  }
+    //    var postJson: Any? {  }
 }

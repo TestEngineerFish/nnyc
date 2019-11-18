@@ -70,16 +70,16 @@ struct YXWordStepModel: Mappable {
     }
         
     mutating func mapping(map: Map) {
-        wordId <- map["word_id"]
-        type <- map["type"]
+        wordId      <- map["word_id"]
+        type        <- map["type"]
         isCareScore <- map["is_care_score"]
-        score <- map["score"]
-        step <- map["step"]
-        isBackup <- map["is_backup"]
+        score       <- map["score"]
+        step        <- map["step"]
+        isBackup    <- map["is_backup"]
         
-        question <- map["question"]
-        option <- map["option"]
-        answers <- map["answer_list"]
+        question    <- map["question"]
+        option      <- map["option"]
+        answers     <- map["answer_list"]
     }
     
 }

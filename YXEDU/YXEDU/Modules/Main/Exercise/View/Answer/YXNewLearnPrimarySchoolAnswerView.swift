@@ -201,14 +201,15 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onResult(_ result: String!, isLast: Bool) {
-//        print("录音结果: " + result)
+        print("录音结果: " + result)
         if isLast {
             let resultDict = result.convertToDictionary()
             guard let score = resultDict["score"] as? Double else {
                 return
             }
+            YXUtils.showHUD(self, title: "当前得分: \(score)")
             self.lastLevel = {
-                if score > 80 {
+                if score > 90 {
                     return 3
                 } else if score > 60 {
                     return 2
@@ -237,12 +238,12 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onEndOral(_ error: Error!) {
-//        print("录音完成,错误: " + String(describing: error))
+        print("录音完成,错误: " + String(describing: error))
         return
     }
 
     func onVADTimeout() {
-//        print("VAD超时啦")
+        print("VAD超时啦")
         return
     }
 
@@ -272,7 +273,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
-//        print("lifecycle: \(lifecycle)")
+        print("lifecycle: \(lifecycle)")
         return
     }
 }

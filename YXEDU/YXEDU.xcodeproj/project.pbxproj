@@ -39,6 +39,16 @@
 		224529072327A85100510507 /* YYDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529062327A85100510507 /* YYDataSourceManager.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
 		2245290C2327AE0D00510507 /* YXFMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245290B2327AE0D00510507 /* YXFMDBManager.swift */; };
+		224A2FBF238233CC00AD99B0 /* YXSexangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FBB238233CC00AD99B0 /* YXSexangleView.swift */; };
+		224A2FC0238233CC00AD99B0 /* YXAvatarPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FBC238233CC00AD99B0 /* YXAvatarPinView.swift */; };
+		224A2FC1238233CC00AD99B0 /* YXLearnMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FBD238233CC00AD99B0 /* YXLearnMapViewController.swift */; };
+		224A2FC2238233CC00AD99B0 /* LearningMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FBE238233CC00AD99B0 /* LearningMapView.swift */; };
+		224A2FC6238233E100AD99B0 /* YXLearningResultHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FC3238233E100AD99B0 /* YXLearningResultHeaderView.swift */; };
+		224A2FC7238233E100AD99B0 /* YXTaskMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FC4238233E100AD99B0 /* YXTaskMapView.swift */; };
+		224A2FC8238233E100AD99B0 /* YXLearningResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FC5238233E100AD99B0 /* YXLearningResultViewController.swift */; };
+		224A2FCD238234C300AD99B0 /* YXTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FCC238234C300AD99B0 /* YXTools.swift */; };
+		224A2FCF2382353F00AD99B0 /* YXLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FCE2382353F00AD99B0 /* YXLabel.swift */; };
+		224A2FD6238283C100AD99B0 /* YXLearnMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FD5238283C100AD99B0 /* YXLearnMapModel.swift */; };
 		22659061237432D5006C9925 /* libusc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2265905F237432D5006C9925 /* libusc.a */; };
 		2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */; };
 		2279F257236D544F0080A0B2 /* YXWordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F256236D544F0080A0B2 /* YXWordButton.swift */; };
@@ -108,7 +118,6 @@
 		77F69A642361496C00E55185 /* YXHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A632361496C00E55185 /* YXHomeViewController.swift */; };
 		77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A652361499E00E55185 /* YXSelectBookViewController.swift */; };
 		77F69A68236149B300E55185 /* YXAddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A67236149B300E55185 /* YXAddBookViewController.swift */; };
-		77F69A6A236149E300E55185 /* YXStudyMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A69236149E300E55185 /* YXStudyMapViewController.swift */; };
 		77F69A7023614D9600E55185 /* YXDesignableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A6D23614D9600E55185 /* YXDesignableImageView.swift */; };
 		77F69A7223614D9600E55185 /* YXDesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A6F23614D9600E55185 /* YXDesignableView.swift */; };
 		77F69A74236152BE00E55185 /* YXDesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A73236152BE00E55185 /* YXDesignableButton.swift */; };
@@ -721,6 +730,16 @@
 		224529062327A85100510507 /* YYDataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDataSourceManager.swift; sourceTree = "<group>"; };
 		224529082327A86A00510507 /* YYDatabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabaseConfig.swift; sourceTree = "<group>"; };
 		2245290B2327AE0D00510507 /* YXFMDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFMDBManager.swift; sourceTree = "<group>"; };
+		224A2FBB238233CC00AD99B0 /* YXSexangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXSexangleView.swift; sourceTree = "<group>"; };
+		224A2FBC238233CC00AD99B0 /* YXAvatarPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXAvatarPinView.swift; sourceTree = "<group>"; };
+		224A2FBD238233CC00AD99B0 /* YXLearnMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXLearnMapViewController.swift; sourceTree = "<group>"; };
+		224A2FBE238233CC00AD99B0 /* LearningMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearningMapView.swift; sourceTree = "<group>"; };
+		224A2FC3238233E100AD99B0 /* YXLearningResultHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXLearningResultHeaderView.swift; sourceTree = "<group>"; };
+		224A2FC4238233E100AD99B0 /* YXTaskMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXTaskMapView.swift; sourceTree = "<group>"; };
+		224A2FC5238233E100AD99B0 /* YXLearningResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXLearningResultViewController.swift; sourceTree = "<group>"; };
+		224A2FCC238234C300AD99B0 /* YXTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTools.swift; sourceTree = "<group>"; };
+		224A2FCE2382353F00AD99B0 /* YXLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLabel.swift; sourceTree = "<group>"; };
+		224A2FD5238283C100AD99B0 /* YXLearnMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnMapModel.swift; sourceTree = "<group>"; };
 		2265905F237432D5006C9925 /* libusc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libusc.a; sourceTree = "<group>"; };
 		22659060237432D5006C9925 /* USCRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCRecognizer.h; sourceTree = "<group>"; };
 		2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXListenAndLackWordQuestionView.swift; sourceTree = "<group>"; };
@@ -798,7 +817,6 @@
 		77F69A632361496C00E55185 /* YXHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeViewController.swift; sourceTree = "<group>"; };
 		77F69A652361499E00E55185 /* YXSelectBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectBookViewController.swift; sourceTree = "<group>"; };
 		77F69A67236149B300E55185 /* YXAddBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAddBookViewController.swift; sourceTree = "<group>"; };
-		77F69A69236149E300E55185 /* YXStudyMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXStudyMapViewController.swift; sourceTree = "<group>"; };
 		77F69A6D23614D9600E55185 /* YXDesignableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXDesignableImageView.swift; sourceTree = "<group>"; };
 		77F69A6F23614D9600E55185 /* YXDesignableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXDesignableView.swift; sourceTree = "<group>"; };
 		77F69A73236152BE00E55185 /* YXDesignableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXDesignableButton.swift; sourceTree = "<group>"; };
@@ -1970,6 +1988,60 @@
 			path = Dao;
 			sourceTree = "<group>";
 		};
+		224A2FB92382339900AD99B0 /* LearnMap */ = {
+			isa = PBXGroup;
+			children = (
+				224A2FD32382837C00AD99B0 /* Model */,
+				224A2FD42382838400AD99B0 /* Views */,
+				224A2FD02382831D00AD99B0 /* ViewController */,
+				224A2FBE238233CC00AD99B0 /* LearningMapView.swift */,
+				224A2FBC238233CC00AD99B0 /* YXAvatarPinView.swift */,
+				224A2FBB238233CC00AD99B0 /* YXSexangleView.swift */,
+			);
+			path = LearnMap;
+			sourceTree = "<group>";
+		};
+		224A2FBA238233A300AD99B0 /* LearnResult */ = {
+			isa = PBXGroup;
+			children = (
+				224A2FC3238233E100AD99B0 /* YXLearningResultHeaderView.swift */,
+				224A2FC5238233E100AD99B0 /* YXLearningResultViewController.swift */,
+				224A2FC4238233E100AD99B0 /* YXTaskMapView.swift */,
+			);
+			path = LearnResult;
+			sourceTree = "<group>";
+		};
+		224A2FC9238234A900AD99B0 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				224A2FCC238234C300AD99B0 /* YXTools.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		224A2FD02382831D00AD99B0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				224A2FBD238233CC00AD99B0 /* YXLearnMapViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		224A2FD32382837C00AD99B0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				224A2FD5238283C100AD99B0 /* YXLearnMapModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		224A2FD42382838400AD99B0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2265905E23743282006C9925 /* Unisound */ = {
 			isa = PBXGroup;
 			children = (
@@ -2216,7 +2288,6 @@
 				77F69A632361496C00E55185 /* YXHomeViewController.swift */,
 				77F69A652361499E00E55185 /* YXSelectBookViewController.swift */,
 				77F69A67236149B300E55185 /* YXAddBookViewController.swift */,
-				77F69A69236149E300E55185 /* YXStudyMapViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2620,6 +2691,7 @@
 		EE5E012A232754FA00655654 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				224A2FC9238234A900AD99B0 /* Tools */,
 				EEB147232372E6F400AC329C /* FileManager */,
 				EED3D40C2331C75B00121218 /* Env */,
 				EE5E014D232754FA00655654 /* AVPlayer */,
@@ -3042,6 +3114,7 @@
 				EE5E025F2327793700655654 /* YXTabBarViewController.m */,
 				EE77210D237C2B6E00CD632E /* YXView.swift */,
 				22298BFB237D52FC00F24786 /* YXButton.swift */,
+				224A2FCE2382353F00AD99B0 /* YXLabel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -5249,6 +5322,8 @@
 		EEF29A89236AC81C00CDC312 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				224A2FBA238233A300AD99B0 /* LearnResult */,
+				224A2FB92382339900AD99B0 /* LearnMap */,
 				EE772104237A8BF300CD632E /* AudioView */,
 				22A5AFB7236C53E900FBFABD /* YXExerciseAnimation.swift */,
 				2205A93D23628FDE00C6E674 /* YXFindRoutesUtil.swift */,
@@ -5548,6 +5623,7 @@
 				EE5E0233232756C000655654 /* XStackAreaLineChartConfiguration.m in Sources */,
 				EE5E0243232756C000655654 /* XPositiveNegativeBarChartView.m in Sources */,
 				EE5EF21223273BAE00655654 /* YRLoadingView.m in Sources */,
+				224A2FC2238233CC00AD99B0 /* LearningMapView.swift in Sources */,
 				EE5EF2B52327423F00655654 /* YXFileDBManager.m in Sources */,
 				EE5E000B23274FEB00655654 /* YXCareerWordInfo.m in Sources */,
 				EE5EF1FC23273BAE00655654 /* YRHttpTask.m in Sources */,
@@ -5588,6 +5664,7 @@
 				EE5E00A323274FEB00655654 /* YXUnitDetailModel.m in Sources */,
 				EE5EF2B42327423F00655654 /* YXModelArchiverManager.m in Sources */,
 				EE6FB0B42366E95F00E96015 /* YXExerciseBottomView.swift in Sources */,
+				224A2FBF238233CC00AD99B0 /* YXSexangleView.swift in Sources */,
 				EE5EF20C23273BAE00655654 /* UIView+YR.m in Sources */,
 				EE5E0226232756C000655654 /* TYTextContainer.m in Sources */,
 				EE5E0255232756C100655654 /* XNotificationBridge.m in Sources */,
@@ -5685,6 +5762,7 @@
 				EE5E007123274FEB00655654 /* YXRecordView.m in Sources */,
 				EE5EFD5323274F0900655654 /* YXGameModel.m in Sources */,
 				EE5E009E23274FEB00655654 /* YXWordPreviewPopView.m in Sources */,
+				224A2FC0238233CC00AD99B0 /* YXAvatarPinView.swift in Sources */,
 				EE5E006523274FEB00655654 /* YXStudyBatchModel.m in Sources */,
 				EE5E00C923274FEB00655654 /* YXReportIndexView.m in Sources */,
 				EE5E008123274FEB00655654 /* YXSpellQuestionViewOld.m in Sources */,
@@ -5792,6 +5870,7 @@
 				EE5EFD5723274F0900655654 /* YXPreviousRankModel.m in Sources */,
 				EE5E004823274FEB00655654 /* YXComNaviView.m in Sources */,
 				2205A9382361BB9500C6E674 /* UIImage+Extension.swift in Sources */,
+				224A2FC1238233CC00AD99B0 /* YXLearnMapViewController.swift in Sources */,
 				EE5E007423274FEB00655654 /* YXStudyAccomplishView.m in Sources */,
 				EE5E007C23274FEB00655654 /* YXWordLettersView.m in Sources */,
 				EED3D4202331D5D000121218 /* YYCache.swift in Sources */,
@@ -5828,7 +5907,6 @@
 				EE5E008423274FEB00655654 /* YXReviewAccomplishView.m in Sources */,
 				EE54F7E22362AA3100EC605A /* YXChineseQuestionView.swift in Sources */,
 				EE5E007A23274FEB00655654 /* YXSelectLettersViewOld.m in Sources */,
-				77F69A6A236149E300E55185 /* YXStudyMapViewController.swift in Sources */,
 				EE5E016F232754FA00655654 /* YXMediator.m in Sources */,
 				224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */,
 				EE54F7D22362AA3100EC605A /* YXBaseAnswerView.swift in Sources */,
@@ -5875,6 +5953,7 @@
 				EE5E024E232756C100655654 /* XLineContainerView.m in Sources */,
 				EE5E008E23274FEB00655654 /* YXCalendarMonthDataView.m in Sources */,
 				EE5E006B23274FEB00655654 /* YXAnimatorStarView.m in Sources */,
+				224A2FCF2382353F00AD99B0 /* YXLabel.swift in Sources */,
 				EE5E009F23274FEB00655654 /* YXASTextLibModel.m in Sources */,
 				EE5E00E223274FEC00655654 /* FBYLineGraphContentView.m in Sources */,
 				EE5EFD4D23274F0900655654 /* YXPreviousListViewController.m in Sources */,
@@ -5884,6 +5963,7 @@
 				EE5E002323274FEB00655654 /* YXMyWordListCellModel.m in Sources */,
 				EE5E00F723274FEC00655654 /* YXPersonalCenterCell.m in Sources */,
 				EE5E010423274FEC00655654 /* YXBadgeCompletedView.m in Sources */,
+				224A2FD6238283C100AD99B0 /* YXLearnMapModel.swift in Sources */,
 				EE772108237A8BF400CD632E /* YXAudioPlayerView.swift in Sources */,
 				EE5EFCD523274E5500655654 /* YXPunchModel.m in Sources */,
 				EE5E009A23274FEB00655654 /* YXKeyPointWordCell.m in Sources */,
@@ -5896,6 +5976,7 @@
 				7786B6D02361C3820027D0E3 /* YXGroupWordBookCell.swift in Sources */,
 				771E88682362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift in Sources */,
 				EE5EFD5023274F0900655654 /* YXUserRankModel.m in Sources */,
+				224A2FC6238233E100AD99B0 /* YXLearningResultHeaderView.swift in Sources */,
 				2205A93C2361C92500C6E674 /* UIFont+Extension.swift in Sources */,
 				EE5EFD4F23274F0900655654 /* YXRankListBaseViewController.m in Sources */,
 				EE54F7D42362AA3100EC605A /* YXRightOrWrongAnswerView.swift in Sources */,
@@ -6010,6 +6091,7 @@
 				EE5E00E623274FEC00655654 /* YXFresherGuideView.m in Sources */,
 				EE5E009D23274FEB00655654 /* YXArticleContentView.m in Sources */,
 				EE5EF2B62327423F00655654 /* YXInterfaceCacheService.m in Sources */,
+				224A2FCD238234C300AD99B0 /* YXTools.swift in Sources */,
 				EE5E0224232756C000655654 /* YXSentenceTextStorage.m in Sources */,
 				77D2150C2367D7BA00E5FBF1 /* YXUserModel.swift in Sources */,
 				EE5E00F623274FEC00655654 /* GroupShadowTableView.m in Sources */,
@@ -6039,6 +6121,7 @@
 				EE1E4AA623694D59007D248F /* YXFillWordAccordingToChinese_ConnectionExerciseView.swift in Sources */,
 				EE5E005723274FEB00655654 /* YXUnitDetailVC.m in Sources */,
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
+				224A2FC7238233E100AD99B0 /* YXTaskMapView.swift in Sources */,
 				EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */,
 				EE5E007523274FEB00655654 /* YXFillWordView.m in Sources */,
 				77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */,
@@ -6066,6 +6149,7 @@
 				2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */,
 				22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */,
 				EE5EFD5423274F0900655654 /* YXMyPreGradeModel.m in Sources */,
+				224A2FC8238233E100AD99B0 /* YXLearningResultViewController.swift in Sources */,
 				EE5E0250232756C100655654 /* OrdinateView.m in Sources */,
 				EE5E016C232754FA00655654 /* YXLog.m in Sources */,
 				EE5EFD4423274F0900655654 /* YXGameResultModel.m in Sources */,

@@ -240,12 +240,20 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
         self.resultView.isHidden = true
         self.view.isUserInteractionEnabled = true
         self.resultView.layer.removeAllAnimations()
-        if let isRight = anim.value(forKey: "isRight") as? Bool, isRight{
-            if self.exerciseViewArray.first?.isWrong ?? false {
+        if let isRight = anim.value(forKey: "isRight") as? Bool {
+            
+            if isRight {
+                if self.exerciseViewArray.first?.isWrong ?? false {
+                    self.exerciseViewArray.first?.remindView?.remindDetail()
+                }
+                // 切题
+                self.switchExerciseView()
+            } else if self.exerciseViewArray.first?.exerciseModel.type == .validationWordAndChinese
+                || self.exerciseViewArray.first?.exerciseModel.type == .validationImageAndWord {
+                // 判断题做错了，显示详情页后，直接切题
                 self.exerciseViewArray.first?.remindView?.remindDetail()
+                self.switchExerciseView()
             }
-            // 切题
-            self.switchExerciseView()
             
         }
     }

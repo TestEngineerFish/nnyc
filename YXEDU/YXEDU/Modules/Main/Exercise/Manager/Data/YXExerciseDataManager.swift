@@ -12,16 +12,18 @@ import ObjectMapper
 
 /// 练习的数据管理器
 class YXExerciseDataManager: NSObject {
-    
+
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
     
-    private var exerciseModelArray: [YXWordExerciseModel] = []
+    private var newExerciseModelArray: [YXWordExerciseModel] = []
+    private var reviewExerciseModelArray: [YXWordExerciseModel] = []
+    
+//    private var exerciseModelArray: [YXWordExerciseModel] = []
     private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseResultModels(completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
-        
         let request = YXExerciseRequest.exercise
         YYNetworkService.default.httpRequestTask(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
             self.processExerciseData(result: response.data)
@@ -41,20 +43,65 @@ class YXExerciseDataManager: NSObject {
     
     /// 从当前关卡数据中，获取一个练习数据对象
     func fetchOneExerciseModel() -> YXWordExerciseModel? {
-        if exerciseModelArray.count == 0 {
-            return nil
+        
+        for exercise in self.newExerciseModelArray {
+            if exercise.isFinish == false {
+                return exercise
+            }
         }
-        return exerciseModelArray.removeFirst()
+        
+        for exercise in self.reviewExerciseModelArray {
+            if exercise.isFinish == false {
+                if exercise.isCareScore {//是否关注分数
+                    return fetchCareScoreExercise(exerciseModel: exercise)
+                } else {
+                    return exercise
+                }
+            }
+        }
+        return nil
+//        if exerciseModelArray.count == 0 {
+//            return nil
+//        }
+//        return exerciseModelArray.removeFirst()
     }
     
     
-    /// 完成一个练习后，答题后删除练习题
-    /// - Parameter exerciseModel:
+    
+    /// 完成一个练习后，答题后修改状态
+    /// - Parameters:
+    ///   - exerciseModel: 练习数据
+    ///   - right: 对错
+    ///   - next: 是否做下一题
     func completionExercise(exerciseModel: YXWordExerciseModel, right: Bool) {
         
-        if right {
-//            self.exerciseModelArray.removeFirst()
-        } else {
+        var next = right
+        
+        if right == false && (exerciseModel.type == .validationWordAndChinese
+        || exerciseModel.type == .validationImageAndWord) {
+            next = true
+        }
+        
+        if next {
+            if exerciseModel.isNewWord {
+                for (i, e) in newExerciseModelArray.enumerated() {
+                    if e.word?.wordId == exerciseModel.word?.wordId {
+                        newExerciseModelArray[i].isFinish = true
+                        break
+                    }
+                }
+            } else {
+                for (i, e) in self.reviewExerciseModelArray.enumerated() {
+                    if e.word?.wordId == exerciseModel.word?.wordId && e.step == exerciseModel.step {
+                        newExerciseModelArray[i].isFinish = true
+                    }
+                    
+                }
+            }
+        }
+        
+        
+        if !right {
             self.addWrongExercise(exerciseModel: exerciseModel)
             self.addWrongBook(exerciseModel: exerciseModel)
         }
@@ -63,14 +110,14 @@ class YXExerciseDataManager: NSObject {
     /// 错题数据处理，重做
     /// - Parameter wrongExercise: 练习Model
     private func addWrongExercise(exerciseModel: YXWordExerciseModel) {
-        guard let model = exerciseModelArray.last else {
-            self.exerciseModelArray.append(exerciseModel)
-            return
-        }
-            
-        if !(model.question?.wordId == exerciseModel.question?.wordId && model.type == exerciseModel.type) {
-            self.exerciseModelArray.append(exerciseModel)
-        }
+//        guard let model = exerciseModelArray.last else {
+//            self.exerciseModelArray.append(exerciseModel)
+//            return
+//        }
+//
+//        if !(model.question?.wordId == exerciseModel.question?.wordId && model.type == exerciseModel.type) {
+//            self.exerciseModelArray.append(exerciseModel)
+//        }
         
     }
     
@@ -89,7 +136,15 @@ class YXExerciseDataManager: NSObject {
         completion?(true, nil)
     }
     
-
+    
+    func updateScore(wordId: Int, score: Int) {        
+        for (i, e) in self.newExerciseModelArray.enumerated() {
+            if e.word?.wordId == wordId {
+                newExerciseModelArray[i].score = score
+            }
+        }
+    }
+    
     
     //MARK: - private
     private func processExerciseData(result: YXExerciseResultModel?) {
@@ -97,7 +152,7 @@ class YXExerciseDataManager: NSObject {
         self.processReviewWord(result: result)
         
         // 处理答案选项
-        exerciseModelArray = YXExerciseOptionManager().processOptions(exerciseModelArray: exerciseModelArray)
+//        exerciseModelArray = YXExerciseOptionManager().processOptions(exerciseModelArray: exerciseModelArray)
     }
     
     
@@ -113,7 +168,7 @@ class YXExerciseDataManager: NSObject {
                     exercise.word = word
                     exercise.isNewWord = true
                     
-                    exerciseModelArray.append(exercise)
+                    newExerciseModelArray.append(exercise)
                 } else if (word.gradeId ?? 0) <= 9 { // 初中
                     var exercise = YXWordExerciseModel()
                     exercise.type = .newLearnJuniorHighSchool
@@ -121,7 +176,7 @@ class YXExerciseDataManager: NSObject {
                     exercise.word = word
                     exercise.isNewWord = true
                     
-                    exerciseModelArray.append(exercise)
+                    newExerciseModelArray.append(exercise)
                 }
             }
         }
@@ -141,19 +196,21 @@ class YXExerciseDataManager: NSObject {
                     backupExerciseModelArray[key] = exercise
                     continue
                 }
-                                
-                if subStep.isCareScore {//是否关注分数
-                    if subStep.score == self.fetchWordScore(wordId: subStep.wordId) {
-                        var exercise = createExerciseModel(step: subStep)
-                        exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
-                        exerciseModelArray.append(exercise)
-                    }
-                } else {
-                    var exercise = createExerciseModel(step: subStep)
-                    exercise.word = fetchWord(wordId: subStep.wordId)
-                    exerciseModelArray.append(exercise)
-                }
-                                
+                
+                var exercise = createExerciseModel(step: subStep)
+                exercise.word = fetchWord(wordId: subStep.wordId)
+                reviewExerciseModelArray.append(exercise)
+                
+//                if subStep.isCareScore {//是否关注分数
+//                    if subStep.score == self.fetchWordScore(wordId: subStep.wordId) {
+//                        var exercise = createExerciseModel(step: subStep)
+//                        exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
+//                        reviewExerciseModelArray.append(exercise)
+//                    }
+//                } else {
+//
+//                }
+
             }
             
         }
@@ -161,13 +218,13 @@ class YXExerciseDataManager: NSObject {
 
     
     public func fetchWord(wordId: Int) -> YXWordModel? {
-//        return dao.selectWord(wordId: wordId)
+        //        return dao.selectWord(wordId: wordId)
         let json = """
         {
             "word_id" : 1,
-            "word" : "good",
-            "word_property" : "adj.",
-            "word_paraphrase" : "好的;优质的;",
+            "word" : "overnight",
+            "word_property" : "adv",
+            "word_paraphrase" : "在晚上, 在夜里",
             "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
             "symbol_us" : "美/ɡʊd/",
             "symbol_uk" : "英/ɡʊd/",
@@ -186,7 +243,7 @@ class YXExerciseDataManager: NSObject {
         var word = YXWordModel(JSONString: json)
         word?.wordId = wordId
         word?.gradeId = 1
-//        word?.word = (word?.word ?? "") + "\(wordId)"
+        //        word?.word = (word?.word ?? "") + "\(wordId)"
         return word
         
     }
@@ -198,6 +255,18 @@ class YXExerciseDataManager: NSObject {
         return 7
     }
     
+    
+    private func fetchCareScoreExercise(exerciseModel: YXWordExerciseModel) -> YXWordExerciseModel? {
+        let score = self.fetchWordScore(wordId: exerciseModel.word?.wordId ?? 0)
+        for exercise in self.reviewExerciseModelArray {
+            if exercise.word?.wordId == exerciseModel.word?.wordId
+                && exercise.step == exerciseModel.step
+                && exercise.score == score {
+                return exercise
+            }
+        }
+        return nil
+    }
     
     private func createExerciseModel(step: YXWordStepModel) -> YXWordExerciseModel {
         var exercise = YXWordExerciseModel()
