@@ -90,6 +90,8 @@ struct YXExerciseOptionModel: Mappable {
     
     var firstItems: [YXOptionItemModel]?
     var secondItems: [YXOptionItemModel]?
+    
+    init() {}        
         
     init?(map: Map) {
     }
@@ -106,7 +108,9 @@ struct YXExerciseOptionModel: Mappable {
 struct YXOptionItemModel: Mappable {
     var optionId: Int = -1
     var content: String?
-        
+    
+    init() {}
+            
     init?(map: Map) {
     }
     

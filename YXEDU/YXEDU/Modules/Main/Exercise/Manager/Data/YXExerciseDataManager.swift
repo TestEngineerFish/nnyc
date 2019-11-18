@@ -14,6 +14,7 @@ import ObjectMapper
 class YXExerciseDataManager: NSObject {
     
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
+    
     private var exerciseModelArray: [YXWordExerciseModel] = []
     private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
     
@@ -92,8 +93,11 @@ class YXExerciseDataManager: NSObject {
     
     //MARK: - private
     private func processExerciseData(result: YXExerciseResultModel?) {
-//        self.processNewWord(result: result)
+        self.processNewWord(result: result)
         self.processReviewWord(result: result)
+        
+        // 处理答案选项
+        exerciseModelArray = YXExerciseOptionManager().processOptions(exerciseModelArray: exerciseModelArray)
     }
     
     
@@ -107,6 +111,7 @@ class YXExerciseDataManager: NSObject {
                     exercise.type = .newLearnPrimarySchool
                     exercise.question = word
                     exercise.word = word
+                    exercise.isNewWord = true
                     
                     exerciseModelArray.append(exercise)
                 } else if (word.gradeId ?? 0) <= 9 { // 初中
@@ -114,6 +119,7 @@ class YXExerciseDataManager: NSObject {
                     exercise.type = .newLearnJuniorHighSchool
                     exercise.question = word
                     exercise.word = word
+                    exercise.isNewWord = true
                     
                     exerciseModelArray.append(exercise)
                 }
@@ -152,28 +158,7 @@ class YXExerciseDataManager: NSObject {
             
         }
     }
-    
-    /*
-     
-     if review.isNewWord {
-         // 新学单词，需要根据打分来判断，再选择哪个
-         for subStep in step {
-             if subStep.score == self.fetchWordScore(wordId: review.wordId) {
-                 var exercise = createExerciseModel(step: subStep)
-                 exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
-                 exerciseModelArray.append(exercise)
-                 break
-             }
-         }
-     } else {
-         // 不是新学，只有一个题型
-         if let sp = step.first {
-             var exercise = createExerciseModel(step: sp)
-             exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
-             exerciseModelArray.append(exercise)
-         }
-     }
-     */
+
     
     public func fetchWord(wordId: Int) -> YXWordModel? {
 //        return dao.selectWord(wordId: wordId)

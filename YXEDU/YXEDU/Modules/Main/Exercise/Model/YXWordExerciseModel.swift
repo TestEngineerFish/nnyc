@@ -31,6 +31,8 @@ struct YXWordExerciseModel: Mappable {
         
     /// 第几步
     var step: Int = 0
+    
+    var isNewWord: Bool = false
 
     init() {}
     
