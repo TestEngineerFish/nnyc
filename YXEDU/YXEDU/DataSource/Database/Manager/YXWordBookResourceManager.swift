@@ -30,7 +30,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
         self.currentDownloadWordBook = wordBook
         self.closure = closure
                 
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbookwords", parameters: ["book_id": 29]) { (response, isSuccess) in
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbookwords", parameters: ["book_id": wordBook.bookId ?? 0]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [String: Any] else {
                 DispatchQueue.main.async { self.closure?(false) }
                 return
