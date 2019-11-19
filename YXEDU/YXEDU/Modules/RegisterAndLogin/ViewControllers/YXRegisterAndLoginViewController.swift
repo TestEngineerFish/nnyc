@@ -331,7 +331,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                             YXUserModel.default.token = (response as! [String: Any])["token"] as? String
                             YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
                             YXConfigure.shared().token = YXUserModel.default.token
-                            
+                            YXConfigure.shared().uuid = YXUserModel.default.uuid
+
                             YXComHttpService.shared().requestConfig({ (response, isSuccess) in
                                 if isSuccess, let response = response?.responseObject {
                                     let config = response as! YXConfigModel
