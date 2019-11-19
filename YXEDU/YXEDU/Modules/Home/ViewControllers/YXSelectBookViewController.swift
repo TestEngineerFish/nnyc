@@ -85,19 +85,19 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     @IBAction func downloadWordBook(_ sender: UIButton) {
-        for index in 0..<wordBookModels.count {
-            let wordBook = wordBookModels[index]
-            guard wordBook.isSelected else { continue }
-
-            DispatchQueue.global().async {
-                YXWordBookResourceManager.shared.downloadMaterial(in: wordBook) { (isSuccess) in
-                    guard isSuccess else { return }
-                    DispatchQueue.main.async {
-                        self.navigationController?.popToRootViewController(animated: true)
-                    }
-                }
-            }
-        }
+//        for index in 0..<wordBookModels.count {
+//            let wordBook = wordBookModels[index]
+//            guard wordBook.isSelected else { continue }
+//
+//            DispatchQueue.global().async {
+//                YXWordBookResourceManager.shared.downloadMaterial(in: wordBook) { (isSuccess) in
+//                    guard isSuccess else { return }
+//                    DispatchQueue.main.async {
+//                        self.navigationController?.popToRootViewController(animated: true)
+//                    }
+//                }
+//            }
+//        }
     }
      
      @IBAction func startStudy(_ sender: UIButton) {
