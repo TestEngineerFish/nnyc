@@ -17,11 +17,11 @@ protocol YYDataSource {
     /// 普通数据库执行器
     var normalRunner: FMDatabaseQueue { get }
         
-    /// 词书数据可执行器
+    /// 词书数据可执行器 —— 异步执行
     var wordRunnerQueue: FMDatabaseQueue { get }
     
-    /// 词书数据可执行器
-//    var wordRunner: FMDatabaseQueue { get }
+    /// 词书数据可执行器 —— 同步执行
+    var wordRunner: FMDatabase { get }
     
 }
 
@@ -32,10 +32,14 @@ protocol YYDataSource {
  */
 extension YYDataSource {
     var normalRunner: FMDatabaseQueue {
-        return YYDataSourceManager.default.createRunner(type: .normal)
+        return YYDataSourceQueueManager.default.createRunner(type: .normal)
     }
     
     var wordRunnerQueue: FMDatabaseQueue {
+        return YYDataSourceQueueManager.default.createRunner(type: .word)
+    }
+    
+    var wordRunner: FMDatabase {
         return YYDataSourceManager.default.createRunner(type: .word)
     }
 }

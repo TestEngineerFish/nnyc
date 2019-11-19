@@ -1,8 +1,8 @@
 //
-//  YYDataSourceManager.swift
+//  YXDataSourceManager.swift
 //  YXEDU
 //
-//  Created by 沙庭宇 on 2019/9/10.
+//  Created by sunwu on 2019/11/19.
 //  Copyright © 2019 shiji. All rights reserved.
 //
 
@@ -21,25 +21,23 @@ enum YYSQLError: Error {
     case ExecuteSQLError
 }
 
-/***
- * 数据源管理类，负责创建App中所有的数据源对应的执行器
- */
-class YYDataSourceManager: NSObject {
 
+class YYDataSourceManager: NSObject {
+    
     /** 全局唯一管理器 */
     public static let `default` = YYDataSourceManager()
-
+    
     /** 存储所有的执行器 */
-    private var runners: [YYDataSourceType: FMDatabaseQueue] = [ : ]
-
+    private var runners: [YYDataSourceType: FMDatabase] = [ : ]
+    
     private override init() {
         super.init()
     }
-
+    
     /**
      * 根据数据源类型，返回对应的执行器
      */
-    public func createRunner(type: YYDataSourceType) -> FMDatabaseQueue {
+    public func createRunner(type: YYDataSourceType) -> FMDatabase {
         switch type {
         case .normal:
             return try! normalRunner()
@@ -47,18 +45,18 @@ class YYDataSourceManager: NSObject {
             return try! wordRunner()
         }
     }
-
+    
     /**
      * 创建数据表
      */
     public func createTable(runner: FMDatabase, sql: String) -> Bool {
         let execute = runner.executeStatements(sql)
         if !execute {
-//            DDLogError(String(format: "error: execute sql %@ failed error %@", sql, runner.lastErrorMessage()))
+            DDLogError(String(format: "error: execute sql %@ failed error %@", sql, runner.lastErrorMessage()))
         }
         return execute
     }
-
+    
     /**
      * 关闭数据源， 当退出登录时, 更换账号时
      */
@@ -74,48 +72,53 @@ class YYDataSourceManager: NSObject {
 
 //MARK: +++++++++++++++  private method
 extension YYDataSourceManager {
-
-    private func normalRunner() throws -> FMDatabaseQueue {
+    
+    private func normalRunner() throws -> FMDatabase {
         let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
         return try createRunner(type: .normal, filePath: filePath, sqls: YYSQLManager.CreateNormalTables)
     }
     
-    private func wordRunner() throws -> FMDatabaseQueue {
-        let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
-        return try createRunner(type: .normal, filePath: filePath, sqls: YYSQLManager.CreateWordTables)
+    private func wordRunner() throws -> FMDatabase {
+        let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.word.rawValue)
+        return try createRunner(type: .word, filePath: filePath, sqls: YYSQLManager.CreateWordTables)
     }
-
+    
     /**
      * 创建数据源
      */
-    private func createRunner(type: YYDataSourceType, filePath: String, sqls: [String]) throws -> FMDatabaseQueue {
+    private func createRunner(type: YYDataSourceType, filePath: String, sqls: [String]) throws -> FMDatabase {
         // 从缓存读取
         if let runner = runners[type] {
             return runner
         }
-
-        let runner = FMDatabaseQueue(path: filePath)
-
-        for sql in sqls {
-            runner?.inDatabase({ (db) in
-                let execute = db.executeStatements(sql)
-                if !execute {
-                    //                DDLogError(String(format: "error: execute sql %@ failed error %@", sql, runner.lastErrorMessage()))
-                }
-            })
+        
+        let runner = FMDatabase(path: filePath)
+        guard runner.open() else {
+            DDLogError(String(format:"error open database failed %@", filePath))
+            throw YYSQLError.CreateDatabaseError
         }
-
+        
+        for sql in sqls {
+            let execute = runner.executeStatements(sql)
+            if !execute {
+                DDLogError(String(format: "error: execute sql %@ failed error %@", sql, runner.lastErrorMessage()))
+            }
+        }
+        
         // 添加到缓存中，不用重复创建
         runners[type] = runner
-
-        return runner!
+        
+        return runner
     }
+    
+
+
 }
 
 
 
 extension YYDataSourceManager {
-    static func dbFilePath(fileName: String) -> String {
+    class func dbFilePath(fileName: String) -> String {
         let documentPath =  NSHomeDirectory() + "/Documents/"
         if !FileManager.default.fileExists(atPath: documentPath){
             do{
