@@ -28,29 +28,49 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
      @IBAction func deleteWordBook(_ sender: UIButton) {
         for index in 0..<wordBookModels.count {
             let wordBook = wordBookModels[index]
-            guard wordBook.isSelected, let bookID = wordBook.bookId else { continue }
+            guard wordBook.isSelected, let currentLearningWordBookId = wordBook.bookId else { continue }
             
-            YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": bookID]) { [weak self] (response, isSuccess) in
-                guard let self = self, isSuccess else { return }
+            var nextLearnWordBookId: Int?
+            if index == 0 {
+                nextLearnWordBookId = self.wordBookModels[1].bookId
                 
-                YXWordBookDaoImpl().deleteBook(bookId: bookID) { [weak self] (result, isSuccess) in
+            } else if index == self.wordBookModels.count - 1 {
+                nextLearnWordBookId = self.wordBookModels[index - 1].bookId
+                
+            } else {
+                nextLearnWordBookId = self.wordBookModels[index + 1].bookId
+            }
+            
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(nextLearnWordBookId ?? 0)", "unit_id": "\(wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
+                guard let self = self, isSuccess else { return }
+
+                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": currentLearningWordBookId]) { [weak self] (response, isSuccess) in
                     guard let self = self, isSuccess else { return }
                     
-                    let wordBooksMaterialURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(bookID)")
-                    try? FileManager.default.removeItem(at: wordBooksMaterialURL)
-                    
-                    if index == 0 {
-                        self.fetchWordBookDetail(self.wordBookModels[1])
+                    YXWordBookDaoImpl().deleteBook(bookId: currentLearningWordBookId) { [weak self] (result, isSuccess) in
+                        guard let self = self, isSuccess else { return }
                         
-                    } else if index == self.wordBookModels.count - 1 {
-                        self.fetchWordBookDetail(self.wordBookModels[index - 1])
+                        let wordBooksMaterialURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(currentLearningWordBookId)")
+                        try? FileManager.default.removeItem(at: wordBooksMaterialURL)
                         
-                    } else {
-                        self.fetchWordBookDetail(self.wordBookModels[index + 1])
+                        if index == 0 {
+                            self.fetchWordBookDetail(self.wordBookModels[1])
+                            
+                        } else if index == self.wordBookModels.count - 1 {
+                            self.fetchWordBookDetail(self.wordBookModels[index - 1])
+                            
+                        } else {
+                            self.fetchWordBookDetail(self.wordBookModels[index + 1])
+                        }
+                        
+                        self.wordBookModels.remove(at: index)
+                        self.bookCollectionView.reloadData()
                     }
                     
-                    self.wordBookModels.remove(at: index)
-                    self.bookCollectionView.reloadData()
+                }
+                
+                YXWordBookDaoImpl().deleteWord(bookId: currentLearningWordBookId) { (result, isSuccess) in
+
                 }
             }
             

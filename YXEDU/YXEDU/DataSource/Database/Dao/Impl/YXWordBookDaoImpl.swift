@@ -51,14 +51,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         
         self.wordRunner.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
-            guard isSuccess else {
-                completion(nil, false)
-                return
-            }
-            
-            deleteWord(bookId: bookId) { (result, isSuccess) in
-                completion(nil, isSuccess)
-            }
+            completion(nil, isSuccess)
         }
     }
     

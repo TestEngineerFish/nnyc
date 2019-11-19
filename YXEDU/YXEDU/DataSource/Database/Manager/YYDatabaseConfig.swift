@@ -264,7 +264,7 @@ extension YYSQLManager {
         
         case deleteWord =
         """
-            DELETE * FROM word
+            DELETE FROM word
             WHERE bookId = ?
         """
     }
