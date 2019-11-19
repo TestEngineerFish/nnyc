@@ -216,11 +216,10 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         self.setAllSubviewStatus()
         remindLabel.isHidden = true
         
-        guard let word = exerciseModel.word else {
-            return
-        }
-        let detailView = YXRemindDetailView(word: word)
-        UIApplication.shared.keyWindow?.addSubview(detailView)
+        guard let word = exerciseModel.word else { return }
+        
+        let detailView = YXWordDetailTipView(word: word)
+        detailView.showWithAnimation()
     }
     
     //MARK: - 辅助方法

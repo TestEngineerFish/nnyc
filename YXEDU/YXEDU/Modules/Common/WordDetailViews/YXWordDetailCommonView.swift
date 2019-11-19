@@ -82,23 +82,23 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             imageView.sd_setImage(with: URL(string: imageUrl), completed: nil)
         }
                 
-        if let usage = word.usages {
+        if let usage = word.usages, usage.count > 0 {
             partsOfWord.append(["常用用法": usage])
         }
         
-        if let synonym = word.synonym {
+        if let synonym = word.synonym, synonym.isEmpty == false  {
             partsOfWord.append(["同义词": synonym])
         }
         
-        if let antonym = word.antonym {
+        if let antonym = word.antonym, antonym.isEmpty == false  {
             partsOfWord.append(["反义词": antonym])
         }
         
-        if let testCenter = word.testCenter {
+        if let testCenter = word.testCenter, testCenter.isEmpty == false {
             partsOfWord.append(["考点": testCenter])
         }
         
-        if let deformation = word.deformation {
+        if let deformation = word.deformation, deformation.isEmpty == false {
             partsOfWord.append(["联想": deformation])
         }
         
