@@ -151,14 +151,18 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(bookID)", "unit_id": "\(unitID)"]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
                 
-                YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
-                    guard isSucess else { return }
-                    
-                    if let finishClosure = self.finishClosure {
-                        finishClosure()
+                DispatchQueue.global().async {
+                    YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
+                        guard isSucess else { return }
                         
-                    } else {
-                        self.navigationController?.popToRootViewController(animated: true)
+                        DispatchQueue.main.async {
+                            if let finishClosure = self.finishClosure {
+                                finishClosure()
+                                
+                            } else {
+                                self.navigationController?.popToRootViewController(animated: true)
+                            }
+                        }
                     }
                 }
             }

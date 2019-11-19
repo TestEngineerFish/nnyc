@@ -33,26 +33,26 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                 
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbookwords", parameters: ["book_id": wordBook.bookId ?? 0]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [String: Any] else {
-                DispatchQueue.main.async { self.closure?(false) }
+                self.closure?(false)
                 return
             }
 
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 guard let jsonString = String(data: jsonData, encoding: .utf8), let wordBook = YXWordBookModel(JSONString: jsonString) else {
-                    DispatchQueue.main.async { self.closure?(false) }
+                    self.closure?(false)
                     return
                 }
                 
                 YXWordBookDaoImpl().insertBook(book: wordBook) { (result, isSuccess) in
                     guard isSuccess else {
-                        DispatchQueue.main.async { self.closure?(false) }
+                        self.closure?(false)
                         return
                     }
                 }
                 
                 guard let units = wordBook.units else {
-                    DispatchQueue.main.async { self.closure?(false) }
+                    self.closure?(false)
                     return
                 }
                 
@@ -72,21 +72,21 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                     }
                 }
                 
-                DispatchQueue.main.async { self.closure?(true) }
-                
+                self.closure?(true)
+
             } catch {
                 print(error)
-                DispatchQueue.main.async { self.closure?(false) }
+                self.closure?(false)
             }
         }
 //        guard let bookID = wordBook.bookId else {
-//            DispatchQueue.main.async { self.closure?(false) }
+//            self.closure?(false)
 //            return
 //        }
 //
 //        YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
 //            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
-//               DispatchQueue.main.async { self.closure?(true) }
+//               self.closure?(true)
 //
 //            } else {
 //                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
@@ -98,14 +98,14 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
     
     func downloadMaterial(in wordBook: YXWordBookModel, _ closure: ((_ isSuccess: Bool) -> Void)?) {
         guard let bookID = wordBook.bookId else {
-            DispatchQueue.main.async { self.closure?(false) }
+            self.closure?(false)
             return
         }
         
         YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
             if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
-                DispatchQueue.main.async { self.closure?(true) }
-                
+                self.closure?(false)
+
             } else {
                 let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
                 downloadTask.resume()
@@ -120,7 +120,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         guard let url = downloadTask.originalRequest?.url, let bookID = currentDownloadWordBook.bookId else {
-            DispatchQueue.main.async { self.closure?(false) }
+            self.closure?(false)
             return
         }
         
@@ -140,7 +140,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             }
             
         } catch {
-            DispatchQueue.main.async { self.closure?(false) }
+            self.closure?(false)
         }
     }
     
@@ -154,13 +154,13 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             let data = try Data(contentsOf: wordBooksJsonUrl)
             let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
             guard let jsonString = String(data: jsonData, encoding: .utf8), let wordBook = YXWordBookModel(JSONString: jsonString), let units = wordBook.units else {
-                DispatchQueue.main.async { self.closure?(false) }
+                self.closure?(false)
                 return
             }
             
             YXWordBookDaoImpl().insertBook(book: wordBook) { (result, isSuccess) in
                 guard isSuccess else {
-                    DispatchQueue.main.async { self.closure?(false) }
+                    self.closure?(false)
                     return
                 }
             }
@@ -181,10 +181,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                 }
             }
             
-            DispatchQueue.main.async { self.closure?(true) }
-            
+            self.closure?(true)
+
         } catch {
-            DispatchQueue.main.async { self.closure?(false) }
+            self.closure?(false)
         }
     }
     
@@ -195,7 +195,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
             let data = try Data(contentsOf: wordBooksJsonUrl)
             let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
             guard let jsonString = String(data: jsonData, encoding: .utf8), let wordBook = YXWordBookModel(JSONString: jsonString), let units = wordBook.units else {
-                DispatchQueue.main.async { self.closure?(false) }
+                self.closure?(false)
                 return
             }
 
@@ -209,10 +209,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                     word.unitName = unit.unitName
                     word.isExtensionUnit = unit.isExtensionUnit
                     
-                    word.imageUrl = replaceResourceUrl(ResourcePath: word.imageUrl)
-                    word.americanPronunciation = replaceResourceUrl(ResourcePath: word.americanPronunciation)
-                    word.englishPronunciation = replaceResourceUrl(ResourcePath: word.englishPronunciation)
-                    word.examplePronunciation = replaceResourceUrl(ResourcePath: word.examplePronunciation)
+                    word.imageUrl = replaceResourceUrl(resourcePath: word.imageUrl, wordBooksResourcePath: url.path)
+                    word.americanPronunciation = replaceResourceUrl(resourcePath: word.americanPronunciation, wordBooksResourcePath: url.path)
+                    word.englishPronunciation = replaceResourceUrl(resourcePath: word.englishPronunciation, wordBooksResourcePath: url.path)
+                    word.examplePronunciation = replaceResourceUrl(resourcePath: word.examplePronunciation, wordBooksResourcePath: url.path)
 
                     YXWordBookDaoImpl().insertWord(word: word) { (result, isSuccess) in
                         print(isSuccess)
@@ -220,16 +220,15 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                 }
             }
             
-            DispatchQueue.main.async { self.closure?(true) }
-            
+            self.closure?(true)
+
         } catch {
-            DispatchQueue.main.async { self.closure?(false) }
+            self.closure?(false)
         }
     }
     
-    private func replaceResourceUrl(ResourcePath: String?) -> String {
-        var string = ""
-        
-        return string
+    private func replaceResourceUrl(resourcePath: String?, wordBooksResourcePath: String) -> String? {
+        guard let newPath = resourcePath?.replacingOccurrences(of: "http://cdn.xstudyedu.com", with: wordBooksResourcePath) else { return resourcePath }
+        return newPath
     }
 }

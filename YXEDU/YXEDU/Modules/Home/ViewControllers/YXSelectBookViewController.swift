@@ -59,17 +59,19 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     @IBAction func downloadWordBook(_ sender: UIButton) {
-        YXWordBookDaoImpl().selectWord(wordId: 4470) { (result, isSuccess) in
-            print(result)
+        for index in 0..<wordBookModels.count {
+            let wordBook = wordBookModels[index]
+            guard wordBook.isSelected else { continue }
+
+            DispatchQueue.global().async {
+                YXWordBookResourceManager.shared.downloadMaterial(in: wordBook) { (isSuccess) in
+                    guard isSuccess else { return }
+                    DispatchQueue.main.async {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                }
+            }
         }
-//        for index in 0..<wordBookModels.count {
-//            let wordBook = wordBookModels[index]
-//            guard wordBook.isSelected else { continue }
-//
-//            YXWordBookResourceManager.shared.downloadMaterial(in: wordBook) { (isSueeces) in
-//
-//            }
-//        }
     }
      
      @IBAction func startStudy(_ sender: UIButton) {
@@ -80,9 +82,13 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBookStateModels.bookId ?? 0)", "unit_id": "\(wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
 
-                YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
-                    guard isSucess else { return }
-                    self.navigationController?.popToRootViewController(animated: true)
+                DispatchQueue.global().async {
+                    YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
+                        guard isSuccess else { return }
+                        DispatchQueue.main.async {
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }
+                    }
                 }
             }
             
