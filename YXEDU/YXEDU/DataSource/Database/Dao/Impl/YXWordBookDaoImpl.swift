@@ -15,7 +15,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
         let params: [Any?] = [book.bookId,
                              book.bookName,
-                             book.bookSource,
+                             book.bookJsonSourcePath,
                              book.bookHash,
                              book.gradeId,
                              book.gradeType]
@@ -36,12 +36,13 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             
             book.bookId = Int(result?.int(forColumn: "bookId") ?? 0)
             book.bookName = result?.string(forColumn: "bookName")
-            book.bookSource = result?.string(forColumn: "bookSource")
+            book.bookJsonSourcePath = result?.string(forColumn: "bookSource")
             book.bookHash = result?.string(forColumn: "bookHash")
             book.gradeId = Int(result?.int(forColumn: "gradeId") ?? 0)
             book.gradeType = Int(result?.int(forColumn: "gradeType") ?? 0)
 
-            completion(book, result != nil)
+            let isSuccess = result?.next() ?? false
+            completion(isSuccess ? book : nil, isSuccess)
         }
     }
     
@@ -111,7 +112,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             word.englishExample = result?.string(forColumn: "englishExample")
             word.chineseExample = result?.string(forColumn: "chineseExample")
             word.examplePronunciation = result?.string(forColumn: "examplePronunciation")
-            word.usages = try? JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as? [String] ?? []
+            word.usages = try? (JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as! [String])
             word.synonym = result?.string(forColumn: "synonym")
             word.antonym = result?.string(forColumn: "antonym")
             word.testCenter = result?.string(forColumn: "testCenter")
@@ -123,7 +124,53 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             word.unitName = result?.string(forColumn: "unitName")
             word.isExtensionUnit = result?.bool(forColumn: "isExtensionUnit") ?? false
             
-            completion(word, result != nil)
+            let isSuccess = result?.next() ?? false
+            completion(isSuccess ? word : nil, isSuccess)
+        }
+    }
+    
+    func selectWordByUnitId(_ unitId: Int, completion: finishBlock) {
+        let sql = YYSQLManager.WordBookSQL.selectWordByUnitId.rawValue
+        let params: [Any] = [unitId]
+        
+        self.wordRunner.inDatabase { (db) in
+            let result = db.executeQuery(sql, withArgumentsIn: params)
+            let usagesData: Data! = (result?.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
+
+            var words: [YXWordModel] = []
+            
+            while result?.next() ?? false {
+                var word = YXWordModel()
+                
+                word.wordId = Int(result?.int(forColumn: "wordId") ?? 0)
+                word.word = result?.string(forColumn: "word")
+                word.partOfSpeech = result?.string(forColumn: "partOfSpeech")
+                word.meaning = result?.string(forColumn: "meaning")
+                word.imageUrl = result?.string(forColumn: "imageUrl")
+                word.americanPhoneticSymbol = result?.string(forColumn: "americanPhoneticSymbol")
+                word.englishPhoneticSymbol = result?.string(forColumn: "englishPhoneticSymbol")
+                word.americanPronunciation = result?.string(forColumn: "americanPronunciation")
+                word.englishPronunciation = result?.string(forColumn: "englishPronunciation")
+                word.englishExample = result?.string(forColumn: "englishExample")
+                word.chineseExample = result?.string(forColumn: "chineseExample")
+                word.examplePronunciation = result?.string(forColumn: "examplePronunciation")
+                word.usages = try? JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as? [String] ?? []
+                word.synonym = result?.string(forColumn: "synonym")
+                word.antonym = result?.string(forColumn: "antonym")
+                word.testCenter = result?.string(forColumn: "testCenter")
+                word.deformation = result?.string(forColumn: "deformation")
+                word.gradeId = Int(result?.int(forColumn: "gradeId") ?? 0)
+                word.gardeType = Int(result?.int(forColumn: "gardeType") ?? 0)
+                word.bookId = Int(result?.int(forColumn: "bookId") ?? 0)
+                word.unitId = Int(result?.int(forColumn: "unitId") ?? 0)
+                word.unitName = result?.string(forColumn: "unitName")
+                word.isExtensionUnit = result?.bool(forColumn: "isExtensionUnit") ?? false
+                
+                words.append(word)
+            }
+            
+            let isSuccess = result?.next() ?? false
+            completion(isSuccess ? words : nil, isSuccess)
         }
     }
     

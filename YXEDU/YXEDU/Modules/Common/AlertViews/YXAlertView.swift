@@ -45,8 +45,8 @@ class YXAlertView: UIView, UITextFieldDelegate {
         textField.text = ""
     }
     
-    init(frame: CGRect, type: YXAlertViewType) {
-        super.init(frame: frame)
+    init(type: YXAlertViewType = .normal) {
+        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         self.type = type
         
         initializationFromNib()
@@ -60,15 +60,17 @@ class YXAlertView: UIView, UITextFieldDelegate {
     private func initializationFromNib() {
         Bundle.main.loadNibNamed("YXAlertView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.frame
+        contentView.frame = self.bounds
         
         switch type {
         case .normal:
+            textFieldView.isHidden = true
             cancelButtonRightDistance.constant = ((screenWidth - 128) / 2) + 10
             doneButtonLeftDistance.constant = ((screenWidth - 128) / 2) + 10
             alertHeight.constant = 184
             
         case .inputable:
+            textFieldView.isHidden = false
             textField.delegate = self
             textField.addTarget(self, action: #selector(changeTextField), for: UIControl.Event.editingChanged)
             alertHeight.constant = 204

@@ -108,7 +108,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                 self.closure?(false)
 
             } else {
-                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
+                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSourcePath!)!)
                 downloadTask.resume()
             }
         }

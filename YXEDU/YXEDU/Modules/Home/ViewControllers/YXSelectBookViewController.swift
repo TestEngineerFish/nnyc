@@ -26,56 +26,62 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
      }
      
      @IBAction func deleteWordBook(_ sender: UIButton) {
-        for index in 0..<wordBookModels.count {
-            let wordBook = wordBookModels[index]
-            guard wordBook.isSelected, let currentLearningWordBookId = wordBook.bookId else { continue }
-            
-            var nextLearnWordBookId: Int?
-            if index == 0 {
-                nextLearnWordBookId = self.wordBookModels[1].bookId
+        let alertView = YXAlertView()
+        alertView.descriptionLabel.text = "删除这本词书后你的学习进度会保留，重新添加词书可以继续学习这本书"
+        alertView.doneClosure = { _ in
+            for index in 0..<self.wordBookModels.count {
+                let wordBook = self.wordBookModels[index]
+                guard wordBook.isSelected, let currentLearningWordBookId = wordBook.bookId else { continue }
                 
-            } else if index == self.wordBookModels.count - 1 {
-                nextLearnWordBookId = self.wordBookModels[index - 1].bookId
+                var nextLearnWordBookId: Int?
+                if index == 0 {
+                    nextLearnWordBookId = self.wordBookModels[1].bookId
+                    
+                } else if index == self.wordBookModels.count - 1 {
+                    nextLearnWordBookId = self.wordBookModels[index - 1].bookId
+                    
+                } else {
+                    nextLearnWordBookId = self.wordBookModels[index + 1].bookId
+                }
                 
-            } else {
-                nextLearnWordBookId = self.wordBookModels[index + 1].bookId
-            }
-            
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(nextLearnWordBookId ?? 0)", "unit_id": "\(wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
-                guard let self = self, isSuccess else { return }
-
-                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": currentLearningWordBookId]) { [weak self] (response, isSuccess) in
+                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(nextLearnWordBookId ?? 0)", "unit_id": "\(self.wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
                     guard let self = self, isSuccess else { return }
                     
-                    YXWordBookDaoImpl().deleteBook(bookId: currentLearningWordBookId) { [weak self] (result, isSuccess) in
+                    YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": currentLearningWordBookId]) { [weak self] (response, isSuccess) in
                         guard let self = self, isSuccess else { return }
                         
-                        let wordBooksMaterialURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(currentLearningWordBookId)")
-                        try? FileManager.default.removeItem(at: wordBooksMaterialURL)
-                        
-                        if index == 0 {
-                            self.fetchWordBookDetail(self.wordBookModels[1])
+                        YXWordBookDaoImpl().deleteBook(bookId: currentLearningWordBookId) { [weak self] (result, isSuccess) in
+                            guard let self = self, isSuccess else { return }
                             
-                        } else if index == self.wordBookModels.count - 1 {
-                            self.fetchWordBookDetail(self.wordBookModels[index - 1])
+                            let wordBooksMaterialURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(currentLearningWordBookId)")
+                            try? FileManager.default.removeItem(at: wordBooksMaterialURL)
                             
-                        } else {
-                            self.fetchWordBookDetail(self.wordBookModels[index + 1])
+                            if index == 0 {
+                                self.fetchWordBookDetail(self.wordBookModels[1])
+                                
+                            } else if index == self.wordBookModels.count - 1 {
+                                self.fetchWordBookDetail(self.wordBookModels[index - 1])
+                                
+                            } else {
+                                self.fetchWordBookDetail(self.wordBookModels[index + 1])
+                            }
+                            
+                            self.wordBookModels.remove(at: index)
+                            self.bookCollectionView.reloadData()
                         }
                         
-                        self.wordBookModels.remove(at: index)
-                        self.bookCollectionView.reloadData()
                     }
                     
+                    YXWordBookDaoImpl().deleteWord(bookId: currentLearningWordBookId) { (result, isSuccess) in
+                        
+                    }
                 }
                 
-                YXWordBookDaoImpl().deleteWord(bookId: currentLearningWordBookId) { (result, isSuccess) in
-
-                }
+                break
             }
-            
-            break
         }
+        
+        alertView.show()
     }
     
     @IBAction func downloadWordBook(_ sender: UIButton) {

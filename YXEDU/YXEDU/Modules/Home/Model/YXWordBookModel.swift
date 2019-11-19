@@ -39,7 +39,8 @@ struct YXWordBookModel: Mappable {
     var gradeType: Int?
     var bookId: Int?
     var bookName: String?
-    var bookSource: String?
+    var bookJsonSourcePath: String?
+    var bookSourcePath: String?
     var coverImagePath: String?
     var countOfWords: Int?
     var bookHash: String?
@@ -55,7 +56,7 @@ struct YXWordBookModel: Mappable {
         gradeId <- map["book_grade"]
         bookId <- map["book_id"]
         bookName <- map["book_name"]
-        bookSource <- map["book_url"]
+        bookJsonSourcePath <- map["book_url"]
         coverImagePath <- map["cover"]
         countOfWords <- map["?"]
         bookHash <- map["hash"]

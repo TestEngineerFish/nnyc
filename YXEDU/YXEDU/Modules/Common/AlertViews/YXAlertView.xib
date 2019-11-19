@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,14 +34,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ct3-cU-vXD" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                     <rect key="frame" x="64" y="356" width="286" height="184"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwl-R0-as1">
-                            <rect key="frame" x="135.5" y="24" width="15.5" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提示" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwl-R0-as1">
+                            <rect key="frame" x="125.5" y="24" width="35" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sHv-1g-9Wg">
-                            <rect key="frame" x="135.5" y="61" width="15.5" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sHv-1g-9Wg">
+                            <rect key="frame" x="20" y="61" width="246" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -152,10 +152,12 @@
                         <constraint firstAttribute="trailing" secondItem="VSr-wl-KM8" secondAttribute="trailing" constant="20" id="4B3-7z-tQf"/>
                         <constraint firstAttribute="bottom" secondItem="VSr-wl-KM8" secondAttribute="bottom" constant="30" id="9JL-pQ-bGi"/>
                         <constraint firstAttribute="bottom" secondItem="o0l-c1-Doe" secondAttribute="bottom" constant="30" id="Asl-Jb-kNW"/>
+                        <constraint firstAttribute="trailing" secondItem="sHv-1g-9Wg" secondAttribute="trailing" constant="20" id="Kbc-KN-646"/>
                         <constraint firstItem="bwl-R0-as1" firstAttribute="top" secondItem="ct3-cU-vXD" secondAttribute="top" constant="24" id="Ona-g3-sXi"/>
                         <constraint firstItem="bwl-R0-as1" firstAttribute="centerX" secondItem="ct3-cU-vXD" secondAttribute="centerX" id="Sic-xD-cos"/>
                         <constraint firstAttribute="height" constant="184" id="StY-Oe-Efb"/>
                         <constraint firstItem="o0l-c1-Doe" firstAttribute="leading" secondItem="ct3-cU-vXD" secondAttribute="leading" constant="20" id="XQY-qa-pQ9"/>
+                        <constraint firstItem="sHv-1g-9Wg" firstAttribute="leading" secondItem="ct3-cU-vXD" secondAttribute="leading" constant="20" id="bcl-pB-sa9"/>
                         <constraint firstItem="rrr-rd-sKa" firstAttribute="top" secondItem="bwl-R0-as1" secondAttribute="bottom" constant="20" id="cN0-O7-iSE"/>
                         <constraint firstItem="sHv-1g-9Wg" firstAttribute="centerX" secondItem="ct3-cU-vXD" secondAttribute="centerX" id="gGm-eS-BED"/>
                         <constraint firstItem="VSr-wl-KM8" firstAttribute="leading" secondItem="ct3-cU-vXD" secondAttribute="leading" constant="20" id="kR9-Af-ICs"/>
@@ -169,7 +171,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="ct3-cU-vXD" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="64" id="0Sc-FY-3UA"/>
                 <constraint firstItem="ct3-cU-vXD" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6hc-C5-zN7"/>
