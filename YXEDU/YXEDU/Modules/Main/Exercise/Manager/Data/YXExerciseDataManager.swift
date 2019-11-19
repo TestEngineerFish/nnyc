@@ -249,7 +249,6 @@ class YXExerciseDataManager: NSObject {
     private func reportJson() -> String {
         var map: [Int : YXExerciseReportModel] = [:]
         for e in reviewExerciseModelArray {
-            
             if let _ = map[e.word?.wordId ?? 0] {
                 continue
             } else {
@@ -261,11 +260,9 @@ class YXExerciseDataManager: NSObject {
                 report.result = YXExerciseReportModel.ResultModel()
                 
                 map[e.word?.wordId ?? 0]  = report
-            }
-            
+            }            
         }
         
-//        var array: [String] = []
         for e in reviewExerciseModelArray {
             var model = map[e.word?.wordId ?? 0]
             switch e.step {
@@ -282,11 +279,6 @@ class YXExerciseDataManager: NSObject {
             }
         }
         
-//        var array: [YXExerciseReportModel] = []
-//        for (_, e) in map {
-//            array.append(e)
-//        }
-//         =
         return Array(map.values).toJSONString() ?? ""
     }
     
