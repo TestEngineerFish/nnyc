@@ -116,11 +116,14 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
             if !self.selectedBtnArray.contains(button) && success {
                 button.status = .selected
                 self.selectedBtnArray.append(button)
+                if let result = self.delegate?.checkResult(), result.0 {
+                    self.showResult(errorList: result.1)
+                }
             }
         }
     }
 
-    override func showResult(errorList list: [Int]) {
+    private func showResult(errorList list: [Int]) {
         if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in

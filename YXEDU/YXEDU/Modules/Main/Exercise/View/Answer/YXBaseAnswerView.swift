@@ -21,7 +21,7 @@ protocol YXAnswerViewDelegate: NSObjectProtocol {
 }
 
 /// 答案视图基类，所有的答案区都需要继承自该类
-class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate, YXQuestionEventProtocol {
+class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
 
     var contentScrollView: UIScrollView?
     /// 练习数据模型
@@ -80,6 +80,4 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate, YXQuestionEventProtoc
     func playAudioStart() {}
     func playAudioFinished() {}
 
-    // MARK: YXQuestionEventProtocol
-    func showResult(errorList list: [Int]) {}
 }

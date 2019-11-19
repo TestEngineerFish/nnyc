@@ -18,9 +18,6 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
 
         self.spellView = YXSpellSubview(self.exerciseModel)
         addSubview(spellView!)
-        self.spellView?.showResultBlock = { (errorTagList: [Int]) -> Void in
-            self.delegate?.showResult(errorList: errorTagList)
-        }
 
         self.initAudioPlayerView()
     }
@@ -56,4 +53,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
         self.spellView?.showResultView(errorList: list)
     }
 
+    override func checkResult() -> (Bool, [Int])? {
+        return self.spellView?.checkResult()
+    }
 }

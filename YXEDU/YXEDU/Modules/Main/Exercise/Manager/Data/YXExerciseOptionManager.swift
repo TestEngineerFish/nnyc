@@ -90,24 +90,24 @@ class YXExerciseOptionManager: NSObject {
             }
         }
                         
-        if items.count < 3 {
-            var isOK = true
-            var selectCount = 0
-            while isOK  {
-                let currentUnitWordArray = self.currentUnitWordArray(unit: exerciseModel.word?.unitId ?? 0)
-                let unitWord = currentUnitWordArray[random(max: currentUnitWordArray.count)]
-                if unitWord.wordId != exerciseModel.word?.wordId {
-                    items.append(itemModel(word: unitWord, type: exerciseModel.type))
-                    if items.count == 3 {
-                        isOK = false
-                    }
-                }
-                selectCount += 1
-                if selectCount > 5 {
-                    isOK = false
-                }
-            }
-        }
+//        if items.count < 3 {
+//            var isOK = true
+//            var selectCount = 0
+//            while isOK  {
+//                let currentUnitWordArray = self.currentUnitWordArray(unit: exerciseModel.word?.unitId ?? 0)
+//                let unitWord = currentUnitWordArray[random(max: currentUnitWordArray.count)]
+//                if unitWord.wordId != exerciseModel.word?.wordId {
+//                    items.append(itemModel(word: unitWord, type: exerciseModel.type))
+//                    if items.count == 3 {
+//                        isOK = false
+//                    }
+//                }
+//                selectCount += 1
+//                if selectCount > 5 {
+//                    isOK = false
+//                }
+//            }
+//        }
     
         
         // 添加正取的选项

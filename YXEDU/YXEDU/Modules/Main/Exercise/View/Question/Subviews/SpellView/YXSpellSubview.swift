@@ -27,8 +27,6 @@ class YXSpellSubview: UIView {
     var wordViewList = [YXLackWordView]()
     var resultArrary: [NSTextCheckingResult]?
 
-    var showResultBlock: (([Int]) ->Void)?
-
     init(_ model: YXWordExerciseModel) {
         self.exerciseModel = model
         super.init(frame: CGRect.zero)
@@ -141,17 +139,6 @@ class YXSpellSubview: UIView {
                 break
             }
         }
-        // 检测是否有未填充的空格
-        let emptyBlankList = self.wordViewList.filter { (wordView) -> Bool in
-            if wordView.type == .blank && wordView.text.isEmpty {
-                return true
-            } else {
-                return false
-            }
-        }
-        if emptyBlankList.isEmpty {
-            self.checkResult()
-        }
         return result
     }
 
@@ -167,19 +154,30 @@ class YXSpellSubview: UIView {
     }
 
     /// 检验结果
-    private func checkResult() {
+    /// - returns: Bool: 是否需要更新结果, [Int]: 错误结果
+    func checkResult() -> (Bool, [Int]) {
+        var showResult = false
         var errorTagList = [Int]()
-        self.wordViewList.forEach { (wordView) in
-            print("=====")
-            print(wordView.text)
-            print(wordView.rightText)
-            print("=====")
-            if wordView.text != wordView.rightText {
-                errorTagList.append(wordView.tag)
+        // 检测是否有未填充的空格
+        let emptyBlankList = self.wordViewList.filter { (wordView) -> Bool in
+            if wordView.type == .blank && wordView.text.isEmpty {
+                return true
+            } else {
+                return false
             }
         }
-        self.showResultView(errorList: errorTagList)
-        self.showResultBlock?(errorTagList)
+        // 如果没有未填充的空格,则显示结果
+        if emptyBlankList.isEmpty {
+            showResult = true
+            // 校验错误的tag
+            self.wordViewList.forEach { (wordView) in
+                if wordView.text != wordView.rightText {
+                    errorTagList.append(wordView.tag)
+                }
+            }
+            self.showResultView(errorList: errorTagList)
+        }
+        return (showResult, errorTagList)
     }
 
     /// 显示结果

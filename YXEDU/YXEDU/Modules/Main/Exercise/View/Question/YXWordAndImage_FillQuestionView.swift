@@ -17,9 +17,6 @@ class YXWordAndImage_FillQuestionView: YXBaseQuestionView {
         
         self.spellView = YXSpellSubview(self.exerciseModel)
         addSubview(spellView!)
-        self.spellView?.showResultBlock = { (errorTagList: [Int]) -> Void in
-            self.delegate?.showResult(errorList: errorTagList)
-        }
 
         self.initImageView()
     }
@@ -62,6 +59,10 @@ class YXWordAndImage_FillQuestionView: YXBaseQuestionView {
 
     override func showResult(errorList list: [Int]) {
         self.spellView?.showResultView(errorList: list)
+    }
+
+    override func checkResult() -> (Bool, [Int])? {
+        return self.spellView?.checkResult()
     }
 
 }

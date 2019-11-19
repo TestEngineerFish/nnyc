@@ -24,4 +24,5 @@ protocol YXAnswerEventProtocol {
     /// - Parameter list: 错误对象ID列表
     func showResult(errorList list: [Int])
     func playAudio()
+    func checkResult() -> (Bool, [Int])?
 }

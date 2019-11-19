@@ -100,6 +100,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     func unselectAnswerButton(_ button: YXLetterButton) {}
     func showResult(errorList list: [Int]) {}
     func playAudio() {}
+    func checkResult() -> (Bool, [Int])? { return nil }
 
     // MARK: Tools
     func getTitleWidth() -> CGFloat {
