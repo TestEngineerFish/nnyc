@@ -120,18 +120,18 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.wrongWordsCount = "\(result.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
                 
-//                DispatchQueue.global().async {
-//                    var wordBook = YXWordBookModel()
-//                    wordBook.bookId = result.bookId
-//                    wordBook.bookSource = result.bookSource
-//                    wordBook.bookHash = result.bookHash
-//                    YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
-//                        guard isSuccess else { return }
-//                        DispatchQueue.main.async {
-//
-//                        }
-//                    }
-//                }
+                DispatchQueue.global().async {
+                    var wordBook = YXWordBookModel()
+                    wordBook.bookId = result.bookId
+                    wordBook.bookJsonSourcePath = result.bookSource
+                    wordBook.bookHash = result.bookHash
+                    YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
+                        guard isSuccess else { return }
+                        DispatchQueue.main.async {
+
+                        }
+                    }
+                }
                 
             } catch {
                 print(error)
