@@ -11,15 +11,17 @@ import UIKit
 class YXLearningResultHeaderView: UIView {
 
     var model: YXLearnMapUnitModel
-    var homeModel: YXHomeModel
+    var newLearnAmount: Int = 0
+    var reviewLearnAmount: Int = 0
 
     var firstStar  = UIImageView()
     var secondStar = UIImageView()
     var thirdStar  = UIImageView()
 
-    init(_ model:YXLearnMapUnitModel, homdModel: YXHomeModel) {
+    init(_ model:YXLearnMapUnitModel, newAmount: Int, reviewAmount: Int) {
         self.model     = model
-        self.homeModel = homdModel
+        self.newLearnAmount = newAmount
+        self.reviewLearnAmount = reviewAmount
         super.init(frame: CGRect.zero)
         self.createSubviews()
     }
@@ -92,7 +94,7 @@ class YXLearningResultHeaderView: UIView {
         // 新学标题
         let newLearnLabel = UILabel()
         newLearnLabel.textAlignment = .left
-        let newLearnText = "• 新掌握了 \(homeModel.newWords ?? 0) 个单词"
+        let newLearnText = "• 新掌握了 \(newLearnAmount) 个单词"
         let newLearnMutAttrStr = NSMutableAttributedString(string: newLearnText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x888888), NSAttributedString.Key.font:UIFont.regularFont(ofSize: 14)])
         newLearnMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.mediumFont(ofSize: 14), NSAttributedString.Key.foregroundColor:UIColor.hex(0xFBA217)], range: NSRange(location: 7, length: newLearnText.count - 11))
         newLearnLabel.attributedText = newLearnMutAttrStr
@@ -100,7 +102,7 @@ class YXLearningResultHeaderView: UIView {
         // 巩固标题
         let reviewLabel = UILabel()
         reviewLabel.textAlignment = .left
-        let reviewText = "• 巩固了 \(homeModel.reviewWords ?? 0) 个单词"
+        let reviewText = "• 巩固了 \(reviewLearnAmount) 个单词"
         let reViewMutAttrStr = NSMutableAttributedString(string: reviewText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x888888), NSAttributedString.Key.font:UIFont.regularFont(ofSize: 14)])
         reViewMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.mediumFont(ofSize: 14), NSAttributedString.Key.foregroundColor:UIColor.hex(0xFBA217)], range: NSRange(location: 6, length: reviewText.count - 10))
         reviewLabel.attributedText = reViewMutAttrStr

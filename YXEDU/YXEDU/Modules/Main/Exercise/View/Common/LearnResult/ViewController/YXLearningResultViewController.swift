@@ -15,8 +15,12 @@ class YXLearningResultViewController: UIViewController {
     var punchButton = YXButton()
     var mapModelList: [YXLearnMapUnitModel]? // 总单元
     var currentModel: YXLearnMapUnitModel? // 当前单元
-    var homeModel:YXHomeModel?
     var requestCount = 0
+
+    var newLearnAmount: Int = 0 // 新学单词数
+    var reviewLearnAmount: Int = 0 // 复习单词数量
+    var bookId: Int? // 书ID
+    var unitId: Int? // 单元ID
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -40,12 +44,12 @@ class YXLearningResultViewController: UIViewController {
         }
         backButton.addTarget(self, action: #selector(backClick), for: .touchUpInside)
 
-        guard let _currentModel = self.currentModel, let _homeModel = self.homeModel else {
+        guard let _currentModel = self.currentModel else {
             return
         }
 
         // 结果视图
-        let headerView = YXLearningResultHeaderView(_currentModel, homdModel: _homeModel)
+        let headerView = YXLearningResultHeaderView(_currentModel, newAmount: newLearnAmount, reviewAmount: reviewLearnAmount)
         self.view.addSubview(headerView)
         headerView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -109,7 +113,7 @@ class YXLearningResultViewController: UIViewController {
     }
 
     private func bindData() {
-        guard let model = self.homeModel, let bookId = model.bookId, let unitId = model.unitId else {
+        guard let bookId = self.bookId, let unitId = self.unitId else {
             return
         }
         let request = YXExerciseRequest.learnResult(bookId: bookId, unitId: unitId)
@@ -138,7 +142,7 @@ class YXLearningResultViewController: UIViewController {
 
     /// 学习新单元
     private func learnUnit(_ unitId: Int) {
-        guard let model = self.homeModel, let bookId = model.bookId, let unitId = model.unitId else {
+        guard let bookId = self.bookId, let unitId = self.unitId else {
             return
         }
         let request = YXExerciseRequest.addUserBook(userId: 0, bookId: bookId, unitId: unitId)
