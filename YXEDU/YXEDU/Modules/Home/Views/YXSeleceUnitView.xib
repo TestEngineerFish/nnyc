@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,6 +22,10 @@
                 <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xUI-FG-qI3">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="2rW-4d-Iyy" appends="YES" id="Gr8-P2-2AO"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JyU-xs-LZW" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                     <rect key="frame" x="57" y="319" width="300" height="258"/>
@@ -107,5 +111,10 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="140.57971014492756" y="125.89285714285714"/>
         </view>
+        <tapGestureRecognizer id="2rW-4d-Iyy">
+            <connections>
+                <action selector="dismiss:" destination="-1" id="6Eu-aT-nlI"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

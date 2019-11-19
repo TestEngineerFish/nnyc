@@ -41,11 +41,17 @@ class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         self.removeFromSuperview()
     }
     
+    @IBAction func dismiss(_ sender: UITapGestureRecognizer) {
+        self.removeFromSuperview()
+    }
+    
     func show() {
         let window = UIApplication.shared.windows.first
         window?.addSubview(self)
     }
-
+    
+    
+    
     // MARK: - PickerView
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
