@@ -44,7 +44,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
         shapLayer.lineWidth   = 10
         shapLayer.strokeColor = UIColor.hex(0xE5DDD7).cgColor
         shapLayer.fillColor   = nil
-//        shapLayer.strokeEnd   = CGFloat(unitViewArray.count/3)
+        shapLayer.strokeEnd   = CGFloat(self.modelArray.count)/3
         self.layer.addSublayer(shapLayer)
 
         // 设置点
