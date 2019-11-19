@@ -10,16 +10,15 @@ import UIKit
 
 public enum YXExerciseRequest: YYBaseRequest {
     case exercise
-    case learnMap(bookID: Int)
+    case learnMap(bookId: Int)
+    case learnResult(bookId: Int, unitId: Int)
 }
 
 
 extension YXExerciseRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .exercise:
-            return .get
-        case .learnMap:
+        case .exercise, .learnMap, .learnResult:
             return .get
         }
     }
@@ -32,6 +31,8 @@ extension YXExerciseRequest {
             return YXAPI.Word.exercise
         case .learnMap:
             return YXAPI.Word.learnMap
+        case .learnResult:
+            return YXAPI.Word.learnResult
         }
     }
 }
@@ -40,8 +41,10 @@ extension YXExerciseRequest {
 extension YXExerciseRequest {
     var parameters: [String : Any]? {
         switch self {
-        case .learnMap(let bookID):
-            return ["book_id" : bookID]
+        case .learnMap(let bookId):
+            return ["book_id" : bookId]
+        case .learnResult(let bookId, let unitId):
+            return ["book_id" : bookId, "unit_id" : unitId]
         default:
             return nil
         }

@@ -60,7 +60,6 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         }
     }
     
-    
     override func bindData() {
         self.remindView?.remindSteps = [[.example, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
     }

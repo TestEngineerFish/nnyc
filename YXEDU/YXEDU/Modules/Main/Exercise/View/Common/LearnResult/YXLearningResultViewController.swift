@@ -15,6 +15,8 @@ class YXLearningResultViewController: UIViewController {
     var backButton = UIButton()
     var punchButton = YXButton()
     var mapModelList: [YXLearnMapUnitModel]?
+        var homeModel:YXHomeModel?
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -93,7 +95,11 @@ class YXLearningResultViewController: UIViewController {
     }
 
     private func bindData() {
-        
+        guard let model = self.homeModel, let bookId = model.bookId, let unitId = model.unitId else {
+            return
+        }
+        let request = YXExerciseRequest.learnResult(bookId: bookId, unitId: unitId)
+//        YYNetworkService.default.httpRequestTask(<#T##type: YYBaseResopnse.Protocol##YYBaseResopnse.Protocol#>, request: <#T##YYBaseRequest#>, success: <#T##((YYBaseResopnse) -> Void)?##((YYBaseResopnse) -> Void)?##(YYBaseResopnse) -> Void#>, fail: <#T##((NSError) -> Void)?##((NSError) -> Void)?##(NSError) -> Void#>)
     }
 
     // MARK: Event
@@ -103,8 +109,8 @@ class YXLearningResultViewController: UIViewController {
     }
 
     @objc private func punchEvent() {
-        let vc = YXLearnMapViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
-        self.hidesBottomBarWhenPushed = false
+//        let vc = YXLearnMapViewController()
+//        self.navigationController?.pushViewController(vc, animated: true)
+//        self.hidesBottomBarWhenPushed = false
     }
 }

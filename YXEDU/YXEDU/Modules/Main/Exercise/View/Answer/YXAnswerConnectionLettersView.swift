@@ -50,9 +50,11 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     }
 
     private func setPath() {
-        guard let word = self.exerciseModel.word?.word else {
+        guard var word = self.exerciseModel.question?.word else {
              return
          }
+        word = word.replacingOccurrences(of: "[", with: "")
+        word = word.replacingOccurrences(of: "]", with: "")
          self.lettersArray = word.map { (char) -> String in
              return "\(char)"
          }

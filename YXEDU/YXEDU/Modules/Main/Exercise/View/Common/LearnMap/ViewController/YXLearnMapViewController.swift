@@ -98,7 +98,7 @@ class YXLearnMapViewController: UIViewController {
         guard let _bookId = self.bookId else {
             return
         }
-        let request = YXExerciseRequest.learnMap(bookID: _bookId)
+        let request = YXExerciseRequest.learnMap(bookId: _bookId)
         YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { (response) in
             self.mapModelList = response.dataArray
             self.createMapView()
