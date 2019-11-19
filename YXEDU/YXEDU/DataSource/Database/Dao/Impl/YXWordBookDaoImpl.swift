@@ -32,7 +32,16 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         
         self.wordRunner.inDatabase { (db) in
             let result = db.executeQuery(sql, withArgumentsIn: params)
-            completion(result, result != nil)
+            var book = YXWordBookModel()
+            
+            book.bookId = Int(result?.int(forColumn: "bookId") ?? 0)
+            book.bookName = result?.string(forColumn: "bookName")
+            book.bookSource = result?.string(forColumn: "bookSource")
+            book.bookHash = result?.string(forColumn: "bookHash")
+            book.gradeId = Int(result?.int(forColumn: "gradeId") ?? 0)
+            book.gradeType = Int(result?.int(forColumn: "gradeType") ?? 0)
+
+            completion(book, result != nil)
         }
     }
     
