@@ -31,7 +31,7 @@ class YXWordAnswerView: YXBaseAnswerView {
             button.frame = CGRect(x: x, y: y, width: itemW, height: itemH)
             button.status = .normal
             button.setTitle(item.content ?? "", for: .normal)
-            button.tag = item.optionId
+            button.tag = index + offsetTag
             button.addTarget(self, action: #selector(clickBtn(_:)), for: .touchUpInside)
             self.contentScrollView?.addSubview(button)
             self.allBtnArray.append(button)
@@ -59,6 +59,9 @@ class YXWordAnswerView: YXBaseAnswerView {
             if !self.selectedBtnArray.contains(button) && success {
                 button.status = .selected
                 self.selectedBtnArray.append(button)
+                if let result = self.delegate?.checkResult(), result.0 {
+                    self.showResultView(errorList: result.1)
+                }
             }
         }
     }
@@ -90,10 +93,10 @@ class YXWordAnswerView: YXBaseAnswerView {
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
             for id in list {
-                if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
-                    return button.tag == id
-                }) {
-                    button.status = .error
+                self.selectedBtnArray.forEach { (letterButton) in
+                    if letterButton.tag == id {
+                        letterButton.status = .error
+                    }
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)

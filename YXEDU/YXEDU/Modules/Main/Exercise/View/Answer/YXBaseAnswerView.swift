@@ -29,6 +29,9 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
 
     var delegate: YXAnswerEventProtocol?
 
+    // 按钮tag偏移量
+    let offsetTag    = 100
+
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)

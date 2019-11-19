@@ -17,7 +17,6 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     var verItemNum   = 3
     var buttonArray2 = [[YXLetterButton]]()
     var selectedBtnArray = [YXLetterButton]()
-    let offsetTag    = 100
 
     override func createSubviews() {
         super.createSubviews()
