@@ -24,24 +24,19 @@ class YXExerciseOptionManager: NSObject {
         return Int(arc4random()) % max
     }
     
+
     
-    func processOptions(exerciseModelArray: [YXWordExerciseModel]) -> [YXWordExerciseModel] {
-                
-        for exerciseModel in exerciseModelArray {
-            if exerciseModel.isNewWord {
-                newWordArray.append(exerciseModel)
-            } else {
-                reviewWordArray.append(exerciseModel)
-            }
-        }
+    func processOptions(newArray: [YXWordExerciseModel], reviewArray: [YXWordExerciseModel]) -> [YXWordExerciseModel] {
+        newWordArray = newArray
+        reviewWordArray = reviewArray
         
         self.processReviewWordOption()
-//        return (newWordArray + reviewWordArray)
         return reviewWordArray
     }
     
     func processReviewWordOption() {
         let count = self.reviewWordArray.count
+        
         for (index, exercise) in reviewWordArray.enumerated() {
             switch exercise.type {
             case .lookWordChooseImage, .lookExampleChooseImage, .lookWordChooseChinese,

@@ -34,10 +34,11 @@ class YXExerciseDataManager: NSObject {
     }
     
     
-    
     /// 加载本地未学完的关卡数据
     func fetchUnCompletionExerciseModels() {
-
+        let data = YXExcerciseProgressManager.localExerciseModels()
+        newExerciseModelArray = data.0
+        reviewExerciseModelArray = data.1
     }
     
     
@@ -93,11 +94,15 @@ class YXExerciseDataManager: NSObject {
             } else {
                 for (i, e) in self.reviewExerciseModelArray.enumerated() {
                     if e.word?.wordId == exerciseModel.word?.wordId && e.step == exerciseModel.step {
-                        newExerciseModelArray[i].isFinish = true
+                        reviewExerciseModelArray[i].isFinish = true
                     }
                     
                 }
             }
+            
+            YXExcerciseProgressManager.updateNewWordProgress(exerciseModels: newExerciseModelArray)
+            YXExcerciseProgressManager.updateReviewWordProgress(exerciseModels: reviewExerciseModelArray)
+            
         }
         
         
@@ -132,12 +137,12 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportUnit(test: Any, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        
+        YXExcerciseProgressManager.clearExerciseModels()
         completion?(true, nil)
     }
     
     
-    func updateScore(wordId: Int, score: Int) {        
+    func updateScore(wordId: Int, score: Int) {
         for (i, e) in self.newExerciseModelArray.enumerated() {
             if e.word?.wordId == wordId {
                 newExerciseModelArray[i].score = score
@@ -151,8 +156,13 @@ class YXExerciseDataManager: NSObject {
         self.processNewWord(result: result)
         self.processReviewWord(result: result)
         
-        // 处理答案选项
-//        exerciseModelArray = YXExerciseOptionManager().processOptions(exerciseModelArray: exerciseModelArray)
+        // 处理练习答案选项
+        reviewExerciseModelArray = YXExerciseOptionManager().processOptions(newArray: newExerciseModelArray, reviewArray: reviewExerciseModelArray)
+        
+        // 处理
+        YXExcerciseProgressManager.initStatus()
+        YXExcerciseProgressManager.updateNewWordProgress(exerciseModels: newExerciseModelArray)
+        YXExcerciseProgressManager.updateReviewWordProgress(exerciseModels: reviewExerciseModelArray)
     }
     
     
@@ -167,7 +177,7 @@ class YXExerciseDataManager: NSObject {
                     exercise.question = word
                     exercise.word = word
                     exercise.isNewWord = true
-                    
+                    exercise.isFinish = true
                     newExerciseModelArray.append(exercise)
                 } else if (word.gradeId ?? 0) <= 9 { // 初中
                     var exercise = YXWordExerciseModel()
@@ -175,7 +185,7 @@ class YXExerciseDataManager: NSObject {
                     exercise.question = word
                     exercise.word = word
                     exercise.isNewWord = true
-                    
+                    exercise.isFinish = true
                     newExerciseModelArray.append(exercise)
                 }
             }

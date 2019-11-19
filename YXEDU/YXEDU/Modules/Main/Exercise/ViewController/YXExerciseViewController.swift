@@ -224,7 +224,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
         // 这题做完，需要移除掉
         self.dataManager.completionExercise(exerciseModel: exerciseModel, right: right)
         // 更新学习进度
-        YXExcerciseProgressManager.updateProgress(exerciseModel: exerciseModel)
+//        YXExcerciseProgressManager.updateProgress(exerciseModel: exerciseModel)
         if right {
             self.showRightAnimation()
             YXAVPlayerManager.share.playRightAudio()

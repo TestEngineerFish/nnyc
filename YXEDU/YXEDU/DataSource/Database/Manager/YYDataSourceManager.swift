@@ -76,12 +76,12 @@ class YYDataSourceManager: NSObject {
 extension YYDataSourceManager {
 
     private func normalRunner() throws -> FMDatabaseQueue {
-        let filePath: String = self.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
+        let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
         return try createRunner(type: .normal, filePath: filePath, sqls: YYSQLManager.CreateNormalTables)
     }
     
     private func wordRunner() throws -> FMDatabaseQueue {
-        let filePath: String = self.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
+        let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
         return try createRunner(type: .normal, filePath: filePath, sqls: YYSQLManager.CreateWordTables)
     }
 
@@ -115,7 +115,7 @@ extension YYDataSourceManager {
 
 
 extension YYDataSourceManager {
-    private func dbFilePath(fileName: String) -> String {
+    static func dbFilePath(fileName: String) -> String {
         let documentPath =  NSHomeDirectory() + "/Documents/"
         if !FileManager.default.fileExists(atPath: documentPath){
             do{
