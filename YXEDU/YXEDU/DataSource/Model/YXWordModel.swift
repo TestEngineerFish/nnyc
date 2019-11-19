@@ -78,6 +78,11 @@ struct YXWordModel: Mappable {
         usages <- map["usage_list"]
         column <- map["column"]
         row <- map["row"]
+        
+        
+        bookId <- map["book_id"]
+        unitId <- map["unit_id"]
+        
     }
     
     ///根据本地设置，获取音标

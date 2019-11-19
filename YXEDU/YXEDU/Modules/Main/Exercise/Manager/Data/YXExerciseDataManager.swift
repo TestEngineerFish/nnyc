@@ -13,6 +13,9 @@ import ObjectMapper
 /// 练习的数据管理器
 class YXExerciseDataManager: NSObject {
 
+    public var newWordCount: Int = 0
+    public var reviewWordCount: Int = 0
+    
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
     
     private var newExerciseModelArray: [YXWordExerciseModel] = []
@@ -42,8 +45,6 @@ class YXExerciseDataManager: NSObject {
     
     /// 从当前关卡数据中，获取一个练习数据对象
     func fetchOneExerciseModel() -> YXWordExerciseModel? {
-        print("\n====================\n")
-        print(reportJson())
         
         for exercise in self.newExerciseModelArray {
             if exercise.isFinish == false {
@@ -69,8 +70,9 @@ class YXExerciseDataManager: NSObject {
     /// - Parameters:
     ///   - exerciseModel: 练习数据
     ///   - right: 对错
-    ///   - next: 是否做下一题
     func completionExercise(exerciseModel: YXWordExerciseModel, right: Bool) {
+        
+        self.updateScore(exerciseModel: exerciseModel, right: right)
         
         var next = right
         
@@ -96,10 +98,10 @@ class YXExerciseDataManager: NSObject {
                     
                 }
             }
-            
-            // 处理进度状态
-            YXExcerciseProgressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
         }
+        
+        // 处理进度状态
+        YXExcerciseProgressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
         
         
         if !right {
@@ -129,24 +131,55 @@ class YXExerciseDataManager: NSObject {
     }
     
     
+//    private func updateScore(exerciseModel: YXWordExerciseModel, right: Bool) {
+//        for (i, e) in self.reviewExerciseModelArray.enumerated() {
+//            if e.word?.wordId == exerciseModel.word?.wordId && e.step == exerciseModel.step {
+//                reviewExerciseModelArray[i].isFinish = true
+//                reviewExerciseModelArray[i].isRight = right
+//            }
+//
+//        }
+//    }
+    
     /// 上报关卡
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportUnit( completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let json = self.reportJson()
         let request = YXExerciseRequest.report(json: json)
-        YYNetworkService.default.httpRequestTask(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
-            completion?(response.statusCode == 200, nil)
+        YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
+            completion?(response.dataArray != nil, nil)
         }) { (error) in
             completion?(false, error.message)
         }
     }
     
     
-    func updateScore(wordId: Int, score: Int) {
-        for (i, e) in self.newExerciseModelArray.enumerated() {
-            if e.word?.wordId == wordId {
-                newExerciseModelArray[i].score = score
+    func updateScore(exerciseModel: YXWordExerciseModel, right: Bool) {
+
+        var score = 10
+        for e in reviewExerciseModelArray {
+            if exerciseModel.word?.wordId == e.word?.wordId {
+                score = e.score
+                break
+            }
+        }
+        
+        if exerciseModel.step == 1 {
+            score -= (right ? 0 : 3)
+        } else if exerciseModel.step == 2 {
+            score -= (right ? 0 : 2)
+        } else if exerciseModel.step == 3 {
+            score -= (right ? 0 : 1)
+        } else if exerciseModel.step == 4 {
+            score -= (right ? 0 : 1)
+        }
+        
+        score = score < 0 ? 0 : score
+        
+        for (i, e) in self.reviewExerciseModelArray.enumerated() {
+            if e.word?.wordId == exerciseModel.word?.wordId {
+                reviewExerciseModelArray[i].score = score
             }
         }
     }
@@ -256,11 +289,11 @@ class YXExerciseDataManager: NSObject {
                 report.wordId = e.word?.wordId ?? 0
                 report.bookId = e.word?.bookId ?? 0
                 report.unitId = e.word?.unitId ?? 0
-                report.score = e.score ?? 0
+                report.score = e.score
                 report.result = YXExerciseReportModel.ResultModel()
                 
                 map[e.word?.wordId ?? 0]  = report
-            }            
+            }
         }
         
         for e in reviewExerciseModelArray {

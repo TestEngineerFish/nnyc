@@ -118,6 +118,9 @@ class YXExerciseViewController: UIViewController {
         // 存在学完未上报的关卡
 //        if true {
         if !YXExcerciseProgressManager.isReport() {
+            // 先加载本地数据
+            dataManager.fetchUnCompletionExerciseModels()
+            
             // 先上报关卡
             dataManager.reportUnit {[weak self] (result, msg) in
                 guard let self = self else { return }
@@ -174,17 +177,25 @@ class YXExerciseViewController: UIViewController {
             // 没有数据，就是完成了练习
             YXExcerciseProgressManager.completionExercise()
             
-            // 上报
-            dataManager.reportUnit { (result, errorMsg) in
+            // 学完，上报
+            dataManager.reportUnit { [weak self] (result, errorMsg) in
+                guard let self = self else {return}
                 if result {
                     YXExcerciseProgressManager.completionReport()
+                    
+                    let vc = YXLearningResultViewController()
+                    vc.bookId = 1
+                    vc.unitId = 1
+                    vc.newLearnAmount = 1
+                    vc.reviewLearnAmount = 1
+                    
+                    self.navigationController?.pushViewController(vc, animated: true)
                 } else {
                     YXUtils.showHUD(self.view, title: "上报关卡失败")
                 }
             }
             
             print("学完")
-            self.navigationController?.popViewController(animated: true)
         }
 
     }
