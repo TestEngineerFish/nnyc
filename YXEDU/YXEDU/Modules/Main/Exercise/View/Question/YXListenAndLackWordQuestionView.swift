@@ -12,16 +12,17 @@ import Foundation
 class YXListenAndLackWordQuestionView: YXBaseQuestionView {
 
     var spellView: YXSpellSubview?
-    var audioView: YXAudioPlayerView?
 
     override func createSubviews() {
         super.createSubviews()
 
         self.spellView = YXSpellSubview(self.exerciseModel)
         addSubview(spellView!)
+        self.spellView?.showResultBlock = { (errorTagList: [Int]) -> Void in
+            self.delegate?.showResult(errorList: errorTagList)
+        }
 
-        audioView = YXAudioPlayerView()
-        addSubview(audioView!)
+        self.initAudioPlayerView()
     }
 
     override func layoutSubviews() {
@@ -34,17 +35,17 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
                 make.width.equalTo(w)
                 make.height.equalTo(30)
             }
-            audioView?.snp.makeConstraints({ (make) in
+            audioPlayerView?.snp.makeConstraints({ (make) in
                 make.top.equalTo(_spellView.snp.bottom).offset(10)
                 make.centerX.equalToSuperview()
-                make.width.height.equalTo(AdaptSize(22))
+                make.width.height.equalTo(AdaptSize(32))
             })
         }
     }
 
     // MARK: YXAnswerEventProtocol
-    override func selectedAnswerButton(_ button: YXLetterButton) -> Int {
-        return self.spellView?.insertLetter(button) ?? 0
+    override func selectedAnswerButton(_ button: YXLetterButton) -> Bool {
+        return self.spellView?.insertLetter(button) ?? false
     }
 
     override func unselectAnswerButton(_ button: YXLetterButton) {

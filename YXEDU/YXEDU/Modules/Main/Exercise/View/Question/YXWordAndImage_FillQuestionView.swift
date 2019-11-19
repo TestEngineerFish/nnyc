@@ -14,9 +14,22 @@ class YXWordAndImage_FillQuestionView: YXBaseQuestionView {
 
     override func createSubviews() {
         super.createSubviews()
-        self.initImageView()
+        
         self.spellView = YXSpellSubview(self.exerciseModel)
         addSubview(spellView!)
+        self.spellView?.showResultBlock = { (errorTagList: [Int]) -> Void in
+            self.delegate?.showResult(errorList: errorTagList)
+        }
+
+        self.initImageView()
+    }
+
+    override func bindData() {
+        super.bindData()
+        guard let imageUrl = self.exerciseModel.question?.imageUrl else {
+            return
+        }
+        self.imageView?.showImage(with: imageUrl)
     }
     
     override func layoutSubviews() {
@@ -39,8 +52,8 @@ class YXWordAndImage_FillQuestionView: YXBaseQuestionView {
     }
 
     // MARK: YXAnswerEventProtocol
-    override func selectedAnswerButton(_ button: YXLetterButton) -> Int {
-        return self.spellView?.insertLetter(button) ?? 0
+    override func selectedAnswerButton(_ button: YXLetterButton) -> Bool {
+        return self.spellView?.insertLetter(button) ?? false
     }
 
     override func unselectAnswerButton(_ button: YXLetterButton) {

@@ -23,6 +23,7 @@ enum YXCharTextFiledType: Int {
 class YXLackWordView: UIView {
     let baseLineView = UIView()
     let textField    = YXCharacterTextField()
+    var rightText = ""
 
     var type: YXCharTextFiledType = .normal {
         willSet(newValue) {
@@ -48,7 +49,7 @@ class YXLackWordView: UIView {
         }
     }
 
-    var text: String? {
+    var text: String {
         get {
             return self.textField.text ?? ""
         }

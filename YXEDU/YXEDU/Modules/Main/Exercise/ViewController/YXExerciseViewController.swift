@@ -52,7 +52,7 @@ class YXExerciseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.showLoadAnimation()
+//        self.showLoadAnimation()
         self.createSubviews()
         self.bindProperty()
         self.startStudy()

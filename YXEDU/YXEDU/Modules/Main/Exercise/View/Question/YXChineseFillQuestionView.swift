@@ -17,8 +17,19 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
 
         self.spellView = YXSpellSubview(self.exerciseModel)
         addSubview(spellView!)
+        self.spellView?.showResultBlock = { (errorTagList: [Int]) -> Void in
+            self.delegate?.showResult(errorList: errorTagList)
+        }
 
         self.initSubTitleLabel()
+    }
+
+    override func bindData() {
+        super.bindData()
+        guard let meaning = self.exerciseModel.question?.meaning else {
+            return
+        }
+        self.subTitleLabel?.text = meaning
     }
 
     override func layoutSubviews() {
@@ -40,8 +51,8 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
     }
     
     // MARK: YXAnswerEventProtocol
-    override func selectedAnswerButton(_ button: YXLetterButton) -> Int? {
-        return self.spellView?.insertLetter(button)
+    override func selectedAnswerButton(_ button: YXLetterButton) -> Bool {
+        return self.spellView?.insertLetter(button) ?? false
     }
 
     override func unselectAnswerButton(_ button: YXLetterButton) {
