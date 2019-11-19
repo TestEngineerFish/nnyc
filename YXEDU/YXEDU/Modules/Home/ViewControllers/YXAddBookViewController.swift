@@ -145,7 +145,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookID = wordBook.bookId, let units = wordBook.units else { return }
         
-        let seleceUnitView = YXSeleceUnitView(frame: self.view.bounds, units: units) { (unitID) in
+        let seleceUnitView = YXSeleceUnitView(units: units) { (unitID) in
             guard let unitID = unitID else { return }
 
             YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(bookID)", "unit_id": "\(unitID)"]) { [weak self] (response, isSuccess) in
@@ -168,7 +168,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
         
-        self.view.addSubview(seleceUnitView)
+        seleceUnitView.show()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

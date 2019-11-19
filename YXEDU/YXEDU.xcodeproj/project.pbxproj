@@ -1975,7 +1975,6 @@
 			children = (
 				224529062327A85100510507 /* YYDataSourceManager.swift */,
 				224529082327A86A00510507 /* YYDatabaseConfig.swift */,
-				77CBFD702373B48000A670D7 /* YXWordBookResourceManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -2168,6 +2167,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		77077EC82383F649005C1176 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				77CBFD702373B48000A670D7 /* YXWordBookResourceManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		771512DC236710F200F6D400 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
@@ -2281,6 +2288,7 @@
 				77F69A6B236149F300E55185 /* ViewControllers */,
 				77F69A7723617C9F00E55185 /* Views */,
 				77D048F82361A0FC00CE95D8 /* Model */,
+				77077EC82383F649005C1176 /* Manager */,
 			);
 			path = Home;
 			sourceTree = "<group>";
