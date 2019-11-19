@@ -98,20 +98,20 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
     }
     
     func downloadMaterial(in wordBook: YXWordBookModel, _ closure: ((_ isSuccess: Bool) -> Void)?) {
-        guard let bookID = wordBook.bookId else {
-            self.closure?(false)
-            return
-        }
-        
-        YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
-            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
-                self.closure?(false)
-
-            } else {
-                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSourcePath!)!)
-                downloadTask.resume()
-            }
-        }
+//        guard let bookID = wordBook.bookId else {
+//            self.closure?(false)
+//            return
+//        }
+//
+//        YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
+//            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
+//                self.closure?(false)
+//
+//            } else {
+//                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSourcePath!)!)
+//                downloadTask.resume()
+//            }
+//        }
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {

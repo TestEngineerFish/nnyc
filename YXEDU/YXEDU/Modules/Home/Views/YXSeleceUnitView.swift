@@ -15,8 +15,8 @@ class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
 
-    init(frame: CGRect, units: [YXWordBookUnitModel], doneClosure: ((_ id: Int?) -> Void)?) {
-        super.init(frame: frame)
+    init(units: [YXWordBookUnitModel], doneClosure: ((_ id: Int?) -> Void)?) {
+        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         self.units = units
         self.doneClosure = doneClosure
 
@@ -31,7 +31,7 @@ class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     func initializationFromNib() {
         Bundle.main.loadNibNamed("YXSeleceUnitView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.frame
+        contentView.frame = self.bounds
     }
     
     @IBAction func done(_ sender: UIButton) {
@@ -39,6 +39,11 @@ class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         let unit = units[row]
         doneClosure?(unit.unitId)
         self.removeFromSuperview()
+    }
+    
+    func show() {
+        let window = UIApplication.shared.windows.first
+        window?.addSubview(self)
     }
 
     // MARK: - PickerView

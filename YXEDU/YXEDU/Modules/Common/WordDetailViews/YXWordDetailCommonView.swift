@@ -169,7 +169,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             }
             
         } else {
-            if let strings = partsOfWord[indexPath.section].values.first as? [String] {
+            if let strings = partsOfWord[indexPath.section].values.first as? [String], strings.count > 0 {
                 cell.label.text = strings[indexPath.row]
                 
             } else if let string = partsOfWord[indexPath.section].values.first as? String {
