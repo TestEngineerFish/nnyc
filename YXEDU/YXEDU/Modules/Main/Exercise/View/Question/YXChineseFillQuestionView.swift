@@ -55,11 +55,7 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
     override func unselectAnswerButton(_ button: YXLetterButton) {
         self.spellView?.removeLetter(button)
     }
-
-    override func showResult(errorList list: [Int]) {
-        self.spellView?.showResultView(errorList: list)
-    }
-
+    
     override func checkResult() -> (Bool, [Int])? {
         return self.spellView?.checkResult()
     }

@@ -133,22 +133,17 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     ///   - insert: 是否添加到问题区域
     /// - description:设置选中效果,需要满足,1、问题区域有空缺可填充(排除第一个字母);2、不在已选中列表中
     private func selectedButton(_ button: YXLetterButton) {
-
-        let index = self.delegate?.selectedAnswerButton(button)
-        // 添加按钮到已选按钮列表
-        if index != nil, !self.selectedBtnArray.contains(button) {
+        // 通过回调更新选中顺序,也可防止同时选中多个
+        let success = delegate?.selectedAnswerButton(button) ?? false
+        if !self.selectedBtnArray.contains(button) && success {
             self.connectionLine(fromButton: self.selectedBtnArray.last, toButton: button)
             self.selectedBtnArray.append(button)
             button.status = .selected
             // 更新周围可选按钮
             self.updateEnableButton(current: button)
-            if self.selectedBtnArray.count >= self.word.count {
-                // 检查结果
-                let errList = self.checkAnserResult()
-                // 更新UI
-                self.showResultView(errorList: errList)
-                // 更新问题UI
-                self.delegate?.showResult(errorList: errList)
+
+            if let result = self.delegate?.checkResult(), result.0 {
+                self.showResult(errorList: result.1)
             }
         }
     }
@@ -343,7 +338,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         return predicateRe.evaluate(with: text)
     }
 
-    private func showResultView(errorList list: [Int]) {
+    private func showResult(errorList list: [Int]) {
         if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in

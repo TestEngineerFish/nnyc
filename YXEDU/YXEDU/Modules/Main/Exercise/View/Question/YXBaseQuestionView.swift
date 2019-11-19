@@ -98,7 +98,6 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     func selectedAnswerButton(_ button: YXLetterButton) -> Bool { return false }
     /// 取消按钮,移除单词/字母
     func unselectAnswerButton(_ button: YXLetterButton) {}
-    func showResult(errorList list: [Int]) {}
     func playAudio() {}
     func checkResult() -> (Bool, [Int])? { return nil }
 
