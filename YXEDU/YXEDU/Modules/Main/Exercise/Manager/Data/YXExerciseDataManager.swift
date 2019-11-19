@@ -12,9 +12,13 @@ import ObjectMapper
 
 /// 练习的数据管理器
 class YXExerciseDataManager: NSObject {
-
+    
+    
     public var newWordCount: Int = 0
     public var reviewWordCount: Int = 0
+    public var bookId: Int { return newExerciseModelArray.first?.word?.bookId ?? 0 }
+    public var unitId: Int { return newExerciseModelArray.first?.word?.unitId ?? 0 }
+
     
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
     
@@ -311,6 +315,10 @@ class YXExerciseDataManager: NSObject {
                 print()
             }
         }
+        
+        
+        newWordCount = self.newExerciseModelArray.count
+        reviewWordCount = map.count
         
         return Array(map.values).toJSONString() ?? ""
     }

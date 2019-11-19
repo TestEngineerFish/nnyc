@@ -181,21 +181,24 @@ class YXExerciseViewController: UIViewController {
             dataManager.reportUnit { [weak self] (result, errorMsg) in
                 guard let self = self else {return}
                 if result {
+                    // 上报结束
                     YXExcerciseProgressManager.completionReport()
                     
                     let vc = YXLearningResultViewController()
-                    vc.bookId = 1
-                    vc.unitId = 1
-                    vc.newLearnAmount = 1
-                    vc.reviewLearnAmount = 1
+                    vc.bookId = self.dataManager.bookId
+                    vc.unitId = self.dataManager.unitId
+                    vc.newLearnAmount = self.dataManager.newWordCount
+                    vc.reviewLearnAmount = self.dataManager.reviewWordCount
                     
                     self.navigationController?.pushViewController(vc, animated: true)
                 } else {
                     YXUtils.showHUD(self.view, title: "上报关卡失败")
+                    self.navigationController?.popViewController(animated: true)
                 }
+                print("学完")
             }
             
-            print("学完")
+            
         }
 
     }
