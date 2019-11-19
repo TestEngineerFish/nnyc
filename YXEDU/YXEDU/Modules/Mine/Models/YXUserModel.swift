@@ -19,6 +19,10 @@ class YXUserModel: NSObject {
         if let didUseAmericanPronunciation = YYCache.object(forKey: "DidUseAmericanPronunciation") as? Bool {
             self.didUseAmericanPronunciation = didUseAmericanPronunciation
         }
+        
+        if let currentLearningWordBookId = YYCache.object(forKey: "CurrentLearningWordBookId") as? Int {
+            self.currentLearningWordBookId = currentLearningWordBookId
+        }
     }
     
     var didLogin = false {
@@ -30,6 +34,12 @@ class YXUserModel: NSObject {
     var didUseAmericanPronunciation = false {
         didSet {
             YYCache.set(didLogin, forKey: "DidUseAmericanPronunciation")
+        }
+    }
+    
+    var currentLearningWordBookId = 0 {
+        didSet {
+            YYCache.set(didLogin, forKey: "CurrentLearningWordBookId")
         }
     }
     

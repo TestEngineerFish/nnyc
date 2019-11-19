@@ -31,69 +31,70 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
         self.currentDownloadWordBook = wordBook
         self.closure = closure
                 
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbookwords", parameters: ["book_id": wordBook.bookId ?? 0]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject as? [String: Any] else {
-                self.closure?(false)
-                return
-            }
-
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                guard let jsonString = String(data: jsonData, encoding: .utf8), let wordBook = YXWordBookModel(JSONString: jsonString) else {
-                    self.closure?(false)
-                    return
-                }
-                
-                YXWordBookDaoImpl().insertBook(book: wordBook) { (result, isSuccess) in
-                    guard isSuccess else {
-                        self.closure?(false)
-                        return
-                    }
-                }
-                
-                guard let units = wordBook.units else {
-                    self.closure?(false)
-                    return
-                }
-                
-                for unit in units {
-                    guard let words = unit.words else { continue }
-                    for var word in words {
-                        word.gradeId = wordBook.gradeId
-                        word.gardeType = wordBook.gradeType
-                        word.bookId = wordBook.bookId
-                        word.unitId = unit.unitId
-                        word.unitName = unit.unitName
-                        word.isExtensionUnit = unit.isExtensionUnit
-
-                        YXWordBookDaoImpl().insertWord(word: word) { (result, isSuccess) in
-                            print(isSuccess)
-                        }
-                    }
-                }
-                
-                self.closure?(true)
-
-            } catch {
-                print(error)
-                self.closure?(false)
-            }
+        guard let bookID = wordBook.bookId else {
+            self.closure?(false)
+            return
         }
-//        guard let bookID = wordBook.bookId else {
-//            self.closure?(false)
-//            return
-//        }
-//
-//        YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
-//            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
-//               self.closure?(true)
-//
-//            } else {
+
+        YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
+            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
+               self.closure?(true)
+
+            } else {
 //                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
 //                downloadingWordBookId = downloadTask.taskIdentifier
 //                downloadTask.resume()
-//            }
-//        }
+                
+                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbookwords", parameters: ["book_id": wordBook.bookId ?? 0]) { (response, isSuccess) in
+                    guard isSuccess, let response = response?.responseObject as? [String: Any] else {
+                        self.closure?(false)
+                        return
+                    }
+                    
+                    do {
+                        let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
+                        guard let jsonString = String(data: jsonData, encoding: .utf8), let wordBook = YXWordBookModel(JSONString: jsonString) else {
+                            self.closure?(false)
+                            return
+                        }
+                        
+                        YXWordBookDaoImpl().insertBook(book: wordBook) { (result, isSuccess) in
+                            guard isSuccess else {
+                                self.closure?(false)
+                                return
+                            }
+                        }
+                        
+                        guard let units = wordBook.units else {
+                            self.closure?(false)
+                            return
+                        }
+                        
+                        for unit in units {
+                            guard let words = unit.words else { continue }
+                            for var word in words {
+                                word.gradeId = wordBook.gradeId
+                                word.gardeType = wordBook.gradeType
+                                word.bookId = wordBook.bookId
+                                word.unitId = unit.unitId
+                                word.unitName = unit.unitName
+                                word.isExtensionUnit = unit.isExtensionUnit
+                                
+                                YXWordBookDaoImpl().insertWord(word: word) { (result, isSuccess) in
+                                    print(isSuccess)
+                                }
+                            }
+                        }
+                        
+                        self.closure?(true)
+                        
+                    } catch {
+                        print(error)
+                        self.closure?(false)
+                    }
+                }
+            }
+        }
     }
     
     func downloadMaterial(in wordBook: YXWordBookModel, _ closure: ((_ isSuccess: Bool) -> Void)?) {
