@@ -27,6 +27,8 @@ class YXSpellSubview: UIView {
     var wordViewList = [YXLackWordView]()
     var resultArrary: [NSTextCheckingResult]?
 
+    var showResultBlock: (([Int]) ->Void)?
+
     init(_ model: YXWordExerciseModel) {
         self.exerciseModel = model
         super.init(frame: CGRect.zero)
@@ -64,7 +66,8 @@ class YXSpellSubview: UIView {
             if !lackWord.isEmpty {
                 let wordView = YXLackWordView()
                 wordView.textField.text = lackWord
-                wordView.type = .normal
+                wordView.rightText      = lackWord
+                wordView.type           = .normal
                 self.addSubview(wordView)
                 self.wordViewList.append(wordView)
             }
@@ -75,7 +78,8 @@ class YXSpellSubview: UIView {
             if !letter2.isEmpty {
                 let wordView = YXLackWordView()
                 wordView.textField.text = ""
-                wordView.type = .blank
+                wordView.rightText      = letter2
+                wordView.type           = .blank
                 self.addSubview(wordView)
                 self.wordViewList.append(wordView)
             }
@@ -86,6 +90,7 @@ class YXSpellSubview: UIView {
                 if !lackWord.isEmpty {
                     let wordView = YXLackWordView()
                     wordView.textField.text = lackWord
+                    wordView.rightText      = lackWord
                     wordView.type = .normal
                     self.addSubview(wordView)
                     self.wordViewList.append(wordView)
@@ -99,8 +104,8 @@ class YXSpellSubview: UIView {
         maxX = 0
         self.wordViewList.forEach { (view) in
             var _width = CGFloat(AdaptSize(20))
-            if let text = view.text, !text.isEmpty {
-                let w = text.textWidth(font: view.textField.font!, height: charH)
+            if !view.text.isEmpty {
+                let w = view.text.textWidth(font: view.textField.font!, height: charH)
                 _width = w > _width ? w : _width
             }
             view.snp.remakeConstraints { (make) in
@@ -124,21 +129,30 @@ class YXSpellSubview: UIView {
     // TODO: Event
 
     /// 添加单词
-    func insertLetter(_ button: YXLetterButton) -> Int? {
-        var index = 0
+    func insertLetter(_ button: YXLetterButton) -> Bool {
+        var result = false
         for wordView in self.wordViewList {
-            if wordView.text.isNilOrEmpty {
-                wordView.text = button.currentTitle
+            if wordView.text.isEmpty {
+                wordView.text = button.currentTitle ?? ""
                 wordView.tag  = button.tag
                 // 修改宽度
                 self.resetConstraints()
-                return index
-            }
-            if wordView.type == .blank {
-                index += 1
+                result = true
+                break
             }
         }
-        return nil
+        // 检测是否有未填充的空格
+        let emptyBlankList = self.wordViewList.filter { (wordView) -> Bool in
+            if wordView.type == .blank && wordView.text.isEmpty {
+                return true
+            } else {
+                return false
+            }
+        }
+        if emptyBlankList.isEmpty {
+            self.checkResult()
+        }
+        return result
     }
 
     /// 移除单词
@@ -150,6 +164,22 @@ class YXSpellSubview: UIView {
                 self.resetConstraints()
             }
         }
+    }
+
+    /// 检验结果
+    private func checkResult() {
+        var errorTagList = [Int]()
+        self.wordViewList.forEach { (wordView) in
+            print("=====")
+            print(wordView.text)
+            print(wordView.rightText)
+            print("=====")
+            if wordView.text != wordView.rightText {
+                errorTagList.append(wordView.tag)
+            }
+        }
+        self.showResultView(errorList: errorTagList)
+        self.showResultBlock?(errorTagList)
     }
 
     /// 显示结果

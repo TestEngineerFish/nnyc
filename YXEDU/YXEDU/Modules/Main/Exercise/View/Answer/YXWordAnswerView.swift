@@ -43,24 +43,22 @@ class YXWordAnswerView: YXBaseAnswerView {
 
     @objc private func clickBtn(_ button: YXLetterButton) {
         if button.status == .selected || button.status == .error {
-            button.status = .normal
-            self.delegate?.unselectAnswerButton(button)
-            if let index = self.selectedBtnArray.firstIndex(of: button) {
-                self.selectedBtnArray.remove(at: index)
-            }
-        } else {
-            let index = delegate?.selectedAnswerButton(button)
-            if let _index = index, !self.selectedBtnArray.contains(button) {
-                button.status = .selected
-                self.selectedBtnArray.insert(button, at: _index)
-                if self.selectedBtnArray.count >= self.exerciseModel.answers?.count ?? 0 {
-                    // 检查结果
-                    let errList = self.checkAnserResult(button)
-                    // 更新UI
-                    self.showResultView(errorList: errList)
-                    // 更新问题UI
-                    self.delegate?.showResult(errorList: errList)
+            let tmpButtonArray = self.selectedBtnArray.filter { (selButton) -> Bool in
+                if selButton.tag == button.tag {
+                    selButton.status = .normal
+                    return false
+                } else {
+                    return true
                 }
+            }
+            self.selectedBtnArray = tmpButtonArray
+            delegate?.unselectAnswerButton(button)
+        } else {
+            // 通过回调更新选中顺序,也可防止同时选中多个
+            let success = delegate?.selectedAnswerButton(button) ?? false
+            if !self.selectedBtnArray.contains(button) && success {
+                button.status = .selected
+                self.selectedBtnArray.append(button)
             }
         }
     }

@@ -67,9 +67,9 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     private func createButtonArray(_ itemList: [YXOptionItemModel]) {
         var wordsBtnArray2 = Array(repeating: [YXLetterButton](), count: 3)
         // 1、生成按钮组
-        for item in itemList {
+        for (index, item) in itemList.enumerated() {
             let button = self.createWordButton(item.content)
-            button.tag = item.optionId + offsetTag
+            button.tag = index + offsetTag
             // 1.1、遍历二维数组中,是否需要插入对应单词
             for index in 0..<wordsBtnArray2.count {
                 let btnArray = wordsBtnArray2[index]
@@ -100,48 +100,27 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
 
     @objc func clickButton(_ button: YXLetterButton) {
         if button.status == .selected || button.status == .error {
-            if let index = self.selectedBtnArray.firstIndex(of: button) {
-                self.selectedBtnArray.remove(at: index)
-                button.status = .normal
+            let tmpButtonArray = self.selectedBtnArray.filter { (selButton) -> Bool in
+                if selButton.tag == button.tag {
+                    selButton.status = .normal
+                    return false
+                } else {
+                    return true
+                }
             }
+            self.selectedBtnArray = tmpButtonArray
             delegate?.unselectAnswerButton(button)
         } else {
             // 通过回调更新选中顺序,也可防止同时选中多个
-            let index = delegate?.selectedAnswerButton(button) ?? 0
-            if !self.selectedBtnArray.contains(button) {
+            let success = delegate?.selectedAnswerButton(button) ?? false
+            if !self.selectedBtnArray.contains(button) && success {
                 button.status = .selected
-                self.selectedBtnArray.insert(button, at: index)
-                if self.selectedBtnArray.count >= self.exerciseModel.answers?.count ?? 0 {
-                    // 检查结果
-                    let errList = self.checkAnserResult()
-                    // 更新UI
-                    self.showResultView(errorList: errList)
-                    // 更新问题UI
-                    self.delegate?.showResult(errorList: errList)
-                }
+                self.selectedBtnArray.append(button)
             }
         }
     }
 
-    /// 检查结果.如果有错误的则返回对应错误的ID数组,否则返回空数组
-    private func checkAnserResult() -> [Int] {
-        var errList = [Int]()
-        guard let answers = self.exerciseModel.answers else {
-            return errList
-        }
-        for (index, button) in self.selectedBtnArray.enumerated() {
-            if index >= answers.count { break }
-            let rightId   = answers[index]
-            let currentId = button.tag - offsetTag
-            if rightId != currentId {
-                errList.append(currentId + offsetTag)
-            }
-        }
-        return errList
-    }
-
-    /// 显示结果页
-    private func showResultView(errorList list: [Int]) {
+    override func showResult(errorList list: [Int]) {
         if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in
@@ -150,15 +129,13 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
             for id in list {
-                if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
-                    return button.tag == id
-                }) {
-                    button.status = .error
+                self.selectedBtnArray.forEach { (letterButton) in
+                    if letterButton.tag == id {
+                        letterButton.status = .error
+                    }
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)
         }
     }
-
-
 }

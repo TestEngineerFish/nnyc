@@ -15,6 +15,7 @@ class YXLearnMapViewController: UIViewController {
     var backButton = UIButton()
     var leftCloud  = UIImageView()
     var rightCloud = UIImageView()
+    var bookId: Int?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -43,7 +44,7 @@ class YXLearnMapViewController: UIViewController {
         self.view.addSubview(backButton)
         backButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(16))
-            make.top.equalToSuperview().offset(AdaptSize(32))
+            make.top.equalToSuperview().offset(AdaptSize(40))
             make.width.height.equalTo(AdaptSize(22))
         }
         backButton.addTarget(self, action: #selector(backClick), for: .touchUpInside)
@@ -82,6 +83,7 @@ class YXLearnMapViewController: UIViewController {
         // 学习路径
         let learningPath = LearningMapView(units: modelList, frame: self.view.bounds)
         self.view.addSubview(learningPath)
+        self.view.bringSubviewToFront(backButton)
         learningPath.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
@@ -93,7 +95,10 @@ class YXLearnMapViewController: UIViewController {
 
 
     private func bindData() {
-        let request = YXExerciseRequest.learnMap(bookID: 1)
+        guard let _bookId = self.bookId else {
+            return
+        }
+        let request = YXExerciseRequest.learnMap(bookID: _bookId)
         YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { (response) in
             self.mapModelList = response.dataArray
             self.createMapView()

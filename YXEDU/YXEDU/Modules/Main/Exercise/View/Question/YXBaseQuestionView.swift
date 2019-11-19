@@ -16,6 +16,8 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     let bottomPadding = CGFloat(54)
     
     var exerciseModel: YXWordExerciseModel
+
+    var delegate: YXQuestionEventProtocol?
     
     /// 主标题
     var titleLabel: UILabel?
@@ -93,9 +95,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
 
 
     // MARK:YXAnswerEventProtocol
-    func selectedAnswerButton(_ button: YXLetterButton) -> Int? {
-        return nil
-    }
+    func selectedAnswerButton(_ button: YXLetterButton) -> Bool { return false }
     /// 取消按钮,移除单词/字母
     func unselectAnswerButton(_ button: YXLetterButton) {}
     func showResult(errorList list: [Int]) {}

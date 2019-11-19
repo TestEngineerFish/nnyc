@@ -93,7 +93,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
             c.x = index % 2 > 0 ? self.contentSize.width/2 + centerOffset : self.contentSize.width/2 - centerOffset
             p1.y -= arcHeight
         }
-        let totalLength = CGFloat(sectorAmount) * sectorUnits + 2
+        let totalLength = CGFloat(sectorAmount) * sectorUnits + 1
         let scaleValue  = CGFloat(self.unitAmount) / totalLength
         proShapeLayer.path        = bezierPath.cgPath
         proShapeLayer.lineWidth   = 10

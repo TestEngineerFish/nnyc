@@ -14,6 +14,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var collectedWordsCount = "--"
     private var wrongWordsCount = "--"
     private var isCheckingLoginState = true
+    private var homeModel: YXHomeModel?
     
     @IBOutlet weak var bookNameButton: UIButton!
     @IBOutlet weak var unitNameButton: UIButton!
@@ -108,7 +109,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 let decoder = JSONDecoder()
                 let result = try decoder.decode(YXHomeModel.self, from: jsonData)
                 YXConfigure.shared().currLearningBookId = "\(result.bookId ?? 0)"
-                
+                self.homeModel = result
                 self.bookNameButton.setTitle(result.bookName, for: .normal)
                 self.unitNameButton.setTitle(result.unitName, for: .normal)
                 self.countOfWaitForStudyWords.text = "\((result.newWords ?? 0) + (result.reviewWords ?? 0))"
@@ -143,6 +144,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBAction func showLearnMap(_ sender: UIButton) {
         self.hidesBottomBarWhenPushed = true
         let vc = YXLearnMapViewController()
+        vc.bookId = self.homeModel?.bookId
         self.navigationController?.pushViewController(vc, animated: true)
         self.hidesBottomBarWhenPushed = false
     }
