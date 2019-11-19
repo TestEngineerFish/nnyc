@@ -190,7 +190,10 @@ class YXExerciseViewController: UIViewController {
                     vc.newLearnAmount = self.dataManager.newWordCount
                     vc.reviewLearnAmount = self.dataManager.reviewWordCount
                     
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    self.navigationController?.popViewController(animated: false)
+                    
+                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+//                    self.navigationController?.pushViewController(vc, animated: true)
                 } else {
                     YXUtils.showHUD(self.view, title: "上报关卡失败")
                     self.navigationController?.popViewController(animated: true)
