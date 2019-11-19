@@ -11,12 +11,12 @@ import UIKit
 
 class YXLearningResultViewController: UIViewController {
 
-    let model: YXLearingResultModel = YXLearingResultModel(star: 1, unitStr: "Unit 2", newLearn: 32, review: 20, unlockUnit: "拓展词汇")
     var backButton = UIButton()
     var punchButton = YXButton()
-    var mapModelList: [YXLearnMapUnitModel]?
-        var homeModel:YXHomeModel?
-
+    var mapModelList: [YXLearnMapUnitModel]? // 总单元
+    var currentModel: YXLearnMapUnitModel? // 当前单元
+    var homeModel:YXHomeModel?
+    var requestCount = 0
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -26,7 +26,7 @@ class YXLearningResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        self.createSubviews()
+        self.bindData()
     }
 
     private func createSubviews() {
@@ -40,8 +40,12 @@ class YXLearningResultViewController: UIViewController {
         }
         backButton.addTarget(self, action: #selector(backClick), for: .touchUpInside)
 
+        guard let _currentModel = self.currentModel, let _homeModel = self.homeModel else {
+            return
+        }
+
         // 结果视图
-        let headerView = YXLearningResultHeaderView(model)
+        let headerView = YXLearningResultHeaderView(_currentModel, homdModel: _homeModel)
         self.view.addSubview(headerView)
         headerView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -67,7 +71,10 @@ class YXLearningResultViewController: UIViewController {
     }
 
     /// 设置任务地图
-    private func createTaskMap(_ modelArray: [YXLearnMapUnitModel]) {
+    private func createTaskMap() {
+        guard let modelArray = self.mapModelList else {
+            return
+        }
         // 任务地图视图
         let taskMapViewSize = CGSize(width: AdaptSize(307), height: AdaptSize(245))
         let taskMapView = YXTaskMapView(modelArray, frame: CGRect(origin: CGPoint.zero, size: taskMapViewSize))
@@ -99,7 +106,27 @@ class YXLearningResultViewController: UIViewController {
             return
         }
         let request = YXExerciseRequest.learnResult(bookId: bookId, unitId: unitId)
-//        YYNetworkService.default.httpRequestTask(<#T##type: YYBaseResopnse.Protocol##YYBaseResopnse.Protocol#>, request: <#T##YYBaseRequest#>, success: <#T##((YYBaseResopnse) -> Void)?##((YYBaseResopnse) -> Void)?##(YYBaseResopnse) -> Void#>, fail: <#T##((NSError) -> Void)?##((NSError) -> Void)?##(NSError) -> Void#>)
+        YYNetworkService.default.httpRequestTask(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
+            // 如果后台还在计算,则重新请求
+            if response.data?.countStatus == .some(.ing) {
+                // 如果请求次数超过五次,则退出
+                if self.requestCount >= 5 {
+                    YXUtils.showHUD(self.view, title: "后台繁忙,请稍后重试")
+                } else {
+                    self.requestCount += 1
+                    self.bindData()
+                }
+            } else {
+                self.mapModelList = response.data?.unitList
+                self.currentModel = self.mapModelList?.filter({ (model) -> Bool in
+                    return model.status == .uniteIng
+                    }).first
+                self.createSubviews()
+                self.createTaskMap()
+            }
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error)")
+        }
     }
 
     // MARK: Event
@@ -109,8 +136,8 @@ class YXLearningResultViewController: UIViewController {
     }
 
     @objc private func punchEvent() {
-//        let vc = YXLearnMapViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
-//        self.hidesBottomBarWhenPushed = false
+        //        let vc = YXLearnMapViewController()
+        //        self.navigationController?.pushViewController(vc, animated: true)
+        //        self.hidesBottomBarWhenPushed = false
     }
 }

@@ -31,7 +31,6 @@ struct YXLearnMapUnitModel: Mappable {
         stars       <- map["stars"]
         status      <- map["status"]
         ext         <- map["ext"]
-
     }
 }
 

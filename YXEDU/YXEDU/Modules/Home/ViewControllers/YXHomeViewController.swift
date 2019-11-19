@@ -143,8 +143,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     @IBAction func showLearnMap(_ sender: UIButton) {
         self.hidesBottomBarWhenPushed = true
-        let vc = YXLearnMapViewController()
-        vc.bookId = self.homeModel?.bookId
+//        let vc = YXLearnMapViewController()
+//        vc.bookId = self.homeModel?.bookId
+        let vc = YXLearningResultViewController()
+        vc.homeModel = self.homeModel
         self.navigationController?.pushViewController(vc, animated: true)
         self.hidesBottomBarWhenPushed = false
     }

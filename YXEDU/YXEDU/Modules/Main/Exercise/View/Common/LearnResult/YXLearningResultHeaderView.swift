@@ -8,25 +8,18 @@
 
 import UIKit
 
-struct YXLearingResultModel {
-    var star: Int
-    var unitStr: String
-    var newLearn: Int
-    var review: Int
-    var unlockUnit: String?
-
-}
-
 class YXLearningResultHeaderView: UIView {
 
-    var model: YXLearingResultModel
+    var model: YXLearnMapUnitModel
+    var homeModel: YXHomeModel
 
     var firstStar  = UIImageView()
     var secondStar = UIImageView()
     var thirdStar  = UIImageView()
 
-    init(_ model:YXLearingResultModel) {
-        self.model = model
+    init(_ model:YXLearnMapUnitModel, homdModel: YXHomeModel) {
+        self.model     = model
+        self.homeModel = homdModel
         super.init(frame: CGRect.zero)
         self.createSubviews()
     }
@@ -39,7 +32,7 @@ class YXLearningResultHeaderView: UIView {
 
         // 松鼠头像
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "learnResult\(model.star)")
+        imageView.image = UIImage(named: "learnResult\(model.stars)")
         self.addSubview(imageView)
         imageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -48,15 +41,9 @@ class YXLearningResultHeaderView: UIView {
             make.height.equalTo(AdaptSize(109))
         }
         // 星星
-        firstStar.image  = UIImage(named: "star_enable")
-        secondStar.image = UIImage(named: "star_enable")
-        if model.star > 1 {
-            secondStar.image = UIImage(named: "star_enable")
-        }
-        thirdStar.image = UIImage(named: "star_enable")
-        if model.star > 1 {
-            thirdStar.image = UIImage(named: "star_enable")
-        }
+        firstStar.image  = model.stars > 0 ? UIImage(named: "star_enable") : UIImage(named: "star_disable")
+        secondStar.image = model.stars > 1 ? UIImage(named: "star_enable") : UIImage(named: "star_disable")
+        thirdStar.image  = model.stars > 2 ? UIImage(named: "star_enable") : UIImage(named: "star_disable")
         firstStar.isHidden  = true
         secondStar.isHidden = true
         thirdStar.isHidden  = true
@@ -79,44 +66,87 @@ class YXLearningResultHeaderView: UIView {
             make.height.width.equalTo(27)
         }
 
-        // 文本
+        // 单元标题
         let titleLabel = UILabel()
         titleLabel.textAlignment = .center
-        let titleText = "恭喜完成 \(model.unitStr) 的学习!"
+        let titleText = "恭喜完成 " + (model.unitName ?? "") + " 的学习!"
         let titleMutAttrStr = NSMutableAttributedString(string: titleText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x323232), NSAttributedString.Key.font:UIFont.regularFont(ofSize: 17)])
         titleMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.mediumFont(ofSize: 17)], range: NSRange(location: 5, length: titleText.count - 5))
         titleLabel.attributedText = titleMutAttrStr
 
+        // 进度标题
+        let progressLabel = UILabel()
+        progressLabel.textAlignment = .center
+        let progressText = "\(model.unitName ?? "") 完成 \(model.rate * 100)%"
+        let progressMutAttrStr = NSMutableAttributedString(string: progressText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x323232), NSAttributedString.Key.font:UIFont.mediumFont(ofSize: 17)])
+        progressMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.regularFont(ofSize: 17)], range: NSRange(location: progressText.count - 7, length: 2))
+        progressMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.semiboldFont(ofSize: 17), NSAttributedString.Key.foregroundColor:UIColor.orange1], range: NSRange(location: progressText.count - 4, length: 4))
+        progressLabel.attributedText = progressMutAttrStr
+
+        // 进度条
+        let progressView = UIProgressView()
+        progressView.progressTintColor = UIColor.orange1
+        progressView.trackTintColor = UIColor.hex(0xEFECE2)
+        progressView.setProgress(self.model.rate, animated: true)
+
+        // 新学标题
         let newLearnLabel = UILabel()
         newLearnLabel.textAlignment = .left
-        let newLearnText = "• 新掌握了 \(model.newLearn) 个单词"
+        let newLearnText = "• 新掌握了 \(homeModel.newWords ?? 0) 个单词"
         let newLearnMutAttrStr = NSMutableAttributedString(string: newLearnText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x888888), NSAttributedString.Key.font:UIFont.regularFont(ofSize: 14)])
         newLearnMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.mediumFont(ofSize: 14), NSAttributedString.Key.foregroundColor:UIColor.hex(0xFBA217)], range: NSRange(location: 7, length: newLearnText.count - 11))
         newLearnLabel.attributedText = newLearnMutAttrStr
 
+        // 巩固标题
         let reviewLabel = UILabel()
         reviewLabel.textAlignment = .left
-        let reviewText = "• 巩固了 \(model.review) 个单词"
+        let reviewText = "• 巩固了 \(homeModel.reviewWords ?? 0) 个单词"
         let reViewMutAttrStr = NSMutableAttributedString(string: reviewText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x888888), NSAttributedString.Key.font:UIFont.regularFont(ofSize: 14)])
         reViewMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.mediumFont(ofSize: 14), NSAttributedString.Key.foregroundColor:UIColor.hex(0xFBA217)], range: NSRange(location: 6, length: reviewText.count - 10))
         reviewLabel.attributedText = reViewMutAttrStr
 
         self.addSubview(titleLabel)
+        self.addSubview(progressLabel)
+        self.addSubview(progressView)
         self.addSubview(newLearnLabel)
         self.addSubview(reviewLabel)
 
-
-        titleLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(11)
-            make.height.equalTo(24)
-            make.width.equalToSuperview()
+        // 新学文本Y值
+        var offsetY = CGFloat.zero
+        if model.status == .uniteEnd {
+            progressLabel.isHidden = true
+            progressView.isHidden  = true
+            offsetY = 10
+            titleLabel.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(imageView.snp.bottom).offset(11)
+                make.height.equalTo(24)
+                make.width.equalToSuperview()
+            }
+            self.showAnimation()
+        } else {
+            titleLabel.isHidden = true
+            offsetY = AdaptSize(63)
+            progressLabel.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(imageView.snp.bottom).offset(11)
+                make.height.equalTo(24)
+                make.width.equalToSuperview()
+            }
+            progressView.snp.makeConstraints { (make) in
+                make.top.equalTo(progressLabel.snp.bottom).offset(AdaptSize(7))
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AdaptSize(160))
+                make.height.equalTo(AdaptSize(8))
+            }
+            progressView.layer.cornerRadius  = AdaptSize(8/2)
+            progressView.layer.masksToBounds = true
         }
 
         newLearnLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.top.equalTo(imageView.snp.bottom).offset(offsetY)
             make.left.equalTo(self.snp.centerX).offset(AdaptSize(-60))
-            make.width.equalTo(titleLabel)
+            make.width.equalTo(AdaptSize(200))
             make.height.equalTo(20)
         }
 
@@ -126,10 +156,10 @@ class YXLearningResultHeaderView: UIView {
         }
 
         // 如果有扩展单元解锁
-        if let _unlockUnit = model.unlockUnit {
+        if let _unlockUnit = model.ext {
             let unlockLabel = UILabel()
             unlockLabel.textAlignment = .left
-            let unlockText = "• 解锁了 " + _unlockUnit
+            let unlockText = "• 解锁了 " + _unlockUnit.unitName
             let unlockMutAttrStr = NSMutableAttributedString(string: unlockText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x888888), NSAttributedString.Key.font:UIFont.regularFont(ofSize: 14)])
             unlockMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.mediumFont(ofSize: 14), NSAttributedString.Key.foregroundColor:UIColor.hex(0xFBA217)], range: NSRange(location: 6, length: unlockText.count - 6))
             unlockLabel.attributedText = unlockMutAttrStr
@@ -139,7 +169,7 @@ class YXLearningResultHeaderView: UIView {
                 make.top.equalTo(reviewLabel.snp.bottom).offset(2)
             }
         }
-        self.showAnimation()
+
     }
 
     private func showAnimation() {
