@@ -15,6 +15,9 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         questionView = YXChineseFillQuestionView(exerciseModel: exerciseModel)
         questionView?.layer.removeShadow()
         self.addSubview(questionView!)
+        
+        remindView = YXRemindView(exerciseModel: exerciseModel)
+        self.addSubview(remindView!)
 
         answerView = YXAnswerConnectionLettersView(exerciseModel: exerciseModel)
         answerView?.contentScrollView?.isScrollEnabled = false
@@ -58,6 +61,12 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
             make.width.equalTo(viewW)
             make.center.equalToSuperview()
         }
+        
+        remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(questionView!.snp.bottom).offset(15)
+            make.left.width.equalTo(questionView!)
+            make.height.equalTo(150)
+        })
     }
     
     override func bindData() {
