@@ -12,13 +12,9 @@ import Lottie
 
 /// 练习模块，主控制器
 class YXExerciseViewController: UIViewController {
-    
-    
+        
     // 数据管理器
     var dataManager: YXExerciseDataManager = YXExerciseDataManager()
-    
-    /// 学习进度管理器
-//    var progressManager: YXExcerciseProgressManager = YXExcerciseProgressManager()
     
     // 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
@@ -52,7 +48,7 @@ class YXExerciseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.showLoadAnimation()
+//        self.showLoadAnimation()
         self.createSubviews()
         self.bindProperty()
         self.startStudy()
@@ -101,7 +97,12 @@ class YXExerciseViewController: UIViewController {
             self?.navigationController?.popViewController(animated: true)
         }
         self.headerView.switchEvent = {[weak self] in
-            self?.switchExerciseView()
+            
+            YXExcerciseProgressManager.completionExercise()
+            YXExcerciseProgressManager.completionReport()
+            
+            self?.navigationController?.popViewController(animated: true)
+//            self?.switchExerciseView()
         }
                 
         self.bottomView.tipsEvent = {[weak self] in
@@ -115,7 +116,7 @@ class YXExerciseViewController: UIViewController {
     /// 开始学习
     private func startStudy() {
         // 存在学完未上报的关卡
-        if YXExcerciseProgressManager.isExistUnReport() {
+        if !YXExcerciseProgressManager.isReport() {
             // 先上报关卡
             dataManager.reportUnit(test: "") {[weak self] (result, msg) in
                 guard let self = self else { return }
@@ -125,7 +126,7 @@ class YXExerciseViewController: UIViewController {
                     YXUtils.showHUD(self.view, title: "上报失败")
                 }
             }
-        } else if YXExcerciseProgressManager.isExistUnCompletion() {// 存在未学完的关卡
+        } else if !YXExcerciseProgressManager.isCompletion() {// 存在未学完的关卡
             dataManager.fetchUnCompletionExerciseModels()
             self.switchExerciseView()
         } else {
@@ -153,10 +154,10 @@ class YXExerciseViewController: UIViewController {
     private func switchExerciseView() {
         self.hideLoadAnimation()
         // 当前关卡是否学完
-        if YXExcerciseProgressManager.isCompletion() {
-            print("显示打卡页面")
-            return
-        }
+//        if YXExcerciseProgressManager.isCompletion() {
+//            print("显示打卡页面")
+//            return
+//        }
         
         if let model = dataManager.fetchOneExerciseModel() {
             if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {
@@ -169,6 +170,17 @@ class YXExerciseViewController: UIViewController {
             exerciseView.exerciseDelegate = self
             loadExerciseView(exerciseView: exerciseView)
         } else {
+            // 没有数据，就是完成了练习
+            YXExcerciseProgressManager.completionExercise()
+            
+            // 上报
+            dataManager.reportUnit(test: "") { (result, errorMsg) in
+                if result {
+                    YXExcerciseProgressManager.completionReport()
+                } else {
+                    YXUtils.showHUD(self.view, title: "上报关卡失败")
+                }
+            }
             
             print("学完")
             self.navigationController?.popViewController(animated: true)

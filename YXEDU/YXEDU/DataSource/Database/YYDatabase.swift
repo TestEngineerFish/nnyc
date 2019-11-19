@@ -18,7 +18,10 @@ protocol YYDataSource {
     var normalRunner: FMDatabaseQueue { get }
         
     /// 词书数据可执行器
-    var wordRunner: FMDatabaseQueue { get }
+    var wordRunnerQueue: FMDatabaseQueue { get }
+    
+    /// 词书数据可执行器
+//    var wordRunner: FMDatabaseQueue { get }
     
 }
 
@@ -32,7 +35,7 @@ extension YYDataSource {
         return YYDataSourceManager.default.createRunner(type: .normal)
     }
     
-    var wordRunner: FMDatabaseQueue {
+    var wordRunnerQueue: FMDatabaseQueue {
         return YYDataSourceManager.default.createRunner(type: .word)
     }
 }

@@ -35,16 +35,16 @@ class YXExerciseOptionManager: NSObject {
     }
     
     func processReviewWordOption() {
-        let count = self.reviewWordArray.count
+        
         
         for (index, exercise) in reviewWordArray.enumerated() {
             switch exercise.type {
             case .lookWordChooseImage, .lookExampleChooseImage, .lookWordChooseChinese,
                  .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord,
                  .listenChooseWord, .listenChooseChinese, .listenChooseImage:
-                reviewWordOption(exerciseModel: &reviewWordArray[index])
+                reviewWordOption(index: index)
             case .validationImageAndWord, .validationWordAndChinese:
-                validReviewWordOption(exerciseModel: &reviewWordArray[index], count: count)
+                validReviewWordOption(index: index)
             default:
                 print("其他题型不用生成选项")
             }
@@ -53,7 +53,9 @@ class YXExerciseOptionManager: NSObject {
     }
     
         
-    func reviewWordOption( exerciseModel: inout YXWordExerciseModel)  {
+    func reviewWordOption(index: Int)  {
+        
+        var exerciseModel = reviewWordArray[index]
         
         var items: [YXOptionItemModel] = []
 
@@ -71,8 +73,10 @@ class YXExerciseOptionManager: NSObject {
             
             // 查询的次数还有问题，后续需要优化
             var selectCount = 0
-            while isOK  {
-                let reviewExercise = reviewWordArray[random(max: reviewWordArray.count)]
+            let max = self.reviewWordArray.count
+            while max > 0 && isOK  {
+                
+                let reviewExercise = reviewWordArray[random(max: max)]
                 if reviewExercise.word?.wordId != exerciseModel.word?.wordId {
                     items.append(itemModel(word: reviewExercise.word!, type: exerciseModel.type))
                     if items.count == 3 {
@@ -115,15 +119,19 @@ class YXExerciseOptionManager: NSObject {
         
         exerciseModel.option = option
         exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
+        
+        reviewWordArray[index] = exerciseModel
     }
     
     
-    func validReviewWordOption( exerciseModel: inout YXWordExerciseModel, count: Int)  {
+    func validReviewWordOption(index: Int)  {
+        var exerciseModel = reviewWordArray[index]
+        
 //        exerciseModel.question?.soundmark = exerciseModel.word?.soundmark
         var items: [YXOptionItemModel] = []
         
-//        let max = self.reviewWordArray.count
-        let num = self.random(max: count)
+        let max = self.reviewWordArray.count
+        let num = self.random(max: max)
         if num % 2 == 1 {// 对
             exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
             exerciseModel.question?.meaning = exerciseModel.word?.meaning
@@ -157,6 +165,8 @@ class YXExerciseOptionManager: NSObject {
         
         exerciseModel.option = option
         exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
+        
+        reviewWordArray[index] = exerciseModel
     }
     
     /// 其他新学单词
@@ -204,39 +214,9 @@ class YXExerciseOptionManager: NSObject {
             item.content = word.word
             default:
             print()
-//                item.content = ""
         }
         
         return item
     }
-    
-    
-    
-    func process(exerciseModel: YXWordExerciseModel) -> YXWordExerciseModel {
-//        switch (exerciseModel.type {
-//        case .lookWordChooseImage:
-//        case .lookExampleChooseImage:
-//        case .lookWordChooseChinese:
-//        case .lookExampleChooseChinese:
-//        case .lookChineseChooseWord:
-//        case .lookImageChooseWord:
-//
-//        case .validationWordAndChinese:
-//        case .validationImageAndWord:
-//
-//        case .listenChooseWord:
-//        case .listenChooseChinese:
-//        case .listenChooseImage:
-//
-//
-//        default:
-//
-//        }
-        
-        return exerciseModel
-    }
-    
-    
-//    func
     
 }

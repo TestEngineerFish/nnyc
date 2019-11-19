@@ -20,7 +20,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                              book.gradeId,
                              book.gradeType]
         
-        self.wordRunner.inDatabase { (db) in
+        self.wordRunnerQueue.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
             completion(nil, isSuccess)
         }
@@ -30,7 +30,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         let sql = YYSQLManager.WordBookSQL.selectBook.rawValue
         let params: [Any] = [bookId]
         
-        self.wordRunner.inDatabase { (db) in
+        self.wordRunnerQueue.inDatabase { (db) in
             let result = db.executeQuery(sql, withArgumentsIn: params)
             var book = YXWordBookModel()
             
@@ -50,7 +50,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         let sql = YYSQLManager.WordBookSQL.deleteBook.rawValue
         let params: [Any] = [bookId]
         
-        self.wordRunner.inDatabase { (db) in
+        self.wordRunnerQueue.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
             completion(nil, isSuccess)
         }
@@ -84,7 +84,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                               word.unitName,
                               word.isExtensionUnit]
         
-        self.wordRunner.inDatabase { (db) in
+        self.wordRunnerQueue.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
             completion(nil, isSuccess)
         }
@@ -94,7 +94,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         let sql = YYSQLManager.WordBookSQL.selectWord.rawValue
         let params: [Any] = [wordId]
         
-        self.wordRunner.inDatabase { (db) in
+        self.wordRunnerQueue.inDatabase { (db) in
             let result = db.executeQuery(sql, withArgumentsIn: params)
             let usagesData: Data! = (result?.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
 
@@ -133,7 +133,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         let sql = YYSQLManager.WordBookSQL.selectWordByUnitId.rawValue
         let params: [Any] = [unitId]
         
-        self.wordRunner.inDatabase { (db) in
+        self.wordRunnerQueue.inDatabase { (db) in
             let result = db.executeQuery(sql, withArgumentsIn: params)
             let usagesData: Data! = (result?.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
 
@@ -178,9 +178,39 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         let sql = YYSQLManager.WordBookSQL.deleteWord.rawValue
         let params: [Any] = [bookId]
         
-        self.wordRunner.inDatabase { (db) in
+        self.wordRunnerQueue.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
             completion(nil, isSuccess)
         }
+    }
+    
+    
+    func selectWord(wordId: Int) -> YXWordModel? {
+        let json = """
+        {
+            "word_id" : 1,
+            "word" : "overnight",
+            "word_property" : "adv",
+            "word_paraphrase" : "在晚上, 在夜里",
+            "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
+            "symbol_us" : "美/ɡʊd/",
+            "symbol_uk" : "英/ɡʊd/",
+            "voice_us" : "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
+            "voice_uk" : "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
+            "example_en" : "You have such a <font color='#55a7fd'>good</font> chance.",
+            "example_cn" : "你有这么一个好的机会。",
+            "example_voice": "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
+            "synonym": "great,helpful",
+            "antonym": "poor,bad",
+            "usage":  ["adj.+n.  early morning 清晨","n.+n.  morning exercise早操"]
+        }
+        """
+
+
+        var word = YXWordModel(JSONString: json)
+        word?.wordId = wordId
+        word?.gradeId = 1
+        //        word?.word = (word?.word ?? "") + "\(wordId)"
+        return word
     }
 }

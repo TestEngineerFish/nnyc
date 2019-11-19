@@ -17,8 +17,6 @@ class YXExerciseDataManager: NSObject {
     
     private var newExerciseModelArray: [YXWordExerciseModel] = []
     private var reviewExerciseModelArray: [YXWordExerciseModel] = []
-    
-//    private var exerciseModelArray: [YXWordExerciseModel] = []
     private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
     
     /// 获取今天要学习的练习数据
@@ -61,10 +59,6 @@ class YXExerciseDataManager: NSObject {
             }
         }
         return nil
-//        if exerciseModelArray.count == 0 {
-//            return nil
-//        }
-//        return exerciseModelArray.removeFirst()
     }
     
     
@@ -100,9 +94,8 @@ class YXExerciseDataManager: NSObject {
                 }
             }
             
-            YXExcerciseProgressManager.updateNewWordProgress(exerciseModels: newExerciseModelArray)
-            YXExcerciseProgressManager.updateReviewWordProgress(exerciseModels: reviewExerciseModelArray)
-            
+            // 处理进度状态
+            YXExcerciseProgressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
         }
         
         
@@ -137,7 +130,6 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportUnit(test: Any, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        YXExcerciseProgressManager.clearExerciseModels()
         completion?(true, nil)
     }
     
@@ -159,10 +151,9 @@ class YXExerciseDataManager: NSObject {
         // 处理练习答案选项
         reviewExerciseModelArray = YXExerciseOptionManager().processOptions(newArray: newExerciseModelArray, reviewArray: reviewExerciseModelArray)
         
-        // 处理
-        YXExcerciseProgressManager.initStatus()
-        YXExcerciseProgressManager.updateNewWordProgress(exerciseModels: newExerciseModelArray)
-        YXExcerciseProgressManager.updateReviewWordProgress(exerciseModels: reviewExerciseModelArray)
+        // 处理进度状态
+        YXExcerciseProgressManager.initProgressStatus()
+        YXExcerciseProgressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
     }
     
     
@@ -171,23 +162,19 @@ class YXExerciseDataManager: NSObject {
         for wordId in result?.newWords ?? [] {
             
             if let word = self.fetchWord(wordId: wordId) {
+                var exercise = YXWordExerciseModel()
+                exercise.question = word
+                exercise.word = word
+                exercise.isNewWord = true
+                exercise.isFinish = true
+                
                 if (word.gradeId ?? 0) <= 6 {// 小学
-                    var exercise = YXWordExerciseModel()
                     exercise.type = .newLearnPrimarySchool
-                    exercise.question = word
-                    exercise.word = word
-                    exercise.isNewWord = true
-                    exercise.isFinish = true
-                    newExerciseModelArray.append(exercise)
                 } else if (word.gradeId ?? 0) <= 9 { // 初中
-                    var exercise = YXWordExerciseModel()
                     exercise.type = .newLearnJuniorHighSchool
-                    exercise.question = word
-                    exercise.word = word
-                    exercise.isNewWord = true
-                    exercise.isFinish = true
-                    newExerciseModelArray.append(exercise)
                 }
+                
+                newExerciseModelArray.append(exercise)
             }
         }
     }
@@ -197,30 +184,15 @@ class YXExerciseDataManager: NSObject {
         for step in result?.steps ?? [] {
             
             for subStep in step {
-                
-                if subStep.isBackup {
-                    var exercise = createExerciseModel(step: subStep)
-                    exercise.word = fetchWord(wordId: subStep.wordId)
-                    
-                    let key = "\(subStep.wordId)-" + (subStep.type ?? "")
-                    backupExerciseModelArray[key] = exercise
-                    continue
-                }
-                
                 var exercise = createExerciseModel(step: subStep)
                 exercise.word = fetchWord(wordId: subStep.wordId)
-                reviewExerciseModelArray.append(exercise)
                 
-//                if subStep.isCareScore {//是否关注分数
-//                    if subStep.score == self.fetchWordScore(wordId: subStep.wordId) {
-//                        var exercise = createExerciseModel(step: subStep)
-//                        exercise.word = fetchWord(wordId: exercise.question?.wordId ?? 0)
-//                        reviewExerciseModelArray.append(exercise)
-//                    }
-//                } else {
-//
-//                }
-
+                if subStep.isBackup {
+                    let key = "\(subStep.wordId)-" + (subStep.type ?? "")
+                    backupExerciseModelArray[key] = exercise
+                } else {
+                    reviewExerciseModelArray.append(exercise)
+                }
             }
             
         }
@@ -228,34 +200,7 @@ class YXExerciseDataManager: NSObject {
 
     
     public func fetchWord(wordId: Int) -> YXWordModel? {
-        //        return dao.selectWord(wordId: wordId)
-        let json = """
-        {
-            "word_id" : 1,
-            "word" : "overnight",
-            "word_property" : "adv",
-            "word_paraphrase" : "在晚上, 在夜里",
-            "word_image" : "http://static.51jiawawa.com/images/goods/20181114165122185.png",
-            "symbol_us" : "美/ɡʊd/",
-            "symbol_uk" : "英/ɡʊd/",
-            "voice_us" : "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
-            "voice_uk" : "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
-            "example_en" : "You have such a <font color='#55a7fd'>good</font> chance.",
-            "example_cn" : "你有这么一个好的机会。",
-            "example_voice": "http://cdn.xstudyedu.com/res/rj_45/voice/overnight_uk.mp3",
-            "synonym": "great,helpful",
-            "antonym": "poor,bad",
-            "usage":  ["adj.+n.  early morning 清晨","n.+n.  morning exercise早操"]
-        }
-        """
-        
-        
-        var word = YXWordModel(JSONString: json)
-        word?.wordId = wordId
-        word?.gradeId = 1
-        //        word?.word = (word?.word ?? "") + "\(wordId)"
-        return word
-        
+        return dao.selectWord(wordId: wordId)        
     }
     
 
@@ -284,6 +229,9 @@ class YXExerciseDataManager: NSObject {
         exercise.question = step.question
         exercise.option = step.option
         exercise.answers = step.answers
+        exercise.step = step.step
+        exercise.isCareScore = step.isCareScore
+
         return exercise
     }
     

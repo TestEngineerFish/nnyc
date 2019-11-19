@@ -10,60 +10,60 @@ import UIKit
 /// 练习进度管理器
 class YXExcerciseProgressManager: NSObject {
     
+    /// 本地存储Key
     enum LocalKey: String {
         case new = "new.txt"
         case review = "review.txt"
         
         case report = "Exercise_Report_Status"
         case completion = "Exercise_Completion_Status"
+        
+        var key: String {
+            return "\(YXUserModel.default.uuid ?? "")_" + self.rawValue
+        }
     }
     
-    /// 是否存在学完，未上报的关卡
-    class func isExistUnReport() -> Bool {
-        if let result = YYCache.object(forKey: LocalKey.report.rawValue) as? Bool, result == false {
-            return true
+    /// 关卡是否上报
+    class func isReport() -> Bool {
+        if let _ = YYCache.object(forKey: LocalKey.report.key) as? Bool {
+            return false
         }
-        return false
+        return true
     }
     
-    /// 是否存在未学完的关卡
-    class func isExistUnCompletion() -> Bool {
-        if let result = YYCache.object(forKey: LocalKey.completion.rawValue) as? Bool, result == false {
-            return true
+    /// 关卡是否学完
+    class func isCompletion() -> Bool {
+        if let _ = YYCache.object(forKey: LocalKey.completion.key) as? Bool {
+            return false
         }
-        return false
+        return true
     }
+    
     
     /// 跟新练习进度
-//    class func updateProgress(exerciseModel: YXWordExerciseModel) {
-//
-//    }
-    class func initStatus() {
-        YYCache.set(false, forKey: LocalKey.completion.rawValue)
-    }
-    
-    class func updateNewWordProgress(exerciseModels: [YXWordExerciseModel]) {
-        let str = exerciseModels.toJSONString()
-        let filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.new.rawValue)
-        try? str?.write(toFile: filePath, atomically: true, encoding: .utf8)
+    /// - Parameters:
+    ///   - newExerciseModel: 新学
+    ///   - reviewExerciseModel: 复习
+    class func updateProgress(newExerciseModel: [YXWordExerciseModel], reviewExerciseModel: [YXWordExerciseModel]) {
+        self.saveToLocal(exerciseModels: newExerciseModel, key: .new)
+        self.saveToLocal(exerciseModels: reviewExerciseModel, key: .review)
     }
     
     
-    class func updateReviewWordProgress(exerciseModels: [YXWordExerciseModel]) {
-        let str = exerciseModels.toJSONString()
-        let filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.review.rawValue)
-        try? str?.write(toFile: filePath, atomically: true, encoding: .utf8)
+    class func initProgressStatus() {
+        YYCache.set(false, forKey: LocalKey.completion.key)
     }
     
-        
+
+    /// 本地未学完的数据
     class func localExerciseModels() -> ([YXWordExerciseModel], [YXWordExerciseModel]) {
-        var filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.new.rawValue)
+        var filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.new.key)
         var new: [YXWordExerciseModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
             new = Array<YXWordExerciseModel>(JSONString: str)
         }
         
-        filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.review.rawValue)
+        filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.review.key)
         var review: [YXWordExerciseModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
             review = Array<YXWordExerciseModel>(JSONString: str)
@@ -73,24 +73,32 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    class func clearExerciseModels() {
-        var filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.review.rawValue)
-        _ = YYFileManager.share.clearFile(path: filePath)
-        
-        filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.review.rawValue)
-        _ = YYFileManager.share.clearFile(path: filePath)
-        
-        YYCache.remove(forKey: LocalKey.report.rawValue)
+    /// 完成答题
+    class func completionExercise() {
+        YYCache.remove(forKey: LocalKey.completion.key)        
+        YYCache.set(false, forKey: LocalKey.report.key)
     }
     
-    /// 对错判断
-//    class func isRight() -> Bool {
-//         return false
-//    }
     
-    /// 当前关卡是否学完
-    class func isCompletion() -> Bool {
-        return false
+    /// 完成上报
+    class func completionReport() {
+        YYCache.remove(forKey: LocalKey.report.key)
+        
+        var filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.new.key)
+        var result = YYFileManager.share.clearFile(path: filePath)
+        print("新学数据完成，本地数据删除：", result )
+        
+        filePath = YYDataSourceManager.dbFilePath(fileName: LocalKey.review.key)
+        result = YYFileManager.share.clearFile(path: filePath)
+        print("复习数据完成，本地数据删除：", result )
+    }
+    
+    /// 更新进度
+    /// - Parameter exerciseModels: 数据
+    private class func saveToLocal(exerciseModels: [YXWordExerciseModel], key: LocalKey) {
+        let str = exerciseModels.toJSONString()
+        let filePath = YYDataSourceManager.dbFilePath(fileName: key.key)
+        try? str?.write(toFile: filePath, atomically: true, encoding: .utf8)
     }
     
 }

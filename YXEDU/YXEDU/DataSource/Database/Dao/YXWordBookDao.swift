@@ -34,4 +34,11 @@ protocol YXWordBookDao {
     /// 查询单词
     /// - Parameter wordId: 单词 id
     func selectWord(wordId: Int,  completion: finishBlock)
+    
+    
+    
+    
+    /// 查询单词
+    /// - Parameter wordId: 单词 id
+    func selectWord(wordId: Int) -> YXWordModel?
 }

@@ -27,26 +27,6 @@ struct YXExerciseResultModel: Mappable {
     }
 }
 
-
-///// 复习单词数据模型
-//struct YXReviewWordModel: Mappable {
-//    var wordId: Int = -1
-//    /// 是否新单词
-//    var isNewWord: Bool = false
-//    /// 步骤模型
-//    var steps: [[YXWordStepModel]]?
-//    init?(map: Map) {
-//    }
-//
-//    mutating func mapping(map: Map) {
-//        wordId <- map["word_id"]
-//        isNewWord <- map["is_new_word"]
-//        steps <- map["step_list"]
-//    }
-//}
-
-
-
 struct YXWordStepModel: Mappable {
     var wordId: Int = -1
     /// 是否根据得分选择题型
