@@ -201,18 +201,26 @@ class YXExerciseOptionManager: NSObject {
         
         switch type {
             case .lookWordChooseImage:
-            item.content = word.imageUrl
+                item.content = word.imageUrl
             case .lookExampleChooseImage:
-            item.content = word.imageUrl
+                item.content = word.imageUrl
             case .lookWordChooseChinese:
-            item.content = word.meaning
+                item.content = word.meaning
             case .lookExampleChooseChinese:
-            item.content = word.meaning
+                item.content = word.meaning
             case .lookChineseChooseWord:
-            item.content = word.word
+                item.content = word.word
             case .lookImageChooseWord:
-            item.content = word.word
+                item.content = word.word
+            
+            case .listenChooseWord:
+                item.content = word.word
+            case .listenChooseChinese:
+                item.content = word.meaning
+            case .listenChooseImage:
+                item.content = word.imageUrl
             default:
+                
             print()
         }
         

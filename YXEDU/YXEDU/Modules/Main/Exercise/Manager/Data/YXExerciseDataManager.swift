@@ -42,6 +42,8 @@ class YXExerciseDataManager: NSObject {
     
     /// 从当前关卡数据中，获取一个练习数据对象
     func fetchOneExerciseModel() -> YXWordExerciseModel? {
+        print("\n====================\n")
+        print(reportJson())
         
         for exercise in self.newExerciseModelArray {
             if exercise.isFinish == false {
@@ -89,6 +91,7 @@ class YXExerciseDataManager: NSObject {
                 for (i, e) in self.reviewExerciseModelArray.enumerated() {
                     if e.word?.wordId == exerciseModel.word?.wordId && e.step == exerciseModel.step {
                         reviewExerciseModelArray[i].isFinish = true
+                        reviewExerciseModelArray[i].isRight = right
                     }
                     
                 }
@@ -129,8 +132,14 @@ class YXExerciseDataManager: NSObject {
     /// 上报关卡
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
-    func reportUnit(test: Any, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        completion?(true, nil)
+    func reportUnit( completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+        let json = self.reportJson()
+        let request = YXExerciseRequest.report(json: json)
+        YYNetworkService.default.httpRequestTask(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
+            completion?(response.statusCode == 200, nil)
+        }) { (error) in
+            completion?(false, error.message)
+        }
     }
     
     
@@ -235,8 +244,51 @@ class YXExerciseDataManager: NSObject {
         return exercise
     }
     
+    
+    
+    private func reportJson() -> String {
+        var map: [Int : YXExerciseReportModel] = [:]
+        for e in reviewExerciseModelArray {
+            
+            if let _ = map[e.word?.wordId ?? 0] {
+                continue
+            } else {
+                var report = YXExerciseReportModel()
+                report.wordId = e.word?.wordId ?? 0
+                report.bookId = e.word?.bookId ?? 0
+                report.unitId = e.word?.unitId ?? 0
+                report.score = e.score ?? 0
+                report.result = YXExerciseReportModel.ResultModel()
+                
+                map[e.word?.wordId ?? 0]  = report
+            }
+            
+        }
+        
+//        var array: [String] = []
+        for e in reviewExerciseModelArray {
+            var model = map[e.word?.wordId ?? 0]
+            switch e.step {
+            case 1:
+                model?.result?.one = e.isRight
+            case 2:
+                model?.result?.two = e.isRight
+            case 3:
+                model?.result?.three = e.isRight
+            case 4:
+                model?.result?.four = e.isRight
+            default:
+                print()
+            }
+        }
+        
+//        var array: [YXExerciseReportModel] = []
+//        for (_, e) in map {
+//            array.append(e)
+//        }
+//         =
+        return Array(map.values).toJSONString() ?? ""
+    }
+    
 }
-
-
-
 

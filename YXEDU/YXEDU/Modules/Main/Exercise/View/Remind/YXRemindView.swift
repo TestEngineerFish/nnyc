@@ -226,7 +226,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     //MARK: - 辅助方法
     private func setAllSubviewStatus() {
         
-        if remindSteps.count == 0 {
+        if remindSteps.count == 0 || currentRemindIndex == -1 {
             return
         }
         

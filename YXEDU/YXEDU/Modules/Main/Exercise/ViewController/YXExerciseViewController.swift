@@ -116,9 +116,10 @@ class YXExerciseViewController: UIViewController {
     /// 开始学习
     private func startStudy() {
         // 存在学完未上报的关卡
+//        if true {
         if !YXExcerciseProgressManager.isReport() {
             // 先上报关卡
-            dataManager.reportUnit(test: "") {[weak self] (result, msg) in
+            dataManager.reportUnit {[weak self] (result, msg) in
                 guard let self = self else { return }
                 if result {
                     self.fetchExerciseData()
@@ -174,7 +175,7 @@ class YXExerciseViewController: UIViewController {
             YXExcerciseProgressManager.completionExercise()
             
             // 上报
-            dataManager.reportUnit(test: "") { (result, errorMsg) in
+            dataManager.reportUnit { (result, errorMsg) in
                 if result {
                     YXExcerciseProgressManager.completionReport()
                 } else {
@@ -233,10 +234,9 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
     ///答完题回调处理
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
-        // 这题做完，需要移除掉
+        // 答题后，数据处理
         self.dataManager.completionExercise(exerciseModel: exerciseModel, right: right)
-        // 更新学习进度
-//        YXExcerciseProgressManager.updateProgress(exerciseModel: exerciseModel)
+
         if right {
             self.showRightAnimation()
             YXAVPlayerManager.share.playRightAudio()

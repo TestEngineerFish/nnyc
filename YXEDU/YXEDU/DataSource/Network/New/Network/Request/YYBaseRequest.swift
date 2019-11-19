@@ -18,6 +18,7 @@ public enum YYHTTPMethod: String {
     case put     = "PUT"
     case patch   = "PATCH"
     case delete  = "DELETE"
+    case body    = "BODY"
 }
 
 protocol YYBaseRequest {

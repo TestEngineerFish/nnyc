@@ -40,11 +40,18 @@ struct YYNetworkService {
         if let postJSON = request.postJson {
             var _request = URLRequest(url: request.url)
             _request.httpMethod = request.method.rawValue
+            if request.method == .body {
+                _request.httpMethod = "POST"
+            }
             _request.allHTTPHeaderFields = request.handleHeader(parameters: requestParametersReduceValueNil(request.parameters))
             
             do {
                 if let _postJSON = requestParametersReduceValueNil(postJSON as? [AnyHashable : Any]) {
-                    try _request.httpBody = JSONSerialization.data(withJSONObject: _postJSON, options: [])
+                    if request.method == .body {
+                        _request.httpBody = (_postJSON["json"] as? String)?.data(using: .utf8)
+                    } else {
+                        try _request.httpBody = JSONSerialization.data(withJSONObject: _postJSON, options: [])
+                    }
                 }
                 return self.httpPostRequest(type, request: _request, success: { (response, httpStatusCode) in
                     self.handleStatusCodeLogicResponseObject(response, statusCode: httpStatusCode, request: request, success: success, fail: fail)

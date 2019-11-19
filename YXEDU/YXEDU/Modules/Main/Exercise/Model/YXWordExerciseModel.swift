@@ -31,7 +31,9 @@ struct YXWordExerciseModel: Mappable {
     var isCareScore: Bool = false
         
     /// 第几步
-    var step: Int = 0
+    var step: Int = 0    
+    /// 对错
+    var isRight: Bool?
     
     var isNewWord: Bool = false
         
@@ -56,6 +58,8 @@ struct YXWordExerciseModel: Mappable {
         step <- map["step"]
         isNewWord <- map["is_new_word"]
         isFinish <- map["is_finish"]
+        isRight <- map["is_right"]
+        
     }
     
 }
