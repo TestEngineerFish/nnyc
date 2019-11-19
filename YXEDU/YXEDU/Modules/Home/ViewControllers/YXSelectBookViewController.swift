@@ -35,7 +35,10 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 
                 YXWordBookDaoImpl().deleteBook(bookId: bookID) { [weak self] (result, isSuccess) in
                     guard let self = self, isSuccess else { return }
-
+                    
+                    let wordBooksMaterialURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(bookID)")
+                    try? FileManager.default.removeItem(at: wordBooksMaterialURL)
+                    
                     if index == 0 {
                         self.fetchWordBookDetail(self.wordBookModels[1])
                         
@@ -56,7 +59,17 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     @IBAction func downloadWordBook(_ sender: UIButton) {
-        
+        YXWordBookDaoImpl().selectWord(wordId: 4470) { (result, isSuccess) in
+            print(result)
+        }
+//        for index in 0..<wordBookModels.count {
+//            let wordBook = wordBookModels[index]
+//            guard wordBook.isSelected else { continue }
+//
+//            YXWordBookResourceManager.shared.downloadMaterial(in: wordBook) { (isSueeces) in
+//
+//            }
+//        }
     }
      
      @IBAction func startStudy(_ sender: UIButton) {

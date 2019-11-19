@@ -19,6 +19,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
         urlSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
     }
     
+    private var downloadingWordBookId: Int?
     private var urlSession: URLSession!
     private var currentDownloadWordBook: YXWordBookModel!
     private var closure: ((_ isSuccess: Bool) -> Void)?
@@ -75,6 +76,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                 
             } catch {
                 print(error)
+                DispatchQueue.main.async { self.closure?(false) }
             }
         }
 //        guard let bookID = wordBook.bookId else {
@@ -88,9 +90,27 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
 //
 //            } else {
 //                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
+//                downloadingWordBookId = downloadTask.taskIdentifier
 //                downloadTask.resume()
 //            }
 //        }
+    }
+    
+    func downloadMaterial(in wordBook: YXWordBookModel, _ closure: ((_ isSuccess: Bool) -> Void)?) {
+        guard let bookID = wordBook.bookId else {
+            DispatchQueue.main.async { self.closure?(false) }
+            return
+        }
+        
+        YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
+            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
+                DispatchQueue.main.async { self.closure?(true) }
+                
+            } else {
+                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
+                downloadTask.resume()
+            }
+        }
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
@@ -105,14 +125,19 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
         }
         
         let downloadedZipURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent(url.lastPathComponent)
-        let unzipWordBooksJsonURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("\(bookID)")
+        let unzipWordBooksJsonURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(bookID)")
         try? FileManager.default.removeItem(at: downloadedZipURL)
         
         do {
             try FileManager.default.moveItem(at: location, to: downloadedZipURL)
             try Zip.unzipFile(downloadedZipURL, destination: unzipWordBooksJsonURL, overwrite: true, password: nil)
             
-            self.saveWordBook(with: unzipWordBooksJsonURL)
+            if downloadTask.taskIdentifier == downloadingWordBookId {
+                self.saveWordBook(with: unzipWordBooksJsonURL)
+                
+            } else {
+                self.saveWordBookMaterial(with: unzipWordBooksJsonURL)
+            }
             
         } catch {
             DispatchQueue.main.async { self.closure?(false) }
@@ -151,7 +176,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                     word.isExtensionUnit = unit.isExtensionUnit
 
                     YXWordBookDaoImpl().insertWord(word: word) { (result, isSuccess) in
-                        
+                        print(isSuccess)
                     }
                 }
             }
@@ -161,5 +186,50 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
         } catch {
             DispatchQueue.main.async { self.closure?(false) }
         }
+    }
+    
+    private func saveWordBookMaterial(with url: URL) {
+        let wordBooksJsonUrl = url.appendingPathComponent("words.json")
+
+        do {
+            let data = try Data(contentsOf: wordBooksJsonUrl)
+            let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+            guard let jsonString = String(data: jsonData, encoding: .utf8), let wordBook = YXWordBookModel(JSONString: jsonString), let units = wordBook.units else {
+                DispatchQueue.main.async { self.closure?(false) }
+                return
+            }
+
+            for unit in units {
+                guard let words = unit.words else { continue }
+                for var word in words {
+                    word.gradeId = wordBook.gradeId
+                    word.gardeType = wordBook.gradeType
+                    word.bookId = wordBook.bookId
+                    word.unitId = unit.unitId
+                    word.unitName = unit.unitName
+                    word.isExtensionUnit = unit.isExtensionUnit
+                    
+                    word.imageUrl = replaceResourceUrl(ResourcePath: word.imageUrl)
+                    word.americanPronunciation = replaceResourceUrl(ResourcePath: word.americanPronunciation)
+                    word.englishPronunciation = replaceResourceUrl(ResourcePath: word.englishPronunciation)
+                    word.examplePronunciation = replaceResourceUrl(ResourcePath: word.examplePronunciation)
+
+                    YXWordBookDaoImpl().insertWord(word: word) { (result, isSuccess) in
+                        print(isSuccess)
+                    }
+                }
+            }
+            
+            DispatchQueue.main.async { self.closure?(true) }
+            
+        } catch {
+            DispatchQueue.main.async { self.closure?(false) }
+        }
+    }
+    
+    private func replaceResourceUrl(ResourcePath: String?) -> String {
+        var string = ""
+        
+        return string
     }
 }

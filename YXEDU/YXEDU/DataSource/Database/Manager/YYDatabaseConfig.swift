@@ -232,13 +232,13 @@ extension YYSQLManager {
         case selectBook =
         """
             SELECT * FROM book
-            WHERE bookId IN (%@)
+            WHERE bookId = ?
         """
         
         case deleteBook =
         """
             DELETE FROM book
-            WHERE bookId IN (%@)
+            WHERE bookId = ?
         """
         
         case insertWord =
@@ -259,13 +259,13 @@ extension YYSQLManager {
         case selectWord =
         """
             SELECT * FROM word
-            WHERE wordId IN (%@)
+            WHERE wordId = ?
         """
         
         case deleteWord =
         """
             DELETE * FROM word
-            WHERE bookId IN (%@)
+            WHERE bookId = ?
         """
     }
 }
