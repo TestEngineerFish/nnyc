@@ -13,7 +13,7 @@ public enum YXExerciseRequest: YYBaseRequest {
     case learnMap(bookId: Int)
     case learnResult(bookId: Int, unitId: Int)
     case report(json: String)
-    case addUserBook(userId: Int, bookId: Int, unitId: Int)
+    case addUserBook(userId: String, bookId: Int, unitId: Int)
 }
 
 

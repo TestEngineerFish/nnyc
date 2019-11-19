@@ -16,6 +16,7 @@ class YXLearnMapViewController: UIViewController {
     var leftCloud  = UIImageView()
     var rightCloud = UIImageView()
     var bookId: Int?
+    var unitId: Int?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -81,7 +82,13 @@ class YXLearnMapViewController: UIViewController {
             return
         }
         // 学习路径
-        let learningPath = LearningMapView(units: modelList, frame: self.view.bounds)
+        let learningPath = LearningMapView(units: modelList, frame: self.view.bounds, unitId: unitId)
+        learningPath.learnNewUnit = { (unitId: Int?) -> Void in
+            guard let id = unitId else {
+                return
+            }
+            self.learnUnit(id)
+        }
         self.view.addSubview(learningPath)
         self.view.bringSubviewToFront(backButton)
         learningPath.snp.makeConstraints { (make) in
@@ -102,6 +109,19 @@ class YXLearnMapViewController: UIViewController {
         YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { (response) in
             self.mapModelList = response.dataArray
             self.createMapView()
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error)")
+        }
+    }
+
+    /// 学习新单元
+    private func learnUnit(_ unitId: Int) {
+        guard let uuidStr = YXUserModel.default.uuid, let bookId = self.bookId else {
+            return
+        }
+        let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
+        YYNetworkService.default.httpRequestTask(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
+            print("学习新单元成功")
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
         }

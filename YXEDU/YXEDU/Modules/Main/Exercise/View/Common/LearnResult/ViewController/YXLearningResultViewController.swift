@@ -142,10 +142,10 @@ class YXLearningResultViewController: UIViewController {
 
     /// 学习新单元
     private func learnUnit(_ unitId: Int) {
-        guard let bookId = self.bookId, let unitId = self.unitId else {
+        guard let uuidStr = YXUserModel.default.uuid, let bookId = self.bookId else {
             return
         }
-        let request = YXExerciseRequest.addUserBook(userId: 0, bookId: bookId, unitId: unitId)
+        let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
         YYNetworkService.default.httpRequestTask(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
             print("学习新单元成功")
         }) { (error) in

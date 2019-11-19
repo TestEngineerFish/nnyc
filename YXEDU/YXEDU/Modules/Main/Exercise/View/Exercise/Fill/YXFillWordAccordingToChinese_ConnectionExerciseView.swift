@@ -11,22 +11,26 @@ import UIKit
 /// /// 看中文填空，点击 + 连线两种操作
 class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
 
+    var contentView = UIView()
+
     override func createSubview() {
+        self.addSubview(contentView)
+
         questionView = YXChineseFillQuestionView(exerciseModel: exerciseModel)
         questionView?.layer.removeShadow()
-        self.addSubview(questionView!)
+        self.contentView.addSubview(questionView!)
         
         remindView = YXRemindView(exerciseModel: exerciseModel)
         self.addSubview(remindView!)
 
         answerView = YXAnswerConnectionLettersView(exerciseModel: exerciseModel)
         answerView?.contentScrollView?.isScrollEnabled = false
-        self.addSubview(answerView!)
+        self.contentView.addSubview(answerView!)
 
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
 
-        self.layer.setDefaultShadow()
+        self.contentView.layer.setDefaultShadow()
     }
     
     override func layoutSubviews() {
@@ -56,14 +60,14 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
 
         let viewW = screenWidth - 44
         let viewH = questionH + answerViewTop + answerViewH + answerViewBottom
-        self.snp.makeConstraints { (make) in
+        self.contentView.snp.makeConstraints { (make) in
             make.height.equalTo(viewH)
             make.width.equalTo(viewW)
             make.center.equalToSuperview()
         }
         
         remindView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(questionView!.snp.bottom).offset(15)
+            make.top.equalTo(contentView.snp.bottom).offset(15)
             make.left.width.equalTo(questionView!)
             make.height.equalTo(150)
         })

@@ -19,14 +19,14 @@ class YXSexangleView: UIView {
     var progressLabel: YXLabel?
     var delegate: YXSexangleViewClickProcotol?
     var isExtension: Bool
-
+    var gradientLayer: CAGradientLayer?
     var avatarView: UIView?
 
-    init(_ model: YXLearnMapUnitModel, isExtension: Bool) {
+    init(_ model: YXLearnMapUnitModel, isExtension: Bool, isShowProgress: Bool) {
         self.model = model
         self.isExtension = isExtension
         super.init(frame: CGRect(origin: .zero, size: CGSize(width: 81, height: 81)))
-        self.createSubview(progress: 0.8)
+        self.createSubview(isShowProgress: isShowProgress)
         if model.status == .uniteEnd {
             // 设置星星等级
             self.setScoreStarView(model.stars)
@@ -40,29 +40,13 @@ class YXSexangleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func createSubview(progress rate: CGFloat = 1.0) {
+    private func createSubview(isShowProgress: Bool) {
         // 最外部的六边形
         let outSideColor = self.getOutSideColor()
         let outSideLayer = self.getSexangleLayer(self.width, strokeColor: outSideColor.cgColor)
         self.layer.addSublayer(outSideLayer)
-        if model.status == .uniteIng {
-            // 设置渐变
-            let maskLayer = self.getSexangleLayer(81, strokeColor: UIColor.red.cgColor)
-            let gradientLayer = self.getGradientLayer()
-            self.layer.addSublayer(gradientLayer)
-            gradientLayer.frame = self.bounds
-            gradientLayer.mask = maskLayer
-//            maskLayer.strokeStart = 0.0
-//            maskLayer.strokeEnd   = rate
-            // 设置动画
-            let progressAnimation = CABasicAnimation(keyPath: "strokeEnd")
-            progressAnimation.fromValue   = 0.0
-            progressAnimation.toValue     = rate
-            progressAnimation.duration    = 2
-            progressAnimation.repeatCount = 1
-            progressAnimation.fillMode    = .forwards
-            progressAnimation.isRemovedOnCompletion = false
-            maskLayer.add(progressAnimation, forKey: nil)
+        if model.status == .uniteIng, isShowProgress {
+            self.showProgressAnimation()
         }
 
         // 内部的六边形
@@ -83,6 +67,28 @@ class YXSexangleView: UIView {
             make.height.equalTo(42)
             make.width.equalToSuperview()
         }
+    }
+
+     // 设置进度动画
+    func showProgressAnimation() {
+        self.hideProgressAnimtion()
+        let maskLayer = self.getSexangleLayer(81, strokeColor: UIColor.red.cgColor)
+        gradientLayer = self.getGradientLayer()
+        self.layer.addSublayer(gradientLayer!)
+        gradientLayer?.frame = self.bounds
+        gradientLayer?.mask = maskLayer
+        let progressAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        progressAnimation.fromValue   = 0.0
+        progressAnimation.toValue     = self.model.rate
+        progressAnimation.duration    = 2
+        progressAnimation.repeatCount = 1
+        progressAnimation.fillMode    = .forwards
+        progressAnimation.isRemovedOnCompletion = false
+        maskLayer.add(progressAnimation, forKey: nil)
+    }
+
+    func hideProgressAnimtion() {
+        self.gradientLayer?.removeFromSuperlayer()
     }
 
     /// 获得内容视图
@@ -271,9 +277,7 @@ class YXSexangleView: UIView {
     // MARK: Event
 
     @objc private func clickEvent(_ tap: UITapGestureRecognizer) {
-        if self.model.status != .uniteUnstart {
-            self.delegate?.clickSexangleView(self)
-        }
+        self.delegate?.clickSexangleView(self)
     }
 
     // MARK: Tools

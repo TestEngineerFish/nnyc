@@ -12,7 +12,8 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
 
     var modelArray: [YXLearnMapUnitModel]
     var avatarPinView: YXAvatarPinView?
-
+    var learnNewUnit:((Int?)->Void)?
+    var currentUnitId: Int?
     // 间距
     let margin = CGFloat(130)
     // 弧线数量
@@ -28,14 +29,16 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
     // 单元坐标数组,从低到高
     var unitPointArray = [CGPoint]()
     // 单元视图数组,从低到高
-    var unitViewArray = [UIView]()
+    var unitViewArray = [YXSexangleView]()
+    var currentUnitView: YXSexangleView?
     // 路径
     let proShapeLayer = CAShapeLayer()
 
-    init(units modelArray: [YXLearnMapUnitModel], frame: CGRect) {
-        self.modelArray = modelArray
-        let tmpAmount = modelArray.count - 1
-        sectorAmount = tmpAmount / Int(sectorUnits)
+    init(units modelArray: [YXLearnMapUnitModel], frame: CGRect, unitId: Int?) {
+        self.modelArray    = modelArray
+        self.currentUnitId = unitId
+        let tmpAmount      = modelArray.count - 1
+        sectorAmount       = tmpAmount / Int(sectorUnits)
         if tmpAmount % Int(sectorUnits) > 0 {
             sectorAmount += 1
         }
@@ -52,8 +55,9 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         // 获得当前学习单元对象
         for (index, model) in self.modelArray.enumerated() {
             // 默认获取第一个学习中的单元
-            if model.status == .uniteIng && index < self.unitViewArray.count {
+            if model.unitID == unitId && index < self.unitViewArray.count {
                 let unitView = self.unitViewArray[index]
+                self.currentUnitView = unitView
                 // 创建用户头像
                 self.avatarPinView = YXAvatarPinView()
                 self.movePinView(to: unitView, animation: false)
@@ -122,7 +126,8 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         for (index, point) in self.unitPointArray.enumerated() {
             if index < self.modelArray.count {
                 let model = self.modelArray[index]
-                let sexangleView = YXSexangleView(model, isExtension: false)
+                let isShowProgress = model.unitID == self.currentUnitId
+                let sexangleView = YXSexangleView(model, isExtension: false, isShowProgress: isShowProgress)
                 sexangleView.center = point
                 sexangleView.delegate = self
                 self.addSubview(sexangleView)
@@ -132,14 +137,24 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
     }
 
     /// 移动到对应单元视图
-    private func movePinView(to unitView: UIView, animation: Bool = true) {
+    private func movePinView(to unitView: YXSexangleView, animation: Bool = true) {
         let targetFrame = CGRect(x: unitView.frame.midX - AdaptSize(15), y: unitView.frame.minY - AdaptSize(5), width: AdaptSize(30), height: AdaptSize(30))
         if animation {
             UIView.animate(withDuration: 1) {
                 self.avatarPinView?.frame = targetFrame
+                // 隐藏进度条
+                self.currentUnitView?.hideProgressAnimtion()
+                // 替换当前视图
+                self.currentUnitView = unitView
+                // 显示选中视图的进度条
+                unitView.showProgressAnimation()
             }
         } else {
             avatarPinView?.frame = targetFrame
+        }
+        if unitView.tag < self.modelArray.count {
+            let model = self.modelArray[unitView.tag]
+            self.learnNewUnit?(model.unitID)
         }
     }
 

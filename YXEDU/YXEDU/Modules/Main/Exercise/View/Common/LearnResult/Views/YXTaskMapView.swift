@@ -44,6 +44,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
         shapLayer.lineWidth   = 10
         shapLayer.strokeColor = UIColor.hex(0xE5DDD7).cgColor
         shapLayer.fillColor   = nil
+//        shapLayer.strokeEnd   = CGFloat(unitViewArray.count/3)
         self.layer.addSublayer(shapLayer)
 
         // 设置点
@@ -64,7 +65,8 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
         for (index, point) in self.unitPointArray.enumerated() {
             if index < self.modelArray.count {
                 let model = self.modelArray[index]
-                let sexangleView = YXSexangleView(model, isExtension: false)
+                let isShowProgress = model.unitID == self.currentModel?.unitID
+                let sexangleView = YXSexangleView(model, isExtension: false, isShowProgress: isShowProgress)
                 sexangleView.tag = index
                 sexangleView.center = point
                 sexangleView.delegate = self
