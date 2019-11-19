@@ -13,6 +13,7 @@ public enum YXExerciseRequest: YYBaseRequest {
     case learnMap(bookId: Int)
     case learnResult(bookId: Int, unitId: Int)
     case report(json: String)
+    case addUserBook(userId: Int, bookId: Int, unitId: Int)
 }
 
 
@@ -23,6 +24,8 @@ extension YXExerciseRequest {
             return .get
         case . report:
             return .body
+        case .addUserBook:
+            return .post
         }
     }
 }
@@ -38,10 +41,11 @@ extension YXExerciseRequest {
             return YXAPI.Word.learnResult
         case .report:
             return YXAPI.Word.report
+        case .addUserBook:
+            return YXAPI.Word.addUserBook
         }
     }
 }
-
 
 extension YXExerciseRequest {
     var parameters: [String : Any]? {
@@ -50,6 +54,8 @@ extension YXExerciseRequest {
             return ["book_id" : bookId]
         case .learnResult(let bookId, let unitId):
             return ["book_id" : bookId, "unit_id" : unitId]
+        case .addUserBook(let userId, let bookId, let unitId):
+            return ["user_id":userId, "book_id":bookId, "unit_id":unitId]
         default:
             return nil
         }

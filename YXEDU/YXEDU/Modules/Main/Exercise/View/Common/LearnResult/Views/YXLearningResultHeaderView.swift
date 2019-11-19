@@ -116,11 +116,11 @@ class YXLearningResultHeaderView: UIView {
         if model.status == .uniteEnd {
             progressLabel.isHidden = true
             progressView.isHidden  = true
-            offsetY = 10
+            offsetY = AdaptSize(45)
             titleLabel.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(imageView.snp.bottom).offset(11)
-                make.height.equalTo(24)
+                make.top.equalTo(imageView.snp.bottom).offset(AdaptSize(11))
+                make.height.equalTo(AdaptSize(24))
                 make.width.equalToSuperview()
             }
             self.showAnimation()
@@ -129,8 +129,8 @@ class YXLearningResultHeaderView: UIView {
             offsetY = AdaptSize(63)
             progressLabel.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(imageView.snp.bottom).offset(11)
-                make.height.equalTo(24)
+                make.top.equalTo(imageView.snp.bottom).offset(AdaptSize(11))
+                make.height.equalTo(AdaptSize(24))
                 make.width.equalToSuperview()
             }
             progressView.snp.makeConstraints { (make) in
@@ -147,7 +147,7 @@ class YXLearningResultHeaderView: UIView {
             make.top.equalTo(imageView.snp.bottom).offset(offsetY)
             make.left.equalTo(self.snp.centerX).offset(AdaptSize(-60))
             make.width.equalTo(AdaptSize(200))
-            make.height.equalTo(20)
+            make.height.equalTo(AdaptSize(20))
         }
 
         reviewLabel.snp.makeConstraints { (make) in

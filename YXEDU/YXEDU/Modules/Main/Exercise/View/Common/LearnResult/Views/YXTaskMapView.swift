@@ -14,9 +14,13 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
     var unitViewArray = [UIView]()
     var unitPointArray = [CGPoint]()
     var avatarPinView: YXAvatarPinView?
+    var currentModel: YXLearnMapUnitModel?
 
-    init(_ modelArray: [YXLearnMapUnitModel], frame: CGRect) {
+    var learnNewUnit:((Int?)->Void)?
+
+    init(_ modelArray: [YXLearnMapUnitModel], frame: CGRect, currentModel: YXLearnMapUnitModel?) {
         self.modelArray = modelArray
+        self.currentModel = currentModel
         super.init(frame: frame)
         self.createSubviews()
     }
@@ -67,9 +71,17 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
                 self.insertSubview(sexangleView, at: 1)
                 self.unitViewArray.append(sexangleView)
                 // 如果是当前学习的单元,则添加小图钉头像
-                if model.status == .uniteIng {
+                if model.unitID == self.currentModel?.unitID {
                     self.addAvatarPinView(sexangleView)
                 }
+            }
+        }
+        guard let currentModel = self.currentModel, let nextView = self.unitViewArray.last else {
+            return
+        }
+        if currentModel.stars > 1 {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                self.movePinView(to: nextView)
             }
         }
     }
@@ -95,18 +107,34 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
 
     /// 添加提示气泡
     private func addTipsView() {
+        guard let currentModel = self.currentModel else {
+            return
+        }
         let bubbleImageView = UIImageView(image: UIImage(named: "bubble"))
         let bubbleSize = CGSize(width: AdaptSize(170), height: AdaptSize(60))
         bubbleImageView.size = bubbleSize
         let label = UILabel()
-        label.text = "学得不错，继续学习\n就可以推进这个单元的进度哦~"
+        label.text = {
+            if currentModel.stars > 1 {
+                return "学得不错，有时间可以再回头巩固一下哦"
+            } else if currentModel.stars > 2 {
+                if currentModel.ext == nil {
+                    return "获得了3星呢，之后开始下个单元的学习吧~"
+                } else {
+                    return "来试试拓展单元吧，可以学到更多有用的词汇哦~"
+                }
+            } else {
+                return "有些单词还掌握得不太好呢，再练习一下吧~"
+            }
+        }()
         label.textColor = UIColor.white
         label.font = UIFont.semiboldFont(ofSize: 12)
         label.numberOfLines = 2
         label.textAlignment = .center
         bubbleImageView.addSubview(label)
         label.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
+            make.left.equalToSuperview().offset(AdaptSize(15))
+            make.right.equalToSuperview().offset(AdaptSize(-15))
             make.height.equalTo(AdaptSize(34))
             make.top.equalToSuperview().offset(AdaptSize(8))
         }
@@ -136,6 +164,11 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
         } else {
             avatarPinView?.frame = targetFrame
         }
+        if unitView.tag < self.modelArray.count {
+            let model = self.modelArray[unitView.tag]
+            self.learnNewUnit?(model.unitID)
+        }
+
     }
 
     // MARK: YXSexangleViewClickProcotol

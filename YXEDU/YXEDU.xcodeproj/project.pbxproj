@@ -2002,9 +2002,6 @@
 				224A2FD32382837C00AD99B0 /* Model */,
 				224A2FD42382838400AD99B0 /* Views */,
 				224A2FD02382831D00AD99B0 /* ViewController */,
-				224A2FBE238233CC00AD99B0 /* LearningMapView.swift */,
-				224A2FBC238233CC00AD99B0 /* YXAvatarPinView.swift */,
-				224A2FBB238233CC00AD99B0 /* YXSexangleView.swift */,
 			);
 			path = LearnMap;
 			sourceTree = "<group>";
@@ -2012,10 +2009,9 @@
 		224A2FBA238233A300AD99B0 /* LearnResult */ = {
 			isa = PBXGroup;
 			children = (
+				224DF54C238443FC00D2B0BF /* Views */,
+				224DF54B238443ED00D2B0BF /* ViewController */,
 				224DF54823840E4800D2B0BF /* Model */,
-				224A2FC3238233E100AD99B0 /* YXLearningResultHeaderView.swift */,
-				224A2FC5238233E100AD99B0 /* YXLearningResultViewController.swift */,
-				224A2FC4238233E100AD99B0 /* YXTaskMapView.swift */,
 			);
 			path = LearnResult;
 			sourceTree = "<group>";
@@ -2047,6 +2043,9 @@
 		224A2FD42382838400AD99B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				224A2FBE238233CC00AD99B0 /* LearningMapView.swift */,
+				224A2FBC238233CC00AD99B0 /* YXAvatarPinView.swift */,
+				224A2FBB238233CC00AD99B0 /* YXSexangleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2057,6 +2056,23 @@
 				224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		224DF54B238443ED00D2B0BF /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				224A2FC5238233E100AD99B0 /* YXLearningResultViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		224DF54C238443FC00D2B0BF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				224A2FC3238233E100AD99B0 /* YXLearningResultHeaderView.swift */,
+				224A2FC4238233E100AD99B0 /* YXTaskMapView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2265905E23743282006C9925 /* Unisound */ = {

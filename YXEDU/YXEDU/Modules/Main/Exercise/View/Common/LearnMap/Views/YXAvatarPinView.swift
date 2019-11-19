@@ -32,7 +32,7 @@ class YXAvatarPinView: UIView {
             make.height.equalTo(AdaptSize(42))
         }
 
-        let avatarImageView = UIImageView(image: UIImage(named: "dogAvatar"))
+        let avatarImageView = UIImageView(image: UIImage(named: "Mission_Card_Box"))
         imageView.addSubview(avatarImageView)
         avatarImageView.frame = CGRect(x: 0, y: 0, width: AdaptSize(24), height: AdaptSize(24))
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width/2

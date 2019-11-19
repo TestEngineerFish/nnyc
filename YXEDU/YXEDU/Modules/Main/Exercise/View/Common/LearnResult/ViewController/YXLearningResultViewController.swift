@@ -77,7 +77,14 @@ class YXLearningResultViewController: UIViewController {
         }
         // 任务地图视图
         let taskMapViewSize = CGSize(width: AdaptSize(307), height: AdaptSize(245))
-        let taskMapView = YXTaskMapView(modelArray, frame: CGRect(origin: CGPoint.zero, size: taskMapViewSize))
+        let taskMapFrame    = CGRect(origin: CGPoint.zero, size: taskMapViewSize)
+        let taskMapView     = YXTaskMapView(modelArray, frame: taskMapFrame, currentModel: currentModel)
+        taskMapView.learnNewUnit = { (unitId: Int?) -> Void in
+            guard let id = unitId else {
+                return
+            }
+            self.learnUnit(id)
+        }
         taskMapView.backgroundColor    = UIColor.white
         taskMapView.layer.cornerRadius = 6
         self.view.addSubview(taskMapView)
@@ -119,11 +126,24 @@ class YXLearningResultViewController: UIViewController {
             } else {
                 self.mapModelList = response.data?.unitList
                 self.currentModel = self.mapModelList?.filter({ (model) -> Bool in
-                    return model.status == .uniteIng
+                    return model.unitID == unitId
                     }).first
                 self.createSubviews()
                 self.createTaskMap()
             }
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error)")
+        }
+    }
+
+    /// 学习新单元
+    private func learnUnit(_ unitId: Int) {
+        guard let model = self.homeModel, let bookId = model.bookId, let unitId = model.unitId else {
+            return
+        }
+        let request = YXExerciseRequest.addUserBook(userId: 0, bookId: bookId, unitId: unitId)
+        YYNetworkService.default.httpRequestTask(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
+            print("学习新单元成功")
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
         }
