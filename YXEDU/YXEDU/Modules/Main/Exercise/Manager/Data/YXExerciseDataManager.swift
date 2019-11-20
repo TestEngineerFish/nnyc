@@ -212,7 +212,7 @@ class YXExerciseDataManager: NSObject {
                 exercise.question = word
                 exercise.word = word
                 exercise.isNewWord = true
-                exercise.isFinish = true
+//                exercise.isFinish = true
                 
                 if (word.gradeId ?? 0) <= 6 {// 小学
                     exercise.type = .newLearnPrimarySchool
