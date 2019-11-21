@@ -13,7 +13,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 答题区状态
     enum AnswerStatus {
-        case normal     // 空状态
+        case normal     // 初始空状态
+        case playing    // 播放中
         case listening  // 收听中
         case reporting  // 上报云知声中
         case showResult // 显示结果中
@@ -45,7 +46,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.listenView?.pause()
             self.listenView?.alpha = 0.35
             self.enginer?.cancel()
-            self.status = .normal
+            self.status = .playing
         }
     }
     /// 从后台进入前台,
@@ -101,6 +102,17 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 self.enginer?.stop()
             }
         })
+        // ==== tap action ====
+        let tap = UITapGestureRecognizer(target: self, action: #selector(stopListen))
+        listenView?.isUserInteractionEnabled = true
+        listenView?.addGestureRecognizer(tap)
+    }
+
+    // ==== 测试用 结束收听 ==== 
+    @objc private func stopListen() {
+        self.listenView?.pause()
+        self.listenView?.alpha = 0.35
+        self.enginer?.stop()
     }
 
     /// 隐藏跟读动画
@@ -129,7 +141,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         })
         resultView?.animationComplete = {
             var isPlay = true
-            self.status = .normal
+            self.status = .playing
             self.alreadyCount += 1
             /// 如果已学习次数达到次,或者评分超弱1星,则切题
             if self.alreadyCount > 1 || self.lastLevel > 1 {
@@ -148,37 +160,30 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     private func hideResultAnimation() {
         resultView?.hideAnimation()
         resultView = nil
-        self.status = .normal
+        self.status = .playing
     }
 
     // MARK: YXAudioPlayerViewDelegate
 
     override func playAudioStart() {
-        switch self.status {
-        case .normal:
-            break
-        case .listening:
+        if self.status == .listening {
             // 置灰显示
             self.listenView?.pause()
             self.listenView?.alpha = 0.35
             self.enginer?.cancel()
-            self.status = .normal
-        case .reporting:
-            // 重播
-            break
-        case .showResult:
-            // 显示结果时,无法播放
-            break
+            self.status = .playing
         }
+        self.status = .playing
     }
 
     override func playAudioFinished() {
-        if self.status != .normal {
+        if self.status != .playing {
             return
         }
         guard let word = self.exerciseModel.question?.word else {
             return
         }
+        self.enginer?.cancel()
         self.enginer?.oralText = word
         self.enginer?.start()
     }
@@ -207,7 +212,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             guard let score = resultDict["score"] as? Double else {
                 return
             }
-            YXUtils.showHUD(self, title: "当前得分: \(score)")
+//            YXUtils.showHUD(self, title: "当前得分: \(score)")
             self.lastLevel = {
                 if score > 90 {
                     return 3

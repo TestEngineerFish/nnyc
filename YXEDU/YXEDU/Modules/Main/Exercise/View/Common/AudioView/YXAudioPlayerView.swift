@@ -21,6 +21,7 @@ class YXAudioPlayerView: UIView {
     
     private let audioButton: UIButton
     var urlStr: String?
+    var hasPermissions = true
 
     init() {
         self.audioButton = UIButton()
@@ -34,6 +35,10 @@ class YXAudioPlayerView: UIView {
         self.addSubview(audioButton)
         audioButton.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
+        }
+        // 判断权限
+        YXAuthorizationManager.authorizeMicrophoneWith { (isAllow) in
+            self.hasPermissions = isAllow
         }
     }
 
