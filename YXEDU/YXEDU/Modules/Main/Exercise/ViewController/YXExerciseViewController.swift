@@ -26,17 +26,16 @@ class YXExerciseViewController: UIViewController {
     private var exerciseViewArray: [YXBaseExerciseView] = []
         
     // 顶部view
-    private var headerView: YXExerciseHeaderView = YXExerciseHeaderView()
+    private var headerView = YXExerciseHeaderView()
     
     // 底部view
-    private var bottomView: YXExerciseBottomView = YXExerciseBottomView()
+    private var bottomView = YXExerciseBottomView()
 
     private var resultView = UIImageView()
 
     // Load视图
     var animationView = UIView()
-    
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -98,10 +97,14 @@ class YXExerciseViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         
         self.headerView.backEvent = {[weak self] in
-            // 暂停播放和取消录音监听
-            YXAVPlayerManager.share.pauseAudio()
-            USCRecognizer.sharedManager()?.cancel()
-            self?.navigationController?.popViewController(animated: true)
+            guard let self = self else { return }
+            YXComAlertView.show(.common, in: self.view, info: "提示", content: "是否放弃本次学习并退出", firstBlock: { (obj) in
+                // 暂停播放和取消录音监听
+                YXAVPlayerManager.share.pauseAudio()
+                USCRecognizer.sharedManager()?.cancel()
+                self.navigationController?.popViewController(animated: true)
+            }) { (obj) in
+            }
         }
         self.headerView.switchEvent = {[weak self] in
             
@@ -134,7 +137,7 @@ class YXExerciseViewController: UIViewController {
 //        YXExcerciseProgressManager.initProgressStatus()
 //        YYCache.remove(forKey: YXExcerciseProgressManager.LocalKey.report.key)
         
-        if !YXExcerciseProgressManager.isReport(bookId: bookId, unitId: unitId) {
+        if !progressManager.isReport() {
             // 先加载本地数据
             dataManager.fetchUnCompletionExerciseModels()
             
@@ -147,7 +150,7 @@ class YXExerciseViewController: UIViewController {
                     YXUtils.showHUD(self.view, title: "上报失败")
                 }
             }
-        } else if !YXExcerciseProgressManager.isCompletion(bookId: bookId, unitId: unitId) {// 存在未学完的关卡
+        } else if !progressManager.isCompletion() {// 存在未学完的关卡
             dataManager.fetchUnCompletionExerciseModels()
             self.switchExerciseView()
         } else {
@@ -175,7 +178,9 @@ class YXExerciseViewController: UIViewController {
     private func switchExerciseView() {
         self.hideLoadAnimation()
         
-        if let model = dataManager.fetchOneExerciseModel() {
+        let data = dataManager.fetchOneExerciseModel()
+        
+        if let model = data.2 {
             if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {
                 self.bottomView.tipsButton.isHidden = true
             } else {

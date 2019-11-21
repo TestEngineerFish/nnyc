@@ -18,9 +18,10 @@ class YXExerciseDataManager: NSObject {
     public var reviewWordCount: Int = 0
     public var bookId: Int = 0 // { return newExerciseModelArray.first?.word?.bookId ?? 0 }
     public var unitId: Int = 0 //{ return newExerciseModelArray.first?.word?.unitId ?? 0 }
-    
+        
+    /// 剩余要复习的单词数量
+    private var needReviewWordCount = 0
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
-    
     private var newExerciseModelArray: [YXWordExerciseModel] = []
     private var reviewExerciseModelArray: [YXWordExerciseModel] = []
     private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
@@ -69,24 +70,26 @@ class YXExerciseDataManager: NSObject {
     
     
     /// 从当前关卡数据中，获取一个练习数据对象
-    func fetchOneExerciseModel() -> YXWordExerciseModel? {
+    func fetchOneExerciseModel() -> (Int, Int, YXWordExerciseModel?) {
+        var needNewWordCount = newExerciseModelArray.count
         
         for exercise in self.newExerciseModelArray {
             if exercise.isFinish == false {
-                return exercise
+                return (needNewWordCount, needReviewWordCount, exercise)
             }
+            needNewWordCount -= 1
         }
         
         for exercise in self.reviewExerciseModelArray {
             if exercise.isFinish == false {
                 if exercise.isCareScore {//是否关注分数
-                    return fetchCareScoreExercise(exerciseModel: exercise)
+                    return (needNewWordCount, needReviewWordCount, fetchCareScoreExercise(exerciseModel: exercise))
                 } else {
-                    return exercise
+                    return (needNewWordCount, needReviewWordCount, exercise)
                 }
             }
         }
-        return nil
+        return (needNewWordCount, needReviewWordCount, nil)
     }
     
     

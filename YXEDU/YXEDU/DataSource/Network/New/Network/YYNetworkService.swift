@@ -48,6 +48,7 @@ struct YYNetworkService {
             do {
                 if let _postJSON = requestParametersReduceValueNil(postJSON as? [AnyHashable : Any]) {
                     if request.method == .body {
+                        _request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                         _request.httpBody = (_postJSON["json"] as? String)?.data(using: .utf8)
                     } else {
                         try _request.httpBody = JSONSerialization.data(withJSONObject: _postJSON, options: [])

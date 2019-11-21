@@ -71,20 +71,20 @@ class YXExerciseHeaderView: UIView {
         self.switchButton.addTarget(self, action: #selector(clickSwitchButton), for: .touchUpInside)
         
         
-        self.learningLabel.text = "学习"
+        self.learningLabel.text = "待新学"
         self.learningLabel.textColor = UIColor.black3
         self.learningLabel.font = UIFont.regularFont(ofSize: 10)
         
-        self.reviewLabel.text = "复习"
+        self.reviewLabel.text = "待复习"
         self.reviewLabel.textColor = UIColor.black3
         self.reviewLabel.font = UIFont.regularFont(ofSize: 10)
         
         
-        self.learningProgressLabel.text = "1/20"
+        self.learningProgressLabel.text = "20"
         self.learningProgressLabel.textColor = UIColor.orange1
         self.learningProgressLabel.font = UIFont.regularFont(ofSize: 10)
         
-        self.reviewProgressLabel.text = "1/20"
+        self.reviewProgressLabel.text = "20"
         self.reviewProgressLabel.textColor = UIColor.orange1
         self.reviewProgressLabel.font = UIFont.regularFont(ofSize: 10)
         
@@ -109,13 +109,13 @@ class YXExerciseHeaderView: UIView {
         
         self.learningLabel.snp.makeConstraints { (make) in
             make.top.equalTo(0)
-            make.right.equalTo(-43)
-            make.width.equalTo(21)
+            make.right.equalTo(-38)
+            make.width.equalTo(31)
             make.height.equalTo(14)
         }
         self.reviewLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(-43)
-            make.width.equalTo(21)
+            make.right.equalTo(-38)
+            make.width.equalTo(32)
             make.height.equalTo(14)
             make.bottom.equalTo(0)
         }
