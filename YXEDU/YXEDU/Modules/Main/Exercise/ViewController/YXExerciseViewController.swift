@@ -120,7 +120,7 @@ class YXExerciseViewController: UIViewController {
     }
     
     private func initManager() {
-        dataManager = YXExerciseDataManager(bookId: bookId, unitId: bookId)
+        dataManager = YXExerciseDataManager(bookId: bookId, unitId: unitId)
         
         progressManager = YXExcerciseProgressManager()
         progressManager.bookId = self.bookId
@@ -134,7 +134,7 @@ class YXExerciseViewController: UIViewController {
 //        YXExcerciseProgressManager.initProgressStatus()
 //        YYCache.remove(forKey: YXExcerciseProgressManager.LocalKey.report.key)
         
-        if !progressManager.isReport() {
+        if !YXExcerciseProgressManager.isReport(bookId: bookId, unitId: unitId) {
             // 先加载本地数据
             dataManager.fetchUnCompletionExerciseModels()
             
@@ -147,7 +147,7 @@ class YXExerciseViewController: UIViewController {
                     YXUtils.showHUD(self.view, title: "上报失败")
                 }
             }
-        } else if !progressManager.isCompletion() {// 存在未学完的关卡
+        } else if !YXExcerciseProgressManager.isCompletion(bookId: bookId, unitId: unitId) {// 存在未学完的关卡
             dataManager.fetchUnCompletionExerciseModels()
             self.switchExerciseView()
         } else {

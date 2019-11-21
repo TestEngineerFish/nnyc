@@ -25,7 +25,7 @@ class YXExcerciseProgressManager: NSObject {
     
     
     private func key(_ key: LocalKey) -> String {
-        return "\(bookId)_\(unitId)_\(YXUserModel.default.uuid ?? "")_" + key.rawValue
+        return "\(bookId)_\(unitId)_\(YXUserModel.default.uuid ?? "")_" + key.rawValue        
     }
     
     
@@ -44,6 +44,15 @@ class YXExcerciseProgressManager: NSObject {
         }
         return true
     }
+    
+    
+    class func isReport(bookId: Int, unitId: Int) -> Bool {
+        let manager = YXExcerciseProgressManager()
+        manager.bookId = bookId
+        manager.unitId = unitId
+        return manager.isReport()
+    }
+    
     
     class func isCompletion(bookId: Int, unitId: Int) -> Bool {
         let manager = YXExcerciseProgressManager()
