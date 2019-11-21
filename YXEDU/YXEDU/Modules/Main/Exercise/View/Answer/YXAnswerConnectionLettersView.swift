@@ -84,7 +84,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
             } else {
                 maxX = nextX
             }
-            self.contentScrollView?.addSubview(button)
+            self.addSubview(button)
             allButtonArray.append(button)
         }
         // 显示首个字母的动画
@@ -93,7 +93,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
         self.isUserInteractionEnabled = true
         self.addGestureRecognizer(pan)
-        self.contentScrollView?.contentSize = CGSize(width: viewWidth, height: viewWidth)
+//        self.contentSize = CGSize(width: viewWidth, height: viewWidth)
     }
 
     /// 在VC中显示的时候调用!!
@@ -242,7 +242,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         shaperLayer.fillColor   = nil
         shaperLayer.zPosition   = -1
         shaperLayer.strokeColor = UIColor.orange4.cgColor
-        self.contentScrollView?.layer.addSublayer(shaperLayer)
+        self.layer.addSublayer(shaperLayer)
 
         self.lineDictionary.updateValue(shaperLayer, forKey: toButton.tag)
         // 震动效果

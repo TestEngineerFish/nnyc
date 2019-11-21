@@ -45,7 +45,7 @@ class YXWordQuestionView: YXBaseQuestionView {
     
     override func bindData() {
         titleLabel?.text = exerciseModel.question?.word
-        subTitleLabel?.text = exerciseModel.question?.americanPhoneticSymbol
+        subTitleLabel?.text = exerciseModel.question?.soundmark
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
             self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice

@@ -141,34 +141,33 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
     private func movePinView(to unitView: YXSexangleView, animation: Bool = true) {
         let targetFrame = CGRect(x: unitView.frame.midX - AdaptSize(15), y: unitView.frame.minY - AdaptSize(5), width: AdaptSize(30), height: AdaptSize(30))
         if animation {
-            let currentUnitName = self.currentUnitView?.model.unitName ?? ""
-            let toUnitName = unitView.model.unitName ?? ""
-            let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
-            YXComAlertView.show(.common, in: self, info: "提示", content: content, firstBlock: { (obj) in
-                UIView.animate(withDuration: 1) {
-                    self.avatarPinView?.frame = targetFrame
-                    // 隐藏进度条
-                    self.currentUnitView?.hideProgressAnimtion()
-                    // 替换当前视图
-                    self.currentUnitView = unitView
-                    // 显示选中视图的进度条
-                    unitView.showProgressAnimation()
-                }
-                if unitView.tag < self.modelArray.count {
-                    let model = self.modelArray[unitView.tag]
-                    self.learnNewUnit?(model.unitID)
-                }
-            }, secondBlock: nil)
+            UIView.animate(withDuration: 1) {
+                self.avatarPinView?.frame = targetFrame
+                // 隐藏进度条
+                self.currentUnitView?.hideProgressAnimtion()
+                // 替换当前视图
+                self.currentUnitView = unitView
+                // 显示选中视图的进度条
+                unitView.showProgressAnimation()
+            }
+            if unitView.tag < self.modelArray.count {
+                let model = self.modelArray[unitView.tag]
+                self.learnNewUnit?(model.unitID)
+            }
         } else {
             avatarPinView?.frame = targetFrame
         }
-
     }
 
     // MARK: YXSexangleViewClickProcotol
 
     func clickSexangleView(_ view: YXSexangleView) {
-        self.movePinView(to: view)
+        let currentUnitName = self.currentUnitView?.model.unitName ?? ""
+        let toUnitName = view.model.unitName ?? ""
+        let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
+        YXComAlertView.show(.common, in: kWindow, info: "提示", content: content, firstBlock: { (obj) in
+            self.movePinView(to: view)
+        }, secondBlock: nil)
     }
 
 }

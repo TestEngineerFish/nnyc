@@ -12,9 +12,9 @@ import UIKit
 class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     enum Config {
-        static var itemHeight: CGFloat = 105
-        static var itemWidth: CGFloat = (screenWidth - 35 * 2 - 14) / 2
-//        static var itemInterval: CGFloat = 13
+        static var itemHeight: CGFloat = AdaptSize(105)
+        static var itemWidth: CGFloat = AdaptSize(146)
+        static var itemInterval: CGFloat = AdaptSize(14)
     }
     
 
@@ -36,9 +36,8 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)
-        flowLayout.minimumLineSpacing = 13
+        flowLayout.minimumLineSpacing = Config.itemInterval
         flowLayout.minimumInteritemSpacing = 0
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 35, bottom: 0, right: 35)
 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = UIColor.white
@@ -52,20 +51,19 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         self.addSubview(collectionView)
 
         collectionView.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
-        
         self.collectionView.reloadData()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = self.bounds
-        
+        let itemHNum = ((self.exerciseModel.option?.firstItems?.count ?? 0) + 1)/2
+        let h = (Config.itemHeight + Config.itemInterval) * CGFloat(itemHNum) - Config.itemInterval
+        collectionView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(h)
+        }
     }
-    
-    override func bindData() {
-        self.collectionView.reloadData()
-    }
-    
         
     //MARK:- delegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -117,17 +115,8 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 cell?.layer.borderColor = UIColor.clear.cgColor
             }
-            
         }
-        
-        
-        
     }
-    
-    
-    
-    
-    
 }
 
 

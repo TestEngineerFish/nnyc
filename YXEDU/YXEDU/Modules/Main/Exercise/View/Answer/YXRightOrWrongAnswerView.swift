@@ -12,8 +12,8 @@ import UIKit
 class YXRightOrWrongAnswerView: YXBaseAnswerView {
     
 
-    var rightButton: UIButton = UIButton()
-    var wrongButton: UIButton = UIButton()
+    var rightButton = UIButton()
+    var wrongButton = UIButton()
 
     override func createSubviews() {
         super.createSubviews()
@@ -25,17 +25,17 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
     override func layoutSubviews() {
 
         rightButton.snp.makeConstraints { (make) in
-            make.top.bottom.equalToSuperview()
-            make.left.equalTo(22)
-            make.height.equalTo(42)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
+            make.height.equalTo(AdaptSize(42))
+            make.width.equalTo(AdaptSize(154))
         }
         
         wrongButton.snp.makeConstraints { (make) in
-            make.top.bottom.equalToSuperview()
-            make.left.equalTo(rightButton.snp.right).offset(23)
-            make.right.equalTo(-22)
-            make.width.equalTo(rightButton.snp.width)
-            make.height.equalTo(42)
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalTo(AdaptSize(42))
+            make.width.equalTo(AdaptSize(154))
         }
     }
     

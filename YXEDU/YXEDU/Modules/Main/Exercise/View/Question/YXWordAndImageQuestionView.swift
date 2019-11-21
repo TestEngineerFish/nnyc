@@ -51,11 +51,11 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
             make.left.equalTo(titleLabel!.snp.right).offset(3)
             make.width.height.equalTo(22)
         })
-        
     }
     
     override func bindData() {
-        self.titleLabel?.text = exerciseModel.question?.word
+        let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+        self.titleLabel?.text    = word
         self.subTitleLabel?.text = exerciseModel.question?.soundmark
         
         if let url = self.exerciseModel.question?.imageUrl {

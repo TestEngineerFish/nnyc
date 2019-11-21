@@ -31,9 +31,6 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         self.contentView.addSubview(thirdQuestionView!)
         self.currentQuestionView = firstQuestionView
 
-        remindView = YXRemindView(exerciseModel: exerciseModel)
-        self.addSubview(remindView!)
-
         answerView = YXNewLearnAnswerView(exerciseModel: self.exerciseModel)
         self.addSubview(answerView!)
 
@@ -71,12 +68,6 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         })
 
         contentView.contentSize = CGSize(width: contentViewW*3, height: AdaptSize(250))
-
-        remindView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(contentView.snp.bottom).offset(15)
-            make.left.width.equalTo(contentView)
-            make.height.equalTo(150)
-        })
 
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()

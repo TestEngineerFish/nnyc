@@ -30,6 +30,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
     }
     
     override func createSubviews() {
+        super.createSubviews()
         flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)
@@ -50,14 +51,18 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
 
         collectionView.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
         
-        
         self.collectionView.reloadData()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = self.bounds
-//        collectionView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 42 * 4 + 13 * 3)
+        let itemNum = CGFloat(self.exerciseModel.option?.firstItems?.count ?? 0)
+        let h = (Config.itemHeight + Config.itemInterval) * itemNum - Config.itemInterval
+        collectionView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(h)
+        }
     }
     
     override func bindData() {

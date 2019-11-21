@@ -111,9 +111,9 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     //MARK: 外部调用方法
-    public func show() {
-        if remindSteps.count == 0 {
-            return
+    public func show() -> CGFloat {
+        if remindSteps.isEmpty {
+            return 20
         }
         
         // 下标必须要放在前面，由于layout布局有延迟，如果放后面，会有取值错误
@@ -126,6 +126,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         
         let step = remindSteps[currentRemindIndex]
         self.processRedmine(remindStep: step)
+        return 200
     }
     
     //MARK: 提示实现

@@ -12,14 +12,15 @@ import UIKit
 class YXFillWordAccordingToImageExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
+        super.createSubview()
         questionView = YXWordAndImage_FillQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
         remindView = YXRemindView(exerciseModel: exerciseModel)
-        self.addSubview(remindView!)
+        self.scrollView.addSubview(remindView!)
 
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
-        self.addSubview(answerView!)
+        self.scrollView.addSubview(answerView!)
 
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
@@ -27,25 +28,7 @@ class YXFillWordAccordingToImageExerciseView: YXBaseExerciseView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        questionView?.snp.makeConstraints { (make) in
-            make.top.equalTo(32)
-            make.left.equalTo(22)
-            make.right.equalTo(-22)
-            make.height.equalTo(250)
-        }
-        remindView?.snp.makeConstraints({ (make) in
-            make.left.equalTo(questionView!)
-            make.top.equalTo(questionView!.snp.bottom)
-            make.width.equalTo(questionView!)
-            make.height.equalTo(AdaptSize(120))
-        })
-        let topPadding = self.height - 200
-        answerView?.snp.makeConstraints({ (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(topPadding)
-            make.width.equalTo(270)
-            make.height.equalTo(200)
-        })
+        self.questionViewHeight = AdaptSize(230)
     }
     
     override func bindData() {

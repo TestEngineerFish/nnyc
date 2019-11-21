@@ -66,14 +66,9 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         contentView.frame = self.bounds
         
         wordLabel.text = word.word
-        
-        if YXUserModel.default.didUseAmericanPronunciation {
-            phoneticSymbolLabel.text = word.americanPhoneticSymbol
-            
-        } else {
-            phoneticSymbolLabel.text = word.englishPhoneticSymbol
-        }
-        
+
+        phoneticSymbolLabel.text = word.soundmark
+
         if let partOfSpeech = word.partOfSpeech, let meaning = word.meaning {
             partOfSpeechAndSenseLabel.text = partOfSpeech + meaning
         }

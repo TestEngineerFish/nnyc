@@ -29,9 +29,10 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
 
     private func createUI() {
         var maxY = CGFloat(0)
+        let contentView = UIView()
         for buttonArray in buttonArray2 {
             let cellView = UIView()
-            contentScrollView?.addSubview(cellView)
+            contentView.addSubview(cellView)
             cellView.snp.makeConstraints { (make) in
                 make.top.equalToSuperview().offset(maxY)
                 make.centerX.equalToSuperview()
@@ -58,8 +59,13 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
             }
             maxY += itemSize + margin
         }
-        let contentH = maxY - margin
-        contentScrollView?.contentSize = CGSize(width: 270, height: contentH)
+        self.addSubview(contentView)
+        let contentViewH = CGFloat(buttonArray2.count) * (itemSize + margin) - margin
+        contentView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(contentViewH)
+        }
     }
 
     /// 根据单词数组,生成一行一组按钮的二维数组

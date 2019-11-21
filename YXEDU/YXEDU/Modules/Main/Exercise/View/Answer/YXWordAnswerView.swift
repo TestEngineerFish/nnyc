@@ -24,6 +24,7 @@ class YXWordAnswerView: YXBaseAnswerView {
         guard let itemList = self.exerciseModel.option?.firstItems else {
             return
         }
+        let contentView = UIView()
         for (index, item) in itemList.enumerated() {
             let x = (index % 2 > 0) ? itemW + marginH : 0
             let y = CGFloat(index / 2) * (marginV + itemH)
@@ -33,12 +34,18 @@ class YXWordAnswerView: YXBaseAnswerView {
             button.setTitle(item.content ?? "", for: .normal)
             button.tag = index + offsetTag
             button.addTarget(self, action: #selector(clickBtn(_:)), for: .touchUpInside)
-            self.contentScrollView?.addSubview(button)
+            contentView.addSubview(button)
             self.allBtnArray.append(button)
         }
 
         self.maxX = self.allBtnArray.last?.frame.maxY ?? 0
-        self.contentScrollView?.contentSize = CGSize(width: 300, height: self.maxX)
+        self.addSubview(contentView)
+        let contentViewW = (itemW + marginH)*2 - marginH
+        contentView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalTo(contentViewW)
+            make.height.equalTo(self.maxX)
+        }
     }
 
     @objc private func clickBtn(_ button: YXLetterButton) {

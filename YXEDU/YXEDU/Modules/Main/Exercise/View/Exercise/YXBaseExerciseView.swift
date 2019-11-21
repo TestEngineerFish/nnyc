@@ -27,12 +27,36 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate {
 
     /// 题目view
     var questionView: YXBaseQuestionView?
+    var questionViewHeight: CGFloat = AdaptSize(160) {
+        willSet {
+            self.questionView?.snp.makeConstraints { (make) in
+                make.height.equalTo(newValue)
+            }
+        }
+    }
+
+    // 包括提醒和答案区域
+    var scrollView = UIScrollView()
 
     /// 提醒view
     var remindView: YXRemindView?
+    let remindViewDefaultHeight = AdaptSize(150)
+    var remindViewHeight = AdaptSize(150) {
+        willSet {
+            remindView?.snp.updateConstraints({ (make) in
+                make.height.equalTo(newValue)
+            })
+        }
+        didSet {
+            self.adjustConstraints()
+        }
+    }
     
     /// 答案view
     var answerView: YXBaseAnswerView?
+    var answerViewHeight: CGFloat {
+        return self.height - questionViewHeight - remindViewHeight
+    }
     
     weak var exerciseDelegate: YXExerciseViewDelegate?
     
@@ -52,9 +76,51 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// 子类需要设置问题的视图的高度
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.addSubview(scrollView)
+        guard let questionView = self.questionView else {
+            return
+        }
+        questionView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(AdaptSize(32))
+            make.width.equalTo(AdaptSize(332))
+            make.centerX.equalToSuperview()
+        }
+        scrollView.snp.makeConstraints { (make) in
+            make.top.equalTo(questionView.snp.bottom)
+            make.left.right.equalTo(questionView)
+            make.bottom.equalToSuperview()
+        }
+        if let remindView = self.remindView {
+            remindView.snp.makeConstraints { (make) in
+                make.top.left.right.equalToSuperview()
+                make.height.equalTo(remindViewHeight)
+            }
+            answerView?.snp.makeConstraints { (make) in
+                make.top.equalTo(remindView.snp.bottom)
+                make.width.equalTo(questionView)
+                make.left.right.bottom.equalToSuperview()
+                make.height.equalTo(answerViewHeight)
+            }
+        }
+    }
+
     func bindData() {}
 
-    func createSubview() {}
+    func createSubview() {
+        self.scrollView.isScrollEnabled = false
+        self.scrollView.showsVerticalScrollIndicator   = false
+        self.scrollView.showsHorizontalScrollIndicator = false
+    }
+
+    /// 校准scrollView高度
+    func adjustConstraints() {
+        if self.remindViewHeight > self.remindViewDefaultHeight {
+            scrollView.isScrollEnabled = true
+        }
+    }
     
     /// 动画入场，动画从右边往左边显示出来
     func animateAdmission(_ first: Bool = false, _ completion: (() -> Void)?) {

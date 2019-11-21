@@ -46,12 +46,12 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
             make.left.equalTo(titleLabel!.snp.right).offset(3)
             make.width.height.equalTo(22)
         })
-        
     }
     
     override func bindData() {
-        self.titleLabel?.text = exerciseModel.question?.word
-        self.subTitleLabel?.text = exerciseModel.question?.soundmark
+        let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+        self.titleLabel?.text     = word
+        self.subTitleLabel?.text  = exerciseModel.question?.soundmark
         self.descTitleLabel?.text = (exerciseModel.question?.partOfSpeech ?? "") + " " + (exerciseModel.question?.meaning ?? "")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in

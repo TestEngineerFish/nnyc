@@ -22,8 +22,6 @@ protocol YXAnswerViewDelegate: NSObjectProtocol {
 
 /// 答案视图基类，所有的答案区都需要继承自该类
 class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
-
-    var contentScrollView: UIScrollView?
     /// 练习数据模型
     var exerciseModel: YXWordExerciseModel
 
@@ -47,31 +45,8 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
 
     weak var answerDelegate: YXAnswerViewDelegate?
 
-    override func createSubviews() {
-        self.contentScrollView = UIScrollView()
-        self.addSubview(contentScrollView!)
-        self.contentScrollView?.snp.makeConstraints({ (make) in
-            make.edges.equalToSuperview()
-        })
-    }
-
-
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.adjustConstraints()
-    }
-
-    /// 校准scrollView高度
-    private func adjustConstraints() {
-        guard let scrollView = self.contentScrollView else {
-            return
-        }
-        if scrollView.bounds.height > scrollView.contentSize.height {
-            scrollView.snp.remakeConstraints { (make) in
-                make.left.right.bottom.equalToSuperview()
-                make.height.equalTo(scrollView.contentSize.height)
-            }
-        }
     }
 
     // 答题完成时，子类必须调用该方法

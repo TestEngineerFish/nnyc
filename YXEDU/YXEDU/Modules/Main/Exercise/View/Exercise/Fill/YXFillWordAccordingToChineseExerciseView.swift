@@ -12,14 +12,15 @@ import UIKit
 class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
+        super.createSubview()
         questionView = YXChineseFillQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
         remindView = YXRemindView(exerciseModel: exerciseModel)
-        self.addSubview(remindView!)
+        self.scrollView.addSubview(remindView!)
 
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
-        self.addSubview(answerView!)
+        self.scrollView.addSubview(answerView!)
 
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
@@ -27,27 +28,8 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        questionView?.snp.makeConstraints { (make) in
-            make.top.equalTo(32)
-            make.left.equalTo(22)
-            make.right.equalTo(-22)
-            make.height.equalTo(180)
-        }
-
-        remindView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(questionView!.snp.bottom).offset(15)
-            make.left.width.equalTo(questionView!)
-            make.height.equalTo(150)
-        })
-
-        answerView?.snp.makeConstraints({ (make) in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.width.equalTo(270)
-            make.height.equalTo(200)
-        })
+        self.questionViewHeight = AdaptSize(160)
     }
-    
     
     override func bindData() {
         self.remindView?.remindSteps = [[.example, .image, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
