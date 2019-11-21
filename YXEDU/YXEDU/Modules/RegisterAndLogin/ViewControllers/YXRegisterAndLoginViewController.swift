@@ -8,6 +8,10 @@
 
 import UIKit
 
+public let heightOfStateBar = UIApplication.shared.statusBarFrame.height
+public let heightOfNavigationBar = heightOfStateBar + 44
+public let heightOfSafeBotom: CGFloat = heightOfStateBar == 44 ? 34 : 0
+
 class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     var shouldShowShanYan = true
@@ -448,9 +452,12 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             view.addSubview(containerView)
             containerView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.centerY.equalToSuperview().offset(-12)
+                let a = ((screenHeight - heightOfNavigationBar - heightOfSafeBotom) / 2) + heightOfSafeBotom
+                let b = screenHeight / 2
+                let offset = b - a
+                make.centerY.equalToSuperview().offset(offset - 44)
                 make.leading.trailing.equalToSuperview().inset(20)
-                make.height.equalTo(246)
+                make.height.equalTo((screenHeight - heightOfNavigationBar) * (246 / 667))
             }
             
             view.addSubview(otherLoginButton)
@@ -461,7 +468,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             
             view.addSubview(quickLoginLabel)
             quickLoginLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(containerView.snp.bottom).offset(54)
+                make.bottom.greaterThanOrEqualToSuperview().offset(-142).priorityRequired()
+                make.bottom.equalToSuperview().offset(-(142 / 667) * screenHeight).priorityHigh()
                 make.centerX.equalToSuperview()
                 make.height.equalTo(17)
                 make.width.equalTo(50)

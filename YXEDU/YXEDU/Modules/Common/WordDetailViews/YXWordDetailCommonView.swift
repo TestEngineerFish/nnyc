@@ -159,13 +159,8 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             }
             
             cell.playAuoidButton.isHidden = false
-            if let americanPronunciationUrl = word.americanPronunciation, let englishPronunciationUrl = word.englishPronunciation {
-                if YXUserModel.default.didUseAmericanPronunciation {
-                    cell.pronunciationUrl = URL(string: americanPronunciationUrl)
-                    
-                } else {
-                    cell.pronunciationUrl = URL(string: englishPronunciationUrl)
-                }
+            if let pronunciationUrl = word.examplePronunciation {
+                cell.pronunciationUrl = URL(string: pronunciationUrl)
             }
             
         } else {
