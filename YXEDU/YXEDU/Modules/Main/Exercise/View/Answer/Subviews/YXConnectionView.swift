@@ -80,8 +80,6 @@ class YXConnectionView: UIView {
     private var movingPoint: CGPoint?
     private var shapeLayer: CAShapeLayer?
     
-    private var dataManager = YXExerciseDataManager()
-    
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
@@ -225,8 +223,8 @@ extension YXConnectionView {
             make.width.equalTo(22)
             make.height.equalTo(22)
         }
-
-        let word = dataManager.fetchWord(wordId: leftItemArray[index].itemModel?.optionId ?? 0)
+        
+        let word = YXWordBookDaoImpl().selectWord(wordId: leftItemArray[index].itemModel?.optionId ?? 0)
         self.audioPlayerView.isHidden = false
         self.audioPlayerView.urlStr = word?.voice
         self.audioPlayerView.play()

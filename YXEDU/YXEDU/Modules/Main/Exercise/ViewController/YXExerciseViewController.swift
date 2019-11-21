@@ -1,4 +1,4 @@
-//
+ //
 //  YXExerciseViewController.swift
 //  YXEDU
 //
@@ -12,9 +12,15 @@ import Lottie
 
 /// 练习模块，主控制器
 class YXExerciseViewController: UIViewController {
-        
+            
+    public var bookId: Int = 0
+    public var unitId: Int = 0
+    
     // 数据管理器
-    var dataManager: YXExerciseDataManager = YXExerciseDataManager()
+    private var dataManager: YXExerciseDataManager!
+    /// 进度管理器
+    private var progressManager: YXExcerciseProgressManager!
+    
     
     // 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
@@ -51,6 +57,7 @@ class YXExerciseViewController: UIViewController {
 //        self.showLoadAnimation()
         self.createSubviews()
         self.bindProperty()
+        self.initManager()
         self.startStudy()
     }
 
@@ -98,8 +105,8 @@ class YXExerciseViewController: UIViewController {
         }
         self.headerView.switchEvent = {[weak self] in
             
-            YXExcerciseProgressManager.completionExercise()
-            YXExcerciseProgressManager.completionReport()
+            self?.progressManager.completionExercise()
+            self?.progressManager.completionReport()
             
             self?.navigationController?.popViewController(animated: true)
 //            self?.switchExerciseView()
@@ -112,12 +119,22 @@ class YXExerciseViewController: UIViewController {
 
     }
     
+    private func initManager() {
+        dataManager = YXExerciseDataManager(bookId: bookId, unitId: bookId)
+        
+        progressManager = YXExcerciseProgressManager()
+        progressManager.bookId = self.bookId
+        progressManager.unitId = self.unitId
+    }
     
     /// 开始学习
     private func startStudy() {
         // 存在学完未上报的关卡
 //        if true {
-        if !YXExcerciseProgressManager.isReport() {
+//        YXExcerciseProgressManager.initProgressStatus()
+//        YYCache.remove(forKey: YXExcerciseProgressManager.LocalKey.report.key)
+        
+        if !progressManager.isReport() {
             // 先加载本地数据
             dataManager.fetchUnCompletionExerciseModels()
             
@@ -130,7 +147,7 @@ class YXExerciseViewController: UIViewController {
                     YXUtils.showHUD(self.view, title: "上报失败")
                 }
             }
-        } else if !YXExcerciseProgressManager.isCompletion() {// 存在未学完的关卡
+        } else if !progressManager.isCompletion() {// 存在未学完的关卡
             dataManager.fetchUnCompletionExerciseModels()
             self.switchExerciseView()
         } else {
@@ -157,11 +174,6 @@ class YXExerciseViewController: UIViewController {
     /// 切换题目
     private func switchExerciseView() {
         self.hideLoadAnimation()
-        // 当前关卡是否学完
-//        if YXExcerciseProgressManager.isCompletion() {
-//            print("显示打卡页面")
-//            return
-//        }
         
         if let model = dataManager.fetchOneExerciseModel() {
             if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {
@@ -175,14 +187,14 @@ class YXExerciseViewController: UIViewController {
             loadExerciseView(exerciseView: exerciseView)
         } else {
             // 没有数据，就是完成了练习
-            YXExcerciseProgressManager.completionExercise()
+            progressManager.completionExercise()
             
             // 学完，上报
             dataManager.reportUnit { [weak self] (result, errorMsg) in
                 guard let self = self else {return}
                 if result {
                     // 上报结束
-                    YXExcerciseProgressManager.completionReport()
+                    self.progressManager.completionReport()
                     
                     let vc = YXLearningResultViewController()
                     vc.bookId = self.dataManager.bookId
@@ -190,10 +202,10 @@ class YXExerciseViewController: UIViewController {
                     vc.newLearnAmount = self.dataManager.newWordCount
                     vc.reviewLearnAmount = self.dataManager.reviewWordCount
                     
+
                     self.navigationController?.popViewController(animated: false)
-                    
+                    vc.hidesBottomBarWhenPushed = true
                     YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-//                    self.navigationController?.pushViewController(vc, animated: true)
                 } else {
                     YXUtils.showHUD(self.view, title: "上报关卡失败")
                     self.navigationController?.popViewController(animated: true)

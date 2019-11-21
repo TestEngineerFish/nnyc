@@ -16,15 +16,29 @@ class YXExerciseDataManager: NSObject {
     
     public var newWordCount: Int = 0
     public var reviewWordCount: Int = 0
-    public var bookId: Int { return newExerciseModelArray.first?.word?.bookId ?? 0 }
-    public var unitId: Int { return newExerciseModelArray.first?.word?.unitId ?? 0 }
-
+    public var bookId: Int = 0 // { return newExerciseModelArray.first?.word?.bookId ?? 0 }
+    public var unitId: Int = 0 //{ return newExerciseModelArray.first?.word?.unitId ?? 0 }
     
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
     
     private var newExerciseModelArray: [YXWordExerciseModel] = []
     private var reviewExerciseModelArray: [YXWordExerciseModel] = []
     private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
+        
+    /// 进度管理器
+    private var progressManager: YXExcerciseProgressManager
+    
+    
+    init(bookId: Int, unitId: Int) {
+        self.bookId = bookId
+        self.unitId = unitId
+        
+        progressManager = YXExcerciseProgressManager()
+        progressManager.bookId = bookId
+        progressManager.unitId = unitId
+        
+        super.init()
+    }
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
@@ -41,9 +55,16 @@ class YXExerciseDataManager: NSObject {
     
     /// 加载本地未学完的关卡数据
     func fetchUnCompletionExerciseModels() {
-        let data = YXExcerciseProgressManager.localExerciseModels()
+        let data = progressManager.localExerciseModels()
         newExerciseModelArray = data.0
         reviewExerciseModelArray = data.1
+        
+//        for (index, _) in self.reviewExerciseModelArray.enumerated() {
+//            if (index == reviewExerciseModelArray.count - 1) {
+//                reviewExerciseModelArray[index].isFinish = false
+//            }
+//        }
+        
     }
     
     
@@ -105,7 +126,7 @@ class YXExerciseDataManager: NSObject {
         }
         
         // 处理进度状态
-        YXExcerciseProgressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
+        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
         
         
         if !right {
@@ -160,27 +181,34 @@ class YXExerciseDataManager: NSObject {
     
     
     func updateScore(exerciseModel: YXWordExerciseModel, right: Bool) {
-
         var score = 10
-        for e in reviewExerciseModelArray {
-            if exerciseModel.word?.wordId == e.word?.wordId {
-                score = e.score
-                break
+        
+        if exerciseModel.type == .newLearnPrimarySchool || exerciseModel.type == .newLearnPrimarySchool_Group {// 小学新学
+            return
+        } else if exerciseModel.type == .newLearnJuniorHighSchool {// 初中新学
+            score = (right ? 7 : 0)
+        } else {
+            for e in reviewExerciseModelArray {
+                if exerciseModel.word?.wordId == e.word?.wordId {
+                    score = e.score
+                    break
+                }
             }
+            
+            if exerciseModel.step == 1 {
+                score -= (right ? 0 : 3)
+            } else if exerciseModel.step == 2 {
+                score -= (right ? 0 : 2)
+            } else if exerciseModel.step == 3 {
+                score -= (right ? 0 : 1)
+            } else if exerciseModel.step == 4 {
+                score -= (right ? 0 : 1)
+            }
+            
+            score = score < 0 ? 0 : score
         }
         
-        if exerciseModel.step == 1 {
-            score -= (right ? 0 : 3)
-        } else if exerciseModel.step == 2 {
-            score -= (right ? 0 : 2)
-        } else if exerciseModel.step == 3 {
-            score -= (right ? 0 : 1)
-        } else if exerciseModel.step == 4 {
-            score -= (right ? 0 : 1)
-        }
-        
-        score = score < 0 ? 0 : score
-        
+                
         for (i, e) in self.reviewExerciseModelArray.enumerated() {
             if e.word?.wordId == exerciseModel.word?.wordId {
                 reviewExerciseModelArray[i].score = score
@@ -198,11 +226,13 @@ class YXExerciseDataManager: NSObject {
         reviewExerciseModelArray = YXExerciseOptionManager().processOptions(newArray: newExerciseModelArray, reviewArray: reviewExerciseModelArray)
         
         // 处理进度状态
-        YXExcerciseProgressManager.initProgressStatus()
-        YXExcerciseProgressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
+        progressManager.initProgressStatus()
+        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
     }
     
     
+    /// 处理新学
+    /// - Parameter result: <#result description#>
     private func processNewWord(result: YXExerciseResultModel?) {
         // 处理新学单词
         for wordId in result?.newWords ?? [] {
@@ -212,7 +242,6 @@ class YXExerciseDataManager: NSObject {
                 exercise.question = word
                 exercise.word = word
                 exercise.isNewWord = true
-//                exercise.isFinish = true
                 
                 if (word.gradeId ?? 0) <= 6 {// 小学
                     exercise.type = .newLearnPrimarySchool
@@ -301,16 +330,16 @@ class YXExerciseDataManager: NSObject {
         }
         
         for e in reviewExerciseModelArray {
-            var model = map[e.word?.wordId ?? 0]
+            let wordId = e.word?.wordId ?? 0
             switch e.step {
             case 1:
-                model?.result?.one = e.isRight
+                map[wordId]?.result?.one = e.isRight
             case 2:
-                model?.result?.two = e.isRight
+                map[wordId]?.result?.two = e.isRight
             case 3:
-                model?.result?.three = e.isRight
+                map[wordId]?.result?.three = e.isRight
             case 4:
-                model?.result?.four = e.isRight
+                map[wordId]?.result?.four = e.isRight
             default:
                 print()
             }

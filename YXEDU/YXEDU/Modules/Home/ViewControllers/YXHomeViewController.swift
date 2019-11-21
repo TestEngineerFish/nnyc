@@ -26,6 +26,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     @IBAction func startExercise(_ sender: UIButton) {
         let vc = YXExerciseViewController()
+        vc.bookId = homeModel?.bookId ?? 0
+        vc.unitId = homeModel?.unitId ?? 0
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -145,7 +147,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func adjustStartStudyButtonState() {
         if let lastStoredDate = YYCache.object(forKey: "LastStoredDate") as? Date {
             if Calendar.current.isDateInToday(lastStoredDate) {
-                if YXExcerciseProgressManager.isCompletion() {
+                if YXExcerciseProgressManager.isCompletion(bookId: homeModel?.bookId ?? 0, unitId: homeModel?.unitId ?? 0) {
                     startStudyButton.setTitle("再学一组", for: .normal)
                     
                 } else {
