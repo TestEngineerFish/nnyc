@@ -46,8 +46,8 @@ class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func show() {
-        let window = UIApplication.shared.windows.first
-        window?.addSubview(self)
+        kWindow.addSubview(self)
+//        kWindow.isHidden = false
     }
     
     
