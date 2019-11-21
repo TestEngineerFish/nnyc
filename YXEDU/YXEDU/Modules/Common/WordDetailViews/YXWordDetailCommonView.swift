@@ -134,28 +134,24 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetialCell", for: indexPath) as! YXWordDetialCell
       
         if indexPath.section == 0 {
-            if let englishExample = word.englishExample, let chineseExample = word.chineseExample {
-//                let hashtagIndex = englishExample.firstIndex(of: "#")!
-//                let startColorIndex = englishExample.index(hashtagIndex, offsetBy: 1)
-//                let endColorIndex = englishExample.index(startColorIndex, offsetBy: 6)
-//                let colorString = String(englishExample[startColorIndex..<endColorIndex])
+            if let englishExample = word.englishExample, let chineseExample = word.chineseExample, let wordContent = word.word {
+                let example = englishExample + "\n" + chineseExample
                 
-                let firstRightBracket = englishExample.firstIndex(of: ">")!
-                let startHighLightIndex = englishExample.index(firstRightBracket, offsetBy: 1)
-                let lastLeftBracket = englishExample.lastIndex(of: "<")!
-                let highLightString = String(englishExample[startHighLightIndex..<lastLeftBracket])
+                if let range = example.range(of: wordContent) {
+                    let location = example.distance(from: example.startIndex, to: range.lowerBound)
+                    
+                    let attrString = NSMutableAttributedString(string: example)
+                    
+                    let attr: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.black2]
+                    attrString.addAttributes(attr, range: NSRange(location: 0, length: attrString.length))
+                    let attr2: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.orange1]
+                    attrString.addAttributes(attr2, range: NSRange(location: location, length: wordContent.count))
+                    
+                    cell.label.attributedText = attrString
+                }
                 
-                let firstLeftBracket = englishExample.firstIndex(of: "<")!
-                let lastRightBracket = englishExample.lastIndex(of: ">")!
-                let endHighLightIndex = englishExample.index(lastRightBracket, offsetBy: 1)
-                let string = String(englishExample[englishExample.startIndex..<firstLeftBracket]) + highLightString + String(englishExample[endHighLightIndex..<englishExample.endIndex]) + "\n\(chineseExample)"
                 
-                let attrString = NSMutableAttributedString(string: string)
-                let highLightRange = string.range(of: highLightString)!
-                let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
-                attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
                 
-                cell.label.attributedText = attrString
             }
             
             cell.playAuoidButton.isHidden = false

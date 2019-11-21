@@ -213,9 +213,12 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     public func remindDetail() {
         // 显示详情页
-        self.setAllSubviewStatus()
-        remindLabel.isHidden = true
+//        self.setAllSubviewStatus()
+//        remindLabel.isHidden = true
         
+        
+        
+    
         guard let word = exerciseModel.word else { return }
         
         let detailView = YXWordDetailTipView(word: word)
@@ -266,6 +269,15 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
             if (type == .wordAudio || type == .exampleAudio) {
                 return true
             }
+        }
+        return false
+    }
+    
+    
+    /// 是否为最后一步提示
+    private func isLastStepRemind(type: YXRemindType) -> Bool {
+        if (currentRemindIndex + 1) == self.remindSteps.count {
+            self.remindSteps.last
         }
         return false
     }

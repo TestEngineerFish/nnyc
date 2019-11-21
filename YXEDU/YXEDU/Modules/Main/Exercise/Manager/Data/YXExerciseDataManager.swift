@@ -158,17 +158,6 @@ class YXExerciseDataManager: NSObject {
         
     }
     
-    
-//    private func updateScore(exerciseModel: YXWordExerciseModel, right: Bool) {
-//        for (i, e) in self.reviewExerciseModelArray.enumerated() {
-//            if e.word?.wordId == exerciseModel.word?.wordId && e.step == exerciseModel.step {
-//                reviewExerciseModelArray[i].isFinish = true
-//                reviewExerciseModelArray[i].isRight = right
-//            }
-//
-//        }
-//    }
-    
     /// 上报关卡
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
@@ -245,6 +234,7 @@ class YXExerciseDataManager: NSObject {
                 exercise.question = word
                 exercise.word = word
                 exercise.isNewWord = true
+//                exercise.isFinish = true
                 
                 if (word.gradeId ?? 0) <= 6 {// 小学
                     exercise.type = .newLearnPrimarySchool

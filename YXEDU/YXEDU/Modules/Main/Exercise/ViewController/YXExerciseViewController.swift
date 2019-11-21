@@ -133,10 +133,6 @@ class YXExerciseViewController: UIViewController {
     /// 开始学习
     private func startStudy() {
         // 存在学完未上报的关卡
-//        if true {
-//        YXExcerciseProgressManager.initProgressStatus()
-//        YYCache.remove(forKey: YXExcerciseProgressManager.LocalKey.report.key)
-        
         if !progressManager.isReport() {
             // 先加载本地数据
             dataManager.fetchUnCompletionExerciseModels()
@@ -179,6 +175,9 @@ class YXExerciseViewController: UIViewController {
         self.hideLoadAnimation()
         
         let data = dataManager.fetchOneExerciseModel()
+        
+        headerView.learningProgress = "\(data.0)"
+        headerView.reviewProgress = "\(data.1)"
         
         if let model = data.2 {
             if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {

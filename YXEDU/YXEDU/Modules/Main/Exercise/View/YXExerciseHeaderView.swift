@@ -64,7 +64,7 @@ class YXExerciseHeaderView: UIView {
         self.backButton.addTarget(self, action: #selector(clickBackButton), for: .touchUpInside)
         
         
-        self.switchButton.setTitle("切换题目", for: .normal)
+        self.switchButton.setTitle("测试-清空数据", for: .normal)
         self.switchButton.setTitleColor(UIColor.black3, for: .normal)
         self.switchButton.setTitleColor(UIColor.black2, for: .highlighted)
         self.switchButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 12)
@@ -103,7 +103,7 @@ class YXExerciseHeaderView: UIView {
         
         self.switchButton.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.equalTo(49)
+            make.width.equalTo(100)
             make.height.equalTo(17)
         }
         
