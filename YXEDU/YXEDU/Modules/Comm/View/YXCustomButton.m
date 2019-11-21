@@ -25,18 +25,11 @@
     YXCustomButton *button = [self buttonWithType:UIButtonTypeCustom];
     button.cornerRadius = cornerRadius;
     button.exclusiveTouch = YES;
-//    button.gradintLayer.hidden = YES;
-//    UIImage *disableImage = [[UIImage imageNamed:@"com_btn_disable"] imageWithSize:size andCornerRadius:cornerRadius];
-//    UIImage *image = [[UIImage imageNamed:@"com_btn_normal"] imageWithSize:size andCornerRadius:cornerRadius];
-//    [button setBackgroundImage:image forState:UIControlStateNormal];
-//    [button setBackgroundImage:disableImage forState:UIControlStateDisabled];
-//    [button setBackgroundImage:image forState:UIControlStateHighlighted];
-
     if (cornerRadius) {
         button.layer.shadowRadius = 2.5;
         button.layer.shadowOpacity = 0.53;
         button.layer.shadowOffset = CGSizeMake(0, 2);
-        button.layer.shadowColor = UIColorOfHex(0x8DADD7).CGColor;
+        button.layer.shadowColor = UIColorOfHex(0xFB8417).CGColor;
     }
     return button;
 }
@@ -69,8 +62,6 @@
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
     self.gradintLayer.hidden = !enabled;
-//    self.gradintLayer.colors = enabled ? self.normalColors : self.disableColors;
-//    [self setNeedsDisplay];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled {
@@ -80,11 +71,6 @@
 - (CAGradientLayer *)gradintLayer {
     if (!_gradintLayer) {
         CAGradientLayer *gradintLayer = [CAGradientLayer layer];
-//        UIColor *startColor = UIColorOfHex(0x60B6F8);
-//        UIColor *endColor = UIColorOfHex(0x6098F7);
-//        gradintLayer.colors = @[(__bridge id)startColor.CGColor,
-//                                 (__bridge id)endColor.CGColor];
-//        gradintLayer.locations  = @[@(0.5)];
         gradintLayer.colors = self.normalColors;
         // 起始点
         gradintLayer.startPoint = CGPointMake(0, 0);
@@ -98,8 +84,8 @@
 
 - (NSArray *)normalColors {
     if (!_normalColors) {
-        UIColor *startColor = UIColorOfHex(0x60B6F8);
-        UIColor *endColor = UIColorOfHex(0x6098F7);
+        UIColor *startColor = UIColorOfHex(0xFDBA33);
+        UIColor *endColor = UIColorOfHex(0xFB8417);
         _normalColors = @[(__bridge id)startColor.CGColor,
                                 (__bridge id)endColor.CGColor];
     }

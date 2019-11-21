@@ -131,7 +131,7 @@ class YXSexangleView: UIView {
             imageView.image = {
                 if model.status == .uniteEnd {
                     return UIImage(named: "fruit_enable")
-                } else if model.status == .uniteUnstart {
+                } else if model.status == .uniteUnstart || model.status == .uniteIngProgressZero {
                     return UIImage(named: "fruit_disable")
                 } else {
                     return nil
@@ -284,7 +284,7 @@ class YXSexangleView: UIView {
     /// 获取外边框填充颜色
     func getOutSideColor() -> UIColor {
         switch self.model.status {
-        case .uniteUnstart:
+        case .uniteUnstart, .uniteIngProgressZero:
             return self.isExtension ? UIColor.hex(0xE5DDD7) : UIColor.hex(0xE5DDD7)
         case .uniteStop:
             return self.isExtension ? UIColor.hex(0xFFE1B3) : UIColor.hex(0xF5F5F5)
@@ -298,7 +298,7 @@ class YXSexangleView: UIView {
     /// 获取内部填充颜色
     func getInSideFillColor() -> UIColor {
         switch self.model.status {
-        case .uniteUnstart:
+        case .uniteUnstart, .uniteIngProgressZero:
             return self.isExtension ? UIColor.hex(0xE5DDD7) : UIColor.hex(0xE5DDD7)
         case .uniteStop:
             return self.isExtension ? UIColor.hex(0xFFE1B3) : UIColor.hex(0xFFE9C7)
@@ -312,7 +312,7 @@ class YXSexangleView: UIView {
     /// 获取文字颜色
     func getTitleColor() -> UIColor {
         switch self.model.status {
-        case .uniteUnstart:
+        case .uniteUnstart, .uniteIngProgressZero:
             return self.isExtension ? UIColor.hex(0xB78F58) : UIColor.hex(0xB78F58)
         case .uniteStop:
             return self.isExtension ? UIColor.hex(0xE38B03) : UIColor.hex(0xFB6617)

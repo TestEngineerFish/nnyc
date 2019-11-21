@@ -116,7 +116,7 @@ class YXLearnMapViewController: UIViewController {
 
     /// 学习新单元
     private func learnUnit(_ unitId: Int) {
-        guard let uuidStr = YXUserModel.default.uuid, let bookId = self.bookId else {
+        guard let uuidStr = YXConfigure.shared()?.uuid, let bookId = self.bookId else {
             return
         }
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)

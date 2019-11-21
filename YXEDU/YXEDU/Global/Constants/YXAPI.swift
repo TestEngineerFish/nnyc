@@ -28,7 +28,7 @@ struct YXAPI {
         static let learnMap = "/api/v1/learn/getbookunitstatus"
         /// 学习结果页
         static let learnResult = "/api/v1/learn/getcurrentunitstatus"
-        /// 学习结果页
+        /// 上报接口
         static let report = "/api/v1/result"
         /// 用户添加词书
         static let addUserBook = "/api/v1/book/adduserbook"

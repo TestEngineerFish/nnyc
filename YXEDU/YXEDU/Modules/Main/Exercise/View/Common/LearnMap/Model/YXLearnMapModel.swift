@@ -31,6 +31,9 @@ struct YXLearnMapUnitModel: Mappable {
         stars       <- map["stars"]
         status      <- map["status"]
         ext         <- map["ext"]
+        if (status == .uniteIng || status == .uniteStop) && rate == .zero {
+            status = .uniteIngProgressZero
+        }
     }
 }
 
@@ -55,6 +58,9 @@ struct YXLearnMapUnitExtModel: Mappable {
         rate        <- map["rate"]
         stars       <- map["stars"]
         status      <- map["status"]
+        if (status == .uniteIng || status == .uniteStop) && rate == .zero {
+            status = .uniteIngProgressZero
+        }
     }
 }
 
@@ -64,6 +70,7 @@ enum YXUnitLearnStatusType: Int {
     case uniteStop    = 0
     case uniteIng     = 1
     case uniteEnd     = 2
+    case uniteIngProgressZero = 100
 }
 
 

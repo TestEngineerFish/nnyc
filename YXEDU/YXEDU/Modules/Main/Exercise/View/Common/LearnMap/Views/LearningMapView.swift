@@ -128,8 +128,9 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
                 let model = self.modelArray[index]
                 let isShowProgress = model.unitID == self.currentUnitId
                 let sexangleView = YXSexangleView(model, isExtension: false, isShowProgress: isShowProgress)
-                sexangleView.center = point
+                sexangleView.center   = point
                 sexangleView.delegate = self
+                sexangleView.tag      = index
                 self.addSubview(sexangleView)
                 self.unitViewArray.append(sexangleView)
             }
@@ -140,22 +141,28 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
     private func movePinView(to unitView: YXSexangleView, animation: Bool = true) {
         let targetFrame = CGRect(x: unitView.frame.midX - AdaptSize(15), y: unitView.frame.minY - AdaptSize(5), width: AdaptSize(30), height: AdaptSize(30))
         if animation {
-            UIView.animate(withDuration: 1) {
-                self.avatarPinView?.frame = targetFrame
-                // 隐藏进度条
-                self.currentUnitView?.hideProgressAnimtion()
-                // 替换当前视图
-                self.currentUnitView = unitView
-                // 显示选中视图的进度条
-                unitView.showProgressAnimation()
-            }
+            let currentUnitName = self.currentUnitView?.model.unitName ?? ""
+            let toUnitName = unitView.model.unitName ?? ""
+            let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
+            YXComAlertView.show(.common, in: self, info: "提示", content: content, firstBlock: { (obj) in
+                UIView.animate(withDuration: 1) {
+                    self.avatarPinView?.frame = targetFrame
+                    // 隐藏进度条
+                    self.currentUnitView?.hideProgressAnimtion()
+                    // 替换当前视图
+                    self.currentUnitView = unitView
+                    // 显示选中视图的进度条
+                    unitView.showProgressAnimation()
+                }
+                if unitView.tag < self.modelArray.count {
+                    let model = self.modelArray[unitView.tag]
+                    self.learnNewUnit?(model.unitID)
+                }
+            }, secondBlock: nil)
         } else {
             avatarPinView?.frame = targetFrame
         }
-        if unitView.tag < self.modelArray.count {
-            let model = self.modelArray[unitView.tag]
-            self.learnNewUnit?(model.unitID)
-        }
+
     }
 
     // MARK: YXSexangleViewClickProcotol

@@ -20,12 +20,12 @@ public enum YXExerciseRequest: YYBaseRequest {
 extension YXExerciseRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .exercise, .learnMap, .learnResult:
+        case .exercise, .learnMap, .learnResult, .addUserBook:
             return .get
-        case . report:
+        case .report:
             return .body
-        case .addUserBook:
-            return .post
+            //        case .addUserBook:
+            //            return .post
         }
     }
 }

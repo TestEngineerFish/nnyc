@@ -82,7 +82,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
             return
         }
         if currentModel.stars > 1 {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
                 self.movePinView(to: nextView)
             }
         }

@@ -60,7 +60,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         super.viewWillDisappear(true)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let careerModel = YXCareerModel(item: "learn", bookId: 0, sort: 1)
         
@@ -184,7 +184,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 1 {
             return 3
-            
         } else {
             return 4
         }
