@@ -31,41 +31,32 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         alertView.doneClosure = { _ in
             for index in 0..<self.wordBookModels.count {
                 let wordBook = self.wordBookModels[index]
-                guard wordBook.isSelected, let currentLearningWordBookId = wordBook.bookId else { continue }
+                guard wordBook.isSelected, let selectedBookId = wordBook.bookId else { continue }
                 
-                var nextLearnWordBook: YXWordBookModel!
-                if index == 0 {
-                    nextLearnWordBook = self.wordBookModels[1]
-                    
-                } else if index == self.wordBookModels.count - 1 - 1 {
-                    nextLearnWordBook = self.wordBookModels[index - 1 ]
+                var nextSelectWordBook: YXWordBookModel!
+                if index == self.wordBookModels.count - 1 - 1 {
+                    nextSelectWordBook = self.wordBookModels[index - 1 ]
                     
                 } else {
-                    nextLearnWordBook = self.wordBookModels[index + 1]
+                    nextSelectWordBook = self.wordBookModels[index + 1]
                 }
                 
-                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(nextLearnWordBook?.bookId ?? 0)", "unit_id": "\(nextLearnWordBook?.units?.first?.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
+                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": selectedBookId]) { [weak self] (response, isSuccess) in
                     guard let self = self, isSuccess else { return }
                     
-                    YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": currentLearningWordBookId]) { [weak self] (response, isSuccess) in
-                        guard let self = self, isSuccess else { return }
+                    if index == self.wordBookModels.count - 1 - 1 {
+                        self.wordBookModels[index - 1 ].isSelected = true
                         
-                        YXWordBookDaoImpl().deleteBook(bookId: currentLearningWordBookId) { [weak self] (result, isSuccess) in
-                            guard let self = self, isSuccess else { return }
-                            
-                            let wordBooksMaterialURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(currentLearningWordBookId)")
-                            try? FileManager.default.removeItem(at: wordBooksMaterialURL)
-                            
-                            self.fetchWordBookDetail(nextLearnWordBook)
-                            self.wordBookModels.remove(at: index)
-                            self.bookCollectionView.reloadData()
-                        }
-                        
+                    } else {
+                        self.wordBookModels[index + 1].isSelected = true
                     }
-                    
-                    YXWordBookDaoImpl().deleteWord(bookId: currentLearningWordBookId) { (result, isSuccess) in
-                        
-                    }
+                    self.bookCollectionView.reloadData()
+                    self.fetchWordBookDetail(nextSelectWordBook)
+
+                    self.wordBookModels.remove(at: index)
+                    YXWordBookDaoImpl().deleteBook(bookId: selectedBookId)
+                    YXWordBookDaoImpl().deleteWord(bookId: selectedBookId)
+                    try? FileManager.default.removeItem(at: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(selectedBookId)"))
                 }
                 
                 break
@@ -119,6 +110,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         bookCollectionView.register(UINib(nibName: "YXWordBookCell", bundle: nil), forCellWithReuseIdentifier: "YXWordBookCell")
         
         startStudyButton.isUserInteractionEnabled = false
+        deleteWordBookButton.isHidden = true
         fetchWordBooks()
     }
     
@@ -227,6 +219,13 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            deleteWordBookButton.isHidden = true
+            
+        } else {
+            deleteWordBookButton.isHidden = false
+        }
+        
         if indexPath.row == wordBookModels.count - 1 {
             self.performSegue(withIdentifier: "AddBook", sender: nil)
             

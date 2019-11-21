@@ -14,7 +14,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var collectedWordsCount = "--"
     private var wrongWordsCount = "--"
     private var isCheckingLoginState = true
-    private var homeModel: YXHomeModel?
+    private var homeModel: YXHomeModel!
     
     @IBOutlet weak var startStudyButton: YXDesignableButton!
     @IBOutlet weak var bookNameButton: UIButton!
@@ -54,8 +54,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         if isCheckingLoginState == false {
             loadData()
         }
-        
-        adjustStartStudyButtonState()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -111,29 +109,33 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                let decoder = JSONDecoder()
-                let result = try decoder.decode(YXHomeModel.self, from: jsonData)
-                YXConfigure.shared().currLearningBookId = "\(result.bookId ?? 0)"
-                self.homeModel = result
-                self.bookNameButton.setTitle(result.bookName, for: .normal)
-                self.unitNameButton.setTitle(result.unitName, for: .normal)
-                self.countOfWaitForStudyWords.text = "\((result.newWords ?? 0) + (result.reviewWords ?? 0))"
-                self.progressBar.setProgress(Float(result.unitProgress ?? 0), animated: true)
+                self.homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
+                self.adjustStartStudyButtonState()
+
+                YXConfigure.shared().currLearningBookId = "\(self.homeModel.bookId ?? 0)"
+
+                self.bookNameButton.setTitle(self.homeModel.bookName, for: .normal)
+                self.unitNameButton.setTitle(self.homeModel.unitName, for: .normal)
+                self.countOfWaitForStudyWords.text = "\((self.homeModel.newWords ?? 0) + (self.homeModel.reviewWords ?? 0))"
+                self.progressBar.setProgress(Float(self.homeModel.unitProgress ?? 0), animated: true)
                 
-                self.learnedWordsCount = "\(result.learnedWords ?? 0)"
-                self.collectedWordsCount = "\(result.collectedWords ?? 0)"
-                self.wrongWordsCount = "\(result.wrongWords ?? 0)"
+                self.learnedWordsCount = "\(self.homeModel.learnedWords ?? 0)"
+                self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
+                self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
                 
                 DispatchQueue.global().async {
                     var wordBook = YXWordBookModel()
-                    wordBook.bookId = result.bookId
-                    wordBook.bookJsonSourcePath = result.bookSource
-                    wordBook.bookHash = result.bookHash
+                    wordBook.bookId = self.homeModel.bookId
+                    wordBook.bookJsonSourcePath = self.homeModel.bookSource
+                    wordBook.bookHash = self.homeModel.bookHash
                     YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
-                        guard isSuccess else { return }
                         DispatchQueue.main.async {
-
+                            if isSuccess {
+                                
+                            } else {
+                                
+                            }
                         }
                     }
                 }

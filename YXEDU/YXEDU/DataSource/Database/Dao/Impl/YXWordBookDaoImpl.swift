@@ -11,7 +11,7 @@ import ObjectMapper
 
 class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
-    func insertBook(book: YXWordBookModel, completion: finishBlock) {
+    func insertBook(book: YXWordBookModel, completion: finishBlock? = nil) {
         let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
         let params: [Any?] = [book.bookId,
                              book.bookName,
@@ -22,7 +22,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         
         self.wordRunnerQueue.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
-            completion(nil, isSuccess)
+            completion?(nil, isSuccess)
         }
     }
     
@@ -46,17 +46,17 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         }
     }
     
-    func deleteBook(bookId: Int, completion: finishBlock) {
+    func deleteBook(bookId: Int, completion: finishBlock? = nil) {
         let sql = YYSQLManager.WordBookSQL.deleteBook.rawValue
         let params: [Any] = [bookId]
         
         self.wordRunnerQueue.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
-            completion(nil, isSuccess)
+            completion?(nil, isSuccess)
         }
     }
     
-    func insertWord(word: YXWordModel, completion: finishBlock) {
+    func insertWord(word: YXWordModel, completion: finishBlock? = nil) {
         let sql = YYSQLManager.WordBookSQL.insertWord.rawValue
         let usagesData: Data! = try? JSONSerialization.data(withJSONObject: word.usages ?? [])
         
@@ -86,7 +86,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         
         self.wordRunnerQueue.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
-            completion(nil, isSuccess)
+            completion?(nil, isSuccess)
         }
     }
     
@@ -129,7 +129,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         }
     }
     
-    func selectWordByUnitId(_ unitId: Int, completion: finishBlock) {
+    func selectWordByUnitId(unitId: Int, completion: finishBlock) {
         let sql = YYSQLManager.WordBookSQL.selectWordByUnitId.rawValue
         let params: [Any] = [unitId]
         
@@ -174,13 +174,13 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         }
     }
     
-    func deleteWord(bookId: Int, completion: finishBlock) {
+    func deleteWord(bookId: Int, completion: finishBlock? = nil) {
         let sql = YYSQLManager.WordBookSQL.deleteWord.rawValue
         let params: [Any] = [bookId]
         
         self.wordRunnerQueue.inDatabase { (db) in
             let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
-            completion(nil, isSuccess)
+            completion?(nil, isSuccess)
         }
     }
     
