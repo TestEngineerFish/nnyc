@@ -33,18 +33,18 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 let wordBook = self.wordBookModels[index]
                 guard wordBook.isSelected, let currentLearningWordBookId = wordBook.bookId else { continue }
                 
-                var nextLearnWordBookId: Int?
+                var nextLearnWordBook: YXWordBookModel!
                 if index == 0 {
-                    nextLearnWordBookId = self.wordBookModels[1].bookId
+                    nextLearnWordBook = self.wordBookModels[1]
                     
-                } else if index == self.wordBookModels.count - 1 {
-                    nextLearnWordBookId = self.wordBookModels[index - 1].bookId
+                } else if index == self.wordBookModels.count - 1 - 1 {
+                    nextLearnWordBook = self.wordBookModels[index - 1 ]
                     
                 } else {
-                    nextLearnWordBookId = self.wordBookModels[index + 1].bookId
+                    nextLearnWordBook = self.wordBookModels[index + 1]
                 }
                 
-                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(nextLearnWordBookId ?? 0)", "unit_id": "\(self.wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
+                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(nextLearnWordBook?.bookId ?? 0)", "unit_id": "\(nextLearnWordBook?.units?.first?.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
                     guard let self = self, isSuccess else { return }
                     
                     YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": currentLearningWordBookId]) { [weak self] (response, isSuccess) in
@@ -56,16 +56,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                             let wordBooksMaterialURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(currentLearningWordBookId)")
                             try? FileManager.default.removeItem(at: wordBooksMaterialURL)
                             
-                            if index == 0 {
-                                self.fetchWordBookDetail(self.wordBookModels[1])
-                                
-                            } else if index == self.wordBookModels.count - 1 {
-                                self.fetchWordBookDetail(self.wordBookModels[index - 1])
-                                
-                            } else {
-                                self.fetchWordBookDetail(self.wordBookModels[index + 1])
-                            }
-                            
+                            self.fetchWordBookDetail(nextLearnWordBook)
                             self.wordBookModels.remove(at: index)
                             self.bookCollectionView.reloadData()
                         }
@@ -163,6 +154,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     
     private func fetchWordBookDetail(_ wordBook: YXWordBookModel) {
         bookNameLabel.text = wordBook.bookName
+        
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookId ?? 0)"]) { [weak self] (response, isSuccess) in
             guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
@@ -242,9 +234,11 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let wordBook = wordBookModels[indexPath.row]
             if wordBook.isCurrentStudy {
                 startStudyButton.isUserInteractionEnabled = false
+                startStudyButton.setTitle("继续学习", for: .normal)
                 
             } else {
                 startStudyButton.isUserInteractionEnabled = true
+                startStudyButton.setTitle("开始学习", for: .normal)
             }
             fetchWordBookDetail(wordBook)
                         

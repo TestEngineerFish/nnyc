@@ -16,6 +16,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var isCheckingLoginState = true
     private var homeModel: YXHomeModel?
     
+    @IBOutlet weak var startStudyButton: YXDesignableButton!
     @IBOutlet weak var bookNameButton: UIButton!
     @IBOutlet weak var unitNameButton: UIButton!
     @IBOutlet weak var countOfWaitForStudyWords: YXDesignableLabel!
@@ -45,18 +46,20 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         tabBarController?.tabBar.isHidden = false
         
         if isCheckingLoginState == false {
             loadData()
         }
+        
+        adjustStartStudyButtonState()
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(true)
-//        navigationController?.setNavigationBarHidden(true, animated: true)
-//    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let careerModel = YXCareerModel(item: "learn", bookId: 0, sort: 1)
@@ -138,9 +141,29 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
         }
     }
+    
+    private func adjustStartStudyButtonState() {
+        if let lastStoredDate = YYCache.object(forKey: "LastStoredDate") as? Date {
+            if Calendar.current.isDateInToday(lastStoredDate) {
+                if YXExcerciseProgressManager.isCompletion() {
+                    startStudyButton.setTitle("再学一组", for: .normal)
+                    
+                } else {
+                    startStudyButton.setTitle("继续学习", for: .normal)
+                }
+                
+            } else {
+                startStudyButton.setTitle("开始背单词", for: .normal)
+            }
+            
+        } else {
+            YYCache.set(Date(), forKey: "LastStoredDate")
+        }
+    }
 
+    
+    
     // MARK: Event
-
     @IBAction func showLearnMap(_ sender: UIButton) {
         self.hidesBottomBarWhenPushed = true
         let vc = YXLearnMapViewController()

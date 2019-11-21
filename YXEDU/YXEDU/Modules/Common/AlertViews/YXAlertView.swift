@@ -95,7 +95,6 @@ class YXAlertView: UIView, UITextFieldDelegate {
     }
     
     func show() {
-        let window = UIApplication.shared.windows.first
-        window?.addSubview(self)
+        kWindow.addSubview(self)
     }
 }
