@@ -73,10 +73,10 @@ class YXExerciseOptionManager: NSObject {
             
             // 查询的次数还有问题，后续需要优化
             var selectCount = 0
-            let max = self.reviewWordArray.count
+            let max = self.reviewWordArray.count - 1
             while max > 0 && isOK  {
-                
-                let reviewExercise = reviewWordArray[random(max: max)]
+                let index = random(max: max)
+                let reviewExercise = reviewWordArray[index]
                 if reviewExercise.word?.wordId != exerciseModel.word?.wordId {
                     items.append(itemModel(word: reviewExercise.word!, type: exerciseModel.type))
                     if items.count == 3 {

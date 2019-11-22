@@ -39,7 +39,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
     
         loginButton.isUserInteractionEnabled = false
-
     }
     
     @IBAction func sendSMSWithoutAuthCode(_ sender: UIButton) {

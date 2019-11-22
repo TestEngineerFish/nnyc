@@ -23,8 +23,8 @@ class YXAccountInfoView: UIView {
     @IBOutlet weak var bindQQButton: UIButton!
     @IBOutlet weak var bindWechatButton: UIButton!
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         initializationFromNib()
     }
     
@@ -36,7 +36,7 @@ class YXAccountInfoView: UIView {
     func initializationFromNib() {
         Bundle.main.loadNibNamed("YXAccountInfoView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.frame
+        contentView.frame = self.bounds
     }
 
     @IBAction func bindQQ(_ sender: UIButton) {
@@ -77,5 +77,9 @@ class YXAccountInfoView: UIView {
             bindWechatButton.setTitle("    去绑定    ", for: .normal)
             bindWechatButton.backgroundColor = UIColor.hex(0xFBA217)
         }
+    }
+    
+    func show() {
+        kWindow.addSubview(self)
     }
 }

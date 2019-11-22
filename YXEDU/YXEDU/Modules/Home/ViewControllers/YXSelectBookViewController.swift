@@ -41,7 +41,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     nextSelectWordBook = self.wordBookModels[index + 1]
                 }
                 
-                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v2/book/delbook", parameters: ["bookId": selectedBookId]) { [weak self] (response, isSuccess) in
+                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/api/v1/book/deluserbook", parameters: ["book_id": selectedBookId]) { [weak self] (response, isSuccess) in
                     guard let self = self, isSuccess else { return }
                     
                     if index == self.wordBookModels.count - 1 - 1 {

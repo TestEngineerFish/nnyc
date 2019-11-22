@@ -13,9 +13,12 @@
                 <outlet property="alertHeight" destination="StY-Oe-Efb" id="iHB-0Q-3dI"/>
                 <outlet property="cancelButtonRightDistance" destination="vf0-C6-MQX" id="ta2-Ul-OJ1"/>
                 <outlet property="clearButton" destination="sYH-8X-j99" id="Qmq-kF-ckQ"/>
+                <outlet property="closeButton" destination="4Vh-iI-Pge" id="hNr-ki-Eyg"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="5If-RI-ene"/>
                 <outlet property="descriptionLabel" destination="sHv-1g-9Wg" id="6dJ-26-Mzc"/>
                 <outlet property="doneButtonLeftDistance" destination="kR9-Af-ICs" id="wSr-i5-tA8"/>
+                <outlet property="leftButton" destination="o0l-c1-Doe" id="vxg-Og-Hek"/>
+                <outlet property="rightOrCenterButton" destination="VSr-wl-KM8" id="mC9-cd-VYb"/>
                 <outlet property="textCountLabel" destination="viN-5F-SYu" id="zwY-jq-PF5"/>
                 <outlet property="textField" destination="KVv-Wb-Aw6" id="AoV-ey-TrU"/>
                 <outlet property="textFieldView" destination="rrr-rd-sKa" id="Plr-Oh-IQ5"/>
@@ -30,6 +33,10 @@
                 <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TAM-jf-gYE">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="zfY-WI-zji" appends="YES" id="41G-1e-gFr"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ct3-cU-vXD" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                     <rect key="frame" x="64" y="356" width="286" height="184"/>
@@ -144,6 +151,17 @@
                                 <constraint firstAttribute="height" constant="60" id="twL-rb-sPd"/>
                             </constraints>
                         </view>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Vh-iI-Pge">
+                            <rect key="frame" x="258" y="6" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="2Dv-9z-cqD"/>
+                                <constraint firstAttribute="width" constant="22" id="AzT-Xq-PxS"/>
+                            </constraints>
+                            <state key="normal" image="close"/>
+                            <connections>
+                                <action selector="close:" destination="-1" eventType="touchUpInside" id="LNE-g0-WFH"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
@@ -152,8 +170,10 @@
                         <constraint firstAttribute="trailing" secondItem="VSr-wl-KM8" secondAttribute="trailing" constant="20" id="4B3-7z-tQf"/>
                         <constraint firstAttribute="bottom" secondItem="VSr-wl-KM8" secondAttribute="bottom" constant="30" id="9JL-pQ-bGi"/>
                         <constraint firstAttribute="bottom" secondItem="o0l-c1-Doe" secondAttribute="bottom" constant="30" id="Asl-Jb-kNW"/>
+                        <constraint firstAttribute="trailing" secondItem="4Vh-iI-Pge" secondAttribute="trailing" constant="6" id="E6H-rg-XrH"/>
                         <constraint firstAttribute="trailing" secondItem="sHv-1g-9Wg" secondAttribute="trailing" constant="20" id="Kbc-KN-646"/>
                         <constraint firstItem="bwl-R0-as1" firstAttribute="top" secondItem="ct3-cU-vXD" secondAttribute="top" constant="24" id="Ona-g3-sXi"/>
+                        <constraint firstItem="4Vh-iI-Pge" firstAttribute="top" secondItem="ct3-cU-vXD" secondAttribute="top" constant="6" id="P39-Rq-hJa"/>
                         <constraint firstItem="bwl-R0-as1" firstAttribute="centerX" secondItem="ct3-cU-vXD" secondAttribute="centerX" id="Sic-xD-cos"/>
                         <constraint firstAttribute="height" constant="184" id="StY-Oe-Efb"/>
                         <constraint firstItem="o0l-c1-Doe" firstAttribute="leading" secondItem="ct3-cU-vXD" secondAttribute="leading" constant="20" id="XQY-qa-pQ9"/>
@@ -185,8 +205,14 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="139" y="141"/>
         </view>
+        <tapGestureRecognizer id="zfY-WI-zji">
+            <connections>
+                <action selector="tapBackground:" destination="-1" id="QkP-Kd-M6E"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
+        <image name="close" width="23" height="23"/>
         <image name="empty" width="18" height="18"/>
     </resources>
 </document>

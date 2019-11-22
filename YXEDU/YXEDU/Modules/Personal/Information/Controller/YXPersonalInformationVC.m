@@ -42,9 +42,9 @@
 - (void)setUpDataSource {
     NSMutableArray *dataSource = [NSMutableArray array];
         
-    NSArray *allTitles = @[@[@"头像",@"昵称",@"性别"],@[@"生日",@"地区",@"年级"], @[@"退出登录"]];
-    NSArray *isShowAccseeories = @[@[@"1",@"1",@"1"],@[@"1",@"1",@"1"],@[@"1"]];
-    NSArray *isShowBottomLines = @[@[@"1",@"1",@"0"],@[@"1",@"1",@"1"],@[@"1"]];
+    NSArray *allTitles = @[@[@"头像",@"昵称",@"性别"],@[@"生日",@"地区",@"年级"], @[@""]];
+    NSArray *isShowAccseeories = @[@[@"1",@"1",@"1"],@[@"1",@"1",@"1"],@[@"0"]];
+    NSArray *isShowBottomLines = @[@[@"1",@"1",@"0"],@[@"1",@"1",@"1"],@[@"0"]];
 
     for (NSInteger i = 0; i < allTitles.count; i++) {
             
@@ -71,10 +71,15 @@
     self.tableDataSource = dataSource;
 }
 
+- (void)back {
+    [self.navigationController popViewControllerAnimated: true];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.title = @"个人资料";
+    [self.navigationItem.leftBarButtonItem setTarget: self];
+    [self.navigationItem.leftBarButtonItem setAction: @selector(back)];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(removePickerView:) name:@"RemovePickerView" object:nil];
 
@@ -164,6 +169,17 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         [self addAvatarImage:cell];
+        
+    } else if (indexPath.section == 2 && indexPath.row == 0) {
+        YXDesignableButton *button = [[YXDesignableButton alloc] initWithFrame: CGRectMake(20, 2, SCREEN_WIDTH - 40, 40)];
+        [button setTitle:@"退出登录" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithRed:(251.0 / 255.0) green:(162.0 / 255.0) blue:(23.0 / 255.0) alpha:1] forState:UIControlStateNormal];
+        [button.titleLabel setFont: [UIFont systemFontOfSize:17]];
+        button.cornerRadius = 20;
+        button.borderWidth = 1;
+        button.borderColor = [UIColor colorWithRed:(251.0 / 255.0) green:(162.0 / 255.0) blue:(23.0 / 255.0) alpha:1];
+        [button addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:button];
     }
     
     return cell;
@@ -172,8 +188,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && indexPath.row == 0) {
         return 100;
+        
     } else {
-        return 60;
+        return 44;
     }
 }
 
@@ -280,18 +297,6 @@
             break;
 
         case 2:
-        {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *actionConfirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [[YXUserModel default] logout];
-            }];
-            
-            UIAlertAction *actionCancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-                    
-            [alert addAction:actionConfirm];
-            [alert addAction:actionCancle];
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
-        }
             break;
     }
     
@@ -463,6 +468,19 @@
         self.pickerView = nil;
     }];
 
+}
+
+- (void)logout {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionConfirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[YXUserModel default] logout];
+    }];
+    
+    UIAlertAction *actionCancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction:actionConfirm];
+    [alert addAction:actionCancle];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 
 @end
