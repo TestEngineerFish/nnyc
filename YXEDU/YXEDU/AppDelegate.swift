@@ -16,7 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
+        getNotificationPermissions()
+        initThirdPartyServices()
+        initViewAndData()
+
+        return true
+    }
+    
+    func getNotificationPermissions() {
         UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             authored, error in
@@ -24,10 +32,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard authored else { return }
 //            application.registerForRemoteNotifications()
         }
-        
+    }
+    
+    func initThirdPartyServices() {
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
-
+    }
+    
+    func initViewAndData() {
         if YXUserModel.default.didLogin == false {
             window = UIWindow(frame: UIScreen.main.bounds)
             window?.rootViewController = nil
@@ -37,9 +49,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = navigationController
             
             window?.makeKeyAndVisible()
+            
+        } else {
+            guard let tabBarViewController = window?.rootViewController as? UITabBarController else { return }
+            tabBarViewController.selectedIndex = 2
         }
-        
-        return true
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

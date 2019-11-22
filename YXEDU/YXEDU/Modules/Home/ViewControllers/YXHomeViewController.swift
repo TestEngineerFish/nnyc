@@ -25,11 +25,39 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var subItemCollectionView: UICollectionView!
 
     @IBAction func startExercise(_ sender: UIButton) {
-        let vc = YXExerciseViewController()
-        vc.bookId = homeModel?.bookId ?? 0
-        vc.unitId = homeModel?.unitId ?? 0
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+        if countOfWaitForStudyWords.text == "0" {
+            guard let homeData = homeModel else { return }
+            
+            let alertView = YXAlertView(type: .normal)
+            if homeData.isLastUnit == 1 {
+                alertView.descriptionLabel.text = "你太厉害了，已经背完这本书拉，你可以……"
+                alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
+                alertView.doneClosure = { _ in
+                    self.showLearnMap(alertView.rightOrCenterButton)
+                }
+                
+            } else {
+                alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
+                alertView.closeButton.isHidden = false
+                alertView.leftButton.setTitle("换单元", for: .normal)
+                alertView.rightOrCenterButton.setTitle("换本书学", for: .normal)
+                
+                alertView.cancleClosure = {
+                    self.showLearnMap(alertView.rightOrCenterButton)
+                }
+                
+                alertView.doneClosure = { _ in
+                    self.performSegue(withIdentifier: "AddWordsBook", sender: self)
+                }
+            }
+            
+        } else {
+            let vc = YXExerciseViewController()
+            vc.bookId = homeModel?.bookId ?? 0
+            vc.unitId = homeModel?.unitId ?? 0
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     

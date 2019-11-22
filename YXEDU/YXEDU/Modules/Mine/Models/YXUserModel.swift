@@ -20,8 +20,20 @@ class YXUserModel: NSObject {
             self.didUseAmericanPronunciation = didUseAmericanPronunciation
         }
         
-        if let currentLearningWordBookId = YYCache.object(forKey: "CurrentLearningWordBookId") as? Int {
-            self.currentLearningWordBookId = currentLearningWordBookId
+        if let token = YYCache.object(forKey: "UserToken") as? String {
+            self.token = token
+        }
+        
+        if let uuid = YYCache.object(forKey: "UserUUID") as? String {
+            self.uuid = uuid
+        }
+        
+        if let username = YYCache.object(forKey: "UserName") as? String {
+            self.username = username
+        }
+        
+        if let userAvatarPath = YYCache.object(forKey: "UserAvatarPath") as? String {
+            self.userAvatarPath = userAvatarPath
         }
     }
     
@@ -37,29 +49,44 @@ class YXUserModel: NSObject {
         }
     }
     
-    var currentLearningWordBookId = 0 {
+    var token: String? {
         didSet {
-            YYCache.set(didLogin, forKey: "CurrentLearningWordBookId")
+            YYCache.set(token, forKey: "UserToken")
         }
     }
     
-    var token: String?
-    var uuid: String?
-    var username: String?
-    var userAvatarPath: String?
-    var phoneNumber: String? 
+    var uuid: String? {
+        didSet {
+            YYCache.set(uuid, forKey: "UserUUID")
+        }
+    }
+    
+    var username: String? {
+        didSet {
+            YYCache.set(uuid, forKey: "UserName")
+        }
+    }
+    
+    var userAvatarPath: String? {
+        didSet {
+            YYCache.set(uuid, forKey: "UserAvatarPath")
+        }
+    }
+
     var integral: Int?
 
     func login() {
         let storyboard = UIStoryboard(name:"Main", bundle: nil)
         let tabBarController = storyboard.instantiateViewController(withIdentifier: "YXTabBarViewController") as? UITabBarController
         UIApplication.shared.keyWindow?.rootViewController = tabBarController
+        
+        tabBarController?.selectedIndex = 2
     }
     
     @objc
     func logout() {
         self.didLogin = false
-        
+
         YXMediator().loginOut()
         
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)

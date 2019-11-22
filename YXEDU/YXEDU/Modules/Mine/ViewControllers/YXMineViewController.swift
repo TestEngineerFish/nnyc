@@ -34,6 +34,9 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
+        
+        loadData()
+        tabBarController?.selectedIndex = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,12 +97,14 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.loadBadgeData()
                 
                 // 个人信息
-                self.avatarImageView.sd_setImage(with: URL(string: loginModel.user.avatar), placeholderImage: #imageLiteral(resourceName: "userPlaceHolder"), completed: nil)
-                self.nameLabel.text = loginModel.user.nick
+                YXUserModel.default.userAvatarPath = loginModel.user.avatar
+                YXUserModel.default.username = loginModel.user.nick
+                self.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), placeholderImage: #imageLiteral(resourceName: "userPlaceHolder"), completed: nil)
+                self.nameLabel.text = YXUserModel.default.username
                 self.calendarLabel.text = "\(loginModel.user.punchDays ?? 0)"
                 
                 // 账户信息
-                let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as! UILabel
+                let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel
                 self.bindInfo = [loginModel.user.mobile, "", ""]
 
                 if loginModel.user.userBind.contains(",1") {
@@ -111,36 +116,36 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
                 
                 if self.bindInfo[1] == "1", self.bindInfo[2] == "2" {
-                    bindLabel.text = ""
+                    bindLabel?.text = ""
                     
                 } else {
-                    bindLabel.text = "去绑定"
+                    bindLabel?.text = "去绑定"
                 }
 
                 // 发音
-                let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as! UILabel
+                let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as? UILabel
                 if loginModel.user.speech == "0" {
-                    speechLabel.text = "英式"
+                    speechLabel?.text = "英式"
                     YXUserModel.default.didUseAmericanPronunciation = false
                     
                 } else {
-                    speechLabel.text = "美式"
+                    speechLabel?.text = "美式"
                     YXUserModel.default.didUseAmericanPronunciation = true
                 }
                 
                 // 素材包管理
-                let materailLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as! UILabel
-                materailLabel.text = "0.00M"
+                let materailLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
+                materailLabel?.text = "0.00M"
                 
                 // 每日提醒
-                let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0))?.viewWithTag(2) as! UILabel
+                let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0))?.viewWithTag(2) as? UILabel
                 if let date = UserDefaults.standard.object(forKey: "Reminder") as? Date {
                     let dateFormatter = DateFormatter()
                     dateFormatter.timeStyle = .short
-                    remindLabel.text = dateFormatter.string(from: date)
+                    remindLabel?.text = dateFormatter.string(from: date)
                     
                 } else {
-                    remindLabel.text = "已关闭"
+                    remindLabel?.text = "已关闭"
                 }
                 
                 self.tableView.reloadData()
@@ -160,7 +165,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         YXComHttpService.shared().requestBadgesInfo({ (response, isSuccess) in
             if isSuccess, let response = response {
-                guard let badgesList = YXConfigure.shared().confModel.badgeList, let badgeStatus = (response as! [String: Any])["badgesInfo"] as? [[String:Any]] else { return }
+                guard let configure = YXConfigure.shared().confModel, let badgesList = configure.badgeList, let badgeStatus = (response as! [String: Any])["badgesInfo"] as? [[String:Any]] else { return }
                 
                 var earnedBadgeCount = 0
                 var currentIndex = 0
@@ -245,7 +250,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         switch indexPath.row {
         case 0:
-            let accountInfoView = YXAccountInfoView(frame: self.view.bounds)
+            let accountInfoView = YXAccountInfoView()
             accountInfoView.bindInfo = bindInfo
             accountInfoView.bindQQClosure = {
                 if self.bindInfo[1] == "1" {
@@ -289,7 +294,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
             }
             
-            self.view.addSubview(accountInfoView)
+            accountInfoView.show()
             break
 
         case 1:

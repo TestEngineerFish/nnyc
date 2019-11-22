@@ -360,6 +360,13 @@
                                                     <outlet property="delegate" destination="nnd-vG-UVX" id="43M-X3-S28"/>
                                                 </connections>
                                             </collectionView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeLogo" translatesAutoresizingMaskIntoConstraints="NO" id="9T2-Xj-D06">
+                                                <rect key="frame" x="20" y="10" width="86" height="22"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="22" id="0GG-br-lPn"/>
+                                                    <constraint firstAttribute="width" constant="86" id="fVA-6Z-30O"/>
+                                                </constraints>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
@@ -369,8 +376,10 @@
                                             <constraint firstItem="Udq-Hf-n6w" firstAttribute="leading" secondItem="Fo0-y4-QGD" secondAttribute="leading" constant="20" id="ELk-J8-NbV"/>
                                             <constraint firstItem="q7v-mq-Dhk" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="bottom" constant="20" id="UXR-sT-5L4"/>
                                             <constraint firstAttribute="trailing" secondItem="dAx-HE-Hhk" secondAttribute="trailing" constant="20" id="Wgk-er-NlO"/>
+                                            <constraint firstItem="9T2-Xj-D06" firstAttribute="leading" secondItem="Fo0-y4-QGD" secondAttribute="leading" constant="20" id="ZCr-1v-39Z"/>
                                             <constraint firstAttribute="bottom" secondItem="q7v-mq-Dhk" secondAttribute="bottom" id="k8t-Yb-uPT"/>
                                             <constraint firstAttribute="trailing" secondItem="Udq-Hf-n6w" secondAttribute="trailing" constant="20" id="tWS-Ld-lQH"/>
+                                            <constraint firstItem="9T2-Xj-D06" firstAttribute="top" secondItem="Fo0-y4-QGD" secondAttribute="top" constant="10" id="uO4-Zi-GuL"/>
                                             <constraint firstItem="q7v-mq-Dhk" firstAttribute="leading" secondItem="Fo0-y4-QGD" secondAttribute="leading" constant="20" id="wCV-fZ-FiR"/>
                                         </constraints>
                                     </view>
@@ -808,6 +817,7 @@
         <image name="back" width="22" height="22"/>
         <image name="changeWordBook" width="18" height="19"/>
         <image name="homeBackground" width="332" height="382"/>
+        <image name="homeLogo" width="86" height="22"/>
         <image name="homeProgressBar" width="259" height="8"/>
         <image name="homeProgressBarTrack" width="259" height="8"/>
         <image name="homeSearch" width="22" height="22"/>

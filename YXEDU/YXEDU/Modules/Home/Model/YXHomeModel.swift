@@ -16,6 +16,7 @@ struct YXHomeModel: Codable {
     var bookHash: String?
     var unitId: Int?
     var unitName: String?
+    var isLastUnit: Int?
     var unitProgress: Double?
     var newWords: Int?
     var reviewWords: Int?
@@ -31,6 +32,7 @@ struct YXHomeModel: Codable {
         case bookHash = "hash"
         case unitId = "unit_id"
         case unitName = "unit_name"
+        case isLastUnit = "is_last_unit"
         case unitProgress = "learn_rate"
         case newWords = "new_num"
         case reviewWords = "review_num"

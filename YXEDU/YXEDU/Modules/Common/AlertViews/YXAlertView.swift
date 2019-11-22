@@ -25,6 +25,9 @@ class YXAlertView: UIView, UITextFieldDelegate {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var textFieldView: UIView!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var leftButton: UIButton!
+    @IBOutlet weak var rightOrCenterButton: UIButton!
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var textCountLabel: UILabel!
     @IBOutlet weak var cancelButtonRightDistance: NSLayoutConstraint!
@@ -41,8 +44,16 @@ class YXAlertView: UIView, UITextFieldDelegate {
         self.removeFromSuperview()
     }
     
+    @IBAction func close(_ sender: UIButton) {
+        self.removeFromSuperview()
+    }
+    
     @IBAction func clearTextField(_ sender: UIButton) {
         textField.text = ""
+    }
+    
+    @IBAction func tapBackground(_ sender: UITapGestureRecognizer) {
+        self.removeFromSuperview()
     }
     
     init(type: YXAlertViewType = .normal) {

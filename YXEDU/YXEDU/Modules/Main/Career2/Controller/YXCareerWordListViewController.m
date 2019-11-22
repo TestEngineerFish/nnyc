@@ -412,13 +412,9 @@ static NSString *const kYXCareerNoteWordListCellID = @"kYXCareerNoteWordListCell
     NSArray *wordIds = model.wordIds;
     YXCareerNoteWordInfoModel *cellInfoModel = [YXCareerNoteWordInfoModel mj_objectWithKeyValues:wordIds[indexPath.row]];
     
-    YXCareerWordInfo *wordInfo = [[YXCareerWordInfo alloc] init];
-    wordInfo.bookId = cellInfoModel.book_id;
-    wordInfo.wordId = cellInfoModel.word_id;
-    wordInfo.wordDetail = cellInfoModel.wordModel;
-    YXWordDetailViewControllerOld *wdvc = [[YXWordDetailViewControllerOld alloc] init];
-    wdvc.careerWordInfo = wordInfo;
-    wdvc.isFavWord = (self.wordListViewType == kYXWordListCollection);
+    YXWordDetailViewControllerNew *wdvc = [[YXWordDetailViewControllerNew alloc] init];
+    wdvc.wordId = cellInfoModel.word_id;
+   
     [self.navigationController pushViewController:wdvc animated:YES];
 }
 
