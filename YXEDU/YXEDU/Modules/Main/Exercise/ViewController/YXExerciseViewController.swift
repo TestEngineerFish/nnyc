@@ -110,7 +110,6 @@ class YXExerciseViewController: UIViewController {
             self?.progressManager.completionReport()
             
             self?.navigationController?.popViewController(animated: true)
-//            self?.switchExerciseView()
         }
                 
         self.bottomView.tipsEvent = {[weak self] in

@@ -22,13 +22,13 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         self.contentView.addSubview(questionView!)
         
         remindView = YXRemindView(exerciseModel: exerciseModel)
+        remindView?.delegate = self
         self.addSubview(remindView!)
 
         answerView = YXAnswerConnectionLettersView(exerciseModel: exerciseModel)
-        self.contentView.addSubview(answerView!)
-
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
+        self.contentView.addSubview(answerView!)
 
         self.contentView.layer.setDefaultShadow()
     }
@@ -74,6 +74,23 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
     
     override func bindData() {
         self.remindView?.remindSteps = [[.example, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
+    }
+
+    override func updateHeightConstraints(_ height: CGFloat) {
+        let remindViewH = self.height - self.contentView.frame.maxY
+        let lackH = height - remindViewH
+        if lackH > 0 {
+            self.remindView?.isHidden = false
+            UIView.animate(withDuration: 0.5) {
+                self.transform = CGAffineTransform(translationX: 0, y: -lackH)
+            }
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+                UIView.animate(withDuration: 0.5) {
+                    self.transform = .identity
+                }
+                self.remindView?.isHidden = true
+            }
+        }
     }
     
 }
