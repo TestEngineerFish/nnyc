@@ -20,6 +20,10 @@ enum YXRemindType: Int {
     case detail                 // 详情页
 }
 
+/// 提示区域更新约束
+protocol YXRemindViewProtocol {
+    func updateHeightConstraints(_ height: CGFloat)
+}
 
 class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
@@ -38,6 +42,8 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     /// 等待播放的语音列表（某一步提示，可能会播放多个语音，需要使用队列顺序播放，例如：单词语音+例句语音）
     private var audioList: [String] = []
     private var playIndex = 0
+
+    var delegate: YXRemindViewProtocol?
     
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
@@ -111,9 +117,9 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     //MARK: 外部调用方法
-    public func show() -> CGFloat {
+    public func show() {
         if remindSteps.isEmpty {
-            return 20
+            return
         }
         
         // 下标必须要放在前面，由于layout布局有延迟，如果放后面，会有取值错误
@@ -126,7 +132,15 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         
         let step = remindSteps[currentRemindIndex]
         self.processRedmine(remindStep: step)
-        return 200
+        // 更新高度
+        let maxHeirht: CGFloat = {
+            if self.titleLabel.isHidden {
+                return self.imageView.frame.maxY
+            } else {
+                return self.titleLabel.frame.maxY
+            }
+        }()
+        self.delegate?.updateHeightConstraints(maxHeirht)
     }
     
     //MARK: 提示实现
@@ -310,6 +324,5 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     func playAudioFinished() {
         self.playAudio()
     }
-
 }
 
