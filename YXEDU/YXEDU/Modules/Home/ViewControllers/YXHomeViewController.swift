@@ -52,6 +52,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
             
         } else {
+            YYCache.set(Date(), forKey: "LastStoredDate")
+
             let vc = YXExerciseViewController()
             vc.bookId = homeModel?.bookId ?? 0
             vc.unitId = homeModel?.unitId ?? 0
@@ -116,10 +118,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     private func checkLoginState() {
         YXComHttpService.shared().requestConfig({ (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject else { return }
-            
-            let config = response as! YXConfigModel
             self.isCheckingLoginState = false
+
+            guard isSuccess, let response = response?.responseObject else { return }
+            let config = response as! YXConfigModel
             
             guard config.baseConfig.learning else {
                 self.performSegue(withIdentifier: "AddWordsBook", sender: self)
@@ -187,9 +189,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             } else {
                 startStudyButton.setTitle("开始背单词", for: .normal)
             }
-            
-        } else {
-            YYCache.set(Date(), forKey: "LastStoredDate")
         }
     }
 

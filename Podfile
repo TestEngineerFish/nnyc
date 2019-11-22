@@ -26,7 +26,7 @@ target 'YXEDU' do
      pod 'MJRefresh'
      pod 'WMPageController'
      pod 'VTMagic'
-     pod 'TZImagePickerController', '~> 3.0.9'
+     pod 'TZImagePickerController'
      pod 'FMDB'
      pod 'MagicalRecord'
      pod 'MJExtension'

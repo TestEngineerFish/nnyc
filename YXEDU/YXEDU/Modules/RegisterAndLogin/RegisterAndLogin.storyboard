@@ -484,21 +484,9 @@
                                     <constraint firstAttribute="height" constant="72" id="JOk-oZ-AYl"/>
                                 </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="绑定手机号">
-                                        <attributes>
-                                            <font key="NSFont" size="17" name=".PingFangSC-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="6" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="             ">
+                                    <fragment content="绑定手机号             会让您的账号更安全">
                                         <attributes>
                                             <font key="NSFont" metaFont="system" size="17"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="6" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="会让您的账号更安全">
-                                        <attributes>
-                                            <font key="NSFont" size="17" name=".PingFangSC-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="6" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -551,7 +539,7 @@
     </scenes>
     <resources>
         <image name="LoginBackground" width="375" height="131"/>
-        <image name="Logo" width="150" height="37"/>
+        <image name="Logo" width="159" height="38"/>
         <image name="QQ" width="41" height="41"/>
         <image name="Wechat" width="41" height="41"/>
         <image name="back" width="22" height="22"/>

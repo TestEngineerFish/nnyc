@@ -375,6 +375,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     picker.delegate = self;
+    picker.allowsEditing = YES;
     [self presentViewController:picker animated:YES completion:nil];
 }
 
@@ -382,38 +383,18 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.delegate = self;
-    picker.navigationBar.tintColor = [UIColor whiteColor];
+    picker.allowsEditing = YES;
+//    picker.navigationBar.tintColor = [UIColor whiteColor];
     [self presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     [picker dismissViewControllerAnimated:YES completion:^{
-        UIImage *image = info[UIImagePickerControllerOriginalImage];
-        UIImage *clipImage = [self clipImage:image];
-        
-        [self postAvatar:clipImage];
+        [self postAvatar:info[UIImagePickerControllerEditedImage]];
     }];
 }
 
-- (UIImage *)clipImage:(UIImage *)image {
-    UIImage *newImage;
-    
-    CGFloat width = image.size.width;
-    CGFloat height = image.size.height;
-    
-    if (width >= height) {
-        UIGraphicsBeginImageContext(CGSizeMake(height, height));
-        [image drawInRect:(CGRectMake((height - width) / 2, 0, width, height))];
-    } else {
-        UIGraphicsBeginImageContext(CGSizeMake(width, width));
-        [image drawInRect:(CGRectMake(0, (width - height) / 2, width, height))];
-    }
-    
-    newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
-}
+
 
 // MARK: - PickerView Delegate
 - (void)basePickverView:(YXBasePickverView *)pickverView withSelectedTitle:(NSString *)title {

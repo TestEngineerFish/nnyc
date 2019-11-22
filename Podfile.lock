@@ -69,7 +69,7 @@ PODS:
   - SnapKit (4.0.1)
   - SSKeychain (1.4.1)
   - SVProgressHUD (2.2.5)
-  - TZImagePickerController (3.0.9)
+  - TZImagePickerController (3.2.7)
   - UICollectionViewLeftAlignedLayout (1.0.2)
   - UMCAnalytics (6.0.5):
     - UMCCommon
@@ -118,7 +118,7 @@ DEPENDENCIES:
   - SnapKit (~> 4.0.0)
   - SSKeychain
   - SVProgressHUD
-  - TZImagePickerController (~> 3.0.9)
+  - TZImagePickerController
   - UICollectionViewLeftAlignedLayout
   - UMCAnalytics
   - UMCCommon
@@ -215,7 +215,7 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc
+  TZImagePickerController: 821b81f83594a736e831a018f2a2ce31822ddf0b
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
   UMCAnalytics: 045be2cd1ec05aa95ad62405a850757f932e2d59
   UMCCommon: 971f324a5a99c9d662ae040a815e7e3d7ef8b2a8
@@ -226,6 +226,6 @@ SPEC CHECKSUMS:
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 60aa3fd69ed6277c89ac911fdb53d7adcb79ed25
+PODFILE CHECKSUM: 965a9e3a331881e582c46197a8101bff871a8372
 
 COCOAPODS: 1.8.4

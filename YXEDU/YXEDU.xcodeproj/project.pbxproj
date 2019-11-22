@@ -77,6 +77,7 @@
 		23FD6CE822952E5400334321 /* 答题引导2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE422952E5400334321 /* 答题引导2@3x.png */; };
 		23FD6CE922952E5400334321 /* 答题引导1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE522952E5400334321 /* 答题引导1@2x.png */; };
 		770182B32366D80D00070BFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770182B22366D80D00070BFF /* AppDelegate.swift */; };
+		7702ABFF23880E6600EC0C69 /* YXAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */; };
 		771512E02367126800F6D400 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771512DF2367126800F6D400 /* Mine.storyboard */; };
 		771512E22367131500F6D400 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771512E12367131500F6D400 /* Home.storyboard */; };
 		771512E4236713E600F6D400 /* YXMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771512E3236713E600F6D400 /* YXMineViewController.swift */; };
@@ -779,6 +780,7 @@
 		4FCB6DA42328CBB50038E8F5 /* YXStatusCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXStatusCode.h; sourceTree = "<group>"; };
 		6F3F6E87CCD9D15BB5221A47 /* Pods-YXEDU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.debug.xcconfig"; sourceTree = "<group>"; };
 		770182B22366D80D00070BFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAboutUsViewController.swift; sourceTree = "<group>"; };
 		771512DF2367126800F6D400 /* Mine.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Mine.storyboard; sourceTree = "<group>"; };
 		771512E12367131500F6D400 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		771512E3236713E600F6D400 /* YXMineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMineViewController.swift; sourceTree = "<group>"; };
@@ -2226,6 +2228,7 @@
 			isa = PBXGroup;
 			children = (
 				771512E3236713E600F6D400 /* YXMineViewController.swift */,
+				7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -5721,6 +5724,7 @@
 				EE5E0255232756C100655654 /* XNotificationBridge.m in Sources */,
 				EE5E009523274FEB00655654 /* YXArticleDetailAttributionStringModel.m in Sources */,
 				EE5E0163232754FA00655654 /* YXGuideView.m in Sources */,
+				7702ABFF23880E6600EC0C69 /* YXAboutUsViewController.swift in Sources */,
 				EE5E007F23274FEB00655654 /* YXNinePalaceKeyBoardView.m in Sources */,
 				2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */,
 				EE5E00C423274FEB00655654 /* YXDataSituationView.m in Sources */,
