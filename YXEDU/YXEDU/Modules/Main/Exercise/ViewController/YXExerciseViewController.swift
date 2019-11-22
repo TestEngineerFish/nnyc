@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Lottie
-
 
 /// 练习模块，主控制器
 class YXExerciseViewController: UIViewController {
@@ -34,7 +32,7 @@ class YXExerciseViewController: UIViewController {
     private var resultView = UIImageView()
 
     // Load视图
-    var animationView = UIView()
+    var loadingView: YXExerciseLoadingView?
         
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -53,7 +51,7 @@ class YXExerciseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.showLoadAnimation()
+        self.showLoadAnimation()
         self.createSubviews()
         self.bindProperty()
         self.initManager()
@@ -241,27 +239,16 @@ class YXExerciseViewController: UIViewController {
 
     /// 显示loading动画
     private func showLoadAnimation() {
-        kWindow.addSubview(animationView)
-        let loadAnimation = AnimationView(name: "learnLoading")
-        animationView.addSubview(loadAnimation)
-
-        animationView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-
-        loadAnimation.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.width.equalTo(200)
-            make.height.equalTo(300)
-        }
-        loadAnimation.play()
+        self.loadingView = YXExerciseLoadingView(frame: kWindow.bounds)
+        kWindow.addSubview(self.loadingView!)
+        self.loadingView?.showAnimation()
     }
 
     private func hideLoadAnimation() {
-        self.animationView.removeFromSuperview()
+        self.loadingView?.stopAnimation()
+        self.loadingView = nil
     }
 }
-
 
 extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate {
     ///答完题回调处理

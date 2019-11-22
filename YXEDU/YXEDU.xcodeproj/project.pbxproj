@@ -62,6 +62,7 @@
 		2290EAD123705884000BCA47 /* YXLearnResultAnimationSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2290EAD023705884000BCA47 /* YXLearnResultAnimationSubview.swift */; };
 		2290EAD423714AD2000BCA47 /* readAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 2290EAD323714AD2000BCA47 /* readAnimation.json */; };
 		22A5AFB8236C53E900FBFABD /* YXExerciseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A5AFB7236C53E900FBFABD /* YXExerciseAnimation.swift */; };
+		22AC8E74238783A1000E477B /* YXExerciseLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AC8E73238783A1000E477B /* YXExerciseLoadingView.swift */; };
 		22B1F2102382CDAC00A84F61 /* learnLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 22B1F20F2382CDAC00A84F61 /* learnLoading.json */; };
 		22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */; };
 		22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */; };
@@ -758,6 +759,7 @@
 		2290EAD023705884000BCA47 /* YXLearnResultAnimationSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnResultAnimationSubview.swift; sourceTree = "<group>"; };
 		2290EAD323714AD2000BCA47 /* readAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = readAnimation.json; sourceTree = "<group>"; };
 		22A5AFB7236C53E900FBFABD /* YXExerciseAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseAnimation.swift; sourceTree = "<group>"; };
+		22AC8E73238783A1000E477B /* YXExerciseLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseLoadingView.swift; sourceTree = "<group>"; };
 		22B1F20F2382CDAC00A84F61 /* learnLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = learnLoading.json; sourceTree = "<group>"; };
 		22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionMeaningView.swift; sourceTree = "<group>"; };
 		22ED549C2366D80400011B82 /* YXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXModel.h; sourceTree = "<group>"; };
@@ -5373,6 +5375,7 @@
 				2205A93D23628FDE00C6E674 /* YXFindRoutesUtil.swift */,
 				77201829237CE7ED00535732 /* YXWordDetailView.swift */,
 				77CCB9BA237A4B5B004EB781 /* YXWordDetailView.xib */,
+				22AC8E73238783A1000E477B /* YXExerciseLoadingView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -5950,6 +5953,7 @@
 				77F69A7623616CE600E55185 /* YXDesignableLabel.swift in Sources */,
 				EE5E010A23274FEC00655654 /* YXBindResultModel.m in Sources */,
 				EE5E000723274FEB00655654 /* YXDeleteAnimateView.m in Sources */,
+				22AC8E74238783A1000E477B /* YXExerciseLoadingView.swift in Sources */,
 				EE5E008423274FEB00655654 /* YXReviewAccomplishView.m in Sources */,
 				EE54F7E22362AA3100EC605A /* YXChineseQuestionView.swift in Sources */,
 				EE5E007A23274FEB00655654 /* YXSelectLettersViewOld.m in Sources */,
