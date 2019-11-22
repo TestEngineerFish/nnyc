@@ -12,14 +12,15 @@ class YXCharacterTextField: UITextField, UIGestureRecognizerDelegate {
 
     var isBlank = false
 
-    override init(frame: CGRect) {
+    init(frame: CGRect, isTitle: Bool) {
         super.init(frame: frame)
         self.tag                    = 999// 用户响应底部答题事件
-        self.font                   = UIFont.boldSystemFont(ofSize: AdaptSize(20))
-        self.textColor              = UIColor.hex(0x323232)
+        self.font                   = isTitle ? UIFont.boldSystemFont(ofSize: AdaptSize(20)) : UIFont.pfSCRegularFont(withSize: 16)
+        self.textColor              = isTitle ? UIColor.black1 : UIColor.black2
         self.borderStyle            = .none
         self.returnKeyType          = .done
         self.textAlignment          = .center
+        self.backgroundColor        = .clear
         self.inputAccessoryView     = UIView()
         self.autocorrectionType     = .no
         self.autocapitalizationType = .none

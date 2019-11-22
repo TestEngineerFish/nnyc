@@ -11,8 +11,9 @@ import UIKit
 
 class YXLearningResultViewController: UIViewController {
 
-    var backButton = UIButton()
-    var punchButton = YXButton()
+    var backButton        = UIButton()
+    var contentScrollView = UIScrollView()
+    var punchButton       = YXButton()
     var mapModelList: [YXLearnMapUnitModel]? // 总单元
     var currentModel: YXLearnMapUnitModel? // 当前单元
     var requestCount = 0
@@ -34,8 +35,34 @@ class YXLearningResultViewController: UIViewController {
     }
 
     private func createSubviews() {
+        guard let _currentModel = self.currentModel else {
+            return
+        }
+
+        // 结果视图
+        let headerView = YXLearningResultHeaderView(_currentModel, newAmount: newLearnAmount, reviewAmount: reviewLearnAmount)
+        self.contentScrollView.addSubview(headerView)
+        headerView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.height.equalTo(AdaptSize(244))
+            make.width.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(23))
+        }
+
+        // 内容视图,支持滑动
+        self.view.addSubview(self.contentScrollView)
+        self.contentScrollView.isScrollEnabled = true
+        self.contentScrollView.showsVerticalScrollIndicator   = false
+        self.contentScrollView.showsHorizontalScrollIndicator = false
+
+        self.contentScrollView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-kSafeBottomMargin)
+        }
+
         // 返回按钮
-        backButton.setImage(UIImage(named: "back"), for: .normal)
+        backButton.setImage(UIImage(named: "closeBtn"), for: .normal)
         self.view.addSubview(backButton)
         backButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(16))
@@ -43,20 +70,6 @@ class YXLearningResultViewController: UIViewController {
             make.width.height.equalTo(AdaptSize(22))
         }
         backButton.addTarget(self, action: #selector(backClick), for: .touchUpInside)
-
-        guard let _currentModel = self.currentModel else {
-            return
-        }
-
-        // 结果视图
-        let headerView = YXLearningResultHeaderView(_currentModel, newAmount: newLearnAmount, reviewAmount: reviewLearnAmount)
-        self.view.addSubview(headerView)
-        headerView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.height.equalTo(AdaptSize(244))
-            make.width.equalToSuperview()
-            make.top.equalToSuperview().offset(kNavHeight)
-        }
 
         // 打卡按钮
         let punchSize = CGSize(width: screenWidth - AdaptSize(100), height: AdaptSize(42))
@@ -69,9 +82,11 @@ class YXLearningResultViewController: UIViewController {
         self.view.addSubview(punchButton)
         punchButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-30 - kSafeBottomMargin)
+            make.bottom.equalToSuperview().offset(-AdaptSize(30) - kSafeBottomMargin)
             make.size.equalTo(punchSize)
         }
+
+
     }
 
     /// 设置任务地图
@@ -91,9 +106,9 @@ class YXLearningResultViewController: UIViewController {
         }
         taskMapView.backgroundColor    = UIColor.white
         taskMapView.layer.cornerRadius = 6
-        self.view.addSubview(taskMapView)
+        self.contentScrollView.addSubview(taskMapView)
         taskMapView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(kNavHeight + AdaptSize(300))
+            make.top.equalToSuperview().offset(AdaptSize(300))
             make.size.equalTo(taskMapViewSize)
             make.centerX.equalToSuperview()
         }
@@ -110,6 +125,8 @@ class YXLearningResultViewController: UIViewController {
             make.width.equalTo(48)
             make.height.equalTo(12)
         }
+        let contentScrollViewH = kNavHeight + AdaptSize(300) + taskMapViewSize.height + AdaptSize(50) + AdaptSize(42)
+        self.contentScrollView.contentSize = CGSize(width: contentScrollView.width, height: contentScrollViewH)
     }
 
     private func bindData() {
@@ -131,7 +148,7 @@ class YXLearningResultViewController: UIViewController {
                 self.mapModelList = response.data?.unitList
                 self.currentModel = self.mapModelList?.filter({ (model) -> Bool in
                     return model.unitID == unitId
-                    }).first
+                }).first
                 self.createSubviews()
                 self.createTaskMap()
             }

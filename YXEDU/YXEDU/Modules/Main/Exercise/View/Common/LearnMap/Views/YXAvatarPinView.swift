@@ -32,7 +32,8 @@ class YXAvatarPinView: UIView {
             make.height.equalTo(AdaptSize(42))
         }
 
-        let avatarImageView = UIImageView(image: UIImage(named: "Mission_Card_Box"))
+        let avatarImageView = YXKVOImageView()
+        avatarImageView.showImage(with: YXUserModel.default.userAvatarPath ?? "")
         imageView.addSubview(avatarImageView)
         avatarImageView.frame = CGRect(x: 0, y: 0, width: AdaptSize(24), height: AdaptSize(24))
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width/2

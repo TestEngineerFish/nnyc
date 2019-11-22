@@ -17,7 +17,7 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         self.addSubview(contentView)
         self.contentView.backgroundColor = UIColor.white
 
-        questionView = YXChineseFillQuestionView(exerciseModel: exerciseModel)
+        questionView = YXChineseFillConnectionLetterQuestionView(exerciseModel: exerciseModel)
         questionView?.layer.removeShadow()
         self.contentView.addSubview(questionView!)
         

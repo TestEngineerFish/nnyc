@@ -16,7 +16,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
     override func createSubviews() {
         super.createSubviews()
 
-        self.spellView = YXSpellSubview(self.exerciseModel)
+        self.spellView = YXSpellSubview(self.exerciseModel, isTitle: true)
         addSubview(spellView!)
 
         self.initAudioPlayerView()

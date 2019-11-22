@@ -130,14 +130,14 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
             }
         }()
         label.textColor = UIColor.white
-        label.font = UIFont.semiboldFont(ofSize: 12)
+        label.font = UIFont.semiboldFont(ofSize: AdaptSize(12))
         label.numberOfLines = 2
         label.textAlignment = .center
         bubbleImageView.addSubview(label)
         label.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(15))
             make.right.equalToSuperview().offset(AdaptSize(-15))
-            make.height.equalTo(AdaptSize(34))
+            make.height.equalTo(AdaptSize(36))
             make.top.equalToSuperview().offset(AdaptSize(8))
         }
         self.addSubview(bubbleImageView)

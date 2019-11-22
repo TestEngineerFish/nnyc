@@ -22,8 +22,9 @@ enum YXCharTextFiledType: Int {
 
 class YXLackWordView: UIView {
     let baseLineView = UIView()
-    let textField    = YXCharacterTextField()
-    var rightText = ""
+    var textField: YXCharacterTextField
+    var rightText    = ""
+    var isTitle: Bool // 是否是主题Label
 
     var type: YXCharTextFiledType = .normal {
         willSet(newValue) {
@@ -40,11 +41,11 @@ class YXLackWordView: UIView {
         willSet(value) {
             switch value {
             case .normal:
-                self.textField.textColor   = UIColor.black6
+                self.textField.textColor = isTitle ? UIColor.black1 : UIColor.black2
             case .error:
-                self.textField.textColor   = UIColor.red1
+                self.textField.textColor = UIColor.red1
             case .right:
-                self.textField.textColor   = UIColor.green1
+                self.textField.textColor = UIColor.green1
             }
         }
     }
@@ -58,7 +59,9 @@ class YXLackWordView: UIView {
         }
     }
 
-    override init(frame: CGRect) {
+    init(frame: CGRect, isTitle: Bool) {
+        self.isTitle = isTitle
+        self.textField = YXCharacterTextField(frame: CGRect.zero, isTitle: isTitle)
         super.init(frame: frame)
         self.createUI()
         self.bindProperty()
@@ -82,9 +85,10 @@ class YXLackWordView: UIView {
     }
 
     private func bindProperty() {
-        baseLineView.backgroundColor = UIColor.hex(0xC0C0C0)
-        self.isUserInteractionEnabled = true
-        self.textField.isUserInteractionEnabled = false
+        self.backgroundColor                       = .clear
+        baseLineView.backgroundColor               = UIColor.hex(0xC0C0C0)
+        self.isUserInteractionEnabled              = true
+        self.textField.isUserInteractionEnabled    = false
         self.baseLineView.isUserInteractionEnabled = false
     }
 }

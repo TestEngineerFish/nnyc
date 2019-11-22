@@ -301,11 +301,11 @@ class YXExerciseDataManager: NSObject {
     
     private func createExerciseModel(step: YXWordStepModel) -> YXWordExerciseModel {
         var exercise = YXWordExerciseModel()
-        exercise.type = YXExerciseType(rawValue: step.type ?? "") ?? .none
-        exercise.question = step.question
-        exercise.option = step.option
-        exercise.answers = step.answers
-        exercise.step = step.step
+        exercise.type        = YXExerciseType(rawValue: step.type ?? "") ?? .none
+        exercise.question    = step.question
+        exercise.option      = step.option
+        exercise.answers     = step.answers
+        exercise.step        = step.step
         exercise.isCareScore = step.isCareScore
 
         return exercise
@@ -323,7 +323,7 @@ class YXExerciseDataManager: NSObject {
                 report.wordId = e.word?.wordId ?? 0
                 report.bookId = e.word?.bookId ?? 0
                 report.unitId = e.word?.unitId ?? 0
-                report.score = e.score
+                report.score  = e.score
                 report.result = YXExerciseReportModel.ResultModel()
                 
                 map[e.word?.wordId ?? 0]  = report

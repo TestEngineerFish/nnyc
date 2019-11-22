@@ -19,16 +19,22 @@ struct YXCharacterModel {
 }
 
 class YXSpellSubview: UIView {
-    let margin = CGFloat(10)
-    let charH  = CGFloat(30)
+    var margin: CGFloat {
+        return isTitle ? AdaptSize(9)  : AdaptSize(3)
+    }
+    var charH: CGFloat {
+        isTitle ? AdaptSize(28) : AdaptSize(22)
+    }
     var maxX   = CGFloat(0)
+    var isTitle: Bool
 
     var exerciseModel: YXWordExerciseModel
     var wordViewList = [YXLackWordView]()
     var resultArrary: [NSTextCheckingResult]?
 
-    init(_ model: YXWordExerciseModel) {
+    init(_ model: YXWordExerciseModel, isTitle: Bool) {
         self.exerciseModel = model
+        self.isTitle       = isTitle
         super.init(frame: CGRect.zero)
         self.bindData()
         self.createUI()
@@ -62,7 +68,7 @@ class YXSpellSubview: UIView {
             // 添加可见字母
             let lackWord = word.substring(fromIndex: offset, length: _result.range.location - offset)
             if !lackWord.isEmpty {
-                let wordView = YXLackWordView()
+                let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
                 wordView.textField.text = lackWord
                 wordView.rightText      = lackWord
                 wordView.type           = .normal
@@ -74,7 +80,7 @@ class YXSpellSubview: UIView {
             letter2.removeFirst()
             letter2.removeLast()
             if !letter2.isEmpty {
-                let wordView = YXLackWordView()
+                let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
                 wordView.textField.text = ""
                 wordView.rightText      = letter2
                 wordView.type           = .blank
@@ -86,7 +92,7 @@ class YXSpellSubview: UIView {
                 // 添加可见字母
                 let lackWord = word.substring(fromIndex: offset, length: word.count - offset)
                 if !lackWord.isEmpty {
-                    let wordView = YXLackWordView()
+                    let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
                     wordView.textField.text = lackWord
                     wordView.rightText      = lackWord
                     wordView.type = .normal
@@ -117,9 +123,9 @@ class YXSpellSubview: UIView {
         if self.superview != nil {
             self.snp.remakeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalToSuperview().offset(CGFloat(54))
+                make.top.equalToSuperview().offset(AdaptSize(64))
                 make.width.equalTo(maxX - margin)
-                make.height.equalTo(30)
+                make.height.equalTo(charH)
             }
         }
     }

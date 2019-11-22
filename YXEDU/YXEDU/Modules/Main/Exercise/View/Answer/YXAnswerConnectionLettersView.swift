@@ -31,6 +31,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     var word = ""
 
     var util: YXFindRouteUtil?
+    var pan: UIPanGestureRecognizer?
 
     override init(exerciseModel: YXWordExerciseModel) {
         itemNumberH = exerciseModel.question?.row ?? 0
@@ -90,10 +91,9 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         // 显示首个字母的动画
         self.showFirstButtonAnimation(rightRoutes.first)
         // 添加手势事件
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
+        self.pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
         self.isUserInteractionEnabled = true
-        self.addGestureRecognizer(pan)
-//        self.contentSize = CGSize(width: viewWidth, height: viewWidth)
+        self.addGestureRecognizer(pan!)
     }
 
     /// 在VC中显示的时候调用!!
@@ -341,6 +341,10 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     }
 
     private func showResult(errorList list: [Int]) {
+        if let pan = self.pan {
+            self.removeGestureRecognizer(pan)
+        }
+
         if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in
@@ -357,5 +361,8 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)
         }
+        self.pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(pan!)
     }
 }

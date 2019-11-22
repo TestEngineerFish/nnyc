@@ -25,7 +25,7 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
             self.questionView?.audioPlayerView?.play()
         }
     }
