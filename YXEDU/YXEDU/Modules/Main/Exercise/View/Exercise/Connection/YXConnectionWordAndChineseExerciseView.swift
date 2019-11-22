@@ -14,10 +14,9 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
     var contentView = UIView()
 
     private var answerHeight: CGFloat {
-        let itemH          = AdaptSize(30)
-        let itemInterval   = AdaptSize(34)
-        let bottomInterval = AdaptSize(50)
-        return (itemH + itemInterval)*4 - itemInterval + bottomInterval
+        let itemConfig = YXConnectionWordAndChineseConfig()
+        let height = (itemConfig.leftItemHeight + itemConfig.leftInterval)*4 - itemConfig.leftInterval
+        return height
     }
             
     override func createSubview() {
@@ -62,7 +61,7 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
         remindView?.snp.makeConstraints({ (make) in
             make.top.equalTo(contentView.snp.bottom).offset(15)
             make.left.width.equalTo(contentView)
-            make.height.equalTo(AdaptSize(150))
+            make.bottom.equalToSuperview().priorityLow()
         })
     }
 

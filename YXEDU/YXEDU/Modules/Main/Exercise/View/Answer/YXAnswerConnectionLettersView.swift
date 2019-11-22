@@ -24,8 +24,8 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     var lettersArray = [String]()
     var itemNumberH: Int
     var itemNumberW: Int
-    let margin       = CGFloat(8)
-    let itemSize     = CGFloat(48)
+    let margin       = AdaptSize(8)
+    let itemSize     = AdaptSize(48)
     // 是否大写
     var isCapitalLetter = false
     var word = ""
@@ -184,7 +184,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         self.enableButtonArray.forEach { (btn) in
             if !self.selectedBtnArray.contains(btn) {
                 btn.isEnabled = false
-                btn.setTitleColor(UIColor.hex(0xC0C0C0), for: .normal)
+                btn.setTitleColor(UIColor.black6, for: .normal)
             }
         }
         self.enableButtonArray = []
@@ -201,7 +201,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         // 显示更新后的可选按钮
         newArray?.forEach({ (button) in
             button.isEnabled = true
-            button.setTitleColor(UIColor.hex(0x323232), for: .normal)
+            button.setTitleColor(UIColor.black1, for: .normal)
         })
         guard let _newArray = newArray else {
             return
@@ -238,7 +238,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         bezierPath.addLine(to: toButton.center)
         let shaperLayer         = CAShapeLayer()
         shaperLayer.path        = bezierPath.cgPath
-        shaperLayer.lineWidth   = 6
+        shaperLayer.lineWidth   = AdaptSize(6)
         shaperLayer.fillColor   = nil
         shaperLayer.zPosition   = -1
         shaperLayer.strokeColor = UIColor.orange4.cgColor
@@ -269,7 +269,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     // MARK:Tools
     private func createButton(_ letter: String) -> YXLetterButton {
         let button = YXLetterButton()
-        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 19.2)
+        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(19.2))
         button.status = .disable
         button.setTitle(letter, for: .normal)
         button.addTarget(self, action: #selector(clickButton(_:)), for: .touchUpInside)

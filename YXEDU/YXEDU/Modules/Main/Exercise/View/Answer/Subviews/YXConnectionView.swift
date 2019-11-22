@@ -36,13 +36,13 @@ struct YXConnectionWordAndChineseConfig: YXConnectionItemConfigProtocol {
 }
 /// 单词 + 图片
 struct YXConnectionWordAndImageConfig: YXConnectionItemConfigProtocol {
-    var leftItemWidth: CGFloat { return 102}
-    var leftItemHeight: CGFloat { return 30}
-    var leftInterval: CGFloat { return 54}
+    var leftItemWidth: CGFloat { return AdaptSize(102)}
+    var leftItemHeight: CGFloat { return AdaptSize(30)}
+    var leftInterval: CGFloat { return AdaptSize(54)}
 
-    var rightItemWidth: CGFloat { return 89}
-    var rightItemHeight: CGFloat { return 59}
-    var rightInterval: CGFloat { return 24}
+    var rightItemWidth: CGFloat { return AdaptSize(89)}
+    var rightItemHeight: CGFloat { return AdaptSize(59)}
+    var rightInterval: CGFloat { return AdaptSize(24)}
 }
 
 
@@ -102,7 +102,7 @@ class YXConnectionView: UIView {
     }
     
     func createLeftItems() {
-        var y = CGFloat.zero
+        var y = (itemConfig.rightItemHeight - itemConfig.leftItemHeight)/2
         for (index, title) in questionArray.enumerated() {
             
             let itemView = YXConnectionItemView()

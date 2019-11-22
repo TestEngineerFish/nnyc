@@ -213,13 +213,6 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     
     public func remindDetail() {
-        // 显示详情页
-//        self.setAllSubviewStatus()
-//        remindLabel.isHidden = true
-        
-        
-        
-    
         guard let word = exerciseModel.word else { return }
         
         let detailView = YXWordDetailTipView(word: word)

@@ -18,7 +18,7 @@ struct YXFindRouteUtil {
     var wordLength = 0
 
     init(_ itemNumberH: Int, itemNumberW: Int) {
-        self.itemNumberH = itemNumberW
+        self.itemNumberH = itemNumberH
         self.itemNumberW = itemNumberW
         blackList = Array(repeating: [Int](), count: itemNumberH * itemNumberW)
     }

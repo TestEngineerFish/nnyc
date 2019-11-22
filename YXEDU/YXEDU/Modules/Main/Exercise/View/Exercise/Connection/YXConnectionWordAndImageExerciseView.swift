@@ -11,48 +11,59 @@ import UIKit
 /// 连接单词和图片
 class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
 
+    var contentView = UIView()
+
     private var answerHeight: CGFloat {
         let itemConfig = YXConnectionWordAndImageConfig()
-        return itemConfig.rightItemHeight * 4 + itemConfig.rightInterval * 3
+        let height = (itemConfig.rightItemHeight + itemConfig.rightInterval)*4 - itemConfig.rightInterval
+        return height
     }
             
     override func createSubview() {
-        questionView = YXBaseQuestionView(exerciseModel: self.exerciseModel)
-        self.addSubview(questionView!)
-        
-        remindView = YXRemindView(exerciseModel: exerciseModel)
-        self.addSubview(remindView!)
+        self.addSubview(contentView)
+        self.contentView.backgroundColor = UIColor.white
+
+        questionView = YXConnectionQuestionView(exerciseModel: self.exerciseModel)
+        self.contentView.addSubview(questionView!)
         
         answerView = YXConnectionAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
-        self.addSubview(answerView!)
-        
+        self.contentView.addSubview(answerView!)
+
+        remindView = YXRemindView(exerciseModel: exerciseModel)
+        self.contentView.addSubview(remindView!)
+
+        self.contentView.layer.setDefaultShadow()
     }
     
     
     override func layoutSubviews() {
-        super.layoutSubviews()
+
+        self.contentView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(22))
+            make.right.equalToSuperview().offset(AdaptSize(-22))
+            make.top.equalToSuperview().offset(AdaptSize(32))
+            make.height.equalTo(AdaptSize(442))
+        }
 
         self.questionView?.snp.makeConstraints { (make) in
-            make.top.equalTo(32)
-            make.left.equalTo(22)
-            make.right.equalTo(-22)
-            make.height.equalTo(442)
+            make.top.equalToSuperview().offset(AdaptSize(-12))
+            make.centerX.equalToSuperview().offset(AdaptSize(10))
+            make.width.equalTo(AdaptSize(231))
+            make.height.equalTo(AdaptSize(87))
         }
-        
-        remindView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(questionView!.snp.bottom).offset(15)
-            make.left.width.equalTo(questionView!)
-            make.height.equalTo(150)
-        })
-        
+
         self.answerView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(140)
+            make.top.equalToSuperview().offset(AdaptSize(108))
             make.left.right.equalToSuperview()
             make.height.equalTo(answerHeight)
         })
-//        answerView?.frame = CGRect(x: 22, y: 108 + 32, width: screenWidth, height: answerHeight)
-        
+
+        remindView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(contentView.snp.bottom).offset(15)
+            make.left.width.equalTo(contentView)
+            make.bottom.equalToSuperview().priorityLow()
+        })
     }
 
     override func bindData() {

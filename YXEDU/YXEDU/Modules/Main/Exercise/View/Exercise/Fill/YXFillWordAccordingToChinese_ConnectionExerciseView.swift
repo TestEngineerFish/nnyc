@@ -15,6 +15,7 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
         self.addSubview(contentView)
+        self.contentView.backgroundColor = UIColor.white
 
         questionView = YXChineseFillQuestionView(exerciseModel: exerciseModel)
         questionView?.layer.removeShadow()
@@ -33,42 +34,41 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
     }
     
     override func layoutSubviews() {
-        super.layoutSubviews()
         guard let question = self.exerciseModel.question else {
             return
         }
-        let questionH   = 160
+        let questionH = AdaptSize(100)
         questionView?.snp.makeConstraints({ (make) in
             make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
             make.height.equalTo(questionH)
-            make.left.equalToSuperview()
-            make.width.equalToSuperview()
+            make.left.width.equalToSuperview()
         })
 
-        let answerViewTop    = 35
-        let answerViewBottom = 50
-        let answerViewW = question.column * (8 + 48) - 8
-        let answerViewH = question.row * (8 + 48) - 8
+        let answerViewTop    = AdaptSize(35)
+        let answerViewBottom = AdaptSize(50)
+        let itemInterval     = AdaptSize(8)
+        let itemSize         = AdaptSize(48)
+        let answerViewW = CGFloat(question.column) * (itemInterval + itemSize) - itemInterval
+        let answerViewH = CGFloat(question.row) * (itemInterval + itemSize) - itemInterval
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(questionView!.snp.bottom).offset(35)
+            make.top.equalTo(questionView!.snp.bottom).offset(answerViewTop)
             make.width.equalTo(answerViewW)
             make.height.equalTo(answerViewH)
         })
 
-        let viewW = screenWidth - 44
-        let viewH = questionH + answerViewTop + answerViewH + answerViewBottom
+        let contentH = questionH + answerViewTop + answerViewH + answerViewBottom
         self.contentView.snp.makeConstraints { (make) in
-            make.height.equalTo(viewH)
-            make.width.equalTo(viewW)
-            make.center.equalToSuperview()
+            make.height.equalTo(contentH)
+            make.left.equalToSuperview().offset(AdaptSize(22))
+            make.right.equalToSuperview().offset(AdaptSize(-22))
+            make.top.equalToSuperview().offset(AdaptSize(32))
         }
         
         remindView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(contentView.snp.bottom).offset(15)
-            make.left.width.equalTo(questionView!)
-            make.height.equalTo(150)
+            make.top.equalTo(contentView.snp.bottom).offset(AdaptSize(15))
+            make.left.width.equalTo(contentView)
+            make.bottom.equalToSuperview().priorityLow()
         })
     }
     
