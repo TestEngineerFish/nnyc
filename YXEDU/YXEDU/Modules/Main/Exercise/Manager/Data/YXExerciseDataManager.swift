@@ -172,6 +172,14 @@ class YXExerciseDataManager: NSObject {
     }
     
     
+    func skipNewWord() {
+        for (i, _) in newExerciseModelArray.enumerated() {
+            newExerciseModelArray[i].isFinish = true
+        }
+        
+        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
+    }
+    
     func updateScore(exerciseModel: YXWordExerciseModel, right: Bool) {
         var score = 10
         
@@ -218,16 +226,16 @@ class YXExerciseDataManager: NSObject {
         reviewExerciseModelArray = YXExerciseOptionManager().processOptions(newArray: newExerciseModelArray, reviewArray: reviewExerciseModelArray)
         
         // 处理进度状态
-        progressManager.initProgressStatus()
+        progressManager.initProgressStatus(reviewWordIds: result?.reviewWordIds)
         progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
     }
     
     
     /// 处理新学
-    /// - Parameter result: <#result description#>
+    /// - Parameter result:
     private func processNewWord(result: YXExerciseResultModel?) {
         // 处理新学单词
-        for wordId in result?.newWords ?? [] {
+        for wordId in result?.newWordIds ?? [] {
             
             if let word = self.fetchWord(wordId: wordId) {
                 var exercise = YXWordExerciseModel()

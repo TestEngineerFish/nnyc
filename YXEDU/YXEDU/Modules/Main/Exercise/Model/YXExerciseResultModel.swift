@@ -14,7 +14,8 @@ struct YXExerciseResultModel: Mappable {
 
     var bookId: Int?
     var unitId: Int?
-    var newWords: [Int]?
+    var newWordIds: [Int]?
+    var reviewWordIds: [Int]?
     var steps: [[YXWordStepModel]]?
     
     init?(map: Map) {
@@ -22,7 +23,8 @@ struct YXExerciseResultModel: Mappable {
     
     mutating func mapping(map: Map) {
         bookId <- map["book_id"]
-        newWords <- map["new_word_list"]
+        newWordIds <- map["new_word_list"]
+        reviewWordIds <- map["review_word_list"]
         steps <- map["step_list"]
     }
 }

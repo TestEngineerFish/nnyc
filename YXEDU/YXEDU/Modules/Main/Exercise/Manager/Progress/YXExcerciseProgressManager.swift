@@ -21,11 +21,12 @@ class YXExcerciseProgressManager: NSObject {
         
         case report = "Exercise_Report_Status"
         case completion = "Exercise_Completion_Status"
+        case reviewWordIds = "Review_Word_Id_List"
     }
     
     
     private func key(_ key: LocalKey) -> String {
-        return "\(bookId)_\(unitId)_\(YXUserModel.default.uuid ?? "")_" + key.rawValue        
+        return "\(bookId)_\(unitId)_\(YXConfigure.shared().uuid ?? "")_" + key.rawValue
     }
     
     
@@ -43,6 +44,15 @@ class YXExcerciseProgressManager: NSObject {
             return false
         }
         return true
+    }
+    
+    
+    /// 待复习的单词数
+    func reviewWordIds() -> [Int] {
+        if let list = YYCache.object(forKey: key(.reviewWordIds)) as? [Int] {
+            return list
+        }
+        return []
     }
     
     
@@ -72,8 +82,9 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    func initProgressStatus() {
+    func initProgressStatus(reviewWordIds: [Int]?) {
         YYCache.set(false, forKey: key(.completion))
+        YYCache.set(reviewWordIds, forKey: key(.reviewWordIds))
     }
     
 

@@ -10,7 +10,10 @@ import UIKit
 
 
 /// 例句题目
-class YXExampleQuestionView: YXBaseQuestionView {
+class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
+    
+    private var audioList: [String] = []
+    
     override func createSubviews() {
         super.createSubviews()
         self.initSubTitleLabel()
@@ -19,7 +22,6 @@ class YXExampleQuestionView: YXBaseQuestionView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         
         subTitleLabel?.snp.makeConstraints({ (make) in
             let height = self.subTitleLabel?.attributedText?.string.textHeight(font: subTitleLabel!.font, width: screenWidth - 64) ?? 0
@@ -32,32 +34,39 @@ class YXExampleQuestionView: YXBaseQuestionView {
     
     override func bindProperty() {
         self.audioPlayerView?.isHidden = true
-    }
-    override func bindData() {
-        
-        guard let word = self.exerciseModel.question?.word, let example = exerciseModel.question?.englishExample else {
-            return
-        }
-        
-        if let range = example.range(of: word) {
-            let location = example.distance(from: example.startIndex, to: range.lowerBound)
-            
-            let attrString = NSMutableAttributedString(string: example)
-            
-            let attr: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.black2]
-            attrString.addAttributes(attr, range: NSRange(location: 0, length: attrString.length))
-            let attr2: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.orange1]
-            attrString.addAttributes(attr2, range: NSRange(location: location, length: word.count))
-            
-            self.subTitleLabel?.attributedText = attrString
-        }
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
-            self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice
-            self?.audioPlayerView?.play()
-        }
-        
+        self.audioPlayerView?.delegate = self
     }
     
+    override func bindData() {
+        self.subTitleLabel?.attributedText = exerciseModel.question?.exampleAttr
+        
+        self.audioList.append(self.exerciseModel.word?.voice ?? "")
+        self.audioList.append(self.exerciseModel.word?.examplePronunciation ?? "")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
+            self?.playAudio()
+        }
+        
+    }
+        
+    
+    /// 播放语音
+    override func playAudio() {
+        if let url = audioList.first, url.isNotEmpty {
+            audioList.removeFirst()
+            self.audioPlayerView?.urlStr = url
+            self.audioPlayerView?.play()
+        }
+    }
+    
+
+    func playAudioFinished() {
+        self.playAudio()
+    }
+    
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.audioList.append(self.exerciseModel.word?.voice ?? "")
+        self.playAudio()
+    }
 }

@@ -14,6 +14,7 @@ class YXExerciseHeaderView: UIView {
     
     var backEvent: (() -> Void)?
     var switchEvent: (() -> Void)?
+    var skipEvent: (() -> Void)?
     
     var learningProgress: String? {
         didSet {
@@ -31,6 +32,7 @@ class YXExerciseHeaderView: UIView {
     //MARK: - 私有属性
     private var backButton: UIButton = UIButton()
     private var switchButton: UIButton = UIButton()
+    private var skipButton: UIButton = UIButton()
     
     private var learningLabel: UILabel = UILabel()
     private var reviewLabel: UILabel = UILabel()
@@ -51,6 +53,7 @@ class YXExerciseHeaderView: UIView {
     func createSubviews() {
         self.addSubview(backButton)
         self.addSubview(switchButton)
+        self.addSubview(skipButton)
         self.addSubview(learningLabel)
         self.addSubview(reviewLabel)
         self.addSubview(learningProgressLabel)
@@ -64,11 +67,17 @@ class YXExerciseHeaderView: UIView {
         self.backButton.addTarget(self, action: #selector(clickBackButton), for: .touchUpInside)
         
         
-        self.switchButton.setTitle("测试-清空数据", for: .normal)
+        self.switchButton.setTitle("测试-清空", for: .normal)
         self.switchButton.setTitleColor(UIColor.black3, for: .normal)
         self.switchButton.setTitleColor(UIColor.black2, for: .highlighted)
-        self.switchButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 12)
+        self.switchButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 14)
         self.switchButton.addTarget(self, action: #selector(clickSwitchButton), for: .touchUpInside)
+        
+        self.skipButton.setTitle("跳过", for: .normal)
+        self.skipButton.setTitleColor(UIColor.black3, for: .normal)
+        self.skipButton.setTitleColor(UIColor.black2, for: .highlighted)
+        self.skipButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 14)
+        self.skipButton.addTarget(self, action: #selector(clickSkipButton), for: .touchUpInside)
         
         
         self.learningLabel.text = "待新学"
@@ -104,6 +113,13 @@ class YXExerciseHeaderView: UIView {
         self.switchButton.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.width.equalTo(100)
+            make.height.equalTo(17)
+        }
+        
+        self.skipButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(100)
+            make.width.equalTo(50)
             make.height.equalTo(17)
         }
         
@@ -145,4 +161,10 @@ class YXExerciseHeaderView: UIView {
     @objc func clickSwitchButton() {
         self.switchEvent?()
     }
+    
+    
+    @objc func clickSkipButton() {
+        self.skipEvent?()
+    }
+    
 }

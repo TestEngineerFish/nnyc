@@ -94,4 +94,29 @@ struct YXWordModel: Mappable {
     var voice: String? {
         return YXUserModel.default.didUseAmericanPronunciation ? americanPronunciation : englishPronunciation
     }
+    
+    var example: String? {
+        return exampleAttr?.string
+    }
+    
+    var exampleAttr: NSAttributedString? {
+        guard let _word = word, var _example = englishExample else {
+            return nil
+        }
+        _example = _example.replacingOccurrences(of: "<font color='#55a7fd'>", with: "").replacingOccurrences(of: "</font>", with: "")
+        
+        if let range = _example.range(of: _word) {
+            let location = _example.distance(from: _example.startIndex, to: range.lowerBound)
+            
+            let attrString = NSMutableAttributedString(string: _example)
+            
+            let attr: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.black2]
+            attrString.addAttributes(attr, range: NSRange(location: 0, length: attrString.length))
+            let attr2: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.orange1]
+            attrString.addAttributes(attr2, range: NSRange(location: location, length: _word.count))
+            
+            return attrString
+        }
+        return nil
+    }
 }

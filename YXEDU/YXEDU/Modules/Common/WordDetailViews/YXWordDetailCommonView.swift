@@ -129,24 +129,11 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetialCell", for: indexPath) as! YXWordDetialCell
       
         if indexPath.section == 0 {
-            if let englishExample = word.englishExample, let chineseExample = word.chineseExample, let wordContent = word.word {
-                let example = englishExample + "\n" + chineseExample
+            if let exampleAttr = word.exampleAttr, let chineseExample = word.chineseExample {
+                let example = NSMutableAttributedString(attributedString: exampleAttr)
+                example.append(NSAttributedString(string: "\n" + chineseExample))
                 
-                if let range = example.range(of: wordContent) {
-                    let location = example.distance(from: example.startIndex, to: range.lowerBound)
-                    
-                    let attrString = NSMutableAttributedString(string: example)
-                    
-                    let attr: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.black2]
-                    attrString.addAttributes(attr, range: NSRange(location: 0, length: attrString.length))
-                    let attr2: [NSAttributedString.Key : Any] = [.font: UIFont.pfSCRegularFont(withSize: 16),.foregroundColor: UIColor.orange1]
-                    attrString.addAttributes(attr2, range: NSRange(location: location, length: wordContent.count))
-                    
-                    cell.label.attributedText = attrString
-                }
-                
-                
-                
+                cell.label.attributedText = example
             }
             
             cell.playAuoidButton.isHidden = false

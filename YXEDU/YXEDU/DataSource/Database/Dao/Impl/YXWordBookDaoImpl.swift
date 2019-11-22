@@ -69,7 +69,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                               word.americanPhoneticSymbol,
                               word.englishPronunciation,
                               word.americanPronunciation,
-                              word.englishExample?.replacingOccurrences(of: "<font color='#55a7fd'>", with: "").replacingOccurrences(of: "</font>", with: ""),
+                              word.englishExample,
                               word.chineseExample,
                               word.examplePronunciation,
                               String(data: usagesData!, encoding: .utf8),
@@ -151,7 +151,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                 word.englishPhoneticSymbol = result?.string(forColumn: "englishPhoneticSymbol")
                 word.americanPronunciation = result?.string(forColumn: "americanPronunciation")
                 word.englishPronunciation = result?.string(forColumn: "englishPronunciation")
-                word.englishExample = result?.string(forColumn: "englishExample")?.replacingOccurrences(of: "<font color='#55a7fd'>", with: "").replacingOccurrences(of: "</font>", with: "")
+                word.englishExample = result?.string(forColumn: "englishExample")
                 word.chineseExample = result?.string(forColumn: "chineseExample")
                 word.examplePronunciation = result?.string(forColumn: "examplePronunciation")
                 word.usages = try? JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as? [String] ?? []
@@ -206,8 +206,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             word.englishPhoneticSymbol = result.string(forColumn: "englishPhoneticSymbol")
             word.americanPronunciation = result.string(forColumn: "americanPronunciation")
             word.englishPronunciation = result.string(forColumn: "englishPronunciation")
-            word.englishExample = result.string(forColumn: "englishExample")?.replacingOccurrences(of: "<font color='#55a7fd'>", with: "").replacingOccurrences(of: "</font>", with: "")
-            
+            word.englishExample = result.string(forColumn: "englishExample")            
             word.chineseExample = result.string(forColumn: "chineseExample")
             word.examplePronunciation = result.string(forColumn: "examplePronunciation")
             word.usages = try? (JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as! [String])

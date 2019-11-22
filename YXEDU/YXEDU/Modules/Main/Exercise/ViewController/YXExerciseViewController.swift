@@ -105,17 +105,22 @@ class YXExerciseViewController: UIViewController {
             }
         }
         self.headerView.switchEvent = {[weak self] in
-            
             self?.progressManager.completionExercise()
             self?.progressManager.completionReport()
-            
             self?.navigationController?.popViewController(animated: true)
-//            self?.switchExerciseView()
         }
                 
         self.bottomView.tipsEvent = {[weak self] in
             print("提示点击事件")
-            self?.exerciseViewArray.first?.remindView?.show()
+            guard let exerciseModel = self?.exerciseViewArray.first?.exerciseModel else { return }
+            self?.dataManager.completionExercise(exerciseModel: exerciseModel, right: false)
+            self?.exerciseViewArray[0].isWrong = true
+            _ = self?.exerciseViewArray.first?.remindView?.show()
+        }
+        
+        self.headerView.skipEvent = { [weak self] in
+            self?.dataManager.skipNewWord()
+            self?.navigationController?.popViewController(animated: true)
         }
 
     }
@@ -177,7 +182,10 @@ class YXExerciseViewController: UIViewController {
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
-        if let model = data.2 {
+        if var model = data.2 {
+            
+//            model.type = .lookExampleChooseImage
+            
             if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {
                 self.bottomView.tipsButton.isHidden = true
             } else {
@@ -267,7 +275,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
             self.exerciseViewArray.first?.isWrong = true
             // 等待错误提示音播放完后，再进行提示
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
-                self?.exerciseViewArray.first?.remindView?.show()
+                _ = self?.exerciseViewArray.first?.remindView?.show()
             }
         }
         // 震动效果

@@ -9,15 +9,19 @@
 import UIKit
 
 
-protocol YXAudioPlayerViewDelegate {
+protocol YXAudioPlayerViewDelegate: NSObjectProtocol {
     ///  播放开始
     func playAudioStart()
     /// 播放结束
     func playAudioFinished()
 }
 
+extension YXAudioPlayerViewDelegate {
+    func playAudioStart() {}
+}
+
 class YXAudioPlayerView: UIView {
-    var delegate: YXAudioPlayerViewDelegate?
+    weak var delegate: YXAudioPlayerViewDelegate?
     
     private let audioButton: UIButton
     var urlStr: String?
