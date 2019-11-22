@@ -99,11 +99,20 @@ class YXWordAnswerView: YXBaseAnswerView {
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
+            var firstButton: YXLetterButton?
             for id in list {
                 self.selectedBtnArray.forEach { (letterButton) in
                     if letterButton.tag == id {
+                        if firstButton == nil {
+                            firstButton = letterButton
+                        }
                         letterButton.status = .error
                     }
+                }
+            }
+            if let button = firstButton {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+                    self.clickButton(button)
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)

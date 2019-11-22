@@ -344,7 +344,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         if let pan = self.pan {
             self.removeGestureRecognizer(pan)
         }
-
+        var firstButton: YXLetterButton?
         if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in
@@ -356,10 +356,18 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
                 if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
                     return button.tag == tag
                 }) {
+                    if firstButton == nil {
+                        firstButton = button
+                    }
                     button.status = .error
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)
+        }
+        if let button = firstButton {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+                self.clickButton(button)
+            }
         }
         self.pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
         self.isUserInteractionEnabled = true

@@ -34,6 +34,7 @@ class YXLetterButton: UIButton {
 
     var status: YXButtonStatus = .normal {
         willSet {
+            self.transform = .identity
             switch newValue {
             case .normal:
                 self.isEnabled         = true
@@ -50,6 +51,9 @@ class YXLetterButton: UIButton {
                 self.backgroundColor   = UIColor.white
                 self.layer.borderColor = UIColor.red1.cgColor
                 self.setTitleColor(UIColor.red1, for: .normal)
+                UIView.animate(withDuration: 0.3) {
+                    self.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                }
             case .right:
                 self.isEnabled         = false
                 self.backgroundColor   = UIColor.white

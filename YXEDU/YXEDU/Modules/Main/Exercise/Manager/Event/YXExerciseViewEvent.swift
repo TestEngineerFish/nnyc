@@ -9,9 +9,10 @@
 import UIKit
 
 protocol YXQuestionEventProtocol {
-    /// 更新结果UI
-    /// - Parameter list: 错误对象ID列表
-    func showResult(errorList list: [Int])
+//    /// 更新结果UI
+//    /// - Parameter list: 错误对象ID列表
+//    func showResult(errorList list: [Int])
+//    func unselectQuestionLetter(_ tag: Int)
 }
 
 protocol YXAnswerEventProtocol {

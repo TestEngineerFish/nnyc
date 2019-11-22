@@ -85,8 +85,6 @@ class YXLearningResultViewController: UIViewController {
             make.bottom.equalToSuperview().offset(-AdaptSize(30) - kSafeBottomMargin)
             make.size.equalTo(punchSize)
         }
-
-
     }
 
     /// 设置任务地图
