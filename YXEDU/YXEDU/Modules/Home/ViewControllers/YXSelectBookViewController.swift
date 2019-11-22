@@ -13,6 +13,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     private var wordBookStateModels: YXWordBookStatusModel!
     private var wordBookModels: [YXWordBookModel] = []
     
+    @IBOutlet weak var distanceOfDownloadButtonBetweenLeft: NSLayoutConstraint!
     @IBOutlet weak var bookCollectionView: UICollectionView!
     @IBOutlet weak var deleteWordBookButton: YXDesignableButton!
     @IBOutlet weak var bookNameLabel: UILabel!
@@ -109,8 +110,6 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
 
         bookCollectionView.register(UINib(nibName: "YXWordBookCell", bundle: nil), forCellWithReuseIdentifier: "YXWordBookCell")
         
-        startStudyButton.isUserInteractionEnabled = false
-        deleteWordBookButton.isHidden = true
         fetchWordBooks()
     }
     
@@ -219,28 +218,26 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            deleteWordBookButton.isHidden = true
-            
-        } else {
-            deleteWordBookButton.isHidden = false
-        }
-        
         if indexPath.row == wordBookModels.count - 1 {
             self.performSegue(withIdentifier: "AddBook", sender: nil)
-            
+
         } else {
-            let wordBook = wordBookModels[indexPath.row]
-            if wordBook.isCurrentStudy {
+            if indexPath.row == 0 {
+                deleteWordBookButton.isHidden = true
+                distanceOfDownloadButtonBetweenLeft.constant = 12
                 startStudyButton.isUserInteractionEnabled = false
                 startStudyButton.setTitle("继续学习", for: .normal)
                 
             } else {
+                deleteWordBookButton.isHidden = false
+                distanceOfDownloadButtonBetweenLeft.constant = 84
                 startStudyButton.isUserInteractionEnabled = true
                 startStudyButton.setTitle("开始学习", for: .normal)
             }
+            
+            let wordBook = wordBookModels[indexPath.row]
             fetchWordBookDetail(wordBook)
-                        
+            
             for index in 0..<wordBookModels.count {
                 wordBookModels[index].isSelected = false
             }
