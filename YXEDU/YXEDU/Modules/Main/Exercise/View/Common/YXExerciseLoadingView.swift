@@ -10,7 +10,6 @@ import UIKit
 import Lottie
 
 class YXExerciseLoadingView: UIView, CAAnimationDelegate {
-
     var progressLayer = CAGradientLayer()
     var dotLayer      = CAGradientLayer()
     var finished      = false
@@ -91,7 +90,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         }
         self.progressLayer.frame = CGRect(x: 0, y: 0, width: AdaptSize(189), height: AdaptSize(15))
         self.dotLayer.frame = CGRect(x: 0, y: 0, width: AdaptSize(15), height: AdaptSize(15))
-
+        squirrelView.play()
         return headerView
     }
 
@@ -160,6 +159,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         proAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         proAnimation.delegate       = self
         proMaskLayer.add(proAnimation, forKey: "proAnimation")
+
     }
 
     func stopAnimation() {

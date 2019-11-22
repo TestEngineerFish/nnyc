@@ -68,8 +68,6 @@ class YXConnectionItemView: UIButton {
     
     private func bindProperty() {
         self.addTarget(self, action: #selector(clickButton), for: .touchUpInside)
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = rightItemType == .text ? self.height / 2 : 4
     }
     
     private func setContent() {

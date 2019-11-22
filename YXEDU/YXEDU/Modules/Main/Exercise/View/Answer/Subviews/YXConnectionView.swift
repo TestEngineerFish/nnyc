@@ -21,15 +21,15 @@ protocol YXConnectionItemConfigProtocol {
     var leftPardding: CGFloat {get}
 }
 extension YXConnectionItemConfigProtocol {
-    var leftPardding: CGFloat {return 46}
+    var leftPardding: CGFloat {return AdaptSize(22)}
 }
 
 /// 单词 + 中文
 struct YXConnectionWordAndChineseConfig: YXConnectionItemConfigProtocol {
-    var leftItemWidth: CGFloat { return 102}
-    var leftItemHeight: CGFloat { return 30}
-    var leftInterval: CGFloat { return 34}
-    
+    var leftItemWidth: CGFloat { return AdaptSize(104)}
+    var leftItemHeight: CGFloat { return AdaptSize(30)}
+    var leftInterval: CGFloat { return AdaptSize(34)}
+
     var rightItemWidth: CGFloat { return leftItemWidth}
     var rightItemHeight: CGFloat { return leftItemHeight}
     var rightInterval: CGFloat { return leftInterval}
@@ -39,7 +39,7 @@ struct YXConnectionWordAndImageConfig: YXConnectionItemConfigProtocol {
     var leftItemWidth: CGFloat { return 102}
     var leftItemHeight: CGFloat { return 30}
     var leftInterval: CGFloat { return 54}
-    
+
     var rightItemWidth: CGFloat { return 89}
     var rightItemHeight: CGFloat { return 59}
     var rightInterval: CGFloat { return 24}
@@ -89,16 +89,10 @@ class YXConnectionView: UIView {
         
         self.audioPlayerView.isHidden = true
     }
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        self.addGesture()
-//        self.clipsToBounds = true
-//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     func createSubview() {
         self.addSubview(audioPlayerView)
@@ -108,50 +102,59 @@ class YXConnectionView: UIView {
     }
     
     func createLeftItems() {
+        var y = CGFloat.zero
         for (index, title) in questionArray.enumerated() {
             
-            let x = self.left + itemConfig.leftPardding
-            let y = (itemConfig.leftItemHeight + itemConfig.leftInterval) * CGFloat(index) + (itemConfig.rightItemHeight - itemConfig.leftItemHeight) / 2
-            let ivFrame = CGRect(x: x, y: y, width: itemConfig.leftItemWidth, height: itemConfig.leftItemHeight)
-            
-            let itemView = YXConnectionItemView(frame: ivFrame)
-            itemView.index = index
-            itemView.itemType = .left
+            let itemView = YXConnectionItemView()
+            itemView.index         = index
+            itemView.itemType      = .left
             itemView.rightItemType = .text
-            itemView.itemStatus = .normal
-            itemView.itemTitle = title
-            itemView.itemModel = exerciseModel?.option?.firstItems?[index]
-            itemView.clickEvent = {[weak self] (index, type) in
+            itemView.itemStatus    = .normal
+            itemView.itemTitle     = title
+            itemView.itemModel     = exerciseModel?.option?.firstItems?[index]
+            itemView.clickEvent    = {[weak self] (index, type) in
                 self?.itemEvent(index: index, type: type)
             }
-
+            itemView.layer.masksToBounds = true
+            itemView.layer.cornerRadius = itemConfig.leftItemHeight/2
             leftItemArray.append(itemView)
             self.addSubview(itemView)
+            itemView.snp.makeConstraints { (make) in
+                make.left.equalTo(AdaptSize(itemConfig.leftPardding))
+                make.top.equalToSuperview().offset(y)
+                make.width.equalTo(itemConfig.leftItemWidth)
+                make.height.equalTo(itemConfig.leftItemHeight)
+            }
+            y += itemConfig.leftItemHeight + itemConfig.leftInterval
         }
-        
-      
     }
     
     func createRightItems() {
+        var y = CGFloat.zero
         for (index, title) in answerArray.enumerated() {
-            
-            let x = self.width - itemConfig.rightItemWidth - itemConfig.leftPardding
-            let y = (itemConfig.rightItemHeight + itemConfig.rightInterval) * CGFloat(index)
-            let ivFrame = CGRect(x: x , y: y, width: itemConfig.rightItemWidth, height: itemConfig.rightItemHeight)
-            
-            let itemView = YXConnectionItemView(frame: ivFrame)
-            itemView.index = index
-            itemView.itemType = .right
+            let itemView = YXConnectionItemView()
+            itemView.index         = index
+            itemView.itemType      = .right
             itemView.rightItemType = (exerciseModel?.type == .connectionWordAndChinese) ? .text : .image
-            itemView.itemStatus = .normal
-            itemView.itemTitle = title
-            itemView.itemModel = exerciseModel?.option?.secondItems?[index]
-            itemView.clickEvent = {[weak self] (index, type) in
+            itemView.itemStatus    = .normal
+            itemView.itemTitle     = title
+            itemView.itemModel     = exerciseModel?.option?.secondItems?[index]
+            itemView.clickEvent    = {[weak self] (index, type) in
                 self?.itemEvent(index: index, type: type)
             }
+            itemView.layer.masksToBounds = true
+            itemView.layer.cornerRadius = itemView.rightItemType == .text ? itemConfig.rightItemHeight/2 : 4
             
             rightItemArray.append(itemView)
             self.addSubview(itemView)
+
+            itemView.snp.makeConstraints { (make) in
+                make.right.equalTo(AdaptSize(-itemConfig.leftPardding))
+                make.top.equalToSuperview().offset(y)
+                make.width.equalTo(itemConfig.rightItemWidth)
+                make.height.equalTo(itemConfig.rightItemHeight)
+            }
+            y += itemConfig.rightItemHeight + itemConfig.rightInterval
         }
     }
     

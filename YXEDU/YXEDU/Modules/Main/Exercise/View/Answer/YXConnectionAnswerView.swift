@@ -17,9 +17,14 @@ class YXConnectionAnswerView: YXBaseAnswerView {
     override func createSubviews() {
         super.createSubviews()
         self.connectionView = YXConnectionView(exerciseModel: self.exerciseModel)
-        let connectionHeight = connectionView!.itemConfig.rightItemHeight * 4 + connectionView!.itemConfig.rightInterval * 3 + 30
-        connectionView?.frame = CGRect(x: 0, y: 0, width: screenWidth, height: connectionHeight)
         self.addSubview(connectionView!)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.connectionView?.snp.makeConstraints({ (make) in
+            make.edges.equalToSuperview()
+        })
     }
     
     override func bindProperty() {
