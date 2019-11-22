@@ -11,6 +11,7 @@ import Foundation
 enum YXRemindType: Int {
     case word                   // 单词拼写
     case example                // 例句
+    case exampleWithDigWord        // 例句，单词挖空
     case soundmark              // 音标
     case wordAudio              // 单词读音
     case exampleAudio           // 例句读音
@@ -156,6 +157,8 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
                     remindSoundmark()
                 case .example:
                     remindExample()
+                case .exampleWithDigWord:
+                    remindExampleWithDigWord()
                 case .image:
                     remindImage()
                 case .wordAudio:
@@ -183,6 +186,13 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         setAllSubviewStatus()
     }
 
+    private func remindExampleWithDigWord() {
+        if let word = exerciseModel.word?.word {
+            titleLabel.text = exerciseModel.word?.example?.replacingOccurrences(of: word, with: "__")
+        }        
+        setAllSubviewStatus()
+    }
+    
     private func remindImage() {
         if let url = exerciseModel.word?.imageUrl {
             imageView.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
@@ -253,7 +263,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     private func hasText() -> Bool {
         let step = remindSteps[currentRemindIndex]
         for type in step {
-            if (type == .word || type == .example || type == .soundmark
+            if (type == .word || type == .example || type == .exampleWithDigWord || type == .soundmark
             || type == .wordChinese || type == . exampleChinese) {
                 return true
             }
@@ -281,14 +291,6 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         return false
     }
     
-    
-    /// 是否为最后一步提示
-    private func isLastStepRemind(type: YXRemindType) -> Bool {
-        if (currentRemindIndex + 1) == self.remindSteps.count {
-            self.remindSteps.last
-        }
-        return false
-    }
     
     /// 播放语音
     private func playAudio() {

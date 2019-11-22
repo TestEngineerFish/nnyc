@@ -184,7 +184,7 @@ class YXExerciseViewController: UIViewController {
         
         if var model = data.2 {
             
-//            model.type = .lookExampleChooseImage
+//            model.type = .lookImageChooseWord
             
             if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {
                 self.bottomView.tipsButton.isHidden = true
