@@ -31,6 +31,7 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
         self.contentView.addSubview(answerView!)
 
         remindView = YXRemindView(exerciseModel: exerciseModel)
+        remindView?.delegate = self
         self.contentView.addSubview(remindView!)
 
         self.contentView.layer.setDefaultShadow()
@@ -68,5 +69,22 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
 
     override func bindData() {
         self.remindView?.remindSteps = [[.example], [.wordChinese], [.detail]]
+    }
+
+    override func updateHeightConstraints(_ height: CGFloat) {
+        let remindViewH = self.height - self.contentView.frame.maxY
+        let lackH = height - remindViewH
+        if lackH > 0 {
+            self.remindView?.isHidden = false
+            UIView.animate(withDuration: 0.5) {
+                self.transform = CGAffineTransform(translationX: 0, y: -lackH)
+            }
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+                UIView.animate(withDuration: 0.5) {
+                    self.transform = .identity
+                }
+                self.remindView?.isHidden = true
+            }
+        }
     }
 }
