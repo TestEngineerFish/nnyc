@@ -91,7 +91,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zoQ-9B-QBW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-480.80000000000001" y="139.65517241379311"/>
+            <point key="canvasLocation" x="-481" y="140"/>
         </scene>
         <!--学习-->
         <scene sceneID="yYR-rI-Gxx">
@@ -422,7 +422,8 @@
                         <segue destination="tQ4-Ah-3Gu" kind="show" identifier="Calendar" id="fSi-bJ-cQk"/>
                         <segue destination="N4y-4U-KXc" kind="show" identifier="StudyReport" id="f6j-pj-jMh"/>
                         <segue destination="xWi-kI-jZm" kind="show" identifier="PickUpWords" id="Ah7-hX-NCL"/>
-                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBook2" id="CTN-wc-He9"/>
+                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBookFromHome" id="CTN-wc-He9"/>
+                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBookFromHomeWithoutAnimation" animates="NO" id="ciU-tN-L5E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5w-Bb-6XP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -806,7 +807,7 @@
                         <outlet property="distanceOfDownloadButtonBetweenLeft" destination="kOS-Fn-Fd5" id="cLJ-UH-3tr"/>
                         <outlet property="startStudyButton" destination="QWh-Bm-blK" id="Axu-R5-I3T"/>
                         <outlet property="unitLabel" destination="P9i-EW-1nQ" id="ku2-yo-HCe"/>
-                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBook1" id="kVR-sK-4gc"/>
+                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBook" id="kVR-sK-4gc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8PQ-jr-pLh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

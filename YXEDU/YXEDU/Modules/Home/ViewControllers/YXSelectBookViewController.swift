@@ -220,7 +220,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == wordBookModels.count - 1 {
-            self.performSegue(withIdentifier: "AddBook1", sender: nil)
+            self.performSegue(withIdentifier: "AddBook", sender: nil)
 
         } else {
             if indexPath.row == 0 {
