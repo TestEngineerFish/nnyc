@@ -57,7 +57,7 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
         self.answerView?.snp.makeConstraints({ (make) in
             make.top.equalToSuperview().offset(AdaptSize(94))
             make.left.right.equalToSuperview()
-            make.height.equalTo(answerHeight)
+            make.bottom.equalToSuperview()
         })
 
         remindView?.snp.makeConstraints({ (make) in
