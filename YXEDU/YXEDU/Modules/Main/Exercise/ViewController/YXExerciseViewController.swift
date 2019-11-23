@@ -273,7 +273,10 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
             return
         }
         
-        self.exerciseViewArray.first?.isWrong = !right
+        // 如果有做错
+        if !right {
+            self.exerciseViewArray.first?.isWrong = true
+        }
         
         // 答题后的对错动画
         switchAnimation.show(isRight: right)
