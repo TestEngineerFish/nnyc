@@ -180,7 +180,13 @@ class YXExerciseDataManager: NSObject {
         progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
     }
     
-    func updateScore(exerciseModel: YXWordExerciseModel, right: Bool) {
+    
+    
+    /// 更新得分
+    /// - Parameters:
+    ///   - exerciseModel:
+    ///   - right:
+    private func updateScore(exerciseModel: YXWordExerciseModel, right: Bool) {
         var score = 10
         
         if exerciseModel.type == .newLearnPrimarySchool || exerciseModel.type == .newLearnPrimarySchool_Group {// 小学新学
