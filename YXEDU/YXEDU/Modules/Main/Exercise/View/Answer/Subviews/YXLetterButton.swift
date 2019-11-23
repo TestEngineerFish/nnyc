@@ -51,9 +51,9 @@ class YXLetterButton: UIButton {
                 self.backgroundColor   = UIColor.white
                 self.layer.borderColor = UIColor.red1.cgColor
                 self.setTitleColor(UIColor.red1, for: .normal)
-                self.showBlowUpAnimation()
+                self.layer.showBlowUpAnimation()
             case .right:
-                self.isEnabled         = false
+                self.isEnabled         = true
                 self.backgroundColor   = UIColor.white
                 self.layer.borderColor = UIColor.green1.cgColor
                 self.setTitleColor(UIColor.green1, for: .normal)
@@ -64,17 +64,6 @@ class YXLetterButton: UIButton {
                 self.setTitleColor(UIColor.black6, for: .normal)
             }
         }
-    }
-
-    private func showBlowUpAnimation() {
-        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
-        animation.duration       = 0.15
-        animation.repeatCount    = 3
-        animation.autoreverses   = true
-        animation.tensionValues  = [1.0, 1.15, 1.0]
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation.isRemovedOnCompletion = true
-        self.layer.add(animation, forKey: "showBlowUpAnimation")
     }
 
     override init(frame: CGRect) {

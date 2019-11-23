@@ -355,5 +355,17 @@ extension CALayer {
         self.removeAnimation(forKey: "flickerAnimation")
     }
 
+    /// 添加放大动画
+    func showBlowUpAnimation() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+        animation.duration       = 0.5
+        animation.repeatCount    = 2
+        animation.autoreverses   = false
+        animation.values         = [1.0, 1.2, 1.0]
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.isRemovedOnCompletion = true
+        self.add(animation, forKey: "showBlowUpAnimation")
+    }
+
 
 }

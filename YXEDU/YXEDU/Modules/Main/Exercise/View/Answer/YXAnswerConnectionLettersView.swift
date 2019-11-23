@@ -96,7 +96,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         self.addGestureRecognizer(pan!)
     }
 
-    /// 在VC中显示的时候调用!!
+    /// 显示首个字母动画
     private func showFirstButtonAnimation(_ btnTag: Int?) {
         if let tag = btnTag, tag < self.allButtonArray.count, tag >= 0 {
             let button = self.allButtonArray[tag]
@@ -111,22 +111,23 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     // MARK: Event
 
     @objc private func clickButton(_ button: YXLetterButton) {
-        var targetBtn = button
-        if targetBtn.isEqual(self.selectedBtnArray.first) && self.selectedBtnArray.count > 1 {
-            targetBtn = self.selectedBtnArray[1]
+        var firstBtn: YXLetterButton?
+        if button.isEqual(self.selectedBtnArray.first) {
+            firstBtn = self.selectedBtnArray.first
         }
-        if targetBtn.isEnabled {
-            if targetBtn.status == .selected || targetBtn.status == .error {
+        if button.isEnabled {
+            if button.status != .disable {
                 let reversedArray = self.selectedBtnArray.reversed()
                 for btn in reversedArray {
                     self.unselectButton(btn)
-                    if btn.tag == targetBtn.tag {
+                    if btn.tag == button.tag {
                         break
                     }
                 }
-            } else {
-                self.selectedButton(targetBtn)
             }
+        }
+        if firstBtn != nil {
+            self.showFirstButtonAnimation(self.rightRoutes.first)
         }
     }
 
@@ -139,7 +140,9 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         // 通过回调更新选中顺序,也可防止同时选中多个
         let success = delegate?.selectedAnswerButton(button) ?? false
         if !self.selectedBtnArray.contains(button) && success {
+            // 连线
             self.connectionLine(fromButton: self.selectedBtnArray.last, toButton: button)
+            // 添加到已选数组
             self.selectedBtnArray.append(button)
             button.status = .selected
             // 更新周围可选按钮
@@ -346,7 +349,6 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         if let pan = self.pan {
             self.removeGestureRecognizer(pan)
         }
-//        var firstButton: YXLetterButton?
         if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in
@@ -354,14 +356,13 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
-            for tag in list {
-                if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
-                    return button.tag == tag
-                }) {
-//                    if firstButton == nil {
-//                        firstButton = button
-//                    }
-                    button.status = .error
+            // 答题错误
+            self.selectedBtnArray.forEach { (letterBtn) in
+                // 变更连线颜色
+                let shaperLayer = self.lineDictionary[letterBtn.tag]
+                shaperLayer?.strokeColor = UIColor.red1.cgColor
+                if list.contains(letterBtn.tag) {
+                    letterBtn.status = .error
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)
