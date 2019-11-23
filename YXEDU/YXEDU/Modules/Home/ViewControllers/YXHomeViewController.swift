@@ -51,6 +51,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 }
             }
             
+            alertView.adjustAlertHeight()
+            alertView.show()
+            
         } else {
             YYCache.set(Date(), forKey: "LastStoredDate")
 

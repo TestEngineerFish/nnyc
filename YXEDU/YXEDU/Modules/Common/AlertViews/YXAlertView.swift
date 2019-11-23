@@ -72,7 +72,7 @@ class YXAlertView: UIView, UITextFieldDelegate {
         Bundle.main.loadNibNamed("YXAlertView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
-        
+
         switch type {
         case .normal:
             textFieldView.isHidden = true
@@ -107,5 +107,16 @@ class YXAlertView: UIView, UITextFieldDelegate {
     
     func show() {
         kWindow.addSubview(self)
+    }
+    
+    func adjustAlertHeight() {
+        let titleHeight = getHeightOf(titleLabel.text ?? "", font: UIFont.systemFont(ofSize: 17), width: screenWidth)
+        let descpritionHeight = getHeightOf(descriptionLabel.text ?? "", font: UIFont.systemFont(ofSize: 14), width: screenWidth - 128 - 40)
+        alertHeight.constant = 184 - 24 - 20 + titleHeight + descpritionHeight
+    }
+    
+    private func getHeightOf(_ string: String, font: UIFont, width: CGFloat) -> CGFloat {
+        let rect = NSString(string: string).boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+        return ceil(rect.height)
     }
 }

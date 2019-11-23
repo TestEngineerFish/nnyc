@@ -64,6 +64,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             }
         }
         
+        alertView.adjustAlertHeight()
         alertView.show()
     }
     
