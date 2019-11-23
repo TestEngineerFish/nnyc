@@ -19,7 +19,7 @@ class YXLabel: UILabel {
     }
 
     @objc private func countDown() {
-        if count < maxNum {
+        if count <= maxNum {
             self.text = "\(count)%"
 
             count += 1
