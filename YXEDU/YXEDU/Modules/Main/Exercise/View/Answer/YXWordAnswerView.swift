@@ -112,7 +112,7 @@ class YXWordAnswerView: YXBaseAnswerView {
             }
             if let button = firstButton {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
-                    self.clickButton(button)
+                    self.clickBtn(button)
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)
