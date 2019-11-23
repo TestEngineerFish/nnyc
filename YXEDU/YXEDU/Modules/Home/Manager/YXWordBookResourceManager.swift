@@ -80,9 +80,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                                 word.unitName = unit.unitName
                                 word.isExtensionUnit = unit.isExtensionUnit
                                 
-                                YXWordBookDaoImpl().insertWord(word: word) { (result, isSuccess) in
-                                    print(isSuccess)
-                                }
+                                YXWordBookDaoImpl().insertWord(word: word)
                             }
                         }
                         

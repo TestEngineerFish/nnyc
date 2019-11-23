@@ -239,7 +239,6 @@
                                                                 <color key="value" red="0.88235294117647056" green="0.69803921568627447" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="NO"/>
-                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSpeicalButton" value="YES"/>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="canBeDisabled" value="NO"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="gradientColorStartPoint">
                                                                 <real key="value" value="0.69999999999999996"/>
@@ -830,6 +829,6 @@
         <image name="unitIndicator" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CTN-wc-He9"/>
+        <segue reference="ciU-tN-L5E"/>
     </inferredMetricsTieBreakers>
 </document>

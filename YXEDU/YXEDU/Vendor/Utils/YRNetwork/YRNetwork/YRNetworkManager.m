@@ -81,9 +81,7 @@
     NSURLSessionDataTask *task = [self.sessionManager GET:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // 删除已完成的task
         [self _removeTask:task];
-        
-        NSLog(@"get = request url:%@",task.originalRequest.URL.absoluteString);
-        
+                
         [self _successResponse:responseObject url:url params:params requestType:YRHttpRequestTypeGet task:task completion:completion];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

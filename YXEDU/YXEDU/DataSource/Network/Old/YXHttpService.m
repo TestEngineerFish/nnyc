@@ -45,11 +45,7 @@
 - (void)GET:(NSString *) url
  parameters:(NSDictionary *) params
 finshedBlock:(finishBlock)block {
-    NSLog(@"%@", url);
-    NSLog(@"%@", params);
     [[YXNetworkService shared] GET:url parameters:params cache:YRHttpResponseCachePolicyNone useCache:NO completion:^(YRHttpResponse *response) {
-        
-        NSLog(@"%@", response.responseObject);
         if (response.error) {
             block(@(response.error.code), NO);
         } else {
@@ -61,11 +57,8 @@ finshedBlock:(finishBlock)block {
 
 - (void)POST:(NSString *)url
   parameters:(NSDictionary *) params
-finshedBlock:(finishBlock)block {
-    NSLog(@"%@", url);
-    NSLog(@"%@", params);
+finshedBlock:(finishBlock)block {\
     [[YXNetworkService shared] POST:url parameters:params cache:YRHttpResponseCachePolicyNone useCache:NO completion:^(YRHttpResponse *response) {
-        NSLog(@"%@", response.responseObject);
         if (response.error) {
             block(@(response.error.code), NO);
         } else {
@@ -101,7 +94,6 @@ finshedBlock:(finishBlock)block {
     [[YXNetworkService shared]upload:url parameters:params appendFormFiles:fileArr headers:nil uploadProgress:^(NSProgress *uploadProgress) {
         
     } completion:^(YRHttpResponse *response) {
-        NSLog(@"%@", response.error.originalError);
         if (response.error) {
             block(response.error, NO);
         } else {
@@ -115,9 +107,6 @@ finshedBlock:(finishBlock)block {
   parameters:(NSDictionary *) params
        datas:(NSArray *)dataArr
 finshedBlock:(finishBlock)block {
-    NSLog(@"%@", url);
-    NSLog(@"%@", params);
-    
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     [manager POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSInteger idx = 0;

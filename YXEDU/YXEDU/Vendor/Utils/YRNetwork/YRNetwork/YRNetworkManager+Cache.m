@@ -46,7 +46,6 @@
     NSString *txtPath = [self cacheFilePath:url params:params]; // 文件保存路径
     if ([data isKindOfClass:[NSDictionary class]]) {
         BOOL result = [data writeToFile:txtPath atomically:YES];
-        NSLog(@"缓存 %d", result);
     }
 }
 
