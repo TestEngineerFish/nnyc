@@ -422,7 +422,7 @@
                         <segue destination="tQ4-Ah-3Gu" kind="show" identifier="Calendar" id="fSi-bJ-cQk"/>
                         <segue destination="N4y-4U-KXc" kind="show" identifier="StudyReport" id="f6j-pj-jMh"/>
                         <segue destination="xWi-kI-jZm" kind="show" identifier="PickUpWords" id="Ah7-hX-NCL"/>
-                        <segue destination="KRx-zx-laN" kind="show" identifier="AddWordsBook" id="iXC-Hp-gIV"/>
+                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBook" id="CTN-wc-He9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5w-Bb-6XP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -806,7 +806,7 @@
                         <outlet property="distanceOfDownloadButtonBetweenLeft" destination="kOS-Fn-Fd5" id="cLJ-UH-3tr"/>
                         <outlet property="startStudyButton" destination="QWh-Bm-blK" id="Axu-R5-I3T"/>
                         <outlet property="unitLabel" destination="P9i-EW-1nQ" id="ku2-yo-HCe"/>
-                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBook" id="kVR-sK-4gc"/>
+                        <segue destination="KRx-zx-laN" kind="show" identifier="" id="kVR-sK-4gc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8PQ-jr-pLh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -829,6 +829,6 @@
         <image name="unitIndicator" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kVR-sK-4gc"/>
+        <segue reference="CTN-wc-He9"/>
     </inferredMetricsTieBreakers>
 </document>

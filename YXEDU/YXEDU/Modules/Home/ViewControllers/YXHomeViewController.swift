@@ -47,7 +47,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 }
                 
                 alertView.doneClosure = { _ in
-                    self.performSegue(withIdentifier: "AddWordsBook", sender: self)
+                    self.performSegue(withIdentifier: "AddBook", sender: self)
                 }
             }
             
@@ -112,7 +112,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             destinationViewController.selectedIndex = 2
             destinationViewController.careerModel = careerModel
             
-        } else if segue.identifier == "AddWordsBook" {
+        } else if segue.identifier == "AddBook", homeModel == nil {
             let destinationViewController = segue.destination as! YXAddBookViewController
             destinationViewController.navigationItem.leftBarButtonItems = []
             destinationViewController.navigationItem.hidesBackButton = true
@@ -127,7 +127,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let config = response as! YXConfigModel
             
             guard config.baseConfig.learning else {
-                self.performSegue(withIdentifier: "AddWordsBook", sender: self)
+                self.performSegue(withIdentifier: "AddBook", sender: self)
                 return
             }
             
