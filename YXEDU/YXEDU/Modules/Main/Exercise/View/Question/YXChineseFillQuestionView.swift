@@ -23,10 +23,10 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
 
     override func bindData() {
         super.bindData()
-        guard let meaning = self.exerciseModel.question?.meaning else {
+        guard let property = self.exerciseModel.question?.partOfSpeech, let meaning = self.exerciseModel.question?.meaning else {
             return
         }
-        self.subTitleLabel?.text = meaning
+        self.subTitleLabel?.text = property + meaning
     }
 
     override func layoutSubviews() {
