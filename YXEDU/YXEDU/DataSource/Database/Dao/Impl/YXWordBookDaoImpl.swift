@@ -21,7 +21,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                              book.gradeType]
         
         self.wordRunnerQueue.inDatabase { (db) in
-            let isSuccess = db.executeUpdate(sql, withArgumentsIn: params)
+            let isSuccess = db.executeUpdate(sql, withArgumentsIn: params as [Any])
             completion?(nil, isSuccess)
         }
     }
@@ -129,49 +129,44 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         }
     }
     
-    func selectWordByUnitId(unitId: Int, completion: finishBlock) {
+    func selectWordByUnitId(unitId: Int) -> [YXWordModel] {
         let sql = YYSQLManager.WordBookSQL.selectWordByUnitId.rawValue
         let params: [Any] = [unitId]
-        
-        self.wordRunnerQueue.inDatabase { (db) in
-            let result = db.executeQuery(sql, withArgumentsIn: params)
-            let usagesData: Data! = (result?.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
-
-            var words: [YXWordModel] = []
-            
-            while result?.next() ?? false {
-                var word = YXWordModel()
-                
-                word.wordId = Int(result?.int(forColumn: "wordId") ?? 0)
-                word.word = result?.string(forColumn: "word")
-                word.partOfSpeech = result?.string(forColumn: "partOfSpeech")
-                word.meaning = result?.string(forColumn: "meaning")
-                word.imageUrl = result?.string(forColumn: "imageUrl")
-                word.americanPhoneticSymbol = result?.string(forColumn: "americanPhoneticSymbol")
-                word.englishPhoneticSymbol = result?.string(forColumn: "englishPhoneticSymbol")
-                word.americanPronunciation = result?.string(forColumn: "americanPronunciation")
-                word.englishPronunciation = result?.string(forColumn: "englishPronunciation")
-                word.englishExample = result?.string(forColumn: "englishExample")
-                word.chineseExample = result?.string(forColumn: "chineseExample")
-                word.examplePronunciation = result?.string(forColumn: "examplePronunciation")
-                word.usages = try? JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as? [String] ?? []
-                word.synonym = result?.string(forColumn: "synonym")
-                word.antonym = result?.string(forColumn: "antonym")
-                word.testCenter = result?.string(forColumn: "testCenter")
-                word.deformation = result?.string(forColumn: "deformation")
-                word.gradeId = Int(result?.int(forColumn: "gradeId") ?? 0)
-                word.gardeType = Int(result?.int(forColumn: "gardeType") ?? 0)
-                word.bookId = Int(result?.int(forColumn: "bookId") ?? 0)
-                word.unitId = Int(result?.int(forColumn: "unitId") ?? 0)
-                word.unitName = result?.string(forColumn: "unitName")
-                word.isExtensionUnit = result?.bool(forColumn: "isExtensionUnit") ?? false
-                
-                words.append(word)
-            }
-            
-            let isSuccess = result?.next() ?? false
-            completion(isSuccess ? words : nil, isSuccess)
+        var wordModelArray = [YXWordModel]()
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return wordModelArray
         }
+
+        while result.next() {
+            var word = YXWordModel()
+            let usagesData: Data! = (result.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
+            word.wordId       = Int(result.int(forColumn: "wordId"))
+            word.word         = result.string(forColumn: "word")
+            word.partOfSpeech = result.string(forColumn: "partOfSpeech")
+            word.meaning      = result.string(forColumn: "meaning")
+            word.imageUrl     = result.string(forColumn: "imageUrl")
+            word.americanPhoneticSymbol = result.string(forColumn: "americanPhoneticSymbol")
+            word.englishPhoneticSymbol  = result.string(forColumn: "englishPhoneticSymbol")
+            word.americanPronunciation  = result.string(forColumn: "americanPronunciation")
+            word.englishPronunciation   = result.string(forColumn: "englishPronunciation")
+            word.englishExample = result.string(forColumn: "englishExample")
+            word.chineseExample = result.string(forColumn: "chineseExample")
+            word.examplePronunciation = result.string(forColumn: "examplePronunciation")
+            word.usages      = try? JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as? [String] ?? []
+            word.synonym     = result.string(forColumn: "synonym")
+            word.antonym     = result.string(forColumn: "antonym")
+            word.testCenter  = result.string(forColumn: "testCenter")
+            word.deformation = result.string(forColumn: "deformation")
+            word.gradeId     = Int(result.int(forColumn: "gradeId") )
+            word.gardeType   = Int(result.int(forColumn: "gardeType") )
+            word.bookId      = Int(result.int(forColumn: "bookId") )
+            word.unitId      = Int(result.int(forColumn: "unitId") )
+            word.unitName    = result.string(forColumn: "unitName")
+            word.isExtensionUnit = result.bool(forColumn: "isExtensionUnit")
+
+            wordModelArray.append(word)
+        }
+        return wordModelArray
     }
     
     func deleteWord(bookId: Int, completion: finishBlock? = nil) {

@@ -37,7 +37,7 @@ protocol YXWordBookDao {
     
     /// 通过单元 ID 查询单词
     /// - Parameter unitId: 单元 id
-    func selectWordByUnitId(unitId: Int,  completion: finishBlock)
+    func selectWordByUnitId(unitId: Int) -> [YXWordModel]
     
     
     
