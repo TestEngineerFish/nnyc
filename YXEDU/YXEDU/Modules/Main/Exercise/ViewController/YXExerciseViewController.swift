@@ -47,7 +47,7 @@ class YXExerciseViewController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.hideLoadAnimation()
+        self.hideLoadAnimation(nil)
     }
     
     override func viewDidLoad() {
@@ -151,7 +151,9 @@ class YXExerciseViewController: UIViewController {
             }
         } else if !progressManager.isCompletion() {// 存在未学完的关卡
             dataManager.fetchUnCompletionExerciseModels()
-            self.switchExerciseView()
+            self.hideLoadAnimation { [weak self] in
+                self?.switchExerciseView()
+            }
         } else {
             self.fetchExerciseData()
         }
@@ -165,7 +167,9 @@ class YXExerciseViewController: UIViewController {
             guard let self = self else { return }
             if result {
                 DispatchQueue.main.async {
-                    self.switchExerciseView()
+                    self.hideLoadAnimation { [weak self] in
+                        self?.switchExerciseView()
+                    }
                 }
             } else {//
                 YXUtils.showHUD(self.view, title: "加载数据失败")
@@ -175,14 +179,12 @@ class YXExerciseViewController: UIViewController {
     
     /// 切换题目
     private func switchExerciseView() {
-        self.hideLoadAnimation()
-        
         let data = dataManager.fetchOneExerciseModel()
         
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
-        if var model = data.2 {
+        if let model = data.2 {
             
 //            model.type = .lookImageChooseWord
             
@@ -252,8 +254,8 @@ class YXExerciseViewController: UIViewController {
         self.loadingView?.showAnimation()
     }
 
-    private func hideLoadAnimation() {
-        self.loadingView?.stopAnimation()
+    private func hideLoadAnimation(_ completeBlock: (()->Void)?) {
+        self.loadingView?.stopAnimation(completeBlock)
         self.loadingView = nil
     }
 }
@@ -292,8 +294,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
             answerWrong()
         }
     }
-    
-    
+
     /// 答对处理
     func answerRight() {
         if self.exerciseViewArray.first?.isWrong ?? false {

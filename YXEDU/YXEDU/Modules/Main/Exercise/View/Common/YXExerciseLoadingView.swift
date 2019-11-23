@@ -13,6 +13,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     var progressLayer = CAGradientLayer()
     var dotLayer      = CAGradientLayer()
     var finished      = false
+    var completeBlock: (()->Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -162,8 +163,9 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
 
     }
 
-    func stopAnimation() {
+    func stopAnimation(_ completeBlock: (()->Void)?) {
         self.finished = true
+        self.completeBlock = completeBlock
     }
 
     // MARK: CAAnimationDelegate
@@ -171,6 +173,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if self.finished {
             self.removeFromSuperview()
+            self.completeBlock?()
         } else {
             self.showAnimation()
         }
