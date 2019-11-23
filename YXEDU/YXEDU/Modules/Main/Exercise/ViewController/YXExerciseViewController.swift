@@ -28,8 +28,9 @@ class YXExerciseViewController: UIViewController {
     
     // 底部view
     private var bottomView = YXExerciseBottomView()
-
-    private var resultView = UIImageView()
+    
+    /// 切题动画
+    private var switchAnimation = YXSwitchAnimation()
 
     // Load视图
     var loadingView: YXExerciseLoadingView?
@@ -59,7 +60,7 @@ class YXExerciseViewController: UIViewController {
     }
 
     deinit {
-        self.resultView.removeAllSubviews()
+        print("练习 VC 释放")
     }
 
     override func viewWillLayoutSubviews() {
@@ -77,22 +78,21 @@ class YXExerciseViewController: UIViewController {
             make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
         }
 
-        self.resultView.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 120, height: 120))
-        }
     }
     
     private func createSubviews() {
         self.view.addSubview(headerView)
         self.view.addSubview(bottomView)
-        kWindow.addSubview(resultView)
-        self.resultView.isHidden = true
     }
     
     
     private func bindProperty() {
         self.view.backgroundColor = UIColor.white
+        
+        self.switchAnimation.owenrView = self.view
+        self.switchAnimation.animationDidStop = { [weak self] (right) in
+            self?.animationDidStop(isRight: right)
+        }
         
         self.headerView.backEvent = {[weak self] in
             guard let self = self else { return }
@@ -258,7 +258,7 @@ class YXExerciseViewController: UIViewController {
     }
 }
 
-extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate {
+extension YXExerciseViewController: YXExerciseViewDelegate {
     ///答完题回调处理
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
@@ -266,67 +266,39 @@ extension YXExerciseViewController: YXExerciseViewDelegate, CAAnimationDelegate 
         self.dataManager.completionExercise(exerciseModel: exerciseModel, right: right)
 
         if right {
-            self.showRightAnimation()
-            YXAVPlayerManager.share.playRightAudio()
+            if exerciseModel.type == .newLearnPrimarySchool
+                || exerciseModel.type == .newLearnPrimarySchool_Group
+                || exerciseModel.type == .newLearnJuniorHighSchool {
+                // 新学直接切题，不用显示动画后
+                self.switchExerciseView()
+            } else {
+                switchAnimation.showRightAnimation()
+                YXAVPlayerManager.share.playRightAudio()
+            }
         } else {
-            self.showWrongAnimation()
-            YXAVPlayerManager.share.playWrongAudio()
-            
             self.exerciseViewArray.first?.isWrong = true
-            // 等待错误提示音播放完后，再进行提示
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
-                _ = self?.exerciseViewArray.first?.remindView?.show()
-            }
+            switchAnimation.showWrongAnimation()
+            YXAVPlayerManager.share.playWrongAudio()
         }
-        // 震动效果
-        if #available(iOS 10.0, *) {
-            let shock = UIImpactFeedbackGenerator(style: .medium)
-            shock.impactOccurred()
-        }
+        
+        switchAnimation.feedback()
     }
-
-    /// 显示正确动画
-    private func showRightAnimation() {
-        self.view.isUserInteractionEnabled = false
-        self.resultView.isHidden = false
-        self.resultView.image = UIImage(named: "success")
-        let animation = YXExerciseAnimation.zoomInHideAnimation()
-        animation.delegate = self
-        animation.setValue(true, forKey: "isRight")
-        self.resultView.layer.add(animation, forKey: nil)
-    }
-
-    /// 显示错误动画
-    private func showWrongAnimation() {
-        self.view.isUserInteractionEnabled = false
-        self.resultView.isHidden = false
-        self.resultView.image = UIImage(named: "error")
-        let animation = YXExerciseAnimation.zoomInHideAnimation()
-        animation.delegate = self
-        animation.setValue(false, forKey: "isRight")
-        self.resultView.layer.add(animation, forKey: nil)
-    }
-
-    // TODO: CAAnimationDelegate
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        self.resultView.isHidden = true
-        self.view.isUserInteractionEnabled = true
-        self.resultView.layer.removeAllAnimations()
-        if let isRight = anim.value(forKey: "isRight") as? Bool {
-            
-            if isRight {
-                if self.exerciseViewArray.first?.isWrong ?? false {
-                    self.exerciseViewArray.first?.remindView?.remindDetail()
-                }
-                // 切题
-                self.switchExerciseView()
-            } else if self.exerciseViewArray.first?.exerciseModel.type == .validationWordAndChinese
-                || self.exerciseViewArray.first?.exerciseModel.type == .validationImageAndWord {
-                // 判断题做错了，显示详情页后，直接切题
+    
+    
+    func animationDidStop(isRight: Bool) {
+        if isRight {
+            if self.exerciseViewArray.first?.isWrong ?? false {
                 self.exerciseViewArray.first?.remindView?.remindDetail()
-                self.switchExerciseView()
             }
-            
+            // 切题
+            self.switchExerciseView()
+        } else if self.exerciseViewArray.first?.exerciseModel.type == .validationWordAndChinese
+            || self.exerciseViewArray.first?.exerciseModel.type == .validationImageAndWord {
+            // 判断题做错了，显示详情页后，直接切题
+            self.exerciseViewArray.first?.remindView?.show()
+            self.switchExerciseView()
+        } else {
+            _ = self.exerciseViewArray.first?.remindView?.show()
         }
     }
 }
