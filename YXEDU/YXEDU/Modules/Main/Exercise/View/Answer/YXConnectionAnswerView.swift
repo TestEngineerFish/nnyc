@@ -9,6 +9,11 @@
 import UIKit
 
 
+protocol YXConnectionAnswerViewDelegate: NSObjectProtocol {
+    func connectionViewSelectedStatus(selected: Bool, wordId: Int)
+    func remindEvent(wordId: Int)
+}
+
 /// 连线题目， 1. 词义连线，2. 词图连线
 class YXConnectionAnswerView: YXBaseAnswerView {
 
@@ -30,8 +35,14 @@ class YXConnectionAnswerView: YXBaseAnswerView {
     override func bindProperty() {
         self.backgroundColor = UIColor.clear
         
-        connectionView!.connectionCompletion = {[weak self] in
+        connectionView?.connectionCompletion = { [weak self] in
             self?.answerCompletion(right: true)
+        }
+        connectionView?.selectedLeftItemEvent = { [weak self] (status, wordId) in
+            self?.connectionAnswerViewDelegate?.connectionViewSelectedStatus(selected: status == .selected, wordId: wordId)
+        }
+        connectionView?.remindEvent = { [weak self] (wordId) in
+            self?.connectionAnswerViewDelegate?.remindEvent(wordId: wordId)
         }
     }
     

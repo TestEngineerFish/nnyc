@@ -49,6 +49,9 @@ struct YXConnectionWordAndImageConfig: YXConnectionItemConfigProtocol {
 class YXConnectionView: UIView {
     
     var connectionCompletion: (() -> ())?
+    var selectedLeftItemEvent: ((_ status: YXConnectionItemStatus, _ wordId: Int) -> ())?
+    var remindEvent: ((_ wordId: Int) -> ())?
+    
     
     var itemConfig: YXConnectionItemConfigProtocol {
         if exerciseModel?.type == .connectionWordAndChinese {
@@ -183,16 +186,23 @@ class YXConnectionView: UIView {
 //MARK: - 处理点击事件相关的
 extension YXConnectionView {
     private func itemEvent(index: Int, type: YXConnectionItemType) {
-//        let item = leftItemArray[index]
-//        if item.itemStatus == .selected {
-//            self.audioPlayerView.isHidden = true
-//            return
-//        }
-        
         if type == .left {
+            if (leftItemArray[index].itemStatus == .selected) {
+                leftItemArray[index].itemStatus = .normal
+                self.selectedLeftItemEvent?(.normal, leftItemArray[index].itemModel?.optionId ?? 0)
+                self.audioPlayerView.isHidden = true
+                return
+            }
+            self.selectedLeftItemEvent?(.selected, leftItemArray[index].itemModel?.optionId ?? 0)
+            
             self.leftItemEvent(index: index )
             self.playAudio(index: index)
         } else {
+            
+            if (rightItemArray[index].itemStatus == .selected) {
+                rightItemArray[index].itemStatus = .normal
+                return
+            }
             self.rightItemEvent(index: index)
         }
     }
@@ -434,11 +444,7 @@ extension YXConnectionView {
                 shapeLayer = self.drawLine(status: .right, start: start, end: end)
                 
 //                let CABasicAnimation
-                
-                
-                
-                
-                
+                                                                                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                     shapeLayer.removeFromSuperlayer()
                     
@@ -456,7 +462,10 @@ extension YXConnectionView {
             
             
         } else {
-
+            
+            selectedLeftItemEvent?(.normal, selectedItems.0.itemModel?.optionId ?? 0)
+            remindEvent?(selectedItems.0.itemModel?.optionId ?? 0)
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
                 guard let self = self else { return }
                 shapeLayer.removeFromSuperlayer()

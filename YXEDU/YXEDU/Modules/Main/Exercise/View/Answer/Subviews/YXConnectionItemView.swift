@@ -126,9 +126,7 @@ class YXConnectionItemView: UIButton {
     }
     
     @objc private func clickButton() {
-        if itemStatus == .selected {
-            self.itemStatus = .normal
-        } else if itemStatus == .normal {
+        if itemStatus == .selected || itemStatus == .normal {
             self.clickEvent?(self.index, self.itemType)
         }
     }

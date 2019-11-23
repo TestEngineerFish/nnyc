@@ -16,8 +16,6 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     let bottomPadding = CGFloat(54)
     
     var exerciseModel: YXWordExerciseModel
-
-    var delegate: YXQuestionEventProtocol?
     
     /// 主标题
     var titleLabel: UILabel?

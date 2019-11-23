@@ -53,6 +53,10 @@ class YXWordQuestionView: YXBaseQuestionView {
         }
         
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.audioPlayerView?.play()
+    }
 }
 
 

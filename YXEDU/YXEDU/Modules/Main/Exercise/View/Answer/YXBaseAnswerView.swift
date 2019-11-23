@@ -26,6 +26,8 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
     var exerciseModel: YXWordExerciseModel
 
     var delegate: YXAnswerEventProtocol?
+    weak var answerDelegate: YXAnswerViewDelegate?
+    weak var connectionAnswerViewDelegate: YXConnectionAnswerViewDelegate?
 
     // 按钮tag偏移量
     let offsetTag    = 100
@@ -42,8 +44,6 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    weak var answerDelegate: YXAnswerViewDelegate?
 
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -196,6 +196,7 @@ class YXExerciseViewController: UIViewController {
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
             exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.exerciseViewTop, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)
             exerciseView.exerciseDelegate = self
+            exerciseView.answerView?.connectionAnswerViewDelegate = self
             loadExerciseView(exerciseView: exerciseView)
         } else {
             // 没有数据，就是完成了练习
@@ -326,3 +327,26 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     }
     
 }
+
+
+extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
+    func connectionViewSelectedStatus(selected: Bool, wordId: Int) {
+        bottomView.tipsButton.isEnabled = selected
+        if selected {
+            let word = dataManager.fetchWord(wordId: wordId)
+            self.exerciseViewArray[0].remindView?.exerciseModel.word = word
+        }
+    }
+    
+    func remindEvent(wordId: Int) {
+        self.exerciseViewArray[0].isWrong = true
+        
+        let word = dataManager.fetchWord(wordId: wordId)
+        self.exerciseViewArray[0].remindView?.exerciseModel.word = word
+        _ = self.exerciseViewArray[0].remindView?.show()
+        
+        // 保持进度到本地
+        
+    }
+}
+ 
