@@ -22,8 +22,9 @@ enum YXRemindType: Int {
 }
 
 /// 提示区域更新约束
-protocol YXRemindViewProtocol {
-    func updateHeightConstraints(_ height: CGFloat)
+@objc protocol YXRemindViewProtocol: NSObjectProtocol {
+    @objc optional func updateHeightConstraints(_ height: CGFloat)
+//    @objc optional func dismissRemindView()
 }
 
 class YXRemindView: UIView, YXAudioPlayerViewDelegate {
@@ -44,7 +45,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     private var audioList: [String] = []
     private var playIndex = 0
 
-    var delegate: YXRemindViewProtocol?
+    weak var delegate: YXRemindViewProtocol?
     
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
@@ -141,7 +142,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
                 return self.titleLabel.frame.maxY
             }
         }()
-        self.delegate?.updateHeightConstraints(maxHeirht)
+        self.delegate?.updateHeightConstraints?(maxHeirht)
     }
     
     //MARK: 提示实现
@@ -189,7 +190,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     private func remindExampleWithDigWord() {
         if let word = exerciseModel.word?.word {
             titleLabel.text = exerciseModel.word?.example?.replacingOccurrences(of: word, with: "__")
-        }        
+        }
         setAllSubviewStatus()
     }
     
@@ -236,10 +237,14 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     
-    public func remindDetail() {
+    public func remindDetail(completion: (() -> Void)? = nil) {
         guard let word = exerciseModel.word else { return }
         
         let detailView = YXWordDetailTipView(word: word)
+        detailView.dismissClosure = { [weak self] in
+            completion?()
+//            self?.delegate?.dismissRemindView?()
+        }
         detailView.showWithAnimation()
     }
     

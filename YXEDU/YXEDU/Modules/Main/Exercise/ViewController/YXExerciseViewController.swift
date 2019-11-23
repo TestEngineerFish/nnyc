@@ -265,40 +265,60 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         // 答题后，数据处理
         self.dataManager.completionExercise(exerciseModel: exerciseModel, right: right)
 
-        if right {
-            if exerciseModel.type == .newLearnPrimarySchool
-                || exerciseModel.type == .newLearnPrimarySchool_Group
-                || exerciseModel.type == .newLearnJuniorHighSchool {
-                // 新学直接切题，不用显示动画后
-                self.switchExerciseView()
-            } else {
-                switchAnimation.showRightAnimation()
-                YXAVPlayerManager.share.playRightAudio()
-            }
-        } else {
-            self.exerciseViewArray.first?.isWrong = true
-            switchAnimation.showWrongAnimation()
-            YXAVPlayerManager.share.playWrongAudio()
+        // 新学直接切题，不用显示动画后
+        if exerciseModel.type == .newLearnPrimarySchool
+            || exerciseModel.type == .newLearnPrimarySchool_Group
+            || exerciseModel.type == .newLearnJuniorHighSchool {
+            self.switchExerciseView()
+            return
         }
         
-        switchAnimation.feedback()
+        self.exerciseViewArray.first?.isWrong = !right
+        
+        // 答题后的对错动画
+        switchAnimation.show(isRight: right)
     }
     
     
+    /// 动画停止后回调
+    /// - Parameter isRight: 对错
     func animationDidStop(isRight: Bool) {
         if isRight {
-            if self.exerciseViewArray.first?.isWrong ?? false {
-                self.exerciseViewArray.first?.remindView?.remindDetail()
-            }
-            // 切题
+            answerRight()
+        } else {
+            answerWrong()
+        }
+    }
+    
+    
+    /// 答对处理
+    func answerRight() {
+        if self.exerciseViewArray.first?.isWrong ?? false {
+            self.showRemindDetail()
+        } else {// 切题
             self.switchExerciseView()
-        } else if self.exerciseViewArray.first?.exerciseModel.type == .validationWordAndChinese
+        }
+    }
+    
+    /// 答错处理
+    func answerWrong() {
+        if self.exerciseViewArray.first?.exerciseModel.type == .validationWordAndChinese
             || self.exerciseViewArray.first?.exerciseModel.type == .validationImageAndWord {
             // 判断题做错了，显示详情页后，直接切题
-            self.exerciseViewArray.first?.remindView?.show()
-            self.switchExerciseView()
+            self.showRemindDetail()
         } else {
             _ = self.exerciseViewArray.first?.remindView?.show()
         }
     }
+    
+    
+    /// 显示详情页后，延迟切题
+    func showRemindDetail() {
+        self.exerciseViewArray.first?.remindView?.remindDetail {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                self?.switchExerciseView()
+            }
+        }
+    }
+    
 }

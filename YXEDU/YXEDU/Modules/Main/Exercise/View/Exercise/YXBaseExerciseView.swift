@@ -22,7 +22,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol {
 
     var exerciseModel: YXWordExerciseModel
     
-    /// 是否做错
+    /// 是否做错过
     var isWrong: Bool = false
 
     /// 题目view

@@ -27,8 +27,19 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
         self.createSubviews()
     }
     
+    public func show(isRight: Bool) {
+        if isRight {
+            showRightAnimation()
+            YXAVPlayerManager.share.playRightAudio()
+        } else {
+            showWrongAnimation()
+            YXAVPlayerManager.share.playWrongAudio()
+        }
+        feedback()
+    }
     
-    func createSubviews() {
+    
+    private func createSubviews() {
         self.resultView.isHidden = true
         
         kWindow.addSubview(resultView)
@@ -39,7 +50,7 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
     }
     
     /// 显示正确动画
-    public func showRightAnimation() {
+    private func showRightAnimation() {
         self.owenrView?.isUserInteractionEnabled = false
         self.resultView.isHidden = false
         self.resultView.image = UIImage(named: "success")
@@ -50,7 +61,7 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
     }
 
     /// 显示错误动画
-    public func showWrongAnimation() {
+    private func showWrongAnimation() {
         self.owenrView?.isUserInteractionEnabled = false
         self.resultView.isHidden = false
         self.resultView.image = UIImage(named: "error")
