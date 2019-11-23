@@ -95,7 +95,8 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol {
         }
         if let remindView = self.remindView {
             remindView.snp.makeConstraints { (make) in
-                make.top.left.right.equalToSuperview()
+                make.top.equalToSuperview().offset(AdaptSize(16))
+                make.left.right.equalToSuperview()
                 make.height.equalTo(remindViewHeight)
             }
             answerView?.snp.makeConstraints { (make) in
