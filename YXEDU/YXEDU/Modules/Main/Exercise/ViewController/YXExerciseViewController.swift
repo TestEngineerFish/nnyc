@@ -35,6 +35,9 @@ class YXExerciseViewController: UIViewController {
     // Load视图
     private var loadingView: YXExerciseLoadingView?
         
+    /// 哪个单词的提示，仅连线题使用
+    private var remindWordId: Int = -1
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -111,11 +114,13 @@ class YXExerciseViewController: UIViewController {
         }
                 
         self.bottomView.tipsEvent = {[weak self] in
+            guard let self = self else { return }
             print("提示点击事件")
-            guard let exerciseModel = self?.exerciseViewArray.first?.exerciseModel else { return }
-            self?.dataManager.completionExercise(exerciseModel: exerciseModel, right: false)
-            self?.exerciseViewArray[0].isWrong = true
-            self?.exerciseViewArray.first?.remindView?.show()
+            guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel else { return }
+            self.dataManager.completionExercise(exerciseModel: exerciseModel, right: false)
+            self.exerciseViewArray[0].isWrong = true
+            self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
+            self.exerciseViewArray.first?.remindView?.show()
         }
         
         self.headerView.skipEvent = { [weak self] in
@@ -336,6 +341,7 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int) {
         bottomView.tipsButton.isEnabled = selected
         if selected {
+            remindWordId = wordId
             self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: false)
         }
     }
