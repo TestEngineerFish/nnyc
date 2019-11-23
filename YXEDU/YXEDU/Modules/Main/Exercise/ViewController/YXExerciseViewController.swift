@@ -33,7 +33,7 @@ class YXExerciseViewController: UIViewController {
     private var switchAnimation = YXSwitchAnimation()
 
     // Load视图
-    var loadingView: YXExerciseLoadingView?
+    private var loadingView: YXExerciseLoadingView?
         
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -115,10 +115,13 @@ class YXExerciseViewController: UIViewController {
             guard let exerciseModel = self?.exerciseViewArray.first?.exerciseModel else { return }
             self?.dataManager.completionExercise(exerciseModel: exerciseModel, right: false)
             self?.exerciseViewArray[0].isWrong = true
-            _ = self?.exerciseViewArray.first?.remindView?.show()
+            self?.exerciseViewArray.first?.remindView?.show()
         }
         
         self.headerView.skipEvent = { [weak self] in
+            YXAVPlayerManager.share.pauseAudio()
+            USCRecognizer.sharedManager()?.cancel()
+            
             self?.dataManager.skipNewWord()
             self?.navigationController?.popViewController(animated: true)
         }
@@ -179,13 +182,13 @@ class YXExerciseViewController: UIViewController {
     
     /// 切换题目
     private func switchExerciseView() {
+        
         let data = dataManager.fetchOneExerciseModel()
         
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
         if let model = data.2 {
-            
 //            model.type = .lookImageChooseWord
             
             if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {
@@ -333,20 +336,18 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int) {
         bottomView.tipsButton.isEnabled = selected
         if selected {
-            let word = dataManager.fetchWord(wordId: wordId)
-            self.exerciseViewArray[0].remindView?.exerciseModel.word = word
+            self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: false)
         }
     }
     
     func remindEvent(wordId: Int) {
         self.exerciseViewArray[0].isWrong = true
-        
-        let word = dataManager.fetchWord(wordId: wordId)
-        self.exerciseViewArray[0].remindView?.exerciseModel.word = word
-        _ = self.exerciseViewArray[0].remindView?.show()
+        self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
+        self.exerciseViewArray[0].remindView?.show()
         
         // 保持进度到本地
         
     }
+     
 }
  

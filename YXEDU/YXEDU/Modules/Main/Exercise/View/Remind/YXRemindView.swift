@@ -39,7 +39,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     private var audioPlayerView = YXAudioPlayerView()
     
     /// 当前提示到哪一步了，默认从第一个开始提示
-    private var currentRemindIndex = -1
+    public var currentRemindIndex = -1
     
     /// 等待播放的语音列表（某一步提示，可能会播放多个语音，需要使用队列顺序播放，例如：单词语音+例句语音）
     private var audioList: [String] = []

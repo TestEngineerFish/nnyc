@@ -12,6 +12,8 @@ import UIKit
 class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
 
     var contentView = UIView()
+    /// 连线题，每个单词提示到哪一步
+    private var remindMap: [Int : Int] = [:]
 
     private var answerHeight: CGFloat {
         let itemConfig = YXConnectionWordAndChineseConfig()
@@ -87,5 +89,24 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
         }
     }
     
-    
+    override func remindAction(wordId: Int, isRemind: Bool) {
+        let word = YXWordBookDaoImpl().selectWord(wordId: wordId)
+        remindView?.exerciseModel.word = word
+        
+        if let index = remindMap[wordId] {
+            remindView?.currentRemindIndex = index
+            if isRemind {
+                let count = self.remindView?.remindSteps.count ?? 0
+                remindMap[wordId] = index + 1 >= count ? count - 1 : index + 1
+            }
+        } else {
+            
+            remindMap[wordId] = -1
+            remindView?.currentRemindIndex = -1
+                                                                                        
+            
+        }
+        
+        
+    }
 }
