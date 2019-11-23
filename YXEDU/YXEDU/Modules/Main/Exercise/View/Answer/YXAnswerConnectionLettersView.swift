@@ -111,20 +111,21 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     // MARK: Event
 
     @objc private func clickButton(_ button: YXLetterButton) {
-        if button.isEqual(self.selectedBtnArray.first) {
-            return
+        var targetBtn = button
+        if targetBtn.isEqual(self.selectedBtnArray.first) && self.selectedBtnArray.count > 1 {
+            targetBtn = self.selectedBtnArray[1]
         }
-        if button.isEnabled {
-            if button.status == .selected || button.status == .error {
+        if targetBtn.isEnabled {
+            if targetBtn.status == .selected || targetBtn.status == .error {
                 let reversedArray = self.selectedBtnArray.reversed()
                 for btn in reversedArray {
                     self.unselectButton(btn)
-                    if btn.tag == button.tag {
+                    if btn.tag == targetBtn.tag {
                         break
                     }
                 }
             } else {
-                self.selectedButton(button)
+                self.selectedButton(targetBtn)
             }
         }
     }
@@ -341,10 +342,11 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     }
 
     private func showResult(errorList list: [Int]) {
+        // 防止显示结果后,手势依旧在处理滑动事件
         if let pan = self.pan {
             self.removeGestureRecognizer(pan)
         }
-        var firstButton: YXLetterButton?
+//        var firstButton: YXLetterButton?
         if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in
@@ -356,15 +358,15 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
                 if let button = self.selectedBtnArray.first(where: { (button) -> Bool in
                     return button.tag == tag
                 }) {
-                    if firstButton == nil {
-                        firstButton = button
-                    }
+//                    if firstButton == nil {
+//                        firstButton = button
+//                    }
                     button.status = .error
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)
         }
-        if let button = firstButton {
+        if let button = self.selectedBtnArray.first {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
                 self.clickButton(button)
             }
