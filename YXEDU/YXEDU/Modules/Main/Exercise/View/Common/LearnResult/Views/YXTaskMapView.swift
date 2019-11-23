@@ -175,13 +175,16 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
 
     // MARK: YXSexangleViewClickProcotol
     func clickSexangleView(_ view: YXSexangleView) {
-        let currentUnitName = self.currentModel?.unitName ?? ""
-        let toUnitName = view.model.unitName ?? ""
-        let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
-        YXComAlertView.show(.common, in: kWindow, info: "提示", content: content, firstBlock: { (obj) in
+        if self.currentModel?.status == .some(.uniteIng) || self.currentModel?.status == .some(.uniteStop) {
+            let currentUnitName = self.currentModel?.unitName ?? ""
+            let toUnitName = view.model.unitName ?? ""
+            let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
+            YXComAlertView.show(.common, in: kWindow, info: "提示", content: content, firstBlock: { (obj) in
+                self.movePinView(to: view)
+            }, secondBlock: nil)
+        } else {
             self.movePinView(to: view)
-        }, secondBlock: nil)
-
+        }
     }
 
 }

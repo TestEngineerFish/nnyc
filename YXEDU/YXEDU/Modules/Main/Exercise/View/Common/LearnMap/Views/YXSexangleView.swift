@@ -73,6 +73,7 @@ class YXSexangleView: UIView {
     func showProgressAnimation() {
         self.hideProgressAnimtion()
         let maskLayer = self.getSexangleLayer(self.width, strokeColor: UIColor.red.cgColor)
+
         // 获取渐变图层
         gradientLayer = self.getGradientLayer()
         self.layer.addSublayer(gradientLayer!)
@@ -222,7 +223,7 @@ class YXSexangleView: UIView {
         let shapLayer         = CAShapeLayer()
         shapLayer.path        = path.cgPath
         shapLayer.lineWidth   = AdaptSize(5)
-        shapLayer.lineJoin    = .round
+        shapLayer.lineCap     = .round
         shapLayer.strokeColor = strokeColor
         shapLayer.fillColor   = fillColor
         return shapLayer
