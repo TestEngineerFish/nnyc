@@ -1,16 +1,24 @@
  //
-//  YXExerciseViewController.swift
-//  YXEDU
-//
-//  Created by sunwu on 2019/10/24.
-//  Copyright © 2019 shiji. All rights reserved.
-//
+ //  YXExerciseViewController.swift
+ //  YXEDU
+ //
+ //  Created by sunwu on 2019/10/24.
+ //  Copyright © 2019 shiji. All rights reserved.
+ //
 
-import UIKit
+ import UIKit
+ protocol YXExerciseViewControllerProtocol {
+    /// 显示弹框事件
+    func showAlertEvnet()
+    /// 返回首页事件
+    func backHomeEvent()
+    /// 隐藏弹框事件
+    func hideAlertEvent()
+ }
 
-/// 练习模块，主控制器
-class YXExerciseViewController: UIViewController {
-            
+ /// 练习模块，主控制器
+ class YXExerciseViewController: UIViewController {
+
     public var bookId: Int = 0
     public var unitId: Int = 0
     
@@ -22,7 +30,7 @@ class YXExerciseViewController: UIViewController {
     
     // 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
-        
+
     // 顶部view
     private var headerView = YXExerciseHeaderView()
     
@@ -34,7 +42,10 @@ class YXExerciseViewController: UIViewController {
 
     // Load视图
     private var loadingView: YXExerciseLoadingView?
-        
+
+    // 协议
+    private var delegate: YXExerciseViewControllerProtocol?
+
     /// 哪个单词的提示，仅连线题使用
     private var remindWordId: Int = -1
     
@@ -68,7 +79,7 @@ class YXExerciseViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-                
+
         self.headerView.snp.makeConstraints { (make) in
             make.top.equalTo(YXExerciseConfig.headerViewTop)
             make.left.right.equalTo(0)
@@ -84,11 +95,12 @@ class YXExerciseViewController: UIViewController {
     }
     
     private func createSubviews() {
+        headerView.delegate = self
+        bottomView.delegate = self
         self.view.addSubview(headerView)
         self.view.addSubview(bottomView)
     }
-    
-    
+
     private func bindProperty() {
         self.view.backgroundColor = UIColor.white
         
@@ -96,41 +108,6 @@ class YXExerciseViewController: UIViewController {
         self.switchAnimation.animationDidStop = { [weak self] (right) in
             self?.animationDidStop(isRight: right)
         }
-        
-        self.headerView.backEvent = {[weak self] in
-            guard let self = self else { return }
-            YXComAlertView.show(.common, in: self.view, info: "提示", content: "是否放弃本次学习并退出", firstBlock: { (obj) in
-                // 暂停播放和取消录音监听
-                YXAVPlayerManager.share.pauseAudio()
-                USCRecognizer.sharedManager()?.cancel()
-                self.navigationController?.popViewController(animated: true)
-            }) { (obj) in
-            }
-        }
-        self.headerView.switchEvent = {[weak self] in
-            self?.progressManager.completionExercise()
-            self?.progressManager.completionReport()
-            self?.navigationController?.popViewController(animated: true)
-        }
-                
-        self.bottomView.tipsEvent = {[weak self] in
-            guard let self = self else { return }
-            print("提示点击事件")
-            guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel else { return }
-            self.dataManager.completionExercise(exerciseModel: exerciseModel, right: false)
-            self.exerciseViewArray[0].isWrong = true
-            self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
-            self.exerciseViewArray.first?.remindView?.show()
-        }
-        
-        self.headerView.skipEvent = { [weak self] in
-            YXAVPlayerManager.share.pauseAudio()
-            USCRecognizer.sharedManager()?.cancel()
-            
-            self?.dataManager.skipNewWord()
-            self?.navigationController?.popViewController(animated: true)
-        }
-
     }
     
     private func initManager() {
@@ -194,7 +171,7 @@ class YXExerciseViewController: UIViewController {
         headerView.reviewProgress = "\(data.1)"
         
         if let model = data.2 {
-//            model.type = .lookImageChooseWord
+            //            model.type = .lookImageChooseWord
             
             if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {
                 self.bottomView.tipsButton.isHidden = true
@@ -203,6 +180,7 @@ class YXExerciseViewController: UIViewController {
             }
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
             exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.exerciseViewTop, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)
+            self.delegate = exerciseView
             exerciseView.exerciseDelegate = self
             exerciseView.answerView?.connectionAnswerViewDelegate = self
             loadExerciseView(exerciseView: exerciseView)
@@ -267,9 +245,9 @@ class YXExerciseViewController: UIViewController {
         self.loadingView?.stopAnimation(completeBlock)
         self.loadingView = nil
     }
-}
+ }
 
-extension YXExerciseViewController: YXExerciseViewDelegate {
+ extension YXExerciseViewController: YXExerciseViewDelegate {
     ///答完题回调处理
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
@@ -334,10 +312,10 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         }
     }
     
-}
+ }
 
 
-extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
+ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int) {
         bottomView.tipsButton.isEnabled = selected
         if selected {
@@ -354,6 +332,40 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
         // 保持进度到本地
         
     }
-     
-}
+ }
+
+ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
+    func clickHomeBtnEvent() {
+        self.delegate?.showAlertEvnet()
+        YXComAlertView.show(.common, in: self.view, info: "提示", content: "是否放弃本次学习并退出", firstBlock: { (objc) in
+            self.delegate?.backHomeEvent()
+            self.navigationController?.popViewController(animated: true)
+        }) { (obj) in
+            self.delegate?.hideAlertEvent()
+        }
+    }
+
+    func clickSwitchBtnEvent() {
+        self.progressManager.completionExercise()
+        self.progressManager.completionReport()
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    func clickSkipBtnEvent() {
+        YXAVPlayerManager.share.pauseAudio()
+        self.dataManager.skipNewWord()
+        self.navigationController?.popViewController(animated: true)
+    }
+ }
+
+ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
+    func clickTipsBtnEvent() {
+        print("提示点击事件")
+        guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel else { return }
+        self.dataManager.completionExercise(exerciseModel: exerciseModel, right: false)
+        self.exerciseViewArray[0].isWrong = true
+        self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
+        self.exerciseViewArray.first?.remindView?.show()
+    }
+ }
  

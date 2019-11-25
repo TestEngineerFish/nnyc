@@ -39,21 +39,13 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 进入后台, 停止播放音频和语音监听
     @objc private func didEnterBackgroundNotification() {
         print("进入后台, 停止播放音频和语音监听")
-        YXAVPlayerManager.share.pauseAudio()
-        self.enginer?.cancel()
-        if self.status == .listening {
-            // 置灰显示
-            self.listenView?.pause()
-            self.listenView?.alpha = 0.35
-            self.enginer?.cancel()
-            self.status = .playing
-        }
+        self.pauseView()
     }
+
     /// 从后台进入前台,
     @objc private func didBecomeActiveNotification() {
         // 该做啥呢?问问产品吧
-        print("该做啥呢?问问产品吧")
-        self.delegate?.playAudio()
+        self.playView()
     }
 
     required init?(coder: NSCoder) {
@@ -161,6 +153,24 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         resultView?.hideAnimation()
         resultView = nil
         self.status = .playing
+    }
+
+    /// 页面暂停
+    func pauseView() {
+        YXAVPlayerManager.share.pauseAudio()
+        self.enginer?.cancel()
+        if self.status == .listening {
+            // 置灰显示
+            self.listenView?.pause()
+            self.listenView?.alpha = 0.35
+            self.enginer?.cancel()
+            self.status = .playing
+        }
+    }
+
+    /// 页面播放
+    func playView() {
+        self.delegate?.playAudio()
     }
 
     // MARK: YXAudioPlayerViewDelegate

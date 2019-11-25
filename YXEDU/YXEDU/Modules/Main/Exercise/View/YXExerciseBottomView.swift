@@ -8,13 +8,18 @@
 
 import UIKit
 
+protocol YXExerciseBottomViewProtocol {
+    /// 点击提示一下按钮事件
+    func clickTipsBtnEvent()
+}
+
 /// 练习模块：底部View
 class YXExerciseBottomView: UIView {
     
-    var tipsEvent: (() -> Void)?
-    
     //MARK: - 私有属性
     var tipsButton = UIButton()
+
+    var delegate: YXExerciseBottomViewProtocol?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,7 +60,7 @@ class YXExerciseBottomView: UIView {
     
     
     @objc func clickTipsButton() {
-        self.tipsEvent?()
+        self.delegate?.clickTipsBtnEvent()
     }
     
 }

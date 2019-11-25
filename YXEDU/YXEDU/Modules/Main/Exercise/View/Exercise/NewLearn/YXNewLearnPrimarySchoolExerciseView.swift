@@ -126,4 +126,27 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         return true
     }
 
+    // MARK: ==== YXExerciseViewControllerProtocol ====
+    override func backHomeEvent() {
+        super.backHomeEvent()
+        // 暂停播放
+        YXAVPlayerManager.share.pauseAudio()
+    }
+
+    override func showAlertEvnet() {
+        super.showAlertEvnet()
+        guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
+            return
+        }
+        _answerView.pauseView()
+    }
+
+    override func hideAlertEvent() {
+        super.hideAlertEvent()
+        guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
+            return
+        }
+        _answerView.playView()
+    }
+
 }

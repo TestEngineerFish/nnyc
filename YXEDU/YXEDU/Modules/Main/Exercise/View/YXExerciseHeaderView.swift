@@ -8,13 +8,19 @@
 
 import UIKit
 
+protocol YXExerciseHeaderViewProtocol {
+    /// 点击回首页按钮
+    func clickHomeBtnEvent()
+    /// 点击切题按钮
+    func clickSwitchBtnEvent()
+    /// 点击跳过按钮
+    func clickSkipBtnEvent()
+}
 
 /// 练习模块：顶部view
 class YXExerciseHeaderView: UIView {
-    
-    var backEvent: (() -> Void)?
-    var switchEvent: (() -> Void)?
-    var skipEvent: (() -> Void)?
+
+    var delegate: YXExerciseHeaderViewProtocol?
     
     var learningProgress: String? {
         didSet {
@@ -149,22 +155,18 @@ class YXExerciseHeaderView: UIView {
             make.height.equalTo(14)
             make.bottom.equalTo(0)
         }
-        
-        
     }
     
-    
     @objc func clickBackButton() {
-        self.backEvent?()
+        self.delegate?.clickHomeBtnEvent()
     }
     
     @objc func clickSwitchButton() {
-        self.switchEvent?()
+        self.delegate?.clickSwitchBtnEvent()
     }
     
-    
     @objc func clickSkipButton() {
-        self.skipEvent?()
+        self.delegate?.clickSkipBtnEvent()
     }
     
 }

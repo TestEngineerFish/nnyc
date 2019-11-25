@@ -18,7 +18,7 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
 
 
 /// 练习模块基类：内容主页面，包括题目View、答案View、TipsView
-class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol {
+class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YXExerciseViewControllerProtocol {
 
     var exerciseModel: YXWordExerciseModel
     
@@ -163,5 +163,10 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol {
 
     // MARK: ==== YXRemindViewProtocol ====
     func updateHeightConstraints(_ height: CGFloat) {}
+
+    // MARK: ==== YXExerciseViewControllerProtocol ====
+    func showAlertEvnet() {}
+    func backHomeEvent() {}
+    func hideAlertEvent() {}
 
 }
