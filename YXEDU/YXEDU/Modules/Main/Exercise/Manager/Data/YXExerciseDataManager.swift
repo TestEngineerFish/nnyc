@@ -23,9 +23,10 @@ class YXExerciseDataManager: NSObject {
     private var needReviewWordCount = 0
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
     private var newExerciseModelArray: [YXWordExerciseModel] = []
-    private var reviewExerciseModelArray: [YXWordExerciseModel] = []
+    private var reviewModelArray: [[YXWordExerciseModel]] = []
     private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
     private let reviewWordIdsKey = "ReviewWordIdsKey"
+    private var currentStep = 0
     /// 进度管理器
     private var progressManager: YXExcerciseProgressManager
     
@@ -58,7 +59,7 @@ class YXExerciseDataManager: NSObject {
     func fetchUnCompletionExerciseModels() {
         let data = progressManager.localExerciseModels()
         newExerciseModelArray = data.0
-        reviewExerciseModelArray = data.1
+        reviewModelArray = data.1
     }
 
     
@@ -75,15 +76,19 @@ class YXExerciseDataManager: NSObject {
             needNewWordCount -= 1
         }
         
-        for exercise in self.reviewExerciseModelArray {
-            if exercise.isFinish == false {
-                if exercise.isCareScore {//是否关注分数
-                    return (needNewWordCount, needReviewWordCount, fetchCareScoreExercise(exerciseModel: exercise))
-                } else {
-                    return (needNewWordCount, needReviewWordCount, exercise)
+        for (i, subArray) in reviewModelArray.enumerated() {
+            self.currentStep = i
+            for exercise in subArray {
+                if exercise.isFinish == false {
+                    if exercise.isCareScore {//是否关注分数
+                        return (needNewWordCount, needReviewWordCount, fetchCareScoreExercise(exerciseModel: exercise))
+                    } else {
+                        return (needNewWordCount, needReviewWordCount, exercise)
+                    }
                 }
             }
         }
+        
         return (needNewWordCount, needReviewWordCount, nil)
     }
     
@@ -109,7 +114,7 @@ class YXExerciseDataManager: NSObject {
         updateNeedReviewWordCount()
         
         // 处理进度状态
-        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
+        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
         
         
         if !right {
@@ -121,6 +126,17 @@ class YXExerciseDataManager: NSObject {
     /// 错题数据处理，重做
     /// - Parameter wrongExercise: 练习Model
     private func addWrongExercise(exerciseModel: YXWordExerciseModel) {
+        
+//        exerciseModel.step
+        var nextStepLastIndex: ((_ step: Int) -> Int) = { [weak self] (step) in
+            
+//            var nextStep = step + 1
+//            if nextStep ==
+            
+            
+            return 0
+        }
+        
 //        guard let model = exerciseModelArray.last else {
 //            self.exerciseModelArray.append(exerciseModel)
 //            return
@@ -157,7 +173,7 @@ class YXExerciseDataManager: NSObject {
             newExerciseModelArray[i].isFinish = true
         }
         
-        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
+        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
     }
     
     
@@ -172,11 +188,14 @@ class YXExerciseDataManager: NSObject {
                 }
             }
         } else {
-            for (i, e) in self.reviewExerciseModelArray.enumerated() {
-                if e.step == exerciseModel.step && e.word?.wordId == exerciseModel.word?.wordId {
-                    reviewExerciseModelArray[i].isFinish = true
+            for (i, subArray) in reviewModelArray.enumerated() {
+                for (j, e) in subArray.enumerated() {
+                    if e.step == exerciseModel.step && e.word?.wordId == exerciseModel.word?.wordId {
+                        reviewModelArray[i][j].isFinish = true
+                    }
                 }
             }
+            
         }
     }
     
@@ -190,9 +209,11 @@ class YXExerciseDataManager: NSObject {
         
         var map: [Int : Bool] = [:]
         for wordId in wordIds {
-            for e in reviewExerciseModelArray {
-                if wordId == e.word?.wordId && e.isFinish == false {
-                    map[wordId] = false
+            for subArray in reviewModelArray {
+                for e in subArray {
+                    if wordId == e.word?.wordId && e.isFinish == false {
+                        map[wordId] = false
+                    }
                 }
             }
         }
@@ -207,12 +228,14 @@ class YXExerciseDataManager: NSObject {
     ///   - exerciseModel: 数据
     ///   - right: 对错
     private func updateStepRightOrWrong(exerciseModel: YXWordExerciseModel, right: Bool) {
-        for (i, e) in self.reviewExerciseModelArray.enumerated() {
-            if e.word?.wordId == exerciseModel.word?.wordId && e.step == exerciseModel.step {
-                if let _ = e.isRight {
-                    return
+        for (i, subArray) in self.reviewModelArray.enumerated() {
+            for (j, e) in subArray.enumerated() {
+                if e.word?.wordId == exerciseModel.word?.wordId && e.step == exerciseModel.step {
+                    if let _ = e.isRight {
+                        return
+                    }
+                    reviewModelArray[i][j].isRight = right
                 }
-                reviewExerciseModelArray[i].isRight = right
             }
         }
     }
@@ -230,10 +253,12 @@ class YXExerciseDataManager: NSObject {
         } else if exerciseModel.type == .newLearnJuniorHighSchool {// 初中新学
             score = (right ? 7 : 0)
         } else {
-            for e in reviewExerciseModelArray {
-                if exerciseModel.word?.wordId == e.word?.wordId {
-                    score = e.score
-                    break
+            for subArray in reviewModelArray {
+                for e in subArray {
+                    if exerciseModel.word?.wordId == e.word?.wordId {
+                        score = e.score
+                        break
+                    }
                 }
             }
             
@@ -250,12 +275,15 @@ class YXExerciseDataManager: NSObject {
             score = score < 0 ? 0 : score
         }
         
-                
-        for (i, e) in self.reviewExerciseModelArray.enumerated() {
-            if e.word?.wordId == exerciseModel.word?.wordId {
-                reviewExerciseModelArray[i].score = score
+
+        for (i,subArray) in reviewModelArray.enumerated() {
+            for (j, e) in subArray.enumerated() {
+                if e.word?.wordId == exerciseModel.word?.wordId {
+                    reviewModelArray[i][j].score = score
+                }
             }
         }
+        
     }
     
     
@@ -265,11 +293,11 @@ class YXExerciseDataManager: NSObject {
         self.processReviewWord(result: result)
         
         // 处理练习答案选项
-        reviewExerciseModelArray = YXExerciseOptionManager().processOptions(newArray: newExerciseModelArray, reviewArray: reviewExerciseModelArray)
+        reviewModelArray = YXExerciseOptionManager().processOptions(newArray: newExerciseModelArray, reviewArray: reviewModelArray)
         
         // 处理进度状态
         progressManager.initProgressStatus(reviewWordIds: result?.reviewWordIds)
-        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewExerciseModelArray)
+        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
         
         YYCache.set(result?.reviewWordIds, forKey: reviewWordIdsKey)
     }
@@ -299,10 +327,12 @@ class YXExerciseDataManager: NSObject {
         }
     }
     
+    
+    /// 处理复习单词
+    /// - Parameter result:
     private func processReviewWord(result: YXExerciseResultModel?) {
-        // 处理复习单词
         for step in result?.steps ?? [] {
-            
+            var subArray: [YXWordExerciseModel] = []
             for subStep in step {
                 var exercise = createExerciseModel(step: subStep)
                 exercise.word = fetchWord(wordId: subStep.wordId)
@@ -311,10 +341,10 @@ class YXExerciseDataManager: NSObject {
                     let key = "\(subStep.wordId)-" + (subStep.type ?? "")
                     backupExerciseModelArray[key] = exercise
                 } else {
-                    reviewExerciseModelArray.append(exercise)
+                    subArray.append(exercise)
                 }
             }
-            
+            reviewModelArray.append(subArray)
         }
     }
 
@@ -333,13 +363,16 @@ class YXExerciseDataManager: NSObject {
     
     private func fetchCareScoreExercise(exerciseModel: YXWordExerciseModel) -> YXWordExerciseModel? {
         let score = self.fetchWordScore(wordId: exerciseModel.word?.wordId ?? 0)
-        for exercise in self.reviewExerciseModelArray {
-            if exercise.word?.wordId == exerciseModel.word?.wordId
-                && exercise.step == exerciseModel.step
-                && exercise.score == score {
-                return exercise
+        for subArray in reviewModelArray {
+            for exercise in subArray {
+                if exercise.word?.wordId == exerciseModel.word?.wordId
+                    && exercise.step == exerciseModel.step
+                    && exercise.score == score {
+                    return exercise
+                }
             }
         }
+        
         return nil
     }
     
@@ -359,37 +392,41 @@ class YXExerciseDataManager: NSObject {
     
     private func reportJson() -> String {
         var map: [Int : YXExerciseReportModel] = [:]
-        for e in reviewExerciseModelArray {
-            if let _ = map[e.word?.wordId ?? 0] {
-                continue
-            } else {
-                var report = YXExerciseReportModel()
-                report.wordId = e.word?.wordId ?? 0
-                report.bookId = e.word?.bookId ?? 0
-                report.unitId = e.word?.unitId ?? 0
-                report.score  = e.score
-                report.result = YXExerciseReportModel.ResultModel()
+        for subArray in reviewModelArray {
+            for e in subArray {
+                if let _ = map[e.word?.wordId ?? 0] {
+                    continue
+                } else {
+                    var report = YXExerciseReportModel()
+                    report.wordId = e.word?.wordId ?? 0
+                    report.bookId = e.word?.bookId ?? 0
+                    report.unitId = e.word?.unitId ?? 0
+                    report.score  = e.score
+                    report.result = YXExerciseReportModel.ResultModel()
+                    
+                    map[e.word?.wordId ?? 0]  = report
+                }
+            }
+        }
+        
+        for subArray in reviewModelArray {
+            for e in subArray {
+                let wordId = e.word?.wordId ?? 0
+                switch e.step {
+                case 1:
+                    map[wordId]?.result?.one = e.isRight
+                case 2:
+                    map[wordId]?.result?.two = e.isRight
+                case 3:
+                    map[wordId]?.result?.three = e.isRight
+                case 4:
+                    map[wordId]?.result?.four = e.isRight
+                default:
+                    print()
+                }
+            }
+        }
                 
-                map[e.word?.wordId ?? 0]  = report
-            }
-        }
-        
-        for e in reviewExerciseModelArray {
-            let wordId = e.word?.wordId ?? 0
-            switch e.step {
-            case 1:
-                map[wordId]?.result?.one = e.isRight
-            case 2:
-                map[wordId]?.result?.two = e.isRight
-            case 3:
-                map[wordId]?.result?.three = e.isRight
-            case 4:
-                map[wordId]?.result?.four = e.isRight
-            default:
-                print()
-            }
-        }
-        
         
         newWordCount = self.newExerciseModelArray.count
         reviewWordCount = map.count

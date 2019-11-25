@@ -12,8 +12,10 @@ class YXExerciseOptionManager: NSObject {
     
     
     private var newWordArray: [YXWordExerciseModel] = []
-    private var reviewWordArray: [YXWordExerciseModel] = []
-
+    private var reviewWordArray: [[YXWordExerciseModel]] = []
+    
+    /// 所有复习题的1维数组
+    private var exerciseArray: [YXWordExerciseModel] = []
     
     /// 随机数
     /// - Parameter max: 最大数，不包括这个数
@@ -25,36 +27,44 @@ class YXExerciseOptionManager: NSObject {
     }
     
 
-    
-    func processOptions(newArray: [YXWordExerciseModel], reviewArray: [YXWordExerciseModel]) -> [YXWordExerciseModel] {
-        newWordArray = newArray
-        reviewWordArray = reviewArray
+    func processOptions(newArray: [YXWordExerciseModel], reviewArray: [[YXWordExerciseModel]]) -> [[YXWordExerciseModel]] {
+        self.newWordArray = newArray
+        self.reviewWordArray = reviewArray
+        
+        self.exerciseArray.removeAll()
+        for subArray in reviewWordArray {
+            for e in subArray {
+                self.exerciseArray.append(e)
+            }
+        }
         
         self.processReviewWordOption()
-        return reviewWordArray
+        return self.reviewWordArray
     }
     
     func processReviewWordOption() {
         
-        
-        for (index, exercise) in reviewWordArray.enumerated() {
-            switch exercise.type {
-            case .lookWordChooseImage, .lookExampleChooseImage, .lookWordChooseChinese,
-                 .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord,
-                 .listenChooseWord, .listenChooseChinese, .listenChooseImage:
-                reviewWordOption(index: index)
-            case .validationImageAndWord, .validationWordAndChinese:
-                validReviewWordOption(index: index)
-            default:
-                print("其他题型不用生成选项")
-            }
+        for (step, subArray) in reviewWordArray.enumerated() {
+            for (index, exercise) in subArray.enumerated() {
+                switch exercise.type {
+                case .lookWordChooseImage, .lookExampleChooseImage, .lookWordChooseChinese,
+                     .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord,
+                     .listenChooseWord, .listenChooseChinese, .listenChooseImage:
+                    reviewWordOption(step: step, index: index)
+                case .validationImageAndWord, .validationWordAndChinese:
+                    validReviewWordOption(step: step, index: index)
+                default:
+                    print("其他题型不用生成选项")
+                }
 
+            }
         }
+        
     }
 
-    func reviewWordOption(index: Int)  {
+    func reviewWordOption(step: Int, index: Int)  {
 
-        var exerciseModel = reviewWordArray[index]
+        var exerciseModel = reviewWordArray[step][index]
         var items         = [YXOptionItemModel]()
         // 提高查找速度,拿空间换时间
         var whiteList = [Int?]()
@@ -80,8 +90,8 @@ class YXExerciseOptionManager: NSObject {
         // 从学习流程获取数据
         if items.count < 3 {
             // 防止无限随机同一个对象
-            var tmpReviewWordArray = reviewWordArray
-            for _ in 0..<reviewWordArray.count {
+            var tmpReviewWordArray = exerciseArray
+            for _ in 0..<exerciseArray.count {
                 let randomInt = Int.random(in: 0..<tmpReviewWordArray.count)
                 let _wordExerciseModel = tmpReviewWordArray[randomInt]
                 guard let wordModel = _wordExerciseModel.word else {
@@ -131,12 +141,12 @@ class YXExerciseOptionManager: NSObject {
         exerciseModel.option = option
         exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
         
-        reviewWordArray[index] = exerciseModel
+        reviewWordArray[step][index] = exerciseModel
     }
     
     
-    func validReviewWordOption(index: Int)  {
-        var exerciseModel = reviewWordArray[index]
+    func validReviewWordOption(step: Int, index: Int)  {
+        var exerciseModel = reviewWordArray[step][index]
         
 //        exerciseModel.question?.soundmark = exerciseModel.word?.soundmark
         var items: [YXOptionItemModel] = []
@@ -157,7 +167,7 @@ class YXExerciseOptionManager: NSObject {
             // 其他的新学单词集合，排除当前的单词
             var wordArray = self.otherNewWordArray(wordId: exerciseModel.word?.wordId ?? 0)
             if wordArray.count == 0 {
-                wordArray = reviewWordArray
+                wordArray = exerciseArray
             }
             
             let exercise = wordArray[random(max: wordArray.count)]
@@ -177,7 +187,7 @@ class YXExerciseOptionManager: NSObject {
         exerciseModel.option = option
         exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
         
-        reviewWordArray[index] = exerciseModel
+        reviewWordArray[step][index] = exerciseModel
     }
     
     /// 其他新学单词

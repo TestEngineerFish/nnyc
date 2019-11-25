@@ -63,3 +63,21 @@ struct YXWordExerciseModel: Mappable {
     }
     
 }
+
+
+
+struct YXCacheWordExerciseModel: Mappable {
+    var steps: [[YXWordExerciseModel]]?
+    
+    init() {}
+    
+    init?(map: Map) {
+        self.mapping(map: map)
+    }        
+    mutating func mapping(map: Map) {
+        steps     <- map["steps"]
+    }
+}
+
+
+
