@@ -175,6 +175,9 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
 
     // MARK: YXSexangleViewClickProcotol
     func clickSexangleView(_ view: YXSexangleView) {
+        if view.model.unitID == self.currentModel?.unitID {
+            return
+        }
         if self.currentModel?.status == .some(.uniteIng) || self.currentModel?.status == .some(.uniteStop) {
             let currentUnitName = self.currentModel?.unitName ?? ""
             let toUnitName = view.model.unitName ?? ""

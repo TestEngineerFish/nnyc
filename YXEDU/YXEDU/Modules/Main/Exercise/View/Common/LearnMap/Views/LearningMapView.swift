@@ -162,6 +162,9 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
     // MARK: YXSexangleViewClickProcotol
 
     func clickSexangleView(_ view: YXSexangleView) {
+        if view == self.currentUnitView {
+            return
+        }
         if self.currentUnitView?.model.status == .some(.uniteIng) || self.currentUnitView?.model.status == .some(.uniteStop) {
             let currentUnitName = self.currentUnitView?.model.unitName ?? ""
             let toUnitName = view.model.unitName ?? ""

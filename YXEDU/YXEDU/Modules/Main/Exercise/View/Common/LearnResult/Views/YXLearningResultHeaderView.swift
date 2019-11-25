@@ -79,7 +79,8 @@ class YXLearningResultHeaderView: UIView {
         // 进度标题
         let progressLabel = UILabel()
         progressLabel.textAlignment = .center
-        let percent = "\(model.rate * 100)%"
+
+        let percent = String(format: "%0.0f%%", (model.rate * 100))
         let progressText = "\(model.unitName ?? "") 完成 " + percent
         let progressMutAttrStr = NSMutableAttributedString(string: progressText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x323232), NSAttributedString.Key.font:UIFont.mediumFont(ofSize: AdaptSize(17))])
         progressMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.regularFont(ofSize: AdaptSize(17))], range: NSRange(location: progressText.count - percent.count - 2, length: 2))
