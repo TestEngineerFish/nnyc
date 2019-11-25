@@ -99,6 +99,12 @@ class YXExerciseDataManager: NSObject {
     ///   - exerciseModel: 练习数据
     ///   - right: 对错
     func completionExercise(exerciseModel: YXWordExerciseModel, right: Bool) {
+        
+        if !right {
+            self.addWrongExercise(exerciseModel: exerciseModel)
+            self.addWrongBook(exerciseModel: exerciseModel)
+        }
+        
         var finish = right
         // 选择题做错，也标注答题完成
         if right == false && (exerciseModel.type == .validationWordAndChinese || exerciseModel.type == .validationImageAndWord) {
@@ -115,36 +121,22 @@ class YXExerciseDataManager: NSObject {
         
         // 处理进度状态
         progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
-        
-        
-        if !right {
-            self.addWrongExercise(exerciseModel: exerciseModel)
-            self.addWrongBook(exerciseModel: exerciseModel)
-        }
+                
     }
     
     /// 错题数据处理，重做
     /// - Parameter wrongExercise: 练习Model
     private func addWrongExercise(exerciseModel: YXWordExerciseModel) {
-        
-//        exerciseModel.step
-        var nextStepLastIndex: ((_ step: Int) -> Int) = { [weak self] (step) in
-            
-//            var nextStep = step + 1
-//            if nextStep ==
-            
-            
-            return 0
+        var nextStep = currentStep + 1
+        if nextStep >= self.reviewModelArray.count {
+            nextStep = currentStep
         }
         
-//        guard let model = exerciseModelArray.last else {
-//            self.exerciseModelArray.append(exerciseModel)
-//            return
-//        }
-//
-//        if !(model.question?.wordId == exerciseModel.question?.wordId && model.type == exerciseModel.type) {
-//            self.exerciseModelArray.append(exerciseModel)
-//        }
+        if reviewModelArray[nextStep].contains(where: { (model) -> Bool in
+            return model.word?.wordId == exerciseModel.word?.wordId && model.step == exerciseModel.step
+        }) == false {
+            reviewModelArray[nextStep].append(exerciseModel)
+        }
         
     }
     
@@ -167,7 +159,7 @@ class YXExerciseDataManager: NSObject {
         }
     }
     
-    
+
     func skipNewWord() {
         for (i, _) in newExerciseModelArray.enumerated() {
             newExerciseModelArray[i].isFinish = true
@@ -189,6 +181,9 @@ class YXExerciseDataManager: NSObject {
             }
         } else {
             for (i, subArray) in reviewModelArray.enumerated() {
+                if i > currentStep { // 做错后重做的需要保护
+                    break
+                }
                 for (j, e) in subArray.enumerated() {
                     if e.step == exerciseModel.step && e.word?.wordId == exerciseModel.word?.wordId {
                         reviewModelArray[i][j].isFinish = true
