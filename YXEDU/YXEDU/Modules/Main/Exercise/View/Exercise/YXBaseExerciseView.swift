@@ -100,9 +100,9 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol {
                 make.height.equalTo(remindViewHeight)
             }
             answerView?.snp.makeConstraints { (make) in
-                make.top.equalTo(remindView.snp.bottom)
+                make.top.equalTo(remindView.snp.bottom).priorityLow()
                 make.width.equalTo(questionView)
-                make.left.right.bottom.equalToSuperview()
+                make.left.right.bottom.equalTo(self).priorityHigh()
                 make.height.equalTo(answerViewHeight)
             }
         }
