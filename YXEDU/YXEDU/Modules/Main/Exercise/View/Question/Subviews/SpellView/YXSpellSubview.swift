@@ -188,12 +188,16 @@ class YXSpellSubview: UIView {
 
     /// 显示结果
     func showResultView(errorList list: [Int]) {
+        let isClaer = !list.isEmpty
         self.wordViewList.forEach { (lackWord) in
             if lackWord.type == .blank {
                 if list.contains(lackWord.tag) {
                     lackWord.status = .error
                 } else {
                     lackWord.status = .right
+                }
+                if isClaer {
+                    lackWord.clearValue()
                 }
             }
         }

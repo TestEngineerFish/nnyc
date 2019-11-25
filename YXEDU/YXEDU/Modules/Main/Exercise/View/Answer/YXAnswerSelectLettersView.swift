@@ -140,9 +140,9 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
             self.selectedBtnArray.forEach { (letterBtn) in
                 if list.contains(letterBtn.tag) {
                     letterBtn.status = .error
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
-                        self.clickButton(letterBtn)
-                    }
+                }
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+                    self.clickButton(letterBtn)
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)

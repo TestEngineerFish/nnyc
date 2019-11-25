@@ -44,7 +44,6 @@ class YXLackWordView: UIView {
                 self.textField.textColor = isTitle ? UIColor.black1 : UIColor.black2
             case .error:
                 self.textField.textColor = UIColor.red1
-                self.clearValue()
             case .right:
                 self.textField.textColor = UIColor.green1
             }
@@ -93,7 +92,7 @@ class YXLackWordView: UIView {
         self.baseLineView.isUserInteractionEnabled = false
     }
 
-    private func clearValue() {
+    func clearValue() {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
             self.textField.text = ""
             self.status         = .normal
