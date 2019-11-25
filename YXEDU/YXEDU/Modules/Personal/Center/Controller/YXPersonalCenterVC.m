@@ -159,9 +159,9 @@
         NSArray *bageStatusIds = [self.allBadgesDetails valueForKey:@"badgeId"];        
         // Data form api: /v2/api/getconfig
         NSMutableArray *badgeStatus = [NSMutableArray array];
-        for (YXBadgeListModel *badgeListModel in badgeList) {
+        for (YXBadgeListModelOld *badgeListModel in badgeList) {
             NSMutableArray *groupbadgeStatus = [NSMutableArray array];
-            for (YXBadgeModel *badgeModel in badgeListModel.options) {
+            for (YXBadgeModelOld *badgeModel in badgeListModel.options) {
                 NSString *badgeId = badgeModel.badgeId;
                 NSInteger index = [bageStatusIds indexOfObject:@([badgeId integerValue])];
                 YXPersonalBadgeModel *badge = [[YXPersonalBadgeModel alloc] init];

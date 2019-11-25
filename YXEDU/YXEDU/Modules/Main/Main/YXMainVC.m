@@ -1723,7 +1723,7 @@ for (NSInteger i = 0; i < _alertView.completedTaskModelAry.count; i++) {
  */
 //- (void)popBadges {
 //    if (_curIndex < self.bages.count) {
-//        YXBadgeModel *badgeModel = [self.bages objectAtIndex:_curIndex];
+//        YXBadgeModelOld *badgeModel = [self.bages objectAtIndex:_curIndex];
 //        //         = [[YXConfigure shared] badgeModelWith:currentBadgeId];
 //        __weak typeof(self) weakSelf = self;
 //        [YXBadgeView showBadgeViewWithModel:badgeModel finishBlock:^{
@@ -1736,7 +1736,7 @@ for (NSInteger i = 0; i < _alertView.completedTaskModelAry.count; i++) {
 //if (self.bages) {
 //    return;
 //}
-//YXBadgeListModel *blm = [YXConfigure shared].confModel.badgeList.firstObject;
+//YXBadgeListModelOld *blm = [YXConfigure shared].confModel.badgeList.firstObject;
 //self.bages = blm.options;
 //[self popBadges];
 

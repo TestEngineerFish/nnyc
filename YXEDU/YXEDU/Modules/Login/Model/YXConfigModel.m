@@ -209,7 +209,7 @@
     return @{
              @"bookList" : [YXConfigGradeModel class],
              @"wordFrame" : [YXWordFormModel class],
-             @"badgeList" : [YXBadgeListModel class],
+             @"badgeList" : [YXBadgeListModelOld class],
              @"taskList" : [YXTaskModel class]
              };
 }
@@ -217,8 +217,8 @@
 - (NSMutableDictionary *)badgesDic {
     if (!_badgesDic) {
         _badgesDic = [NSMutableDictionary dictionary];
-        for (YXBadgeListModel *groupBadges in _badgeList) {
-            for (YXBadgeModel *badgeModel in groupBadges.options) {
+        for (YXBadgeListModelOld *groupBadges in _badgeList) {
+            for (YXBadgeModelOld *badgeModel in groupBadges.options) {
                 [_badgesDic setObject:badgeModel forKey:badgeModel.badgeId];
             }
         }

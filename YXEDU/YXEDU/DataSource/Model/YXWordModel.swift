@@ -99,12 +99,11 @@ struct YXWordModel: Mappable {
     }
     
     var exampleAttr: NSAttributedString? {
-        guard let _word = word, var _example = englishExample else {
-            return nil
-        }
+        guard let _word = word, var _example = englishExample else { return nil }
+        
         _example = _example.replacingOccurrences(of: "<font color='#55a7fd'>", with: "").replacingOccurrences(of: "</font>", with: "")
         
-        if let range = _example.range(of: _word) {
+        if let range = _example.lowercased().range(of: _word.lowercased()) {
             let location = _example.distance(from: _example.startIndex, to: range.lowerBound)
             
             let attrString = NSMutableAttributedString(string: _example)
@@ -116,6 +115,7 @@ struct YXWordModel: Mappable {
             
             return attrString
         }
+        
         return nil
     }
 }

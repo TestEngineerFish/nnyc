@@ -17,7 +17,11 @@ struct YXAPI {
     
     //MARK: - 个人模块
     struct Profile {
+        // 用户配置信息
+        static let userInformation = "/api/v1/user/config"
         
+        // 徽章信息
+        static let badgeList = "/api/v1/user/getbadgelist"
     }
     
     //MARK: - 单词模块

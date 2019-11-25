@@ -26,7 +26,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func tapCalendar(_ sender: UITapGestureRecognizer) {
-        navigationController?.pushViewController(YXCalendarViewController(), animated: true)
+        self.performSegue(withIdentifier: "Calendar", sender: self)
     }
     
     override func viewDidLoad() {
@@ -68,10 +68,10 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             var currentIndex = 0
             var sectionBadges: [[YXPersonalBadgeModel]] = []
             
-            for badges in (badgesList as! [YXBadgeListModel]) {
+            for badges in (badgesList as! [YXBadgeListModelOld]) {
                 var newBadges: [YXPersonalBadgeModel] = []
                 
-                for _ in (badges.options as! [YXBadgeModel]) {
+                for _ in (badges.options as! [YXBadgeModelOld]) {
                     newBadges.append(self.innerBadges[currentIndex])
                     currentIndex = currentIndex + 1
                 }
@@ -163,60 +163,69 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     private func loadBadgeData() {
         self.badges = []
         
-        YXComHttpService.shared().requestBadgesInfo({ (response, isSuccess) in
-            if isSuccess, let response = response {
-                guard let configure = YXConfigure.shared().confModel, let badgesList = configure.badgeList, let badgeStatus = (response as! [String: Any])["badgesInfo"] as? [[String:Any]] else { return }
-                
-                var earnedBadgeCount = 0
-                var currentIndex = 0
-                for a in 0..<badgesList.count {
-                    let badges = (badgesList[a] as! YXBadgeListModel).options as! [YXBadgeModel]
-                    for b in 0..<badges.count {
-                        let badge = badges[b]
-                        
-                        let personalBadgeModel = YXPersonalBadgeModel()
-                        personalBadgeModel.badgeID = badge.badgeId
-                        personalBadgeModel.badgeName = badge.badgeName
-                        personalBadgeModel.completedBadgeImageUrl = badge.realize
-                        personalBadgeModel.incompleteBadgeImageUrl = badge.unRealized
-                        personalBadgeModel.desc = badge.desc
-                        
-                        let badgeState = badgeStatus[currentIndex]
-                        if let finishDate = badgeState["finishTime"] as? Double {
-                            personalBadgeModel.finishDate = "\(finishDate)"
-                            
-                        } else {
-                            personalBadgeModel.finishDate = "0"
-                        }
-                        personalBadgeModel.done = "\(badgeState["done"] as? Int ?? 0)"
-                        personalBadgeModel.total = "\(badgeState["total"] as? Int ?? 0)"
-                            
-                        currentIndex = currentIndex + 1
-                        if personalBadgeModel.finishDate != "0" {
-                            earnedBadgeCount = earnedBadgeCount + 1
-                        }
-                        
-                        self.badges.append(personalBadgeModel)
-                    }
-                }
-                
-                self.innerBadges = self.badges
-                
-                var newBadge = self.badges
-                for index in 0..<self.badges.count {
-                    let badge = self.badges[index]
+        let request = YXMineRequest.badgeList
+        YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXBadgeListModel>.self, request: request, success: { (response) in
+            guard let badgesList = response.dataArray else { return }
+             
+            YXComHttpService.shared().requestBadgesInfo({ (response, isSuccess) in
+                if isSuccess, let response = response {
+                    guard let badgeStatus = (response as! [String: Any])["badgesInfo"] as? [[String:Any]] else { return }
                     
-                    guard badge.finishDate != "0" else { continue }
-                    newBadge.insert(badge, at: 0)
-                    newBadge.remove(at: index + 1)
+                    var earnedBadgeCount = 0
+                    var currentIndex = 0
+                    for a in 0..<badgesList.count {
+                        guard let badges = (badgesList[a]).badges else { continue }
+                        
+                        for b in 0..<badges.count {
+                            let badge = badges[b]
+                            
+                            let personalBadgeModel = YXPersonalBadgeModel()
+                            personalBadgeModel.badgeID = "\(badge.ID ?? 0)"
+                            personalBadgeModel.badgeName = badge.name ?? ""
+                            personalBadgeModel.completedBadgeImageUrl = badge.imageOfCompletedStatus ?? ""
+                            personalBadgeModel.incompleteBadgeImageUrl = badge.imageOfIncompletedStatus ?? ""
+                            personalBadgeModel.desc = badge.description ?? ""
+                            
+                            let badgeState = badgeStatus[currentIndex]
+                            if let finishDate = badgeState["finishTime"] as? Double {
+                                personalBadgeModel.finishDate = "\(finishDate)"
+                                
+                            } else {
+                                personalBadgeModel.finishDate = "0"
+                            }
+                            personalBadgeModel.done = "\(badgeState["done"] as? Int ?? 0)"
+                            personalBadgeModel.total = "\(badgeState["total"] as? Int ?? 0)"
+                            
+                            currentIndex = currentIndex + 1
+                            if personalBadgeModel.finishDate != "0" {
+                                earnedBadgeCount = earnedBadgeCount + 1
+                            }
+                            
+                            self.badges.append(personalBadgeModel)
+                        }
+                    }
+                    
+                    self.innerBadges = self.badges
+                    
+                    var newBadge = self.badges
+                    for index in 0..<self.badges.count {
+                        let badge = self.badges[index]
+                        
+                        guard badge.finishDate != "0" else { continue }
+                        newBadge.insert(badge, at: 0)
+                        newBadge.remove(at: index + 1)
+                    }
+                    self.badges = newBadge
+                    
+                    self.ownedMedalLabel.text = "\(earnedBadgeCount)"
+                    self.totalMedalLabel.text = "/\(badgeStatus.count)"
+                    self.collectionView.reloadData()
                 }
-                self.badges = newBadge
-
-                self.ownedMedalLabel.text = "\(earnedBadgeCount)"
-                self.totalMedalLabel.text = "/\(badgeStatus.count)"
-                self.collectionView.reloadData()
-            }
-        })
+            })
+            
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error)")
+        }
     }
     
     

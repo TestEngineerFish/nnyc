@@ -100,6 +100,8 @@
 		7759A897237943C700C63199 /* YXWordDetialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7759A895237943C700C63199 /* YXWordDetialCell.swift */; };
 		7759A898237943C700C63199 /* YXWordDetialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7759A896237943C700C63199 /* YXWordDetialCell.xib */; };
 		775DA334236861A0004D58D3 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 775DA333236861A0004D58D3 /* TencentOpenAPI.framework */; };
+		776F747D238BC5FE0027D166 /* YXMineRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F747C238BC5FE0027D166 /* YXMineRequest.swift */; };
+		776F7480238BC7690027D166 /* YXBadgeListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F747F238BC7690027D166 /* YXBadgeListModel.swift */; };
 		77706E402372EBCF00149D09 /* YXAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77706E3F2372EBCF00149D09 /* YXAlertView.swift */; };
 		777C1E2A236BDF380097A822 /* YXHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C1E29236BDF380097A822 /* YXHomeModel.swift */; };
 		7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */; };
@@ -449,7 +451,7 @@
 		EE5E00FD23274FEC00655654 /* YXLogoutModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFD123274FEA00655654 /* YXLogoutModel.m */; };
 		EE5E00FE23274FEC00655654 /* YXPersonalBindModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFD223274FEA00655654 /* YXPersonalBindModel.m */; };
 		EE5E00FF23274FEC00655654 /* YXPersonalMyBadgesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFD623274FEA00655654 /* YXPersonalMyBadgesVC.m */; };
-		EE5E010023274FEC00655654 /* YXBadgeListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFDC23274FEA00655654 /* YXBadgeListModel.m */; };
+		EE5E010023274FEC00655654 /* YXBadgeListModelOld.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFDC23274FEA00655654 /* YXBadgeListModelOld.m */; };
 		EE5E010123274FEC00655654 /* YXPersonalBadgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFDD23274FEA00655654 /* YXPersonalBadgeModel.m */; };
 		EE5E010223274FEC00655654 /* YXPersonalSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFE123274FEA00655654 /* YXPersonalSectionModel.m */; };
 		EE5E010323274FEC00655654 /* YXPersonalBadgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFE523274FEA00655654 /* YXPersonalBadgeCell.m */; };
@@ -808,6 +810,8 @@
 		7759A895237943C700C63199 /* YXWordDetialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordDetialCell.swift; sourceTree = "<group>"; };
 		7759A896237943C700C63199 /* YXWordDetialCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordDetialCell.xib; sourceTree = "<group>"; };
 		775DA333236861A0004D58D3 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		776F747C238BC5FE0027D166 /* YXMineRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMineRequest.swift; sourceTree = "<group>"; };
+		776F747F238BC7690027D166 /* YXBadgeListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeListModel.swift; sourceTree = "<group>"; };
 		77706E3F2372EBCF00149D09 /* YXAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAlertView.swift; sourceTree = "<group>"; };
 		777C1E29236BDF380097A822 /* YXHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeModel.swift; sourceTree = "<group>"; };
 		7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookCell.swift; sourceTree = "<group>"; };
@@ -1838,8 +1842,8 @@
 		EE5EFFD623274FEA00655654 /* YXPersonalMyBadgesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonalMyBadgesVC.m; sourceTree = "<group>"; };
 		EE5EFFD823274FEA00655654 /* YXPersonalBadgeSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalBadgeSection.h; sourceTree = "<group>"; };
 		EE5EFFDA23274FEA00655654 /* YXPersonalBadgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalBadgeModel.h; sourceTree = "<group>"; };
-		EE5EFFDB23274FEA00655654 /* YXBadgeListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXBadgeListModel.h; sourceTree = "<group>"; };
-		EE5EFFDC23274FEA00655654 /* YXBadgeListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXBadgeListModel.m; sourceTree = "<group>"; };
+		EE5EFFDB23274FEA00655654 /* YXBadgeListModelOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXBadgeListModelOld.h; sourceTree = "<group>"; };
+		EE5EFFDC23274FEA00655654 /* YXBadgeListModelOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXBadgeListModelOld.m; sourceTree = "<group>"; };
 		EE5EFFDD23274FEA00655654 /* YXPersonalBadgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonalBadgeModel.m; sourceTree = "<group>"; };
 		EE5EFFDF23274FEA00655654 /* YXPersonalBadgeSectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalBadgeSectionModel.h; sourceTree = "<group>"; };
 		EE5EFFE023274FEA00655654 /* YXPersonalSectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalSectionModel.h; sourceTree = "<group>"; };
@@ -2220,6 +2224,7 @@
 		771512DC236710F200F6D400 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				776F747B238BC5DD0027D166 /* Manager */,
 				771512DF2367126800F6D400 /* Mine.storyboard */,
 				771512E5236717E000F6D400 /* ViewControllers */,
 				773452C8236A7E9A00801FDD /* Views */,
@@ -2240,6 +2245,7 @@
 		771512E62367180E00F6D400 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				776F747F238BC7690027D166 /* YXBadgeListModel.swift */,
 				77D2150B2367D7BA00E5FBF1 /* YXUserModel.swift */,
 			);
 			path = Models;
@@ -2303,6 +2309,14 @@
 				77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */,
 			);
 			path = AlertViews;
+			sourceTree = "<group>";
+		};
+		776F747B238BC5DD0027D166 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				776F747C238BC5FE0027D166 /* YXMineRequest.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		77706E3E2372EBA200149D09 /* Common */ = {
@@ -5220,8 +5234,8 @@
 			isa = PBXGroup;
 			children = (
 				EE5EFFDA23274FEA00655654 /* YXPersonalBadgeModel.h */,
-				EE5EFFDB23274FEA00655654 /* YXBadgeListModel.h */,
-				EE5EFFDC23274FEA00655654 /* YXBadgeListModel.m */,
+				EE5EFFDB23274FEA00655654 /* YXBadgeListModelOld.h */,
+				EE5EFFDC23274FEA00655654 /* YXBadgeListModelOld.m */,
 				EE5EFFDD23274FEA00655654 /* YXPersonalBadgeModel.m */,
 			);
 			path = CollectionViewModel;
@@ -5771,6 +5785,7 @@
 				EE5EFD6023274F0900655654 /* YXWordsChallengeCell.m in Sources */,
 				EE5E00F823274FEC00655654 /* YXPersonalReminderVC.m in Sources */,
 				EE5E010623274FEC00655654 /* YXPersonalSectionCell.m in Sources */,
+				776F7480238BC7690027D166 /* YXBadgeListModel.swift in Sources */,
 				EE5E02612327793800655654 /* BSRootVC.m in Sources */,
 				EE5E0238232756C000655654 /* XRandomNumerHelper.m in Sources */,
 				EE5E001223274FEB00655654 /* YXCareerCommentButton.m in Sources */,
@@ -5780,6 +5795,7 @@
 				7786D61E236C66A800741DCE /* YXSeleceUnitView.swift in Sources */,
 				EE5E002E23274FEB00655654 /* YXCurrentSeletBookInfo.m in Sources */,
 				EE5EF20123273BAE00655654 /* YRNetworkManager.m in Sources */,
+				776F747D238BC5FE0027D166 /* YXMineRequest.swift in Sources */,
 				EE5E000923274FEB00655654 /* YXCareerViewController.m in Sources */,
 				EE5E007723274FEB00655654 /* YXCheckButtonsView.m in Sources */,
 				EE5E00EF23274FEC00655654 /* YXPersonChangeNameVC.m in Sources */,
@@ -5994,7 +6010,7 @@
 				EE5E004923274FEB00655654 /* YXUnVipNormalCell.m in Sources */,
 				EE5EFCDC23274E5500655654 /* YXNoNetworkView.m in Sources */,
 				EE5E00F223274FEC00655654 /* YXPersonalInformationCell.m in Sources */,
-				EE5E010023274FEC00655654 /* YXBadgeListModel.m in Sources */,
+				EE5E010023274FEC00655654 /* YXBadgeListModelOld.m in Sources */,
 				EE5E00CB23274FEB00655654 /* YXBookSettingViewController.m in Sources */,
 				EE5EF253232740B800655654 /* UITextView+Placeholder.m in Sources */,
 				EE5E024B232756C100655654 /* XPositiveNegativeBarContainerView.m in Sources */,

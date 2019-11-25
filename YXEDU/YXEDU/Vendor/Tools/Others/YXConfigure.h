@@ -23,7 +23,7 @@
 @property (nonatomic, assign)BOOL isUsStyle;
 
 - (void)loginOut;
-- (YXBadgeModel *)badgeModelWith:(NSString *)badgeId;
+- (YXBadgeModelOld *)badgeModelWith:(NSString *)badgeId;
 
 
 @property (nonatomic, strong) YXConfigure3Model *conf3Model;

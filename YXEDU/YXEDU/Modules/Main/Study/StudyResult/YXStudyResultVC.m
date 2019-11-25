@@ -349,7 +349,7 @@
     NSLog(@"-------badgeIds-------%@",badgeIds);
     if (_curShowBadgeIndex < badgeIds.count) {
         NSString *currentBadgeId = [NSString stringWithFormat:@"%@",[badgeIds objectAtIndex:_curShowBadgeIndex]];
-        YXBadgeModel *badgeModel = [[YXConfigure shared] badgeModelWith:currentBadgeId];
+        YXBadgeModelOld *badgeModel = [[YXConfigure shared] badgeModelWith:currentBadgeId];
         [self popBadges:badgeModel shareModel:nil];
 //        NSDictionary *param = @{@"badgeId" : badgeModel.badgeId};
 //        [YXDataProcessCenter GET:DOMAIN_BADGESHARE parameters:param finshedBlock:^(YRHttpResponse *response, BOOL result) {
@@ -363,7 +363,7 @@
         _curShowBadgeIndex = 0;
     }
 }
-- (void)popBadges:(YXBadgeModel *)badgeModel shareModel:(YXShareLinkModel *)shareModel {
+- (void)popBadges:(YXBadgeModelOld *)badgeModel shareModel:(YXShareLinkModel *)shareModel {
     __weak typeof(self) weakSelf = self;
     UIView *view = self.navigationController.view;
     [YXBadgeView showBadgeViewTo:view

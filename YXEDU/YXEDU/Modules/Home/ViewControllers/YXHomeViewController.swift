@@ -31,13 +31,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let alertView = YXAlertView(type: .normal)
             if homeData.isLastUnit == 1 {
                 alertView.descriptionLabel.text = "你太厉害了，已经背完这本书拉，你可以……"
-                alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
-                alertView.doneClosure = { _ in
-                    self.showLearnMap(alertView.rightOrCenterButton)
-                }
-                
-            } else {
-                alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
                 alertView.closeButton.isHidden = false
                 alertView.leftButton.setTitle("换单元", for: .normal)
                 alertView.rightOrCenterButton.setTitle("换本书学", for: .normal)
@@ -48,6 +41,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 
                 alertView.doneClosure = { _ in
                     self.performSegue(withIdentifier: "AddBookFromHome", sender: self)
+                }
+                
+            } else {
+                alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
+                alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
+                alertView.doneClosure = { _ in
+                    self.showLearnMap(alertView.rightOrCenterButton)
                 }
             }
             

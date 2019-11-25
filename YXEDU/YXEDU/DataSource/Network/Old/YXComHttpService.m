@@ -86,7 +86,7 @@
     [YXDataProcessCenter GET:DOMAIN_GETCONFIG modelClass:[YXConfigModel class] parameters:@{} finshedBlock:^(YRHttpResponse *response, BOOL result) {
         if (result) {
             YXConfigModel *confModel = response.responseObject;
-            [confModel.badgeList sortUsingComparator:^NSComparisonResult(YXBadgeListModel *obj1, YXBadgeListModel *obj2) {
+            [confModel.badgeList sortUsingComparator:^NSComparisonResult(YXBadgeListModelOld *obj1, YXBadgeListModelOld *obj2) {
                 if ([obj1.type integerValue] > [obj2.type integerValue]) {
                     return NSOrderedDescending;
                 } else {

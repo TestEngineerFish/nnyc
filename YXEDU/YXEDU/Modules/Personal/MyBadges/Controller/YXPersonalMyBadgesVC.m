@@ -37,6 +37,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationItem.leftBarButtonItem setTarget: self];
+    [self.navigationItem.leftBarButtonItem setAction: @selector(back)];
+
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - kNavHeight) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -71,6 +74,10 @@
 //                            }];
 }
 
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 // MARK: - Lazy Load
 - (NSArray *)sections {
@@ -81,7 +88,7 @@
         NSMutableArray *allName = [NSMutableArray array];
 
         NSArray *badgeList = [YXConfigure shared].confModel.badgeList;
-        for (YXBadgeListModel *badgeListModel in badgeList) {
+        for (YXBadgeListModelOld *badgeListModel in badgeList) {
             [allName addObject:badgeListModel.title];
         }
 

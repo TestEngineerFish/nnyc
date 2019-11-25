@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YXBadgeListModel.h"
+#import "YXBadgeListModelOld.h"
 #import "YXConfigBookModel.h"
 
 typedef NS_ENUM(NSInteger, YXSharePalform) {

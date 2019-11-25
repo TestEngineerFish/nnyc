@@ -7,18 +7,18 @@
 //  Copyright © 2018年 shiji. All rights reserved.
 //
 
-#import "YXBadgeListModel.h"
-@implementation YXBadgeModel
+#import "YXBadgeListModelOld.h"
+@implementation YXBadgeModelOld
 
 @end
 
 
 
 
-@implementation YXBadgeListModel
+@implementation YXBadgeListModelOld
 + (NSDictionary *)mj_objectClassInArray {
     return @{
-             @"options" : [YXBadgeModel class]
+             @"options" : [YXBadgeModelOld class]
              };
 }
 

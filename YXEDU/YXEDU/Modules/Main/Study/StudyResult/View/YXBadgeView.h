@@ -7,17 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YXBadgeListModel.h"
+#import "YXBadgeListModelOld.h"
 #import "YXShareLinkModel.h"
 
 @interface YXBadgeView : UIView
-@property (nonatomic, strong)YXBadgeModel *badgeModel;
-//+ (YXBadgeView *)showBadgeViewWithModel:(YXBadgeModel *)badgeModel
+@property (nonatomic, strong)YXBadgeModelOld *badgeModel;
+//+ (YXBadgeView *)showBadgeViewWithModel:(YXBadgeModelOld *)badgeModel
 //                             shareModel:(YXShareLinkModel *)shareModel
 //                            finishBlock:(ActionFinishBlock)finishBlock;
 
 + (YXBadgeView *)showBadgeViewTo:(UIView *)view
-                       WithModel:(YXBadgeModel *)badgeModel
+                       WithModel:(YXBadgeModelOld *)badgeModel
                       shareModel:(YXShareLinkModel *)shareModel
                      finishBlock:(ActionFinishBlock)finishBlock;
 @end

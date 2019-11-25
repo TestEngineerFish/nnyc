@@ -136,9 +136,12 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 cell.label.attributedText = example
             }
             
-            cell.playAuoidButton.isHidden = false
             if let pronunciationUrl = word.examplePronunciation {
                 cell.pronunciationUrl = URL(string: pronunciationUrl)
+                cell.playAuoidButton.isHidden = false
+                
+            } else {
+                cell.playAuoidButton.isHidden = true
             }
             
         } else {

@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, YXBadgeType) {
     YXBadgeTypeWillpower
 };
 
-@interface YXBadgeModel : NSObject
+@interface YXBadgeModelOld : NSObject
 @property (nonatomic, copy)NSString *badgeId;
 @property (nonatomic, copy)NSString *badgeName;
 @property (nonatomic, copy)NSString *realize;
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, YXBadgeType) {
 @end
 
 
-@interface YXBadgeListModel : NSObject
+@interface YXBadgeListModelOld : NSObject
 @property (nonatomic, copy)NSString *title;
 @property (nonatomic, copy)NSString *type;
 @property (nonatomic, strong)NSMutableArray *options;

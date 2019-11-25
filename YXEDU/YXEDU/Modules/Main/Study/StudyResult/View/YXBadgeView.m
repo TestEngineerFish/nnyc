@@ -266,7 +266,7 @@
     return self;
 }
 
-- (void)setBadgeModel:(YXBadgeModel *)badgeModel {
+- (void)setBadgeModel:(YXBadgeModelOld *)badgeModel {
     _badgeModel = badgeModel;
     self.badgeNameL.text = badgeModel.badgeName;
     [self.badgeImageView sd_setImageWithURL:[NSURL URLWithString:badgeModel.realize]];
@@ -286,7 +286,7 @@
 
 
 + (YXBadgeView *)showBadgeViewTo:(UIView *)view
-                       WithModel:(YXBadgeModel *)badgeModel
+                       WithModel:(YXBadgeModelOld *)badgeModel
                       shareModel:(YXShareLinkModel *)shareModel
                      finishBlock:(ActionFinishBlock)finishBlock
 {
@@ -307,7 +307,7 @@
     return badgeView;
 }
 
-+ (YXBadgeView *)showBadgeViewWithModel:(YXBadgeModel *)badgeModel
++ (YXBadgeView *)showBadgeViewWithModel:(YXBadgeModelOld *)badgeModel
                              shareModel:(YXShareLinkModel *)shareModel
                             finishBlock:(ActionFinishBlock)finishBlock
 {
