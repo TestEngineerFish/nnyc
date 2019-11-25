@@ -168,6 +168,46 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         }
         return wordModelArray
     }
+
+    func selectWordByBookId(_ bookId: Int) -> [YXWordModel] {
+        let sql = YYSQLManager.WordBookSQL.selectWordByBookId.rawValue
+        let params: [Any] = [bookId]
+        var wordModelArray = [YXWordModel]()
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return wordModelArray
+        }
+
+        while result.next() {
+            var word = YXWordModel()
+            let usagesData: Data! = (result.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
+            word.wordId       = Int(result.int(forColumn: "wordId"))
+            word.word         = result.string(forColumn: "word")
+            word.partOfSpeech = result.string(forColumn: "partOfSpeech")
+            word.meaning      = result.string(forColumn: "meaning")
+            word.imageUrl     = result.string(forColumn: "imageUrl")
+            word.americanPhoneticSymbol = result.string(forColumn: "americanPhoneticSymbol")
+            word.englishPhoneticSymbol  = result.string(forColumn: "englishPhoneticSymbol")
+            word.americanPronunciation  = result.string(forColumn: "americanPronunciation")
+            word.englishPronunciation   = result.string(forColumn: "englishPronunciation")
+            word.englishExample = result.string(forColumn: "englishExample")
+            word.chineseExample = result.string(forColumn: "chineseExample")
+            word.examplePronunciation = result.string(forColumn: "examplePronunciation")
+            word.usages      = try? JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as? [String] ?? []
+            word.synonym     = result.string(forColumn: "synonym")
+            word.antonym     = result.string(forColumn: "antonym")
+            word.testCenter  = result.string(forColumn: "testCenter")
+            word.deformation = result.string(forColumn: "deformation")
+            word.gradeId     = Int(result.int(forColumn: "gradeId") )
+            word.gardeType   = Int(result.int(forColumn: "gardeType") )
+            word.bookId      = Int(result.int(forColumn: "bookId") )
+            word.unitId      = Int(result.int(forColumn: "unitId") )
+            word.unitName    = result.string(forColumn: "unitName")
+            word.isExtensionUnit = result.bool(forColumn: "isExtensionUnit")
+
+            wordModelArray.append(word)
+        }
+        return wordModelArray
+    }
     
     func deleteWord(bookId: Int, completion: finishBlock? = nil) {
         let sql = YYSQLManager.WordBookSQL.deleteWord.rawValue

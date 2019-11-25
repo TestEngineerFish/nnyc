@@ -267,6 +267,12 @@ extension YYSQLManager {
             SELECT * FROM word
             WHERE unitId = ?
         """
+
+        case selectWordByBookId =
+        """
+            SELECT * FROM word
+            WHERE bookId = ?
+        """
         
         case deleteWord =
         """

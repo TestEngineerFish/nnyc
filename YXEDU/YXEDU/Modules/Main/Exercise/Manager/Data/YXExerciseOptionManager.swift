@@ -130,6 +130,27 @@ class YXExerciseOptionManager: NSObject {
                 }
             }
         }
+        // 从书中获取数据
+        if items.count < 3 {
+            if let bookId = exerciseModel.word?.bookId {
+                let wordModelArray = YXWordBookDaoImpl().selectWordByBookId(bookId)
+                var tmpWordModelArray = wordModelArray
+                for _ in 0..<wordModelArray.count {
+                    let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
+                    let wordModel = tmpWordModelArray[randomInt]
+                    if !whiteList.contains(wordModel.wordId) {
+                        let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
+                        items.append(itemModel)
+                    }
+                    whiteList.append(wordModel.wordId)
+                    // 移除已经随机过的对象
+                    tmpWordModelArray.remove(at: randomInt)
+                    if items.count > 2 {
+                        break
+                    }
+                }
+            }
+        }
         
         // 添加正取的选项
         let at = random(max: items.count + 1)
