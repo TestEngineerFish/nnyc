@@ -183,7 +183,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     private func remindExample() {
-        titleLabel.text = exerciseModel.word?.englishExample
+        titleLabel.attributedText = exerciseModel.word?.exampleAttr
         setAllSubviewStatus()
     }
 
