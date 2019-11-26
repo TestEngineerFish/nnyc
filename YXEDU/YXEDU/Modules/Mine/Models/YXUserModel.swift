@@ -62,14 +62,14 @@ class YXUserModel: NSObject {
     }
     
     var username: String? {
-        didSet {
-            YYCache.set(uuid, forKey: "UserName")
+        willSet {
+            YYCache.set(newValue, forKey: "UserName")
         }
     }
     
     var userAvatarPath: String? {
-        didSet {
-            YYCache.set(uuid, forKey: "UserAvatarPath")
+        willSet {
+            YYCache.set(newValue, forKey: "UserAvatarPath")
         }
     }
 
