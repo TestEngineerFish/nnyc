@@ -11,7 +11,7 @@ import ObjectMapper
 
 
 /// 练习的数据管理器
-class YXExerciseDataManager_backup: NSObject {
+class YXExerciseDataManager: NSObject {
     
     
     public var newWordCount: Int = 0
@@ -24,11 +24,21 @@ class YXExerciseDataManager_backup: NSObject {
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
     private var newExerciseModelArray: [YXWordExerciseModel] = []
     private var reviewModelArray: [[YXWordExerciseModel]] = []
+        
+    private var currentTurnArray: [YXWordExerciseModel] = []
+    /// 单词集合
+    private var reviewWordArray: [YXWordStepsModel] = []
+    
     private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
     private let reviewWordIdsKey = "ReviewWordIdsKey"
     private var currentStep = 0
+    
+    
+    /// 当前第几轮
+//    private var currentTurn = 0
     /// 进度管理器
     private var progressManager: YXExcerciseProgressManager
+    private var optionManager: YXExerciseOptionManager2
     
     
     init(bookId: Int, unitId: Int) {
@@ -37,7 +47,10 @@ class YXExerciseDataManager_backup: NSObject {
         
         progressManager = YXExcerciseProgressManager()
         progressManager.bookId = bookId
+        
         progressManager.unitId = unitId
+        
+        optionManager = YXExerciseOptionManager2()
         
         super.init()
     }
@@ -76,23 +89,8 @@ class YXExerciseDataManager_backup: NSObject {
             needNewWordCount -= 1
         }
         
-        for (i, subArray) in reviewModelArray.enumerated() {
-            self.currentStep = i
-            for exercise in subArray {
-                if exercise.isFinish == false {
-                    if exercise.isCareScore {//是否关注分数
-                        return (needNewWordCount, needReviewWordCount, fetchCareScoreExercise(exerciseModel: exercise))
-                    } else {
-                        return (needNewWordCount, needReviewWordCount, exercise)
-                    }
-                }
-            }
-        }
-        
-        return (needNewWordCount, needReviewWordCount, nil)
+        return (needNewWordCount, needReviewWordCount, buildExercise())
     }
-    
-    
     
     /// 完成一个练习后，答题后修改状态
     /// - Parameters:
@@ -101,7 +99,7 @@ class YXExerciseDataManager_backup: NSObject {
     func completionExercise(exerciseModel: YXWordExerciseModel, right: Bool) {
         
         if !right {
-            self.addWrongExercise(exerciseModel: exerciseModel)
+//            self.addWrongExercise(exerciseModel: exerciseModel)
             self.addWrongBook(exerciseModel: exerciseModel)
         }
         
@@ -111,16 +109,19 @@ class YXExerciseDataManager_backup: NSObject {
             finish = true
         }
         if finish {
-            updateFinishStatus(exerciseModel: exerciseModel)
+            
         }
-        updateScore(exerciseModel: exerciseModel, right: right)
-        updateStepRightOrWrong(exerciseModel: exerciseModel, right: right)
+        
+        updateFinishStatus(exerciseModel: exerciseModel, right: right)
+        
+//        updateScore(exerciseModel: exerciseModel, right: right)
+//        updateStepRightOrWrong(exerciseModel: exerciseModel, right: right)
         
         // 更新待学习数
-        updateNeedReviewWordCount()
+//        updateNeedReviewWordCount()
         
         // 处理进度状态
-        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
+//        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
                 
     }
     
@@ -171,7 +172,7 @@ class YXExerciseDataManager_backup: NSObject {
     
     /// 更新某个练习的完成状态
     /// - Parameter exerciseModel: 哪个练习
-    private func updateFinishStatus(exerciseModel: YXWordExerciseModel) {
+    private func updateFinishStatus(exerciseModel: YXWordExerciseModel, right: Bool) {
         if exerciseModel.isNewWord {
             for (i, e) in newExerciseModelArray.enumerated() {
                 if e.word?.wordId == exerciseModel.word?.wordId {
@@ -180,15 +181,23 @@ class YXExerciseDataManager_backup: NSObject {
                 }
             }
         } else {
-            for (i, subArray) in reviewModelArray.enumerated() {
-                if i > currentStep { // 做错后重做的需要保护
-                    break
+            
+            if exerciseModel.type == .connectionWordAndChinese || exerciseModel.type == .connectionWordAndImage {
+                for item in exerciseModel.option?.firstItems ?? [] {
+                    currentTurnArray.removeFirst()
+                    self.updateWordStepStatus(wordId: item.optionId, step: exerciseModel.step, right: right)
                 }
-                for (j, e) in subArray.enumerated() {
-                    if e.step == exerciseModel.step && e.word?.wordId == exerciseModel.word?.wordId {
-                        reviewModelArray[i][j].isFinish = true
-                    }
+            } else {
+                
+                var finish = right
+                // 选择题做错，也标注答题完成
+                if right == false && (exerciseModel.type == .validationWordAndChinese || exerciseModel.type == .validationImageAndWord) {
+                    finish = true
                 }
+                if finish {
+                    currentTurnArray.removeFirst()
+                }
+                self.updateWordStepStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right)
             }
             
         }
@@ -282,17 +291,52 @@ class YXExerciseDataManager_backup: NSObject {
     }
     
     
+    
+    private func updateWordStepStatus(wordId: Int, step: Int, right: Bool) {
+        for (i, word) in reviewWordArray.enumerated() {
+            if word.wordId == wordId {
+                for (j, stepModel) in word.exerciseSteps.enumerated() {
+                    
+                    for (z, e) in stepModel.enumerated() {
+                        if e.step == step {
+                            reviewWordArray[i].exerciseSteps[j][z].isFinish = right
+                            
+                            
+                            if right == false {
+                                reviewWordArray[i].exerciseSteps[j][z].isContinue = true
+                            }
+                            
+                            if e.isRight == nil {
+                                reviewWordArray[i].exerciseSteps[j][z].isRight = right
+                            }
+                        }
+                    }
+                }
+                break
+            }
+        }
+    }
+    
+    public func fetchWord(wordId: Int) -> YXWordModel? {
+        return dao.selectWord(wordId: wordId)
+    }
+    
+    
+    
     //MARK: - private
     private func processExerciseData(result: YXExerciseResultModel?) {
         self.processNewWord(result: result)
         self.processReviewWord(result: result)
         
         // 处理练习答案选项
-        reviewModelArray = YXExerciseOptionManager().processOptions(newArray: newExerciseModelArray, reviewArray: reviewModelArray)
+        
+        optionManager.initData(newArray: newExerciseModelArray, reviewArray: self.reviewWords())
+        
+//        reviewModelArray = YXExerciseOptionManager().processOptions(newArray: newExerciseModelArray, reviewArray: reviewModelArray)
         
         // 处理进度状态
-        progressManager.initProgressStatus(reviewWordIds: result?.reviewWordIds)
-        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
+//        progressManager.initProgressStatus(reviewWordIds: result?.reviewWordIds)
+//        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
         
         YYCache.set(result?.reviewWordIds, forKey: reviewWordIdsKey)
     }
@@ -326,26 +370,154 @@ class YXExerciseDataManager_backup: NSObject {
     /// 处理复习单词
     /// - Parameter result:
     private func processReviewWord(result: YXExerciseResultModel?) {
+        
         for step in result?.steps ?? [] {
-            var subArray: [YXWordExerciseModel] = []
+
             for subStep in step {
                 var exercise = createExerciseModel(step: subStep)
-                exercise.word = fetchWord(wordId: subStep.wordId)
-                
-                if subStep.isBackup {
-                    let key = "\(subStep.wordId)-" + (subStep.type ?? "")
-                    backupExerciseModelArray[key] = exercise
+                if exercise.type == .connectionWordAndImage || exercise.type == .connectionWordAndChinese {
+                    for option in exercise.option?.firstItems ?? [] {
+                        exercise.word = fetchWord(wordId: option.optionId)
+                        self.addWordStep(exerciseModel: exercise, isBackup: false)
+                    }
                 } else {
-                    subArray.append(exercise)
+                    exercise.word = fetchWord(wordId: subStep.wordId)
+                    self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)
                 }
             }
-            reviewModelArray.append(subArray)
+
         }
+    
     }
+    
+    
+    
+    
+    
+    private func buildExercise() -> YXWordExerciseModel? {
+
+        if currentTurnArray.count == 0 {
+            
+            for (i, word) in reviewWordArray.enumerated() {
+                for (j, step) in word.exerciseSteps.enumerated() {
+                    if let exericse = fetchExerciseOfStep(exerciseArray: step) {
+                        if exericse.isFinish {
+                            if exericse.isContinue == true {// 如果上一轮有做错过，需要继续做
+                                for z in 0..<step.count {
+                                    reviewWordArray[i].exerciseSteps[j][z].isContinue = nil
+                                }
+                                currentTurnArray.append(exericse)
+                                break
+                            }
+                        } else {
+                            currentTurnArray.append(exericse)
+                            break
+                        }
+ 
+                    }
+                }
+            }
+            currentTurnArray.sort { (model1, model2) -> Bool in
+                return model1.step > model2.step
+            }
+        }
+        
+        if currentTurnArray.first?.type == .connectionWordAndChinese
+            || currentTurnArray.first?.type == .connectionWordAndImage {
+            
+            var connectionArray: [YXWordExerciseModel] = []
+            for exercise in currentTurnArray {
+                if exercise.type == .connectionWordAndChinese || exercise.type == .connectionWordAndImage {
+                    if connectionArray.count < 4 {
+                        connectionArray.append(exercise)
+                    }
+                }
+            }
+            
+            if connectionArray.count > 1 {
+                return YXExerciseOptionManager2().connectionExercise(exerciseArray: connectionArray)
+            } else {// 连线题，只有一个，就出备选题
+                let e = connectionArray.first
+                if let backupE = backupExercise(wordId: e?.word?.wordId ?? 0, step: e?.step ?? 0) {
+                    return optionManager.processReviewWordOption(exercise: backupE)
+                } else {
+                    return nil
+                }
+            }
+            
+        }
+    
+        guard let e = currentTurnArray.first else {
+            return nil
+        }
+        return optionManager.processReviewWordOption(exercise: e)
+        
+    }
+    
+    
+    /// 获取练习题的备份题
+    /// - Parameters:
+    ///   - wordId: 单词Id
+    ///   - step: 步骤
+    private func backupExercise(wordId: Int, step: Int) -> YXWordExerciseModel? {
+        for word in reviewWordArray {
+            if word.wordId == wordId {
+                return word.backupExerciseStep[step]
+            }
+        }
+        return nil
+    }
+    
+    
+    /// 获取单词下某个step 具体的练习数据，可能需要根据得分来获取
+    /// - Parameter exerciseArray:
+    private func fetchExerciseOfStep(exerciseArray: [YXWordExerciseModel]) -> YXWordExerciseModel? {
+        var model: YXWordExerciseModel?
+        if exerciseArray.count > 1 { // 根据得分取
+            for exercise in exerciseArray {
+                if exercise.isCareScore && exercise.score == fetchWordScore(wordId: exercise.word?.wordId ?? 0) {
+                    model = exercise
+                }
+            }
+        } else if let exercise = exerciseArray.first {
+            model = exercise
+        }
+        return model
+    }
+    
 
     
-    public func fetchWord(wordId: Int) -> YXWordModel? {
-        return dao.selectWord(wordId: wordId)        
+    private func addWordStep(exerciseModel: YXWordExerciseModel, isBackup: Bool) {
+        
+        let step = exerciseModel.step
+        
+        var index = -1
+        for (i, e) in reviewWordArray.enumerated() {
+            if e.wordId == exerciseModel.word?.wordId {
+                index = i
+                break
+            }
+        }
+        
+        if index == -1 {// 单词不存在
+            var stepsModel = YXWordStepsModel()
+            stepsModel.wordId = exerciseModel.word?.wordId ?? 0
+            
+            if isBackup {
+                stepsModel.backupExerciseStep[step] = exerciseModel
+            } else {
+                stepsModel.exerciseSteps[step - 1].append(exerciseModel)
+            }
+            
+            reviewWordArray.append(stepsModel)
+        } else {// 单词存在
+            if isBackup {
+                reviewWordArray[index].backupExerciseStep[step] = exerciseModel
+            } else {
+                reviewWordArray[index].exerciseSteps[step - 1].append(exerciseModel)
+            }
+        }
+        
     }
     
 
@@ -429,5 +601,16 @@ class YXExerciseDataManager_backup: NSObject {
         return Array(map.values).toJSONString() ?? ""
     }
     
+    
+    
+    private func reviewWords() -> [YXWordExerciseModel] {
+        var array: [YXWordExerciseModel] = []
+        for word in reviewWordArray {
+            if let e = word.exerciseSteps.first?.first {
+                array.append(e)
+            }
+        }
+        return array
+    }
 }
 

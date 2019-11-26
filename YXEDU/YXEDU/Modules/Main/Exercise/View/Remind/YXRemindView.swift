@@ -241,7 +241,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         guard let word = exerciseModel.word else { return }
         
         let detailView = YXWordDetailTipView(word: word)
-        detailView.dismissClosure = { [weak self] in
+        detailView.dismissClosure = {
             completion?()
 //            self?.delegate?.dismissRemindView?()
         }

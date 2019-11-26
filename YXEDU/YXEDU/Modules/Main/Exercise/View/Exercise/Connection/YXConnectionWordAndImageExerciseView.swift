@@ -16,7 +16,8 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
     private var remindMap: [Int : Int] = [:]
     private var answerHeight: CGFloat {
         let itemConfig = YXConnectionWordAndImageConfig()
-        let height = (itemConfig.rightItemHeight + itemConfig.rightInterval)*4 - itemConfig.rightInterval
+        let count = CGFloat(exerciseModel.option?.firstItems?.count ?? 0)
+        let height = (itemConfig.rightItemHeight + itemConfig.rightInterval) * count - itemConfig.rightInterval
         return height
     }
             

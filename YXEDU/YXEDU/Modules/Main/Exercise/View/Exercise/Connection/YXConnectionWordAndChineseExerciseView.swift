@@ -17,7 +17,8 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
 
     private var answerHeight: CGFloat {
         let itemConfig = YXConnectionWordAndChineseConfig()
-        let height = (itemConfig.leftItemHeight + itemConfig.leftInterval)*4 - itemConfig.leftInterval
+        let count = CGFloat(exerciseModel.option?.firstItems?.count ?? 0)
+        let height = (itemConfig.leftItemHeight + itemConfig.leftInterval) * count - itemConfig.leftInterval
         return height
     }
             

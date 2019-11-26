@@ -14,6 +14,14 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
     /// 练习完成
     /// - Parameter right: 是否答对
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool)
+    
+    
+    /// 连线题，某个选项连线后
+    /// - Parameters:
+    ///   - wordId:
+    ///   - step:
+    ///   - right:
+    func itemConnectionCompletion(_ wordId: Int, _ step: Int, _ right: Bool)
 }
 
 

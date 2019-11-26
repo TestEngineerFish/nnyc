@@ -34,6 +34,16 @@ struct YXWordExerciseModel: Mappable {
     var step: Int = 0
     /// 对错
     var isRight: Bool?
+            
+//    /// 第几轮
+//    var turn: Int = 0
+    
+    // 每一轮是否有做错过
+    var turnRightMap: [Int : Bool] = [:]
+    
+    /// 是否继续做
+    var isContinue: Bool?
+    
     
     var isNewWord: Bool = false
         
@@ -80,4 +90,36 @@ struct YXCacheWordExerciseModel: Mappable {
 }
 
 
+
+
+/// 单词的训练步骤
+struct YXWordStepsModel: Mappable {
+    
+    var wordId: Int = 0
+    //
+    var exerciseSteps: [[YXWordExerciseModel]] = []
+//    var stepTypes: [YXExerciseType] = []
+    var backupExerciseStep: [Int : YXWordExerciseModel] = [:]
+    
+//    var stepResults: [Bool] = []
+    
+    init() {
+        self.initSteps()
+    }
+    
+    init?(map: Map) {
+        self.initSteps()
+        self.mapping(map: map)
+    }
+    mutating func mapping(map: Map) {
+        
+    }
+    
+    private mutating func initSteps() {
+        for _ in 0..<4 {
+            let stepArray: [YXWordExerciseModel] = []
+            exerciseSteps.append(stepArray)
+        }
+    }
+}
 

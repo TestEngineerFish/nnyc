@@ -16,7 +16,7 @@ struct YXExerciseResultModel: Mappable {
     var unitId: Int?
     var newWordIds: [Int]?
     var reviewWordIds: [Int]?
-    var steps: [[YXWordStepModel]]?
+    var steps: [[YXExerciseStepModel]]?
     
     init?(map: Map) {
     }
@@ -29,7 +29,7 @@ struct YXExerciseResultModel: Mappable {
     }
 }
 
-struct YXWordStepModel: Mappable {
+struct YXExerciseStepModel: Mappable {
     var wordId: Int = -1
     /// 是否根据得分选择题型
     var isCareScore: Bool = true

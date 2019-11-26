@@ -272,6 +272,13 @@
     }
     
     
+    func itemConnectionCompletion(_ wordId: Int, _ step: Int, _ right: Bool) {
+        
+    }
+    
+    
+    
+    
     /// 动画停止后回调
     /// - Parameter isRight: 对错
     func animationDidStop(isRight: Bool) {
