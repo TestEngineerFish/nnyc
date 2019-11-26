@@ -40,8 +40,8 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
 
     /// 提醒view
     var remindView: YXRemindView?
-    let remindViewDefaultHeight = AdaptSize(150)
-    var remindViewHeight = AdaptSize(150) {
+    let remindViewDefaultHeight = AdaptSize(135)
+    var remindViewHeight = AdaptSize(135) {
         willSet {
             remindView?.snp.updateConstraints({ (make) in
                 make.height.equalTo(newValue)
@@ -55,7 +55,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     /// 答案view
     var answerView: YXBaseAnswerView?
     var answerViewHeight: CGFloat {
-        return self.height - questionViewHeight - remindViewHeight
+        return self.height - questionViewHeight - remindViewDefaultHeight
     }
     
     weak var exerciseDelegate: YXExerciseViewDelegate?
@@ -97,7 +97,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
             remindView.snp.makeConstraints { (make) in
                 make.top.equalToSuperview().offset(AdaptSize(16))
                 make.left.right.equalToSuperview()
-                make.height.equalTo(remindViewHeight)
+                make.height.equalTo(remindViewDefaultHeight)
             }
             answerView?.snp.makeConstraints { (make) in
                 make.top.equalTo(remindView.snp.bottom).priorityLow()
