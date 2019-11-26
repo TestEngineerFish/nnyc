@@ -325,7 +325,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         if let exclusionIndex = newArray.firstIndex(of: exclusion) {
             newArray.remove(at: exclusionIndex)
         }
-        let index = Int(arc4random()) % newArray.count
+        let index = Int.random(in: 0..<newArray.count)
         var letter = newArray[index]
         if isCapitalLetter {
             letter = letter.capitalized

@@ -59,7 +59,7 @@ struct YXFindRouteUtil {
                  if routeList.count >= wordLength {
                      break
                  }
-                let nextIndex = Int(arc4random()) % list.count
+                let nextIndex = Int.random(in: 0..<list.count)
                 let nextStep  = list[nextIndex]
                 self.findRoute(nextStep)
                 list.remove(at: nextIndex)

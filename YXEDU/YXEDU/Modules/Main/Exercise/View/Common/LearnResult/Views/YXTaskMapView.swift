@@ -168,6 +168,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
         }
         if unitView.tag < self.modelArray.count {
             let model = self.modelArray[unitView.tag]
+            self.currentModel = model
             self.learnNewUnit?(model.unitID)
         }
 
