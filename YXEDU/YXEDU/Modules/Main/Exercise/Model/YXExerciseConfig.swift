@@ -9,19 +9,13 @@
 import UIKit
 
 struct YXExerciseConfig {
-    static let headerViewHeight: CGFloat = 28
-    
-    static let headerViewTop: CGFloat = 18 + (iPhoneXLater ? 34 : 0)
-    
-    static let questionViewTop: CGFloat = 80 + (iPhoneXLater ? 34 : 0)
-    
-    static let answerViewBottom: CGFloat = 86
-    
-    static let exerciseViewTop: CGFloat = 47 + (iPhoneXLater ? 34 : 0)
-    static let exerciseViewBottom: CGFloat = 86 + (iPhoneXLater ? 34 : 0)
-    
+    static let headerViewHeight: CGFloat   = AdaptSize(28)
+    static let headerViewTop: CGFloat      = AdaptSize(18) + kSafeBottomMargin
+    static let questionViewTop: CGFloat    = AdaptSize(80) + kSafeBottomMargin
+    static let answerViewBottom: CGFloat   = AdaptSize(86)
+    static let exerciseViewTop: CGFloat    = AdaptSize(47) + kSafeBottomMargin
+    static let exerciseViewBottom: CGFloat = AdaptSize(86) + kSafeBottomMargin
     static let exerciseViewHeight: CGFloat = screenHeight - YXExerciseConfig.exerciseViewTop - YXExerciseConfig.exerciseViewBottom
-    
     /// 底部提示view距离边框底部的间距
-    static let bottomViewBottom: CGFloat = -19 - (iPhoneXLater ? 34 : 0)
+    static let bottomViewBottom: CGFloat   = AdaptSize(-19) - kSafeBottomMargin
 }

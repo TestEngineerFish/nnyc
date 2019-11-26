@@ -12,9 +12,9 @@ import UIKit
 class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     enum Config {
-        static var itemHeight: CGFloat = 42
-        static var itemWidth: CGFloat = screenWidth - 35 * 2
-        static var itemInterval: CGFloat = 13
+        static var itemHeight: CGFloat = AdaptSize(42)
+        static var itemWidth: CGFloat = screenWidth - AdaptSize(35) * 2
+        static var itemInterval: CGFloat = AdaptSize(13)
     }
     
     private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -36,7 +36,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)
         flowLayout.minimumLineSpacing = Config.itemInterval
         flowLayout.minimumInteritemSpacing = 0
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 35, bottom: 0, right: 35)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: AdaptSize(35), bottom: 0, right: AdaptSize(35))
 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = UIColor.white

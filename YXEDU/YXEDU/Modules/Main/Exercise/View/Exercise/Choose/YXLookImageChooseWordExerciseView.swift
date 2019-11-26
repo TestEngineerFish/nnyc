@@ -10,8 +10,6 @@ import UIKit
 
 /// 看图片选单词
 class YXLookImageChooseWordExerciseView: YXBaseExerciseView {
-
-//    private let answerHeight: CGFloat = 42 * 4 + 13 * 3
         
     override func createSubview() {
         super.createSubview()
