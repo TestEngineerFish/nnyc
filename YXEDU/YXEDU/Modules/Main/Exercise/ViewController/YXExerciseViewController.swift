@@ -361,7 +361,7 @@
  extension YXExerciseViewController: YXExerciseBottomViewProtocol {
     func clickTipsBtnEvent() {
         print("提示点击事件")
-        guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel else { return }
+        guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
         self.dataManager.completionExercise(exerciseModel: exerciseModel, right: false)
         self.exerciseViewArray[0].isWrong = true
         self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
