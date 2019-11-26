@@ -253,8 +253,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onEndOral(_ error: Error!) {
-        print("录音完成,错误: " + String(describing: error))
-        return
+        guard let _error = error else {
+            return
+        }
+        YXUtils.showHUD(self, title: "网络错误,评测失败,请重试\n\(_error.localizedDescription)")
+        self.playView()
     }
 
     func onVADTimeout() {

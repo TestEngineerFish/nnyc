@@ -23,7 +23,7 @@ class YXExerciseOptionManager: NSObject {
         if max == 0 {
             return 0
         }
-        return Int(arc4random()) % max
+        return Int.random(in: 0..<max)
     }
     
 
