@@ -27,15 +27,22 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var status: AnswerStatus
     var alreadyCount = 0 // 当题学习次数,再次学习,无论成绩,都切题
     var lastLevel    = 0 // 最近一次跟读评分
+    var tempOpusData = Data() // 缓存当前录音
+    var retryCount   = 0
+    var retryPath    = {
+        return NSTemporaryDirectory() + "tmpData.opus"
+    }()    // 缓存录音本地地址
 
     override init(exerciseModel: YXWordExerciseModel) {
         self.status = .normal
         super.init(exerciseModel: exerciseModel)
         self.enginer = USCRecognizer.sharedManager()
+        self.enginer?.setIdentifier(YXConfigure.shared()?.uuid)
         self.enginer?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
+
     /// 进入后台, 停止播放音频和语音监听
     @objc private func didEnterBackgroundNotification() {
         print("进入后台, 停止播放音频和语音监听")
@@ -45,6 +52,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 从后台进入前台,
     @objc private func didBecomeActiveNotification() {
         // 该做啥呢?问问产品吧
+        if self.status == .showResult || self.status == .reporting {
+            return
+        }
         self.playView()
     }
 
@@ -206,18 +216,22 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onBeginOral() {
         // 显示录音动画
+        self.resetOpusTempData()
         self.showReadAnaimtion()
         self.status = .listening
     }
 
     func onStopOral() {
+        self.setCatchRecordOpus(opus: self.tempOpusData)
         self.titleLabel?.text = "打分中……"
         self.status = .reporting
     }
 
     func onResult(_ result: String!, isLast: Bool) {
-        print("录音结果: " + result)
+        print("============录音结果: " + result)
         if isLast {
+            // 录音结束,清除临时录音缓存
+            self.resetOpusTempData()
             let resultDict = result.convertToDictionary()
             guard let score = resultDict["score"] as? Double else {
                 return
@@ -253,11 +267,18 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onEndOral(_ error: Error!) {
-        guard let _error = error else {
+        guard let _ = error else {
             return
         }
-        YXUtils.showHUD(self, title: "网络错误,评测失败,请重试\n\(_error.localizedDescription)")
-        self.playView()
+        // 判断重试次数
+        if self.retryCount < 3 {
+            self.titleLabel?.text = "网络错误,录音重传中……"
+            self.enginer?.retry(withFilePath: self.retryPath)
+            self.retryCount += 1
+        } else {
+            self.titleLabel?.text = ""
+            YXUtils.showHUD(kWindow, title: "网络连接失败,请稍后再试")
+        }
     }
 
     func onVADTimeout() {
@@ -277,6 +298,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onRecordingOpusBuffer(_ opusData: Data!) {
 //        print("音频编码数据: " + String(describing: opusData))
+        // 存当前音频数据
+        tempOpusData.append(opusData)
         return
     }
 
@@ -293,5 +316,16 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
         print("lifecycle: \(lifecycle)")
         return
+    }
+
+    // TODO: USC Tools
+
+    private func setCatchRecordOpus(opus data: Data) {
+        NSData(data: data).write(toFile: self.retryPath, atomically: true)
+    }
+
+    private func resetOpusTempData() {
+        self.tempOpusData.removeAll()
+        self.retryCount = 0
     }
 }

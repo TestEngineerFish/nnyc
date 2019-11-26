@@ -59,7 +59,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
             }
             audioPlayerView?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(imageView!.snp.bottom).offset(10)
+                make.top.equalTo(imageView!.snp.bottom).offset(AdaptSize(10))
                 make.width.height.equalTo(AdaptSize(40))
             }
 
@@ -71,18 +71,18 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview()
                 make.width.equalToSuperview()
-                make.height.equalTo(40)
+                make.height.equalTo(AdaptSize(40))
             }
             subTitleLabel?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(titleLabel!.snp.bottom)
                 make.width.equalToSuperview()
-                make.height.equalTo(20)
+                make.height.equalTo(AdaptSize(20))
             }
             audioPlayerView?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(subTitleLabel!.snp.bottom).offset(10)
-                make.width.height.equalTo(40)
+                make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(10))
+                make.width.height.equalTo(AdaptSize(40))
             }
 
         case .wordAndImageAndAudio:
@@ -93,24 +93,24 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview()
                 make.width.equalToSuperview()
-                make.height.equalTo(40)
+                make.height.equalTo(AdaptSize(40))
             }
             subTitleLabel?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(titleLabel!.snp.bottom)
                 make.width.equalToSuperview()
-                make.height.equalTo(20)
+                make.height.equalTo(AdaptSize(20))
             }
             imageView?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(subTitleLabel!.snp.bottom).offset(30)
-                make.width.equalTo(150)
-                make.height.equalTo(108)
+                make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(30))
+                make.width.equalTo(AdaptSize(150))
+                make.height.equalTo(AdaptSize(108))
             }
             audioPlayerView?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(imageView!.snp.bottom).offset(10)
-                make.width.height.equalTo(40)
+                make.top.equalTo(imageView!.snp.bottom).offset(AdaptSize(10))
+                make.width.height.equalTo(AdaptSize(40))
             }
         }
     }
