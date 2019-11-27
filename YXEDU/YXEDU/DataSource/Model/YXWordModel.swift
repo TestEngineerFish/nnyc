@@ -99,11 +99,23 @@ struct YXWordModel: Mappable {
     }
     
     var exampleAttr: NSAttributedString? {
-        guard let _example = englishExample, let data = _example.data(using: .unicode) else {
-            return nil
-        }
+        guard let englishExample = englishExample else { return nil }
 
-        let attr = try? NSMutableAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
-        return attr
+        let firstRightBracket = englishExample.firstIndex(of: ">")!
+        let startHighLightIndex = englishExample.index(firstRightBracket, offsetBy: 1)
+        let lastLeftBracket = englishExample.lastIndex(of: "<")!
+        let highLightString = String(englishExample[startHighLightIndex..<lastLeftBracket])
+        
+        let firstLeftBracket = englishExample.firstIndex(of: "<")!
+        let lastRightBracket = englishExample.lastIndex(of: ">")!
+        let endHighLightIndex = englishExample.index(lastRightBracket, offsetBy: 1)
+        let string = String(englishExample[englishExample.startIndex..<firstLeftBracket]) + highLightString + String(englishExample[endHighLightIndex..<englishExample.endIndex])
+        
+        let attrString = NSMutableAttributedString(string: string)
+        let highLightRange = string.range(of: highLightString)!
+        let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
+        attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
+        
+        return attrString
     }
 }
