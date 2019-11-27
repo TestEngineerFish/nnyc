@@ -62,9 +62,9 @@ class YXLearnResultAnimationSubview: UIView {
     }
 
     func showAnimation() {
-        let duration = Double(0.75)
+        let duration = Double(0.25)
         let animation = CAKeyframeAnimation(keyPath: "transform.scale")
-        animation.values = [0.0, 1.2, 1.0]
+        animation.values = [0.0, 1.4, 1.0]
         animation.duration = duration
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
 
