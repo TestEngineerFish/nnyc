@@ -41,7 +41,15 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
 
         // 延迟播放.(因为在切题的时候会有动画)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.2) {
-            self.playerAudio()
+            var isPlay = true
+            kWindow.subviews.forEach { (subview) in
+                if subview.tag != 0 {
+                    isPlay = false
+                }
+            }
+            if isPlay {
+                self.playerAudio()
+            }
         }
     }
 

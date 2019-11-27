@@ -344,7 +344,7 @@
  extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     func clickHomeBtnEvent() {
         self.delegate?.showAlertEvnet()
-        YXComAlertView.show(.common, in: self.view, info: "提示", content: "是否放弃本次学习并退出", firstBlock: { (objc) in
+        YXComAlertView.show(.common, in: kWindow, info: "提示", content: "是否放弃本次学习并退出", firstBlock: { (objc) in
             self.delegate?.backHomeEvent()
             self.navigationController?.popViewController(animated: true)
         }) { (obj) in

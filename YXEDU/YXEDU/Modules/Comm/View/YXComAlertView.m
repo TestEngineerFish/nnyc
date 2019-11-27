@@ -75,6 +75,7 @@
        firstBlock:(YXFirstBlock)firstBlock
       secondBlock:(YXSecondBlock)secondBlock {
     self.alertType = alertType;
+    self.tag = 999;
     [self maskView];
     switch (alertType) {
             
