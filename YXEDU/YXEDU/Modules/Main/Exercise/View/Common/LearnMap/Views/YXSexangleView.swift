@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol YXSexangleViewClickProcotol {
+protocol YXSexangleViewClickProcotol: NSObjectProtocol {
     func clickSexangleView(_ view: YXSexangleView)
 }
 
@@ -17,7 +17,7 @@ class YXSexangleView: UIView {
 
     var model: YXLearnMapUnitModel
     var progressLabel: YXLabel?
-    var delegate: YXSexangleViewClickProcotol?
+    weak var delegate: YXSexangleViewClickProcotol?
     var isExtension: Bool
     var gradientLayer: CAGradientLayer?
     var avatarView: UIView?

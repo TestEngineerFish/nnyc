@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol YXAnswerEventProtocol {
+protocol YXAnswerEventProtocol: NSObjectProtocol {
     /// 点击答题区的按钮事件,
     /// - Parameter button: 点击的按钮
     /// - returns:  是否插入成功

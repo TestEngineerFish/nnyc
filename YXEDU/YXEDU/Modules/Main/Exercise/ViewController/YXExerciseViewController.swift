@@ -7,7 +7,7 @@
  //
 
  import UIKit
- protocol YXExerciseViewControllerProtocol {
+ protocol YXExerciseViewControllerProtocol: NSObjectProtocol {
     /// 显示弹框事件
     func showAlertEvnet()
     /// 返回首页事件
@@ -44,7 +44,7 @@
     private var loadingView: YXExerciseLoadingView?
 
     // 协议
-    private var delegate: YXExerciseViewControllerProtocol?
+    private weak var delegate: YXExerciseViewControllerProtocol?
 
     /// 哪个单词的提示，仅连线题使用
     private var remindWordId: Int = -1

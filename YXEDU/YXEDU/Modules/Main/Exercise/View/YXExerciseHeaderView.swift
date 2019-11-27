@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol YXExerciseHeaderViewProtocol {
+protocol YXExerciseHeaderViewProtocol: NSObjectProtocol {
     /// 点击回首页按钮
     func clickHomeBtnEvent()
     /// 点击切题按钮
@@ -20,7 +20,7 @@ protocol YXExerciseHeaderViewProtocol {
 /// 练习模块：顶部view
 class YXExerciseHeaderView: UIView {
 
-    var delegate: YXExerciseHeaderViewProtocol?
+    weak var delegate: YXExerciseHeaderViewProtocol?
     
     var learningProgress: String? {
         didSet {

@@ -25,7 +25,7 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
     /// 练习数据模型
     var exerciseModel: YXWordExerciseModel
 
-    var delegate: YXAnswerEventProtocol?
+    weak var delegate: YXAnswerEventProtocol?
     weak var answerDelegate: YXAnswerViewDelegate?
     weak var connectionAnswerViewDelegate: YXConnectionAnswerViewDelegate?
 
