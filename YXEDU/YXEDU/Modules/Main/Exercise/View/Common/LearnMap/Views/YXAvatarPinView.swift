@@ -33,7 +33,11 @@ class YXAvatarPinView: UIView {
         }
 
         let avatarImageView = YXKVOImageView()
-        avatarImageView.showImage(with: YXUserModel.default.userAvatarPath ?? "")
+        if let avatarPath = YXUserModel.default.userAvatarPath, !avatarPath.isEmpty {
+            avatarImageView.showImage(with: avatarPath)
+        } else {
+            avatarImageView.image = UIImage(named: "userPlaceHolder")
+        }
         imageView.addSubview(avatarImageView)
         avatarImageView.frame = CGRect(x: 0, y: 0, width: AdaptSize(24), height: AdaptSize(24))
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width/2
