@@ -51,10 +51,11 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     } else {
                         self.wordBookModels[index + 1].isSelected = true
                     }
-                    self.bookCollectionView.reloadData()
+                    
                     self.fetchWordBookDetail(nextSelectWordBook)
-
                     self.wordBookModels.remove(at: index)
+                    self.bookCollectionView.reloadData()
+                    
                     YXWordBookDaoImpl().deleteBook(bookId: selectedBookId)
                     YXWordBookDaoImpl().deleteWord(bookId: selectedBookId)
                     try? FileManager.default.removeItem(at: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(selectedBookId)"))
@@ -121,16 +122,12 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 guard let jsonString = String(data: jsonData, encoding: .utf8), let result = YXUserWordBookListModel(JSONString: jsonString), let wordBookStateModels = result.currentLearnWordBookStatus, var learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 else { return }
-                self.wordBookStateModels = wordBookStateModels
-                self.fetchWordBookDetail(learnedWordBooks[0])
-
                 learnedWordBooks[0].isSelected = true
                 learnedWordBooks[0].isCurrentStudy = true
                 self.wordBookModels = learnedWordBooks
                 
-                if learnedWordBooks.count == 1 {
-                    self.deleteWordBookButton.isHidden = true
-                }
+                self.wordBookStateModels = wordBookStateModels
+                self.fetchWordBookDetail(learnedWordBooks[0])
                 
                 var newWordBook = YXWordBookModel()
                 newWordBook.bookName = "添加词书"
@@ -146,6 +143,19 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     
     private func fetchWordBookDetail(_ wordBook: YXWordBookModel) {
         bookNameLabel.text = wordBook.bookName
+        
+        if wordBook.isCurrentStudy {
+            deleteWordBookButton.isHidden = true
+            distanceOfDownloadButtonBetweenLeft.constant = 12
+            startStudyButton.isUserInteractionEnabled = false
+            startStudyButton.setTitle("继续学习", for: .normal)
+            
+        } else {
+            deleteWordBookButton.isHidden = false
+            distanceOfDownloadButtonBetweenLeft.constant = 84
+            startStudyButton.isUserInteractionEnabled = true
+            startStudyButton.setTitle("开始学习", for: .normal)
+        }
         
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookId ?? 0)"]) { [weak self] (response, isSuccess) in
             guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
@@ -223,19 +233,6 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             self.performSegue(withIdentifier: "AddBook", sender: nil)
 
         } else {
-            if indexPath.row == 0 {
-                deleteWordBookButton.isHidden = true
-                distanceOfDownloadButtonBetweenLeft.constant = 12
-                startStudyButton.isUserInteractionEnabled = false
-                startStudyButton.setTitle("继续学习", for: .normal)
-                
-            } else {
-                deleteWordBookButton.isHidden = false
-                distanceOfDownloadButtonBetweenLeft.constant = 84
-                startStudyButton.isUserInteractionEnabled = true
-                startStudyButton.setTitle("开始学习", for: .normal)
-            }
-            
             let wordBook = wordBookModels[indexPath.row]
             fetchWordBookDetail(wordBook)
             
