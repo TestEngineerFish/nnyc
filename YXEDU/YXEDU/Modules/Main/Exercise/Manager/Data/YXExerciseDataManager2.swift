@@ -156,10 +156,10 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportUnit( completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        let json = self.reportJson()
-        print(json)
-        completion?(true, nil)
-        return
+//        let json = self.reportJson()
+//        print(json)
+//        completion?(true, nil)
+//        return
         
         let request = YXExerciseRequest.report(json: json)
         YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
@@ -507,7 +507,7 @@ class YXExerciseDataManager: NSObject {
     
 
     
-    /// 更新每个练习的完成状态
+    /// 更新每个练习的完成状态 （是否需要重做）
     /// - Parameters:
     ///   - wordId:
     ///   - step:
