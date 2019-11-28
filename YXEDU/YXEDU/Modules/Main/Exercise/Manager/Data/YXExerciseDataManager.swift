@@ -40,7 +40,7 @@ class YXExerciseDataManager: NSObject {
     private var currentTurn = 0
     /// 进度管理器
     private var progressManager: YXExcerciseProgressManager
-    private var optionManager: YXExerciseOptionManager2
+    private var optionManager: YXExerciseOptionManager
     
     
     init(bookId: Int, unitId: Int) {
@@ -52,7 +52,7 @@ class YXExerciseDataManager: NSObject {
         
         progressManager.unitId = unitId
         
-        optionManager = YXExerciseOptionManager2()
+        optionManager = YXExerciseOptionManager()
         
         super.init()
     }
@@ -346,7 +346,7 @@ class YXExerciseDataManager: NSObject {
             }
             
             if connectionArray.count > 1 {
-                return YXExerciseOptionManager2().connectionExercise(exerciseArray: connectionArray)
+                return YXExerciseOptionManager().connectionExercise(exerciseArray: connectionArray)
             } else {// 连线题，只有一个，就出备选题
                 let e = connectionArray.first
                 if let backupE = backupExercise(wordId: e?.word?.wordId ?? 0, step: e?.step ?? 0) {
@@ -368,7 +368,7 @@ class YXExerciseDataManager: NSObject {
             }
             
             if connectionArray.count > 1 {
-                return YXExerciseOptionManager2().connectionExercise(exerciseArray: connectionArray)
+                return YXExerciseOptionManager().connectionExercise(exerciseArray: connectionArray)
             } else {// 连线题，只有一个，就出备选题
                 let e = connectionArray.first
                 if let backupE = backupExercise(wordId: e?.word?.wordId ?? 0, step: e?.step ?? 0) {
