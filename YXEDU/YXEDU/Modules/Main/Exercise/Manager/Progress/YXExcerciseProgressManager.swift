@@ -19,11 +19,12 @@ class YXExcerciseProgressManager: NSObject {
     enum LocalKey: String {
         case new = "new.txt"
         case review = "review.txt"
+        case current = "current.txt"
         
         case report = "Exercise_Report_Status"
         case completion = "Exercise_Completion_Status"
         case reviewWordIds = "Review_Word_Id_List"
-        
+    
         case score = "Exercise_Score"
         case skipNewWord = "Skip_New_Word"
     }
@@ -88,9 +89,14 @@ class YXExcerciseProgressManager: NSObject {
     /// - Parameters:
     ///   - newExerciseModel: 新学
     ///   - reviewExerciseModel: 复习
-    func updateProgress(newExerciseModel: [YXWordExerciseModel], reviewExerciseModel: [[YXWordExerciseModel]]) {
-        self.saveToLocal(exerciseModels: newExerciseModel, localKey: .new)
-        self.saveToLocal2(exerciseModels: reviewExerciseModel, localKey: .review)
+    func updateProgress(newWordArray: [YXWordExerciseModel], reviewWordArray: [YXWordStepsModel]) {
+        self.saveToLocal(jsonString: newWordArray.toJSONString(), localKey: .new)
+        self.saveToLocal(jsonString: reviewWordArray.toJSONString(), localKey: .review)
+    }
+    
+    
+    func updateCurrentExercisesProgress(currentExerciseArray: [YXWordExerciseModel]) {
+        self.saveToLocal(jsonString: currentExerciseArray.toJSONString(), localKey: .current)
     }
     
     
@@ -120,7 +126,7 @@ class YXExcerciseProgressManager: NSObject {
     
 
     /// 本地未学完的数据
-    func localExerciseModels() -> ([YXWordExerciseModel], [[YXWordExerciseModel]]) {
+    func localExerciseModels() -> ([YXWordExerciseModel], [YXWordStepsModel], [YXWordExerciseModel]) {
         var filePath = YYDataSourceManager.dbFilePath(fileName: key(.new))
         var new: [YXWordExerciseModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
@@ -128,13 +134,17 @@ class YXExcerciseProgressManager: NSObject {
         }
         
         filePath = YYDataSourceManager.dbFilePath(fileName: key(.review))
-        var review: [[YXWordExerciseModel]]?
-        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {            
-            let catchModel = Mapper<YXCacheWordExerciseModel>().map(JSONString: str)
-            review = catchModel?.steps
+        var review: [YXWordStepsModel]?
+        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
+            review = Array<YXWordStepsModel>(JSONString: str)
         }
         
-        return (new ?? [], review ?? [])
+        filePath = YYDataSourceManager.dbFilePath(fileName: key(.current))
+        var current: [YXWordExerciseModel]?
+        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
+            current = Array<YXWordExerciseModel>(JSONString: str)
+        }
+        return (new ?? [], review ?? [], current ?? [])
     }
     
     
@@ -147,7 +157,7 @@ class YXExcerciseProgressManager: NSObject {
     
     /// 完成上报
     func completionReport() {
-        YYCache.remove(forKey: key(.report))
+        YYCache.remove(forKey: key(.report))        
         YYCache.remove(forKey: key(.skipNewWord))
         
         var filePath = YYDataSourceManager.dbFilePath(fileName: key(.new))
@@ -163,21 +173,20 @@ class YXExcerciseProgressManager: NSObject {
     
     /// 更新进度
     /// - Parameter exerciseModels: 数据
-    private func saveToLocal(exerciseModels: [YXWordExerciseModel], localKey: LocalKey) {
-        let str = exerciseModels.toJSONString()
+    private func saveToLocal(jsonString: String?, localKey: LocalKey) {
         let filePath = YYDataSourceManager.dbFilePath(fileName: key(localKey))
-        try? str?.write(toFile: filePath, atomically: true, encoding: .utf8)
+        try? jsonString?.write(toFile: filePath, atomically: true, encoding: .utf8)
     }
     
     
-    private func saveToLocal2(exerciseModels: [[YXWordExerciseModel]], localKey: LocalKey) {
-        
-        var catchModel = YXCacheWordExerciseModel()
-        catchModel.steps = exerciseModels
-        
-        let str = catchModel.toJSONString()
-        let filePath = YYDataSourceManager.dbFilePath(fileName: key(localKey))
-        try? str?.write(toFile: filePath, atomically: true, encoding: .utf8)
-    }
+//    private func saveToLocal2(exerciseModels: [[YXWordExerciseModel]], localKey: LocalKey) {
+//
+//        var catchModel = YXCacheWordExerciseModel()
+//        catchModel.steps = exerciseModels
+//
+//        let str = catchModel.toJSONString()
+//        let filePath = YYDataSourceManager.dbFilePath(fileName: key(localKey))
+//        try? str?.write(toFile: filePath, atomically: true, encoding: .utf8)
+//    }
     
 }

@@ -59,7 +59,7 @@ class YXExerciseDataManager_backup: NSObject {
     func fetchUnCompletionExerciseModels() {
         let data = progressManager.localExerciseModels()
         newExerciseModelArray = data.0
-        reviewModelArray = data.1
+//        reviewModelArray = data.1
     }
 
     
@@ -120,7 +120,7 @@ class YXExerciseDataManager_backup: NSObject {
         updateNeedReviewWordCount()
         
         // 处理进度状态
-        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
+//        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
                 
     }
     
@@ -165,7 +165,7 @@ class YXExerciseDataManager_backup: NSObject {
             newExerciseModelArray[i].isFinish = true
         }
         
-        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
+//        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
     }
     
     
@@ -292,7 +292,7 @@ class YXExerciseDataManager_backup: NSObject {
         
         // 处理进度状态
         progressManager.initProgressStatus(reviewWordIds: result?.reviewWordIds)
-        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
+//        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
         
         YYCache.set(result?.reviewWordIds, forKey: reviewWordIdsKey)
     }

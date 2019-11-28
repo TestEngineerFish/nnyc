@@ -171,13 +171,15 @@
         headerView.reviewProgress = "\(data.1)"
         
         if let model = data.2 {
-            //            model.type = .lookImageChooseWord
+
+            // 新学隐藏提示
+            let tipsHidden = model.type == .newLearnPrimarySchool || model.type == .newLearnPrimarySchool_Group || model.type == .newLearnJuniorHighSchool
+            self.bottomView.tipsButton.isHidden = tipsHidden
             
-            if model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool {
-                self.bottomView.tipsButton.isHidden = true
-            } else {
-                self.bottomView.tipsButton.isHidden = false
-            }
+            // 连线未选中时，禁用提示
+            let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese)
+            self.bottomView.tipsButton.isEnabled = tipsEnabled
+                                    
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
             exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.exerciseViewTop, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)
             self.delegate = exerciseView
@@ -245,15 +247,15 @@
         self.loadingView?.stopAnimation(completeBlock)
         self.loadingView = nil
     }
- }
+}
  
- extension YXExerciseViewController: YXExerciseViewDelegate {
+extension YXExerciseViewController: YXExerciseViewDelegate {
     
     ///答完题回调处理
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
         // 答题后，数据处理
-        self.dataManager.completionExercise(exerciseModel: exerciseModel, right: right)
+        self.dataManager.defaultAnswerAction(exerciseModel: exerciseModel, right: right)
         
         // 新学直接切题，不用显示动画后
         if exerciseModel.type == .newLearnPrimarySchool
@@ -313,10 +315,10 @@
         }
     }
     
- }
+}
  
  
- extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
+extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int) {
         bottomView.tipsButton.isEnabled = selected
         if selected {
@@ -334,14 +336,12 @@
         
     }
     func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
-        dataManager.updateScore(wordId: wordId, step: step, right: right, type: type)
-        dataManager.updateStepRightOrWrongStatus(wordId: wordId, step: step, right: right)
-        dataManager.updateWordStepStatus(wordId: wordId, step: step, right: right, finish: false)
+        dataManager.connectionAnswerAction(wordId: wordId, step: step, right: right, type: type)
     }
     
- }
+}
  
- extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
+extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     func clickHomeBtnEvent() {
         self.delegate?.showAlertEvnet()
         
@@ -367,16 +367,22 @@
         self.dataManager.skipNewWord()
         self.navigationController?.popViewController(animated: true)
     }
- }
+}
  
- extension YXExerciseViewController: YXExerciseBottomViewProtocol {
+extension YXExerciseViewController: YXExerciseBottomViewProtocol {
     func clickTipsBtnEvent() {
         print("提示点击事件")
         guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
-        self.dataManager.completionExercise(exerciseModel: exerciseModel, right: false)
+                
+        if exerciseModel.type == .connectionWordAndImage || exerciseModel.type == .connectionWordAndChinese {
+            self.connectionEvent(wordId: remindWordId, step: exerciseModel.step, right: false, type: exerciseModel.type)
+        } else {
+            self.dataManager.defaultAnswerAction(exerciseModel: exerciseModel, right: false)
+        }
+        
         self.exerciseViewArray[0].isWrong = true
         self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
         self.exerciseViewArray.first?.remindView?.show()
     }
- }
+}
  

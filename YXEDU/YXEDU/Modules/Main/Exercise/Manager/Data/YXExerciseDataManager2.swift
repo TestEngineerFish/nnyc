@@ -16,18 +16,20 @@ class YXExerciseDataManager: NSObject {
     
     public var newWordCount: Int = 0
     public var reviewWordCount: Int = 0
-    public var bookId: Int = 0 // { return newExerciseModelArray.first?.word?.bookId ?? 0 }
-    public var unitId: Int = 0 //{ return newExerciseModelArray.first?.word?.unitId ?? 0 }
+    public var bookId: Int = 0 // { return newExerciseArray.first?.word?.bookId ?? 0 }
+    public var unitId: Int = 0 //{ return newExerciseArray.first?.word?.unitId ?? 0 }
         
     /// 剩余要复习的单词数量
     private var needReviewWordCount = 0
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
-    private var newExerciseModelArray: [YXWordExerciseModel] = []
-//    private var reviewModelArray: [[YXWordExerciseModel]] = []
-        
-    private var currentTurnArray: [YXWordExerciseModel] = []
-    /// 单词集合
+    
+    
+    /// 新学练习集合
+    private var newExerciseArray: [YXWordExerciseModel] = []
+    /// 复习单词集合
     private var reviewWordArray: [YXWordStepsModel] = []
+    /// 当前轮
+    private var currentTurnArray: [YXWordExerciseModel] = []
     
     private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
     private let reviewWordIdsKey = "ReviewWordIdsKey"
@@ -73,8 +75,9 @@ class YXExerciseDataManager: NSObject {
     /// 加载本地未学完的关卡数据
     func fetchUnCompletionExerciseModels() {
         let data = progressManager.localExerciseModels()
-        newExerciseModelArray = data.0
-//        reviewModelArray = data.1
+        newExerciseArray = data.0
+        reviewWordArray = data.1
+        currentTurnArray = data.2
     }
 
     
@@ -82,12 +85,12 @@ class YXExerciseDataManager: NSObject {
     func fetchOneExerciseModel() -> (Int, Int, YXWordExerciseModel?) {
         let json = self.reportJson()
         print(json)
-        var needNewWordCount = newExerciseModelArray.count
+        var needNewWordCount = newExerciseArray.count
         
         if progressManager.isSkipNewWord() {
             needNewWordCount = 0
         } else {
-            for exercise in self.newExerciseModelArray {
+            for exercise in self.newExerciseArray {
                 if exercise.isFinish == false {
                     return (needNewWordCount, needReviewWordCount, exercise)
                 }
@@ -100,34 +103,56 @@ class YXExerciseDataManager: NSObject {
         return (needNewWordCount, needReviewWordCount, e)
     }
     
-    /// 完成一个练习后，答题后修改状态
+    /// 做题动作，不管答题对错，都需要调用次方法修改相关状态（连线题单个选项的对错有其他的方法处理）
     /// - Parameters:
     ///   - exerciseModel: 练习数据
     ///   - right: 对错
-    func completionExercise(exerciseModel: YXWordExerciseModel, right: Bool) {
+    func defaultAnswerAction(exerciseModel: YXWordExerciseModel, right: Bool) {
         
-        if !right {
-            self.addWrongBook(exerciseModel: exerciseModel)
-        }
+//        if !right {
+//            self.addWrongBook(exerciseModel: exerciseModel)
+//        }
         
         // 更新每个练习的完成状态
         updateFinishStatus(exerciseModel: exerciseModel, right: right)
         
-        
-//        updateScore(exerciseModel: exerciseModel, right: right)
+        // 更新积分
         updateScore(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, type: exerciseModel.type)
+        
+        // 更新对错
         updateStepRightOrWrongStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right)
         
         // 更新待学习数
         updateNeedReviewWordCount()
         
-        // 处理进度状态
-//        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
+        // 更新进度状态
+        progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
+        progressManager.updateCurrentExercisesProgress(currentExerciseArray: currentTurnArray)
         
         printStatus()
-        
-            
+                    
     }
+    
+    
+    
+    /// 连线题，单个选项的做题动作处理
+    /// - Parameters:
+    ///   - wordId:
+    ///   - step:
+    ///   - right:
+    ///   - type:
+    func connectionAnswerAction(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
+        updateScore(wordId: wordId, step: step, right: right, type: type)
+        updateStepRightOrWrongStatus(wordId: wordId, step: step, right: right)
+        updateWordStepStatus(wordId: wordId, step: step, right: right, finish: false)
+        
+        // 更新进度状态
+        progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
+//        progressManager.updateCurrentExercisesProgress(currentExerciseArray: currentTurnArray)
+    }
+    
+    
+    
     
     /// 更新每个Step的 对错
     /// - Parameters:
@@ -157,9 +182,9 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportUnit( completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let json = self.reportJson()
-//        print(json)
-//        completion?(true, nil)
-//        return
+        print(json)
+        completion?(true, nil)
+        return
         
         let request = YXExerciseRequest.report(json: json)
         YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
@@ -185,11 +210,12 @@ class YXExerciseDataManager: NSObject {
         self.processReviewWord(result: result)
         
         // 处理练习答案选项
-        optionManager.initData(newArray: newExerciseModelArray, reviewArray: self.reviewWords())
+        optionManager.initData(newArray: newExerciseArray, reviewArray: self.reviewWords())
         
         // 处理进度状态
-//        progressManager.initProgressStatus(reviewWordIds: result?.reviewWordIds)
-//        progressManager.updateProgress(newExerciseModel: newExerciseModelArray, reviewExerciseModel: reviewModelArray)
+        progressManager.initProgressStatus(reviewWordIds: result?.reviewWordIds)
+        progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
+
         
         YYCache.set(result?.reviewWordIds, forKey: reviewWordIdsKey)
     }
@@ -214,7 +240,7 @@ class YXExerciseDataManager: NSObject {
                     exercise.type = .newLearnJuniorHighSchool
                 }
                 
-                newExerciseModelArray.append(exercise)
+                newExerciseArray.append(exercise)
             }
         }
     }
@@ -360,38 +386,36 @@ class YXExerciseDataManager: NSObject {
     }
    
    
-   /// 获取练习题的备份题
-   /// - Parameters:
-   ///   - wordId: 单词Id
-   ///   - step: 步骤
-   private func backupExercise(wordId: Int, step: Int) -> YXWordExerciseModel? {
-       for word in reviewWordArray {
-           if word.wordId == wordId {
-               return word.backupExerciseStep[step]
-           }
-       }
-       return nil
-   }
+    /// 获取练习题的备份题
+    /// - Parameters:
+    ///   - wordId: 单词Id
+    ///   - step: 步骤
+    private func backupExercise(wordId: Int, step: Int) -> YXWordExerciseModel? {
+        for word in reviewWordArray {
+            if word.wordId == wordId {
+                return word.backupExerciseStep[step]
+            }
+        }
+        return nil
+    }
    
-   
-   /// 获取单词下某个step 具体的练习数据，可能需要根据得分来获取
-   /// - Parameter exerciseArray:
-   private func fetchExerciseOfStep(exerciseArray: [YXWordExerciseModel]) -> YXWordExerciseModel? {
-       var model: YXWordExerciseModel?
-       if exerciseArray.count > 1 { // 根据得分取
-           for exercise in exerciseArray {
-               if exercise.isCareScore && exercise.score == fetchWordScore(wordId: exercise.word?.wordId ?? 0) {
-                   model = exercise
-               }
-           }
-       } else if let exercise = exerciseArray.first {
-           model = exercise
-       }
-       return model
-   }
-   
+    /// 获取单词下某个step 具体的练习数据，可能需要根据得分来获取
+    /// - Parameter exerciseArray:
+    private func fetchExerciseOfStep(exerciseArray: [YXWordExerciseModel]) -> YXWordExerciseModel? {
+        var model: YXWordExerciseModel?
+        if exerciseArray.count > 1 { // 根据得分取
+            for exercise in exerciseArray {
+                if exercise.isCareScore && exercise.score == fetchWordScore(wordId: exercise.word?.wordId ?? 0) {
+                    model = exercise
+                }
+            }
+        } else if let exercise = exerciseArray.first {
+            model = exercise
+        }
+        return model
+    }
 
-   
+      
       
 
    /// 查询单词练习得分
@@ -406,9 +430,9 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter exerciseModel: 哪个练习
     private func updateFinishStatus(exerciseModel: YXWordExerciseModel, right: Bool) {
         if exerciseModel.isNewWord {
-            for (i, e) in newExerciseModelArray.enumerated() {
+            for (i, e) in newExerciseArray.enumerated() {
                 if e.word?.wordId == exerciseModel.word?.wordId {
-                    newExerciseModelArray[i].isFinish = true
+                    newExerciseArray[i].isFinish = true
                     break
                 }
             }
@@ -443,10 +467,6 @@ class YXExerciseDataManager: NSObject {
     ///   - exerciseModel:
     ///   - right:
     public func updateScore(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
-        
-//        guard let wordId = exerciseModel.word?.wordId else {
-//            return
-//        }
         
         var score = 10
         
@@ -588,10 +608,8 @@ class YXExerciseDataManager: NSObject {
             }
             
         }
-
-                
         
-        newWordCount = self.newExerciseModelArray.count
+        newWordCount = self.newExerciseArray.count
         reviewWordCount = map.count
         
         return Array(map.values).toJSONString() ?? ""
