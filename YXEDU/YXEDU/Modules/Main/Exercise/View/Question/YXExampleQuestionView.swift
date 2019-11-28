@@ -67,7 +67,7 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.audioList.append(self.exerciseModel.word?.voice ?? "")
+        self.audioList.append(self.exerciseModel.word?.englishExample ?? "")
         self.playAudio()
     }
 }
