@@ -82,9 +82,9 @@
             make.centerY.mas_equalTo(self.leftButton);
         }];
         [self.arrowIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.titleLabel.mas_right).with.offset(5);
+            make.left.equalTo(self.titleLabel.mas_right);
             make.centerY.equalTo(self.titleLabel);
-            make.size.mas_equalTo(CGSizeMake(13, 7));
+            make.size.mas_equalTo(CGSizeMake(AdaptSize(18), AdaptSize(18)));
         }];
         UITapGestureRecognizer *tapArrow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTitleView)];
         UITapGestureRecognizer *tapTitleLabel= [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTitleView)];

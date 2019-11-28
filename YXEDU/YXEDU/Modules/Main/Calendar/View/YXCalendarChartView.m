@@ -156,7 +156,7 @@
 - (UIView *)xAxisView {
     if (!_xAxisView) {
         _xAxisView = [[UIView alloc] init];
-        _xAxisView.backgroundColor = UIColorOfHex(0x57d7f3);
+        _xAxisView.backgroundColor = UIColorOfHex(0xDF8619);
         [self addSubview:_xAxisView];
         [self bringSubviewToFront:_xAxisView];
         [_xAxisView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -172,7 +172,7 @@
 - (UIView *)yAxisView {
     if (!_yAxisView) {
         _yAxisView = [[UIView alloc] init];
-        _yAxisView.backgroundColor = UIColorOfHex(0x57d7f3);
+        _yAxisView.backgroundColor = UIColorOfHex(0xDF8619);
         [self addSubview:_yAxisView];
         [self bringSubviewToFront:_yAxisView];
         [_yAxisView mas_makeConstraints:^(MASConstraintMaker *make) {

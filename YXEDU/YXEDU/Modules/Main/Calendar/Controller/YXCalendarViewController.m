@@ -55,6 +55,7 @@ static CGFloat const kPickViewHeight = 272.f;
 @property (nonatomic, strong) UIView  *noResultsView;
 @property (nonatomic, strong) UIView  *noNetworkViewWithCalendar;
 //table view
+@property (nonatomic, strong) UIImageView *fruitIcon;
 @property (nonatomic, strong) UILabel *tableTitleLabel;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSString *word;
@@ -213,6 +214,14 @@ static CGFloat const kPickViewHeight = 272.f;
     return _monthSummaryView;
 }
 
+- (UIImageView *)fruitIcon {
+    if (!_fruitIcon) {
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fruit_icon"]];
+        _fruitIcon = imageView;
+    }
+    return _fruitIcon;
+}
+
 - (UILabel *)tableTitleLabel {
     if (!_tableTitleLabel) {
         UILabel *tableTitleLabel  = [[UILabel alloc] init];
@@ -231,11 +240,13 @@ static CGFloat const kPickViewHeight = 272.f;
         defaultResultView.backgroundColor = UIColor.clearColor;
         UIImageView *imageView = [UIImageView new];
         imageView.image = [UIImage imageNamed:@"no_data_icon"];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
         [defaultResultView addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(defaultResultView);
             make.top.equalTo(defaultResultView).with.offset(-20);
-            make.width.and.height.mas_equalTo(AdaptSize(60.f));
+            make.width.mas_equalTo(AdaptSize(178.f));
+            make.height.mas_equalTo(AdaptSize(109.f));
         }];
         UILabel *label = [[UILabel alloc] init];
         label.text = @"当天没有学习数据哦~";
@@ -382,6 +393,7 @@ static CGFloat const kPickViewHeight = 272.f;
     [self.view addSubview:self.contentScroll];
     [self.contentScroll addSubview:self.monthDataView];
     [self.contentScroll addSubview:self.monthSummaryView];
+    [self.contentScroll addSubview:self.fruitIcon];
     [self.contentScroll addSubview:self.tableTitleLabel];
     [self.view addSubview:self.shareImageIcon];
     [self.view bringSubviewToFront:self.shareImageIcon];
@@ -410,10 +422,17 @@ static CGFloat const kPickViewHeight = 272.f;
         make.right.equalTo(self.monthDataView).with.offset(AdaptSize(-15.f));
         make.height.mas_equalTo(AdaptSize(81.f));
     }];
+
+    [self.fruitIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.monthSummaryView.mas_bottom).with.offset(AdaptSize(12));
+        make.left.equalTo(self.monthSummaryView).with.offset(10.5);
+        make.size.mas_equalTo(CGSizeMake(AdaptSize(14.f), 14.f));
+    }];
     
     [self.tableTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.monthSummaryView.mas_bottom).with.offset(20.f);
-        make.left.right.equalTo(self.monthSummaryView).with.offset(10.5);
+        make.centerY.equalTo(self.fruitIcon);
+        make.left.equalTo(self.fruitIcon.mas_right).with.offset(AdaptSize(2.f));
+        make.right.equalTo(self.monthSummaryView).with.offset(-10.5);
         make.height.mas_equalTo(16.f);
     }];
 }

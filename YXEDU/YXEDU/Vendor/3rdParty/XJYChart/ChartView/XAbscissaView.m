@@ -60,7 +60,7 @@
                                  labelWidth - 2 * intervalWidth,
                                  self.frame.size.height)];
     label.text = self.dataDescribeArray[i];
-    label.textColor = UIColorOfHex(0x3AC8FC);
+    label.textColor = UIColorOfHex(0xDF8619);
 //    label.adjustsFontSizeToFitWidth = YES;
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentCenter;
