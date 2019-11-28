@@ -32,6 +32,13 @@ class YXSeleceUnitView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         Bundle.main.loadNibNamed("YXSeleceUnitView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
+        
+        for index in 0..<units.count {
+            guard units[index].isLastLearnUnit == 1 else { continue }
+            pickerView.selectRow(index, inComponent: 0, animated: true)
+            
+            break
+        }
     }
     
     @IBAction func done(_ sender: UIButton) {

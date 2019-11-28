@@ -68,6 +68,7 @@ struct YXWordBookModel: Mappable {
 struct YXWordBookUnitModel: Mappable {
     var unitId: Int?
     var unitName: String?
+    var isLastLearnUnit: Int?
     var isExtensionUnit: Bool = false
     var words: [YXWordModel]?
     
@@ -78,6 +79,7 @@ struct YXWordBookUnitModel: Mappable {
     mutating func mapping(map: Map) {
         unitId <- map["unit_id"]
         unitName <- map["unit_name"]
+        isLastLearnUnit <- map["is_last_learn_unit"]
         isExtensionUnit <- map["is_ext_unit"]
         words <- map["word_list"]
     }
