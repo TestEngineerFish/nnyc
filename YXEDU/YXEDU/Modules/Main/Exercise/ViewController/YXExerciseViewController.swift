@@ -336,7 +336,7 @@
     func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
         dataManager.updateScore(wordId: wordId, step: step, right: right, type: type)
         dataManager.updateStepRightOrWrongStatus(wordId: wordId, step: step, right: right)
-        dataManager.updateWordStepStatus(wordId: wordId, step: step, right: right, finish: right)
+        dataManager.updateWordStepStatus(wordId: wordId, step: step, right: right, finish: false)
     }
     
  }
