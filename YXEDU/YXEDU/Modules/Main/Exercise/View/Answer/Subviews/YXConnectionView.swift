@@ -384,8 +384,8 @@ extension YXConnectionView {
             itemView.itemStatus = .selected
             self.drawLineProcess()
         } else {// 清除掉
-//            self.startItemView?.itemStatus = .normal
-//            self.startItemView = nil
+            self.startItemView?.itemStatus = .normal
+            self.startItemView = nil
             self.shapeLayer?.removeFromSuperlayer()
         }
 

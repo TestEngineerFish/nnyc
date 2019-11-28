@@ -389,7 +389,7 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
         guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
                 
         if exerciseModel.type == .connectionWordAndImage || exerciseModel.type == .connectionWordAndChinese {
-            self.connectionEvent(wordId: remindWordId, step: exerciseModel.step, right: false, type: exerciseModel.type)
+            dataManager.connectionAnswerAction(wordId: remindWordId, step: exerciseModel.step, right: false, type: exerciseModel.type)
         } else {
             self.dataManager.defaultAnswerAction(exerciseModel: exerciseModel, right: false)
         }
