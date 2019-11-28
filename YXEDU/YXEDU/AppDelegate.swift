@@ -8,6 +8,8 @@
 
 import UIKit
 import UserNotifications
+import GrowingCoreKit
+import GrowingAutoTrackKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initThirdPartyServices() {
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
+        
+        Growing.start(withAccountId: kGrowingIOID)
     }
     
     func initViewAndData() {
@@ -57,9 +61,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        Growing.handle(url)
         return YXMediator.shared().handleOpen(url)
     }
 
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        if Growing.handle(url) {
+            return true
+        }
+        
+        return false
+    }
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         print("==== applicationWillEnterForeground ====")
     }
