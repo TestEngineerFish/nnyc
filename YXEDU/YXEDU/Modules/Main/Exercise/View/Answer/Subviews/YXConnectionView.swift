@@ -445,7 +445,7 @@ extension YXConnectionView {
                 
 //                let CABasicAnimation
                                                                                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     shapeLayer.removeFromSuperlayer()
                     
                     selectedItems.0.itemStatus = .end
