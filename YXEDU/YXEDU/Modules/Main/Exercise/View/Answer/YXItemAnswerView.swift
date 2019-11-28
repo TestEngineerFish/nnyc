@@ -120,7 +120,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         } else {
             self.answerCompletion(right: false)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 cell?.backgroundColor = UIColor.white
                 cell?.layer.borderColor = UIColor.black6.cgColor
                 if let label = cell?.contentView.subviews.first as? UILabel {

@@ -356,13 +356,14 @@
     }
 
     func clickSwitchBtnEvent() {
+        self.delegate?.backHomeEvent()
         self.progressManager.completionExercise()
         self.progressManager.completionReport()
         self.navigationController?.popViewController(animated: true)
     }
 
     func clickSkipBtnEvent() {
-        YXAVPlayerManager.share.pauseAudio()
+        self.delegate?.backHomeEvent()
         self.dataManager.skipNewWord()
         self.navigationController?.popViewController(animated: true)
     }

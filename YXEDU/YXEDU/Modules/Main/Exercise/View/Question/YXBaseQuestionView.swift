@@ -49,7 +49,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     
     func initTitleLabel() {
         self.titleLabel = UILabel()
-        self.titleLabel?.font = UIFont.pfSCSemiboldFont(withSize: 20)
+        self.titleLabel?.font = UIFont.pfSCSemiboldFont(withSize: 26)
         self.titleLabel?.textColor = UIColor.black1
         self.titleLabel?.textAlignment = .center
         self.titleLabel?.text = ""

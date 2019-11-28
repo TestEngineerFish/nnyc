@@ -17,6 +17,7 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
     override func createSubviews() {
         super.createSubviews()
         self.initSubTitleLabel()
+        self.subTitleLabel?.font = UIFont.pfSCMediumFont(withSize: AdaptSize(20))
         self.initAudioPlayerView()
     }
     
@@ -24,10 +25,10 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
         super.layoutSubviews()
         
         subTitleLabel?.snp.makeConstraints({ (make) in
-            let height = self.subTitleLabel?.attributedText?.string.textHeight(font: subTitleLabel!.font, width: screenWidth - 64) ?? 0
+            let height = self.subTitleLabel?.attributedText?.string.textHeight(font: subTitleLabel!.font, width: self.width - AdaptSize(60)) ?? 0
             make.centerY.equalToSuperview()
-            make.left.equalTo(10)
-            make.right.equalTo(-10)
+            make.left.equalTo(AdaptSize(30))
+            make.right.equalTo(AdaptSize(-30))
             make.height.equalTo(height)
         })
     }

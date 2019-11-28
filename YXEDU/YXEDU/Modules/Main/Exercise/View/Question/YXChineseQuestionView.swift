@@ -14,6 +14,7 @@ class YXChineseQuestionView: YXBaseQuestionView {
     override func createSubviews() {
         super.createSubviews()
         self.initTitleLabel()
+        self.titleLabel?.font = UIFont.pfSCSemiboldFont(withSize: 20)
         self.initSubTitleLabel()
     }
     

@@ -31,18 +31,18 @@ class YXExerciseOptionManager2: NSObject {
     func processReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
         
         switch exercise.type {
-            case .lookWordChooseImage, .lookExampleChooseImage, .lookWordChooseChinese,
-                 .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord,
-                 .listenChooseWord, .listenChooseChinese, .listenChooseImage:
-                
-                return reviewWordOption(exercise: exercise)
-            case .validationImageAndWord, .validationWordAndChinese:
-                
-                return validReviewWordOption(exercise: exercise)
-            default:
-                
-                print("其他题型不用生成选项")
-                return exercise
+        case .lookWordChooseImage, .lookExampleChooseImage, .lookWordChooseChinese,
+             .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord,
+             .listenChooseWord, .listenChooseChinese, .listenChooseImage:
+
+            return reviewWordOption(exercise: exercise)
+        case .validationImageAndWord, .validationWordAndChinese:
+
+            return validReviewWordOption(exercise: exercise)
+        default:
+
+            print("其他题型不用生成选项")
+            return exercise
         }
     }
 
@@ -146,7 +146,7 @@ class YXExerciseOptionManager2: NSObject {
         exerciseModel.option = option
         exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
         
-//        reviewWordArray[index] = exerciseModel
+        //        reviewWordArray[index] = exerciseModel
         return exerciseModel
     }
     
@@ -154,7 +154,7 @@ class YXExerciseOptionManager2: NSObject {
     func validReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
         var exerciseModel = exercise
         
-//        exerciseModel.question?.soundmark = exerciseModel.word?.soundmark
+        //        exerciseModel.question?.soundmark = exerciseModel.word?.soundmark
         var items: [YXOptionItemModel] = []
         
         let max = self.reviewWordArray.count
@@ -163,7 +163,7 @@ class YXExerciseOptionManager2: NSObject {
             exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
             exerciseModel.question?.meaning = exerciseModel.word?.meaning
             exerciseModel.question?.imageUrl = exerciseModel.word?.imageUrl
-                                        
+
             var item = YXOptionItemModel()
             item.optionId = -1
             
@@ -182,7 +182,7 @@ class YXExerciseOptionManager2: NSObject {
             
             var item = YXOptionItemModel()
             item.optionId = -1
-                        
+
             items.append(item)
             items.append(itemModel(word: exerciseModel.word!, type: exerciseModel.type))
         }
@@ -193,50 +193,45 @@ class YXExerciseOptionManager2: NSObject {
         exerciseModel.option = option
         exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
         
-//        reviewWordArray[index] = exerciseModel
+        //        reviewWordArray[index] = exerciseModel
         return exerciseModel
     }
     
     
     public func connectionExercise(exerciseArray: [YXWordExerciseModel]) -> YXWordExerciseModel {
-            
-            var exercise = exerciseArray.first!
-            var option = YXExerciseOptionModel()
-            
-            option.firstItems = []
-            option.secondItems = []
-            
-            for e in exerciseArray {
-                var item = YXOptionItemModel()
-                item.optionId = e.word?.wordId ?? 0
-                item.content = e.word?.word
-                option.firstItems?.append(item)
-                
-                
-                var rightItem = YXOptionItemModel()
-                rightItem.optionId = e.word?.wordId ?? 0
-                
-                if exercise.type == .connectionWordAndImage {
-                    rightItem.content = e.word?.imageUrl
-                } else if exercise.type == .connectionWordAndChinese {
-                    rightItem.content = e.word?.meaning
-                }
-                
-                
-                option.secondItems?.append(rightItem)
-            }
-            
-    //        let secondItems = option.secondItems
-    //        for i in 0..<exerciseArray.count {
-    //            let num = random(max: exerciseArray.count)
-    //            let e = secondItems?[i]
-    //            option.secondItems?[num] = e!
-    //        }
 
-            exercise.option = option
-            
-            return exercise
+        var exercise = exerciseArray.first!
+        var option = YXExerciseOptionModel()
+
+        option.firstItems = []
+        option.secondItems = []
+
+        for e in exerciseArray {
+            var item = YXOptionItemModel()
+            item.optionId = e.word?.wordId ?? 0
+            item.content = e.word?.word
+            option.firstItems?.append(item)
+
+
+            var rightItem = YXOptionItemModel()
+            rightItem.optionId = e.word?.wordId ?? 0
+
+            if exercise.type == .connectionWordAndImage {
+                rightItem.content = e.word?.imageUrl
+            } else if exercise.type == .connectionWordAndChinese {
+                rightItem.content = e.word?.meaning
+            }
+
+
+            option.secondItems?.append(rightItem)
         }
+
+        option.secondItems = option.secondItems?.shuffled()
+
+        exercise.option = option
+
+        return exercise
+    }
     
     
     /// 其他新学单词
@@ -253,10 +248,10 @@ class YXExerciseOptionManager2: NSObject {
     /// - Parameter unit:
     func currentUnitWordArray(unit: Int) ->[YXWordModel] {
         
-//        var array: [YXWordExerciseModel] = []
-//        for exercise in reviewWordArray {
-//            array.append(exercise)
-//        }
+        //        var array: [YXWordExerciseModel] = []
+        //        for exercise in reviewWordArray {
+        //            array.append(exercise)
+        //        }
         return []
     }
     
@@ -266,26 +261,26 @@ class YXExerciseOptionManager2: NSObject {
         item.optionId = word.wordId ?? -1
         
         switch type {
-            case .lookWordChooseImage:
-                item.content = word.imageUrl
-            case .lookExampleChooseImage:
-                item.content = word.imageUrl
-            case .lookWordChooseChinese:
-                item.content = word.meaning
-            case .lookExampleChooseChinese:
-                item.content = word.meaning
-            case .lookChineseChooseWord:
-                item.content = word.word
-            case .lookImageChooseWord:
-                item.content = word.word
-            case .listenChooseWord:
-                item.content = word.word
-            case .listenChooseChinese:
-                item.content = word.meaning
-            case .listenChooseImage:
-                item.content = word.imageUrl
-            default:
-                break
+        case .lookWordChooseImage:
+            item.content = word.imageUrl
+        case .lookExampleChooseImage:
+            item.content = word.imageUrl
+        case .lookWordChooseChinese:
+            item.content = word.meaning
+        case .lookExampleChooseChinese:
+            item.content = word.meaning
+        case .lookChineseChooseWord:
+            item.content = word.word
+        case .lookImageChooseWord:
+            item.content = word.word
+        case .listenChooseWord:
+            item.content = word.word
+        case .listenChooseChinese:
+            item.content = word.meaning
+        case .listenChooseImage:
+            item.content = word.imageUrl
+        default:
+            break
         }
         
         return item

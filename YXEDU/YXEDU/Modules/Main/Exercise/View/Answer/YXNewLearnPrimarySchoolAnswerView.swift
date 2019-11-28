@@ -45,7 +45,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 进入后台, 停止播放音频和语音监听
     @objc private func didEnterBackgroundNotification() {
-        print("进入后台, 停止播放音频和语音监听")
+//        print("进入后台, 停止播放音频和语音监听")
         self.pauseView()
     }
 
@@ -228,7 +228,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onResult(_ result: String!, isLast: Bool) {
-        print("============录音结果: " + result)
+//        print("============录音结果: " + result)
         if isLast {
             // 录音结束,清除临时录音缓存
             self.resetOpusTempData()
@@ -282,7 +282,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onVADTimeout() {
-        print("VAD超时啦")
+//        print("VAD超时啦")
         return
     }
 
@@ -314,7 +314,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
-        print("lifecycle: \(lifecycle)")
+//        print("lifecycle: \(lifecycle)")
         return
     }
 

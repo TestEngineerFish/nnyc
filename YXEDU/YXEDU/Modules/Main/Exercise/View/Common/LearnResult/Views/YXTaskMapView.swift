@@ -179,7 +179,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
         if view.model.unitID == self.currentModel?.unitID {
             return
         }
-        if self.currentModel?.status == .some(.uniteIng) || self.currentModel?.status == .some(.uniteStop) {
+        if self.currentModel?.status == .some(.uniteIng) {
             let currentUnitName = self.currentModel?.unitName ?? ""
             let toUnitName = view.model.unitName ?? ""
             let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)

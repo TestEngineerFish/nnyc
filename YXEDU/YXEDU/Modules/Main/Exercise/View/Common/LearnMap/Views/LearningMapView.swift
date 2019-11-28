@@ -172,7 +172,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         if view == self.currentUnitView {
             return
         }
-        if self.currentUnitView?.model.status == .some(.uniteIng) || self.currentUnitView?.model.status == .some(.uniteStop) {
+        if self.currentUnitView?.model.status == .some(.uniteIng) {
             let currentUnitName = self.currentUnitView?.model.unitName ?? ""
             let toUnitName = view.model.unitName ?? ""
             let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)

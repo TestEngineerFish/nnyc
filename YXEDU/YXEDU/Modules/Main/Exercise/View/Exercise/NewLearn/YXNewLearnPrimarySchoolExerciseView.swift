@@ -139,6 +139,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         super.backHomeEvent()
         // 暂停播放
         YXAVPlayerManager.share.pauseAudio()
+        USCRecognizer.sharedManager()?.cancel()
     }
 
     override func showAlertEvnet() {

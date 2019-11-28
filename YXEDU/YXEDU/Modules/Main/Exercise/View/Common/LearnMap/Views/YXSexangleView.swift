@@ -74,22 +74,13 @@ class YXSexangleView: UIView {
     func showProgressAnimation() {
         self.hideProgressAnimtion()
         let maskLayer = self.getSexangleLayer(self.width, strokeColor: UIColor.red.cgColor)
-//        let dotLayer  = CALayer()
-//        let startX = CGFloat(sin(M_1_PI / 180 * 60)) * (width/2)
-//        dotLayer.frame = CGRect(x: startX, y: 0, width: AdaptSize(10), height: AdaptSize(10))
-//        dotLayer.backgroundColor = UIColor.yellow.cgColor
-//        dotLayer.cornerRadius = AdaptSize(10)/2
         // 获取渐变图层
         gradientLayer = self.getGradientLayer()
-//        let gradientLayer2 = self.getGradientLayer()
 
         self.layer.addSublayer(gradientLayer!)
-//        self.layer.addSublayer(gradientLayer2)
-//        gradientLayer2.frame = self.bounds
         gradientLayer?.frame = self.bounds
 
         gradientLayer?.mask  = maskLayer
-//        gradientLayer2.mask  = dotLayer
 
         let progressAnimation = CABasicAnimation(keyPath: "strokeEnd")
         progressAnimation.fromValue   = 0.0
@@ -99,20 +90,6 @@ class YXSexangleView: UIView {
         progressAnimation.fillMode    = .forwards
         progressAnimation.isRemovedOnCompletion = false
         maskLayer.add(progressAnimation, forKey: nil)
-
-//        let progressAnimation2 = CAKeyframeAnimation(keyPath: "position")
-//        progressAnimation2.duration = 2
-//        progressAnimation2.repeatCount = 1
-//        progressAnimation2.fillMode = .forwards
-//        progressAnimation2.isRemovedOnCompletion = false
-//        let point0 = CGPoint(x: width/2, y: 0)
-//        let point1 = CGPoint(x: width - startX, y: width/4)
-//        let point2 = CGPoint(x: width - startX, y: width/2 + width/4)
-//        let point3 = CGPoint(x: width/2, y: width)
-//        let point4 = CGPoint(x: startX, y: width/2 + width/4)
-//        let point5 = CGPoint(x: startX, y: width/4)
-//        progressAnimation2.values = [point0, point1, point2, point3]
-//        dotLayer.add(progressAnimation2, forKey: nil)
     }
 
     func hideProgressAnimtion() {
@@ -122,7 +99,7 @@ class YXSexangleView: UIView {
     /// 获得内容视图
     private func createContentView() -> UIView {
 
-        if  model.status == .uniteIng || model.status == .uniteStop {
+        if  model.status == .uniteIng {
             let view = UIView()
             let unitLabel = UILabel()
             unitLabel.text          = model.unitName
@@ -319,8 +296,6 @@ class YXSexangleView: UIView {
         switch self.model.status {
         case .uniteUnstart, .uniteIngProgressZero:
             return self.isExtension ? UIColor.hex(0xE5DDD7) : UIColor.hex(0xE5DDD7)
-        case .uniteStop:
-            return self.isExtension ? UIColor.hex(0xFFE1B3) : UIColor.hex(0xF5F5F5)
         case .uniteIng:
             return self.isExtension ? UIColor.hex(0xF5F5F5) : UIColor.hex(0xF5F5F5)
         case .uniteEnd:
@@ -333,8 +308,6 @@ class YXSexangleView: UIView {
         switch self.model.status {
         case .uniteUnstart, .uniteIngProgressZero:
             return self.isExtension ? UIColor.hex(0xE5DDD7) : UIColor.hex(0xE5DDD7)
-        case .uniteStop:
-            return self.isExtension ? UIColor.hex(0xFFE1B3) : UIColor.hex(0xFFE9C7)
         case .uniteIng:
             return self.isExtension ? UIColor.hex(0xFFE9C7) : UIColor.hex(0xFFE9C7)
         case .uniteEnd:
@@ -347,8 +320,6 @@ class YXSexangleView: UIView {
         switch self.model.status {
         case .uniteUnstart, .uniteIngProgressZero:
             return self.isExtension ? UIColor.hex(0xB78F58) : UIColor.hex(0xB78F58)
-        case .uniteStop:
-            return self.isExtension ? UIColor.hex(0xE38B03) : UIColor.hex(0xFB6617)
         case .uniteIng:
             return self.isExtension ? UIColor.hex(0xE38B03) : UIColor.hex(0xFB6617)
         case .uniteEnd:

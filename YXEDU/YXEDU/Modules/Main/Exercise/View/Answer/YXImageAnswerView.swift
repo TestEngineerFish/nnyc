@@ -112,7 +112,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         } else {
             self.answerCompletion(right: false)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 cell?.layer.borderColor = UIColor.clear.cgColor
             }
         }

@@ -15,6 +15,7 @@ class YXChineseFillConnectionLetterQuestionView: YXBaseQuestionView {
         super.createSubviews()
 
         self.initTitleLabel()
+        self.titleLabel?.font = UIFont.pfSCSemiboldFont(withSize: 26)
         self.initAudioPlayerView()
 
         self.spellView = YXSpellSubview(self.exerciseModel, isTitle: false)
