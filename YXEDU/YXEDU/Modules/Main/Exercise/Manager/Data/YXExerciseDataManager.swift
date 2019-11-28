@@ -85,6 +85,10 @@ class YXExerciseDataManager: NSObject {
     
     /// 从当前关卡数据中，获取一个练习数据对象
     func fetchOneExerciseModel() -> (Int, Int, YXWordExerciseModel?) {
+        // 更新待学习数
+        updateNeedNewWordCount()
+        updateNeedReviewWordCount()
+        
         let json = self.reportJson()
         print(json)
         var needNewWordCount = newExerciseArray.count
@@ -102,8 +106,10 @@ class YXExerciseDataManager: NSObject {
         
         let e = buildExercise()
         printCurrentTurn()
-        // 取出来一个后，保持进度
+        
+        // 取出来一个后，保存当前轮的进度
         progressManager.updateCurrentExercisesProgress(currentExerciseArray: currentTurnArray)
+
         
         return (needNewWordCount, needReviewWordCount, e)
     }
@@ -114,10 +120,6 @@ class YXExerciseDataManager: NSObject {
     ///   - right: 对错
     func defaultAnswerAction(exerciseModel: YXWordExerciseModel, right: Bool) {
         
-//        if !right {
-//            self.addWrongBook(exerciseModel: exerciseModel)
-//        }
-        
         // 更新每个练习的完成状态
         updateFinishStatus(exerciseModel: exerciseModel, right: right)
         
@@ -126,9 +128,6 @@ class YXExerciseDataManager: NSObject {
         
         // 更新对错
         updateStepRightOrWrongStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right)
-        
-        // 更新待学习数
-        updateNeedReviewWordCount()
         
         // 更新进度状态
         progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
@@ -199,10 +198,15 @@ class YXExerciseDataManager: NSObject {
     }
     
 
+    func isConnectionFinish() -> Bool {
+        return false
+    }
+    
     func skipNewWord() {
         progressManager.setSkipNewWord()
     }
     
+
     func fetchWord(wordId: Int) -> YXWordModel? {
         return dao.selectWord(wordId: wordId)
     }
@@ -507,6 +511,10 @@ class YXExerciseDataManager: NSObject {
     }
     
     
+    private func updateNeedNewWordCount() {
+        
+    }
+    
     /// 更新待学习数
     private func updateNeedReviewWordCount() {
         guard let wordIds = YYCache.object(forKey: reviewWordIdsKey) as? [Int] else {
@@ -519,7 +527,7 @@ class YXExerciseDataManager: NSObject {
             for word in reviewWordArray {
                 for step in word.exerciseSteps {
                     let e = step.first
-                    if wordId == word.wordId && e?.isFinish == false {
+                    if wordId == word.wordId && (e?.isFinish == false || e?.isContinue == true) {
                         map[wordId] = false
                     }
                 }
