@@ -288,7 +288,7 @@ class YXExerciseDataManager_backup: NSObject {
         self.processReviewWord(result: result)
         
         // 处理练习答案选项
-        reviewModelArray = YXExerciseOptionManager().processOptions(newArray: newExerciseModelArray, reviewArray: reviewModelArray)
+        reviewModelArray = YXExerciseOptionManager_backup().processOptions(newArray: newExerciseModelArray, reviewArray: reviewModelArray)
         
         // 处理进度状态
         progressManager.initProgressStatus(reviewWordIds: result?.reviewWordIds)

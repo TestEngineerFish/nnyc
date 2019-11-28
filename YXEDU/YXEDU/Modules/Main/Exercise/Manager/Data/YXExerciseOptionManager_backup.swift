@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXExerciseOptionManager: NSObject {
+class YXExerciseOptionManager_backup: NSObject {
     
     
     private var newWordArray: [YXWordExerciseModel] = []
