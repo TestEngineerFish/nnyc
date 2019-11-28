@@ -121,7 +121,12 @@ static CGFloat const kPickViewHeight = 272.f;
 - (YXComNaviView *)naview {
     if (!_naview) {
         _naview = [YXComNaviView comNaviViewWithLeftButtonType:YXNaviviewLeftButtonWhite];
-        _naview.backgroundColor = [UIColor hexStringToColor:@"EDA743"];
+        _naview.backgroundColor = UIColor.clearColor;
+        UIImage *bgImage = [UIImage imageNamed:@"header_orange_bg"];
+        UIImageView *naviBGImageView = [[UIImageView alloc] initWithImage:bgImage];
+        naviBGImageView.frame = CGRectMake(-50, 0, SCREEN_WIDTH + 50, kNavHeight);
+        naviBGImageView.contentMode = UIViewContentModeScaleAspectFill;
+        [_naview insertSubview:naviBGImageView atIndex:0];
         [_naview.leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [_naview setRightButtonView:self.rightView];
         _naview.titleLabel.textColor = UIColor.whiteColor;
@@ -210,11 +215,11 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (UILabel *)tableTitleLabel {
     if (!_tableTitleLabel) {
-        UILabel *tableTitleLabel = [[UILabel alloc] init];
-        tableTitleLabel.font = [UIFont systemFontOfSize:16.f];
-        tableTitleLabel.textColor = [UIColor colorWithRed:67/255.0 green:74/255.0 blue:93/255.0 alpha:1.0];
-        tableTitleLabel.text = @"--月--号学习数据";
-        _tableTitleLabel = tableTitleLabel;
+        UILabel *tableTitleLabel  = [[UILabel alloc] init];
+        tableTitleLabel.font      = [UIFont regularFontOfSize:12];
+        tableTitleLabel.textColor = UIColorOfHex(0x888888);
+        tableTitleLabel.text      = @"--月--号学习数据";
+        _tableTitleLabel          = tableTitleLabel;
     }
     return _tableTitleLabel;
 }
@@ -400,15 +405,15 @@ static CGFloat const kPickViewHeight = 272.f;
     }];
 
     [self.monthSummaryView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.monthDataView.mas_bottom).with.offset(-110.f);
-        make.left.equalTo(self.monthDataView).with.offset(15.f);
-        make.right.equalTo(self.monthDataView).with.offset(-15.f);
-        make.height.mas_equalTo(150.f);
+        make.top.equalTo(self.monthDataView.mas_bottom).with.offset(AdaptSize(-40.f));
+        make.left.equalTo(self.monthDataView).with.offset(AdaptSize(15.f));
+        make.right.equalTo(self.monthDataView).with.offset(AdaptSize(-15.f));
+        make.height.mas_equalTo(AdaptSize(81.f));
     }];
     
     [self.tableTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.monthSummaryView.mas_bottom).with.offset(20.f);
-        make.left.right.equalTo(self.monthDataView);
+        make.left.right.equalTo(self.monthSummaryView).with.offset(10.5);
         make.height.mas_equalTo(16.f);
     }];
 }

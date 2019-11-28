@@ -37,7 +37,7 @@
         calendarView.headerHeight                     = 0.f;
         calendarView.scrollDirection                  = FSCalendarScrollDirectionHorizontal;
         calendarView.backgroundColor                  = UIColor.clearColor;
-        calendarView.appearance.weekdayTextColor      = UIColor.whiteColor;
+        calendarView.appearance.weekdayTextColor      = UIColorOfHex(0xFFD99E);
         calendarView.appearance.titleDefaultColor     = UIColor.whiteColor;
         calendarView.appearance.titleTodayColor       = UIColorOfHex(0xFF960A);
         calendarView.appearance.todayColor            = UIColor.whiteColor;
@@ -124,9 +124,8 @@
     if (!_calendarStatusView) {
         UIView *statusView = [[UIView alloc] init];
         statusView.backgroundColor = UIColor.clearColor;
-        UIView *studiedIcon = [[UIView alloc] init];
-        studiedIcon.backgroundColor = UIColorOfHex(0xBEEEFD);
-        studiedIcon.layer.cornerRadius = 5.f;
+
+        UIImageView *studiedIcon = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"calendar_icon_learned"]];
         [statusView addSubview:studiedIcon];
         [studiedIcon mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(statusView);

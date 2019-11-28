@@ -27,13 +27,9 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         self.initImageView()
         self.initAudioPlayerView()
         if let wordModel = self.exerciseModel.word {
-            self.titleLabel?.text = wordModel.word
+            self.titleLabel?.text    = wordModel.word
             self.subTitleLabel?.text = wordModel.meaning
         }
-        if let urlStr = exerciseModel.question?.imageUrl {
-            imageView?.showImage(with: urlStr)
-        }
-        audioPlayerView?.urlStr = exerciseModel.question?.voice
         self.layer.removeShadow()
         self.clipsToBounds = true
         self.createSubviews(type)
