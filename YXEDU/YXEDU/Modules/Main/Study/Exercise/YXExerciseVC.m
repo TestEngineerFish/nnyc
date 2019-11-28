@@ -92,9 +92,9 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
     if (self) {
         [YXConfigure shared].firstAppearKeyBoard = YES;
         //注册通知
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(userDidTakeScreenshot:)
-                                                     name:UIApplicationUserDidTakeScreenshotNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(userDidTakeScreenshot:)
+//                                                     name:UIApplicationUserDidTakeScreenshotNotification object:nil];
     }
     return self;
 }
@@ -676,9 +676,9 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 }
 
 //截屏响应
-- (void)userDidTakeScreenshot:(NSNotification *)notification {
-    self.floatView.snapShoptImage = [YXUtils screenShot];
-}
+//- (void)userDidTakeScreenshot:(NSNotification *)notification {
+//    self.floatView.snapShoptImage = [YXUtils screenShot];
+//}
 
 #pragma mark -YXExerciseFloatViewDelegate-
 - (void)exerciseFloatViewSubmmit:(YXExerciseFloatView *)floatView {

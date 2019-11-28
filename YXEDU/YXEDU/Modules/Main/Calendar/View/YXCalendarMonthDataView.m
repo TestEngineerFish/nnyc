@@ -34,19 +34,19 @@
 {
     if (!_calendarView) {
         FSCalendar *calendarView = [[FSCalendar alloc] init];
-        calendarView.headerHeight = 0.f;
-        calendarView.scrollDirection = FSCalendarScrollDirectionHorizontal;
-        calendarView.backgroundColor = UIColor.clearColor;
-        calendarView.appearance.weekdayTextColor = UIColor.whiteColor;
-        calendarView.appearance.titleDefaultColor = UIColor.whiteColor;
-        calendarView.appearance.titleTodayColor = UIColorOfHex(0xA86600);
-        calendarView.appearance.todayColor = UIColor.whiteColor;
-        calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
-        calendarView.appearance.selectionColor = UIColor.clearColor;
-        calendarView.appearance.titlePlaceholderColor = UIColorOfHex(0x38A0F2);
-        calendarView.weekdayHeight = AdaptSize(50.f);
-        calendarView.locale = [NSLocale localeWithLocaleIdentifier:@"zh-CN"];
-        calendarView.appearance.titleFont = [UIFont systemFontOfSize:AdaptSize(16.f)];
+        calendarView.headerHeight                     = 0.f;
+        calendarView.scrollDirection                  = FSCalendarScrollDirectionHorizontal;
+        calendarView.backgroundColor                  = UIColor.clearColor;
+        calendarView.appearance.weekdayTextColor      = UIColor.whiteColor;
+        calendarView.appearance.titleDefaultColor     = UIColor.whiteColor;
+        calendarView.appearance.titleTodayColor       = UIColorOfHex(0xFF960A);
+        calendarView.appearance.todayColor            = UIColor.whiteColor;
+        calendarView.appearance.borderSelectionColor  = UIColor.whiteColor;
+        calendarView.appearance.selectionColor        = UIColor.clearColor;
+        calendarView.appearance.titlePlaceholderColor = UIColorOfHex(0xDF8619);
+        calendarView.weekdayHeight                    = AdaptSize(50.f);
+        calendarView.locale                           = [NSLocale localeWithLocaleIdentifier:@"zh-CN"];
+        calendarView.appearance.titleFont             = [UIFont systemFontOfSize:AdaptSize(16.f)];
         _calendarView = calendarView;
     }
     return _calendarView;

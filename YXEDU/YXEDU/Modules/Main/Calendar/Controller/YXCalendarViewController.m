@@ -121,12 +121,7 @@ static CGFloat const kPickViewHeight = 272.f;
 - (YXComNaviView *)naview {
     if (!_naview) {
         _naview = [YXComNaviView comNaviViewWithLeftButtonType:YXNaviviewLeftButtonWhite];
-        _naview.backgroundColor = UIColor.clearColor;
-        UIImage *bgImage = [UIImage imageNamed:@"calendar_bg"];
-        UIImageView *naviBGImageView = [[UIImageView alloc] initWithImage:bgImage];
-        naviBGImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH, kNavHeight);
-        naviBGImageView.contentMode = UIViewContentModeTop;
-        [_naview insertSubview:naviBGImageView atIndex:0];
+        _naview.backgroundColor = [UIColor hexStringToColor:@"EDA743"];
         [_naview.leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [_naview setRightButtonView:self.rightView];
         _naview.titleLabel.textColor = UIColor.whiteColor;
@@ -467,13 +462,13 @@ static CGFloat const kPickViewHeight = 272.f;
             [weakSelf.monthDataView.chartView setDataArray:[weakSelf setupChartData] selected:[NSNumber numberWithUnsignedInteger:weakSelf.currentSelectedDate.day - 1]];
             [self.monthDataView.calendarView selectDate:self.currentSelectedDate scrollToDate:NO];
             if (self.currentSelectedDate.day == self.monthDataView.calendarView.today.day) {
-                self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0x2FC7FF);
-                self.monthDataView.calendarView.appearance.selectionColor = UIColor.whiteColor;
-                self.monthDataView.calendarView.appearance.titleSelectionColor = UIColorOfHex(0x59C6F3);
+                self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFF960A);
+                self.monthDataView.calendarView.appearance.selectionColor       = UIColorOfHex(0xFFD6A4);
+                self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColorOfHex(0xFF960A);
             } else {
                 self.monthDataView.calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
-                self.monthDataView.calendarView.appearance.selectionColor = UIColor.clearColor;
-                self.monthDataView.calendarView.appearance.titleSelectionColor = UIColor.whiteColor;
+                self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
+                self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColor.whiteColor;
             }
         }
     }];
@@ -824,13 +819,13 @@ static CGFloat const kPickViewHeight = 272.f;
     self.currentSelectedDate = date;
     NSDate *today = calendar.today;
     if (date == today) {
-        self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0x2FC7FF);
-        self.monthDataView.calendarView.appearance.selectionColor = UIColor.whiteColor;
-        self.monthDataView.calendarView.appearance.titleSelectionColor = UIColorOfHex(0x59C6F3);
+        self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFF960A);
+        self.monthDataView.calendarView.appearance.selectionColor       = UIColorOfHex(0xFFD6A4);
+        self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColorOfHex(0xFF960A);
     } else {
         self.monthDataView.calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
-        self.monthDataView.calendarView.appearance.selectionColor = UIColor.clearColor;
-        self.monthDataView.calendarView.appearance.titleSelectionColor = UIColor.whiteColor;
+        self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
+        self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColor.whiteColor;
     }
     //扯淡的滑动
     [calendar selectDate:date];
@@ -868,11 +863,11 @@ static CGFloat const kPickViewHeight = 272.f;
     NSString *key = [dateformatter stringFromDate:date];
     // 已学习
     if ([self.monthData.studiedDateDict.allKeys containsObject:key]) {
-        return [UIColor colorWithWhite:1 alpha:0.55];
+        return [UIColor colorWithWhite:1 alpha:0.17];
     }
     // 已打卡的肯定学习过了
     if ([self.monthData.punchedDateDict.allKeys containsObject:key]) {
-        return [UIColor colorWithWhite:1 alpha:0.55];
+        return [UIColor colorWithWhite:1 alpha:0.17];
     }
     return nil;
 }
@@ -883,11 +878,11 @@ static CGFloat const kPickViewHeight = 272.f;
     dateformatter.dateFormat = @"yyyy-MM-dd";
     NSString *key = [dateformatter stringFromDate:date];
     if ([self.monthData.studiedDateDict.allKeys containsObject:key]) {
-        return UIColorOfHex(0x3AC8FC);
+        return UIColor.whiteColor;
     }
     // 已打卡的肯定学习过了
     if ([self.monthData.punchedDateDict.allKeys containsObject:key]) {
-        return UIColorOfHex(0x3AC8FC);
+        return UIColor.whiteColor;
     }
     return nil;
 }
