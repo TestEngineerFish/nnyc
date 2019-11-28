@@ -78,6 +78,8 @@ class YXExerciseDataManager: NSObject {
         newExerciseArray = data.0
         reviewWordArray = data.1
         currentTurnArray = data.2
+        
+        optionManager.initData(newArray: newExerciseArray, reviewArray: self.reviewWords())
     }
 
     
