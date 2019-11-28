@@ -132,7 +132,7 @@ class YXExerciseHeaderView: UIView {
         self.learningLabel.snp.makeConstraints { (make) in
             make.top.equalTo(0)
             make.right.equalTo(-38)
-            make.width.equalTo(31)
+            make.width.equalTo(32)
             make.height.equalTo(14)
         }
         self.reviewLabel.snp.makeConstraints { (make) in
