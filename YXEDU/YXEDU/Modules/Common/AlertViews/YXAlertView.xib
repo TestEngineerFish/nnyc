@@ -11,9 +11,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXAlertView" customModule="YXEDU" customModuleProvider="target">
             <connections>
                 <outlet property="alertHeight" destination="StY-Oe-Efb" id="iHB-0Q-3dI"/>
+                <outlet property="backgroundView" destination="TAM-jf-gYE" id="VWK-VV-qDZ"/>
                 <outlet property="cancelButtonRightDistance" destination="vf0-C6-MQX" id="ta2-Ul-OJ1"/>
                 <outlet property="clearButton" destination="sYH-8X-j99" id="Qmq-kF-ckQ"/>
                 <outlet property="closeButton" destination="4Vh-iI-Pge" id="hNr-ki-Eyg"/>
+                <outlet property="containerView" destination="ct3-cU-vXD" id="ENI-JJ-GvM"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="5If-RI-ene"/>
                 <outlet property="descriptionLabel" destination="sHv-1g-9Wg" id="6dJ-26-Mzc"/>
                 <outlet property="doneButtonLeftDistance" destination="kR9-Af-ICs" id="wSr-i5-tA8"/>
@@ -207,7 +209,7 @@
         </view>
         <tapGestureRecognizer id="zfY-WI-zji">
             <connections>
-                <action selector="tapBackground:" destination="-1" id="QkP-Kd-M6E"/>
+                <action selector="close:" destination="-1" id="2lo-x4-Sts"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

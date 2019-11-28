@@ -21,6 +21,8 @@ class YXAlertView: UIView, UITextFieldDelegate {
     private var type: YXAlertViewType = .normal
     
     @IBOutlet var contentView: UIView!
+    @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var textFieldView: UIView!
@@ -35,25 +37,36 @@ class YXAlertView: UIView, UITextFieldDelegate {
     @IBOutlet weak var alertHeight: NSLayoutConstraint!
     
     @IBAction func cancle(_ sender: UIButton) {
-        cancleClosure?()
-        self.removeFromSuperview()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.contentView.alpha = 0
+            
+        }, completion: { completed in
+            self.cancleClosure?()
+            self.removeFromSuperview()
+        })
     }
     
     @IBAction func done(_ sender: UIButton) {
-        doneClosure?(textField.text)
-        self.removeFromSuperview()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.contentView.alpha = 0
+            
+        }, completion: { completed in
+            self.doneClosure?(self.textField.text)
+            self.removeFromSuperview()
+        })
     }
     
-    @IBAction func close(_ sender: UIButton) {
-        self.removeFromSuperview()
+    @IBAction func close(_ sender: Any) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.contentView.alpha = 0
+            
+        }, completion: { completed in
+            self.removeFromSuperview()
+        })
     }
     
     @IBAction func clearTextField(_ sender: UIButton) {
         textField.text = ""
-    }
-    
-    @IBAction func tapBackground(_ sender: UITapGestureRecognizer) {
-        self.removeFromSuperview()
     }
     
     init(type: YXAlertViewType = .normal) {
@@ -107,6 +120,16 @@ class YXAlertView: UIView, UITextFieldDelegate {
     
     func show() {
         kWindow.addSubview(self)
+        containerView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        containerView.alpha = 0
+        backgroundView.alpha = 0
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            self.containerView.transform = .identity
+            self.containerView.alpha = 1
+            self.backgroundView.alpha = 0.7
+            
+        }, completion: nil)
     }
     
     func adjustAlertHeight() {
