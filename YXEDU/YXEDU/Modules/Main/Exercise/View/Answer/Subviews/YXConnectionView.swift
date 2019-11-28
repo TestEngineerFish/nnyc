@@ -51,6 +51,7 @@ class YXConnectionView: UIView {
     var connectionCompletion: (() -> ())?
     var selectedLeftItemEvent: ((_ status: YXConnectionItemStatus, _ wordId: Int) -> ())?
     var remindEvent: ((_ wordId: Int) -> ())?
+    var connectionEvent: ((_ wordId: Int, _ right: Bool) -> ())?
     
     
     var itemConfig: YXConnectionItemConfigProtocol {
@@ -432,7 +433,12 @@ extension YXConnectionView {
         // 第一次画黑线
         var shapeLayer = self.drawLine(status: .selected, start: start, end: end)
         
-        if isConnectionRight() {
+        let right = isConnectionRight()
+    
+        self.connectionEvent?(selectedItems.0.itemModel?.optionId ?? 0, right)
+        
+        if right {
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
                 guard let self = self else { return }
                 shapeLayer.removeFromSuperlayer()

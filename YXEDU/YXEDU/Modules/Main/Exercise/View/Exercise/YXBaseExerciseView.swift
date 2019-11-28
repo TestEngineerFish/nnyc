@@ -21,7 +21,7 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
     ///   - wordId:
     ///   - step:
     ///   - right:
-    func itemConnectionCompletion(_ wordId: Int, _ step: Int, _ right: Bool)
+//    func itemConnectionCompletion(_ wordId: Int, _ step: Int, _ right: Bool)
 }
 
 

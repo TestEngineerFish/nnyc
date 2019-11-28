@@ -12,6 +12,7 @@ import UIKit
 protocol YXConnectionAnswerViewDelegate: NSObjectProtocol {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int)
     func remindEvent(wordId: Int)
+    func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXExerciseType)
 }
 
 /// 连线题目， 1. 词义连线，2. 词图连线
@@ -44,6 +45,11 @@ class YXConnectionAnswerView: YXBaseAnswerView {
         connectionView?.remindEvent = { [weak self] (wordId) in
             self?.connectionAnswerViewDelegate?.remindEvent(wordId: wordId)
         }
+        connectionView?.connectionEvent = { [weak self] (wordId, right) in
+            guard let self = self else { return }
+            self.connectionAnswerViewDelegate?.connectionEvent(wordId: wordId, step: self.exerciseModel.step, right: right, type: self.exerciseModel.type)
+        }
+        
     }
     
     override func bindData() {

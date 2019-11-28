@@ -5,7 +5,7 @@
  //  Created by sunwu on 2019/10/24.
  //  Copyright © 2019 shiji. All rights reserved.
  //
-
+ 
  import UIKit
  protocol YXExerciseViewControllerProtocol: NSObjectProtocol {
     /// 显示弹框事件
@@ -15,10 +15,10 @@
     /// 隐藏弹框事件
     func hideAlertEvent()
  }
-
+ 
  /// 练习模块，主控制器
  class YXExerciseViewController: UIViewController {
-
+    
     public var bookId: Int = 0
     public var unitId: Int = 0
     
@@ -30,7 +30,7 @@
     
     // 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
-
+    
     // 顶部view
     private var headerView = YXExerciseHeaderView()
     
@@ -39,13 +39,13 @@
     
     /// 切题动画
     private var switchAnimation = YXSwitchAnimation()
-
+    
     // Load视图
     private var loadingView: YXExerciseLoadingView?
-
+    
     // 协议
     private weak var delegate: YXExerciseViewControllerProtocol?
-
+    
     /// 哪个单词的提示，仅连线题使用
     private var remindWordId: Int = -1
     
@@ -58,7 +58,7 @@
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
-
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.hideLoadAnimation(nil)
@@ -72,14 +72,14 @@
         self.initManager()
         self.startStudy()
     }
-
+    
     deinit {
         print("练习 VC 释放")
     }
-
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-
+        
         self.headerView.snp.makeConstraints { (make) in
             make.top.equalTo(YXExerciseConfig.headerViewTop)
             make.left.right.equalTo(0)
@@ -91,7 +91,7 @@
             make.height.equalTo(18)
             make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
         }
-
+        
     }
     
     private func createSubviews() {
@@ -100,7 +100,7 @@
         self.view.addSubview(headerView)
         self.view.addSubview(bottomView)
     }
-
+    
     private func bindProperty() {
         self.view.backgroundColor = UIColor.white
         
@@ -201,7 +201,7 @@
                     vc.newLearnAmount = self.dataManager.newWordCount
                     vc.reviewLearnAmount = self.dataManager.reviewWordCount
                     
-
+                    
                     self.navigationController?.popViewController(animated: false)
                     vc.hidesBottomBarWhenPushed = true
                     YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
@@ -214,7 +214,7 @@
             
             
         }
-
+        
     }
     
     /// 加载一个练习
@@ -233,27 +233,28 @@
         exerciseView.animateAdmission(isFirst, nil)
         
     }
-
+    
     /// 显示loading动画
     private func showLoadAnimation() {
         self.loadingView = YXExerciseLoadingView(frame: kWindow.bounds)
         kWindow.addSubview(self.loadingView!)
         self.loadingView?.showAnimation()
     }
-
+    
     private func hideLoadAnimation(_ completeBlock: (()->Void)?) {
         self.loadingView?.stopAnimation(completeBlock)
         self.loadingView = nil
     }
  }
-
+ 
  extension YXExerciseViewController: YXExerciseViewDelegate {
+    
     ///答完题回调处理
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
         // 答题后，数据处理
         self.dataManager.completionExercise(exerciseModel: exerciseModel, right: right)
-
+        
         // 新学直接切题，不用显示动画后
         if exerciseModel.type == .newLearnPrimarySchool
             || exerciseModel.type == .newLearnPrimarySchool_Group
@@ -263,20 +264,13 @@
         }
         
         // 如果有做错
-        if !right {
+        if !right && (exerciseModel.type != .connectionWordAndChinese || exerciseModel.type != .connectionWordAndImage) {
             self.exerciseViewArray.first?.isWrong = true
         }
         
         // 答题后的对错动画
         switchAnimation.show(isRight: right)
     }
-    
-    
-    func itemConnectionCompletion(_ wordId: Int, _ step: Int, _ right: Bool) {
-        
-    }
-    
-    
     
     
     /// 动画停止后回调
@@ -288,7 +282,7 @@
             answerWrong()
         }
     }
-
+    
     /// 答对处理
     func answerRight() {
         if self.exerciseViewArray.first?.isWrong ?? false {
@@ -320,8 +314,8 @@
     }
     
  }
-
-
+ 
+ 
  extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int) {
         bottomView.tipsButton.isEnabled = selected
@@ -339,8 +333,13 @@
         // 保持进度到本地
         
     }
+    func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
+        dataManager.updateScore(wordId: wordId, step: step, right: right, type: type)
+        dataManager.updateStepRightOrWrongStatus(wordId: wordId, step: step, right: right)
+    }
+    
  }
-
+ 
  extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     func clickHomeBtnEvent() {
         self.delegate?.showAlertEvnet()
@@ -354,21 +353,21 @@
         
         alertView.show()
     }
-
+    
     func clickSwitchBtnEvent() {
         self.delegate?.backHomeEvent()
         self.progressManager.completionExercise()
         self.progressManager.completionReport()
         self.navigationController?.popViewController(animated: true)
     }
-
+    
     func clickSkipBtnEvent() {
         self.delegate?.backHomeEvent()
         self.dataManager.skipNewWord()
         self.navigationController?.popViewController(animated: true)
     }
  }
-
+ 
  extension YXExerciseViewController: YXExerciseBottomViewProtocol {
     func clickTipsBtnEvent() {
         print("提示点击事件")

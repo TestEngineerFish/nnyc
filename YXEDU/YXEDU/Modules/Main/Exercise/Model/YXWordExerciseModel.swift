@@ -39,7 +39,7 @@ struct YXWordExerciseModel: Mappable {
 //    var turn: Int = 0
     
     // 每一轮是否有做错过
-    var turnRightMap: [Int : Bool] = [:]
+//    var turnRightMap: [Int : Bool] = [:]
     
     /// 是否继续做
     var isContinue: Bool?
