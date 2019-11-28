@@ -156,7 +156,7 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportUnit( completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-//        let json = self.reportJson()
+        let json = self.reportJson()
 //        print(json)
 //        completion?(true, nil)
 //        return
