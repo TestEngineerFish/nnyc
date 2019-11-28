@@ -21,10 +21,12 @@ class YXSexangleView: UIView {
     var isExtension: Bool
     var gradientLayer: CAGradientLayer?
     var avatarView: UIView?
+    var isShowProgress: Bool
 
     init(_ model: YXLearnMapUnitModel, isExtension: Bool, isShowProgress: Bool) {
-        self.model = model
-        self.isExtension = isExtension
+        self.model          = model
+        self.isExtension    = isExtension
+        self.isShowProgress = isShowProgress
         super.init(frame: CGRect(origin: .zero, size: CGSize(width: AdaptSize(81), height: AdaptSize(81))))
         self.createSubview(isShowProgress: isShowProgress)
         if model.status == .uniteEnd {
@@ -149,7 +151,11 @@ class YXSexangleView: UIView {
             }
             // 设置进度数字动画
             let interval = Double(2/(model.rate*100))
-            self.progressLabel?.startCount(interval: interval)
+            if isShowProgress {
+                self.progressLabel?.startCount(interval: interval)
+            } else {
+                self.progressLabel?.text = String(format: "%d%%", Int(model.rate * 100))
+            }
             return view
         } else {
             let view = UIView()

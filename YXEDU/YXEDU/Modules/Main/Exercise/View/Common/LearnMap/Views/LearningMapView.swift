@@ -64,7 +64,14 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
                 self.addSubview(avatarPinView!)
             }
         }
-        self.setContentOffset(CGPoint(x: 0, y: h - self.height + kNavHeight), animated: true)
+        if self.contentSize.height > self.frame.height {
+            var offsetY = (self.currentUnitView?.frame.midY ?? 0) - self.frame.height/2
+            offsetY = offsetY < 0 ? 0 : offsetY
+            offsetY = offsetY + self.frame.height > self.contentSize.height ? self.contentSize.height - self.frame.height : offsetY
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                self.setContentOffset(CGPoint(x: 0, y: offsetY), animated: true)
+            }
+        }
     }
 
     required init?(coder: NSCoder) {

@@ -70,9 +70,16 @@ class YXLearnMapViewController: UIViewController {
         // 底部的树
         let treeImageView = UIImageView(image: UIImage(named: "pathTree"))
         self.view.addSubview(treeImageView)
+        let treeImageViewH = AdaptSize(103)
         treeImageView.snp.makeConstraints { (make) in
-            make.bottom.left.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(103))
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview().offset(treeImageViewH + kSafeBottomMargin)
+            make.height.equalTo(treeImageViewH)
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            UIView.animate(withDuration: 1.0) {
+                treeImageView.transform = CGAffineTransform(translationX: 0, y: -treeImageViewH - kSafeBottomMargin)
+            }
         }
     }
 
