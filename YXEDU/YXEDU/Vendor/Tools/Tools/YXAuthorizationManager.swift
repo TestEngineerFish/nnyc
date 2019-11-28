@@ -178,9 +178,14 @@ extension YXAuthorizationManager {
     }
 
     class func showAlert(title: String, message: String) {
-        YXComAlertView.show(.common, in: kWindow, info: title, content: message, firstBlock: { (obj) in
+        let alertView = YXAlertView()
+        alertView.titleLabel.text = title
+        alertView.descriptionLabel.text = message
+        alertView.doneClosure = { _ in
             YXAuthorizationManager.jumpToAppSetting()
-        }, secondBlock: nil)
+        }
+        
+        alertView.show()
     }
 
     // MARK: 跳转到APP内设置界面
