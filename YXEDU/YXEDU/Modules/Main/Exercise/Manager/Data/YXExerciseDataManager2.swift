@@ -182,9 +182,9 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportUnit( completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let json = self.reportJson()
-        print(json)
-        completion?(true, nil)
-        return
+//        print(json)
+//        completion?(true, nil)
+//        return
         
         let request = YXExerciseRequest.report(json: json)
         YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in

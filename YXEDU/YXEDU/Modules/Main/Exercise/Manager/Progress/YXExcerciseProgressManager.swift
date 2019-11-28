@@ -154,10 +154,12 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.set(false, forKey: key(.report))
     }
     
-    
+
     /// 完成上报
     func completionReport() {
-        YYCache.remove(forKey: key(.report))        
+        YYCache.remove(forKey: key(.report))
+        YYCache.remove(forKey: key(.score))
+        YYCache.remove(forKey: key(.reviewWordIds))
         YYCache.remove(forKey: key(.skipNewWord))
         
         var filePath = YYDataSourceManager.dbFilePath(fileName: key(.new))
@@ -167,6 +169,10 @@ class YXExcerciseProgressManager: NSObject {
         filePath = YYDataSourceManager.dbFilePath(fileName: key(.review))
         result = YYFileManager.share.clearFile(path: filePath)
         print("复习数据完成，本地数据删除：", result )
+        
+        filePath = YYDataSourceManager.dbFilePath(fileName: key(.current))
+        result = YYFileManager.share.clearFile(path: filePath)
+        print("当前轮数据完成，本地数据删除：", result )
     }
     
     
