@@ -198,7 +198,17 @@ class YXExerciseDataManager: NSObject {
     }
     
 
-    func isConnectionFinish() -> Bool {
+    func hasConnectionError(wordId: Int, step: Int) -> Bool {
+        for word in self.reviewWordArray {
+            if word.wordId == wordId {
+                for stepModel in word.exerciseSteps {
+                    if let e = stepModel.first, e.step == step, let right = e.isRight {
+                        return right == false
+                    }
+                }
+                return false
+            }
+        }
         return false
     }
     

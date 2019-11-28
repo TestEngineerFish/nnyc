@@ -170,10 +170,11 @@
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
-        if let model = data.2 {
-
+        if var model = data.2 {
+//            model.type = .lookWordChooseChinese
+            
             // 新学隐藏提示
-            let tipsHidden = model.type == .newLearnPrimarySchool || model.type == .newLearnPrimarySchool_Group || model.type == .newLearnJuniorHighSchool
+            let tipsHidden = (model.type == .newLearnPrimarySchool || model.type == .newLearnPrimarySchool_Group || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
             self.bottomView.tipsButton.isHidden = tipsHidden
             
             // 连线未选中时，禁用提示
@@ -266,7 +267,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         }
         
         // 如果有做错
-        if !right && (exerciseModel.type != .connectionWordAndChinese || exerciseModel.type != .connectionWordAndImage) {
+        if !right && (exerciseModel.type != .connectionWordAndChinese && exerciseModel.type != .connectionWordAndImage) {
             self.exerciseViewArray.first?.isWrong = true
         }
         
@@ -328,15 +329,28 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     }
     
     func remindEvent(wordId: Int) {
-        self.exerciseViewArray[0].isWrong = true
+//        self.exerciseViewArray[0].isWrong = true
         self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
         self.exerciseViewArray[0].remindView?.show()
-        
-        // 保持进度到本地
-        
     }
+    
     func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
         dataManager.connectionAnswerAction(wordId: wordId, step: step, right: right, type: type)
+        
+        if right {
+            if dataManager.hasConnectionError(wordId: wordId, step: step) {
+                self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
+                self.exerciseViewArray[0].remindView?.remindDetail()
+            }
+        }
+        
+        // 下面有代码调用，重复调了
+//        else {// 连错
+////            self.exerciseViewArray[0].isWrong = true
+//            self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
+//            self.exerciseViewArray[0].remindView?.show()
+//        }
+        
     }
     
 }
@@ -380,7 +394,9 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
             self.dataManager.defaultAnswerAction(exerciseModel: exerciseModel, right: false)
         }
         
-        self.exerciseViewArray[0].isWrong = true
+        if exerciseModel.type != .connectionWordAndChinese && exerciseModel.type != .connectionWordAndImage {
+            self.exerciseViewArray[0].isWrong = true
+        }
         self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
         self.exerciseViewArray.first?.remindView?.show()
     }
