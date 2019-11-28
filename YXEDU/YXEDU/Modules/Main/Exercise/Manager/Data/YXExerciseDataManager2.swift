@@ -512,7 +512,7 @@ class YXExerciseDataManager: NSObject {
     ///   - wordId:
     ///   - step:
     ///   - right:
-    private func updateWordStepStatus(wordId: Int, step: Int, right: Bool, finish: Bool) {
+    public func updateWordStepStatus(wordId: Int, step: Int, right: Bool, finish: Bool) {
         for (i, word) in reviewWordArray.enumerated() {
             if word.wordId == wordId {
                 for (j, stepModel) in word.exerciseSteps.enumerated() {
