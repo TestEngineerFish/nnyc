@@ -92,7 +92,9 @@ struct YXWordStepsModel: Mappable {
     
     var wordId: Int = 0
     var exerciseSteps: [[YXWordExerciseModel]] = []
-    var backupExerciseStep: [Int : YXWordExerciseModel] = [:]
+    var backupExerciseStep: [String : YXWordExerciseModel] = [:]
+    
+//    var backupStr: String = ""
     
     init() {
         self.initSteps()
@@ -103,10 +105,10 @@ struct YXWordStepsModel: Mappable {
         self.mapping(map: map)
     }
     mutating func mapping(map: Map) {
-        wordId     <- map["word_id"]
-        exerciseSteps     <- map["exercise_step_list"]
-        backupExerciseStep     <- map["backup_exercise_step_map"]
-        
+        wordId                  <- map["word_id"]
+        exerciseSteps           <- map["exercise_step_list"]
+        backupExerciseStep      <- map["backup_exercise_step_map"] //(, YXWordBackupTransform())
+//        backupStr     <- map["backup_str"]
     }
     
     private mutating func initSteps() {
@@ -114,6 +116,32 @@ struct YXWordStepsModel: Mappable {
             let stepArray: [YXWordExerciseModel] = []
             exerciseSteps.append(stepArray)
         }
+    }
+}
+
+
+struct YXWordBackupTransform: TransformType {
+    
+    typealias Object = [Int : YXWordExerciseModel]
+    typealias JSON = String
+
+    
+    init() {}
+    
+    func transformFromJSON(_ value: Any?) -> [Int : YXWordExerciseModel]? {
+        if let str = value as? String, let data = str.data(using: .utf8) {
+            let d = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [Int : YXWordExerciseModel] ?? [:]
+            return d
+        }
+        return nil
+    }
+    
+    func transformToJSON(_ value: [Int : YXWordExerciseModel]?) -> String? {
+        if let data = value, let d = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted) {
+//            NSJSONWritingPrettyPrinted
+            return String.init(data: d, encoding: .utf8)
+        }
+        return nil
     }
 }
 

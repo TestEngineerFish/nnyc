@@ -101,7 +101,7 @@ class YXExerciseDataManager: NSObject {
         }
         
         let e = buildExercise()
-        
+        printCurrentTurn()
         // 取出来一个后，保持进度
         progressManager.updateCurrentExercisesProgress(currentExerciseArray: currentTurnArray)
         
@@ -290,7 +290,7 @@ class YXExerciseDataManager: NSObject {
             stepsModel.wordId = exerciseModel.word?.wordId ?? 0
             
             if isBackup {
-                stepsModel.backupExerciseStep[step] = exerciseModel
+                stepsModel.backupExerciseStep[String(step)] = exerciseModel
             } else {
                 stepsModel.exerciseSteps[step - 1].append(exerciseModel)
             }
@@ -298,7 +298,7 @@ class YXExerciseDataManager: NSObject {
             reviewWordArray.append(stepsModel)
         } else {// 单词存在
             if isBackup {
-                reviewWordArray[index].backupExerciseStep[step] = exerciseModel
+                reviewWordArray[index].backupExerciseStep[String(step)] = exerciseModel
             } else {
                 reviewWordArray[index].exerciseSteps[step - 1].append(exerciseModel)
             }
@@ -397,7 +397,7 @@ class YXExerciseDataManager: NSObject {
     private func backupExercise(wordId: Int, step: Int) -> YXWordExerciseModel? {
         for word in reviewWordArray {
             if word.wordId == wordId {
-                return word.backupExerciseStep[step]
+                return word.backupExerciseStep[String(step)]
             }
         }
         return nil

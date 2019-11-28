@@ -2662,9 +2662,9 @@
 			isa = PBXGroup;
 			children = (
 				EE7E1D072363679500600A88 /* YXExerciseConfig.swift */,
+				EE54F7B52362AA3100EC605A /* YXExerciseType.swift */,
 				EE7720FD2375AA5E00CD632E /* YXExerciseResultModel.swift */,
 				EE54F7B42362AA3100EC605A /* YXWordExerciseModel.swift */,
-				EE54F7B52362AA3100EC605A /* YXExerciseType.swift */,
 				EE77211D23841FEC00CD632E /* YXExerciseReportModel.swift */,
 			);
 			path = Model;
