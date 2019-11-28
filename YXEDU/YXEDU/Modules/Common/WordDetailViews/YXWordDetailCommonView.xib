@@ -43,7 +43,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="krV-F4-QQf" customClass="YXDesignableImageView" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="292" y="6" width="98" height="72"/>
+                    <rect key="frame" x="292" y="8" width="98" height="72"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="98" id="Yqe-jc-pCH"/>
                         <constraint firstAttribute="height" constant="72" id="vh7-89-1Nf"/>
@@ -97,7 +97,7 @@
                 <constraint firstItem="5KF-Sy-Uh7" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gJj-wg-hTc"/>
                 <constraint firstItem="nkP-Fs-mzR" firstAttribute="centerY" secondItem="11v-Vb-OEW" secondAttribute="centerY" id="sMb-wK-Pp4"/>
                 <constraint firstItem="Y7d-xJ-we1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="slY-vo-5Do"/>
-                <constraint firstItem="krV-F4-QQf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="uo7-IZ-cCF"/>
+                <constraint firstItem="krV-F4-QQf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="uo7-IZ-cCF"/>
                 <constraint firstAttribute="trailing" secondItem="cO4-0T-jiD" secondAttribute="trailing" constant="20" id="vnL-fr-3Cc"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="krV-F4-QQf" secondAttribute="trailing" constant="24" id="yfs-sR-Wlb"/>
                 <constraint firstAttribute="bottom" secondItem="5KF-Sy-Uh7" secondAttribute="bottom" id="ygs-nk-prZ"/>
