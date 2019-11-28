@@ -32,6 +32,6 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
     }
     
     override func bindData() {
-        self.remindView?.remindSteps = [[.example, .image, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
+        self.remindView?.remindSteps = [[.exampleWithDigWord, .image, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
     }
 }

@@ -29,23 +29,16 @@ struct YXWordExerciseModel: Mappable {
     //MARK: - 以下几个属性用于本地记录进度时使用
     /// 是否根据得分选择题型
     var isCareScore: Bool = false
-        
+    
+    var isNewWord: Bool = false
+    
     /// 第几步
     var step: Int = 0
     /// 对错
     var isRight: Bool?
-            
-//    /// 第几轮
-//    var turn: Int = 0
-    
-    // 每一轮是否有做错过
-//    var turnRightMap: [Int : Bool] = [:]
     
     /// 是否继续做
     var isContinue: Bool?
-    
-    
-    var isNewWord: Bool = false
         
     var isFinish: Bool = false
     
@@ -58,37 +51,39 @@ struct YXWordExerciseModel: Mappable {
         
     mutating func mapping(map: Map) {
         type     <- map["type"]
+        word     <- map["word"]
         question <- map["question"]
         option   <- map["option"]
         answers  <- map["answer_list"]
         score    <- map["score"]
-        word     <- map["word"]
-        
+                
         isCareScore <- map["is_care_score"]
-        step <- map["step"]
         isNewWord <- map["is_new_word"]
-        isFinish <- map["is_finish"]
+        
+        step <- map["step"]
         isRight <- map["is_right"]
+        isContinue <- map["is_continue"]
+        isFinish <- map["is_finish"]
         
     }
     
 }
 
 
-
-struct YXCacheWordExerciseModel: Mappable {
-    var steps: [[YXWordExerciseModel]]?
-    
-    init() {}
-    
-    init?(map: Map) {
-        self.mapping(map: map)
-    }        
-    mutating func mapping(map: Map) {
-        steps     <- map["steps"]
-    }
-}
-
+//
+//struct YXCacheWordExerciseModel: Mappable {
+//    var steps: [[YXWordExerciseModel]]?
+//
+//    init() {}
+//
+//    init?(map: Map) {
+//        self.mapping(map: map)
+//    }
+//    mutating func mapping(map: Map) {
+//        steps     <- map["steps"]
+//    }
+//}
+//
 
 
 
@@ -96,12 +91,8 @@ struct YXCacheWordExerciseModel: Mappable {
 struct YXWordStepsModel: Mappable {
     
     var wordId: Int = 0
-    //
     var exerciseSteps: [[YXWordExerciseModel]] = []
-//    var stepTypes: [YXExerciseType] = []
     var backupExerciseStep: [Int : YXWordExerciseModel] = [:]
-    
-//    var stepResults: [Bool] = []
     
     init() {
         self.initSteps()
@@ -112,6 +103,9 @@ struct YXWordStepsModel: Mappable {
         self.mapping(map: map)
     }
     mutating func mapping(map: Map) {
+        wordId     <- map["word_id"]
+        exerciseSteps     <- map["exercise_step_list"]
+        backupExerciseStep     <- map["backup_exercise_step_map"]
         
     }
     

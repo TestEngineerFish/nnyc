@@ -99,7 +99,10 @@ class YXExerciseDataManager: NSObject {
         }
         
         let e = buildExercise()
-        printCurrentTurn()
+        
+        // 取出来一个后，保持进度
+        progressManager.updateCurrentExercisesProgress(currentExerciseArray: currentTurnArray)
+        
         return (needNewWordCount, needReviewWordCount, e)
     }
     
@@ -127,7 +130,6 @@ class YXExerciseDataManager: NSObject {
         
         // 更新进度状态
         progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
-        progressManager.updateCurrentExercisesProgress(currentExerciseArray: currentTurnArray)
         
         printStatus()
                     
