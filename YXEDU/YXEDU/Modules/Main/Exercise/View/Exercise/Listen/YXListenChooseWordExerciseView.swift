@@ -21,6 +21,7 @@ class YXListenChooseWordExerciseView: YXBaseExerciseView {
 
         answerView = YXItemAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
+        (answerView as! YXItemAnswerView).titleLabel.font = UIFont.boldSystemFont(ofSize: AdaptSize(14))
         self.scrollView.addSubview(answerView!)
     }
 
