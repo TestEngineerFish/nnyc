@@ -116,9 +116,12 @@ class YXExerciseDataManager: NSObject {
             finish = true
         }
         if finish {
-            // 更新每个练习的完成状态
-            updateFinishStatus(exerciseModel: exerciseModel, right: right)
+            
+            
         }
+        
+        // 更新每个练习的完成状态
+        updateFinishStatus(exerciseModel: exerciseModel, right: right)
         
         
         updateScore(exerciseModel: exerciseModel, right: right)
@@ -373,7 +376,16 @@ class YXExerciseDataManager: NSObject {
                     self.updateWordStepStatus(wordId: item.optionId, step: exerciseModel.step, right: right)
                 }
             } else {
-                currentTurnArray.removeFirst()
+                
+                var finish = right
+                // 选择题做错，也标注答题完成
+                if right == false && (exerciseModel.type == .validationWordAndChinese || exerciseModel.type == .validationImageAndWord) {
+                    finish = true
+                }
+                if finish {
+                    currentTurnArray.removeFirst()
+                }                
+                
                 self.updateWordStepStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right)
             }
             
