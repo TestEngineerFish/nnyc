@@ -131,9 +131,9 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     private func showResult(errorList list: [Int]) {
         if list.isEmpty {
             // 答题正确
-            self.selectedBtnArray.forEach { (button) in
-                button.status = .right
-            }
+//            self.selectedBtnArray.forEach { (button) in
+//                button.status = .right
+//            }
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
             // 答题错误
@@ -141,8 +141,12 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
                 if list.contains(letterBtn.tag) {
                     letterBtn.status = .error
                 }
+                // 取消选中状态
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
-                    self.clickButton(letterBtn)
+                    // 反之用户在这之间已取消选中
+                    if letterBtn.status == .error {
+                        self.clickButton(letterBtn)
+                    }
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)

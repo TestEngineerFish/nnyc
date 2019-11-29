@@ -9,6 +9,7 @@
 import UIKit
 import CoreGraphics
 
+@objc
 public extension UIColor {
     class func make(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat = 1.0) -> UIColor {
         if #available(iOS 10.0, *) {
@@ -45,7 +46,7 @@ public extension UIColor {
     ///   - direction: 渐变方向
     /// - Returns: 渐变后的颜色,如果设置失败,则返回nil
     /// - note: 设置前,一定要确定当前View的高宽!!!否则无法准确的绘制
-    class func gradientColor(with size: CGSize, colors: [CGColor], direction: GradientDirectionType) -> UIColor? {
+    @objc class func gradientColor(with size: CGSize, colors: [UIColor], direction: GradientDirectionType) -> UIColor? {
         switch direction {
         case .horizontal:
             return gradientColor(with: size, colors: colors, startPoint: CGPoint(x: 0, y: 0.5), endPoint: CGPoint(x: 1, y: 0.5))
@@ -64,7 +65,10 @@ public extension UIColor {
     /// - parameter startPoint: 渐变开始坐标
     /// - parameter endPoint: 渐变结束坐标
     /// - returns: 返回一个渐变的color,如果绘制失败,则返回nil;
-    class func gradientColor(with size: CGSize, colors: [CGColor], startPoint: CGPoint, endPoint: CGPoint) -> UIColor? {
+    class func gradientColor(with size: CGSize, colors: [UIColor], startPoint: CGPoint, endPoint: CGPoint) -> UIColor? {
+        let cgColors = colors.compactMap { (color) -> CGColor in
+            return color.cgColor
+        }
         // 设置画布,开始准备绘制
         UIGraphicsBeginImageContextWithOptions(size, false, screenScale)
         // 获取当前画布上下文,用于操作画布对象
@@ -72,11 +76,11 @@ public extension UIColor {
         // 创建RGB空间
         let colorSpaceRef     = CGColorSpaceCreateDeviceRGB()
         // 在RGB空间中绘制渐变色,可设置渐变色占比,默认均分
-        guard let gradientRef = CGGradient(colorsSpace: colorSpaceRef, colors: colors as CFArray, locations: nil) else { return nil }
+        guard let gradientRef = CGGradient(colorsSpace: colorSpaceRef, colors: cgColors as CFArray, locations: nil) else { return nil }
         // 设置渐变起始坐标
-        let startPoint        = CGPoint.zero
+        let startPoint        = CGPoint(x: size.width * startPoint.x, y: size.height * startPoint.y)
         // 设置渐变结束坐标
-        let endPoint          = CGPoint(x: size.width, y: size.height)
+        let endPoint          = CGPoint(x: size.width * endPoint.x, y: size.height * endPoint.y)
         // 开始绘制图片
         context.drawLinearGradient(gradientRef, start: startPoint, end: endPoint, options: CGGradientDrawingOptions(rawValue: CGGradientDrawingOptions.drawsBeforeStartLocation.rawValue | CGGradientDrawingOptions.drawsAfterEndLocation.rawValue))
         // 获取渐变图片
@@ -125,7 +129,7 @@ public extension UIColor {
     /// 次要信息 0x888888
     class var black3: UIColor { return UIColor.hex(0x888888) }
     
-    /// 分割线 #4F4F4F
+    /// 分割线 #DCDCDC
     class var black4: UIColor { return UIColor.hex(0xDCDCDC) }
     
     /// 蒙层 0x000000  70%

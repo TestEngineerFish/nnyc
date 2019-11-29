@@ -111,14 +111,15 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     // MARK: Event
     
     @objc private func clickButton(_ button: YXLetterButton) {
-        var firstBtn: YXLetterButton?
-        if button.isEqual(self.selectedBtnArray.first) {
-            firstBtn = self.selectedBtnArray.first
-        }
+
         if button.status != .disable {
             if self.selectedBtnArray.contains(button) {
                 let reversedArray = self.selectedBtnArray.reversed()
                 for btn in reversedArray {
+                    // 如果选中首字母,则跳出
+                    if btn.isEqual(self.selectedBtnArray.first) {
+                        break
+                    }
                     self.unselectButton(btn)
                     if btn.tag == button.tag {
                         break
@@ -127,10 +128,6 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
             } else {
                 self.selectedButton(button)
             }
-            
-        }
-        if firstBtn != nil {
-            self.showFirstButtonAnimation(self.rightRoutes.first)
         }
     }
     
@@ -155,17 +152,6 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
                 self.showResult(errorList: result.1)
             }
         }
-    }
-    /// 检查结果.如果有错误的则返回对应错误的ID数组,否则返回空数组
-    private func checkAnserResult() -> [Int]{
-        var errList = [Int]()
-        for (index, letter) in word.enumerated() {
-            let button = self.selectedBtnArray[index]
-            if let text = button.currentTitle, text != "\(letter)" {
-                errList.append(button.tag)
-            }
-        }
-        return errList
     }
     
     /// 取消选中

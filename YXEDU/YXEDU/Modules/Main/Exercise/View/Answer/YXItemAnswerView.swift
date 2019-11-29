@@ -79,8 +79,8 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         let idf = "UICollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: idf, for: indexPath)
         cell.backgroundColor = UIColor.white
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.black6.cgColor
+        cell.layer.borderWidth = 0.5
+        cell.layer.borderColor = UIColor.black4.cgColor
         
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = itemSize().height / 2
@@ -90,8 +90,8 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         
         cell.contentView.addSubview(label)
         label.snp.makeConstraints { (make) in
-            make.left.equalTo(21)
-            make.right.equalTo(-21)
+            make.left.equalTo(AdaptSize(21))
+            make.right.equalTo(AdaptSize(-21))
             make.top.bottom.equalToSuperview()
         }
         
@@ -122,7 +122,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 cell?.backgroundColor = UIColor.white
-                cell?.layer.borderColor = UIColor.black6.cgColor
+                cell?.layer.borderColor = UIColor.black4.cgColor
                 if let label = cell?.contentView.subviews.first as? UILabel {
                     label.textColor = UIColor.black2
                 }

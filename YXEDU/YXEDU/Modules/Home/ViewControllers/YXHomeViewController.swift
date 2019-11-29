@@ -206,8 +206,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         vc.bookId = self.homeModel?.bookId
         vc.unitId = self.homeModel?.unitId
 //        let vc = YXLearningResultViewController()
-//        vc.newLearnAmount = self.homeModel?.newWords ?? 0
-//        vc.reviewLearnAmount = self.homeModel?.reviewWords ?? 0
+//        vc.newLearnAmount = 5
+//        vc.reviewLearnAmount = 9
 //        vc.bookId = self.homeModel?.bookId
 //        vc.unitId = self.homeModel?.unitId
         self.navigationController?.pushViewController(vc, animated: true)

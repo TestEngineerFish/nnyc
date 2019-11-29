@@ -241,7 +241,7 @@ extension CALayer {
 }
 
 /// 渐变色的方向枚举
-public enum GradientDirectionType: Int {
+@objc public enum GradientDirectionType: Int {
     case horizontal = 0 /// 水平(左->右)
     case vertical   = 1 /// 垂直(上->下)
     case leftTop    = 2 /// 斜角(左上->右下)
@@ -249,12 +249,13 @@ public enum GradientDirectionType: Int {
 }
 
 // MARK: - 渐变色
+@objc
 extension CALayer {
     /// 根据方向,设置渐变色
     /// - parameter colors: 渐变的颜色数组
     /// - parameter direction: 渐变方向的枚举对象
     /// - note: 设置前,一定要确定当前View的高宽!!!否则无法准确的绘制
-    public func setGradient(colors: [UIColor], direction: GradientDirectionType) {
+    @objc public func setGradient(colors: [UIColor], direction: GradientDirectionType) {
         switch direction {
         case .horizontal:
             setGradient(colors: colors, startPoint: CGPoint(x: 0, y: 0.5), endPoint: CGPoint(x: 1, y: 0.5))
@@ -273,7 +274,7 @@ extension CALayer {
     /// - parameter startPoint: 开始渐变的坐标(控制渐变的方向),取值(0 ~ 1)
     /// - parameter endPoint: 结束渐变的坐标(控制渐变的方向),取值(0 ~ 1)
     @discardableResult
-    public func setGradient(colors: [UIColor], locations: [NSNumber]? = nil, startPoint: CGPoint, endPoint: CGPoint) -> CAGradientLayer {
+    @objc public func setGradient(colors: [UIColor], locations: [NSNumber]? = nil, startPoint: CGPoint, endPoint: CGPoint) -> CAGradientLayer {
         /// 设置渐变色
         func _setGradient(_ layer: CAGradientLayer) {
             // self.layoutIfNeeded()

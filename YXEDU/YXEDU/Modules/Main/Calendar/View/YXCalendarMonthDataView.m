@@ -39,8 +39,8 @@
         calendarView.backgroundColor                  = UIColor.clearColor;
         calendarView.appearance.weekdayTextColor      = UIColorOfHex(0xFFD99E);
         calendarView.appearance.titleDefaultColor     = UIColor.whiteColor;
-        calendarView.appearance.titleTodayColor       = UIColorOfHex(0xFF960A);
-        calendarView.appearance.todayColor            = UIColor.whiteColor;
+        calendarView.appearance.titleTodayColor       = UIColorOfHex(0xFFE005);
+        calendarView.appearance.todayColor            = UIColor.clearColor;
         calendarView.appearance.borderSelectionColor  = UIColor.whiteColor;
         calendarView.appearance.selectionColor        = UIColor.clearColor;
         calendarView.appearance.titlePlaceholderColor = UIColorOfHex(0xDF8619);
@@ -66,12 +66,11 @@
 {
     self = [super init];
     if (self) {
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"calendar_bg"]];
-        [backgroundImageView setUserInteractionEnabled:YES];
-        // 添加背景图片
-        [self addSubview:backgroundImageView];
+        UIView *backgroundView = [[UIView alloc] init];
+        backgroundView.backgroundColor = [UIColor gradientColorWith:CGSizeMake(kSCREEN_WIDTH, kSCREEN_WIDTH * 1.15f) colors:@[UIColorOfHex(0xFFA83E), UIColorOfHex(0xFFC671)] direction:GradientDirectionTypeVertical];
+        [self addSubview:backgroundView];
         // 添加日历和图表容器视图
-        [backgroundImageView addSubview:self.screenShowView];
+        [self addSubview:self.screenShowView];
         // 添加日历视图
         [self.screenShowView addSubview:self.calendarView];
         // 添加日历状态栏
@@ -81,14 +80,13 @@
         // 添加图表状态栏
         [self.screenShowView addSubview:self.chartStatusView];
 
-        [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.left.right.bottom.equalTo(self);
+        [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
         }];
 
         [self.screenShowView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.top.equalTo(backgroundImageView);
+            make.left.top.height.equalTo(self);
             make.width.equalTo(self).multipliedBy(2.f);
-            make.height.mas_equalTo(backgroundImageView.height);
         }];
 
         [self.calendarView mas_makeConstraints:^(MASConstraintMaker *make) {

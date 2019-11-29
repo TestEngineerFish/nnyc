@@ -121,9 +121,7 @@ class YXSpellSubview: UIView {
             maxX += _width + margin
         }
         if self.superview != nil {
-            self.snp.remakeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalToSuperview().offset(AdaptSize(64))
+            self.snp.updateConstraints { (make) in
                 make.width.equalTo(maxX - margin)
                 make.height.equalTo(charH)
             }
@@ -151,7 +149,7 @@ class YXSpellSubview: UIView {
     /// 移除单词
     func removeLetter(_ button: YXLetterButton) {
         for wordView in self.wordViewList {
-            if wordView.tag == button.tag {
+            if wordView.tag == button.tag && wordView.type == .blank {
                 wordView.text = ""
                 // 修改宽度
                 self.resetConstraints()

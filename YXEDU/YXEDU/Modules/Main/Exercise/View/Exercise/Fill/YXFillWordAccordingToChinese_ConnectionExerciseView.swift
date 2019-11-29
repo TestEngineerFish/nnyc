@@ -37,7 +37,7 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         guard let question = self.exerciseModel.question else {
             return
         }
-        let questionH = AdaptSize(100)
+        let questionH = AdaptSize(110)
         questionView?.snp.makeConstraints({ (make) in
             make.top.equalToSuperview()
             make.height.equalTo(questionH)
