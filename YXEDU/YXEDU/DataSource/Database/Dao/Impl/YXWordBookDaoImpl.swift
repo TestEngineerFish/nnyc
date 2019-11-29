@@ -41,6 +41,8 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             book.gradeId = Int(result?.int(forColumn: "gradeId") ?? 0)
             book.gradeType = Int(result?.int(forColumn: "gradeType") ?? 0)
 
+            result?.close()
+
             let isSuccess = result?.next() ?? false
             completion(isSuccess ? book : nil, isSuccess)
         }
@@ -124,6 +126,8 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             word.unitName = result?.string(forColumn: "unitName")
             word.isExtensionUnit = result?.bool(forColumn: "isExtensionUnit") ?? false
             
+            result?.close()
+
             let isSuccess = result?.next() ?? false
             completion(isSuccess ? word : nil, isSuccess)
         }
@@ -166,6 +170,8 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
             wordModelArray.append(word)
         }
+        
+        result.close()
         return wordModelArray
     }
 
@@ -206,7 +212,8 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
             wordModelArray.append(word)
         }
-        
+
+        result.close()
         return wordModelArray
     }
     

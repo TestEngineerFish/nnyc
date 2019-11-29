@@ -131,18 +131,20 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     // MARK: Animation
     func showAnimation() {
         let dotAnimation = CABasicAnimation(keyPath: "position.x")
-        dotAnimation.toValue = AdaptSize(181)
-        dotAnimation.repeatCount = 1
-        dotAnimation.duration = 3
-        dotAnimation.autoreverses = false
+        dotAnimation.toValue        = AdaptSize(181)
+        dotAnimation.repeatCount    = 1
+        dotAnimation.duration       = 3
+        dotAnimation.autoreverses   = false
         dotAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        dotAnimation.fillMode       = .forwards
+        dotAnimation.isRemovedOnCompletion = false
         dotLayer.add(dotAnimation, forKey: "dotAnimation")
 
         let proMaskLayer = CAShapeLayer()
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 0, y: AdaptSize(15)/2))
         path.addLine(to: CGPoint(x: AdaptSize(189), y: AdaptSize(15)/2))
-        proMaskLayer.path = path.cgPath
+        proMaskLayer.path        = path.cgPath
         proMaskLayer.lineWidth   = AdaptSize(15)
         proMaskLayer.lineJoin    = .round
         proMaskLayer.strokeColor = UIColor.blue.cgColor

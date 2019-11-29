@@ -40,13 +40,13 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
         self.contentView.layer.setDefaultShadow()
     }
     
-    
     override func layoutSubviews() {
+        let contentViewH = CGFloat(self.exerciseModel.option?.firstItems?.count ?? 0) * (AdaptSize(30) + AdaptSize(34)) + AdaptSize(108)
         self.contentView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(22))
             make.right.equalToSuperview().offset(AdaptSize(-22))
             make.top.equalToSuperview().offset(AdaptSize(32))
-            make.height.equalTo(AdaptSize(380))
+            make.height.equalTo(contentViewH)
         }
 
         self.questionView?.snp.makeConstraints { (make) in

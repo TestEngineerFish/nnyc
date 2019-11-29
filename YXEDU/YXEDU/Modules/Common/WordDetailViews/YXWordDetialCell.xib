@@ -18,9 +18,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mha-yg-xUf">
-                        <rect key="frame" x="50" y="0.0" width="379" height="219"/>
+                        <rect key="frame" x="30" y="0.0" width="399" height="219"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" red="0.30980392159999998" green="0.30980392159999998" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAD-JR-5co">
@@ -38,7 +38,7 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Mha-yg-xUf" secondAttribute="trailing" constant="80" id="1Ie-zU-6Cl"/>
                     <constraint firstAttribute="bottom" secondItem="Mha-yg-xUf" secondAttribute="bottom" id="KcC-PR-Kyn"/>
-                    <constraint firstItem="Mha-yg-xUf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="30" id="Oia-Df-VDD"/>
+                    <constraint firstItem="Mha-yg-xUf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="Oia-Df-VDD"/>
                     <constraint firstAttribute="trailing" secondItem="bAD-JR-5co" secondAttribute="trailing" constant="30" id="hCI-ID-GVZ"/>
                     <constraint firstItem="Mha-yg-xUf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="muH-Pd-0Xp"/>
                     <constraint firstItem="bAD-JR-5co" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="oZ1-QJ-Rsi"/>
@@ -53,6 +53,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="playAudioIcon" width="22" height="22"/>
+        <image name="playAudioIcon" width="37" height="37"/>
     </resources>
 </document>

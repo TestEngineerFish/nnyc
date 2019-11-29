@@ -94,6 +94,7 @@ class YXLearningResultHeaderView: UIView {
         progressView.setProgress(self.model.rate, animated: true)
 
         // 新学标题
+
         let newLearnLabel = UILabel()
         newLearnLabel.textAlignment = .left
         let newLearnText = "• 新掌握了 \(newLearnAmount) 个单词"
@@ -157,6 +158,18 @@ class YXLearningResultHeaderView: UIView {
         reviewLabel.snp.makeConstraints { (make) in
             make.left.height.width.equalTo(newLearnLabel)
             make.top.equalTo(newLearnLabel.snp.bottom).offset(2)
+        }
+
+        if newLearnAmount <= 0 {
+            newLearnLabel.isHidden = true
+            reviewLabel.snp.remakeConstraints { (make) in
+                make.left.height.width.equalTo(newLearnLabel)
+                make.top.equalTo(imageView.snp.bottom).offset(offsetY)
+            }
+        }
+        if reviewLearnAmount <= 0 {
+            reviewLabel.isHidden = true
+
         }
 
         // 如果有扩展单元解锁

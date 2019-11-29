@@ -122,12 +122,12 @@ static CGFloat const kPickViewHeight = 272.f;
 - (YXComNaviView *)naview {
     if (!_naview) {
         _naview = [YXComNaviView comNaviViewWithLeftButtonType:YXNaviviewLeftButtonWhite];
-        _naview.backgroundColor = UIColor.clearColor;
-        UIImage *bgImage = [UIImage imageNamed:@"header_orange_bg"];
-        UIImageView *naviBGImageView = [[UIImageView alloc] initWithImage:bgImage];
-        naviBGImageView.frame = CGRectMake(-50, 0, SCREEN_WIDTH + 50, kNavHeight);
-        naviBGImageView.contentMode = UIViewContentModeScaleAspectFill;
-        [_naview insertSubview:naviBGImageView atIndex:0];
+        _naview.backgroundColor = UIColorOfHex(0xFFA83E);
+//        UIImage *bgImage = [UIImage imageNamed:@"header_orange_bg"];
+//        UIImageView *naviBGImageView = [[UIImageView alloc] initWithImage:bgImage];
+//        naviBGImageView.frame = CGRectMake(-50, 0, SCREEN_WIDTH + 50, kNavHeight);
+//        naviBGImageView.contentMode = UIViewContentModeScaleAspectFill;
+//        [_naview insertSubview:naviBGImageView atIndex:0];
         [_naview.leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [_naview setRightButtonView:self.rightView];
         _naview.titleLabel.textColor = UIColor.whiteColor;
@@ -486,9 +486,9 @@ static CGFloat const kPickViewHeight = 272.f;
             [weakSelf.monthDataView.chartView setDataArray:[weakSelf setupChartData] selected:[NSNumber numberWithUnsignedInteger:weakSelf.currentSelectedDate.day - 1]];
             [self.monthDataView.calendarView selectDate:self.currentSelectedDate scrollToDate:NO];
             if (self.currentSelectedDate.day == self.monthDataView.calendarView.today.day) {
-                self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFF960A);
-                self.monthDataView.calendarView.appearance.selectionColor       = UIColorOfHex(0xFFD6A4);
-                self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColorOfHex(0xFF960A);
+                self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFFE005);
+                self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
+                self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColorOfHex(0xFFE005);
             } else {
                 self.monthDataView.calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
                 self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
@@ -841,16 +841,16 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
     self.currentSelectedDate = date;
-    NSDate *today = calendar.today;
-    if (date == today) {
-        self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFF960A);
-        self.monthDataView.calendarView.appearance.selectionColor       = UIColorOfHex(0xFFD6A4);
-        self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColorOfHex(0xFF960A);
-    } else {
-        self.monthDataView.calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
-        self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
-        self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColor.whiteColor;
-    }
+//    NSDate *today = calendar.today;
+//    if (date == today) {
+//        self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFF960A);
+//        self.monthDataView.calendarView.appearance.selectionColor       = UIColorOfHex(0xFFD6A4);
+//        self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColorOfHex(0xFF960A);
+//    } else {
+    self.monthDataView.calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
+    self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
+    self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColor.whiteColor;
+//    }
     //扯淡的滑动
     [calendar selectDate:date];
 }
@@ -909,6 +909,15 @@ static CGFloat const kPickViewHeight = 272.f;
         return UIColor.whiteColor;
     }
     return nil;
+}
+
+- (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance borderDefaultColorForDate:(NSDate *)date {
+    NSDate *today = calendar.today;
+    if (date == today) {
+        return UIColorOfHex(0xFFE005);
+    } else {
+        return UIColor.clearColor;
+    }
 }
 
 #pragma mark - YXBasePickverViewDelegate

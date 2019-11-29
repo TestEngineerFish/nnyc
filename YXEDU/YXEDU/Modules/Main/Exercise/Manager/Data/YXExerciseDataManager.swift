@@ -121,7 +121,7 @@ class YXExerciseDataManager: NSObject {
         
         // 更新进度状态
         progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
-        
+
         // 打印
 //        printStatus()
                     

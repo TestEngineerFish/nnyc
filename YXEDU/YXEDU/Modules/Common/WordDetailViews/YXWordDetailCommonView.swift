@@ -129,11 +129,15 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetialCell", for: indexPath) as! YXWordDetialCell
       
         if indexPath.section == 0 {
-            if let exampleAttr = word.exampleAttr, let chineseExample = word.chineseExample {
-                let example = NSMutableAttributedString(attributedString: exampleAttr)
-                example.append(NSAttributedString(string: "\n" + chineseExample))
+            if let englishExampleAttributedString = word.englishExampleAttributedString, let chineseExample = word.chineseExample {
+                let attributedString = NSMutableAttributedString(attributedString: englishExampleAttributedString)
+                attributedString.append(NSAttributedString(string: "\n"))
                 
-                cell.label.attributedText = example
+                let chineseExampleAttributedString = NSMutableAttributedString(string: chineseExample)
+                chineseExampleAttributedString.addAttribute(.foregroundColor, value: UIColor.hex(0x4F4F4F), range: NSRange(location: 0, length: chineseExample.count))
+                attributedString.append(chineseExampleAttributedString)
+
+                cell.label.attributedText = attributedString
             }
             
             if let pronunciationUrl = word.examplePronunciation {
