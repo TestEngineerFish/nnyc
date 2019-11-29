@@ -24,7 +24,7 @@ enum YXRemindType: Int {
 /// 提示区域更新约束
 @objc protocol YXRemindViewProtocol: NSObjectProtocol {
     @objc optional func updateHeightConstraints(_ height: CGFloat)
-//    @objc optional func dismissRemindView()
+    //    @objc optional func dismissRemindView()
 }
 
 class YXRemindView: UIView, YXAudioPlayerViewDelegate {
@@ -33,7 +33,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     public var exerciseModel: YXWordExerciseModel
     
     private var remindLabel = UILabel()
-        
+
     private var titleLabel = UILabel()
     private var imageView = YXKVOImageView()
     private var audioPlayerView = YXAudioPlayerView()
@@ -59,41 +59,38 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         self.addSubview(self.titleLabel)
         self.addSubview(self.imageView)
         self.addSubview(self.audioPlayerView)
+        self.remindLabel.snp.remakeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.top.equalTo(self.snp.bottom)
+            make.width.equalTo(AdaptSize(37))
+            make.height.equalTo(AdaptSize(20))
+        }
+
+        self.titleLabel.snp.remakeConstraints { (make) in
+            make.top.equalTo(self.snp.bottom)
+            make.left.equalTo(remindLabel.snp.right)
+            make.size.equalTo(titleSize())
+        }
+
+        self.audioPlayerView.snp.remakeConstraints { (make) in
+            make.top.equalTo(self.snp.bottom)
+            make.left.equalTo(titleLabel.snp.right).offset(AdaptSize(5))
+            make.width.height.equalTo(AdaptSize(22))
+        }
+
+        self.imageView.snp.remakeConstraints { (make) in
+            make.top.equalTo(self.snp.bottom)
+            make.left.equalTo(remindLabel.snp.right)
+            make.width.equalTo(AdaptSize(89))
+            make.height.equalTo(AdaptSize(70))
+        }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        self.remindLabel.snp.remakeConstraints { (make) in
-            make.top.left.equalTo(0)
-            make.width.equalTo(37)
-            make.height.equalTo(20)
-        }
-        
-        self.titleLabel.snp.remakeConstraints { (make) in
-            make.top.equalTo(0)
-            make.left.equalTo(remindLabel.snp.right)
+        self.titleLabel.snp.updateConstraints { (make) in
             make.size.equalTo(titleSize())
         }
-        
-        self.audioPlayerView.snp.remakeConstraints { (make) in
-            make.top.equalTo(0)
-            make.left.equalTo(titleLabel.snp.right).offset(5)
-            make.width.height.equalTo(22)
-        }
-        
-        self.imageView.snp.remakeConstraints { (make) in
-            if titleLabel.isHidden {
-                make.top.equalTo(0)
-            } else {
-                make.top.equalTo(titleLabel.snp.bottom).offset(5)
-            }
-            
-            make.left.equalTo(remindLabel.snp.right)
-            make.width.equalTo(89)
-            make.height.equalTo(70)
-        }
-        
     }
     
     private func bindProperty() {
@@ -101,16 +98,17 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         remindLabel.text            = "提示:"
         remindLabel.textColor       = UIColor.black3
         remindLabel.isHidden         = true
-                
+
         titleLabel.font             = UIFont.pfSCRegularFont(withSize: 14)
         titleLabel.textColor        = UIColor.black1
         titleLabel.numberOfLines    = 0
         titleLabel.isHidden         = true
-        
+
         audioPlayerView.isHidden    = true
         audioPlayerView.delegate    = self
-        
-        imageView.isHidden          = true
+
+        imageView.isHidden           = true
+        imageView.layer.cornerRadius = AdaptSize(3.75)
     }
     
     
@@ -152,26 +150,26 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         
         for type in remindStep {
             switch type {
-                case .word:
-                    remindWord()
-                case .soundmark:
-                    remindSoundmark()
-                case .example:
-                    remindExample()
-                case .exampleWithDigWord:
-                    remindExampleWithDigWord()
-                case .image:
-                    remindImage()
-                case .wordAudio:
-                    remindWordAudio()
-                case .exampleAudio:
-                    remindExampleAudio()
-                case .wordChinese:
-                    remindWordChinese()
-                case .exampleChinese:
-                    remindExampleChinese()
-                default:
-                    remindDetail()
+            case .word:
+                remindWord()
+            case .soundmark:
+                remindSoundmark()
+            case .example:
+                remindExample()
+            case .exampleWithDigWord:
+                remindExampleWithDigWord()
+            case .image:
+                remindImage()
+            case .wordAudio:
+                remindWordAudio()
+            case .exampleAudio:
+                remindExampleAudio()
+            case .wordChinese:
+                remindWordChinese()
+            case .exampleChinese:
+                remindExampleChinese()
+            default:
+                remindDetail()
             }
         }
         
@@ -243,7 +241,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         let detailView = YXWordDetailTipView(word: word)
         detailView.dismissClosure = {
             completion?()
-//            self?.delegate?.dismissRemindView?()
+            //            self?.delegate?.dismissRemindView?()
         }
         detailView.showWithAnimation()
     }
@@ -254,12 +252,26 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         if remindSteps.count == 0 || currentRemindIndex == -1 {
             return
         }
-        
         remindLabel.isHidden = false
         titleLabel.isHidden = !hasText()
-        imageView.isHidden = !hasImage()        
+        imageView.isHidden = !hasImage()
         audioPlayerView.isHidden = !hasAudio()
-        
+        UIView.animate(withDuration: 0.5) {
+            self.remindLabel.transform = CGAffineTransform(translationX: 0, y: -self.height)
+            if self.hasText() {
+                self.titleLabel.transform = CGAffineTransform(translationX: 0, y: -self.height)
+            }
+            if self.hasImage() {
+                var top = -self.height
+                if !self.titleLabel.isHidden {
+                    top += self.titleLabel.height + AdaptSize(5)
+                }
+                self.imageView.transform = CGAffineTransform(translationX: 0, y: top)
+            }
+            if self.hasAudio() {
+                self.audioPlayerView.transform = CGAffineTransform(translationX: 0, y: -self.height)
+            }
+        }
         self.setNeedsLayout()
     }
     
@@ -269,7 +281,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         let step = remindSteps[currentRemindIndex]
         for type in step {
             if (type == .word || type == .example || type == .exampleWithDigWord || type == .soundmark
-            || type == .wordChinese || type == . exampleChinese) {
+                || type == .wordChinese || type == . exampleChinese) {
                 return true
             }
         }
@@ -317,7 +329,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
             maxWidth -= 25
         }
         let realWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: 20) ?? 0
-                    
+
         if realWidth > maxWidth {
             let height = titleLabel.text?.textHeight(font: titleLabel.font, width: maxWidth) ?? 20
             return CGSize(width: maxWidth, height: height)
