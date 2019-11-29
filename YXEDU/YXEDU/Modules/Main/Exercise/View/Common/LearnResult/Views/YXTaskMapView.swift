@@ -90,20 +90,10 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
 
     /// 添加小山
     private func addHillView() {
-        let hillLeft = UIImageView(image: UIImage(named: "hill"))
-        let hillRight = UIImageView(image: UIImage(named: "hill"))
+        let hillLeft = UIImageView(image: UIImage(named: "learnResultCardBackground"))
         self.addSubview(hillLeft)
-        self.addSubview(hillRight)
-        let hillSize = CGSize(width: AdaptSize(30), height: AdaptSize(36))
         hillLeft.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(25))
-            make.top.equalToSuperview().offset(AdaptSize(63))
-            make.size.equalTo(hillSize)
-        }
-        hillRight.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(AdaptSize(-24))
-            make.bottom.equalToSuperview().offset(AdaptSize(-49))
-            make.size.equalTo(hillSize)
+            make.edges.equalToSuperview()
         }
     }
 
