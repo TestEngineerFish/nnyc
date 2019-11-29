@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         getNotificationPermissions()
         initThirdPartyServices()
         initViewAndData()
-
+        
         return true
     }
     

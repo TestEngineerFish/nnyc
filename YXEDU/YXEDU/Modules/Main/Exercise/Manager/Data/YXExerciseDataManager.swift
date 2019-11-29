@@ -84,9 +84,7 @@ class YXExerciseDataManager: NSObject {
         // 打印
 //        printReportResult()
         
-        if progressManager.isSkipNewWord() {
-            needNewStudyCount = 0
-        } else {
+        if !progressManager.isSkipNewWord() {
             for exercise in self.newExerciseArray {
                 if exercise.isFinish == false {
                     return (needNewStudyCount, needReviewCount, exercise)
@@ -333,20 +331,11 @@ class YXExerciseDataManager: NSObject {
             }
             currentTurn += 1
                         
-            // 按step 从高到低排序
-            currentTurnArray.sort { (model1, model2) -> Bool in
-                return model1.step > model2.step
-            }
-            
-            
-            // 第二次排序，同一个step 上一轮没做错的排到前面
-//            currentTurnArray.sort { (model1, model2) -> Bool in
-//                return model1.step > model2.step
-//            }
-            
+            // 排序
+            self.sortCurrentTurn()
         }
         
-        
+
         
         // Q-A-9
         if currentTurnArray.first?.type == .connectionWordAndChinese {
@@ -403,6 +392,79 @@ class YXExerciseDataManager: NSObject {
         return optionManager.processReviewWordOption(exercise: e)
     }
    
+    
+    private func sortCurrentTurn() {
+        // 按step 从高到低排序
+        currentTurnArray.sort { (model1, model2) -> Bool in
+            return model1.step > model2.step
+        }
+        
+        
+        // 第二次排序，同一个step 上一轮没做错的排到前面
+        var tmpStepArray: [[YXWordExerciseModel]] = []
+                
+        /// 数组的下标
+        let arrayIndex: ((_ step: Int) -> Int) = { (stepIndex) in
+            for (i, step) in tmpStepArray.enumerated() {
+                if step.first?.step == stepIndex {
+                    return i
+                }
+            }
+            return -1
+        }
+        
+        for e in currentTurnArray {
+            let stepIndex = arrayIndex(e.step)
+            if stepIndex == -1 {
+                tmpStepArray.append([e])
+            } else {
+                tmpStepArray[stepIndex].append(e)
+            }
+        }
+        
+        
+        /// 上轮是否做对
+        let isPreviousRight: ((_ wordId: Int) -> Bool) = { [weak self] (wordId) in
+            guard let self = self else { return true }
+            
+            var wrong = false
+            for word in self.reviewWordArray {
+                if word.wordId == wordId {
+                    
+                    for step in word.exerciseSteps {
+                        let e = step.first
+                        if (e?.isFinish == true) {
+                            wrong = e?.isContinue ?? false
+                        }
+                    }
+                    
+                }
+                
+            }
+            return !wrong
+        }
+                
+        
+        currentTurnArray.removeAll()
+        
+        for step in tmpStepArray {
+            
+            var rightArray: [YXWordExerciseModel] = []
+            var wrongArray: [YXWordExerciseModel] = []
+            
+            for model in step {
+                if isPreviousRight(model.word?.wordId ?? 0) {
+                    rightArray.append(model)
+                } else {
+                    wrongArray.append(model)
+                }
+            }
+            currentTurnArray.append(contentsOf: rightArray)
+            currentTurnArray.append(contentsOf: wrongArray)
+        }
+        
+        
+    }
    
     /// 获取练习题的备份题
     /// - Parameters:
