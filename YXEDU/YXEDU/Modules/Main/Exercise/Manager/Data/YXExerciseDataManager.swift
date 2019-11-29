@@ -12,17 +12,11 @@ import ObjectMapper
 
 /// 练习的数据管理器
 class YXExerciseDataManager: NSObject {
-    
-    
-    public var newWordCount: Int = 0
-    public var reviewWordCount: Int = 0
-    public var bookId: Int = 0 // { return newExerciseArray.first?.word?.bookId ?? 0 }
-    public var unitId: Int = 0 //{ return newExerciseArray.first?.word?.unitId ?? 0 }
+    /// 哪本书，哪个单元
+    public var bookId: Int = 0, unitId: Int = 0
         
-    /// 剩余要复习的单词数量
-    private var needReviewWordCount = 0
-    private let dao: YXWordBookDao = YXWordBookDaoImpl()
-    
+    /// 新学 和 复习的单词数量
+    private var needNewStudyCount = 0, needReviewCount = 0
     
     /// 新学练习集合
     private var newExerciseArray: [YXWordExerciseModel] = []
@@ -30,16 +24,14 @@ class YXExerciseDataManager: NSObject {
     private var reviewWordArray: [YXWordStepsModel] = []
     /// 当前轮
     private var currentTurnArray: [YXWordExerciseModel] = []
-    
-    private var backupExerciseModelArray: [String : YXWordExerciseModel] = [:]
-    private let reviewWordIdsKey = "ReviewWordIdsKey"
-    private var currentStep = 0
-    
-    
+        
     /// 当前第几轮
     private var currentTurn = 0
+    
+    private let dao: YXWordBookDao = YXWordBookDaoImpl()
     /// 进度管理器
     private var progressManager: YXExcerciseProgressManager
+    /// 选项生成器
     private var optionManager: YXExerciseOptionManager
     
     
@@ -73,8 +65,8 @@ class YXExerciseDataManager: NSObject {
     
     
     /// 加载本地未学完的关卡数据
-    func fetchUnCompletionExerciseModels() {
-        let data = progressManager.localExerciseModels()
+    func fetchLocalExerciseModels() {
+        let data = progressManager.loadLocalExerciseModels()
         newExerciseArray = data.0
         reviewWordArray = data.1
         currentTurnArray = data.2
@@ -86,32 +78,32 @@ class YXExerciseDataManager: NSObject {
     /// 从当前关卡数据中，获取一个练习数据对象
     func fetchOneExerciseModel() -> (Int, Int, YXWordExerciseModel?) {
         // 更新待学习数
-        updateNeedNewWordCount()
-        updateNeedReviewWordCount()
+        updateNeedNewStudyCount()
+        updateNeedReviewCount()
         
-        let json = self.reportJson()
-        print(json)
-        var needNewWordCount = newExerciseArray.count
+        // 打印
+//        printReportResult()
         
         if progressManager.isSkipNewWord() {
-            needNewWordCount = 0
+            needNewStudyCount = 0
         } else {
             for exercise in self.newExerciseArray {
                 if exercise.isFinish == false {
-                    return (needNewWordCount, needReviewWordCount, exercise)
+                    return (needNewStudyCount, needReviewCount, exercise)
                 }
-                needNewWordCount -= 1
             }
         }
         
         let e = buildExercise()
-        printCurrentTurn()
+        
+        // 打印
+//        printCurrentTurn()
         
         // 取出来一个后，保存当前轮的进度
         progressManager.updateCurrentExercisesProgress(currentExerciseArray: currentTurnArray)
 
         
-        return (needNewWordCount, needReviewWordCount, e)
+        return (needNewStudyCount, needReviewCount, e)
     }
     
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态（连线题单个选项的对错有其他的方法处理）
@@ -132,7 +124,8 @@ class YXExerciseDataManager: NSObject {
         // 更新进度状态
         progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
         
-        printStatus()
+        // 打印
+//        printStatus()
                     
     }
     
@@ -151,10 +144,8 @@ class YXExerciseDataManager: NSObject {
         
         // 更新进度状态
         progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
-//        progressManager.updateCurrentExercisesProgress(currentExerciseArray: currentTurnArray)
     }
-    
-    
+        
     
     
     /// 更新每个Step的 对错
@@ -185,10 +176,6 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportUnit( completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let json = self.reportJson()
-//        print(json)
-//        completion?(true, nil)
-//        return
-        
         let request = YXExerciseRequest.report(json: json)
         YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
             completion?(response.dataArray != nil, nil)
@@ -231,11 +218,10 @@ class YXExerciseDataManager: NSObject {
         optionManager.initData(newArray: newExerciseArray, reviewArray: self.reviewWords())
         
         // 处理进度状态
-        progressManager.initProgressStatus(reviewWordIds: result?.reviewWordIds)
-        progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
-
+        progressManager.initProgressStatus(newWordIds: result?.newWordIds, reviewWordIds: result?.reviewWordIds)
         
-        YYCache.set(result?.reviewWordIds, forKey: reviewWordIdsKey)
+        // 保存数据
+        progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
     }
     
     
@@ -250,7 +236,6 @@ class YXExerciseDataManager: NSObject {
                 exercise.question = word
                 exercise.word = word
                 exercise.isNewWord = true
-//                exercise.isFinish = true
                 
                 if (word.gradeId ?? 0) <= 6 {// 小学
                     exercise.type = .newLearnPrimarySchool
@@ -322,6 +307,7 @@ class YXExerciseDataManager: NSObject {
     
     //MARK: - private - fetch data
     
+    /// 出题逻辑（根据step，上轮对错）
     private func buildExercise() -> YXWordExerciseModel? {
 
         if currentTurnArray.count == 0 {
@@ -346,13 +332,23 @@ class YXExerciseDataManager: NSObject {
                 }
             }
             currentTurn += 1
+                        
+            // 按step 从高到低排序
+            currentTurnArray.sort { (model1, model2) -> Bool in
+                return model1.step > model2.step
+            }
+            
+            
+            // 第二次排序，同一个step 上一轮没做错的排到前面
+//            currentTurnArray.sort { (model1, model2) -> Bool in
+//                return model1.step > model2.step
+//            }
+            
         }
         
-        // 按step 从高到低排序
-        currentTurnArray.sort { (model1, model2) -> Bool in
-            return model1.step > model2.step
-        }
         
+        
+        // Q-A-9
         if currentTurnArray.first?.type == .connectionWordAndChinese {
             var connectionArray: [YXWordExerciseModel] = []
             for exercise in currentTurnArray {
@@ -375,6 +371,8 @@ class YXExerciseDataManager: NSObject {
                 }
             }
         }
+        
+        // Q-A-10
         if currentTurnArray.first?.type == .connectionWordAndImage {
             var connectionArray: [YXWordExerciseModel] = []
             for exercise in currentTurnArray {
@@ -400,6 +398,8 @@ class YXExerciseDataManager: NSObject {
         guard let e = currentTurnArray.first else {
             return nil
         }
+        
+        // 其他题型
         return optionManager.processReviewWordOption(exercise: e)
     }
    
@@ -520,18 +520,15 @@ class YXExerciseDataManager: NSObject {
         
     }
     
-    
-    private func updateNeedNewWordCount() {
+    /// 更新待学习数 - 新学
+    private func updateNeedNewStudyCount() {
+        let wordIds = progressManager.loadLocalWordsProgress().0
         
-    }
-    
-    /// 更新待学习数
-    private func updateNeedReviewWordCount() {
-        guard let wordIds = YYCache.object(forKey: reviewWordIdsKey) as? [Int] else {
-            needReviewWordCount = 0
+        if wordIds.count == 0 {
+            needNewStudyCount = 0
             return
         }
-        
+
         var map: [Int : Bool] = [:]
         for wordId in wordIds {
             for word in reviewWordArray {
@@ -544,7 +541,31 @@ class YXExerciseDataManager: NSObject {
             }
         }
         
-        needReviewWordCount = map.count
+        needNewStudyCount = map.count
+    }
+    
+    /// 更新待学习数 - 复习
+    private func updateNeedReviewCount() {
+        let wordIds = progressManager.loadLocalWordsProgress().1
+        
+        if wordIds.count == 0 {
+            needReviewCount = 0
+            return
+        }
+
+        var map: [Int : Bool] = [:]
+        for wordId in wordIds {
+            for word in reviewWordArray {
+                for step in word.exerciseSteps {
+                    let e = step.first
+                    if wordId == word.wordId && (e?.isFinish == false || e?.isContinue == true) {
+                        map[wordId] = false
+                    }
+                }
+            }
+        }
+        
+        needReviewCount = map.count
     }
     
 
@@ -631,9 +652,6 @@ class YXExerciseDataManager: NSObject {
             
         }
         
-        newWordCount = self.newExerciseArray.count
-        reviewWordCount = map.count
-        
         return Array(map.values).toJSONString() ?? ""
     }
     
@@ -649,6 +667,10 @@ class YXExerciseDataManager: NSObject {
         return array
     }
     
+    func printReportResult() {
+        let json = self.reportJson()
+        print(json)
+    }
     
     func printCurrentTurn() {
         print("第\(currentTurn)轮数量：", currentTurnArray.count)

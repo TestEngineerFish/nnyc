@@ -11,7 +11,7 @@ import Foundation
 enum YXRemindType: Int {
     case word                   // 单词拼写
     case example                // 例句
-    case exampleWithDigWord        // 例句，单词挖空
+    case exampleWithDigWord     // 例句，单词挖空
     case soundmark              // 音标
     case wordAudio              // 单词读音
     case exampleAudio           // 例句读音
@@ -189,7 +189,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
 
     private func remindExampleWithDigWord() {
         if let word = exerciseModel.word?.word {
-            titleLabel.text = exerciseModel.word?.example?.replacingOccurrences(of: word, with: "__")
+            titleLabel.text = exerciseModel.word?.example?.replacingOccurrences(of: word, with: "____")
         }
         setAllSubviewStatus()
     }
@@ -257,8 +257,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         
         remindLabel.isHidden = false
         titleLabel.isHidden = !hasText()
-        imageView.isHidden = !hasImage()
-        
+        imageView.isHidden = !hasImage()        
         audioPlayerView.isHidden = !hasAudio()
         
         self.setNeedsLayout()

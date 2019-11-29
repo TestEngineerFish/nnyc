@@ -192,6 +192,7 @@ extension YXConnectionView {
                 leftItemArray[index].itemStatus = .normal
                 self.selectedLeftItemEvent?(.normal, leftItemArray[index].itemModel?.optionId ?? 0)
                 self.audioPlayerView.isHidden = true
+                self.startItemView = nil
                 return
             }
             self.selectedLeftItemEvent?(.selected, leftItemArray[index].itemModel?.optionId ?? 0)
@@ -372,11 +373,16 @@ extension YXConnectionView {
 //            print("跑到画板外面去啦————结束")
 //            return
 //        }
-        
+        // 结束时，其实
         if let _startItemView = self.startItemView,
             let itemView = gestureItemView(point: point),
             itemView.itemType != _startItemView.itemType,
             itemView.itemStatus != .end {
+            
+            // 如果结束时，是左边项，发送左边项选中事件
+            if itemView.itemType == .left {
+                selectedLeftItemEvent?(.selected, itemView.itemModel?.optionId ?? 0)
+            }
             
             self.shapeLayer?.removeFromSuperlayer()
             self.startItemView = nil
@@ -403,6 +409,11 @@ extension YXConnectionView {
         }
         self.startItemView = itemView
         selectItem(index: itemView.index, type: itemView.itemType)
+        
+        // 如果开始是左边项，发送左边项选中事件
+        if itemView.itemType == .left {
+            selectedLeftItemEvent?(.selected, itemView.itemModel?.optionId ?? 0)
+        }
     }
     
     private func gestureItemView(point: CGPoint) -> YXConnectionItemView? {
@@ -425,6 +436,7 @@ extension YXConnectionView {
 
     private func drawLineProcess() {
         
+        self.audioPlayerView.isHidden = true
         
         let selectedItems = self.leftAndRightItems()
         let start = selectedItems.0.locationPoint

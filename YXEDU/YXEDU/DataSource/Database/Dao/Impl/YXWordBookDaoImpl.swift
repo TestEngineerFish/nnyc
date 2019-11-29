@@ -206,6 +206,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
             wordModelArray.append(word)
         }
+        
         return wordModelArray
     }
     

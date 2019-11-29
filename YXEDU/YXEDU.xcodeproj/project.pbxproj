@@ -148,7 +148,6 @@
 		D665A0B82091A43200FBC9D2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D665A0B72091A43100FBC9D2 /* libresolv.tbd */; };
 		D672C2552064D21800696828 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D672C2542064D21800696828 /* libsqlite3.tbd */; };
 		D672C2572064D24D00696828 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D672C2562064D24D00696828 /* CoreTelephony.framework */; };
-		EE04BDBA2366C45100D6713C /* YXExerciseDataManager_backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE04BDB92366C45100D6713C /* YXExerciseDataManager_backup.swift */; };
 		EE04BDBC2366C48200D6713C /* YXExcerciseProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE04BDBB2366C48100D6713C /* YXExcerciseProgressManager.swift */; };
 		EE04BDBE2366C51D00D6713C /* YXAnswerViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE04BDBD2366C51D00D6713C /* YXAnswerViewFactory.swift */; };
 		EE08F3662372E06B00FA3FDF /* YXWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F3652372E06B00FA3FDF /* YXWordModel.swift */; };
@@ -683,7 +682,6 @@
 		EE77210A237C1F8400CD632E /* YYMediaCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE772109237C1F8400CD632E /* YYMediaCache.swift */; };
 		EE77210E237C2B6E00CD632E /* YXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE77210D237C2B6E00CD632E /* YXView.swift */; };
 		EE772110237D3EF700CD632E /* YXWordAndImage_FillQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE77210F237D3EF700CD632E /* YXWordAndImage_FillQuestionView.swift */; };
-		EE7721122382376700CD632E /* YXExerciseOptionManager_backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7721112382376700CD632E /* YXExerciseOptionManager_backup.swift */; };
 		EE77211B2384117D00CD632E /* YYDataSourceQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7721192384117C00CD632E /* YYDataSourceQueueManager.swift */; };
 		EE77211C2384117D00CD632E /* YXDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE77211A2384117D00CD632E /* YXDataSourceManager.swift */; };
 		EE77211E23841FEC00CD632E /* YXExerciseReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE77211D23841FEC00CD632E /* YXExerciseReportModel.swift */; };
@@ -862,7 +860,6 @@
 		D665A0B72091A43100FBC9D2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		D672C2542064D21800696828 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		D672C2562064D24D00696828 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		EE04BDB92366C45100D6713C /* YXExerciseDataManager_backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseDataManager_backup.swift; sourceTree = "<group>"; };
 		EE04BDBB2366C48100D6713C /* YXExcerciseProgressManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExcerciseProgressManager.swift; sourceTree = "<group>"; };
 		EE04BDBD2366C51D00D6713C /* YXAnswerViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAnswerViewFactory.swift; sourceTree = "<group>"; };
 		EE08F3652372E06B00FA3FDF /* YXWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordModel.swift; sourceTree = "<group>"; };
@@ -1880,7 +1877,6 @@
 		EE772109237C1F8400CD632E /* YYMediaCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYMediaCache.swift; sourceTree = "<group>"; };
 		EE77210D237C2B6E00CD632E /* YXView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXView.swift; sourceTree = "<group>"; };
 		EE77210F237D3EF700CD632E /* YXWordAndImage_FillQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordAndImage_FillQuestionView.swift; sourceTree = "<group>"; };
-		EE7721112382376700CD632E /* YXExerciseOptionManager_backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseOptionManager_backup.swift; sourceTree = "<group>"; };
 		EE7721192384117C00CD632E /* YYDataSourceQueueManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYDataSourceQueueManager.swift; sourceTree = "<group>"; };
 		EE77211A2384117D00CD632E /* YXDataSourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXDataSourceManager.swift; sourceTree = "<group>"; };
 		EE77211D23841FEC00CD632E /* YXExerciseReportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseReportModel.swift; sourceTree = "<group>"; };
@@ -2476,11 +2472,9 @@
 		EE04BDB72366C41000D6713C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				EE3DAB9A23750E2400B2FF40 /* YXExerciseRequest.swift */,
 				EE772126238CFC4200CD632E /* YXExerciseDataManager.swift */,
 				EE772128238D4F1D00CD632E /* YXExerciseOptionManager.swift */,
-				EE3DAB9A23750E2400B2FF40 /* YXExerciseRequest.swift */,
-				EE04BDB92366C45100D6713C /* YXExerciseDataManager_backup.swift */,
-				EE7721112382376700CD632E /* YXExerciseOptionManager_backup.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -5908,7 +5902,6 @@
 				EE77211C2384117D00CD632E /* YXDataSourceManager.swift in Sources */,
 				EE5E010123274FEC00655654 /* YXPersonalBadgeModel.m in Sources */,
 				EE5E00E323274FEC00655654 /* YXSynchroIndicatorView.m in Sources */,
-				EE7721122382376700CD632E /* YXExerciseOptionManager_backup.swift in Sources */,
 				EE5E00BA23274FEB00655654 /* YXMyBooksInfo.m in Sources */,
 				EE5EFD6123274F0900655654 /* YXDescoverBlankCell.m in Sources */,
 				EE5E001623274FEB00655654 /* YXCareerSortView.m in Sources */,
@@ -5976,7 +5969,6 @@
 				EE5E00C723274FEB00655654 /* YXReportAblityView.m in Sources */,
 				EE1E4AA423694D17007D248F /* YXFillWordAccordingToImageExerciseView.swift in Sources */,
 				EE5E000F23274FEB00655654 /* YXBookBrefInfo.m in Sources */,
-				EE04BDBA2366C45100D6713C /* YXExerciseDataManager_backup.swift in Sources */,
 				EE5E0241232756C000655654 /* XCycleView.m in Sources */,
 				EE77210E237C2B6E00CD632E /* YXView.swift in Sources */,
 				EEFBABA423729BA1001A6302 /* YXConnectionItemView.swift in Sources */,

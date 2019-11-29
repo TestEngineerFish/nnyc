@@ -123,7 +123,7 @@
         // 存在学完未上报的关卡
         if !progressManager.isReport() {
             // 先加载本地数据
-            dataManager.fetchUnCompletionExerciseModels()
+            dataManager.fetchLocalExerciseModels()
             
             // 先上报关卡
             dataManager.reportUnit {[weak self] (result, msg) in
@@ -135,7 +135,7 @@
                 }
             }
         } else if !progressManager.isCompletion() {// 存在未学完的关卡
-            dataManager.fetchUnCompletionExerciseModels()
+            dataManager.fetchLocalExerciseModels()
             self.hideLoadAnimation { [weak self] in
                 self?.switchExerciseView()
             }
@@ -195,19 +195,19 @@
             dataManager.reportUnit { [weak self] (result, errorMsg) in
                 guard let self = self else {return}
                 if result {
-                    // 上报结束
+                    let progress = self.progressManager.loadLocalWordsProgress()
+                    // 上报结束, 清空数据
                     self.progressManager.completionReport()
                     
                     let vc = YXLearningResultViewController()
                     vc.bookId = self.dataManager.bookId
                     vc.unitId = self.dataManager.unitId
-                    vc.newLearnAmount = self.dataManager.newWordCount
-                    vc.reviewLearnAmount = self.dataManager.reviewWordCount
-                    
-                    
+                    vc.newLearnAmount = progress.0.count
+                    vc.reviewLearnAmount = progress.1.count
+                                        
                     self.navigationController?.popViewController(animated: false)
                     vc.hidesBottomBarWhenPushed = true
-                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)                              
                 } else {
                     YXUtils.showHUD(self.view, title: "上报关卡失败")
                     self.navigationController?.popViewController(animated: true)
@@ -317,8 +317,8 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     }
     
 }
- 
- 
+
+
 extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int) {
         bottomView.tipsButton.isEnabled = selected

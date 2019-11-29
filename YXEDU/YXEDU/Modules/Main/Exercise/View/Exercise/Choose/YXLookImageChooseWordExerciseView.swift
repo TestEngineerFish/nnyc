@@ -32,6 +32,6 @@ class YXLookImageChooseWordExerciseView: YXBaseExerciseView {
     }
     
     override func bindData() {
-        self.remindView?.remindSteps = [[.exampleChinese], [.exampleWithDigWord], [.detail]]
+        self.remindView?.remindSteps = [[.wordChinese], [.exampleWithDigWord], [.detail]]
     }
 }
