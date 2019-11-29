@@ -86,7 +86,8 @@ class YXUserModel: NSObject {
     @objc
     func logout() {
         self.didLogin = false
-
+        YYCache.set(nil, forKey: "LastStoredDate")
+        
         YXMediator().loginOut()
         
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)

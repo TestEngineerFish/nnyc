@@ -95,10 +95,10 @@ struct YXWordModel: Mappable {
     }
     
     var example: String? {
-        return exampleAttr?.string
+        return englishExampleAttributedString?.string
     }
     
-    var exampleAttr: NSAttributedString? {
+    var englishExampleAttributedString: NSAttributedString? {
         guard let englishExample = englishExample else { return nil }
 
         let firstRightBracket = englishExample.firstIndex(of: ">")!

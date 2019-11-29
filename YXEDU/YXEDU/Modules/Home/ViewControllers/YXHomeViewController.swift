@@ -70,6 +70,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let lineView = UIView(frame: CGRect(x: 0, y: -0.5, width: screenWidth, height: 0.5))
+        lineView.backgroundColor = UIColor.hex(0xDCDCDC)
+        self.tabBarController?.tabBar.addSubview(lineView)
+        
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
