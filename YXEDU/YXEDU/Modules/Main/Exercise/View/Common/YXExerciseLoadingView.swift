@@ -138,7 +138,6 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         dotAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         dotAnimation.fillMode       = .forwards
         dotAnimation.isRemovedOnCompletion = false
-        dotAnimation.delegate = self
         dotLayer.add(dotAnimation, forKey: "dotAnimation")
 
         let proMaskLayer = CAShapeLayer()
@@ -174,7 +173,6 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     // MARK: CAAnimationDelegate
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        dotLayer.removeAllAnimations()
         if self.finished {
             self.removeFromSuperview()
             self.completeBlock?()
