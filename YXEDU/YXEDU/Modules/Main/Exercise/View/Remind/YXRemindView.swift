@@ -258,6 +258,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         remindLabel.isHidden = false
         titleLabel.isHidden = !hasText()
         imageView.isHidden = !hasImage()
+        
         audioPlayerView.isHidden = !hasAudio()
         
         self.setNeedsLayout()

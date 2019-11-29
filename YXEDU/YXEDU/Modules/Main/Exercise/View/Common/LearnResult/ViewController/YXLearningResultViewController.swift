@@ -46,7 +46,7 @@ class YXLearningResultViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.height.equalTo(AdaptSize(244))
             make.width.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(23))
+            make.top.equalToSuperview().offset(AdaptSize(26))
         }
 
         // 内容视图,支持滑动
@@ -107,23 +107,22 @@ class YXLearningResultViewController: UIViewController {
         self.contentScrollView.addSubview(taskMapView)
         taskMapView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(AdaptSize(300))
+            make.bottom.equalToSuperview().offset(AdaptSize(100))
             make.size.equalTo(taskMapViewSize)
             make.centerX.equalToSuperview()
         }
         taskMapView.layer.setDefaultShadow()
 
-        let taskMapLabel = UILabel()
-        taskMapLabel.text = "任务地图"
-        taskMapLabel.font = UIFont.regularFont(ofSize: 12)
-        taskMapLabel.textColor = UIColor.hex(0xFBA217)
-        self.view.addSubview(taskMapLabel)
-        taskMapLabel.snp.makeConstraints { (make) in
-            make.bottom.equalTo(taskMapView.snp.top).offset(-7)
+        let taskMapLabelImageView = UIImageView()
+        taskMapLabelImageView.image = UIImage(named: "taskMapLabel")
+        self.view.addSubview(taskMapLabelImageView)
+        taskMapLabelImageView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(taskMapView.snp.top).offset(-6)
             make.left.equalTo(taskMapView)
             make.width.equalTo(48)
-            make.height.equalTo(12)
+            make.height.equalTo(10)
         }
-        let contentScrollViewH = kNavHeight + AdaptSize(300) + taskMapViewSize.height + AdaptSize(50) + AdaptSize(42)
+        let contentScrollViewH = kStatusBarHeight + AdaptSize(300) + taskMapViewSize.height + AdaptSize(100)
         self.contentScrollView.contentSize = CGSize(width: contentScrollView.width, height: contentScrollViewH)
     }
 

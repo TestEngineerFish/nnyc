@@ -521,7 +521,7 @@ extension YXConnectionView {
         case .wrong:
             lineColor = UIColor.red1
         case .end:
-            lineColor = UIColor.black3
+            lineColor = UIColor.black8
         default:
             lineColor = UIColor.black1
         }

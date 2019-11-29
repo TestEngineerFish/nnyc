@@ -52,9 +52,9 @@ class YXExerciseBottomView: UIView {
         
         self.tipsButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalTo(19)
-            make.width.equalTo(100)
-            make.height.equalTo(17)
+            make.left.equalTo(20)
+            make.width.equalTo(68)
+            make.height.equalTo(18)
         }
     }
     
