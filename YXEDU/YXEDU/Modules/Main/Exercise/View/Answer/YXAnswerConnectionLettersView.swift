@@ -349,9 +349,10 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         }
         if list.isEmpty {
             // 答题正确
-            self.selectedBtnArray.forEach { (button) in
-                button.status = .right
-            }
+//            需求时保持选中状态
+//            self.selectedBtnArray.forEach { (button) in
+//                button.status = .right
+//            }
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
             // 答题错误

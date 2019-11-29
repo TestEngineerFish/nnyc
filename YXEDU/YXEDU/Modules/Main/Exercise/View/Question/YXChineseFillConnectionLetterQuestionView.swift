@@ -39,7 +39,7 @@ class YXChineseFillConnectionLetterQuestionView: YXBaseQuestionView {
         self.titleLabel?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(36))
-            make.height.equalTo(AdaptSize(28))
+            make.height.equalTo(self.titleLabel!.height)
             make.width.equalTo(self.titleLabel!.width)
         })
         self.audioPlayerView?.snp.makeConstraints({ (make) in
@@ -49,7 +49,7 @@ class YXChineseFillConnectionLetterQuestionView: YXBaseQuestionView {
         })
         let spellViewW = (self.spellView?.maxX ?? 0) - (self.spellView?.margin ?? 0)
         self.spellView?.snp.makeConstraints({ (make) in
-            make.top.equalToSuperview().offset(AdaptSize(64))
+            make.top.equalTo(self.titleLabel!.snp.bottom).offset(AdaptSize(10))
             make.centerX.equalToSuperview()
             make.width.equalTo(spellViewW)
             make.height.equalTo(AdaptSize(30))
