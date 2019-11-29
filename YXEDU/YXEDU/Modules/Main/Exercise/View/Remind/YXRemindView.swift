@@ -107,8 +107,9 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         audioPlayerView.isHidden    = true
         audioPlayerView.delegate    = self
 
-        imageView.isHidden           = true
-        imageView.layer.cornerRadius = AdaptSize(3.75)
+        imageView.isHidden            = true
+        imageView.layer.cornerRadius  = AdaptSize(3.75)
+        imageView.layer.masksToBounds = true
     }
     
     
