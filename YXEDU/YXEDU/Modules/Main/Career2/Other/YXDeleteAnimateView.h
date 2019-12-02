@@ -6,8 +6,6 @@
 //  Copyright © 2018年 shiji. All rights reserved.
 //
 
-#import "YXReoprtEleView.h"
-
 @interface YXDeleteAnimateView : UIView
 @property (nonatomic, readonly ,strong)UIView *animateContentView;
 @property (nonatomic, readonly ,strong)UIView *animateView;;

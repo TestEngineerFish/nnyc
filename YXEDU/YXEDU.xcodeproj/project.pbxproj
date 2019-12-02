@@ -362,17 +362,6 @@
 		EE5E00BC23274FEB00655654 /* YXBookTitleHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF2823274FEA00655654 /* YXBookTitleHeader.m */; };
 		EE5E00BD23274FEB00655654 /* YXMyBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF2C23274FEA00655654 /* YXMyBookCell.m */; };
 		EE5E00BE23274FEB00655654 /* YXDownloadProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF2D23274FEA00655654 /* YXDownloadProgressView.m */; };
-		EE5E00BF23274FEB00655654 /* YXReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF3223274FEA00655654 /* YXReportViewController.m */; };
-		EE5E00C023274FEB00655654 /* YXReportDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF3423274FEA00655654 /* YXReportDetailInfo.m */; };
-		EE5E00C123274FEB00655654 /* YXIndexModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF3723274FEA00655654 /* YXIndexModel.m */; };
-		EE5E00C223274FEB00655654 /* YXStudySpeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF3A23274FEA00655654 /* YXStudySpeedView.m */; };
-		EE5E00C323274FEB00655654 /* YXBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF3C23274FEA00655654 /* YXBarChartView.m */; };
-		EE5E00C423274FEB00655654 /* YXDataSituationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF3E23274FEA00655654 /* YXDataSituationView.m */; };
-		EE5E00C523274FEB00655654 /* YXVocabularyView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF3F23274FEA00655654 /* YXVocabularyView.m */; };
-		EE5E00C623274FEB00655654 /* YXReoprtEleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF4023274FEA00655654 /* YXReoprtEleView.m */; };
-		EE5E00C723274FEB00655654 /* YXReportAblityView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF4223274FEA00655654 /* YXReportAblityView.m */; };
-		EE5E00C823274FEB00655654 /* YXCompositeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF4423274FEA00655654 /* YXCompositeView.m */; };
-		EE5E00C923274FEB00655654 /* YXReportIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF4523274FEA00655654 /* YXReportIndexView.m */; };
 		EE5E00CA23274FEB00655654 /* YXBookListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF4B23274FEA00655654 /* YXBookListViewModel.m */; };
 		EE5E00CB23274FEB00655654 /* YXBookSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF5323274FEA00655654 /* YXBookSettingViewController.m */; };
 		EE5E00CC23274FEB00655654 /* YXSelectBookVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF5423274FEA00655654 /* YXSelectBookVC.m */; };
@@ -1635,28 +1624,6 @@
 		EE5EFF2C23274FEA00655654 /* YXMyBookCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXMyBookCell.m; sourceTree = "<group>"; };
 		EE5EFF2D23274FEA00655654 /* YXDownloadProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXDownloadProgressView.m; sourceTree = "<group>"; };
 		EE5EFF2E23274FEA00655654 /* YXPersonalBookVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalBookVC.h; sourceTree = "<group>"; };
-		EE5EFF3123274FEA00655654 /* YXReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXReportViewController.h; sourceTree = "<group>"; };
-		EE5EFF3223274FEA00655654 /* YXReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXReportViewController.m; sourceTree = "<group>"; };
-		EE5EFF3423274FEA00655654 /* YXReportDetailInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXReportDetailInfo.m; sourceTree = "<group>"; };
-		EE5EFF3523274FEA00655654 /* YXIndexModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXIndexModel.h; sourceTree = "<group>"; };
-		EE5EFF3623274FEA00655654 /* YXReportDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXReportDetailInfo.h; sourceTree = "<group>"; };
-		EE5EFF3723274FEA00655654 /* YXIndexModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXIndexModel.m; sourceTree = "<group>"; };
-		EE5EFF3923274FEA00655654 /* YXCompositeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCompositeView.h; sourceTree = "<group>"; };
-		EE5EFF3A23274FEA00655654 /* YXStudySpeedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXStudySpeedView.m; sourceTree = "<group>"; };
-		EE5EFF3B23274FEA00655654 /* YXReportAblityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXReportAblityView.h; sourceTree = "<group>"; };
-		EE5EFF3C23274FEA00655654 /* YXBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXBarChartView.m; sourceTree = "<group>"; };
-		EE5EFF3D23274FEA00655654 /* YXReportIndexView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXReportIndexView.h; sourceTree = "<group>"; };
-		EE5EFF3E23274FEA00655654 /* YXDataSituationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXDataSituationView.m; sourceTree = "<group>"; };
-		EE5EFF3F23274FEA00655654 /* YXVocabularyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXVocabularyView.m; sourceTree = "<group>"; };
-		EE5EFF4023274FEA00655654 /* YXReoprtEleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXReoprtEleView.m; sourceTree = "<group>"; };
-		EE5EFF4123274FEA00655654 /* YXBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXBarChartView.h; sourceTree = "<group>"; };
-		EE5EFF4223274FEA00655654 /* YXReportAblityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXReportAblityView.m; sourceTree = "<group>"; };
-		EE5EFF4323274FEA00655654 /* YXStudySpeedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXStudySpeedView.h; sourceTree = "<group>"; };
-		EE5EFF4423274FEA00655654 /* YXCompositeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCompositeView.m; sourceTree = "<group>"; };
-		EE5EFF4523274FEA00655654 /* YXReportIndexView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXReportIndexView.m; sourceTree = "<group>"; };
-		EE5EFF4623274FEA00655654 /* YXReoprtEleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXReoprtEleView.h; sourceTree = "<group>"; };
-		EE5EFF4723274FEA00655654 /* YXVocabularyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXVocabularyView.h; sourceTree = "<group>"; };
-		EE5EFF4823274FEA00655654 /* YXDataSituationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXDataSituationView.h; sourceTree = "<group>"; };
 		EE5EFF4B23274FEA00655654 /* YXBookListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXBookListViewModel.m; sourceTree = "<group>"; };
 		EE5EFF4C23274FEA00655654 /* YXBookListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXBookListViewModel.h; sourceTree = "<group>"; };
 		EE5EFF4D23274FEA00655654 /* YXBookSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXBookSettingViewController.h; sourceTree = "<group>"; };
@@ -3727,7 +3694,6 @@
 				EE5EFEFB23274FE900655654 /* Search */,
 				EE5EFEFF23274FE900655654 /* Misssion */,
 				EE5EFF1723274FEA00655654 /* Book */,
-				EE5EFF2F23274FEA00655654 /* Report */,
 				EE5EFF4923274FEA00655654 /* Select */,
 				EE5EFF6B23274FEA00655654 /* Main */,
 			);
@@ -4606,59 +4572,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		EE5EFF2F23274FEA00655654 /* Report */ = {
-			isa = PBXGroup;
-			children = (
-				EE5EFF3023274FEA00655654 /* Controller */,
-				EE5EFF3323274FEA00655654 /* Model */,
-				EE5EFF3823274FEA00655654 /* View */,
-			);
-			path = Report;
-			sourceTree = "<group>";
-		};
-		EE5EFF3023274FEA00655654 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				EE5EFF3123274FEA00655654 /* YXReportViewController.h */,
-				EE5EFF3223274FEA00655654 /* YXReportViewController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		EE5EFF3323274FEA00655654 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				EE5EFF3423274FEA00655654 /* YXReportDetailInfo.m */,
-				EE5EFF3523274FEA00655654 /* YXIndexModel.h */,
-				EE5EFF3623274FEA00655654 /* YXReportDetailInfo.h */,
-				EE5EFF3723274FEA00655654 /* YXIndexModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		EE5EFF3823274FEA00655654 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				EE5EFF3923274FEA00655654 /* YXCompositeView.h */,
-				EE5EFF3A23274FEA00655654 /* YXStudySpeedView.m */,
-				EE5EFF3B23274FEA00655654 /* YXReportAblityView.h */,
-				EE5EFF3C23274FEA00655654 /* YXBarChartView.m */,
-				EE5EFF3D23274FEA00655654 /* YXReportIndexView.h */,
-				EE5EFF3E23274FEA00655654 /* YXDataSituationView.m */,
-				EE5EFF3F23274FEA00655654 /* YXVocabularyView.m */,
-				EE5EFF4023274FEA00655654 /* YXReoprtEleView.m */,
-				EE5EFF4123274FEA00655654 /* YXBarChartView.h */,
-				EE5EFF4223274FEA00655654 /* YXReportAblityView.m */,
-				EE5EFF4323274FEA00655654 /* YXStudySpeedView.h */,
-				EE5EFF4423274FEA00655654 /* YXCompositeView.m */,
-				EE5EFF4523274FEA00655654 /* YXReportIndexView.m */,
-				EE5EFF4623274FEA00655654 /* YXReoprtEleView.h */,
-				EE5EFF4723274FEA00655654 /* YXVocabularyView.h */,
-				EE5EFF4823274FEA00655654 /* YXDataSituationView.h */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		EE5EFF4923274FEA00655654 /* Select */ = {
 			isa = PBXGroup;
 			children = (
@@ -5484,7 +5397,6 @@
 				2290EAC8236FCCFE000BCA47 /* YXNewLearnPrimarySchoolAnswerView.swift in Sources */,
 				EE5E004F23274FEB00655654 /* YXWordDetailMemoryCell.m in Sources */,
 				EE5E008323274FEB00655654 /* YXSpellView.m in Sources */,
-				EE5E00C823274FEB00655654 /* YXCompositeView.m in Sources */,
 				EE5E0235232756C000655654 /* XBarChartConfiguration.m in Sources */,
 				EE5E00D423274FEB00655654 /* YXSelectBookCell.m in Sources */,
 				EE5E010323274FEC00655654 /* YXPersonalBadgeCell.m in Sources */,
@@ -5542,7 +5454,6 @@
 				7702ABFF23880E6600EC0C69 /* YXAboutUsViewController.swift in Sources */,
 				EE5E007F23274FEB00655654 /* YXNinePalaceKeyBoardView.m in Sources */,
 				2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */,
-				EE5E00C423274FEB00655654 /* YXDataSituationView.m in Sources */,
 				EE7721002379333100CD632E /* YXKVOImageView.swift in Sources */,
 				EE5E0178232754FA00655654 /* JPushManager.m in Sources */,
 				EE5E00B123274FEB00655654 /* YXMissonTableViewCell.m in Sources */,
@@ -5594,7 +5505,6 @@
 				EE5E007723274FEB00655654 /* YXCheckButtonsView.m in Sources */,
 				EE5E00EF23274FEC00655654 /* YXPersonChangeNameVC.m in Sources */,
 				EE5E005F23274FEB00655654 /* YXExerciseSubmitErrorView.m in Sources */,
-				EE5E00C023274FEB00655654 /* YXReportDetailInfo.m in Sources */,
 				EE5E010723274FEC00655654 /* YXBindPhoneVC.m in Sources */,
 				EE5EF20D23273BAE00655654 /* YRProgressView.m in Sources */,
 				EE5EF20F23273BAE00655654 /* NSObject+YR.m in Sources */,
@@ -5610,7 +5520,6 @@
 				22A5AFB8236C53E900FBFABD /* YXExerciseAnimation.swift in Sources */,
 				EE5E00D023274FEB00655654 /* YXSelectBookSegment.m in Sources */,
 				EE5E00B723274FEB00655654 /* YXPersonalBookVC.m in Sources */,
-				EE5E00C123274FEB00655654 /* YXIndexModel.m in Sources */,
 				EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */,
 				2290EAC4236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift in Sources */,
 				EE5E010823274FEC00655654 /* YXBindViewModel.m in Sources */,
@@ -5635,7 +5544,6 @@
 				EE5EFD5323274F0900655654 /* YXGameModel.m in Sources */,
 				224A2FC0238233CC00AD99B0 /* YXAvatarPinView.swift in Sources */,
 				EE5E006523274FEB00655654 /* YXStudyBatchModel.m in Sources */,
-				EE5E00C923274FEB00655654 /* YXReportIndexView.m in Sources */,
 				EE5E008123274FEB00655654 /* YXSpellQuestionViewOld.m in Sources */,
 				EE5EF20423273BAE00655654 /* UIImage+YR.m in Sources */,
 				EE5E003123274FEB00655654 /* YXMyBookFooterView.m in Sources */,
@@ -5757,7 +5665,6 @@
 				77F69A7023614D9600E55185 /* YXDesignableImageView.swift in Sources */,
 				EE5E003423274FEB00655654 /* YXWordListView.m in Sources */,
 				EE54F7DF2362AA3100EC605A /* YXWordAndChineseQuestionView.swift in Sources */,
-				EE5E00C723274FEB00655654 /* YXReportAblityView.m in Sources */,
 				EE1E4AA423694D17007D248F /* YXFillWordAccordingToImageExerciseView.swift in Sources */,
 				EE5E000F23274FEB00655654 /* YXBookBrefInfo.m in Sources */,
 				EE5E0241232756C000655654 /* XCycleView.m in Sources */,
@@ -5767,7 +5674,6 @@
 				EE54F7D02362AA3100EC605A /* YXWordExerciseModel.swift in Sources */,
 				77F69A68236149B300E55185 /* YXAddBookViewController.swift in Sources */,
 				EE5E001F23274FEB00655654 /* YXCreateWordBookVC.m in Sources */,
-				EE5E00C623274FEB00655654 /* YXReoprtEleView.m in Sources */,
 				EE5E0171232754FA00655654 /* YXCrashReport.m in Sources */,
 				77F69A7623616CE600E55185 /* YXDesignableLabel.swift in Sources */,
 				EE5E010A23274FEC00655654 /* YXBindResultModel.m in Sources */,
@@ -5784,7 +5690,6 @@
 				EE5EFC4B23274BBB00655654 /* YXLoginVC.m in Sources */,
 				EE5E001923274FEB00655654 /* YXWordDetailModel.m in Sources */,
 				77F69A74236152BE00E55185 /* YXDesignableButton.swift in Sources */,
-				EE5E00C223274FEB00655654 /* YXStudySpeedView.m in Sources */,
 				EE5E005B23274FEB00655654 /* YXCompleteGroupView.m in Sources */,
 				2205A93E23628FDE00C6E674 /* YXFindRoutesUtil.swift in Sources */,
 				EE5EFC4F23274BBB00655654 /* YXReportDeviceModel.m in Sources */,
@@ -5861,7 +5766,6 @@
 				EE5EF20823273BAE00655654 /* NSTimer+YR.m in Sources */,
 				EE5E027123277CD600655654 /* YXIconfont.m in Sources */,
 				EE5E000C23274FEB00655654 /* YXCareerWordListModel.m in Sources */,
-				EE5E00C323274FEB00655654 /* YXBarChartView.m in Sources */,
 				EE5EFC5223274BBB00655654 /* YXConfigure3Model.m in Sources */,
 				EE7721222388D58200CD632E /* YXSwitchAnimation.swift in Sources */,
 				EE5E004B23274FEB00655654 /* YXWordDetailExamCell.m in Sources */,
@@ -5870,7 +5774,6 @@
 				EE5E000523274FEB00655654 /* LGYSegmentView.m in Sources */,
 				EE5E001E23274FEB00655654 /* YXMyWordBookListVC.m in Sources */,
 				EE5E0230232756C000655654 /* XBaseChartConfiguration.m in Sources */,
-				EE5E00BF23274FEB00655654 /* YXReportViewController.m in Sources */,
 				EE5EFCE423274E5500655654 /* YXLoadingView.m in Sources */,
 				EE4C7CDB236817550092751D /* YXLookWordChooseImageExerciseView.swift in Sources */,
 				EE5E00DF23274FEC00655654 /* FBYLineGraphColorView.m in Sources */,
@@ -5961,7 +5864,6 @@
 				EE1E4A9C236948AB007D248F /* YXValidationWordAndChineseExerciseView.swift in Sources */,
 				EE5E0256232756C100655654 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */,
-				EE5E00C523274FEB00655654 /* YXVocabularyView.m in Sources */,
 				EE5E00AC23274FEB00655654 /* YXTaskViewModel.m in Sources */,
 				EE5E0174232754FA00655654 /* SJCall.mm in Sources */,
 				EE5E002523274FEB00655654 /* YXWordListBaseInfo.m in Sources */,
