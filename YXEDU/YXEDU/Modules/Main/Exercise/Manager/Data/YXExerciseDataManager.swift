@@ -680,7 +680,7 @@ class YXExerciseDataManager: NSObject {
         exercise.answers     = step.answers
         exercise.step        = step.step
         exercise.isCareScore = step.isCareScore
-        exercise.isNewWord   = false//step.isNewWord
+        exercise.isNewWord   = step.isNewWord
         
         return exercise
     }
