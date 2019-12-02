@@ -410,10 +410,10 @@ class YXExerciseDataManager: NSObject {
         }
 
         
-        if currentTurn == 1 {
-            return
-        }
-        
+//        if currentTurn == 1 {
+//            return
+//        }
+        return
         
         // 第二次排序，同一个step 上一轮没做错的排到前面
         var tmpStepArray: [[YXWordExerciseModel]] = []
@@ -680,7 +680,7 @@ class YXExerciseDataManager: NSObject {
         exercise.answers     = step.answers
         exercise.step        = step.step
         exercise.isCareScore = step.isCareScore
-        exercise.isNewWord   = step.isNewWord
+        exercise.isNewWord   = false//step.isNewWord
         
         return exercise
     }
