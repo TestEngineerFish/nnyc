@@ -696,7 +696,15 @@ class YXExerciseDataManager: NSObject {
             if let _ = map[word.wordId] {
                 continue
             } else {
-                let e = word.exerciseSteps.first?.first
+                
+                // 查找不为空的一个对象
+                var e: YXWordExerciseModel?
+                for step in word.exerciseSteps {
+                    if step.count > 0 {
+                        e = step.first
+                        break
+                    }
+                }
                 
                 var report = YXExerciseReportModel()
                 report.wordId = word.wordId
