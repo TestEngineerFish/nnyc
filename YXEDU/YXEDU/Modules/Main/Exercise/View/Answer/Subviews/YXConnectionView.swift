@@ -84,6 +84,10 @@ class YXConnectionView: UIView {
     private var movingPoint: CGPoint?
     private var shapeLayer: CAShapeLayer?
     
+    
+    /// 点击后连线状态， 用于防止快速点击时出错, true 连线完毕，false连线中
+    private var connectionStatus: Bool = true
+    
     init(exerciseModel: YXWordExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
@@ -187,12 +191,19 @@ class YXConnectionView: UIView {
 //MARK: - 处理点击事件相关的
 extension YXConnectionView {
     private func itemEvent(index: Int, type: YXConnectionItemType) {
+        
+        if connectionStatus == false {
+            return
+        }
+        connectionStatus = false
+        
         if type == .left {
-            if (leftItemArray[index].itemStatus == .selected) {
+            if (leftItemArray[index].itemStatus == .selected) {// 取消左边的选中
                 leftItemArray[index].itemStatus = .normal
                 self.selectedLeftItemEvent?(.normal, leftItemArray[index].itemModel?.optionId ?? 0)
                 self.audioPlayerView.isHidden = true
                 self.startItemView = nil
+                connectionStatus = true
                 return
             }
             self.selectedLeftItemEvent?(.selected, leftItemArray[index].itemModel?.optionId ?? 0)
@@ -201,12 +212,15 @@ extension YXConnectionView {
             self.playAudio(index: index)
         } else {
             
-            if (rightItemArray[index].itemStatus == .selected) {
+            if (rightItemArray[index].itemStatus == .selected) {// 取消右边的选中
                 rightItemArray[index].itemStatus = .normal
+                self.startItemView = nil
+                connectionStatus = true
                 return
             }
             self.rightItemEvent(index: index)
         }
+        
     }
     
     
@@ -217,6 +231,7 @@ extension YXConnectionView {
         } else {
             self.selectItem(index: index, type: .left)
             self.startItemView = self.leftItemArray[index]
+            connectionStatus = true
         }
     }
     
@@ -227,6 +242,7 @@ extension YXConnectionView {
         } else {
             self.selectItem(index: index, type: .right)
             self.startItemView = self.rightItemArray[index]
+            connectionStatus = true
         }
     }
     
@@ -473,6 +489,8 @@ extension YXConnectionView {
                     // 第三次画完成线
                     shapeLayer = self.drawLine(status: .end, start: start, end: end)
                     
+                    self.connectionStatus = true
+                    
                     // 做题完成
                     self.processConnectionCompletion()
                 }
@@ -497,6 +515,8 @@ extension YXConnectionView {
                     shapeLayer.removeFromSuperlayer()
                     selectedItems.0.itemStatus = .normal
                     selectedItems.1.itemStatus = .normal
+                    
+                    self.connectionStatus = true
                 }
             }
         }
