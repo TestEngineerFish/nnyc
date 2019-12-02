@@ -24,8 +24,6 @@
     
     // 数据管理器
     private var dataManager: YXExerciseDataManager!
-    /// 进度管理器
-    private var progressManager: YXExcerciseProgressManager!
     
     
     // 练习view容器，用于动画切题
@@ -112,16 +110,12 @@
     
     private func initManager() {
         dataManager = YXExerciseDataManager(bookId: bookId, unitId: unitId)
-        
-        progressManager = YXExcerciseProgressManager()
-        progressManager.bookId = self.bookId
-        progressManager.unitId = self.unitId
     }
     
     /// 开始学习
     private func startStudy() {
         // 存在学完未上报的关卡
-        if !progressManager.isReport() {
+        if !dataManager.progressManager.isReport() {
             // 先加载本地数据
             dataManager.fetchLocalExerciseModels()
             
@@ -134,7 +128,7 @@
                     YXUtils.showHUD(self.view, title: "上报失败")
                 }
             }
-        } else if !progressManager.isCompletion() {// 存在未学完的关卡
+        } else if !dataManager.progressManager.isCompletion() {// 存在未学完的关卡
             dataManager.fetchLocalExerciseModels()
             self.hideLoadAnimation { [weak self] in
                 self?.switchExerciseView()
@@ -189,15 +183,15 @@
             loadExerciseView(exerciseView: exerciseView)
         } else {
             // 没有数据，就是完成了练习
-            progressManager.completionExercise()
+            dataManager.progressManager.completionExercise()
             
             // 学完，上报
             dataManager.reportUnit { [weak self] (result, errorMsg) in
                 guard let self = self else {return}
                 if result {
-                    let progress = self.progressManager.loadLocalWordsProgress()
+                    let progress = self.dataManager.progressManager.loadLocalWordsProgress()
                     // 上报结束, 清空数据
-                    self.progressManager.completionReport()
+                    self.dataManager.progressManager.completionReport()
                     
                     let vc = YXLearningResultViewController()
                     vc.bookId = self.dataManager.bookId
@@ -371,8 +365,8 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     
     func clickSwitchBtnEvent() {
         self.delegate?.backHomeEvent()
-        self.progressManager.completionExercise()
-        self.progressManager.completionReport()
+        self.dataManager.progressManager.completionExercise()
+        self.dataManager.progressManager.completionReport()
         self.navigationController?.popViewController(animated: true)
     }
     

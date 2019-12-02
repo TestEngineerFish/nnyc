@@ -14,23 +14,26 @@ import ObjectMapper
 class YXExerciseDataManager: NSObject {
     /// 哪本书，哪个单元
     public var bookId: Int = 0, unitId: Int = 0
-        
+    /// 进度管理器
+    public var progressManager: YXExcerciseProgressManager
+    
+    
+    /// 当前第几轮
+    private var currentTurn = 0
     /// 新学 和 复习的单词数量
     private var needNewStudyCount = 0, needReviewCount = 0
-    
-    /// 新学练习集合
+    /// 新学跟读集合
     private var newExerciseArray: [YXWordExerciseModel] = []
     /// 复习单词集合
     private var reviewWordArray: [YXWordStepsModel] = []
     /// 当前轮
     private var currentTurnArray: [YXWordExerciseModel] = []
-        
-    /// 当前第几轮
-    private var currentTurn = 0
+    /// 上一轮
+    private var previousTurnArray: [YXWordExerciseModel] = []
+
     
+    /// 本地数据库访问
     private let dao: YXWordBookDao = YXWordBookDaoImpl()
-    /// 进度管理器
-    private var progressManager: YXExcerciseProgressManager
     /// 选项生成器
     private var optionManager: YXExerciseOptionManager
     
@@ -38,14 +41,8 @@ class YXExerciseDataManager: NSObject {
     init(bookId: Int, unitId: Int) {
         self.bookId = bookId
         self.unitId = unitId
-        
-        progressManager = YXExcerciseProgressManager()
-        progressManager.bookId = bookId
-        
-        progressManager.unitId = unitId
-        
+        progressManager = YXExcerciseProgressManager(bookId: bookId, unitId: unitId)
         optionManager = YXExerciseOptionManager()
-        
         super.init()
     }
     
@@ -69,7 +66,12 @@ class YXExerciseDataManager: NSObject {
         let data = progressManager.loadLocalExerciseModels()
         newExerciseArray = data.0
         reviewWordArray = data.1
-        currentTurnArray = data.2
+        
+        let turnData = progressManager.loadLocalTurnData()
+        currentTurnArray = turnData.0
+        previousTurnArray = turnData.1
+                
+        currentTurn = progressManager.currentTurn()
         
         optionManager.initData(newArray: newExerciseArray, reviewArray: self.reviewWords())
     }
@@ -82,7 +84,7 @@ class YXExerciseDataManager: NSObject {
         updateNeedReviewCount()
         
         // 打印
-//        printReportResult()
+        printReportResult()
         
         if !progressManager.isSkipNewWord() {
             for exercise in self.newExerciseArray {
@@ -98,7 +100,7 @@ class YXExerciseDataManager: NSObject {
 //        printCurrentTurn()
         
         // 取出来一个后，保存当前轮的进度
-        progressManager.updateCurrentExercisesProgress(currentExerciseArray: currentTurnArray)
+        progressManager.updateTurnProgress(currentTurnArray: currentTurnArray, previousTurnArray: previousTurnArray)
 
         
         return (needNewStudyCount, needReviewCount, e)
@@ -223,7 +225,7 @@ class YXExerciseDataManager: NSObject {
     }
     
     
-    /// 处理新学
+    /// 处理新学跟读
     /// - Parameter result:
     private func processNewWord(result: YXExerciseResultModel?) {
         // 处理新学单词
@@ -309,11 +311,14 @@ class YXExerciseDataManager: NSObject {
     private func buildExercise() -> YXWordExerciseModel? {
 
         if currentTurnArray.count == 0 {
-                
+            currentTurn += 1
+            progressManager.setCurrentTurn(turn: currentTurn)
+            
             for (i, word) in reviewWordArray.enumerated() {
                 for (j, step) in word.exerciseSteps.enumerated() {
                     if let exericse = fetchExerciseOfStep(exerciseArray: step) {
-                        if exericse.isFinish {
+                        
+                        if exericse.isFinish {// 做过
                             if exericse.isContinue == true {// 如果上一轮有做错过，需要继续做
                                 for z in 0..<step.count {
                                     reviewWordArray[i].exerciseSteps[j][z].isContinue = nil
@@ -321,15 +326,19 @@ class YXExerciseDataManager: NSObject {
                                 currentTurnArray.append(exericse)
                                 break
                             }
-                        } else {
-                            currentTurnArray.append(exericse)
-                            break
+                        } else {// 没做
+                            if exericse.isNewWord {// 如果是新学，1到4步都要做
+                                currentTurnArray.append(exericse)
+                                break
+                            } else if exericse.step == currentTurn {// 复习，到指定轮次和 step 相同是才开始训练
+                                currentTurnArray.append(exericse)
+                                break
+                            }
                         }
 
                     }
                 }
             }
-            currentTurn += 1
                         
             // 排序
             self.sortCurrentTurn()
@@ -394,9 +403,15 @@ class YXExerciseDataManager: NSObject {
    
     
     private func sortCurrentTurn() {
+        
         // 按step 从高到低排序
         currentTurnArray.sort { (model1, model2) -> Bool in
             return model1.step > model2.step
+        }
+
+        
+        if currentTurn == 1 {
+            return
         }
         
         
@@ -443,7 +458,7 @@ class YXExerciseDataManager: NSObject {
             }
             return !wrong
         }
-                
+
         
         currentTurnArray.removeAll()
         
@@ -665,7 +680,8 @@ class YXExerciseDataManager: NSObject {
         exercise.answers     = step.answers
         exercise.step        = step.step
         exercise.isCareScore = step.isCareScore
-
+        exercise.isNewWord   = step.isNewWord
+        
         return exercise
     }
     

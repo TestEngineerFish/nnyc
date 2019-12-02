@@ -40,7 +40,7 @@ struct YXExerciseStepModel: Mappable {
     /// 第几步
     var step: Int = -1
     var isBackup: Bool = false
-    
+    var isNewWord: Bool = false
         /// 问题
     var question: YXWordModel?
     /// 选项
@@ -58,6 +58,7 @@ struct YXExerciseStepModel: Mappable {
         score       <- map["score"]
         step        <- map["step"]
         isBackup    <- map["is_backup"]
+        isNewWord <- map["is_new_word"]
         
         question    <- map["question"]
         option      <- map["option"]

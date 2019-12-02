@@ -20,7 +20,9 @@ class YXExcerciseProgressManager: NSObject {
         case new = "new.txt"
         case review = "review.txt"
         case current = "current.txt"
+        case previous = "previous.txt"
         
+        case currentTurn = "Exercise_Current_Turn"
         case report = "Exercise_Report_Status"
         case completion = "Exercise_Completion_Status"
         
@@ -32,10 +34,18 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    private func key(_ key: LocalKey) -> String {
-        return "\(bookId)_\(unitId)_\(YXConfigure.shared().uuid ?? "")_" + key.rawValue
+    override init() {
+        super.init()
     }
     
+    init(bookId: Int, unitId: Int) {
+        self.bookId = bookId
+        self.unitId = unitId
+        super.init()
+    }
+    
+    
+    //MARK: - Get
     
     /// 关卡是否上报
     func isReport() -> Bool {
@@ -54,12 +64,20 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    /// 待复习的单词数
+    /// 待复习的单词列表
     func reviewWordIds() -> [Int] {
         if let list = YYCache.object(forKey: key(.reviewWordIds)) as? [Int] {
             return list
         }
         return []
+    }
+    
+    
+    func currentTurn() -> Int {
+        if let turn = YYCache.object(forKey: key(.currentTurn)) as? Int {
+            return turn
+        }
+        return 0
     }
     
     
@@ -82,8 +100,65 @@ class YXExcerciseProgressManager: NSObject {
         return YYCache.object(forKey: key(.skipNewWord)) != nil
     }
     
+    
+    func fetchScore(wordId: Int) -> Int {
+        guard let map = YYCache.object(forKey: key(.score)) as? [Int : Int]  else {
+            return 10
+        }
+        return map[wordId] ?? 10
+    }
+    
+    
+    /// 本地未学完的数据
+    func loadLocalExerciseModels() -> ([YXWordExerciseModel], [YXWordStepsModel]) {
+        var filePath = YYDataSourceManager.dbFilePath(fileName: key(.new))
+        var new: [YXWordExerciseModel]?
+        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
+            new = Array<YXWordExerciseModel>(JSONString: str)
+        }
+        
+        filePath = YYDataSourceManager.dbFilePath(fileName: key(.review))
+        var review: [YXWordStepsModel]?
+        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
+            review = Array<YXWordStepsModel>(JSONString: str)
+        }
+        return (new ?? [], review ?? [])
+    }
+    
+    
+    func loadLocalTurnData() -> ([YXWordExerciseModel], [YXWordExerciseModel]) {
+        var filePath = YYDataSourceManager.dbFilePath(fileName: key(.current))
+        var current: [YXWordExerciseModel]?
+        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
+            current = Array<YXWordExerciseModel>(JSONString: str)
+        }
+        
+        filePath = YYDataSourceManager.dbFilePath(fileName: key(.previous))
+        var previous: [YXWordExerciseModel]?
+        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
+            previous = Array<YXWordExerciseModel>(JSONString: str)
+        }
+        
+        return (current ?? [], previous ?? [])
+    }
+    
+    
+    func loadLocalWordsProgress() -> ([Int], [Int]) {
+        let new = YYCache.object(forKey: key(.newWordIds)) as? [Int] ?? []
+        let review = YYCache.object(forKey: key(.reviewWordIds)) as? [Int] ?? []
+        return (new, review)
+    }
+    
+    
+    
+    //MARK: - Set
+    
     func setSkipNewWord() {
         YYCache.set(true, forKey: key(.skipNewWord))
+    }
+    
+    func setCurrentTurn(turn: Int) {
+        YYCache.set(turn, forKey: key(.current))
     }
     
     
@@ -92,13 +167,14 @@ class YXExcerciseProgressManager: NSObject {
     ///   - newExerciseModel: 新学
     ///   - reviewExerciseModel: 复习
     func updateProgress(newWordArray: [YXWordExerciseModel], reviewWordArray: [YXWordStepsModel]) {
-        self.saveToLocal(jsonString: newWordArray.toJSONString(), localKey: .new)
-        self.saveToLocal(jsonString: reviewWordArray.toJSONString(), localKey: .review)
+        self.saveToLocalFile(jsonString: newWordArray.toJSONString(), localKey: .new)
+        self.saveToLocalFile(jsonString: reviewWordArray.toJSONString(), localKey: .review)
     }
     
     
-    func updateCurrentExercisesProgress(currentExerciseArray: [YXWordExerciseModel]) {
-        self.saveToLocal(jsonString: currentExerciseArray.toJSONString(), localKey: .current)
+    func updateTurnProgress(currentTurnArray: [YXWordExerciseModel], previousTurnArray: [YXWordExerciseModel]) {
+        self.saveToLocalFile(jsonString: currentTurnArray.toJSONString(), localKey: .current)
+        self.saveToLocalFile(jsonString: previousTurnArray.toJSONString(), localKey: .previous)
     }
     
     
@@ -112,14 +188,7 @@ class YXExcerciseProgressManager: NSObject {
         }
 
     }
-    
-    
-    func fetchScore(wordId: Int) -> Int {
-        guard let map = YYCache.object(forKey: key(.score)) as? [Int : Int]  else {
-            return 10
-        }
-        return map[wordId] ?? 10
-    }
+
     
     func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?) {
         YYCache.set(false, forKey: key(.completion))
@@ -128,35 +197,6 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.set(reviewWordIds, forKey: key(.reviewWordIds))
     }
     
-
-    /// 本地未学完的数据
-    func loadLocalExerciseModels() -> ([YXWordExerciseModel], [YXWordStepsModel], [YXWordExerciseModel]) {
-        var filePath = YYDataSourceManager.dbFilePath(fileName: key(.new))
-        var new: [YXWordExerciseModel]?
-        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
-            new = Array<YXWordExerciseModel>(JSONString: str)
-        }
-        
-        filePath = YYDataSourceManager.dbFilePath(fileName: key(.review))
-        var review: [YXWordStepsModel]?
-        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
-            review = Array<YXWordStepsModel>(JSONString: str)
-        }
-        
-        filePath = YYDataSourceManager.dbFilePath(fileName: key(.current))
-        var current: [YXWordExerciseModel]?
-        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
-            current = Array<YXWordExerciseModel>(JSONString: str)
-        }
-        return (new ?? [], review ?? [], current ?? [])
-    }
-    
-    
-    func loadLocalWordsProgress() -> ([Int], [Int]) {
-        let new = YYCache.object(forKey: key(.newWordIds)) as? [Int] ?? []
-        let review = YYCache.object(forKey: key(.reviewWordIds)) as? [Int] ?? []
-        return (new, review)
-    }
     
     /// 完成答题
     func completionExercise() {
@@ -169,30 +209,35 @@ class YXExcerciseProgressManager: NSObject {
     func completionReport() {
         YYCache.remove(forKey: key(.report))
         YYCache.remove(forKey: key(.score))
+        YYCache.remove(forKey: key(.currentTurn))
         YYCache.remove(forKey: key(.newWordIds))
         YYCache.remove(forKey: key(.reviewWordIds))
         YYCache.remove(forKey: key(.skipNewWord))
         
-        var filePath = YYDataSourceManager.dbFilePath(fileName: key(.new))
-        var result = YYFileManager.share.clearFile(path: filePath)
-        print("新学数据完成，本地数据删除：", result )
-
-        filePath = YYDataSourceManager.dbFilePath(fileName: key(.review))
-        result = YYFileManager.share.clearFile(path: filePath)
-        print("复习数据完成，本地数据删除：", result )
-        
-        filePath = YYDataSourceManager.dbFilePath(fileName: key(.current))
-        result = YYFileManager.share.clearFile(path: filePath)
-        print("当前轮数据完成，本地数据删除：", result )
+        removeLocalFile(.new)
+        removeLocalFile(.review)
+        removeLocalFile(.current)
+        removeLocalFile(.previous)
     }
     
     
     
+    //MARK: - Private
+    private func key(_ key: LocalKey) -> String {
+        return "\(bookId)_\(unitId)_\(YXConfigure.shared().uuid ?? "")_" + key.rawValue
+    }
+    
     /// 保持到本地文件
     /// - Parameter exerciseModels: 数据
-    private func saveToLocal(jsonString: String?, localKey: LocalKey) {
+    private func saveToLocalFile(jsonString: String?, localKey: LocalKey) {
         let filePath = YYDataSourceManager.dbFilePath(fileName: key(localKey))
         try? jsonString?.write(toFile: filePath, atomically: true, encoding: .utf8)
+    }
+    
+    private func removeLocalFile(_ localKey: LocalKey) {
+        let filePath = YYDataSourceManager.dbFilePath(fileName: self.key(localKey))
+        let result = YYFileManager.share.clearFile(path: filePath)
+        print(localKey, "数据完成，本地数据删除：", result )
     }
     
 }
