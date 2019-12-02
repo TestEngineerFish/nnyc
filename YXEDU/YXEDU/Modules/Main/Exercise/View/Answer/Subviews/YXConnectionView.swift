@@ -448,6 +448,7 @@ extension YXConnectionView {
         let right = isConnectionRight()
     
         self.connectionEvent?(selectedItems.0.itemModel?.optionId ?? 0, right)
+        selectedLeftItemEvent?(.normal, selectedItems.0.itemModel?.optionId ?? 0)
         
         if right {
             
@@ -480,8 +481,6 @@ extension YXConnectionView {
             
             
         } else {
-            
-            selectedLeftItemEvent?(.normal, selectedItems.0.itemModel?.optionId ?? 0)
             remindEvent?(selectedItems.0.itemModel?.optionId ?? 0)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
