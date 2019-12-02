@@ -110,6 +110,12 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         imageView.isHidden            = true
         imageView.layer.cornerRadius  = AdaptSize(3.75)
         imageView.layer.masksToBounds = true
+        
+        
+        let tap = UITapGestureRecognizer()
+        tap.addTarget(self, action: #selector(clickExampleTitle))
+        titleLabel.addGestureRecognizer(tap)
+        
     }
     
     
@@ -339,6 +345,15 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         }
 
     }
+    
+    
+    @objc func clickExampleTitle() {
+        if hasAudio(), let url = exerciseModel.word?.voice {
+            self.audioPlayerView.urlStr = url
+            self.audioPlayerView.play()            
+        }
+    }
+    
     //MARK: - 语音播放结束
     func playAudioStart() { }
     func playAudioFinished() {
