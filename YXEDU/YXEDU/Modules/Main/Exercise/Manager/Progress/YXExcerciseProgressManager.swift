@@ -22,7 +22,7 @@ class YXExcerciseProgressManager: NSObject {
         case current = "current.txt"
         case previous = "previous.txt"
         
-        case currentTurn = "Exercise_Current_Turn"
+        case currentTurnIndex = "Exercise_Current_Turn"
         case report = "Exercise_Report_Status"
         case completion = "Exercise_Completion_Status"
         
@@ -73,8 +73,8 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    func currentTurn() -> Int {
-        if let turn = YYCache.object(forKey: key(.currentTurn)) as? Int {
+    func currentTurnIndex() -> Int {
+        if let turn = YYCache.object(forKey: key(.currentTurnIndex)) as? Int {
             return turn
         }
         return 0
@@ -157,8 +157,8 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.set(true, forKey: key(.skipNewWord))
     }
     
-    func setCurrentTurn(turn: Int) {
-        YYCache.set(turn, forKey: key(.current))
+    func setCurrentTurn(index: Int) {
+        YYCache.set(index, forKey: key(.current))
     }
     
     
@@ -209,7 +209,7 @@ class YXExcerciseProgressManager: NSObject {
     func completionReport() {
         YYCache.remove(forKey: key(.report))
         YYCache.remove(forKey: key(.score))
-        YYCache.remove(forKey: key(.currentTurn))
+        YYCache.remove(forKey: key(.currentTurnIndex))
         YYCache.remove(forKey: key(.newWordIds))
         YYCache.remove(forKey: key(.reviewWordIds))
         YYCache.remove(forKey: key(.skipNewWord))

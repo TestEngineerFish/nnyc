@@ -40,6 +40,7 @@ struct YXWordExerciseModel: Mappable {
     /// 是否继续做
     var isContinue: Bool?
         
+    // 做完
     var isFinish: Bool = false
     
 
@@ -70,22 +71,6 @@ struct YXWordExerciseModel: Mappable {
 }
 
 
-//
-//struct YXCacheWordExerciseModel: Mappable {
-//    var steps: [[YXWordExerciseModel]]?
-//
-//    init() {}
-//
-//    init?(map: Map) {
-//        self.mapping(map: map)
-//    }
-//    mutating func mapping(map: Map) {
-//        steps     <- map["steps"]
-//    }
-//}
-//
-
-
 
 /// 单词的训练步骤
 struct YXWordStepsModel: Mappable {
@@ -93,8 +78,6 @@ struct YXWordStepsModel: Mappable {
     var wordId: Int = 0
     var exerciseSteps: [[YXWordExerciseModel]] = []
     var backupExerciseStep: [String : YXWordExerciseModel] = [:]
-    
-//    var backupStr: String = ""
     
     init() {
         self.initSteps()
@@ -108,7 +91,6 @@ struct YXWordStepsModel: Mappable {
         wordId                  <- map["word_id"]
         exerciseSteps           <- map["exercise_step_list"]
         backupExerciseStep      <- map["backup_exercise_step_map"] //(, YXWordBackupTransform())
-//        backupStr     <- map["backup_str"]
     }
     
     private mutating func initSteps() {
