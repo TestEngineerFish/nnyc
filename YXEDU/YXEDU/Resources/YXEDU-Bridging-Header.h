@@ -26,8 +26,6 @@
 // 闪验
 #import <CL_ShanYanSDK/CL_ShanYanSDK.h>
 
-//
-#import "YXLoginVC.h"
 #import "YXPolicyVC.h"
 #import "YXBindViewModel.h"
 #import "YXLoginSendModel.h"

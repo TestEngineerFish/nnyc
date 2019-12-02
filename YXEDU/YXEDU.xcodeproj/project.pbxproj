@@ -533,7 +533,6 @@
 		EE5EF2B62327423F00655654 /* YXInterfaceCacheService.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF2AB2327423F00655654 /* YXInterfaceCacheService.m */; };
 		EE5EF2B72327423F00655654 /* YXMaterialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF2AE2327423F00655654 /* YXMaterialModel.m */; };
 		EE5EFC4A23274BBB00655654 /* YXLoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3523274BBB00655654 /* YXLoginViewModel.m */; };
-		EE5EFC4B23274BBB00655654 /* YXLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3723274BBB00655654 /* YXLoginVC.m */; };
 		EE5EFC4C23274BBB00655654 /* YXPolicyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3823274BBB00655654 /* YXPolicyVC.m */; };
 		EE5EFC4E23274BBB00655654 /* YXConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3C23274BBB00655654 /* YXConfigModel.m */; };
 		EE5EFC4F23274BBB00655654 /* YXReportDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC4023274BBB00655654 /* YXReportDeviceModel.m */; };
@@ -1123,7 +1122,6 @@
 		EE5EF2AE2327423F00655654 /* YXMaterialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXMaterialModel.m; sourceTree = "<group>"; };
 		EE5EFC3523274BBB00655654 /* YXLoginViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXLoginViewModel.m; sourceTree = "<group>"; };
 		EE5EFC3623274BBB00655654 /* YXLoginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXLoginViewModel.h; sourceTree = "<group>"; };
-		EE5EFC3723274BBB00655654 /* YXLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXLoginVC.m; sourceTree = "<group>"; };
 		EE5EFC3823274BBB00655654 /* YXPolicyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPolicyVC.m; sourceTree = "<group>"; };
 		EE5EFC3C23274BBB00655654 /* YXConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXConfigModel.m; sourceTree = "<group>"; };
 		EE5EFC3D23274BBB00655654 /* YXLoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXLoginModel.h; sourceTree = "<group>"; };
@@ -1137,7 +1135,6 @@
 		EE5EFC4523274BBB00655654 /* YXReportDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXReportDeviceModel.h; sourceTree = "<group>"; };
 		EE5EFC4623274BBB00655654 /* YXConfigure3Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXConfigure3Model.m; sourceTree = "<group>"; };
 		EE5EFC4723274BBB00655654 /* YXConfigBookModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXConfigBookModel.m; sourceTree = "<group>"; };
-		EE5EFC4823274BBB00655654 /* YXLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXLoginVC.h; sourceTree = "<group>"; };
 		EE5EFC4923274BBB00655654 /* YXPolicyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPolicyVC.h; sourceTree = "<group>"; };
 		EE5EFC5623274D0F00655654 /* nnyc_dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = nnyc_dev.plist; sourceTree = "<group>"; };
 		EE5EFC5723274D0F00655654 /* nnyc_dis.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = nnyc_dis.plist; sourceTree = "<group>"; };
@@ -3288,8 +3285,6 @@
 			children = (
 				EE5EFC3B23274BBB00655654 /* Model */,
 				EE5EFC3423274BBB00655654 /* ViewModel */,
-				EE5EFC4823274BBB00655654 /* YXLoginVC.h */,
-				EE5EFC3723274BBB00655654 /* YXLoginVC.m */,
 				EE5EFC4923274BBB00655654 /* YXPolicyVC.h */,
 				EE5EFC3823274BBB00655654 /* YXPolicyVC.m */,
 			);
@@ -5480,7 +5475,6 @@
 				224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */,
 				EE54F7D22362AA3100EC605A /* YXBaseAnswerView.swift in Sources */,
 				EE5E002B23274FEB00655654 /* YXChangeWordlistNameView.m in Sources */,
-				EE5EFC4B23274BBB00655654 /* YXLoginVC.m in Sources */,
 				EE5E001923274FEB00655654 /* YXWordDetailModel.m in Sources */,
 				77F69A74236152BE00E55185 /* YXDesignableButton.swift in Sources */,
 				EE5E005B23274FEB00655654 /* YXCompleteGroupView.m in Sources */,

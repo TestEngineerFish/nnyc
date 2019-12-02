@@ -8,7 +8,6 @@
 
 #import "YXMediator.h"
 #import <TencentOpenAPI/TencentOAuth.h>
-#import "YXLoginVC.h"
 #import "WXApiManager.h"
 #import "QQApiManager.h"
 #import "BaiduLocManager.h"
