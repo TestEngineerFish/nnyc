@@ -158,7 +158,7 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     func setCurrentTurn(index: Int) {
-        YYCache.set(index, forKey: key(.current))
+        YYCache.set(index, forKey: key(.currentTurnIndex))
     }
     
     

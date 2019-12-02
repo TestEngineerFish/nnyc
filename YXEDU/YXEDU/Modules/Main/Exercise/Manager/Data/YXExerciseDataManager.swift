@@ -186,7 +186,11 @@ class YXExerciseDataManager: NSObject {
         }
     }
     
-
+    
+    /// 是否连线错误
+    /// - Parameters:
+    ///   - wordId:
+    ///   - step:
     func hasConnectionError(wordId: Int, step: Int) -> Bool {
         for word in self.reviewWordArray {
             if word.wordId == wordId {
@@ -331,7 +335,7 @@ class YXExerciseDataManager: NSObject {
                             if exericse.isNewWord {// 如果是新学，1到4步都要做
                                 currentTurnArray.append(exericse)
                                 break
-                            } else if exericse.step == currentTurnIndex {// 复习，到指定轮次和 step 相同是才开始训练
+                            } else if currentTurnIndex >= exericse.step {// 复习，到指定轮次和 step 相同是才开始训练
                                 currentTurnArray.append(exericse)
                                 break
                             }
