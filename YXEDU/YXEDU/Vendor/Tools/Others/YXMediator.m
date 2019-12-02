@@ -21,7 +21,6 @@
 #import "JPushManager.h"
 #import "NetWorkRechable.h"
 #import "YXNavigationController.h"
-#import "YXSelectBookVC.h"
 #import "YXUtils.h"
 #import "YXStudyRecordCenter.h"
 #import "YXModelArchiverManager.h"

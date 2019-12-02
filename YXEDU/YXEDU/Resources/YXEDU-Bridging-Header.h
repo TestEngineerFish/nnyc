@@ -8,7 +8,6 @@
 
 #import "YXMaterialModel.h"
 #import "YXWordDetailModel.h"
-#import "YXBookMaterialModel.h"
 #import "YXStudyRecordModel.h"
 #import "MJExtension.h"
 #import "NSObject+YR.h"
@@ -47,7 +46,6 @@
 #import "YXPersonalMyBadgesVC.h"
 #import "YXBaseWebViewController.h"
 #import "YXLearnReportModel.h"
-#import "YXBookMaterialManager.h"
 #import "YXWordModelManager.h"
 #import "YXReportErrorView.h"
 #import "YXMissionViewController.h"

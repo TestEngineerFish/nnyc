@@ -31,8 +31,6 @@
 #import "UIImageView+YR.h"
 #import "YXAPI.h"
 #import "NSString+YX.h"
-// #import "AppDelegate.h"
-#import "YXSelectBookVC.h"
 #import "NSObject+YR.h"
 #import "YXComHttpService.h"
 #import "YXRouteManager.h"
@@ -149,14 +147,14 @@
 }
 
 - (void)presentSelectBookViewController {
-    YXSelectBookVC *selectBookVC = [[YXSelectBookVC alloc]init];
-    selectBookVC.isFirstLogin = YES;
-    selectBookVC.selectedBookSuccessBlock = ^{
-        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//        [app showMainVC];
-    };
-    YXNavigationController *selecNaviVC = [[YXNavigationController alloc] initWithRootViewController:selectBookVC];
-    [self presentViewController:selecNaviVC animated:YES completion:nil];
+//    YXSelectBookVC *selectBookVC = [[YXSelectBookVC alloc]init];
+//    selectBookVC.isFirstLogin = YES;
+//    selectBookVC.selectedBookSuccessBlock = ^{
+//        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+////        [app showMainVC];
+//    };
+//    YXNavigationController *selecNaviVC = [[YXNavigationController alloc] initWithRootViewController:selectBookVC];
+//    [self presentViewController:selecNaviVC animated:YES completion:nil];
 }
 
 - (void)presentBindViewControllerWithPf:(NSString *)pf {

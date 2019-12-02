@@ -4,7 +4,6 @@
 #import "YXWordDetailViewControllerOld.h"
 #import "BSUtils.h"
 #import "YXUserSaveTool.h"
-#import "YXBookSettingViewController.h"
 #import "YXStudyProgressView.h"
 #import "YXPosterShareView.h"
 #import "YXMyWordListDetailModel.h"

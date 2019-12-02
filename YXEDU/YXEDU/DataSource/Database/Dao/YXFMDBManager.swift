@@ -14,30 +14,6 @@ typealias finishBlock = (Any?,Bool) -> Void
 class YXFMDBManager: YYDatabase {
     @objc static let share = YXFMDBManager()
 
-
-    /// 插入书籍信息
-    ///
-    /// - Parameters:
-    ///   - bookMaterials: 书籍信息列表
-    ///   - block: 数据库操作完成后的回调
-    @objc func insertBookMaterial(_ bookMaterials: [YXBookMaterialModel], completeBlock block: finishBlock) {
-        let sql = YYSQLManager.NormalSQL.insertBookMaterial.rawValue
-        self.normalRunner.inExclusiveTransaction { (db, rollback) in
-            for bookMaterial in bookMaterials {
-                let parameters: [Any] = [bookMaterial.bookId!, bookMaterial.bookName!, bookMaterial.resPath!, bookMaterial.isFinished!, bookMaterial.materialSize!]
-                do {
-                    try db.executeUpdate(sql, values: parameters)
-                } catch {
-                    block(bookMaterial, false)
-                    rollback.pointee = true
-                    return
-                }
-            }
-            block(nil, true)
-        }
-    }
-
-
     /// 获取书籍信息
     ///
     /// - Parameters:
