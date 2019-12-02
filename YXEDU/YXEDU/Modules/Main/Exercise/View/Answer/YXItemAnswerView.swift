@@ -21,11 +21,11 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
     private var collectionView: UICollectionView!
     private var collectionViewCell: UICollectionViewCell!
     
-    
+    var titleFont = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
     var titleLabel: UILabel {
-        let label = UILabel()
+        let label       = UILabel()
         label.textColor = UIColor.black2
-        label.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
+        label.font      = titleFont
         return label
     }
     

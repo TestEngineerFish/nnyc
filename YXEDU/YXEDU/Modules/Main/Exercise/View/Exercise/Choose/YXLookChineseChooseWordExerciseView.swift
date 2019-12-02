@@ -23,6 +23,7 @@ class YXLookChineseChooseWordExerciseView: YXBaseExerciseView {
         
         answerView = YXItemAnswerView(exerciseModel: exerciseModel)
         answerView?.answerDelegate = self
+        (answerView as! YXItemAnswerView).titleFont = UIFont.boldSystemFont(ofSize: AdaptSize(14))
         self.scrollView.addSubview(answerView!)
     }
 
