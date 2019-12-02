@@ -80,13 +80,13 @@
         
         self.headerView.snp.makeConstraints { (make) in
             make.top.equalTo(YXExerciseConfig.headerViewTop)
-            make.left.right.equalTo(0)
-            make.height.equalTo(28)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(AdaptSize(28))
         }
         
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
-            make.height.equalTo(18)
+            make.height.equalTo(AdaptSize(18))
             make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
         }
         
@@ -176,7 +176,7 @@
             self.bottomView.tipsButton.isEnabled = tipsEnabled
                                     
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
-            exerciseView.frame = CGRect(x: screenWidth, y: YXExerciseConfig.exerciseViewTop, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)
+            exerciseView.frame = CGRect(x: screenWidth, y: self.headerView.frame.maxY, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)
             self.delegate = exerciseView
             exerciseView.exerciseDelegate = self
             exerciseView.answerView?.connectionAnswerViewDelegate = self
@@ -358,6 +358,9 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
         alertView.doneClosure = { _ in
             self.delegate?.backHomeEvent()
             self.navigationController?.popViewController(animated: true)
+        }
+        alertView.cancleClosure = {
+            self.delegate?.hideAlertEvent()
         }
         
         alertView.show()

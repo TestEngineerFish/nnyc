@@ -15,7 +15,6 @@ class YXChineseFillConnectionLetterQuestionView: YXBaseQuestionView {
         super.createSubviews()
 
         self.initTitleLabel()
-        self.titleLabel?.font = UIFont.pfSCSemiboldFont(withSize: 26)
         self.initAudioPlayerView()
 
         self.spellView = YXSpellSubview(self.exerciseModel, isTitle: false)
@@ -49,7 +48,7 @@ class YXChineseFillConnectionLetterQuestionView: YXBaseQuestionView {
         })
         let spellViewW = (self.spellView?.maxX ?? 0) - (self.spellView?.margin ?? 0)
         self.spellView?.snp.makeConstraints({ (make) in
-            make.top.equalToSuperview().offset(AdaptSize(64))
+            make.top.equalTo(self.titleLabel!.snp.bottom).offset(AdaptSize(10))
             make.centerX.equalToSuperview()
             make.width.equalTo(spellViewW)
             make.height.equalTo(AdaptSize(22))

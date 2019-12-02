@@ -76,32 +76,32 @@ class YXExerciseHeaderView: UIView {
         self.switchButton.setTitle("测试-清空", for: .normal)
         self.switchButton.setTitleColor(UIColor.black3, for: .normal)
         self.switchButton.setTitleColor(UIColor.black2, for: .highlighted)
-        self.switchButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 14)
+        self.switchButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
         self.switchButton.addTarget(self, action: #selector(clickSwitchButton), for: .touchUpInside)
         
         self.skipButton.setTitle("跳过", for: .normal)
         self.skipButton.setTitleColor(UIColor.black3, for: .normal)
         self.skipButton.setTitleColor(UIColor.black2, for: .highlighted)
-        self.skipButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 14)
+        self.skipButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
         self.skipButton.addTarget(self, action: #selector(clickSkipButton), for: .touchUpInside)
         
         
         self.learningLabel.text = "待新学"
         self.learningLabel.textColor = UIColor.black3
-        self.learningLabel.font = UIFont.regularFont(ofSize: 10)
+        self.learningLabel.font = UIFont.regularFont(ofSize: AdaptSize(10))
         
         self.reviewLabel.text = "待复习"
         self.reviewLabel.textColor = UIColor.black3
-        self.reviewLabel.font = UIFont.regularFont(ofSize: 10)
+        self.reviewLabel.font = UIFont.regularFont(ofSize: AdaptSize(10))
         
         
         self.learningProgressLabel.text = "20"
         self.learningProgressLabel.textColor = UIColor.orange1
-        self.learningProgressLabel.font = UIFont.regularFont(ofSize: 10)
+        self.learningProgressLabel.font = UIFont.regularFont(ofSize: AdaptSize(10))
         
         self.reviewProgressLabel.text = "20"
         self.reviewProgressLabel.textColor = UIColor.orange1
-        self.reviewProgressLabel.font = UIFont.regularFont(ofSize: 10)
+        self.reviewProgressLabel.font = UIFont.regularFont(ofSize: AdaptSize(10))
         
     }
     
@@ -111,49 +111,48 @@ class YXExerciseHeaderView: UIView {
         
         self.backButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalTo(20)
-            make.width.equalTo(22)
-            make.height.equalTo(25)
+            make.left.equalTo(AdaptSize(20))
+            make.width.equalTo(AdaptSize(22))
+            make.height.equalTo(AdaptSize(25))
         }
         
         self.switchButton.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.equalTo(100)
-            make.height.equalTo(17)
+            make.width.equalTo(AdaptSize(100))
+            make.height.equalTo(AdaptSize(17))
         }
         
         self.skipButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalTo(100)
-            make.width.equalTo(50)
-            make.height.equalTo(17)
+            make.left.equalTo(AdaptSize(100))
+            make.width.equalTo(AdaptSize(50))
+            make.height.equalTo(AdaptSize(17))
         }
         
         self.learningLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(0)
-            make.right.equalTo(-38)
-            make.width.equalTo(32)
-            make.height.equalTo(14)
+            make.bottom.equalTo(self.snp.centerY)
+            make.right.equalTo(AdaptSize(-38))
+            make.width.equalTo(AdaptSize(32))
+            make.height.equalTo(AdaptSize(14))
         }
         self.reviewLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(-38)
-            make.width.equalTo(32)
-            make.height.equalTo(14)
-            make.bottom.equalTo(0)
+            make.right.equalTo(AdaptSize(-38))
+            make.width.equalTo(AdaptSize(32))
+            make.height.equalTo(AdaptSize(14))
+            make.top.equalTo(self.snp.centerY)
         }
         
         self.learningProgressLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(0)
-            make.left.equalTo(learningLabel.snp.right).offset(2)
-            make.right.equalTo(0)
-            make.height.equalTo(14)
+            make.top.right.equalToSuperview()
+            make.left.equalTo(learningLabel.snp.right).offset(AdaptSize(2))
+            make.height.equalTo(AdaptSize(14))
         }
         
         self.reviewProgressLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(reviewLabel.snp.right).offset(2)
-            make.right.equalTo(0)
-            make.height.equalTo(14)
-            make.bottom.equalTo(0)
+            make.left.equalTo(reviewLabel.snp.right).offset(AdaptSize(2))
+            make.right.equalToSuperview()
+            make.height.equalTo(AdaptSize(14))
+            make.bottom.equalToSuperview()
         }
     }
     
