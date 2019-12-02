@@ -59,7 +59,7 @@ V = nil;\
 /*
  * api: user/reg 社交网络平台登录接口, 通过社交网络接口登录APP
  */
-#define DOMAIN_LOGIN STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/reg"))
+#define DOMAIN_LOGIN STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/reg")) // ⭐️
 
 /*
  * api: user/logout 退出登录
@@ -80,7 +80,7 @@ V = nil;\
 /*
  * 获取词书配置
  */
-#define DOMAIN_GETCONFIG STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/api/getconfig"))
+#define DOMAIN_GETCONFIG STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/api/getconfig")) // ⭐️
 
 ///v2/book/setlearning
 
@@ -100,23 +100,23 @@ V = nil;\
  * version : 1.3版本
  * 备注：对比1.2版本 v1/user/getinfo 接口
  */
-#define DOMAIN_GETINFO STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/user/getinfo"))
+#define DOMAIN_GETINFO STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/user/getinfo")) // ⭐️
 
 
 /*
  * 获取用户信息user/sendsms
  */
-#define DOMAIN_SENDSMS STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/api/sendsms"))
+#define DOMAIN_SENDSMS STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/api/sendsms")) // ⭐️
 
 /* 版本：v1.1
  * 图形验证码接口/api/captcha
  */
-#define DOMAIN_CAPTCHA STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/api/captcha"))
+#define DOMAIN_CAPTCHA STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/api/captcha")) // ⭐️
 
 /*
  * 获取用户信息绑定手机号
  */
-#define DOMAIN_BINDMOBILE STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/bindmobile"))
+#define DOMAIN_BINDMOBILE STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/bindmobile")) // ⭐️
 
 /*
  * 设定要学习的图书 book/setlearning
@@ -159,13 +159,13 @@ V = nil;\
  */
 #define DOMAIN_STUDY STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/learning/study"))
 
-#define DOMAIN_AGREEMENT STRCAT(STRCAT(SCHEME,YX_IP),@"/agreement.html") //STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/agreement.html"))
+#define DOMAIN_AGREEMENT STRCAT(STRCAT(SCHEME,YX_IP),@"/agreement.html") // ⭐️ //STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/agreement.html"))
 
 /*
  * v1.1
  * 批量学习上报 /api/feedback ::method: post
  */
-#define DOMAIN_FEEDBACK STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/api/feedback"))
+#define DOMAIN_FEEDBACK STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/api/feedback")) // ⭐️
 
 /*
  * v1.1
@@ -177,19 +177,19 @@ V = nil;\
  * v1.1
  * 检查版本更新 api/chkver ::method: Get
  */
-#define DOMAIN_CHKVER STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/api/chkver"))
+#define DOMAIN_CHKVER STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/api/chkver")) // ⭐️
 
 /*
  * v1.1
  * 绑定社交网络 user/bind ::method: POST
  */
-#define DOMAIN_BINDSO STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/bind"))
+#define DOMAIN_BINDSO STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/bind")) // ⭐️
 
 /*
  * v1.1
  * 解绑定社交网络 user/unbind ::method: POST
  */
-#define DOMAIN_UNBINDSO STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/unbind"))
+#define DOMAIN_UNBINDSO STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/unbind")) // ⭐️
 
 /*
  * v1.3
@@ -307,7 +307,7 @@ V = nil;\
  */
 #define DOMAIN_FAVORITE STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/learning/favorite"))
 
-#define DOMAIN_WORDFAVORITE STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/book/favorite"))
+#define DOMAIN_WORDFAVORITE STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/book/favorite")) // ⭐️
 
 /*
  * v1.3
@@ -367,7 +367,7 @@ V = nil;\
 
 #define DOMAIN_LEARNREPORT STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/learnreport"))
 
-#define DOMAIN_DETAILLEARNREPORT STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/detailedlearnreport"))
+#define DOMAIN_DETAILLEARNREPORT STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/detailedlearnreport")) // ⭐️
 
 
 /** 1.4.0语音上报接口 */
@@ -380,34 +380,34 @@ V = nil;\
 
 #pragma mark --- V2.0 -----
 /** 发现页聚合接口 */
-#define DIMAIN_DESCOVERINDEX STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/index"))
+#define DIMAIN_DESCOVERINDEX STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/index")) // ⭐️
 
 /** 上一期排行榜接口 */
-#define DIMAIN_PREVIOUSRANKING STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/preranking"))
+#define DIMAIN_PREVIOUSRANKING STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/preranking")) // ⭐️
 
 /** 用户的签到信息接口 */
-#define DOMAIN_SIGNININFO STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/signininfo"))
+#define DOMAIN_SIGNININFO STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/signininfo")) // ⭐️
 
 /** 手动触发签到操作 */
-#define DOMAIN_SIGNIN STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/signin"))
+#define DOMAIN_SIGNIN STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/signin")) // ⭐️
 
 /** 获取积分是否充足接口 */
-#define DIMAIN_GAMEAVAIABLE STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/credits"))
+#define DIMAIN_GAMEAVAIABLE STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/credits")) // ⭐️
 
 /** 游戏开始接口 */
-#define DIMAIN_GAMESTART STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/start"))
+#define DIMAIN_GAMESTART STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/start")) // ⭐️
 
 /** 游戏结束接口，上报数据 */
-#define DIMAIN_GAMEREPORT STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/reviewreport"))
+#define DIMAIN_GAMEREPORT STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/reviewreport")) // ⭐️
 
 /** 获取游戏结果接口 */
-#define DIMAIN_GAMERESULT STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/result"))
+#define DIMAIN_GAMERESULT STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/game/result")) // ⭐️
 
 /** 用户领取任务积分 */
-#define DOMAIN_GETNEWTASK STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/receivetaskreward"))
+#define DOMAIN_GETNEWTASK STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/receivetaskreward")) // ⭐️
 
 /** 查询用户当前积分的接口 */
-#define DOMAIN_CREDITS STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/credits"))
+#define DOMAIN_CREDITS STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/credits")) // ⭐️
 
 /** 特殊数据上报接口 */
 #define DOMAIN_SEEDSREPORT STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/api/seedsreport"))
@@ -415,16 +415,16 @@ V = nil;\
 
 #pragma mark --- V2.1.1 -----
 /** 我的词单首页接口 */
-#define DOMAIN_MYWORDLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/mywordlist"))
+#define DOMAIN_MYWORDLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/mywordlist")) // ⭐️
 
 /** 批量删除用户词单 */
-#define DOMAIN_DELETEMYWORDLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/deletewordlist"))
+#define DOMAIN_DELETEMYWORDLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/deletewordlist")) // ⭐️
 
 /** 词单详情接口 */
 #define DOMAIN_WORDLISTDETAILS STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/details"))
 
 /** 获取词单单词列表数据 */
-#define DOMAIN_WORDLISTBOOKWORDS STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/bookwords"))
+#define DOMAIN_WORDLISTBOOKWORDS STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/bookwords")) // ⭐️
 
 
 /** 根据词书ID获取本词书下哪些单词已经被选为词单 */
@@ -434,11 +434,11 @@ V = nil;\
 #define DOMAIN_CREATEWORDLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/createwordlist"))
 
 /** 获取用户词单的基础信息 */
-#define DOMAIN_WORDLISTBASEINFO STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/baseinfo"))
+#define DOMAIN_WORDLISTBASEINFO STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/baseinfo")) // ⭐️
 
 // >>>>词单学习相关
 /** 刷新学习流程，重新学习 */
-#define DOMAIN_WORDLISTREFRESHPROGRESS STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/refreshprogress"))
+#define DOMAIN_WORDLISTREFRESHPROGRESS STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/refreshprogress")) // ⭐️
 
 /** 获取听写10道题 */
 #define DOMAIN_WORDLISTSTARTLISTEN STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/startlisten"))
@@ -474,16 +474,16 @@ V = nil;\
 #define DOMAIN_UPDATEWORDLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/updatewordlist"))
 
 /** 根据词单分享码获得对应的词单详情 */
-#define DOMAIN_SHARECODEWORDLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/simplifieddetails"))
+#define DOMAIN_SHARECODEWORDLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/simplifieddetails")) // ⭐️
 
 /** 保存到我的词单接口 */
 #define DOMAIN_SAVEWORDLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/wordlist/savewordlist"))
 
 /** 词书列表 */
-#define DOMAIN_NOTEBOOKLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/learning/notebooklist"))
+#define DOMAIN_NOTEBOOKLIST STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/learning/notebooklist")) // ⭐️
 
 /** 词书单词列表 */
-#define DOMAIN_NOTELISTWORDS STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/learning/notewordlist"))
+#define DOMAIN_NOTELISTWORDS STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/learning/notewordlist")) // ⭐️
 
 /** 分享页配置接口 */
 #define DOMAIN_CONFIGSHARE STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/config/share"))
@@ -508,13 +508,13 @@ V = nil;\
 #define DOMAIN_USERWORDHANDLEWORDTOOLKIT STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/handlewordtoolkit"))
 
 /** 日历-月汇总数据 */
-#define DOMAIN_CALENDARMONTHLYDATA STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/punch/monthly"))
+#define DOMAIN_CALENDARMONTHLYDATA STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/punch/monthly")) // ⭐️
 
 /** 日历-日汇总数据 */
-#define DOMAIN_CALENDARDAILYDATA STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/punch/daily"))
+#define DOMAIN_CALENDARDAILYDATA STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/punch/daily")) // ⭐️
 
 /** 日历-每月分享图 */
-#define DOMAIN_CALENDARSHAREIMAGE STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/punch/share"))
+#define DOMAIN_CALENDARSHAREIMAGE STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/punch/share")) // ⭐️
 
 
 /*
