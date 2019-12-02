@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objc
 class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private var learnedWordsCount = "--"
@@ -219,7 +220,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.hidesBottomBarWhenPushed = false
     }
 
-    
+    @objc func enterTaskVC() {
+        let missionVC = YXMissionViewController()
+        self.navigationController?.pushViewController(missionVC, animated: true)
+    }
     
     // MARK: -
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

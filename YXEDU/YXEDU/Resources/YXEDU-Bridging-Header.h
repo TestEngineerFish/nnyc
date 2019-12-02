@@ -50,6 +50,7 @@
 #import "YXBookMaterialManager.h"
 #import "YXWordModelManager.h"
 #import "YXReportErrorView.h"
+#import "YXMissionViewController.h"
 
 #import "ZipArchive.h"
 #import "YXCacheKey.h"

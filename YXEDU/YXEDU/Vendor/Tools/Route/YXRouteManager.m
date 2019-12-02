@@ -7,9 +7,7 @@
 //
 
 #import "YXRouteManager.h"
-#import "YXTabBarViewController.h"
 #import "YXBaseWebViewController.h"
-#import "YXMainVC.h"
 #import "YXCalendarViewController.h"
 
 @interface YXRouteManager ()
@@ -34,60 +32,58 @@
 - (void)openUrl:(NSString *)url title:(NSString *)title {
     UIViewController *roovc = [UIApplication sharedApplication].delegate.window.rootViewController;
     if ([url hasPrefix:@"https://"] || [url hasPrefix:@"http://"]) {
-        if ([roovc isKindOfClass:[YXTabBarViewController class]]) {
-            YXTabBarViewController *tabVC = (YXTabBarViewController *)roovc;
-            UIViewController *selectedVC = [tabVC selectedViewController];
-            if ([selectedVC isKindOfClass:[UINavigationController class]]) {
-                [self pushWebView:url title:title pushedNaviController:(UINavigationController *)selectedVC];
-            }
-        }else if([roovc isKindOfClass:[UINavigationController class]]) {
-            [self pushWebView:url title:title pushedNaviController:(UINavigationController *)roovc];
-        }
+//        if ([roovc isKindOfClass:[YXTabBarViewController class]]) {
+//            YXTabBarViewController *tabVC = (YXTabBarViewController *)roovc;
+//            UIViewController *selectedVC = [tabVC selectedViewController];
+//            if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+//                [self pushWebView:url title:title pushedNaviController:(UINavigationController *)selectedVC];
+//            }
+//        }else if([roovc isKindOfClass:[UINavigationController class]]) {
+//            [self pushWebView:url title:title pushedNaviController:(UINavigationController *)roovc];
+//        }
     }else if([url hasPrefix:@"nnyc://"]){ // 页面内跳转协议
-        if ([roovc isKindOfClass:[YXTabBarViewController class]]) {
-            YXTabBarViewController *tabVC = (YXTabBarViewController *)roovc;
-            UIViewController *selectedVC = [tabVC selectedViewController];
-            if ([selectedVC isKindOfClass:[UINavigationController class]]) {
-                UINavigationController *selectedNaviVC = (UINavigationController *)selectedVC;
-                [selectedNaviVC popViewControllerAnimated:NO];
-                
-                NSArray *pathParams = [url componentsSeparatedByString:@"?"];
-                NSString *path = pathParams.firstObject;
-                NSURLComponents *components = [[NSURLComponents alloc] initWithString:url];
-                NSArray *param = [components queryItems];
-                SEL selector = NSSelectorFromString([self.pathRouteSelecter objectForKey:path]);//NSStringFromSelector();
-                if ([self respondsToSelector:selector]) {
-                    IMP imp = [self methodForSelector:selector];
-                    void(*func)(id,SEL,id) = (void *)imp;
-                    func(self,selector,param);
-                }
-            }
-        }
+//        if ([roovc isKindOfClass:[YXTabBarViewController class]]) {
+//            YXTabBarViewController *tabVC = (YXTabBarViewController *)roovc;
+//            UIViewController *selectedVC = [tabVC selectedViewController];
+//            if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+//                UINavigationController *selectedNaviVC = (UINavigationController *)selectedVC;
+//                [selectedNaviVC popViewControllerAnimated:NO];
+//
+//                NSArray *pathParams = [url componentsSeparatedByString:@"?"];
+//                NSString *path = pathParams.firstObject;
+//                NSURLComponents *components = [[NSURLComponents alloc] initWithString:url];
+//                NSArray *param = [components queryItems];
+//                SEL selector = NSSelectorFromString([self.pathRouteSelecter objectForKey:path]);//NSStringFromSelector();
+//                if ([self respondsToSelector:selector]) {
+//                    IMP imp = [self methodForSelector:selector];
+//                    void(*func)(id,SEL,id) = (void *)imp;
+//                    func(self,selector,param);
+//                }
+//            }
+//        }
     }
 }
 
 - (void)openInsideUrl:(NSString *)url {
     UIViewController *roovc = [UIApplication sharedApplication].delegate.window.rootViewController;
     if([url hasPrefix:@"nnyc://"]){ // 页面内跳转协议
-        if ([roovc isKindOfClass:[YXTabBarViewController class]]) {
-            YXTabBarViewController *tabVC = (YXTabBarViewController *)roovc;
-            UIViewController *selectedVC = [tabVC selectedViewController];
-            if ([selectedVC isKindOfClass:[UINavigationController class]]) {
-//                UINavigationController *selectedNaviVC = (UINavigationController *)selectedVC;
-//                [selectedNaviVC popViewControllerAnimated:NO];
-
-                NSArray *pathParams = [url componentsSeparatedByString:@"?"];
-                NSString *path = pathParams.firstObject;
-                NSURLComponents *components = [[NSURLComponents alloc] initWithString:url];
-                NSArray *param = [components queryItems];
-                SEL selector = NSSelectorFromString([self.pathRouteSelecter objectForKey:path]);
-                if ([self respondsToSelector:selector]) {
-                    IMP imp = [self methodForSelector:selector];
-                    void(*func)(id,SEL,id) = (void *)imp;
-                    func(self,selector,param);
-                }
-            }
-        }
+//        if ([roovc isKindOfClass:[YXTabBarViewController class]]) {
+//            YXTabBarViewController *tabVC = (YXTabBarViewController *)roovc;
+//            UIViewController *selectedVC = [tabVC selectedViewController];
+//            if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+//
+//                NSArray *pathParams = [url componentsSeparatedByString:@"?"];
+//                NSString *path = pathParams.firstObject;
+//                NSURLComponents *components = [[NSURLComponents alloc] initWithString:url];
+//                NSArray *param = [components queryItems];
+//                SEL selector = NSSelectorFromString([self.pathRouteSelecter objectForKey:path]);
+//                if ([self respondsToSelector:selector]) {
+//                    IMP imp = [self methodForSelector:selector];
+//                    void(*func)(id,SEL,id) = (void *)imp;
+//                    func(self,selector,param);
+//                }
+//            }
+//        }
     }
 }
 
@@ -104,8 +100,8 @@
     UITabBarController *tabbarVC = [self rootTabbar];
     if (tabbarVC && index != NSNotFound) {
         UINavigationController *naviVC = tabbarVC.selectedViewController;
-        if ([naviVC.visibleViewController isKindOfClass:[YXMainVC class]]) {
-            [(YXMainVC *)naviVC.visibleViewController enterMyCareer:index];
+        if ([naviVC.visibleViewController isKindOfClass:[YXHomeViewController class]]) {
+//            [(YXHomeViewController *)naviVC.visibleViewController enterMyCareer:index];
         }
     }
 }
@@ -116,8 +112,8 @@
     UITabBarController *tabbarVC = [self rootTabbar];
     if (tabbarVC) {
         UINavigationController *naviVC = tabbarVC.selectedViewController;
-        if ([naviVC.visibleViewController isKindOfClass:[YXMainVC class]]) {
-            [(YXMainVC *)naviVC.visibleViewController enterReportVC];
+        if ([naviVC.visibleViewController isKindOfClass:[YXHomeViewController class]]) {
+//            [(YXHomeViewController *)naviVC.visibleViewController enterReportVC];
         }
     }
 }
@@ -127,8 +123,8 @@
     UITabBarController *tabbarVC = [self rootTabbar];
     if (tabbarVC) {
         UINavigationController *naviVC = tabbarVC.selectedViewController;
-        if ([naviVC.visibleViewController isKindOfClass:[YXMainVC class]]) {
-            [(YXMainVC *)naviVC.visibleViewController enterTaskVC];
+        if ([naviVC.visibleViewController isKindOfClass:[YXHomeViewController class]]) {
+            [(YXHomeViewController *)naviVC.visibleViewController enterTaskVC];
         }
     }
 }
@@ -140,15 +136,6 @@
         calendarVC.transType = TransationPop;
         [vc presentViewController:calendarVC animated:YES completion:nil];
     }
-
-//    [self switchTabWithTabName:@"main"];
-//    UITabBarController *tabbarVC = [self rootTabbar];
-//    if (tabbarVC) {
-//        UINavigationController *naviVC = tabbarVC.selectedViewController;
-//        if ([naviVC.visibleViewController isKindOfClass:[YXMainVC class]]) {
-//            [(YXMainVC *)naviVC.visibleViewController enterCalendarVC];
-//        }
-//    }
 }
 
 
@@ -161,12 +148,12 @@
 }
 
 - (UITabBarController *)rootTabbar {
-    UIViewController *roovc = [UIApplication sharedApplication].delegate.window.rootViewController;
-    if ([roovc isKindOfClass:[YXTabBarViewController class]]) {
-        return (YXTabBarViewController *)roovc;
-    }else {
+//    UIViewController *roovc = [UIApplication sharedApplication].delegate.window.rootViewController;
+//    if ([roovc isKindOfClass:[YXTabBarViewController class]]) {
+//        return (YXTabBarViewController *)roovc;
+//    }else {
         return nil;
-    }
+//    }
 }
 
 - (void)pushWebView:(NSString *)link title:(NSString *)title pushedNaviController:(UINavigationController *)naviVC{
