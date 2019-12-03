@@ -42,6 +42,9 @@ struct YXWordExerciseModel: Mappable {
         
     // 做完
     var isFinish: Bool = false
+        
+    /// 在当前轮中，是否已经完成，（当前轮完成后，不是删除数据，而且是改变状态为true）
+    var isCurrentTurnFinish: Bool = false
     
 
     init() {}
@@ -65,6 +68,7 @@ struct YXWordExerciseModel: Mappable {
         isRight <- map["is_right"]
         isContinue <- map["is_continue"]
         isFinish <- map["is_finish"]
+        isCurrentTurnFinish <- map["is_current_turn_finish"]
         
     }
     

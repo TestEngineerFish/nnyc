@@ -39,9 +39,9 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     init(bookId: Int, unitId: Int) {
-        self.bookId = bookId
-        self.unitId = unitId
         super.init()
+        self.bookId = bookId
+        self.unitId = unitId        
     }
     
     

@@ -692,6 +692,9 @@
 		EE7E1D082363679500600A88 /* YXExerciseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D072363679500600A88 /* YXExerciseConfig.swift */; };
 		EE7E1D0A236367A000600A88 /* YXExerciseHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */; };
 		EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB147242372E6F400AC329C /* YYFileManager.swift */; };
+		EECD5CDE23963B9D00B4BEB3 /* YXExerciseDataManager+ParserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECD5CDD23963B9D00B4BEB3 /* YXExerciseDataManager+ParserData.swift */; };
+		EECD5CE023963CBD00B4BEB3 /* YXExerciseDataManager+BuildData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECD5CDF23963CBD00B4BEB3 /* YXExerciseDataManager+BuildData.swift */; };
+		EECD5CE223963CDA00B4BEB3 /* YXExerciseDataManager+UpdateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECD5CE123963CDA00B4BEB3 /* YXExerciseDataManager+UpdateData.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
 		EED3D41B2331D04B00121218 /* YRLocatorProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4142331D04B00121218 /* YRLocatorProvider.m */; };
@@ -1887,6 +1890,9 @@
 		EE7E1D072363679500600A88 /* YXExerciseConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseConfig.swift; sourceTree = "<group>"; };
 		EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseHeaderView.swift; sourceTree = "<group>"; };
 		EEB147242372E6F400AC329C /* YYFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYFileManager.swift; sourceTree = "<group>"; };
+		EECD5CDD23963B9D00B4BEB3 /* YXExerciseDataManager+ParserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YXExerciseDataManager+ParserData.swift"; sourceTree = "<group>"; };
+		EECD5CDF23963CBD00B4BEB3 /* YXExerciseDataManager+BuildData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YXExerciseDataManager+BuildData.swift"; sourceTree = "<group>"; };
+		EECD5CE123963CDA00B4BEB3 /* YXExerciseDataManager+UpdateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YXExerciseDataManager+UpdateData.swift"; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
 		EED3D4122331D04B00121218 /* YRRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRRouter.h; sourceTree = "<group>"; };
@@ -2474,6 +2480,9 @@
 			children = (
 				EE3DAB9A23750E2400B2FF40 /* YXExerciseRequest.swift */,
 				EE772126238CFC4200CD632E /* YXExerciseDataManager.swift */,
+				EECD5CDD23963B9D00B4BEB3 /* YXExerciseDataManager+ParserData.swift */,
+				EECD5CDF23963CBD00B4BEB3 /* YXExerciseDataManager+BuildData.swift */,
+				EECD5CE123963CDA00B4BEB3 /* YXExerciseDataManager+UpdateData.swift */,
 				EE772128238D4F1D00CD632E /* YXExerciseOptionManager.swift */,
 			);
 			path = Data;
@@ -5836,6 +5845,7 @@
 				EE5E00E023274FEC00655654 /* FBYLineGraphView.m in Sources */,
 				EE5E00D723274FEB00655654 /* YXBookTransHelper.m in Sources */,
 				EE77211B2384117D00CD632E /* YYDataSourceQueueManager.swift in Sources */,
+				EECD5CE223963CDA00B4BEB3 /* YXExerciseDataManager+UpdateData.swift in Sources */,
 				EE5E006623274FEB00655654 /* YXWordQuestionModel.m in Sources */,
 				EE5E00B823274FEB00655654 /* YXPersonalBookModel.m in Sources */,
 				EE5E007123274FEB00655654 /* YXRecordView.m in Sources */,
@@ -5902,6 +5912,7 @@
 				EE77211C2384117D00CD632E /* YXDataSourceManager.swift in Sources */,
 				EE5E010123274FEC00655654 /* YXPersonalBadgeModel.m in Sources */,
 				EE5E00E323274FEC00655654 /* YXSynchroIndicatorView.m in Sources */,
+				EECD5CDE23963B9D00B4BEB3 /* YXExerciseDataManager+ParserData.swift in Sources */,
 				EE5E00BA23274FEB00655654 /* YXMyBooksInfo.m in Sources */,
 				EE5EFD6123274F0900655654 /* YXDescoverBlankCell.m in Sources */,
 				EE5E001623274FEB00655654 /* YXCareerSortView.m in Sources */,
@@ -6311,6 +6322,7 @@
 				EE5E0254232756C100655654 /* XLineChartItem.m in Sources */,
 				EE5E008D23274FEB00655654 /* YXCalendarMonthSummaryView.m in Sources */,
 				777C1E2A236BDF380097A822 /* YXHomeModel.swift in Sources */,
+				EECD5CE023963CBD00B4BEB3 /* YXExerciseDataManager+BuildData.swift in Sources */,
 				EE5EFD5E23274F0900655654 /* YXChallengeUserCell.m in Sources */,
 				EE5E0167232754FA00655654 /* KSGuaidViewCell.m in Sources */,
 			);
