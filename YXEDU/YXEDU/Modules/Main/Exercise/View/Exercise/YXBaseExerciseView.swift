@@ -11,7 +11,7 @@ import UIKit
 
 /// 练习相关的协议
 protocol YXExerciseViewDelegate: NSObjectProtocol {
-    /// 练习完成
+    /// 普通题型练习完成（不包括连线题）
     /// - Parameter right: 是否答对
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool)
     

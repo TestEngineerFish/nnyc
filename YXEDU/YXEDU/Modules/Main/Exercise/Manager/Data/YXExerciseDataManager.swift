@@ -97,6 +97,8 @@ class YXExerciseDataManager: NSObject {
             }
         }
         
+        
+        // 生成题型
         let e = buildExercise()
         
         // 打印
@@ -116,13 +118,13 @@ class YXExerciseDataManager: NSObject {
     /// - Parameters:
     ///   - exerciseModel: 练习数据
     ///   - right: 对错
-    func defaultAnswerAction(exerciseModel: YXWordExerciseModel, right: Bool) {
+    func normalAnswerAction(exerciseModel: YXWordExerciseModel, right: Bool) {
         
         // 更新每个练习的完成状态
-        updateFinishStatus(exerciseModel: exerciseModel, right: right)
+        updateNormalExerciseFinishStatus(exerciseModel: exerciseModel, right: right)
         
         // 更新积分
-        updateScore(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, type: exerciseModel.type)
+        updateWordScore(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, type: exerciseModel.type)
         
         // 更新对错
         updateStepRightOrWrongStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right)
@@ -137,16 +139,22 @@ class YXExerciseDataManager: NSObject {
     
     
     
-    /// 连线题，单个选项的做题动作处理
+    /// 连线题，仅单个选项的做题动作处理
     /// - Parameters:
     ///   - wordId:
     ///   - step:
     ///   - right:
     ///   - type:
     func connectionAnswerAction(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
-        updateScore(wordId: wordId, step: step, right: right, type: type)
-        updateStepRightOrWrongStatus(wordId: wordId, step: step, right: right)
+        
+        // 更新单个项的完成状态
         updateWordStepStatus(wordId: wordId, step: step, right: right, finish: false)
+        
+        // 更新积分
+        updateWordScore(wordId: wordId, step: step, right: right, type: type)
+        
+        // 更新对错
+        updateStepRightOrWrongStatus(wordId: wordId, step: step, right: right)
         
         // 更新进度状态
         progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
@@ -168,11 +176,11 @@ class YXExerciseDataManager: NSObject {
     }
     
     
-    /// 是否连线错误
+    /// 在当前轮次中，是否有连线错误
     /// - Parameters:
-    ///   - wordId:
-    ///   - step:
-    func hasConnectionError(wordId: Int, step: Int) -> Bool {
+    ///   - wordId: 单词ID
+    ///   - step:   step
+    func hasErrorInCurrentTurn(wordId: Int, step: Int) -> Bool {
         for e in currentTurnArray {
             if e.word?.wordId == wordId && e.step == step, let right = e.isRight {
                 return right == false
@@ -200,7 +208,7 @@ class YXExerciseDataManager: NSObject {
                 continue
             } else {
                 
-                // 查找不为空的一个对象
+                // 查找不为空的一个对象，有些单词可能第一或者第二步没有，只有后面几步的情况
                 var e: YXWordExerciseModel?
                 for step in word.exerciseSteps {
                     if step.count > 0 {

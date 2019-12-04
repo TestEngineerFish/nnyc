@@ -51,7 +51,7 @@ class YXConnectionView: UIView {
     var connectionCompletion: (() -> ())?
     var selectedLeftItemEvent: ((_ status: YXConnectionItemStatus, _ wordId: Int) -> ())?
     var remindEvent: ((_ wordId: Int) -> ())?
-    var connectionEvent: ((_ wordId: Int, _ right: Bool) -> ())?
+    var connectionEvent: ((_ wordId: Int, _ right: Bool, _ finish: Bool) -> ())?
     
     
     var itemConfig: YXConnectionItemConfigProtocol {
@@ -312,7 +312,7 @@ extension YXConnectionView {
     }
     
     
-    private func processConnectionCompletion() {
+    private func processConnectionCompletion() -> Bool {
         var count = 0
         let itemArray = leftItemArray + rightItemArray
         for itemView in itemArray {
@@ -322,9 +322,11 @@ extension YXConnectionView {
         }
         
         if itemArray.count == count {
-            self.connectionCompletion?()
+//            self.connectionCompletion?()
             print("全部连接完毕")
+            return true
         }
+        return false
         
     }
 }
@@ -463,7 +465,7 @@ extension YXConnectionView {
         
         let right = isConnectionRight()
     
-        self.connectionEvent?(selectedItems.0.itemModel?.optionId ?? 0, right)
+//        self.connectionEvent?(selectedItems.0.itemModel?.optionId ?? 0, right)
         selectedLeftItemEvent?(.normal, selectedItems.0.itemModel?.optionId ?? 0)
         
         if right {
@@ -492,7 +494,8 @@ extension YXConnectionView {
                     self.connectionStatus = true
                     
                     // 做题完成
-                    self.processConnectionCompletion()
+                    let result = self.processConnectionCompletion()
+                    self.connectionEvent?(selectedItems.0.itemModel?.optionId ?? 0, true, result)
                 }
                 
             }
@@ -517,6 +520,8 @@ extension YXConnectionView {
                     selectedItems.1.itemStatus = .normal
                     
                     self.connectionStatus = true
+                    
+                    self.connectionEvent?(selectedItems.0.itemModel?.optionId ?? 0, false, false)
                 }
             }
         }
