@@ -201,7 +201,7 @@
                                         
                     self.navigationController?.popViewController(animated: false)
                     vc.hidesBottomBarWhenPushed = true
-                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)                              
+                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
                 } else {
                     YXUtils.showHUD(self.view, title: "上报关卡失败")
                     self.navigationController?.popViewController(animated: true)
@@ -413,3 +413,4 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
     }
 }
  
+

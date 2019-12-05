@@ -350,7 +350,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     @objc func clickExampleTitle() {
         if hasAudio(), let url = exerciseModel.word?.voice {
             self.audioPlayerView.urlStr = url
-            self.audioPlayerView.play()            
+            self.audioPlayerView.play()
         }
     }
     
@@ -360,4 +360,5 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         self.playAudio()
     }
 }
+
 
