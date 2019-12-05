@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
         
-//        Growing.start(withAccountId: kGrowingIOID)
+        Growing.start(withAccountId: kGrowingIOID)
     }
     
     func initViewAndData() {
