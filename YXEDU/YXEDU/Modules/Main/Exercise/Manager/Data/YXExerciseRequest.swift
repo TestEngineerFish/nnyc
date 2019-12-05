@@ -48,7 +48,7 @@ extension YXExerciseRequest {
 }
 
 extension YXExerciseRequest {
-    var parameters: [String : Any]? {
+    var parameters: [String : Any?]? {
         switch self {
         case .learnMap(let bookId):
             return ["book_id" : bookId]
@@ -56,19 +56,11 @@ extension YXExerciseRequest {
             return ["book_id" : bookId, "unit_id" : unitId]
         case .addUserBook(let userId, let bookId, let unitId):
             return ["user_id":userId, "book_id":bookId, "unit_id":unitId]
-        default:
-            return nil
-        }
-    }
-    
-    var postJson: Any? {
-        
-        switch self {
         case .report(let json):
             return ["json" : json]
         default:
             return nil
         }
-        
     }
+    
 }

@@ -24,10 +24,9 @@ public enum YYHTTPMethod: String {
 protocol YYBaseRequest {
     var method: YYHTTPMethod { get }
     var header: [String : String] { get }
-    var parameters: [String : Any]? { get }
+    var parameters: [String : Any?]? { get }
     var url: URL { get }
     var path: String { get }
-    var postJson: Any? { get }
     
     func handleHeader(parameters: [String : Any]?, headers: [String : String]?) -> [String : String]
 }
@@ -43,7 +42,7 @@ extension YYBaseRequest {
         return _header
     }
     
-    public var parameters: [String : Any]? {
+    public var parameters: [String : Any?]? {
         return nil
     }
     
@@ -60,8 +59,6 @@ extension YYBaseRequest {
     }
     
     public var path: String { return "" }
-    
-    public var postJson : Any? { return nil }
     
     func handleHeader(parameters: [String : Any]?, headers: [String : String]? = nil) -> [String : String] {
         

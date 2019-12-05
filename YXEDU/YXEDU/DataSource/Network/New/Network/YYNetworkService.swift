@@ -13,22 +13,23 @@ import ObjectMapper
 import CocoaLumberjack
 
 struct YYNetworkService {
-    private let MAX_CONCURRENT_OPERATION_COUNT: Int = 3
-    private let request_time_out: TimeInterval = 60
+    public static let `default` = YYNetworkService()
     
-//    private var model: YYNetFoxHTTPModel?
+    private let maxOperationCount: Int = 3
+    private let timeout: TimeInterval = 15
+    
+    private var sessionManager: SessionManager!
     
     private var defaultConfiguration: URLSessionConfiguration {
         let _configuration = URLSessionConfiguration.default
-        _configuration.timeoutIntervalForRequest = request_time_out
-        //_configuration.protocolClasses = [YYNetFoxProtocol.self]
+        _configuration.timeoutIntervalForRequest = timeout
         return _configuration
     }
     
-    public static let `default` = YYNetworkService()
+    
     private init() {
-        let sessionManager:SessionManager = Alamofire.SessionManager.init(configuration: self.defaultConfiguration)
-        sessionManager.session.delegateQueue.maxConcurrentOperationCount = MAX_CONCURRENT_OPERATION_COUNT
+        sessionManager = Alamofire.SessionManager.init(configuration: self.defaultConfiguration)
+        sessionManager.session.delegateQueue.maxConcurrentOperationCount = maxOperationCount
     }
     
     /**
@@ -37,21 +38,21 @@ struct YYNetworkService {
     @discardableResult
     public func httpRequestTask <T> (_ type: T.Type, request: YYBaseRequest, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> YYTaskRequest? where T: YYBaseResopnse {
         
-        if let postJSON = request.postJson {
+        if request.method == .post {
             var _request = URLRequest(url: request.url)
             _request.httpMethod = request.method.rawValue
             if request.method == .body {
                 _request.httpMethod = "POST"
             }
-            _request.allHTTPHeaderFields = request.handleHeader(parameters: requestParametersReduceValueNil(request.parameters))
+            _request.allHTTPHeaderFields = request.handleHeader(parameters: removeNilValue(request.parameters))
             
             do {
-                if let _postJSON = requestParametersReduceValueNil(postJSON as? [AnyHashable : Any]) {
+                if let params = removeNilValue(request.parameters) {
                     if request.method == .body {
                         _request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                        _request.httpBody = (_postJSON["json"] as? String)?.data(using: .utf8)
+                        _request.httpBody = (params["json"] as? String)?.data(using: .utf8)
                     } else {
-                        try _request.httpBody = JSONSerialization.data(withJSONObject: _postJSON, options: [])
+                        try _request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
                     }
                 }
                 return self.httpPostRequest(type, request: _request, success: { (response, httpStatusCode) in
@@ -59,12 +60,12 @@ struct YYNetworkService {
                 }, fail: { (error) in
                     fail?(error as NSError)
                 })
-            }catch let parseError {
+            } catch let parseError {
                 fail?(parseError as NSError)
                 return nil
             }
         } else {
-            return self.httpRequest(type, request: request, header: request.handleHeader(parameters: requestParametersReduceValueNil(request.parameters)), success: { (response, httpStatusCode) in
+            return self.httpRequest(type, request: request, header: request.handleHeader(parameters: removeNilValue(request.parameters)), success: { (response, httpStatusCode) in
                 self.handleStatusCodeLogicResponseObject(response, statusCode: httpStatusCode, request: request, success: success, fail: fail)
             }, fail: { (error) in
                 fail?(error as NSError)
@@ -74,18 +75,8 @@ struct YYNetworkService {
     
     public func httpDownloadRequestTask <T> (_ type: T.Type, request: YYBaseRequest, localSavePath: String, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
         
-        guard let postJSON = request.postJson as? [AnyHashable : Any] else {
-            return
-        }
-        
-        let _requestPostJson = (postJSON as? [String : Any?])?.reduce([String : Any]()) { (dict, e) in
-            guard let value = e.1 else { return dict }
-            var dict = dict
-            dict[e.0] = value
-            return dict
-            } as! [String : Any]
-        
-        Alamofire.download(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: _requestPostJson, headers: request.handleHeader(parameters: _requestPostJson, headers: request.header)) { (url, response) -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
+        let params = removeNilValue(request.parameters)
+        Alamofire.download(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: params, headers: request.handleHeader(parameters: params, headers: request.header)) { (url, response) -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
             let path = YYFileManager.share.createPath(documentPath: localSavePath)
             return (URL(fileURLWithPath: path), [.removePreviousFile, .createIntermediateDirectories])
             }.downloadProgress { (progress) in
@@ -103,90 +94,56 @@ struct YYNetworkService {
      */
     public func httpUploadRequestTask <T> (_ type: T.Type, request: YYBaseRequest, mimeType: String = "image/jpeg", fileName: String = "photo", success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
         
-        var requestHeader = request.header
-        requestHeader["Content-Type"] = "multipart/form-data"
-        guard let postJSON = request.postJson as? [AnyHashable : Any] else {
+        guard let parameters = request.parameters else {
             return
         }
         
-        var _requestPostJson = (postJSON as? [String : Any?])?.reduce([String : Any]()) { (dict, e) in
-            guard let value = e.1 else { return dict }
-            var dict = dict
-            dict[e.0] = value
-            return dict
-            } as! [String : Any]
-        
-        var headerRequestPostJson = _requestPostJson
-        
-        if headerRequestPostJson.keys.contains("cover") {
-            headerRequestPostJson.removeValue(forKey: "cover")
-        }
-        if headerRequestPostJson.keys.contains("file_info") {
-            headerRequestPostJson.removeValue(forKey: "file_info")
+        // 文件参数名称
+        let name: String = "file"
+                
+        // 去除空值，删除文件参数
+        var params = removeNilValue(parameters) ?? [:]
+        if params.keys.contains(name) {
+            params.removeValue(forKey: name)
         }
         
+        // 构建新的header
+        var requestHeader = request.header
+        requestHeader["Content-Type"] = "multipart/form-data"
+        requestHeader = request.handleHeader(parameters: params, headers: requestHeader)
+        
+        // 转换对象
+        let method = HTTPMethod(rawValue: request.method.rawValue) ?? .post
+    
         //MARK: 上传
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
-            var fileData: Any?
-            var name: String = ""
-            if _requestPostJson.keys.contains("file") {
-                fileData = _requestPostJson["file"]
-                name = "file"
-            }else if _requestPostJson.keys.contains("cover") {
-                fileData = _requestPostJson["cover"]
-                name = "cover"
-            } else if _requestPostJson.keys.contains("file_info") {
-                fileData = _requestPostJson["file_info"]
-                name = "file_info"
+        sessionManager.upload(multipartFormData: { (multipartFormData) in
+            guard let fileData = parameters[name] else {
+                return
             }
             
-            if let _fileData = fileData, _fileData is String {
-                multipartFormData.append(URL(fileURLWithPath:(_fileData as! String)), withName: name, fileName: fileName, mimeType: mimeType)
-            }else if let _fileData = fileData, fileData is Data {
-                multipartFormData.append(_fileData as! Data, withName: name, fileName: fileName, mimeType: mimeType)
+            // 文件数据 （先放前面）
+            if fileData is String {
+                multipartFormData.append(URL(fileURLWithPath:(fileData as! String)), withName: name, fileName: fileName, mimeType: mimeType)
+            } else if fileData is Data {
+                multipartFormData.append(fileData as! Data, withName: name, fileName: fileName, mimeType: mimeType)
             }
-            _requestPostJson.removeValue(forKey: name)
             
-            for (key, value) in _requestPostJson {
-                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key )
+            // 普通表单参数 （放在文件数据的后面还是前面，要看后端接口的支持情况，目前是放在后面）
+            // 普通表单数据使用 params，删除了文件数据的
+            for (key, value) in params {
+                if let data = "\(value)".data(using: String.Encoding.utf8) {
+                    multipartFormData.append(data, withName: key)
+                }
             }
-        }, usingThreshold: UInt64.init(), to: request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .post , headers: request.handleHeader(parameters: headerRequestPostJson, headers: requestHeader)) { (result) in
+            
+        }, usingThreshold: UInt64.init(), to: request.url, method: method , headers: requestHeader) { (result) in
             switch result {
             case .success(let upload, _, _):
                 upload.responseObject(completionHandler: { (response: DataResponse <T>) in
-                    var result = self
                     switch response.result {
                     case .success(let x):
                         self.handleStatusCodeLogicResponseObject(x, statusCode: (response.response?.statusCode) ?? 0, request: request, success: success, fail: fail)
-//                        if (response.response?.statusCode ?? 0) != 0 {
-//                            result.model = YYNetFoxHTTPModel()
-//                            let requestModel = YYNetFoxHTTPRequestModel()
-//                            let responseModel = YYNetFoxHTTPResponseModel()
-//                            if let _urlRequest = response.request {
-//                                requestModel.saveRequest(_urlRequest)
-//                                result.model?.requestModel = requestModel
-//                            }
-//                            let resultData: Data? = x.toJSONString()?.data(using: String.Encoding.utf8)
-//                            if let _urlResponse = response.response {
-//                                responseModel.saveResponse(_urlResponse, data: resultData, timeLine: response.timeline)
-//                                result.model?.responseModel = responseModel
-//                            }
-//                            result.loaded()
-//                        }
                     case .failure(let error):
-//                        result.model = YYNetFoxHTTPModel()
-//                        let requestModel = YYNetFoxHTTPRequestModel()
-//                        let responseModel = YYNetFoxHTTPResponseModel()
-//                        if let _urlRequest = response.request {
-//                            requestModel.saveRequest(_urlRequest)
-//                            result.model?.requestModel = requestModel
-//                        }
-//
-//                        if let _urlResponse = response.response {
-//                            responseModel.saveResponse(_urlResponse, timeLine: response.timeline)
-//                            result.model?.responseModel = responseModel
-//                        }
-//                        result.loaded()
                         fail?(error as NSError)
                     }
                 })
@@ -194,49 +151,19 @@ struct YYNetworkService {
                 fail?(error as NSError)
             }
         }
+        
     }
     
     @discardableResult
     private func httpPostRequest <T> (_ type: T.Type, request: URLRequest, success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void?, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
         
-        let request = Alamofire.request(request).responseObject { (response: DataResponse<T>) in
-            self.saveSessID(response: response.response)
-            var result = self
+        let request = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
             switch response.result {
             case .success(var x):
                 x.response = response.response
                 x.request = response.request
                 success(x, (response.response?.statusCode) ?? 0)
-//                if (response.response?.statusCode ?? 0) != 0 {
-//                    result.model = YYNetFoxHTTPModel()
-//                    let requestModel = YYNetFoxHTTPRequestModel()
-//                    let responseModel = YYNetFoxHTTPResponseModel()
-//                    if let _urlRequest = response.request {
-//                        requestModel.saveRequest(_urlRequest)
-//                        result.model?.requestModel = requestModel
-//                    }
-//                    let resultData: Data? = x.toJSONString()?.data(using: String.Encoding.utf8)
-//                    if let _urlResponse = response.response {
-//                        responseModel.saveResponse(_urlResponse, data: resultData, timeLine: response.timeline)
-//                        result.model?.responseModel = responseModel
-//                    }
-//                    result.loaded()
-//                }
             case .failure(let error):
-//                result.model = YYNetFoxHTTPModel()
-//                let requestModel = YYNetFoxHTTPRequestModel()
-//                let responseModel = YYNetFoxHTTPResponseModel()
-//                if let _urlRequest = response.request {
-//                    requestModel.saveRequest(_urlRequest)
-//                    result.model?.requestModel = requestModel
-//                }
-//
-//                if let _urlResponse = response.response {
-//                    responseModel.saveResponse(_urlResponse, timeLine: response.timeline)
-//                    result.model?.responseModel = responseModel
-//                }
-//                result.loaded()
-                
                 fail(error as NSError)
             }
         }
@@ -248,44 +175,14 @@ struct YYNetworkService {
     @discardableResult
     private func httpRequest <T>(_ type: T.Type, request: YYBaseRequest, header:[String:String], success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
         let encoding: ParameterEncoding = (.get == request.method ? URLEncoding.default : JSONEncoding.default)
-        let request = Alamofire.request(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: requestParametersReduceValueNil(request.parameters), encoding: encoding, headers: header).responseObject { (response: DataResponse <T>) in
-            
-            self.saveSessID(response: response.response)
-//            var result = self
+        let request = sessionManager.request(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: removeNilValue(request.parameters), encoding: encoding, headers: header).responseObject { (response: DataResponse <T>) in
+
             switch response.result {
             case .success(var x):
                 x.response = response.response
                 x.request = response.request
                 success(x, (response.response?.statusCode) ?? 0)
-//                if (response.response?.statusCode ?? 0) != 0 {
-//                    result.model = YYNetFoxHTTPModel()
-//                    let requestModel = YYNetFoxHTTPRequestModel()
-//                    let responseModel = YYNetFoxHTTPResponseModel()
-//                    if let _urlRequest = response.request {
-//                        requestModel.saveRequest(_urlRequest)
-//                        result.model?.requestModel = requestModel
-//                    }
-//                    let resultData: Data? = x.toJSONString()?.data(using: String.Encoding.utf8)
-//                    if let _urlResponse = response.response {
-//                        responseModel.saveResponse(_urlResponse, data: resultData, timeLine: response.timeline)
-//                        result.model?.responseModel = responseModel
-//                    }
-//                    result.loaded()
-//                }
             case .failure(let error):
-//                result.model = YYNetFoxHTTPModel()
-//                let requestModel = YYNetFoxHTTPRequestModel()
-//                let responseModel = YYNetFoxHTTPResponseModel()
-//                if let _urlRequest = response.request {
-//                    requestModel.saveRequest(_urlRequest)
-//                    result.model?.requestModel = requestModel
-//                }
-//
-//                if let _urlResponse = response.response {
-//                    responseModel.saveResponse(_urlResponse, timeLine: response.timeline)
-//                    result.model?.responseModel = responseModel
-//                }
-//                result.loaded()
                 
                 fail(error as NSError)
             }
@@ -332,34 +229,21 @@ struct YYNetworkService {
             }
         }
     }
+
     
-    
-    private func loaded(){
-//        if let _model = self.model {
-//            let logText = _model.toJSON()
-//            YYLoggerManager.default.addLoggerDataSource(.network, logText: logText)
-//        }
-    }
-    
-    /**
-     *  保存 Session ID
-     */
-    private func saveSessID(response: HTTPURLResponse?) {
-        if let sessID = response?.allHeaderFields["YY-SESSID"] {
-            UserDefaults.standard.archive(object: sessID, forkey: "YY-SESSID")
+    /// 删除空的值
+    /// - Parameter parameters: 参数集合
+    private func removeNilValue(_ parameters: [String : Any?]?) -> [String : Any]? {
+        guard let _parameters = parameters else  {
+            return nil
         }
+        var params: [String : Any] = [ : ]
+        for (key, value) in _parameters {
+            if let v = value {
+                params[key] = v
+            }
+        }
+        return params.count > 0 ? params : nil
     }
     
-    private func requestParametersReduceValueNil(_ requestionParameters: [AnyHashable : Any]?) -> [String : Any]? {
-        if let _requestionParameters = requestionParameters {
-            return (_requestionParameters as? [String : Any?])?.reduce([String : Any]()) { (dict, e) in
-                guard let value = e.1 else { return dict }
-                var dict = dict
-                dict[e.0] = value
-                return dict
-                } as! [String : Any]
-        }
-        
-        return nil
-    }
 }
