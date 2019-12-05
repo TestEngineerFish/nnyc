@@ -22,7 +22,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GZu-Mz-FY4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3895" y="2608"/>
+            <point key="canvasLocation" x="-3818" y="2610"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="8MX-u2-MoF">
@@ -37,33 +37,44 @@
                     </tabBar>
                     <connections>
                         <segue destination="Bvn-Jb-bkz" kind="relationship" relationship="viewControllers" id="7sV-qD-Gcw"/>
-                        <segue destination="GHL-ss-xco" kind="relationship" relationship="viewControllers" id="lcK-4c-IVY"/>
-                        <segue destination="bSa-1o-uJX" kind="relationship" relationship="viewControllers" id="g1g-ts-WVD"/>
+                        <segue destination="PS5-Ve-3WL" kind="relationship" relationship="viewControllers" id="MrP-5a-Sqz"/>
+                        <segue destination="GHL-ss-xco" kind="relationship" relationship="viewControllers" id="UF8-vc-ZMz"/>
+                        <segue destination="bSa-1o-uJX" kind="relationship" relationship="viewControllers" id="6Z5-A1-nbo"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n9H-Ie-1a3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3894" y="852"/>
+            <point key="canvasLocation" x="-4068" y="859"/>
         </scene>
         <!--Mine-->
         <scene sceneID="Nv1-zm-EVH">
             <objects>
                 <viewControllerPlaceholder storyboardName="Mine" id="bSa-1o-uJX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="vWK-KP-HJv"/>
+                    <tabBarItem key="tabBarItem" title="我的" image="tabMine" selectedImage="tabMineSelected" id="vWK-KP-HJv"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuY-8E-SfB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3099" y="1572"/>
+            <point key="canvasLocation" x="-3157" y="1572"/>
+        </scene>
+        <!--Review-->
+        <scene sceneID="owb-hc-voO">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Review" id="PS5-Ve-3WL" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="复习" id="xg0-qE-W0s"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p66-cf-ivj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4447" y="1572"/>
         </scene>
         <!--Home-->
         <scene sceneID="a57-dz-k8Q">
             <objects>
                 <viewControllerPlaceholder storyboardName="Home" id="Bvn-Jb-bkz" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="M19-oW-6eB"/>
+                    <tabBarItem key="tabBarItem" title="首页" image="tabLearn" selectedImage="tabLearnSelected" id="M19-oW-6eB"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zXZ-AH-BR5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4702" y="1572"/>
+            <point key="canvasLocation" x="-4867" y="1572"/>
         </scene>
         <!--挑战-->
         <scene sceneID="zDv-hQ-POC">
@@ -82,12 +93,16 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hp9-YS-h5d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3895" y="1862"/>
+            <point key="canvasLocation" x="-3818" y="1862"/>
         </scene>
     </scenes>
     <resources>
         <image name="nil" width="16" height="16"/>
         <image name="tabChallenge" width="22" height="22"/>
         <image name="tabChallengeSelected" width="22" height="22"/>
+        <image name="tabLearn" width="22" height="22"/>
+        <image name="tabLearnSelected" width="22" height="22"/>
+        <image name="tabMine" width="22" height="22"/>
+        <image name="tabMineSelected" width="22" height="22"/>
     </resources>
 </document>

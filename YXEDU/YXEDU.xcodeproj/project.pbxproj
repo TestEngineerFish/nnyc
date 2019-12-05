@@ -79,6 +79,7 @@
 		23FD6CE922952E5400334321 /* 答题引导1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6CE522952E5400334321 /* 答题引导1@2x.png */; };
 		770182B32366D80D00070BFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770182B22366D80D00070BFF /* AppDelegate.swift */; };
 		7702ABFF23880E6600EC0C69 /* YXAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */; };
+		7709751B2398F4DC0071A779 /* Review.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7709751A2398F4DC0071A779 /* Review.storyboard */; };
 		771512E02367126800F6D400 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771512DF2367126800F6D400 /* Mine.storyboard */; };
 		771512E22367131500F6D400 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771512E12367131500F6D400 /* Home.storyboard */; };
 		771512E4236713E600F6D400 /* YXMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771512E3236713E600F6D400 /* YXMineViewController.swift */; };
@@ -723,6 +724,7 @@
 		6F3F6E87CCD9D15BB5221A47 /* Pods-YXEDU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.debug.xcconfig"; sourceTree = "<group>"; };
 		770182B22366D80D00070BFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAboutUsViewController.swift; sourceTree = "<group>"; };
+		7709751A2398F4DC0071A779 /* Review.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Review.storyboard; sourceTree = "<group>"; };
 		771512DF2367126800F6D400 /* Mine.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Mine.storyboard; sourceTree = "<group>"; };
 		771512E12367131500F6D400 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		771512E3236713E600F6D400 /* YXMineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMineViewController.swift; sourceTree = "<group>"; };
@@ -2029,6 +2031,14 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		7709751C2398F4E10071A779 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				7709751A2398F4DC0071A779 /* Review.storyboard */,
+			);
+			path = Review;
+			sourceTree = "<group>";
+		};
 		771512DC236710F200F6D400 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
@@ -3044,6 +3054,7 @@
 			isa = PBXGroup;
 			children = (
 				77F69A612361495300E55185 /* Main.storyboard */,
+				7709751C2398F4E10071A779 /* Review */,
 				77706E3E2372EBA200149D09 /* Common */,
 				77F69A602361492500E55185 /* Home */,
 				771E88612362ABB2000BFAAD /* RegisterAndLogin */,
@@ -5009,6 +5020,7 @@
 				202709B921DE3A3000E88457 /* oneDrawgameGuide2@3x.png in Resources */,
 				77252A7023628909007D86A0 /* YXSelectGradeView.xib in Resources */,
 				77CCB9BC237A4B5B004EB781 /* YXWordDetailView.xib in Resources */,
+				7709751B2398F4DC0071A779 /* Review.storyboard in Resources */,
 				20C86B9C217873FE00FCAAED /* WaveLoadingImages in Resources */,
 				7759A898237943C700C63199 /* YXWordDetialCell.xib in Resources */,
 				23FD6CE622952E5400334321 /* 答题引导1@3x.png in Resources */,
