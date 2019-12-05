@@ -8,7 +8,6 @@
 
 #import "YXMediator.h"
 #import <TencentOpenAPI/TencentOAuth.h>
-#import "YXLoginVC.h"
 #import "WXApiManager.h"
 #import "QQApiManager.h"
 #import "BaiduLocManager.h"
@@ -21,7 +20,6 @@
 #import "JPushManager.h"
 #import "NetWorkRechable.h"
 #import "YXNavigationController.h"
-#import "YXSelectBookVC.h"
 #import "YXUtils.h"
 #import "YXStudyRecordCenter.h"
 #import "YXModelArchiverManager.h"

@@ -11,7 +11,6 @@
 #import "NSString+YX.h"
 #import "UIFont+IconFont.h"
 #import "YXRouteManager.h"
-#import "YXReportViewController.h"
 
 @interface YXBaseWebViewController ()<WKNavigationDelegate>
 @property (nonatomic, weak) WKWebView *webView;

@@ -9,34 +9,42 @@
 import UIKit
 
 extension YXExerciseDataManager {
-    /// 更新正常题型练习的完成状态 （不包括连线题）
+    /// 更新某个练习的完成状态
     /// - Parameter exerciseModel: 哪个练习
-    func updateNormalExerciseFinishStatus(exerciseModel: YXWordExerciseModel, right: Bool) {
+    func updateFinishStatus(exerciseModel: YXWordExerciseModel, right: Bool) {
         if exerciseModel.isNewWord && (exerciseModel.type == .newLearnPrimarySchool || exerciseModel.type == .newLearnPrimarySchool_Group || exerciseModel.type == .newLearnJuniorHighSchool) {
-            
             for (i, e) in newExerciseArray.enumerated() {
                 if e.word?.wordId == exerciseModel.word?.wordId {
                     newExerciseArray[i].isFinish = true
                     break
                 }
             }
-            
         } else {
-                        
-            var finish = right
-            // 选择题做错，也标注答题完成
-            if right == false && (exerciseModel.type == .validationWordAndChinese || exerciseModel.type == .validationImageAndWord) {
-                finish = true
-            }
-            if finish {
-                updateCurrentTurnStatus(wordId: exerciseModel.word?.wordId ?? 0)
-            }
+            // 以下是一个练习整体做完的处理（连线题所有项全部连完）
             
-            self.updateWordStepStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, finish: finish)
-            
+            if exerciseModel.type == .connectionWordAndChinese || exerciseModel.type == .connectionWordAndImage {
+                // 进入这个分支，表示连线题，所有项都完成（不管中间是否有出错）
+                for item in exerciseModel.option?.firstItems ?? [] {
+//                    currentTurnArray.removeFirst()
+                    updateCurrentTurnStatus(wordId: item.optionId)
+                    self.updateWordStepStatus(wordId: item.optionId, step: exerciseModel.step, right: right, finish: right)
+                }
+            } else {
+                
+                var finish = right
+                // 选择题做错，也标注答题完成
+                if right == false && (exerciseModel.type == .validationWordAndChinese || exerciseModel.type == .validationImageAndWord) {
+                    finish = true
+                }
+                if finish {
+//                    currentTurnArray.removeFirst()
+                    updateCurrentTurnStatus(wordId: exerciseModel.word?.wordId ?? 0)
+                }
+                
+                self.updateWordStepStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, finish: finish)
+            }
         }
     }
-    
     
     /// 连线题型 ，连线题所有项全部连完
     func updateConnectionExerciseFinishStatus(exerciseModel: YXWordExerciseModel, right: Bool) {
@@ -48,12 +56,12 @@ extension YXExerciseDataManager {
         
     }
     
-    
+
     /// 更新得分
     /// - Parameters:
     ///   - exerciseModel:
     ///   - right:
-    public func updateWordScore(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
+    public func updateScore(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
         
         var score = 10
         
@@ -120,7 +128,7 @@ extension YXExerciseDataManager {
     ///   - wordId:
     ///   - step:
     ///   - right:
-    func updateWordStepStatus(wordId: Int, step: Int, right: Bool, finish: Bool) {
+    public func updateWordStepStatus(wordId: Int, step: Int, right: Bool, finish: Bool) {
         for (i, word) in reviewWordArray.enumerated() {
             if word.wordId == wordId {
                 for (j, stepModel) in word.exerciseSteps.enumerated() {

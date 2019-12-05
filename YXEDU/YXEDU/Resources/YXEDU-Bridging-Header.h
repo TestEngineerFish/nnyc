@@ -8,7 +8,6 @@
 
 #import "YXMaterialModel.h"
 #import "YXWordDetailModel.h"
-#import "YXBookMaterialModel.h"
 #import "YXStudyRecordModel.h"
 #import "MJExtension.h"
 #import "NSObject+YR.h"
@@ -27,8 +26,6 @@
 // 闪验
 #import <CL_ShanYanSDK/CL_ShanYanSDK.h>
 
-//
-#import "YXLoginVC.h"
 #import "YXPolicyVC.h"
 #import "YXBindViewModel.h"
 #import "YXLoginSendModel.h"
@@ -47,9 +44,9 @@
 #import "YXPersonalMyBadgesVC.h"
 #import "YXBaseWebViewController.h"
 #import "YXLearnReportModel.h"
-#import "YXBookMaterialManager.h"
 #import "YXWordModelManager.h"
 #import "YXReportErrorView.h"
+#import "YXMissionViewController.h"
 
 #import "ZipArchive.h"
 #import "YXCacheKey.h"

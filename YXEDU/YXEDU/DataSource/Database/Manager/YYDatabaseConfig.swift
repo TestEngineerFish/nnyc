@@ -125,12 +125,6 @@ extension YYSQLManager {
     // MARK: Update & Select
 
     enum NormalSQL: String {
-        case insertBookMaterial =
-        """
-            INSERT OR REPLACE INTO T_BOOKMATERIAL
-            (bookId, bookName, resPath, isFinished, materialSize)
-            VALUES (?, ?, ?, ?, ?)
-        """
         case queryBookMaterial =
         """
             SELECT * FROM T_BOOKMATERIAL

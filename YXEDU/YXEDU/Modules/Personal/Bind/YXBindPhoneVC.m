@@ -21,9 +21,7 @@
 #import "YXSendSMSModel.h"
 #import "YXComAlertView.h"
 #import "NSString+YX.h"
-// #import "AppDelegate.h"
 #import "IQKeyboardManager.h"
-#import "YXLoginVC.h"
 #import "YXComHttpService.h"
 #import "Growing.h"
 
@@ -143,16 +141,9 @@ static NSString *const kBindPlatformKey = @"BindPlatformKey";
 - (void)back {
     [self.view endEditing:YES];
     [self cancleTimer];
-    //[YXConfigure shared].token = @"";
     [[YXConfigure shared] saveToken:@""];
-    YXNavigationController *navi = (YXNavigationController *)self.presentingViewController;
     [Growing track:kGrowingTraceBindMobile withVariable:@{@"bind_mobile_type": @"cancel"}];
-    if ([navi.topViewController isKindOfClass:[YXLoginVC class]]) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }else {
-         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//        [app showLoginVC];
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)bindBtnClicked:(id)sender {
@@ -206,11 +197,7 @@ static NSString *const kBindPlatformKey = @"BindPlatformKey";
 }
 
 - (void)dimi {
-    YXNavigationController *navi = (YXNavigationController *)self.presentingViewController;
-    
-    if ([navi.topViewController isKindOfClass:[YXLoginVC class]]) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)showSelectedVC {

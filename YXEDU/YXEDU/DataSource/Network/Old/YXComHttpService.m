@@ -12,7 +12,6 @@
 #import "NSObject+YR.h"
 #import "YXConfigure.h"
 #import "YXAPI.h"
-#import "YXPersonalBookModel.h"
 #import "YXInterfaceCacheService.h"
 #import "YXWordModelManager.h"
 

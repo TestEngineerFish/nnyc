@@ -11,8 +11,6 @@
 #import "YXPersonalMaterialCell.h"
 #import "YXUtils.h"
 #import "YXComAlertView.h"
-#import "YXBookMaterialManager.h"
-#import "YXBookMaterialModel.h"
 #import "NSObject+YR.h"
 #import "YXNoResourceView.h"
 #import "YXNoNetworkView.h"
@@ -38,10 +36,6 @@
     self.containerView.layer.borderColor = UIColor.whiteColor.CGColor;
     self.containerView.layer.cornerRadius = 8;
     self.containerView.layer.masksToBounds = NO;
-//    self.containerView.layer.shadowColor = UIColorOfHex(0xAED7E3).CGColor;
-//    self.containerView.layer.shadowRadius = 2;
-//    self.containerView.layer.shadowOpacity = 1;
-//    self.containerView.layer.shadowOffset = CGSizeMake(0, 2);
     
     self.containerView.layer.shadowColor = UIColorOfHex(0xAED7E3).CGColor;
     self.containerView.layer.shadowRadius = 2.5;
@@ -91,47 +85,21 @@
     [super viewWillDisappear:animated];
     CGFloat size = 0;
     if (self.refreshBookMaterial) {
-        for (YXBookMaterialModel *bmm in self.materialSources) {
-            size += [bmm.materialSize floatValue];
-        }
-        self.refreshBookMaterial([NSString stringWithFormat:@"%.2fM",size]);
+//        for (YXBookMaterialModel *bmm in self.materialSources) {
+//            size += [bmm.materialSize floatValue];
+//        }
+//        self.refreshBookMaterial([NSString stringWithFormat:@"%.2fM",size]);
     }
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.textColorType = TextColorWhite;
-//    [self requestAllMaterial];
     
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     
-    [[YXBookMaterialManager shareManager] quaryMaterialOfAllBooksCompleteBlock:^(id obj, BOOL result) {
-        self.materialSources = obj;
-        [self.tableView reloadData];
-//        if (result) {
-//
-//            if (self.materialSources.count > 0) {
-//                [self.tableView reloadData];
-//            } else {
-//                YXNoResourceView *view = [YXNoResourceView create];
-//                view.frame = self.view.frame;
-//                [self.view addSubview:view];
-//            }
-//        else {
-//            YXNoNetworkView *view = [YXNoNetworkView createWith:^{
-//                [[YXBookMaterialManager shareManager] quaryMaterialOfAllBooksCompleteBlock:^(id obj, BOOL result) {
-//                    if (result) {
-//                        self.materialSources = obj;
-//                        if (self.materialSources.count > 0) {
-//                            [view removeFromSuperview];
-//                            [self.tableView reloadData];
-//                        }
-//                    }
-//                }];
-//            }];
-//            view.frame = self.view.frame;
-//            [self.view addSubview:view];
-//        }
-    }];
+//    [[YXBookMaterialManager shareManager] quaryMaterialOfAllBooksCompleteBlock:^(id obj, BOOL result) {
+//        self.materialSources = obj;
+//        [self.tableView reloadData];
+//    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -153,16 +121,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YXPersonalMaterialCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YXPersonalMaterialCell" forIndexPath:indexPath];
-    YXBookMaterialModel *model = self.materialSources[indexPath.row];
-    
-    cell.titleLable.text = model.bookName;
-    cell.sizeLabel.text = [NSString stringWithFormat:@"%@M", model.materialSize];
-    cell.deleteBlock = ^(id obj) {
-        [YXComAlertView showAlert:YXAlertCommon inView:[UIApplication sharedApplication].keyWindow info:nil content:@"确定删除该资源？" firstBlock:^(id obj) {
-            [self deleteBook:model];
-        } secondBlock:^(id obj) {
-        }];
-    };
+//    YXBookMaterialModel *model = self.materialSources[indexPath.row];
+//
+//    cell.titleLable.text = model.bookName;
+//    cell.sizeLabel.text = [NSString stringWithFormat:@"%@M", model.materialSize];
+//    cell.deleteBlock = ^(id obj) {
+//        [YXComAlertView showAlert:YXAlertCommon inView:[UIApplication sharedApplication].keyWindow info:nil content:@"确定删除该资源？" firstBlock:^(id obj) {
+//            [self deleteBook:model];
+//        } secondBlock:^(id obj) {
+//        }];
+//    };
     
     return cell;
 }
@@ -175,20 +143,20 @@
     return NO;
 }
 
-- (void)deleteBook:(YXBookMaterialModel *)book {
-    if (book.bookId) {
-        [YXFMDBManager.share deleteBookMaterialsWithBookIds:@[book.bookId] completeBlock:^(id obj, BOOL result) {
-            if (result) {
-                NSError *error = nil;
-                BOOL suceess = [[NSFileManager defaultManager] removeItemAtPath:book.resPath error:&error];
-                if (suceess) {
-                    [self.materialSources removeObject:book];
-                    [self.tableView reloadData];
-                }
-            }
-        }];
-    }
-}
+//- (void)deleteBook:(YXBookMaterialModel *)book {
+//    if (book.bookId) {
+//        [YXFMDBManager.share deleteBookMaterialsWithBookIds:@[book.bookId] completeBlock:^(id obj, BOOL result) {
+//            if (result) {
+//                NSError *error = nil;
+//                BOOL suceess = [[NSFileManager defaultManager] removeItemAtPath:book.resPath error:&error];
+//                if (suceess) {
+//                    [self.materialSources removeObject:book];
+//                    [self.tableView reloadData];
+//                }
+//            }
+//        }];
+//    }
+//}
 
 - (void)deleteAllButtonClicked:(id)sender {
     [YXComAlertView showAlert:YXAlertCommon inView:[UIApplication sharedApplication].keyWindow info:nil content:@"删除所有资源?" firstBlock:^(id obj) {

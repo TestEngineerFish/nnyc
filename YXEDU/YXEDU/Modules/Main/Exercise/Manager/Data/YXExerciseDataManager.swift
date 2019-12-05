@@ -178,9 +178,9 @@ class YXExerciseDataManager: NSObject {
     
     /// 在当前轮次中，是否有连线错误
     /// - Parameters:
-    ///   - wordId: 单词ID
-    ///   - step:   step
-    func hasErrorInCurrentTurn(wordId: Int, step: Int) -> Bool {
+    ///   - wordId:
+    ///   - step:
+    func hasConnectionError(wordId: Int, step: Int) -> Bool {
         for e in currentTurnArray {
             if e.word?.wordId == wordId && e.step == step, let right = e.isRight {
                 return right == false
