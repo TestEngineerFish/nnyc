@@ -32,6 +32,7 @@ struct YYNetworkService {
         sessionManager.session.delegateQueue.maxConcurrentOperationCount = maxOperationCount
     }
     
+    //MARK: ----------------- Request -----------------
     /**
      *  普通HTTP Request, 支持GET、POST方式
      */
@@ -39,23 +40,20 @@ struct YYNetworkService {
     public func httpRequestTask <T> (_ type: T.Type, request: YYBaseRequest, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> YYTaskRequest? where T: YYBaseResopnse {
         
         if request.method == .post {
-            var _request = URLRequest(url: request.url)
-            _request.httpMethod = request.method.rawValue
-            if request.method == .body {
-                _request.httpMethod = "POST"
-            }
-            _request.allHTTPHeaderFields = request.handleHeader(parameters: removeNilValue(request.parameters))
+            var urlRequest = URLRequest(url: request.url)
+            urlRequest.httpMethod = request.method.rawValue
+            urlRequest.allHTTPHeaderFields = request.handleHeader(parameters: removeNilValue(request.parameters))
             
             do {
                 if let params = removeNilValue(request.parameters) {
-                    if request.method == .body {
-                        _request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                        _request.httpBody = (params["json"] as? String)?.data(using: .utf8)
+                    if request.isHttpBody {
+                        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                        urlRequest.httpBody = (params["json"] as? String)?.data(using: .utf8)
                     } else {
-                        try _request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+                        try urlRequest.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
                     }
                 }
-                return self.httpPostRequest(type, request: _request, success: { (response, httpStatusCode) in
+                return self.post(type, request: urlRequest, success: { (response, httpStatusCode) in
                     self.handleStatusCodeLogicResponseObject(response, statusCode: httpStatusCode, request: request, success: success, fail: fail)
                 }, fail: { (error) in
                     fail?(error as NSError)
@@ -65,7 +63,7 @@ struct YYNetworkService {
                 return nil
             }
         } else {
-            return self.httpRequest(type, request: request, header: request.handleHeader(parameters: removeNilValue(request.parameters)), success: { (response, httpStatusCode) in
+            return self.get(type, request: request, header: request.handleHeader(parameters: removeNilValue(request.parameters)), success: { (response, httpStatusCode) in
                 self.handleStatusCodeLogicResponseObject(response, statusCode: httpStatusCode, request: request, success: success, fail: fail)
             }, fail: { (error) in
                 fail?(error as NSError)
@@ -73,7 +71,8 @@ struct YYNetworkService {
         }
     }
     
-    public func httpDownloadRequestTask <T> (_ type: T.Type, request: YYBaseRequest, localSavePath: String, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
+    
+    public func download <T> (_ type: T.Type, request: YYBaseRequest, localSavePath: String, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
         
         let params = removeNilValue(request.parameters)
         Alamofire.download(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: params, headers: request.handleHeader(parameters: params, headers: request.header)) { (url, response) -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
@@ -92,7 +91,7 @@ struct YYNetworkService {
     /**
      *  文件内容上传 Request
      */
-    public func httpUploadRequestTask <T> (_ type: T.Type, request: YYBaseRequest, mimeType: String = "image/jpeg", fileName: String = "photo", success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
+    public func upload <T> (_ type: T.Type, request: YYBaseRequest, mimeType: String = "image/jpeg", fileName: String = "photo", success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
         
         guard let parameters = request.parameters else {
             return
@@ -108,14 +107,13 @@ struct YYNetworkService {
         }
         
         // 构建新的header
-        var requestHeader = request.header
-        requestHeader["Content-Type"] = "multipart/form-data"
-        requestHeader = request.handleHeader(parameters: params, headers: requestHeader)
+        var headers = request.header
+        headers["Content-Type"] = "multipart/form-data"
+        headers = request.handleHeader(parameters: params, headers: headers)
         
         // 转换对象
         let method = HTTPMethod(rawValue: request.method.rawValue) ?? .post
     
-        //MARK: 上传
         sessionManager.upload(multipartFormData: { (multipartFormData) in
             guard let fileData = parameters[name] else {
                 return
@@ -129,14 +127,14 @@ struct YYNetworkService {
             }
             
             // 普通表单参数 （放在文件数据的后面还是前面，要看后端接口的支持情况，目前是放在后面）
-            // 普通表单数据使用 params，删除了文件数据的
+            // 普通表单数据使用 params 填充，删除了文件数据的
             for (key, value) in params {
                 if let data = "\(value)".data(using: String.Encoding.utf8) {
                     multipartFormData.append(data, withName: key)
                 }
             }
             
-        }, usingThreshold: UInt64.init(), to: request.url, method: method , headers: requestHeader) { (result) in
+        }, usingThreshold: UInt64.init(), to: request.url, method: method , headers: headers) { (result) in
             switch result {
             case .success(let upload, _, _):
                 upload.responseObject(completionHandler: { (response: DataResponse <T>) in
@@ -154,26 +152,10 @@ struct YYNetworkService {
         
     }
     
-    @discardableResult
-    private func httpPostRequest <T> (_ type: T.Type, request: URLRequest, success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void?, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
-        
-        let request = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
-            switch response.result {
-            case .success(var x):
-                x.response = response.response
-                x.request = response.request
-                success(x, (response.response?.statusCode) ?? 0)
-            case .failure(let error):
-                fail(error as NSError)
-            }
-        }
-        
-        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: request)
-        return taskRequest
-    }
+    //MARK: ----------------- Method -----------------
     
     @discardableResult
-    private func httpRequest <T>(_ type: T.Type, request: YYBaseRequest, header:[String:String], success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
+    private func get <T>(_ type: T.Type, request: YYBaseRequest, header:[String:String], success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
         let encoding: ParameterEncoding = (.get == request.method ? URLEncoding.default : JSONEncoding.default)
         let request = sessionManager.request(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: removeNilValue(request.parameters), encoding: encoding, headers: header).responseObject { (response: DataResponse <T>) in
 
@@ -192,7 +174,27 @@ struct YYNetworkService {
         return taskRequest
     }
     
-    /**
+    
+    @discardableResult
+    private func post <T> (_ type: T.Type, request: URLRequest, success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void?, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
+        
+        let request = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
+            switch response.result {
+            case .success(var x):
+                x.response = response.response
+                x.request = response.request
+                success(x, (response.response?.statusCode) ?? 0)
+            case .failure(let error):
+                fail(error as NSError)
+            }
+        }
+        
+        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: request)
+        return taskRequest
+    }
+    
+    //MARK: ----------------- Response -----------------
+    /**R
      *  请求状态码逻辑处理
      */
     private func handleStatusCodeLogicResponseObject <T> (_ response: T, statusCode: Int, request: YYBaseRequest, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {

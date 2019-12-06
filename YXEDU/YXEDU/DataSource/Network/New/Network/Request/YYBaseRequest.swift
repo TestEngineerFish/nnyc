@@ -18,7 +18,6 @@ public enum YYHTTPMethod: String {
     case put     = "PUT"
     case patch   = "PATCH"
     case delete  = "DELETE"
-    case body    = "BODY"
 }
 
 protocol YYBaseRequest {
@@ -27,7 +26,14 @@ protocol YYBaseRequest {
     var parameters: [String : Any?]? { get }
     var url: URL { get }
     var path: String { get }
-    
+        
+    /// 参数值是否需要设置到body中，如果是请重写该方法，默认为表单方式提交
+    var isHttpBody: Bool { get }
+        
+    /// 设置header，包括加密方式
+    /// - Parameters:
+    ///   - parameters: 参数集合
+    ///   - headers: 默认header
     func handleHeader(parameters: [String : Any]?, headers: [String : String]?) -> [String : String]
 }
 
@@ -59,6 +65,8 @@ extension YYBaseRequest {
     }
     
     public var path: String { return "" }
+    
+    public var isHttpBody: Bool { return false }
     
     func handleHeader(parameters: [String : Any]?, headers: [String : String]? = nil) -> [String : String] {
         

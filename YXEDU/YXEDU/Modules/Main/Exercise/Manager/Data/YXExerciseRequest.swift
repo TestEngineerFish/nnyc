@@ -23,9 +23,7 @@ extension YXExerciseRequest {
         case .exercise, .learnMap, .learnResult, .addUserBook:
             return .get
         case .report:
-            return .body
-            //        case .addUserBook:
-            //            return .post
+            return .post
         }
     }
 }
@@ -63,4 +61,15 @@ extension YXExerciseRequest {
         }
     }
     
+}
+
+
+extension YXExerciseRequest {
+    var isHttpBody: Bool {
+        switch self {
+        case .report: return true
+        default: return false
+        }
+    }
+
 }
