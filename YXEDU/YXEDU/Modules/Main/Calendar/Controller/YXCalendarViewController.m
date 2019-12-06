@@ -15,7 +15,6 @@
 #import "YXWordDetailModel.h"
 #import "NSDate+Extension.h"
 #import "YXBasePickverView.h"
-#import "YXCalendarShareView.h"
 #import "YXCalendarFresherGuideView.h"
 #import "YXCalendarMonthSummaryView.h"
 #import "YXCalendarMonthDataView.h"
@@ -33,7 +32,7 @@ static CGFloat const kHeaderHeight = 44.f;
 static CGFloat const kCellHeight = 40.f;
 static CGFloat const kPickViewHeight = 272.f;
 
-@interface YXCalendarViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance, YXBasePickverViewDelegate, YXCalendarFresherGuideViewDelegate, YXCalendarUpdateData, CalendarShareViewDelegate>
+@interface YXCalendarViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance, YXBasePickverViewDelegate, YXCalendarFresherGuideViewDelegate, YXCalendarUpdateData>
 @property (nonatomic, copy) NSDate *currentSelectedDate;//选中的具体日期
 @property (nonatomic, copy) NSDate *currentTitleDate;//标题显示的月份
 
@@ -67,9 +66,6 @@ static CGFloat const kPickViewHeight = 272.f;
 @property (nonatomic, strong) YXCalendarStudyDayData *dayData;
 @property (nonatomic, strong) NSDictionary<NSString *, UIImage *> *studiedDate;//显示已学习状态
 @property (nonatomic, strong) NSTimer *timer;
-// share
-@property (nonatomic, strong) UIImageView *shareImageIcon;
-@property (nonatomic, strong) YXCalendarShareView *shareView;
 
 @end
 
@@ -352,19 +348,6 @@ static CGFloat const kPickViewHeight = 272.f;
     return _datePickBackgroundView;
 }
 
-- (UIImageView *)shareImageIcon {
-    if (!_shareImageIcon) {
-        _shareImageIcon = [[UIImageView alloc] init];
-        _shareImageIcon.frame = CGRectMake(SCREEN_WIDTH - 70.f, SCREEN_HEIGHT - 70.f - kSafeBottomMargin, 50.f, 50.f);
-        _shareImageIcon.layer.cornerRadius = 25.f;
-        _shareImageIcon.image = [UIImage imageNamed:@"share_calendar_icon"];
-        [_shareImageIcon setUserInteractionEnabled:YES];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showShareView:)];
-        [_shareImageIcon addGestureRecognizer:tap];
-    }
-    return _shareImageIcon;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self _initUI];
@@ -373,9 +356,6 @@ static CGFloat const kPickViewHeight = 272.f;
     if (![YXCalendarFresherGuideView isFresherGuideShowed]) {
         _fresherGuideView = [YXCalendarFresherGuideView showGuideViewToView:self.tabBarController.view delegate:self];
     }
-    [UIView animateWithDuration:1 animations:^{
-        self.shareImageIcon.transform = CGAffineTransformTranslate(self.shareImageIcon.transform, 45, 0);
-    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -395,8 +375,6 @@ static CGFloat const kPickViewHeight = 272.f;
     [self.contentScroll addSubview:self.monthSummaryView];
     [self.contentScroll addSubview:self.fruitIcon];
     [self.contentScroll addSubview:self.tableTitleLabel];
-    [self.view addSubview:self.shareImageIcon];
-    [self.view bringSubviewToFront:self.shareImageIcon];
     
     [self.naview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.view);
@@ -629,28 +607,6 @@ static CGFloat const kPickViewHeight = 272.f;
     [self getDailyData:self.currentSelectedDate];
 }
 
-- (void)showShareView:(UITapGestureRecognizer *)sender {
-    __weak typeof(self) weakSelf = self;
-    if (CGRectGetMaxX(self.shareImageIcon.frame) > SCREEN_WIDTH) {
-        [UIView animateWithDuration:0.25 animations:^{
-            weakSelf.shareImageIcon.transform = CGAffineTransformTranslate(self.shareImageIcon.transform, -45, 0);
-        }];
-    } else {
-        if (!self.monthData) {
-            return;
-        }
-        self.shareView = [YXCalendarShareView showCompletedViewWithMonthDate:self.monthData];
-        self.shareView.delegate = self;
-        [kWindow addSubview:self.shareView];
-        [self.shareView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.view);
-            make.top.equalTo(self.view);
-            make.bottom.equalTo(self.view);
-        }];
-        [self.shareView layoutIfNeeded];
-    }
-}
-
 - (void)showTableView {
     if (self.noResultsView) {
         [self.noResultsView removeFromSuperview];
@@ -830,11 +786,6 @@ static CGFloat const kPickViewHeight = 272.f;
     if (scrollView.contentOffset.y < 0) {
         scrollView.contentOffset = CGPointMake(0, 0);
     }
-    if (CGRectGetMaxX(self.shareImageIcon.frame) < SCREEN_WIDTH) {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.shareImageIcon.transform = CGAffineTransformTranslate(self.shareImageIcon.transform, 45, 0);
-        }];
-    }
 }
 
 #pragma mark - FSCalendarDelegate, FSCalendarDataSource
@@ -959,11 +910,7 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 #pragma mark - CalendarShareViewDelegate
-- (void)closeShareViewBlock {
-    [UIView animateWithDuration:1 animations:^{
-        self.shareImageIcon.transform = CGAffineTransformTranslate(self.shareImageIcon.transform, 45, 0);
-    }];
-}
+
 
 - (void)reloadShareData {
 

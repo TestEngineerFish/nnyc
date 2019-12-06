@@ -144,7 +144,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
                 // 取消选中状态
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
                     // 反之用户在这之间已取消选中
-                    if letterBtn.status == .error {
+                    if letterBtn.status != .normal && letterBtn.status != .disable {
                         self.clickButton(letterBtn)
                     }
                 }

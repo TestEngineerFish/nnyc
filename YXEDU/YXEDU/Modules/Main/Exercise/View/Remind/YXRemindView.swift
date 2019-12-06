@@ -259,6 +259,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         if remindSteps.count == 0 || currentRemindIndex == -1 {
             return
         }
+        self.setNeedsLayout()
         remindLabel.isHidden = false
         titleLabel.isHidden = !hasText()
         imageView.isHidden = !hasImage()
@@ -271,7 +272,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
             if self.hasImage() {
                 var top = -self.height
                 if !self.titleLabel.isHidden {
-                    top += self.titleLabel.height + AdaptSize(5)
+                    top += self.titleSize().height + AdaptSize(5)
                 }
                 self.imageView.transform = CGAffineTransform(translationX: 0, y: top)
             }
@@ -279,7 +280,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
                 self.audioPlayerView.transform = CGAffineTransform(translationX: 0, y: -self.height)
             }
         }
-        self.setNeedsLayout()
+
     }
     
     

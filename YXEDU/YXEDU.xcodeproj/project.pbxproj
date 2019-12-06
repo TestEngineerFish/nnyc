@@ -347,7 +347,6 @@
 		EE5E008F23274FEB00655654 /* YXCalendarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFEC023274FE900655654 /* YXCalendarChartView.m */; };
 		EE5E009023274FEB00655654 /* YXCalendarFresherGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFEC123274FE900655654 /* YXCalendarFresherGuideView.m */; };
 		EE5E009123274FEB00655654 /* YXCalendarBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFEC223274FE900655654 /* YXCalendarBookCell.m */; };
-		EE5E009223274FEB00655654 /* YXCalendarShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFEC323274FE900655654 /* YXCalendarShareView.m */; };
 		EE5E009323274FEB00655654 /* YXCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFEC423274FE900655654 /* YXCalendarHeaderView.m */; };
 		EE5E00AB23274FEB00655654 /* YXSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFEFD23274FE900655654 /* YXSearchVC.m */; };
 		EE5E00AC23274FEB00655654 /* YXTaskViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF0223274FE900655654 /* YXTaskViewModel.m */; };
@@ -1554,7 +1553,6 @@
 		EE5EFEB823274FE900655654 /* YXCalendarFresherGuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCalendarFresherGuideView.h; sourceTree = "<group>"; };
 		EE5EFEB923274FE900655654 /* YXCalendarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCalendarChartView.h; sourceTree = "<group>"; };
 		EE5EFEBA23274FE900655654 /* YXCalendarHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCalendarHeaderView.h; sourceTree = "<group>"; };
-		EE5EFEBB23274FE900655654 /* YXCalendarShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCalendarShareView.h; sourceTree = "<group>"; };
 		EE5EFEBC23274FE900655654 /* YXCalendarBookCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCalendarBookCell.h; sourceTree = "<group>"; };
 		EE5EFEBD23274FE900655654 /* YXCalendarWordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCalendarWordCell.m; sourceTree = "<group>"; };
 		EE5EFEBE23274FE900655654 /* YXCalendarMonthSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCalendarMonthSummaryView.m; sourceTree = "<group>"; };
@@ -1562,7 +1560,6 @@
 		EE5EFEC023274FE900655654 /* YXCalendarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCalendarChartView.m; sourceTree = "<group>"; };
 		EE5EFEC123274FE900655654 /* YXCalendarFresherGuideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCalendarFresherGuideView.m; sourceTree = "<group>"; };
 		EE5EFEC223274FE900655654 /* YXCalendarBookCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCalendarBookCell.m; sourceTree = "<group>"; };
-		EE5EFEC323274FE900655654 /* YXCalendarShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCalendarShareView.m; sourceTree = "<group>"; };
 		EE5EFEC423274FE900655654 /* YXCalendarHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCalendarHeaderView.m; sourceTree = "<group>"; };
 		EE5EFEFD23274FE900655654 /* YXSearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXSearchVC.m; sourceTree = "<group>"; };
 		EE5EFEFE23274FE900655654 /* YXSearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXSearchVC.h; sourceTree = "<group>"; };
@@ -4362,7 +4359,6 @@
 				EE5EFEB823274FE900655654 /* YXCalendarFresherGuideView.h */,
 				EE5EFEB923274FE900655654 /* YXCalendarChartView.h */,
 				EE5EFEBA23274FE900655654 /* YXCalendarHeaderView.h */,
-				EE5EFEBB23274FE900655654 /* YXCalendarShareView.h */,
 				EE5EFEBC23274FE900655654 /* YXCalendarBookCell.h */,
 				EE5EFEBD23274FE900655654 /* YXCalendarWordCell.m */,
 				EE5EFEBE23274FE900655654 /* YXCalendarMonthSummaryView.m */,
@@ -4370,7 +4366,6 @@
 				EE5EFEC023274FE900655654 /* YXCalendarChartView.m */,
 				EE5EFEC123274FE900655654 /* YXCalendarFresherGuideView.m */,
 				EE5EFEC223274FE900655654 /* YXCalendarBookCell.m */,
-				EE5EFEC323274FE900655654 /* YXCalendarShareView.m */,
 				EE5EFEC423274FE900655654 /* YXCalendarHeaderView.m */,
 			);
 			path = View;
@@ -5436,7 +5431,6 @@
 				22298BFE237D7B5100F24786 /* YXNewLearnPrimarySchoolWordGroupExerciseView.swift in Sources */,
 				EE54F7CF2362AA3100EC605A /* YXExerciseViewEvent.swift in Sources */,
 				EE5E016D232754FA00655654 /* YXConfigure.m in Sources */,
-				EE5E009223274FEB00655654 /* YXCalendarShareView.m in Sources */,
 				EE5EF20623273BAE00655654 /* UIImageView+YR.m in Sources */,
 				EE5E006923274FEB00655654 /* YXQuestionBaseView.m in Sources */,
 				EE5EFCD123274E5500655654 /* YXBaseWebViewController.m in Sources */,
