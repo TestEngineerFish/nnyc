@@ -131,7 +131,7 @@ class YXLearningResultViewController: UIViewController {
             return
         }
         let request = YXExerciseRequest.learnResult(bookId: bookId, unitId: unitId)
-        YYNetworkService.default.httpRequestTask(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
             // 如果后台还在计算,则重新请求
             if response.data?.countStatus == .some(.ing) {
                 // 如果请求次数超过五次,则退出
@@ -160,7 +160,7 @@ class YXLearningResultViewController: UIViewController {
             return
         }
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
-        YYNetworkService.default.httpRequestTask(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
             print("学习新单元成功")
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")

@@ -164,7 +164,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.badges = []
         
         let request = YXMineRequest.badgeList
-        YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXBadgeListModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXBadgeListModel>.self, request: request, success: { (response) in
             guard let badgesList = response.dataArray else { return }
              
             YXComHttpService.shared().requestBadgesInfo({ (response, isSuccess) in

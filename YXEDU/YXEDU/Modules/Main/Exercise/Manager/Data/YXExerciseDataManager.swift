@@ -56,7 +56,7 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 数据加载成功后的回调
     func fetchTodayExerciseResultModels(completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
         let request = YXExerciseRequest.exercise
-        YYNetworkService.default.httpRequestTask(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
             self.processExerciseData(result: response.data)
             completion(true, nil)
         }) { (error) in
@@ -168,7 +168,7 @@ class YXExerciseDataManager: NSObject {
     func reportUnit( completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let json = self.reportJson()
         let request = YXExerciseRequest.report(json: json)
-        YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
             completion?(response.dataArray != nil, nil)
         }) { (error) in
             completion?(false, error.message)

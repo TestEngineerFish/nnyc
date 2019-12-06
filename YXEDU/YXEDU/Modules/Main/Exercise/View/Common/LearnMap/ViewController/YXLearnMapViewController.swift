@@ -113,7 +113,7 @@ class YXLearnMapViewController: UIViewController {
             return
         }
         let request = YXExerciseRequest.learnMap(bookId: _bookId)
-        YYNetworkService.default.httpRequestTask(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { (response) in
             self.mapModelList = response.dataArray
             self.createMapView()
         }) { (error) in
@@ -127,7 +127,7 @@ class YXLearnMapViewController: UIViewController {
             return
         }
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
-        YYNetworkService.default.httpRequestTask(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
             print("学习新单元成功")
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")

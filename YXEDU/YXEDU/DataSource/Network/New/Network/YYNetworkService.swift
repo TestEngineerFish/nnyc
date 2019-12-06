@@ -37,7 +37,7 @@ struct YYNetworkService {
      *  普通HTTP Request, 支持GET、POST方式
      */
     @discardableResult
-    public func httpRequestTask <T> (_ type: T.Type, request: YYBaseRequest, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> YYTaskRequest? where T: YYBaseResopnse {
+    public func request <T> (_ type: T.Type, request: YYBaseRequest, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> YYTaskRequest? where T: YYBaseResopnse {
         
         if request.method == .post {
             var urlRequest = URLRequest(url: request.url)
