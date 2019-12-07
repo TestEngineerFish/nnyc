@@ -14,6 +14,7 @@ class BPSegmentView: UICollectionView {
 
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
+        self.backgroundColor = UIColor.white
         self.showsVerticalScrollIndicator  = false
         self.showsHorizontalScrollIndicator = false
     }

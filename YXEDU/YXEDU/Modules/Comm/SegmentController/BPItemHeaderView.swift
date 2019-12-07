@@ -9,13 +9,6 @@
 import UIKit
 
 protocol BPItemProtocol: NSObjectProtocol {
-    //    func titleFont() -> UIFont
-    //    func titleColor() -> UIColor
-    //    func text() -> String
-    //    func lineColor() -> UIColor
-    //    func lineWidth() -> CGFloat
-    //    func lineHeight() -> CGFloat
-
     /// 切入动画
     /// - Parameter progress: 切入进度
     func switchIn(progress: Float)
@@ -30,7 +23,6 @@ class BPItemHeaderView: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.red
         self.createSubviews()
     }
 
@@ -47,7 +39,7 @@ class BPItemHeaderView: UICollectionViewCell {
 
         let lineHeight = CGFloat(5)
         lineLayer.frame = CGRect(x: 0, y: self.frame.height - lineHeight, width: CGFloat.zero, height: lineHeight)
-        lineLayer.backgroundColor = UIColor.white.cgColor
+        lineLayer.backgroundColor = UIColor.orange1.cgColor
         lineLayer.cornerRadius = lineHeight / 2
     }
 

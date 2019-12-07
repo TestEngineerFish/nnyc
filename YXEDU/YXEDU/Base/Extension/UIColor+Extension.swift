@@ -138,7 +138,7 @@ public extension UIColor {
     /// 选项的边框 0xC0C0C0
     class var black6: UIColor { return UIColor.hex(0xC0C0C0) }
     
-    /// 连线完成
+    /// 连线完成 4F4F4F
     class var black8: UIColor { return UIColor.hex(0x4F4F4F).withAlphaComponent(0.3) }
 
     /// 错误颜色 0xFF532B

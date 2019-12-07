@@ -38,6 +38,12 @@ struct YXAPI {
         static let addUserBook = "/api/v1/book/adduserbook"
     }
 
+    // MARK: - 复习模块
+    struct Review {
+        /// 获得复习计划中词书选项列表
+        static let reviewBookList = "/api/v1/learn/getreviewbooklist"
+    }
+
     
     //MARK: - 设置模块
     struct Setting {

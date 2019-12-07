@@ -11,9 +11,9 @@ import UIKit
 @objc
 class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private var learnedWordsCount = "--"
-    private var collectedWordsCount = "--"
-    private var wrongWordsCount = "--"
+    private var learnedWordsCount    = "--"
+    private var collectedWordsCount  = "--"
+    private var wrongWordsCount      = "--"
     private var isCheckingLoginState = true
     private var homeModel: YXHomeModel!
     

@@ -10,6 +10,7 @@ import UIKit
 
 class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
 
+    // ---- 子视图
     var segmentControllerView: BPSegmentControllerView = {
         let h = screenHeight - kNavHeight - AdaptSize(60) - kSafeBottomMargin
         var config = BPSegmentConfig()
@@ -18,7 +19,6 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
         config.headerItemSpacing  = AdaptSize(10)
         config.contentItemSize    = CGSize(width: screenWidth, height: h - config.headerHeight)
         config.contentItemSpacing = CGFloat.zero
-        config.pageNumbers        = 10
         let segmentFrame = CGRect(x: 0, y: 0, width: screenWidth, height: h)
         let segmentControllerView = BPSegmentControllerView(config, frame: segmentFrame)
         return segmentControllerView
@@ -42,11 +42,15 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
         return view
     }()
 
+    // ---- 数据对象
+    var model: YXReviewBookModel?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         segmentControllerView.delegate = self
         self.createSubviews()
+        self.getData()
     }
 
     private func createSubviews() {
@@ -66,12 +70,24 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
             make.center.equalToSuperview()
             make.size.equalTo(makeSize)
         }
-        makePlanButton.backgroundColor = UIColor.gradientColor(with: makeSize, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
 
         selectedWordView.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-10))
             make.size.equalTo(CGSize(width: AdaptSize(154), height: AdaptSize(54)))
             make.bottom.equalTo(bottomView.snp.top).offset(AdaptSize(-30))
+        }
+        selectedWordView.backgroundColor = UIColor.hex(0xFFF4E9)
+        makePlanButton.backgroundColor = UIColor.gradientColor(with: makeSize, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
+        makePlanButton.layer.cornerRadius = makeSize.height / 2
+    }
+
+    private func getData() {
+        let request = YXReviewRequest.reviewBookList
+        YYNetworkService.default.request(YYStructResponse<YXReviewBookModel>.self, request: request, success: { (response) in
+            self.model = response.data
+            self.segmentControllerView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error)")
         }
     }
 
@@ -81,13 +97,26 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
         return IndexPath(item: 0, section: 0)
     }
 
-//    /// 自定义Item视图
-//    func segment(_ segment: BPSegmentView, itemForRowAt indexPath: IndexPath) -> UIView {
-//
-//    }
-//    /// 自定义Content视图
-//    func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
-//
-//    }
+    func pagesNumber() -> Int {
+        return self.model?.list.count ?? 0
+    }
+
+    /// 自定义Item视图
+    func segment(_ segment: BPSegmentView, itemForRowAt indexPath: IndexPath) -> UIView {
+        guard let model = self.model else {
+            return UIView()
+        }
+        let itemModel = model.list[indexPath.item]
+        let itemView = YXWordBookItemView(itemModel, frame: CGRect.zero)
+        return itemView
+    }
+    /// 自定义Content视图
+    func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
+        guard let listModel = self.model?.currentModel else {
+            return UIView()
+        }
+        let tableView = YXReviewUnitListView(listModel, frame: CGRect.zero)
+        return tableView
+    }
 
 }

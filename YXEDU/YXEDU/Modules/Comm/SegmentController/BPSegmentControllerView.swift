@@ -12,6 +12,8 @@ protocol BPSegmentDataSource: NSObjectProtocol {
 
     /// 首选中Index
     func firstSelectedIndex() -> IndexPath?
+    /// 页面数
+    func pagesNumber() -> Int
     /// 自定义Item视图
     func segment(_ segment: BPSegmentView, itemForRowAt indexPath: IndexPath) -> UIView
     /// 自定义Content视图
@@ -23,6 +25,10 @@ extension BPSegmentDataSource {
     /// 首选中Index
     func firstSelectedIndex() -> IndexPath? {
         return nil
+    }
+    /// 页面数
+    func pagesNumber() -> Int {
+        return 0
     }
     /// 自定义Item视图
     func segment(_ segment: BPSegmentView, itemForRowAt indexPath: IndexPath) -> UIView {
@@ -40,7 +46,6 @@ struct BPSegmentConfig {
     var headerItemSpacing  = CGFloat.zero
     var contentItemSize    = CGSize.zero
     var contentItemSpacing = CGFloat.zero
-    var pageNumbers        = Int.zero
 }
 
 class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -83,8 +88,9 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         self.lastSelectedIndex = self.delegate?.firstSelectedIndex() ?? IndexPath(item: 0, section: 0)
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    func reloadData() {
+        self.headerScrollView.reloadData()
+        self.contentScrollView.reloadData()
     }
 
     private func createSubviews() {
@@ -104,8 +110,6 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         headerScrollView = BPSegmentView(frame: headerFrame, collectionViewLayout: headerFlowLayout)
         let contentFrame = CGRect(x: 0, y: headerScrollView.frame.maxY, width: self.frame.width, height: self.frame.height - headerScrollView.frame.height)
         contentScrollView = BPSegmentView(frame: contentFrame, collectionViewLayout: contentFlowLayout)
-        self.headerScrollView.backgroundColor  = UIColor.yellow
-        self.contentScrollView.backgroundColor = UIColor.blue
         self.addSubview(headerScrollView)
         self.addSubview(contentScrollView)
 
@@ -126,7 +130,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     // TODO: ==== UICollectionViewDataSource ====
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.config.pageNumbers
+        return self.delegate?.pagesNumber() ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -141,6 +145,9 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
             // 获取自定义View,如果有的话
             if let itemSubview = self.delegate?.segment(segmentView, itemForRowAt: indexPath) {
                 _itemView.contentView.addSubview(itemSubview)
+                itemSubview.snp.makeConstraints { (make) in
+                    make.edges.equalToSuperview()
+                }
             }
             // 设置选中状态
             if self.lastSelectedIndex == indexPath {
@@ -159,6 +166,9 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
             // 获取自定义View,如果有的话
             if let contentSubview = self.delegate?.segment(segmentView, contentForRowAt: indexPath){
                 _contentView.contentView.addSubview(contentSubview)
+                contentSubview.snp.makeConstraints { (make) in
+                    make.edges.equalToSuperview()
+                }
             }
             // 设置选中状态
             if self.lastSelectedIndex == indexPath {
@@ -186,7 +196,8 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         guard let segmentView = collectionView as? BPSegmentView, segmentView.isHeaderView else {
             return UIEdgeInsets.zero
         }
-        let headerMaxWidth = CGFloat(self.config.pageNumbers) * (self.config.headerItemSize.width + self.config.headerItemSpacing) - self.config.headerItemSpacing
+        let pagesNumber = CGFloat(self.delegate?.pagesNumber() ?? 0)
+        let headerMaxWidth = pagesNumber * (self.config.headerItemSize.width + self.config.headerItemSpacing) - self.config.headerItemSpacing
         let margin = self.width - headerMaxWidth
         let offsetX = margin > 0 ? margin / 2 : self.config.headerItemSpacing
         return UIEdgeInsets(top: 0, left: offsetX, bottom: 0, right: self.config.headerItemSpacing)
