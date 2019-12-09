@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXReviewUnitListCell: UITableViewCell {
+class YXReviewWordListView: UITableViewCell {
 
     var selectView: UIView = {
         let view = UIView()
@@ -61,9 +61,9 @@ class YXReviewUnitListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bindData(_ model: YXReviewWordModel, isSelected: Bool) {
+    func bindData(_ model: YXReviewWordModel) {
         self.model = model
-        self.selectBarBtn.backgroundColor = isSelected ? UIColor.orange1 : UIColor.hex(0xEEEEEE)
+        self.selectBarBtn.backgroundColor = model.isSelected ? UIColor.orange1 : UIColor.hex(0xEEEEEE)
         self.titleLabel.text       = model.word
         self.descriptionLabel.text = String(format: "%@%@", model.property, model.paraphrase)
         self.statusButton.isHidden = model.isLearn

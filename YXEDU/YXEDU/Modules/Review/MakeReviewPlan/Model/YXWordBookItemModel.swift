@@ -9,53 +9,56 @@
 import Foundation
 import ObjectMapper
 
-struct YXReviewBookModel: Mappable {
+class YXReviewBookModel: Mappable {
     var list: [YXReviewWordBookItemModel] = []
     var currentModel: [YXReviewUnitModel] = []
+    var modelDict: [String:[YXReviewUnitModel]] = [:]
 
-    init?(map: Map) {}
+    required init?(map: Map) {}
 
-    mutating func mapping(map: Map) {
+    func mapping(map: Map) {
         list         <- map["list"]
         currentModel <- map["cur_words"]
     }
 }
 
-struct YXReviewWordBookItemModel: Mappable {
+class YXReviewWordBookItemModel: Mappable {
     var id: Int          = 0
     var type: Int?
     var name: String     = ""
     var wordsNumber: Int = 0
+    var isLearning       = false
 
-    init?(map: Map) {}
+    required init?(map: Map) {}
 
-    mutating func mapping(map: Map) {
+    func mapping(map: Map) {
         id          <- map["review_book_id"]
         type        <- map["review_book_type"]
         name        <- map["review_book_name"]
         wordsNumber <- map["review_book_num"]
+        isLearning  <- map["is_learning"]
     }
 }
 
-struct YXReviewUnitModel: Mappable, Equatable {
+class YXReviewUnitModel: Mappable, Equatable {
 
     var id: Int          = 0
     var name: String     = ""
     var wordsNumber: Int = 0
     var list: [YXReviewWordModel]          = []
-    var selectedWords: [YXReviewWordModel] = []
-    var isAllSelected    = false
+    var isCheckAll       = false
+    var isOpenUp         = false
 
-    init?(map: Map) {}
+    required init?(map: Map) {}
 
-    mutating func mapping(map: Map) {
+    func mapping(map: Map) {
         id          <- map["unit_id"]
         name        <- map["unit_name"]
         wordsNumber <- map["words_num"]
         list        <- map["list"]
     }
 
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    static func == (lhs: YXReviewUnitModel, rhs: YXReviewUnitModel) -> Bool {
         if lhs.id == rhs.id {
             return true
         } else {
@@ -64,16 +67,17 @@ struct YXReviewUnitModel: Mappable, Equatable {
     }
 }
 
-struct YXReviewWordModel: Mappable, Equatable {
+class YXReviewWordModel: Mappable, Equatable {
     var id: Int            = 0
     var word: String       = ""
     var property: String   = ""
     var paraphrase: String = ""
     var isLearn: Bool      = false
+    var isSelected         = false
 
-    init?(map: Map) {}
+    required init?(map: Map) {}
 
-    mutating func mapping(map: Map) {
+    func mapping(map: Map) {
         id         <- map["word_id"]
         word       <- map["word"]
         property   <- map["word_property"]
@@ -81,7 +85,7 @@ struct YXReviewWordModel: Mappable, Equatable {
         isLearn    <- map["is_learn"]
     }
 
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    static func == (lhs: YXReviewWordModel, rhs: YXReviewWordModel) -> Bool {
         if lhs.id == rhs.id {
             return true
         } else {

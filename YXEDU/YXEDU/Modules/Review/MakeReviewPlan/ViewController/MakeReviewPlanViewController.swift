@@ -14,6 +14,8 @@ protocol YXMakeReviewPlanProtocol: NSObjectProtocol {
     func openUpUnit(_ unitModel: YXReviewUnitModel)
     func closeDownUnit(_ unitModel: YXReviewUnitModel)
     func isContainUnit(_ unitModel: YXReviewUnitModel) -> Bool
+//    func checkAll(_ unitModel: YXReviewUnitModel, with bookId: Int) -> YXReviewUnitModel
+//    func uncheckAll(_ unitModel: YXReviewUnitModel, with bookId: Int) -> YXReviewUnitModel
 }
 
 class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMakeReviewPlanProtocol {
@@ -94,7 +96,15 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
     private func getData() {
         let request = YXReviewRequest.reviewBookList
         YYNetworkService.default.request(YYStructResponse<YXReviewBookModel>.self, request: request, success: { (response) in
-            self.model = response.data
+            guard var _model = response.data else {
+                return
+            }
+            _model.list.forEach { (bookModel) in
+                if bookModel.isLearning {
+                    _model.modelDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
+                }
+            }
+            self.model = _model
             self.segmentControllerView.reloadData()
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
@@ -122,11 +132,16 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
     }
     /// 自定义Content视图
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
-        guard let listModel = self.model?.currentModel else {
+        guard let model = self.model, indexPath.row < model.list.count else {
             return UIView()
         }
-        let tableView = YXReviewWordListView(listModel, frame: CGRect.zero)
+        let bookId = model.list[indexPath.row].id
+        guard let unitModelList = model.modelDict["\(bookId)"] else {
+            return UIView()
+        }
+        let tableView = YXReviewUnitListView(unitModelList, frame: CGRect.zero)
         tableView.delegate = self
+        tableView.tag = bookId
         return tableView
     }
 
@@ -156,9 +171,41 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
         }
         self.openUpUnitList.remove(at: firstIndex)
     }
-    
+
     func isContainUnit(_ unitModel: YXReviewUnitModel) -> Bool {
         self.openUpUnitList.contains(unitModel)
     }
+
+//    func checkAll(_ unitModel: YXReviewUnitModel, with bookId: Int) -> YXReviewUnitModel {
+//        print("全选")
+//        guard let model = self.model, let unitModelList = model.modelDict["\(bookId)"] else {
+//            return unitModel
+//        }
+//        for var wordModel in unitModelList[unitModel.id].list {
+//            wordModel.isSelected = true
+//        }
+//        for (index, unitModelList) in unitModelList {
+//
+//        }
+//        self.model?.modelDict.updateValue(unitModelList, forKey: "\(bookId)")
+//        return unitModelList[unitModel.id]
+//    }
+
+//    func uncheckAll(_ unitModel: YXReviewUnitModel, with bookId: Int) -> YXReviewUnitModel {
+//        print("取消全选")
+//        guard let model = self.model, let unitModelList = model.modelDict["\(bookId)"] else {
+//            return unitModel
+//        }
+//        for var wordModel in unitModelList[unitModel.id].list {
+//            wordModel.isSelected = false
+//        }
+//        self.model?.modelDict.updateValue(unitModelList, forKey: "\(bookId)")
+//        return unitModelList[unitModel.id]
+//    }
+
+    // MARK: ==== Tools ====
+//    private func getBookModel(_ unitModel: UI) {
+
+//    }
 
 }

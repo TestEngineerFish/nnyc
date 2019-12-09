@@ -8,7 +8,16 @@
 
 import UIKit
 
+protocol YXReviewUnitListHeaderProtocol: NSObjectProtocol {
+    func checkAll(_ unitModel: YXReviewUnitModel, section: Int)
+    func uncheckAll(_ unitModel: YXReviewUnitModel, section: Int)
+    func clickHeaderView(_ showList: Bool, unitModel: YXReviewUnitModel)
+}
+
 class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
+
+    var model: YXReviewUnitModel?
+    var delegate: YXReviewUnitListHeaderProtocol?
 
     var unitNameLabel: UILabel = {
         let label = UILabel()
@@ -22,15 +31,19 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
         return label
     }()
+    var checkAllButton: YXButton = {
+        let button = YXButton()
+        button.setTitle("全选", for: .normal)
+        button.setTitleColor(UIColor.orange1, for: .normal)
+        button.contentHorizontalAlignment = .right
+        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
+        return button
+    }()
     var arrowButton: YXButton = {
         let button = YXButton()
         button.setImage(UIImage(named: "unit_arrow"), for: .normal)
         return button
     }()
-
-    var model: YXReviewUnitModel?
-    // ---- 点击回调
-    var clickBlock: ((Bool) -> Void)?
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -46,10 +59,17 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     func bindData(_ model: YXReviewUnitModel) {
         self.model = model
         self.unitNameLabel.text = model.name
-        let selectedNum = "\(model.selectedWords.count)"
-        let statisticsText = String(format: "（%@/%d词）", selectedNum, model.list.count)
+        var selectedNum = 0
+        model.list.forEach { (wordModel) in
+            if wordModel.isSelected {
+                selectedNum += 1
+            }
+        }
+        let checkAllText = model.isCheckAll ? "取消全选" : "全选"
+        self.checkAllButton.setTitle(checkAllText, for: .normal)
+        let statisticsText = String(format: "（%d/%d词）", selectedNum, model.list.count)
         let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
-        attrStr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: NSRange(location: 1, length: selectedNum.count))
+        attrStr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: NSRange(location: 1, length: "\(selectedNum)".count))
         self.statisticsLabel.attributedText = attrStr
         self.setNeedsLayout()
     }
@@ -66,24 +86,67 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     }
 
     private func setSubviews() {
-        self.addSubview(unitNameLabel)
-        self.addSubview(statisticsLabel)
-        self.addSubview(arrowButton)
+        self.contentView.addSubview(unitNameLabel)
+        self.contentView.addSubview(statisticsLabel)
+        self.contentView.addSubview(checkAllButton)
+        self.contentView.addSubview(arrowButton)
 
         self.unitNameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(AdaptSize(22))
             make.centerY.equalToSuperview()
             make.width.equalTo(CGFloat.zero)
         }
+
         self.arrowButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-18))
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(18), height: AdaptSize(18)))
         }
+
+        self.checkAllButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.arrowButton.snp.left).offset(AdaptSize(-21))
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(60), height: AdaptSize(18)))
+        }
+
         self.statisticsLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.unitNameLabel.snp.right)
             make.centerY.equalToSuperview()
-            make.right.equalTo(self.arrowButton.snp.left)
+            make.right.equalTo(self.checkAllButton.snp.left).offset(AdaptSize(-5))
+        }
+
+        self.checkAllButton.addTarget(self, action: #selector(clickCheckAllBtn(_:)), for: .touchUpInside)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(clickView(_:)))
+        self.addGestureRecognizer(tap)
+    }
+
+    @objc private func clickCheckAllBtn(_ button: YXButton) {
+        guard let unitModel = self.model else {
+            return
+        }
+        unitModel.isCheckAll = !unitModel.isCheckAll
+        if unitModel.isCheckAll {
+            self.delegate?.checkAll(unitModel, section: self.tag)
+            unitModel.isOpenUp      = true
+            button.setTitle("取消全选", for: .normal)
+        } else {
+            self.delegate?.uncheckAll(unitModel, section: self.tag)
+            unitModel.isOpenUp      = false
+            button.setTitle("全选", for: .normal)
         }
     }
+
+    @objc private func clickView(_ tap: UITapGestureRecognizer) {
+        guard let view = tap.view as? YXReviewUnitListHeaderView, let unitModel = view.model else {
+            return
+        }
+        if view.arrowButton.transform == .identity {
+            self.delegate?.clickHeaderView(true, unitModel: unitModel)
+            view.arrowButton.transform = CGAffineTransform(rotationAngle: .pi)
+        } else {
+            self.delegate?.clickHeaderView(false, unitModel: unitModel)
+            view.arrowButton.transform = .identity
+        }
+    }
+
 }

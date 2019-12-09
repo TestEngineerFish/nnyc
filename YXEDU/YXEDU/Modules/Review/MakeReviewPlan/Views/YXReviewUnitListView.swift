@@ -8,24 +8,18 @@
 
 import UIKit
 
-class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, YXReviewUnitListHeaderProtocol {
 
     var tableView = UITableView()
-    var listModel: [YXReviewUnitModel]
+    var unitModelList: [YXReviewUnitModel]
     weak var delegate: YXMakeReviewPlanProtocol?
     final let kYXReviewUnitListCell       = "YXReviewUnitListCell"
     final let kYXReviewUnitListHeaderView = "YXReviewUnitListHeaderView"
 
     init(_ listModel: [YXReviewUnitModel], frame: CGRect) {
-        self.listModel = listModel
+        self.unitModelList = listModel
         super.init(frame: frame)
         self.setSubviews()
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
-    }
-
-    @objc private func pan(_ pan: UIPanGestureRecognizer) {
-
-//        self.tableView.selectRow(at: <#T##IndexPath?#>, animated: <#T##Bool#>, scrollPosition: <#T##UITableView.ScrollPosition#>)
     }
 
     required init?(coder: NSCoder) {
@@ -37,39 +31,39 @@ class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
-        self.tableView.register(YXReviewUnitListCell.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
+        self.tableView.register(YXReviewWordListView.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
         self.tableView.register(YXReviewUnitListHeaderView.classForCoder(), forHeaderFooterViewReuseIdentifier: kYXReviewUnitListHeaderView)
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
     }
 
+    // MARK: ==== Event ====
+
     // MARK: ==== UIGestureRecognizerDelegate ====
-    @objc private func tapListHeader(_ tap: UITapGestureRecognizer) {
-        guard let headerView = tap.view as? YXReviewUnitListHeaderView else {
-            return
-        }
-        if headerView.tag < self.listModel.count {
-            let unitModel = self.listModel[headerView.tag]
-            if self.delegate?.isContainUnit(unitModel) ?? false {
-                self.delegate?.closeDownUnit(unitModel)
-                headerView.arrowButton.transform = .identity
-            } else {
-                self.delegate?.openUpUnit(unitModel)
-                headerView.arrowButton.transform = CGAffineTransform(rotationAngle: .pi)
-            }
-            tableView.reloadData()
-        }
-    }
+
+//    @objc private func pan(_ pan: UIPanGestureRecognizer) {
+//        guard let cell = pan.view?.superview?.superview as? YXReviewWordListView, let model = cell.model, let indexPath = cell.indexPath else {
+//            return
+//        }
+//        if self.delegate?.isContainWord(model) ?? false {
+//            self.delegate?.unselectWord(model)
+//        } else {
+//            self.delegate?.selectedWord(model)
+//        }
+//        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//        let point = pan.translation(in: cell)
+//        print(point)
+//    }
 
     // MARK: ==== UITableViewDataSource ====
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.listModel.count
+        return self.unitModelList.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let unitModel = self.listModel[section]
+        let unitModel = self.unitModelList[section]
         if self.delegate?.isContainUnit(unitModel) ?? false {
             return unitModel.list.count
         } else {
@@ -81,7 +75,7 @@ class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         guard let headerView = view as? YXReviewUnitListHeaderView else {
             return
         }
-        let unitModel = self.listModel[section]
+        let unitModel = self.unitModelList[section]
         headerView.bindData(unitModel)
     }
 
@@ -90,24 +84,26 @@ class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             return nil
         }
         headerView.tag = section
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapListHeader(_:)))
-        headerView.addGestureRecognizer(tap)
+        headerView.delegate = self
         return headerView
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? YXReviewUnitListCell else {
+        guard let cell = cell as? YXReviewWordListView else {
             return
         }
-        let wordModel = self.listModel[indexPath.section].list[indexPath.row]
-        let isSelsected = self.delegate?.isContainWord(wordModel) ?? false
-        cell.bindData(wordModel, isSelected: isSelsected)
+        let wordModel = self.unitModelList[indexPath.section].list[indexPath.row]
+        cell.bindData(wordModel)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXReviewUnitListCell) as? YXReviewUnitListCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXReviewUnitListCell) as? YXReviewWordListView else {
             return UITableViewCell()
         }
+        cell.isUserInteractionEnabled = true
+//        cell.indexPath = indexPath
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
+//        cell.selectView.addGestureRecognizer(pan)
         return cell
     }
 
@@ -117,12 +113,37 @@ class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     // MARK: ==== UITableViewDelegate ====
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let wordModel = self.listModel[indexPath.section].list[indexPath.row]
-        if self.delegate?.isContainWord(wordModel) ?? false {
+        let wordModel = self.unitModelList[indexPath.section].list[indexPath.row]
+        if wordModel.isSelected {
             self.delegate?.unselectWord(wordModel)
         } else {
             self.delegate?.selectedWord(wordModel)
         }
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        wordModel.isSelected = !wordModel.isSelected
+        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+    }
+
+    // MARK: ==== YXReviewUnitListHeaderProtocol ====
+    func checkAll(_ unitModel: YXReviewUnitModel, section: Int) {
+        unitModel.list.forEach { (wordModel) in
+            wordModel.isSelected = true
+        }
+        self.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
+    }
+
+    func uncheckAll(_ unitModel: YXReviewUnitModel, section: Int) {
+        unitModel.list.forEach { (wordModel) in
+            wordModel.isSelected = false
+        }
+        self.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
+    }
+
+    func clickHeaderView(_ showList: Bool, unitModel model: YXReviewUnitModel) {
+        if self.delegate?.isContainUnit(model) ?? false {
+            self.delegate?.closeDownUnit(model)
+        } else {
+            self.delegate?.openUpUnit(model)
+        }
+        tableView.reloadData()
     }
 }
