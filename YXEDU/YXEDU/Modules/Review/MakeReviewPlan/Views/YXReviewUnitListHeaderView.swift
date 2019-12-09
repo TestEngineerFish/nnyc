@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXReviewUnitListHeaderView: UIView {
+class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
 
     var unitNameLabel: UILabel = {
         let label = UILabel()
@@ -28,11 +28,12 @@ class YXReviewUnitListHeaderView: UIView {
         return button
     }()
 
-    var model: YXReviewUnitModel
+    var model: YXReviewUnitModel?
+    // ---- 点击回调
+    var clickBlock: ((Bool) -> Void)?
 
-    init(_ model: YXReviewUnitModel, frame: CGRect) {
-        self.model = model
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.hex(0xF2F2F2)
         self.setSubviews()
     }
@@ -41,24 +42,37 @@ class YXReviewUnitListHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func bindData(_ model: YXReviewUnitModel) {
+        self.model = model
+        self.unitNameLabel.text = model.name
+        let selectedNum = "\(model.selectedWords.count)"
+        let statisticsText = String(format: "（%@/%d词）", selectedNum, model.list.count)
+        let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
+        attrStr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: NSRange(location: 1, length: selectedNum.count))
+        self.statisticsLabel.attributedText = attrStr
+        self.setNeedsLayout()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let model = self.model else {
+            return
+        }
+        let unitWidth = model.name.textWidth(font: self.unitNameLabel.font, height: self.height)
+        self.unitNameLabel.snp.updateConstraints { (make) in
+            make.width.equalTo(unitWidth)
+        }
+    }
+
     private func setSubviews() {
         self.addSubview(unitNameLabel)
         self.addSubview(statisticsLabel)
         self.addSubview(arrowButton)
 
-        self.unitNameLabel.text = self.model.name
-        let selectedNum = "\(self.model.selectedWords.count)"
-
-        let statisticsText = String(format: "（%@/%d词）", selectedNum, self.model.list.count)
-        let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
-        attrStr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: NSRange(location: 1, length: selectedNum.count))
-        self.statisticsLabel.attributedText = attrStr
-
-        let unitWidth = self.model.name.textWidth(font: self.unitNameLabel.font, height: self.height)
         self.unitNameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(AdaptSize(22))
             make.centerY.equalToSuperview()
-            make.width.equalTo(unitWidth)
+            make.width.equalTo(CGFloat.zero)
         }
         self.arrowButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-18))
@@ -69,21 +83,6 @@ class YXReviewUnitListHeaderView: UIView {
             make.left.equalTo(self.unitNameLabel.snp.right)
             make.centerY.equalToSuperview()
             make.right.equalTo(self.arrowButton.snp.left)
-        }
-
-        self.arrowButton.addTarget(self, action: #selector(tapButton(_:)), for: .touchUpInside)
-
-    }
-
-    // MARK: ==== Event ====
-    @objc private func tapButton(_ button: YXButton) {
-        button.isSelected = !button.isSelected
-        UIView.animate(withDuration: 0.15) {
-            if button.isSelected {
-                button.transform = CGAffineTransform(rotationAngle: .pi)
-            } else {
-                button.transform = .identity
-            }
         }
     }
 }

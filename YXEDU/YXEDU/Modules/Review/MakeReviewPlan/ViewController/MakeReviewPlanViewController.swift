@@ -10,7 +10,10 @@ import UIKit
 protocol YXMakeReviewPlanProtocol: NSObjectProtocol {
     func selectedWord(_ word: YXReviewWordModel)
     func unselectWord(_ word: YXReviewWordModel)
-    func isContionWord(_ word: YXReviewWordModel) -> Bool
+    func isContainWord(_ word: YXReviewWordModel) -> Bool
+    func openUpUnit(_ unitModel: YXReviewUnitModel)
+    func closeDownUnit(_ unitModel: YXReviewUnitModel)
+    func isContainUnit(_ unitModel: YXReviewUnitModel) -> Bool
 }
 
 class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMakeReviewPlanProtocol {
@@ -50,6 +53,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
     // ---- 数据对象
     var model: YXReviewBookModel?
     var selectedWords: [YXReviewWordModel] = []
+    var openUpUnitList: [YXReviewUnitModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +117,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
             return UIView()
         }
         let itemModel = model.list[indexPath.item]
-        let itemView  = YXWordBookItemView(itemModel, frame: CGRect.zero)
+        let itemView  = YXReviewBookItem(itemModel, frame: CGRect.zero)
         return itemView
     }
     /// 自定义Content视图
@@ -121,7 +125,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
         guard let listModel = self.model?.currentModel else {
             return UIView()
         }
-        let tableView = YXReviewUnitListView(listModel, frame: CGRect.zero)
+        let tableView = YXReviewWordListView(listModel, frame: CGRect.zero)
         tableView.delegate = self
         return tableView
     }
@@ -138,8 +142,23 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
         self.selectedWords.remove(at: firstIndex)
     }
 
-    func isContionWord(_ word: YXReviewWordModel) -> Bool {
+    func isContainWord(_ word: YXReviewWordModel) -> Bool {
         return self.selectedWords.contains(word)
+    }
+
+    func openUpUnit(_ unitModel: YXReviewUnitModel) {
+        self.openUpUnitList.append(unitModel)
+    }
+
+    func closeDownUnit(_ unitModel: YXReviewUnitModel) {
+        guard let firstIndex = self.openUpUnitList.firstIndex(of: unitModel) else {
+            return
+        }
+        self.openUpUnitList.remove(at: firstIndex)
+    }
+    
+    func isContainUnit(_ unitModel: YXReviewUnitModel) -> Bool {
+        self.openUpUnitList.contains(unitModel)
     }
 
 }

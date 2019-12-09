@@ -1,5 +1,5 @@
 //
-//  YXWordBookItemView.swift
+//  YXReviewBookItem.swift
 //  YXEDU
 //
 //  Created by 沙庭宇 on 2019/12/7.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXWordBookItemView: UIView {
+class YXReviewBookItem: UIView {
     var bookImageView = UIImageView()
     var signImageView = UIImageView()
     var numberlabel: UILabel = {

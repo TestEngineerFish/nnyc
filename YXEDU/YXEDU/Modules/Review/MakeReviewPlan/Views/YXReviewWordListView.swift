@@ -61,9 +61,9 @@ class YXReviewUnitListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bindData(_ model: YXReviewWordModel) {
+    func bindData(_ model: YXReviewWordModel, isSelected: Bool) {
         self.model = model
-        self.selectBarBtn.backgroundColor = model.isSelsected ? UIColor.orange1 : UIColor.hex(0xEEEEEE)
+        self.selectBarBtn.backgroundColor = isSelected ? UIColor.orange1 : UIColor.hex(0xEEEEEE)
         self.titleLabel.text       = model.word
         self.descriptionLabel.text = String(format: "%@%@", model.property, model.paraphrase)
         self.statusButton.isHidden = model.isLearn
@@ -89,7 +89,7 @@ class YXReviewUnitListCell: UITableViewCell {
         self.contentView.addSubview(statusButton)
 
         self.selectView.snp.makeConstraints { (make) in
-            make.left.height.equalToSuperview()
+            make.left.top.bottom.equalToSuperview()
             make.width.equalTo(AdaptSize(56))
         }
         self.selectBarBtn.snp.makeConstraints { (make) in

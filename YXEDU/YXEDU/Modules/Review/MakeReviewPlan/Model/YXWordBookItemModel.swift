@@ -37,7 +37,7 @@ struct YXReviewWordBookItemModel: Mappable {
     }
 }
 
-struct YXReviewUnitModel: Mappable {
+struct YXReviewUnitModel: Mappable, Equatable {
 
     var id: Int          = 0
     var name: String     = ""
@@ -54,6 +54,14 @@ struct YXReviewUnitModel: Mappable {
         wordsNumber <- map["words_num"]
         list        <- map["list"]
     }
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        if lhs.id == rhs.id {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 struct YXReviewWordModel: Mappable, Equatable {
@@ -62,7 +70,6 @@ struct YXReviewWordModel: Mappable, Equatable {
     var property: String   = ""
     var paraphrase: String = ""
     var isLearn: Bool      = false
-    var isSelsected        = false
 
     init?(map: Map) {}
 
@@ -73,4 +80,13 @@ struct YXReviewWordModel: Mappable, Equatable {
         paraphrase <- map["word_paraphrase"]
         isLearn    <- map["is_learn"]
     }
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        if lhs.id == rhs.id {
+            return true
+        } else {
+            return false
+        }
+    }
+
 }
