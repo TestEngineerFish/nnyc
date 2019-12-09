@@ -164,8 +164,7 @@ struct YYNetworkService {
                 x.response = response.response
                 x.request = response.request
                 success(x, (response.response?.statusCode) ?? 0)
-            case .failure(let error):
-                
+            case .failure(let error):                
                 fail(error as NSError)
             }
         }
