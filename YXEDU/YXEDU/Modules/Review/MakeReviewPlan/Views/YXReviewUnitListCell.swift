@@ -49,16 +49,36 @@ class YXReviewUnitListCell: UITableViewCell {
         return button
     }()
 
-    var model: YXReviewWordModel
-    init(_ model: YXReviewWordModel, frame: CGRect) {
-        self.model = model
-        super.init(style: .default, reuseIdentifier: nil)
+    var model: YXReviewWordModel?
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         self.setSubviews()
     }
 
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func bindData(_ model: YXReviewWordModel) {
+        self.model = model
+        self.selectBarBtn.backgroundColor = model.isSelsected ? UIColor.orange1 : UIColor.hex(0xEEEEEE)
+        self.titleLabel.text       = model.word
+        self.descriptionLabel.text = String(format: "%@%@", model.property, model.paraphrase)
+        self.statusButton.isHidden = model.isLearn
+        self.setNeedsLayout()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let model = self.model else {
+            return
+        }
+        let titleWidth = model.word.textWidth(font: self.titleLabel.font, height: AdaptSize(21))
+        self.titleLabel.snp.updateConstraints { (make) in
+            make.width.equalTo(titleWidth)
+        }
     }
 
     private func setSubviews() {
@@ -68,10 +88,6 @@ class YXReviewUnitListCell: UITableViewCell {
         self.contentView.addSubview(descriptionLabel)
         self.contentView.addSubview(statusButton)
 
-        self.titleLabel.text       = self.model.word
-        self.descriptionLabel.text = String(format: "%@%@", self.model.property, self.model.paraphrase)
-        self.statusButton.isHidden = self.model.isLearn
-
         self.selectView.snp.makeConstraints { (make) in
             make.left.height.equalToSuperview()
             make.width.equalTo(AdaptSize(56))
@@ -80,12 +96,11 @@ class YXReviewUnitListCell: UITableViewCell {
             make.center.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(16)))
         }
-        let titleWidth = self.model.word.textWidth(font: self.titleLabel.font, height: AdaptSize(21))
         self.titleLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.selectView.snp.right)
             make.top.equalToSuperview().offset(AdaptSize(9))
             make.height.equalTo(AdaptSize(21))
-            make.width.equalTo(titleWidth)
+            make.width.equalTo(CGFloat.zero)
         }
         self.descriptionLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.titleLabel.snp.bottom)
@@ -99,10 +114,5 @@ class YXReviewUnitListCell: UITableViewCell {
             make.centerY.equalTo(self.titleLabel)
             make.right.greaterThanOrEqualToSuperview().priorityHigh()
         }
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        self.selectBarBtn.backgroundColor = selected ? UIColor.orange1 : UIColor.hex(0xEEEEEE)
     }
 }

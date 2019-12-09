@@ -7,8 +7,13 @@
 //
 
 import UIKit
+protocol YXMakeReviewPlanProtocol: NSObjectProtocol {
+    func selectedWord(_ word: YXReviewWordModel)
+    func unselectWord(_ word: YXReviewWordModel)
+    func isContionWord(_ word: YXReviewWordModel) -> Bool
+}
 
-class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
+class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMakeReviewPlanProtocol {
 
     // ---- 子视图
     var segmentControllerView: BPSegmentControllerView = {
@@ -44,6 +49,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
 
     // ---- 数据对象
     var model: YXReviewBookModel?
+    var selectedWords: [YXReviewWordModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,7 +113,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
             return UIView()
         }
         let itemModel = model.list[indexPath.item]
-        let itemView = YXWordBookItemView(itemModel, frame: CGRect.zero)
+        let itemView  = YXWordBookItemView(itemModel, frame: CGRect.zero)
         return itemView
     }
     /// 自定义Content视图
@@ -116,7 +122,24 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
             return UIView()
         }
         let tableView = YXReviewUnitListView(listModel, frame: CGRect.zero)
+        tableView.delegate = self
         return tableView
+    }
+
+    // MARK: ==== YXMakeReviewPlanProtocol ====
+    func selectedWord(_ word: YXReviewWordModel) {
+        self.selectedWords.append(word)
+    }
+
+    func unselectWord(_ word: YXReviewWordModel) {
+        guard let firstIndex = self.selectedWords.firstIndex(of: word) else {
+            return
+        }
+        self.selectedWords.remove(at: firstIndex)
+    }
+
+    func isContionWord(_ word: YXReviewWordModel) -> Bool {
+        return self.selectedWords.contains(word)
     }
 
 }

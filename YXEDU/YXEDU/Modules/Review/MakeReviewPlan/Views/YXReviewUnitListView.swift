@@ -12,6 +12,8 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     var tableView = UITableView()
     var listModel: [YXReviewUnitModel]
+    weak var delegate: YXMakeReviewPlanProtocol?
+    final let kYXReviewUnitListCell = "YXReviewUnitListCell"
 
     init(_ listModel: [YXReviewUnitModel], frame: CGRect) {
         self.listModel = listModel
@@ -28,6 +30,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource {
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
+        self.tableView.register(YXReviewUnitListCell.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
@@ -50,10 +53,20 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource {
         return headerView
     }
 
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+                guard let cell = cell as? YXReviewUnitListCell else {
+            return
+        }
+        var wordModel = self.listModel[indexPath.section].list[indexPath.row]
+        wordModel.isSelsected = self.delegate?.isContionWord(wordModel) ?? false
+        cell.bindData(wordModel)
+        print(wordModel.isSelsected, "=========")
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = self.listModel[indexPath.section].list[indexPath.row]
-        let cell = YXReviewUnitListCell(model, frame: CGRect.zero)
-        cell.selectionStyle = .none
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXReviewUnitListCell) as? YXReviewUnitListCell else {
+            return UITableViewCell()
+        }
         return cell
     }
 
@@ -62,10 +75,14 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     // MARK: ==== UITableViewDelegate ====
 
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let cell = tableView.cellForRow(at: indexPath) else {
-//            return
-//        }
-//        cell.setSelected(cell.isSelected, animated: true)
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let wordModel = self.listModel[indexPath.section].list[indexPath.row]
+        if wordModel.isSelsected {
+            self.delegate?.unselectWord(wordModel)
+        } else {
+            self.delegate?.selectedWord(wordModel)
+        }
+//        self.listModel[indexPath.section].list[indexPath.row].isSelsected = !model.isSelsected
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
 }

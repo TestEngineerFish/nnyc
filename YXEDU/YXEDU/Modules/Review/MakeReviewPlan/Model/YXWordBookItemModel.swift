@@ -44,6 +44,7 @@ struct YXReviewUnitModel: Mappable {
     var wordsNumber: Int = 0
     var list: [YXReviewWordModel]          = []
     var selectedWords: [YXReviewWordModel] = []
+    var isAllSelected    = false
 
     init?(map: Map) {}
 
@@ -55,13 +56,13 @@ struct YXReviewUnitModel: Mappable {
     }
 }
 
-struct YXReviewWordModel: Mappable {
+struct YXReviewWordModel: Mappable, Equatable {
     var id: Int            = 0
     var word: String       = ""
     var property: String   = ""
     var paraphrase: String = ""
     var isLearn: Bool      = false
-
+    var isSelsected        = false
 
     init?(map: Map) {}
 
