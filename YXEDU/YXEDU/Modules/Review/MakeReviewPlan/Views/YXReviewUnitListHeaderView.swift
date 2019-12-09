@@ -35,6 +35,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.hex(0xF2F2F2)
+        self.isUserInteractionEnabled = true
         self.setSubviews()
     }
 

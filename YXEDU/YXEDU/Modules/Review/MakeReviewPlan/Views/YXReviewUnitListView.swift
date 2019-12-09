@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
+class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
 
     var tableView = UITableView()
     var listModel: [YXReviewUnitModel]
@@ -20,6 +20,12 @@ class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         self.listModel = listModel
         super.init(frame: frame)
         self.setSubviews()
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
+    }
+
+    @objc private func pan(_ pan: UIPanGestureRecognizer) {
+
+//        self.tableView.selectRow(at: <#T##IndexPath?#>, animated: <#T##Bool#>, scrollPosition: <#T##UITableView.ScrollPosition#>)
     }
 
     required init?(coder: NSCoder) {
@@ -38,16 +44,19 @@ class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    // MARK: ==== Event ====
-    @objc private func showWordsList(_ button: YXButton) {
-        if button.tag < self.listModel.count {
-            let unitModel = self.listModel[button.tag]
+    // MARK: ==== UIGestureRecognizerDelegate ====
+    @objc private func tapListHeader(_ tap: UITapGestureRecognizer) {
+        guard let headerView = tap.view as? YXReviewUnitListHeaderView else {
+            return
+        }
+        if headerView.tag < self.listModel.count {
+            let unitModel = self.listModel[headerView.tag]
             if self.delegate?.isContainUnit(unitModel) ?? false {
                 self.delegate?.closeDownUnit(unitModel)
-                button.transform = .identity
+                headerView.arrowButton.transform = .identity
             } else {
                 self.delegate?.openUpUnit(unitModel)
-                button.transform = CGAffineTransform(rotationAngle: .pi)
+                headerView.arrowButton.transform = CGAffineTransform(rotationAngle: .pi)
             }
             tableView.reloadData()
         }
@@ -80,8 +89,9 @@ class YXReviewWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: kYXReviewUnitListHeaderView) as? YXReviewUnitListHeaderView else {
             return nil
         }
-        headerView.arrowButton.tag = section
-        headerView.arrowButton.addTarget(self, action: #selector(showWordsList(_:)), for: .touchUpInside)
+        headerView.tag = section
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapListHeader(_:)))
+        headerView.addGestureRecognizer(tap)
         return headerView
     }
 
