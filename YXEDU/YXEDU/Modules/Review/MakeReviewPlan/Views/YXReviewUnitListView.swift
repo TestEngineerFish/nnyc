@@ -8,11 +8,16 @@
 
 import UIKit
 
-class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, YXReviewUnitListHeaderProtocol {
+protocol YXReviewUnitListViewProtocol: NSObjectProtocol {
+    func selectedWord(_ word: YXReviewWordModel)
+    func unselectWord(_ word: YXReviewWordModel)
+}
+
+class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, YXReviewUnitListHeaderProtocol, YXReviewSelectedWordsListViewProtocol {
 
     var tableView = UITableView()
     var unitModelList: [YXReviewUnitModel]
-    weak var delegate: YXMakeReviewPlanProtocol?
+    weak var delegate: YXReviewUnitListViewProtocol?
     final let kYXReviewUnitListCell       = "YXReviewUnitListCell"
     final let kYXReviewUnitListHeaderView = "YXReviewUnitListHeaderView"
 
@@ -64,7 +69,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let unitModel = self.unitModelList[section]
-        if self.delegate?.isContainUnit(unitModel) ?? false {
+        if unitModel.isOpenUp {
             return unitModel.list.count
         } else {
             return 0
@@ -138,12 +143,22 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         self.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
     }
 
-    func clickHeaderView(_ showList: Bool, unitModel model: YXReviewUnitModel) {
-        if self.delegate?.isContainUnit(model) ?? false {
-            self.delegate?.closeDownUnit(model)
-        } else {
-            self.delegate?.openUpUnit(model)
+    func clickHeaderView(_ section: Int) {
+        tableView.reloadSections(IndexSet(integer: section), with: .automatic)
+    }
+
+    // MARK: ==== YXReviewSelectedWordsListViewProtocol ====
+    func remove(_ word: YXReviewWordModel) {
+        if self.tag == word.bookId {
+            for (unitIndex, unitModel) in self.unitModelList.enumerated() {
+                if unitModel.id == word.unitId {
+                    guard let wordIndex = unitModel.list.firstIndex(of: word) else {
+                        return
+                    }
+                    unitModel.list[wordIndex].isSelected = false
+                    self.tableView.reloadRows(at: [IndexPath(row: wordIndex, section: unitIndex)], with: .automatic)
+                }
+            }
         }
-        tableView.reloadData()
     }
 }

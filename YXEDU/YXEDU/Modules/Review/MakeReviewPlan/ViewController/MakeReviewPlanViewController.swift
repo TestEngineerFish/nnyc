@@ -7,18 +7,9 @@
 //
 
 import UIKit
-protocol YXMakeReviewPlanProtocol: NSObjectProtocol {
-    func selectedWord(_ word: YXReviewWordModel)
-    func unselectWord(_ word: YXReviewWordModel)
-    func isContainWord(_ word: YXReviewWordModel) -> Bool
-    func openUpUnit(_ unitModel: YXReviewUnitModel)
-    func closeDownUnit(_ unitModel: YXReviewUnitModel)
-    func isContainUnit(_ unitModel: YXReviewUnitModel) -> Bool
-//    func checkAll(_ unitModel: YXReviewUnitModel, with bookId: Int) -> YXReviewUnitModel
-//    func uncheckAll(_ unitModel: YXReviewUnitModel, with bookId: Int) -> YXReviewUnitModel
-}
 
-class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMakeReviewPlanProtocol {
+
+class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
 
     // ---- 子视图
     var segmentControllerView: BPSegmentControllerView = {
@@ -33,11 +24,8 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
         let segmentControllerView = BPSegmentControllerView(config, frame: segmentFrame)
         return segmentControllerView
     }()
-    var selectedWordView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.gray1
-        return view
-    }()
+    var selectedWordsListView = YXReviewSelectedWordsListView()
+
     var makePlanButton: YXButton = {
         let button = YXButton()
         button.setTitle("创建复习计划", for: .normal)
@@ -54,8 +42,6 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
 
     // ---- 数据对象
     var model: YXReviewBookModel?
-    var selectedWords: [YXReviewWordModel] = []
-    var openUpUnitList: [YXReviewUnitModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +56,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
         self.view.addSubview(segmentControllerView)
         self.view.addSubview(bottomView)
         self.bottomView.addSubview(makePlanButton)
-        self.view.addSubview(selectedWordView)
+        self.view.addSubview(selectedWordsListView)
 
         bottomView.snp.makeConstraints { (make) in
             make.top.equalTo(segmentControllerView.snp.bottom)
@@ -83,12 +69,12 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
             make.size.equalTo(makeSize)
         }
 
-        selectedWordView.snp.makeConstraints { (make) in
+        selectedWordsListView.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-10))
-            make.size.equalTo(CGSize(width: AdaptSize(154), height: AdaptSize(54)))
+            make.size.equalTo(CGSize(width: AdaptSize(154), height: selectedWordsListView.defalutHeight))
             make.bottom.equalTo(bottomView.snp.top).offset(AdaptSize(-30))
         }
-        selectedWordView.backgroundColor = UIColor.hex(0xFFF4E9)
+
         makePlanButton.backgroundColor = UIColor.gradientColor(with: makeSize, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
         makePlanButton.layer.cornerRadius = makeSize.height / 2
     }
@@ -96,7 +82,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
     private func getData() {
         let request = YXReviewRequest.reviewBookList
         YYNetworkService.default.request(YYStructResponse<YXReviewBookModel>.self, request: request, success: { (response) in
-            guard var _model = response.data else {
+            guard let _model = response.data else {
                 return
             }
             _model.list.forEach { (bookModel) in
@@ -140,72 +126,9 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource, YXMak
             return UIView()
         }
         let tableView = YXReviewUnitListView(unitModelList, frame: CGRect.zero)
-        tableView.delegate = self
+        tableView.delegate = self.selectedWordsListView
         tableView.tag = bookId
+        self.selectedWordsListView.delegate = tableView
         return tableView
     }
-
-    // MARK: ==== YXMakeReviewPlanProtocol ====
-    func selectedWord(_ word: YXReviewWordModel) {
-        self.selectedWords.append(word)
-    }
-
-    func unselectWord(_ word: YXReviewWordModel) {
-        guard let firstIndex = self.selectedWords.firstIndex(of: word) else {
-            return
-        }
-        self.selectedWords.remove(at: firstIndex)
-    }
-
-    func isContainWord(_ word: YXReviewWordModel) -> Bool {
-        return self.selectedWords.contains(word)
-    }
-
-    func openUpUnit(_ unitModel: YXReviewUnitModel) {
-        self.openUpUnitList.append(unitModel)
-    }
-
-    func closeDownUnit(_ unitModel: YXReviewUnitModel) {
-        guard let firstIndex = self.openUpUnitList.firstIndex(of: unitModel) else {
-            return
-        }
-        self.openUpUnitList.remove(at: firstIndex)
-    }
-
-    func isContainUnit(_ unitModel: YXReviewUnitModel) -> Bool {
-        self.openUpUnitList.contains(unitModel)
-    }
-
-//    func checkAll(_ unitModel: YXReviewUnitModel, with bookId: Int) -> YXReviewUnitModel {
-//        print("全选")
-//        guard let model = self.model, let unitModelList = model.modelDict["\(bookId)"] else {
-//            return unitModel
-//        }
-//        for var wordModel in unitModelList[unitModel.id].list {
-//            wordModel.isSelected = true
-//        }
-//        for (index, unitModelList) in unitModelList {
-//
-//        }
-//        self.model?.modelDict.updateValue(unitModelList, forKey: "\(bookId)")
-//        return unitModelList[unitModel.id]
-//    }
-
-//    func uncheckAll(_ unitModel: YXReviewUnitModel, with bookId: Int) -> YXReviewUnitModel {
-//        print("取消全选")
-//        guard let model = self.model, let unitModelList = model.modelDict["\(bookId)"] else {
-//            return unitModel
-//        }
-//        for var wordModel in unitModelList[unitModel.id].list {
-//            wordModel.isSelected = false
-//        }
-//        self.model?.modelDict.updateValue(unitModelList, forKey: "\(bookId)")
-//        return unitModelList[unitModel.id]
-//    }
-
-    // MARK: ==== Tools ====
-//    private func getBookModel(_ unitModel: UI) {
-
-//    }
-
 }

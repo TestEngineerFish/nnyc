@@ -11,7 +11,7 @@ import UIKit
 protocol YXReviewUnitListHeaderProtocol: NSObjectProtocol {
     func checkAll(_ unitModel: YXReviewUnitModel, section: Int)
     func uncheckAll(_ unitModel: YXReviewUnitModel, section: Int)
-    func clickHeaderView(_ showList: Bool, unitModel: YXReviewUnitModel)
+    func clickHeaderView(_ section: Int)
 }
 
 class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
@@ -140,13 +140,13 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         guard let view = tap.view as? YXReviewUnitListHeaderView, let unitModel = view.model else {
             return
         }
-        if view.arrowButton.transform == .identity {
-            self.delegate?.clickHeaderView(true, unitModel: unitModel)
+        unitModel.isOpenUp = !unitModel.isOpenUp
+        if unitModel.isOpenUp {
             view.arrowButton.transform = CGAffineTransform(rotationAngle: .pi)
         } else {
-            self.delegate?.clickHeaderView(false, unitModel: unitModel)
             view.arrowButton.transform = .identity
         }
+        self.delegate?.clickHeaderView(self.tag)
     }
 
 }

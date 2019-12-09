@@ -25,8 +25,9 @@ class YXReviewBookModel: Mappable {
 class YXReviewWordBookItemModel: Mappable {
     var id: Int          = 0
     var type: Int?
-    var name: String     = ""
+    var name             = ""
     var wordsNumber: Int = 0
+    var versionName      = ""
     var isLearning       = false
 
     required init?(map: Map) {}
@@ -36,6 +37,7 @@ class YXReviewWordBookItemModel: Mappable {
         type        <- map["review_book_type"]
         name        <- map["review_book_name"]
         wordsNumber <- map["review_book_num"]
+        versionName <- map["review_book_ver_name"]
         isLearning  <- map["is_learning"]
     }
 }
@@ -67,21 +69,38 @@ class YXReviewUnitModel: Mappable, Equatable {
     }
 }
 
+class YXReviewParaphrase: Mappable {
+    var key   = ""
+    var value = ""
+
+    required init?(map: Map) {}
+
+    func mapping(map: Map) {
+        key   <- map["k"]
+        value <- map["v"]
+    }
+}
+
 class YXReviewWordModel: Mappable, Equatable {
+
     var id: Int            = 0
     var word: String       = ""
-    var property: String   = ""
-    var paraphrase: String = ""
+    var voiceUs: String?
+    var voiceUk: String?
+    var paraphrase: [YXReviewParaphrase] = []
     var isLearn: Bool      = false
     var isSelected         = false
+    var unitId = 0
+    var bookId = 0
 
     required init?(map: Map) {}
 
     func mapping(map: Map) {
         id         <- map["word_id"]
         word       <- map["word"]
-        property   <- map["word_property"]
-        paraphrase <- map["word_paraphrase"]
+        voiceUs    <- map["voice_us"]
+        voiceUk    <- map["voice_uk"]
+        paraphrase <- map["paraphrase"]
         isLearn    <- map["is_learn"]
     }
 

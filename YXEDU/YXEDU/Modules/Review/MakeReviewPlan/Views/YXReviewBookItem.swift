@@ -11,10 +11,11 @@ import UIKit
 class YXReviewBookItem: UIView {
     var bookImageView = UIImageView()
     var signImageView = UIImageView()
-    var numberlabel: UILabel = {
+    var infolabel: UILabel = {
         let label = UILabel()
         label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(10))
         label.textColor = UIColor.white
+        label.numberOfLines = 2
         return label
     }()
     var titleLabel: UILabel = {
@@ -35,26 +36,27 @@ class YXReviewBookItem: UIView {
 
     private func setSubviews() {
         self.addSubview(bookImageView)
-        self.addSubview(numberlabel)
+        self.addSubview(infolabel)
         self.addSubview(signImageView)
         self.addSubview(titleLabel)
 
+        let versionName = model.versionName.isEmpty ? "" : model.versionName + "\n"
         self.bookImageView.image = UIImage(named: "book_unselect")
         self.signImageView.image = UIImage(named: "unit_arrow")
-        self.numberlabel.text    = "\(self.model.wordsNumber)词"
+        self.infolabel.text      = String(format: "%@%d词", versionName, model.wordsNumber)
         self.titleLabel.text     = self.model.name
         self.titleLabel.contentMode    = .top
         self.titleLabel.numberOfLines  = 0
-        self.numberlabel.numberOfLines = 0
+        self.infolabel.numberOfLines   = 0
         self.titleLabel.textAlignment  = .center
-        self.numberlabel.textAlignment = .center
+        self.infolabel.textAlignment   = .center
 
         self.bookImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(6))
             make.size.equalTo(CGSize(width: AdaptSize(43), height: AdaptSize(49)))
         }
-        self.numberlabel.snp.makeConstraints { (make) in
+        self.infolabel.snp.makeConstraints { (make) in
             make.center.width.height.equalTo(self.bookImageView)
         }
         self.titleLabel.snp.makeConstraints { (make) in

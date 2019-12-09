@@ -63,10 +63,21 @@ class YXReviewWordListView: UITableViewCell {
 
     func bindData(_ model: YXReviewWordModel) {
         self.model = model
-        self.selectBarBtn.backgroundColor = model.isSelected ? UIColor.orange1 : UIColor.hex(0xEEEEEE)
+        if model.isSelected {
+            self.selectBarBtn.setImage(UIImage(named: "word_selected"), for: .normal)
+        } else {
+            self.selectBarBtn.setImage(nil, for: .normal)
+        }
         self.titleLabel.text       = model.word
-        self.descriptionLabel.text = String(format: "%@%@", model.property, model.paraphrase)
         self.statusButton.isHidden = model.isLearn
+        self.descriptionLabel.text = {
+            var text = ""
+            for p in model.paraphrase {
+                text.append(p.key)
+                text.append(p.value)
+            }
+            return text
+        }()
         self.setNeedsLayout()
     }
 
@@ -96,6 +107,7 @@ class YXReviewWordListView: UITableViewCell {
             make.center.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(16)))
         }
+        self.selectBarBtn.layer.cornerRadius = AdaptSize(16/2)
         self.titleLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.selectView.snp.right)
             make.top.equalToSuperview().offset(AdaptSize(9))
