@@ -8,7 +8,12 @@
 
 import UIKit
 
-class YXReviewBottomView: UIView {
+protocol YXReviewBottomViewProtocol: NSObjectProtocol {
+    func showRemind()
+    func hideRemind()
+}
+
+class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
 
     var makeButton: YXButton = {
         let button = YXButton()
@@ -61,7 +66,7 @@ class YXReviewBottomView: UIView {
         }
     }
 
-    // MARK: ==== Event ====
+    // MARK: ==== YXReviewBottomView ====
     func showRemind() {
         if self.superview != nil {
             self.remindLabel.isHidden = false
@@ -84,11 +89,5 @@ class YXReviewBottomView: UIView {
                 make.height.equalTo(CGFloat.zero)
             }
         }
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        superview?.touchesBegan(touches, with: event)
-        self.showRemind()
-        self.setNeedsLayout()
     }
 }

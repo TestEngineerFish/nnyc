@@ -48,7 +48,18 @@ class YXReviewUnitModel: Mappable, Equatable {
     var name: String     = ""
     var wordsNumber: Int = 0
     var list: [YXReviewWordModel]          = []
-    var isCheckAll       = false
+    var isCheckAll: Bool {
+        get {
+            var checkAll = true
+            for wordModel in list {
+                if !wordModel.isSelected {
+                    checkAll = false
+                    break
+                }
+            }
+            return checkAll
+        }
+    }
     var isOpenUp         = false
 
     required init?(map: Map) {}

@@ -34,9 +34,10 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        segmentControllerView.delegate = self
+        self.bindData()
         self.createSubviews()
         self.getData()
+
     }
 
     private func createSubviews() {
@@ -57,6 +58,11 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
             make.height.equalTo(selectedWordsListView.defalutHeight)
             make.bottom.equalToSuperview().offset(AdaptSize(-90))
         }
+    }
+
+    private func bindData() {
+        self.selectedWordsListView.delegateBottomView = self.bottomView
+        self.segmentControllerView.delegate = self
     }
 
     private func getData() {
@@ -106,8 +112,8 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
             return UIView()
         }
         let tableView = YXReviewUnitListView(unitModelList, frame: CGRect.zero)
+        tableView.tag      = bookId
         tableView.delegate = self.selectedWordsListView
-        tableView.tag = bookId
         self.selectedWordsListView.delegate = tableView
         return tableView
     }

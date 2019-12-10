@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol YXReviewSelectedWordsListViewProtocol {
+protocol YXReviewSelectedWordsListViewProtocol: NSObjectProtocol {
     func remove(_ word: YXReviewWordModel)
 }
 
@@ -17,9 +17,11 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
     var wordsModelList: [YXReviewWordModel] = []
     final let defalutHeight = AdaptSize(54)
     final let cellHeight    = AdaptSize(30)
+    final let maxWordsCount = 1
     final let kYXReviewSelectedWordCell = "YXReviewSelectedWordCell"
 
-    var delegate: YXReviewSelectedWordsListViewProtocol?
+    weak var delegate: YXReviewSelectedWordsListViewProtocol?
+    weak var delegateBottomView: YXReviewBottomView?
 
     var titleLabel: UILabel = {
         let label = UILabel()
@@ -75,7 +77,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(AdaptSize(10))
             make.left.right.equalToSuperview()
-            make.bottom.equalToSuperview().offset(AdaptSize(-12))
+            make.bottom.equalToSuperview().offset(AdaptSize(-12)).priorityLow()
         }
 
         self.arrowButton.addTarget(self, action: #selector(clickArrowBtn(_:)), for: .touchUpInside)
@@ -98,11 +100,9 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
 
     @objc func clickRemoveBtn(_ button: YXButton) {
         if button.tag < self.wordsModelList.count {
-            let model = self.wordsModelList[button.tag]
-            self.delegate?.remove(model)
-            self.wordsModelList.remove(at: button.tag)
-            self.tableView.reloadData()
-            self.setNeedsLayout()
+            let wordModel = self.wordsModelList[button.tag]
+            self.delegate?.remove(wordModel)
+            self.removedWord(wordModel, index: button.tag)
         }
     }
 
@@ -111,6 +111,33 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         let maxRows = self.wordsModelList.count > 5 ? 5 : self.wordsModelList.count
         let maxHeight = CGFloat(maxRows) * AdaptSize(23) + AdaptSize(10) + AdaptSize(12) + defalutHeight
         return self.wordsModelList.count > 0 ? maxHeight : defalutHeight
+    }
+
+    /// 添加单词
+    private func appendWord(_ wordModel: YXReviewWordModel) {
+        self.wordsModelList.append(wordModel)
+        if self.wordsModelList.count > maxWordsCount {
+            self.delegateBottomView?.showRemind()
+        }
+        self.setNeedsLayout()
+        self.tableView.reloadData()
+    }
+
+    /// 移除单词
+    private func removedWord(_ wordModel: YXReviewWordModel, index: Int? = nil) {
+        if let _index = index {
+            self.wordsModelList.remove(at: _index)
+        } else {
+            guard let firstIndex = self.wordsModelList.firstIndex(of: wordModel) else {
+                return
+            }
+            self.wordsModelList.remove(at: firstIndex)
+        }
+        if self.wordsModelList.count <= maxWordsCount {
+            self.delegateBottomView?.hideRemind()
+        }
+        self.setNeedsLayout()
+        self.tableView.reloadData()
     }
 
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
@@ -143,18 +170,11 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
 
     // MARK: ==== YXReviewUnitListViewProtocol ====
     func selectedWord(_ word: YXReviewWordModel) {
-        self.wordsModelList.append(word)
-        self.setNeedsLayout()
-        self.tableView.reloadData()
+        self.appendWord(word)
     }
 
     func unselectWord(_ word: YXReviewWordModel) {
-        guard let firstIndex = self.wordsModelList.firstIndex(of: word) else {
-            return
-        }
-        self.wordsModelList.remove(at: firstIndex)
-        self.setNeedsLayout()
-        self.tableView.reloadData()
+        self.removedWord(word)
     }
 
     override func layoutSubviews() {

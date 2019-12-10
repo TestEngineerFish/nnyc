@@ -169,8 +169,10 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
                     }
                     unitModel.list[wordIndex].isSelected = false
                     self.tableView.reloadData()
+                    break
                 }
             }
         }
     }
+
 }
