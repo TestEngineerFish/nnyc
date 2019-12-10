@@ -8,19 +8,19 @@
 
 import UIKit
 
-class YXReviewWordListView: UITableViewCell {
+class YXReviewWordViewCell: UITableViewCell {
 
-    var selectView: UIView = {
-        let view = UIView()
-        view.isUserInteractionEnabled = true
-        view.backgroundColor = UIColor.clear
-        return view
+    var selectBarBtn: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.clear
+        button.imageEdgeInsets = UIEdgeInsets(top: AdaptSize(22), left: AdaptSize(22), bottom: AdaptSize(22), right: AdaptSize(18))
+        return button
     }()
 
-    var selectBarBtn: YXButton = {
-        let button = YXButton()
-        button.backgroundColor = UIColor.hex(0xEEEEEE)
-        return button
+    var barImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = UIColor.hex(0xEEEEEE)
+        return imageView
     }()
 
     var titleLabel: UILabel = {
@@ -64,9 +64,9 @@ class YXReviewWordListView: UITableViewCell {
     func bindData(_ model: YXReviewWordModel) {
         self.model = model
         if model.isSelected {
-            self.selectBarBtn.setImage(UIImage(named: "word_selected"), for: .normal)
+            self.barImageView.image = UIImage(named: "word_selected")
         } else {
-            self.selectBarBtn.setImage(nil, for: .normal)
+            self.barImageView.image = nil
         }
         self.titleLabel.text       = model.word
         self.statusButton.isHidden = model.isLearn
@@ -93,30 +93,31 @@ class YXReviewWordListView: UITableViewCell {
     }
 
     private func setSubviews() {
-        self.contentView.addSubview(selectView)
-        self.selectView.addSubview(selectBarBtn)
+        self.contentView.addSubview(selectBarBtn)
+        selectBarBtn.addSubview(barImageView)
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(descriptionLabel)
         self.contentView.addSubview(statusButton)
 
-        self.selectView.snp.makeConstraints { (make) in
+        self.selectBarBtn.snp.makeConstraints { (make) in
             make.left.top.bottom.equalToSuperview()
             make.width.equalTo(AdaptSize(56))
         }
-        self.selectBarBtn.snp.makeConstraints { (make) in
+        let barSize = CGSize(width: AdaptSize(16), height: AdaptSize(16))
+        self.barImageView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(16)))
+            make.size.equalTo(barSize)
         }
-        self.selectBarBtn.layer.cornerRadius = AdaptSize(16/2)
+        self.barImageView.layer.cornerRadius = barSize.height / 2
         self.titleLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.selectView.snp.right)
+            make.left.equalTo(self.selectBarBtn.snp.right)
             make.top.equalToSuperview().offset(AdaptSize(9))
             make.height.equalTo(AdaptSize(21))
             make.width.equalTo(CGFloat.zero)
         }
         self.descriptionLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.titleLabel.snp.bottom)
-            make.left.equalTo(self.selectView.snp.right)
+            make.left.equalTo(self.selectBarBtn.snp.right)
             make.right.equalToSuperview()
             make.height.equalTo(AdaptSize(20))
         }

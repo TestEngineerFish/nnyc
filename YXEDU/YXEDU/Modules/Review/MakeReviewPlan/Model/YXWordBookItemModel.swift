@@ -71,13 +71,6 @@ class YXReviewUnitModel: Mappable {
         list        <- map["list"]
     }
 
-//    static func == (lhs: YXReviewUnitModel, rhs: YXReviewUnitModel) -> Bool {
-//        if lhs.id == rhs.id {
-//            return true
-//        } else {
-//            return false
-//        }
-//    }
 }
 
 class YXReviewParaphrase: Mappable {

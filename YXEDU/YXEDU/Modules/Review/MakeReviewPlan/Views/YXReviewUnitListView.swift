@@ -16,6 +16,9 @@ protocol YXReviewUnitListViewProtocol: NSObjectProtocol {
 class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, YXReviewUnitListHeaderProtocol, YXReviewSelectedWordsListViewProtocol {
 
     var tableView = UITableView()
+    var pan: UIPanGestureRecognizer?
+    var lastPassByIndexPath: IndexPath?
+    var previousLocation: CGPoint?
     var unitModelList: [YXReviewUnitModel]
     weak var delegate: YXReviewUnitListViewProtocol?
     final let kYXReviewUnitListCell       = "YXReviewUnitListCell"
@@ -36,8 +39,12 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
-        self.tableView.register(YXReviewWordListView.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
+        self.tableView.register(YXReviewWordViewCell.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
         self.tableView.register(YXReviewUnitListHeaderView.classForCoder(), forHeaderFooterViewReuseIdentifier: kYXReviewUnitListHeaderView)
+        pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
+        pan!.delegate = self
+        self.tableView.addGestureRecognizer(pan!)
+        self.tableView.panGestureRecognizer.require(toFail: pan!)
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
@@ -47,19 +54,53 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
 
     // MARK: ==== UIGestureRecognizerDelegate ====
 
-//    @objc private func pan(_ pan: UIPanGestureRecognizer) {
-//        guard let cell = pan.view?.superview?.superview as? YXReviewWordListView, let model = cell.model, let indexPath = cell.indexPath else {
-//            return
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let _pan = self.pan, _pan == gestureRecognizer else {
+            return true
+        }
+        let point = gestureRecognizer.location(in: self.tableView)
+        if point.x <= AdaptSize(56) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    @objc private func pan(_ pan: UIPanGestureRecognizer) {
+        if pan.state == .began {
+            self.lastPassByIndexPath = nil
+            self.previousLocation    = pan.location(in: self.tableView)
+        } else if pan.state == .changed {
+            let newLocation = pan.location(in: self.tableView)
+            self.commitNewLocation(newLocation)
+            self.previousLocation = newLocation
+        }
+    }
+
+    private func commitNewLocation(_ newLocation: CGPoint) {
+        guard let previousLocation = self.previousLocation else {
+            return
+        }
+        let offsetX = newLocation.x - previousLocation.x
+        let offsetY = newLocation.y - previousLocation.y
+//        if offsetY > offsetX {
+            guard let indexPath = self.tableView.indexPathForRow(at: newLocation) else {
+                return
+            }
+            if self.lastPassByIndexPath != indexPath {
+                self.updateWordSelectStatus(indexPath)
+                self.lastPassByIndexPath = indexPath
+            }
 //        }
-//        if self.delegate?.isContainWord(model) ?? false {
-//            self.delegate?.unselectWord(model)
-//        } else {
-//            self.delegate?.selectedWord(model)
-//        }
-//        self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//        let point = pan.translation(in: cell)
-//        print(point)
-//    }
+    }
+
+    private func updateWordSelectStatus(_ indexPath: IndexPath) {
+        guard let cell = self.tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell, let wordModel = cell.model else {
+            return
+        }
+        cell.model?.isSelected = !wordModel.isSelected
+        self.tableView.reloadRows(at: [indexPath], with: .none)
+    }
 
     // MARK: ==== UITableViewDataSource ====
 
@@ -94,7 +135,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? YXReviewWordListView else {
+        guard let cell = cell as? YXReviewWordViewCell else {
             return
         }
         let wordModel = self.unitModelList[indexPath.section].list[indexPath.row]
@@ -102,13 +143,9 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXReviewUnitListCell) as? YXReviewWordListView else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXReviewUnitListCell) as? YXReviewWordViewCell else {
             return UITableViewCell()
         }
-        cell.isUserInteractionEnabled = true
-//        cell.indexPath = indexPath
-//        let pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
-//        cell.selectView.addGestureRecognizer(pan)
         return cell
     }
 

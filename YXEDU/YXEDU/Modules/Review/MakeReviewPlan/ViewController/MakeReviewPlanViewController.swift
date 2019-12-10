@@ -128,11 +128,11 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
         }
         let bookModel = model.list[indexPath.row]
         if let unitModelList = model.modelDict["\(bookModel.id)"] {
-            let tableView = YXReviewUnitListView(unitModelList, frame: CGRect.zero)
-            tableView.tag      = bookModel.id
-            tableView.delegate = self.selectedWordsListView
-            self.selectedWordsListView.delegate = tableView
-            return tableView
+            let unitListView = YXReviewUnitListView(unitModelList, frame: CGRect.zero)
+            unitListView.tag      = bookModel.id
+            unitListView.delegate = self.selectedWordsListView
+            self.selectedWordsListView.delegate = unitListView
+            return unitListView
         } else {
             self.requestWordsList(bookModel.id, type: bookModel.type)
             return UIView()
