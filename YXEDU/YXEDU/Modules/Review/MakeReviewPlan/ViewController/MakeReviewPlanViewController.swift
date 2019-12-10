@@ -26,19 +26,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
     }()
     var selectedWordsListView = YXReviewSelectedWordsListView()
 
-    var makePlanButton: YXButton = {
-        let button = YXButton()
-        button.setTitle("创建复习计划", for: .normal)
-        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(17))
-        button.setTitleColor(UIColor.white, for: .normal)
-        return button
-    }()
-    var bottomView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        view.layer.setDefaultShadow()
-        return view
-    }()
+    var bottomView = YXReviewBottomView()
 
     // ---- 数据对象
     var model: YXReviewBookModel?
@@ -55,18 +43,12 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
         self.title = "选择单词"
         self.view.addSubview(segmentControllerView)
         self.view.addSubview(bottomView)
-        self.bottomView.addSubview(makePlanButton)
         self.view.addSubview(selectedWordsListView)
 
         bottomView.snp.makeConstraints { (make) in
-            make.top.equalTo(segmentControllerView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
-        }
-
-        let makeSize = CGSize(width: AdaptSize(226), height: AdaptSize(42))
-        makePlanButton.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.size.equalTo(makeSize)
+            make.bottom.equalToSuperview().offset(kSafeBottomMargin)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(AdaptSize(60) + kSafeBottomMargin)
         }
 
         selectedWordsListView.snp.makeConstraints { (make) in
@@ -75,9 +57,6 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
             make.height.equalTo(selectedWordsListView.defalutHeight)
             make.bottom.equalToSuperview().offset(AdaptSize(-90))
         }
-
-        makePlanButton.backgroundColor = UIColor.gradientColor(with: makeSize, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
-        makePlanButton.layer.cornerRadius = makeSize.height / 2
     }
 
     private func getData() {

@@ -44,10 +44,15 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         button.setImage(UIImage(named: "unit_arrow"), for: .normal)
         return button
     }()
+    var bottomView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.white
+        return view
+    }()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.hex(0xF2F2F2)
+        self.contentView.backgroundColor = UIColor.hex(0xF2F2F2)
         self.isUserInteractionEnabled = true
         self.setSubviews()
     }
@@ -90,7 +95,16 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         self.contentView.addSubview(statisticsLabel)
         self.contentView.addSubview(checkAllButton)
         self.contentView.addSubview(arrowButton)
+        self.addSubview(bottomView)
 
+        self.contentView.snp.remakeConstraints { (make) in
+            make.left.top.right.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
+        }
+        self.bottomView.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(AdaptSize(5))
+        }
         self.unitNameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(AdaptSize(22))
             make.centerY.equalToSuperview()
