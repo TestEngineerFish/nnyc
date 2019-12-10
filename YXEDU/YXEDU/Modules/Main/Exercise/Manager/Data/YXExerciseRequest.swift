@@ -26,9 +26,7 @@ extension YXExerciseRequest {
             return .post
         }
     }
-}
 
-extension YXExerciseRequest {
     var path: String {
         switch self {
         case .exercise:
@@ -43,9 +41,7 @@ extension YXExerciseRequest {
             return YXAPI.Word.addUserBook
         }
     }
-}
 
-extension YXExerciseRequest {
     var parameters: [String : Any?]? {
         switch self {
         case .learnMap(let bookId):
@@ -61,10 +57,7 @@ extension YXExerciseRequest {
         }
     }
     
-}
 
-
-extension YXExerciseRequest {
     var isHttpBody: Bool {
         switch self {
         case .report: return true

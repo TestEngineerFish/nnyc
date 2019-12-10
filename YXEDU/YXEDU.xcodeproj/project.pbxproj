@@ -671,6 +671,10 @@
 		EE7E1D082363679500600A88 /* YXExerciseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D072363679500600A88 /* YXExerciseConfig.swift */; };
 		EE7E1D0A236367A000600A88 /* YXExerciseHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */; };
 		EEACEB06239E62160036B3A2 /* YXReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB05239E62160036B3A2 /* YXReviewViewController.swift */; };
+		EEACEB1D239F9DA90036B3A2 /* YXReviewPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB19239F9DA90036B3A2 /* YXReviewPlanView.swift */; };
+		EEACEB1E239F9DA90036B3A2 /* YXReviewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB1A239F9DA90036B3A2 /* YXReviewHeaderView.swift */; };
+		EEACEB1F239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */; };
+		EEACEB21239F9DBA0036B3A2 /* YXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */; };
 		EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB147242372E6F400AC329C /* YYFileManager.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
@@ -1779,6 +1783,10 @@
 		EE7E1D072363679500600A88 /* YXExerciseConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseConfig.swift; sourceTree = "<group>"; };
 		EE7E1D09236367A000600A88 /* YXExerciseHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseHeaderView.swift; sourceTree = "<group>"; };
 		EEACEB05239E62160036B3A2 /* YXReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewViewController.swift; sourceTree = "<group>"; };
+		EEACEB19239F9DA90036B3A2 /* YXReviewPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewPlanView.swift; sourceTree = "<group>"; };
+		EEACEB1A239F9DA90036B3A2 /* YXReviewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewHeaderView.swift; sourceTree = "<group>"; };
+		EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewPlanTableViewCell.swift; sourceTree = "<group>"; };
+		EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXViewController.swift; sourceTree = "<group>"; };
 		EEB147242372E6F400AC329C /* YYFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYFileManager.swift; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
@@ -3228,6 +3236,7 @@
 		EE5EF13923265E2D00655654 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */,
 				EE7720FF2379333000CD632E /* YXKVOImageView.swift */,
 				EE5E025B2327793600655654 /* BSRootVC.h */,
 				EE5E025E2327793700655654 /* BSRootVC.m */,
@@ -5112,6 +5121,9 @@
 		EEACEB03239E42A60036B3A2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EEACEB1B239F9DA90036B3A2 /* Cell */,
+				EEACEB1A239F9DA90036B3A2 /* YXReviewHeaderView.swift */,
+				EEACEB19239F9DA90036B3A2 /* YXReviewPlanView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5122,6 +5134,14 @@
 				EEACEB05239E62160036B3A2 /* YXReviewViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		EEACEB1B239F9DA90036B3A2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		EEB147232372E6F400AC329C /* FileManager */ = {
@@ -5548,6 +5568,7 @@
 				EE5E021D232756BF00655654 /* TYDrawStorage.m in Sources */,
 				22298BFC237D52FC00F24786 /* YXButton.swift in Sources */,
 				EE5E027D23277D9400655654 /* YXTrace.m in Sources */,
+				EEACEB1D239F9DA90036B3A2 /* YXReviewPlanView.swift in Sources */,
 				EE5E003323274FEB00655654 /* YXWordListGuideView.m in Sources */,
 				EE54F7DA2362AA3100EC605A /* YXBaseQuestionView.swift in Sources */,
 				EE04BDBC2366C48200D6713C /* YXExcerciseProgressManager.swift in Sources */,
@@ -5823,6 +5844,7 @@
 				EE5EFD5023274F0900655654 /* YXUserRankModel.m in Sources */,
 				224A2FC6238233E100AD99B0 /* YXLearningResultHeaderView.swift in Sources */,
 				2205A93C2361C92500C6E674 /* UIFont+Extension.swift in Sources */,
+				EEACEB21239F9DBA0036B3A2 /* YXViewController.swift in Sources */,
 				EE5EFD4F23274F0900655654 /* YXRankListBaseViewController.m in Sources */,
 				EE54F7D42362AA3100EC605A /* YXRightOrWrongAnswerView.swift in Sources */,
 				EE5EF20023273BAE00655654 /* YRNetworkManager+Cache.m in Sources */,
@@ -5894,6 +5916,7 @@
 				EE5E0225232756C000655654 /* TYTextContainer+Extended.m in Sources */,
 				EE1E4A9E236948C4007D248F /* YXValidationImageAndWordExerciseView.swift in Sources */,
 				EE5E004A23274FEB00655654 /* YXWordDetailAudioCell.m in Sources */,
+				EEACEB1E239F9DA90036B3A2 /* YXReviewHeaderView.swift in Sources */,
 				EE5E003723274FEB00655654 /* YXLeftTitleButton.m in Sources */,
 				EE5E016E232754FA00655654 /* YXUserSaveTool.m in Sources */,
 				EE5E00FC23274FEC00655654 /* YXFeedBackSelectImageView.m in Sources */,
@@ -5973,6 +5996,7 @@
 				EE5E005D23274FEB00655654 /* YXGraphSelectView.m in Sources */,
 				EE5E001823274FEB00655654 /* YXWordModelManager.m in Sources */,
 				EE5E021A232756BF00655654 /* TYLinkTextStorage.m in Sources */,
+				EEACEB1F239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift in Sources */,
 				EE5E00F123274FEC00655654 /* YXBasePickverView.m in Sources */,
 				EE5E004323274FEB00655654 /* YXGraphExampleSentenceCell.m in Sources */,
 				EE5EF1FF23273BAE00655654 /* YRError.m in Sources */,

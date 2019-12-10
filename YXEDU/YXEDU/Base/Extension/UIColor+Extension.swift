@@ -116,6 +116,8 @@ public extension UIColor {
     /// 底色 #FFD086
     class var orange4: UIColor { return UIColor.hex(0xFFD086) }
     
+    /// 进度条颜色1 （复习页） #FB6817
+    class var orange5: UIColor { return UIColor.hex(0xFB6817) }
     
     /// 图片 placeholder
     class var orange7: UIColor { return UIColor.hex(0xFFF4E9) }
@@ -149,11 +151,19 @@ public extension UIColor {
 
     /// 正确颜色 0xFF532B
     class var green1: UIColor { return UIColor.hex(0x6DB353)}
-
-
+    
+    /// 进度条 绿色 #8EC292
+    class var green2: UIColor { return UIColor.hex(0x8EC292)}
+    
+    /// 进度条 蓝色 #9BB4CF
+    class var blue1: UIColor { return UIColor.hex(0x9BB4CF)}
+    
     
     /// 提示 0x888888
     class var gray1: UIColor { return UIColor.hex(0x888888) }
+    
+    /// 进度条底色 EBEBEB
+    class var gray2: UIColor { return UIColor.hex(0xEBEBEB) }
     
 }
 
