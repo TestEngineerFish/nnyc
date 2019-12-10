@@ -144,6 +144,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
             }
             // 获取自定义View,如果有的话
             if let itemSubview = self.delegate?.segment(segmentView, itemForRowAt: indexPath) {
+                _itemView.contentView.removeAllSubviews()
                 _itemView.contentView.addSubview(itemSubview)
                 itemSubview.snp.makeConstraints { (make) in
                     make.edges.equalToSuperview()
@@ -165,6 +166,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
             }
             // 获取自定义View,如果有的话
             if let contentSubview = self.delegate?.segment(segmentView, contentForRowAt: indexPath){
+                _contentView.contentView.removeAllSubviews()
                 _contentView.contentView.addSubview(contentSubview)
                 contentSubview.snp.makeConstraints { (make) in
                     make.edges.equalToSuperview()

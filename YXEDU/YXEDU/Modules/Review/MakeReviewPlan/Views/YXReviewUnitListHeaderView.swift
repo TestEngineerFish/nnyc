@@ -103,7 +103,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         }
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(AdaptSize(5))
+            make.height.equalTo(AdaptSize(5)).priorityLow()
         }
         self.unitNameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(AdaptSize(22))

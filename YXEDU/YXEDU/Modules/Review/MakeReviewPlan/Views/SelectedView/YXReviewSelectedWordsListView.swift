@@ -17,7 +17,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
     var wordsModelList: [YXReviewWordModel] = []
     final let defalutHeight = AdaptSize(54)
     final let cellHeight    = AdaptSize(30)
-    final let maxWordsCount = 1
+    final let maxWordsCount = 150
     final let kYXReviewSelectedWordCell = "YXReviewSelectedWordCell"
 
     weak var delegate: YXReviewSelectedWordsListViewProtocol?

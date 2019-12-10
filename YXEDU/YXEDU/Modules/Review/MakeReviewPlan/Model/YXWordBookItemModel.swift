@@ -24,7 +24,7 @@ class YXReviewBookModel: Mappable {
 
 class YXReviewWordBookItemModel: Mappable {
     var id: Int          = 0
-    var type: Int?
+    var type: Int        = 0
     var name             = ""
     var wordsNumber: Int = 0
     var versionName      = ""
@@ -42,7 +42,7 @@ class YXReviewWordBookItemModel: Mappable {
     }
 }
 
-class YXReviewUnitModel: Mappable, Equatable {
+class YXReviewUnitModel: Mappable {
 
     var id: Int          = 0
     var name: String     = ""
@@ -71,13 +71,13 @@ class YXReviewUnitModel: Mappable, Equatable {
         list        <- map["list"]
     }
 
-    static func == (lhs: YXReviewUnitModel, rhs: YXReviewUnitModel) -> Bool {
-        if lhs.id == rhs.id {
-            return true
-        } else {
-            return false
-        }
-    }
+//    static func == (lhs: YXReviewUnitModel, rhs: YXReviewUnitModel) -> Bool {
+//        if lhs.id == rhs.id {
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
 }
 
 class YXReviewParaphrase: Mappable {

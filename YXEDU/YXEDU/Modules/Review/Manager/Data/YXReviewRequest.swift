@@ -8,12 +8,13 @@
 
 public enum YXReviewRequest: YYBaseRequest {
     case reviewBookList
+    case reviewWordList(bookId: Int, bookType: Int)
 }
 
 extension YXReviewRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .reviewBookList:
+        case .reviewBookList, .reviewWordList:
             return .get
         }
     }
@@ -24,6 +25,8 @@ extension YXReviewRequest {
         switch self {
         case .reviewBookList:
             return YXAPI.Review.reviewBookList
+        case .reviewWordList:
+            return YXAPI.Review.reviewWordList
         }
     }
 }
@@ -33,6 +36,8 @@ extension YXReviewRequest {
         switch self {
         case .reviewBookList:
             return nil
+        case .reviewWordList(let bookId, let bookType):
+            return ["review_book_id" : bookId, "review_book_type" : bookType]
         }
     }
 }
