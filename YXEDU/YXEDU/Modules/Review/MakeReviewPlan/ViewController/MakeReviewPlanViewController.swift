@@ -71,8 +71,9 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
 
         selectedWordsListView.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-10))
-            make.size.equalTo(CGSize(width: AdaptSize(154), height: selectedWordsListView.defalutHeight))
-            make.bottom.equalTo(bottomView.snp.top).offset(AdaptSize(-30))
+            make.width.equalTo(AdaptSize(155))
+            make.height.equalTo(selectedWordsListView.defalutHeight)
+            make.bottom.equalToSuperview().offset(AdaptSize(-90))
         }
 
         makePlanButton.backgroundColor = UIColor.gradientColor(with: makeSize, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)

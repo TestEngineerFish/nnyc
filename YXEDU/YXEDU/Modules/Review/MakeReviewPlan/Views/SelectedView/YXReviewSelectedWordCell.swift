@@ -13,6 +13,7 @@ class YXReviewSelectedWordCell: UITableViewCell {
     var removeButton: YXButton = {
         let button = YXButton()
         button.setImage(UIImage(named: "word_delete"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         return button
     }()
 
@@ -34,6 +35,9 @@ class YXReviewSelectedWordCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle  = .none
+        self.backgroundColor = UIColor.clear
+        self.contentView.backgroundColor = UIColor.clear
         self.setSubviews()
     }
 
@@ -49,21 +53,30 @@ class YXReviewSelectedWordCell: UITableViewCell {
         removeButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(AdaptSize(20))
-            make.size.equalTo(CGSize(width: AdaptSize(8), height: AdaptSize(8)))
+            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
         }
 
         wordLabel.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
             make.left.equalTo(removeButton.snp.right).offset(AdaptSize(6))
             make.right.equalTo(paraphraseLabel.snp.left).offset(AdaptSize(-12))
             make.height.equalToSuperview()
         }
 
         paraphraseLabel.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            make.height.equalToSuperview()
             make.right.greaterThanOrEqualToSuperview().offset(AdaptSize(-15)).priorityHigh()
         }
     }
 
+    func bindData(_ wordModel: YXReviewWordModel) {
+        self.wordLabel.text = wordModel.word
+        self.paraphraseLabel.text = {
+            var paraphrase = ""
+            wordModel.paraphrase.forEach { (p) in
+                paraphrase.append(p.key)
+            }
+            return paraphrase
+        }()
+    }
 
 }

@@ -127,11 +127,9 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         unitModel.isCheckAll = !unitModel.isCheckAll
         if unitModel.isCheckAll {
             self.delegate?.checkAll(unitModel, section: self.tag)
-            unitModel.isOpenUp      = true
             button.setTitle("取消全选", for: .normal)
         } else {
             self.delegate?.uncheckAll(unitModel, section: self.tag)
-            unitModel.isOpenUp      = false
             button.setTitle("全选", for: .normal)
         }
     }

@@ -15,8 +15,8 @@ protocol YXReviewSelectedWordsListViewProtocol {
 class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewDelegate, YXReviewUnitListViewProtocol {
 
     var wordsModelList: [YXReviewWordModel] = []
-    final let defalutHeight = AdaptSize(51)
-    final let cellHeight    = AdaptSize(23)
+    final let defalutHeight = AdaptSize(54)
+    final let cellHeight    = AdaptSize(30)
     final let kYXReviewSelectedWordCell = "YXReviewSelectedWordCell"
 
     var delegate: YXReviewSelectedWordsListViewProtocol?
@@ -28,9 +28,10 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         label.textAlignment = .left
         return label
     }()
-    var arrowButton: YXButton = {
-        let button = YXButton()
+    var arrowButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "arrow_select"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         return button
     }()
 
@@ -43,6 +44,8 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         self.layer.cornerRadius   = AdaptSize(6)
         self.tableView.delegate   = self
         self.tableView.dataSource = self
+        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.separatorInset  = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
         self.tableView.register(YXReviewSelectedWordCell.classForCoder(), forCellReuseIdentifier: kYXReviewSelectedWordCell)
         self.setSubviews()
     }
@@ -57,9 +60,9 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         self.addSubview(tableView)
 
         arrowButton.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(AdaptSize(-26))
+            make.right.equalToSuperview().offset(AdaptSize(-5))
             make.centerY.equalTo(titleLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(15), height: AdaptSize(5)))
+            make.size.equalTo(CGSize(width: AdaptSize(25), height: AdaptSize(18)))
         }
 
         titleLabel.snp.makeConstraints { (make) in
@@ -72,24 +75,24 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(AdaptSize(10))
             make.left.right.equalToSuperview()
-            make.bottom.equalToSuperview().offset(AdaptSize(12))
+            make.bottom.equalToSuperview().offset(AdaptSize(-12))
         }
 
         self.arrowButton.addTarget(self, action: #selector(clickArrowBtn(_:)), for: .touchUpInside)
     }
 
     // MARK: ==== Event ====
-    @objc func clickArrowBtn(_ button: YXButton) {
-        button.isSelected = !button.isSelected
-        if button.isSelected {
-            let h = CGFloat(self.wordsModelList.count) * AdaptSize(23) + AdaptSize(10)
-            UIView.animate(withDuration: 0.25) {
-                self.height = h
-            }
+    @objc func clickArrowBtn(_ button: UIButton) {
+        var h = CGFloat.zero
+        if button.transform == .identity {
+            h = self.getMaxHeight()
+            button.transform = CGAffineTransform(rotationAngle: .pi)
         } else {
-            UIView.animate(withDuration: 0.25) {
-                self.height = self.defalutHeight
-            }
+            h = self.defalutHeight
+            button.transform = .identity
+        }
+        self.snp.updateConstraints { (make) in
+            make.height.equalTo(h)
         }
     }
 
@@ -97,7 +100,17 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         if button.tag < self.wordsModelList.count {
             let model = self.wordsModelList[button.tag]
             self.delegate?.remove(model)
+            self.wordsModelList.remove(at: button.tag)
+            self.tableView.reloadData()
+            self.setNeedsLayout()
         }
+    }
+
+    // MARK: ==== Tools ====
+    private func getMaxHeight() -> CGFloat {
+        let maxRows = self.wordsModelList.count > 5 ? 5 : self.wordsModelList.count
+        let maxHeight = CGFloat(maxRows) * AdaptSize(23) + AdaptSize(10) + AdaptSize(12) + defalutHeight
+        return self.wordsModelList.count > 0 ? maxHeight : defalutHeight
     }
 
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
@@ -106,13 +119,21 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         return wordsModelList.count
     }
 
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? YXReviewSelectedWordCell else {
+            return
+        }
+        let wordModel = self.wordsModelList[indexPath.row]
+        cell.bindData(wordModel)
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXReviewSelectedWordCell) as? YXReviewSelectedWordCell else {
             return UITableViewCell()
         }
         cell.removeButton.tag = indexPath.row
-        cell.removeButton.addTarget(self, action: #selector(clickArrowBtn(_:)), for: .touchUpInside)
-        return UITableViewCell()
+        cell.removeButton.addTarget(self, action: #selector(clickRemoveBtn(_:)), for: .touchUpInside)
+        return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -139,6 +160,16 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
     override func layoutSubviews() {
         super.layoutSubviews()
         self.titleLabel.text = String(format: "%@%d", "已选择：", self.wordsModelList.count)
-        self.height = CGFloat(self.wordsModelList.count) * AdaptSize(23) + AdaptSize(10) + defalutHeight
+        if self.arrowButton.transform != .identity {
+            let h = self.getMaxHeight()
+            if self.superview != nil {
+                self.snp.updateConstraints { (make) in
+                    make.height.equalTo(AdaptSize(h))
+                }
+            }
+            if self.wordsModelList.isEmpty {
+                self.arrowButton.transform = .identity
+            }
+        }
     }
 }
