@@ -62,18 +62,16 @@ class YXUserModel: NSObject {
     }
     
     var username: String? {
-        willSet {
-            YYCache.set(newValue, forKey: "UserName")
+        didSet {
+            YYCache.set(username, forKey: "UserName")
         }
     }
     
     var userAvatarPath: String? {
-        willSet {
-            YYCache.set(newValue, forKey: "UserAvatarPath")
+        didSet {
+            YYCache.set(userAvatarPath, forKey: "UserAvatarPath")
         }
     }
-
-    var integral: Int?
 
     func login() {
         let storyboard = UIStoryboard(name:"Main", bundle: nil)

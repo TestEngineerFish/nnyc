@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXWordDetailHeaderView: UIView {
+class YXWordDetailFeaturedSectionFooterView: UIView {
     var shouldShowExpand = false {
         didSet {
             if shouldShowExpand {
@@ -33,18 +33,13 @@ class YXWordDetailHeaderView: UIView {
     }
     
     var expandClosure: (() -> Void)?
-
-    private var headerTitle: String = ""
-
+    
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var expandButton: UIButton!
     @IBOutlet weak var expandstateIcon: UIImageView!
-    
-    init(headerTitle: String) {
-        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 54))
-        self.headerTitle = headerTitle
-        
+
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 16))
         initializationFromNib()
     }
     
@@ -54,11 +49,9 @@ class YXWordDetailHeaderView: UIView {
     }
     
     private func initializationFromNib() {
-        Bundle.main.loadNibNamed("YXWordDetailHeaderView", owner: self, options: nil)
+        Bundle.main.loadNibNamed("YXWordDetailFeaturedSectionFooterView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.bounds
-        
-        headerLabel.text = headerTitle
+        contentView.frame = self.frame
     }
     
     @IBAction func expand(_ sender: Any) {

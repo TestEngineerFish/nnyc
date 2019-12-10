@@ -6,10 +6,10 @@
 //  Copyright © 2019年 shiji. All rights reserved.
 //
 
-#import "YXWordListView.h"
+#import "YXWordListViewOld.h"
 #import "YXMyWordBookCell.h"
 
-@implementation YXWordListView
+@implementation YXWordListViewOld
 //- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 //    UIView *view = [super hitTest:point withEvent:event];
 //    if (self.manageState) {

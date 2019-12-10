@@ -9,8 +9,17 @@
 import UIKit
 
 class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource {
+    private enum SectionType: String {
+        case deformation = "单词变形"
+        case examples = "例句"
+        case featured = "念念精选"
+        case synonym = "同义词"
+        case antonym = "反义词"
+    }
+    
     private var word: YXWordModel!
-    private var partsOfWord: [[String: Any]] = [["例句": ""]]
+    private var sections: [[String: Any]] = []
+    private var sectionExpandStatus: [Bool] = []
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var wordLabel: UILabel!
@@ -65,51 +74,91 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         addSubview(contentView)
         contentView.frame = self.bounds
         
+        tableView.register(UINib(nibName: "YXWordDetailExampleCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailExampleCell")
+        tableView.register(UINib(nibName: "YXWordDetailClassicCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailClassicCell")
+
         wordLabel.text = word.word
 
         phoneticSymbolLabel.text = word.soundmark
 
-        if let partOfSpeech = word.partOfSpeech, let meaning = word.meaning {
-            partOfSpeechAndSenseLabel.text = partOfSpeech + meaning
+        if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
+            var text = ""
+
+            for index in 0..<partOfSpeechAndMeanings.count {
+                guard let partOfSpeech = partOfSpeechAndMeanings[index].partOfSpeech, let meaning = partOfSpeechAndMeanings[index].meaning else { continue }
+                
+                if index == 0 {
+                    text = partOfSpeech + meaning
+                    
+                } else {
+                    text = "/n" + partOfSpeech + meaning
+                }
+            }
+            
+            partOfSpeechAndSenseLabel.text = text
         }
         
         if let imageUrl = word.imageUrl {
             imageView.sd_setImage(with: URL(string: imageUrl), completed: nil)
         }
                 
-        if let usage = word.usages, usage.count > 0 {
-            partsOfWord.append(["常用用法": usage])
+        if let deformations = word.deformations, deformations.count > 0 {
+            sections.append([SectionType.deformation.rawValue: deformations])
+            sectionExpandStatus.append(false)
         }
         
-        if let synonym = word.synonym, synonym.isEmpty == false  {
-            partsOfWord.append(["同义词": synonym])
+        if let examples = word.examples, examples.count > 0 {
+            sections.append([SectionType.examples.rawValue: examples])
+            sectionExpandStatus.append(true)
         }
         
-        if let antonym = word.antonym, antonym.isEmpty == false  {
-            partsOfWord.append(["反义词": antonym])
+        if (word.fixedMatchs?.count ?? 0) > 0 || (word.commonPhrases?.count ?? 0) > 0 || (word.wordAnalysis?.count ?? 0) > 0 || (word.detailedSyntaxs?.count ?? 0) > 0 {
+            sections.append([SectionType.featured.rawValue: []])
+            sectionExpandStatus.append(true)
         }
         
-        if let testCenter = word.testCenter, testCenter.isEmpty == false {
-            partsOfWord.append(["考点": testCenter])
+        if let synonyms = word.synonyms, synonyms.count > 0 {
+            sections.append([SectionType.synonym.rawValue: synonyms])
+            sectionExpandStatus.append(true)
         }
         
-        if let deformation = word.deformation, deformation.isEmpty == false {
-            partsOfWord.append(["联想": deformation])
+        if let antonyms = word.antonyms, antonyms.count > 0 {
+            sections.append([SectionType.antonym.rawValue: antonyms])
+            sectionExpandStatus.append(true)
         }
         
-        tableView.register(UINib(nibName: "YXWordDetialCell", bundle: nil), forCellReuseIdentifier: "YXWordDetialCell")
     }
     
     
     
     // MARK: -
     func numberOfSections(in tableView: UITableView) -> Int {
-        return partsOfWord.count
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let boundsOfTableHeaderView = CGRect(x: 0, y: 0, width: screenWidth, height: 54)
-        return YXWordDetailHeaderView(frame: boundsOfTableHeaderView, headerTitle: partsOfWord[section].keys.first!)
+        let scetionType = sections[section].keys.first
+        
+        if scetionType == SectionType.featured.rawValue {
+            return UIView()
+            
+        } else {
+            let view = YXWordDetailHeaderView(headerTitle: scetionType ?? "")
+            
+            if scetionType == SectionType.deformation.rawValue {
+                view.shouldShowExpand = true
+                view.isExpand = sectionExpandStatus[section]
+                view.expandClosure = {
+                    self.sectionExpandStatus[section] = !self.sectionExpandStatus[section]
+                    self.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
+                }
+                
+            } else {
+                view.shouldShowExpand = false
+            }
+            
+            return view
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -117,48 +166,69 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let strings = partsOfWord[section].values.first as? [String], strings.count > 1 {
-            return strings.count
+        let sectionExpandState = sectionExpandStatus[section]
+
+        let section = sections[section]
+        guard let sectionContent = section.values.first as? [Any] else { return 0 }
+
+        switch section.keys.first {
+        case SectionType.deformation.rawValue:
+            if sectionExpandState {
+                return sectionContent.count
+                
+            } else {
+                return 0
+            }
             
-        } else {
+        case SectionType.examples.rawValue:
+            return sectionContent.count
+            
+        case SectionType.featured.rawValue:
             return 1
+            
+        case SectionType.synonym.rawValue:
+            return sectionContent.count
+            
+        case SectionType.antonym.rawValue:
+            return sectionContent.count
+            
+        default:
+            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetialCell", for: indexPath) as! YXWordDetialCell
-      
-        if indexPath.section == 0 {
-            if let englishExampleAttributedString = word.englishExampleAttributedString, let chineseExample = word.chineseExample {
-                let attributedString = NSMutableAttributedString(attributedString: englishExampleAttributedString)
-                attributedString.append(NSAttributedString(string: "\n"))
-                
-                let chineseExampleAttributedString = NSMutableAttributedString(string: chineseExample)
-                chineseExampleAttributedString.addAttribute(.foregroundColor, value: UIColor.hex(0x4F4F4F), range: NSRange(location: 0, length: chineseExample.count))
-                attributedString.append(chineseExampleAttributedString)
+        let section = sections[indexPath.section]
 
-                cell.label.attributedText = attributedString
-            }
+        switch section.keys.first {
+        case SectionType.deformation.rawValue:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as! YXWordDetailClassicCell
+            return cell
             
-            if let pronunciationUrl = word.examplePronunciation {
-                cell.pronunciationUrl = URL(string: pronunciationUrl)
-                cell.playAuoidButton.isHidden = false
-                
-            } else {
-                cell.playAuoidButton.isHidden = true
-            }
+        case SectionType.examples.rawValue:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailExampleCell", for: indexPath) as! YXWordDetailExampleCell
+            return cell
             
-        } else {
-            if let strings = partsOfWord[indexPath.section].values.first as? [String], strings.count > 0 {
-                cell.label.text = strings[indexPath.row]
-                
-            } else if let string = partsOfWord[indexPath.section].values.first as? String {
-                cell.label.text = string
-            }
-
-            cell.playAuoidButton.isHidden = true
+        case SectionType.featured.rawValue:
+            let cell = UITableViewCell()
+            let view = YXWordDetailFeaturedView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: cell.height), word: word)
+//            view.heightChangeClosure = { height in
+//                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//            }
+            
+            cell.contentView.addSubview(view)
+            return cell
+            
+        case SectionType.synonym.rawValue:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as! YXWordDetailClassicCell
+            return cell
+            
+        case SectionType.antonym.rawValue:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as! YXWordDetailClassicCell
+            return cell
+            
+        default:
+            return UITableViewCell()
         }
-        
-        return cell
     }
 }

@@ -90,6 +90,11 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let wordBook = wordBookModels[index]
             guard wordBook.isSelected else { continue }
             
+            guard index != 0 else {
+                self.navigationController?.popViewController(animated: true)
+                return
+            }
+            
             YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBookStateModels.bookId ?? 0)", "unit_id": "\(wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
                 guard let self = self, isSuccess else { return }
 
@@ -97,7 +102,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
                         guard isSuccess else { return }
                         DispatchQueue.main.async {
-                            self.navigationController?.popToRootViewController(animated: true)
+                            self.navigationController?.popViewController(animated: true)
                         }
                     }
                 }
@@ -147,13 +152,11 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         if wordBook.isCurrentStudy {
             deleteWordBookButton.isHidden = true
             distanceOfDownloadButtonBetweenLeft.constant = 12
-            startStudyButton.isUserInteractionEnabled = false
             startStudyButton.setTitle("继续学习", for: .normal)
             
         } else {
             deleteWordBookButton.isHidden = false
             distanceOfDownloadButtonBetweenLeft.constant = 84
-            startStudyButton.isUserInteractionEnabled = true
             startStudyButton.setTitle("开始学习", for: .normal)
         }
         

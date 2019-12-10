@@ -60,25 +60,32 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     
     func insertWord(word: YXWordModel, completion: finishBlock? = nil) {
         let sql = YYSQLManager.WordBookSQL.insertWord.rawValue
-        let usagesData: Data! = try? JSONSerialization.data(withJSONObject: word.usages ?? [])
-        
+        let partOfSpeechAndMeaningsData: Data! = try? JSONSerialization.data(withJSONObject: word.partOfSpeechAndMeanings ?? [])
+        let deformationsData: Data! = try? JSONSerialization.data(withJSONObject: word.deformations ?? [])
+        let examplessData: Data! = try? JSONSerialization.data(withJSONObject: word.examples ?? [])
+        let fixedMatchsData: Data! = try? JSONSerialization.data(withJSONObject: word.fixedMatchs ?? [])
+        let commonPhrasesData: Data! = try? JSONSerialization.data(withJSONObject: word.commonPhrases ?? [])
+        let wordAnalysisData: Data! = try? JSONSerialization.data(withJSONObject: word.wordAnalysis ?? [])
+        let detailedSyntaxsData: Data! = try? JSONSerialization.data(withJSONObject: word.detailedSyntaxs ?? [])
+        let synonymsData: Data! = try? JSONSerialization.data(withJSONObject: word.synonyms ?? [])
+        let antonymsData: Data! = try? JSONSerialization.data(withJSONObject: word.antonyms ?? [])
+
         let params: [Any?] = [word.wordId,
                               word.word,
-                              word.partOfSpeech,
-                              word.meaning,
+                              String(data: partOfSpeechAndMeaningsData!, encoding: .utf8),
                               word.imageUrl,
                               word.englishPhoneticSymbol,
                               word.americanPhoneticSymbol,
                               word.englishPronunciation,
                               word.americanPronunciation,
-                              word.englishExample,
-                              word.chineseExample,
-                              word.examplePronunciation,
-                              String(data: usagesData!, encoding: .utf8),
-                              word.synonym,
-                              word.antonym,
-                              word.testCenter,
-                              word.deformation,
+                              String(data: deformationsData!, encoding: .utf8),
+                              String(data: examplessData!, encoding: .utf8),
+                              String(data: fixedMatchsData!, encoding: .utf8),
+                              String(data: commonPhrasesData!, encoding: .utf8),
+                              String(data: wordAnalysisData!, encoding: .utf8),
+                              String(data: detailedSyntaxsData!, encoding: .utf8),
+                              String(data: synonymsData!, encoding: .utf8),
+                              String(data: antonymsData!, encoding: .utf8),
                               word.gradeId,
                               word.gardeType,
                               word.bookId,
@@ -97,28 +104,35 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         let params: [Any] = [wordId]
         
         self.wordRunnerQueue.inDatabase { (db) in
-            let result = db.executeQuery(sql, withArgumentsIn: params)
-            let usagesData: Data! = (result?.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
-
             var word = YXWordModel()
+
+            let result = db.executeQuery(sql, withArgumentsIn: params)
+            let partOfSpeechAndMeaningsData: Data! = (result?.string(forColumn: "partOfSpeechAndMeanings") ?? "[]").data(using: .utf8)!
+            let deformationsData: Data! = (result?.string(forColumn: "deformations") ?? "[]").data(using: .utf8)!
+            let examplessData: Data! = (result?.string(forColumn: "examples") ?? "[]").data(using: .utf8)!
+            let fixedMatchsData: Data! = (result?.string(forColumn: "fixedMatchs") ?? "[]").data(using: .utf8)!
+            let commonPhrasesData: Data! = (result?.string(forColumn: "commonPhrases") ?? "[]").data(using: .utf8)!
+            let wordAnalysisData: Data! = (result?.string(forColumn: "wordAnalysis") ?? "[]").data(using: .utf8)!
+            let detailedSyntaxsData: Data! = (result?.string(forColumn: "detailedSyntaxs") ?? "[]").data(using: .utf8)!
+            let synonymsData: Data! = (result?.string(forColumn: "synonyms") ?? "[]").data(using: .utf8)!
+            let antonymsData: Data! = (result?.string(forColumn: "antonyms") ?? "[]").data(using: .utf8)!
             
             word.wordId = Int(result?.int(forColumn: "wordId") ?? 0)
             word.word = result?.string(forColumn: "word")
-            word.partOfSpeech = result?.string(forColumn: "partOfSpeech")
-            word.meaning = result?.string(forColumn: "meaning")
+            word.partOfSpeechAndMeanings = try? (JSONSerialization.jsonObject(with: partOfSpeechAndMeaningsData, options: .mutableContainers) as! [YXWordPartOfSpeechAndMeaningModel])
             word.imageUrl = result?.string(forColumn: "imageUrl")
             word.americanPhoneticSymbol = result?.string(forColumn: "americanPhoneticSymbol")
             word.englishPhoneticSymbol = result?.string(forColumn: "englishPhoneticSymbol")
             word.americanPronunciation = result?.string(forColumn: "americanPronunciation")
             word.englishPronunciation = result?.string(forColumn: "englishPronunciation")
-            word.englishExample = result?.string(forColumn: "englishExample")
-            word.chineseExample = result?.string(forColumn: "chineseExample")
-            word.examplePronunciation = result?.string(forColumn: "examplePronunciation")
-            word.usages = try? (JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as! [String])
-            word.synonym = result?.string(forColumn: "synonym")
-            word.antonym = result?.string(forColumn: "antonym")
-            word.testCenter = result?.string(forColumn: "testCenter")
-            word.deformation = result?.string(forColumn: "deformation")
+            word.deformations = try? (JSONSerialization.jsonObject(with: deformationsData, options: .mutableContainers) as! [YXWordDeformationModel])
+            word.examples = try? (JSONSerialization.jsonObject(with: examplessData, options: .mutableContainers) as! [YXWordExampleModel])
+            word.fixedMatchs = try? (JSONSerialization.jsonObject(with: fixedMatchsData, options: .mutableContainers) as! [YXWordFixedMatchModel])
+            word.commonPhrases = try? (JSONSerialization.jsonObject(with: commonPhrasesData, options: .mutableContainers) as! [YXWordCommonPhrasesModel])
+            word.wordAnalysis = try? (JSONSerialization.jsonObject(with: wordAnalysisData, options: .mutableContainers) as! [YXWordAnalysisModel])
+            word.detailedSyntaxs = try? (JSONSerialization.jsonObject(with: detailedSyntaxsData, options: .mutableContainers) as! [YXWordDetailedSyntaxModel])
+            word.synonyms = try? (JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers) as! [String])
+            word.antonyms = try? (JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers) as! [String])
             word.gradeId = Int(result?.int(forColumn: "gradeId") ?? 0)
             word.gardeType = Int(result?.int(forColumn: "gardeType") ?? 0)
             word.bookId = Int(result?.int(forColumn: "bookId") ?? 0)
@@ -143,31 +157,40 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
         while result.next() {
             var word = YXWordModel()
-            let usagesData: Data! = (result.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
-            word.wordId       = Int(result.int(forColumn: "wordId"))
-            word.word         = result.string(forColumn: "word")
-            word.partOfSpeech = result.string(forColumn: "partOfSpeech")
-            word.meaning      = result.string(forColumn: "meaning")
-            word.imageUrl     = result.string(forColumn: "imageUrl")
+            
+            let partOfSpeechAndMeaningsData: Data! = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]").data(using: .utf8)!
+            let deformationsData: Data! = (result.string(forColumn: "deformations") ?? "[]").data(using: .utf8)!
+            let examplessData: Data! = (result.string(forColumn: "examples") ?? "[]").data(using: .utf8)!
+            let fixedMatchsData: Data! = (result.string(forColumn: "fixedMatchs") ?? "[]").data(using: .utf8)!
+            let commonPhrasesData: Data! = (result.string(forColumn: "commonPhrases") ?? "[]").data(using: .utf8)!
+            let wordAnalysisData: Data! = (result.string(forColumn: "wordAnalysis") ?? "[]").data(using: .utf8)!
+            let detailedSyntaxsData: Data! = (result.string(forColumn: "detailedSyntaxs") ?? "[]").data(using: .utf8)!
+            let synonymsData: Data! = (result.string(forColumn: "synonyms") ?? "[]").data(using: .utf8)!
+            let antonymsData: Data! = (result.string(forColumn: "antonyms") ?? "[]").data(using: .utf8)!
+            
+            word.wordId = Int(result.int(forColumn: "wordId"))
+            word.word = result.string(forColumn: "word")
+            word.partOfSpeechAndMeanings = try? (JSONSerialization.jsonObject(with: partOfSpeechAndMeaningsData, options: .mutableContainers) as! [YXWordPartOfSpeechAndMeaningModel])
+            word.imageUrl = result.string(forColumn: "imageUrl")
             word.americanPhoneticSymbol = result.string(forColumn: "americanPhoneticSymbol")
-            word.englishPhoneticSymbol  = result.string(forColumn: "englishPhoneticSymbol")
-            word.americanPronunciation  = result.string(forColumn: "americanPronunciation")
-            word.englishPronunciation   = result.string(forColumn: "englishPronunciation")
-            word.englishExample = result.string(forColumn: "englishExample")
-            word.chineseExample = result.string(forColumn: "chineseExample")
-            word.examplePronunciation = result.string(forColumn: "examplePronunciation")
-            word.usages      = try? JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as? [String] ?? []
-            word.synonym     = result.string(forColumn: "synonym")
-            word.antonym     = result.string(forColumn: "antonym")
-            word.testCenter  = result.string(forColumn: "testCenter")
-            word.deformation = result.string(forColumn: "deformation")
-            word.gradeId     = Int(result.int(forColumn: "gradeId") )
-            word.gardeType   = Int(result.int(forColumn: "gardeType") )
-            word.bookId      = Int(result.int(forColumn: "bookId") )
-            word.unitId      = Int(result.int(forColumn: "unitId") )
-            word.unitName    = result.string(forColumn: "unitName")
+            word.englishPhoneticSymbol = result.string(forColumn: "englishPhoneticSymbol")
+            word.americanPronunciation = result.string(forColumn: "americanPronunciation")
+            word.englishPronunciation = result.string(forColumn: "englishPronunciation")
+            word.deformations = try? (JSONSerialization.jsonObject(with: deformationsData, options: .mutableContainers) as! [YXWordDeformationModel])
+            word.examples = try? (JSONSerialization.jsonObject(with: examplessData, options: .mutableContainers) as! [YXWordExampleModel])
+            word.fixedMatchs = try? (JSONSerialization.jsonObject(with: fixedMatchsData, options: .mutableContainers) as! [YXWordFixedMatchModel])
+            word.commonPhrases = try? (JSONSerialization.jsonObject(with: commonPhrasesData, options: .mutableContainers) as! [YXWordCommonPhrasesModel])
+            word.wordAnalysis = try? (JSONSerialization.jsonObject(with: wordAnalysisData, options: .mutableContainers) as! [YXWordAnalysisModel])
+            word.detailedSyntaxs = try? (JSONSerialization.jsonObject(with: detailedSyntaxsData, options: .mutableContainers) as! [YXWordDetailedSyntaxModel])
+            word.synonyms = try? (JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers) as! [String])
+            word.antonyms = try? (JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers) as! [String])
+            word.gradeId = Int(result.int(forColumn: "gradeId"))
+            word.gardeType = Int(result.int(forColumn: "gardeType"))
+            word.bookId = Int(result.int(forColumn: "bookId"))
+            word.unitId = Int(result.int(forColumn: "unitId"))
+            word.unitName = result.string(forColumn: "unitName")
             word.isExtensionUnit = result.bool(forColumn: "isExtensionUnit")
-
+            
             wordModelArray.append(word)
         }
         
@@ -185,29 +208,38 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
         while result.next() {
             var word = YXWordModel()
-            let usagesData: Data! = (result.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
-            word.wordId       = Int(result.int(forColumn: "wordId"))
-            word.word         = result.string(forColumn: "word")
-            word.partOfSpeech = result.string(forColumn: "partOfSpeech")
-            word.meaning      = result.string(forColumn: "meaning")
-            word.imageUrl     = result.string(forColumn: "imageUrl")
+            
+            let partOfSpeechAndMeaningsData: Data! = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]").data(using: .utf8)!
+            let deformationsData: Data! = (result.string(forColumn: "deformations") ?? "[]").data(using: .utf8)!
+            let examplessData: Data! = (result.string(forColumn: "examples") ?? "[]").data(using: .utf8)!
+            let fixedMatchsData: Data! = (result.string(forColumn: "fixedMatchs") ?? "[]").data(using: .utf8)!
+            let commonPhrasesData: Data! = (result.string(forColumn: "commonPhrases") ?? "[]").data(using: .utf8)!
+            let wordAnalysisData: Data! = (result.string(forColumn: "wordAnalysis") ?? "[]").data(using: .utf8)!
+            let detailedSyntaxsData: Data! = (result.string(forColumn: "detailedSyntaxs") ?? "[]").data(using: .utf8)!
+            let synonymsData: Data! = (result.string(forColumn: "synonyms") ?? "[]").data(using: .utf8)!
+            let antonymsData: Data! = (result.string(forColumn: "antonyms") ?? "[]").data(using: .utf8)!
+            
+            word.wordId = Int(result.int(forColumn: "wordId"))
+            word.word = result.string(forColumn: "word")
+            word.partOfSpeechAndMeanings = try? (JSONSerialization.jsonObject(with: partOfSpeechAndMeaningsData, options: .mutableContainers) as! [YXWordPartOfSpeechAndMeaningModel])
+            word.imageUrl = result.string(forColumn: "imageUrl")
             word.americanPhoneticSymbol = result.string(forColumn: "americanPhoneticSymbol")
-            word.englishPhoneticSymbol  = result.string(forColumn: "englishPhoneticSymbol")
-            word.americanPronunciation  = result.string(forColumn: "americanPronunciation")
-            word.englishPronunciation   = result.string(forColumn: "englishPronunciation")
-            word.englishExample = result.string(forColumn: "englishExample")
-            word.chineseExample = result.string(forColumn: "chineseExample")
-            word.examplePronunciation = result.string(forColumn: "examplePronunciation")
-            word.usages      = try? JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as? [String] ?? []
-            word.synonym     = result.string(forColumn: "synonym")
-            word.antonym     = result.string(forColumn: "antonym")
-            word.testCenter  = result.string(forColumn: "testCenter")
-            word.deformation = result.string(forColumn: "deformation")
-            word.gradeId     = Int(result.int(forColumn: "gradeId") )
-            word.gardeType   = Int(result.int(forColumn: "gardeType") )
-            word.bookId      = Int(result.int(forColumn: "bookId") )
-            word.unitId      = Int(result.int(forColumn: "unitId") )
-            word.unitName    = result.string(forColumn: "unitName")
+            word.englishPhoneticSymbol = result.string(forColumn: "englishPhoneticSymbol")
+            word.americanPronunciation = result.string(forColumn: "americanPronunciation")
+            word.englishPronunciation = result.string(forColumn: "englishPronunciation")
+            word.deformations = try? (JSONSerialization.jsonObject(with: deformationsData, options: .mutableContainers) as! [YXWordDeformationModel])
+            word.examples = try? (JSONSerialization.jsonObject(with: examplessData, options: .mutableContainers) as! [YXWordExampleModel])
+            word.fixedMatchs = try? (JSONSerialization.jsonObject(with: fixedMatchsData, options: .mutableContainers) as! [YXWordFixedMatchModel])
+            word.commonPhrases = try? (JSONSerialization.jsonObject(with: commonPhrasesData, options: .mutableContainers) as! [YXWordCommonPhrasesModel])
+            word.wordAnalysis = try? (JSONSerialization.jsonObject(with: wordAnalysisData, options: .mutableContainers) as! [YXWordAnalysisModel])
+            word.detailedSyntaxs = try? (JSONSerialization.jsonObject(with: detailedSyntaxsData, options: .mutableContainers) as! [YXWordDetailedSyntaxModel])
+            word.synonyms = try? (JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers) as! [String])
+            word.antonyms = try? (JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers) as! [String])
+            word.gradeId = Int(result.int(forColumn: "gradeId"))
+            word.gardeType = Int(result.int(forColumn: "gardeType"))
+            word.bookId = Int(result.int(forColumn: "bookId"))
+            word.unitId = Int(result.int(forColumn: "unitId"))
+            word.unitName = result.string(forColumn: "unitName")
             word.isExtensionUnit = result.bool(forColumn: "isExtensionUnit")
 
             wordModelArray.append(word)
@@ -238,25 +270,32 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         if result.next() {
             var word = YXWordModel()
             
-            let usagesData: Data! = (result.string(forColumn: "usages") ?? "[]").data(using: .utf8)!
-                        
+            let partOfSpeechAndMeaningsData: Data! = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]").data(using: .utf8)!
+            let deformationsData: Data! = (result.string(forColumn: "deformations") ?? "[]").data(using: .utf8)!
+            let examplessData: Data! = (result.string(forColumn: "examples") ?? "[]").data(using: .utf8)!
+            let fixedMatchsData: Data! = (result.string(forColumn: "fixedMatchs") ?? "[]").data(using: .utf8)!
+            let commonPhrasesData: Data! = (result.string(forColumn: "commonPhrases") ?? "[]").data(using: .utf8)!
+            let wordAnalysisData: Data! = (result.string(forColumn: "wordAnalysis") ?? "[]").data(using: .utf8)!
+            let detailedSyntaxsData: Data! = (result.string(forColumn: "detailedSyntaxs") ?? "[]").data(using: .utf8)!
+            let synonymsData: Data! = (result.string(forColumn: "synonyms") ?? "[]").data(using: .utf8)!
+            let antonymsData: Data! = (result.string(forColumn: "antonyms") ?? "[]").data(using: .utf8)!
+            
             word.wordId = Int(result.int(forColumn: "wordId"))
             word.word = result.string(forColumn: "word")
-            word.partOfSpeech = result.string(forColumn: "partOfSpeech")
-            word.meaning = result.string(forColumn: "meaning")
+            word.partOfSpeechAndMeanings = try? (JSONSerialization.jsonObject(with: partOfSpeechAndMeaningsData, options: .mutableContainers) as! [YXWordPartOfSpeechAndMeaningModel])
             word.imageUrl = result.string(forColumn: "imageUrl")
             word.americanPhoneticSymbol = result.string(forColumn: "americanPhoneticSymbol")
             word.englishPhoneticSymbol = result.string(forColumn: "englishPhoneticSymbol")
             word.americanPronunciation = result.string(forColumn: "americanPronunciation")
             word.englishPronunciation = result.string(forColumn: "englishPronunciation")
-            word.englishExample = result.string(forColumn: "englishExample")            
-            word.chineseExample = result.string(forColumn: "chineseExample")
-            word.examplePronunciation = result.string(forColumn: "examplePronunciation")
-            word.usages = try? (JSONSerialization.jsonObject(with: usagesData, options: .mutableContainers) as! [String])
-            word.synonym = result.string(forColumn: "synonym")
-            word.antonym = result.string(forColumn: "antonym")
-            word.testCenter = result.string(forColumn: "testCenter")
-            word.deformation = result.string(forColumn: "deformation")
+            word.deformations = try? (JSONSerialization.jsonObject(with: deformationsData, options: .mutableContainers) as! [YXWordDeformationModel])
+            word.examples = try? (JSONSerialization.jsonObject(with: examplessData, options: .mutableContainers) as! [YXWordExampleModel])
+            word.fixedMatchs = try? (JSONSerialization.jsonObject(with: fixedMatchsData, options: .mutableContainers) as! [YXWordFixedMatchModel])
+            word.commonPhrases = try? (JSONSerialization.jsonObject(with: commonPhrasesData, options: .mutableContainers) as! [YXWordCommonPhrasesModel])
+            word.wordAnalysis = try? (JSONSerialization.jsonObject(with: wordAnalysisData, options: .mutableContainers) as! [YXWordAnalysisModel])
+            word.detailedSyntaxs = try? (JSONSerialization.jsonObject(with: detailedSyntaxsData, options: .mutableContainers) as! [YXWordDetailedSyntaxModel])
+            word.synonyms = try? (JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers) as! [String])
+            word.antonyms = try? (JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers) as! [String])
             word.gradeId = Int(result.int(forColumn: "gradeId"))
             word.gardeType = Int(result.int(forColumn: "gardeType"))
             word.bookId = Int(result.int(forColumn: "bookId"))

@@ -238,16 +238,16 @@ extension YYSQLManager {
         case insertWord =
         """
             INSERT OR REPLACE INTO word
-            (wordId, word, partOfSpeech, meaning, imageUrl,
-            englishPhoneticSymbol, americanPhoneticSymbol, englishPronunciation, americanPronunciation, englishExample,
-            chineseExample, examplePronunciation, usages, synonym, antonym,
-            testCenter, deformation, gradeId, gardeType, bookId,
-            unitId, unitName, isExtensionUnit)
+            (wordId, word, partOfSpeechAndMeanings, imageUrl, englishPhoneticSymbol,
+            americanPhoneticSymbol, englishPronunciation, americanPronunciation, deformations, examples,
+            fixedMatchs, commonPhrases, wordAnalysis, detailedSyntaxs, synonyms,
+            antonyms, gradeId, gardeType, bookId, unitId,
+            unitName, isExtensionUnit)
             VALUES (?, ?, ?, ?, ?,
                     ?, ?, ?, ?, ?,
                     ?, ?, ?, ?, ?,
                     ?, ?, ?, ?, ?,
-                    ?, ?, ?)
+                    ?, ?)
         """
         
         case selectWord =

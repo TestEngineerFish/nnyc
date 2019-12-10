@@ -18,7 +18,7 @@
 #import "YXWordListBaseInfo.h"
 #import "YXWordBookBaseManageView.h"
 #import "YXMyWordListDetailModel.h"
-#import "YXWordListView.h"
+#import "YXWordListViewOld.h"
 #import "YXLoadingView.h"
 
 static NSString *const kYXMyWordBookCellID = @"YXMyWordBookCellID";
@@ -33,7 +33,7 @@ static NSString *const kYXMyWordBookCellID = @"YXMyWordBookCellID";
 @property (nonatomic, weak) UIView *bottomView;
 @property (nonatomic, weak) YXSpringAnimateButton *deleteBtn;
 @property (nonatomic, strong) YXWordListBaseInfo *wordListBaseInfo;
-@property (nonatomic, weak) YXWordListView *wordListView;
+@property (nonatomic, weak) YXWordListViewOld *wordListView;
 @property (nonatomic, strong) UIButton *createBtn;
 @property(nonatomic, weak) YXLoadingView *loadingAnimaterView;
 @end

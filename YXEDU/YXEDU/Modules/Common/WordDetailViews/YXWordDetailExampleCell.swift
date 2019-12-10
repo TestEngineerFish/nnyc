@@ -1,5 +1,5 @@
 //
-//  YXWordDetialCell.swift
+//  YXWordDetailExampleCell.swift
 //  YXEDU
 //
 //  Created by Jake To on 11/11/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXWordDetialCell: UITableViewCell {
+class YXWordDetailExampleCell: UITableViewCell {
     var pronunciationUrl: URL!
     
     @IBOutlet weak var label: UILabel!

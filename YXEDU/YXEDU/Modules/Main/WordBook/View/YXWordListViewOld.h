@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YXWordListView : UIView
+@interface YXWordListViewOld : UIView
 @property (nonatomic, assign) BOOL manageState;
 
 @end
