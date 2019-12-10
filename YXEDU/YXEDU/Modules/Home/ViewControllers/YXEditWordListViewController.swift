@@ -22,7 +22,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var wordCountLabel: UILabel!
     @IBOutlet weak var redButton: YXDesignableButton!
-
+    @IBOutlet weak var bottonViewHeight: NSLayoutConstraint!
+    
     @IBAction func back(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)
     }
@@ -33,6 +34,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        bottonViewHeight.constant = bottonViewHeight.constant + kSafeBottomMargin
         
         tableView.register(UINib(nibName: "YXWordListEditCell", bundle: nil), forCellReuseIdentifier: "YXWordListEditCell")
 

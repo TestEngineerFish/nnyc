@@ -11,6 +11,8 @@ import UIKit
 @objc
 class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    private var wordListType: YXWordListType = .learned
+    
     private var learnedWordsCount    = "--"
     private var collectedWordsCount  = "--"
     private var wrongWordsCount      = "--"
@@ -128,6 +130,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let destinationViewController = segue.destination as! YXAddBookViewController
             destinationViewController.navigationItem.leftBarButtonItems = []
             destinationViewController.navigationItem.hidesBackButton = true
+            
+        } else if segue.identifier == "WordList" {
+            let destinationViewController = segue.destination as! YXWordListViewController
+            destinationViewController.wordListType = wordListType
         }
     }
     
@@ -304,15 +310,18 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         if collectionView.tag == 1 {
             switch indexPath.row {
             case 0:
-                self.performSegue(withIdentifier: "LearnedWords", sender: self)
+                wordListType = .learned
+                self.performSegue(withIdentifier: "WordList", sender: self)
                 break
                 
             case 1:
-                self.performSegue(withIdentifier: "FavoritesWords", sender: self)
+                wordListType = .collected
+                self.performSegue(withIdentifier: "WordList", sender: self)
                 break
                 
             case 2:
-                self.performSegue(withIdentifier: "WrongWords", sender: self)
+                wordListType = .wrongWords
+                self.performSegue(withIdentifier: "WordList", sender: self)
                 break
                 
             default:

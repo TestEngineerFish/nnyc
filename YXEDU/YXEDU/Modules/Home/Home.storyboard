@@ -430,7 +430,7 @@
         <!--单词列表-->
         <scene sceneID="WnR-X0-yQ5">
             <objects>
-                <viewController id="I2c-Ah-MPk" customClass="YXWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="I2c-Ah-MPk" customClass="YXWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yMV-FE-yyv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -467,10 +467,9 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="kda-uh-QDN" firstAttribute="centerX" secondItem="pwr-jY-kfy" secondAttribute="centerX" id="0a4-dp-P2t"/>
+                                    <constraint firstItem="kda-uh-QDN" firstAttribute="top" secondItem="pwr-jY-kfy" secondAttribute="top" constant="14" id="5JZ-wk-uje"/>
                                     <constraint firstAttribute="trailing" secondItem="kda-uh-QDN" secondAttribute="trailing" constant="50" id="SXq-8t-XZs"/>
                                     <constraint firstItem="kda-uh-QDN" firstAttribute="leading" secondItem="pwr-jY-kfy" secondAttribute="leading" constant="50" id="dp8-p9-9rQ"/>
-                                    <constraint firstItem="kda-uh-QDN" firstAttribute="centerY" secondItem="pwr-jY-kfy" secondAttribute="centerY" id="kgD-D8-12i"/>
                                     <constraint firstAttribute="height" constant="68" id="ur7-nr-7zq"/>
                                 </constraints>
                             </view>
@@ -486,9 +485,14 @@
                     <navigationItem key="navigationItem" title="单词列表" id="snY-ih-MCg">
                         <barButtonItem key="leftBarButtonItem" image="back" id="SrR-bp-N0i">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="back:" destination="I2c-Ah-MPk" id="nHX-tK-uBD"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bottomView" destination="pwr-jY-kfy" id="btG-zG-2t3"/>
+                        <outlet property="bottonViewHeight" destination="ur7-nr-7zq" id="d7S-BB-jxW"/>
                         <segue destination="qql-3G-E8i" kind="show" id="VmI-1Q-DHB"/>
                     </connections>
                 </viewController>
@@ -499,7 +503,7 @@
         <!-- - -->
         <scene sceneID="Gzi-3n-2en">
             <objects>
-                <viewController id="qql-3G-E8i" customClass="YXEditWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="qql-3G-E8i" customClass="YXEditWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DU0-3m-EQG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -557,12 +561,12 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="FvO-ki-r1j" secondAttribute="trailing" constant="20" id="3I2-Lx-UVc"/>
-                                    <constraint firstItem="dj4-OR-aCX" firstAttribute="centerY" secondItem="Xem-R2-0tJ" secondAttribute="centerY" id="J3c-nb-mMo"/>
+                                    <constraint firstItem="dj4-OR-aCX" firstAttribute="top" secondItem="Xem-R2-0tJ" secondAttribute="top" constant="25.5" id="Ae1-UY-Bqs"/>
                                     <constraint firstItem="TZk-cK-VPe" firstAttribute="leading" secondItem="Xem-R2-0tJ" secondAttribute="leading" constant="20" id="KPP-9g-LF2"/>
+                                    <constraint firstItem="TZk-cK-VPe" firstAttribute="top" secondItem="Xem-R2-0tJ" secondAttribute="top" constant="25.5" id="MIH-Z4-T0A"/>
                                     <constraint firstAttribute="height" constant="68" id="dzw-AK-Xc4"/>
-                                    <constraint firstItem="FvO-ki-r1j" firstAttribute="centerY" secondItem="Xem-R2-0tJ" secondAttribute="centerY" id="r4V-kD-9c5"/>
-                                    <constraint firstItem="TZk-cK-VPe" firstAttribute="centerY" secondItem="Xem-R2-0tJ" secondAttribute="centerY" id="uRC-Lc-mMm"/>
                                     <constraint firstItem="dj4-OR-aCX" firstAttribute="leading" secondItem="TZk-cK-VPe" secondAttribute="trailing" id="vz0-Zg-rae"/>
+                                    <constraint firstItem="FvO-ki-r1j" firstAttribute="top" secondItem="Xem-R2-0tJ" secondAttribute="top" constant="14" id="yYv-Gb-NNC"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
@@ -617,6 +621,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bottonViewHeight" destination="dzw-AK-Xc4" id="3c1-E3-tlq"/>
                         <outlet property="headerLabel" destination="bWe-xp-pKr" id="wCP-mH-X21"/>
                         <outlet property="redButton" destination="FvO-ki-r1j" id="acO-db-wbf"/>
                         <outlet property="tableView" destination="0lM-4x-gHK" id="3Da-7N-jXK"/>
