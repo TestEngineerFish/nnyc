@@ -126,6 +126,8 @@
 		773452CA236A7EFA00801FDD /* YXAccountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */; };
 		773452CC236A7F1A00801FDD /* YXAccountInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */; };
 		7748D15E239F3F4700182611 /* YXWordListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748D15D239F3F4700182611 /* YXWordListRequest.swift */; };
+		7748D161239FB75400182611 /* YXWordDeformationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748D15F239FB75400182611 /* YXWordDeformationsCell.swift */; };
+		7748D162239FB75400182611 /* YXWordDeformationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7748D160239FB75400182611 /* YXWordDeformationsCell.xib */; };
 		7759A89123793E2800C63199 /* YXWordDetailCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7759A88F23793E2800C63199 /* YXWordDetailCommonView.xib */; };
 		7759A89223793E2800C63199 /* YXWordDetailCommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7759A89023793E2800C63199 /* YXWordDetailCommonView.swift */; };
 		7759A897237943C700C63199 /* YXWordDetailExampleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7759A895237943C700C63199 /* YXWordDetailExampleCell.swift */; };
@@ -822,6 +824,8 @@
 		773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAccountInfoView.swift; sourceTree = "<group>"; };
 		773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAccountInfoView.xib; sourceTree = "<group>"; };
 		7748D15D239F3F4700182611 /* YXWordListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordListRequest.swift; sourceTree = "<group>"; };
+		7748D15F239FB75400182611 /* YXWordDeformationsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXWordDeformationsCell.swift; sourceTree = "<group>"; };
+		7748D160239FB75400182611 /* YXWordDeformationsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YXWordDeformationsCell.xib; sourceTree = "<group>"; };
 		7759A88F23793E2800C63199 /* YXWordDetailCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YXWordDetailCommonView.xib; sourceTree = "<group>"; };
 		7759A89023793E2800C63199 /* YXWordDetailCommonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXWordDetailCommonView.swift; sourceTree = "<group>"; };
 		7759A895237943C700C63199 /* YXWordDetailExampleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordDetailExampleCell.swift; sourceTree = "<group>"; };
@@ -2355,6 +2359,8 @@
 				7759A88F23793E2800C63199 /* YXWordDetailCommonView.xib */,
 				77CCB9B523794CC2004EB781 /* YXWordDetailHeaderView.swift */,
 				77CCB9B723794CCB004EB781 /* YXWordDetailHeaderView.xib */,
+				7748D15F239FB75400182611 /* YXWordDeformationsCell.swift */,
+				7748D160239FB75400182611 /* YXWordDeformationsCell.xib */,
 				7759A895237943C700C63199 /* YXWordDetailExampleCell.swift */,
 				7759A896237943C700C63199 /* YXWordDetailExampleCell.xib */,
 				77097536239A30080071A779 /* YXWordDetailClassicCell.swift */,
@@ -5318,6 +5324,7 @@
 				77097539239A30080071A779 /* YXWordDetailClassicCell.xib in Resources */,
 				EE5E01132327528600655654 /* wrong.mp3 in Resources */,
 				228F9D4623A099C300F15F19 /* Discovery.storyboard in Resources */,
+				7748D162239FB75400182611 /* YXWordDeformationsCell.xib in Resources */,
 				EE5EFC5823274D0F00655654 /* nnyc_dev.plist in Resources */,
 				7709753123992D570071A779 /* YXWordDetailFeaturedClassicCell.xib in Resources */,
 				77626C05239E37E600B9407A /* YXWordListEditCell.xib in Resources */,
@@ -5544,6 +5551,7 @@
 				224A2FC2238233CC00AD99B0 /* LearningMapView.swift in Sources */,
 				EE5EF2B52327423F00655654 /* YXFileDBManager.m in Sources */,
 				EE5E000B23274FEB00655654 /* YXCareerWordInfo.m in Sources */,
+				7748D161239FB75400182611 /* YXWordDeformationsCell.swift in Sources */,
 				EE5EF1FC23273BAE00655654 /* YRHttpTask.m in Sources */,
 				EE5E0177232754FA00655654 /* QQApiManager.m in Sources */,
 				EE5E004223274FEB00655654 /* YXGraphIllustationCell.m in Sources */,

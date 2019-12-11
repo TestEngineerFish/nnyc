@@ -20,7 +20,10 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     private var word: YXWordModel!
     private var sections: [[String: Any]] = []
     private var sectionExpandStatus: [Bool] = []
-    
+    private var mostDeformationLength: CGFloat = 44
+    private var featuredView: YXWordDetailFeaturedView!
+    private var featuredViewheight: CGFloat = 0
+
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var phoneticSymbolLabel: UILabel!
@@ -75,10 +78,19 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         contentView.frame = self.bounds
         
         tableView.register(UINib(nibName: "YXWordDetailExampleCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailExampleCell")
+        tableView.register(UINib(nibName: "YXWordDeformationsCell", bundle: nil), forCellReuseIdentifier: "YXWordDeformationsCell")
         tableView.register(UINib(nibName: "YXWordDetailClassicCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailClassicCell")
 
+        featuredView = YXWordDetailFeaturedView(word: word, heightChangeClosure: { height in
+            self.featuredViewheight = height
+            
+            for index in 0..<self.sections.count {
+                guard self.sections[index].keys.first == SectionType.featured.rawValue else { continue }
+                self.tableView.reloadData()
+            }
+        })
+        
         wordLabel.text = word.word
-
         phoneticSymbolLabel.text = word.soundmark
 
         if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
@@ -91,7 +103,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                     text = partOfSpeech + meaning
                     
                 } else {
-                    text = "/n" + partOfSpeech + meaning
+                    text = text + "\n" + partOfSpeech + meaning
                 }
             }
             
@@ -105,6 +117,19 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         if let deformations = word.deformations, deformations.count > 0 {
             sections.append([SectionType.deformation.rawValue: deformations])
             sectionExpandStatus.append(false)
+            
+            var mostWidth: CGFloat = 0
+            
+            for deformation in deformations {
+                guard let deformation = deformation.deformation else { continue }
+                let width = deformation.textWidth(font: UIFont.systemFont(ofSize: 13), height: 20)
+                
+                if width > mostWidth {
+                    mostWidth = width
+                }
+            }
+            
+            mostDeformationLength = mostDeformationLength + mostWidth
         }
         
         if let examples = word.examples, examples.count > 0 {
@@ -126,7 +151,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             sections.append([SectionType.antonym.rawValue: antonyms])
             sectionExpandStatus.append(true)
         }
-        
     }
     
     
@@ -150,7 +174,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 view.isExpand = sectionExpandStatus[section]
                 view.expandClosure = {
                     self.sectionExpandStatus[section] = !self.sectionExpandStatus[section]
-                    self.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
+                    self.tableView.reloadData()
                 }
                 
             } else {
@@ -162,7 +186,14 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 54
+        let scetionType = sections[section].keys.first
+               
+        if scetionType == SectionType.featured.rawValue {
+            return 0
+            
+        } else {
+            return 54
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -187,14 +218,29 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             return 1
             
         case SectionType.synonym.rawValue:
-            return sectionContent.count
+            return sectionContent.count > 0 ? 1 : 0
             
         case SectionType.antonym.rawValue:
-            return sectionContent.count
+            return sectionContent.count > 0 ? 1 : 0
             
         default:
             return 0
         }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let section = sections[indexPath.section]
+//
+//        switch section.keys.first {
+//        case SectionType.featured.rawValue:
+//            guard let sublayers = featuredView.layer.sublayers else { break }
+//            for layer in sublayers {
+//                layer.removeAllAnimations()
+//            }
+//
+//        default:
+//            break
+//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -202,33 +248,84 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
 
         switch section.keys.first {
         case SectionType.deformation.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as! YXWordDetailClassicCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDeformationsCell", for: indexPath) as! YXWordDeformationsCell
+            let deformations = section.values.first as? [YXWordDeformationModel]
+            let deformation = deformations?[indexPath.row]
+            
+            cell.titleLabel.text = deformation?.deformation
+            cell.contentLabel.text = deformation?.word
+            cell.contentDistance.constant = mostDeformationLength
+            
             return cell
             
         case SectionType.examples.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailExampleCell", for: indexPath) as! YXWordDetailExampleCell
+            let examples = section.values.first as? [YXWordExampleModel]
+            let example = examples?[indexPath.row]
+
+            cell.label.text = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
+            
             return cell
             
         case SectionType.featured.rawValue:
             let cell = UITableViewCell()
-            let view = YXWordDetailFeaturedView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: cell.height), word: word)
-//            view.heightChangeClosure = { height in
-//                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//            }
+            cell.addSubview(featuredView)
+            featuredView.snp.makeConstraints { (make) in
+                make.edges.equalToSuperview()
+            }
             
-            cell.contentView.addSubview(view)
             return cell
             
         case SectionType.synonym.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as! YXWordDetailClassicCell
+            let synonyms = section.values.first as? [String]
+
+            var text = ""
+            for index in 0..<(synonyms?.count ?? 0) {
+                if index == 0 {
+                    text = synonyms?[0] ?? ""
+                    
+                } else {
+                    text = text + ", " + (synonyms?[index] ?? "")
+                }
+            }
+            
+            cell.label.text = text
+            
             return cell
             
         case SectionType.antonym.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as! YXWordDetailClassicCell
+            let antonyms = section.values.first as? [String]
+
+            var text = ""
+            for index in 0..<(antonyms?.count ?? 0) {
+                if index == 0 {
+                    text = antonyms?[0] ?? ""
+                    
+                } else {
+                    text = text + ", " + (antonyms?[index] ?? "")
+                }
+            }
+            
+            cell.label.text = text
+            
             return cell
             
         default:
             return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = sections[indexPath.section]
+
+        switch section.keys.first {
+        case SectionType.featured.rawValue:
+            return featuredViewheight
+            
+        default:
+            return tableView.estimatedRowHeight
         }
     }
 }

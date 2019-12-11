@@ -25,9 +25,12 @@ class YXWordDetailHeaderView: UIView {
     var isExpand = false {
         didSet {
             if isExpand {
-                
+                expandButton.setTitle("收起", for: .normal)
+                expandstateIcon.image = #imageLiteral(resourceName: "collapsedState")
+
             } else {
-                
+                expandButton.setTitle("查看单词变形", for: .normal)
+                expandstateIcon.image = #imageLiteral(resourceName: "expandState")
             }
         }
     }

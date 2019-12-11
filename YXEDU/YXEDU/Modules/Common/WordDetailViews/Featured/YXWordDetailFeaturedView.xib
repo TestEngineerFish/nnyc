@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,17 +20,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QvV-Cw-EDc" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="10" y="68" width="394" height="770"/>
+                    <rect key="frame" x="10" y="54" width="394" height="798"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="14" sectionFooterHeight="14" translatesAutoresizingMaskIntoConstraints="NO" id="JZG-RF-5nI">
-                            <rect key="frame" x="0.0" y="20" width="394" height="730"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="JZG-RF-5nI">
+                            <rect key="frame" x="0.0" y="24" width="394" height="750"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="JZG-RF-5nI" secondAttribute="trailing" id="3Og-ut-jij"/>
-                        <constraint firstItem="JZG-RF-5nI" firstAttribute="top" secondItem="QvV-Cw-EDc" secondAttribute="top" constant="20" id="aDK-15-9Hi"/>
-                        <constraint firstAttribute="bottom" secondItem="JZG-RF-5nI" secondAttribute="bottom" constant="20" id="c3z-BG-yl7"/>
+                        <constraint firstItem="JZG-RF-5nI" firstAttribute="top" secondItem="QvV-Cw-EDc" secondAttribute="top" constant="24" id="aDK-15-9Hi"/>
+                        <constraint firstAttribute="bottom" secondItem="JZG-RF-5nI" secondAttribute="bottom" constant="24" id="c3z-BG-yl7"/>
                         <constraint firstItem="JZG-RF-5nI" firstAttribute="leading" secondItem="QvV-Cw-EDc" secondAttribute="leading" id="k1r-7B-jzB"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
@@ -41,21 +42,21 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="featuredIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0J4-fa-ran">
-                    <rect key="frame" x="354" y="44" width="60" height="50"/>
+                    <rect key="frame" x="344" y="44" width="70" height="80"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="0CS-cF-M99"/>
-                        <constraint firstAttribute="width" constant="60" id="uoO-jb-Jcq"/>
+                        <constraint firstAttribute="height" constant="80" id="0CS-cF-M99"/>
+                        <constraint firstAttribute="width" constant="70" id="uoO-jb-Jcq"/>
                     </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="0J4-fa-ran" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="KRR-ub-XLy"/>
-                <constraint firstItem="QvV-Cw-EDc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="N0r-RD-x7h"/>
+                <constraint firstItem="QvV-Cw-EDc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="N0r-RD-x7h"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="QvV-Cw-EDc" secondAttribute="trailing" constant="10" id="aAZ-Ur-B5c"/>
                 <constraint firstItem="QvV-Cw-EDc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="koZ-rz-lwJ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="0J4-fa-ran" secondAttribute="trailing" id="uKw-zA-z1Q"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="QvV-Cw-EDc" secondAttribute="bottom" constant="24" id="yFp-WC-xd3"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="QvV-Cw-EDc" secondAttribute="bottom" constant="10" id="yFp-WC-xd3"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="139" y="154"/>

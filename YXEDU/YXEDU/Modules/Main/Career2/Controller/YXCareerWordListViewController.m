@@ -412,10 +412,10 @@ static NSString *const kYXCareerNoteWordListCellID = @"kYXCareerNoteWordListCell
     NSArray *wordIds = model.wordIds;
     YXCareerNoteWordInfoModel *cellInfoModel = [YXCareerNoteWordInfoModel mj_objectWithKeyValues:wordIds[indexPath.row]];
     
-    YXWordDetailViewControllerNew *wdvc = [[YXWordDetailViewControllerNew alloc] init];
-    wdvc.wordId = cellInfoModel.word_id;
-   
-    [self.navigationController pushViewController:wdvc animated:YES];
+//     *wdvc = [[YXWordDetailViewControllerNew alloc] init];
+//    wdvc.wordId =YXWordDetailViewControllerNew cellInfoModel.word_id;
+//   
+//    [self.navigationController pushViewController:wdvc animated:YES];
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath  API_AVAILABLE(ios(11.0)){
