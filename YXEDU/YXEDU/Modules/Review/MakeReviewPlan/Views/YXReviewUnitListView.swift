@@ -78,11 +78,11 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     }
 
     private func commitNewLocation(_ newLocation: CGPoint) {
-        guard let previousLocation = self.previousLocation else {
-            return
-        }
-        let offsetX = newLocation.x - previousLocation.x
-        let offsetY = newLocation.y - previousLocation.y
+//        guard let previousLocation = self.previousLocation else {
+//            return
+//        }
+//        let offsetX = newLocation.x - previousLocation.x
+//        let offsetY = newLocation.y - previousLocation.y
 //        if offsetY > offsetX {
             guard let indexPath = self.tableView.indexPathForRow(at: newLocation) else {
                 return

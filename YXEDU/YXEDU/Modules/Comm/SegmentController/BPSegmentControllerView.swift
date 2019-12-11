@@ -18,6 +18,8 @@ protocol BPSegmentDataSource: NSObjectProtocol {
     func segment(_ segment: BPSegmentView, itemForRowAt indexPath: IndexPath) -> UIView
     /// 自定义Content视图
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView
+    /// 点击Item视图
+    func segment(_ segment: BPSegmentView, didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath)
 }
 
 extension BPSegmentDataSource {
@@ -38,6 +40,10 @@ extension BPSegmentDataSource {
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
         return UIView()
     }
+    /// 点击Item视图
+    func segment(_ segment: BPSegmentView, didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
+        
+    }
 }
 
 struct BPSegmentConfig {
@@ -55,7 +61,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     final let headerItemIdf  = "BPItemView"
     final let contentItemIdf = "BPItemContentView"
     var config: BPSegmentConfig
-    var lastSelectedIndex =  IndexPath()
+    var lastSelectedIndex: IndexPath!
     // ---- 子视图
     var headerScrollView: BPSegmentView!
     var contentScrollView: BPSegmentView!
@@ -186,7 +192,6 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     // TODO: ==== UICollectionViewDelegate ====
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 滑动
         guard let segmentView = collectionView as? BPSegmentView else {
             return
         }
@@ -278,6 +283,8 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     ///   - collectionView: 视图对象
     private func selectItem(with indexPath: IndexPath, in collectionView: BPSegmentView) {
 
+        // 通知业务层处理点击事件
+        self.delegate?.segment(collectionView, didSelectRowAt: indexPath, previousSelectRowAt: self.lastSelectedIndex)
         // 如果选中不是已选中的Item,则更新最后选中位置
         if indexPath != self.lastSelectedIndex {
             // 移除上一次选中效果

@@ -73,6 +73,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
             _model.list.forEach { (bookModel) in
                 if bookModel.isLearning {
                     _model.modelDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
+                    bookModel.isSelected = true
                 }
             }
             self.model = _model
@@ -137,6 +138,14 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
             self.requestWordsList(bookModel.id, type: bookModel.type)
             return UIView()
         }
+    }
 
+    func segment(_ segment: BPSegmentView, didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
+        guard let model = self.model else {
+            return
+        }
+        model.list[indexPath.row].isSelected    = true
+        model.list[preIndexPath.row].isSelected = false
+        segment.reloadData()
     }
 }

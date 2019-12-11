@@ -29,6 +29,7 @@ class YXReviewWordBookItemModel: Mappable {
     var wordsNumber: Int = 0
     var versionName      = ""
     var isLearning       = false
+    var isSelected       = false
 
     required init?(map: Map) {}
 

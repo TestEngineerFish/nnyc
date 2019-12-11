@@ -30,7 +30,7 @@ class YXReviewBookItem: UIView {
     }
 
     func bindData(_ bookModel: YXReviewWordBookItemModel) {
-        self.bookImageView.image = bookModel.isLearning ? UIImage(named: "book_selected") : UIImage(named: "book_unselect")
+        self.bookImageView.image = bookModel.isSelected ? UIImage(named: "book_selected") : UIImage(named: "book_unselect")
         let versionName          = bookModel.versionName.isEmpty ? "" : bookModel.versionName + "\n"
         self.infolabel.text      = String(format: "%@%d词", versionName, bookModel.wordsNumber)
         self.titleLabel.text     = bookModel.name
