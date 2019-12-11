@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import ObjectMapper
 
 class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
 
@@ -60,9 +60,18 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
     }
 
     private func bindData() {
+        self.segmentControllerView.delegate           = self
         self.selectedWordsListView.delegateBottomView = self.bottomView
-        self.segmentControllerView.delegate = self
+        self.bottomView.makeButton.addTarget(self, action: #selector(makeReivewPlan), for: .touchUpInside)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapAction(_:)))
+        self.view.addGestureRecognizer(tap)
     }
+
+    @objc private func tapAction(_ tap: UITapGestureRecognizer) {
+        print("click me")
+    }
+
+    // MARK: ==== Request ====
 
     private func requestBooksList() {
         let request = YXReviewRequest.reviewBookList
@@ -100,6 +109,60 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
         }
+    }
+
+    private func requestMakeReviewPlan(_ name: String?) {
+        let name = name ?? ""
+        let idsList = self.selectedWordsListView.wordsModelList.map { (wordModel) -> Int in
+            return wordModel.id
+        }
+        let jsonData = try! JSONSerialization.data(withJSONObject: idsList, options: JSONSerialization.WritingOptions.prettyPrinted)
+        let idsStr = String(data: jsonData, encoding: String.Encoding.utf8)!
+        let request = YXReviewRequest.makeReviewPlan(name: name, code: nil, idsList: idsStr)
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
+            self.navigationController?.popViewController(animated: true)
+        }) { (error) in
+            // 如果名称重复错误,也需要处理哦
+            YXUtils.showHUD(self.view, title: "\(error)")
+        }
+    }
+
+    // MARK: ==== Event ====
+    @objc private func makeReivewPlan() {
+        // 显示弹框
+        let name = self.getPlanName()
+        let alertView = YXAlertView(type: .inputable, placeholder: name)
+        alertView.doneClosure = { (text: String?) in
+            self.requestMakeReviewPlan(text)
+        }
+        alertView.show()
+    }
+
+    // MARK: ==== Tools ====
+    private func getPlanName() -> String {
+        var bookName = "我的复习计划"
+        var bookIdList: Set<Int> = []
+        self.selectedWordsListView.wordsModelList.forEach { (wordModel) in
+            bookIdList.insert(wordModel.bookId)
+        }
+        if bookIdList.count > 1 {
+            return bookName
+        } else {
+            guard let list = self.model?.list, let bookId = bookIdList.first else {
+                return bookName
+            }
+            list.forEach { (bookModel) in
+                if bookModel.id == bookId {
+                    if bookModel.type == 1 {
+                        bookName = "错词本复习计划"
+                    } else if bookModel.type == 2 {
+                        bookName = "收藏单词复习计划"
+                    }
+                }
+            }
+            return bookName
+        }
+
     }
 
     // MARK: ==== BPSegmentDataSource ====

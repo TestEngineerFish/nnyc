@@ -51,7 +51,11 @@ class YXAlertView: UIView, UITextFieldDelegate {
             self.contentView.alpha = 0
             
         }, completion: { completed in
-            self.doneClosure?(self.textField.text)
+            var text = self.textField.text
+            if text?.isEmpty ?? false {
+                text = self.textField.placeholder
+            }
+            self.doneClosure?(text)
             self.removeFromSuperview()
         })
     }
@@ -69,11 +73,11 @@ class YXAlertView: UIView, UITextFieldDelegate {
         textField.text = ""
     }
     
-    init(type: YXAlertViewType = .normal) {
+    init(type: YXAlertViewType = .normal, placeholder text:String = "") {
         super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         self.type = type
-        
         initializationFromNib()
+        self.textField.placeholder = text
     }
     
     required init?(coder: NSCoder) {

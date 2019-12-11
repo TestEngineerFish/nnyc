@@ -152,6 +152,10 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return AdaptSize(58)
     }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return AdaptSize(33)
+    }
     // MARK: ==== UITableViewDelegate ====
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

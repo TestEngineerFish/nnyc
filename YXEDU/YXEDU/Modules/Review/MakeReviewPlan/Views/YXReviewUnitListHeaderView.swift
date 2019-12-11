@@ -99,15 +99,15 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
 
         self.contentView.snp.remakeConstraints { (make) in
             make.left.top.right.equalToSuperview()
-            make.bottom.equalTo(bottomView.snp.top)
+            make.bottom.equalTo(bottomView.snp.top).priorityHigh()
         }
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(AdaptSize(5)).priorityLow()
+            make.height.equalTo(AdaptSize(5))
         }
         self.unitNameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(AdaptSize(22))
-            make.centerY.equalToSuperview()
+            make.centerY.height.equalToSuperview()
             make.width.equalTo(CGFloat.zero)
         }
 
@@ -125,8 +125,8 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
 
         self.statisticsLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.unitNameLabel.snp.right)
-            make.centerY.equalToSuperview()
-            make.right.equalTo(self.checkAllButton.snp.left).offset(AdaptSize(-5))
+            make.centerY.height.equalToSuperview()
+            make.right.greaterThanOrEqualTo(self.checkAllButton.snp.left).offset(AdaptSize(-5))
         }
 
         self.checkAllButton.addTarget(self, action: #selector(clickCheckAllBtn(_:)), for: .touchUpInside)

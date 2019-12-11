@@ -2062,6 +2062,37 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		228F9D4723A09CBB00F15F19 /* NewRank */ = {
+			isa = PBXGroup;
+			children = (
+				228F9D4A23A09CDC00F15F19 /* Views */,
+				228F9D4923A09CD600F15F19 /* Model */,
+				228F9D4823A09CCF00F15F19 /* ViewController */,
+			);
+			path = NewRank;
+			sourceTree = "<group>";
+		};
+		228F9D4823A09CCF00F15F19 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		228F9D4923A09CD600F15F19 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		228F9D4A23A09CDC00F15F19 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2290EABF236DB022000BCA47 /* Remind */ = {
 			isa = PBXGroup;
 			children = (
@@ -3707,6 +3738,7 @@
 		EE5EFCEC23274F0900655654 /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
+				228F9D4723A09CBB00F15F19 /* NewRank */,
 				228F9D4523A099C300F15F19 /* Discovery.storyboard */,
 				EE5EFCED23274F0900655654 /* Game */,
 				EE5EFD0923274F0900655654 /* Rank */,
