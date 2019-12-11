@@ -376,22 +376,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             "k": "on the air",
             "v": "穿上盛装的，精心打扮的"
         }
-    ],
-    "analysis": [
-        {
-            "title": "through & across",
-            "list": ["through用做介词。\"表示从物体里面穿过。", "across 用做介词。表示在一个物体的表面上穿过。"]
-        }
-    ],
-    "grammar": [
-        {
-            "title": "反身代词",
-            "list": ["第一人称—我自己/我们自己—myself/ourselves", "第二人称—你自己/你们自己—yourself/yourselves", "第三人称—他/她/它/他们自己—himself/herself/itself/themselves"]
-        },
-        {
-            "title": "频率副词",
-            "list": ["第一人称—我自己/我们自己—myself/ourselves", "第二人称—你自己/你们自己—yourself/yourselves", "第三人称—他/她/它/他们自己—himself/herself/itself/themselves"]
-        }
     ]
 }
 """

@@ -196,6 +196,17 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let scetionType = sections[section].keys.first
+               
+        if (section + 1) < sections.count, scetionType == SectionType.examples.rawValue, sections[section + 1].keys.first == SectionType.featured.rawValue {
+            return 0
+            
+        } else {
+            return 20
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionExpandState = sectionExpandStatus[section]
 

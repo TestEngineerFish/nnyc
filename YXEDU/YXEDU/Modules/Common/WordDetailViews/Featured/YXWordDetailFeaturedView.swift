@@ -79,7 +79,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             sections.append([SectionType.wordAnalysis.rawValue: wordAnalysis])
             sectionExpandStatus.append(true)
             
-            for analysis in wordAnalysis {
+            for _ in wordAnalysis {
                 wordAnalysisExpandStatus.append(false)
             }
         }
@@ -88,7 +88,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             sections.append([SectionType.detailedSyntax.rawValue: detailedSyntaxs])
             sectionExpandStatus.append(true)
             
-            for detailedSyntax in detailedSyntaxs {
+            for _ in detailedSyntaxs {
                 detailedSyntaxExpandStatus.append(false)
             }
         }
@@ -100,7 +100,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     private func heightChange() {
         tableView.layoutIfNeeded()
         
-        let height = tableView.contentSize.height + 68
+        let height = tableView.contentSize.height + 86
         
         self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: height)
         contentView.frame = self.bounds
