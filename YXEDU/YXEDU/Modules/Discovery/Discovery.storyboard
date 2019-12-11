@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GHL-ss-xco">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--挑战-->
+        <scene sceneID="zDv-hQ-POC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GHL-ss-xco" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="挑战" image="tabChallenge" selectedImage="tabChallengeSelected" id="ggj-B0-24Y"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ERP-cu-kV6">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9X5-TP-IO8" kind="relationship" relationship="rootViewController" id="cEH-dZ-uHx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hp9-YS-h5d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3818" y="1862"/>
+        </scene>
+        <!--Descovery View Controller-->
+        <scene sceneID="JIW-cl-9lu">
+            <objects>
+                <viewController storyboardIdentifier="UIViewController-mSI-dQ-ykb" id="9X5-TP-IO8" customClass="YXDescoveryViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1XQ-kK-G1h">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Rjr-Oh-5oB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ZeN-5Z-ceb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ogX-gD-60b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3819" y="2618"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="tabChallenge" width="22" height="22"/>
+        <image name="tabChallengeSelected" width="22" height="22"/>
+    </resources>
+</document>

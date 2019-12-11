@@ -4,9 +4,26 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Descovery View Controller-->
+        <scene sceneID="2jw-ZT-zJp">
+            <objects>
+                <viewController id="mSI-dQ-ykb" customClass="YXDescoveryViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="642-bP-bNf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="oZE-Bv-jAZ"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="IHV-T2-byI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GZu-Mz-FY4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3818" y="2610"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="8MX-u2-MoF">
             <objects>
@@ -21,7 +38,7 @@
                     <connections>
                         <segue destination="Bvn-Jb-bkz" kind="relationship" relationship="viewControllers" id="7sV-qD-Gcw"/>
                         <segue destination="PS5-Ve-3WL" kind="relationship" relationship="viewControllers" id="MrP-5a-Sqz"/>
-                        <segue destination="0YZ-Rc-PnZ" kind="relationship" relationship="viewControllers" id="UF8-vc-ZMz"/>
+                        <segue destination="GHL-ss-xco" kind="relationship" relationship="viewControllers" id="UF8-vc-ZMz"/>
                         <segue destination="bSa-1o-uJX" kind="relationship" relationship="viewControllers" id="6Z5-A1-nbo"/>
                     </connections>
                 </tabBarController>
@@ -37,7 +54,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuY-8E-SfB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3734" y="1326"/>
+            <point key="canvasLocation" x="-3157" y="1572"/>
         </scene>
         <!--Review-->
         <scene sceneID="owb-hc-voO">
@@ -47,7 +64,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p66-cf-ivj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4172" y="1326"/>
+            <point key="canvasLocation" x="-4447" y="1572"/>
         </scene>
         <!--Home-->
         <scene sceneID="a57-dz-k8Q">
@@ -57,21 +74,32 @@
                     <tabBarItem key="tabBarItem" title="首页" image="tabLearn" selectedImage="tabLearnSelected" id="M19-oW-6eB"/>
                 </viewControllerPlaceholder>
             </objects>
-            <point key="canvasLocation" x="-4379" y="1326"/>
+            <point key="canvasLocation" x="-4867" y="1572"/>
         </scene>
-        <!--Discovery-->
-        <scene sceneID="VTy-bK-Tmx">
+        <!--挑战-->
+        <scene sceneID="zDv-hQ-POC">
             <objects>
-                <viewControllerPlaceholder storyboardName="Discovery" id="0YZ-Rc-PnZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="BhM-LE-Oew"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QUS-vD-1RP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GHL-ss-xco" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="挑战" image="tabChallenge" selectedImage="tabChallengeSelected" id="ggj-B0-24Y"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ERP-cu-kV6">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mSI-dQ-ykb" kind="relationship" relationship="rootViewController" id="saD-sj-kmM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hp9-YS-h5d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3923" y="1326"/>
+            <point key="canvasLocation" x="-3818" y="1862"/>
         </scene>
     </scenes>
     <resources>
         <image name="nil" width="16" height="16"/>
+        <image name="tabChallenge" width="22" height="22"/>
+        <image name="tabChallengeSelected" width="22" height="22"/>
         <image name="tabLearn" width="22" height="22"/>
         <image name="tabLearnSelected" width="22" height="22"/>
         <image name="tabMine" width="22" height="22"/>
