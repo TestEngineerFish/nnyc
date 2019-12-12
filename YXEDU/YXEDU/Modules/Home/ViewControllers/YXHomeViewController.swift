@@ -28,10 +28,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var subItemCollectionView: UICollectionView!
 
     @IBAction func startExercise(_ sender: UIButton) {
-        let vc = MakeReviewPlanViewController()
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
-        return
+//        let vc = MakeReviewPlanViewController()
+//        vc.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(vc, animated: true)
+//        return
         if countOfWaitForStudyWords.text == "0" {
             guard let homeData = homeModel else { return }
             

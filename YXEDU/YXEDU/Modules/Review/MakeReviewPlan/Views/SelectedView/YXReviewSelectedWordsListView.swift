@@ -119,25 +119,21 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         if self.wordsModelList.count > maxWordsCount {
             self.delegateBottomView?.showRemind()
         }
+        self.tableView.insertRows(at: [IndexPath(row: self.wordsModelList.count - 1, section: 0)], with: .right)
         self.setNeedsLayout()
-        self.tableView.reloadData()
     }
 
     /// 移除单词
     private func removedWord(_ wordModel: YXReviewWordModel, index: Int? = nil) {
-        if let _index = index {
-            self.wordsModelList.remove(at: _index)
-        } else {
-            guard let firstIndex = self.wordsModelList.firstIndex(of: wordModel) else {
-                return
-            }
-            self.wordsModelList.remove(at: firstIndex)
+        var tmpIndex = index
+        if tmpIndex == nil {
+            tmpIndex = self.wordsModelList.firstIndex(of: wordModel)
         }
-        if self.wordsModelList.count <= maxWordsCount {
-            self.delegateBottomView?.hideRemind()
+        guard let _index = tmpIndex else {
+            return
         }
-        self.setNeedsLayout()
-        self.tableView.reloadData()
+        self.wordsModelList.remove(at: _index)
+        self.tableView.deleteRows(at: [IndexPath(row: _index, section: 0)], with: .left)
     }
 
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====

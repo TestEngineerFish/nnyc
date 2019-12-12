@@ -63,12 +63,6 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
         self.segmentControllerView.delegate           = self
         self.selectedWordsListView.delegateBottomView = self.bottomView
         self.bottomView.makeButton.addTarget(self, action: #selector(makeReivewPlan), for: .touchUpInside)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapAction(_:)))
-        self.view.addGestureRecognizer(tap)
-    }
-
-    @objc private func tapAction(_ tap: UITapGestureRecognizer) {
-        print("click me")
     }
 
     // MARK: ==== Request ====
