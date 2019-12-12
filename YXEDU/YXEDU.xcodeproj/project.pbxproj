@@ -679,6 +679,9 @@
 		EEACEB1E239F9DA90036B3A2 /* YXReviewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB1A239F9DA90036B3A2 /* YXReviewHeaderView.swift */; };
 		EEACEB1F239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */; };
 		EEACEB21239F9DBA0036B3A2 /* YXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */; };
+		EEACEB2423A1DEC20036B3A2 /* YXNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB2323A1DEC20036B3A2 /* YXNotification.swift */; };
+		EEACEB2823A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB2723A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift */; };
+		EEACEB2A23A1DFB20036B3A2 /* YYCustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB2923A1DFB20036B3A2 /* YYCustomNavigationBar.swift */; };
 		EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB147242372E6F400AC329C /* YYFileManager.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
@@ -1795,6 +1798,9 @@
 		EEACEB1A239F9DA90036B3A2 /* YXReviewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewHeaderView.swift; sourceTree = "<group>"; };
 		EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewPlanTableViewCell.swift; sourceTree = "<group>"; };
 		EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXViewController.swift; sourceTree = "<group>"; };
+		EEACEB2323A1DEC20036B3A2 /* YXNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNotification.swift; sourceTree = "<group>"; };
+		EEACEB2723A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YWBaseViewController+CustomNavigationBar.swift"; sourceTree = "<group>"; };
+		EEACEB2923A1DFB20036B3A2 /* YYCustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYCustomNavigationBar.swift; sourceTree = "<group>"; };
 		EEB147242372E6F400AC329C /* YYFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYFileManager.swift; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
@@ -3286,15 +3292,8 @@
 		EE5EF13923265E2D00655654 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */,
-				EE7720FF2379333000CD632E /* YXKVOImageView.swift */,
-				EE5E025B2327793600655654 /* BSRootVC.h */,
-				EE5E025E2327793700655654 /* BSRootVC.m */,
-				EE5E025D2327793700655654 /* YXNavigationController.h */,
-				EE5E025A2327793600655654 /* YXNavigationController.m */,
-				EE77210D237C2B6E00CD632E /* YXView.swift */,
-				22298BFB237D52FC00F24786 /* YXButton.swift */,
-				224A2FCE2382353F00AD99B0 /* YXLabel.swift */,
+				EEACEB2523A1DF2E0036B3A2 /* View */,
+				EEACEB2623A1DF340036B3A2 /* ViewController */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3472,19 +3471,10 @@
 		EE5EF21723273DBE00655654 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				EEACEB2223A1DE800036B3A2 /* Old */,
 				EE3DAB9823750E1500B2FF40 /* YXAPI.swift */,
-				EE5E026C23277CC200655654 /* YXAPI.h */,
-				EE5E026F23277CD600655654 /* YXIconfont.h */,
-				EE5E027023277CD600655654 /* YXIconfont.m */,
-				EE5E027223277CE400655654 /* YXNotification.h */,
-				EE5E027323277CE400655654 /* YXNotification.m */,
-				EE5E027523277CF600655654 /* YXAccount.h */,
-				4FCB6DA42328CBB50038E8F5 /* YXStatusCode.h */,
-				EE5E027823277D0D00655654 /* YXCacheKey.h */,
-				EE5E027923277D0D00655654 /* YXCacheKey.m */,
-				EE5E027B23277D9400655654 /* YXTrace.h */,
-				EE5E027C23277D9400655654 /* YXTrace.m */,
 				2205A9392361C88900C6E674 /* Iconfont.swift */,
+				EEACEB2323A1DEC20036B3A2 /* YXNotification.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -5196,6 +5186,49 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		EEACEB2223A1DE800036B3A2 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				EE5E026C23277CC200655654 /* YXAPI.h */,
+				EE5E026F23277CD600655654 /* YXIconfont.h */,
+				EE5E027023277CD600655654 /* YXIconfont.m */,
+				EE5E027223277CE400655654 /* YXNotification.h */,
+				EE5E027323277CE400655654 /* YXNotification.m */,
+				EE5E027523277CF600655654 /* YXAccount.h */,
+				4FCB6DA42328CBB50038E8F5 /* YXStatusCode.h */,
+				EE5E027823277D0D00655654 /* YXCacheKey.h */,
+				EE5E027923277D0D00655654 /* YXCacheKey.m */,
+				EE5E027B23277D9400655654 /* YXTrace.h */,
+				EE5E027C23277D9400655654 /* YXTrace.m */,
+			);
+			path = Old;
+			sourceTree = "<group>";
+		};
+		EEACEB2523A1DF2E0036B3A2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				22298BFB237D52FC00F24786 /* YXButton.swift */,
+				224A2FCE2382353F00AD99B0 /* YXLabel.swift */,
+				EE77210D237C2B6E00CD632E /* YXView.swift */,
+				EE7720FF2379333000CD632E /* YXKVOImageView.swift */,
+				EEACEB2923A1DFB20036B3A2 /* YYCustomNavigationBar.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EEACEB2623A1DF340036B3A2 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EE5E025B2327793600655654 /* BSRootVC.h */,
+				EE5E025E2327793700655654 /* BSRootVC.m */,
+				EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */,
+				EEACEB2723A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift */,
+				EE5E025D2327793700655654 /* YXNavigationController.h */,
+				EE5E025A2327793600655654 /* YXNavigationController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		EEB147232372E6F400AC329C /* FileManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -5554,6 +5587,7 @@
 				7748D161239FB75400182611 /* YXWordDeformationsCell.swift in Sources */,
 				EE5EF1FC23273BAE00655654 /* YRHttpTask.m in Sources */,
 				EE5E0177232754FA00655654 /* QQApiManager.m in Sources */,
+				EEACEB2423A1DEC20036B3A2 /* YXNotification.swift in Sources */,
 				EE5E004223274FEB00655654 /* YXGraphIllustationCell.m in Sources */,
 				EE5E002623274FEB00655654 /* YXMyWordListDetailModel.m in Sources */,
 				EE5E005A23274FEB00655654 /* YXExerciseVC.m in Sources */,
@@ -5713,6 +5747,7 @@
 				77626C08239E428700B9407A /* YXWordListEmptyCell.swift in Sources */,
 				EE5E0169232754FA00655654 /* YXRouteManager.m in Sources */,
 				EE5E010B23274FEC00655654 /* YXBindModel.m in Sources */,
+				EEACEB2A23A1DFB20036B3A2 /* YYCustomNavigationBar.swift in Sources */,
 				EE5E00F923274FEC00655654 /* YXFeedBackViewModel.m in Sources */,
 				EE5E003C23274FEB00655654 /* YXBadgeView.m in Sources */,
 				77D048FA2361A12000CE95D8 /* YXWordBookModel.swift in Sources */,
@@ -6038,6 +6073,7 @@
 				EE1E4AA623694D59007D248F /* YXFillWordAccordingToChinese_ConnectionExerciseView.swift in Sources */,
 				EE5E005723274FEB00655654 /* YXUnitDetailVC.m in Sources */,
 				7709753323992FF70071A779 /* YXWordDetailFeaturedView.swift in Sources */,
+				EEACEB2823A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift in Sources */,
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
 				224A2FC7238233E100AD99B0 /* YXTaskMapView.swift in Sources */,
 				EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */,

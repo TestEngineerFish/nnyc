@@ -11,7 +11,7 @@ import UIKit
 
 typealias YYEVC = YYEnvChangeViewController
 
-@objc class YYEnvChangeViewController: BSRootVC {
+@objc class YYEnvChangeViewController: YXViewController {
     
     var screenWidth: CGFloat = UIScreen.main.bounds.size.width
     var screenHeight: CGFloat = UIScreen.main.bounds.size.height

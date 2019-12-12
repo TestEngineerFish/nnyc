@@ -8,10 +8,14 @@
 
 import UIKit
 
-class YXReviewViewController: UIViewController {
+class YXReviewViewController: YXViewController {
     
     
     var headerView = YXReviewHeaderView()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -20,8 +24,9 @@ class YXReviewViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.customNavigationBar?.isHidden = true
         
-        self.navigationController?.navigationBar.isHidden = true
+//        self.navigationController?.navigationBar.isHidden = true
         
         self.view.addSubview(headerView)
         headerView.snp.makeConstraints { (make) in
