@@ -165,5 +165,9 @@ public extension UIColor {
     /// 进度条底色 EBEBEB
     class var gray2: UIColor { return UIColor.hex(0xEBEBEB) }
     
+    
+    /// 复习按钮字体颜色 7D5311
+    class var brown1: UIColor { return UIColor.hex(0x7D5311) }
+    
 }
 

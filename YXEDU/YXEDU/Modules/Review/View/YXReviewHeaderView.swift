@@ -10,6 +10,11 @@ import UIKit
 
 class YXReviewHeaderView: YXView {
 
+    var bgView = UIView()
+    var contentView = UIView()
+    
+    var imageView = UIImageView()
+    
     var titleLabel = UILabel()
     var countLabel = UILabel()
     
@@ -42,10 +47,6 @@ class YXReviewHeaderView: YXView {
     var subTitleLabel = UILabel()
     
     
-    var bgView = UIView()
-    var contentView = UIView()
-    
-    
     var favoriteButton = UIButton()
     var wrongWordButton = UIButton()
         
@@ -62,10 +63,11 @@ class YXReviewHeaderView: YXView {
     
     override func createSubviews() {
         self.addSubview(bgView)
-        bgView.addSubview(contentView)
-        
+        self.addSubview(imageView)
         self.addSubview(favoriteButton)
         self.addSubview(wrongWordButton)
+        
+        bgView.addSubview(contentView)
         
         contentView.addSubview(titleLabel)
         contentView.addSubview(countLabel)
@@ -96,6 +98,8 @@ class YXReviewHeaderView: YXView {
     
     
     override func bindProperty() {
+        imageView.image = UIImage(named: "review_circle_icon")
+        
         bgView.backgroundColor = UIColor.orange1
         bgView.layer.masksToBounds = true
         bgView.layer.cornerRadius = 20
@@ -152,7 +156,31 @@ class YXReviewHeaderView: YXView {
         forgetProgressLabel.textColor = UIColor.blue1
         forgetProgressLabel.text = "10%"
         forgetPointLabel.backgroundColor = UIColor.blue1
-            
+
+        
+        reviewButton.layer.masksToBounds = true
+        reviewButton.layer.cornerRadius = 21
+        reviewButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
+        reviewButton.setTitle("智能复习", for: .normal)
+        reviewButton.setTitleColor(UIColor.white, for: .normal)
+        reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
+        
+        subTitleLabel.textColor = UIColor.black6
+        subTitleLabel.text = "智能计划复习内容巩固薄弱单词"
+        subTitleLabel.font = UIFont.pfSCRegularFont(withSize: 12)
+        
+        
+        favoriteButton.setBackgroundImage(UIImage(named: "review_favorite_icon"), for: .normal)
+        favoriteButton.setTitle("收藏夹", for: .normal)
+        favoriteButton.setTitleColor(UIColor.brown1, for: .normal)
+        favoriteButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
+        favoriteButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -60, bottom: 0, right: 0)
+        
+        wrongWordButton.setBackgroundImage(UIImage(named: "review_wrong_icon"), for: .normal)
+        wrongWordButton.setTitle("错题本", for: .normal)
+        wrongWordButton.setTitleColor(UIColor.brown1, for: .normal)
+        wrongWordButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
+        wrongWordButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -60, bottom: 0, right: 0)
     }
     
     
@@ -167,14 +195,20 @@ class YXReviewHeaderView: YXView {
             make.height.equalTo(339)
         }
         
+        imageView.snp.makeConstraints { (make) in
+            make.top.equalTo(8)
+            make.left.equalTo(11)
+            make.width.equalTo(42)
+            make.height.equalTo(29)
+        }
+        
         contentView.snp.makeConstraints { (make) in
             make.top.equalTo(9)
             make.left.equalTo(8)
             make.right.equalTo(-8)
             make.bottom.equalTo(-10)
         }
-        
-        
+                
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(23)
             make.centerX.equalToSuperview()
@@ -274,6 +308,37 @@ class YXReviewHeaderView: YXView {
             make.top.equalTo(forgetProgressView.snp.bottom).offset(3)
             make.left.right.equalTo(forgetProgressView)
             make.height.equalTo(14)
+        }
+        
+        
+        
+        reviewButton.snp.makeConstraints { (make) in
+            make.top.equalTo(forgetProgressLabel.snp.bottom).offset(14)
+            make.left.equalTo(45)
+            make.right.equalTo(-45)
+            make.height.equalTo(42)
+        }
+        
+        
+        subTitleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(reviewButton.snp.bottom).offset(8)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(169)
+            make.height.equalTo(17)
+        }
+        
+        favoriteButton.snp.makeConstraints { (make) in
+            make.top.equalTo(bgView.snp.bottom).offset(10)
+            make.left.equalTo(22)
+            make.height.equalTo(51)
+        }
+        
+        wrongWordButton.snp.makeConstraints { (make) in
+            make.top.equalTo(bgView.snp.bottom).offset(10)
+            make.left.equalTo(favoriteButton.snp.right).offset(12)
+            make.right.equalTo(-22)
+            make.width.equalTo(160)
+            make.height.equalTo(51)
         }
         
         super.layoutIfNeeded()

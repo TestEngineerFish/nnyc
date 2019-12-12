@@ -28,6 +28,8 @@ enum YXExerciseType: String {
     case listenChooseChinese = "Q-C-2"                    // 听录音选词义
     case listenChooseImage = "Q-C-3"                      // 听录音选图片
     
+    case listenFillWord = "Q-C-9"                         // 听录音输入单词
+    
     //MARK: ---- 连线题
     case connectionWordAndChinese = "Q-A-9"               // 连接单词和中文
     case connectionWordAndImage = "Q-A-10"                 // 连接单词和图片

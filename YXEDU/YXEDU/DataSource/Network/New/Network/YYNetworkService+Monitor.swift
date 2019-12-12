@@ -18,10 +18,7 @@ extension YYNetworkService {
     /** 判断网络权限 */
     var isAuth: Bool {
         let status = YXNetworkAuthManager.default.state
-        if status == .restricted {
-            return false
-        }
-        return true
+        return status != .restricted
     }
     
     var networkError: NSError {
@@ -29,8 +26,7 @@ extension YYNetworkService {
     }
     
     var authError: NSError {
-        return NSError(domain: "网络权限被关闭", code: 0, userInfo: [NSLocalizedDescriptionKey : ""])
-//        return NSError(domain: "网络权限被关闭", code: 0, userInfo: [NSLocalizedDescriptionKey : "请到设置中开启网络权限"])
+        return NSError(domain: "网络权限被关闭", code: 0, userInfo: [NSLocalizedDescriptionKey : "请到设置中开启网络权限"])
     }
     
     func startMonitorNetwork() {
@@ -40,11 +36,8 @@ extension YYNetworkService {
             switch status {
             case .unknown, .notReachable:
                 print("没有网络")
-                
-                UIView.toast("网络不给力")
-                //YWAlertManager.showAlert(title: "网络问题", message: "请检查您的网络", actionTitle: "关闭", action: nil, completion: nil)
+//                UIView.toast("网络不给力")
             case .reachable(let type):
-                //                UIView.cleanTopWindow(anyClass: YYNetworkErrorAlertView.classForCoder())
                 if type == .wwan {
                     print("手机网络")
                 } else if type == .ethernetOrWiFi {
