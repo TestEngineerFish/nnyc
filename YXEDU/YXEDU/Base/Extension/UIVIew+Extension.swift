@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Toast_Swift
 
 /**
  *  ViewGeometry
@@ -130,6 +131,33 @@ public extension UIView {
         }
     }
 }
+
+
+extension UIView {
+    
+    /**
+     * 显示Toast提示，基于当前的View，不影响其他页面的操作
+     */
+    public func toast(_ message: String?) {
+        if let msg = message, msg.isNotEmpty {
+            self.makeToast(msg, duration: 1.2, position: .center)
+        }
+    }
+    
+    /**
+     * 显示Toast提示，基于最顶层，可能会影响其他的操作
+     */
+    public class func toast(_ msg: String?) {
+        if let _msg = msg, _msg.isNotEmpty {
+            if let topWindow = UIApplication.shared.windows.last {
+                topWindow.toast(_msg)
+            }
+        }
+    }
+    
+}
+
+
 
 extension UIView {
     

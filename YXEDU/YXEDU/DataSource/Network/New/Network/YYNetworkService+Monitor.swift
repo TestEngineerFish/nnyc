@@ -40,7 +40,8 @@ extension YYNetworkService {
             switch status {
             case .unknown, .notReachable:
                 print("没有网络")
-//                UIView.toast("网络不给力")
+                
+                UIView.toast("网络不给力")
                 //YWAlertManager.showAlert(title: "网络问题", message: "请检查您的网络", actionTitle: "关闭", action: nil, completion: nil)
             case .reachable(let type):
                 //                UIView.cleanTopWindow(anyClass: YYNetworkErrorAlertView.classForCoder())

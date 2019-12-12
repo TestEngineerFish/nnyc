@@ -69,6 +69,8 @@ PODS:
   - SnapKit (4.0.1)
   - SSKeychain (1.4.1)
   - SVProgressHUD (2.2.5)
+  - Toast (4.0.0)
+  - Toast-Swift (5.0.0)
   - TZImagePickerController (3.2.7)
   - UICollectionViewLeftAlignedLayout (1.0.2)
   - UMCAnalytics (6.0.5):
@@ -118,6 +120,8 @@ DEPENDENCIES:
   - SnapKit (~> 4.0.0)
   - SSKeychain
   - SVProgressHUD
+  - Toast
+  - Toast-Swift
   - TZImagePickerController
   - UICollectionViewLeftAlignedLayout
   - UMCAnalytics
@@ -167,6 +171,8 @@ SPEC REPOS:
     - SnapKit
     - SSKeychain
     - SVProgressHUD
+    - Toast
+    - Toast-Swift
     - TZImagePickerController
     - UICollectionViewLeftAlignedLayout
     - UMCAnalytics
@@ -215,6 +221,8 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  Toast-Swift: 36f4720243c8582c2be243a60a51e193c761f541
   TZImagePickerController: 821b81f83594a736e831a018f2a2ce31822ddf0b
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
   UMCAnalytics: 045be2cd1ec05aa95ad62405a850757f932e2d59
@@ -226,6 +234,6 @@ SPEC CHECKSUMS:
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 965a9e3a331881e582c46197a8101bff871a8372
+PODFILE CHECKSUM: 58ac3a57874ba7eb5be83df0dd6f6dd7d8d969ca
 
 COCOAPODS: 1.8.4

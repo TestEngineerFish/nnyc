@@ -67,4 +67,7 @@ target 'YXEDU' do
 
      # 音视频缓存库
      pod 'KTVHTTPCache'
+     
+     pod 'Toast-Swift'
+     pod 'Toast'
 end

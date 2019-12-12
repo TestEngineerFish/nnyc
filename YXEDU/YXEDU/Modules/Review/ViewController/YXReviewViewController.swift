@@ -21,6 +21,7 @@ class YXReviewViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
+        
         self.isMonitorNetwork = true
         
 //        self.navigationController?.navigationBar.isHidden = true

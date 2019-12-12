@@ -131,6 +131,10 @@ class YXAuthorizationManager: NSObject {
         }
     }
 
+    @objc class func authorizeNetwork() {
+        showNetworkAlert()
+    }
+    
     ///请求地理位置权限
     private lazy var locationManager: CLLocationManager = {
         let _locationManager = CLLocationManager()
@@ -175,6 +179,10 @@ extension YXAuthorizationManager {
 
     class func showMicrophoneAlert() {
         showAlert(title: "无法访问你的麦克风", message: "请到设置 -> 念念有词 -> 麦克风 ，打开访问权限")
+    }
+    
+    class func showNetworkAlert() {
+        showAlert(title: "您已关闭\"念念有词\"的无线数据网络", message: "您可以在\"设置\"中为此应用打开无线数据网络")
     }
 
     class func showAlert(title: String, message: String) {

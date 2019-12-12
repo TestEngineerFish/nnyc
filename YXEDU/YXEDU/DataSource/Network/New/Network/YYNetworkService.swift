@@ -43,6 +43,21 @@ struct YYNetworkService {
     @discardableResult
     public func request <T> (_ type: T.Type, request: YYBaseRequest, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> YYTaskRequest? where T: YYBaseResopnse {
         
+        // 先判断是否有网络
+        if !isReachable {
+            
+            // 没有网络时，判断授权是否打开
+            if !isAuth {
+                fail?(authError)
+                YXAuthorizationManager.authorizeNetwork()
+                return nil
+            }
+            
+            fail?(networkError)
+            return nil
+        }
+        
+        
         if request.method == .post {
             var urlRequest = URLRequest(url: request.url)
             urlRequest.httpMethod = request.method.rawValue

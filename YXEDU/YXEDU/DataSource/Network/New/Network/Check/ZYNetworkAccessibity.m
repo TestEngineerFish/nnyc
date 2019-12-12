@@ -21,7 +21,7 @@
 // inet
 #import <arpa/inet.h>
 
-//#import "YXEDU-Swift.h"
+#import "YXEDU-Swift.h"
 
 NSString * const ZYNetworkAccessibityChangedNotification = @"ZYNetworkAccessibityChangedNotification";
 
@@ -455,11 +455,11 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 - (void)showNetworkRestrictedAlert {
     
-//    [YYAuthorizationManager authorizeNetwork];
+    [YXAuthorizationManager authorizeNetwork];
     
-    if (self.alertController.presentingViewController == nil && ![self.alertController isBeingPresented]) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:self.alertController animated:YES completion:nil];
-    }
+//    if (self.alertController.presentingViewController == nil && ![self.alertController isBeingPresented]) {
+//        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:self.alertController animated:YES completion:nil];
+//    }
 }
 
 - (void)hideNetworkRestrictedAlert {
