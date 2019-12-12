@@ -30,3 +30,21 @@ struct YXChallengeModel: Mappable {
 
     }
 }
+
+struct YXChallengeUserModel: Mappable {
+
+    var rank: Int?
+    var name: String = ""
+    var avatarStr: String = ""
+    var time: Int = 0
+    var questionCount: Int = 0
+
+
+    init?(map: Map) { }
+
+    mutating func mapping(map: Map) {
+
+    }
+
+
+}

@@ -33,7 +33,6 @@
 		220E6747236BE1F5001C794A /* Optional+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220E6746236BE1F5001C794A /* Optional+Extension.swift */; };
 		22164C0223A0DA9A00E9252D /* YXChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22164C0123A0DA9A00E9252D /* YXChallengeViewController.swift */; };
 		22164C0423A0DFAA00E9252D /* YXChallengeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22164C0323A0DFAA00E9252D /* YXChallengeHeaderView.swift */; };
-		22164C0623A0E02300E9252D /* YXChallengeRankTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22164C0523A0E02300E9252D /* YXChallengeRankTopView.swift */; };
 		22164C0823A0E03400E9252D /* YXChalllengeRankListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22164C0723A0E03400E9252D /* YXChalllengeRankListView.swift */; };
 		22164C0B23A1190D00E9252D /* YXCountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22164C0A23A1190D00E9252D /* YXCountDownView.swift */; };
 		22164C0F23A11E4200E9252D /* YXChallengeStartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22164C0E23A11E4200E9252D /* YXChallengeStartButton.swift */; };
@@ -51,6 +50,9 @@
 		223D2688239B4BB7008DED9E /* MakeReviewPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D2687239B4BB7008DED9E /* MakeReviewPlanViewController.swift */; };
 		224352C323A1DF5400F278E6 /* YXChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352C223A1DF5400F278E6 /* YXChallengeModel.swift */; };
 		224352C523A1E91B00F278E6 /* YXChallengePropertyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352C423A1E91B00F278E6 /* YXChallengePropertyView.swift */; };
+		224352CB23A240AF00F278E6 /* YXChallengeRankTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352CA23A240AF00F278E6 /* YXChallengeRankTopView.swift */; };
+		224352CF23A240F900F278E6 /* YXChallengeRankTop3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352CE23A240F900F278E6 /* YXChallengeRankTop3View.swift */; };
+		224352D123A2593600F278E6 /* YXChallengeRankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352D023A2593600F278E6 /* YXChallengeRankCell.swift */; };
 		224529042327A82500510507 /* YYDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529032327A82500510507 /* YYDatabase.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
 		2245290C2327AE0D00510507 /* YXFMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245290B2327AE0D00510507 /* YXFMDBManager.swift */; };
@@ -737,7 +739,6 @@
 		220E6746236BE1F5001C794A /* Optional+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extension.swift"; sourceTree = "<group>"; };
 		22164C0123A0DA9A00E9252D /* YXChallengeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeViewController.swift; sourceTree = "<group>"; };
 		22164C0323A0DFAA00E9252D /* YXChallengeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeHeaderView.swift; sourceTree = "<group>"; };
-		22164C0523A0E02300E9252D /* YXChallengeRankTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeRankTopView.swift; sourceTree = "<group>"; };
 		22164C0723A0E03400E9252D /* YXChalllengeRankListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChalllengeRankListView.swift; sourceTree = "<group>"; };
 		22164C0A23A1190D00E9252D /* YXCountDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCountDownView.swift; sourceTree = "<group>"; };
 		22164C0E23A11E4200E9252D /* YXChallengeStartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeStartButton.swift; sourceTree = "<group>"; };
@@ -755,6 +756,9 @@
 		223D2687239B4BB7008DED9E /* MakeReviewPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeReviewPlanViewController.swift; sourceTree = "<group>"; };
 		224352C223A1DF5400F278E6 /* YXChallengeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeModel.swift; sourceTree = "<group>"; };
 		224352C423A1E91B00F278E6 /* YXChallengePropertyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengePropertyView.swift; sourceTree = "<group>"; };
+		224352CA23A240AF00F278E6 /* YXChallengeRankTopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXChallengeRankTopView.swift; sourceTree = "<group>"; };
+		224352CE23A240F900F278E6 /* YXChallengeRankTop3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXChallengeRankTop3View.swift; sourceTree = "<group>"; };
+		224352D023A2593600F278E6 /* YXChallengeRankCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeRankCell.swift; sourceTree = "<group>"; };
 		224529022327A34300510507 /* YXEDU-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YXEDU-Bridging-Header.h"; sourceTree = "<group>"; };
 		224529032327A82500510507 /* YYDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabase.swift; sourceTree = "<group>"; };
 		224529082327A86A00510507 /* YYDatabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabaseConfig.swift; sourceTree = "<group>"; };
@@ -1936,6 +1940,8 @@
 				22164C0A23A1190D00E9252D /* YXCountDownView.swift */,
 				22164C0E23A11E4200E9252D /* YXChallengeStartButton.swift */,
 				224352C423A1E91B00F278E6 /* YXChallengePropertyView.swift */,
+				224352CA23A240AF00F278E6 /* YXChallengeRankTopView.swift */,
+				224352D023A2593600F278E6 /* YXChallengeRankCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -2138,7 +2144,7 @@
 			children = (
 				22164C0923A118DB00E9252D /* Subviews */,
 				22164C0323A0DFAA00E9252D /* YXChallengeHeaderView.swift */,
-				22164C0523A0E02300E9252D /* YXChallengeRankTopView.swift */,
+				224352CE23A240F900F278E6 /* YXChallengeRankTop3View.swift */,
 				22164C0723A0E03400E9252D /* YXChalllengeRankListView.swift */,
 			);
 			path = Views;
@@ -5705,7 +5711,6 @@
 				EE5EFCDD23274E5500655654 /* YXShareView.m in Sources */,
 				EE5EFD4823274F0900655654 /* YXGameGuideView.m in Sources */,
 				EE5EFD6523274F0900655654 /* YXPreviousChallengeCell.m in Sources */,
-				22164C0623A0E02300E9252D /* YXChallengeRankTopView.swift in Sources */,
 				EE5E0170232754FA00655654 /* YXUtils.m in Sources */,
 				2279F257236D544F0080A0B2 /* YXWordButton.swift in Sources */,
 				EE5E003D23274FEB00655654 /* YXStudyResultVC.m in Sources */,
@@ -6175,6 +6180,7 @@
 				EE5E016C232754FA00655654 /* YXLog.m in Sources */,
 				EE5EFD4423274F0900655654 /* YXGameResultModel.m in Sources */,
 				EE5EF255232740B800655654 /* UIView+Layout.m in Sources */,
+				224352D123A2593600F278E6 /* YXChallengeRankCell.swift in Sources */,
 				EE5E023C232756C000655654 /* Colours.m in Sources */,
 				EE5E008A23274FEB00655654 /* YXCalendarStudyDayData.m in Sources */,
 				EE5EFCEA23274E5500655654 /* YXBaseMaskView.m in Sources */,
@@ -6205,6 +6211,8 @@
 				EE5E003823274FEB00655654 /* YXTopActionView.m in Sources */,
 				EE5E000E23274FEB00655654 /* YXCareerNoteWordInfoModel.m in Sources */,
 				EE5EF20B23273BAE00655654 /* YRHUDUtils.m in Sources */,
+				224352CB23A240AF00F278E6 /* YXChallengeRankTopView.swift in Sources */,
+				224352CF23A240F900F278E6 /* YXChallengeRankTop3View.swift in Sources */,
 				77252A7123628909007D86A0 /* YXSelectGradeView.swift in Sources */,
 				77F69A7A23617CCB00E55185 /* YXHomeStudyDataCell.swift in Sources */,
 				EE5E00FB23274FEC00655654 /* YXFeedSendModel.m in Sources */,
