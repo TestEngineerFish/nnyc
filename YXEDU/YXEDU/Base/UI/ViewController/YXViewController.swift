@@ -57,7 +57,7 @@ class YXViewController: UIViewController {
     }
 
     /** 如果监听了网络变化，子类可以重写该方法进行相应处理 */
-    func monitorNetwork() {}
+    func monitorNetwork(isReachable: Bool) {}
 
 
 }
@@ -73,6 +73,6 @@ extension YXViewController {
     }
 
     @objc private func monitorNetworkEvent(_ notification: Notification) {
-        self.monitorNetwork()
+        self.monitorNetwork(isReachable: YYNetworkService.default.isReachable)
     }
 }

@@ -14,6 +14,7 @@ import CocoaLumberjack
 
 struct YYNetworkService {
     public static let `default` = YYNetworkService()
+    public let networkManager = NetworkReachabilityManager()
     
     private let maxOperationCount: Int = 3
     private let timeout: TimeInterval = 15
@@ -28,6 +29,9 @@ struct YYNetworkService {
     
     
     private init() {
+        // 网络权限管理
+        YXNetworkAuthManager.default.check()
+        
         sessionManager = Alamofire.SessionManager.init(configuration: self.defaultConfiguration)
         sessionManager.session.delegateQueue.maxConcurrentOperationCount = maxOperationCount
     }

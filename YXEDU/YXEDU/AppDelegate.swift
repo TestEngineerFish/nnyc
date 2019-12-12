@@ -23,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initThirdPartyServices()
         initViewAndData()
         
+        // 网络状态监听
+        YYNetworkService.default.startMonitorNetwork()
+        
         return true
     }
     
