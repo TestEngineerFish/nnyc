@@ -209,7 +209,6 @@
 		EE08F3742372E3C200FA3FDF /* YYNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36A2372E3C200FA3FDF /* YYNetworkService.swift */; };
 		EE08F3752372E3C200FA3FDF /* YYBaseResopnse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36C2372E3C200FA3FDF /* YYBaseResopnse.swift */; };
 		EE08F3762372E3C200FA3FDF /* YYBaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36E2372E3C200FA3FDF /* YYBaseRequest.swift */; };
-		EE08F3772372E3C200FA3FDF /* YYTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36F2372E3C200FA3FDF /* YYTaskRequest.swift */; };
 		EE08F3782372E3C200FA3FDF /* YYNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F3712372E3C200FA3FDF /* YYNetworkError.swift */; };
 		EE08F3792372E3C200FA3FDF /* Mappable+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F3732372E3C200FA3FDF /* Mappable+Transform.swift */; };
 		EE1E4A832369428F007D248F /* YXLookExampleChooseImageExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E4A822369428F007D248F /* YXLookExampleChooseImageExerciseView.swift */; };
@@ -693,6 +692,7 @@
 		EEACEB3823A22B1E0036B3A2 /* YYNetworkService+Monitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB3323A22B1D0036B3A2 /* YYNetworkService+Monitor.swift */; };
 		EEACEB3923A22B1E0036B3A2 /* YXNetworkAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB3523A22B1E0036B3A2 /* YXNetworkAuthManager.swift */; };
 		EEACEB3A23A22B1E0036B3A2 /* ZYNetworkAccessibity.m in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB3623A22B1E0036B3A2 /* ZYNetworkAccessibity.m */; };
+		EEACEB3C23A22B8B0036B3A2 /* YYTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB3B23A22B8B0036B3A2 /* YYTaskRequest.swift */; };
 		EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB147242372E6F400AC329C /* YYFileManager.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
@@ -923,7 +923,6 @@
 		EE08F36A2372E3C200FA3FDF /* YYNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYNetworkService.swift; sourceTree = "<group>"; };
 		EE08F36C2372E3C200FA3FDF /* YYBaseResopnse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYBaseResopnse.swift; sourceTree = "<group>"; };
 		EE08F36E2372E3C200FA3FDF /* YYBaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYBaseRequest.swift; sourceTree = "<group>"; };
-		EE08F36F2372E3C200FA3FDF /* YYTaskRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YYTaskRequest.swift; path = ../YYTaskRequest.swift; sourceTree = "<group>"; };
 		EE08F3712372E3C200FA3FDF /* YYNetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYNetworkError.swift; sourceTree = "<group>"; };
 		EE08F3732372E3C200FA3FDF /* Mappable+Transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Mappable+Transform.swift"; sourceTree = "<group>"; };
 		EE1E4A822369428F007D248F /* YXLookExampleChooseImageExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLookExampleChooseImageExerciseView.swift; sourceTree = "<group>"; };
@@ -1824,6 +1823,7 @@
 		EEACEB3523A22B1E0036B3A2 /* YXNetworkAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXNetworkAuthManager.swift; sourceTree = "<group>"; };
 		EEACEB3623A22B1E0036B3A2 /* ZYNetworkAccessibity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYNetworkAccessibity.m; sourceTree = "<group>"; };
 		EEACEB3723A22B1E0036B3A2 /* ZYNetworkAccessibity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYNetworkAccessibity.h; sourceTree = "<group>"; };
+		EEACEB3B23A22B8B0036B3A2 /* YYTaskRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYTaskRequest.swift; sourceTree = "<group>"; };
 		EEB147242372E6F400AC329C /* YYFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYFileManager.swift; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
@@ -2675,8 +2675,8 @@
 		EE08F36D2372E3C200FA3FDF /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				EEACEB3B23A22B8B0036B3A2 /* YYTaskRequest.swift */,
 				EE08F36E2372E3C200FA3FDF /* YYBaseRequest.swift */,
-				EE08F36F2372E3C200FA3FDF /* YYTaskRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -5665,6 +5665,7 @@
 				EE5E009123274FEB00655654 /* YXCalendarBookCell.m in Sources */,
 				7748D15E239F3F4700182611 /* YXWordListRequest.swift in Sources */,
 				224352C523A1E91B00F278E6 /* YXChallengePropertyView.swift in Sources */,
+				EEACEB3C23A22B8B0036B3A2 /* YYTaskRequest.swift in Sources */,
 				EE54F7D92362AA3100EC605A /* YXWordAndImageQuestionView.swift in Sources */,
 				EE5E006123274FEB00655654 /* YXLearnProgressView.m in Sources */,
 				EE04BDBE2366C51D00D6713C /* YXAnswerViewFactory.swift in Sources */,
@@ -5889,7 +5890,6 @@
 				2296F76F239B8F5500C50660 /* YXReviewBookItem.swift in Sources */,
 				EE5E007C23274FEB00655654 /* YXWordLettersView.m in Sources */,
 				EED3D4202331D5D000121218 /* YYCache.swift in Sources */,
-				EE08F3772372E3C200FA3FDF /* YYTaskRequest.swift in Sources */,
 				EE5E021E232756BF00655654 /* TYViewStorage.m in Sources */,
 				EE5E002C23274FEB00655654 /* YXWordBookBaseManageView.m in Sources */,
 				EE5E001423274FEB00655654 /* YXCareerWordListTableViewCell.m in Sources */,
