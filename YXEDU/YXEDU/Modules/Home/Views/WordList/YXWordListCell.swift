@@ -9,10 +9,13 @@
 import UIKit
 
 class YXWordListCell: UITableViewCell {
-    var playAudioClosure: (() -> Void)?
+    var americanPronunciation: String?
+    var englishPronunciation: String?
+
     var showWordDetailClosure: (() -> Void)?
     var removeMaskClosure: (() -> Void)?
 
+    @IBOutlet weak var playAuoidButton: UIButton!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var meaningLabel: UILabel!
     @IBOutlet weak var meaningLabelMask: UIImageView!
@@ -31,7 +34,26 @@ class YXWordListCell: UITableViewCell {
     }
     
     @IBAction func playAudio(_ sender: Any) {
-        playAudioClosure?()
+        if YXAVPlayerManager.share.isPlaying {
+            YXAVPlayerManager.share.pauseAudio()
+            playAuoidButton.layer.removeFlickerAnimation()
+            
+        } else {
+            guard let americanPronunciationUrl = americanPronunciation, let englishPronunciationUrl = englishPronunciation else { return }
+            playAuoidButton.layer.addFlickerAnimation()
+            
+            var pronunciationUrl: URL!
+            if YXUserModel.default.didUseAmericanPronunciation {
+                pronunciationUrl = URL(string: americanPronunciationUrl)
+                
+            } else {
+                pronunciationUrl = URL(string: englishPronunciationUrl)
+            }
+            
+            YXAVPlayerManager.share.playerAudio(pronunciationUrl) {
+                self.playAuoidButton.layer.removeFlickerAnimation()
+            }
+        }
     }
     
     @IBAction func showWordDetail(_ sender: Any) {

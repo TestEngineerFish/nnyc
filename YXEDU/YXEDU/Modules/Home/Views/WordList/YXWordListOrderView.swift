@@ -8,10 +8,10 @@
 
 import UIKit
 
-enum YXWordListOrderType {
-    case `default`
-    case az
-    case za
+enum YXWordListOrderType: String {
+    case `default` = "默认排序"
+    case az = "字母 A - Z"
+    case za = "字母 Z - A"
 }
 
 class YXWordListOrderView: UIView {
@@ -59,21 +59,21 @@ class YXWordListOrderView: UIView {
             azButton.setTitleColor(.black, for: .normal)
             zaButton.setTitleColor(.orange1, for: .normal)
             break
-
-        default:
-            break
         }
     }
     
     @IBAction func tapDefault(_ sender: Any) {
         orderClosure?(YXWordListOrderType.default)
+        self.removeFromSuperview()
     }
     
     @IBAction func tapAZ(_ sender: Any) {
         orderClosure?(YXWordListOrderType.az)
+        self.removeFromSuperview()
     }
     
     @IBAction func tapZA(_ sender: Any) {
         orderClosure?(YXWordListOrderType.za)
+        self.removeFromSuperview()
     }
 }

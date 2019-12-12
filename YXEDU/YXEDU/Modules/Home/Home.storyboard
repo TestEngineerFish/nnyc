@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y1G-4r-ZDj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y1G-4r-ZDj">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -434,52 +434,7 @@
                     <view key="view" contentMode="scaleToFill" id="yMV-FE-yyv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pwr-jY-kfy">
-                                <rect key="frame" x="0.0" y="740" width="414" height="68"/>
-                                <subviews>
-                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kda-uh-QDN" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                                        <rect key="frame" x="50" y="14" width="314" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="mCs-MO-rba"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="抽查复习">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="20"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enableGradientBackground" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="gradientColor1">
-                                                <color key="value" red="0.99215686270000003" green="0.72941176470000002" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="gradientColor2">
-                                                <color key="value" red="0.98431372549999996" green="0.51764705879999995" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="canBeDisabled" value="YES"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="startStudy:" destination="Ya4-tm-uHn" eventType="touchUpInside" id="3qw-aC-oMz"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstItem="kda-uh-QDN" firstAttribute="top" secondItem="pwr-jY-kfy" secondAttribute="top" constant="14" id="5JZ-wk-uje"/>
-                                    <constraint firstAttribute="trailing" secondItem="kda-uh-QDN" secondAttribute="trailing" constant="50" id="SXq-8t-XZs"/>
-                                    <constraint firstItem="kda-uh-QDN" firstAttribute="leading" secondItem="pwr-jY-kfy" secondAttribute="leading" constant="50" id="dp8-p9-9rQ"/>
-                                    <constraint firstAttribute="height" constant="68" id="ur7-nr-7zq"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="otH-NK-pmI" firstAttribute="trailing" secondItem="pwr-jY-kfy" secondAttribute="trailing" id="93f-xr-to9"/>
-                            <constraint firstItem="pwr-jY-kfy" firstAttribute="leading" secondItem="otH-NK-pmI" secondAttribute="leading" id="DIU-Wz-ApN"/>
-                            <constraint firstAttribute="bottom" secondItem="pwr-jY-kfy" secondAttribute="bottom" id="npP-dd-hEu"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="otH-NK-pmI"/>
                     </view>
                     <navigationItem key="navigationItem" title="单词列表" id="snY-ih-MCg">
@@ -491,8 +446,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="bottomView" destination="pwr-jY-kfy" id="btG-zG-2t3"/>
-                        <outlet property="bottonViewHeight" destination="ur7-nr-7zq" id="d7S-BB-jxW"/>
                         <segue destination="qql-3G-E8i" kind="show" id="VmI-1Q-DHB"/>
                     </connections>
                 </viewController>

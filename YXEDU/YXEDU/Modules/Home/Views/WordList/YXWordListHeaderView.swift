@@ -15,8 +15,8 @@ class YXWordListHeaderView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var editButton: UIButton!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 30))
         initializationFromNib()
     }
     

@@ -58,6 +58,9 @@ struct YXWordModel: Mappable {
     // 是否是综合词
     var isComplexWord: Int?
     
+    // 是否隱藏詞義
+    var hidePartOfSpeechAndMeanings = false
+    
     init() {}
     
     init?(map: Map) {

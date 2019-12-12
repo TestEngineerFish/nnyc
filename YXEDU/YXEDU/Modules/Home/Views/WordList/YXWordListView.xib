@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXWordListView" customModule="YXEDU" customModuleProvider="target">
             <connections>
+                <outlet property="bottomView" destination="u48-m5-JVG" id="o3D-In-R5A"/>
+                <outlet property="bottonViewHeight" destination="Wxl-lp-ZKx" id="bCl-Li-cEZ"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="q8w-mW-av2"/>
+                <outlet property="editButton" destination="ZI0-jX-cg2" id="chm-TX-aiD"/>
+                <outlet property="orderButton" destination="uaw-3w-z0S" id="zjF-ar-nBG"/>
                 <outlet property="orderButtonDistance" destination="fn4-Yb-s4d" id="3qR-TR-Hzm"/>
                 <outlet property="tableView" destination="cIS-uI-M84" id="Nkv-AW-9z5"/>
                 <outlet property="wordCountLabel" destination="uVz-RK-iF6" id="NC0-Uu-c1A"/>
@@ -34,12 +38,12 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uaw-3w-z0S" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="193" y="12" width="92" height="24"/>
+                    <rect key="frame" x="201" y="12" width="84" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="0sH-wY-RDb"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="12" maxY="0.0"/>
+                    <inset key="contentEdgeInsets" minX="12" minY="0.0" maxX="8" maxY="0.0"/>
                     <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-2" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="-2" maxY="0.0"/>
                     <state key="normal" title="默认排序" image="changeWordListOrder">
@@ -60,8 +64,8 @@
                         <action selector="order:" destination="-1" eventType="touchUpInside" id="oV2-rx-SiQ"/>
                     </connections>
                 </button>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" estimatedRowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cIS-uI-M84">
-                    <rect key="frame" x="0.0" y="44.5" width="375" height="622.5"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cIS-uI-M84">
+                    <rect key="frame" x="0.0" y="44.5" width="375" height="554.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWB-el-TEL">
@@ -71,15 +75,50 @@
                         <constraint firstAttribute="height" constant="0.5" id="w7y-fR-OD5"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u48-m5-JVG">
+                    <rect key="frame" x="0.0" y="599" width="375" height="68"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqH-of-pLE" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
+                            <rect key="frame" x="50" y="14" width="275" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="XP8-ME-yFO"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal" title="抽查复习">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="20"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="enableGradientBackground" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="gradientColor1">
+                                    <color key="value" red="0.99215686270000003" green="0.72941176470000002" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="gradientColor2">
+                                    <color key="value" red="0.98431372549999996" green="0.51764705879999995" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="canBeDisabled" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="hqH-of-pLE" secondAttribute="trailing" constant="50" id="ChC-1M-gB2"/>
+                        <constraint firstItem="hqH-of-pLE" firstAttribute="top" secondItem="u48-m5-JVG" secondAttribute="top" constant="14" id="HPi-XD-LGS"/>
+                        <constraint firstAttribute="height" constant="68" id="Wxl-lp-ZKx"/>
+                        <constraint firstItem="hqH-of-pLE" firstAttribute="leading" secondItem="u48-m5-JVG" secondAttribute="leading" constant="50" id="aRP-iU-bqg"/>
+                    </constraints>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZI0-jX-cg2" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="292" y="12" width="63" height="24"/>
+                    <rect key="frame" x="300" y="12" width="55" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="pW8-1U-b2w"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="12" maxY="0.0"/>
+                    <inset key="contentEdgeInsets" minX="12" minY="0.0" maxX="8" maxY="0.0"/>
                     <inset key="titleEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <inset key="imageEdgeInsets" minX="28" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="26" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="编辑" image="wordListArrow">
                         <color key="titleColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
@@ -103,19 +142,22 @@
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="yWB-el-TEL" secondAttribute="trailing" constant="20" id="1ib-GK-0dc"/>
                 <constraint firstItem="uaw-3w-z0S" firstAttribute="centerY" secondItem="hJe-T6-tic" secondAttribute="centerY" id="3WQ-7b-Gh7"/>
-                <constraint firstAttribute="bottom" secondItem="cIS-uI-M84" secondAttribute="bottom" id="3p8-UK-WV0"/>
+                <constraint firstItem="u48-m5-JVG" firstAttribute="top" secondItem="cIS-uI-M84" secondAttribute="bottom" id="3p8-UK-WV0"/>
                 <constraint firstItem="hJe-T6-tic" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="7o7-jM-fne"/>
                 <constraint firstItem="hJe-T6-tic" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="Bd7-c9-4wC"/>
                 <constraint firstItem="yWB-el-TEL" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="GKr-tJ-L9R"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="cIS-uI-M84" secondAttribute="trailing" id="IAq-IV-bjJ"/>
+                <constraint firstAttribute="bottom" secondItem="u48-m5-JVG" secondAttribute="bottom" id="Mao-cU-CFn"/>
                 <constraint firstItem="uVz-RK-iF6" firstAttribute="leading" secondItem="hJe-T6-tic" secondAttribute="trailing" id="O9k-yX-4xI"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="uaw-3w-z0S" secondAttribute="trailing" constant="90" id="fn4-Yb-s4d"/>
                 <constraint firstItem="uVz-RK-iF6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="hez-IJ-6fx"/>
                 <constraint firstItem="cIS-uI-M84" firstAttribute="top" secondItem="yWB-el-TEL" secondAttribute="bottom" id="mlY-IX-FDj"/>
+                <constraint firstAttribute="trailing" secondItem="u48-m5-JVG" secondAttribute="trailing" id="oZ9-10-XzK"/>
                 <constraint firstItem="yWB-el-TEL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="44" id="qx0-st-65A"/>
                 <constraint firstItem="ZI0-jX-cg2" firstAttribute="centerY" secondItem="hJe-T6-tic" secondAttribute="centerY" id="rpe-uS-7sZ"/>
                 <constraint firstAttribute="trailing" secondItem="ZI0-jX-cg2" secondAttribute="trailing" constant="20" id="uHG-WO-TJh"/>
                 <constraint firstItem="cIS-uI-M84" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="wzB-oK-o1n"/>
+                <constraint firstItem="u48-m5-JVG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xxE-9F-AjY"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="139" y="154"/>
