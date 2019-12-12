@@ -28,6 +28,8 @@ class YXViewController: UIViewController {
         print("=============== 内存告警 ================")
     }
 
+    
+    /// 状态栏默认为黑色字体，子类可以重写实现
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
