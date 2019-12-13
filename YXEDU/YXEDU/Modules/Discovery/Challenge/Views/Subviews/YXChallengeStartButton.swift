@@ -8,23 +8,25 @@
 
 import UIKit
 
-enum YXChallengeStatusType {
-    case normal
-    case lock
-    case again
+enum YXChallengeStatusType: Int {
+
+    case task = 1
+    case free = 3
+    case lock = 0
+    case again = 4
 
     func getPriceString(_ model: YXChallengeModel) -> NSAttributedString {
         var price = ""
         switch self {
+        case .free:
+            price = "免费"
         case .lock:
-            price = "\(model.lockPrice)"
-        case .again:
-            price = "\(model.unitPrice)/次"
-        default:
-            price = ""
+            price = "\(model.gameInfo?.unlockCoin ?? 100)"
+        case .again, .task:
+            price = "\(model.gameInfo?.unitCoin ?? 5)/次"
         }
         let mutAttr = NSMutableAttributedString(string: price, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0xFFED3C), NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(20))])
-        if self == .again {
+        if self == .again || self == .task || self == .free {
             mutAttr.addAttributes([NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(12))], range: NSRange(location: price.count - 2, length: 2))
         }
         return mutAttr
@@ -39,8 +41,8 @@ class YXChallengeStartButton: YXButton {
         label.textColor     = UIColor.white
         label.textAlignment = .center
         label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(20))
-        label.shadowOffset = CGSize(width: 0, height: 1)
-        label.shadowColor  = UIColor.hex(0xE34B0B)
+        label.shadowOffset  = CGSize(width: 0, height: 1)
+        label.shadowColor   = UIColor.hex(0xE34B0B)
         return label
     }()
 
@@ -59,31 +61,24 @@ class YXChallengeStartButton: YXButton {
 
     private func setSubview(_ model: YXChallengeModel) {
         self.addSubview(customTitleLabel)
-        switch model.status {
-        case .normal:
-            self.customTitleLabel.text = "开始学习"
-            self.setBackgroundImage(UIImage(named: "challengeButton"), for: .normal)
-            self.customTitleLabel.snp.makeConstraints { (make) in
-                make.edges.equalToSuperview()
-            }
-        case .lock:
+        guard let userModel = model.userModel else {
+            return
+        }
+
+        if userModel.gameStatus == .lock {
             self.customTitleLabel.text = "解锁"
             self.setBackgroundImage(UIImage(named: "challengeLockButton"), for: .normal)
-            let priceView = self.getPriceView(model)
-            self.addSubview(priceView)
-            self.customTitleLabel.snp.makeConstraints { (make) in
-                make.left.equalToSuperview().offset(AdaptSize(79))
-                make.centerY.equalToSuperview().offset(AdaptSize(-3))
-                make.size.equalTo(CGSize(width: AdaptSize(41), height: AdaptSize(28)))
+        } else {
+            if userModel.ranking == 0 {
+                self.customTitleLabel.text = "开始学习"
+            } else {
+                self.customTitleLabel.text = "再来一次"
             }
-            priceView.snp.makeConstraints { (make) in
-                make.left.equalTo(customTitleLabel.snp.right)
-                make.centerY.equalTo(customTitleLabel)
-                make.size.equalTo(CGSize(width: AdaptSize(90), height: AdaptSize(28)))
-            }
-        case .again:
-            self.customTitleLabel.text = "再来一次"
             self.setBackgroundImage(UIImage(named: "challengeButton"), for: .normal)
+        }
+
+        switch userModel.gameStatus {
+        case .task, .again:
             let priceView = self.getPriceView(model)
             self.addSubview(priceView)
             self.customTitleLabel.snp.makeConstraints { (make) in
@@ -96,11 +91,40 @@ class YXChallengeStartButton: YXButton {
                 make.centerY.equalTo(customTitleLabel)
                 make.size.equalTo(CGSize(width: AdaptSize(90), height: AdaptSize(28)))
             }
+        case .free:
+            let priceView = self.getPriceView(model)
+            self.addSubview(priceView)
+            self.customTitleLabel.snp.makeConstraints { (make) in
+                make.left.equalToSuperview().offset(AdaptSize(40))
+                make.centerY.equalToSuperview().offset(AdaptSize(-3))
+                make.size.equalTo(CGSize(width: AdaptSize(82), height: AdaptSize(28)))
+            }
+            priceView.snp.makeConstraints { (make) in
+                make.left.equalTo(customTitleLabel.snp.right)
+                make.centerY.equalTo(customTitleLabel)
+                make.size.equalTo(CGSize(width: AdaptSize(90), height: AdaptSize(28)))
+            }
+        case .lock:
+            let priceView = self.getPriceView(model)
+            self.addSubview(priceView)
+            self.customTitleLabel.snp.makeConstraints { (make) in
+                make.left.equalToSuperview().offset(AdaptSize(79))
+                make.centerY.equalToSuperview().offset(AdaptSize(-3))
+                make.size.equalTo(CGSize(width: AdaptSize(41), height: AdaptSize(28)))
+            }
+            priceView.snp.makeConstraints { (make) in
+                make.left.equalTo(customTitleLabel.snp.right)
+                make.centerY.equalTo(customTitleLabel)
+                make.size.equalTo(CGSize(width: AdaptSize(90), height: AdaptSize(28)))
+            }
         }
     }
 
     // MARK: ==== Tools ====
     private func getPriceView(_ model: YXChallengeModel) -> UIView {
+        guard let userModel = model.userModel else {
+            return UIView()
+        }
         let priceView = UIView()
         let leftBracket: UILabel = {
             let label = UILabel()
@@ -125,7 +149,7 @@ class YXChallengeStartButton: YXButton {
         }()
         let priceLabel: UILabel = {
             let label            = UILabel()
-            label.attributedText = model.status.getPriceString(model)
+            label.attributedText = userModel.gameStatus.getPriceString(model)
             return label
         }()
 

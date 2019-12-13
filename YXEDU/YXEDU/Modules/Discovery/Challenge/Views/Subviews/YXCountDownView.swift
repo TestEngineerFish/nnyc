@@ -10,13 +10,13 @@ import UIKit
 
 class YXCountDownView: UIView {
 
-    func bindData(_ time: Float) {
-        self.setCountDownView(time)
+    func bindData(_ timeLeft: Int) {
+        self.setCountDownView(timeLeft)
     }
 
     /// 设置倒计时视图
     /// - Parameter time: 单位秒
-    private func setCountDownView(_ time: Float) {
+    private func setCountDownView(_ time: Int) {
         let day = 3600 * 24
         let dayNumber = Int(time) / day
         let hourNumber  = (Int(time) % day) / 3600

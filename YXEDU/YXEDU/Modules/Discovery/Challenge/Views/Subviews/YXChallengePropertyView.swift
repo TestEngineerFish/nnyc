@@ -46,8 +46,8 @@ class YXChallengePropertyView: UIView {
         }
     }
 
-    func bindData(_ number: Int) {
-        self.numberLabel.text = "\(number)"
+    func bindData(_ coins: Int) {
+        self.numberLabel.text = "\(coins)"
         self.setNeedsLayout()
     }
 

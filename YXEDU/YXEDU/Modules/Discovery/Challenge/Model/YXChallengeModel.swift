@@ -12,26 +12,47 @@ import ObjectMapper
 
 struct YXChallengeModel: Mappable {
 
-    var time: Float      = 0 //活动剩余时间
-    var unitPrice: Int = 0 //参与一次费用
-    var lockPrice: Int = 0 //活动解锁费用
-    var ruleUrl: String?   //活动规则地址
-    var status: YXChallengeStatusType = .normal
-    var userCoins: Int = 0 //用户剩余金币
-    var backgroundImageUrl: String? //活动背景图地址
+    var bannerModel: YXChallengeBanner?
+    var gameInfo: YXChallengeGameInfo?
+    var userModel: YXChallengeUserModel?
     var rankedList: [YXChallengeUserModel] = [] // 排行榜数据列表
 
     init?(map: Map) {
     }
 
     mutating func mapping(map: Map) {
-        time      <- map[""]
-        unitPrice <- map[""]
-        lockPrice <- map[""]
-        ruleUrl   <- map[""]
-        rankedList <- map["list"]
-        backgroundImageUrl <- map[""]
+        bannerModel <- map["banners"]
+        gameInfo    <- map["game_info"]
+        userModel   <- map["user_info"]
+        rankedList  <- map["list"]
+    }
+}
 
+struct YXChallengeBanner: Mappable {
+
+    var imageUrl: String = ""
+    var redirect: String = ""
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        imageUrl <- map["img_url"]
+        redirect <- map["redirect"]
+    }
+}
+
+struct YXChallengeGameInfo: Mappable {
+
+    var unitCoin: Int   = 0
+    var unlockCoin: Int = 0
+    var timeLeft: Int   = 0
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        unitCoin   <- map["preCoin"]
+        unlockCoin <- map["unlockCoin"]
+        timeLeft   <- map["end_time"]
     }
 }
 
@@ -43,17 +64,24 @@ struct YXChallengeUserModel: Mappable {
     var time: Float        = 0
     var questionCount: Int = 0
     var bonus: Int         = 0
+    // ---- 当前用户独有字段 ----
+    var gameStatus: YXChallengeStatusType = .lock
+    var challengeResult: Int = 0
+    var myCoins: Int         = 0
 
 
     init?(map: Map) { }
 
     mutating func mapping(map: Map) {
-        ranking       <- map["ranking"]
-        name          <- map["nick"]
-        avatarStr     <- map["avatar"]
-        time          <- map["speedTime"]
-        questionCount <- map["correctNum"]
-        bonus         <- map["bonus"]
+        ranking         <- map["ranking"]
+        name            <- map["nick"]
+        avatarStr       <- map["avatar"]
+        time            <- map["speedTime"]
+        questionCount   <- map["correctNum"]
+        bonus           <- map["bonus"]
+        challengeResult <- map["state"]
+        gameStatus      <- map["status"]
+        myCoins         <- map["credits"]
     }
 
 

@@ -56,8 +56,8 @@ class YXChallengeHeaderView: UIView {
     }
 
     func bindData(_ challengeModel: YXChallengeModel) {
-        propertyView.bindData(challengeModel.userCoins)
-        countDownView.bindData(challengeModel.time)
+        propertyView.bindData(challengeModel.userModel?.myCoins ?? 0)
+        countDownView.bindData(challengeModel.gameInfo?.timeLeft ?? 0)
         startButton.bindData(challengeModel)
     }
 
