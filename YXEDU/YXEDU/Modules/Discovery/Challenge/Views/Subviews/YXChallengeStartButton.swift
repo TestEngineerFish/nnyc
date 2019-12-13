@@ -13,13 +13,13 @@ enum YXChallengeStatusType {
     case lock
     case again
 
-    func getPriceString() -> NSAttributedString {
+    func getPriceString(_ model: YXChallengeModel) -> NSAttributedString {
         var price = ""
         switch self {
         case .lock:
-            price = "100"
+            price = "\(model.lockPrice)"
         case .again:
-            price = "5/次"
+            price = "\(model.unitPrice)/次"
         default:
             price = ""
         }
@@ -52,13 +52,14 @@ class YXChallengeStartButton: YXButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bindData(_ type: YXChallengeStatusType) {
-        self.setSubview(type)
+    func bindData(_ model: YXChallengeModel) {
+
+        self.setSubview(model)
     }
 
-    private func setSubview(_ type: YXChallengeStatusType) {
+    private func setSubview(_ model: YXChallengeModel) {
         self.addSubview(customTitleLabel)
-        switch type {
+        switch model.status {
         case .normal:
             self.customTitleLabel.text = "开始学习"
             self.setBackgroundImage(UIImage(named: "challengeButton"), for: .normal)
@@ -68,7 +69,7 @@ class YXChallengeStartButton: YXButton {
         case .lock:
             self.customTitleLabel.text = "解锁"
             self.setBackgroundImage(UIImage(named: "challengeLockButton"), for: .normal)
-            let priceView = self.getPriceView(type)
+            let priceView = self.getPriceView(model)
             self.addSubview(priceView)
             self.customTitleLabel.snp.makeConstraints { (make) in
                 make.left.equalToSuperview().offset(AdaptSize(79))
@@ -83,7 +84,7 @@ class YXChallengeStartButton: YXButton {
         case .again:
             self.customTitleLabel.text = "再来一次"
             self.setBackgroundImage(UIImage(named: "challengeButton"), for: .normal)
-            let priceView = self.getPriceView(type)
+            let priceView = self.getPriceView(model)
             self.addSubview(priceView)
             self.customTitleLabel.snp.makeConstraints { (make) in
                 make.left.equalToSuperview().offset(AdaptSize(40))
@@ -99,7 +100,7 @@ class YXChallengeStartButton: YXButton {
     }
 
     // MARK: ==== Tools ====
-    private func getPriceView(_ type: YXChallengeStatusType) -> UIView {
+    private func getPriceView(_ model: YXChallengeModel) -> UIView {
         let priceView = UIView()
         let leftBracket: UILabel = {
             let label = UILabel()
@@ -124,7 +125,7 @@ class YXChallengeStartButton: YXButton {
         }()
         let priceLabel: UILabel = {
             let label            = UILabel()
-            label.attributedText = type.getPriceString()
+            label.attributedText = model.status.getPriceString(model)
             return label
         }()
 

@@ -38,13 +38,6 @@ class YXChallengeHeaderView: UIView {
         return button
     }()
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        propertyView.bindData(100000)
-        countDownView.bindData(368200)
-        startButton.bindData(.again)
-    }
-
     var gameRuleButton: YXButton = {
         let button = YXButton()
         button.setTitle("查看游戏规则", for: .normal)
@@ -60,6 +53,12 @@ class YXChallengeHeaderView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func bindData(_ challengeModel: YXChallengeModel) {
+        propertyView.bindData(challengeModel.userCoins)
+        countDownView.bindData(challengeModel.time)
+        startButton.bindData(challengeModel)
     }
 
     private func setSubviews() {
@@ -111,9 +110,4 @@ class YXChallengeHeaderView: UIView {
             make.size.equalTo(CGSize(width: AdaptSize(73), height: AdaptSize(17)))
         }
     }
-
-    // MARK: ==== Request ====
-
-
-
 }

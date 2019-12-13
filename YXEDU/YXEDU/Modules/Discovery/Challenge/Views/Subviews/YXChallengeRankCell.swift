@@ -29,7 +29,7 @@ class YXChallengeRankCell: UITableViewCell {
         path.addLine(to: CGPoint(x: AdaptSize(0), y: 0))
         path.addLine(to: CGPoint(x: AdaptSize(5), y: 0))
         path.close()
-        layer.path = path.cgPath
+        layer.path      = path.cgPath
         layer.fillColor = UIColor.hex(0xCF6900).cgColor
         return layer
     }()
@@ -37,7 +37,7 @@ class YXChallengeRankCell: UITableViewCell {
     var shadeView: UIView = {
         let view = UIView()
         view.isHidden = true
-        view.size = CGSize(width: AdaptSize(359), height: AdaptSize(81))
+        view.size     = CGSize(width: AdaptSize(359), height: AdaptSize(81))
         view.layer.setGradient(colors: [UIColor.hex(0xFDB832), UIColor.orange1], direction: .vertical)
         view.clipRectCorner(directionList: [.topLeft, .topRight], cornerRadius: AdaptSize(6))
         return view
@@ -50,7 +50,7 @@ class YXChallengeRankCell: UITableViewCell {
     }()
 
     var tagImageView: UIImageView = {
-        let imageView = UIImageView()
+        let imageView   = UIImageView()
         imageView.image = UIImage(named: "challengeLevelTag")
         return imageView
     }()
