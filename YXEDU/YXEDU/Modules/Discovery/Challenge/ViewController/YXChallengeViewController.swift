@@ -15,27 +15,40 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     final let kYXChallengeRankCell = "YXChallengeRankCell"
 
     var challengeModel: YXChallengeModel?
-    var tableView = UITableView()
+    var tableView = UITableView(frame: CGRect.zero, style: .grouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setSubviews()
         self.navigationController?.isNavigationBarHidden = true
-
+        self.view.backgroundColor = UIColor.hex(0xE9DDC4)
+        self.setSubviews()
+        self.requestChallengeData()
     }
 
     private func setSubviews() {
         self.view.addSubview(tableView)
         self.tableView.delegate   = self
         self.tableView.dataSource = self
+        self.tableView.separatorStyle  = .none
+        self.tableView.backgroundColor = UIColor.hex(0xE9DDC4)
         self.tableView.register(YXChallengeRankCell.classForCoder(), forCellReuseIdentifier: kYXChallengeRankCell)
         self.tableView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().offset(-kStatusBarHeight)
+            make.left.right.bottom.equalToSuperview()
         }
-
-
-
     }
+
+    // MARK: ==== Request ====
+    private func requestChallengeData() {
+        let request = YXChallengeRequest.challengeModel(nil, flag: "")
+        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
+            self.challengeModel = response.data
+            self.tableView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error)")
+        }
+    }
+
 
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,9 +56,13 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.addSubview(headerView)
-        headerView.addSubview(top3View)
+        guard let model = self.challengeModel else {
+            return nil
+        }
+        let view = UIView()
+        view.backgroundColor = UIColor.hex(0xE9DDC4)
+        view.addSubview(headerView)
+        view.addSubview(top3View)
         headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(AdaptSize(297))
@@ -55,13 +72,12 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(AdaptSize(-26))
             make.top.equalTo(headerView.snp.bottom).offset(AdaptSize(-20))
-            make.height.equalTo(AdaptSize(205))
+            make.bottom.equalToSuperview()
         }
-        return headerView
-    }
-
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        <#code#>
+        headerView.bindData(model)
+        let top3ModelList = Array(model.rankedList.prefix(3))
+        top3View.bindData(top3ModelList)
+        return view
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,6 +86,13 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         }
         let userModel = model.rankedList[indexPath.row]
         cell.bindData(userModel)
+        if indexPath.row == 0 {
+            cell.showBorderView()
+        } else if indexPath.row == 1 {
+            cell.showArrowLayer()
+        } else if indexPath.row == model.rankedList.count - 1 {
+            cell.showBottomRadius()
+        }
         return cell
     }
 

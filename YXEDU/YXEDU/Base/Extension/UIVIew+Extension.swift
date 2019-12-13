@@ -274,7 +274,7 @@ extension UIView {
             bezierPath.move(to: CGPoint(x: 0, y: radius))
             bezierPath.addArc(withCenter: CGPoint(x: radius, y: radius), radius: radius, startAngle: .pi, endAngle: .pi * 1.5, clockwise: true)
         } else {
-            bezierPath.addLine(to: origin)
+            bezierPath.addLine(to: CGPoint.zero)
         }
         // 如果右上角需要绘制
         if directionList.contains(.topRight) {

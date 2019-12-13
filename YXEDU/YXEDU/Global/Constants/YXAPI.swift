@@ -50,11 +50,17 @@ struct YXAPI {
 
     //MARK: - 单词列表模块
     struct WordList {
-        // 收藏、已学、未学列表
-        static let wordList = "api/v1/word/getnotelist"
+        /// 收藏、已学、未学列表
+        static let wordList = "/api/v1/word/getnotelist"
         
-        // 错词
-        static let wrongWordList = "api/v1/word/getwronglist"
+        /// 错词
+        static let wrongWordList = "/api/v1/word/getwronglist"
+    }
+
+    // MARK: - 挑战模块
+    struct Challenge {
+        /// 挑战页面接口
+        static let challengeModel = "/api/v1/game/ranking"
     }
     
     //MARK: - 设置模块

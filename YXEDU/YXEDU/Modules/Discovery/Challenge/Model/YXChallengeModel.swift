@@ -12,7 +12,7 @@ import ObjectMapper
 
 struct YXChallengeModel: Mappable {
 
-    var time: Int      = 0 //活动剩余时间
+    var time: Float      = 0 //活动剩余时间
     var unitPrice: Int = 0 //参与一次费用
     var lockPrice: Int = 0 //活动解锁费用
     var ruleUrl: String?   //活动规则地址
@@ -29,6 +29,7 @@ struct YXChallengeModel: Mappable {
         unitPrice <- map[""]
         lockPrice <- map[""]
         ruleUrl   <- map[""]
+        rankedList <- map["list"]
         backgroundImageUrl <- map[""]
 
     }
@@ -36,17 +37,23 @@ struct YXChallengeModel: Mappable {
 
 struct YXChallengeUserModel: Mappable {
 
-    var rank: Int?
-    var name: String = ""
-    var avatarStr: String = ""
-    var time: Int = 0
+    var ranking: Int       = 0
+    var name: String       = ""
+    var avatarStr: String  = ""
+    var time: Float        = 0
     var questionCount: Int = 0
+    var bonus: Int         = 0
 
 
     init?(map: Map) { }
 
     mutating func mapping(map: Map) {
-
+        ranking       <- map["ranking"]
+        name          <- map["nick"]
+        avatarStr     <- map["avatar"]
+        time          <- map["speedTime"]
+        questionCount <- map["correctNum"]
+        bonus         <- map["bonus"]
     }
 
 

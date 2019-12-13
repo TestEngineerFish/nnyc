@@ -53,6 +53,17 @@ class YXChallengeRankTop3View: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func bindData(_ rankedList: [YXChallengeUserModel]) {
+        if rankedList.count > 0 {
+            self.firstView.bindData(rankedList[0])
+        }
+        if rankedList.count > 1 {
+            self.secondView.bindData(rankedList[1])
+        }
+        if rankedList.count > 2 {
+            self.thirdView.bindData(rankedList[2])
+        }
+    }
 
     private func setSubviews() {
         self.addSubview(backgroundImageView)
