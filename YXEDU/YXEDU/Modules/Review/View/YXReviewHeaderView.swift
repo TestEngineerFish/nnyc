@@ -49,8 +49,12 @@ class YXReviewHeaderView: YXView {
     
     var favoriteButton = UIButton()
     var wrongWordButton = UIButton()
-        
     
+    
+    var reviewPlanLabel = UILabel()
+    var createReviewPlanButton = UIButton()
+    
+            
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
@@ -66,6 +70,9 @@ class YXReviewHeaderView: YXView {
         self.addSubview(imageView)
         self.addSubview(favoriteButton)
         self.addSubview(wrongWordButton)
+        self.addSubview(reviewPlanLabel)
+        self.addSubview(createReviewPlanButton)
+        
         
         bgView.addSubview(contentView)
         
@@ -94,6 +101,7 @@ class YXReviewHeaderView: YXView {
         
         contentView.addSubview(reviewButton)
         contentView.addSubview(subTitleLabel)
+                
     }
     
     
@@ -181,6 +189,21 @@ class YXReviewHeaderView: YXView {
         wrongWordButton.setTitleColor(UIColor.brown1, for: .normal)
         wrongWordButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
         wrongWordButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -60, bottom: 0, right: 0)
+        
+        
+        reviewPlanLabel.font = UIFont.mediumFont(ofSize: 15)
+        reviewPlanLabel.textColor = UIColor.black1
+        reviewPlanLabel.text = "复习计划"
+        
+        createReviewPlanButton.layer.masksToBounds = true
+        createReviewPlanButton.layer.cornerRadius = 12.5
+        createReviewPlanButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
+        createReviewPlanButton.setImage(UIImage(named: ""), for: .normal)
+        createReviewPlanButton.setTitle("制定复习计划", for: .normal)
+        createReviewPlanButton.setTitleColor(UIColor.white, for: .normal)
+        createReviewPlanButton.titleLabel?.font = UIFont.regularFont(ofSize: 12)
+        createReviewPlanButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
+        createReviewPlanButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -70, bottom: 0, right: 0)
     }
     
     
@@ -339,6 +362,21 @@ class YXReviewHeaderView: YXView {
             make.right.equalTo(-22)
             make.width.equalTo(160)
             make.height.equalTo(51)
+        }
+        
+        
+        reviewPlanLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(favoriteButton.snp.bottom).offset(25)
+            make.left.equalTo(22)
+            make.width.equalTo(61)
+            make.height.equalTo(21)
+        }
+        
+        createReviewPlanButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(reviewPlanLabel)
+            make.right.equalTo(-22)
+            make.width.equalTo(104)
+            make.height.equalTo(25)
         }
         
         super.layoutIfNeeded()

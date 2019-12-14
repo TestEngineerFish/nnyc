@@ -28,8 +28,7 @@ class YXReviewPlanTableView: YXView {
         
         self.addSubview(titleLabel)
         self.addSubview(createButton)
-        
-        
+                
     }
     
     

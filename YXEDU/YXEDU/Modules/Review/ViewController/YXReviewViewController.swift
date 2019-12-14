@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXReviewViewController: YXViewController {
+class YXReviewViewController: YXTableViewController {
     
     
     var headerView = YXReviewHeaderView()
@@ -30,7 +30,7 @@ class YXReviewViewController: YXViewController {
         headerView.snp.makeConstraints { (make) in
             make.top.equalTo(41 + kSafeBottomMargin)
             make.left.right.equalToSuperview()
-            make.height.equalTo(400)
+            make.height.equalTo(453.5)
         }
         
         

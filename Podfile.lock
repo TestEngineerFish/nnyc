@@ -28,6 +28,7 @@ PODS:
   - CocoaLumberjack/Swift (3.6.0):
     - CocoaLumberjack/Core
   - DACircularProgress (2.3.1)
+  - DZNEmptyDataSet (1.8.1)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -97,6 +98,7 @@ DEPENDENCIES:
   - CocoaLumberjack
   - CocoaLumberjack/Swift
   - DACircularProgress (~> 2.3.1)
+  - DZNEmptyDataSet
   - FMDB
   - FSCalendar
   - GrowingAutoTrackKit
@@ -144,6 +146,7 @@ SPEC REPOS:
     - CocoaAsyncSocket
     - CocoaLumberjack
     - DACircularProgress
+    - DZNEmptyDataSet
     - FMDB
     - FSCalendar
     - Growing
@@ -194,6 +197,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaLumberjack: 78b0c238666f4f58db069738ec176f4519557516
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   FSCalendar: 3a5ed3636e2ba1b83ebebfcf0c2603105a6f5efe
   Growing: e6f4c1fc6aaee7c6531229c752ca13da44f92e66
@@ -234,6 +238,6 @@ SPEC CHECKSUMS:
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 58ac3a57874ba7eb5be83df0dd6f6dd7d8d969ca
+PODFILE CHECKSUM: 79459e0ebc224e75cea04005c2989477adbba610
 
 COCOAPODS: 1.8.4

@@ -658,13 +658,18 @@
 		EEACEB1F239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */; };
 		EEACEB21239F9DBA0036B3A2 /* YXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */; };
 		EEACEB2423A1DEC20036B3A2 /* YXNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB2323A1DEC20036B3A2 /* YXNotification.swift */; };
-		EEACEB2823A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB2723A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift */; };
 		EEACEB2A23A1DFB20036B3A2 /* YYCustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB2923A1DFB20036B3A2 /* YYCustomNavigationBar.swift */; };
 		EEACEB3823A22B1E0036B3A2 /* YYNetworkService+Monitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB3323A22B1D0036B3A2 /* YYNetworkService+Monitor.swift */; };
 		EEACEB3923A22B1E0036B3A2 /* YXNetworkAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB3523A22B1E0036B3A2 /* YXNetworkAuthManager.swift */; };
 		EEACEB3A23A22B1E0036B3A2 /* ZYNetworkAccessibity.m in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB3623A22B1E0036B3A2 /* ZYNetworkAccessibity.m */; };
 		EEACEB3C23A22B8B0036B3A2 /* YYTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB3B23A22B8B0036B3A2 /* YYTaskRequest.swift */; };
 		EEACEB3E23A287850036B3A2 /* YXReviewPlanTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB3D23A287850036B3A2 /* YXReviewPlanTableView.swift */; };
+		EEACEB5323A4F0E40036B3A2 /* YXTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB5123A4F0E30036B3A2 /* YXTableViewController.swift */; };
+		EEACEB5423A4F0E40036B3A2 /* YXViewController+CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB5223A4F0E30036B3A2 /* YXViewController+CustomNavigationBar.swift */; };
+		EEACEB5623A4F0F30036B3A2 /* YYScrollRefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB5523A4F0F30036B3A2 /* YYScrollRefreshAnimator.swift */; };
+		EEACEB5B23A4F1060036B3A2 /* YYRefrshHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB5823A4F1060036B3A2 /* YYRefrshHeaderView.swift */; };
+		EEACEB5C23A4F1060036B3A2 /* YYRefreshFrashContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB5923A4F1060036B3A2 /* YYRefreshFrashContentView.swift */; };
+		EEACEB5D23A4F1060036B3A2 /* YYRefrshFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB5A23A4F1060036B3A2 /* YYRefrshFooterView.swift */; };
 		EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB147242372E6F400AC329C /* YYFileManager.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
@@ -1724,7 +1729,6 @@
 		EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewPlanTableViewCell.swift; sourceTree = "<group>"; };
 		EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXViewController.swift; sourceTree = "<group>"; };
 		EEACEB2323A1DEC20036B3A2 /* YXNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNotification.swift; sourceTree = "<group>"; };
-		EEACEB2723A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YWBaseViewController+CustomNavigationBar.swift"; sourceTree = "<group>"; };
 		EEACEB2923A1DFB20036B3A2 /* YYCustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYCustomNavigationBar.swift; sourceTree = "<group>"; };
 		EEACEB3323A22B1D0036B3A2 /* YYNetworkService+Monitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YYNetworkService+Monitor.swift"; sourceTree = "<group>"; };
 		EEACEB3523A22B1E0036B3A2 /* YXNetworkAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXNetworkAuthManager.swift; sourceTree = "<group>"; };
@@ -1732,6 +1736,12 @@
 		EEACEB3723A22B1E0036B3A2 /* ZYNetworkAccessibity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYNetworkAccessibity.h; sourceTree = "<group>"; };
 		EEACEB3B23A22B8B0036B3A2 /* YYTaskRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYTaskRequest.swift; sourceTree = "<group>"; };
 		EEACEB3D23A287850036B3A2 /* YXReviewPlanTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewPlanTableView.swift; sourceTree = "<group>"; };
+		EEACEB5123A4F0E30036B3A2 /* YXTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXTableViewController.swift; sourceTree = "<group>"; };
+		EEACEB5223A4F0E30036B3A2 /* YXViewController+CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YXViewController+CustomNavigationBar.swift"; sourceTree = "<group>"; };
+		EEACEB5523A4F0F30036B3A2 /* YYScrollRefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYScrollRefreshAnimator.swift; sourceTree = "<group>"; };
+		EEACEB5823A4F1060036B3A2 /* YYRefrshHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYRefrshHeaderView.swift; sourceTree = "<group>"; };
+		EEACEB5923A4F1060036B3A2 /* YYRefreshFrashContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYRefreshFrashContentView.swift; sourceTree = "<group>"; };
+		EEACEB5A23A4F1060036B3A2 /* YYRefrshFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYRefrshFooterView.swift; sourceTree = "<group>"; };
 		EEB147242372E6F400AC329C /* YYFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYFileManager.swift; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
@@ -3350,6 +3360,7 @@
 			children = (
 				EE5EF22223273DD900655654 /* BSUtils.h */,
 				EE5EF22323273DD900655654 /* BSUtils.m */,
+				EEACEB5723A4F1060036B3A2 /* RefreshView */,
 				EE5EF1C123273BAD00655654 /* YRNetwork */,
 				EE5EF1D423273BAE00655654 /* YRUtils */,
 			);
@@ -5048,6 +5059,7 @@
 				224A2FCE2382353F00AD99B0 /* YXLabel.swift */,
 				EE77210D237C2B6E00CD632E /* YXView.swift */,
 				EE7720FF2379333000CD632E /* YXKVOImageView.swift */,
+				EEACEB5523A4F0F30036B3A2 /* YYScrollRefreshAnimator.swift */,
 				EEACEB2923A1DFB20036B3A2 /* YYCustomNavigationBar.swift */,
 			);
 			path = View;
@@ -5056,10 +5068,11 @@
 		EEACEB2623A1DF340036B3A2 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EEACEB5123A4F0E30036B3A2 /* YXTableViewController.swift */,
+				EEACEB5223A4F0E30036B3A2 /* YXViewController+CustomNavigationBar.swift */,
 				EE5E025B2327793600655654 /* BSRootVC.h */,
 				EE5E025E2327793700655654 /* BSRootVC.m */,
 				EEACEB20239F9DBA0036B3A2 /* YXViewController.swift */,
-				EEACEB2723A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift */,
 				EE5E025D2327793700655654 /* YXNavigationController.h */,
 				EE5E025A2327793600655654 /* YXNavigationController.m */,
 			);
@@ -5074,6 +5087,16 @@
 				EEACEB3623A22B1E0036B3A2 /* ZYNetworkAccessibity.m */,
 			);
 			path = Check;
+			sourceTree = "<group>";
+		};
+		EEACEB5723A4F1060036B3A2 /* RefreshView */ = {
+			isa = PBXGroup;
+			children = (
+				EEACEB5823A4F1060036B3A2 /* YYRefrshHeaderView.swift */,
+				EEACEB5923A4F1060036B3A2 /* YYRefreshFrashContentView.swift */,
+				EEACEB5A23A4F1060036B3A2 /* YYRefrshFooterView.swift */,
+			);
+			path = RefreshView;
 			sourceTree = "<group>";
 		};
 		EEB147232372E6F400AC329C /* FileManager */ = {
@@ -5488,6 +5511,7 @@
 				EE5E007F23274FEB00655654 /* YXNinePalaceKeyBoardView.m in Sources */,
 				2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */,
 				EE7721002379333100CD632E /* YXKVOImageView.swift in Sources */,
+				EEACEB5623A4F0F30036B3A2 /* YYScrollRefreshAnimator.swift in Sources */,
 				EE5E0178232754FA00655654 /* JPushManager.m in Sources */,
 				EE5E00B123274FEB00655654 /* YXMissonTableViewCell.m in Sources */,
 				EE7E1D062363678E00600A88 /* YXQuestionViewFactory.swift in Sources */,
@@ -5530,6 +5554,7 @@
 				223D2685239B4A70008DED9E /* BPItemHeaderView.swift in Sources */,
 				224352DD23A4B92400F278E6 /* YXGameQuestionView.swift in Sources */,
 				EEACEB3823A22B1E0036B3A2 /* YYNetworkService+Monitor.swift in Sources */,
+				EEACEB5423A4F0E40036B3A2 /* YXViewController+CustomNavigationBar.swift in Sources */,
 				EE5E004623274FEB00655654 /* YXWordDetailChoiceCell.m in Sources */,
 				7786D61E236C66A800741DCE /* YXSeleceUnitView.swift in Sources */,
 				EE5E002E23274FEB00655654 /* YXCurrentSeletBookInfo.m in Sources */,
@@ -5704,6 +5729,7 @@
 				22298C00237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift in Sources */,
 				EE54F7D02362AA3100EC605A /* YXWordExerciseModel.swift in Sources */,
 				77F69A68236149B300E55185 /* YXAddBookViewController.swift in Sources */,
+				EEACEB5C23A4F1060036B3A2 /* YYRefreshFrashContentView.swift in Sources */,
 				EE5E001F23274FEB00655654 /* YXCreateWordBookVC.m in Sources */,
 				EE5E0171232754FA00655654 /* YXCrashReport.m in Sources */,
 				77F69A7623616CE600E55185 /* YXDesignableLabel.swift in Sources */,
@@ -5830,11 +5856,13 @@
 				EE5E0231232756C000655654 /* XAreaLineChartConfiguration.m in Sources */,
 				EEACEB3A23A22B1E0036B3A2 /* ZYNetworkAccessibity.m in Sources */,
 				EE4E6B1E2398F04A002B845A /* YXExerciseDataManager+ParserData.swift in Sources */,
+				EEACEB5323A4F0E40036B3A2 /* YXTableViewController.swift in Sources */,
 				EE5E0232232756C000655654 /* XNormalLineChartConfiguration.m in Sources */,
 				EE5E002F23274FEB00655654 /* YXMyWordBookCell.m in Sources */,
 				EE5E008223274FEB00655654 /* YXWordCharacterViewOld.m in Sources */,
 				223D2688239B4BB7008DED9E /* MakeReviewPlanViewController.swift in Sources */,
 				224352DF23A4B93600F278E6 /* YXGameAnswerView.swift in Sources */,
+				EEACEB5D23A4F1060036B3A2 /* YYRefrshFooterView.swift in Sources */,
 				EE5E003223274FEB00655654 /* YXSelectMyWordCell.m in Sources */,
 				EED3D41B2331D04B00121218 /* YRLocatorProvider.m in Sources */,
 				2205A92E23619F7500C6E674 /* YXAnswerSelectLettersView.swift in Sources */,
@@ -5911,7 +5939,6 @@
 				EE1E4AA623694D59007D248F /* YXFillWordAccordingToChinese_ConnectionExerciseView.swift in Sources */,
 				EE5E005723274FEB00655654 /* YXUnitDetailVC.m in Sources */,
 				7709753323992FF70071A779 /* YXWordDetailFeaturedView.swift in Sources */,
-				EEACEB2823A1DF8B0036B3A2 /* YWBaseViewController+CustomNavigationBar.swift in Sources */,
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
 				224A2FC7238233E100AD99B0 /* YXTaskMapView.swift in Sources */,
 				EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */,
@@ -5965,6 +5992,7 @@
 				2205A94B23630CD900C6E674 /* String+Extension.swift in Sources */,
 				EE3DABA02375124B00B2FF40 /* YXWordBookDaoImpl.swift in Sources */,
 				EE5E0176232754FA00655654 /* WXApiManager.m in Sources */,
+				EEACEB5B23A4F1060036B3A2 /* YYRefrshHeaderView.swift in Sources */,
 				EE5E005423274FEB00655654 /* YXUnitDetailViewModel.m in Sources */,
 				EE54F7E02362AA3100EC605A /* YXImageQuestionView.swift in Sources */,
 				EE5E003823274FEB00655654 /* YXTopActionView.m in Sources */,
