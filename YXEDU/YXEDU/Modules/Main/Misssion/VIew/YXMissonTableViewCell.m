@@ -7,14 +7,13 @@
 //
 
 #import "YXMissonTableViewCell.h"
-#import "YXDescoverTitleView.h"
 #import "YXMissionCollectionViewCell.h"
 
 @interface YXMissonTableViewCell () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, YXMissionCollectionViewCellDelegate>
 
 @property (nonatomic, strong) UICollectionView *missionCollectionView;
 
-@property (nonatomic, strong)  YXDescoverTitleView *titleView;
+//@property (nonatomic, strong)  YXDescoverTitleView *titleView;
 
 @end
 
@@ -39,7 +38,7 @@
 
 - (void)setTitle:(NSString *)title {
     _title = title;
-    _titleView.titleLabel.text = _title;
+//    _titleView.titleLabel.text = _title;
 }
 
 - (void)setupUI {
@@ -50,10 +49,10 @@
     line.backgroundColor = [UIColor colorWithRed:233/255.0 green:239/255.0 blue:244/255.0 alpha:1.0].CGColor;
     [self.layer addSublayer:line];
     
-    _titleView = [[YXDescoverTitleView alloc] init];
-    _titleView.frame = CGRectMake(AdaptSize(15), AdaptSize(30), AdaptSize(150), AdaptSize(15));
-    //_titleView.titleLabel.text = _title;
-    [self addSubview:_titleView];
+//    _titleView = [[YXDescoverTitleView alloc] init];
+//    _titleView.frame = CGRectMake(AdaptSize(15), AdaptSize(30), AdaptSize(150), AdaptSize(15));
+//    //_titleView.titleLabel.text = _title;
+//    [self addSubview:_titleView];
     
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
     layout.itemSize = MakeAdaptCGSize(135, 180);

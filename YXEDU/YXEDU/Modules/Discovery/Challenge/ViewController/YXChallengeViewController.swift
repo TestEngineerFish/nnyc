@@ -40,13 +40,21 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Request ====
     private func requestChallengeData() {
-        let request = YXChallengeRequest.challengeModel(nil, flag: "")
+        let request = YXChallengeRequest.challengeModel(flag: "")
         YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
             self.challengeModel = response.data
             self.tableView.reloadData()
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
         }
+    }
+
+    // MARK: ==== Event ====
+    @objc private func playGame(){
+        self.tabBarController?.hidesBottomBarWhenPushed = true
+        let vc = YXGameViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        self.tabBarController?.hidesBottomBarWhenPushed = false
     }
 
 
@@ -63,6 +71,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         view.backgroundColor = UIColor.hex(0xE9DDC4)
         view.addSubview(headerView)
         view.addSubview(top3View)
+        headerView.startButton.addTarget(self, action: #selector(playGame), for: .touchUpInside)
         headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(AdaptSize(297))

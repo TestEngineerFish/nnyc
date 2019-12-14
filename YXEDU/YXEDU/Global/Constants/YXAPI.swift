@@ -61,6 +61,8 @@ struct YXAPI {
     struct Challenge {
         /// 挑战页面接口
         static let challengeModel = "/api/v1/game/ranking"
+        /// 开始游戏接口
+        static let playGame = "/api/v1/game/starting"
     }
     
     //MARK: - 设置模块

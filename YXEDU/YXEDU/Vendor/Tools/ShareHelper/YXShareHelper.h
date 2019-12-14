@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "YXPunchModel.h"
 #import "YXShareImageGenerator.h"
-#import "YXGameResultModel.h"
 @interface YXShareHelper : NSObject
 + (void)shareImage:(UIImage *)image
         toPaltform:(YXSharePalform)platform

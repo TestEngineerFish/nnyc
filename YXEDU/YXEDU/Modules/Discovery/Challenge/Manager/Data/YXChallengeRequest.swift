@@ -9,13 +9,14 @@
 import Foundation
 
 public enum YXChallengeRequest: YYBaseRequest {
-    case challengeModel(_ id: Int?, flag: String)
+    case challengeModel(flag: String)
+    case playGame
 }
 
 extension YXChallengeRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .challengeModel:
+        case .challengeModel, .playGame:
             return .get
         }
     }
@@ -26,6 +27,8 @@ extension YXChallengeRequest {
         switch self {
         case .challengeModel:
             return YXAPI.Challenge.challengeModel
+        case .playGame:
+            return YXAPI.Challenge.playGame
         }
     }
 }
@@ -33,8 +36,10 @@ extension YXChallengeRequest {
 extension YXChallengeRequest {
     public var parameters: [String : Any?]? {
         switch self {
-        case .challengeModel(let id, let flag):
-            return ["gameId": id, "flag":flag]
+        case .challengeModel(let flag):
+            return ["gameId": 1, "flag":flag]
+        case .playGame:
+            return ["gameId": 1]
         }
     }
 }

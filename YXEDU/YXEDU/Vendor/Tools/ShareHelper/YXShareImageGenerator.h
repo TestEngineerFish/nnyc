@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "YXPunchModel.h"
-#import "YXGameResultModel.h"
 @interface YXShareImageGenerator : NSObject
 + (UIImage *)generateResultImage:(YXPunchModel *)model
                             link:(NSString *)link;
@@ -21,7 +20,7 @@
                            link:(NSString *)link;
 + (UIImage *)generatorQRCodeImageWith:(NSString *)info;
 
-+ (UIImage *)generateGameResultImage:(YXGameResultModel *)model
-                            platform:(YXSharePalform)platform;
+//+ (UIImage *)generateGameResultImage:(YXGameResultModel *)model
+//                            platform:(YXSharePalform)platform;
 @end
 
