@@ -56,6 +56,12 @@ struct YXChallengeGameInfo: Mappable {
     }
 }
 
+enum YXChallengeResultType: Int {
+    case success = 1
+    case fail    = 2
+    case notList = 3
+}
+
 struct YXChallengeUserModel: Mappable {
 
     var ranking: Int       = 0
@@ -65,9 +71,9 @@ struct YXChallengeUserModel: Mappable {
     var questionCount: Int = 0
     var bonus: Int         = 0
     // ---- 当前用户独有字段 ----
-    var gameStatus: YXChallengeStatusType = .lock
-    var challengeResult: Int = 0
-    var myCoins: Int         = 0
+    var gameStatus: YXChallengeStatusType      = .lock
+    var challengeResult: YXChallengeResultType = .notList
+    var myCoins: Int = 0
 
 
     init?(map: Map) { }

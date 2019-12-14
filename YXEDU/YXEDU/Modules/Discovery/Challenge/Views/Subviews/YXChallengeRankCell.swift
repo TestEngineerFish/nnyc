@@ -120,6 +120,7 @@ class YXChallengeRankCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.hex(0xE9DDC4)
+        self.selectionStyle = .none
         self.setSubviews()
     }
     
@@ -129,27 +130,66 @@ class YXChallengeRankCell: UITableViewCell {
 
     // MARK: ==== Update UI ====
     /// 显示遮罩
-    func showBorderView() {
+    func showCnallengeResultView(_ userModel: YXChallengeUserModel) {
         self.shadeView.isHidden     = false
         self.levelLabel.isHidden    = true
         self.customContentView.backgroundColor = .clear
-        self.nameLabel.textColor        = UIColor.white
-        self.descriptionLabel.textColor = UIColor.white
-        // 部分视图放大
+        switch userModel.challengeResult {
+        case .success:
+            self.nameLabel.text           = userModel.name
+            self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
+            self.nameLabel.textColor        = UIColor.white
+            self.descriptionLabel.textColor = UIColor.white
+            self.goldIconImageView.isHidden = false
+            self.bonusLabel.isHidden        = false
+            self.goldIconImageView.snp.updateConstraints { (make) in
+                make.size.equalTo(CGSize(width: AdaptSize(28), height: AdaptSize(28)))
+            }
+        case .fail:
+            self.nameLabel.text             = "挑战失败"
+            self.descriptionLabel.text      = "别灰心，再接再厉哦"
+            self.nameLabel.textColor        = UIColor.hex(0xFFF7EB)
+            self.descriptionLabel.textColor = UIColor.hex(0xFFF7EB)
+            self.goldIconImageView.isHidden = true
+            self.bonusLabel.isHidden        = true
+            self.shadeView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
+        case .notList:
+            self.nameLabel.text             = "本期内尚未完成过学习计划"
+            self.descriptionLabel.text      = "无法参加挑战"
+            self.nameLabel.textColor        = UIColor.hex(0xFFF7EB)
+            self.descriptionLabel.textColor = UIColor.hex(0xFFF7EB)
+            self.goldIconImageView.isHidden = true
+            self.bonusLabel.isHidden        = true
+            self.shadeView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
+        }
+
         self.avatarImageView.layer.cornerRadius = AdaptSize(47/2)
         self.avatarImageView.snp.updateConstraints { (make) in
             make.width.equalTo(AdaptSize(47))
             make.height.equalTo(AdaptSize(47))
         }
-        self.goldIconImageView.snp.updateConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(28), height: AdaptSize(28)))
+        self.nameLabel.sizeToFit()
+        self.nameLabel.snp.updateConstraints { (make) in
+            make.width.equalTo(self.nameLabel.width)
+        }
+        self.descriptionLabel.sizeToFit()
+        self.descriptionLabel.snp.updateConstraints { (make) in
+            make.width.equalTo(self.descriptionLabel.width)
         }
     }
 
     /// 显示尖角
-    func showArrowLayer() {
+    func showArrowLayer(_ userModel: YXChallengeUserModel) {
         self.leftTopLayer.isHidden  = false
         self.rightTopLayer.isHidden = false
+        switch userModel.challengeResult {
+        case .success:
+            self.leftTopLayer.fillColor = UIColor.hex(0xCF6900).cgColor
+            self.rightTopLayer.fillColor = UIColor.hex(0xCF6900).cgColor
+        case .fail, .notList:
+            self.leftTopLayer.fillColor = UIColor.hex(0xA47528).cgColor
+            self.rightTopLayer.fillColor = UIColor.hex(0xA47528).cgColor
+        }
     }
 
     /// 显示底部圆角
@@ -157,13 +197,13 @@ class YXChallengeRankCell: UITableViewCell {
         self.customContentView.clipRectCorner(directionList: [.bottomLeft, .bottomRight], cornerRadius: AdaptSize(14))
     }
 
-    func bindData(_ model: YXChallengeUserModel) {
-        self.levelHighlightLabel.text = "\(model.ranking)"
-        self.levelLabel.text          = "\(model.ranking)"
-        self.nameLabel.text           = model.name
-        self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", model.questionCount, model.time)
-        self.bonusLabel.text          = "+\(model.bonus)"
-        self.avatarImageView.showImage(with: model.avatarStr)
+    func bindData(_ userModel: YXChallengeUserModel) {
+        self.levelHighlightLabel.text = "\(userModel.ranking)"
+        self.levelLabel.text          = "\(userModel.ranking)"
+        self.nameLabel.text           = userModel.name
+        self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
+        self.bonusLabel.text          = "+\(userModel.bonus)"
+        self.avatarImageView.showImage(with: userModel.avatarStr)
 
         self.levelHighlightLabel.sizeToFit()
         self.tagImageView.snp.updateConstraints { (make) in

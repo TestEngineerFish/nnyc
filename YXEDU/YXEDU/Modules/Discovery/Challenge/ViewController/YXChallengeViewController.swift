@@ -84,14 +84,20 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         guard let model = self.challengeModel, let cell = tableView.dequeueReusableCell(withIdentifier: kYXChallengeRankCell) as? YXChallengeRankCell else {
             return UITableViewCell()
         }
-        let userModel = model.rankedList[indexPath.row]
-        cell.bindData(userModel)
         if indexPath.row == 0 {
-            cell.showBorderView()
-        } else if indexPath.row == 1 {
-            cell.showArrowLayer()
-        } else if indexPath.row == model.rankedList.count - 1 {
-            cell.showBottomRadius()
+            guard let userModel = model.userModel else {
+                return cell
+            }
+            cell.bindData(userModel)
+            cell.showCnallengeResultView(userModel)
+        } else {
+            let otherUserModel = model.rankedList[indexPath.row]
+            cell.bindData(otherUserModel)
+            if indexPath.row == 1 {
+                cell.showArrowLayer(otherUserModel)
+            } else if indexPath.row == model.rankedList.count - 1 {
+                cell.showBottomRadius()
+            }
         }
         return cell
     }
@@ -106,5 +112,9 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         } else {
             return AdaptSize(67)
         }
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.requestChallengeData()
     }
 }
