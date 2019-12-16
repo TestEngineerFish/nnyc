@@ -13,8 +13,9 @@ class YXGameViewController: YXViewController {
     var gameModel: YXGameModel?
     var currentQuestionIndex = 0
 
-    var headerView = YXGameHeaderView()
+    var headerView   = YXGameHeaderView()
     var questionView = YXGameQuestionView()
+    var answerView   = YXGameAnswerView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,7 @@ class YXGameViewController: YXViewController {
         self.view.addSubview(backgroundImageView)
         self.view.addSubview(headerView)
         self.view.addSubview(questionView)
+        self.view.addSubview(answerView)
 
         backgroundImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
@@ -48,11 +50,14 @@ class YXGameViewController: YXViewController {
             make.left.top.right.equalToSuperview()
             make.height.equalTo(AdaptSize(60))
         }
-
         questionView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(headerView.snp.bottom)
             make.size.equalTo(CGSize(width: AdaptSize(256), height: AdaptSize(183)))
+        }
+        answerView.snp.makeConstraints { (make) in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(questionView.snp.bottom).offset(AdaptSize(21))
         }
 
         headerView.backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
@@ -74,8 +79,10 @@ class YXGameViewController: YXViewController {
         guard let gameModel = self.gameModel, self.currentQuestionIndex < gameModel.wordModelList.count else {
             return
         }
+        
         let wordModel = gameModel.wordModelList[currentQuestionIndex]
         questionView.bindData(wordModel)
+        answerView.bindData(wordModel)
         currentQuestionIndex += 1
     }
 

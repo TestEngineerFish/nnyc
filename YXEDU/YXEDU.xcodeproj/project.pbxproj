@@ -58,6 +58,7 @@
 		224352DF23A4B93600F278E6 /* YXGameAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352DE23A4B93600F278E6 /* YXGameAnswerView.swift */; };
 		224352E123A4B94300F278E6 /* YXGameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352E023A4B94300F278E6 /* YXGameHeaderView.swift */; };
 		224352E323A4D26100F278E6 /* YXGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352E223A4D26100F278E6 /* YXGameModel.swift */; };
+		224352E523A5089E00F278E6 /* YXGameQuestionSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352E423A5089E00F278E6 /* YXGameQuestionSubview.swift */; };
 		224529042327A82500510507 /* YYDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529032327A82500510507 /* YYDatabase.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
 		2245290C2327AE0D00510507 /* YXFMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245290B2327AE0D00510507 /* YXFMDBManager.swift */; };
@@ -741,6 +742,7 @@
 		224352DE23A4B93600F278E6 /* YXGameAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGameAnswerView.swift; sourceTree = "<group>"; };
 		224352E023A4B94300F278E6 /* YXGameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGameHeaderView.swift; sourceTree = "<group>"; };
 		224352E223A4D26100F278E6 /* YXGameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGameModel.swift; sourceTree = "<group>"; };
+		224352E423A5089E00F278E6 /* YXGameQuestionSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGameQuestionSubview.swift; sourceTree = "<group>"; };
 		224529022327A34300510507 /* YXEDU-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YXEDU-Bridging-Header.h"; sourceTree = "<group>"; };
 		224529032327A82500510507 /* YYDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabase.swift; sourceTree = "<group>"; };
 		224529082327A86A00510507 /* YYDatabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabaseConfig.swift; sourceTree = "<group>"; };
@@ -1906,6 +1908,7 @@
 			children = (
 				224352E023A4B94300F278E6 /* YXGameHeaderView.swift */,
 				224352DC23A4B92400F278E6 /* YXGameQuestionView.swift */,
+				224352E423A5089E00F278E6 /* YXGameQuestionSubview.swift */,
 				224352DE23A4B93600F278E6 /* YXGameAnswerView.swift */,
 			);
 			path = Game;
@@ -5968,6 +5971,7 @@
 				EE5E007523274FEB00655654 /* YXFillWordView.m in Sources */,
 				77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */,
 				EE5E0253232756C100655654 /* XPieItem.m in Sources */,
+				224352E523A5089E00F278E6 /* YXGameQuestionSubview.swift in Sources */,
 				EED3D4252331DE2D00121218 /* YXEvnOC.m in Sources */,
 				EE4E6B222398F04A002B845A /* YXExerciseRequest.swift in Sources */,
 				EE5E001023274FEB00655654 /* YXCareerNoteWordListModel.m in Sources */,

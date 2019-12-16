@@ -8,6 +8,28 @@
 
 import UIKit
 
+struct YXConnectionLettersConfig {
+    var itemSize   = CGSize(width: AdaptSize(48), height: AdaptSize(48))
+    var itemMargin = AdaptSize(8)
+    var itemBgImage: UIImage?
+    var itemFont = UIFont.pfSCRegularFont(withSize: AdaptSize(19.2))
+    var backgroundNormalColor   = UIColor.white
+    var backgroundSelectedColor = UIColor.orange1
+    var backgroundErrorColor    = UIColor.white
+    var backgroundRightColor    = UIColor.white
+    var backgroundDisableColor  = UIColor.white
+    var borderNormalColor       = UIColor.black6
+    var borderSelectedColor     = UIColor.orange1
+    var borderErrorColor        = UIColor.red1
+    var borderRightColor        = UIColor.green1
+    var borderDisableColor      = UIColor.black6
+    var textNormalColor         = UIColor.black1
+    var textSelectedColor       = UIColor.white
+    var textErrorColor          = UIColor.red1
+    var textRightColor          = UIColor.green1
+    var textDisableColor        = UIColor.black6
+}
+
 /// 滑动(点击)连接字母答题页面
 class YXAnswerConnectionLettersView: YXBaseAnswerView {
     
@@ -24,19 +46,21 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     var lettersArray = [String]()
     var itemNumberH: Int
     var itemNumberW: Int
-    let margin       = AdaptSize(8)
-    let itemSize     = AdaptSize(48)
+    var config: YXConnectionLettersConfig
+
     // 是否大写
     var isCapitalLetter = false
     var word = ""
     
     var util: YXFindRouteUtil?
     var pan: UIPanGestureRecognizer?
-    
-    override init(exerciseModel: YXWordExerciseModel) {
+
+    init(exerciseModel: YXWordExerciseModel, config: YXConnectionLettersConfig = YXConnectionLettersConfig()) {
         itemNumberH = exerciseModel.question?.row ?? 0
         itemNumberW = exerciseModel.question?.column ?? 0
+        self.config = config
         super.init(exerciseModel: exerciseModel)
+        self.backgroundColor = UIColor.clear
     }
     
     required init?(coder: NSCoder) {
@@ -72,16 +96,16 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         selectedBtnArray = []
         var maxX = CGFloat.zero
         var maxY = CGFloat.zero
-        let viewWidth = CGFloat(itemNumberW) * (itemSize + margin) - margin
+        let viewWidth = CGFloat(itemNumberW) * (config.itemSize.width + config.itemMargin) - config.itemMargin
         for index in 0..<allLettersArray.count {
             let letter = self.allLettersArray[index]
             let button = self.createButton(letter)
             button.tag = index
-            button.frame = CGRect(x: maxX, y: maxY, width: itemSize, height: itemSize)
-            let nextX = maxX + margin + itemSize
+            button.frame = CGRect(x: maxX, y: maxY, width: config.itemSize.width, height: config.itemSize.height)
+            let nextX = maxX + config.itemMargin + config.itemSize.width
             if nextX > viewWidth {
                 maxX = 0
-                maxY += itemSize + margin
+                maxY += config.itemSize.height + config.itemMargin
             } else {
                 maxX = nextX
             }
@@ -256,8 +280,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     
     // MARK:Tools
     private func createButton(_ letter: String) -> YXLetterButton {
-        let button = YXLetterButton()
-        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(19.2))
+        let button = YXLetterButton(config: config)
         button.status = .disable
         button.setTitle(letter, for: .normal)
         button.addTarget(self, action: #selector(clickButton(_:)), for: .touchUpInside)
