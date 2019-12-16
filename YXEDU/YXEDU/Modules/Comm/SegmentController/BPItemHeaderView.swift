@@ -31,7 +31,7 @@ class BPItemHeaderView: UICollectionViewCell {
     }
 
     private func createSubviews() {
-        self.contentView.layer.addSublayer(backgroundLayer)
+//        self.contentView.layer.addSublayer(backgroundLayer)
         self.contentView.layer.addSublayer(lineLayer)
 
         backgroundLayer.frame = self.bounds

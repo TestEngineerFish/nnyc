@@ -9,9 +9,11 @@
 import ObjectMapper
 
 struct YXWrongWordListModel: Mappable {
-    var familiarList: [YXWordModel]?
-    var recentWrongList: [YXWordModel]?
-    var reviewList: [YXWordModel]?
+    var familiarList: [YXWordModel]? = []
+    var recentWrongList: [YXWordModel]? = []
+    var reviewList: [YXWordModel]? = []
+    
+    init() {}
 
     init?(map: Map) {
         self.mapping(map: map)

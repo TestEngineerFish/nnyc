@@ -165,7 +165,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             return 30
 
         } else {
-            return 1
+            return 0.01
         }
     }
     

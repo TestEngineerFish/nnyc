@@ -19,10 +19,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
     
-    private var learnedWords: [YXWordModel]!
-    private var notLearnedWords: [YXWordModel]!
-    private var collectedWords: [YXWordModel]!
-    private var wrongWordList: YXWrongWordListModel!
+    private var learnedWords: [YXWordModel] = []
+    private var notLearnedWords: [YXWordModel] = []
+    private var collectedWords: [YXWordModel] = []
+    private var wrongWordList: YXWrongWordListModel = YXWrongWordListModel()
     private var orderType: [YXWordListOrderType] = [.default, .default, .default, .default]
 
     private var wordListView: BPSegmentControllerView!
@@ -41,7 +41,22 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: segue)
+        if segue.identifier == "EditWordList" {
+            let editWordListViewController = segue.destination as! YXEditWordListViewController
+            
+            switch wordListType {
+            case .collected:
+                editWordListViewController.editWordListType = .collected
+                editWordListViewController.words = collectedWords
+
+            case .wrongWords:
+                editWordListViewController.editWordListType = .familiar
+                editWordListViewController.words = wrongWordList.familiarList ?? []
+                
+            default:
+                break
+            }
+        }
     }
     
     
@@ -103,6 +118,9 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
         let wordListView = YXWordListView(frame: .zero)
+        wordListView.editClosure = {
+            self.performSegue(withIdentifier: "EditWordList", sender: self)
+        }
         
         switch indexPath.row {
         case 0:
@@ -217,6 +235,25 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     }
     
     func segment(_ segment: BPSegmentView, didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
-       
+        switch indexPath.row {
+        case 0:
+            wordListType = .learned
+            break
+            
+        case 1:
+            wordListType = .notLearned
+            break
+            
+        case 2:
+            wordListType = .collected
+            break
+            
+        case 3:
+            wordListType = .wrongWords
+            break
+            
+        default:
+            break
+        }
     }
 }

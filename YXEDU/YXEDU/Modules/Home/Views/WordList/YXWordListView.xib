@@ -75,7 +75,7 @@
                         <constraint firstAttribute="height" constant="0.5" id="w7y-fR-OD5"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u48-m5-JVG">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u48-m5-JVG" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="599" width="375" height="68"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqH-of-pLE" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
@@ -109,6 +109,9 @@
                         <constraint firstAttribute="height" constant="68" id="Wxl-lp-ZKx"/>
                         <constraint firstItem="hqH-of-pLE" firstAttribute="leading" secondItem="u48-m5-JVG" secondAttribute="leading" constant="50" id="aRP-iU-bqg"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZI0-jX-cg2" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
                     <rect key="frame" x="300" y="12" width="55" height="24"/>
