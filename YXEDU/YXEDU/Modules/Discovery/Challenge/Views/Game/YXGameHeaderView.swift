@@ -54,9 +54,28 @@ class YXGameHeaderView: UIView {
         return label
     }()
 
+    var timer: Timer?
+    var configModel: YXGameConfig?
+    var consumeTime: Double = 0.0
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        timer = Timer(fire: Date(), interval: 1.0, repeats: true, block: { (timer) in
+            guard let config = self.configModel else {
+                return
+            }
+            self.consumeTime += 1
+            var margin = Double(config.totalTime) - self.consumeTime
+            margin = margin < 0 ? 0 : margin
+            self.timeLabel.text = self.getCountDownText(Int(margin))
+            })
+        RunLoop.current.add(timer!, forMode: .common)
         self.setSubviews()
+    }
+
+    deinit {
+        self.timer?.invalidate()
+        self.timer = nil
     }
 
     required init?(coder: NSCoder) {
@@ -129,6 +148,8 @@ class YXGameHeaderView: UIView {
     }
 
     func bindData(_ config: YXGameConfig) {
+        self.configModel = config
+        self.consumeTime = 0.0
         self.timeLabel.text = getCountDownText(config.totalTime)
     }
 
