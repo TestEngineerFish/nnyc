@@ -46,6 +46,8 @@ struct YXAPI {
         static let reviewWordList = "/api/v1/learn/getreviewwordlist"
         /// 创建复习计划
         static let maekReviewPlan = "/api/v1/learn/createreviewplan"
+        /// 获得复习计划列表
+        static let reviewPlan = "/api/v1/learn/getreviewplanlist"
     }
 
     //MARK: - 单词列表模块

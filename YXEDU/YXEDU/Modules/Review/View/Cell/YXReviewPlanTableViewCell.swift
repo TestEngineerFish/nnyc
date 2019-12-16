@@ -52,17 +52,28 @@ class YXReviewPlanTableViewCell: UITableViewCell {
     }
     
     func bindProperty() {
+        bgView.backgroundColor = UIColor.white
+        bgView.layer.setDefaultShadow(radius: 4)
+        
         titleLabel.font = UIFont.pfSCRegularFont(withSize: 15)
         titleLabel.text = "我的复习计划1"
         titleLabel.textColor = UIColor.black1
         
         countLabel.font = UIFont.pfSCRegularFont(withSize: 12)
-        countLabel.text = "我的复习计划1"
         countLabel.textColor = UIColor.black3
         
         subTitleLabel.font = UIFont.pfSCRegularFont(withSize: 12)
         subTitleLabel.text = "听写进度：80%"
         subTitleLabel.textColor = UIColor.black3
+        
+        
+        
+        listenImageView.image = UIImage(named: "review_listen_icon")
+        
+        listenLabel.font = UIFont.pfSCRegularFont(withSize: 12)
+        listenLabel.textColor = UIColor.orange1
+        listenLabel.text = "听写练习"
+                        
         
         reviewButton.titleLabel?.font = UIFont.regularFont(ofSize: 14)
         reviewButton.setTitleColor(UIColor.black2, for: .normal)
@@ -100,15 +111,15 @@ class YXReviewPlanTableViewCell: UITableViewCell {
         }
         
         
-        
-        let subTitleWidth = subTitleLabel.text?.textWidth(font: subTitleLabel.font, height: 17) ?? 0
-        subTitleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(5)
-            make.left.equalTo(titleLabel)
-            make.width.equalTo(subTitleWidth)
-            make.height.equalTo(17)
+        if reviewPlanModel?.listenState != .normal {
+            let subTitleWidth = subTitleLabel.text?.textWidth(font: subTitleLabel.font, height: 17) ?? 0
+            subTitleLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(titleLabel.snp.bottom).offset(5)
+                make.left.equalTo(titleLabel)
+                make.width.equalTo(subTitleWidth)
+                make.height.equalTo(17)
+            }
         }
-        
         
         
         if reviewPlanModel?.listenState == .finish {
@@ -121,11 +132,17 @@ class YXReviewPlanTableViewCell: UITableViewCell {
         }
         
         
-        
         listenImageView.snp.makeConstraints { (make) in
             make.left.equalTo(23)
             make.bottom.equalTo(-23)
             make.width.height.equalTo(15)
+        }
+        
+        listenLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(listenImageView.snp.right).offset(7)
+            make.width.equalTo(49)
+            make.height.equalTo(17)
+            make.bottom.equalTo(-22)
         }
         
         
@@ -159,14 +176,22 @@ class YXReviewPlanTableViewCell: UITableViewCell {
     
     
     func bindData() {
+        titleLabel.text = reviewPlanModel?.planName
+        countLabel.text = "单词: " + (reviewPlanModel?.wordCount.string ?? "")
         
+        if reviewPlanModel?.reviewState == .normal {
+            reviewButton.setTitle("开始复习", for: .normal)
+        } else {
+            reviewButton.setTitle("继续复习", for: .normal)
+        }
     }
     
     
-    func viewHeight() -> CGFloat {
-        let vHeight: CGFloat = reviewPlanModel?.listenState != .normal || reviewPlanModel?.reviewState != .normal ? 120 : 103
+    class func viewHeight(model: YXReviewPlanModel) -> CGFloat {
+        let vHeight: CGFloat = model.listenState != .normal || model.reviewState != .normal ? 120 : 103
         return vHeight
     }
+    
 }
 
 

@@ -11,49 +11,49 @@ import DZNEmptyDataSet
 
 class YXTableViewController: YXViewController, YYScrollRefreshAnimator {
     
+    /// 数据源
     var dataSource: [Any] = []
+    
+    /// TableView
     var tableView = UITableView(frame: .zero, style: .plain)
+    
+    /// 是否隐藏空面板
     var isHiddenEmptyView = true
     
-    private var _hasMore: Bool = false
-    var hasMore: Bool {
-        set {
-            _hasMore = newValue
-            if _hasMore {
+    
+    /// 上拉，加载更多
+    var hasMore: Bool = false {
+        didSet {
+            if hasMore {
                 if self.footerRefreshView == nil {
-                    self.addFooterPullToRefresh {[weak self] in
+                    self.addFooterPullToRefresh { [weak self] in
                         self?.loadMoreData()
                     }
-                    
                 } else {
                     self.footerEndRefreshing()
                 }
-                
             } else {
                 self.footerRefreshView = nil
             }
         }
-        
-        get {
-            return _hasMore
-        }
     }
     
-    var shouldHideRefresh = false {
+    
+    /// 是否隐藏下拉刷新
+    var isHideRefresh = false {
         didSet {
-            if self.shouldHideRefresh {
+            if self.isHideRefresh {
                 self.headerRefreshView = nil
-                
             } else {
-                self.addHeaderPullToRefresh {[weak self] in
+                self.addHeaderPullToRefresh { [weak self] in
                     self?.refreshData()
                 }
             }
         }
     }
     
-    
-    deinit {
+
+    deinit {        
         tableView.delegate = nil
         tableView.dataSource = nil
         
@@ -88,7 +88,7 @@ class YXTableViewController: YXViewController, YYScrollRefreshAnimator {
         
         // 设置刷新动作
         self.refreshCompomentScrollView = self.tableView
-        if !self.shouldHideRefresh {
+        if !self.isHideRefresh {
             self.addHeaderPullToRefresh { [weak self] in
                 self?.refreshData()
             }
