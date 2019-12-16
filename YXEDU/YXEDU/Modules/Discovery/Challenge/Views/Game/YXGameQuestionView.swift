@@ -9,6 +9,12 @@
 import UIKit
 
 class YXGameQuestionView: UIView {
+    var containerView : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
+
     var headerView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "gameQuestionHeader")
@@ -40,12 +46,21 @@ class YXGameQuestionView: UIView {
     var bottomView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "gameQuestionBottom")
+        imageView.isUserInteractionEnabled = true
         return imageView
+    }()
+
+    var skipButton: YXButton = {
+        let button = YXButton()
+        button.setImage(UIImage(named: "gameButtonSkip"), for: .normal)
+//        button.isHidden = true
+        return button
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
+        self.skipButton.addTarget(self, action: #selector(skipQuestion), for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {
@@ -53,12 +68,18 @@ class YXGameQuestionView: UIView {
     }
 
     func createSubviews() {
-        self.addSubview(headerView)
-        self.addSubview(contentView)
-        self.addSubview(bottomView)
+        self.addSubview(containerView)
+        self.containerView.addSubview(contentView)
+        self.containerView.addSubview(headerView)
+        self.containerView.addSubview(bottomView)
         contentView.addSubview(wordMeaningLabel)
         contentView.addSubview(wordPhoneticSymbolLabel)
+        bottomView.addSubview(skipButton)
 
+        containerView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(256), height: AdaptSize(183)))
+        }
         headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(AdaptSize(62))
@@ -83,10 +104,52 @@ class YXGameQuestionView: UIView {
             make.left.right.equalToSuperview()
             make.height.equalTo(AdaptSize(30))
         }
+        skipButton.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().offset(AdaptSize(-13))
+            make.bottom.equalToSuperview().offset(AdaptSize(7))
+            make.size.equalTo(CGSize(width: AdaptSize(70), height: AdaptSize(48)))
+        }
     }
 
     func bindData(_ wordModel: YXGameWordModel) {
         self.wordMeaningLabel.text        = wordModel.meaning
         self.wordPhoneticSymbolLabel.text = wordModel.nature
+    }
+
+    // MARK: ==== Event ====
+    @objc private func skipQuestion() {
+        self.closeAnimation()
+        print("SKIP")
+    }
+
+    func switchAnimation() {
+        // 87
+
+    }
+
+    private func closeAnimation() {
+        let sinkageAnimation = CABasicAnimation(keyPath: "position.y")
+        sinkageAnimation.duration = 0.5
+        sinkageAnimation.toValue = self.height/2 - self.headerView.height + AdaptSize(10)
+        sinkageAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        sinkageAnimation.repeatCount = 1
+        sinkageAnimation.autoreverses = true
+        self.headerView.layer.add(sinkageAnimation, forKey: nil)
+
+        let flotAnimation = CABasicAnimation(keyPath: "position.y")
+        flotAnimation.duration = 0.5
+        flotAnimation.toValue = self.height/2
+        flotAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        flotAnimation.repeatCount = 1
+        flotAnimation.autoreverses = true
+        self.bottomView.layer.add(flotAnimation, forKey: nil)
+
+//        let foldAnimation = CABasicAnimation(keyPath: "bounds.height")
+//        foldAnimation.toValue = CGFloat.zero
+//        foldAnimation.duration = 0.5
+//        foldAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+//        foldAnimation.repeatCount = 1
+//        foldAnimation.autoreverses = true
+//        self.contentView.layer.add(foldAnimation, forKey: nil)
     }
 }

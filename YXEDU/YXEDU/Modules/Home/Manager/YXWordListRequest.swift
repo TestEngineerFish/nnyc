@@ -11,6 +11,9 @@ import UIKit
 public enum YXWordListRequest: YYBaseRequest {
     case wordList(type: Int)
     case wrongWordList
+    case collectWord(wordId: Int, isComplexWord: Int)
+    case cancleCollectWord(wordIds: String)
+    case deleteWrongWord(wordIds: String)
 }
 
 extension YXWordListRequest {
@@ -18,6 +21,9 @@ extension YXWordListRequest {
         switch self {
         case .wordList, .wrongWordList:
             return .get
+            
+        case .collectWord, .cancleCollectWord, .deleteWrongWord:
+            return .post
         }
     }
 }
@@ -30,6 +36,15 @@ extension YXWordListRequest {
             
         case .wrongWordList:
             return YXAPI.WordList.wrongWordList
+            
+        case .collectWord:
+            return YXAPI.WordList.collectWord
+            
+        case .cancleCollectWord:
+            return YXAPI.WordList.cancleCollectWord
+            
+        case .deleteWrongWord:
+            return YXAPI.WordList.deleteWrongWord
         }
     }
 }
@@ -38,7 +53,16 @@ extension YXWordListRequest {
     var parameters: [String : Any]? {
         switch self {
         case .wordList(let type):
-            return ["type" : type]
+            return ["type": type]
+            
+        case .collectWord(let wordId, let isComplexWord):
+            return ["word_id": wordId, "is_synthesis": isComplexWord]
+            
+        case .cancleCollectWord(let wordIds):
+            return ["word_ids": wordIds]
+            
+        case .deleteWrongWord(let wordIds):
+            return ["word_ids": wordIds]
             
         default:
             return nil

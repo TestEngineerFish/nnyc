@@ -8,6 +8,34 @@
 
 import UIKit
 
+struct YXConnectionLettersConfig {
+    var itemSize   = CGSize(width: AdaptSize(48), height: AdaptSize(48))
+    var itemMargin = AdaptSize(8)
+    var itemBgImage: UIImage?
+    var itemFont = UIFont.pfSCRegularFont(withSize: AdaptSize(19.2))
+    var backgroundNormalColor   = UIColor.white
+    var backgroundSelectedColor = UIColor.orange1
+    var backgroundErrorColor    = UIColor.white
+    var backgroundRightColor    = UIColor.white
+    var backgroundDisableColor  = UIColor.white
+    var borderNormalColor       = UIColor.black6
+    var borderSelectedColor     = UIColor.orange1
+    var borderErrorColor        = UIColor.red1
+    var borderRightColor        = UIColor.green1
+    var borderDisableColor      = UIColor.black6
+    var textNormalColor         = UIColor.black1
+    var textSelectedColor       = UIColor.white
+    var textErrorColor          = UIColor.red1
+    var textRightColor          = UIColor.green1
+    var textDisableColor        = UIColor.black6
+
+    var showFirstButton  = true
+    var initButtonStatus = YXButtonStatus.disable
+    var showAllRightView = false
+    var showAllErrorView = false
+    var resultAnimationTime = Double(3.0)
+}
+
 /// 滑动(点击)连接字母答题页面
 class YXAnswerConnectionLettersView: YXBaseAnswerView {
     
@@ -24,19 +52,21 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     var lettersArray = [String]()
     var itemNumberH: Int
     var itemNumberW: Int
-    let margin       = AdaptSize(8)
-    let itemSize     = AdaptSize(48)
+    var config: YXConnectionLettersConfig
+
     // 是否大写
     var isCapitalLetter = false
     var word = ""
     
     var util: YXFindRouteUtil?
     var pan: UIPanGestureRecognizer?
-    
-    override init(exerciseModel: YXWordExerciseModel) {
+
+    init(exerciseModel: YXWordExerciseModel, config: YXConnectionLettersConfig = YXConnectionLettersConfig()) {
         itemNumberH = exerciseModel.question?.row ?? 0
         itemNumberW = exerciseModel.question?.column ?? 0
+        self.config = config
         super.init(exerciseModel: exerciseModel)
+        self.backgroundColor = UIColor.clear
     }
     
     required init?(coder: NSCoder) {
@@ -72,16 +102,16 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         selectedBtnArray = []
         var maxX = CGFloat.zero
         var maxY = CGFloat.zero
-        let viewWidth = CGFloat(itemNumberW) * (itemSize + margin) - margin
+        let viewWidth = CGFloat(itemNumberW) * (config.itemSize.width + config.itemMargin) - config.itemMargin
         for index in 0..<allLettersArray.count {
             let letter = self.allLettersArray[index]
             let button = self.createButton(letter)
             button.tag = index
-            button.frame = CGRect(x: maxX, y: maxY, width: itemSize, height: itemSize)
-            let nextX = maxX + margin + itemSize
+            button.frame = CGRect(x: maxX, y: maxY, width: config.itemSize.width, height: config.itemSize.height)
+            let nextX = maxX + config.itemMargin + config.itemSize.width
             if nextX > viewWidth {
                 maxX = 0
-                maxY += itemSize + margin
+                maxY += config.itemSize.height + config.itemMargin
             } else {
                 maxX = nextX
             }
@@ -89,7 +119,9 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
             allButtonArray.append(button)
         }
         // 显示首个字母的动画
-        self.showFirstButtonAnimation(rightRoutes.first)
+        if config.showFirstButton {
+            self.showFirstButtonAnimation(rightRoutes.first)
+        }
         // 添加手势事件
         self.pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))
         self.isUserInteractionEnabled = true
@@ -117,7 +149,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
                 let reversedArray = self.selectedBtnArray.reversed()
                 for btn in reversedArray {
                     // 如果选中首字母,则跳出
-                    if btn.isEqual(self.selectedBtnArray.first) {
+                    if btn.isEqual(self.selectedBtnArray.first) && config.showFirstButton {
                         break
                     }
                     self.unselectButton(btn)
@@ -137,6 +169,12 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     ///   - insert: 是否添加到问题区域
     /// - description:设置选中效果,需要满足,1、问题区域有空缺可填充(排除第一个字母);2、不在已选中列表中
     private func selectedButton(_ button: YXLetterButton) {
+        // 如果选中了一个,则更新其他按钮为不可选中
+        if selectedBtnArray.isEmpty {
+            self.allButtonArray.forEach { (letterButton) in
+                letterButton.status = .disable
+            }
+        }
         // 通过回调更新选中顺序,也可防止同时选中多个
         let success = delegate?.selectedAnswerButton(button) ?? false
         if !self.selectedBtnArray.contains(button) && success {
@@ -157,7 +195,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     /// 取消选中
     private func unselectButton(_ button: YXLetterButton) {
         self.delegate?.unselectAnswerButton(button)
-        button.status = .disable
+        button.status = config.initButtonStatus
         // 移除选中按钮
         guard let index = self.selectedBtnArray.firstIndex(of: button) else {
             return
@@ -200,10 +238,17 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     /// 滑动事件
     @objc private func panEvent(_ pan: UIPanGestureRecognizer) {
         let point = pan.location(in: self)
-        // 检查是否在有效按钮区域中
-        let selected = self.enableButtonArray.filter { (button) -> Bool in
-            return button.frame.contains(point)
-        }.first
+        var selected: YXLetterButton?
+        if self.selectedBtnArray.isEmpty {
+            selected = self.allButtonArray.filter({ (button) -> Bool in
+                return button.frame.contains(point)
+                }).first
+        } else {
+            // 检查是否在有效按钮区域中
+            selected = self.enableButtonArray.filter { (button) -> Bool in
+                return button.frame.contains(point)
+            }.first
+        }
         // 检查是否在上一个选中区域
         if let _selected = selected {
             self.selectedButton(_selected)
@@ -256,9 +301,8 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     
     // MARK:Tools
     private func createButton(_ letter: String) -> YXLetterButton {
-        let button = YXLetterButton()
-        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(19.2))
-        button.status = .disable
+        let button = YXLetterButton(config: config)
+        button.status = config.initButtonStatus
         button.setTitle(letter, for: .normal)
         button.addTarget(self, action: #selector(clickButton(_:)), for: .touchUpInside)
         return button
@@ -335,10 +379,14 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         }
         if list.isEmpty {
             // 答题正确
-//            需求时保持选中状态
-//            self.selectedBtnArray.forEach { (button) in
-//                button.status = .right
-//            }
+            if config.showAllRightView {
+                self.selectedBtnArray.forEach { (letterBtn) in
+                    // 变更连线颜色
+                    let shaperLayer = self.lineDictionary[letterBtn.tag]
+                    shaperLayer?.strokeColor = config.textRightColor.cgColor
+                    letterBtn.status = .right
+                }
+            }
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
         } else {
             // 答题错误
@@ -346,15 +394,22 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
                 // 变更连线颜色
                 let shaperLayer = self.lineDictionary[letterBtn.tag]
                 shaperLayer?.strokeColor = UIColor.red1.cgColor
-                if list.contains(letterBtn.tag) {
+                if config.showAllErrorView {
                     letterBtn.status = .error
+                } else {
+                    if list.contains(letterBtn.tag) {
+                        letterBtn.status = .error
+                    }
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)
         }
         if let button = self.selectedBtnArray.first {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + config.resultAnimationTime) {
                 self.clickButton(button)
+                self.allButtonArray.forEach { (letterButton) in
+                    letterButton.status = self.config.initButtonStatus
+                }
             }
         }
         self.pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(_:)))

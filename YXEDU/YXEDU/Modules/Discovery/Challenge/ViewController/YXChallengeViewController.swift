@@ -51,10 +51,9 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func playGame(){
-        self.tabBarController?.hidesBottomBarWhenPushed = true
         let vc = YXGameViewController()
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
-        self.tabBarController?.hidesBottomBarWhenPushed = false
     }
 
 
