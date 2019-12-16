@@ -32,16 +32,16 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - FSCalendar (2.8.0)
-  - Growing (2.8.6)
-  - GrowingAutoTrackKit (2.8.6):
-    - GrowingCoreKit (= 2.8.6)
-  - GrowingCoreKit (2.8.6):
-    - Growing (= 2.8.6)
+  - FSCalendar (2.8.1)
+  - Growing (2.8.7)
+  - GrowingAutoTrackKit (2.8.7):
+    - GrowingCoreKit (= 2.8.7)
+  - GrowingCoreKit (2.8.7):
+    - Growing (= 2.8.7)
   - HWWeakTimer (1.0)
   - IQKeyboardManager (6.2.1)
-  - JCore (2.1.4)
-  - JPush (3.2.6):
+  - JCore (2.1.6)
+  - JPush (3.2.8):
     - JCore (< 3.0.0, >= 2.0.0)
   - Kingfisher (5.9.0):
     - Kingfisher/Core (= 5.9.0)
@@ -58,7 +58,7 @@ PODS:
   - Masonry (1.1.0)
   - MBProgressHUD (1.1.0)
   - MJExtension (3.2.1)
-  - MJRefresh (3.2.2)
+  - MJRefresh (3.3.1)
   - ObjectMapper (3.3.0)
   - Reachability (3.2)
   - SDCycleScrollView (1.75):
@@ -71,8 +71,8 @@ PODS:
   - SSKeychain (1.4.1)
   - SVProgressHUD (2.2.5)
   - Toast (4.0.0)
-  - Toast-Swift (5.0.0)
-  - TZImagePickerController (3.2.7)
+  - Toast-Swift (5.0.1)
+  - TZImagePickerController (3.2.8)
   - UICollectionViewLeftAlignedLayout (1.0.2)
   - UMCAnalytics (6.0.5):
     - UMCCommon
@@ -199,14 +199,14 @@ SPEC CHECKSUMS:
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  FSCalendar: 3a5ed3636e2ba1b83ebebfcf0c2603105a6f5efe
-  Growing: e6f4c1fc6aaee7c6531229c752ca13da44f92e66
-  GrowingAutoTrackKit: bb6a0ff104c73a31d5eb92f9b6f118500ed4c1f8
-  GrowingCoreKit: 47cdfd9e3582706bb675c85de8b7c036bd17d90f
+  FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
+  Growing: 00a416c9a7fcb65ee073e8f60758529a3c49602a
+  GrowingAutoTrackKit: 21e73b250a56b37f9dead410e8369009e110fea9
+  GrowingCoreKit: dc334babbca2fedac15191cc116cdf74b23e97aa
   HWWeakTimer: 79488095ef2dd8937f94b676d12bd5fa954486e6
   IQKeyboardManager: 964638372b4a61892cc74fdfa6fd26de8c9464a2
-  JCore: d345c049141877eb61c33011455fdb5fcab1673f
-  JPush: 41dd48a69bd8c08abc692dc7f2b23c0fb281471f
+  JCore: daebd39538328db0cdcad6c4ed101815c42f84bf
+  JPush: 8ce888d6dedfa417e90c8b6bc87405a16ce2e699
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   KTVCocoaHTTPServer: df8d7b861e603ff8037e9b2138aca2563a6b768d
   KTVHTTPCache: 588c3eb16f6bd1e6fde1e230dabfb7bd4e490a4d
@@ -216,7 +216,7 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJExtension: 635f2c663dcb1bf76fa4b715b2570a5710aec545
-  MJRefresh: 72a46ecaa2a0feaf48fc5198dff95f25f8bb27c6
+  MJRefresh: eeda70fbf0ad277f3178cef1cd0c3532591d6237
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
@@ -226,8 +226,8 @@ SPEC CHECKSUMS:
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  Toast-Swift: 36f4720243c8582c2be243a60a51e193c761f541
-  TZImagePickerController: 821b81f83594a736e831a018f2a2ce31822ddf0b
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
+  TZImagePickerController: 4b0a5d3abe6351b6c9ec52c7be0fa9a5bbca23f6
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
   UMCAnalytics: 045be2cd1ec05aa95ad62405a850757f932e2d59
   UMCCommon: 971f324a5a99c9d662ae040a815e7e3d7ef8b2a8
