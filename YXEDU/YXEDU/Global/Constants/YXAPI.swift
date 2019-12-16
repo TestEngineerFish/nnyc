@@ -55,6 +55,16 @@ struct YXAPI {
         
         /// 错词
         static let wrongWordList = "/api/v1/word/getwronglist"
+        
+        // 收藏
+        static let collectWord = "api/v1/word/favorite"
+
+        // 取消收藏
+        static let cancleCollectWord = "api/v1/word/unfavorite"
+        
+        // 刪除錯詞
+        static let deleteWrongWord = "api/v1/word/delwrong"
+        
     }
 
     // MARK: - 挑战模块

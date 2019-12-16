@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,12 +53,18 @@
                             <constraint firstAttribute="height" constant="0.5" id="yZv-Jz-0Xb"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzM-oc-gQo">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzM-oc-gQo" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
                         <rect key="frame" x="20" y="99" width="16" height="16"/>
+                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="a7t-q9-EVG"/>
                             <constraint firstAttribute="width" constant="16" id="kDa-S7-yyw"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="selectWord:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wf7-Hx-okr"/>
                         </connections>
@@ -86,6 +92,8 @@
             <connections>
                 <outlet property="meaningLabel" destination="B8z-m1-4c5" id="xmQ-wG-RYb"/>
                 <outlet property="meaningLabelMask" destination="Bfi-re-0ha" id="u1e-jn-Xtd"/>
+                <outlet property="playAuoidButton" destination="DDl-cc-kAH" id="4Ac-Id-AL5"/>
+                <outlet property="selectButton" destination="yzM-oc-gQo" id="ayi-EB-clx"/>
                 <outlet property="wordLabel" destination="XYT-kM-Mem" id="mad-5K-Hmv"/>
             </connections>
             <point key="canvasLocation" x="268.1159420289855" y="210.26785714285714"/>

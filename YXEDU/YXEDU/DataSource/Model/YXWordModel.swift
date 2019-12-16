@@ -61,6 +61,9 @@ struct YXWordModel: Mappable {
     // 是否隱藏詞義
     var hidePartOfSpeechAndMeanings = false
     
+    // 是否被選中
+    var isSelected = false
+    
     init() {}
     
     init?(map: Map) {

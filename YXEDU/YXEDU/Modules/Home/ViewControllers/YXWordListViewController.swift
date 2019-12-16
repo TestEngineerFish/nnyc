@@ -19,10 +19,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
     
-    private var learnedWords: [YXWordModel] = []
-    private var notLearnedWords: [YXWordModel] = []
-    private var collectedWords: [YXWordModel] = []
-    private var wrongWordList: YXWrongWordListModel = YXWrongWordListModel()
+    private var learnedWords: [YXWordModel]!
+    private var notLearnedWords: [YXWordModel]!
+    private var collectedWords: [YXWordModel]!
+    private var wrongWordList: YXWrongWordListModel!
     private var orderType: [YXWordListOrderType] = [.default, .default, .default, .default]
 
     private var wordListView: BPSegmentControllerView!
@@ -47,11 +47,11 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             switch wordListType {
             case .collected:
                 editWordListViewController.editWordListType = .collected
-                editWordListViewController.words = collectedWords
+                editWordListViewController.words = collectedWords ?? []
 
             case .wrongWords:
                 editWordListViewController.editWordListType = .familiar
-                editWordListViewController.words = wrongWordList.familiarList ?? []
+                editWordListViewController.words = wrongWordList?.familiarList ?? []
                 
             default:
                 break

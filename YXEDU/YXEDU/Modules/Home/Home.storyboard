@@ -600,16 +600,21 @@
             </objects>
             <point key="canvasLocation" x="1181" y="1643"/>
         </scene>
-        <!--Mission View Controller-->
+        <!--任务中心-->
         <scene sceneID="6pL-bl-kzi">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="LEE-do-1y0" customClass="YXMissionViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="LEE-do-1y0" customClass="YXTaskCenterViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fkk-Wd-hK0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Fjr-c0-p0B"/>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="任务中心" id="RCA-7z-YQm">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="JQ1-OS-mHD"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7r7-ka-elt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
