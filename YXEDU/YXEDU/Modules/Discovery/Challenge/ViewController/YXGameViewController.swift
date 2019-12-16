@@ -46,18 +46,21 @@ class YXGameViewController: YXViewController {
         backgroundImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        let top = iPhoneXLater ? 24 : 0
         headerView.snp.makeConstraints { (make) in
-            make.left.top.right.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(top)
             make.height.equalTo(AdaptSize(60))
         }
+
         questionView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
             make.top.equalTo(headerView.snp.bottom)
-            make.size.equalTo(CGSize(width: AdaptSize(256), height: AdaptSize(183)))
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(answerView.snp.top)
         }
         answerView.snp.makeConstraints { (make) in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(questionView.snp.bottom).offset(AdaptSize(21))
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(AdaptSize(396) + kSafeBottomMargin)
         }
 
         headerView.backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)

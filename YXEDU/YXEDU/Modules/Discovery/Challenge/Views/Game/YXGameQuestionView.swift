@@ -9,6 +9,12 @@
 import UIKit
 
 class YXGameQuestionView: UIView {
+    var containerView : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
+
     var headerView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "gameQuestionHeader")
@@ -53,12 +59,17 @@ class YXGameQuestionView: UIView {
     }
 
     func createSubviews() {
-        self.addSubview(headerView)
-        self.addSubview(contentView)
-        self.addSubview(bottomView)
+        self.addSubview(containerView)
+        self.containerView.addSubview(headerView)
+        self.containerView.addSubview(contentView)
+        self.containerView.addSubview(bottomView)
         contentView.addSubview(wordMeaningLabel)
         contentView.addSubview(wordPhoneticSymbolLabel)
 
+        containerView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(256), height: AdaptSize(183)))
+        }
         headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(AdaptSize(62))

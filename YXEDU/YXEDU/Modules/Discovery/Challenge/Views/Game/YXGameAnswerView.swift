@@ -92,6 +92,11 @@ class YXGameAnswerView: UIView {
         config.textErrorColor          = UIColor.hex(0xD64A29)
         config.textRightColor          = UIColor.hex(0x347E3A)
         config.textDisableColor        = UIColor.hex(0x7F4722)
+        config.showFirstButton  = false
+        config.initButtonStatus = .normal
+        config.showAllRightView = true
+        config.showAllErrorView = true
+        config.resultAnimationTime = 1.0
         return config
     }
 

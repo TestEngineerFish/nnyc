@@ -10,8 +10,7 @@ import UIKit
 
 class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
 
-    // =============如果内容超过当前默认宽度162.(左右边距15),则动态变宽
-    //
+
     var wordLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0xC9823D)
@@ -20,6 +19,7 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
         return label
     }()
     var wordModel: YXGameWordModel?
+    var selectedButtonList = [YXLetterButton]()
     final let maxWidth = AdaptSize(162)
 
     init() {
@@ -34,6 +34,7 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
     }
 
     func bindData(_ wordModel: YXGameWordModel) {
+        selectedButtonList = []
         self.wordModel = wordModel
     }
 
@@ -48,9 +49,8 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
 
     override func layoutIfNeeded() {
         super.layoutIfNeeded()
-        self.wordLabel.sizeToFit()
-        let w = self.wordLabel.width + AdaptSize(30) > maxWidth ? self.wordLabel.width + AdaptSize(30) : maxWidth
-        print(w)
+        let labelWidth = (self.wordLabel.text ?? "").textWidth(font: wordLabel.font, height: self.height)
+        let w = labelWidth + AdaptSize(30) > maxWidth ? labelWidth + AdaptSize(30) : maxWidth
         if self.superview != nil {
             self.snp.updateConstraints { (make) in
                 make.width.equalTo(AdaptSize(w))
@@ -65,26 +65,48 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
             return false
         }
         var lackWord = self.wordLabel.text ?? ""
-        lackWord += button.currentTitle ?? ""
-        self.wordLabel.text = lackWord
-        self.layoutIfNeeded()
-        if lackWord.count > wordModel.word.count {
+        if lackWord.count >= wordModel.word.count {
             return false
         } else {
+            lackWord += button.currentTitle ?? ""
+            self.wordLabel.text = lackWord
+            self.selectedButtonList.append(button)
+            self.layoutIfNeeded()
             return true
         }
     }
+
     func unselectAnswerButton(_ button: YXLetterButton) {
         var lackWord = self.wordLabel.text ?? ""
         lackWord.removeLast()
         self.wordLabel.text = lackWord
-        self.setNeedsLayout()
+        self.selectedButtonList.removeLast()
+        self.layoutIfNeeded()
     }
     func playAudio() {}
 
     func checkResult() -> (Bool, [Int])? {
+        guard let wordModel = self.wordModel else {
+            return nil
+        }
+        let currentText = self.wordLabel.text ?? ""
+        var isShow = false
+        var errorList = [Int]()
+        if currentText.count >= wordModel.word.count {
+            isShow = true
+            for (index, char) in wordModel.word.enumerated() {
+                if index < self.selectedButtonList.count {
+                    let selectedBtn = selectedButtonList[index]
+                    let selectedStr = selectedBtn.currentTitle ?? ""
+                    if selectedStr != "\(char)" {
+                        errorList.append(selectedBtn.tag)
+                    }
+                }
+            }
+        }
         print("看看结果")
-        return nil
+
+        return (isShow, errorList)
     }
 
 
