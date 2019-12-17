@@ -9,7 +9,10 @@
 import UIKit
 
 class YXReviewHeaderView: YXView {
-    
+    var startReviewEvent: (() -> Void)?
+    var createReviewPlanEvent: (() -> Void)?
+    var favoriteEvent: (() -> Void)?
+    var wrongWordEvent: (() -> Void)?
     var reviewModel: YXReviewPageModel? { didSet {bindData()} }
     
     var bgView = UIView()
@@ -56,7 +59,14 @@ class YXReviewHeaderView: YXView {
     var reviewPlanLabel = UILabel()
     var createReviewPlanButton = UIButton()
     
-            
+    
+    deinit {
+        reviewButton.removeTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
+        createReviewPlanButton.removeTarget(self, action: #selector(clickCreateReviewPlanButton), for: .touchUpInside)
+        favoriteButton.removeTarget(self, action: #selector(clickFavoriteButton), for: .touchUpInside)
+        wrongWordButton.removeTarget(self, action: #selector(clickWrongWordButton), for: .touchUpInside)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
@@ -174,6 +184,7 @@ class YXReviewHeaderView: YXView {
         reviewButton.setTitle("智能复习", for: .normal)
         reviewButton.setTitleColor(UIColor.white, for: .normal)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
+        reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
         
         subTitleLabel.textColor = UIColor.black6
         subTitleLabel.text = "智能计划复习内容巩固薄弱单词"
@@ -185,13 +196,15 @@ class YXReviewHeaderView: YXView {
         favoriteButton.setTitleColor(UIColor.brown1, for: .normal)
         favoriteButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
         favoriteButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -60, bottom: 0, right: 0)
+        favoriteButton.addTarget(self, action: #selector(clickFavoriteButton), for: .touchUpInside)
+        
         
         wrongWordButton.setBackgroundImage(UIImage(named: "review_wrong_icon"), for: .normal)
         wrongWordButton.setTitle("错题本", for: .normal)
         wrongWordButton.setTitleColor(UIColor.brown1, for: .normal)
         wrongWordButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
         wrongWordButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -60, bottom: 0, right: 0)
-        
+        wrongWordButton.addTarget(self, action: #selector(clickWrongWordButton), for: .touchUpInside)
         
         reviewPlanLabel.font = UIFont.mediumFont(ofSize: 15)
         reviewPlanLabel.textColor = UIColor.black1
@@ -206,6 +219,7 @@ class YXReviewHeaderView: YXView {
         createReviewPlanButton.titleLabel?.font = UIFont.regularFont(ofSize: 12)
         createReviewPlanButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
         createReviewPlanButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -70, bottom: 0, right: 0)
+        createReviewPlanButton.addTarget(self, action: #selector(clickCreateReviewPlanButton), for: .touchUpInside)
     }
     
     
@@ -404,6 +418,8 @@ class YXReviewHeaderView: YXView {
         fuzzyProgressLabel.text = progressStringValue(num: reviewModel?.fuzzyNum)
         forgetProgressLabel.text  = progressStringValue(num: reviewModel?.forgetNum)
         
+        createReviewPlanButton.isHidden = (reviewModel?.reviewPlans?.count ?? 0 == 0)
+        
     }
     
     private func progressStringValue(num: Int?) -> String {
@@ -423,6 +439,22 @@ class YXReviewHeaderView: YXView {
         
         return label
     }
+    
+    @objc private func clickReviewButton() {
+        self.createReviewPlanEvent?()
+    }
+    @objc private func clickCreateReviewPlanButton() {
+        self.startReviewEvent?()
+    }
+    @objc private func clickFavoriteButton() {
+       self.favoriteEvent?()
+    }
+       
+    @objc private func clickWrongWordButton() {
+        self.wrongWordEvent?()
+    }
+       
+    
 }
 
 
@@ -500,5 +532,5 @@ class YXReviewProgressView: YXView {
         
         return color
     }
-    
+
 }

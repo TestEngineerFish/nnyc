@@ -12,21 +12,18 @@ class YXReviewViewController: YXTableViewController {
     
     
     var headerView = YXReviewHeaderView()
-    
+    var footerView = YXReviewPlanEmptyView()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        headerView.bindData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
         self.isMonitorNetwork = true
-        configView()
+        self.configTableView()
         
         self.headerBeginRefreshing()
-//        fetchData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -49,11 +46,40 @@ class YXReviewViewController: YXTableViewController {
         self.fetchData()
     }
     
-    func configView() {
-        self.headerView.size = CGSize(width: screenWidth, height: 453.5)
+    func configTableView() {
+        self.configHeaderView()
+        self.configFooterView()
+        
         self.tableView.tableHeaderView = self.headerView
         self.tableView.register(YXReviewPlanTableViewCell.classForCoder(), forCellReuseIdentifier: "YXReviewPlanTableViewCell")
     }
+    
+    
+    func configHeaderView() {
+        self.headerView.size = CGSize(width: screenWidth, height: 453.5)
+        
+        self.headerView.startReviewEvent = { [weak self] in
+            self?.startReviewEvent()
+        }
+        self.headerView.createReviewPlanEvent = { [weak self] in
+             self?.createReviewEvent()
+         }
+        self.headerView.favoriteEvent = { [weak self] in
+            self?.favoriteEvent()
+        }
+        self.headerView.wrongWordEvent = { [weak self] in
+            self?.wrongWordEvent()
+        }
+    }
+    
+    
+    func configFooterView() {
+        self.footerView.size = CGSize(width: screenWidth, height: 251)
+        self.footerView.createReviewPlanEvent = { [weak self] in
+             self?.createReviewEvent()
+         }
+    }
+    
     
     
     func fetchData() {
@@ -64,6 +90,12 @@ class YXReviewViewController: YXTableViewController {
             } else {
                 self.headerView.reviewModel = pageModel
                 self.dataSource = pageModel?.reviewPlans ?? []
+                
+                if self.dataSource.count == 0 {
+                    self.tableView.tableFooterView = self.footerView
+                } else {
+                    self.tableView.tableFooterView = nil
+                }
                 self.tableView.reloadData()
             }
             self.finishLoading()
@@ -88,7 +120,57 @@ extension YXReviewViewController {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let _cell = cell as? YXReviewPlanTableViewCell else { return }
-        
         _cell.reviewPlanModel = dataSource[indexPath.row] as? YXReviewPlanModel
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = YXReviewPlanDetailViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
+
+extension YXReviewViewController {
+    
+    func favoriteEvent() {
+        let vc = YXReviewPlanDetailViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func wrongWordEvent() {
+        let vc = YXReviewPlanDetailViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    /// 开始智能复习
+    func startReviewEvent() {
+        let vc = YXReviewPlanDetailViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    /// 开始复习 —— 复习计划
+    func startReviewPlanEvent() {
+        let vc = YXReviewPlanDetailViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    /// 开始听力 —— 复习计划
+    func startListenPlanEvent() {
+        let vc = YXReviewPlanDetailViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    func createReviewEvent() {
+        let vc = YXReviewPlanDetailViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func reviewDetailEvent() {
+        let vc = YXReviewPlanDetailViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }

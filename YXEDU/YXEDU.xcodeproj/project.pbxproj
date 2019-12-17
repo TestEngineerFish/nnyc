@@ -677,6 +677,7 @@
 		EEACEB6823A7AA520036B3A2 /* YXReviewDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB6723A7AA510036B3A2 /* YXReviewDataManager.swift */; };
 		EEACEB6A23A7AA610036B3A2 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB6923A7AA610036B3A2 /* Int+Extension.swift */; };
 		EEACEB6C23A7AA850036B3A2 /* YXReviewPlanEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB6B23A7AA850036B3A2 /* YXReviewPlanEmptyView.swift */; };
+		EEACEB6E23A8BCD90036B3A2 /* YXReviewPlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB6D23A8BCD90036B3A2 /* YXReviewPlanDetailViewController.swift */; };
 		EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB147242372E6F400AC329C /* YYFileManager.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
@@ -1756,6 +1757,7 @@
 		EEACEB6723A7AA510036B3A2 /* YXReviewDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewDataManager.swift; sourceTree = "<group>"; };
 		EEACEB6923A7AA610036B3A2 /* Int+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		EEACEB6B23A7AA850036B3A2 /* YXReviewPlanEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewPlanEmptyView.swift; sourceTree = "<group>"; };
+		EEACEB6D23A8BCD90036B3A2 /* YXReviewPlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanDetailViewController.swift; sourceTree = "<group>"; };
 		EEB147242372E6F400AC329C /* YYFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYFileManager.swift; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
@@ -5042,6 +5044,7 @@
 			isa = PBXGroup;
 			children = (
 				EEACEB05239E62160036B3A2 /* YXReviewViewController.swift */,
+				EEACEB6D23A8BCD90036B3A2 /* YXReviewPlanDetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -5759,6 +5762,7 @@
 				EE77210E237C2B6E00CD632E /* YXView.swift in Sources */,
 				EEFBABA423729BA1001A6302 /* YXConnectionItemView.swift in Sources */,
 				2296F777239BBC3600C50660 /* YXReviewUnitListView.swift in Sources */,
+				EEACEB6E23A8BCD90036B3A2 /* YXReviewPlanDetailViewController.swift in Sources */,
 				22298C00237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift in Sources */,
 				EE54F7D02362AA3100EC605A /* YXWordExerciseModel.swift in Sources */,
 				77F69A68236149B300E55185 /* YXAddBookViewController.swift in Sources */,
