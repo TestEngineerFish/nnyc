@@ -79,7 +79,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         top3View.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(AdaptSize(-26))
-            make.top.equalTo(headerView.snp.bottom).offset(AdaptSize(-20))
+            make.top.equalTo(headerView.snp.bottom).offset(AdaptSize(-26))
             make.bottom.equalToSuperview()
         }
         headerView.bindData(model)
@@ -111,7 +111,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return AdaptSize(479)
+        return AdaptSize(481)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

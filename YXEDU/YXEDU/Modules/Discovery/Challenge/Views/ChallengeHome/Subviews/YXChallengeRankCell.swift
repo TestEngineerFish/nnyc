@@ -40,7 +40,6 @@ class YXChallengeRankCell: UITableViewCell {
         let view = UIView()
         view.isHidden = true
         view.size     = CGSize(width: AdaptSize(359), height: AdaptSize(81))
-        view.layer.setGradient(colors: [UIColor.hex(0xFDB832), UIColor.orange1], direction: .vertical)
         view.clipRectCorner(directionList: [.topLeft, .topRight], cornerRadius: AdaptSize(6))
         return view
     }()
@@ -80,7 +79,7 @@ class YXChallengeRankCell: UITableViewCell {
         imageView.layer.cornerRadius = AdaptSize(AdaptSize(38/2))
         imageView.layer.borderColor  = UIColor.white.cgColor
         imageView.layer.borderWidth  = AdaptSize(2)
-        imageView.image              = UIImage(named: "reportSpeedPlatf")
+        imageView.image              = UIImage(named: "challengeAvatar")
         return imageView
     }()
 
@@ -136,31 +135,41 @@ class YXChallengeRankCell: UITableViewCell {
         self.customContentView.backgroundColor = .clear
         switch userModel.challengeResult {
         case .success:
-            self.nameLabel.text           = userModel.name
-            self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
+            self.nameLabel.text             = userModel.name
+            self.descriptionLabel.text      = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
             self.nameLabel.textColor        = UIColor.white
             self.descriptionLabel.textColor = UIColor.white
             self.goldIconImageView.isHidden = false
             self.bonusLabel.isHidden        = false
+            self.descriptionLabel.isHidden  = false
+            self.levelHighlightLabel.text   = "\(userModel.ranking)"
+            self.levelHighlightLabel.font   = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
+            self.shadeView.layer.setGradient(colors: [UIColor.hex(0xFDB832), UIColor.orange1], direction: .vertical)
             self.goldIconImageView.snp.updateConstraints { (make) in
                 make.size.equalTo(CGSize(width: AdaptSize(28), height: AdaptSize(28)))
             }
-        case .fail:
-            self.nameLabel.text             = "挑战失败"
-            self.descriptionLabel.text      = "别灰心，再接再厉哦"
-            self.nameLabel.textColor        = UIColor.hex(0xFFF7EB)
-            self.descriptionLabel.textColor = UIColor.hex(0xFFF7EB)
-            self.goldIconImageView.isHidden = true
-            self.bonusLabel.isHidden        = true
+            self.descriptionLabel.sizeToFit()
+            self.descriptionLabel.snp.updateConstraints { (make) in
+                make.width.equalTo(self.descriptionLabel.width)
+            }
+            self.nameLabel.snp.updateConstraints { (make) in
+                make.centerY.equalTo(avatarImageView).offset(-AdaptSize(10))
+            }
+        case .notInvolved:
+            self.nameLabel.text                = "本期内尚未完成过学习计划"
+            self.nameLabel.textColor           = UIColor.hex(0xFFF7EB)
+            self.descriptionLabel.text         = ""
+            self.descriptionLabel.isHidden     = true
+            self.goldIconImageView.isHidden    = true
+            self.bonusLabel.isHidden           = true
+            self.levelHighlightLabel.text      = "未上榜"
+            self.levelHighlightLabel.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+            self.levelHighlightLabel.textColor = UIColor.hex(0xB3A394)
+            self.tagImageView.image = UIImage(named: "challengeLevelTag2")
             self.shadeView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
-        case .notList:
-            self.nameLabel.text             = "本期内尚未完成过学习计划"
-            self.descriptionLabel.text      = "无法参加挑战"
-            self.nameLabel.textColor        = UIColor.hex(0xFFF7EB)
-            self.descriptionLabel.textColor = UIColor.hex(0xFFF7EB)
-            self.goldIconImageView.isHidden = true
-            self.bonusLabel.isHidden        = true
-            self.shadeView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
+            self.nameLabel.snp.updateConstraints { (make) in
+                make.centerY.equalTo(avatarImageView)
+            }
         }
 
         self.avatarImageView.layer.cornerRadius = AdaptSize(47/2)
@@ -172,9 +181,9 @@ class YXChallengeRankCell: UITableViewCell {
         self.nameLabel.snp.updateConstraints { (make) in
             make.width.equalTo(self.nameLabel.width)
         }
-        self.descriptionLabel.sizeToFit()
-        self.descriptionLabel.snp.updateConstraints { (make) in
-            make.width.equalTo(self.descriptionLabel.width)
+        self.levelHighlightLabel.sizeToFit()
+        self.tagImageView.snp.updateConstraints { (make) in
+            make.width.equalTo(AdaptSize(levelHighlightLabel.width + 13))
         }
     }
 
@@ -184,10 +193,10 @@ class YXChallengeRankCell: UITableViewCell {
         self.rightTopLayer.isHidden = false
         switch userModel.challengeResult {
         case .success:
-            self.leftTopLayer.fillColor = UIColor.hex(0xCF6900).cgColor
+            self.leftTopLayer.fillColor  = UIColor.hex(0xCF6900).cgColor
             self.rightTopLayer.fillColor = UIColor.hex(0xCF6900).cgColor
-        case .fail, .notList:
-            self.leftTopLayer.fillColor = UIColor.hex(0xA47528).cgColor
+        case .notInvolved:
+            self.leftTopLayer.fillColor  = UIColor.hex(0xA47528).cgColor
             self.rightTopLayer.fillColor = UIColor.hex(0xA47528).cgColor
         }
     }
@@ -198,17 +207,13 @@ class YXChallengeRankCell: UITableViewCell {
     }
 
     func bindData(_ userModel: YXChallengeUserModel) {
-        self.levelHighlightLabel.text = "\(userModel.ranking)"
+
         self.levelLabel.text          = "\(userModel.ranking)"
         self.nameLabel.text           = userModel.name
         self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
         self.bonusLabel.text          = "+\(userModel.bonus)"
         self.avatarImageView.showImage(with: userModel.avatarStr)
 
-        self.levelHighlightLabel.sizeToFit()
-        self.tagImageView.snp.updateConstraints { (make) in
-            make.width.equalTo(AdaptSize(levelHighlightLabel.width + 13))
-        }
         self.nameLabel.sizeToFit()
         self.nameLabel.snp.updateConstraints { (make) in
             make.width.equalTo(self.nameLabel.width)

@@ -85,14 +85,14 @@ class YXChallengeRankTop3View: UIView {
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(11))
             make.width.equalTo(AdaptSize(116))
-            make.bottom.equalToSuperview().offset(AdaptSize(-22))
+            make.bottom.equalToSuperview().offset(AdaptSize(-17))
         }
 
         secondView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(37))
             make.width.equalTo(AdaptSize(116))
-            make.bottom.equalToSuperview().offset(AdaptSize(-22))
+            make.bottom.equalToSuperview().offset(AdaptSize(-17))
         }
 
         thirdView.snp.makeConstraints { (make) in

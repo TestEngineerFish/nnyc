@@ -24,32 +24,15 @@ class YXChallengeRankTopView: UIView {
 
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
-        imageView.image = UIImage(named: "reportSpeedPlatf")
+        imageView.image = UIImage(named: "challengeAvatar")
         return imageView
     }()
 
     var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.pfSCMediumFont(withSize: AdaptSize(14))
-        label.textColor = UIColor.black1
-        label.textAlignment = .center
-        return label
-    }()
-
-    var questionTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "答题"
-        label.font = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
-        label.textColor = UIColor.black3
-        label.textAlignment = .center
-        return label
-    }()
-
-    var questionCountLabel: UILabel = {
-        let label = UILabel()
-        label.text = "--个"
-        label.font = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
-        label.textColor = UIColor.orange1
+        label.text = "- -"
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(14))
+        label.textColor     = UIColor.black1
         label.textAlignment = .center
         return label
     }()
@@ -57,24 +40,41 @@ class YXChallengeRankTopView: UIView {
     var separateView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black4
+        view.isHidden        = true
         return view
     }()
 
-    var consumeTimeTitleLabel: UILabel = {
+    var questionLabel: UILabel = {
         let label = UILabel()
-        label.text = "耗时"
-        label.font = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
-        label.textColor = UIColor.black3
-        label.textAlignment = .center
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.textColor     = UIColor.black3
+        label.textAlignment = .left
+        label.isHidden      = true
         return label
     }()
 
-    var consumeTimeCountLabel: UILabel = {
+    var consumeTimeLabel: UILabel = {
         let label = UILabel()
-        label.text = "--秒"
-        label.font = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
-        label.textColor = UIColor.orange1
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.textColor     = UIColor.black3
+        label.textAlignment = .left
+        label.isHidden      = true
+        return label
+    }()
+
+    var goldIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image    = UIImage(named: "challengeGoldIcon")
+        imageView.isHidden = true
+        return imageView
+    }()
+
+    var bonusLabel: UILabel = {
+        let label = UILabel()
+        label.textColor     = UIColor.hex(0xEE531A)
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
         label.textAlignment = .center
+        label.isHidden      = true
         return label
     }()
 
@@ -89,21 +89,35 @@ class YXChallengeRankTopView: UIView {
 
     func bindData(_ model: YXChallengeUserModel) {
         self.avatarImageView.showImage(with: model.avatarStr)
-        self.nameLabel.text             = model.name
-        self.questionCountLabel.text    = "\(model.questionCount)个"
-        self.consumeTimeCountLabel.text = "\(model.time)秒"
+        self.nameLabel.text        = model.name
+        self.questionLabel.text    = "答题 \(model.questionCount)个"
+        self.consumeTimeLabel.text = "耗时 \(model.time)秒"
+        self.bonusLabel.text       = "+\(model.bonus)"
+        goldIconImageView.isHidden = false
+        bonusLabel.isHidden        = false
+        separateView.isHidden      = false
+        questionLabel.isHidden     = false
+        consumeTimeLabel.isHidden  = false
         self.setNeedsLayout()
+    }
+
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+        self.bonusLabel.sizeToFit()
+        self.bonusLabel.snp.updateConstraints { (make) in
+            make.width.equalTo(self.bonusLabel.width)
+        }
     }
 
     private func setSubviews(_ level: YXChallengeRankLevel) {
         self.addSubview(crownImageView)
         self.addSubview(avatarImageView)
         self.addSubview(nameLabel)
-        self.addSubview(questionTitleLabel)
-        self.addSubview(questionCountLabel)
+        self.addSubview(goldIconImageView)
+        self.addSubview(bonusLabel)
+        self.addSubview(questionLabel)
         self.addSubview(separateView)
-        self.addSubview(consumeTimeTitleLabel)
-        self.addSubview(consumeTimeCountLabel)
+        self.addSubview(consumeTimeLabel)
 
         switch level {
         case .first:
@@ -141,43 +155,43 @@ class YXChallengeRankTopView: UIView {
 
         nameLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(separateView.snp.top).offset(AdaptSize(-7))
+            make.bottom.equalToSuperview().offset(AdaptSize(-50))
             make.width.equalToSuperview()
             make.height.equalTo(AdaptSize(20))
         }
 
+        bonusLabel.sizeToFit()
+        bonusLabel.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(3))
+            make.width.equalTo(bonusLabel.width)
+            make.height.equalTo(AdaptSize(17))
+            make.bottom.equalToSuperview()
+        }
+
+        goldIconImageView.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: AdaptSize(17.64), height: AdaptSize(18.34)))
+            make.centerX.equalTo(bonusLabel)
+            make.bottom.equalTo(bonusLabel.snp.top)
+        }
+
         separateView.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(AdaptSize(-3))
-            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.left.equalTo(bonusLabel.snp.right).offset(AdaptSize(3))
             make.size.equalTo(CGSize(width: AdaptSize(1), height: AdaptSize(26)))
         }
 
-        questionTitleLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.bottom.equalTo(questionCountLabel.snp.top)
+        questionLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(separateView.snp.right).offset(AdaptSize(3))
+            make.right.equalToSuperview().offset(AdaptSize(-3))
+            make.top.equalTo(goldIconImageView)
             make.height.equalTo(AdaptSize(17))
-            make.width.equalToSuperview().multipliedBy(0.5)
         }
 
-        questionCountLabel.sizeToFit()
-        questionCountLabel.snp.makeConstraints { (make) in
-            make.left.bottom.equalToSuperview()
+        consumeTimeLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(separateView.snp.right).offset(AdaptSize(3))
+            make.right.equalToSuperview().offset(AdaptSize(-3))
+            make.top.equalTo(questionLabel.snp.bottom)
             make.height.equalTo(AdaptSize(17))
-            make.width.equalToSuperview().multipliedBy(0.5)
-        }
-
-        consumeTimeTitleLabel.snp.makeConstraints { (make) in
-            make.right.equalToSuperview()
-            make.bottom.equalTo(consumeTimeCountLabel.snp.top)
-            make.height.equalTo(AdaptSize(17))
-            make.width.equalToSuperview().multipliedBy(0.5)
-        }
-
-        consumeTimeCountLabel.sizeToFit()
-        consumeTimeCountLabel.snp.makeConstraints { (make) in
-            make.right.bottom.equalToSuperview()
-            make.height.equalTo(AdaptSize(17))
-            make.width.equalToSuperview().multipliedBy(0.5)
         }
     }
 
