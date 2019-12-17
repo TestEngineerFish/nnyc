@@ -28,6 +28,7 @@ struct YXGameConfig: Mappable {
     var totalTime: Int           = 0
     var totalQuestionNumber: Int = 0
     var timeOut: Int             = 0
+    var version: Int             = 0
 
     init?(map: Map) {}
 
@@ -57,6 +58,21 @@ struct YXGameWordModel: Mappable {
         meaning <- map["meaning"]
         row     <- map["row"]
         column  <- map["column"]
+    }
+}
+
+struct YXGameResultModel: Mappable {
+
+    var state: Int          = 0
+    var ranking: Int        = 0
+    var questionNumber: Int = 0
+    var consumeTime: Double = 0
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        state   <- map["state"]
+        ranking <- map["ranking"]
     }
 }
 

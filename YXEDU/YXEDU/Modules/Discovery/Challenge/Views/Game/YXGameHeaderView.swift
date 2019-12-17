@@ -41,7 +41,7 @@ class YXGameHeaderView: UIView {
 
     var recordImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "gameQuestion-1")
+        imageView.image = UIImage(named: "gameQuestion-0")
         return imageView
     }()
 
@@ -57,6 +57,8 @@ class YXGameHeaderView: UIView {
     var timer: Timer?
     var configModel: YXGameConfig?
     var consumeTime: Double = 0.0
+    var currentQuestionNumber = 0
+    var vcDelegate: YXGameViewControllerProtocol?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,7 +70,11 @@ class YXGameHeaderView: UIView {
             var margin = Double(config.totalTime) - self.consumeTime
             margin = margin < 0 ? 0 : margin
             self.timeLabel.text = self.getCountDownText(Int(margin))
-            })
+            if margin <= 0 {
+                self.vcDelegate?.skipQuestion()
+                timer.invalidate()
+            }
+        })
         RunLoop.current.add(timer!, forMode: .common)
         self.setSubviews()
     }
@@ -168,5 +174,14 @@ class YXGameHeaderView: UIView {
         let minute = (time % 3600) / 60
         let second = time % 60
         return String(format: "%02d:%02d:%02d", hour, minute, second)
+    }
+    // MARK: ==== Event ====
+    func addQuestionNumber() {
+        currentQuestionNumber += 1
+        self.recordImageView.image = UIImage(named: "gameQuestion-\(currentQuestionNumber)")
+    }
+
+    func getTimeAndQuestionNumber() -> (Double, Int) {
+        return (self.consumeTime, self.currentQuestionNumber)
     }
 }

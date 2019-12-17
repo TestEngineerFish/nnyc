@@ -53,14 +53,23 @@ class YXGameQuestionView: UIView {
     var skipButton: YXButton = {
         let button = YXButton()
         button.setImage(UIImage(named: "gameButtonSkip"), for: .normal)
-//        button.isHidden = true
+        button.isHidden = true
         return button
     }()
+
+    weak var vcDelegate: YXGameViewControllerProtocol?
+    var timer: Timer?
+    var consumeTime = Double.zero
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
         self.skipButton.addTarget(self, action: #selector(skipQuestion), for: .touchUpInside)
+    }
+
+    deinit {
+        timer?.invalidate()
+        timer = nil
     }
 
     required init?(coder: NSCoder) {
@@ -111,25 +120,36 @@ class YXGameQuestionView: UIView {
         }
     }
 
-    func bindData(_ wordModel: YXGameWordModel) {
+    func bindData(_ wordModel: YXGameWordModel, timeOut: Double) {
         self.wordMeaningLabel.text        = wordModel.meaning
         self.wordPhoneticSymbolLabel.text = wordModel.nature
+        timer?.invalidate()
+        timer = nil
+        timer = Timer(fire: Date(), interval: 1.0, repeats: true, block: { [weak self] (timer) in
+            guard let self = self else {
+                return
+            }
+            self.consumeTime += 1
+            print(self.consumeTime)
+            if self.consumeTime >= timeOut {
+                self.skipButton.isHidden = false
+                self.timer?.invalidate()
+            }
+        })
+        RunLoop.current.add(timer!, forMode: .common)
     }
 
     // MARK: ==== Event ====
-    @objc private func skipQuestion() {
-        self.closeAnimation()
-        print("SKIP")
+    @objc private func skipQuestion(_ button: UIButton) {
+        self.switchAnimation()
+        self.vcDelegate?.skipQuestion()
+        button.isHidden  = true
+        self.consumeTime = 0
     }
 
-    func switchAnimation() {
-        // 87
-
-    }
-
-    private func closeAnimation() {
+    private func switchAnimation() {
         let sinkageAnimation = CABasicAnimation(keyPath: "position.y")
-        sinkageAnimation.duration = 0.5
+        sinkageAnimation.duration = 0.25
         sinkageAnimation.toValue = self.height/2 - self.headerView.height + AdaptSize(10)
         sinkageAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         sinkageAnimation.repeatCount = 1
@@ -137,7 +157,7 @@ class YXGameQuestionView: UIView {
         self.headerView.layer.add(sinkageAnimation, forKey: nil)
 
         let flotAnimation = CABasicAnimation(keyPath: "position.y")
-        flotAnimation.duration = 0.5
+        flotAnimation.duration = 0.25
         flotAnimation.toValue = self.height/2
         flotAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         flotAnimation.repeatCount = 1

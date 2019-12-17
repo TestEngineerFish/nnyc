@@ -8,19 +8,33 @@
 
 import UIKit
 
-class YXGameViewController: YXViewController {
+protocol YXGameViewControllerProtocol: NSObjectProtocol {
+    func switchQuestion()
+    func skipQuestion()
+}
+
+class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
 
     var gameModel: YXGameModel?
+    var gameResultMode: YXGameResultModel?
     var currentQuestionIndex = 0
 
     var headerView   = YXGameHeaderView()
     var questionView = YXGameQuestionView()
     var answerView   = YXGameAnswerView()
+    let resultView   = YXGameResultView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setSubviews()
+        self.bindProperty()
         self.requestData()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.headerView.timer?.invalidate()
+        self.questionView.timer?.invalidate()
     }
 
     private func bindData() {
@@ -29,7 +43,13 @@ class YXGameViewController: YXViewController {
         }
         self.currentQuestionIndex = 0
         headerView.bindData(config)
-        self.switchQuestionView()
+        self.skipQuestion()
+    }
+
+    private func bindProperty() {
+        self.headerView.vcDelegate   = self
+        self.questionView.vcDelegate = self
+        self.answerView.selectedWordView.vcDelegate = self
     }
 
     private func setSubviews() {
@@ -77,20 +97,54 @@ class YXGameViewController: YXViewController {
         }
     }
 
-    // MARK: ==== Event ====
-    private func switchQuestionView() {
-        guard let gameModel = self.gameModel, self.currentQuestionIndex < gameModel.wordModelList.count else {
-            return
+    private func requestReport(_ version: Int, total time: Double, question number: Int) {
+        let request = YXChallengeRequest.report(version: version, totalTime: time, number: number)
+        YYNetworkService.default.request(YYStructResponse<YXGameResultModel>.self, request: request, success: { (response) in
+            self.gameResultMode = response.data
+            self.gameResultMode?.consumeTime = time
+            self.gameResultMode?.questionNumber = number
+            if number > 0 {
+                self.resultView.showSuccessView(self.gameResultMode!)
+            } else {
+                self.resultView.showFailView()
+            }
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error)")
         }
-        
-        let wordModel = gameModel.wordModelList[currentQuestionIndex]
-        questionView.bindData(wordModel)
-        answerView.bindData(wordModel)
-        currentQuestionIndex += 1
     }
+
+    // MARK: ==== Event ====
 
     @objc private func backAction() {
         self.navigationController?.popViewController(animated: true)
     }
 
+    /// - Parameter isRecord: 上题是否回答正确,正确数是否增加1
+    private func showNextQuestion(_ isRecord: Bool) {
+        guard let gameModel = self.gameModel, let config = gameModel.config else {
+            return
+        }
+        if self.currentQuestionIndex < gameModel.wordModelList.count {
+            let wordModel = gameModel.wordModelList[currentQuestionIndex]
+            questionView.bindData(wordModel, timeOut: Double(config.timeOut))
+            answerView.bindData(wordModel)
+            currentQuestionIndex += 1
+        } else {
+            // 显示结果视图
+            let result = self.headerView.getTimeAndQuestionNumber()
+            self.requestReport(config.version, total: result.0, question: result.1)
+            self.headerView.timer?.invalidate()
+            self.questionView.timer?.invalidate()
+        }
+    }
+
+    // MARK: ==== YXGameViewControllerProtocol ====
+    func switchQuestion() {
+        self.headerView.addQuestionNumber()
+        self.showNextQuestion(true)
+    }
+
+    func skipQuestion() {
+        self.showNextQuestion(false)
+    }
 }

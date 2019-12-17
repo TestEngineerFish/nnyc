@@ -17,6 +17,7 @@
 		202709BD21DE3A3000E88457 /* oneDrawgameGuide3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 202709B721DE3A3000E88457 /* oneDrawgameGuide3@3x.png */; };
 		202C7A21218FED8E00EFD072 /* FresherGuide in Resources */ = {isa = PBXBuildFile; fileRef = 202C7A20218FED8E00EFD072 /* FresherGuide */; };
 		20C86B9C217873FE00FCAAED /* WaveLoadingImages in Resources */ = {isa = PBXBuildFile; fileRef = 20C86B9B217873FE00FCAAED /* WaveLoadingImages */; };
+		2202D27123A8AB6700882E5D /* YXGameResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2202D27023A8AB6700882E5D /* YXGameResultView.swift */; };
 		2204145C238671FB002A44DA /* YXAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2204145B238671FB002A44DA /* YXAuthorizationManager.swift */; };
 		2205A92E23619F7500C6E674 /* YXAnswerSelectLettersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92D23619F7500C6E674 /* YXAnswerSelectLettersView.swift */; };
 		2205A9302361A7F900C6E674 /* YXLackWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92F2361A7F900C6E674 /* YXLackWordView.swift */; };
@@ -705,6 +706,7 @@
 		2059176E216AF01400254705 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		20C86B9B217873FE00FCAAED /* WaveLoadingImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WaveLoadingImages; sourceTree = "<group>"; };
 		2167AC0CCD40990E47210822 /* Pods-YXEDU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.release.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.release.xcconfig"; sourceTree = "<group>"; };
+		2202D27023A8AB6700882E5D /* YXGameResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGameResultView.swift; sourceTree = "<group>"; };
 		2204145B238671FB002A44DA /* YXAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAuthorizationManager.swift; sourceTree = "<group>"; };
 		2205A92D23619F7500C6E674 /* YXAnswerSelectLettersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAnswerSelectLettersView.swift; sourceTree = "<group>"; };
 		2205A92F2361A7F900C6E674 /* YXLackWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLackWordView.swift; sourceTree = "<group>"; };
@@ -1918,6 +1920,7 @@
 				224352DC23A4B92400F278E6 /* YXGameQuestionView.swift */,
 				224352E423A5089E00F278E6 /* YXGameQuestionSubview.swift */,
 				224352DE23A4B93600F278E6 /* YXGameAnswerView.swift */,
+				2202D27023A8AB6700882E5D /* YXGameResultView.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -5495,6 +5498,7 @@
 				7748D161239FB75400182611 /* YXWordDeformationsCell.swift in Sources */,
 				EE5EF1FC23273BAE00655654 /* YRHttpTask.m in Sources */,
 				EE5E0177232754FA00655654 /* QQApiManager.m in Sources */,
+				2202D27123A8AB6700882E5D /* YXGameResultView.swift in Sources */,
 				EEACEB2423A1DEC20036B3A2 /* YXNotification.swift in Sources */,
 				EE5E004223274FEB00655654 /* YXGraphIllustationCell.m in Sources */,
 				EE5E002623274FEB00655654 /* YXMyWordListDetailModel.m in Sources */,
