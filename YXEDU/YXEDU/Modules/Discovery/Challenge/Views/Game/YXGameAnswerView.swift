@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXGameAnswerView: UIView {
+class YXGameAnswerView: UIView, CAAnimationDelegate {
 
     var selectedWordView = YXGameQuestionSubview()
     var answerView: YXAnswerConnectionLettersView?
@@ -23,6 +23,7 @@ class YXGameAnswerView: UIView {
     }
 
     func bindData(_ wordModel: YXGameWordModel) {
+        self.answerView?.removeFromSuperview()
         self.selectedWordView.bindData(wordModel)
         var exerciseModel = YXWordExerciseModel()
         var questionModel = YXWordModel()
@@ -59,13 +60,15 @@ class YXGameAnswerView: UIView {
         let config = self.getConfig(wordModel: wordModel, answerViewSize: answerViewSize)
         answerView = YXAnswerConnectionLettersView(exerciseModel: exerciseModel, config: config)
         answerView?.delegate = selectedWordView
-//        answerView?.answerDelegate = self
+        answerView?.isHidden = true
         self.addSubview(answerView!)
         answerView?.snp.remakeConstraints({ (make) in
             make.top.equalTo(selectedWordView.snp.bottom).offset(AdaptSize(18))
             make.centerX.equalToSuperview()
             make.size.equalTo(answerViewSize)
         })
+
+        self.switchAnimation()
     }
 
     private func getConfig(wordModel: YXWordModel, answerViewSize: CGSize) -> YXConnectionLettersConfig {
@@ -100,14 +103,34 @@ class YXGameAnswerView: UIView {
         return config
     }
 
-    // MARK: ==== YXAnswerViewDelegate ====
-//    func answerCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
-//        print("answerCompletion")
-//    }
-//
-//    func switchQuestionView() -> Bool {
-//        print("switch")
-//        return true
-//    }
+    private func switchAnimation() {
+        let scaleAnimater            = CAKeyframeAnimation(keyPath: "transform.scale")
+        scaleAnimater.values         = [0.2, 1.15, 1.0]
+
+        let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
+        opacityAnimation.values      = [0.2, 1.0, 1.0]
+
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations     = [scaleAnimater, opacityAnimation]
+        animationGroup.autoreverses   = false
+        animationGroup.repeatCount    = 1
+        animationGroup.duration       = 0.75
+        animationGroup.delegate       = self
+        animationGroup.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        self.answerView?.layer.add(animationGroup, forKey: nil)
+    }
+
+    // MARK: ==== CAAnimationDelegate ====
+
+    func animationDidStart(_ anim: CAAnimation) {
+        self.answerView?.isHidden = false
+    }
+
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if flag {
+
+        }
+
+    }
 
 }

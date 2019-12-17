@@ -116,7 +116,15 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     // MARK: ==== Event ====
 
     @objc private func backAction() {
-        self.navigationController?.popViewController(animated: true)
+        let alertView = YXAlertView()
+        alertView.titleLabel.text = "提示"
+        alertView.descriptionLabel.text = "挑战尚未完成，是否退出并放弃本次挑战？"
+        alertView.leftButton.setTitle("确定退出", for: .normal)
+        alertView.rightOrCenterButton.setTitle("继续挑战", for: .normal)
+        alertView.cancleClosure = {
+            self.navigationController?.popViewController(animated: true)
+        }
+        alertView.show()
     }
 
     /// - Parameter isRecord: 上题是否回答正确,正确数是否增加1

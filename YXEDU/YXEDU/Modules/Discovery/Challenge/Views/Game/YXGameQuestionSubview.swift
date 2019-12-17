@@ -61,11 +61,13 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
     // MARK: ==== Event ====
     private func showReuslt(_ success: Bool) {
         if success {
+            YXAVPlayerManager.share.playRightAudio()
             self.wordLabel.textColor = UIColor.hex(0x5E9E63)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 self.vcDelegate?.switchQuestion()
             }
         } else {
+            YXAVPlayerManager.share.playWrongAudio()
             self.wordLabel.textColor = UIColor.hex(0xFF532B)
         }
     }

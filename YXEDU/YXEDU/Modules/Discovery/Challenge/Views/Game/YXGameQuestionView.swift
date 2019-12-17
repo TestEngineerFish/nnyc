@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXGameQuestionView: UIView {
+class YXGameQuestionView: UIView, CAAnimationDelegate {
     var containerView : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.clear
@@ -21,10 +21,16 @@ class YXGameQuestionView: UIView {
         return imageView
     }()
 
-    var contentView: UIImageView = {
+    var contentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "gameQuestionContent")
         return imageView
+    }()
+
+    var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
     }()
 
     var wordMeaningLabel: UILabel = {
@@ -60,6 +66,7 @@ class YXGameQuestionView: UIView {
     weak var vcDelegate: YXGameViewControllerProtocol?
     var timer: Timer?
     var consumeTime = Double.zero
+    var wordModel: YXGameWordModel?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -78,6 +85,7 @@ class YXGameQuestionView: UIView {
 
     func createSubviews() {
         self.addSubview(containerView)
+        self.containerView.addSubview(contentImageView)
         self.containerView.addSubview(contentView)
         self.containerView.addSubview(headerView)
         self.containerView.addSubview(bottomView)
@@ -92,6 +100,12 @@ class YXGameQuestionView: UIView {
         headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(AdaptSize(62))
+        }
+        contentImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(headerView.snp.bottom)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
         }
         contentView.snp.makeConstraints { (make) in
             make.top.equalTo(headerView.snp.bottom)
@@ -120,17 +134,22 @@ class YXGameQuestionView: UIView {
         }
     }
 
-    func bindData(_ wordModel: YXGameWordModel, timeOut: Double) {
-        self.wordMeaningLabel.text        = wordModel.meaning
-        self.wordPhoneticSymbolLabel.text = wordModel.nature
+    private func resetData() {
+        self.skipButton.isHidden = true
+        consumeTime = .zero
         timer?.invalidate()
         timer = nil
+    }
+
+    func bindData(_ wordModel: YXGameWordModel, timeOut: Double) {
+        self.wordModel = wordModel
+        self.switchAnimation()
+        self.resetData()
         timer = Timer(fire: Date(), interval: 1.0, repeats: true, block: { [weak self] (timer) in
             guard let self = self else {
                 return
             }
             self.consumeTime += 1
-            print(self.consumeTime)
             if self.consumeTime >= timeOut {
                 self.skipButton.isHidden = false
                 self.timer?.invalidate()
@@ -141,35 +160,67 @@ class YXGameQuestionView: UIView {
 
     // MARK: ==== Event ====
     @objc private func skipQuestion(_ button: UIButton) {
-        self.switchAnimation()
         self.vcDelegate?.skipQuestion()
         button.isHidden  = true
         self.consumeTime = 0
     }
 
     private func switchAnimation() {
+        let duration: Double = 0.75/2
         let sinkageAnimation = CABasicAnimation(keyPath: "position.y")
-        sinkageAnimation.duration = 0.25
-        sinkageAnimation.toValue = self.height/2 - self.headerView.height + AdaptSize(10)
+        sinkageAnimation.duration       = duration
+        sinkageAnimation.toValue        = self.height/2 - self.headerView.height
         sinkageAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        sinkageAnimation.repeatCount = 1
-        sinkageAnimation.autoreverses = true
+        sinkageAnimation.repeatCount    = 1
+        sinkageAnimation.autoreverses   = true
+        sinkageAnimation.delegate       = self 
         self.headerView.layer.add(sinkageAnimation, forKey: nil)
 
         let flotAnimation = CABasicAnimation(keyPath: "position.y")
-        flotAnimation.duration = 0.25
-        flotAnimation.toValue = self.height/2
+        flotAnimation.duration       = duration
+        flotAnimation.toValue        = self.height/2
         flotAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        flotAnimation.repeatCount = 1
-        flotAnimation.autoreverses = true
+        flotAnimation.repeatCount    = 1
+        flotAnimation.autoreverses   = true
         self.bottomView.layer.add(flotAnimation, forKey: nil)
 
-//        let foldAnimation = CABasicAnimation(keyPath: "bounds.height")
-//        foldAnimation.toValue = CGFloat.zero
-//        foldAnimation.duration = 0.5
-//        foldAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-//        foldAnimation.repeatCount = 1
-//        foldAnimation.autoreverses = true
-//        self.contentView.layer.add(foldAnimation, forKey: nil)
+        let foldAnimation = CABasicAnimation(keyPath: "transform.scale.y")
+        foldAnimation.toValue        = 0.7
+        foldAnimation.duration       = duration
+        foldAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        foldAnimation.repeatCount    = 1
+        foldAnimation.autoreverses   = true
+        self.contentImageView.layer.add(foldAnimation, forKey: nil)
+
+        // 内容缩放渐变
+        let scaleAnimater            = CAKeyframeAnimation(keyPath: "transform.scale")
+        scaleAnimater.values         = [1.0, 0.4]
+
+        let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
+        opacityAnimation.values      = [1.0, 0.4]
+
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations     = [scaleAnimater, opacityAnimation]
+        animationGroup.autoreverses   = true
+        animationGroup.repeatCount    = 1
+        animationGroup.duration       = duration
+        animationGroup.delegate       = self
+        animationGroup.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        self.contentView.layer.add(animationGroup, forKey: nil)
+    }
+
+    // MARK: ==== CAAnimationDelegate ====
+    func animationDidStart(_ anim: CAAnimation) {
+
+    }
+
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if flag {
+            guard let wordModel = self.wordModel else {
+                return
+            }
+            self.wordMeaningLabel.text        = wordModel.meaning
+            self.wordPhoneticSymbolLabel.text = wordModel.nature
+        }
     }
 }

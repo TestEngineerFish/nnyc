@@ -19,16 +19,16 @@ class YXGameResultView: UIView {
     var resultImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = true
-        imageView.layer.masksToBounds = true
         return imageView
     }()
 
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
         imageView.image = UIImage(named: "challengeAvatar")
-        imageView.layer.cornerRadius = AdaptSize(47/2)
-        imageView.layer.borderWidth  = AdaptSize(2)
-        imageView.layer.borderColor  = UIColor.white.cgColor
+        imageView.layer.cornerRadius  = AdaptSize(47/2)
+        imageView.layer.borderWidth   = AdaptSize(2)
+        imageView.layer.borderColor   = UIColor.white.cgColor
+        imageView.layer.masksToBounds = true
         return imageView
     }()
 
@@ -219,7 +219,6 @@ class YXGameResultView: UIView {
             make.size.equalTo(descriptionLabel.size)
             make.centerX.equalToSuperview()
         }
-
         closeButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
     }
 
