@@ -67,6 +67,7 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
     var timer: Timer?
     var consumeTime = Double.zero
     var wordModel: YXGameWordModel?
+    var timeout = Double.zero
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,8 +76,7 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
     }
 
     deinit {
-        timer?.invalidate()
-        timer = nil
+        self.stopTimer()
     }
 
     required init?(coder: NSCoder) {
@@ -137,25 +137,14 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
     private func resetData() {
         self.skipButton.isHidden = true
         consumeTime = .zero
-        timer?.invalidate()
-        timer = nil
     }
 
-    func bindData(_ wordModel: YXGameWordModel, timeOut: Double) {
+    func bindData(_ wordModel: YXGameWordModel, timeout: Double) {
         self.wordModel = wordModel
+        self.timeout   = timeout
         self.switchAnimation()
         self.resetData()
-        timer = Timer(fire: Date(), interval: 1.0, repeats: true, block: { [weak self] (timer) in
-            guard let self = self else {
-                return
-            }
-            self.consumeTime += 1
-            if self.consumeTime >= timeOut {
-                self.skipButton.isHidden = false
-                self.timer?.invalidate()
-            }
-        })
-        RunLoop.current.add(timer!, forMode: .common)
+        self.startTimer()
     }
 
     // MARK: ==== Event ====
@@ -192,27 +181,39 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
         foldAnimation.autoreverses   = true
         self.contentImageView.layer.add(foldAnimation, forKey: nil)
 
-        // 内容缩放渐变
-        let scaleAnimater            = CAKeyframeAnimation(keyPath: "transform.scale")
-        scaleAnimater.values         = [1.0, 0.4]
+        self.contentView.layer.scalingAnimation(duration)
+    }
 
-        let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
-        opacityAnimation.values      = [1.0, 0.4]
+    // 重新开始计时
+    func restartTimer() {
+        self.stopTimer()
+        self.skipButton.isHidden = true
+        self.consumeTime = 0
+        self.startTimer()
+    }
 
-        let animationGroup = CAAnimationGroup()
-        animationGroup.animations     = [scaleAnimater, opacityAnimation]
-        animationGroup.autoreverses   = true
-        animationGroup.repeatCount    = 1
-        animationGroup.duration       = duration
-        animationGroup.delegate       = self
-        animationGroup.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        self.contentView.layer.add(animationGroup, forKey: nil)
+    func startTimer() {
+        self.stopTimer()
+        timer = Timer(fire: Date(), interval: 1.0, repeats: true, block: { [weak self] (timer) in
+            guard let self = self else {
+                return
+            }
+            print("question \(self.consumeTime)")
+            self.consumeTime += 1
+            if self.consumeTime >= self.timeout {
+                self.skipButton.isHidden = false
+                self.timer?.invalidate()
+            }
+        })
+        RunLoop.current.add(timer!, forMode: .common)
+    }
+
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 
     // MARK: ==== CAAnimationDelegate ====
-    func animationDidStart(_ anim: CAAnimation) {
-
-    }
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if flag {

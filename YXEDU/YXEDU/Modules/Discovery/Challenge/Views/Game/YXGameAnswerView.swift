@@ -68,7 +68,7 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
             make.size.equalTo(answerViewSize)
         })
 
-        self.switchAnimation()
+        self.answerView?.layer.scalingAnimation(0.75, delegate: self)
     }
 
     private func getConfig(wordModel: YXWordModel, answerViewSize: CGSize) -> YXConnectionLettersConfig {
@@ -101,23 +101,6 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
         config.showAllErrorView = true
         config.resultAnimationTime = 1.0
         return config
-    }
-
-    private func switchAnimation() {
-        let scaleAnimater            = CAKeyframeAnimation(keyPath: "transform.scale")
-        scaleAnimater.values         = [0.2, 1.15, 1.0]
-
-        let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
-        opacityAnimation.values      = [0.2, 1.0, 1.0]
-
-        let animationGroup = CAAnimationGroup()
-        animationGroup.animations     = [scaleAnimater, opacityAnimation]
-        animationGroup.autoreverses   = false
-        animationGroup.repeatCount    = 1
-        animationGroup.duration       = 0.75
-        animationGroup.delegate       = self
-        animationGroup.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        self.answerView?.layer.add(animationGroup, forKey: nil)
     }
 
     // MARK: ==== CAAnimationDelegate ====

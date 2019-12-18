@@ -11,6 +11,7 @@ import UIKit
 protocol YXGameViewControllerProtocol: NSObjectProtocol {
     func switchQuestion()
     func skipQuestion()
+    func startGame()
 }
 
 class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
@@ -19,6 +20,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     var gameResultMode: YXGameResultModel?
     var currentQuestionIndex = 0
 
+    var launchView: YXGameLaunchView?
     var headerView   = YXGameHeaderView()
     var questionView = YXGameQuestionView()
     var answerView   = YXGameAnswerView()
@@ -41,6 +43,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
         guard let gameModel = self.gameModel, let config = gameModel.config else {
             return
         }
+        self.showLaunchView(config)
         self.currentQuestionIndex = 0
         headerView.bindData(config)
         self.skipQuestion()
@@ -115,6 +118,15 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
 
     // MARK: ==== Event ====
 
+    private func showLaunchView(_ config: YXGameConfig) {
+        launchView = YXGameLaunchView(config.totalTime)
+        kWindow.addSubview(launchView!)
+        launchView?.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        launchView?.delegate = self
+    }
+
     @objc private func backAction() {
         let alertView = YXAlertView()
         alertView.titleLabel.text = "提示"
@@ -134,7 +146,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
         }
         if self.currentQuestionIndex < gameModel.wordModelList.count {
             let wordModel = gameModel.wordModelList[currentQuestionIndex]
-            questionView.bindData(wordModel, timeOut: Double(config.timeOut))
+            questionView.bindData(wordModel, timeout: Double(config.timeOut))
             answerView.bindData(wordModel)
             currentQuestionIndex += 1
         } else {
@@ -154,5 +166,10 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
 
     func skipQuestion() {
         self.showNextQuestion(false)
+    }
+
+    func startGame() {
+        self.headerView.startTimer()
+        self.questionView.restartTimer()
     }
 }
