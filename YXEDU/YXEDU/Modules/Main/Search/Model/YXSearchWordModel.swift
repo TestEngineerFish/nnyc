@@ -8,12 +8,10 @@
 
 import ObjectMapper
 
-
-
 struct YXSearchWordModel: YXBaseWordModel {
 
     var wordId: Int?
-    var word: String?    
+    var word: String?
     var americanPronunciation: String?
     var englishPronunciation: String?
     var partOfSpeechAndMeanings: [YXWordPartOfSpeechAndMeaningModel]?
@@ -24,10 +22,10 @@ struct YXSearchWordModel: YXBaseWordModel {
         mapping(map: map)
     }
     
-//    mutating func mapping(map: Map) {
-//        baseMapping(map: map)
-//        isLearn <- map["is_learn"]
-//    }
+    mutating func mapping(map: Map) {
+        baseMapping(map: map)
+        isLearn <- map["is_learn"]
+    }
 }
 
 
@@ -40,7 +38,5 @@ struct YXSearchWordListModel: Mappable {
         words <- map["list"]
     }
 }
-
-
 
 
