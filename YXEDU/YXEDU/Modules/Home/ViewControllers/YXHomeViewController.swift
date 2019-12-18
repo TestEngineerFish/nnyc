@@ -176,19 +176,19 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.studyDataCollectionView.reloadData()
                 
                 DispatchQueue.global().async {
-                    var wordBook = YXWordBookModel()
-                    wordBook.bookId = self.homeModel.bookId
-                    wordBook.bookJsonSourcePath = self.homeModel.bookSource
-                    wordBook.bookHash = self.homeModel.bookHash
-                    YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
-                        DispatchQueue.main.async {
-                            if isSuccess {
-                                
-                            } else {
-                                
-                            }
-                        }
-                    }
+//                    var wordBook = YXWordBookModel()
+//                    wordBook.bookId = self.homeModel.bookId
+//                    wordBook.bookJsonSourcePath = self.homeModel.bookSource
+//                    wordBook.bookHash = self.homeModel.bookHash
+//                    YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
+//                        DispatchQueue.main.async {
+//                            if isSuccess {
+//
+//                            } else {
+//
+//                            }
+//                        }
+//                    }
                 }
                 
             } catch {

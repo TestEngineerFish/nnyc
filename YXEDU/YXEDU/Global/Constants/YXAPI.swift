@@ -57,12 +57,12 @@ struct YXAPI {
         static let reviewPlan = "/api/v1/learn/getreviewplanlist"
     }
 
-    //MARK: - 单词列表模块
+    // MARK: - 单词列表模块
     struct WordList {
-        /// 收藏、已学、未学列表
+        // 收藏、已学、未学列表
         static let wordList = "/api/v1/word/getnotelist"
         
-        /// 错词
+        // 错词
         static let wrongWordList = "/api/v1/word/getwronglist"
         
         // 收藏
@@ -73,7 +73,21 @@ struct YXAPI {
         
         // 刪除錯詞
         static let deleteWrongWord = "api/v1/word/delwrong"
+    }
+    
+    // MARK: - 单词列表模块
+    struct TaskCenter {
+        // 打卡
+        static let punchIn = "/api/v1/user/signin"
         
+        // 日期數據
+        static let punchData = "/api/v1/user/signininfo"
+        
+        // 任務卡片
+        static let taskList = "api/v1/user/task"
+        
+        // 領取積分
+        static let getIntegral = "api/v1/user/receivetaskreward"
     }
 
     // MARK: - 挑战模块
@@ -82,6 +96,8 @@ struct YXAPI {
         static let challengeModel = "/api/v1/game/ranking"
         /// 开始游戏接口
         static let playGame = "/api/v1/game/starting"
+        /// 游戏结果上报接口
+        static let gameReport = "/api/v1/game/stopping"
     }
     
     //MARK: - 设置模块

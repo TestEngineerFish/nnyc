@@ -17,6 +17,8 @@
 		202709BD21DE3A3000E88457 /* oneDrawgameGuide3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 202709B721DE3A3000E88457 /* oneDrawgameGuide3@3x.png */; };
 		202C7A21218FED8E00EFD072 /* FresherGuide in Resources */ = {isa = PBXBuildFile; fileRef = 202C7A20218FED8E00EFD072 /* FresherGuide */; };
 		20C86B9C217873FE00FCAAED /* WaveLoadingImages in Resources */ = {isa = PBXBuildFile; fileRef = 20C86B9B217873FE00FCAAED /* WaveLoadingImages */; };
+		2202D27123A8AB6700882E5D /* YXGameResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2202D27023A8AB6700882E5D /* YXGameResultView.swift */; };
+		2202D27523A9166F00882E5D /* YXGameLaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2202D27423A9166F00882E5D /* YXGameLaunchView.swift */; };
 		2204145C238671FB002A44DA /* YXAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2204145B238671FB002A44DA /* YXAuthorizationManager.swift */; };
 		2205A92E23619F7500C6E674 /* YXAnswerSelectLettersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92D23619F7500C6E674 /* YXAnswerSelectLettersView.swift */; };
 		2205A9302361A7F900C6E674 /* YXLackWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92F2361A7F900C6E674 /* YXLackWordView.swift */; };
@@ -179,6 +181,15 @@
 		778FAE54236FC00300DE0133 /* YXHandWriteAnswerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */; };
 		77B7C6EE23A7254200149ACE /* YXTaskCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C6ED23A7254200149ACE /* YXTaskCenterViewController.swift */; };
 		77B7C6F023A735F200149ACE /* YXResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C6EF23A735F200149ACE /* YXResultModel.swift */; };
+		77B7C6F423A77B7A00149ACE /* YXTaskCenterDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C6F223A77B7A00149ACE /* YXTaskCenterDateCell.swift */; };
+		77B7C6F523A77B7A00149ACE /* YXTaskCenterDateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B7C6F323A77B7A00149ACE /* YXTaskCenterDateCell.xib */; };
+		77B7C6F823A77BA200149ACE /* YXTaskCenterCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C6F623A77BA200149ACE /* YXTaskCenterCardCell.swift */; };
+		77B7C6F923A77BA200149ACE /* YXTaskCenterCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B7C6F723A77BA200149ACE /* YXTaskCenterCardCell.xib */; };
+		77B7C6FC23A77BDF00149ACE /* YXTaskCenterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C6FA23A77BDF00149ACE /* YXTaskCenterCell.swift */; };
+		77B7C6FD23A77BDF00149ACE /* YXTaskCenterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B7C6FB23A77BDF00149ACE /* YXTaskCenterCell.xib */; };
+		77B7C6FF23A86B1F00149ACE /* YXTaskCenterDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C6FE23A86B1F00149ACE /* YXTaskCenterDataModel.swift */; };
+		77B7C70123A86B4800149ACE /* YXTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C70023A86B4800149ACE /* YXTaskModel.swift */; };
+		77B7C70323A8757C00149ACE /* YXTaskCenterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C70223A8757C00149ACE /* YXTaskCenterRequest.swift */; };
 		77CBFD6F2372EBF000A670D7 /* YXAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */; };
 		77CBFD712373B48000A670D7 /* YXWordBookResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBFD702373B48000A670D7 /* YXWordBookResourceManager.swift */; };
 		77CCB9B623794CC2004EB781 /* YXWordDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCB9B523794CC2004EB781 /* YXWordDetailHeaderView.swift */; };
@@ -705,6 +716,8 @@
 		2059176E216AF01400254705 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		20C86B9B217873FE00FCAAED /* WaveLoadingImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WaveLoadingImages; sourceTree = "<group>"; };
 		2167AC0CCD40990E47210822 /* Pods-YXEDU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.release.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.release.xcconfig"; sourceTree = "<group>"; };
+		2202D27023A8AB6700882E5D /* YXGameResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGameResultView.swift; sourceTree = "<group>"; };
+		2202D27423A9166F00882E5D /* YXGameLaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGameLaunchView.swift; sourceTree = "<group>"; };
 		2204145B238671FB002A44DA /* YXAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAuthorizationManager.swift; sourceTree = "<group>"; };
 		2205A92D23619F7500C6E674 /* YXAnswerSelectLettersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAnswerSelectLettersView.swift; sourceTree = "<group>"; };
 		2205A92F2361A7F900C6E674 /* YXLackWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLackWordView.swift; sourceTree = "<group>"; };
@@ -876,6 +889,15 @@
 		778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHandWriteAnswerView.xib; sourceTree = "<group>"; };
 		77B7C6ED23A7254200149ACE /* YXTaskCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTaskCenterViewController.swift; sourceTree = "<group>"; };
 		77B7C6EF23A735F200149ACE /* YXResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXResultModel.swift; sourceTree = "<group>"; };
+		77B7C6F223A77B7A00149ACE /* YXTaskCenterDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTaskCenterDateCell.swift; sourceTree = "<group>"; };
+		77B7C6F323A77B7A00149ACE /* YXTaskCenterDateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXTaskCenterDateCell.xib; sourceTree = "<group>"; };
+		77B7C6F623A77BA200149ACE /* YXTaskCenterCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTaskCenterCardCell.swift; sourceTree = "<group>"; };
+		77B7C6F723A77BA200149ACE /* YXTaskCenterCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXTaskCenterCardCell.xib; sourceTree = "<group>"; };
+		77B7C6FA23A77BDF00149ACE /* YXTaskCenterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTaskCenterCell.swift; sourceTree = "<group>"; };
+		77B7C6FB23A77BDF00149ACE /* YXTaskCenterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXTaskCenterCell.xib; sourceTree = "<group>"; };
+		77B7C6FE23A86B1F00149ACE /* YXTaskCenterDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTaskCenterDataModel.swift; sourceTree = "<group>"; };
+		77B7C70023A86B4800149ACE /* YXTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTaskModel.swift; sourceTree = "<group>"; };
+		77B7C70223A8757C00149ACE /* YXTaskCenterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTaskCenterRequest.swift; sourceTree = "<group>"; };
 		77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAlertView.xib; sourceTree = "<group>"; };
 		77CBFD702373B48000A670D7 /* YXWordBookResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookResourceManager.swift; sourceTree = "<group>"; };
 		77CCB9B523794CC2004EB781 /* YXWordDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -1918,6 +1940,8 @@
 				224352DC23A4B92400F278E6 /* YXGameQuestionView.swift */,
 				224352E423A5089E00F278E6 /* YXGameQuestionSubview.swift */,
 				224352DE23A4B93600F278E6 /* YXGameAnswerView.swift */,
+				2202D27023A8AB6700882E5D /* YXGameResultView.swift */,
+				2202D27423A9166F00882E5D /* YXGameLaunchView.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -2269,6 +2293,7 @@
 			children = (
 				77CBFD702373B48000A670D7 /* YXWordBookResourceManager.swift */,
 				7748D15D239F3F4700182611 /* YXWordListRequest.swift */,
+				77B7C70223A8757C00149ACE /* YXTaskCenterRequest.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -2467,6 +2492,19 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		77B7C6F123A776A000149ACE /* TaskCenter */ = {
+			isa = PBXGroup;
+			children = (
+				77B7C6F223A77B7A00149ACE /* YXTaskCenterDateCell.swift */,
+				77B7C6F323A77B7A00149ACE /* YXTaskCenterDateCell.xib */,
+				77B7C6FA23A77BDF00149ACE /* YXTaskCenterCell.swift */,
+				77B7C6FB23A77BDF00149ACE /* YXTaskCenterCell.xib */,
+				77B7C6F623A77BA200149ACE /* YXTaskCenterCardCell.swift */,
+				77B7C6F723A77BA200149ACE /* YXTaskCenterCardCell.xib */,
+			);
+			path = TaskCenter;
+			sourceTree = "<group>";
+		};
 		77D048F82361A0FC00CE95D8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -2474,6 +2512,8 @@
 				77EE8C3A23A2319900E076FB /* YXWrongWordListModel.swift */,
 				777C1E29236BDF380097A822 /* YXHomeModel.swift */,
 				77B7C6EF23A735F200149ACE /* YXResultModel.swift */,
+				77B7C6FE23A86B1F00149ACE /* YXTaskCenterDataModel.swift */,
+				77B7C70023A86B4800149ACE /* YXTaskModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2520,6 +2560,7 @@
 				77626BF3239E248900B9407A /* Home */,
 				77626BF4239E24C300B9407A /* WordBook */,
 				77626BF5239E24CF00B9407A /* WordList */,
+				77B7C6F123A776A000149ACE /* TaskCenter */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5257,6 +5298,7 @@
 			files = (
 				202709BC21DE3A3000E88457 /* oneDrawgameGuide3@2x.png in Resources */,
 				77097539239A30080071A779 /* YXWordDetailClassicCell.xib in Resources */,
+				77B7C6F923A77BA200149ACE /* YXTaskCenterCardCell.xib in Resources */,
 				EE5E01132327528600655654 /* wrong.mp3 in Resources */,
 				228F9D4623A099C300F15F19 /* Discovery.storyboard in Resources */,
 				7748D162239FB75400182611 /* YXWordDeformationsCell.xib in Resources */,
@@ -5272,6 +5314,7 @@
 				200338D921B93A25009165DF /* shareResultBG@3x.png in Resources */,
 				77626C09239E428700B9407A /* YXWordListEmptyCell.xib in Resources */,
 				7786B6D52361C4E40027D0E3 /* YXSingleGroupWordBookCell.xib in Resources */,
+				77B7C6FD23A77BDF00149ACE /* YXTaskCenterCell.xib in Resources */,
 				EE5E004523274FEB00655654 /* YXWordDetailChoiceCell.xib in Resources */,
 				22B1F2102382CDAC00A84F61 /* learnLoading.json in Resources */,
 				EE5E003E23274FEB00655654 /* YXWordDetailChoiceCell.strings in Resources */,
@@ -5287,6 +5330,7 @@
 				23FD6CE922952E5400334321 /* 答题引导1@2x.png in Resources */,
 				7709752D23992B880071A779 /* YXWordDetailCommonPhrasesCell.xib in Resources */,
 				7759A89123793E2800C63199 /* YXWordDetailCommonView.xib in Resources */,
+				77B7C6F523A77B7A00149ACE /* YXTaskCenterDateCell.xib in Resources */,
 				227C6EEC228A5AA800282EA1 /* iconfont.ttf in Resources */,
 				202709BA21DE3A3000E88457 /* oneDrawgameGuide2@2x.png in Resources */,
 				77CCB9B823794CCB004EB781 /* YXWordDetailHeaderView.xib in Resources */,
@@ -5495,12 +5539,14 @@
 				7748D161239FB75400182611 /* YXWordDeformationsCell.swift in Sources */,
 				EE5EF1FC23273BAE00655654 /* YRHttpTask.m in Sources */,
 				EE5E0177232754FA00655654 /* QQApiManager.m in Sources */,
+				2202D27123A8AB6700882E5D /* YXGameResultView.swift in Sources */,
 				EEACEB2423A1DEC20036B3A2 /* YXNotification.swift in Sources */,
 				EE5E004223274FEB00655654 /* YXGraphIllustationCell.m in Sources */,
 				EE5E002623274FEB00655654 /* YXMyWordListDetailModel.m in Sources */,
 				EE5E005A23274FEB00655654 /* YXExerciseVC.m in Sources */,
 				EE5E007923274FEB00655654 /* YXBaseSpellQuestionView.m in Sources */,
 				EE5E023B232756C000655654 /* UIGestureRecognizer+XGesHelper.m in Sources */,
+				77B7C6F423A77B7A00149ACE /* YXTaskCenterDateCell.swift in Sources */,
 				EE5E00B223274FEB00655654 /* YXMissionToCheckinView.m in Sources */,
 				EE5E000323274FEB00655654 /* YXCustomScrollView.m in Sources */,
 				EE3DAB9923750E1600B2FF40 /* YXAPI.swift in Sources */,
@@ -5666,6 +5712,7 @@
 				EE5E004023274FEB00655654 /* YXGraphTranslateCell.m in Sources */,
 				77CCB9B623794CC2004EB781 /* YXWordDetailHeaderView.swift in Sources */,
 				EE54F7D82362AA3100EC605A /* YXExampleQuestionView.swift in Sources */,
+				77B7C6F823A77BA200149ACE /* YXTaskCenterCardCell.swift in Sources */,
 				EE5E00AD23274FEB00655654 /* YXMissionViewController.m in Sources */,
 				EE5E021C232756BF00655654 /* YXKeyPointTextStorage.m in Sources */,
 				EE5E0240232756C000655654 /* XAnimator.m in Sources */,
@@ -5739,12 +5786,14 @@
 				EE5E004D23274FEB00655654 /* YXWordDetailTextCell.m in Sources */,
 				EE5E004823274FEB00655654 /* YXComNaviView.m in Sources */,
 				2205A9382361BB9500C6E674 /* UIImage+Extension.swift in Sources */,
+				77B7C70323A8757C00149ACE /* YXTaskCenterRequest.swift in Sources */,
 				224A2FC1238233CC00AD99B0 /* YXLearnMapViewController.swift in Sources */,
 				EE5E007423274FEB00655654 /* YXStudyAccomplishView.m in Sources */,
 				2296F76F239B8F5500C50660 /* YXReviewBookItem.swift in Sources */,
 				EE5E007C23274FEB00655654 /* YXWordLettersView.m in Sources */,
 				EED3D4202331D5D000121218 /* YYCache.swift in Sources */,
 				EE5E021E232756BF00655654 /* TYViewStorage.m in Sources */,
+				77B7C6FC23A77BDF00149ACE /* YXTaskCenterCell.swift in Sources */,
 				EE5E002C23274FEB00655654 /* YXWordBookBaseManageView.m in Sources */,
 				EE5E001423274FEB00655654 /* YXCareerWordListTableViewCell.m in Sources */,
 				EE5E007B23274FEB00655654 /* YXSelectLettersQuestionView.m in Sources */,
@@ -5845,6 +5894,7 @@
 				2205A93C2361C92500C6E674 /* UIFont+Extension.swift in Sources */,
 				22164C0F23A11E4200E9252D /* YXChallengeStartButton.swift in Sources */,
 				EEACEB21239F9DBA0036B3A2 /* YXViewController.swift in Sources */,
+				77B7C6FF23A86B1F00149ACE /* YXTaskCenterDataModel.swift in Sources */,
 				EE54F7D42362AA3100EC605A /* YXRightOrWrongAnswerView.swift in Sources */,
 				22164C0223A0DA9A00E9252D /* YXChallengeViewController.swift in Sources */,
 				EE5EF20023273BAE00655654 /* YRNetworkManager+Cache.m in Sources */,
@@ -6010,6 +6060,7 @@
 				EE5EF255232740B800655654 /* UIView+Layout.m in Sources */,
 				224352D123A2593600F278E6 /* YXChallengeRankCell.swift in Sources */,
 				EE5E023C232756C000655654 /* Colours.m in Sources */,
+				2202D27523A9166F00882E5D /* YXGameLaunchView.swift in Sources */,
 				EE5E008A23274FEB00655654 /* YXCalendarStudyDayData.m in Sources */,
 				EE5EFCEA23274E5500655654 /* YXBaseMaskView.m in Sources */,
 				EE5E00ED23274FEC00655654 /* YXPersonalViewModel.m in Sources */,
@@ -6073,6 +6124,7 @@
 				EE5EF21323273BAE00655654 /* NSData+YR.m in Sources */,
 				EE7E1D082363679500600A88 /* YXExerciseConfig.swift in Sources */,
 				223D2684239B4A70008DED9E /* BPSegmentControllerView.swift in Sources */,
+				77B7C70123A86B4800149ACE /* YXTaskModel.swift in Sources */,
 				EE5E00E423274FEC00655654 /* YXNNCareerView.m in Sources */,
 				EE1E4AA823694D8B007D248F /* YXFillWordGroupExerciseView.swift in Sources */,
 				EE5E0254232756C100655654 /* XLineChartItem.m in Sources */,

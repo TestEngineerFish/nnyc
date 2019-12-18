@@ -125,4 +125,13 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.requestChallengeData()
     }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 0 {
+            print(scrollView.contentOffset.y)
+        }
+    }
+
+
 }
+ 

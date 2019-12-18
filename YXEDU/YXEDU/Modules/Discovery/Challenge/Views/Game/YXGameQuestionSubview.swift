@@ -21,6 +21,7 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
     var wordModel: YXGameWordModel?
     var selectedButtonList = [YXLetterButton]()
     final let maxWidth = AdaptSize(162)
+    weak var vcDelegate: YXGameViewControllerProtocol?
 
     init() {
         super.init(frame: CGRect.zero)
@@ -57,6 +58,19 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
             }
         }
     }
+    // MARK: ==== Event ====
+    private func showReuslt(_ success: Bool) {
+        if success {
+            YXAVPlayerManager.share.playRightAudio()
+            self.wordLabel.textColor = UIColor.hex(0x5E9E63)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.vcDelegate?.switchQuestion()
+            }
+        } else {
+            YXAVPlayerManager.share.playWrongAudio()
+            self.wordLabel.textColor = UIColor.hex(0xFF532B)
+        }
+    }
 
     // MARK: ==== YXAnswerEventProtocol ====
 
@@ -64,6 +78,7 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
         guard let wordModel = self.wordModel else {
             return false
         }
+        self.wordLabel.textColor = UIColor.hex(0xC9823D)
         var lackWord = self.wordLabel.text ?? ""
         if lackWord.count >= wordModel.word.count {
             return false
@@ -104,7 +119,9 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
                 }
             }
         }
-        print("看看结果")
+        if isShow {
+            self.showReuslt(errorList.isEmpty)
+        }
 
         return (isShow, errorList)
     }

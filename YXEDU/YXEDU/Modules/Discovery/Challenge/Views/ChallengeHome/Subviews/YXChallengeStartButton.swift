@@ -126,6 +126,7 @@ class YXChallengeStartButton: UIButton {
             return UIView()
         }
         let priceView = UIView()
+        priceView.isUserInteractionEnabled = false
         let leftBracket: UILabel = {
             let label = UILabel()
             label.text          = "（"
