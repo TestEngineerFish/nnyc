@@ -9,7 +9,7 @@
 import ObjectMapper
 
 /// 单词数据模型
-struct YXWordModel: YXBaseWordModel {
+struct YXWordModel: Mappable {
     var gradeId: Int? = -1
     var gardeType: Int? = 1
     var bookId: Int? = -1
@@ -70,6 +70,91 @@ struct YXWordModel: YXBaseWordModel {
         self.mapping(map: map)
     }
     
+    mutating func mapping(map: Map) {
+        wordId                  <- map["word_id"]
+        word                    <- map["word"]
+        imageUrl                <- map["word_image"]
+        partOfSpeechAndMeanings <- map["paraphrase"]
+        americanPhoneticSymbol  <- map["symbol_us"]
+        englishPhoneticSymbol   <- map["symbol_uk"]
+        americanPronunciation   <- map["voice_us"]
+        englishPronunciation    <- map["voice_uk"]
+        examples                <- map["examples"]
+        deformations            <- map["vary"]
+        fixedMatchs             <- map["hold_match"]
+        commonPhrases           <- map["common_short"]
+        wordAnalysis            <- map["analysis"]
+        detailedSyntaxs         <- map["grammar"]
+        synonyms                <- map["synonym"]
+        antonyms                <- map["antonym"]
+        column                  <- map["column"]
+        row                     <- map["row"]
+        bookId                  <- map["book_id"]
+        unitId                  <- map["unit_id"]
+        isComplexWord           <- map["is_synthesis"]
+    }
+    
+    ///根据本地设置，获取音标
+    var soundmark: String? {
+        return YXUserModel.default.didUseAmericanPronunciation ? americanPhoneticSymbol : englishPhoneticSymbol
+    }
+    
+    ///根据本地设置，获取语音
+    var voice: String? {
+        return YXUserModel.default.didUseAmericanPronunciation ? americanPronunciation : englishPronunciation
+    }
+    
+    var partOfSpeech: String? {
+        return partOfSpeechAndMeanings?[0].partOfSpeech
+    }
+    
+    var meaning: String? {
+        set {
+            partOfSpeechAndMeanings?[0].meaning = newValue
+        }
+        
+        get {
+            return partOfSpeechAndMeanings?[0].meaning
+        }
+    }
+    var example: String? {
+        return examples?[0].english
+    }
+    
+    var chineseExample: String? {
+        return examples?[0].chinese
+    }
+    
+    var examplePronunciation: String? {
+        set {
+            examples?[0].pronunciation = newValue
+        }
+        
+        get {
+            return examples?[0].pronunciation
+        }
+    }
+    
+    var englishExampleAttributedString: NSAttributedString? {
+        guard let englishExample = examples?[0].english else { return nil }
+
+        let firstRightBracket = englishExample.firstIndex(of: ">")!
+        let startHighLightIndex = englishExample.index(firstRightBracket, offsetBy: 1)
+        let lastLeftBracket = englishExample.lastIndex(of: "<")!
+        let highLightString = String(englishExample[startHighLightIndex..<lastLeftBracket])
+        
+        let firstLeftBracket = englishExample.firstIndex(of: "<")!
+        let lastRightBracket = englishExample.lastIndex(of: ">")!
+        let endHighLightIndex = englishExample.index(lastRightBracket, offsetBy: 1)
+        let string = String(englishExample[englishExample.startIndex..<firstLeftBracket]) + highLightString + String(englishExample[endHighLightIndex..<englishExample.endIndex])
+        
+        let attrString = NSMutableAttributedString(string: string)
+        let highLightRange = string.range(of: highLightString)!
+        let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
+        attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
+        
+        return attrString
+    }
 }
 
 

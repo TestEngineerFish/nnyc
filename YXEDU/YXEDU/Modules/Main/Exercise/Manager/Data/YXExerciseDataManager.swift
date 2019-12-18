@@ -194,7 +194,7 @@ class YXExerciseDataManager: NSObject {
     }
     
 
-    func fetchWord(wordId: Int) -> YXWordModel? {
+    func fetchWord(wordId: Int) -> YXWordModel? {                         
         return dao.selectWord(wordId: wordId)
     }
     

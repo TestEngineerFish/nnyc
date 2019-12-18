@@ -261,6 +261,108 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     
     
     func selectWord(wordId: Int) -> YXWordModel? {
+        let json = """
+                 {
+                     "word_id": 1,
+                     "word": "good",
+                     "word_image": "http://cdn.xstudyedu.com/res/rj_1/middle/good/1570699002.jpg",
+                     "symbol_us": "美/ɡʊd/",
+                     "symbol_uk": "英/gʊd/",
+                     "voice_us": "http://cdn.xstudyedu.com/res/rj_1/voice/good_us.mp3",
+                     "voice_uk": "http://cdn.xstudyedu.com/res/rj_1/voice/good_uk.mp3",
+                     "word_syllables": "good",
+                     "synonym": [
+                         "great",
+                         "helpful"
+                     ],
+                     "antonym": [
+                         "poor",
+                         "bad"
+                     ],
+                     "usage": [
+                         "adj.+n.  good health 身体健康",
+                         "v.+adj.  look good 看起来不错"
+                     ],
+                     "paraphrase": [{
+                         "k": "adj.",
+                         "v": "好的"
+                     }],
+                     "examples": [{
+                         "en": "You have such a <font color='#55a7fd'>good</font> chance.",
+                         "cn": "你有这么一个好的机会。",
+                         "voice": "http://cdn.xstudyedu.com/res/rj_1/speech/a00c5c2830ffc50a68f820164827f356.mp3",
+                         "image": "http://cdn.xstudyedu.com/res/rj_1/middle/good/1570699002.jpg"
+                     }],
+                     "vary": [{
+                             "k": "最高级",
+                             "v": "best"
+                         },
+                         {
+                             "k": "比较级",
+                             "v": "better"
+                         }
+                     ],
+                     "hold_match": [{
+                             "match_en": "spend sth on sth",
+                             "match_cn": "在……上花费",
+                             "example_en": "More money should be spent on education.",
+                             "example_cn": "更多的钱应该花在教育上。"
+                         },
+                         {
+                             "match_en": "spend sth (in) doing sth",
+                             "match_cn": "花费…去做某事",
+                             "example_en": "I spend all my free time (in) painting.",
+                             "example_cn": "我在画画上花费了我所有的空闲时间。"
+                         }
+                     ],
+                     "common_short": [{
+                             "k": "in air",
+                             "v": "在空中"
+                         },
+                         {
+                             "k": "on the air",
+                             "v": "穿上盛装的，精心打扮的"
+                         }
+                     ],
+                     "analysis": [{
+                         "title": "through & across",
+                         "list": [
+                             "through用做介词。\"表示从物体里面穿过。",
+                             " across 用做介词。表示在一个物体的表面上穿过。"
+                         ]
+                     }],
+                     "grammar": [{
+                             "title": "反身代词",
+                             "list": [
+                                 "第一人称—我自己/我们自己—myself/ourselves ",
+                                 "第二人称—你自己/你们自己—yourself/yourselves ",
+                                 "第三人称—他/她/它/他们自己—himself/herself/ itself/themselves"
+                             ]
+                         },
+                         {
+                             "title": "频率副词",
+                             "list": [
+                                 "第一人称—我自己/我们自己—myself/ourselves ",
+                                 "第二人称—你自己/你们自己—yourself/yourselves ",
+                                 "第三人称—他/她/它/他们自己—himself/herself/ itself/themselves"
+                             ]
+                         }
+                     ],
+
+                     "msg": "",
+                     "time": 1575893582
+                 }
+
+                 """
+                 
+                 
+        var word = YXWordModel(JSONString: json)
+        word?.wordId = wordId
+        //        word?.word = (word?.word ?? "") + "\(wordId)"
+        return word
+        
+        
+        
         let sql = YYSQLManager.WordBookSQL.selectWord.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [wordId]) else {
 //            DDLogError("selectRecordByImageID failed")

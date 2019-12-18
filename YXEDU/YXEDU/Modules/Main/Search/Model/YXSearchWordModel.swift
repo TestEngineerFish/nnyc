@@ -30,10 +30,12 @@ struct YXSearchWordModel: YXBaseWordModel {
 
 
 struct YXSearchWordListModel: Mappable {
-    init?(map: Map) {
-    }
     
     var words: [YXSearchWordModel]?
+    
+    init?(map: Map) {
+    }
+        
     mutating func mapping(map: Map) {
         words <- map["list"]
     }

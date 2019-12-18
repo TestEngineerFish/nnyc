@@ -152,7 +152,7 @@ extension YXReviewViewController {
     
     /// 开始智能复习
     func startReviewEvent() {
-        let vc = YXReviewPlanDetailViewController()
+        let vc = YXSearchViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

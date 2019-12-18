@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXReviewPlanTableViewCell: UITableViewCell {
+class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     var startReviewPlanEvent: (() -> Void)?
     var startListenPlanEvent: (() -> Void)?
@@ -43,7 +43,7 @@ class YXReviewPlanTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createSubviews() {
+    override func createSubviews() {
         self.addSubview(bgView)
         
         bgView.addSubview(titleLabel)
@@ -58,7 +58,7 @@ class YXReviewPlanTableViewCell: UITableViewCell {
         bgView.addSubview(reviewButton)
     }
     
-    func bindProperty() {
+    override func bindProperty() {
         bgView.backgroundColor = UIColor.white
         bgView.layer.setDefaultShadow(radius: 4)
         
@@ -183,7 +183,7 @@ class YXReviewPlanTableViewCell: UITableViewCell {
     }
     
     
-    func bindData() {
+    override func bindData() {
         titleLabel.text = reviewPlanModel?.planName
         countLabel.text = "单词: " + (reviewPlanModel?.wordCount.string ?? "")
         
@@ -195,7 +195,7 @@ class YXReviewPlanTableViewCell: UITableViewCell {
     }
     
     
-    class func viewHeight(model: YXReviewPlanModel) -> CGFloat {
+    override class func viewHeight(model: YXReviewPlanModel) -> CGFloat {
         let vHeight: CGFloat = model.listenState != .normal || model.reviewState != .normal ? 120 : 103
         return vHeight
     }
