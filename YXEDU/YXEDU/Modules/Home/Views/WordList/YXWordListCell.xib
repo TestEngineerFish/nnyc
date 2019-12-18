@@ -35,21 +35,23 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B8z-m1-4c5">
-                        <rect key="frame" x="172" y="96.5" width="242" height="21"/>
+                        <rect key="frame" x="172" y="96.5" width="164" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KbT-WN-PFS">
-                        <rect key="frame" x="434" y="96" width="46" height="22"/>
-                        <inset key="imageEdgeInsets" minX="36" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <state key="normal" title="        " image="go"/>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KbT-WN-PFS">
+                        <rect key="frame" x="356" y="96" width="124" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="szm-UB-Cjr"/>
+                        </constraints>
+                        <state key="normal" image="go"/>
                         <connections>
                             <action selector="showWordDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0ul-zX-iDg"/>
                         </connections>
                     </button>
-                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bfi-re-0ha">
-                        <rect key="frame" x="172" y="91" width="242" height="32"/>
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wordListMask" translatesAutoresizingMaskIntoConstraints="NO" id="Bfi-re-0ha">
+                        <rect key="frame" x="172" y="91" width="164" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="aZF-UX-98z"/>
                         </constraints>
@@ -68,13 +70,13 @@
                     <constraint firstItem="B8z-m1-4c5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="KY9-rk-jIQ"/>
                     <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="B8z-m1-4c5" secondAttribute="trailing" constant="20" id="Rq0-My-kcy"/>
                     <constraint firstItem="Bfi-re-0ha" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="cSb-d8-Qp4"/>
-                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="Bfi-re-0ha" secondAttribute="trailing" constant="20" id="eaw-gJ-Njz"/>
+                    <constraint firstItem="B8z-m1-4c5" firstAttribute="trailing" secondItem="Bfi-re-0ha" secondAttribute="trailing" id="eaw-gJ-Njz"/>
                     <constraint firstItem="B8z-m1-4c5" firstAttribute="leading" secondItem="XYT-kM-Mem" secondAttribute="trailing" constant="20" id="jKJ-Xy-ZT4"/>
                     <constraint firstAttribute="trailing" secondItem="ovL-QG-taA" secondAttribute="trailing" constant="20" id="jQ7-cw-cC0"/>
                     <constraint firstItem="XYT-kM-Mem" firstAttribute="leading" secondItem="DDl-cc-kAH" secondAttribute="trailing" constant="8" id="m5B-dP-8yt"/>
                     <constraint firstItem="DDl-cc-kAH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="nWZ-hz-wjG"/>
                     <constraint firstItem="DDl-cc-kAH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nt8-wU-7CI"/>
-                    <constraint firstItem="Bfi-re-0ha" firstAttribute="leading" secondItem="XYT-kM-Mem" secondAttribute="trailing" constant="20" id="otb-Lk-BVQ"/>
+                    <constraint firstItem="Bfi-re-0ha" firstAttribute="leading" secondItem="B8z-m1-4c5" secondAttribute="leading" id="otb-Lk-BVQ"/>
                     <constraint firstItem="ovL-QG-taA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="sdz-M3-YqG"/>
                     <constraint firstItem="KbT-WN-PFS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vEO-f6-NT1"/>
                     <constraint firstAttribute="trailing" secondItem="KbT-WN-PFS" secondAttribute="trailing" constant="20" id="veD-jJ-pFO"/>
@@ -94,5 +96,6 @@
     <resources>
         <image name="go" width="8" height="14"/>
         <image name="playAudioIcon" width="37" height="37"/>
+        <image name="wordListMask" width="164" height="32"/>
     </resources>
 </document>

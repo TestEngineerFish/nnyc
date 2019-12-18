@@ -11,7 +11,9 @@ import UIKit
 @IBDesignable
 class YXDesignableButton: UIButton {
     
-    lazy var enableLayer: CAGradientLayer = {
+    private var originTextColor: UIColor!
+    
+    lazy var gradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.bounds
         gradientLayer.colors = [gradientColor1.cgColor, gradientColor2.cgColor]
@@ -27,17 +29,19 @@ class YXDesignableButton: UIButton {
         return layer
     }()
     
-    lazy var touchedLayer: CALayer = {
-        let layer = CALayer()
-        layer.frame = self.bounds
-        layer.backgroundColor = UIColor(red: 0.06, green: 0.06, blue: 0.06, alpha: 0.2).cgColor
-        return layer
-    }()
-    
     override var isUserInteractionEnabled: Bool {
         didSet {
-            if canBeDisabled {
-                adjustButtonState()
+            guard enableGradientBackground else { return }
+            
+            if isUserInteractionEnabled {
+                disableLayer.removeFromSuperlayer()
+                self.layer.insertSublayer(gradientLayer, at: 0)
+                self.setTitleColor(originTextColor, for: .normal)
+                
+            } else {
+                gradientLayer.removeFromSuperlayer()
+                self.layer.insertSublayer(disableLayer, at: 0)
+                self.setTitleColor(UIColor(red: 0.92, green: 0.82, blue: 0.73, alpha: 1), for: .normal)
             }
         }
     }
@@ -45,42 +49,11 @@ class YXDesignableButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        if canBeDisabled {
-            adjustButtonState()
-
-        } else {
-            self.layer.insertSublayer(enableLayer, at: 0)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
+        originTextColor = currentTitleColor
         
-//        if enableGradientBackground, isUserInteractionEnabled {
-//            self.layer.addSublayer(touchedLayer)
-//        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-
-//        if enableGradientBackground, isUserInteractionEnabled {
-//            touchedLayer.removeFromSuperlayer()
-//        }
-    }
-    
-    private func adjustButtonState() {
         if enableGradientBackground {
-            if isUserInteractionEnabled {
-                disableLayer.removeFromSuperlayer()
-                self.layer.insertSublayer(enableLayer, at: 0)
-                self.setTitleColor(.white, for: .normal)
-                
-            } else {
-                enableLayer.removeFromSuperlayer()
-                self.layer.insertSublayer(disableLayer, at: 0)
-                self.setTitleColor(UIColor(red: 0.92, green: 0.82, blue: 0.73, alpha: 1), for: .normal)
-            }
+            let enabled = isUserInteractionEnabled
+            isUserInteractionEnabled = enabled
         }
     }
     
@@ -120,7 +93,4 @@ class YXDesignableButton: UIButton {
     
     @IBInspectable
     var gradientColorStartPoint: CGFloat = 0.5
-    
-    @IBInspectable
-    var canBeDisabled: Bool = true
 }

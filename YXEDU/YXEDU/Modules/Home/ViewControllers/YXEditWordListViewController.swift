@@ -39,6 +39,7 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var wordCountLabel: UILabel!
     @IBOutlet weak var redButton: YXDesignableButton!
+    @IBOutlet weak var bottomView: YXDesignableView!
     @IBOutlet weak var bottonViewHeight: NSLayoutConstraint!
     
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -103,8 +104,13 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
             headerLabel.text = "请选择想删除的熟识的单词"
             redButton.setTitle("清除", for: .normal)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        redButton.titleLabel?.textColor = UIColor.hex(0xFF532B)
+        redButton.setTitleColor(UIColor.hex(0xFF532B), for: .normal)
+        bottomView.layer.setDefaultShadow()
     }
        
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,10 +144,10 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
         cell.englishPronunciation = word.englishPronunciation
         
         if word.hidePartOfSpeechAndMeanings {
-            cell.meaningLabelMask.isHidden = true
+            cell.meaningLabelMask.image = nil
             
         } else {
-            cell.meaningLabelMask.isHidden = false
+            cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
         }
         
         cell.removeMaskClosure = {
@@ -159,6 +165,14 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
         cell.selectClosure = {
             self.words[indexPath.row].isSelected = !self.words[indexPath.row].isSelected
             tableView.reloadRows(at: [indexPath], with: .none)
+            
+            var count = 0
+            for word in self.words {
+                guard word.isSelected else { continue }
+                
+                count = count + 1
+                self.wordCountLabel.text = "\(count)"
+            }
         }
         
         return cell

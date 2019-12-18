@@ -31,7 +31,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     var shouldShowBottomView = false {
         didSet {
             if shouldShowBottomView {
-                bottonViewHeight.constant = bottonViewHeight.constant + kSafeBottomMargin
+                bottonViewHeight.constant = 68 + kSafeBottomMargin
                 
             } else {
                 bottonViewHeight.constant = 0
@@ -39,9 +39,23 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    private var originWords: [YXWordModel]?
+    
     var words: [YXWordModel] = [] {
         didSet {
-            wordCountLabel.text = "\(words.count)"
+            if originWords == nil {
+                originWords = words
+            }
+            
+            let wordsCount = words.count
+            if wordsCount == 0 {
+                topViewHeight.constant = 0
+
+            } else {
+                topViewHeight.constant = 44
+            }
+            
+            wordCountLabel.text = "\(wordsCount)"
             tableView.reloadData()
         }
     }
@@ -72,22 +86,74 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 wordsCount = wordsCount + reviewListCount
             }
             
+            if wordsCount == 0 {
+                topViewHeight.constant = 0
+
+            } else {
+                topViewHeight.constant = 44
+            }
+            
             wordCountLabel.text = "\(wordsCount)"
             tableView.reloadData()
         }
     }
     
-    private var wrongWordSectionData: [[String: [YXWordModel]]]?
+    private var originWrongWordSectionData: [[String: [YXWordModel]]]?
+    private var wrongWordSectionData: [[String: [YXWordModel]]]? {
+        didSet {
+            if originWrongWordSectionData == nil {
+                originWrongWordSectionData = wrongWordSectionData
+            }
+        }
+    }
     
     var orderType: YXWordListOrderType = .default {
         didSet {
             self.orderButton.setTitle(orderType.rawValue, for: .normal)
+
+            switch orderType {
+            case .default:
+                if let originWords = originWords {
+                    words = originWords
+                }
+                
+                if let originWrongWordSectionData = originWrongWordSectionData {
+                    wrongWordSectionData = originWrongWordSectionData
+                }
+                break
+                
+            case .az:
+                if let data = wrongWordSectionData {
+                    for index in 0..<data.count {
+                        guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
+                        wrongWordSectionData?[index] = [key: atoz(words: words)]
+                    }
+                    
+                } else {
+                    words = atoz(words: words)
+                }
+                break
+
+            case .za:
+                if let data = wrongWordSectionData {
+                    for index in 0..<data.count {
+                        guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
+                        wrongWordSectionData?[index] = [key: ztoa(words: words)]
+                    }
+                    
+                } else {
+                    words = ztoa(words: words)
+                }
+                break
+            }
             
-            guard words.count > 0 else { return }
+            tableView.reloadData()
         }
     }
 
     @IBOutlet var contentView: UIView!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     @IBOutlet weak var wordCountLabel: UILabel!
     @IBOutlet weak var orderButton: YXDesignableButton!
     @IBOutlet weak var orderButtonDistance: NSLayoutConstraint!
@@ -99,7 +165,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     @IBAction func order(_ sender: Any) {
         let view = YXWordListOrderView(frame: CGRect(x: screenWidth - orderButtonDistance.constant - 120, y: 44, width: 120, height: 120), orderType: orderType)
         view.orderClosure = { type in
-            self.orderButton.setTitle(type.rawValue, for: .normal)
             self.orderType = type
             self.orderClosure?(type)
         }
@@ -169,6 +234,10 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, isWrongWordList {
             if let count = wrongWordSectionData?[section].values.first?.count, count > 0 {
@@ -217,10 +286,10 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 cell.englishPronunciation = word.englishPronunciation
                 
                 if word.hidePartOfSpeechAndMeanings {
-                    cell.meaningLabelMask.isHidden = true
+                    cell.meaningLabelMask.image = nil
                     
                 } else {
-                    cell.meaningLabelMask.isHidden = false
+                    cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
                 }
                 
                 cell.removeMaskClosure = {
@@ -276,10 +345,10 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 cell.englishPronunciation = word.englishPronunciation
                 
                 if word.hidePartOfSpeechAndMeanings {
-                    cell.meaningLabelMask.isHidden = true
+                    cell.meaningLabelMask.image = nil
                     
                 } else {
-                    cell.meaningLabelMask.isHidden = false
+                    cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
                 }
                 
                 cell.removeMaskClosure = {
@@ -317,5 +386,23 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         
         return nil
+    }
+    
+    private func atoz(words: [YXWordModel]) -> [YXWordModel] {
+        var newWords = words
+        newWords.sort { (a, z) -> Bool in
+            a.word ?? "" > z.word ?? ""
+        }
+        
+        return newWords
+    }
+    
+    private func ztoa(words: [YXWordModel]) -> [YXWordModel] {
+        var newWords = words
+        newWords.sort { (a, z) -> Bool in
+            a.word ?? "" < z.word ?? ""
+        }
+        
+        return newWords
     }
 }
