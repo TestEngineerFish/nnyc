@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         } else {
             guard let tabBarViewController = window?.rootViewController as? UITabBarController else { return }
-            tabBarViewController.selectedIndex = 2
+            tabBarViewController.selectedIndex = 3
         }
     }
     
