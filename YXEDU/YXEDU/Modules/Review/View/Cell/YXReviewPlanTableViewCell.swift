@@ -10,6 +10,8 @@ import UIKit
 
 class YXReviewPlanTableViewCell: UITableViewCell {
     
+    var startReviewPlanEvent: (() -> Void)?
+    var startListenPlanEvent: (() -> Void)?
     var reviewPlanModel: YXReviewPlanModel? {
         didSet { bindData() }
     }
@@ -23,8 +25,13 @@ class YXReviewPlanTableViewCell: UITableViewCell {
     var reviewStarView = YXReviewPlanStarContainerView()
     var reviewProgressView = YXReviewPlanProgressView()
     var listenImageView = UIImageView()
-    var listenLabel = UILabel()
+    var listenButton = UIButton()
     var reviewButton = UIButton()
+    
+    deinit {
+        listenButton.removeTarget(self, action: #selector(clickListenButton), for: .touchUpInside)
+        reviewButton.removeTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -47,7 +54,7 @@ class YXReviewPlanTableViewCell: UITableViewCell {
         bgView.addSubview(reviewProgressView)
         
         bgView.addSubview(listenImageView)
-        bgView.addSubview(listenLabel)
+        bgView.addSubview(listenButton)
         bgView.addSubview(reviewButton)
     }
     
@@ -66,14 +73,14 @@ class YXReviewPlanTableViewCell: UITableViewCell {
         subTitleLabel.text = "听写进度：80%"
         subTitleLabel.textColor = UIColor.black3
         
-        
-        
+                
         listenImageView.image = UIImage(named: "review_listen_icon")
         
-        listenLabel.font = UIFont.pfSCRegularFont(withSize: 12)
-        listenLabel.textColor = UIColor.orange1
-        listenLabel.text = "听写练习"
-                        
+        listenButton.setTitle("听写练习", for: .normal)
+        listenButton.titleLabel?.font = UIFont.regularFont(ofSize: 12)
+        listenButton.setTitleColor(UIColor.orange1, for: .normal)
+        listenButton.addTarget(self, action: #selector(clickListenButton), for: .touchUpInside)
+                                    
         
         reviewButton.titleLabel?.font = UIFont.regularFont(ofSize: 14)
         reviewButton.setTitleColor(UIColor.black2, for: .normal)
@@ -81,6 +88,7 @@ class YXReviewPlanTableViewCell: UITableViewCell {
         reviewButton.layer.cornerRadius = 15
         reviewButton.layer.borderColor = UIColor.black4.cgColor
         reviewButton.layer.borderWidth = 0.5
+        reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
     }
     
     
@@ -138,7 +146,7 @@ class YXReviewPlanTableViewCell: UITableViewCell {
             make.width.height.equalTo(15)
         }
         
-        listenLabel.snp.makeConstraints { (make) in
+        listenButton.snp.makeConstraints { (make) in
             make.left.equalTo(listenImageView.snp.right).offset(7)
             make.width.equalTo(49)
             make.height.equalTo(17)
@@ -192,6 +200,16 @@ class YXReviewPlanTableViewCell: UITableViewCell {
         return vHeight
     }
     
+    
+    
+    @objc func clickReviewButton() {
+        self.startReviewPlanEvent?()
+    }
+    
+    
+    @objc func clickListenButton() {
+        self.startListenPlanEvent?()
+    }
 }
 
 

@@ -27,7 +27,7 @@
         <!--Navigation Controller-->
         <scene sceneID="2QG-Ei-65x">
             <objects>
-                <navigationController id="fls-3p-mHj" sceneMemberID="viewController">
+                <navigationController id="fls-3p-mHj" customClass="YXNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MeM-hC-B8c">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

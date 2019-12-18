@@ -30,13 +30,13 @@ extension YXExerciseRequest {
     var path: String {
         switch self {
         case .exercise:
-            return YXAPI.Word.exercise
+            return YXAPI.Exercise.exercise
         case .learnMap:
-            return YXAPI.Word.learnMap
+            return YXAPI.Exercise.learnMap
         case .learnResult:
-            return YXAPI.Word.learnResult
+            return YXAPI.Exercise.learnResult
         case .report:
-            return YXAPI.Word.report
+            return YXAPI.Exercise.report
         case .addUserBook:
             return YXAPI.Word.addUserBook
         }

@@ -121,6 +121,12 @@ extension YXReviewViewController {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let _cell = cell as? YXReviewPlanTableViewCell else { return }
         _cell.reviewPlanModel = dataSource[indexPath.row] as? YXReviewPlanModel
+        _cell.startListenPlanEvent = { [weak self] in
+            self?.startListenPlanEvent()
+        }
+        _cell.startReviewPlanEvent = { [weak self] in
+            self?.startListenPlanEvent()
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

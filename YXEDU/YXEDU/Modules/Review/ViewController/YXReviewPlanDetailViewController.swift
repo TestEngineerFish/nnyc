@@ -9,7 +9,14 @@
 import UIKit
 
 class YXReviewPlanDetailViewController: YXViewController {
-
+    
+    var planId: Int = 0
+    
+//    var
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

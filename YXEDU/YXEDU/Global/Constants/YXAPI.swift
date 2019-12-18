@@ -24,8 +24,8 @@ struct YXAPI {
         static let badgeList = "/api/v1/user/getbadgelist"
     }
     
-    //MARK: - 单词模块
-    struct Word {
+    //MARK: - 练习模块
+    struct Exercise {
         /// 练习接口
         static let exercise = "/api/v1/learn/exercise"
         /// 学习地图
@@ -34,8 +34,15 @@ struct YXAPI {
         static let learnResult = "/api/v1/learn/getcurrentunitstatus"
         /// 上报接口
         static let report = "/api/v1/result"
+    }
+    
+    
+    //MARK: - 单词模块
+    struct Word {
         /// 用户添加词书
         static let addUserBook = "/api/v1/book/adduserbook"
+        /// 搜索单词
+        static let searchWord = "/api/v1/search"
     }
 
     // MARK: - 复习模块
