@@ -28,13 +28,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var subItemCollectionView: UICollectionView!
 
     @IBAction func startExercise(_ sender: UIButton) {
-        let v = YXWordDetailViewControllerNew()
-        v.hidesBottomBarWhenPushed = true
-        v.word = YXWordBookDaoImpl().selectWord(wordId: 4389)
-        
-        navigationController?.pushViewController(v, animated: true)
-        return
-        
         if countOfWaitForStudyWords.text == "0" {
             guard let homeData = homeModel else { return }
             
