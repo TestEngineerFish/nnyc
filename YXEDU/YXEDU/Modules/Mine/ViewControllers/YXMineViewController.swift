@@ -34,9 +34,6 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
-        
-        loadData()
-        tabBarController?.selectedIndex = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {

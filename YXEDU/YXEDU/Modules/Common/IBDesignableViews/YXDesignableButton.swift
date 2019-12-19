@@ -10,9 +10,7 @@ import UIKit
 
 @IBDesignable
 class YXDesignableButton: UIButton {
-    
-    private var originTextColor: UIColor!
-    
+        
     lazy var gradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.bounds
@@ -48,9 +46,7 @@ class YXDesignableButton: UIButton {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        originTextColor = currentTitleColor
-        
+            
         if enableGradientBackground {
             let enabled = isUserInteractionEnabled
             isUserInteractionEnabled = enabled
@@ -93,4 +89,8 @@ class YXDesignableButton: UIButton {
     
     @IBInspectable
     var gradientColorStartPoint: CGFloat = 0.5
+    
+    @IBInspectable
+    var originTextColor: UIColor = .white
+
 }

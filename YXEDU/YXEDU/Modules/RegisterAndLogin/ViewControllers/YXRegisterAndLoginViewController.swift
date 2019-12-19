@@ -18,8 +18,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     var platform: String!
 
     private var timer: Timer?
-    private var CountingDown = 60
-
+    private var countingDown = 60
+    private var slidingVerificationCode: String?
     
     
     // MARK: - Interface Builder
@@ -158,72 +158,59 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     @objc
     private func updateTimer() {
-        if CountingDown == 0 {
+        if countingDown == 0 {
             timer?.invalidate()
             timer = nil
             
-            CountingDown = 60
+            countingDown = 60
             
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitle("重新获取", for: .normal)
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
             
         } else {
-            CountingDown = CountingDown - 1
+            countingDown = countingDown - 1
             sendSMSButton.isUserInteractionEnabled = false
-            sendSMSButton.setTitle("\(CountingDown)秒", for: .normal)
+            sendSMSButton.setTitle("\(countingDown)秒", for: .normal)
             sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
         }
     }
     
-    private func sendSMS(with authCode: String = "") {
-        let sendSMSModel = YXSendSMSModel()
-        sendSMSModel.type = "login"
-        sendSMSModel.mobile = phoneNumberTextField.text
-        sendSMSModel.captcha = authCode
-        
-        let bindViewModel = YXBindViewModel()
-        bindViewModel.sendSMS(sendSMSModel) { (code, isSuccess) in
-            if isSuccess {
+    private func sendSMS() {
+        let request = YXRegisterAndLoginRequest.sendSms(phoneNumber: phoneNumberTextField.text ?? "", loginType: "login", SlidingVerificationCode: slidingVerificationCode)
+        YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { (response) in
+            guard let slidingVerificationCodeModel = response.data else { return }
+            
+            if slidingVerificationCodeModel.isSuccessSendSms == 1 {
                 self.startCountingDown()
                 
-            } else {
-                guard let code = code as? Int, (code == USER_PF_MOBILE_CAPTCHA_CODE || code == USER_PF_MOBILE_CAPTCHA_EMPTY_CODE) else { return }
-                self.showImageAuth(with: bindViewModel)
-            }
-        }
-    }
-    
-    private func showImageAuth(with bindViewModel: YXBindViewModel) {
-        let comAlertView: YXComAlertView = YXComAlertView.show(YXAlertType(rawValue: 3)!, in: self.view, info: "", content: "", firstBlock: { (alertView) in
-            guard let alertView = alertView as? YXComAlertView else { return }
-            
-            if let text = alertView.verifyCodeField.text, text.isEmpty == false {
-                self.sendSMS(with: text)
+            } else if slidingVerificationCodeModel.shouldShowSlidingVerification == 1 {
+                RegisterSliderView.show(.puzzle) { (isSuccess) in
+                    if isSuccess {
+                        self.slidingVerificationCode = slidingVerificationCodeModel.slidingVerificationCode
+                        self.sendSMS()
+                        
+                    } else {
+                        
+                    }
+                }
             }
             
-            alertView.remove()
-            
-        }) { (alertView) in
-            guard let alertView = alertView as? YXComAlertView else { return }
-            
-            bindViewModel.requestGraphCodeMobile(self.phoneNumberTextField.text!) { (data, isSuccess) in
-                alertView.verifyCodeImage.image = UIImage(data: data as! Data)
-            }
-        } as! YXComAlertView
-        
-        bindViewModel.requestGraphCodeMobile(self.phoneNumberTextField.text!) { (data, isSuccess) in
-            comAlertView.verifyCodeImage.image = UIImage(data: data as! Data)
+        }) { (error) in
+
         }
     }
     
     private func login(_ loginModel: YXLoginSendModel) {
-        let parameters = loginModel.yrModelToDictionary() as! [AnyHashable : Any]
-        YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
-
+    let parameters = loginModel.yrModelToDictionary() as! [AnyHashable : Any]
+    YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
+            
             if isSuccess, let response = response?.responseObject {
                 YXUserModel.default.token = (response as! [String: Any])["token"] as? String
                 YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
+                YXUserModel.default.username = (response as! [String: Any])["nick"] as? String
+                YXUserModel.default.userAvatarPath = (response as! [String: Any])["avatar"] as? String
+
                 YXConfigure.shared().token = YXUserModel.default.token
                 YXConfigure.shared().uuid = YXUserModel.default.uuid
 

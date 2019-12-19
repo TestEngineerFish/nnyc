@@ -6,8 +6,6 @@
 //  Copyright © 2019 shiji. All rights reserved.
 //
 
-import Foundation
-
 class YXUserModel: NSObject {
     @objc static var `default` = YXUserModel()
 
@@ -77,8 +75,6 @@ class YXUserModel: NSObject {
         let storyboard = UIStoryboard(name:"Main", bundle: nil)
         let tabBarController = storyboard.instantiateViewController(withIdentifier: "YXTabBarViewController") as? UITabBarController
         UIApplication.shared.keyWindow?.rootViewController = tabBarController
-        
-        tabBarController?.selectedIndex = 2
     }
     
     @objc

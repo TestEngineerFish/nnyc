@@ -12,6 +12,7 @@ struct YXTaskCenterDataModel: Mappable {
     var integral: Int?
     var todayEarnIntegral: Int?
     var punchInCount: Int?
+    var weekendPunchCount: Int?
     var dailyData: [YXTaskCenterDailyDataModel]?
     
     init?(map: Map) {
@@ -26,6 +27,9 @@ struct YXTaskCenterDataModel: Mappable {
 }
 
 struct YXTaskCenterDailyDataModel: Mappable {
+    var weekName: String?
+    var isToday = false
+
     var didPunchIn: Int?
     var integral: Int?
     

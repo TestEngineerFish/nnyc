@@ -9,6 +9,14 @@
 import UIKit
 
 struct YXAPI {
+    //MARK: - 登陸註冊
+    struct RegisterAndLogin {
+        // 登陸
+        static let login = "/v1/user/reg"
+        
+        // 發送短信
+        static let sendSms = "/api/v1/user/sendsms"
+    }
     
     //MARK: - 用户模块
     struct User {
@@ -66,13 +74,13 @@ struct YXAPI {
         static let wrongWordList = "/api/v1/word/getwronglist"
         
         // 收藏
-        static let collectWord = "api/v1/word/favorite"
+        static let collectWord = "/api/v1/word/favorite"
 
         // 取消收藏
-        static let cancleCollectWord = "api/v1/word/unfavorite"
+        static let cancleCollectWord = "/api/v1/word/unfavorite"
         
         // 刪除錯詞
-        static let deleteWrongWord = "api/v1/word/delwrong"
+        static let deleteWrongWord = "/api/v1/word/delwrong"
     }
     
     // MARK: - 单词列表模块
@@ -84,10 +92,10 @@ struct YXAPI {
         static let punchData = "/api/v1/user/signininfo"
         
         // 任務卡片
-        static let taskList = "api/v1/user/task"
+        static let taskList = "/api/v1/user/task"
         
         // 領取積分
-        static let getIntegral = "api/v1/user/receivetaskreward"
+        static let getIntegral = "/api/v1/user/receivetaskreward"
     }
 
     // MARK: - 挑战模块

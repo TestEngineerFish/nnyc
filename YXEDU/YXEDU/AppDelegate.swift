@@ -56,10 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = navigationController
             
             window?.makeKeyAndVisible()
-            
-        } else {
-            guard let tabBarViewController = window?.rootViewController as? UITabBarController else { return }
-            tabBarViewController.selectedIndex = 3
         }
     }
     

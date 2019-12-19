@@ -16,14 +16,14 @@
 @implementation YXNavigationController
 
 + (void)initialize {
-    UINavigationBar *globalNaviBar = [UINavigationBar appearance];
-    [globalNaviBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],NSFontAttributeName : [UIFont boldSystemFontOfSize:19]}];
+//    UINavigationBar *globalNaviBar = [UINavigationBar appearance];
+//    [globalNaviBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],NSFontAttributeName : [UIFont boldSystemFontOfSize:19]}];
     //NSString *naviBGImageName = iPhoneX ? @"com_top_nav" : @"com_top_nav";
-    [globalNaviBar setBackgroundImage:[UIImage imageNamed:@"com_top_nav"] forBarMetrics:UIBarMetricsDefault];
-    [globalNaviBar setShadowImage:[UIImage imageNamed:@"com_nav_shadow"]];
+//    [globalNaviBar setBackgroundImage:[UIImage imageNamed:@"com_top_nav"] forBarMetrics:UIBarMetricsDefault];
+//    [globalNaviBar setShadowImage:[UIImage imageNamed:@"com_nav_shadow"]];
     
     //[globalNaviBar setShadowImage:[UIImage imageWithColor:shadowColor andSize:CGSizeMake(SCREEN_WIDTH, 6)]];
-    globalNaviBar.barTintColor = [UIColor whiteColor];
+//    globalNaviBar.barTintColor = [UIColor whiteColor];
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {

@@ -11,6 +11,7 @@ import UIKit
 class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     
     private var taskCenterData: YXTaskCenterDataModel!
+    private var dailyDatas: [YXTaskCenterDailyDataModel] = []
     private var taskLists: [YXTaskListModel] = []
 
     @IBOutlet weak var integralLabel: YXDesignableLabel!
@@ -18,6 +19,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var punchButton: YXDesignableButton!
     @IBOutlet weak var todayPunchLabel: UILabel!
     @IBOutlet weak var totalPunchLabel: UILabel!
+    @IBOutlet weak var weekendPunchLabel: UILabel!
     @IBOutlet weak var taskTableView: UITableView!
 
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -49,7 +51,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             
             self.integralLabel.text = "\(self.taskCenterData.integral ?? 0)"
             self.todayPunchLabel.text = "\(self.taskCenterData.todayEarnIntegral ?? 0)"
-            self.totalPunchLabel.text = "已连续签到\(self.taskCenterData.punchInCount ?? 0)天"
+            self.totalPunchLabel.text = "\(self.taskCenterData.punchInCount ?? 0)"
+            self.weekendPunchLabel.text = "\(self.taskCenterData.weekendPunchCount ?? 0)"
 
             self.dailyDataCollectionView.reloadData()
 
@@ -94,7 +97,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     // MARK：- collection view
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 999 {
-            return 7
+            return dailyDatas.count
 
         } else {
             let taskList = taskLists[collectionView.tag]
@@ -105,6 +108,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 999 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterDateCell", for: indexPath) as! YXTaskCenterDateCell
+            let dailyData = dailyDatas[indexPath.row]
             
             return cell
             
