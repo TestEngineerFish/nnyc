@@ -51,6 +51,10 @@ class YXDesignableButton: UIButton {
             let enabled = isUserInteractionEnabled
             isUserInteractionEnabled = enabled
         }
+        
+        if enableImageRightAligned, let imageView = imageView {
+            imageEdgeInsets.left = self.bounds.width - imageView.bounds.width - imageRightPadding
+        }
     }
     
     
@@ -78,6 +82,9 @@ class YXDesignableButton: UIButton {
         }
     }
 
+    
+    
+    // 漸變
     @IBInspectable
     var enableGradientBackground: Bool = false
      
@@ -92,5 +99,38 @@ class YXDesignableButton: UIButton {
     
     @IBInspectable
     var originTextColor: UIColor = .white
+    
+    
+    
+    // 圖片
+    @IBInspectable
+    var imageLeftPadding: CGFloat = 0.0 {
+        didSet {
+            imageEdgeInsets.left = imageLeftPadding
+        }
+    }
+    
+    @IBInspectable
+    var imageRightPadding: CGFloat = 0.0 {
+        didSet {
+            imageEdgeInsets.right = imageRightPadding
+        }
+    }
+    
+    @IBInspectable
+    var imageTopPadding: CGFloat = 0.0 {
+        didSet {
+            imageEdgeInsets.top = imageTopPadding
+        }
+    }
+    
+    @IBInspectable
+    var imageBottomPadding: CGFloat = 0.0 {
+        didSet {
+            imageEdgeInsets.bottom = imageBottomPadding
+        }
+    }
 
+    @IBInspectable
+    var enableImageRightAligned: Bool = false
 }

@@ -261,33 +261,33 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     
     
     func selectWord(wordId: Int) -> YXWordModel? {
-        let json = """
-                 {
-                     "word_id": 1,
-                     "word": "good",
-                     "word_image": "http://cdn.xstudyedu.com/res/xxty_349/image/duck_image_0.jpg",
-                     "symbol_us": "美/ɡʊd/",
-                     "symbol_uk": "英/gʊd/",
-                     "voice_us": "http://cdn.xstudyedu.com/res/rj_1/voice/good_us.mp3",
-                     "voice_uk": "http://cdn.xstudyedu.com/res/rj_1/voice/good_uk.mp3",
-                     "word_syllables": "good",
-                     "paraphrase": [{
-                         "k": "adj.",
-                         "v": "好的"
-                     }],
-                     "examples": [{
-                         "en": "You have such a <font color='#55a7fd'>good</font> chance.",
-                         "cn": "你有这么一个好的机会。",
-                         "voice": "http://cdn.xstudyedu.com/res/rj_1/speech/a00c5c2830ffc50a68f820164827f356.mp3",
-                         "image": "http://cdn.xstudyedu.com/res/xxty_349/image/duck_image_0.jpg"
-                     }]
-                 }
-                 """
-                 
-                    
-        var word = YXWordModel(JSONString: json)
-        word?.wordId = wordId
-        return word
+//        let json = """
+//                 {
+//                     "word_id": 1,
+//                     "word": "good",
+//                     "word_image": "http://cdn.xstudyedu.com/res/xxty_349/image/duck_image_0.jpg",
+//                     "symbol_us": "美/ɡʊd/",
+//                     "symbol_uk": "英/gʊd/",
+//                     "voice_us": "http://cdn.xstudyedu.com/res/rj_1/voice/good_us.mp3",
+//                     "voice_uk": "http://cdn.xstudyedu.com/res/rj_1/voice/good_uk.mp3",
+//                     "word_syllables": "good",
+//                     "paraphrase": [{
+//                         "k": "adj.",
+//                         "v": "好的"
+//                     }],
+//                     "examples": [{
+//                         "en": "You have such a <font color='#55a7fd'>good</font> chance.",
+//                         "cn": "你有这么一个好的机会。",
+//                         "voice": "http://cdn.xstudyedu.com/res/rj_1/speech/a00c5c2830ffc50a68f820164827f356.mp3",
+//                         "image": "http://cdn.xstudyedu.com/res/xxty_349/image/duck_image_0.jpg"
+//                     }]
+//                 }
+//                 """
+//                 
+//                    
+//        var word = YXWordModel(JSONString: json)
+//        word?.wordId = wordId
+//        return word
         
         
         

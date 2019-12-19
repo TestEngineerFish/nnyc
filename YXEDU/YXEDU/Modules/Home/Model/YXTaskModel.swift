@@ -25,6 +25,7 @@ struct YXTaskListModel: Mappable {
 struct YXTaskModel: Mappable {
     var id: Int?
     var name: String?
+    var taskType: Int?
     var actionType: Int?
     var integral: Int?
     var state: Int?
@@ -36,6 +37,7 @@ struct YXTaskModel: Mappable {
     mutating func mapping(map: Map) {
         id <- map["task_id"]
         name <- map["task_name"]
+        taskType <- map["type"]
         actionType <- map["action_code"]
         integral <- map["task_credit"]
         state <- map["state"]

@@ -21,7 +21,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var totalPunchLabel: UILabel!
     @IBOutlet weak var weekendPunchLabel: UILabel!
     @IBOutlet weak var taskTableView: UITableView!
-
+    @IBOutlet weak var taskTableViewHeight: NSLayoutConstraint!
+    
     @IBAction func back(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)
     }
@@ -63,6 +64,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         let taskListRequest = YXTaskCenterRequest.taskList
         YYNetworkService.default.request(YYStructDataArrayResponse<YXTaskListModel>.self, request: taskListRequest, success: { (response) in
             self.taskLists = response.dataArray ?? []
+            self.taskTableViewHeight.constant = CGFloat(self.taskLists.count * 172)
+
             self.taskTableView.reloadData()
             
         }) { (error) in
@@ -83,8 +86,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         
         cell.titleLabel.text = taskList.typeName
 
-        cell.collectionView.register(UINib(nibName: "YXTaskCenterCardCell", bundle: nil), forCellWithReuseIdentifier: "YXTaskCenterCardCell")
         cell.collectionView.tag = indexPath.row
+        cell.collectionView.register(UINib(nibName: "YXTaskCenterCardCell", bundle: nil), forCellWithReuseIdentifier: "YXTaskCenterCardCell")
         cell.collectionView.delegate = self
         cell.collectionView.dataSource = self
         cell.collectionView.reloadData()
@@ -108,7 +111,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 999 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterDateCell", for: indexPath) as! YXTaskCenterDateCell
-            let dailyData = dailyDatas[indexPath.row]
+//            let dailyData = dailyDatas[indexPath.row]
             
             return cell
             
@@ -118,29 +121,47 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             let task = taskList.list?[indexPath.row]
             
             cell.titleLabel.text = task?.name
-            cell.titleLabel.layer.shadowOffset = CGSize(width: 0, height: 2)
-            cell.titleLabel.layer.shadowOpacity = 0.5
-            cell.titleLabel.layer.shadowRadius = 4
-            
-            if taskList.typeName == "每日任务" {
-                
-            } else {
-                
+            cell.integral = task?.integral ?? 0
+            cell.taskType = YXTaskCardType(rawValue: task?.taskType  ?? 0) ?? .cyanBlueCard
+            cell.cardStatus = YXTaskCardStatus(rawValue: task?.state ?? 0) ?? .incomplete
+            cell.didRepeat = taskList.typeName == "每日任务" ? true : false
+            cell.adjustCell()
+
+            cell.todoClosure = {
+                switch task?.actionType {
+                case 0:
+                    break
+
+                case 1:
+                    break
+
+                default:
+                    break
+                }
+            }
+
+            cell.getRewardClosure = {
+                let request = YXTaskCenterRequest.getIntegral(taskId: task?.id ?? 0)
+                YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+                    self.taskLists[collectionView.tag].list?[indexPath.row].state = 2
+                    self.taskTableView.reloadData()
+
+                }) { (error) in
+
+                }
             }
             
             return cell
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let taskList = taskLists[collectionView.tag]
-        let task = taskList.list?[indexPath.row]
-        
-        let request = YXTaskCenterRequest.getIntegral(taskId: task?.id ?? 0)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-          
-        }) { (error) in
-            
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView.tag == 999 {
+            let width  = (screenWidth - 40) / 7
+            return CGSize(width: width, height: 72)
+
+        } else {
+            return CGSize(width: 174, height: 138)
         }
     }
 }
