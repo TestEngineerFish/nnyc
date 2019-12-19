@@ -28,10 +28,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var subItemCollectionView: UICollectionView!
 
     @IBAction func startExercise(_ sender: UIButton) {
-        let w = YXWordBookDaoImpl().selectWord(wordId: 4389)
-        print(w)
-        return
-        
         if countOfWaitForStudyWords.text == "0" {
             guard let homeData = homeModel else { return }
             

@@ -38,10 +38,6 @@ protocol YXWordBookDao {
     /// - Parameter bookId: 书ID
     func selectWordByBookId(_ bookId: Int) -> [YXWordModel]
 
-    /// 查询单词
-    /// - Parameter wordId: 单词 id
-    func selectWord(wordId: Int,  completion: finishBlock)
-
     /// 通过单元 ID 查询单词
     /// - Parameter unitId: 单元 id
     func selectWordByUnitId(unitId: Int) -> [YXWordModel]
