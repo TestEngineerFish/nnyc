@@ -147,7 +147,6 @@
                                 <userDefinedRuntimeAttribute type="color" keyPath="gradientColor2">
                                     <color key="value" red="0.98431372549999996" green="0.51764705879999995" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="canBeDisabled" value="YES"/>
                             </userDefinedRuntimeAttributes>
                         </button>
                     </subviews>

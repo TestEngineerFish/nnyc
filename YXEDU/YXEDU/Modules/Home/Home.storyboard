@@ -695,7 +695,6 @@
                                                             <userDefinedRuntimeAttribute type="color" keyPath="gradientColor2">
                                                                 <color key="value" red="1" green="0.47450980390000003" blue="0.047058823530000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="canBeDisabled" value="NO"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="punchIn:" destination="LEE-do-1y0" eventType="touchUpInside" id="dh5-WL-oQ3"/>
@@ -1103,7 +1102,6 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="gradientColor2">
                                         <color key="value" red="0.98431372549019602" green="0.51764705882352935" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="canBeDisabled" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="startStudy:" destination="Ya4-tm-uHn" eventType="touchUpInside" id="kCW-1n-Yqb"/>
