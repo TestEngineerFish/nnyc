@@ -9,49 +9,36 @@
 import UIKit
 
 /// 小学新学
-class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
-
-
-    let contentViewW = screenWidth - AdaptSize(44)
+class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtocol {
 
     override func createSubview() {
         super.createSubview()
 
         questionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel)
+        (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
         self.addSubview(questionView!)
         
         answerView = YXNewLearnAnswerView(exerciseModel: self.exerciseModel)
+        (answerView as! YXNewLearnAnswerView).newLearnDelegate = self
         self.addSubview(answerView!)
-//        answerView?.delegate        = firstQuestionView
         answerView?.answerDelegate  = self
-
-
-        // 延迟播放.(因为在切题的时候会有动画)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.2) {
-            var isPlay = true
-            kWindow.subviews.forEach { (subview) in
-                if subview.tag != 0 {
-                    isPlay = false
-                }
-            }
-            if isPlay {
-                self.playerAudio()
-            }
-        }
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         questionView?.snp.makeConstraints({ (make) in
-            make.top.left.right.equalToSuperview()
+            make.top.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(AdaptSize(-44))
             make.bottom.equalTo(answerView!.snp.bottom)
         })
 
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.width.equalToSuperview().offset(AdaptSize(-44))
-            make.height.equalTo(AdaptSize(200))
+            make.left.equalToSuperview().offset(AdaptSize(80))
+            make.right.equalToSuperview().offset(AdaptSize(-80))
+            make.height.equalTo(AdaptSize(145))
         })
     }
 
@@ -60,11 +47,6 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
             return
         }
         NotificationCenter.default.removeObserver(_answerView)
-    }
-
-    /// 播放音频
-    private func playerAudio() {
-        questionView?.playAudio()
     }
 
     // MARK: YXAnswerViewDelegate
@@ -98,4 +80,18 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         _answerView.playView()
     }
 
+    // MARK: ==== YXNewLearnProtocol ===
+
+    /// 单词和例句播放结束
+    func playWordAndExampleFinished() {
+        guard let question = questionView as? YXNewLearnPrimarySchoolQuestionView else {
+            return
+        }
+        question.showWordView()
+    }
+
+    /// 单词和单词播放结束
+    func playWordAndWordFinished() {
+        print("显示引导图")
+    }
 }

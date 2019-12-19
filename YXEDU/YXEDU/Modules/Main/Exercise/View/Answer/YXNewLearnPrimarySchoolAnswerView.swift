@@ -9,6 +9,13 @@
 import UIKit
 import Lottie
 
+protocol YXNewLearnProtocol: NSObjectProtocol {
+    /// 单词和例句播放结束
+    func playWordAndExampleFinished()
+    /// 单词和单词播放结束
+    func playWordAndWordFinished()
+}
+
 class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     var playAudioButton: UIButton = {
@@ -29,6 +36,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var recordAudioButton: YXButton = {
         let button = YXButton()
         button.setImage(UIImage(named: "recordAudio"), for: .normal)
+        button.isEnabled = false
         return button
     }()
 
@@ -41,22 +49,21 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         return label
     }()
 
-
-
     /// 答题区状态
     enum AnswerStatus {
-        case normal     // 初始空状态
-        case playing    // 播放中
-        case listening  // 收听中
-        case reporting  // 上报云知声中
-        case showResult // 显示结果中
+        case playWordAndExample // 播放单词和例句
+        case playWrodAndWord    // 播放单词两遍
+        case showGuideView      // 显示引导图
+        case prepareRecord      // 准备录音
+        case recording          // 录音中
+        case reporting          // 上报云知声中
+        case showResult         // 显示结果
+        case alreadLearn        // 已学习
     }
 
-    var resultView: YXLearnResultAnimationSubview?
     var titleLabel: UILabel?
-    var listenView: AnimationView?
     var enginer: USCRecognizer?
-    var status: AnswerStatus
+    var status: AnswerStatus = .playWordAndExample
     var alreadyCount = 0 // 当题学习次数,再次学习,无论成绩,都切题
     var lastLevel    = 0 // 最近一次跟读评分
     var tempOpusData = Data() // 缓存当前录音
@@ -65,15 +72,79 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         return NSTemporaryDirectory() + "tmpData.opus"
     }()    // 缓存录音本地地址
 
+    weak var newLearnDelegate: YXNewLearnProtocol?
+
     override init(exerciseModel: YXWordExerciseModel) {
-        self.status = .normal
         super.init(exerciseModel: exerciseModel)
         self.enginer = USCRecognizer.sharedManager()
         self.enginer?.setIdentifier(YXConfigure.shared()?.uuid)
         self.enginer?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        // 延迟播放.(因为在切题的时候会有动画)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.2) {
+            self.playWordAndExample()
+        }
     }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func createSubviews() {
+        super.createSubviews()
+        self.addSubview(playAudioButton)
+        self.addSubview(playAudioLabel)
+        self.addSubview(recordAudioButton)
+        self.addSubview(recordAudioLabel)
+        self.playAudioButton.snp.makeConstraints { (make) in
+            make.left.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
+        }
+        self.playAudioLabel.sizeToFit()
+        self.playAudioLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(playAudioButton)
+            make.top.equalTo(playAudioButton.snp.bottom).offset(AdaptSize(8))
+            make.size.equalTo(playAudioLabel.size)
+        }
+        self.recordAudioButton.snp.makeConstraints { (make) in
+            make.right.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
+        }
+        self.recordAudioLabel.sizeToFit()
+        self.recordAudioLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(recordAudioButton)
+            make.top.equalTo(recordAudioButton.snp.bottom).offset(AdaptSize(8))
+            make.size.equalTo(recordAudioLabel.size)
+        }
+    }
+
+    // MARK: ==== Event ====
+
+    /// 播放单词和例句
+    private func playWordAndExample() {
+        guard let wordUrlStr = self.exerciseModel.question?.voice, let exampleUrlStr = self.exerciseModel.question?.examplePronunciation else {
+            return
+        }
+        YXAVPlayerManager.share.pauseAudio()
+        YXAVPlayerManager.share.playListAudio([wordUrlStr, exampleUrlStr]) {
+            self.newLearnDelegate?.playWordAndExampleFinished()
+            self.playWordAndWord()
+        }
+    }
+
+    /// 播放单词和单词
+    private func playWordAndWord() {
+        guard let wordUrlStr = self.exerciseModel.question?.voice else {
+            return
+        }
+        YXAVPlayerManager.share.pauseAudio()
+        YXAVPlayerManager.share.playListAudio([wordUrlStr, wordUrlStr]) {
+            self.newLearnDelegate?.playWordAndWordFinished()
+        }
+    }
+
+    // MARK: ==== Notification ====
 
     /// 进入后台, 停止播放音频和语音监听
     @objc private func didEnterBackgroundNotification() {
@@ -90,124 +161,37 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playView()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    //MARK: TOOL
+    //MARK: ==== TOOL ====
     /// 显示跟读动画
     func showReadAnaimtion() {
-        self.listenView?.removeFromSuperview()
-        self.titleLabel?.removeFromSuperview()
-        self.listenView = nil
-        self.titleLabel = nil
-        self.listenView = AnimationView(name: "readAnimation")
-        self.addSubview(listenView!)
-        listenView?.snp.makeConstraints({ (make) in
-            make.center.equalToSuperview()
-            make.width.height.equalTo(AdaptSize(52))
-        })
-        let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
-        scaleAnimation.fromValue      = 0
-        scaleAnimation.toValue        = 1
-        scaleAnimation.duration       = 0.5
-        scaleAnimation.fillMode       = .forwards
-        scaleAnimation.autoreverses   = false
-        scaleAnimation.repeatCount    = 1
-        scaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        scaleAnimation.isRemovedOnCompletion = false
 
-        self.titleLabel = UILabel()
-        self.titleLabel?.text = "请跟读"
-        self.titleLabel?.font = UIFont.pfSCSemiboldFont(withSize: AdaptSize(13))
-        self.titleLabel?.textColor = UIColor.black6
-        self.titleLabel?.textAlignment = .center
-        self.addSubview(titleLabel!)
-        self.titleLabel?.snp.makeConstraints({ (make) in
-            make.bottom.equalTo(listenView!.snp.top).offset(AdaptSize(-8))
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalTo(AdaptSize(15))
-        })
-        listenView?.layer.add(scaleAnimation, forKey: nil)
-        titleLabel?.layer.add(scaleAnimation, forKey: nil)
-        self.listenView?.play(completion: { (finished) in
-            if finished {
-                self.enginer?.stop()
-            }
-        })
-        // ==== tap action ====
-        let tap = UITapGestureRecognizer(target: self, action: #selector(stopListen))
-        listenView?.isUserInteractionEnabled = true
-        listenView?.addGestureRecognizer(tap)
     }
 
     // ==== 测试用 结束收听 ==== 
     @objc private func stopListen() {
-        self.listenView?.pause()
-        self.listenView?.alpha = 0.35
+
         self.enginer?.stop()
     }
 
     /// 隐藏跟读动画
     private func hideReadAnimation() {
-        let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
-        scaleAnimation.fromValue      = 1
-        scaleAnimation.toValue        = 0
-        scaleAnimation.duration       = 0.5
-        scaleAnimation.fillMode       = .forwards
-        scaleAnimation.autoreverses   = false
-        scaleAnimation.repeatCount    = 1
-        scaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        scaleAnimation.isRemovedOnCompletion = false
-        self.listenView?.layer.add(scaleAnimation, forKey: nil)
-        titleLabel?.layer.add(scaleAnimation, forKey: nil)
+
     }
 
     /// 显示结果动画
     private func showResultAnimation() {
-        resultView = YXLearnResultAnimationSubview(self.lastLevel)
-        self.addSubview(resultView!)
-        resultView?.snp.makeConstraints({ (make) in
-            make.center.equalToSuperview()
-            make.width.equalTo(AdaptSize(60))
-            make.height.equalTo(AdaptSize(85))
-        })
-        resultView?.animationComplete = {
-            var isPlay = true
-            self.status = .playing
-            self.alreadyCount += 1
-            /// 如果已学习次数达到次,或者评分超弱1星,则切题
-            if self.alreadyCount > 1 || self.lastLevel > 1 {
-                isPlay = self.answerDelegate?.switchQuestionView() ?? false
-            }
-            if isPlay {
-                self.delegate?.playAudio()
-            } else {
-                self.answerDelegate?.answerCompletion(self.exerciseModel, true)
-            }
-        }
-        resultView?.showAnimation()
+
     }
 
     /// 隐藏结果动画
     private func hideResultAnimation() {
-        resultView?.hideAnimation()
-        resultView = nil
-        self.status = .playing
+        self.status = .alreadLearn
     }
 
     /// 页面暂停
     func pauseView() {
         YXAVPlayerManager.share.pauseAudio()
         self.enginer?.cancel()
-        if self.status == .listening {
-            // 置灰显示
-            self.listenView?.pause()
-            self.listenView?.alpha = 0.35
-            self.enginer?.cancel()
-            self.status = .playing
-        }
     }
 
     /// 页面播放
@@ -217,28 +201,21 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     // MARK: YXAudioPlayerViewDelegate
 
-    override func playAudioStart() {
-        if self.status == .listening {
-            // 置灰显示
-            self.listenView?.pause()
-            self.listenView?.alpha = 0.35
-            self.enginer?.cancel()
-            self.status = .playing
-        }
-        self.status = .playing
-    }
-
-    override func playAudioFinished() {
-        if self.status != .playing {
-            return
-        }
-        guard let word = self.exerciseModel.question?.word else {
-            return
-        }
-        self.enginer?.cancel()
-        self.enginer?.oralText = word
-        self.enginer?.start()
-    }
+//    override func playAudioStart() {
+//        self.status = .playing
+//    }
+//
+//    override func playAudioFinished() {
+//        if self.status != .playing {
+//            return
+//        }
+//        guard let word = self.exerciseModel.question?.word else {
+//            return
+//        }
+//        self.enginer?.cancel()
+//        self.enginer?.oralText = word
+//        self.enginer?.start()
+//    }
 
     // MARK: ==== 云知声SDK: USCRecognizerDelegate ====
     func oralEngineDidInit(_ error: Error!) {
@@ -250,7 +227,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         // 显示录音动画
         self.resetOpusTempData()
         self.showReadAnaimtion()
-        self.status = .listening
+        self.status = .recording
     }
 
     func onStopOral() {
@@ -287,10 +264,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.hideReadAnimation()
             // 移除录音视图
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                self.titleLabel?.removeFromSuperview()
-                self.listenView?.removeFromSuperview()
-                self.titleLabel = nil
-                self.listenView   = nil
                 // 显示结果动画
                 self.showResultAnimation()
                 self.status = .showResult

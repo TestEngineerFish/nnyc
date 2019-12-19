@@ -10,7 +10,7 @@ import AVFoundation
 
 class YXAVPlayerManager: NSObject {
 
-    typealias FinishBlock = ()->Void
+    typealias FinishedBlock = ()->Void
     var isPlaying = false
 
     var player: AVPlayer = {
@@ -19,19 +19,38 @@ class YXAVPlayerManager: NSObject {
         return player
     }()
 
-    var finishBlock:FinishBlock?
+    var sourceList: [String] = []
+    var sourceIndex: Int     = 0
+    var finishedBlock:FinishedBlock?
 
     static let share = YXAVPlayerManager()
+
+    /// 播放音频(移除掉)
+    func playerAudio(_ url: URL, finish block: FinishedBlock? = nil) {
+        self.finishedBlock = block
+        self.playAudio(url)
+    }
+
     /// 播放音频
-    func playerAudio(_ url: URL, finish block: FinishBlock? = nil) {
-        self.finishBlock = block
-//        let asset = AVAsset(url: url)
-//        let playerItem = AVPlayerItem(asset: asset)
+    func playAudio(_ url: URL) {
         let playerItem = YYMediaCache.default.playerItem(url)
         self.player.replaceCurrentItem(with: playerItem)
         self.player.play()
         self.isPlaying = true
         self.addObservers()
+    }
+
+    /// 支持播放一组音频
+    func playListAudio(_ sourceList: [String], finished block: FinishedBlock? = nil) {
+        self.finishedBlock = block
+        self.sourceList    = sourceList
+        self.sourceIndex   = 0
+        if !sourceList.isEmpty {
+            guard let url = URL(string: sourceList[0]) else {
+                return
+            }
+            self.playAudio(url)
+        }
     }
     /// 停止播放
     func pauseAudio() {
@@ -61,8 +80,16 @@ class YXAVPlayerManager: NSObject {
     /// 播放结束事件
     @objc private func playFinished() {
         print("播放结束")
+        self.sourceIndex += 1
         self.isPlaying = false
-        self.finishBlock?()
+        if self.sourceIndex >= self.sourceList.count {
+            self.finishedBlock?()
+        } else {
+            guard let url = URL(string: self.sourceList[sourceIndex]) else {
+                return
+            }
+            self.playAudio(url)
+        }
     }
 
     /// 播放答题正确音效

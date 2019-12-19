@@ -33,25 +33,29 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         return label
     }()
 
-
     override init(exerciseModel: YXWordExerciseModel) {
         super.init(exerciseModel: exerciseModel)
         self.layer.removeShadow()
         self.clipsToBounds = true
-        self.bindData()
-        self.createSubviews()
-        self.showExample()
     }
 
     override func bindData() {
         guard let wordModel = self.exerciseModel.word else {
             return
         }
-        self.titleLabel?.text         = wordModel.word
-        self.subTitleLabel?.text      = wordModel.meaning
-        self.exampleLabel.text        = wordModel.example
-        self.chineseExampleLabel.text = wordModel.chineseExample
-        self.imageView?.showImage(with: wordModel.imageUrl ?? "")
+
+        self.titleLabel?.text            = wordModel.word
+        self.subTitleLabel?.text         = wordModel.meaning
+        self.exampleLabel.text           = wordModel.example
+        self.chineseExampleLabel.text    = wordModel.chineseExample
+//        self.exampleLabel.attributedText = {
+//            guard let attributionStr = (wordModel.example ?? "").html2AttributedString else {
+//                return nil
+//            }
+//            let mAttr = NSMutableAttributedString(attributedString: attributionStr)
+//            mAttr.addAttributes([NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(16)), NSAttributedString.Key.foregroundColor : UIColor.black1], range: NSRange(location: 0, length: attributionStr.length))
+//            return mAttr
+//        }()
     }
 
     required init?(coder aDecoder: NSCoder) {
