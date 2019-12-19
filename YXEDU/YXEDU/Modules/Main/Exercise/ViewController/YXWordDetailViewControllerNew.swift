@@ -10,16 +10,14 @@ import UIKit
 
 class YXWordDetailViewControllerNew: UIViewController {
     var word: YXWordModel?
-    var dismissClosure: (() -> Void)?
 
-    private var wordDetailView: YXWordDetailView!
+    private var wordDetailView: YXWordDetailCommonView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let word = word {
-            wordDetailView = YXWordDetailView(frame: self.view.bounds, word: word)
-            wordDetailView.dismissClosure = dismissClosure
+            wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
             self.view.addSubview(wordDetailView)
         }
     }

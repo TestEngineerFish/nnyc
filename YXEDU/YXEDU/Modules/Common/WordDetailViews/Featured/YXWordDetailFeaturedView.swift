@@ -223,7 +223,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
                     content = analysis?.list?[0] ?? ""
                     
                 } else {
-                    content = "\n" + (analysis?.list?[index] ?? "")
+                    content = content + "\n" + (analysis?.list?[index] ?? "")
                 }
             }
             
@@ -252,7 +252,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
                     content = detailedSyntax?.list?[0] ?? ""
                     
                 } else {
-                    content = "\n" + (detailedSyntax?.list?[index] ?? "")
+                    content = content + "\n" + (detailedSyntax?.list?[index] ?? "")
                 }
             }
             

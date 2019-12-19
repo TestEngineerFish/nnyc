@@ -184,7 +184,7 @@ extension YXBaseWordModel {
         let highLightRange = string.range(of: highLightString)!
         let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
         attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
-        
+                
         return attrString
     }
 }

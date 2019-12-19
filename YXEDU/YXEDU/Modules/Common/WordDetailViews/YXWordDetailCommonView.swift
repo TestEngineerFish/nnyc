@@ -239,21 +239,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        let section = sections[indexPath.section]
-//
-//        switch section.keys.first {
-//        case SectionType.featured.rawValue:
-//            guard let sublayers = featuredView.layer.sublayers else { break }
-//            for layer in sublayers {
-//                layer.removeAllAnimations()
-//            }
-//
-//        default:
-//            break
-//        }
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
 
@@ -274,7 +259,24 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             let examples = section.values.first as? [YXWordExampleModel]
             let example = examples?[indexPath.row]
 
-            cell.label.text = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
+            let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
+            
+            let firstRightBracket = combineExample.firstIndex(of: ">")!
+            let startHighLightIndex = combineExample.index(firstRightBracket, offsetBy: 1)
+            let lastLeftBracket = combineExample.lastIndex(of: "<")!
+            let highLightString = String(combineExample[startHighLightIndex..<lastLeftBracket])
+            
+            let firstLeftBracket = combineExample.firstIndex(of: "<")!
+            let lastRightBracket = combineExample.lastIndex(of: ">")!
+            let endHighLightIndex = combineExample.index(lastRightBracket, offsetBy: 1)
+            let string = String(combineExample[combineExample.startIndex..<firstLeftBracket]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
+            
+            let attrString = NSMutableAttributedString(string: string)
+            let highLightRange = string.range(of: highLightString)!
+            let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
+            attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
+            
+            cell.label.attributedText = attrString
             
             return cell
             

@@ -13,11 +13,11 @@ class YXWordDetailFeaturedSectionFooterView: UIView {
         didSet {
             if shouldShowExpand {
                 expandButton.isHidden = false
-                expandstateIcon.isHidden = false
+                expandStateIcon.isHidden = false
                 
             } else {
                 expandButton.isHidden = true
-                expandstateIcon.isHidden = true
+                expandStateIcon.isHidden = true
             }
         }
     }
@@ -26,11 +26,11 @@ class YXWordDetailFeaturedSectionFooterView: UIView {
         didSet {
             if isExpand {
                 expandButton.setTitle("收起", for: .normal)
-                expandstateIcon.image = #imageLiteral(resourceName: "collapsedState")
+                expandStateIcon.image = #imageLiteral(resourceName: "collapsedState")
                 
             } else {
                 expandButton.setTitle("展开", for: .normal)
-                expandstateIcon.image = #imageLiteral(resourceName: "expandState")
+                expandStateIcon.image = #imageLiteral(resourceName: "expandState")
             }
         }
     }
@@ -39,7 +39,7 @@ class YXWordDetailFeaturedSectionFooterView: UIView {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var expandButton: UIButton!
-    @IBOutlet weak var expandstateIcon: UIImageView!
+    @IBOutlet weak var expandStateIcon: UIImageView!
 
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 16))

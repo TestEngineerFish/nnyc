@@ -15,13 +15,17 @@ class YXWordDetailFeaturedClassicCell: UITableViewCell {
         didSet {
             if isExpand {
                 contentLabel.numberOfLines = 0
-                distanceOfContentLabel.constant = 72
+                distanceOfContentLabel.constant = 20
                 distanceOfStateIcon.constant = 6
+                expandButton.setTitle("收起", for: .normal)
+                expandStateIcon.image = #imageLiteral(resourceName: "collapsedState")
                 
             } else {
                 contentLabel.numberOfLines = 1
-                distanceOfContentLabel.constant = 20
+                distanceOfContentLabel.constant = 72
                 distanceOfStateIcon.constant = -16
+                expandButton.setTitle("展开", for: .normal)
+                expandStateIcon.image = #imageLiteral(resourceName: "expandState")
             }
         }
     }
