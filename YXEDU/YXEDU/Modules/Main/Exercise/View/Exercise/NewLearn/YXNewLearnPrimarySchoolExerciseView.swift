@@ -11,6 +11,11 @@ import UIKit
 /// 小学新学
 class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtocol {
 
+    var guideView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        return view
+    }()
     override func createSubview() {
         super.createSubview()
 
@@ -49,10 +54,24 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         NotificationCenter.default.removeObserver(_answerView)
     }
 
-    // MARK: YXAnswerViewDelegate
+    // MARK: ==== Event ====
+    private func showGuideView() {
+        kWindow.addSubview(guideView)
+        guideView.snp.remakeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideGuideView))
+        guideView.addGestureRecognizer(tap)
+        YYCache.set(true, forKey: kAlreadShowNewLearnGuideView)
+    }
+
+    @objc private func hideGuideView() {
+        guideView.removeFromSuperview()
+    }
+
+    // MARK: ==== YXAnswerViewDelegate ====
 
     override func switchQuestionView() -> Bool {
-
         return true
     }
 
@@ -92,6 +111,14 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
 
     /// 单词和单词播放结束
     func playWordAndWordFinished() {
-        print("显示引导图")
+        if !(YYCache.object(forKey: kAlreadShowNewLearnGuideView) as? Bool ?? false)  {
+            print("显示引导图")
+            self.showGuideView()
+        }
+        guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
+            return
+        }
+        _answerView.status = .showGuideView
+
     }
 }

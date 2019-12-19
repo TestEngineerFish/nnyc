@@ -19,6 +19,8 @@
 		20C86B9C217873FE00FCAAED /* WaveLoadingImages in Resources */ = {isa = PBXBuildFile; fileRef = 20C86B9B217873FE00FCAAED /* WaveLoadingImages */; };
 		2202D27123A8AB6700882E5D /* YXGameResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2202D27023A8AB6700882E5D /* YXGameResultView.swift */; };
 		2202D27523A9166F00882E5D /* YXGameLaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2202D27423A9166F00882E5D /* YXGameLaunchView.swift */; };
+		2202D27923AB71DF00882E5D /* YXCacheKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2202D27823AB71DF00882E5D /* YXCacheKey.swift */; };
+		2202D27D23AB7ED200882E5D /* YXRecordAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2202D27C23AB7ED200882E5D /* YXRecordAudioView.swift */; };
 		2204145C238671FB002A44DA /* YXAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2204145B238671FB002A44DA /* YXAuthorizationManager.swift */; };
 		2205A92E23619F7500C6E674 /* YXAnswerSelectLettersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92D23619F7500C6E674 /* YXAnswerSelectLettersView.swift */; };
 		2205A9302361A7F900C6E674 /* YXLackWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A92F2361A7F900C6E674 /* YXLackWordView.swift */; };
@@ -729,6 +731,8 @@
 		2167AC0CCD40990E47210822 /* Pods-YXEDU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXEDU.release.xcconfig"; path = "../Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU.release.xcconfig"; sourceTree = "<group>"; };
 		2202D27023A8AB6700882E5D /* YXGameResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGameResultView.swift; sourceTree = "<group>"; };
 		2202D27423A9166F00882E5D /* YXGameLaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGameLaunchView.swift; sourceTree = "<group>"; };
+		2202D27823AB71DF00882E5D /* YXCacheKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCacheKey.swift; sourceTree = "<group>"; };
+		2202D27C23AB7ED200882E5D /* YXRecordAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRecordAudioView.swift; sourceTree = "<group>"; };
 		2204145B238671FB002A44DA /* YXAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAuthorizationManager.swift; sourceTree = "<group>"; };
 		2205A92D23619F7500C6E674 /* YXAnswerSelectLettersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAnswerSelectLettersView.swift; sourceTree = "<group>"; };
 		2205A92F2361A7F900C6E674 /* YXLackWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLackWordView.swift; sourceTree = "<group>"; };
@@ -2033,6 +2037,7 @@
 			children = (
 				224A2FCC238234C300AD99B0 /* YXTools.swift */,
 				2204145B238671FB002A44DA /* YXAuthorizationManager.swift */,
+				2202D27C23AB7ED200882E5D /* YXRecordAudioView.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -3579,6 +3584,7 @@
 				EE3DAB9823750E1500B2FF40 /* YXAPI.swift */,
 				2205A9392361C88900C6E674 /* Iconfont.swift */,
 				EEACEB2323A1DEC20036B3A2 /* YXNotification.swift */,
+				2202D27823AB71DF00882E5D /* YXCacheKey.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -5828,6 +5834,7 @@
 				EE5E007E23274FEB00655654 /* YXLettersModel.m in Sources */,
 				EE5E00AF23274FEB00655654 /* YXMissionCallenderView.m in Sources */,
 				EED3D41C2331D04B00121218 /* NSString+Router.m in Sources */,
+				2202D27923AB71DF00882E5D /* YXCacheKey.swift in Sources */,
 				EE5EFCDA23274E5500655654 /* YXNoResourceView.m in Sources */,
 				EE5EFC5323274BBB00655654 /* YXConfigBookModel.m in Sources */,
 				EE5E00FE23274FEC00655654 /* YXPersonalBindModel.m in Sources */,
@@ -5941,6 +5948,7 @@
 				EE5E005E23274FEB00655654 /* YXStudySpellView.m in Sources */,
 				EE5E00DE23274FEC00655654 /* YXRefreshView.m in Sources */,
 				7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */,
+				2202D27D23AB7ED200882E5D /* YXRecordAudioView.swift in Sources */,
 				EE5E0249232756C100655654 /* XPieChart.m in Sources */,
 				EE5EF25E232740B800655654 /* NSDate+Extension.m in Sources */,
 				77F69A7223614D9600E55185 /* YXDesignableView.swift in Sources */,

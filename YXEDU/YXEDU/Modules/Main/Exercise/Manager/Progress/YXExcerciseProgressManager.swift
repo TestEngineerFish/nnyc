@@ -31,6 +31,7 @@ class YXExcerciseProgressManager: NSObject {
     
         case score = "Exercise_Score"
         case skipNewWord = "Skip_New_Word"
+        case showGuideView = "a"
     }
     
     

@@ -18,7 +18,6 @@ class YXChallengeRankTopView: UIView {
 
     var crownImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
-        imageView.image = UIImage(named: "")
         return imageView
     }()
 

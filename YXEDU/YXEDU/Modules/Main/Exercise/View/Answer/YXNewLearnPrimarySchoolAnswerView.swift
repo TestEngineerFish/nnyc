@@ -16,7 +16,7 @@ protocol YXNewLearnProtocol: NSObjectProtocol {
     func playWordAndWordFinished()
 }
 
-class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
+class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate, UIGestureRecognizerDelegate {
 
     var playAudioButton: UIButton = {
         let button = UIButton()
@@ -50,15 +50,15 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }()
 
     /// 答题区状态
-    enum AnswerStatus {
-        case playWordAndExample // 播放单词和例句
-        case playWrodAndWord    // 播放单词两遍
-        case showGuideView      // 显示引导图
-        case prepareRecord      // 准备录音
-        case recording          // 录音中
-        case reporting          // 上报云知声中
-        case showResult         // 显示结果
-        case alreadLearn        // 已学习
+    enum AnswerStatus: Int {
+        case playWordAndExample = 0 // 播放单词和例句
+        case playWrodAndWord    = 1 // 播放单词两遍
+        case showGuideView      = 2 // 显示引导图
+        case prepareRecord      = 3 // 准备录音
+        case recording          = 4 // 录音中
+        case reporting          = 5 // 上报云知声中
+        case showResult         = 6 // 显示结果
+        case alreadLearn        = 7 // 已学习
     }
 
     var titleLabel: UILabel?
@@ -117,15 +117,55 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             make.top.equalTo(recordAudioButton.snp.bottom).offset(AdaptSize(8))
             make.size.equalTo(recordAudioLabel.size)
         }
+
+        self.playAudioButton.addTarget(self, action: #selector(playButtonAction(_:)), for: .touchUpInside)
+        self.recordAudioButton.addTarget(self, action: #selector(startRecordAction(_:)), for: .touchDown)
+        self.recordAudioButton.addTarget(self, action: #selector(endRecordAction(_:)), for: .touchUpInside)
     }
 
     // MARK: ==== Event ====
+
+    /// 点击播放按钮
+    @objc private func playButtonAction(_ button: UIButton) {
+        if self.status.rawValue > AnswerStatus.showGuideView.rawValue {
+            self.playView()
+        }
+    }
+
+    /// 长按跟读按钮
+    @objc private func startRecordAction(_ btn: UIButton) {
+        guard let word = self.exerciseModel.question?.word else {
+            return
+        }
+        YXRecordAudioView.share.show()
+        self.enginer?.oralText = word
+        self.enginer?.start()
+    }
+    @objc private func endRecordAction(_ btn: UIButton) {
+        YXRecordAudioView.share.hide()
+        self.enginer?.stop()
+        print("End")
+    }
+
+    /// 页面播放
+    func playView() {
+        switch self.status {
+        case .playWordAndExample:
+            self.playWordAndExample()
+        case .playWrodAndWord:
+            self.playWordAndWord()
+        default:
+            self.playWordAndWord()
+        }
+//        self.delegate?.playAudio()
+    }
 
     /// 播放单词和例句
     private func playWordAndExample() {
         guard let wordUrlStr = self.exerciseModel.question?.voice, let exampleUrlStr = self.exerciseModel.question?.examplePronunciation else {
             return
         }
+        self.status = .playWordAndExample
         YXAVPlayerManager.share.pauseAudio()
         YXAVPlayerManager.share.playListAudio([wordUrlStr, exampleUrlStr]) {
             self.newLearnDelegate?.playWordAndExampleFinished()
@@ -138,9 +178,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         guard let wordUrlStr = self.exerciseModel.question?.voice else {
             return
         }
+        self.status = .playWrodAndWord
         YXAVPlayerManager.share.pauseAudio()
         YXAVPlayerManager.share.playListAudio([wordUrlStr, wordUrlStr]) {
             self.newLearnDelegate?.playWordAndWordFinished()
+            self.recordAudioButton.isEnabled = true
         }
     }
 
@@ -194,10 +236,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.enginer?.cancel()
     }
 
-    /// 页面播放
-    func playView() {
-        self.delegate?.playAudio()
-    }
 
     // MARK: YXAudioPlayerViewDelegate
 
@@ -293,6 +331,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onUpdateVolume(_ volume: Int32) {
 //        print("onUpdateVolume: \(volume)")
+        YXRecordAudioView.share.updateVolume(volume)
+        print(volume)
         return
     }
 

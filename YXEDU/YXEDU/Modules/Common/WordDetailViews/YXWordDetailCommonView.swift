@@ -44,12 +44,12 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             var pronunciationUrl: URL!
             if YXUserModel.default.didUseAmericanPronunciation {
                 pronunciationUrl = URL(string: americanPronunciationUrl)
-                
+                 
             } else {
                 pronunciationUrl = URL(string: englishPronunciationUrl)
             }
             
-            YXAVPlayerManager.share.playerAudio(pronunciationUrl) {
+            YXAVPlayerManager.share.playAudio(pronunciationUrl) {
                 self.playAuoidButton.layer.removeFlickerAnimation()
             }
         }

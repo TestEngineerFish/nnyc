@@ -59,7 +59,7 @@ class YXAudioPlayerView: UIView {
             self.audioButton.layer.addFlickerAnimation()
         }
         self.delegate?.playAudioStart()
-        YXAVPlayerManager.share.playerAudio(url) {
+        YXAVPlayerManager.share.playAudio(url) {
             self.delegate?.playAudioFinished()
             self.audioButton.layer.removeFlickerAnimation()
         }

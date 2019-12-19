@@ -34,7 +34,7 @@ class YXWordDetailExampleCell: UITableViewCell {
             guard let pronunciationUrl = pronunciationUrl else { return }
             playAuoidButton.layer.addFlickerAnimation()
             
-            YXAVPlayerManager.share.playerAudio(pronunciationUrl) {
+            YXAVPlayerManager.share.playAudio(pronunciationUrl) {
                 self.playAuoidButton.layer.removeFlickerAnimation()
             }
         }

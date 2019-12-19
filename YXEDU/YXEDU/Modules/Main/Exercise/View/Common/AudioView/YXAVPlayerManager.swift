@@ -26,13 +26,13 @@ class YXAVPlayerManager: NSObject {
     static let share = YXAVPlayerManager()
 
     /// 播放音频(移除掉)
-    func playerAudio(_ url: URL, finish block: FinishedBlock? = nil) {
+    func playAudio(_ url: URL, finish block: FinishedBlock? = nil) {
         self.finishedBlock = block
-        self.playAudio(url)
+        self.play(url)
     }
 
     /// 播放音频
-    func playAudio(_ url: URL) {
+    func play(_ url: URL) {
         let playerItem = YYMediaCache.default.playerItem(url)
         self.player.replaceCurrentItem(with: playerItem)
         self.player.play()
@@ -49,7 +49,7 @@ class YXAVPlayerManager: NSObject {
             guard let url = URL(string: sourceList[0]) else {
                 return
             }
-            self.playAudio(url)
+            self.play(url)
         }
     }
     /// 停止播放
@@ -88,7 +88,7 @@ class YXAVPlayerManager: NSObject {
             guard let url = URL(string: self.sourceList[sourceIndex]) else {
                 return
             }
-            self.playAudio(url)
+            self.play(url)
         }
     }
 
@@ -98,7 +98,7 @@ class YXAVPlayerManager: NSObject {
             return
         }
         let url = URL(fileURLWithPath: path)
-        YXAVPlayerManager.share.playerAudio(url)
+        YXAVPlayerManager.share.playAudio(url)
     }
 
     /// 播放答题错误音效
@@ -107,7 +107,7 @@ class YXAVPlayerManager: NSObject {
             return
         }
         let url = URL(fileURLWithPath: path)
-        YXAVPlayerManager.share.playerAudio(url)
+        YXAVPlayerManager.share.playAudio(url)
     }
 
 }
