@@ -11,6 +11,38 @@ import Lottie
 
 class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
+    var playAudioButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "playAudio"), for: .normal)
+        return button
+    }()
+
+    var playAudioLabel: UILabel = {
+        let label = UILabel()
+        label.text          = "播放"
+        label.textColor     = UIColor.black2
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
+        label.textAlignment = .center
+        return label
+    }()
+
+    var recordAudioButton: YXButton = {
+        let button = YXButton()
+        button.setImage(UIImage(named: "recordAudio"), for: .normal)
+        return button
+    }()
+
+    var recordAudioLabel: UILabel = {
+        let label = UILabel()
+        label.text          = "按住跟读"
+        label.textColor     = UIColor.black2
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
+        label.textAlignment = .center
+        return label
+    }()
+
+
+
     /// 答题区状态
     enum AnswerStatus {
         case normal     // 初始空状态

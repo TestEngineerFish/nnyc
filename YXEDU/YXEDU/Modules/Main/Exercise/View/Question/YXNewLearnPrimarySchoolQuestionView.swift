@@ -17,102 +17,122 @@ enum NewLearnSubviewType: Int {
 
 class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
-    var viewType: NewLearnSubviewType
+    var exampleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor     = UIColor.black1
+        label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptSize(16))
+        label.textAlignment = .center
+        return label
+    }()
 
-    init(exerciseModel: YXWordExerciseModel, type: NewLearnSubviewType) {
-        self.viewType = type
+    var chineseExampleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor     = UIColor.black1
+        label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptSize(16))
+        label.textAlignment = .center
+        return label
+    }()
+
+
+    override init(exerciseModel: YXWordExerciseModel) {
         super.init(exerciseModel: exerciseModel)
-        self.initTitleLabel()
-        self.initSubTitleLabel()
-        self.initImageView()
-        self.initAudioPlayerView()
-        if let wordModel = self.exerciseModel.word {
-            self.titleLabel?.text    = wordModel.word
-            self.subTitleLabel?.text = wordModel.meaning
-        }
         self.layer.removeShadow()
         self.clipsToBounds = true
-        self.createSubviews(type)
+        self.bindData()
+        self.createSubviews()
+        self.showExample()
+    }
+
+    override func bindData() {
+        guard let wordModel = self.exerciseModel.word else {
+            return
+        }
+        self.titleLabel?.text         = wordModel.word
+        self.subTitleLabel?.text      = wordModel.meaning
+        self.exampleLabel.text        = wordModel.example
+        self.chineseExampleLabel.text = wordModel.chineseExample
+        self.imageView?.showImage(with: wordModel.imageUrl ?? "")
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func createSubviews(_ type: NewLearnSubviewType) {
+    override func createSubviews() {
         super.createSubviews()
+        self.initTitleLabel()
+        self.initSubTitleLabel()
+        self.initImageView()
+        self.addSubview(exampleLabel)
+        self.addSubview(chineseExampleLabel)
 
-        switch type {
-        case .imageAndAudio:
-            titleLabel?.isHidden    = true
-            subTitleLabel?.isHidden = true
-            imageView?.isHidden     = false
-            imageView?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalToSuperview()
-                make.width.equalTo(AdaptSize(150))
-                make.height.equalTo(AdaptSize(108))
-            }
-            audioPlayerView?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(imageView!.snp.bottom).offset(AdaptSize(10))
-                make.width.height.equalTo(AdaptSize(40))
-            }
+        self.titleLabel?.snp.makeConstraints({ (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(69))
+            make.width.equalToSuperview()
+            make.height.equalTo(0)
+        })
 
-        case .wordAndAudio:
-            titleLabel?.isHidden    = false
-            subTitleLabel?.isHidden = false
-            imageView?.isHidden     = true
-            titleLabel?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalToSuperview()
-                make.width.equalToSuperview()
-                make.height.equalTo(AdaptSize(40))
-            }
-            subTitleLabel?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(titleLabel!.snp.bottom)
-                make.width.equalToSuperview()
-                make.height.equalTo(AdaptSize(20))
-            }
-            audioPlayerView?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(10))
-                make.width.height.equalTo(AdaptSize(40))
-            }
+        self.subTitleLabel?.snp.makeConstraints({ (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(titleLabel!.snp.bottom)
+            make.width.equalToSuperview()
+            make.height.equalTo(0)
+        })
 
-        case .wordAndImageAndAudio:
-            titleLabel?.isHidden    = false
-            subTitleLabel?.isHidden = false
-            imageView?.isHidden     = false
-            titleLabel?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalToSuperview()
-                make.width.equalToSuperview()
-                make.height.equalTo(AdaptSize(40))
-            }
-            subTitleLabel?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(titleLabel!.snp.bottom)
-                make.width.equalToSuperview()
-                make.height.equalTo(AdaptSize(20))
-            }
-            imageView?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(30))
-                make.width.equalTo(AdaptSize(150))
-                make.height.equalTo(AdaptSize(108))
-            }
-            audioPlayerView?.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(imageView!.snp.bottom).offset(AdaptSize(10))
-                make.width.height.equalTo(AdaptSize(40))
-            }
+        self.exampleLabel.snp.makeConstraints { (make) in
+            make.centerX.width.equalToSuperview()
+            make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(56))
+            make.height.equalTo(0)
+        }
+
+        self.chineseExampleLabel.snp.makeConstraints { (make) in
+            make.centerX.width.equalToSuperview()
+            make.top.equalTo(exampleLabel.snp.bottom).offset(AdaptSize(2))
+            make.height.equalTo(0)
+        }
+
+        self.imageView?.snp.makeConstraints({ (make) in
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(150), height: AdaptSize(109)))
+            make.top.equalTo(chineseExampleLabel.snp.bottom).offset(AdaptSize(26))
+        })
+    }
+
+    // MARK: ==== Event ====
+    func showExample() {
+        self.exampleLabel.sizeToFit()
+        self.exampleLabel.snp.updateConstraints { (make) in
+            make.height.equalTo(exampleLabel.height)
         }
     }
 
-    override func playAudio() {
-        self.audioPlayerView?.play()
+    func showChineseExample() {
+        self.chineseExampleLabel.sizeToFit()
+        self.chineseExampleLabel.snp.updateConstraints { (make) in
+            make.height.equalTo(chineseExampleLabel.height)
+        }
     }
+
+    func hideChineseExample() {
+        self.chineseExampleLabel.snp.updateConstraints { (make) in
+              make.height.equalTo(0)
+          }
+    }
+
+    func showWordView() {
+        self.titleLabel?.sizeToFit()
+        self.titleLabel?.snp.updateConstraints({ (make) in
+            make.height.equalTo(titleLabel!.height)
+        })
+        self.subTitleLabel?.sizeToFit()
+        self.subTitleLabel?.snp.updateConstraints({ (make) in
+            make.height.equalTo(subTitleLabel!.height)
+        })
+    }
+
+//    override func playAudio() {
+//        self.audioPlayerView?.play()
+//    }
     
 }

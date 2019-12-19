@@ -157,6 +157,10 @@ struct YXWordModel: Mappable {
     }
 }
 
+/// Review
+extension YXWordModel {
+    
+}
 
 
 struct YXWordPartOfSpeechAndMeaningModel: Mappable {
