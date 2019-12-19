@@ -18,7 +18,8 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView {
         super.createSubview()
 
         questionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel)
-
+        self.addSubview(questionView!)
+        
         answerView = YXNewLearnAnswerView(exerciseModel: self.exerciseModel)
         self.addSubview(answerView!)
 //        answerView?.delegate        = firstQuestionView

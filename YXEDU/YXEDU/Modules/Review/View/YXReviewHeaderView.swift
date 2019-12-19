@@ -441,10 +441,10 @@ class YXReviewHeaderView: YXView {
     }
     
     @objc private func clickReviewButton() {
-        self.createReviewPlanEvent?()
-    }
-    @objc private func clickCreateReviewPlanButton() {
         self.startReviewEvent?()
+    }
+    @objc private func clickCreateReviewPlanButton() {        
+        self.createReviewPlanEvent?()
     }
     @objc private func clickFavoriteButton() {
        self.favoriteEvent?()

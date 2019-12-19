@@ -46,7 +46,7 @@ class YXSearchViewController: YXTableViewController {
     
     func configTableView() {
         self.tableView.tableHeaderView = tableHeaderView
-        
+        self.tableView.register(YXSearchTableViewCell.classForCoder(), forCellReuseIdentifier: "YXSearchTableViewCell")
     }
     
     func fetchData() {
@@ -98,6 +98,6 @@ extension YXSearchViewController {
 
 extension YXSearchViewController {
     func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
-        return UIView()
+        return UIView() // search_empty_data
     }
 }
