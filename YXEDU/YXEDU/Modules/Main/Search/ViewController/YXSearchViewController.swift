@@ -11,6 +11,7 @@ import UIKit
 class YXSearchViewController: YXTableViewController {
     var tableHeaderView = YXSearchTableHeaderView()
     var headerView = YXSearchHeaderView()
+    var emptyDataView = YXSearchEmptyDataView()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -98,6 +99,7 @@ extension YXSearchViewController {
 
 extension YXSearchViewController {
     func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
-        return UIView() // search_empty_data
+        emptyDataView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - 86 - kSafeBottomMargin)
+        return emptyDataView
     }
 }

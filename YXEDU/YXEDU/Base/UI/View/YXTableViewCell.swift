@@ -10,8 +10,10 @@ import UIKit
 
 class YXTableViewCell<T>: UITableViewCell {
     
-    var model: T?
-    
+    var model: T? {
+        didSet { bindData() }
+    }
+
     func createSubviews() {}
     
     func bindProperty() {}
