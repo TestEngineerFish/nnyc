@@ -15,9 +15,13 @@ struct YXSearchWordModel: YXBaseWordModel {
     var americanPronunciation: String?
     var englishPronunciation: String?
     var partOfSpeechAndMeanings: [YXWordPartOfSpeechAndMeaningModel]?
+    // 音标
+    var americanPhoneticSymbol: String?
+    var englishPhoneticSymbol: String?
     
     var isLearn: Bool = false
-
+    
+    init() {}
     init?(map: Map) {
         mapping(map: map)
     }

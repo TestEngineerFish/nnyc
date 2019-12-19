@@ -9,7 +9,8 @@
 import UIKit
 
 class YXSearchHeaderView: YXView {
-            
+    
+    var searchEvent: ((_ text: String) -> Void)?
     var searchTextFeild = UITextField()
     var cancelButton = UIButton()
     
@@ -79,7 +80,11 @@ class YXSearchHeaderView: YXView {
     
     
     @objc func didSearchTextFeildChanged() {
-        
+        guard let text = searchTextFeild.text else {
+            return
+        }
+        self.searchEvent?(text)
+        print(text)
     }
     
 }

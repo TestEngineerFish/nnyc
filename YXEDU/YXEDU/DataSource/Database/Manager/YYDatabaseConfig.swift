@@ -19,7 +19,8 @@ struct YYSQLManager {
     
     // 创建词书数据表
     static let CreateWordTables: [String] = [CreateWordTableSQLs.bookTable.rawValue,
-                                             CreateWordTableSQLs.wordTable.rawValue]
+                                             CreateWordTableSQLs.wordTable.rawValue,
+                                             CreateWordTableSQLs.searchHistoryTable.rawValue]
                                                
 }
 
@@ -114,6 +115,16 @@ extension YYSQLManager {
                 unitName varchar(512),
                 isExtensionUnit integer
             )
+        """
+        
+        case searchHistoryTable =
+        """
+            CREATE TABLE IF NOT EXISTS search_history_table (
+                word_id integer PRIMARY KEY NOT NULL,
+                word char(128),
+                meening varchar(512),
+                soundmark char(128)
+            );
         """
     }
     
@@ -272,5 +283,20 @@ extension YYSQLManager {
             DELETE FROM word
             WHERE bookId = ?
         """
+    }
+    
+    
+    enum SearchHistory: String {
+        
+        case selectWord =
+        """
+            select * from word where wordId in (select word_id from search_history_table)
+        """
+        
+        case insertWord =
+        """
+            insert or replace into search_history_table(word_id) values(?)
+        """
+        
     }
 }

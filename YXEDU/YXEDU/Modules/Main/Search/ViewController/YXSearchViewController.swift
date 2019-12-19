@@ -9,9 +9,12 @@
 import UIKit
 
 class YXSearchViewController: YXTableViewController {
+    
     var tableHeaderView = YXSearchTableHeaderView()
-    var headerView = YXSearchHeaderView()
+    var searchView = YXSearchHeaderView()
     var emptyDataView = YXSearchEmptyDataView()
+    
+    private var dao: YXSearchHistoryDao = YXSearchHistoryDaoImpl()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -21,9 +24,10 @@ class YXSearchViewController: YXTableViewController {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
         self.isHideRefresh = true
-        self.createSubviews()
+        
+        self.configHeaderView()
         self.configTableView()
-        self.fetchData()
+        self.loadHistoryData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -31,17 +35,21 @@ class YXSearchViewController: YXTableViewController {
         
         tableHeaderView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 41)
         
-        headerView.snp.makeConstraints { (make) in
+        searchView.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(86 + kSafeBottomMargin)
         }
         tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(headerView.snp.bottom)
+            make.top.equalTo(searchView.snp.bottom)
             make.left.right.bottom.equalToSuperview()
         }
     }
-    func createSubviews() {
-        self.view.addSubview(headerView)
+    
+    func configHeaderView() {
+        self.view.addSubview(searchView)
+        searchView.searchEvent = { [weak self] (text) in
+            self?.fetchData(text: text)
+        }
     }
     
     
@@ -50,23 +58,28 @@ class YXSearchViewController: YXTableViewController {
         self.tableView.register(YXSearchTableViewCell.classForCoder(), forCellReuseIdentifier: "YXSearchTableViewCell")
     }
     
-    func fetchData() {
+    func fetchData(text: String) {
         
-        YXSearchDataManager().searchData(keyword: "boo")  { [weak self] (model, errorMsg) in
+        YXSearchDataManager().searchData(keyword: text)  { [weak self] (model, errorMsg) in
             guard let self = self else { return }
             self.finishLoading()
             if let msg = errorMsg {
                 UIView.toast(msg)
             } else {
                 self.dataSource = model?.words ?? []
-                
+                self.dataSource = []
                 if self.dataSource.count == 0 {
                     self.isHiddenEmptyView = false
                 }
-                
+                self.tableView.tableHeaderView = nil
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    func loadHistoryData() {
+        self.dataSource = dao.selectWord()
+        self.tableView.reloadData()
     }
 }
 
@@ -99,7 +112,13 @@ extension YXSearchViewController {
 
 extension YXSearchViewController {
     func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
-        emptyDataView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - 86 - kSafeBottomMargin)
+        emptyDataView.snp.makeConstraints { (make) in
+            make.height.equalTo(277 + 17 + 5)
+        }
         return emptyDataView
+    }
+    
+    override func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
+        return 0
     }
 }
