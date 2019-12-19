@@ -54,12 +54,15 @@ class YXSearchViewController: YXTableViewController {
     
     
     func configTableView() {
-        self.tableView.tableHeaderView = tableHeaderView
         self.tableView.register(YXSearchTableViewCell.classForCoder(), forCellReuseIdentifier: "YXSearchTableViewCell")
     }
     
     func fetchData(text: String) {
-        
+        if text.count == 0 {
+            self.isHiddenEmptyView = true
+            loadHistoryData()
+            return
+        }
         YXSearchDataManager().searchData(keyword: text)  { [weak self] (model, errorMsg) in
             guard let self = self else { return }
             self.finishLoading()
@@ -67,7 +70,6 @@ class YXSearchViewController: YXTableViewController {
                 UIView.toast(msg)
             } else {
                 self.dataSource = model?.words ?? []
-                self.dataSource = []
                 if self.dataSource.count == 0 {
                     self.isHiddenEmptyView = false
                 }
@@ -78,6 +80,7 @@ class YXSearchViewController: YXTableViewController {
     }
     
     func loadHistoryData() {
+        self.tableView.tableHeaderView = tableHeaderView
         self.dataSource = dao.selectWord()
         self.tableView.reloadData()
     }
@@ -104,6 +107,10 @@ extension YXSearchViewController {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let model = dataSource[indexPath.row] as? YXSearchWordModel else { return }
+        let result = dao.insertWord(word: model)
+        print(result)
         let vc = YXReviewPlanDetailViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -113,12 +120,13 @@ extension YXSearchViewController {
 extension YXSearchViewController {
     func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
         emptyDataView.snp.makeConstraints { (make) in
-            make.height.equalTo(277 + 17 + 5)
+            make.width.equalTo(screenWidth)
+            make.height.equalTo(299)
         }
         return emptyDataView
     }
     
     override func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
-        return 0
+        return -(tableView.height - 299) / 2 + 37
     }
 }

@@ -40,6 +40,7 @@ class YXSearchEmptyDataView: YXView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
+        self.bindProperty()
     }
     
     required init?(coder: NSCoder) {
@@ -61,8 +62,7 @@ class YXSearchEmptyDataView: YXView {
     override func layoutSubviews() {
         super.layoutSubviews()
         imageView.snp.makeConstraints { (make) in
-            make.top.equalTo(37)
-            make.centerX.equalToSuperview()
+            make.top.centerX.equalToSuperview()
             make.width.equalTo(277)
             make.height.equalTo(205)
         }
