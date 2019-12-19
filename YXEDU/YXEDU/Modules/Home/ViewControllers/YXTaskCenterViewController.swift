@@ -49,6 +49,39 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         let punchDataRequest = YXTaskCenterRequest.punchData
         YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: punchDataRequest, success: { (response) in
             self.taskCenterData = response.data
+            var dailyDatas = self.taskCenterData.dailyData ?? []
+            
+            for index in 0..<dailyDatas.count {
+                let dailyData = dailyDatas[index]
+                
+                switch index {
+                case 0:
+                    dailyDatas[index].weekName = "周一"
+                    
+                case 1:
+                    dailyDatas[index].weekName = "周二"
+                    
+                case 2:
+                    dailyDatas[index].weekName = "周三"
+                    
+                case 3:
+                    dailyDatas[index].weekName = "周四"
+                    
+                case 4:
+                    dailyDatas[index].weekName = "周五"
+                    
+                case 5:
+                    dailyDatas[index].weekName = "周六"
+                    
+                case 6:
+                    dailyDatas[index].weekName = "周末"
+                    
+                default:
+                    break
+                }
+            }
+            
+            self.dailyDatas = dailyDatas
             
             self.integralLabel.text = "\(self.taskCenterData.integral ?? 0)"
             self.todayPunchLabel.text = "\(self.taskCenterData.todayEarnIntegral ?? 0)"
@@ -87,9 +120,9 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         cell.titleLabel.text = taskList.typeName
 
         cell.collectionView.tag = indexPath.row
-        cell.collectionView.register(UINib(nibName: "YXTaskCenterCardCell", bundle: nil), forCellWithReuseIdentifier: "YXTaskCenterCardCell")
         cell.collectionView.delegate = self
         cell.collectionView.dataSource = self
+        cell.collectionView.register(UINib(nibName: "YXTaskCenterCardCell", bundle: nil), forCellWithReuseIdentifier: "YXTaskCenterCardCell")
         cell.collectionView.reloadData()
         
         return cell
@@ -111,7 +144,16 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 999 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterDateCell", for: indexPath) as! YXTaskCenterDateCell
-//            let dailyData = dailyDatas[indexPath.row]
+            let dailyData = dailyDatas[indexPath.row]
+            
+            cell.weekLabel.text = dailyData.weekName
+            
+            if dailyData.didPunchIn == 1 {
+                cell.integralStatusLabel.text = "+\(dailyData.integral ?? 0)"
+
+            } else {
+                cell.integralStatusLabel.text = "未获得"
+            }
             
             return cell
             

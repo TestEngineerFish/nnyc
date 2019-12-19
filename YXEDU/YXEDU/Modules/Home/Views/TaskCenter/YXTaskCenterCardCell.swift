@@ -64,8 +64,13 @@ class YXTaskCenterCardCell: UICollectionViewCell {
         todoButton.isEnabled = true
         todoButton.backgroundColor = .white
         todoButton.borderWidth = 0
-        
+        todoButton.alpha = 1
+
         getCoinButton.setTitle("领取\(integral)", for: .normal)
+        getCoinButton.contentEdgeInsets.left = 16
+        getCoinButton.contentEdgeInsets.right = 16
+        getCoinButton.titleEdgeInsets.right = getCoinButton.imageView!.bounds.width + 16
+        getCoinButton.imageEdgeInsets.left = getCoinButton.bounds.width - getCoinButton.imageView!.bounds.width - 16
         
         switch taskType {
         case .cyanBlueCard:
@@ -75,6 +80,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             statusLabel.textColor = UIColor.hex(0x87A7FD)
             todoButton.setTitleColor(UIColor.hex(0x4F7AEE), for: .normal)
             getCoinButton.setTitleColor(UIColor.hex(0x4F7AEE), for: .normal)
+            getCoinButton.originTextColor = UIColor.hex(0x4F7AEE)
             getCoinButton.borderColor = UIColor.hex(0x95B1FB)
             getCoinButton.gradientColor1 = UIColor.hex(0xFFFFFF)
             getCoinButton.gradientColor2 = UIColor.hex(0xC4DCFF)
@@ -87,6 +93,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             statusLabel.textColor = UIColor.hex(0xEFA733)
             todoButton.setTitleColor(UIColor.hex(0xFF9700), for: .normal)
             getCoinButton.setTitleColor(UIColor.hex(0xFF9700), for: .normal)
+            getCoinButton.originTextColor = UIColor.hex(0xFF9700)
             getCoinButton.borderColor = UIColor.hex(0xEBC255)
             getCoinButton.gradientColor1 = UIColor.hex(0xFFFFFF)
             getCoinButton.gradientColor2 = UIColor.hex(0xFFE79A)
@@ -99,6 +106,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             statusLabel.textColor = UIColor.hex(0x9B89F9)
             todoButton.setTitleColor(UIColor.hex(0x7F67FA), for: .normal)
             getCoinButton.setTitleColor(UIColor.hex(0x7F67FA), for: .normal)
+            getCoinButton.originTextColor = UIColor.hex(0x7F67FA)
             getCoinButton.borderColor = UIColor.hex(0xA999FE)
             getCoinButton.gradientColor1 = UIColor.hex(0xFFFFFF)
             getCoinButton.gradientColor2 = UIColor.hex(0xDCD2FF)
@@ -111,6 +119,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             statusLabel.textColor = UIColor.hex(0x84B148)
             todoButton.setTitleColor(UIColor.hex(0x649224), for: .normal)
             getCoinButton.setTitleColor(UIColor.hex(0x649224), for: .normal)
+            getCoinButton.originTextColor = UIColor.hex(0x649224)
             getCoinButton.borderColor = UIColor.hex(0x7EAF39)
             getCoinButton.gradientColor1 = UIColor.hex(0xFFFFFF)
             getCoinButton.gradientColor2 = UIColor.hex(0xE5FFD2)
@@ -123,6 +132,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             statusLabel.textColor = UIColor.hex(0xD57F9D)
             todoButton.setTitleColor(UIColor.hex(0xE37C86), for: .normal)
             getCoinButton.setTitleColor(UIColor.hex(0xE37C86), for: .normal)
+            getCoinButton.originTextColor = UIColor.hex(0xE37C86)
             getCoinButton.borderColor = UIColor.hex(0xE48A9F)
             getCoinButton.gradientColor1 = UIColor.hex(0xFFFFFF)
             getCoinButton.gradientColor2 = UIColor.hex(0xFFD9E8)
@@ -135,6 +145,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             statusLabel.textColor = UIColor.hex(0x65B7D4)
             todoButton.setTitleColor(UIColor.hex(0x1A99FF), for: .normal)
             getCoinButton.setTitleColor(UIColor.hex(0x1A99FF), for: .normal)
+            getCoinButton.originTextColor = UIColor.hex(0x1A99FF)
             getCoinButton.borderColor = UIColor.hex(0x65B4F4)
             getCoinButton.gradientColor1 = UIColor.hex(0xFFFFFF)
             getCoinButton.gradientColor2 = UIColor.hex(0xB7E3FF)
@@ -147,6 +158,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             statusLabel.textColor = UIColor.hex(0x48AE5B)
             todoButton.setTitleColor(UIColor.hex(0x259C46), for: .normal)
             getCoinButton.setTitleColor(UIColor.hex(0x259C46), for: .normal)
+            getCoinButton.originTextColor = UIColor.hex(0x259C46)
             getCoinButton.borderColor = UIColor.hex(0x4FB66C)
             getCoinButton.gradientColor1 = UIColor.hex(0xFFFFFF)
             getCoinButton.gradientColor2 = UIColor.hex(0xD5FFDB)
@@ -159,6 +171,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             statusLabel.textColor = UIColor.hex(0xE5725D)
             todoButton.setTitleColor(UIColor.hex(0xFF6347), for: .normal)
             getCoinButton.setTitleColor(UIColor.hex(0xFF6347), for: .normal)
+            getCoinButton.originTextColor = UIColor.hex(0xFF6347)
             getCoinButton.borderColor = UIColor.hex(0xE36E58)
             getCoinButton.gradientColor1 = UIColor.hex(0xFFFFFF)
             getCoinButton.gradientColor2 = UIColor.hex(0xFFD9E8)
@@ -166,46 +179,54 @@ class YXTaskCenterCardCell: UICollectionViewCell {
         }
         
         switch cardStatus {
-            case .incomplete:
-                if didRepeat {
-                    statusLabel.isHidden = true
-                    rewardLabel.isHidden = false
-                    rewardLabelTopOffset.constant = 56
-                    
-                    todoButton.isHidden = false
-                    todoButton.setTitle("去完成", for: .normal)
-                    todoButton.setTitleColor(.white, for: .normal)
-                    todoButton.backgroundColor = .clear
-                    todoButton.borderWidth = 1
-                    
-                    getCoinButton.isHidden = true
-                    
-                } else {
-                    statusLabel.isHidden = false
-                    rewardLabel.isHidden = false
-                    rewardLabelTopOffset.constant = 84
-                    todoButton.isHidden = true
-                    getCoinButton.isHidden = true
-                }
-                break
-                
-            case .completed:
-                statusLabel.isHidden = false
-                rewardLabel.isHidden = true
-                todoButton.isHidden = true
-                getCoinButton.isHidden = false
-                break
-                
-            case .getReward:
-                statusLabel.isHidden = false
-                rewardLabel.isHidden = true
+        case .incomplete:
+            if didRepeat {
+                statusLabel.isHidden = true
+                coinImageView.isHidden = false
+                rewardLabel.isHidden = false
+                rewardLabelTopOffset.constant = 56
                 
                 todoButton.isHidden = false
-                todoButton.isEnabled = false
+                todoButton.setTitle("去完成", for: .normal)
+                todoButton.setTitleColor(.white, for: .normal)
+                todoButton.backgroundColor = .clear
+                todoButton.borderWidth = 1
                 
                 getCoinButton.isHidden = true
-                break
+                
+            } else {
+                statusLabel.isHidden = false
+                coinImageView.isHidden = false
+                rewardLabel.isHidden = false
+                rewardLabelTopOffset.constant = 84
+                todoButton.isHidden = true
+                getCoinButton.isHidden = true
             }
+            break
+            
+        case .completed:
+            statusLabel.isHidden = false
+            statusLabel.text = "已完成"
+            coinImageView.isHidden = true
+            rewardLabel.isHidden = true
+            todoButton.isHidden = true
+            todoButton.alpha = 0.3
+            getCoinButton.isHidden = false
+            break
+            
+        case .getReward:
+            statusLabel.isHidden = false
+            statusLabel.text = "已完成"
+            coinImageView.isHidden = true
+            rewardLabel.isHidden = true
+            todoButton.isHidden = false
+            todoButton.isEnabled = false
+            todoButton.alpha = 0.3
+            getCoinButton.isHidden = true
+            break
+        }
+        
+        getCoinButton.layoutSubviews()
     }
     
     @IBAction func todo(_ sender: Any) {

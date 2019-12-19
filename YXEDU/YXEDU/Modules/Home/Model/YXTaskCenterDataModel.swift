@@ -28,7 +28,7 @@ struct YXTaskCenterDataModel: Mappable {
 
 struct YXTaskCenterDailyDataModel: Mappable {
     var weekName: String?
-    var isToday = false
+    var dailyStatus: YXTaskCenterDailyStatus = .today
 
     var didPunchIn: Int?
     var integral: Int?
@@ -41,4 +41,10 @@ struct YXTaskCenterDailyDataModel: Mappable {
         didPunchIn <- map["sign_in"]
         integral <- map["credit"]
     }
+}
+
+enum YXTaskCenterDailyStatus {
+    case yesterday
+    case today
+    case tomorrow
 }

@@ -660,8 +660,8 @@
                                                 </collectionViewFlowLayout>
                                                 <cells/>
                                                 <connections>
-                                                    <outlet property="dataSource" destination="LEE-do-1y0" id="xn3-PA-Mgk"/>
-                                                    <outlet property="delegate" destination="LEE-do-1y0" id="9aj-zF-eih"/>
+                                                    <outlet property="dataSource" destination="LEE-do-1y0" id="hVr-40-YQy"/>
+                                                    <outlet property="delegate" destination="LEE-do-1y0" id="RMW-t0-gNf"/>
                                                 </connections>
                                             </collectionView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXD-8j-3FL" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
