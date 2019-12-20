@@ -34,7 +34,9 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     @IBAction func punchIn(_ sender: Any) {
         let request = YXTaskCenterRequest.punchIn
         YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: request, success: { (response) in
-          
+            self.taskCenterData = response.data
+            self.reloadDailyData()
+            
         }) { (error) in
             
         }
@@ -49,46 +51,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         let punchDataRequest = YXTaskCenterRequest.punchData
         YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: punchDataRequest, success: { (response) in
             self.taskCenterData = response.data
-            var dailyDatas = self.taskCenterData.dailyData ?? []
-            
-            for index in 0..<dailyDatas.count {
-                let dailyData = dailyDatas[index]
-                
-                switch index {
-                case 0:
-                    dailyDatas[index].weekName = "周一"
-                    
-                case 1:
-                    dailyDatas[index].weekName = "周二"
-                    
-                case 2:
-                    dailyDatas[index].weekName = "周三"
-                    
-                case 3:
-                    dailyDatas[index].weekName = "周四"
-                    
-                case 4:
-                    dailyDatas[index].weekName = "周五"
-                    
-                case 5:
-                    dailyDatas[index].weekName = "周六"
-                    
-                case 6:
-                    dailyDatas[index].weekName = "周末"
-                    
-                default:
-                    break
-                }
-            }
-            
-            self.dailyDatas = dailyDatas
-            
-            self.integralLabel.text = "\(self.taskCenterData.integral ?? 0)"
-            self.todayPunchLabel.text = "\(self.taskCenterData.todayEarnIntegral ?? 0)"
-            self.totalPunchLabel.text = "\(self.taskCenterData.punchInCount ?? 0)"
-            self.weekendPunchLabel.text = "\(self.taskCenterData.weekendPunchCount ?? 0)"
-
-            self.dailyDataCollectionView.reloadData()
+            self.reloadDailyData()
 
         }) { (error) in
             
@@ -104,6 +67,77 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         }) { (error) in
             
         }
+    }
+    
+    private func reloadDailyData() {
+        var dailyDatas = self.taskCenterData.dailyData ?? []
+        
+        var punchCount = 0
+        var todayIntegral = 0
+        var didFindWitchDayIsToday = false
+        for index in 0..<dailyDatas.count {
+            
+            switch index {
+            case 0:
+                dailyDatas[index].weekName = "周一"
+                
+            case 1:
+                dailyDatas[index].weekName = "周二"
+                
+            case 2:
+                dailyDatas[index].weekName = "周三"
+                
+            case 3:
+                dailyDatas[index].weekName = "周四"
+                
+            case 4:
+                dailyDatas[index].weekName = "周五"
+                
+            case 5:
+                dailyDatas[index].weekName = "周六"
+                
+            case 6:
+                dailyDatas[index].weekName = "周末"
+                
+            default:
+                break
+            }
+            
+            if dailyDatas[index].didPunchIn == 1 {
+                punchCount = punchCount + 1
+            }
+            
+            if didFindWitchDayIsToday {
+                dailyDatas[index].dailyStatus = .tomorrow
+                
+            } else {
+                dailyDatas[index].dailyStatus = .yesterday
+            }
+            
+            if let today = self.taskCenterData.today, index == today - 1 {
+                didFindWitchDayIsToday = true
+                dailyDatas[index].dailyStatus = .today
+                todayIntegral = dailyDatas[index].integral ?? 0
+                
+                if dailyDatas[index].didPunchIn == 1 {
+                    punchButton.isEnabled = false
+                    punchButton.alpha = 0.3
+                    
+                } else {
+                    punchButton.isEnabled = true
+                    punchButton.alpha = 1
+                }
+            }
+        }
+        
+        self.dailyDatas = dailyDatas
+        
+        self.integralLabel.text = "\(self.taskCenterData.integral ?? 0)"
+        self.todayPunchLabel.text = "\(todayIntegral)"
+        self.totalPunchLabel.text = "\(punchCount)"
+        self.weekendPunchLabel.text = "\(punchCount * (self.taskCenterData.exIntegral ?? 0))"
+
+        self.dailyDataCollectionView.reloadData()
     }
     
 
@@ -148,11 +182,34 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             
             cell.weekLabel.text = dailyData.weekName
             
-            if dailyData.didPunchIn == 1 {
-                cell.integralStatusLabel.text = "+\(dailyData.integral ?? 0)"
+            switch dailyData.dailyStatus {
+            case .yesterday:
+                if dailyData.didPunchIn == 1 {
+                    cell.integralStatusLabel.text = "+\(dailyData.integral ?? 0)"
 
-            } else {
-                cell.integralStatusLabel.text = "未获得"
+                } else {
+                    cell.integralStatusLabel.text = "未获得"
+                    cell.integralStatusLabel.font = UIFont.systemFont(ofSize: 10)
+                }
+                
+                cell.circleView.backgroundColor = UIColor.hex(0xFCD096)
+                cell.integralStatusLabel.textColor = UIColor.hex(0xD98F36)
+                cell.indicatorImageView.isHidden = true
+                break
+                
+            case .today:
+                cell.integralStatusLabel.text = "今天"
+                cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
+                cell.circleView.layer.setDefaultShadow()
+                cell.circleView.layer.cornerRadius = 16
+                cell.circleView.layer.shadowColor = UIColor.hex(0xFFBB00).cgColor
+                break
+                
+            case .tomorrow:
+                cell.integralStatusLabel.text = "+\(dailyData.integral ?? 0)"
+                cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
+                cell.indicatorImageView.isHidden = true
+                break
             }
             
             return cell

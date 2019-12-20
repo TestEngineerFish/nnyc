@@ -611,8 +611,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mjb-YR-oFE">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="686"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="685"/>
                                         <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dkZ-RC-Qzo">
+                                                <rect key="frame" x="30" y="142" width="354" height="1"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="Nyc-Ig-KAx"/>
+                                                </constraints>
+                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的松果币" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rdl-T6-IIj">
                                                 <rect key="frame" x="176" y="20" width="62" height="18"/>
                                                 <constraints>
@@ -646,26 +653,8 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="999" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ehO-sS-3Q7">
-                                                <rect key="frame" x="20" y="106" width="374" height="72"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="72" id="CTj-Pz-fIX"/>
-                                                </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tM4-yj-ajZ">
-                                                    <size key="itemSize" width="50" height="50"/>
-                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                </collectionViewFlowLayout>
-                                                <cells/>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="LEE-do-1y0" id="hVr-40-YQy"/>
-                                                    <outlet property="delegate" destination="LEE-do-1y0" id="RMW-t0-gNf"/>
-                                                </connections>
-                                            </collectionView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXD-8j-3FL" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="178" width="374" height="100"/>
+                                                <rect key="frame" x="20" y="177" width="374" height="100"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="今日签到可获得" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LtF-qj-UPb">
                                                         <rect key="frame" x="20" y="31.5" width="100" height="17"/>
@@ -772,8 +761,26 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="999" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ehO-sS-3Q7">
+                                                <rect key="frame" x="20" y="106" width="374" height="72"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="72" id="CTj-Pz-fIX"/>
+                                                </constraints>
+                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="tM4-yj-ajZ">
+                                                    <size key="itemSize" width="50" height="50"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                                <cells/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="LEE-do-1y0" id="hVr-40-YQy"/>
+                                                    <outlet property="delegate" destination="LEE-do-1y0" id="RMW-t0-gNf"/>
+                                                </connections>
+                                            </collectionView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="172" estimatedRowHeight="172" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QCw-nq-3Yn">
-                                                <rect key="frame" x="0.0" y="298" width="414" height="348"/>
+                                                <rect key="frame" x="0.0" y="297" width="414" height="348"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="348" id="rhs-4d-YZT"/>
@@ -787,11 +794,13 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="ehO-sS-3Q7" firstAttribute="leading" secondItem="mjb-YR-oFE" secondAttribute="leading" constant="20" id="0G4-kY-Izo"/>
-                                            <constraint firstItem="CXD-8j-3FL" firstAttribute="top" secondItem="ehO-sS-3Q7" secondAttribute="bottom" id="4FG-py-Rb4"/>
+                                            <constraint firstAttribute="trailing" secondItem="dkZ-RC-Qzo" secondAttribute="trailing" constant="30" id="3y4-5h-Drs"/>
+                                            <constraint firstItem="CXD-8j-3FL" firstAttribute="top" secondItem="ehO-sS-3Q7" secondAttribute="bottom" constant="-1" id="4FG-py-Rb4"/>
                                             <constraint firstItem="ehO-sS-3Q7" firstAttribute="top" secondItem="Zqz-Cx-Zj8" secondAttribute="bottom" constant="20" id="5Vs-si-IeN"/>
                                             <constraint firstItem="Rdl-T6-IIj" firstAttribute="centerX" secondItem="mjb-YR-oFE" secondAttribute="centerX" id="5v8-lp-NDA"/>
                                             <constraint firstItem="QCw-nq-3Yn" firstAttribute="top" secondItem="CXD-8j-3FL" secondAttribute="bottom" constant="20" id="9VT-6p-n2K"/>
                                             <constraint firstItem="QCw-nq-3Yn" firstAttribute="leading" secondItem="mjb-YR-oFE" secondAttribute="leading" id="AFZ-KA-KIa"/>
+                                            <constraint firstItem="dkZ-RC-Qzo" firstAttribute="leading" secondItem="mjb-YR-oFE" secondAttribute="leading" constant="30" id="Ddt-SX-14E"/>
                                             <constraint firstItem="Zqz-Cx-Zj8" firstAttribute="top" secondItem="Rdl-T6-IIj" secondAttribute="bottom" constant="8" symbolic="YES" id="G4d-mh-Rw1"/>
                                             <constraint firstAttribute="trailing" secondItem="ehO-sS-3Q7" secondAttribute="trailing" constant="20" id="H80-F8-IM4"/>
                                             <constraint firstAttribute="trailing" secondItem="QCw-nq-3Yn" secondAttribute="trailing" id="V1M-FP-TAU"/>
@@ -799,6 +808,7 @@
                                             <constraint firstAttribute="bottom" secondItem="QCw-nq-3Yn" secondAttribute="bottom" constant="40" id="g0m-SO-OX4"/>
                                             <constraint firstAttribute="trailing" secondItem="CXD-8j-3FL" secondAttribute="trailing" constant="20" id="qxj-Jx-CAL"/>
                                             <constraint firstItem="Rdl-T6-IIj" firstAttribute="top" secondItem="mjb-YR-oFE" secondAttribute="top" constant="20" id="r2L-VU-QCg"/>
+                                            <constraint firstItem="dkZ-RC-Qzo" firstAttribute="top" secondItem="ehO-sS-3Q7" secondAttribute="top" constant="36" id="rnA-jE-flR"/>
                                             <constraint firstItem="Zqz-Cx-Zj8" firstAttribute="centerX" secondItem="mjb-YR-oFE" secondAttribute="centerX" id="sBN-qH-7B0"/>
                                         </constraints>
                                     </view>

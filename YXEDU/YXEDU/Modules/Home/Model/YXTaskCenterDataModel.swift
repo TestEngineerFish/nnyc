@@ -10,9 +10,8 @@ import ObjectMapper
 
 struct YXTaskCenterDataModel: Mappable {
     var integral: Int?
-    var todayEarnIntegral: Int?
-    var punchInCount: Int?
-    var weekendPunchCount: Int?
+    var exIntegral: Int?
+    var today: Int?
     var dailyData: [YXTaskCenterDailyDataModel]?
     
     init?(map: Map) {
@@ -20,8 +19,9 @@ struct YXTaskCenterDataModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
+        today <- map["today"]
         integral <- map["user_credits"]
-        todayEarnIntegral <- map["multiplier_score"]
+        exIntegral <- map["multiplier_score"]
         dailyData <- map["list"]
     }
 }
@@ -30,6 +30,7 @@ struct YXTaskCenterDailyDataModel: Mappable {
     var weekName: String?
     var dailyStatus: YXTaskCenterDailyStatus = .today
 
+    var weekDay: Int?
     var didPunchIn: Int?
     var integral: Int?
     
@@ -38,6 +39,7 @@ struct YXTaskCenterDailyDataModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
+        weekDay <- map["week_day"]
         didPunchIn <- map["sign_in"]
         integral <- map["credit"]
     }
