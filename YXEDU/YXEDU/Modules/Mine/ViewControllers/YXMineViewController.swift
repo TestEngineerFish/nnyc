@@ -134,12 +134,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     YXUserModel.default.didUseAmericanPronunciation = true
                 }
                 
-                // 素材包管理
-                let materailLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
-                materailLabel?.text = "0.00M"
-                
                 // 每日提醒
-                let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0))?.viewWithTag(2) as? UILabel
+                let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
                 if let date = UserDefaults.standard.object(forKey: "Reminder") as? Date {
                     let dateFormatter = DateFormatter()
                     dateFormatter.timeStyle = .short
