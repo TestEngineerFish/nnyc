@@ -76,18 +76,19 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         return label
     }()
 
-    var titleLabel: UILabel?
     var timer: Timer?
     var dotNumber = 0
     var enginer: USCRecognizer?
     var status: AnswerStatus = .normal
-    var alreadyCount = 0 // 当题学习次数,再次学习,无论成绩,都切题
     var lastLevel    = 0 // 最近一次跟读评分
+
+    // TODO: ---- 缓存重传机制
     var tempOpusData = Data() // 缓存当前录音
     var retryCount   = 0
     var retryPath    = {
+        // 缓存录音本地地址
         return NSTemporaryDirectory() + "tmpData.opus"
-    }()    // 缓存录音本地地址
+    }()
 
     weak var newLearnDelegate: YXNewLearnProtocol?
 
@@ -140,8 +141,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
 
         self.playAudioButton.addTarget(self, action: #selector(playButtonAction(_:)), for: .touchUpInside)
-        self.recordAudioButton.addTarget(self, action: #selector(startRecordAction(_:)), for: .touchDown)
-        self.recordAudioButton.addTarget(self, action: #selector(endRecordAction(_:)), for: .touchUpInside)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(startRecordAction(_:)))
+        self.recordAudioButton.addGestureRecognizer(longPress)
     }
 
     // MARK: ==== Event ====
@@ -154,15 +155,22 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     /// 长按跟读按钮
-    @objc private func startRecordAction(_ btn: UIButton) {
-        guard let word = self.exerciseModel.question?.word else {
+    @objc private func startRecordAction(_ ges: UILongPressGestureRecognizer) {
+        switch ges.state {
+        case .began:
+            guard let word = self.exerciseModel.question?.word else {
+                return
+            }
+            self.enginer?.oralText = word
+            self.enginer?.start()
+        case .ended:
+            self.endRecordAction()
+        default:
             return
         }
-        YXRecordAudioView.share.show()
-        self.enginer?.oralText = word
-        self.enginer?.start()
     }
-    @objc private func endRecordAction(_ btn: UIButton) {
+
+    private func endRecordAction() {
         YXRecordAudioView.share.hide()
         self.enginer?.stop()
         print("End")
@@ -289,6 +297,28 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playAudioButton.layer.removeAllAnimations()
     }
 
+    /// 显示结果动画
+    private func showResultAnimation() {
+        YXNewLearnResultView.share.show(self.lastLevel)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            YXNewLearnResultView.share.hide()
+            if self.lastLevel > 1 {
+                self.answerCompletion(right: true)
+            }
+        }
+    }
+
+    /// 隐藏结果动画
+    private func hideResultAnimation() {
+        self.status = .alreadLearn
+    }
+
+    /// 页面暂停
+    func pauseView() {
+        YXAVPlayerManager.share.pauseAudio()
+        self.enginer?.cancel()
+    }
+
     // MARK: ==== Notification ====
 
     /// 进入后台, 停止播放音频和语音监听
@@ -306,40 +336,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playByStatus()
     }
 
-    //MARK: ==== TOOL ====
-    /// 显示跟读动画
-    func showReadAnaimtion() {
-
-    }
-
-    // ==== 测试用 结束收听 ==== 
-    @objc private func stopListen() {
-
-        self.enginer?.stop()
-    }
-
-    /// 隐藏跟读动画
-    private func hideReadAnimation() {
-
-    }
-
-    /// 显示结果动画
-    private func showResultAnimation() {
-
-    }
-
-    /// 隐藏结果动画
-    private func hideResultAnimation() {
-        self.status = .alreadLearn
-    }
-
-    /// 页面暂停
-    func pauseView() {
-        YXAVPlayerManager.share.pauseAudio()
-        self.enginer?.cancel()
-    }
-
-
     // MARK: ==== 云知声SDK: USCRecognizerDelegate ====
     func oralEngineDidInit(_ error: Error!) {
 //        print("初始化结束,错误内容: " + String(describing: error))
@@ -349,13 +345,13 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     func onBeginOral() {
         // 显示录音动画
         self.resetOpusTempData()
-        self.showReadAnaimtion()
+        YXRecordAudioView.share.show()
         self.status = .recording
     }
 
     func onStopOral() {
         self.setCatchRecordOpus(opus: self.tempOpusData)
-        self.titleLabel?.text = "打分中……"
+        self.recordAudioLabel.text = "打分中……"
         self.status = .reporting
     }
 
@@ -368,7 +364,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             guard let score = resultDict["score"] as? Double else {
                 return
             }
-//            YXUtils.showHUD(self, title: "当前得分: \(score)")
+            YXUtils.showHUD(self, title: "当前得分: \(score)")
             self.lastLevel = {
                 if score > 90 {
                     return 3
@@ -377,20 +373,13 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 } else if score > 30 {
                     return 1
                 } else {
-                    if self.alreadyCount > 0 {
-                        // 如果已学习次数达到次,默认最低得一星
-                        return 1
-                    }
                     return 0
                 }
             }()
-            self.hideReadAnimation()
-            // 移除录音视图
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                // 显示结果动画
-                self.showResultAnimation()
-                self.status = .showResult
-            }
+            // 显示结果动画
+            self.showResultAnimation()
+            self.status = .showResult
+            self.recordAudioLabel.text = "按住跟读"
         }
     }
 
@@ -400,11 +389,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
         // 判断重试次数
         if self.retryCount < 3 {
-            self.titleLabel?.text = "网络错误,录音重传中……"
+            self.recordAudioLabel.text = "网络错误,录音重传中……"
             self.enginer?.retry(withFilePath: self.retryPath)
             self.retryCount += 1
         } else {
-            self.titleLabel?.text = ""
+            self.recordAudioLabel.text = "按住跟读"
             YXUtils.showHUD(kWindow, title: "网络连接失败,请稍后再试")
         }
     }

@@ -111,9 +111,6 @@ class YXNewLearnPrimarySchoolWordGroupExerciseView: YXBaseExerciseView {
             break
         }
         self.contentView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
-        if let _answerView = answerView as? YXNewLearnAnswerView {
-            _answerView.alreadyCount = 0
-        }
         return true
     }
 }
