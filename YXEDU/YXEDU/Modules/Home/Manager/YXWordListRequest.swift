@@ -14,6 +14,7 @@ public enum YXWordListRequest: YYBaseRequest {
     case collectWord(wordId: Int, isComplexWord: Int)
     case cancleCollectWord(wordIds: String)
     case deleteWrongWord(wordIds: String)
+    case didCollectWord(wordId: Int)
 }
 
 extension YXWordListRequest {
@@ -22,7 +23,7 @@ extension YXWordListRequest {
         case .wordList, .wrongWordList:
             return .get
             
-        case .collectWord, .cancleCollectWord, .deleteWrongWord:
+        case .collectWord, .cancleCollectWord, .deleteWrongWord, .didCollectWord:
             return .post
         }
     }
@@ -45,6 +46,9 @@ extension YXWordListRequest {
             
         case .deleteWrongWord:
             return YXAPI.WordList.deleteWrongWord
+            
+        case .didCollectWord:
+            return YXAPI.WordList.didCollectWord
         }
     }
 }
@@ -63,6 +67,9 @@ extension YXWordListRequest {
             
         case .deleteWrongWord(let wordIds):
             return ["word_ids": wordIds]
+            
+        case .didCollectWord(let wordId):
+            return ["word_id": wordId]
             
         default:
             return nil

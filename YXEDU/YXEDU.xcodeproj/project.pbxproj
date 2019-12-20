@@ -2426,9 +2426,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		7759A8932379438600C63199 /* WordDetailViews */ = {
+		7759A8932379438600C63199 /* WordDetail */ = {
 			isa = PBXGroup;
 			children = (
+				77CCB9B9237A4B5B004EB781 /* YXWordDetailViewControllerNew.swift */,
+				77201829237CE7ED00535732 /* YXWordDetailView.swift */,
+				77CCB9BA237A4B5B004EB781 /* YXWordDetailView.xib */,
 				7759A89023793E2800C63199 /* YXWordDetailCommonView.swift */,
 				7759A88F23793E2800C63199 /* YXWordDetailCommonView.xib */,
 				77CCB9B523794CC2004EB781 /* YXWordDetailHeaderView.swift */,
@@ -2441,7 +2444,7 @@
 				77097537239A30080071A779 /* YXWordDetailClassicCell.xib */,
 				77097525239927600071A779 /* Featured */,
 			);
-			path = WordDetailViews;
+			path = WordDetail;
 			sourceTree = "<group>";
 		};
 		7759A8942379439C00C63199 /* AlertViews */ = {
@@ -2513,11 +2516,20 @@
 		77706E3E2372EBA200149D09 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				77B0A59923AC784B0093A181 /* Models */,
 				77F69A6C23614D6300E55185 /* IBDesignableViews */,
 				7759A8942379439C00C63199 /* AlertViews */,
-				7759A8932379438600C63199 /* WordDetailViews */,
+				7759A8932379438600C63199 /* WordDetail */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		77B0A59923AC784B0093A181 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				77B7C6EF23A735F200149ACE /* YXResultModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		77B7C6F123A776A000149ACE /* TaskCenter */ = {
@@ -2556,7 +2568,6 @@
 				77D048F92361A12000CE95D8 /* YXWordBookModel.swift */,
 				77EE8C3A23A2319900E076FB /* YXWrongWordListModel.swift */,
 				777C1E29236BDF380097A822 /* YXHomeModel.swift */,
-				77B7C6EF23A735F200149ACE /* YXResultModel.swift */,
 				77B7C6FE23A86B1F00149ACE /* YXTaskCenterDataModel.swift */,
 				77B7C70023A86B4800149ACE /* YXTaskModel.swift */,
 			);
@@ -2950,7 +2961,6 @@
 			isa = PBXGroup;
 			children = (
 				EE54F7CC2362AA3100EC605A /* YXExerciseViewController.swift */,
-				77CCB9B9237A4B5B004EB781 /* YXWordDetailViewControllerNew.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -5300,8 +5310,6 @@
 				EE772104237A8BF300CD632E /* AudioView */,
 				22A5AFB7236C53E900FBFABD /* YXExerciseAnimation.swift */,
 				2205A93D23628FDE00C6E674 /* YXFindRoutesUtil.swift */,
-				77201829237CE7ED00535732 /* YXWordDetailView.swift */,
-				77CCB9BA237A4B5B004EB781 /* YXWordDetailView.xib */,
 				22AC8E73238783A1000E477B /* YXExerciseLoadingView.swift */,
 			);
 			path = Common;

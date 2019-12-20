@@ -67,10 +67,6 @@ class YXTaskCenterCardCell: UICollectionViewCell {
         todoButton.alpha = 1
 
         getCoinButton.setTitle("领取\(integral)", for: .normal)
-        getCoinButton.contentEdgeInsets.left = 16
-        getCoinButton.contentEdgeInsets.right = 16
-        getCoinButton.titleEdgeInsets.right = getCoinButton.imageView!.bounds.width + 16
-        getCoinButton.imageEdgeInsets.left = getCoinButton.bounds.width - getCoinButton.imageView!.bounds.width - 16
         
         switch taskType {
         case .cyanBlueCard:
@@ -178,6 +174,12 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             break
         }
         
+        getCoinButton.layoutSubviews()
+        getCoinButton.contentEdgeInsets.left = 16
+        getCoinButton.contentEdgeInsets.right = 16
+        getCoinButton.titleEdgeInsets.left = -getCoinButton.imageView!.bounds.width - 16
+        getCoinButton.imageEdgeInsets.left = getCoinButton.titleLabel!.bounds.width
+        
         switch cardStatus {
         case .incomplete:
             if didRepeat {
@@ -225,8 +227,6 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             getCoinButton.isHidden = true
             break
         }
-        
-        getCoinButton.layoutSubviews()
     }
     
     @IBAction func todo(_ sender: Any) {

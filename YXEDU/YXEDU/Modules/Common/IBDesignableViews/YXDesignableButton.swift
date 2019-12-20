@@ -12,12 +12,12 @@ import UIKit
 class YXDesignableButton: UIButton {
         
     lazy var gradientLayer: CAGradientLayer = {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.bounds
-        gradientLayer.colors = [gradientColor1.cgColor, gradientColor2.cgColor]
-        gradientLayer.startPoint = CGPoint(x: gradientColorStartPoint, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 1 - gradientColorStartPoint, y: 1)
-        return gradientLayer
+        let layer = CAGradientLayer()
+        layer.frame = self.bounds
+        layer.colors = [gradientColor1.cgColor, gradientColor2.cgColor]
+        layer.startPoint = CGPoint(x: gradientColorStartPoint, y: 0)
+        layer.endPoint = CGPoint(x: 1 - gradientColorStartPoint, y: 1)
+        return layer
     }()
     
     lazy var disableLayer: CALayer = {
@@ -31,13 +31,23 @@ class YXDesignableButton: UIButton {
         didSet {
             guard enableGradientBackground else { return }
             
+            gradientLayer.removeFromSuperlayer()
+            disableLayer.removeFromSuperlayer()
+
             if isUserInteractionEnabled {
-                disableLayer.removeFromSuperlayer()
+                gradientLayer = {
+                    let layer = CAGradientLayer()
+                    layer.frame = self.bounds
+                    layer.colors = [gradientColor1.cgColor, gradientColor2.cgColor]
+                    layer.startPoint = CGPoint(x: gradientColorStartPoint, y: 0)
+                    layer.endPoint = CGPoint(x: 1 - gradientColorStartPoint, y: 1)
+                    return layer
+                }()
+                
                 self.layer.insertSublayer(gradientLayer, at: 0)
                 self.setTitleColor(originTextColor, for: .normal)
                 
             } else {
-                gradientLayer.removeFromSuperlayer()
                 self.layer.insertSublayer(disableLayer, at: 0)
                 self.setTitleColor(UIColor(red: 0.92, green: 0.82, blue: 0.73, alpha: 1), for: .normal)
             }

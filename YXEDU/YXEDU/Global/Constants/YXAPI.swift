@@ -81,6 +81,9 @@ struct YXAPI {
         
         // 刪除錯詞
         static let deleteWrongWord = "/api/v1/word/delwrong"
+        
+        // 是否收藏單詞
+        static let didCollectWord = "/api/v1/word/isfavorite"
     }
     
     // MARK: - 单词列表模块

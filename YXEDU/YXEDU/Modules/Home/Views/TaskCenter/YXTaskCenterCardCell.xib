@@ -53,9 +53,8 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCa-9n-I8d" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                        <rect key="frame" x="89.5" y="84" width="66" height="92"/>
+                        <rect key="frame" x="105.5" y="84" width="34" height="92"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                        <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
                         <state key="normal" title="--" image="coin"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
