@@ -43,6 +43,7 @@ struct YXWordBookModel: Mappable {
     var bookSourcePath: String?
     var coverImagePath: String?
     var countOfWords: Int?
+    var didFinished: Int?
     var bookHash: String?
     var units: [YXWordBookUnitModel]?
     
@@ -59,7 +60,8 @@ struct YXWordBookModel: Mappable {
         bookJsonSourcePath <- map["book_json_url"]
         bookSourcePath <- map["book_url"]
         coverImagePath <- map["cover"]
-        countOfWords <- map["?"]
+        countOfWords <- map["words_num"]
+        didFinished <- map["is_learn_finish"]
         bookHash <- map["hash"]
         units <- map["unit_list"]
     }

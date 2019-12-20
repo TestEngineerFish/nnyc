@@ -201,32 +201,14 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXWordBookCell", for: indexPath) as! YXWordBookCell
         let wordBook = wordBookModels[indexPath.row]
 
-        if wordBook.isNewWordBook {
-            cell.bookCover.image = #imageLiteral(resourceName: "newBook")
-
-        } else {
-            if wordBook.isCurrentStudy {
-                cell.bookCover.image = #imageLiteral(resourceName: "currentStudyBook")
-
-            } else {
-                if wordBook.isSelected {
-                    cell.bookCover.image = #imageLiteral(resourceName: "unstudySelectedBook")
-
-                } else {
-                    cell.bookCover.image = #imageLiteral(resourceName: "unstudyBook")
-                }
-            }
-        }
+        cell.countOfWordsLabel.text = "\(wordBook.countOfWords ?? 0)词"
         cell.bookNameLabel.text = wordBook.bookName
         
-        cell.countOfWordsLabel.text = ""
-        
-        if wordBook.isSelected {
-            cell.indicatorIcon.isHidden = false
-            
-        } else {
-            cell.indicatorIcon.isHidden = true
-        }
+        cell.isCurrentStudy = wordBook.isCurrentStudy
+        cell.didFinished = wordBook.didFinished == 1
+        cell.isAddBook = wordBook.isNewWordBook
+        cell.isSelected = wordBook.isSelected
+        cell.adjustCell()
         
         return cell
     }

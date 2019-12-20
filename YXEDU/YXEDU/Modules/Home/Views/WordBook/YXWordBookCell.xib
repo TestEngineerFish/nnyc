@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,7 +30,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZjP-98-QBv">
-                        <rect key="frame" x="41" y="44" width="10" height="12"/>
+                        <rect key="frame" x="41" y="32" width="10" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -42,19 +42,37 @@
                             <constraint firstAttribute="height" constant="12" id="xhn-Do-lXS"/>
                         </constraints>
                     </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="currentStudyBook" translatesAutoresizingMaskIntoConstraints="NO" id="W8K-qW-wOx">
+                        <rect key="frame" x="70" y="20" width="8" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="1HS-fv-4jm"/>
+                            <constraint firstAttribute="width" constant="8" id="xTJ-4U-V5f"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fep-eO-fJZ">
+                        <rect key="frame" x="58" y="54" width="30" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="BkB-EY-Fef"/>
+                            <constraint firstAttribute="width" constant="30" id="hAg-8l-Qgb"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="ZjP-98-QBv" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Pkh-n3-eUP"/>
+                <constraint firstAttribute="trailing" secondItem="fep-eO-fJZ" secondAttribute="trailing" constant="4" id="R8w-Bl-Pu3"/>
                 <constraint firstItem="l7p-25-Avx" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="TbG-og-few"/>
                 <constraint firstItem="Bxc-Uu-e0B" firstAttribute="top" secondItem="l7p-25-Avx" secondAttribute="bottom" constant="6" id="brL-cc-IgB"/>
+                <constraint firstAttribute="trailing" secondItem="W8K-qW-wOx" secondAttribute="trailing" constant="14" id="bvc-pV-fWT"/>
                 <constraint firstAttribute="trailing" secondItem="Bxc-Uu-e0B" secondAttribute="trailing" id="cZw-EA-Swx"/>
+                <constraint firstItem="ZjP-98-QBv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="32" id="dCb-su-x65"/>
                 <constraint firstAttribute="bottom" secondItem="smV-IA-hLe" secondAttribute="bottom" constant="6" id="hu8-Rq-4Xp"/>
-                <constraint firstItem="Bxc-Uu-e0B" firstAttribute="top" secondItem="ZjP-98-QBv" secondAttribute="bottom" constant="12" id="ilH-va-otq"/>
+                <constraint firstItem="fep-eO-fJZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="54" id="nVW-xc-YTz"/>
                 <constraint firstItem="Bxc-Uu-e0B" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="peW-zs-tsW"/>
                 <constraint firstAttribute="trailing" secondItem="l7p-25-Avx" secondAttribute="trailing" constant="10" id="q8z-oW-y8o"/>
                 <constraint firstItem="l7p-25-Avx" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="12" id="qF9-Oz-lIU"/>
                 <constraint firstItem="smV-IA-hLe" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="vF6-PK-Lej"/>
+                <constraint firstItem="W8K-qW-wOx" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="20" id="vfG-Sk-lYT"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="92" height="132"/>
@@ -62,6 +80,8 @@
                 <outlet property="bookCover" destination="l7p-25-Avx" id="o2a-rd-kLP"/>
                 <outlet property="bookNameLabel" destination="Bxc-Uu-e0B" id="ryv-fb-yNI"/>
                 <outlet property="countOfWordsLabel" destination="ZjP-98-QBv" id="qXW-6E-Dgd"/>
+                <outlet property="currentStudyMark" destination="W8K-qW-wOx" id="JxA-GO-p9w"/>
+                <outlet property="finishedMark" destination="fep-eO-fJZ" id="xJ5-MS-raN"/>
                 <outlet property="indicatorIcon" destination="smV-IA-hLe" id="qZU-pT-zIs"/>
             </connections>
             <point key="canvasLocation" x="171.01449275362319" y="180.80357142857142"/>
@@ -69,5 +89,6 @@
     </objects>
     <resources>
         <image name="currentSelectBook" width="21" height="12"/>
+        <image name="currentStudyBook" width="9" height="14"/>
     </resources>
 </document>

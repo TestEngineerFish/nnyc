@@ -501,7 +501,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="打卡日历" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lP-K3-PCu">
-                                                        <rect key="frame" x="63.999999999999972" y="18" width="50" height="15"/>
+                                                        <rect key="frame" x="63.999999999999972" y="20" width="50" height="14.333333333333336"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -529,8 +529,8 @@
                                                     <constraint firstItem="6lP-K3-PCu" firstAttribute="leading" secondItem="wqY-qe-68o" secondAttribute="trailing" constant="12" id="E1k-21-FHU"/>
                                                     <constraint firstAttribute="bottom" secondItem="VjV-l6-sw7" secondAttribute="bottom" constant="20" id="IeW-Os-UF9"/>
                                                     <constraint firstItem="wqY-qe-68o" firstAttribute="leading" secondItem="1QP-WT-1ZU" secondAttribute="leading" constant="16" id="Met-md-cUC"/>
-                                                    <constraint firstItem="6lP-K3-PCu" firstAttribute="top" secondItem="1QP-WT-1ZU" secondAttribute="top" constant="18" id="bdu-Ro-dWq"/>
                                                     <constraint firstItem="jLf-FL-uxB" firstAttribute="leading" secondItem="wqY-qe-68o" secondAttribute="trailing" constant="12" id="rHF-iG-izX"/>
+                                                    <constraint firstItem="6lP-K3-PCu" firstAttribute="centerY" secondItem="1QP-WT-1ZU" secondAttribute="centerY" id="yUe-7w-Wd1"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
