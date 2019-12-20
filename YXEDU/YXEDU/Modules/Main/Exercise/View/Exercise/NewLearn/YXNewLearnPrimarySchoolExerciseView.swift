@@ -67,6 +67,10 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
 
     @objc private func hideGuideView() {
         guideView.removeFromSuperview()
+        guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
+            return
+        }
+        _answerView.status.forward()
     }
 
     // MARK: ==== YXAnswerViewDelegate ====
@@ -96,7 +100,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
             return
         }
-        _answerView.playView()
+        _answerView.playByStatus()
     }
 
     // MARK: ==== YXNewLearnProtocol ===
@@ -111,14 +115,15 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
 
     /// 单词和单词播放结束
     func playWordAndWordFinished() {
-        if !(YYCache.object(forKey: kAlreadShowNewLearnGuideView) as? Bool ?? false)  {
-            print("显示引导图")
-            self.showGuideView()
-        }
         guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
             return
         }
         _answerView.status = .showGuideView
+        if !(YYCache.object(forKey: kAlreadShowNewLearnGuideView) as? Bool ?? false)  {
+            self.showGuideView()
+        } else {
+            _answerView.status.forward()
+        }
 
     }
 }

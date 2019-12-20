@@ -119,8 +119,7 @@ class YXRecordAudioView: UIView {
     func show() {
         kWindow.addSubview(self)
         self.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(AdaptSize(-100))
-            make.centerX.equalToSuperview()
+            make.center.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(198), height: AdaptSize(198)))
         }
     }
