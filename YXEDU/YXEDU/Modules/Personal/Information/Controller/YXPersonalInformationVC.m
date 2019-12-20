@@ -42,9 +42,9 @@
 - (void)setUpDataSource {
     NSMutableArray *dataSource = [NSMutableArray array];
         
-    NSArray *allTitles = @[@[@"头像",@"昵称",@"性别"],@[@"生日",@"地区",@"年级"], @[@""]];
-    NSArray *isShowAccseeories = @[@[@"1",@"1",@"1"],@[@"1",@"1",@"1"],@[@"0"]];
-    NSArray *isShowBottomLines = @[@[@"1",@"1",@"0"],@[@"1",@"1",@"1"],@[@"0"]];
+    NSArray *allTitles = @[@[@"头像",@"昵称",@"性别"],@[@"生日",@"地区",@"年级"]];
+    NSArray *isShowAccseeories = @[@[@"1",@"1",@"1"],@[@"1",@"1",@"1"]];
+    NSArray *isShowBottomLines = @[@[@"1",@"1",@"0"],@[@"1",@"1",@"1"]];
 
     for (NSInteger i = 0; i < allTitles.count; i++) {
             
@@ -135,7 +135,7 @@
         grade = @"其他";
     }
     
-    self.allRightDetails = @[@[@"", name, sex],@[birthday, area, grade], @[@""]];
+    self.allRightDetails = @[@[@"", name, sex],@[birthday, area, grade]];
 
     [self setUpDataSource];
     [self.tableView reloadData];
@@ -170,16 +170,6 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         [self addAvatarImage:cell];
         
-    } else if (indexPath.section == 2 && indexPath.row == 0) {
-        YXDesignableButton *button = [[YXDesignableButton alloc] initWithFrame: CGRectMake(20, 2, SCREEN_WIDTH - 40, 40)];
-        [button setTitle:@"退出登录" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithRed:(251.0 / 255.0) green:(162.0 / 255.0) blue:(23.0 / 255.0) alpha:1] forState:UIControlStateNormal];
-        [button.titleLabel setFont: [UIFont systemFontOfSize:17]];
-        button.cornerRadius = 20;
-        button.borderWidth = 1;
-        button.borderColor = [UIColor colorWithRed:(251.0 / 255.0) green:(162.0 / 255.0) blue:(23.0 / 255.0) alpha:1];
-        [button addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:button];
     }
     
     return cell;
@@ -448,20 +438,6 @@
         self.pickerBackgroundView = nil;
         self.pickerView = nil;
     }];
-
-}
-
-- (void)logout {
-//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-//    UIAlertAction *actionConfirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//        [[YXUserModel default] logout];
-//    }];
-//
-//    UIAlertAction *actionCancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-//
-//    [alert addAction:actionConfirm];
-//    [alert addAction:actionCancle];
-//    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 
 @end

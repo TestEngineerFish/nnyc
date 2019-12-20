@@ -29,6 +29,10 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.performSegue(withIdentifier: "Calendar", sender: self)
     }
     
+    @IBAction func edit(_ sender: UITapGestureRecognizer) {
+        self.performSegue(withIdentifier: "Edit", sender: self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
@@ -53,7 +57,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Setting" {
+        if segue.identifier == "Edit" {
             let destinationViewController = segue.destination as! YXPersonalInformationVC
             destinationViewController.userModel = temporaryUserModel!
             
@@ -229,7 +233,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -244,10 +248,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return tableView.dequeueReusableCell(withIdentifier: "CellFour")!
         case 4:
             return tableView.dequeueReusableCell(withIdentifier: "CellFive")!
-        case 5:
-            return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
         default:
-            return tableView.dequeueReusableCell(withIdentifier: "CellSeven")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
         }
     }
     
@@ -332,26 +334,30 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             break
 
         case 2:
-            self.performSegue(withIdentifier: "ManageMaterial", sender: self)
-            break
-
-        case 3:
             self.performSegue(withIdentifier: "SetReminder", sender: self)
             break
 
+        case 3:
+            break
+
         case 4:
-            self.performSegue(withIdentifier: "AboutUs", sender: self)
+            self.performSegue(withIdentifier: "FeedBack", sender: self)
             break
 
         case 5:
-            self.performSegue(withIdentifier: "FeedBack", sender: self)
-            break
-            
-        case 6:
+            self.performSegue(withIdentifier: "Settings", sender: self)
             break
             
         default:
             break
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 3 {
+            return 6
+        } else {
+            return 44
         }
     }
     

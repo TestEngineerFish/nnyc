@@ -181,6 +181,7 @@
 		7786D620236C66B100741DCE /* YXSeleceUnitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786D61F236C66B100741DCE /* YXSeleceUnitView.xib */; };
 		778FAE52236FBFF700DE0133 /* YXHandWriteAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */; };
 		778FAE54236FC00300DE0133 /* YXHandWriteAnswerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */; };
+		77B0A59B23ACB4750093A181 /* YXSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B0A59A23ACB4750093A181 /* YXSettingsViewController.swift */; };
 		77B7C6EE23A7254200149ACE /* YXTaskCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C6ED23A7254200149ACE /* YXTaskCenterViewController.swift */; };
 		77B7C6F023A735F200149ACE /* YXResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C6EF23A735F200149ACE /* YXResultModel.swift */; };
 		77B7C6F423A77B7A00149ACE /* YXTaskCenterDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B7C6F223A77B7A00149ACE /* YXTaskCenterDateCell.swift */; };
@@ -903,6 +904,7 @@
 		7786D61F236C66B100741DCE /* YXSeleceUnitView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXSeleceUnitView.xib; sourceTree = "<group>"; };
 		778FAE51236FBFF700DE0133 /* YXHandWriteAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHandWriteAnswerView.swift; sourceTree = "<group>"; };
 		778FAE53236FC00300DE0133 /* YXHandWriteAnswerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHandWriteAnswerView.xib; sourceTree = "<group>"; };
+		77B0A59A23ACB4750093A181 /* YXSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSettingsViewController.swift; sourceTree = "<group>"; };
 		77B7C6ED23A7254200149ACE /* YXTaskCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTaskCenterViewController.swift; sourceTree = "<group>"; };
 		77B7C6EF23A735F200149ACE /* YXResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXResultModel.swift; sourceTree = "<group>"; };
 		77B7C6F223A77B7A00149ACE /* YXTaskCenterDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTaskCenterDateCell.swift; sourceTree = "<group>"; };
@@ -2363,10 +2365,10 @@
 		771512DC236710F200F6D400 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
-				776F747B238BC5DD0027D166 /* Manager */,
 				771512DF2367126800F6D400 /* Mine.storyboard */,
 				771512E5236717E000F6D400 /* ViewControllers */,
 				773452C8236A7E9A00801FDD /* Views */,
+				776F747B238BC5DD0027D166 /* Manager */,
 				771512E62367180E00F6D400 /* Models */,
 			);
 			path = Mine;
@@ -2376,6 +2378,7 @@
 			isa = PBXGroup;
 			children = (
 				771512E3236713E600F6D400 /* YXMineViewController.swift */,
+				77B0A59A23ACB4750093A181 /* YXSettingsViewController.swift */,
 				7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */,
 			);
 			path = ViewControllers;
@@ -6142,6 +6145,7 @@
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
 				224A2FC7238233E100AD99B0 /* YXTaskMapView.swift in Sources */,
 				EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */,
+				77B0A59B23ACB4750093A181 /* YXSettingsViewController.swift in Sources */,
 				77626BF0239DFE1100B9407A /* YXWordListViewController.swift in Sources */,
 				EE5E007523274FEB00655654 /* YXFillWordView.m in Sources */,
 				77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */,

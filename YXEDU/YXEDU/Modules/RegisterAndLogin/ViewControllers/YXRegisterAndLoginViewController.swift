@@ -42,8 +42,10 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     @IBAction func sendSMSWithoutAuthCode(_ sender: UIButton) {
+        phoneNumberTextField.resignFirstResponder()
+        authCodeTextField.resignFirstResponder()
+        
         sendSMS()
-        authCodeTextField.becomeFirstResponder()
     }
     
     @IBAction func phoneLogin(_ sender: UIButton) {
@@ -183,7 +185,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             
             if slidingVerificationCodeModel.isSuccessSendSms == 1 {
                 self.startCountingDown()
-                
+                self.authCodeTextField.becomeFirstResponder()
+
             } else if slidingVerificationCodeModel.shouldShowSlidingVerification == 1 {
                 RegisterSliderView.show(.puzzle) { (isSuccess) in
                     if isSuccess {

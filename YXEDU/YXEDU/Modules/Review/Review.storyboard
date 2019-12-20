@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fls-3p-mHj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fls-3p-mHj">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,10 +24,11 @@
             </objects>
             <point key="canvasLocation" x="-328" y="183"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--复习-->
         <scene sceneID="2QG-Ei-65x">
             <objects>
                 <navigationController id="fls-3p-mHj" customClass="YXNavigationController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="复习" image="tabReview" selectedImage="tabReviewSelected" id="x5m-BG-ldx"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MeM-hC-B8c">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -41,4 +42,8 @@
             <point key="canvasLocation" x="-1309" y="184"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="tabReview" width="22" height="22"/>
+        <image name="tabReviewSelected" width="22" height="22"/>
+    </resources>
 </document>

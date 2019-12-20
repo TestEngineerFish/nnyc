@@ -13,8 +13,9 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
     var platform: String!
     
     private var timer: Timer?
-    private var CountingDown = 60
-    
+    private var countingDown = 60
+    private var slidingVerificationCode: String?
+
     
     // MARK: - Interface Builder
     @IBOutlet weak var clearPhoneNumberTextFieldButton: UIButton!
@@ -40,8 +41,10 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
     }
     
     @IBAction func sendSMSWithoutAuthCode(_ sender: UIButton) {
+        phoneNumberTextField.resignFirstResponder()
+        authCodeTextField.resignFirstResponder()
+        
         sendSMS()
-        authCodeTextField.becomeFirstResponder()
     }
     
     @IBAction func login(_ sender: UIButton) {
@@ -142,7 +145,7 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
     
     @objc
     private func updateTimer() {
-        if CountingDown == 0 {
+        if countingDown == 0 {
             timer?.invalidate()
             timer = nil
             
@@ -151,52 +154,36 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
             
         } else {
-            CountingDown = CountingDown - 1
+            countingDown = countingDown - 1
             sendSMSButton.isUserInteractionEnabled = false
-            sendSMSButton.setTitle("\(CountingDown)秒", for: .normal)
+            sendSMSButton.setTitle("\(countingDown)秒", for: .normal)
             sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
         }
     }
     
-    private func sendSMS(with authCode: String = "") {
-        let sendSMSModel = YXSendSMSModel()
-        sendSMSModel.type = "editMobile"
-        sendSMSModel.mobile = phoneNumberTextField.text
-        sendSMSModel.captcha = authCode
-        sendSMSModel.pf = platform
-        
-        let bindViewModel = YXBindViewModel()
-        bindViewModel.sendSMS(sendSMSModel) { (code, isSuccess) in
-            if isSuccess {
+    private func sendSMS() {
+        let request = YXRegisterAndLoginRequest.sendSms(phoneNumber: phoneNumberTextField.text ?? "", loginType: "login", SlidingVerificationCode: slidingVerificationCode)
+        YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { (response) in
+            guard let slidingVerificationCodeModel = response.data else { return }
+            
+            if slidingVerificationCodeModel.isSuccessSendSms == 1 {
                 self.startCountingDown()
-                
-            } else {
-                guard let code = code as? Int, (code == USER_PF_MOBILE_CAPTCHA_CODE || code == USER_PF_MOBILE_CAPTCHA_EMPTY_CODE) else { return }
-                self.showImageAuth(with: bindViewModel)
-            }
-        }
-    }
-    
-    private func showImageAuth(with bindViewModel: YXBindViewModel) {
-        let comAlertView: YXComAlertView = YXComAlertView.show(YXAlertType(rawValue: 3)!, in: self.view, info: "", content: "", firstBlock: { (alertView) in
-            guard let alertView = alertView as? YXComAlertView else { return }
-            
-            if let text = alertView.verifyCodeField.text, text.isEmpty == false {
-                self.sendSMS(with: text)
+                self.authCodeTextField.becomeFirstResponder()
+
+            } else if slidingVerificationCodeModel.shouldShowSlidingVerification == 1 {
+                RegisterSliderView.show(.puzzle) { (isSuccess) in
+                    if isSuccess {
+                        self.slidingVerificationCode = slidingVerificationCodeModel.slidingVerificationCode
+                        self.sendSMS()
+                        
+                    } else {
+                        
+                    }
+                }
             }
             
-            alertView.remove()
-            
-        }) { (alertView) in
-            guard let alertView = alertView as? YXComAlertView else { return }
-            
-            bindViewModel.requestGraphCodeMobile(self.phoneNumberTextField.text!) { (data, isSuccess) in
-                alertView.verifyCodeImage.image = UIImage(data: data as! Data)
-            }
-        } as! YXComAlertView
-        
-        bindViewModel.requestGraphCodeMobile(self.phoneNumberTextField.text!) { (data, isSuccess) in
-            comAlertView.verifyCodeImage.image = UIImage(data: data as! Data)
+        }) { (error) in
+
         }
     }
 

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icon／mine／jifen.png",
+      "filename" : "icon／mine／songguobi.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icon／mine／jifen@2x.png",
+      "filename" : "icon／mine／songguobi@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icon／mine／jifen@3x.png",
+      "filename" : "icon／mine／songguobi@3x.png",
       "scale" : "3x"
     }
   ],
