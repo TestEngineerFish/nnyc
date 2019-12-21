@@ -40,7 +40,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     private var originWords: [YXWordModel]?
-    
     var words: [YXWordModel] = [] {
         didSet {
             if originWords == nil {
@@ -68,23 +67,22 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             if let familiarList = wrongWordList?.familiarList, familiarList.count > 0 {
                 let familiarListCount = familiarList.count
                 wrongWordSectionData?.append(["熟识的单词（\(familiarListCount)）": familiarList])
-                
                 wordsCount = wordsCount + familiarListCount
             }
             
             if let recentWrongList = wrongWordList?.recentWrongList, recentWrongList.count > 0 {
                 let recentWrongListCount = recentWrongList.count
                 wrongWordSectionData?.append(["最近错词（\(recentWrongListCount)）": recentWrongList])
-                
                 wordsCount = wordsCount + recentWrongListCount
             }
             
             if let reviewList = wrongWordList?.reviewList, reviewList.count > 0 {
                 let reviewListCount = reviewList.count
                 wrongWordSectionData?.append(["待复习错词（\(reviewListCount)）": reviewList])
-                
                 wordsCount = wordsCount + reviewListCount
             }
+            
+            originWrongWordSectionData = wrongWordSectionData
             
             if wordsCount == 0 {
                 topViewHeight.constant = 0
@@ -99,13 +97,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     private var originWrongWordSectionData: [[String: [YXWordModel]]]?
-    private var wrongWordSectionData: [[String: [YXWordModel]]]? {
-        didSet {
-            if originWrongWordSectionData == nil {
-                originWrongWordSectionData = wrongWordSectionData
-            }
-        }
-    }
+    private var wrongWordSectionData: [[String: [YXWordModel]]]?
     
     var orderType: YXWordListOrderType = .default {
         didSet {
@@ -404,5 +396,9 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         
         return newWords
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
     }
 }

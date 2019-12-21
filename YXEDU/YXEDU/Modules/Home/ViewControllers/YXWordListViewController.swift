@@ -48,10 +48,25 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             case .collected:
                 editWordListViewController.editWordListType = .collected
                 editWordListViewController.words = collectedWords ?? []
-
+                editWordListViewController.redClosure = { indexs in
+                    for index in indexs {
+                        self.collectedWords.remove(at: index)
+                    }
+                    
+                    self.wordListView.reloadData()
+                }
+                
             case .wrongWords:
                 editWordListViewController.editWordListType = .familiar
                 editWordListViewController.words = wrongWordList?.familiarList ?? []
+                editWordListViewController.redClosure = { indexs in
+                    for index in indexs {
+                        guard let familiarList = self.wrongWordList.familiarList, index < familiarList.count - 1 else { continue }
+                        self.wrongWordList.familiarList!.remove(at: index)
+                    }
+                    
+                    self.wordListView.reloadData()
+                }
                 
             default:
                 break
