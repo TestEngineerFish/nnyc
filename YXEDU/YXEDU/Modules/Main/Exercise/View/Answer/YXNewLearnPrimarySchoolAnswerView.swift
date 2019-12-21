@@ -94,6 +94,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     override init(exerciseModel: YXWordExerciseModel) {
         super.init(exerciseModel: exerciseModel)
+        // 如果没有例句,则跳过第一阶段
+        if exerciseModel.question?.example == nil {
+            self.status = .playedExampleInFristStage
+            self.newLearnDelegate?.playWordAndExampleFinished()
+        }
         self.enginer = USCRecognizer.sharedManager()
         self.enginer?.setIdentifier(YXConfigure.shared()?.uuid)
         self.enginer?.delegate = self
@@ -121,7 +126,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.addSubview(recordAudioButton)
         self.addSubview(recordAudioLabel)
         self.playAudioButton.snp.makeConstraints { (make) in
-            make.left.top.equalToSuperview()
+            make.top.equalToSuperview()
+            make.left.equalToSuperview().offset(AdaptSize(80))
             make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
         }
         self.playAudioLabel.snp.makeConstraints { (make) in
@@ -130,7 +136,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             make.size.equalTo(CGSize(width: AdaptSize(80), height: AdaptSize(18)))
         }
         self.recordAudioButton.snp.makeConstraints { (make) in
-            make.right.top.equalToSuperview()
+            make.top.equalToSuperview()
+            make.right.equalToSuperview().offset(AdaptSize(-80))
             make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
         }
         self.recordAudioLabel.sizeToFit()

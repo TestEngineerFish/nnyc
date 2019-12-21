@@ -17,5 +17,5 @@ struct YXExerciseConfig {
     static let exerciseViewBottom: CGFloat = AdaptSize(86) + kSafeBottomMargin
     static let exerciseViewHeight: CGFloat = screenHeight - YXExerciseConfig.exerciseViewTop - YXExerciseConfig.exerciseViewBottom
     /// 底部提示view距离边框底部的间距
-    static let bottomViewBottom: CGFloat   = AdaptSize(-19) - kSafeBottomMargin
+    static let bottomViewBottom: CGFloat   = -kSafeBottomMargin
 }

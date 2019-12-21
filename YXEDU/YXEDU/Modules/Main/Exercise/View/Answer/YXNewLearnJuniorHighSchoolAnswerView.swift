@@ -14,14 +14,18 @@ class YXNewLearnJuniorHighSchool: YXBaseAnswerView {
     override func createSubviews() {
         super.createSubviews()
         let defaultH = AdaptSize(42)
-        masteredButton.backgroundColor    = UIColor.hex(0xFFE9C7)
-        unknownButton.backgroundColor     = UIColor.hex(0xFFF7DC)
-        masteredButton.layer.cornerRadius = defaultH/2
-        unknownButton.layer.cornerRadius  = defaultH/2
+        masteredButton.backgroundColor     = UIColor.white
+        unknownButton.backgroundColor      = UIColor.white
+        masteredButton.layer.cornerRadius  = defaultH/2
+        unknownButton.layer.cornerRadius   = defaultH/2
+        masteredButton.layer.borderColor   = UIColor.black6.cgColor
+        unknownButton.layer.borderColor    = UIColor.black6.cgColor
+        masteredButton.layer.masksToBounds = true
+        unknownButton.layer.masksToBounds  = true
         masteredButton.setTitle("已掌握", for: .normal)
         unknownButton.setTitle("不认识", for: .normal)
-        masteredButton.setTitleColor(UIColor.hex(0x4F4F4F), for: .normal)
-        unknownButton.setTitleColor(UIColor.hex(0x4F4F4F), for: .normal)
+        masteredButton.setTitleColor(UIColor.black1, for: .normal)
+        unknownButton.setTitleColor(UIColor.black1, for: .normal)
         masteredButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
         unknownButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
         masteredButton.addTarget(self, action: #selector(clickMastered), for: .touchUpInside)

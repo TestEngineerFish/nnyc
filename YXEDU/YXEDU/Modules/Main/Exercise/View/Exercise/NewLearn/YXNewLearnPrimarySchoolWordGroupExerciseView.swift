@@ -113,4 +113,12 @@ class YXNewLearnPrimarySchoolWordGroupExerciseView: YXBaseExerciseView {
         self.contentView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
         return true
     }
+
+    func showTipButton() {
+
+    }
+
+    func showNextButton() {
+        
+    }
 }

@@ -70,6 +70,12 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         self.addSubview(exampleLabel)
         self.addSubview(chineseExampleLabel)
 
+        self.titleLabel?.isHidden         = true
+        self.subTitleLabel?.isHidden      = true
+        self.exampleLabel.isHidden        = true
+        self.chineseExampleLabel.isHidden = true
+        self.imageView?.isHidden          = true
+
         self.titleLabel?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(69))
@@ -98,13 +104,21 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
         self.imageView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(150), height: AdaptSize(109)))
+            make.size.equalTo(CGSize.zero)
             make.top.equalTo(chineseExampleLabel.snp.bottom).offset(AdaptSize(26))
         })
     }
 
     // MARK: ==== Event ====
+    func showImageView() {
+        self.imageView?.isHidden = false
+        self.imageView?.snp.updateConstraints({ (make) in
+            make.size.equalTo(CGSize(width: AdaptSize(150), height: AdaptSize(109)))
+        })
+    }
+
     func showExample() {
+        self.exampleLabel.isHidden = false
         self.exampleLabel.sizeToFit()
         self.exampleLabel.snp.updateConstraints { (make) in
             make.height.equalTo(exampleLabel.height)
@@ -112,19 +126,22 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     }
 
     func showChineseExample() {
-        self.chineseExampleLabel.sizeToFit()
-        self.chineseExampleLabel.snp.updateConstraints { (make) in
-            make.height.equalTo(chineseExampleLabel.height)
+        if self.chineseExampleLabel.isHidden {
+            self.chineseExampleLabel.isHidden = false
+            self.chineseExampleLabel.sizeToFit()
+            self.chineseExampleLabel.snp.updateConstraints { (make) in
+                make.height.equalTo(chineseExampleLabel.height)
+            }
+        } else {
+            self.chineseExampleLabel.isHidden = true
+            self.chineseExampleLabel.snp.updateConstraints { (make) in
+                make.height.equalTo(0)
+            }
         }
     }
 
-    func hideChineseExample() {
-        self.chineseExampleLabel.snp.updateConstraints { (make) in
-              make.height.equalTo(0)
-          }
-    }
-
     func showWordView() {
+        self.titleLabel?.isHidden = false
         self.titleLabel?.sizeToFit()
         self.titleLabel?.snp.updateConstraints({ (make) in
             make.height.equalTo(titleLabel!.height)
@@ -134,9 +151,5 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
             make.height.equalTo(subTitleLabel!.height)
         })
     }
-
-//    override func playAudio() {
-//        self.audioPlayerView?.play()
-//    }
     
 }

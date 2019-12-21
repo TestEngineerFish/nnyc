@@ -11,22 +11,33 @@ import UIKit
 /// 小学新学
 class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtocol {
 
+    var detailView: YXNewLearnJuniorHighSchoolQuestionView?
+    var rightContentView: UIView = {
+        let view = UIView()
+        return view
+    }()
     var guideView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         return view
     }()
     override func createSubview() {
-        super.createSubview()
-
         questionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel)
-        (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
+        if exerciseModel.question?.example != nil {
+            (questionView as! YXNewLearnPrimarySchoolQuestionView).showImageView()
+            (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
+        }
         self.addSubview(questionView!)
         
         answerView = YXNewLearnAnswerView(exerciseModel: self.exerciseModel)
         (answerView as! YXNewLearnAnswerView).newLearnDelegate = self
-        self.addSubview(answerView!)
         answerView?.answerDelegate  = self
+        self.addSubview(answerView!)
+
+        self.addSubview(rightContentView)
+        detailView = YXNewLearnJuniorHighSchoolQuestionView(exerciseModel: exerciseModel)
+        self.addSubview(rightContentView)
+        self.rightContentView.addSubview(detailView!)
     }
 
     override func layoutSubviews() {
@@ -35,15 +46,17 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(AdaptSize(-44))
-            make.bottom.equalTo(answerView!.snp.bottom)
+            make.bottom.equalTo(answerView!.snp.top)
         })
-
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.left.equalToSuperview().offset(AdaptSize(80))
-            make.right.equalToSuperview().offset(AdaptSize(-80))
             make.height.equalTo(AdaptSize(145))
+            make.width.equalToSuperview()
+        })
+        self.rightContentView.snp.makeConstraints({ (make) in
+            make.top.bottom.width.equalToSuperview()
+            make.left.equalTo(self.snp.right)
         })
     }
 
@@ -73,9 +86,17 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         _answerView.status.forward()
     }
 
+    func showDetailView() {
+        UIView.animate(withDuration: 0.5) {
+            self.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
+        }
+    }
+
     // MARK: ==== YXAnswerViewDelegate ====
 
     override func switchQuestionView() -> Bool {
+        //显示单词详情
+
         return true
     }
 
@@ -124,6 +145,9 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         } else {
             _answerView.status.forward()
         }
-
+        if exerciseModel.question?.example != nil {
+            self.exerciseDelegate?.showTipsButton()
+        }
+        self.exerciseDelegate?.showNextButton()
     }
 }

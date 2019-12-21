@@ -137,7 +137,7 @@ extension YXBaseWordModel {
     }
     
     var partOfSpeech: String? {
-        return partOfSpeechAndMeanings?[0].partOfSpeech
+        return partOfSpeechAndMeanings?.first?.partOfSpeech
     }
     
     var meaning: String? {
@@ -146,15 +146,15 @@ extension YXBaseWordModel {
         }
         
         get {
-            return partOfSpeechAndMeanings?[0].meaning
+            return partOfSpeechAndMeanings?.first?.meaning
         }
     }
     var example: String? {
-        return examples?[0].english
+        return examples?.first?.english
     }
     
     var chineseExample: String? {
-        return examples?[0].chinese
+        return examples?.first?.chinese
     }
     
     var examplePronunciation: String? {
@@ -163,12 +163,12 @@ extension YXBaseWordModel {
         }
         
         get {
-            return examples?[0].pronunciation
+            return examples?.first?.pronunciation
         }
     }
     
     var englishExampleAttributedString: NSAttributedString? {
-        guard let englishExample = examples?[0].english else { return nil }
+        guard let englishExample = examples?.first?.english else { return nil }
 
         let firstRightBracket = englishExample.firstIndex(of: ">")!
         let startHighLightIndex = englishExample.index(firstRightBracket, offsetBy: 1)

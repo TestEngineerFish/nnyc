@@ -81,15 +81,14 @@
         self.headerView.snp.makeConstraints { (make) in
             make.top.equalTo(YXExerciseConfig.headerViewTop)
             make.left.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(28))
+            make.height.equalTo(YXExerciseConfig.headerViewHeight)
         }
         
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(18))
+            make.height.equalTo(YXExerciseConfig.exerciseViewBottom)
             make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
         }
-        
     }
     
     private func createSubviews() {
@@ -164,13 +163,22 @@
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
-        if var model = data.2 {
+        if let model = data.2 {
 //            model.type = .lookWordChooseChinese
             
             // 新学隐藏提示
-            let tipsHidden = (model.type == .newLearnPrimarySchool || model.type == .newLearnPrimarySchool_Group || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
+            let tipsHidden = (model.type == .newLearnPrimarySchool_Group || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
+            let nextHidden = (model.type != .newLearnPrimarySchool && model.type != .newLearnPrimarySchool_Group)
             self.bottomView.tipsButton.isHidden = tipsHidden
-            
+            self.bottomView.nextView.isHidden   = nextHidden
+            if model.type == .newLearnPrimarySchool {
+                self.bottomView.tipsButton.isHidden = true
+                self.bottomView.nextView.isHidden   = true
+                self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
+            } else {
+                self.bottomView.tipsButton.setTitle("提示一下", for: .normal)
+            }
+            self.bottomView.layoutSubviews()
             // 连线未选中时，禁用提示
             let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese)
             self.bottomView.tipsButton.isEnabled = tipsEnabled
@@ -267,6 +275,16 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         
         // 答题后的对错动画
         switchAnimation.show(isRight: right)
+    }
+
+    /// 显示底部左侧视图
+    func showTipsButton() {
+        self.bottomView.tipsButton.isHidden = false
+    }
+
+    /// 显示底部右侧视图
+    func showNextButton() {
+        self.bottomView.nextView.isHidden = false
     }
     
     
@@ -396,12 +414,22 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
  
 extension YXExerciseViewController: YXExerciseBottomViewProtocol {
     func clickTipsBtnEvent() {
-        print("提示点击事件")
         guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
-                
-        if exerciseModel.type == .connectionWordAndImage || exerciseModel.type == .connectionWordAndChinese {
+
+        switch exerciseModel.type {
+        case .connectionWordAndImage, .connectionWordAndChinese :
             dataManager.connectionAnswerAction(wordId: remindWordId, step: exerciseModel.step, right: false, type: exerciseModel.type)
-        } else {
+        case .newLearnPrimarySchool:
+            guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView, let questionView = exerciseView.questionView as? YXNewLearnPrimarySchoolQuestionView else {
+                return
+            }
+            questionView.showChineseExample()
+            if questionView.chineseExampleLabel.isHidden {
+                self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
+            } else {
+                self.bottomView.tipsButton.setTitle("收起例句中文", for: .normal)
+            }
+        default:
             self.dataManager.normalAnswerAction(exerciseModel: exerciseModel, right: false)
         }
         
@@ -410,6 +438,20 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
         }
         self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
         self.exerciseViewArray.first?.remindView?.show()
+    }
+    func clickNextViewEvent() {
+        // 显示单词详情
+        guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView else {
+            return
+        }
+        exerciseView.showDetailView()
+        // 记录积分 +0
+    }
+    func clickNextButtonEvent() {
+        guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView, let answerView = exerciseView.answerView as? YXNewLearnAnswerView else {
+            return
+        }
+        answerView.answerCompletion(right: true)
     }
 }
  

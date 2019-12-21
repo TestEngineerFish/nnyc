@@ -14,14 +14,10 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
     /// 普通题型练习完成（不包括连线题）
     /// - Parameter right: 是否答对
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool)
-    
-    
-    /// 连线题，某个选项连线后
-    /// - Parameters:
-    ///   - wordId:
-    ///   - step:
-    ///   - right:
-//    func itemConnectionCompletion(_ wordId: Int, _ step: Int, _ right: Bool)
+    /// 隐藏底部右侧视图
+    func showTipsButton()
+    /// 显示底部右侧视图
+    func showNextButton()
 }
 
 
@@ -87,6 +83,15 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     /// 子类需要设置问题的视图的高度
     override func layoutSubviews() {
         super.layoutSubviews()
+
+    }
+
+    func bindData() {}
+
+    func createSubview() {
+        self.scrollView.isScrollEnabled = false
+        self.scrollView.showsVerticalScrollIndicator   = false
+        self.scrollView.showsHorizontalScrollIndicator = false
         self.addSubview(scrollView)
         guard let questionView = self.questionView else {
             return
@@ -115,14 +120,6 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
                 make.height.equalTo(answerViewHeight)
             }
         }
-    }
-
-    func bindData() {}
-
-    func createSubview() {
-        self.scrollView.isScrollEnabled = false
-        self.scrollView.showsVerticalScrollIndicator   = false
-        self.scrollView.showsHorizontalScrollIndicator = false
     }
 
     /// 校准scrollView高度
@@ -175,7 +172,6 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
 
     // MARK: ==== YXExerciseViewControllerProtocol ====
     func showAlertEvnet() {}
-    func backHomeEvent() {}
+    func backHomeEvent()  {}
     func hideAlertEvent() {}
-
 }
