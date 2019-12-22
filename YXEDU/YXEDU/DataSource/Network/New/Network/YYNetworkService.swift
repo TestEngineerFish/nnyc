@@ -222,15 +222,16 @@ struct YYNetworkService {
         if responseStatusCode == 0 {
             success?(response)
         } else {
-//            if responseStatusCode == 10106 {
-//                // 当登录状态失效时，通知上层
+            if responseStatusCode == 10106 {
+                // 当登录状态失效时，通知上层
 //                let loginExpired = Notification.Name(YYNotificationCenter.kLoginStatusExpired)
 //                NotificationCenter.default.post(name: loginExpired, object: nil)
-//            } else if responseStatusCode == 10109 {
-//                //用户账号已封禁
-//                let accountBlocked = Notification.Name(YYNotificationCenter.kUserAccountHasBeenBlocked)
-//                NotificationCenter.default.post(name: accountBlocked, object: baseResponse.statusMessage)
-//            } else if responseStatusCode == 10107 {
+            } else if responseStatusCode == 10109 {
+                // 停服
+                let serviceStop = YXNotification.kServiceStop
+                NotificationCenter.default.post(name: serviceStop, object: baseResponse.statusMessage)
+            }
+//            else if responseStatusCode == 10107 {
 //                //用户资料信息审核不通过
 //                let infoBlocked = Notification.Name(YYNotificationCenter.kUserInfoHasBeenBlocked)
 //                NotificationCenter.default.post(name: infoBlocked, object: nil)

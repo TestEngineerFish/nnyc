@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 网络状态监听
         YYNetworkService.default.startMonitorNetwork()
+        YXAlertManager.default.checkServiceState()
+        YXAlertManager.default.checkVersion()
         
         return true
     }
@@ -72,7 +74,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
     
+    /** 每次启动时，该方法不会执行，App完全退到后台，再回到前台，该方法才会执行 */
     func applicationWillEnterForeground(_ application: UIApplication) {
         print("==== applicationWillEnterForeground ====")
+        // 回到前台，检查口令
+        YXAlertManager.default.checkCommand(isStartup: false)
+    }
+    
+    /** 每次启动时，都执行，但这个方法太过灵敏，App显示通知栏、双击home等情况，App没有完全退到后台时，也会调用，因此只是App每次启动时调用一次 */
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // 仅刚启动时调用一次
+        YXAlertManager.default.checkCommand(isStartup: true)
     }
 }

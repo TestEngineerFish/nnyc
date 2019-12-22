@@ -104,7 +104,7 @@ extension YXViewController {
         if event?.subtype == .motionShake
             && YRRouter.sharedInstance()?.currentViewController()?.classForCoder != YYEnvChangeViewController.classForCoder() {
             self.navigationController?.pushViewController(YYEnvChangeViewController(), animated: true)
-            print("用户UUID:", YXUserModel.default.uuid)
+            print("用户UUID:", YXUserModel.default.uuid ?? "")
         }
         #endif
     }

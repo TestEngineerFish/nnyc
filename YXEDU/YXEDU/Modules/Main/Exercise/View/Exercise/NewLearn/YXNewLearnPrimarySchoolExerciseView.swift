@@ -75,7 +75,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         }
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideGuideView))
         guideView.addGestureRecognizer(tap)
-        YYCache.set(true, forKey: kAlreadShowNewLearnGuideView)
+        YYCache.set(true, forKey: YXLocalKey.key(.kAlreadShowNewLearnGuideView))
     }
 
     @objc private func hideGuideView() {
@@ -140,7 +140,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             return
         }
         _answerView.status = .showGuideView
-        if !(YYCache.object(forKey: kAlreadShowNewLearnGuideView) as? Bool ?? false)  {
+        if !(YYCache.object(forKey: YXLocalKey.key(.kAlreadShowNewLearnGuideView)) as? Bool ?? false)  {
             self.showGuideView()
         } else {
             _answerView.status.forward()

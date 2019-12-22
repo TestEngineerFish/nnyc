@@ -9,4 +9,13 @@
 import Foundation
 
 
-let kAlreadShowNewLearnGuideView = "kAlreadShowNewLearnGuideView"
+enum YXLocalKey: String {
+    case updateVersionTips = "kUpdateVersionTips" // 版本更新提示
+    case kAlreadShowNewLearnGuideView = "kAlreadShowNewLearnGuideView"
+    
+    static func key(_ key: YXLocalKey) -> String {
+        return "\(YXConfigure.shared().uuid ?? "")_" + key.rawValue
+    }
+}
+
+
