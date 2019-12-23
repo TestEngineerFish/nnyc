@@ -18,14 +18,20 @@ class YXBecomeActiveManager: NSObject {
      * @params startUp  是否刚启动
      */
     public func check() {
+        // 学习中，不要识别口令
+        if let _ = YYCache.object(forKey: YXLocalKey.key(.kLearningState)) {
+            return
+        }
         
         if let command = UIPasteboard.general.string, command.isNotEmpty {
             YXSettingDataManager().checkCommand(command: command) { (model, error) in
                 if let commandModel = model {
                     let commandView = YXReviewPlanCommandView()
                     commandView.model = commandModel
-                    commandView.show()                    
+                    commandView.show()
                 }
+                
+                UIPasteboard.general.string = ""
             }
         }
         

@@ -12,7 +12,11 @@ import Foundation
 enum YXLocalKey: String {
     case updateVersionTips = "kUpdateVersionTips" // 版本更新提示
     case kAlreadShowNewLearnGuideView = "kAlreadShowNewLearnGuideView"
+    case kLearningState = "kLearningState"      // 学习中状态
     
+        
+    /// 根据本地用户，创建新的Key，如果数据缓存不区分用户，可以直接使用，不用调用此方法
+    /// - Parameter key: 标识
     static func key(_ key: YXLocalKey) -> String {
         return "\(YXConfigure.shared().uuid ?? "")_" + key.rawValue
     }

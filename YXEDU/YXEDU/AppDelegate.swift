@@ -23,11 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initThirdPartyServices()
         initViewAndData()
         
-        // 网络状态监听
-        YYNetworkService.default.startMonitorNetwork()
-        YXAlertManager.default.checkServiceState()
-        YXAlertManager.default.checkVersion()
-        
+        initConfig()
         return true
     }
     
@@ -85,5 +81,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // 仅刚启动时调用一次
         YXAlertManager.default.checkCommand(isStartup: true)
+    }
+    
+    
+    
+    func initConfig() {
+        // 网络状态监听
+        YYNetworkService.default.startMonitorNetwork()
+        YXAlertManager.default.checkServiceState()
+        YXAlertManager.default.checkVersion()
+        
+        YYCache.remove(forKey: YXLocalKey.key(.kLearningState))
     }
 }
