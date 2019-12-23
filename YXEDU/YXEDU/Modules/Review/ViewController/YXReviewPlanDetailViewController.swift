@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// 复习计划，详情页
 class YXReviewPlanDetailViewController: YXViewController {
     
     var planId: Int = 0

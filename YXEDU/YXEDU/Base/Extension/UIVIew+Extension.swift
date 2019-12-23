@@ -135,32 +135,6 @@ public extension UIView {
 
 extension UIView {
     
-    /**
-     * 显示Toast提示，基于当前的View，不影响其他页面的操作
-     */
-    public func toast(_ message: String?) {
-        if let msg = message, msg.isNotEmpty {
-            self.makeToast(msg, duration: 1.2, position: .center)
-        }
-    }
-    
-    /**
-     * 显示Toast提示，基于最顶层，可能会影响其他的操作
-     */
-    public class func toast(_ msg: String?) {
-        if let _msg = msg, _msg.isNotEmpty {
-            if let topWindow = UIApplication.shared.windows.last {
-                topWindow.toast(_msg)
-            }
-        }
-    }
-    
-}
-
-
-
-extension UIView {
-    
     fileprivate var bezierPathIdentifier:String { return "bezierPathBorderLayer" }
     
     fileprivate var bezierPathBorder:CAShapeLayer? {
@@ -346,15 +320,15 @@ extension UIView {
 
 extension UIView {
     /** 获取当前的 ViewController */
-//    public var currentViewController: UIViewController? {
-//        return UIViewController.currentViewController
-//    }
-//
-//    /** 把当前 View 显示到顶层窗口上 */
-//    public func showTopWindow() {
-//        UIView.cleanTopWindow(anyClass: YYTopWindowView.classForCoder())
-//        UIApplication.shared.keyWindow?.addSubview(self)
-//    }
+    public var currentViewController: UIViewController? {
+        return YRRouter.sharedInstance()?.currentViewController()
+    }
+
+    /** 把当前 View 显示到顶层窗口上 */
+    public func showTopWindow() {
+        UIView.cleanTopWindow(anyClass: YXTopWindowView.classForCoder())
+        UIApplication.shared.keyWindow?.addSubview(self)
+    }
     
     public class func cleanTopWindow(anyClass: AnyClass) {
         if let tviews = UIApplication.shared.keyWindow?.subviews {
@@ -369,22 +343,22 @@ extension UIView {
     /**
      * 显示Toast提示，基于当前的View，不影响其他页面的操作
      */
-//    public func toast(_ message: String?) {
-//        if let msg = message, msg.isNotEmpty {
-//            self.makeToast(msg, duration: 1.5, position: CSToastPositionCenter)
-//        }
-//    }
+    public func toast(_ message: String?) {
+        if let msg = message, msg.isNotEmpty {
+            self.makeToast(msg, duration: 1.2, position: .center)
+        }
+    }
     
     /**
      * 显示Toast提示，基于最顶层，可能会影响其他的操作
      */
-//    public class func topToast(_ message: String?) {
-//        if let msg = message, msg.isNotEmpty {
-//            if let topWindow = UIApplication.shared.windows.last {
-//                topWindow.toast(msg)
-//            }
-//        }
-//    }
+    public class func toast(_ msg: String?) {
+        if let _msg = msg, _msg.isNotEmpty {
+            if let topWindow = UIApplication.shared.windows.last {
+                topWindow.toast(_msg)
+            }
+        }
+    }
 }
 
 extension CGAffineTransform {

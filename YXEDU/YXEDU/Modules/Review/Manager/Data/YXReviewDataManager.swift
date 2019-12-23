@@ -20,5 +20,12 @@ struct YXReviewDataManager {
     }
     
     
-    
+    func fetchReviewPlanDetailData(completion: ((_ model: YXReviewPlanDetailModel?, _ errorMsg: String?) -> Void)?) {
+        let request = YXReviewRequest.reviewPlan
+        YYNetworkService.default.request(YYStructResponse<YXReviewPlanDetailModel>.self, request: request, success: { (response) in
+            completion?(response.data, nil)
+        }) { (error) in
+            completion?(nil, error.message)
+        }
+    }
 }

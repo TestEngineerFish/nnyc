@@ -19,7 +19,7 @@ class YXBecomeActiveManager: NSObject {
      */
     public func check() {
         // 学习中，不要识别口令
-        if let _ = YYCache.object(forKey: YXLocalKey.key(.learningState)) {
+        if let _ = YYCache.object(forKey: .learningState) {
             return
         }
         
@@ -29,6 +29,11 @@ class YXBecomeActiveManager: NSObject {
                     let commandView = YXReviewPlanCommandView()
                     commandView.model = commandModel
                     commandView.show()
+                    
+                    commandView.detailEvent = {
+                        self.goToReviewPlanDetail(planId: commandModel.planId)
+                        commandView.removeFromSuperview()
+                    }
                 }
                 
                 UIPasteboard.general.string = ""
@@ -36,7 +41,6 @@ class YXBecomeActiveManager: NSObject {
         }
         
     }
-    
     
     public func startupCheck() {
         if isStartUp {
@@ -47,4 +51,13 @@ class YXBecomeActiveManager: NSObject {
         check()
     }
     
+    
+    private func goToReviewPlanDetail(planId: Int) {
+        let vc = YXReviewPlanShareDetailViewController()
+        vc.hidesBottomBarWhenPushed = true
+        vc.planId = planId
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        
+//        YRRouter.openURL("", query: ["plan_id" : planId], animated: true)
+    }
 }

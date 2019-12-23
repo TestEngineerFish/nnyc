@@ -152,8 +152,17 @@ extension YXReviewViewController {
     
     /// 开始智能复习
     func startReviewEvent() {
-        let vc = YXSearchViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = YXSearchViewController()
+//        self.navigationController?.pushViewController(vc, animated: true)
+        
+                let commandView = YXReviewPlanCommandView()
+        //        commandView.model = commandModel
+                commandView.show()
+                
+                commandView.detailEvent = {
+        //            self.goToReviewPlanDetail(planId: commandModel.planId)
+                    commandView.removeFromSuperview()
+                }
     }
     
     /// 开始复习 —— 复习计划

@@ -33,7 +33,7 @@ class YXAlertManager {
     func checkVersion() {
                 
         let appVersion = UIDevice().appVersion()
-        let key = YXLocalKey.key(.updateVersionTips)
+        let key = YXLocalKey.updateVersionTips.rawValue
         if let cacheVersion = YYCache.object(forKey: key) as? String {
             if appVersion != cacheVersion {
                 // 清空提示 【提示后，更了版本，再有新的版本，需要重新提示】

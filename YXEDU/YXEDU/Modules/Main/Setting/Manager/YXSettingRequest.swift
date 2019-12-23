@@ -29,7 +29,7 @@ extension YXSettingRequest {
         case .checkVersion:
             return YXAPI.Setting.checkVersion
         case .checkCommand:
-            return YXAPI.Setting.checkCommand
+            return YXAPI.Review.checkCommand
         }
     }
 }

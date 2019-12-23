@@ -9,14 +9,15 @@
 public enum YXReviewRequest: YYBaseRequest {
     case reviewBookList
     case reviewWordList(bookId: Int, bookType: Int)
-    case makeReviewPlan(name: String, code: String?, idsList:String)
+    case makeReviewPlan(name: String, code: String?, idsList:String?)
     case reviewPlan
+    case reviewPlanDetail(planId: Int)
 }
 
 extension YXReviewRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .reviewBookList, .reviewWordList, .reviewPlan:
+        case .reviewBookList, .reviewWordList, .reviewPlan, .reviewPlanDetail:
             return .get
         case .makeReviewPlan:
             return .post
@@ -35,6 +36,8 @@ extension YXReviewRequest {
             return YXAPI.Review.maekReviewPlan
         case .reviewPlan:
             return YXAPI.Review.reviewPlan
+        case .reviewPlanDetail:
+            return YXAPI.Review.reviewPlanDetail
         }
     }
 }
@@ -46,6 +49,8 @@ extension YXReviewRequest {
             return ["review_book_id" : bookId, "review_book_type" : bookType]
         case .makeReviewPlan(let name, let code, let idsList):
             return ["review_plan_name" : name, "review_share_code" : code, "review_word_ids" : idsList]
+        case .reviewPlanDetail(let planId):
+            return ["review_plan_id" : planId]
         default:
             return nil
         }

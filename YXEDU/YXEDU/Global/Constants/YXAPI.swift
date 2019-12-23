@@ -63,6 +63,10 @@ struct YXAPI {
         static let maekReviewPlan = "/api/v1/learn/createreviewplan"
         /// 获得复习计划列表
         static let reviewPlan = "/api/v1/learn/getreviewplanlist"
+        /// 获得复习计划详情
+        static let reviewPlanDetail = "/api/v1/learn/getreviewplaninfo"
+        /// 口令查询
+        static let checkCommand = "/api/v1/learn/getsharereviewplan"
     }
 
     // MARK: - 单词列表模块
@@ -115,8 +119,7 @@ struct YXAPI {
     struct Setting {
         /// 检查版本接口
         static let checkVersion = "/api/v1/check-version"
-        /// 口令查询
-        static let checkCommand = "/api/v1/learn/getsharereviewplan"
+
     }
 }
 

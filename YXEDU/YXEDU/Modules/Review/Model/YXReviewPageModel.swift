@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-struct YXReviewPageModel: Mappable {
+class YXReviewPageModel: Mappable {
 
     var learnNum: Int = 0
     
@@ -19,10 +19,10 @@ struct YXReviewPageModel: Mappable {
     
     var reviewPlans: [YXReviewPlanModel]?
     
-    init?(map: Map) {
+    required init?(map: Map) {
     }
 
-    mutating func mapping(map: Map) {
+    func mapping(map: Map) {
         learnNum <- map["learn_num"]
         familiarNum <- map["familiar_num"]
         knowNum <- map["know_num"]

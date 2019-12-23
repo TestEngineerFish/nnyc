@@ -91,6 +91,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YXAlertManager.default.checkServiceState()
         YXAlertManager.default.checkVersion()
         
-        YYCache.remove(forKey: YXLocalKey.key(.learningState))
+        YYCache.remove(forKey: .learningState)
     }
 }
