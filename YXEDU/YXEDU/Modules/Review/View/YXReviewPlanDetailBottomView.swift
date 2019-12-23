@@ -37,7 +37,7 @@ class YXReviewPlanShareDetailBottomView: YXView {
         saveButton.layer.masksToBounds = true
         saveButton.layer.cornerRadius = 21
         saveButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
-        saveButton.setTitle("智能复习", for: .normal)
+        saveButton.setTitle("保存到我的复习计划", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
         saveButton.addTarget(self, action: #selector(clickSaveButton), for: .touchUpInside)
@@ -95,7 +95,6 @@ class YXReviewPlanDetailBottomView: YXView {
         listenButton.layer.cornerRadius = 21
         listenButton.layer.borderColor = UIColor.black6.cgColor
         listenButton.layer.borderWidth = 0.1
-        
         listenButton.setTitle("听写练习", for: .normal)
         listenButton.setTitleColor(UIColor.black1, for: .normal)
         listenButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
@@ -106,7 +105,6 @@ class YXReviewPlanDetailBottomView: YXView {
         reviewButton.layer.cornerRadius = 21
         reviewButton.layer.borderColor = UIColor.black6.cgColor
         reviewButton.layer.borderWidth = 0.1
-        
         reviewButton.setTitle("继续复习", for: .normal)
         reviewButton.setTitleColor(UIColor.black1, for: .normal)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)

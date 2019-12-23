@@ -92,5 +92,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YXAlertManager.default.checkVersion()
         
         YYCache.remove(forKey: .learningState)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//            let vc = YXReviewLearningProgressView()
+//            vc.model = nil
+//            vc.show()
+        }
+
     }
 }
