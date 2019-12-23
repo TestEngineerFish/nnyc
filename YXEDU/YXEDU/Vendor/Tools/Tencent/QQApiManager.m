@@ -7,12 +7,10 @@
 //
 
 #import "QQApiManager.h"
-#import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import "Growing.h"
 
 @interface QQApiManager () <TencentSessionDelegate,QQApiInterfaceDelegate>
-@property (nonatomic, strong) TencentOAuth *tencentOAuth;
 @property (nonatomic, copy)NSString *shareBusiness;
 @end
 
@@ -188,7 +186,7 @@
                                                       description:desc];
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:imageObj];
     QQApiSendResultCode retCode = [QQApiInterface sendReq:req];
-    NSLog(@"%d",retCode);
+    NSLog(@"%ld",(long)retCode);
 }
 
 - (void)shareText:(NSString *)text {
@@ -196,6 +194,6 @@
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:txtObj];
     //将内容分享到qq
     QQApiSendResultCode sent = [QQApiInterface sendReq:req];
-    NSLog(@"%d",sent);
+    NSLog(@"%ld",(long)sent);
 }
 @end

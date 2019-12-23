@@ -18,7 +18,7 @@ PODS:
   - AlamofireObjectMapper (5.1.0):
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 3.3)
-  - BMKLocationKit (1.8.0)
+  - BMKLocationKit (1.8.2)
   - Bugly (2.5.2)
   - CL_ShanYanSDK (2.3.0.2)
   - CocoaAsyncSocket (7.6.3)
@@ -40,7 +40,7 @@ PODS:
     - Growing (= 2.8.7)
   - HWWeakTimer (1.0)
   - IQKeyboardManager (6.2.1)
-  - JCore (2.1.6)
+  - JCore (2.1.8)
   - JPush (3.2.8):
     - JCore (< 3.0.0, >= 2.0.0)
   - Kingfisher (5.9.0):
@@ -72,7 +72,7 @@ PODS:
   - SVProgressHUD (2.2.5)
   - Toast (4.0.0)
   - Toast-Swift (5.0.1)
-  - TZImagePickerController (3.2.8)
+  - TZImagePickerController (3.2.9)
   - UICollectionViewLeftAlignedLayout (1.0.2)
   - UMCAnalytics (6.0.5):
     - UMCCommon
@@ -191,7 +191,7 @@ SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AlamofireObjectMapper: 3395e698901d8b0e6f48b7d0c43bd47875325102
-  BMKLocationKit: 29f9f04827bfe2f2ca2c1c87b11161f05d4189a5
+  BMKLocationKit: 59b49b08dce2dd17bd4b8862d86d2cd3fd3f6b8e
   Bugly: dbac48b55ad469a97cc4321045cd50df8f63d44f
   CL_ShanYanSDK: 20ef68b3cc6f9e978c49c16b5c5fbaaefcff63b9
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
@@ -205,7 +205,7 @@ SPEC CHECKSUMS:
   GrowingCoreKit: dc334babbca2fedac15191cc116cdf74b23e97aa
   HWWeakTimer: 79488095ef2dd8937f94b676d12bd5fa954486e6
   IQKeyboardManager: 964638372b4a61892cc74fdfa6fd26de8c9464a2
-  JCore: daebd39538328db0cdcad6c4ed101815c42f84bf
+  JCore: a7f1dead960d77a97717c73ea8b0aa5b33706491
   JPush: 8ce888d6dedfa417e90c8b6bc87405a16ce2e699
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   KTVCocoaHTTPServer: df8d7b861e603ff8037e9b2138aca2563a6b768d
@@ -227,7 +227,7 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
-  TZImagePickerController: 4b0a5d3abe6351b6c9ec52c7be0fa9a5bbca23f6
+  TZImagePickerController: 1f92968aa0e98a06b9e2eccca8560acc19254257
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
   UMCAnalytics: 045be2cd1ec05aa95ad62405a850757f932e2d59
   UMCCommon: 971f324a5a99c9d662ae040a815e7e3d7ef8b2a8
