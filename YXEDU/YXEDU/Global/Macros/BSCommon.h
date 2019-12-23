@@ -56,6 +56,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #define kNotificationCenter [NSNotificationCenter defaultCenter]
 
+static inline CGFloat AS(CGFloat size) {
+    return (kDesignHorizontalScale * size);
+}
 static inline CGFloat AdaptSize(CGFloat size) {
     return (kDesignHorizontalScale * size);
 }

@@ -31,7 +31,7 @@ class YXBecomeActiveManager: NSObject {
                     commandView.show()
                     
                     commandView.detailEvent = {
-                        self.goToReviewPlanDetail(planId: commandModel.planId)
+                        self.goToReviewPlanDetail(planId: commandModel.planId, fromUser: commandModel.nickname)
                         commandView.removeFromSuperview()
                     }
                 }
@@ -52,10 +52,11 @@ class YXBecomeActiveManager: NSObject {
     }
     
     
-    private func goToReviewPlanDetail(planId: Int) {
+    private func goToReviewPlanDetail(planId: Int, fromUser: String?) {
         let vc = YXReviewPlanShareDetailViewController()
         vc.hidesBottomBarWhenPushed = true
         vc.planId = planId
+        vc.fromUser = fromUser
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
         
 //        YRRouter.openURL("", query: ["plan_id" : planId], animated: true)

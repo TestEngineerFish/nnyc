@@ -8,11 +8,12 @@
 
 import ObjectMapper
 
-class YXReviewPlanDetailModel: YXReviewPageModel {
-
-    var word: [YXWordModel]?
+class YXReviewPlanDetailModel: YXReviewPlanModel {
+    var words: [YXWordModel]?
+    
+    var fromUser: String?
 
     override func mapping(map: Map) {
-        word <- map["list"]
+        words <- map["list"]
     }
 }

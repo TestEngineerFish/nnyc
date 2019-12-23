@@ -20,8 +20,8 @@ struct YXReviewDataManager {
     }
     
     
-    func fetchReviewPlanDetailData(completion: ((_ model: YXReviewPlanDetailModel?, _ errorMsg: String?) -> Void)?) {
-        let request = YXReviewRequest.reviewPlan
+    func fetchReviewPlanDetailData(planId: Int, completion: ((_ model: YXReviewPlanDetailModel?, _ errorMsg: String?) -> Void)?) {
+        let request = YXReviewRequest.reviewPlanDetail(planId: planId)
         YYNetworkService.default.request(YYStructResponse<YXReviewPlanDetailModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in

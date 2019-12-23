@@ -33,7 +33,8 @@ class YXReviewPageModel: Mappable {
 }
 
 
-struct YXReviewPlanModel: Mappable {
+class YXReviewPlanModel: Mappable {
+    
     enum ReviewPlanState: Int {
         case normal     = 0 // 未开始
         case learning   = 1 // 进行中
@@ -46,12 +47,11 @@ struct YXReviewPlanModel: Mappable {
     var wordCount: Int = 0
     var reviewState: ReviewPlanState = .normal
     var listenState: ReviewPlanState = .normal
-    
 
-    init?(map: Map) {
+    required init?(map: Map) {
     }
-
-    mutating func mapping(map: Map) {
+    
+    func mapping(map: Map) {
         planId <- map["review_plan_id"]
         planName <- map["review_plan_name"]
         listen <- map["listen"]
