@@ -19,7 +19,7 @@ class YXBecomeActiveManager: NSObject {
      */
     public func check() {
         // 学习中，不要识别口令
-        if let _ = YYCache.object(forKey: YXLocalKey.key(.kLearningState)) {
+        if let _ = YYCache.object(forKey: YXLocalKey.key(.learningState)) {
             return
         }
         
