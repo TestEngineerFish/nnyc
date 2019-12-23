@@ -19,7 +19,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = UIColor.hex(0xE9DDC4)
         self.setSubviews()
         self.requestChallengeData()
@@ -51,7 +50,9 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func playGame(){
-        let vc = YXGameViewController()
+//        let vc = YXGameViewController()
+        let vc = YXShareViewController()
+        vc.titleString = "挑战分享"
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }

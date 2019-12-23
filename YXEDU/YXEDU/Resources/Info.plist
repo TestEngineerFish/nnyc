@@ -150,5 +150,47 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+    <!-- 白名单开始 -->
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <!-- 微信 URL Scheme 白名单-->
+        <string>wechat</string>
+        <string>mqq</string>
+        <string>mqqapi</string>
+        <string>mqqwpa</string>
+        <string>mqqbrowser</string>
+        <string>mttbrowser</string>
+        <string>mqqOpensdkSSoLogin</string>
+        <string>mqqopensdkapiV2</string>
+        <string>mqqopensdkapiV3</string>
+        <string>mqqopensdkapiV4</string>
+        <string>wtloginmqq2</string>
+        <string>mqzone</string>
+        <string>mqzoneopensdk</string>
+        <string>mqzoneopensdkapi</string>
+        <string>mqzoneopensdkapi19</string>
+        <string>mqzoneopensdkapiV2</string>
+        <string>mqqapiwallet</string>
+        <string>mqqopensdkfriend</string>
+        <string>mqqopensdkdataline</string>
+        <string>mqqgamebindinggroup</string>
+        <string>mqqopensdkgrouptribeshare</string>
+        <string>tencentapi.qq.reqContent</string>
+        <string>tencentapi.qzone.reqContent</string>
+        <string>tim</string>
+        <string>timapi</string>
+        <string>timopensdkfriend</string>
+        <string>timwpa</string>
+        <string>timgamebindinggroup</string>
+        <string>timapiwallet</string>
+        <string>timOpensdkSSoLogin</string>
+        <string>timopensdkgrouptribeshare</string>
+        <string>wtlogintim</string>
+        <string>timopensdkapiV4</string>
+        <string>timgamebindinggroup</string>
+        <string>timopensdkdataline</string>
+        <string>wtlogintimV1</string>
+        <string>timapiV1</string>
+    </array>
 </dict>
 </plist>

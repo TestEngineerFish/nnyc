@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <TencentOpenAPI/TencentOAuth.h>
 typedef NS_ENUM(NSInteger, QQShareType) {
     QQShareFriend,
     QQShareQZone,
@@ -18,6 +18,7 @@ typedef void (^qqFinishBlock) (id obj1, id obj2, BOOL result);
 @interface QQApiManager : NSObject
 
 @property (nonatomic, copy) qqFinishBlock finishBlock;
+@property (nonatomic, strong) TencentOAuth *tencentOAuth;
 
 + (instancetype)shared;
 
