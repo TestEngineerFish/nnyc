@@ -16,12 +16,6 @@ class YXShareViewController: YXViewController {
         imageView.layer.borderColor  = UIColor.white.cgColor
         imageView.layer.borderWidth  = AdaptSize(8)
         imageView.image = UIImage(named: "guide_320x480_2")
-        if #available(iOS 11.0, *) {
-            imageView.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner)
-        } else {
-            // Fallback on earlier versions
-        }
-
         return imageView
     }()
 

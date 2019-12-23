@@ -23,35 +23,36 @@
         [self.contentView addSubview:self.openIndicator];
         [self.contentView addSubview:self.amountLabel];
         [self.contentView addSubview:self.separatorView];
-        
-        CGFloat margin = AdaptSize(10.f);
+
         [self.icon mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView);
-            make.left.equalTo(self.contentView);
-            make.width.and.height.mas_equalTo(17.f);
+            make.left.equalTo(self.contentView).with.offset(AdaptSize(16));
+            make.width.and.height.mas_equalTo(AdaptSize(18.f));
         }];
         
         [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView);
-            make.left.equalTo(self.icon.mas_right).offset(margin);
+            make.left.equalTo(self.icon.mas_right).offset(AdaptSize(6));
             make.width.mas_equalTo(100.f);
         }];
 
         [self.openIndicator mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView);
-            make.right.equalTo(self.contentView).offset(-margin).priorityLow();
-            make.size.mas_equalTo(MakeAdaptCGSize(16.f, 9.f));
+            make.right.equalTo(self.contentView).with.offset(AdaptSize(-16)).priorityLow();
+            make.width.and.height.mas_equalTo(AdaptSize(18.f));
         }];
 
         [self.amountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView);
-            make.right.equalTo(self.openIndicator.mas_left).offset(-margin);
+            make.right.equalTo(self.contentView).offset(AdaptSize(-36));
             make.width.mas_equalTo(50.f);
         }];
 
         [self.separatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.left.right.equalTo(self.contentView);
-            make.height.mas_equalTo(1.0f);
+            make.bottom.equalTo(self.contentView);
+            make.width.mas_equalTo(AdaptSize(293));
+            make.left.equalTo(self.contentView).with.offset(AdaptSize(25));
+            make.height.mas_equalTo(AdaptSize(1.f));
         }];
     }
     return self;
@@ -79,7 +80,7 @@
         [self.titleLabel setText:@"当天学习时长"];
         [self.amountLabel setText: [NSString stringWithFormat:@"%02lu:%02lu", day.learningData.studyTimes.integerValue/60, day.learningData.studyTimes.integerValue%60]];
         [self.amountLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self).with.offset(AdaptSize(-10));
+            make.right.equalTo(self.contentView).with.offset(AdaptSize(-18));
         }];
         [self.separatorView setHidden:YES];
         [self layoutIfNeeded];
@@ -98,8 +99,8 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.preferredMaxLayoutWidth = AdaptSize(150);
-        _titleLabel.textColor = UIColorOfHex(0x8095AB);
-        _titleLabel.font = [UIFont pfSCRegularFontWithSize:AdaptSize(15)];
+        _titleLabel.textColor = UIColorOfHex(0x323232);
+        _titleLabel.font = [UIFont pfSCRegularFontWithSize:AdaptSize(14)];
     }
     return _titleLabel;
 }
@@ -116,8 +117,8 @@
         _amountLabel = [[UILabel alloc] init];
         _amountLabel.textAlignment = NSTextAlignmentRight;
         _amountLabel.preferredMaxLayoutWidth = AdaptSize(100);
-        _amountLabel.textColor = UIColorOfHex(0x59B2F3);
-        _amountLabel.font = [UIFont pfSCRegularFontWithSize:AdaptSize(17)];
+        _amountLabel.textColor = UIColorOfHex(0xFBA217);
+        _amountLabel.font = [UIFont pfSCRegularFontWithSize:AdaptSize(14)];
     }
     return _amountLabel;
 }

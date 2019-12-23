@@ -24,12 +24,12 @@
 #import "YXCareerWordInfo.h"
 #import "YXWordDetailViewControllerOld.h"
 
-static NSString *const kYXCalendarCellID = @"YXCalendarCellID";
+static NSString *const kYXCalendarCellID       = @"YXCalendarCellID";
 static NSString *const kYXCalendarHeaderViewID = @"YXCalendarHeaderViewID";
-static NSString *const kRemoveDatePickView = @"RemovePickerView";
+static NSString *const kRemoveDatePickView     = @"RemovePickerView";
 
-static CGFloat const kHeaderHeight = 44.f;
-static CGFloat const kCellHeight = 40.f;
+static CGFloat const kHeaderHeight   = 44.f;
+static CGFloat const kCellHeight     = 40.f;
 static CGFloat const kPickViewHeight = 272.f;
 
 @interface YXCalendarViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance, YXBasePickverViewDelegate, YXCalendarFresherGuideViewDelegate, YXCalendarUpdateData>
@@ -54,6 +54,7 @@ static CGFloat const kPickViewHeight = 272.f;
 @property (nonatomic, strong) UIView  *noResultsView;
 @property (nonatomic, strong) UIView  *noNetworkViewWithCalendar;
 //table view
+@property (nonatomic, strong) UIView *tableContainerView;
 @property (nonatomic, strong) UIImageView *fruitIcon;
 @property (nonatomic, strong) UILabel *tableTitleLabel;
 @property (nonatomic, strong) UITableView *tableView;
@@ -118,12 +119,7 @@ static CGFloat const kPickViewHeight = 272.f;
 - (YXComNaviView *)naview {
     if (!_naview) {
         _naview = [YXComNaviView comNaviViewWithLeftButtonType:YXNaviviewLeftButtonWhite];
-        _naview.backgroundColor = UIColorOfHex(0xFFA83E);
-//        UIImage *bgImage = [UIImage imageNamed:@"header_orange_bg"];
-//        UIImageView *naviBGImageView = [[UIImageView alloc] initWithImage:bgImage];
-//        naviBGImageView.frame = CGRectMake(-50, 0, SCREEN_WIDTH + 50, kNavHeight);
-//        naviBGImageView.contentMode = UIViewContentModeScaleAspectFill;
-//        [_naview insertSubview:naviBGImageView atIndex:0];
+        _naview.backgroundColor = [UIColor gradientColorWith:CGSizeMake(kSCREEN_WIDTH, kNavHeight) colors:@[UIColorOfHex(0xFFC671), UIColorOfHex(0xFFA83E)] direction:GradientDirectionTypeLeftTop];
         [_naview.leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [_naview setRightButtonView:self.rightView];
         _naview.titleLabel.textColor = UIColor.whiteColor;
@@ -143,6 +139,7 @@ static CGFloat const kPickViewHeight = 272.f;
         contentScroll.delegate = self;
         contentScroll.backgroundColor = UIColor.whiteColor;
         contentScroll.translatesAutoresizingMaskIntoConstraints = NO;
+        [contentScroll setScrollEnabled:YES];
         _contentScroll = contentScroll;
     }
     return _contentScroll;
@@ -160,6 +157,7 @@ static CGFloat const kPickViewHeight = 272.f;
         
         [_rightView addSubview:self.calendarBtn];
         [_rightView addSubview:self.chartBtn];
+        [_rightView setHidden:YES];
     }
     return _rightView;
 }
@@ -193,8 +191,8 @@ static CGFloat const kPickViewHeight = 272.f;
 - (YXCalendarMonthDataView *)monthDataView {
     if (!_monthDataView) {
         YXCalendarMonthDataView *view = [YXCalendarMonthDataView showDataView];
-        view.chartView.delegate = self;
-        view.calendarView.delegate = self;
+        view.chartView.delegate      = self;
+        view.calendarView.delegate   = self;
         view.calendarView.dataSource = self;
         _monthDataView = view;
     }
@@ -218,10 +216,20 @@ static CGFloat const kPickViewHeight = 272.f;
     return _fruitIcon;
 }
 
+- (UIView *)tableContainerView {
+    if (!_tableContainerView) {
+        UIView * view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.whiteColor;
+        [view.layer setDefaultShadowWithRadius:10.0];
+        _tableContainerView = view;
+    }
+    return _tableContainerView;
+}
+
 - (UILabel *)tableTitleLabel {
     if (!_tableTitleLabel) {
         UILabel *tableTitleLabel  = [[UILabel alloc] init];
-        tableTitleLabel.font      = [UIFont regularFontOfSize:12];
+        tableTitleLabel.font      = [UIFont regularFontOfSize:AdaptSize(12)];
         tableTitleLabel.textColor = UIColorOfHex(0x888888);
         tableTitleLabel.text      = @"--月--号学习数据";
         _tableTitleLabel          = tableTitleLabel;
@@ -253,6 +261,7 @@ static CGFloat const kPickViewHeight = 272.f;
             make.centerX.equalTo(defaultResultView);
             make.top.equalTo(imageView.mas_bottom).with.offset(5.f);
         }];
+        [defaultResultView setHidden:YES];
         _noResultsView = defaultResultView;
     }
     return _noResultsView;
@@ -299,6 +308,7 @@ static CGFloat const kPickViewHeight = 272.f;
             make.top.equalTo(aboveNoNetworkLabel.mas_bottom).offset(8);
             make.centerX.equalTo(view);
         }];
+        [view setHidden:YES];
         _noNetworkViewWithCalendar = view;
     }
     return _noNetworkViewWithCalendar;
@@ -313,13 +323,14 @@ static CGFloat const kPickViewHeight = 272.f;
         tableView.dataSource = self;
         tableView.backgroundColor = UIColor.clearColor;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        tableView.sectionHeaderHeight = kHeaderHeight;
+        tableView.sectionHeaderHeight = AdaptSize(kHeaderHeight);
         tableView.sectionFooterHeight = 1.f;
-        tableView.rowHeight = kCellHeight;
+        tableView.rowHeight = AdaptSize(kCellHeight);
         tableView.showsVerticalScrollIndicator = NO;
         tableView.contentInset = UIEdgeInsetsMake(0.f, 0.f, AdaptSize(8.f), 0.f);
         tableView.backgroundColor = UIColor.clearColor;
         tableView.scrollEnabled = NO;
+        [tableView setHidden:YES];
         _tableView = tableView;
     }
     return _tableView;
@@ -373,8 +384,12 @@ static CGFloat const kPickViewHeight = 272.f;
     [self.view addSubview:self.contentScroll];
     [self.contentScroll addSubview:self.monthDataView];
     [self.contentScroll addSubview:self.monthSummaryView];
-    [self.contentScroll addSubview:self.fruitIcon];
-    [self.contentScroll addSubview:self.tableTitleLabel];
+    [self.contentScroll addSubview:self.tableContainerView];
+    [self.tableContainerView addSubview:self.fruitIcon];
+    [self.tableContainerView addSubview:self.tableTitleLabel];
+    [self.tableContainerView addSubview:self.tableView];
+    [self.tableContainerView addSubview:self.noNetworkViewWithCalendar];
+    [self.tableContainerView addSubview:self.noResultsView];
     
     [self.naview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.view);
@@ -386,6 +401,7 @@ static CGFloat const kPickViewHeight = 272.f;
         make.top.equalTo(self.view).with.offset(kNavHeight);
         make.bottom.equalTo(self.view).with.offset(-kSafeBottomMargin);
     }];
+    self.contentScroll.contentSize = self.view.size;
 
     [self.monthDataView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentScroll);
@@ -401,17 +417,42 @@ static CGFloat const kPickViewHeight = 272.f;
         make.height.mas_equalTo(AdaptSize(81.f));
     }];
 
+    [self.tableContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentScroll).with.offset(AdaptSize(25));
+        make.right.equalTo(self.contentScroll).with.offset(AdaptSize(-25));
+        make.top.equalTo(self.monthSummaryView.mas_bottom).with.offset(AdaptSize(15));
+        make.height.mas_equalTo(AdaptSize(183));
+    }];
+
     [self.fruitIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.monthSummaryView.mas_bottom).with.offset(AdaptSize(12));
-        make.left.equalTo(self.monthSummaryView).with.offset(10.5);
-        make.size.mas_equalTo(CGSizeMake(AdaptSize(14.f), 14.f));
+        make.top.equalTo(self.tableContainerView).with.offset(AdaptSize(13));
+        make.left.equalTo(self.tableContainerView).with.offset(AdaptSize(14));
+        make.size.mas_equalTo(CGSizeMake(AdaptSize(14.f), AdaptSize(14.f)));
     }];
     
     [self.tableTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.fruitIcon);
         make.left.equalTo(self.fruitIcon.mas_right).with.offset(AdaptSize(2.f));
-        make.right.equalTo(self.monthSummaryView).with.offset(-10.5);
-        make.height.mas_equalTo(16.f);
+        make.right.equalTo(self.tableContainerView).with.offset(AdaptSize(-15));
+        make.height.mas_equalTo(AdaptSize(17));
+    }];
+
+    [self.noResultsView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.tableContainerView);
+        make.size.mas_equalTo(MakeAdaptCGSize(178, 109));
+        make.top.equalTo(self.fruitIcon.mas_bottom).with.offset(AdaptSize(13));
+    }];
+
+    [self.noNetworkViewWithCalendar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.tableContainerView);
+        make.size.mas_equalTo(MakeAdaptCGSize(178, 109));
+        make.top.equalTo(self.fruitIcon.mas_bottom).with.offset(AdaptSize(13));
+    }];
+
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.equalTo(self.tableContainerView);
+        make.top.equalTo(self.fruitIcon.mas_bottom).with.offset(AdaptSize(10));
+        make.height.mas_equalTo(AdaptSize(kHeaderHeight) * 3.f);
     }];
 }
 
@@ -429,7 +470,7 @@ static CGFloat const kPickViewHeight = 272.f;
                                @"numWord":@1,//默认显示1,不然XJYkChart控件为空时比较丑
                                @"costTime":@0,
                                @"status":@0
-                               };
+        };
         [dataArray addObject: [NSMutableDictionary dictionaryWithDictionary:dict]];
     }
     //根据后台返回数据,修改有数据天的值
@@ -463,15 +504,15 @@ static CGFloat const kPickViewHeight = 272.f;
             //更新图表组件
             [weakSelf.monthDataView.chartView setDataArray:[weakSelf setupChartData] selected:[NSNumber numberWithUnsignedInteger:weakSelf.currentSelectedDate.day - 1]];
             [self.monthDataView.calendarView selectDate:self.currentSelectedDate scrollToDate:NO];
-            if (self.currentSelectedDate.day == self.monthDataView.calendarView.today.day) {
-                self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFFE005);
-                self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
-                self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColorOfHex(0xFFE005);
-            } else {
-                self.monthDataView.calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
-                self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
-                self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColor.whiteColor;
-            }
+            //            if (self.currentSelectedDate.day == self.monthDataView.calendarView.today.day) {
+            self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFBA217);
+            self.monthDataView.calendarView.appearance.selectionColor       = UIColorOfHex(0xFBA217);
+            self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColor.whiteColor;
+            //            } else {
+            //                self.monthDataView.calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
+            //                self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
+            //                self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColor.whiteColor;
+            //            }
         }
     }];
 }
@@ -527,47 +568,60 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 - (void)showReviewWordsList: (UITapGestureRecognizer *)sender {
-    self.dayData.showReviewList = !self.dayData.showReviewList;
-    NSUInteger amountCell = self.dayData.reviewBooksList.count;
-    CGFloat amountCellHeight = amountCell * kCellHeight;
+    self.dayData.showReviewList       = !self.dayData.showReviewList;
+    NSUInteger amountCell             = self.dayData.reviewBooksList.count;
+    CGFloat amountCellHeight          = amountCell * AdaptSize(kCellHeight);
+    CGFloat finalTalbeViewHeight      = self.tableView.contentSize.height;
+    CGFloat finalTableContainerHeight = self.tableContainerView.height;
+    CGSize size                       = self.contentScroll.contentSize;
+    CGFloat finalScrollHeight         = CGRectGetMaxY(self.tableContainerView.frame) + AdaptSize(30.f);
+
     if (self.dayData.showReviewList) {
-        [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.tableTitleLabel.mas_bottom).with.offset(20.f);
-            make.left.equalTo(self.monthDataView).offset(20.f);
-            make.right.equalTo(self.monthDataView).offset(-20.f);
-            make.height.mas_equalTo(self.tableView.height + amountCellHeight);
-        }];
+        finalTalbeViewHeight      += amountCellHeight;
+        finalTableContainerHeight += amountCellHeight;
+        finalScrollHeight         += amountCellHeight;
     } else {
-        [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.tableTitleLabel.mas_bottom).with.offset(20.f);
-            make.left.equalTo(self.monthDataView).offset(20.f);
-            make.right.equalTo(self.monthDataView).offset(-20.f);
-            make.height.mas_equalTo(self.tableView.height - amountCellHeight);
-        }];
+        finalTalbeViewHeight      -= amountCellHeight;
+        finalTableContainerHeight -= amountCellHeight;
+        finalScrollHeight         -= amountCellHeight;
     }
+
+    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(finalTalbeViewHeight);
+    }];
+    [self.tableContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(finalTableContainerHeight);
+    }];
+    self.contentScroll.contentSize = CGSizeMake(size.width, finalScrollHeight);
     [self.tableView reloadData];
+
 }
 
 - (void)showStudyWordsList: (UITapGestureRecognizer *)sender {
-    self.dayData.showStudiedList = !self.dayData.showStudiedList;
-    NSUInteger amountCell = self.dayData.studiedBooksList.count;
-    CGFloat amountCellHeight = amountCell * kCellHeight;
+    self.dayData.showStudiedList      = !self.dayData.showStudiedList;
+    NSUInteger amountCell             = self.dayData.studiedBooksList.count;
+    CGFloat amountCellHeight         = amountCell * AdaptSize(kCellHeight);
+    CGFloat finalTalbeViewHeight      = self.tableView.contentSize.height;
+    CGFloat finalTableContainerHeight = self.tableContainerView.height;
+    CGSize size                       = self.contentScroll.contentSize;
+    CGFloat finalScrollHeight         = CGRectGetMaxY(self.tableContainerView.frame) + AdaptSize(30.f);
+
     if (self.dayData.showStudiedList) {
-        [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.tableTitleLabel.mas_bottom).with.offset(20.f);
-            make.left.equalTo(self.monthDataView).offset(20.f);
-            make.right.equalTo(self.monthDataView).offset(-20.f);
-            make.height.mas_equalTo(self.tableView.height + amountCellHeight);
-        }];
+        finalTalbeViewHeight      += amountCellHeight;
+        finalTableContainerHeight += amountCellHeight;
+        finalScrollHeight         += amountCellHeight;
     } else {
-        [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.tableTitleLabel.mas_bottom).with.offset(20.f);
-            make.left.equalTo(self.monthDataView).offset(20.f);
-            make.right.equalTo(self.monthDataView).offset(-20.f);
-            make.height.mas_equalTo(self.tableView.height - amountCellHeight);
-        }];
+        finalTalbeViewHeight      -= amountCellHeight;
+        finalTableContainerHeight -= amountCellHeight;
+        finalScrollHeight         -= amountCellHeight;
     }
-    [self.contentScroll layoutIfNeeded];
+    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(finalTalbeViewHeight);
+    }];
+    [self.tableContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(finalTableContainerHeight);
+    }];
+    self.contentScroll.contentSize = CGSizeMake(size.width, finalScrollHeight);
     [self.tableView reloadData];
 }
 
@@ -608,74 +662,21 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 - (void)showTableView {
-    if (self.noResultsView) {
-        [self.noResultsView removeFromSuperview];
-        self.noResultsView = nil;
-    }
-    if (self.noNetworkViewWithCalendar) {
-        [self.noNetworkViewWithCalendar removeFromSuperview];
-        self.noNetworkViewWithCalendar = nil;
-    }
-    [self tableView];
-    [self.contentScroll addSubview:self.tableView];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.tableTitleLabel.mas_bottom).with.offset(20.f);
-        make.left.equalTo(self.contentScroll).with.offset(20.f);
-        make.right.equalTo(self.contentScroll).with.offset(-20.f);
-        make.width.equalTo(self.monthDataView).with.offset(-40.f);
-        make.height.mas_equalTo(kHeaderHeight * 3.f);
-    }];
-    [self.contentScroll mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.tableView);
-    }];
+    [self.tableView setHidden:NO];
+    [self.noResultsView setHidden:YES];
+    [self.noNetworkViewWithCalendar setHidden:YES];
 }
 
 - (void)showNoResultsView {
-    if (self.tableView) {
-        [self.tableView removeFromSuperview];
-        self.tableView = nil;
-    }
-    if (self.noNetworkViewWithCalendar) {
-        [self.noNetworkViewWithCalendar removeFromSuperview];
-        self.noNetworkViewWithCalendar = nil;
-    }
-    [self noResultsView];
-    [self.contentScroll addSubview:self.noResultsView];
-    [self.noResultsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.tableTitleLabel.mas_bottom).with.offset(30.f + kSafeBottomMargin);
-        make.left.equalTo(self.contentScroll).with.offset(20.f);
-        make.right.equalTo(self.contentScroll).with.offset(-20.f);
-        make.width.equalTo(self.monthDataView).with.offset(-40.f);
-        make.height.mas_equalTo(AdaptSize(80.f));
-    }];
-    [self.contentScroll mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(kNavHeight, 0, kSafeBottomMargin, 0));
-        make.bottom.equalTo(self.noResultsView).with.offset(30.f);
-    }];
+    [self.tableView setHidden:YES];
+    [self.noResultsView setHidden:NO];
+    [self.noNetworkViewWithCalendar setHidden:YES];
 }
 
 - (void)showNoNetWorkView {
-    if (self.tableView) {
-        [self.tableView removeFromSuperview];
-        self.tableView = nil;
-    }
-    if (self.noResultsView) {
-        [self.noResultsView removeFromSuperview];
-        self.noResultsView = nil;
-    }
-
-    [self noNetworkViewWithCalendar];
-    [self.contentScroll addSubview:self.noNetworkViewWithCalendar];
-    [self.noNetworkViewWithCalendar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.tableTitleLabel.mas_bottom).with.offset(30.f + kSafeBottomMargin);
-        make.left.equalTo(self.contentScroll).with.offset(20.f);
-        make.right.equalTo(self.contentScroll).with.offset(-20.f);
-        make.width.equalTo(self.monthDataView).with.offset(-40.f);
-        make.height.mas_equalTo(AdaptSize(140.f));
-    }];
-    [self.contentScroll mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.noNetworkViewWithCalendar).with.offset(30.f);
-    }];
+    [self.tableView setHidden:YES];
+    [self.noResultsView setHidden:YES];
+    [self.noNetworkViewWithCalendar setHidden:NO];
 }
 
 - (void)back {
@@ -792,17 +793,16 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
     self.currentSelectedDate = date;
-//    NSDate *today = calendar.today;
-//    if (date == today) {
-//        self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFF960A);
-//        self.monthDataView.calendarView.appearance.selectionColor       = UIColorOfHex(0xFFD6A4);
-//        self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColorOfHex(0xFF960A);
-//    } else {
-    self.monthDataView.calendarView.appearance.borderSelectionColor = UIColor.whiteColor;
-    self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
+    //    NSDate *today = calendar.today;
+    //    if (date == today) {
+    //        self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFBA217);
+    //        self.monthDataView.calendarView.appearance.selectionColor       = UIColor.clearColor;
+    //        self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColorOfHex(0xFBA217);
+    //    } else {
+    self.monthDataView.calendarView.appearance.borderSelectionColor = UIColorOfHex(0xFBA217);
+    self.monthDataView.calendarView.appearance.selectionColor       = UIColorOfHex(0xFBA217);
     self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColor.whiteColor;
-//    }
-    //扯淡的滑动
+    //    }
     [calendar selectDate:date];
 }
 
@@ -838,34 +838,34 @@ static CGFloat const kPickViewHeight = 272.f;
     NSString *key = [dateformatter stringFromDate:date];
     // 已学习
     if ([self.monthData.studiedDateDict.allKeys containsObject:key]) {
-        return [UIColor colorWithWhite:1 alpha:0.17];
+        return UIColorOfHex(0xFFF4E9);
     }
     // 已打卡的肯定学习过了
     if ([self.monthData.punchedDateDict.allKeys containsObject:key]) {
-        return [UIColor colorWithWhite:1 alpha:0.17];
+        return UIColorOfHex(0xFFF4E9);
     }
     return nil;
 }
 
 // 已学习或者已打卡的字体颜色显示为: UIColorOfHex(0x3AC8FC)
 - (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(NSDate *)date {
-    NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
-    dateformatter.dateFormat = @"yyyy-MM-dd";
-    NSString *key = [dateformatter stringFromDate:date];
-    if ([self.monthData.studiedDateDict.allKeys containsObject:key]) {
-        return UIColor.whiteColor;
-    }
+    //    NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+    //    dateformatter.dateFormat = @"yyyy-MM-dd";
+    //    NSString *key = [dateformatter stringFromDate:date];
+    //    if ([self.monthData.studiedDateDict.allKeys containsObject:key]) {
+    //        return UIColor.whiteColor;
+    //    }
     // 已打卡的肯定学习过了
-    if ([self.monthData.punchedDateDict.allKeys containsObject:key]) {
-        return UIColor.whiteColor;
-    }
+    //    if ([self.monthData.punchedDateDict.allKeys containsObject:key]) {
+    //        return UIColor.whiteColor;
+    //    }
     return nil;
 }
 
 - (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance borderDefaultColorForDate:(NSDate *)date {
     NSDate *today = calendar.today;
     if (date == today) {
-        return UIColorOfHex(0xFFE005);
+        return UIColorOfHex(0xFBA217);
     } else {
         return UIColor.clearColor;
     }
@@ -890,9 +890,9 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 - (void)stepPrecondition:(NSInteger)step {
-//    if (step == 2) {
-//        [self showChartView:self.chartBtn];
-//    }
+    //    if (step == 2) {
+    //        [self showChartView:self.chartBtn];
+    //    }
 }
 
 #pragma mark - <YXCalendarUpdateData>

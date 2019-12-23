@@ -127,7 +127,7 @@ extension CALayer {
 extension CALayer {
     
     /// 设置默认阴影效果
-    func setDefaultShadow(radius: CGFloat = 10) {
+    @objc func setDefaultShadow(radius: CGFloat = 10) {
         self.cornerRadius  = 6
         self.shadowColor   = UIColor.hex(0xc7c7c7).withAlphaComponent(0.5).cgColor
         self.shadowOffset  = CGSize.zero

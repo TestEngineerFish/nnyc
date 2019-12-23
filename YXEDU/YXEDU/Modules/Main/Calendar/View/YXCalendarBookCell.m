@@ -59,8 +59,8 @@
         [self.contentView addSubview:titleLable];
         [titleLable mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self);
-            make.left.equalTo(self.signView.mas_right);
-            make.width.mas_equalTo((SCREEN_WIDTH - 30.f)/3*2);
+            make.left.equalTo(self.signView.mas_right).with.offset(AdaptSize(16));
+            make.width.mas_equalTo(AdaptSize(260));
         }];
         _titleLabel = titleLable;
     }
@@ -76,8 +76,8 @@
         [self.contentView addSubview:valueLable];
         [valueLable mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self);
-            make.right.equalTo(self);
-            make.width.mas_equalTo((SCREEN_WIDTH - 30.f)/3);
+            make.right.equalTo(self).with.offset(AdaptSize(-18));
+            make.left.equalTo(self.titleLabel.mas_right);
         }];
         _valueLabel = valueLable;
     }

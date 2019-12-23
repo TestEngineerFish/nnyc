@@ -36,14 +36,14 @@
         FSCalendar *calendarView = [[FSCalendar alloc] init];
         calendarView.headerHeight                     = 0.f;
         calendarView.scrollDirection                  = FSCalendarScrollDirectionHorizontal;
-        calendarView.backgroundColor                  = UIColor.clearColor;
-        calendarView.appearance.weekdayTextColor      = UIColorOfHex(0xFFD99E);
-        calendarView.appearance.titleDefaultColor     = UIColor.whiteColor;
-        calendarView.appearance.titleTodayColor       = UIColorOfHex(0xFFE005);
+        calendarView.backgroundColor                  = UIColor.whiteColor;
+        calendarView.appearance.weekdayTextColor      = UIColorOfHex(0xDCDCDC);
+        calendarView.appearance.titleDefaultColor     = UIColorOfHex(0x323232);
+        calendarView.appearance.titleTodayColor       = UIColorOfHex(0xFBA217);
         calendarView.appearance.todayColor            = UIColor.clearColor;
-        calendarView.appearance.borderSelectionColor  = UIColor.whiteColor;
+        calendarView.appearance.borderSelectionColor  = UIColorOfHex(0xFBA217);
         calendarView.appearance.selectionColor        = UIColor.clearColor;
-        calendarView.appearance.titlePlaceholderColor = UIColorOfHex(0xDF8619);
+        calendarView.appearance.titlePlaceholderColor = UIColorOfHex(0xDCDCDC);
         calendarView.weekdayHeight                    = AdaptSize(50.f);
         calendarView.locale                           = [NSLocale localeWithLocaleIdentifier:@"zh-CN"];
         calendarView.appearance.titleFont             = [UIFont systemFontOfSize:AdaptSize(16.f)];
@@ -66,9 +66,6 @@
 {
     self = [super init];
     if (self) {
-        UIView *backgroundView = [[UIView alloc] init];
-        backgroundView.backgroundColor = [UIColor gradientColorWith:CGSizeMake(kSCREEN_WIDTH, kSCREEN_WIDTH * 1.15f) colors:@[UIColorOfHex(0xFFA83E), UIColorOfHex(0xFFC671)] direction:GradientDirectionTypeVertical];
-        [self addSubview:backgroundView];
         // 添加日历和图表容器视图
         [self addSubview:self.screenShowView];
         // 添加日历视图
@@ -79,10 +76,6 @@
         [self.screenShowView addSubview:self.chartView];
         // 添加图表状态栏
         [self.screenShowView addSubview:self.chartStatusView];
-
-        [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self);
-        }];
 
         [self.screenShowView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.top.height.equalTo(self);
@@ -134,7 +127,7 @@
         UILabel *studiedLabel = [[UILabel alloc] init];
         studiedLabel.text = @"已学习";
         studiedLabel.font = [UIFont systemFontOfSize:13];
-        studiedLabel.textColor = UIColor.whiteColor;
+        studiedLabel.textColor = UIColorOfHex(0x4F4F4F);
         studiedLabel.layer.shadowColor = UIColor.blackColor.CGColor;
         studiedLabel.layer.shadowOffset = CGSizeMake(2.f, 2.f);
         [statusView addSubview: studiedLabel];
@@ -154,7 +147,7 @@
         UILabel *punchedLabel = [[UILabel alloc] init];
         punchedLabel.text = @"完成打卡";
         punchedLabel.font = [UIFont systemFontOfSize:13];
-        punchedLabel.textColor = UIColor.whiteColor;
+        punchedLabel.textColor = UIColorOfHex(0x4F4F4F);
         punchedLabel.layer.shadowColor = UIColor.blackColor.CGColor;
         punchedLabel.layer.shadowOffset = CGSizeMake(2.f, 2.f);
         [statusView addSubview: punchedLabel];
