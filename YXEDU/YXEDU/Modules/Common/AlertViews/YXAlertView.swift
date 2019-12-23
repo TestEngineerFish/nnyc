@@ -17,7 +17,30 @@ class YXAlertView: UIView, UITextFieldDelegate {
 
     var cancleClosure: (() -> Void)?
     var doneClosure: ((_ string: String?) -> Void)?
-
+    var shouldOnlyShowOneButton = false {
+        didSet {
+            if shouldOnlyShowOneButton {
+                cancelButtonRightDistance.constant = ((screenWidth - 88) / 2) + 10
+                doneButtonLeftDistance.constant = ((screenWidth - 88) / 2) + 10
+                
+            } else {
+                cancelButtonRightDistance.constant = 20
+                doneButtonLeftDistance.constant = 20
+            }
+        }
+    }
+    
+    var shouldDismissWhenTapBackground = false {
+        didSet {
+            if shouldDismissWhenTapBackground {
+                backgroundView.isUserInteractionEnabled = true
+                
+            } else {
+                backgroundView.isUserInteractionEnabled = false
+            }
+        }
+    }
+    
     private var type: YXAlertViewType = .normal
     
     @IBOutlet var contentView: UIView!
@@ -77,6 +100,7 @@ class YXAlertView: UIView, UITextFieldDelegate {
         super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         self.type = type
         initializationFromNib()
+        
         self.textField.placeholder = text
     }
     
