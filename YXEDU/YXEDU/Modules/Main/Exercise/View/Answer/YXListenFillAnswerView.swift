@@ -9,12 +9,15 @@
 import UIKit
 
 class YXListenFillAnswerView: YXBaseAnswerView {
-    
-    
+        
     var textField = UITextField()
     var lineView = YXListenFillAnswerLineView()
     var audioPlayerView = YXAudioPlayerView()
     private var errorCount = 0
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: YXNotification.kCloseWordDetailPage, object: nil)
+    }
     
     override func createSubviews() {
         super.createSubviews()
@@ -38,6 +41,8 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         lineView.openKeyboard = { [weak self] in
             self?.textField.becomeFirstResponder()
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(closeWordDetailPage), name: YXNotification.kCloseWordDetailPage, object: nil)
     }
      
     override func layoutSubviews() {
@@ -56,7 +61,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         }
         
         audioPlayerView.snp.makeConstraints({ (make) in
-            make.top.equalTo(lineView.snp.bottom)
+            make.top.equalTo(lineView.snp.bottom).offset(AS(5))
             make.centerX.equalToSuperview()
             make.width.height.equalTo(AS(37))
         })
@@ -107,13 +112,18 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             }
             answerCompletion(right: false)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
                 self?.lineView.text = ""
                 self?.textField.text = ""
             }
         }
     }
-
+    
+    @objc func closeWordDetailPage() {
+        if errorCount > 3 {
+            textField.becomeFirstResponder()
+        }
+    }
 }
 
 

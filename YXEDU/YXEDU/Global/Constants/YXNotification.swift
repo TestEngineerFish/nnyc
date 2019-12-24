@@ -15,4 +15,5 @@ struct YXNotification {
     
     static let kServiceStop = NSNotification.Name("kServiceStopNotification")   // 停服
     
+    static let kCloseWordDetailPage = NSNotification.Name("kCloseWordDetailPage")   // 详情页关闭的时候
 }
