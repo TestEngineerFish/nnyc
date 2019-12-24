@@ -39,7 +39,7 @@ class YXGameLaunchView: UIView {
     }()
 
     var currentTimer: Int = 4
-    var delegate: YXGameViewControllerProtocol?
+    weak var delegate: YXGameViewControllerProtocol?
 
     init(_ time: Int) {
         super.init(frame: CGRect.zero)

@@ -17,7 +17,7 @@ protocol YXReviewUnitListHeaderProtocol: NSObjectProtocol {
 class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
 
     var model: YXReviewUnitModel?
-    var delegate: YXReviewUnitListHeaderProtocol?
+    weak var delegate: YXReviewUnitListHeaderProtocol?
 
     var unitNameLabel: UILabel = {
         let label = UILabel()

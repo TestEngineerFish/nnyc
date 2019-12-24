@@ -50,9 +50,9 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func playGame(){
-//        let vc = YXGameViewController()
-        let vc = YXShareViewController()
-        vc.titleString = "挑战分享"
+        let vc = YXGameViewController()
+//        let vc = YXShareViewController()
+//        vc.titleString = "挑战分享"
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
