@@ -14,6 +14,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
     var textField = UITextField()
     var lineView = YXListenFillAnswerLineView()
     var audioPlayerView = YXAudioPlayerView()
+    private var errorCount = 0
     
     override func createSubviews() {
         super.createSubviews()
@@ -83,7 +84,9 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             lineView.text = text
             
             if lineView.text.count == 4 {
-                processAnswer(text: text)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                    self?.processAnswer(text: text)
+                }
             }
         } else {
             textField.text = text.subString(location: 0, length: 4)
@@ -92,13 +95,21 @@ class YXListenFillAnswerView: YXBaseAnswerView {
     
     
     func processAnswer(text: String) {
+        
         if exerciseModel.word?.word == text {
+            textField.resignFirstResponder()
             answerCompletion(right: true)
         } else {
+            errorCount += 1
+            
+            if errorCount > 3 {
+                textField.resignFirstResponder()
+            }
             answerCompletion(right: false)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { [weak self] in
                 self?.lineView.text = ""
+                self?.textField.text = ""
             }
         }
     }
