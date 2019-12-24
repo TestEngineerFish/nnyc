@@ -47,6 +47,9 @@ struct YXAPI {
     
     //MARK: - 单词模块
     struct Word {
+        // 户添加词书
+        static let downloadWordBook = "/api/v1/book/getbookwords"
+        
         /// 用户添加词书
         static let addUserBook = "/api/v1/book/adduserbook"
         /// 搜索单词

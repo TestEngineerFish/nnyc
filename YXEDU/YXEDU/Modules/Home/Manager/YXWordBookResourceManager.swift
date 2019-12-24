@@ -41,56 +41,41 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate, URLSessionDow
                self.closure?(true)
 
             } else {
-//                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSource!)!)
-//                downloadingWordBookId = downloadTask.taskIdentifier
-//                downloadTask.resume()
-                
-                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbookwords", parameters: ["book_id": wordBook.bookId ?? 0]) { (response, isSuccess) in
-                    guard isSuccess, let response = response?.responseObject as? [String: Any] else {
+                let request = YXWordBookRequest.downloadWordBook(bookId: wordBook.bookId ?? 0)
+                YYNetworkService.default.request(YYStructResponse<YXWordBookModel>.self, request: request, success: { (response) in
+                    guard let wordBook = response.data else { return }
+                    
+                    YXWordBookDaoImpl().insertBook(book: wordBook) { (result, isSuccess) in
+                        guard isSuccess else {
+                            self.closure?(false)
+                            return
+                        }
+                    }
+                    
+                    guard let units = wordBook.units else {
                         self.closure?(false)
                         return
                     }
                     
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                        guard let jsonString = String(data: jsonData, encoding: .utf8), let wordBook = YXWordBookModel(JSONString: jsonString) else {
-                            self.closure?(false)
-                            return
+                    for unit in units {
+                        guard let words = unit.words else { continue }
+                        for var word in words {
+                            word.gradeId = wordBook.gradeId
+                            word.gardeType = wordBook.gradeType
+                            word.bookId = wordBook.bookId
+                            word.unitId = unit.unitId
+                            word.unitName = unit.unitName
+                            word.isExtensionUnit = unit.isExtensionUnit
+                            
+                            YXWordBookDaoImpl().insertWord(word: word)
                         }
-                        
-                        YXWordBookDaoImpl().insertBook(book: wordBook) { (result, isSuccess) in
-                            guard isSuccess else {
-                                self.closure?(false)
-                                return
-                            }
-                        }
-                        
-                        guard let units = wordBook.units else {
-                            self.closure?(false)
-                            return
-                        }
-                        
-                        for unit in units {
-                            guard let words = unit.words else { continue }
-                            for var word in words {
-                                word.gradeId = wordBook.gradeId
-                                word.gardeType = wordBook.gradeType
-                                word.bookId = wordBook.bookId
-                                word.unitId = unit.unitId
-                                word.unitName = unit.unitName
-                                word.isExtensionUnit = unit.isExtensionUnit
-                                
-                                YXWordBookDaoImpl().insertWord(word: word)
-                            }
-                        }
-                        
-                        self.closure?(true)
-                        
-                    } catch {
-                        print(error)
-                        self.closure?(false)
                     }
-                }
+                    
+                    self.closure?(true)
+                    
+                }, fail: { error in
+                    self.closure?(false)
+                })
             }
         }
     }
