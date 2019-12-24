@@ -23,6 +23,8 @@ class YXReviewResultView: YXTopWindowView {
     var type: ReviewType = .ai
     
     var imageView = UIImageView()
+    var starView = YXReviewResultStarView()
+    
     var titleLabel = UILabel()
     var starTitleLabel = UILabel()
     
@@ -58,6 +60,8 @@ class YXReviewResultView: YXTopWindowView {
         
     override func createSubviews() {
         contentView.addSubview(imageView)
+        contentView.addSubview(starView)
+        
         contentView.addSubview(titleLabel)
         contentView.addSubview(starTitleLabel)
         
@@ -121,6 +125,12 @@ class YXReviewResultView: YXTopWindowView {
             make.centerX.equalToSuperview()
             make.width.equalTo(AS(233))
             make.height.equalTo(AS(141))
+        }
+        
+        starView.snp.makeConstraints { (make) in
+            make.centerX.bottom.equalTo(imageView)
+            make.width.equalTo(AS(27 * 2 + 38 + 6))
+            make.height.equalTo(AS(45))
         }
         
         titleLabel.snp.makeConstraints { (make) in
@@ -201,6 +211,7 @@ class YXReviewResultView: YXTopWindowView {
         subTitleLable2.attributedText = attrString("20 个单词掌握的更好了", 0, 2)
         
         tableView.words = []
+        starView.count = 2
     }
     
     @objc func clickShareButton() {
@@ -226,3 +237,75 @@ class YXReviewResultView: YXTopWindowView {
     }
 
 }
+
+
+class YXReviewResultStarView: YXView {
+    
+    public var count: Int = 0 {
+        didSet { bindData() }
+    }
+    
+    private var imageView1 = UIImageView()
+    private var imageView2 = UIImageView()
+    private var imageView3 = UIImageView()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.createSubviews()
+        self.bindProperty()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func createSubviews() {
+        self.addSubview(imageView1)
+        self.addSubview(imageView2)
+        self.addSubview(imageView3)
+    }
+    
+    override func bindProperty() {
+        imageView1.image = UIImage(named: "review_finish_result_star_dis")
+        imageView2.image = UIImage(named: "review_finish_result_star_dis")
+        imageView3.image = UIImage(named: "review_finish_result_star_dis")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        imageView1.snp.makeConstraints { (make) in
+            make.centerY.left.equalToSuperview()
+            make.width.equalTo(27)
+            make.height.equalTo(45)
+        }
+        
+        imageView2.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalTo(38)
+            make.height.equalTo(45)
+        }
+        
+        imageView3.snp.makeConstraints { (make) in
+            make.centerY.right.equalToSuperview()
+            make.width.equalTo(27)
+            make.height.equalTo(45)
+        }
+        
+    }
+        
+    override func bindData() {
+        if count >= 1 {
+            imageView1.image = UIImage(named: "review_finish_result_star")
+        }
+        if count >= 2 {
+            imageView2.image = UIImage(named: "review_finish_result_star")
+        }
+        if count >= 3 {
+            imageView3.image = UIImage(named: "review_finish_result_star")
+        }
+    }
+}
+
+
+

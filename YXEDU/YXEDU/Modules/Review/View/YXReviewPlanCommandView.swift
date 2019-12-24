@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+/// 复习计划口令页
 class YXReviewPlanCommandView: YXTopWindowView {
     
     var detailEvent: (() -> ())?
@@ -60,9 +62,8 @@ class YXReviewPlanCommandView: YXTopWindowView {
         subTitleLable.font = UIFont.regularFont(ofSize: AS(14))
         
 //        descLabel.textColor = UIColor.black3
-        descLabel.font = UIFont.regularFont(ofSize: AS(14))
-        
-        
+//        descLabel.font = UIFont.regularFont(ofSize: AS(14))
+                
         
         detailButton.layer.masksToBounds = true
         detailButton.layer.cornerRadius = AS(20)
