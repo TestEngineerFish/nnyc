@@ -275,7 +275,7 @@ static CGFloat const kPickViewHeight = 272.f;
         [view addGestureRecognizer:tap];
 
         UIImageView *noNetworkImageView = [[UIImageView alloc] init];
-        noNetworkImageView.image = [UIImage imageNamed:@"no_network_icon"];
+        noNetworkImageView.image = [UIImage imageNamed:@"noNetwork"];
         noNetworkImageView.contentMode = UIViewContentModeScaleAspectFit;
 
         UILabel *aboveNoNetworkLabel = [[UILabel alloc] init];

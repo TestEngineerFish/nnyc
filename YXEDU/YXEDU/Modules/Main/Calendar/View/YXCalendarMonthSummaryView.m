@@ -34,7 +34,7 @@
         [self addSubview:squirrel];
         [squirrel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(msgBubble.mas_centerY);
-            make.left.equalTo(self).with.offset(AdaptSize(AdaptSize(-13.f)));
+            make.left.equalTo(self).with.offset(AdaptSize(-13.f));
             make.size.mas_equalTo(CGSizeMake(AdaptSize(75.f), AdaptSize(84.f)));
         }];
 

@@ -12,7 +12,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     var headerView = YXChallengeHeaderView()
     var top3View   = YXChallengeRankTop3View()
-    final let kYXChallengeRankCell = "YXChallengeRankCell"
+    final let kYXChallengeRankCell   = "YXChallengeRankCell"
 
     var challengeModel: YXChallengeModel?
     var tableView = UITableView(frame: CGRect.zero, style: .grouped)
@@ -60,7 +60,15 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.challengeModel?.rankedList.count ?? 0
+        let amount = self.challengeModel?.rankedList.count ?? 0
+        if amount >= 3 {
+            /// 移除前三名,默认显示自己当前状态
+            return amount - 3 + 1
+        } else if amount == 0 {
+            return 0
+        } else {
+            return 1
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -79,8 +87,8 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
         top3View.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(AdaptSize(-26))
-            make.top.equalTo(headerView.snp.bottom).offset(AdaptSize(-26))
+            make.width.equalToSuperview().offset(AdaptSize(-25))
+            make.top.equalTo(headerView.snp.bottom).offset(AdaptSize(-13))
             make.bottom.equalToSuperview()
         }
         headerView.bindData(model)
@@ -90,29 +98,38 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let model = self.challengeModel, let cell = tableView.dequeueReusableCell(withIdentifier: kYXChallengeRankCell) as? YXChallengeRankCell else {
+        guard let model = self.challengeModel else {
             return UITableViewCell()
         }
         if indexPath.row == 0 {
+            let cell = YXChallengeMyRankCell(style: .default, reuseIdentifier: nil)
             guard let userModel = model.userModel else {
                 return cell
             }
             cell.bindData(userModel)
-            cell.showCnallengeResultView(userModel)
+            return cell
         } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXChallengeRankCell) as? YXChallengeRankCell, indexPath.row + 3 < model.rankedList.count else {
+                return UITableViewCell()
+            }
             let otherUserModel = model.rankedList[indexPath.row]
             cell.bindData(otherUserModel)
-            if indexPath.row == 1 {
-                cell.showArrowLayer(otherUserModel)
-            } else if indexPath.row == model.rankedList.count - 1 {
-                cell.showBottomRadius()
-            }
+            return cell
         }
-        return cell
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = YXChallengeFooterView()
+        footerView.layoutSubviews()
+        return footerView
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return AdaptSize(481)
+        guard let rankedList = self.challengeModel?.rankedList, rankedList.isEmpty else {
+            return AdaptSize(481)
+        }
+        return AdaptSize(583)
+
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -123,13 +140,25 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         }
     }
 
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard let rankedList = self.challengeModel?.rankedList else {
+            return AdaptSize(20)
+        }
+        if rankedList.count > 3 {
+            return AdaptSize(20)
+        } else {
+            return AdaptSize(30)
+        }
+
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.requestChallengeData()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < 0 {
-            print(scrollView.contentOffset.y)
+        if scrollView.contentOffset.y < -kStatusBarHeight {
+            scrollView.contentOffset.y = -kStatusBarHeight
         }
     }
 

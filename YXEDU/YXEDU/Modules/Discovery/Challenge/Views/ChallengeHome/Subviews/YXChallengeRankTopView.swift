@@ -137,7 +137,7 @@ class YXChallengeRankTopView: UIView {
             crownImageView.snp.makeConstraints { (make) in
                 make.left.equalTo(avatarImageView).offset(AdaptSize(-4))
                 make.bottom.equalTo(avatarImageView).offset(AdaptSize(4))
-                make.size.equalTo(CGSize(width: AdaptSize(85), height: AdaptSize(94)))
+                make.size.equalTo(CGSize(width: AdaptSize(87), height: AdaptSize(97)))
             }
         } else {
             avatarImageView.snp.makeConstraints { (make) in

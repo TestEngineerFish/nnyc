@@ -82,7 +82,7 @@ class YXChallengeHeaderView: UIView {
 
         propertyView.snp.makeConstraints { (make) in
             make.right.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(AdaptSize(25)))
+            make.top.equalToSuperview().offset(AdaptSize(25))
             make.size.equalTo(CGSize(width: AdaptSize(44), height: AdaptSize(23)))
         }
 

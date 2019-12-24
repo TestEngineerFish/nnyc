@@ -1,14 +1,14 @@
 //
-//  YXChallengeRankCell.swift
+//  YXChallengeMyRankCell.swift
 //  YXEDU
 //
-//  Created by 沙庭宇 on 2019/12/12.
+//  Created by 沙庭宇 on 2019/12/24.
 //  Copyright © 2019 shiji. All rights reserved.
 //
 
 import UIKit
 
-class YXChallengeRankCell: UITableViewCell {
+class YXChallengeMyRankCell: UITableViewCell {
 
     var leftTopLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
@@ -19,7 +19,6 @@ class YXChallengeRankCell: UITableViewCell {
         path.close()
         layer.path = path.cgPath
         layer.fillColor = UIColor.hex(0xCF6900).cgColor
-        layer.isHidden = true
         return layer
     }()
 
@@ -32,19 +31,17 @@ class YXChallengeRankCell: UITableViewCell {
         path.close()
         layer.path      = path.cgPath
         layer.fillColor = UIColor.hex(0xCF6900).cgColor
-        layer.isHidden = true
         return layer
     }()
 
-    var shadeView: UIView = {
+    var shadowView: UIView =  {
         let view = UIView()
-        view.isHidden = true
         view.size     = CGSize(width: AdaptSize(359), height: AdaptSize(81))
         view.clipRectCorner(directionList: [.topLeft, .topRight], cornerRadius: AdaptSize(6))
         return view
     }()
 
-    var customContentView: UIView = {
+    var bgContentView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.hex(0xF4EEE2)
         return view
@@ -65,18 +62,9 @@ class YXChallengeRankCell: UITableViewCell {
         return label
     }()
 
-    var levelLabel: UILabel = {
-        let label = UILabel()
-        label.text          = "--"
-        label.textColor     = UIColor.orange1
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
-        label.textAlignment = .center
-        return label
-    }()
-
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
-        imageView.layer.cornerRadius = AdaptSize(AdaptSize(38/2))
+        imageView.layer.cornerRadius = AdaptSize(38/2)
         imageView.layer.borderColor  = UIColor.white.cgColor
         imageView.layer.borderWidth  = AdaptSize(2)
         imageView.image              = UIImage(named: "challengeAvatar")
@@ -122,38 +110,38 @@ class YXChallengeRankCell: UITableViewCell {
         self.selectionStyle = .none
         self.setSubviews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: ==== Update UI ====
-    /// 显示遮罩
-    func showCnallengeResultView(_ userModel: YXChallengeUserModel) {
-        self.shadeView.isHidden     = false
-        self.levelLabel.isHidden    = true
-        self.customContentView.backgroundColor = .clear
+    func bindData(_ userModel: YXChallengeUserModel) {
+
         switch userModel.challengeResult {
         case .success:
             self.nameLabel.text             = userModel.name
-            self.descriptionLabel.text      = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
             self.nameLabel.textColor        = UIColor.white
+            self.descriptionLabel.text      = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
             self.descriptionLabel.textColor = UIColor.white
             self.goldIconImageView.isHidden = false
             self.bonusLabel.isHidden        = false
             self.descriptionLabel.isHidden  = false
+            self.leftTopLayer.fillColor     = UIColor.hex(0xCF6900).cgColor
+            self.rightTopLayer.fillColor    = UIColor.hex(0xCF6900).cgColor
+            self.bonusLabel.text            = "+\(userModel.bonus)"
             self.levelHighlightLabel.text   = "\(userModel.ranking)"
             self.levelHighlightLabel.font   = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
-            self.shadeView.layer.setGradient(colors: [UIColor.hex(0xFDB832), UIColor.orange1], direction: .vertical)
-            self.goldIconImageView.snp.updateConstraints { (make) in
-                make.size.equalTo(CGSize(width: AdaptSize(28), height: AdaptSize(28)))
-            }
+            self.shadowView.layer.setGradient(colors: [UIColor.hex(0xFDB832), UIColor.orange1], direction: .vertical)
             self.descriptionLabel.sizeToFit()
             self.descriptionLabel.snp.updateConstraints { (make) in
                 make.width.equalTo(self.descriptionLabel.width)
             }
             self.nameLabel.snp.updateConstraints { (make) in
                 make.centerY.equalTo(avatarImageView).offset(-AdaptSize(10))
+            }
+            self.bonusLabel.sizeToFit()
+            self.bonusLabel.snp.updateConstraints { (make) in
+                make.width.equalTo(self.bonusLabel.width)
             }
         case .notInvolved:
             self.nameLabel.text                = "本期内尚未完成过学习计划"
@@ -162,11 +150,13 @@ class YXChallengeRankCell: UITableViewCell {
             self.descriptionLabel.isHidden     = true
             self.goldIconImageView.isHidden    = true
             self.bonusLabel.isHidden           = true
+            self.leftTopLayer.fillColor        = UIColor.hex(0xA47528).cgColor
+            self.rightTopLayer.fillColor       = UIColor.hex(0xA47528).cgColor
             self.levelHighlightLabel.text      = "未上榜"
             self.levelHighlightLabel.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
             self.levelHighlightLabel.textColor = UIColor.hex(0xB3A394)
             self.tagImageView.image = UIImage(named: "challengeLevelTag2")
-            self.shadeView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
+            self.shadowView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
             self.nameLabel.snp.updateConstraints { (make) in
                 make.centerY.equalTo(avatarImageView)
             }
@@ -183,81 +173,38 @@ class YXChallengeRankCell: UITableViewCell {
         }
         self.levelHighlightLabel.sizeToFit()
         self.tagImageView.snp.updateConstraints { (make) in
-            make.width.equalTo(AdaptSize(levelHighlightLabel.width + 13))
-        }
-    }
-
-    /// 显示尖角
-    func showArrowLayer(_ userModel: YXChallengeUserModel) {
-        self.leftTopLayer.isHidden  = false
-        self.rightTopLayer.isHidden = false
-        switch userModel.challengeResult {
-        case .success:
-            self.leftTopLayer.fillColor  = UIColor.hex(0xCF6900).cgColor
-            self.rightTopLayer.fillColor = UIColor.hex(0xCF6900).cgColor
-        case .notInvolved:
-            self.leftTopLayer.fillColor  = UIColor.hex(0xA47528).cgColor
-            self.rightTopLayer.fillColor = UIColor.hex(0xA47528).cgColor
-        }
-    }
-
-    /// 显示底部圆角
-    func showBottomRadius() {
-        self.customContentView.clipRectCorner(directionList: [.bottomLeft, .bottomRight], cornerRadius: AdaptSize(14))
-    }
-
-    func bindData(_ userModel: YXChallengeUserModel) {
-
-        self.levelLabel.text          = "\(userModel.ranking)"
-        self.nameLabel.text           = userModel.name
-        self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
-        self.bonusLabel.text          = "+\(userModel.bonus)"
-        self.avatarImageView.showImage(with: userModel.avatarStr)
-
-        self.nameLabel.sizeToFit()
-        self.nameLabel.snp.updateConstraints { (make) in
-            make.width.equalTo(self.nameLabel.width)
-        }
-        self.descriptionLabel.sizeToFit()
-        self.descriptionLabel.snp.updateConstraints { (make) in
-            make.width.equalTo(self.descriptionLabel.width)
-        }
-        self.bonusLabel.sizeToFit()
-        self.bonusLabel.snp.updateConstraints { (make) in
-            make.width.equalTo(self.bonusLabel.width)
+            make.width.equalTo(AdaptSize(levelHighlightLabel.width + AdaptSize(13)))
         }
     }
 
     private func setSubviews() {
-        self.contentView.addSubview(shadeView)
-        self.contentView.addSubview(customContentView)
+        self.contentView.addSubview(bgContentView)
+        self.contentView.addSubview(shadowView)
         self.contentView.layer.addSublayer(leftTopLayer)
         self.contentView.layer.addSublayer(rightTopLayer)
 
-        shadeView.addSubview(tagImageView)
+        shadowView.addSubview(avatarImageView)
+        shadowView.addSubview(nameLabel)
+        shadowView.addSubview(descriptionLabel)
+        shadowView.addSubview(goldIconImageView)
+        shadowView.addSubview(bonusLabel)
+        shadowView.addSubview(tagImageView)
         tagImageView.addSubview(levelHighlightLabel)
 
-        customContentView.addSubview(levelLabel)
-        customContentView.addSubview(avatarImageView)
-        customContentView.addSubview(nameLabel)
-        customContentView.addSubview(descriptionLabel)
-        customContentView.addSubview(goldIconImageView)
-        customContentView.addSubview(bonusLabel)
-
-        customContentView.snp.makeConstraints { (make) in
+        bgContentView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(AdaptSize(13))
             make.right.equalToSuperview().offset(AdaptSize(-13))
         }
 
-        leftTopLayer.frame = CGRect(x: AdaptSize(8), y: 0, width: AdaptSize(5), height: AdaptSize(6))
-        rightTopLayer.frame = CGRect(x: AdaptSize(362), y: 0, width: AdaptSize(5), height: AdaptSize(6))
-
-        shadeView.snp.makeConstraints { (make) in
+        shadowView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(8))
             make.right.equalToSuperview().offset(AdaptSize(-8))
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview().offset(AdaptSize(-6))
         }
+        leftTopLayer.frame  = CGRect(x: AdaptSize(8), y: AdaptSize(81), width: AdaptSize(5), height: AdaptSize(6))
+        rightTopLayer.frame = CGRect(x: screenWidth - AdaptSize(13), y: AdaptSize(81), width: AdaptSize(5), height: AdaptSize(6))
 
         levelHighlightLabel.sizeToFit()
         tagImageView.snp.makeConstraints { (make) in
@@ -271,14 +218,6 @@ class YXChallengeRankCell: UITableViewCell {
             make.top.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(AdaptSize(5))
             make.right.equalToSuperview().offset(AdaptSize(-8))
-        }
-
-        levelLabel.sizeToFit()
-        levelLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(16))
-            make.centerY.equalToSuperview()
-            make.height.equalTo(AdaptSize(21))
-            make.width.equalTo(levelLabel.width)
         }
 
         avatarImageView.snp.makeConstraints { (make) in
@@ -306,7 +245,7 @@ class YXChallengeRankCell: UITableViewCell {
 
         goldIconImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(19), height: AdaptSize(19)))
+            make.size.equalTo(CGSize(width: AdaptSize(28), height: AdaptSize(28)))
             make.right.equalTo(bonusLabel.snp.left).offset(AdaptSize(-5))
         }
 
@@ -315,8 +254,9 @@ class YXChallengeRankCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.width.equalTo(bonusLabel.width)
             make.height.equalTo(AdaptSize(21))
-            make.right.equalToSuperview().offset(AdaptSize(-14))
+            make.right.equalToSuperview().offset(AdaptSize(-19))
         }
 
     }
 }
+
