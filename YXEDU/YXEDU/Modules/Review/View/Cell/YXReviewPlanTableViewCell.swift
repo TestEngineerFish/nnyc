@@ -60,16 +60,16 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     override func bindProperty() {
         bgView.backgroundColor = UIColor.white
-        bgView.layer.setDefaultShadow(radius: 4)
+        bgView.layer.setDefaultShadow(radius: AS(4))
         
-        titleLabel.font = UIFont.pfSCRegularFont(withSize: 15)
+        titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
         titleLabel.text = "我的复习计划1"
         titleLabel.textColor = UIColor.black1
         
-        countLabel.font = UIFont.pfSCRegularFont(withSize: 12)
+        countLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
         countLabel.textColor = UIColor.black3
         
-        subTitleLabel.font = UIFont.pfSCRegularFont(withSize: 12)
+        subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
         subTitleLabel.text = "听写进度：80%"
         subTitleLabel.textColor = UIColor.black3
         
@@ -77,15 +77,15 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         listenImageView.image = UIImage(named: "review_listen_icon")
         
         listenButton.setTitle("听写练习", for: .normal)
-        listenButton.titleLabel?.font = UIFont.regularFont(ofSize: 12)
+        listenButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(12))
         listenButton.setTitleColor(UIColor.orange1, for: .normal)
         listenButton.addTarget(self, action: #selector(clickListenButton), for: .touchUpInside)
                                     
         
-        reviewButton.titleLabel?.font = UIFont.regularFont(ofSize: 14)
+        reviewButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
         reviewButton.setTitleColor(UIColor.black2, for: .normal)
         reviewButton.layer.masksToBounds = true
-        reviewButton.layer.cornerRadius = 15
+        reviewButton.layer.cornerRadius = AS(15)
         reviewButton.layer.borderColor = UIColor.black4.cgColor
         reviewButton.layer.borderWidth = 0.5
         reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
@@ -96,36 +96,36 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         super.layoutSubviews()
         
         bgView.snp.makeConstraints { (make) in
-            make.top.equalTo(6.5)
-            make.left.equalTo(22)
-            make.right.equalTo(-22)
-            make.bottom.equalTo(-6.5)
+            make.top.equalTo(AS(6.5))
+            make.left.equalTo(AS(22))
+            make.right.equalTo(AS(-22))
+            make.bottom.equalTo(AS(-6.5))
         }
         
-        let titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: 21) ?? 0
+        let titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(21)) ?? 0
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(15)
-            make.left.equalTo(22)
+            make.top.equalTo(AS(15))
+            make.left.equalTo(AS(22))
             make.width.equalTo(titleWidth)
-            make.height.equalTo(21)
+            make.height.equalTo(AS(21))
         }
         
-        let countWidth = countLabel.text?.textWidth(font: countLabel.font, height: 17) ?? 0
+        let countWidth = countLabel.text?.textWidth(font: countLabel.font, height: AS(17)) ?? 0
         countLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(titleLabel)
-            make.left.equalTo(titleLabel.snp.right).offset(10)
+            make.left.equalTo(titleLabel.snp.right).offset(AS(10))
             make.width.equalTo(countWidth)
-            make.height.equalTo(17)
+            make.height.equalTo(AS(17))
         }
         
         
         if reviewPlanModel?.listenState != .normal {
-            let subTitleWidth = subTitleLabel.text?.textWidth(font: subTitleLabel.font, height: 17) ?? 0
+            let subTitleWidth = subTitleLabel.text?.textWidth(font: subTitleLabel.font, height: AS(17)) ?? 0
             subTitleLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(titleLabel.snp.bottom).offset(5)
+                make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
                 make.left.equalTo(titleLabel)
                 make.width.equalTo(subTitleWidth)
-                make.height.equalTo(17)
+                make.height.equalTo(AS(17))
             }
         }
         
@@ -133,50 +133,50 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         if reviewPlanModel?.listenState == .finish {
             listenStarView.snp.makeConstraints { (make) in
                 make.centerY.equalTo(subTitleLabel)
-                make.left.equalTo(subTitleLabel.snp.right).offset(1)
-                make.width.equalTo(14)
-                make.height.equalTo(48)
+                make.left.equalTo(subTitleLabel.snp.right).offset(AS(1))
+                make.width.equalTo(AS(14))
+                make.height.equalTo(AS(48))
             }
         }
         
         
         listenImageView.snp.makeConstraints { (make) in
-            make.left.equalTo(23)
-            make.bottom.equalTo(-23)
-            make.width.height.equalTo(15)
+            make.left.equalTo(AS(23))
+            make.bottom.equalTo(AS(-23))
+            make.width.height.equalTo(AS(15))
         }
         
         listenButton.snp.makeConstraints { (make) in
-            make.left.equalTo(listenImageView.snp.right).offset(7)
-            make.width.equalTo(49)
-            make.height.equalTo(17)
-            make.bottom.equalTo(-22)
+            make.left.equalTo(listenImageView.snp.right).offset(AS(7))
+            make.width.equalTo(AS(49))
+            make.height.equalTo(AS(17))
+            make.bottom.equalTo(AS(-22))
         }
         
         
         reviewButton.snp.makeConstraints { (make) in
-            make.right.equalTo(-9)
-            make.bottom.equalTo(-14)
-            make.width.equalTo(96)
-            make.height.equalTo(30)
+            make.right.equalTo(AS(-9))
+            make.bottom.equalTo(AS(-14))
+            make.width.equalTo(AS(96))
+            make.height.equalTo(AS(30))
         }
         
         
         if reviewPlanModel?.reviewState == .learning {
             reviewProgressView.snp.makeConstraints { (make) in
-                make.top.equalTo(26)
-                make.right.equalTo(17)
-                make.width.equalTo(81)
-                make.height.equalTo(27)
+                make.top.equalTo(AS(26))
+                make.right.equalTo(AS(17))
+                make.width.equalTo(AS(81))
+                make.height.equalTo(AS(27))
             }
         }
         
         if reviewPlanModel?.reviewState == .finish {
             reviewStarView.snp.makeConstraints { (make) in
-                make.top.equalTo(26)
-                make.right.equalTo(17)
-                make.width.equalTo(81)
-                make.height.equalTo(27)
+                make.top.equalTo(AS(26))
+                make.right.equalTo(AS(17))
+                make.width.equalTo(AS(81))
+                make.height.equalTo(AS(27))
             }
         }
         
@@ -197,7 +197,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     override class func viewHeight(model: YXReviewPlanModel) -> CGFloat {
         let vHeight: CGFloat = model.listenState != .normal || model.reviewState != .normal ? 120 : 103
-        return vHeight
+        return AS(vHeight)
     }
     
     

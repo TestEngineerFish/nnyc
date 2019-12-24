@@ -16,7 +16,7 @@ class YXReviewLearningProgressView: YXTopWindowView {
         
     var imageView = UIImageView()
     var titleLabel = UILabel()
-    var progressView = YXReviewProgressView(type: .iKnow)
+    var progressView = YXReviewProgressView(type: .iKnow, cornerRadius: AS(4))
     
     var subTitleLable1 = UILabel()
     var subTitleLable2 = UILabel()

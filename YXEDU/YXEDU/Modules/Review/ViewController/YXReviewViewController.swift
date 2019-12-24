@@ -30,9 +30,9 @@ class YXReviewViewController: YXTableViewController {
         super.viewWillLayoutSubviews()
         
         self.tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(41 + kSafeBottomMargin)
+            make.top.equalTo(AS(41 + kSafeBottomMargin))
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(-kSafeBottomMargin - kTabBarHeight)
+            make.bottom.equalTo(AS(-kSafeBottomMargin - kTabBarHeight))
         }
     }
     
@@ -56,7 +56,7 @@ class YXReviewViewController: YXTableViewController {
     
     
     func configHeaderView() {
-        self.headerView.size = CGSize(width: screenWidth, height: 453.5)
+        self.headerView.size = CGSize(width: screenWidth, height: AS(453.5))
         
         self.headerView.startReviewEvent = { [weak self] in
             self?.startReviewEvent()
@@ -74,10 +74,10 @@ class YXReviewViewController: YXTableViewController {
     
     
     func configFooterView() {
-        self.footerView.size = CGSize(width: screenWidth, height: 251)
+        self.footerView.size = CGSize(width: screenWidth, height: AS(251))
         self.footerView.createReviewPlanEvent = { [weak self] in
-             self?.createReviewEvent()
-         }
+            self?.createReviewEvent()
+        }
     }
     
     

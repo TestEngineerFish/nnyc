@@ -10,6 +10,10 @@ import UIKit
 
 class YXView: UIView {
     
+    deinit {
+        print("资源释放", self.classForCoder)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

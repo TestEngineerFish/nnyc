@@ -54,22 +54,22 @@ class YXReviewPlanCommandView: YXTopWindowView {
         
         
         titleLabel.textColor = UIColor.black1
-        titleLabel.font = UIFont.regularFont(ofSize: 15)
+        titleLabel.font = UIFont.regularFont(ofSize: AS(15))
         
         subTitleLable.textColor = UIColor.black3
-        subTitleLable.font = UIFont.regularFont(ofSize: 14)
+        subTitleLable.font = UIFont.regularFont(ofSize: AS(14))
         
 //        descLabel.textColor = UIColor.black3
-        descLabel.font = UIFont.regularFont(ofSize: 14)
+        descLabel.font = UIFont.regularFont(ofSize: AS(14))
         
         
         
         detailButton.layer.masksToBounds = true
-        detailButton.layer.cornerRadius = 20
+        detailButton.layer.cornerRadius = AS(20)
         detailButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
         detailButton.setTitle("查看详情", for: .normal)
         detailButton.setTitleColor(UIColor.white, for: .normal)
-        detailButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
+        detailButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
         detailButton.addTarget(self, action: #selector(clickDetailButton), for: .touchUpInside)
         
         closeButton.setImage(UIImage(named: "share_scan_close"), for: .normal)
@@ -81,57 +81,57 @@ class YXReviewPlanCommandView: YXTopWindowView {
         
         contentView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.equalTo(AdaptSize(304))
-            make.height.equalTo(AdaptSize(214))
+            make.width.equalTo(AS(304))
+            make.height.equalTo(AS(214))
         }
         
         iconImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(AdaptSize(33))
-            make.left.equalTo(AdaptSize(85))
-            make.width.equalTo(AdaptSize(38))
-            make.height.equalTo(AdaptSize(40))
+            make.top.equalTo(AS(33))
+            make.left.equalTo(AS(85))
+            make.width.equalTo(AS(38))
+            make.height.equalTo(AS(40))
         }
         
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(AdaptSize(33))
-            make.left.equalTo(iconImageView.snp.right).offset(AdaptSize(17))
-            make.right.equalTo(AdaptSize(-20))
-            make.height.equalTo(AdaptSize(21))
+            make.top.equalTo(AS(33))
+            make.left.equalTo(iconImageView.snp.right).offset(AS(17))
+            make.right.equalTo(AS(-20))
+            make.height.equalTo(AS(21))
         }
         
         subTitleLable.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(AdaptSize(3))
-            make.left.equalTo(iconImageView.snp.right).offset(AdaptSize(17))
-            make.right.equalTo(AdaptSize(-20))
-            make.height.equalTo(AdaptSize(20))
+            make.top.equalTo(titleLabel.snp.bottom).offset(AS(3))
+            make.left.equalTo(iconImageView.snp.right).offset(AS(17))
+            make.right.equalTo(AS(-20))
+            make.height.equalTo(AS(20))
         }
         
         shareImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(AdaptSize(96))
-            make.left.equalTo(AdaptSize(49))
-            make.width.equalTo(AdaptSize(19))
-            make.height.equalTo(AdaptSize(19))
+            make.top.equalTo(AS(96))
+            make.left.equalTo(AS(49))
+            make.width.equalTo(AS(19))
+            make.height.equalTo(AS(19))
         }
         
         descLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(AdaptSize(98))
-            make.left.equalTo(shareImageView.snp.right).offset(AdaptSize(49))
-            make.right.equalTo(AdaptSize(-20))
-            make.height.equalTo(AdaptSize(20))
+            make.top.equalTo(AS(98))
+            make.left.equalTo(shareImageView.snp.right).offset(AS(49))
+            make.right.equalTo(AS(-20))
+            make.height.equalTo(AS(20))
         }
         
         detailButton.snp.makeConstraints { (make) in
-            make.top.equalTo(descLabel.snp.bottom).offset(AdaptSize(26))
-            make.left.equalTo(AdaptSize(40))
-            make.right.equalTo(AdaptSize(-40))
-            make.height.equalTo(AdaptSize(40))
+            make.top.equalTo(descLabel.snp.bottom).offset(AS(26))
+            make.left.equalTo(AS(40))
+            make.right.equalTo(AS(-40))
+            make.height.equalTo(AS(40))
         }
         
         closeButton.snp.makeConstraints { (make) in
-            make.top.equalTo(AdaptSize(6))
-            make.right.equalTo(AdaptSize(-6))
-            make.width.equalTo(AdaptSize(22))
-            make.height.equalTo(AdaptSize(22))
+            make.top.equalTo(AS(6))
+            make.right.equalTo(AS(-6))
+            make.width.equalTo(AS(22))
+            make.height.equalTo(AS(22))
         }
         
     }
@@ -160,10 +160,10 @@ class YXReviewPlanCommandView: YXTopWindowView {
         
         let attrString = NSMutableAttributedString(string: "来自 \(model?.nickname ?? "") 分享的复习计划")
                         
-        let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: 14),.foregroundColor: color1]
+        let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: AS(14)),.foregroundColor: color1]
         attrString.addAttributes(all, range: NSRange(location: 0, length: attrString.length))
         
-        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.regularFont(ofSize: 14),.foregroundColor: color2]
+        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.regularFont(ofSize: AS(14)),.foregroundColor: color2]
         attrString.addAttributes(nicknameAttr, range: NSRange(location: 3, length: model?.nickname?.count ?? 0))
 
         return attrString
