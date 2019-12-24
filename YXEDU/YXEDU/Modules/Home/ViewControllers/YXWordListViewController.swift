@@ -40,6 +40,22 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         self.view.addSubview(wordListView)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.orange1
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditWordList" {
             let editWordListViewController = segue.destination as! YXEditWordListViewController
@@ -99,9 +115,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     func segment(_ segment: BPSegmentView, itemForRowAt indexPath: IndexPath) -> UIView {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor.orange1
         
         let label = UILabel()
+        label.textColor = .white
         switch indexPath.row {
         case 0:
             label.text = "已学词"

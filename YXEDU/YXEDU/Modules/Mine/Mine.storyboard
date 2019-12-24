@@ -66,14 +66,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MineBigLogo" translatesAutoresizingMaskIntoConstraints="NO" id="J21-wq-Dzo">
-                                <rect key="frame" x="141.66666666666666" y="140" width="92" height="120"/>
+                                <rect key="frame" x="141.66666666666666" y="184" width="92" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="92" id="Yms-4h-4d9"/>
                                     <constraint firstAttribute="height" constant="120" id="jeG-n4-9cs"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qei-kz-KWI">
-                                <rect key="frame" x="178.66666666666666" y="262" width="18" height="24"/>
+                                <rect key="frame" x="178.66666666666666" y="306" width="18" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -142,7 +142,7 @@
                             <constraint firstItem="qei-kz-KWI" firstAttribute="centerX" secondItem="lRi-Ce-Ezh" secondAttribute="centerX" id="Wh9-6Y-V0Z"/>
                             <constraint firstItem="QOb-hD-5PX" firstAttribute="centerY" secondItem="lRi-Ce-Ezh" secondAttribute="centerY" constant="88" id="Xj1-KZ-9SW"/>
                             <constraint firstItem="QOb-hD-5PX" firstAttribute="leading" secondItem="xuW-Dh-b82" secondAttribute="leading" constant="40" id="YdT-ez-kyg"/>
-                            <constraint firstItem="qei-kz-KWI" firstAttribute="centerY" secondItem="lRi-Ce-Ezh" secondAttribute="centerY" constant="-88" id="aBN-xc-KdF"/>
+                            <constraint firstItem="qei-kz-KWI" firstAttribute="centerY" secondItem="lRi-Ce-Ezh" secondAttribute="centerY" constant="-44" id="aBN-xc-KdF"/>
                             <constraint firstItem="xuW-Dh-b82" firstAttribute="trailing" secondItem="QOb-hD-5PX" secondAttribute="trailing" constant="40" id="y1b-RN-lwz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xuW-Dh-b82"/>
@@ -410,9 +410,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mineBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Tpd-ZG-Onf">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="136"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="176"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="136" id="ENO-XS-yH7"/>
+                                    <constraint firstAttribute="height" constant="176" id="ENO-XS-yH7"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5cD-or-D31">
@@ -428,7 +428,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0p-vt-y9f">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar_squirrel" translatesAutoresizingMaskIntoConstraints="NO" id="ZxI-93-Dkk" customClass="YXDesignableImageView" customModule="YXEDU" customModuleProvider="target">
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZxI-93-Dkk" customClass="YXDesignableImageView" customModule="YXEDU" customModuleProvider="target">
                                                 <rect key="frame" x="162.66666666666666" y="36" width="50" height="50"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
@@ -437,7 +437,7 @@
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="22"/>
+                                                        <real key="value" value="25"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1092,7 +1092,6 @@
     <resources>
         <image name="MineBigLogo" width="93" height="122"/>
         <image name="back" width="22" height="22"/>
-        <image name="calendar_squirrel" width="75" height="84"/>
         <image name="go" width="8" height="14"/>
         <image name="mineAccountInfo" width="18" height="18"/>
         <image name="mineBackground" width="375" height="137"/>

@@ -35,21 +35,22 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        customNavigationBar?.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
         
         loadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     deinit {

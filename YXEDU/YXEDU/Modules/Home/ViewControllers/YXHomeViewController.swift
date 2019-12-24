@@ -77,9 +77,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         let lineView = UIView(frame: CGRect(x: 0, y: -0.5, width: screenWidth, height: 0.5))
         lineView.backgroundColor = UIColor.hex(0xDCDCDC)
         self.tabBarController?.tabBar.addSubview(lineView)
-        
+
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
         progressBar.progressImage = progressBar.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
         
@@ -91,7 +90,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
         tabBarController?.tabBar.isHidden = false
         
         if isCheckingLoginState == false {
@@ -171,21 +170,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
                 
-                DispatchQueue.global().async {
-                    var wordBook = YXWordBookModel()
-                    wordBook.bookId = self.homeModel.bookId
-                    wordBook.bookJsonSourcePath = self.homeModel.bookSource
-                    wordBook.bookHash = self.homeModel.bookHash
-                    YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
-                        DispatchQueue.main.async {
-                            if isSuccess {
-
-                            } else {
-
-                            }
-                        }
-                    }
-                }
+                var wordBook = YXWordBookModel()
+                wordBook.bookId = self.homeModel.bookId
+                wordBook.bookJsonSourcePath = self.homeModel.bookSource
+                wordBook.bookHash = self.homeModel.bookHash
+                YXWordBookResourceManager.shared.download(wordBook, nil)
                 
             } catch {
                 print(error)

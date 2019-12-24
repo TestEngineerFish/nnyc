@@ -54,7 +54,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             self.reloadDailyData()
 
         }) { (error) in
-            
+
         }
         
         let taskListRequest = YXTaskCenterRequest.taskList
@@ -63,10 +63,26 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             self.taskTableViewHeight.constant = CGFloat(self.taskLists.count * 172)
 
             self.taskTableView.reloadData()
-            
+
         }) { (error) in
-            
+
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.navigationController?.navigationBar.barTintColor = UIColor.orange1
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.tintColor = UIColor.black
     }
     
     private func reloadDailyData() {
@@ -221,7 +237,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             
             cell.titleLabel.text = task?.name
             cell.integral = task?.integral ?? 0
-            cell.taskType = YXTaskCardType(rawValue: task?.taskType  ?? 0) ?? .cyanBlueCard
+            cell.taskColor = YXTaskCardType(rawValue: task?.taskColor  ?? 0) ?? .cyanBlueCard
             cell.cardStatus = YXTaskCardStatus(rawValue: task?.state ?? 0) ?? .incomplete
             cell.didRepeat = taskList.typeName == "每日任务" ? true : false
             cell.adjustCell()
@@ -229,11 +245,17 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             cell.todoClosure = {
                 switch task?.actionType {
                 case 0:
+                    self.navigationController?.popViewController(animated: true)
                     break
-
+                    
                 case 1:
+                    self.tabBarController?.selectedIndex = 2
+                    self.navigationController?.popViewController(animated: true)
                     break
 
+                case 2:
+                    break
+                    
                 default:
                     break
                 }

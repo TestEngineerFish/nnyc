@@ -31,7 +31,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
 
     var integral = 0
     var didRepeat = false
-    var taskType: YXTaskCardType = .cyanBlueCard
+    var taskColor: YXTaskCardType = .cyanBlueCard
     var cardStatus: YXTaskCardStatus = .incomplete
 
     @IBOutlet weak var backgroungImageView: UIImageView!
@@ -68,7 +68,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
 
         getCoinButton.setTitle("领取\(integral)", for: .normal)
         
-        switch taskType {
+        switch taskColor {
         case .cyanBlueCard:
             backgroungImageView.image = #imageLiteral(resourceName: "cyanBlueCard")
             titleLabel.layer.shadowColor = UIColor.hex(0x5185E0).cgColor
