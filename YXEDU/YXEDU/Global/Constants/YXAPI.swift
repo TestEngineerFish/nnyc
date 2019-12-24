@@ -116,6 +116,8 @@ struct YXAPI {
         static let playGame = "/api/v1/game/starting"
         /// 游戏结果上报接口
         static let gameReport = "/api/v1/game/stopping"
+        /// 挑战排名接口
+        static let rankedList = "/api/v1/game/ranking"
     }
     
     //MARK: - 设置模块

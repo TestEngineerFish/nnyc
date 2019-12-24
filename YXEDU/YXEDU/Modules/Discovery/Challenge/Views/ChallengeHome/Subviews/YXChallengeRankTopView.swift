@@ -154,7 +154,7 @@ class YXChallengeRankTopView: UIView {
 
         nameLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(AdaptSize(-50))
+            make.bottom.equalToSuperview().offset(AdaptSize(-43))
             make.width.equalToSuperview()
             make.height.equalTo(AdaptSize(20))
         }
@@ -175,20 +175,20 @@ class YXChallengeRankTopView: UIView {
 
         separateView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
-            make.left.equalTo(bonusLabel.snp.right).offset(AdaptSize(3))
+            make.left.equalTo(bonusLabel.snp.right).offset(AdaptSize(4))
             make.size.equalTo(CGSize(width: AdaptSize(1), height: AdaptSize(26)))
         }
 
         questionLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(separateView.snp.right).offset(AdaptSize(3))
-            make.right.equalToSuperview().offset(AdaptSize(-3))
+            make.left.equalTo(separateView.snp.right).offset(AdaptSize(5))
+            make.right.equalToSuperview()
             make.top.equalTo(goldIconImageView)
             make.height.equalTo(AdaptSize(17))
         }
 
         consumeTimeLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(separateView.snp.right).offset(AdaptSize(3))
-            make.right.equalToSuperview().offset(AdaptSize(-3))
+            make.left.equalTo(questionLabel)
+            make.right.equalToSuperview()
             make.top.equalTo(questionLabel.snp.bottom)
             make.height.equalTo(AdaptSize(17))
         }

@@ -26,8 +26,8 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     private func setSubviews() {
         self.view.addSubview(tableView)
-        self.tableView.delegate   = self
-        self.tableView.dataSource = self
+        self.tableView.delegate        = self
+        self.tableView.dataSource      = self
         self.tableView.separatorStyle  = .none
         self.tableView.backgroundColor = UIColor.hex(0xE9DDC4)
         self.tableView.register(YXChallengeRankCell.classForCoder(), forCellReuseIdentifier: kYXChallengeRankCell)
@@ -39,7 +39,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Request ====
     private func requestChallengeData() {
-        let request = YXChallengeRequest.challengeModel(flag: "")
+        let request = YXChallengeRequest.challengeModel
         YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
             self.challengeModel = response.data
             self.tableView.reloadData()
@@ -53,6 +53,13 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         let vc = YXGameViewController()
 //        let vc = YXShareViewController()
 //        vc.titleString = "挑战分享"
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    @objc private func previousRank() {
+        let vc = YXPreviousRankViewController()
+        vc.gameVersion = 2
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -80,6 +87,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         view.addSubview(headerView)
         view.addSubview(top3View)
         headerView.startButton.addTarget(self, action: #selector(playGame), for: .touchUpInside)
+        headerView.previousRankButton.addTarget(self, action: #selector(previousRank), for: .touchUpInside)
         headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(AdaptSize(297))
@@ -149,7 +157,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         } else {
             return AdaptSize(30)
         }
-
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -21,8 +21,8 @@ class YXChallengeRankTop3View: UIView {
         let button = UIButton()
         button.setTitle("排行榜", for: .normal)
         button.setTitleColor(UIColor.orange1, for: .normal)
-        button.titleLabel?.font = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
-        button.isEnabled = false
+        button.titleLabel?.font   = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
+        button.isEnabled          = false
         button.backgroundColor    = UIColor.hex(0xF8F6F0)
         button.layer.borderColor  = UIColor.hex(0xFFD38E).cgColor
         button.layer.borderWidth  = 2
