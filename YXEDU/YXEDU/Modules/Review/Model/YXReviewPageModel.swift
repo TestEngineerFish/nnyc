@@ -8,6 +8,13 @@
 
 import ObjectMapper
 
+enum ReviewPlanState: Int {
+    case normal     = 0 // 未开始
+    case learning   = 1 // 进行中
+    case finish     = 2 // 完成
+}
+
+
 class YXReviewPageModel: Mappable {
 
     var learnNum: Int = 0
@@ -35,11 +42,6 @@ class YXReviewPageModel: Mappable {
 
 class YXReviewPlanModel: Mappable {
     
-    enum ReviewPlanState: Int {
-        case normal     = 0 // 未开始
-        case learning   = 1 // 进行中
-        case finish     = 2 // 完成
-    }
     var planId: Int = -1
     var planName: String = ""
     var listen: Int = 0
@@ -66,19 +68,19 @@ class YXReviewPlanModel: Mappable {
 
 struct YXReviewPlanStateTransform: TransformType {
         
-    typealias Object = YXReviewPlanModel.ReviewPlanState
+    typealias Object = ReviewPlanState
     typealias JSON = Int
     
     init() {}
     
-    func transformFromJSON(_ value: Any?) -> YXReviewPlanModel.ReviewPlanState? {
-        if let v = value as? Int, let state = YXReviewPlanModel.ReviewPlanState(rawValue: v) {
+    func transformFromJSON(_ value: Any?) -> ReviewPlanState? {
+        if let v = value as? Int, let state = ReviewPlanState(rawValue: v) {
             return state
         }
         return .normal
     }
     
-    func transformToJSON(_ value: YXReviewPlanModel.ReviewPlanState?) -> Int? {
+    func transformToJSON(_ value: ReviewPlanState?) -> Int? {
         return value?.rawValue
     }
 

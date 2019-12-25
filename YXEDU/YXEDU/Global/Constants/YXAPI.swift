@@ -69,7 +69,9 @@ struct YXAPI {
         /// 获得复习计划详情
         static let reviewPlanDetail = "/api/v1/learn/getreviewplaninfo"
         /// 口令查询
-        static let checkCommand = "/api/v1/learn/getsharereviewplan"
+        static let checkCommand = "/api/v1/learn/getsharereviewplan"        
+        /// 复习结果页
+        static let reviewResult = "/api/v1/learn/result"
     }
 
     // MARK: - 单词列表模块

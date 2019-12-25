@@ -9,14 +9,14 @@
 import UIKit
 
 class YXReviewViewController: YXTableViewController {
-    
-    
+        
     var headerView = YXReviewHeaderView()
     var footerView = YXReviewPlanEmptyView()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
@@ -31,8 +31,8 @@ class YXReviewViewController: YXTableViewController {
         
         self.tableView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(41 + kSafeBottomMargin))
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(AS(-kTabBarHeight))
+            make.left.right.bottom.equalToSuperview()
+//            make.bottom.equalTo(AS(-kTabBarHeight))
         }
     }
     
@@ -158,17 +158,12 @@ extension YXReviewViewController {
     
     /// 开始智能复习
     func startReviewEvent() {
-//        let vc = YXSearchViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
-                let commandView = YXReviewPlanCommandView()
-        //        commandView.model = commandModel
-                commandView.show()
-                
-                commandView.detailEvent = {
-        //            self.goToReviewPlanDetail(planId: commandModel.planId)
-                    commandView.removeFromSuperview()
-                }
+        let vc = YXExerciseViewController()
+        vc.dataType = .aiReview
+//        vc.bookId = homeModel?.bookId ?? 0
+//        vc.unitId = homeModel?.unitId ?? 0
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     /// 开始复习 —— 复习计划

@@ -121,7 +121,7 @@
             dataManager.fetchLocalExerciseModels()
             
             // 先上报关卡
-            dataManager.reportUnit {[weak self] (result, msg) in
+            dataManager.reportUnit(type: dataType, time: 0) {[weak self] (result, msg) in
                 guard let self = self else { return }
                 if result {
                     self.fetchExerciseData()
@@ -166,7 +166,7 @@
         headerView.reviewProgress = "\(data.1)"
         
         if var model = data.2 {
-            model.type = .listenFillWord
+//            model.type = .listenFillWord
             
             // 新学隐藏提示
             let tipsHidden = (model.type == .newLearnPrimarySchool_Group || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
@@ -196,7 +196,7 @@
             dataManager.progressManager.completionExercise()
             
             // 学完，上报
-            dataManager.reportUnit { [weak self] (result, errorMsg) in
+            dataManager.reportUnit(type: dataType, time: 0) { [weak self] (result, errorMsg) in
                 guard let self = self else {return}
                 if result {
                     let progress = self.dataManager.progressManager.loadLocalWordsProgress()

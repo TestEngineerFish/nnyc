@@ -28,4 +28,19 @@ struct YXReviewDataManager {
             completion?(nil, error.message)
         }
     }
+    
+    
+    /// 上报复习结果
+    /// - Parameters:
+    ///   - type: <#type description#>
+    ///   - planId: <#planId description#>
+    ///   - completion: <#completion description#>
+    func reportReviewResult(type: YXExerciseDataType, planId: Int, completion: ((_ model: YXReviewResultModel?, _ errorMsg: String?) -> Void)?) {
+        let request = YXReviewRequest.reviewResult(type: type.rawValue, planId: planId)
+        YYNetworkService.default.request(YYStructResponse<YXReviewResultModel>.self, request: request, success: { (response) in
+            completion?(response.data, nil)
+        }) { (error) in
+            completion?(nil, error.message)
+        }
+    }
 }

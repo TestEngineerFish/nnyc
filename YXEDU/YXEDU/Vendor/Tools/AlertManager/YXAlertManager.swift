@@ -61,15 +61,14 @@ class YXAlertManager {
                     YYCache.set(appVersion, forKey: key)
 
                 } else if versionModel.state == .force {
-                    alertView.leftButton.isHidden = true
+                    alertView.shouldOnlyShowOneButton = true
                 }
                                                 
                 alertView.titleLabel.text = "版本更新"
                 alertView.descriptionLabel.text = versionModel.content
                 alertView.doneClosure = { (str) in
                     guard let url = URL(string: versionModel.url ?? "") else { return }
-                    UIApplication.shared.open(url, options: [:]) { (result) in
-                        
+                    UIApplication.shared.open(url, options: [:]) { (result) in                        
                     }
                 }
                 
@@ -88,6 +87,7 @@ class YXAlertManager {
         
         alertView.leftButton.isHidden = true
         alertView.rightOrCenterButton.isHidden = true
+        alertView.shouldDismissWhenTapBackground = false
         
         alertView.show()
     }

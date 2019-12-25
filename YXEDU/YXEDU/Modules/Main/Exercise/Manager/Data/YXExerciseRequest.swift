@@ -12,7 +12,7 @@ public enum YXExerciseRequest: YYBaseRequest {
     case exercise(type: Int, planId: Int?)
     case learnMap(bookId: Int)
     case learnResult(bookId: Int, unitId: Int)
-    case report(json: String)
+    case report(type: Int, time: Int, result: String)
     case addUserBook(userId: String, bookId: Int, unitId: Int)
 }
 
@@ -52,8 +52,8 @@ extension YXExerciseRequest {
             return ["book_id" : bookId, "unit_id" : unitId]
         case .addUserBook(let userId, let bookId, let unitId):
             return ["user_id":userId, "book_id":bookId, "unit_id":unitId]
-        case .report(let json):
-            return ["json" : json]
+        case .report(let type, let time, let result):
+            return ["learn_type" : type, "cost_time" : time, "learn_result" : result]
         default:
             return nil
         }
@@ -62,7 +62,7 @@ extension YXExerciseRequest {
 
     var isHttpBody: Bool {
         switch self {
-        case .report: return true
+//        case .report: return true
         default: return false
         }
     }
