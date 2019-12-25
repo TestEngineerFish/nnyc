@@ -18,13 +18,56 @@ enum YXWordListType {
 class YXWordListViewController: UIViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
-    
+    var wordId: Int!
+
     private var learnedWords: [YXWordModel]!
     private var notLearnedWords: [YXWordModel]!
     private var collectedWords: [YXWordModel]!
     private var wrongWordList: YXWrongWordListModel!
     private var orderType: [YXWordListOrderType] = [.default, .default, .default, .default]
 
+    private var wordListHeaderViews: [UIView] = {
+        var views: [UIView] = []
+        
+        for index in 1...4 {
+            let view = UIView()
+            view.backgroundColor = UIColor.orange1
+            
+            let label = UILabel()
+            label.tag = 1
+            label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+            label.textColor = .white
+            switch index {
+            case 1:
+                label.text = "已学词"
+                break
+                
+            case 2:
+                label.text = "未学词"
+                break
+                
+            case 3:
+                label.text = "收藏夹"
+                break
+                
+            case 4:
+                label.text = "错词本"
+                break
+                
+            default:
+                break
+            }
+            
+            view.addSubview(label)
+            label.snp.makeConstraints { (make) in
+                make.center.equalToSuperview()
+            }
+            
+            views.append(view)
+        }
+        
+        return views
+    }()
     private var wordListView: BPSegmentControllerView!
     
     @IBAction func back(_ sender: Any) {
@@ -36,6 +79,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         
         wordListView = BPSegmentControllerView(BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0), frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
         wordListView.delegate = self
+        wordListView.bindData()
         
         self.view.addSubview(wordListView)
     }
@@ -87,6 +131,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             default:
                 break
             }
+            
+        } else if segue.identifier == "WordDetail" {
+            let wordDetailViewController = segue.destination as! YXWordDetailViewControllerNew
+            wordDetailViewController.wordId = wordId
         }
     }
     
@@ -109,43 +157,13 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         }
     }
     
+    
     func pagesNumber() -> Int {
-        return 4
+        return wordListHeaderViews.count
     }
     
     func segment(_ segment: BPSegmentView, itemForRowAt indexPath: IndexPath) -> UIView {
-        let view = UIView()
-        view.backgroundColor = UIColor.orange1
-        
-        let label = UILabel()
-        label.textColor = .white
-        switch indexPath.row {
-        case 0:
-            label.text = "已学词"
-            break
-            
-        case 1:
-            label.text = "未学词"
-            break
-            
-        case 2:
-            label.text = "收藏夹"
-            break
-            
-        case 3:
-            label.text = "错词本"
-            break
-            
-        default:
-            break
-        }
-        
-        view.addSubview(label)
-        label.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-        }
-        
-        return view
+        return wordListHeaderViews[indexPath.row]
     }
     
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
@@ -251,7 +269,6 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             
             wordListView.isWrongWordList = true
             wordListView.shouldShowEditButton = false
-            wordListView.shouldShowBottomView = true
             wordListView.orderType = orderType[3]
             wordListView.orderClosure = { type in
                 self.orderType[3] = type
@@ -286,6 +303,17 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             
         default:
             break
+        }
+        
+        for index in 0..<wordListHeaderViews.count {
+            let label = wordListHeaderViews[index].viewWithTag(1) as! UILabel
+
+            if index == indexPath.row {
+                label.textColor = .white
+                
+            } else {
+                label.textColor = UIColor.hex(0xFFD99E)
+            }
         }
     }
 }

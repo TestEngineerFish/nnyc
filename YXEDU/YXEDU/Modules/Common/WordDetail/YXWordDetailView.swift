@@ -20,7 +20,7 @@ class YXWordDetailView: UIView {
     
     @IBAction func collectWord(_ sender: UIButton) {
         if self.collectionButton.currentImage == #imageLiteral(resourceName: "unCollectWord") {
-            let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(word.wordId ?? 0),\"is\":\(word.isComplexWord ?? 0)},")
+            let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(word.wordId ?? 0),\"is\":\(word.isComplexWord ?? 0)}]")
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 self.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
                 

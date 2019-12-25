@@ -70,6 +70,9 @@ class YXUserModel: NSObject {
             YYCache.set(userAvatarPath, forKey: "UserAvatarPath")
         }
     }
+    
+    var didFinishDownloadCurrentStudyWordBook = false
+    var didFinishDownloadAllStudyWordBooks = false
 
     func login() {
         let storyboard = UIStoryboard(name:"Main", bundle: nil)

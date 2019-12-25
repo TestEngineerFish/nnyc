@@ -54,7 +54,7 @@ extension YXWordListRequest {
 }
 
 extension YXWordListRequest {
-    var parameters: [String : Any]? {
+    var parameters: [String : Any?]? {
         switch self {
         case .wordList(let type):
             return ["type": type]

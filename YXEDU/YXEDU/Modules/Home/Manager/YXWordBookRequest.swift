@@ -9,11 +9,12 @@
 import UIKit
 
 public enum YXWordBookRequest: YYBaseRequest {
-    case downloadWordBook(bookId: Int)
-    
+    case downloadWordBook(bookId: Int?)
+    case addWordBook(userId: String, bookId: Int, unitId: Int)
+
     var method: YYHTTPMethod {
         switch self {
-        case .downloadWordBook:
+        case .downloadWordBook, .addWordBook:
             return .get
         }
     }
@@ -22,13 +23,24 @@ public enum YXWordBookRequest: YYBaseRequest {
         switch self {
         case .downloadWordBook:
             return YXAPI.Word.downloadWordBook
+            
+        case .addWordBook:
+            return YXAPI.Word.addUserBook
         }
     }
     
-    var parameters: [String : Any]? {
+    var parameters: [String : Any?]? {
         switch self {
         case .downloadWordBook(let bookId):
-            return ["book_id": bookId]
+            if let bookId = bookId {
+                return ["book_id": bookId]
+                
+            } else {
+                return nil
+            }
+            
+        case .addWordBook(let userId, let bookId, let unitId):
+            return ["user_id": userId, "book_id": bookId, "unit_id": unitId]
         }
     }
 }

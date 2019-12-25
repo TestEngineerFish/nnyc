@@ -9,13 +9,17 @@
 import UIKit
 
 public enum YXRegisterAndLoginRequest: YYBaseRequest {
-    case login(phoneNumber: String, code: Int)
     case sendSms(phoneNumber: String, loginType: String, SlidingVerificationCode: String?)
+    case login(phoneNumber: String, code: Int)
+    case userInfomation
     
     var method: YYHTTPMethod {
         switch self {
-        case .login, .sendSms:
+        case .sendSms, .login:
             return .post
+            
+        case .userInfomation:
+            return .get
         }
     }
     
@@ -26,10 +30,13 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
             
         case .sendSms:
             return YXAPI.RegisterAndLogin.sendSms
+            
+        case .userInfomation:
+            return YXAPI.Profile.userInformation
         }
     }
     
-    var parameters: [String : Any]? {
+    var parameters: [String : Any?]? {
         switch self {
         case .login(let phoneNumber, let code):
             return ["phone": phoneNumber, "code": code]
@@ -41,6 +48,9 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
             } else {
                 return ["mobile": phoneNumber, "type": loginType]
             }
+            
+        default:
+            return nil
         }
     }
 }

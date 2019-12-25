@@ -40,7 +40,7 @@ public enum YXTaskCenterRequest: YYBaseRequest {
         }
     }
     
-    var parameters: [String : Any]? {
+    var parameters: [String : Any?]? {
         switch self {
         case .getIntegral(let taskId):
             return ["task_id": taskId]

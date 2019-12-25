@@ -415,14 +415,7 @@
                                     <constraint firstAttribute="height" constant="176" id="ENO-XS-yH7"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5cD-or-D31">
-                                <rect key="frame" x="0.0" y="724" width="355" height="0.0"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" id="NQh-Rt-cyD"/>
-                                </constraints>
-                            </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="sep-yw-UpI">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="sep-yw-UpI">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0p-vt-y9f">
@@ -615,7 +608,7 @@
                                                 </constraints>
                                                 <state key="normal" image="go"/>
                                                 <connections>
-                                                    <segue destination="Kmr-3i-3ce" kind="show" identifier="Badge" id="90S-Ki-QBb"/>
+                                                    <segue destination="Kmr-3i-3ce" kind="show" identifier="BadgeList" id="90S-Ki-QBb"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXr-TQ-XFQ">
@@ -990,13 +983,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Tpd-ZG-Onf" firstAttribute="top" secondItem="NPY-jv-O3s" secondAttribute="top" id="4lB-ub-aUC"/>
-                            <constraint firstAttribute="trailing" secondItem="5cD-or-D31" secondAttribute="trailing" constant="20" symbolic="YES" id="N0m-el-c3X"/>
-                            <constraint firstItem="5cD-or-D31" firstAttribute="leading" secondItem="NPY-jv-O3s" secondAttribute="leading" id="P1f-iV-8ji"/>
                             <constraint firstAttribute="bottomMargin" secondItem="sep-yw-UpI" secondAttribute="bottom" id="RYT-Sl-lsq"/>
                             <constraint firstItem="Tpd-ZG-Onf" firstAttribute="leading" secondItem="chs-8F-nsO" secondAttribute="leading" id="bF9-z4-qzE"/>
                             <constraint firstItem="sep-yw-UpI" firstAttribute="leading" secondItem="chs-8F-nsO" secondAttribute="leading" id="cjK-zg-eb7"/>
                             <constraint firstItem="sep-yw-UpI" firstAttribute="top" secondItem="NPY-jv-O3s" secondAttribute="topMargin" id="fL9-Ns-g3M"/>
-                            <constraint firstAttribute="bottom" secondItem="5cD-or-D31" secondAttribute="bottom" id="g6w-K7-51y"/>
                             <constraint firstItem="chs-8F-nsO" firstAttribute="trailing" secondItem="sep-yw-UpI" secondAttribute="trailing" id="nwo-xi-CFG"/>
                             <constraint firstItem="chs-8F-nsO" firstAttribute="trailing" secondItem="Tpd-ZG-Onf" secondAttribute="trailing" id="uCh-ma-H7w"/>
                         </constraints>
@@ -1057,16 +1047,39 @@
         <!--我的徽章-->
         <scene sceneID="vt1-aC-weC">
             <objects>
-                <viewController title="我的徽章" hidesBottomBarWhenPushed="YES" id="Kmr-3i-3ce" customClass="YXPersonalMyBadgesVC" sceneMemberID="viewController">
+                <viewController title="我的徽章" hidesBottomBarWhenPushed="YES" id="Kmr-3i-3ce" customClass="YXBagdeListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OmR-0w-JXN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1rT-JU-v47">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Kmr-3i-3ce" id="Q1K-q6-T0X"/>
+                                    <outlet property="delegate" destination="Kmr-3i-3ce" id="Nr2-Lc-yyY"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="u9Z-5F-ZSr" firstAttribute="trailing" secondItem="1rT-JU-v47" secondAttribute="trailing" id="71M-06-PPe"/>
+                            <constraint firstAttribute="bottom" secondItem="1rT-JU-v47" secondAttribute="bottom" id="bQj-Re-Cxl"/>
+                            <constraint firstItem="1rT-JU-v47" firstAttribute="leading" secondItem="u9Z-5F-ZSr" secondAttribute="leading" id="tAw-D0-Y0c"/>
+                            <constraint firstItem="1rT-JU-v47" firstAttribute="top" secondItem="u9Z-5F-ZSr" secondAttribute="top" id="vdU-ft-wHz"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="u9Z-5F-ZSr"/>
                     </view>
                     <navigationItem key="navigationItem" title="我的徽章" id="3EA-bq-hUt">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="back" id="N9q-jd-gG2"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="back" id="N9q-jd-gG2">
+                            <connections>
+                                <action selector="back:" destination="Kmr-3i-3ce" id="qI5-yF-TXi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="1rT-JU-v47" id="fFg-xg-F4J"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iqy-Se-aen" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

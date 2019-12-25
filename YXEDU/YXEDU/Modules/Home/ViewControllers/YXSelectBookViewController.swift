@@ -88,25 +88,23 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
      @IBAction func startStudy(_ sender: UIButton) {
         for index in 0..<wordBookModels.count {
             let wordBook = wordBookModels[index]
-            guard wordBook.isSelected else { continue }
+            guard wordBook.isSelected, let bookId = wordBookStateModels.bookId, let unitId = wordBookStateModels.unitId else { continue }
             
             guard index != 0 else {
                 self.navigationController?.popViewController(animated: true)
                 return
             }
             
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBookStateModels.bookId ?? 0)", "unit_id": "\(wordBookStateModels.unitId ?? 0)"]) { [weak self] (response, isSuccess) in
-                guard let self = self, isSuccess else { return }
-
-                DispatchQueue.global().async {
-                    YXWordBookResourceManager.shared.download(wordBook) { (isSuccess) in
-                        guard isSuccess else { return }
-                        DispatchQueue.main.async {
-                            self.navigationController?.popViewController(animated: true)
-                        }
-                    }
+            let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+                YXWordBookResourceManager.shared.download(by: bookId) { (isSuccess) in
+                    guard isSuccess else { return }
+                    self.navigationController?.popViewController(animated: true)
                 }
-            }
+                
+            }, fail: { error in
+                print(error)
+            })
             
             break
         }
@@ -118,6 +116,16 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         bookCollectionView.register(UINib(nibName: "YXWordBookCell", bundle: nil), forCellWithReuseIdentifier: "YXWordBookCell")
         
         fetchWordBooks()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xF5F5F5)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
     }
     
     private func fetchWordBooks() {
