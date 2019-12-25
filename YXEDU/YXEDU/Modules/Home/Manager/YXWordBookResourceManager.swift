@@ -62,12 +62,15 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             self.closure?(true)
             
         } else {
+            self.isDownloading = true
+
             let downloadUrl = URL(string: downloadUrl)!
             let downloadTask = self.urlSession.downloadTask(with: downloadUrl) { (loaction, response, error) in
                 guard let loaction = loaction else { return }
                 let isSuccess = self.unzipDownloadFile(url: downloadUrl, location: loaction, identifier: bookHash)
                 
                 DispatchQueue.main.async {
+                    self.isDownloading = false
                     self.closure?(isSuccess)
                 }
             }
@@ -92,6 +95,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 
             } else {
                 queue.async(group: group) {
+                    self.isDownloading = true
+
                     let downloadUrl = URL(string: downloadUrl)!
                     let downloadTask = self.urlSession.downloadTask(with: downloadUrl) { (loaction, response, error) in
                         guard let loaction = loaction else { return }
@@ -106,6 +111,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         
         group.notify(queue: queue) {
             DispatchQueue.main.async {
+                self.isDownloading = false
                 self.closure?(didFinishAllDownload)
             }
         }
