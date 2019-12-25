@@ -81,7 +81,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             alertView.leftButton.setTitle("直接挑战", for: .normal)
             alertView.rightOrCenterButton.setTitle("去背单词", for: .normal)
             alertView.cancleClosure = {
-                self.requestUnlockGame()
+                self.playGame()
             }
             alertView.doneClosure = { _ in
                 print("跳转到背单词页面")
@@ -105,8 +105,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     private func playGame() {
         let vc = YXGameViewController()
-        //        let vc = YXShareViewController()
-        //        vc.titleString = "挑战分享"
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }

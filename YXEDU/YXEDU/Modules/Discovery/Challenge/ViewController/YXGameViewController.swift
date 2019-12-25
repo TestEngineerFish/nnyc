@@ -12,6 +12,7 @@ protocol YXGameViewControllerProtocol: NSObjectProtocol {
     func switchQuestion()
     func skipQuestion()
     func startGame()
+    func showResultView()
 }
 
 class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
@@ -103,13 +104,26 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     private func requestReport(_ version: Int, total time: Double, question number: Int) {
         let request = YXChallengeRequest.report(version: version, totalTime: time, number: number)
         YYNetworkService.default.request(YYStructResponse<YXGameResultModel>.self, request: request, success: { (response) in
-            self.gameResultMode = response.data
-            self.gameResultMode?.consumeTime = time
+            self.gameResultMode                 = response.data
+            self.gameResultMode?.consumeTime    = time
             self.gameResultMode?.questionNumber = number
             if number > 0 {
                 self.resultView.showSuccessView(self.gameResultMode!)
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+                    self.resultView.closeView()
+                    print("-----跳转----")
+                    YRRouter.popViewController(false)
+                    let shareVC = YXShareViewController()
+                    shareVC.titleString = "挑战分享"
+                    shareVC.hidesBottomBarWhenPushed = true
+                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+
+                }
             } else {
-                self.resultView.showFailView()
+                self.resultView.showFailView {
+                    self.resultView.closeView()
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
@@ -151,10 +165,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             currentQuestionIndex += 1
         } else {
             // 显示结果视图
-            let result = self.headerView.getTimeAndQuestionNumber()
-            self.requestReport(config.version, total: result.0, question: result.1)
-            self.headerView.timer?.invalidate()
-            self.questionView.timer?.invalidate()
+            self.showResultView()
         }
     }
 
@@ -171,5 +182,16 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     func startGame() {
         self.headerView.startTimer()
         self.questionView.restartTimer()
+    }
+
+    func showResultView() {
+        guard let gameModel = self.gameModel, let config = gameModel.config else {
+            return
+        }
+        let result = self.headerView.getTimeAndQuestionNumber()
+        self.headerView.timer?.invalidate()
+        self.questionView.timer?.invalidate()
+        self.answerView.isUserInteractionEnabled = false
+        self.requestReport(config.version, total: result.0, question: result.1)
     }
 }

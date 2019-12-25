@@ -52,6 +52,20 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
 
     // MARK: ==== Event ====
 
+    private func selectCell(with indexPath: IndexPath) {
+        let unitModel = self.unitModelList[indexPath.section]
+        let wordModel = unitModel.list[indexPath.row]
+        wordModel.bookId = self.tag
+        wordModel.unitId = unitModel.id
+        if wordModel.isSelected {
+            self.delegate?.unselectWord(wordModel)
+        } else {
+            self.delegate?.selectedWord(wordModel)
+        }
+        wordModel.isSelected = !wordModel.isSelected
+        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+    }
+
     // MARK: ==== UIGestureRecognizerDelegate ====
 
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -95,11 +109,12 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     }
 
     private func updateWordSelectStatus(_ indexPath: IndexPath) {
-        guard let cell = self.tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell, let wordModel = cell.model else {
-            return
-        }
-        cell.model?.isSelected = !wordModel.isSelected
-        self.tableView.reloadRows(at: [indexPath], with: .none)
+        self.selectCell(with: indexPath)
+//        guard let cell = self.tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell, let wordModel = cell.model else {
+//            return
+//        }
+//        cell.model?.isSelected = !wordModel.isSelected
+//        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
 
     // MARK: ==== UITableViewDataSource ====
@@ -159,17 +174,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     // MARK: ==== UITableViewDelegate ====
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let unitModel = self.unitModelList[indexPath.section]
-        let wordModel = unitModel.list[indexPath.row]
-        wordModel.bookId = self.tag
-        wordModel.unitId = unitModel.id
-        if wordModel.isSelected {
-            self.delegate?.unselectWord(wordModel)
-        } else {
-            self.delegate?.selectedWord(wordModel)
-        }
-        wordModel.isSelected = !wordModel.isSelected
-        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+        self.selectCell(with: indexPath)
     }
 
     // MARK: ==== YXReviewUnitListHeaderProtocol ====

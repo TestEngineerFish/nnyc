@@ -94,7 +94,6 @@ class YXGameResultView: UIView {
 
     var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "gameResultFailButton"), for: .normal)
         button.setBackgroundImage(UIImage(named: "gameResultFailButton"), for: .normal)
         button.isEnabled = true
         return button
@@ -108,6 +107,8 @@ class YXGameResultView: UIView {
         label.textAlignment = .center
         return label
     }()
+
+    var closeBlock: (()->Void)?
 
     func showSuccessView(_ model: YXGameResultModel) {
 
@@ -186,13 +187,11 @@ class YXGameResultView: UIView {
             make.top.height.equalTo(questionLabel)
             make.width.equalTo(timeLabel.width)
         }
-
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
-            self.closeView()
-        }
     }
 
-    func showFailView() {
+//    func showFailView(_ block: (()->Void)) {
+    func showFailView(_ block: (()->Void)?) {
+        self.closeBlock = block
         resultImageView.image = UIImage(named: "gameResultFailBgImage")
 
         kWindow.addSubview(backgroundView)
@@ -219,15 +218,14 @@ class YXGameResultView: UIView {
             make.size.equalTo(descriptionLabel.size)
             make.centerX.equalToSuperview()
         }
-        closeButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(clickCloseButton), for: .touchUpInside)
     }
 
-    @objc private func goBack() {
-        self.closeView()
-        print("返回首页")
+    @objc private func clickCloseButton() {
+        self.closeBlock?()
     }
 
-    @objc private func closeView() {
+    @objc func closeView() {
         self.backgroundView.removeFromSuperview()
         self.resultImageView.removeFromSuperview()
     }

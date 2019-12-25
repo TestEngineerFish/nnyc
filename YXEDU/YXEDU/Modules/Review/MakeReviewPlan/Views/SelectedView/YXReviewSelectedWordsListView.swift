@@ -167,10 +167,12 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
     // MARK: ==== YXReviewUnitListViewProtocol ====
     func selectedWord(_ word: YXReviewWordModel) {
         self.appendWord(word)
+        self.layoutSubviews()
     }
 
     func unselectWord(_ word: YXReviewWordModel) {
         self.removedWord(word)
+        self.layoutSubviews()
     }
 
     override func layoutSubviews() {

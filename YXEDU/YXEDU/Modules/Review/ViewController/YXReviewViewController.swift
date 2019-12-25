@@ -185,7 +185,7 @@ extension YXReviewViewController {
     
     
     func createReviewEvent() {
-        let vc = MakeReviewPlanViewController()
+        let vc = YXMakeReviewPlanViewController()
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }

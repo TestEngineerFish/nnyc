@@ -2196,8 +2196,8 @@
 			isa = PBXGroup;
 			children = (
 				22164C0123A0DA9A00E9252D /* YXChallengeViewController.swift */,
-				224352D823A4B78D00F278E6 /* YXGameViewController.swift */,
 				22A27F2623B206D300E71CD3 /* YXPreviousRankViewController.swift */,
+				224352D823A4B78D00F278E6 /* YXGameViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

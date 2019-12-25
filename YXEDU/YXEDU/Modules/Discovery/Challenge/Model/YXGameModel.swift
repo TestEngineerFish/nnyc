@@ -33,10 +33,10 @@ struct YXGameConfig: Mappable {
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        gameId              <- map["game_id"]
-        totalTime           <- map["total_time"]
-        totalQuestionNumber <- map["total_num"]
-        timeOut             <- map["time_out"]
+        gameId              <- map["gameId"]
+        totalTime           <- map["totalTime"]
+        totalQuestionNumber <- map["totalNum"]
+        timeOut             <- map["timeOut"]
     }
 }
 
@@ -52,7 +52,7 @@ struct YXGameWordModel: Mappable {
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        wordId  <- map["word_id"]
+        wordId  <- map["wordId"]
         word    <- map["word"]
         nature  <- map["nature"]
         meaning <- map["meaning"]

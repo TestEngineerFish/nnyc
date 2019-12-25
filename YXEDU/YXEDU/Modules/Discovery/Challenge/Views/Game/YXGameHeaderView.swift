@@ -182,7 +182,7 @@ class YXGameHeaderView: UIView {
             margin = margin < 0 ? 0 : margin
             self.timeLabel.text = self.getCountDownText(Int(margin))
             if margin <= 0 {
-                self.vcDelegate?.skipQuestion()
+                self.vcDelegate?.showResultView()
                 timer.invalidate()
             }
         })

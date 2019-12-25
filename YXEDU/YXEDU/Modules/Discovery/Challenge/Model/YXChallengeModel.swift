@@ -46,7 +46,7 @@ struct YXChallengeBanner: Mappable {
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        imageUrl <- map["img_url"]
+        imageUrl <- map["imgUrl"]
         redirect <- map["redirect"]
     }
 }
@@ -62,7 +62,7 @@ struct YXChallengeGameInfo: Mappable {
     mutating func mapping(map: Map) {
         unitCoin   <- map["preCoin"]
         unlockCoin <- map["unlockCoin"]
-        timeLeft   <- map["end_time"]
+        timeLeft   <- map["endTime"]
     }
 }
 

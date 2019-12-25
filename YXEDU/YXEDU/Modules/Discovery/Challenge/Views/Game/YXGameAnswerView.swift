@@ -23,7 +23,6 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
     }
 
     func bindData(_ wordModel: YXGameWordModel) {
-        self.answerView?.removeFromSuperview()
         self.selectedWordView.bindData(wordModel)
         var exerciseModel = YXWordExerciseModel()
         var questionModel = YXWordModel()
@@ -56,6 +55,7 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
         guard let wordModel = exerciseModel.question else {
             return
         }
+        self.answerView?.removeFromSuperview()
         let answerViewSize = CGSize(width: AdaptSize(288), height: AdaptSize(288))
         let config = self.getConfig(wordModel: wordModel, answerViewSize: answerViewSize)
         answerView = YXAnswerConnectionLettersView(exerciseModel: exerciseModel, config: config)
@@ -68,7 +68,7 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
             make.size.equalTo(answerViewSize)
         })
 
-        self.answerView?.layer.scalingAnimation(0.75, delegate: self)
+        self.answerView?.layer.scalingAnimation(0.375, delegate: self)
     }
 
     private func getConfig(wordModel: YXWordModel, answerViewSize: CGSize) -> YXConnectionLettersConfig {
@@ -108,12 +108,4 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
     func animationDidStart(_ anim: CAAnimation) {
         self.answerView?.isHidden = false
     }
-
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if flag {
-
-        }
-
-    }
-
 }

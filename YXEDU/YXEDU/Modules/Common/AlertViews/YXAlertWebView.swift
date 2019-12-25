@@ -76,7 +76,6 @@ class YXAlertWebView: UIView, WKNavigationDelegate {
         }
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(hide))
-        self.backgroundView.addGestureRecognizer(tap)
         self.closeImageView.addGestureRecognizer(tap)
     }
 

@@ -155,7 +155,7 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
     }
 
     private func switchAnimation() {
-        let duration: Double = 0.75/2
+        let duration: Double = 0.375
         let sinkageAnimation = CABasicAnimation(keyPath: "position.y")
         sinkageAnimation.duration       = duration
         sinkageAnimation.toValue        = self.height/2 - self.headerView.height
