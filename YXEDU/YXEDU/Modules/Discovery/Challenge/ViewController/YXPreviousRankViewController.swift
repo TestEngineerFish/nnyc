@@ -12,7 +12,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
 
     var gameVersion: Int?
     var challengeModel: YXChallengeModel?
-    var tableView = UITableView(frame: .zero, style: .grouped)
+    var tableView = UITableView(frame: .zero, style: .plain)
     final let kYXChallengeRankCell   = "YXChallengeRankCell"
 
     override func viewDidLoad() {
@@ -30,7 +30,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
         self.tableView.backgroundColor = UIColor.white
         self.tableView.register(YXChallengeRankCell.classForCoder(), forCellReuseIdentifier: kYXChallengeRankCell)
         self.tableView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(AdaptSize(10))
+            make.top.equalToSuperview().offset(kNavHeight + AdaptSize(10))
             make.left.right.bottom.equalToSuperview()
         }
     }
@@ -60,7 +60,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
             guard let userModel = model.userModel else {
                 return cell
             }
-            cell.backgroundColor = UIColor.white
+            cell.backgroundColor = UIColor.clear
             cell.bindData(userModel)
             return cell
         } else {
@@ -68,7 +68,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
                 return UITableViewCell()
             }
             let otherUserModel = model.rankedList[indexPath.row - 1]
-            cell.backgroundColor = UIColor.white
+            cell.backgroundColor = UIColor.clear
             cell.bindData(otherUserModel)
             return cell
         }
@@ -81,7 +81,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return .zero
+        return 0.01
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

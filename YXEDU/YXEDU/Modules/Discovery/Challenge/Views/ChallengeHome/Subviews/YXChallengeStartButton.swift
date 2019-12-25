@@ -10,9 +10,9 @@ import UIKit
 
 enum YXChallengeStatusType: Int {
 
-    case task = 1
-    case free = 3
-    case lock = 0
+    case lock  = 0
+    case task  = 1
+    case free  = 3
     case again = 4
 
     func getPriceString(_ model: YXChallengeModel) -> NSAttributedString {
@@ -81,10 +81,11 @@ class YXChallengeStartButton: UIButton {
         case .task, .again:
             let priceView = self.getPriceView(model)
             self.addSubview(priceView)
+            self.customTitleLabel.sizeToFit()
             self.customTitleLabel.snp.makeConstraints { (make) in
                 make.left.equalToSuperview().offset(AdaptSize(40))
                 make.centerY.equalToSuperview().offset(AdaptSize(-3))
-                make.size.equalTo(CGSize(width: AdaptSize(82), height: AdaptSize(28)))
+                make.size.equalTo(customTitleLabel.size)
             }
             priceView.snp.makeConstraints { (make) in
                 make.left.equalTo(customTitleLabel.snp.right)
@@ -94,10 +95,11 @@ class YXChallengeStartButton: UIButton {
         case .free:
             let priceView = self.getPriceView(model)
             self.addSubview(priceView)
+            self.customTitleLabel.sizeToFit()
             self.customTitleLabel.snp.makeConstraints { (make) in
                 make.left.equalToSuperview().offset(AdaptSize(40))
                 make.centerY.equalToSuperview().offset(AdaptSize(-3))
-                make.size.equalTo(CGSize(width: AdaptSize(82), height: AdaptSize(28)))
+                make.size.equalTo(customTitleLabel.size)
             }
             priceView.snp.makeConstraints { (make) in
                 make.left.equalTo(customTitleLabel.snp.right)
@@ -107,10 +109,11 @@ class YXChallengeStartButton: UIButton {
         case .lock:
             let priceView = self.getPriceView(model)
             self.addSubview(priceView)
+            self.customTitleLabel.sizeToFit()
             self.customTitleLabel.snp.makeConstraints { (make) in
                 make.left.equalToSuperview().offset(AdaptSize(79))
                 make.centerY.equalToSuperview().offset(AdaptSize(-3))
-                make.size.equalTo(CGSize(width: AdaptSize(41), height: AdaptSize(28)))
+                make.size.equalTo(customTitleLabel.size)
             }
             priceView.snp.makeConstraints { (make) in
                 make.left.equalTo(customTitleLabel.snp.right)

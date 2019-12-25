@@ -74,7 +74,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             alertView.doneClosure = { _ in
                 self.requestUnlockGame()
             }
-
+            alertView.show()
         case .task:
             let alertView = YXAlertView(type: .normal)
             alertView.descriptionLabel.text = "背完今天的单词可以获得一次免费挑战机会！"
@@ -118,6 +118,9 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    @objc private func showRuleView() {
+        YXAlertWebView.share.show("http://www.baidu.com")
+    }
 
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,6 +145,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         view.addSubview(top3View)
         headerView.startButton.addTarget(self, action: #selector(clickPlayButton), for: .touchUpInside)
         headerView.previousRankButton.addTarget(self, action: #selector(previousRank), for: .touchUpInside)
+        headerView.gameRuleButton.addTarget(self, action: #selector(showRuleView), for: .touchUpInside)
         headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(AdaptSize(297))
@@ -171,10 +175,10 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             cell.bindData(userModel)
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXChallengeRankCell) as? YXChallengeRankCell, indexPath.row + 3 < model.rankedList.count else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXChallengeRankCell) as? YXChallengeRankCell, indexPath.row + 2 < model.rankedList.count else {
                 return UITableViewCell()
             }
-            let otherUserModel = model.rankedList[indexPath.row]
+            let otherUserModel = model.rankedList[indexPath.row + 2]
             cell.bindData(otherUserModel)
             return cell
         }

@@ -1,5 +1,5 @@
 //
-//  MakeReviewPlanViewController.swift
+//  YXMakeReviewPlanViewController.swift
 //  YXEDU
 //
 //  Created by 沙庭宇 on 2019/12/7.
@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
+class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
 
     // ---- 子视图
     var segmentControllerView: BPSegmentControllerView = {
@@ -20,7 +20,7 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
         config.headerItemSpacing  = AdaptSize(10)
         config.contentItemSize    = CGSize(width: screenWidth, height: h - config.headerHeight)
         config.contentItemSpacing = CGFloat.zero
-        let segmentFrame = CGRect(x: 0, y: 0, width: screenWidth, height: h)
+        let segmentFrame = CGRect(x: 0, y: kNavHeight, width: screenWidth, height: h)
         let segmentControllerView = BPSegmentControllerView(config, frame: segmentFrame)
         return segmentControllerView
     }()
@@ -40,11 +40,11 @@ class MakeReviewPlanViewController: UIViewController, BPSegmentDataSource {
     }
 
     private func createSubviews() {
-        self.title = "选择单词"
+        self.customNavigationBar?.title = "选择单词"
         self.view.addSubview(segmentControllerView)
         self.view.addSubview(bottomView)
         self.view.addSubview(selectedWordsListView)
-
+        self.view.backgroundColor = UIColor.white
         bottomView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview().offset(kSafeBottomMargin)
             make.left.right.equalToSuperview()
