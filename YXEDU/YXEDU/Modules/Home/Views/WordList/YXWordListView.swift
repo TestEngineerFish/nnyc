@@ -86,9 +86,11 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             
             if wordsCount == 0 {
                 topViewHeight.constant = 0
-
+                shouldShowBottomView = false
+                
             } else {
                 topViewHeight.constant = 44
+                shouldShowBottomView = true
             }
             
             wordCountLabel.text = "\(wordsCount)"
@@ -250,39 +252,12 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as! YXWordListCell
+        var word: YXWordModel!
+        
         if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, isWrongWordList {
             if var wrongWords = wrongWordSectionData?[indexPath.section].values.first, wrongWords.count > 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as! YXWordListCell
-                let word = wrongWords[indexPath.row]
-                
-                cell.wordLabel.text = word.word
-                
-                if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
-                    var text = ""
-
-                    for index in 0..<partOfSpeechAndMeanings.count {
-                        guard let partOfSpeech = partOfSpeechAndMeanings[index].partOfSpeech, let meaning = partOfSpeechAndMeanings[index].meaning else { continue }
-                        
-                        if index == 0 {
-                            text = partOfSpeech + meaning
-                            
-                        } else {
-                            text = text + "；" + partOfSpeech + meaning
-                        }
-                    }
-                    
-                    cell.meaningLabel.text = text
-                }
-                
-                cell.americanPronunciation = word.americanPronunciation
-                cell.englishPronunciation = word.englishPronunciation
-                
-                if word.hidePartOfSpeechAndMeanings {
-                    cell.meaningLabelMask.image = nil
-                    
-                } else {
-                    cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
-                }
+                word = wrongWords[indexPath.row]
                 
                 cell.removeMaskClosure = {
                     wrongWords[indexPath.row].hidePartOfSpeechAndMeanings = !word.hidePartOfSpeechAndMeanings
@@ -294,16 +269,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                     tableView.reloadRows(at: [indexPath], with: .none)
                 }
                 
-                cell.showWordDetailClosure = {
-                    if let wordListViewController = self.parentViewController() as? YXWordListViewController {
-                        let wordDetailViewController = YXWordDetailViewControllerNew()
-                        wordDetailViewController.word = YXWordBookDaoImpl().selectWord(wordId: word.wordId ?? 0)
-                        wordListViewController.navigationController?.pushViewController(wordDetailViewController, animated: true)
-                    }
-                }
-                
-                return cell
-                
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
                 return cell
@@ -311,58 +276,56 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             
         } else {
             if words.count > 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as! YXWordListCell
-                let word = words[indexPath.row]
-                
-                cell.wordLabel.text = word.word
-                
-                if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
-                    var text = ""
+                word = words[indexPath.row]
 
-                    for index in 0..<partOfSpeechAndMeanings.count {
-                        guard let partOfSpeech = partOfSpeechAndMeanings[index].partOfSpeech, let meaning = partOfSpeechAndMeanings[index].meaning else { continue }
-                        
-                        if index == 0 {
-                            text = partOfSpeech + meaning
-                            
-                        } else {
-                            text = text + "；" + partOfSpeech + meaning
-                        }
-                    }
-                    
-                    cell.meaningLabel.text = text
-                }
-                
-                cell.americanPronunciation = word.americanPronunciation
-                cell.englishPronunciation = word.englishPronunciation
-                
-                if word.hidePartOfSpeechAndMeanings {
-                    cell.meaningLabelMask.image = nil
-                    
-                } else {
-                    cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
-                }
-                
                 cell.removeMaskClosure = {
                     self.words[indexPath.row].hidePartOfSpeechAndMeanings = !self.words[indexPath.row].hidePartOfSpeechAndMeanings
                     tableView.reloadRows(at: [indexPath], with: .none)
                 }
-                
-                cell.showWordDetailClosure = {
-                    if let wordListViewController = self.parentViewController() as? YXWordListViewController {
-                        let wordDetailViewController = YXWordDetailViewControllerNew()
-                        wordDetailViewController.word = YXWordBookDaoImpl().selectWord(wordId: word.wordId ?? 0)
-                        wordListViewController.navigationController?.pushViewController(wordDetailViewController, animated: true)
-                    }
-                }
-                
-                return cell
                 
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
                 return cell
             }
         }
+        
+        cell.wordLabel.text = word.word
+
+        if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
+            var text = ""
+
+            for index in 0..<partOfSpeechAndMeanings.count {
+                guard let partOfSpeech = partOfSpeechAndMeanings[index].partOfSpeech, let meaning = partOfSpeechAndMeanings[index].meaning else { continue }
+                
+                if index == 0 {
+                    text = partOfSpeech + meaning
+                    
+                } else {
+                    text = text + "；" + partOfSpeech + meaning
+                }
+            }
+            
+            cell.meaningLabel.text = text
+        }
+        
+        cell.americanPronunciation = word.americanPronunciation
+        cell.englishPronunciation = word.englishPronunciation
+        
+        if word.hidePartOfSpeechAndMeanings {
+            cell.meaningLabelMask.image = nil
+            
+        } else {
+            cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
+        }
+        
+        cell.showWordDetailClosure = {
+            if let wordListViewController = self.parentViewController() as? YXWordListViewController {
+                wordListViewController.wordId = word.wordId
+                wordListViewController.performSegue(withIdentifier: "WordDetail", sender: nil)
+            }
+        }
+            
+        return cell
     }
     
     func parentViewController() -> UIViewController? {
@@ -383,7 +346,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     private func atoz(words: [YXWordModel]) -> [YXWordModel] {
         var newWords = words
         newWords.sort { (a, z) -> Bool in
-            a.word ?? "" > z.word ?? ""
+            a.word ?? "" < z.word ?? ""
         }
         
         return newWords
@@ -392,13 +355,9 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     private func ztoa(words: [YXWordModel]) -> [YXWordModel] {
         var newWords = words
         newWords.sort { (a, z) -> Bool in
-            a.word ?? "" < z.word ?? ""
+            a.word ?? "" > z.word ?? ""
         }
         
         return newWords
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
     }
 }

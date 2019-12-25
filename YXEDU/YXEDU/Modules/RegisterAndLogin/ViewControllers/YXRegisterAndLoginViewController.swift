@@ -213,46 +213,35 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
                 YXUserModel.default.username = (response as! [String: Any])["nick"] as? String
                 YXUserModel.default.userAvatarPath = (response as! [String: Any])["avatar"] as? String
-
+                
                 YXConfigure.shared().token = YXUserModel.default.token
                 YXConfigure.shared().uuid = YXUserModel.default.uuid
 
-                YXComHttpService.shared().requestConfig({ (response, isSuccess) in
-                    if isSuccess, let response = response?.responseObject {
-                        let config = response as! YXConfigModel
-
-                        guard config.baseConfig.bindMobile else {
-                            self.performSegue(withIdentifier: "Bind", sender: self)
-                            return
-                        }
-
-                        YYCache.set(self.phoneNumberTextField.text, forKey: "PhoneNumber")
-                        YXUserModel.default.didLogin = true
-                        YXConfigure.shared().saveCurrentToken()
-
-                        guard config.baseConfig.learning else {
-                            let storyboard = UIStoryboard(name:"Home", bundle: nil)
-                            let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
-                            addBookViewController.navigationItem.leftBarButtonItems = []
-                            addBookViewController.navigationItem.hidesBackButton = true
-                            addBookViewController.finishClosure = {
-                                YXUserModel.default.login()
-                            }
-                            
-                            self.navigationController?.pushViewController(addBookViewController, animated: true)
-                            return
-                        }
-                        
-                        YXUserModel.default.login()
-                        
-                    } else if let error = response?.error {
-                        print(error.desc)
-                    }
-                })
+                self.checkUserInfomation()
                 
             } else if let error = response?.error {
                 print(error.desc)
             }
+        }
+    }
+    
+    private func checkUserInfomation() {
+        let request = YXRegisterAndLoginRequest.userInfomation
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
+            guard let userInfomation = response.data else { return }
+            
+            guard userInfomation.didBindPhone == 1 else {
+                self.performSegue(withIdentifier: "Bind", sender: self)
+                return
+            }
+            
+            YYCache.set(self.phoneNumberTextField.text, forKey: "PhoneNumber")
+            YXConfigure.shared().saveCurrentToken()
+            YXUserModel.default.didLogin = true
+            YXUserModel.default.login()
+            
+        }) { (error) in
+            
         }
     }
     
@@ -323,37 +312,9 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                         if isSuccess, let response = response?.responseObject {
                             YXUserModel.default.token = (response as! [String: Any])["token"] as? String
                             YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
-                            YXConfigure.shared().token = YXUserModel.default.token
-                            YXConfigure.shared().uuid = YXUserModel.default.uuid
+                            
+                            self.checkUserInfomation()
 
-                            YXComHttpService.shared().requestConfig({ (response, isSuccess) in
-                                if isSuccess, let response = response?.responseObject {
-                                    let config = response as! YXConfigModel
-                                    
-                                    YYCache.set(phoneNumber[0], forKey: "PhoneNumber")
-                                    YXUserModel.default.didLogin = true
-                                    YXConfigure.shared().saveCurrentToken()
-                                    
-                                    guard config.baseConfig.learning else {
-                                        let storyboard = UIStoryboard(name:"Home", bundle: nil)
-                                        let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
-                                        addBookViewController.navigationItem.leftBarButtonItems = []
-                                        addBookViewController.navigationItem.hidesBackButton = true
-                                        addBookViewController.finishClosure = {
-                                            YXUserModel.default.login()
-                                        }
-                                        
-                                        self.navigationController?.pushViewController(addBookViewController, animated: true)
-                                        return
-                                    }
-                                    
-                                    YXUserModel.default.login()
-                            
-                                } else if let error = response?.error {
-                                    print(error.desc)
-                                }
-                            })
-                            
                         } else if let error = response?.error {
                             print(error.desc)
                         }

@@ -73,7 +73,6 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     init(_ config: BPSegmentConfig, frame: CGRect) {
         self.config = config
         super.init(frame: frame)
-        self.bindData()
         self.createSubviews()
     }
 
@@ -90,7 +89,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func bindData() {
+    func bindData() {
         self.lastSelectedIndex = self.delegate?.firstSelectedIndex() ?? IndexPath(item: 0, section: 0)
     }
 

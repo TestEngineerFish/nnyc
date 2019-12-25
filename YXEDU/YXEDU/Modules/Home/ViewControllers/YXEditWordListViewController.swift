@@ -15,7 +15,7 @@ enum YXEditWordListType {
 }
 
 struct CollectWord: Mappable {
-    var wordId: String!
+    var wordId: Int!
     var isComplexWord: Int!
     
     init() {}
@@ -59,7 +59,7 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
                 indexs.append(index)
 
                 var collectWord = CollectWord()
-                collectWord.wordId = "\(word.wordId ?? 0)"
+                collectWord.wordId = word.wordId ?? 0
                 collectWord.isComplexWord = word.isSelected ? 1 : 0
                 collectWords.append(collectWord)
             }
@@ -181,9 +181,10 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
             
             var count = 0
             for word in self.words {
-                guard word.isSelected else { continue }
+                if word.isSelected {
+                    count = count + 1
+                }
                 
-                count = count + 1
                 self.wordCountLabel.text = "\(count)"
             }
         }

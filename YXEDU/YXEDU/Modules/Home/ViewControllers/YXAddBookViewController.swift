@@ -148,24 +148,16 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         let seleceUnitView = YXSeleceUnitView(units: units) { (unitId) in
             guard let unitId = unitId else { return }
 
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/adduserbook", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(bookId)", "unit_id": "\(unitId)"]) { [weak self] (response, isSuccess) in
-                guard let self = self, isSuccess else { return }
-                
-                DispatchQueue.global().async {
-                    YXWordBookResourceManager.shared.download(wordBook) { (isSucess) in
-                        guard isSucess else { return }
-                        
-                        DispatchQueue.main.async {
-                            if let finishClosure = self.finishClosure {
-                                finishClosure()
-                                
-                            } else {
-                                self.navigationController?.popToRootViewController(animated: true)
-                            }
-                        }
-                    }
+            let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+                YXWordBookResourceManager.shared.download(by: bookId) { (isSuccess) in
+                    guard isSuccess else { return }
+                    self.navigationController?.popViewController(animated: true)
                 }
-            }
+                
+            }, fail: { error in
+
+            })
         }
         
         seleceUnitView.show()

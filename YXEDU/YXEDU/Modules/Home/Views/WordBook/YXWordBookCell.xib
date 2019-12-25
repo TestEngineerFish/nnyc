@@ -49,7 +49,7 @@
                             <constraint firstAttribute="width" constant="8" id="xTJ-4U-V5f"/>
                         </constraints>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fep-eO-fJZ">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="finishMark" translatesAutoresizingMaskIntoConstraints="NO" id="fep-eO-fJZ">
                         <rect key="frame" x="58" y="54" width="30" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="BkB-EY-Fef"/>
@@ -90,5 +90,6 @@
     <resources>
         <image name="currentSelectBook" width="21" height="12"/>
         <image name="currentStudyBook" width="9" height="14"/>
+        <image name="finishMark" width="31" height="10"/>
     </resources>
 </document>

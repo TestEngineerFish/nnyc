@@ -56,30 +56,10 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
         let bindViewModel = YXBindViewModel()
         bindViewModel.bindPhone(bindModel) { (response, isSuccess) in
             guard isSuccess else { return }
-            YXUserModel.default.didLogin = true
             YXConfigure.shared().saveCurrentToken()
 
-            YXComHttpService.shared().requestConfig({ (response, isSuccess) in
-                if isSuccess, let response = response?.responseObject {
-                    let config = response as! YXConfigModel
-                        
-                    guard config.baseConfig.learning else {
-                        let storyboard = UIStoryboard(name:"Home", bundle: nil)
-                        let addBookViewController = storyboard.instantiateViewController(withIdentifier: "YXAddBookViewController") as! YXAddBookViewController
-                        addBookViewController.finishClosure = {
-                            YXUserModel.default.login()
-                        }
-                        
-                        self.navigationController?.pushViewController(addBookViewController, animated: true)
-                        return
-                    }
-                    
-                    YXUserModel.default.login()
-                    
-                } else if let error = response?.error {
-                    print(error.desc)
-                }
-            })
+            YXUserModel.default.didLogin = true
+            YXUserModel.default.login()
         }
     }
     

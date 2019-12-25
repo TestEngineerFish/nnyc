@@ -16,7 +16,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var learnedWordsCount    = "--"
     private var collectedWordsCount  = "--"
     private var wrongWordsCount      = "--"
-    private var isCheckingLoginState = true
     private var homeModel: YXHomeModel!
     
     @IBOutlet weak var startStudyButton: YXDesignableButton!
@@ -84,18 +83,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
-        
-        checkLoginState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
         tabBarController?.tabBar.isHidden = false
-        
-        if isCheckingLoginState == false {
-            loadData()
-        }
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+
+        loadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -132,23 +127,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
-    private func checkLoginState() {
-        YXComHttpService.shared().requestConfig({ (response, isSuccess) in
-            self.isCheckingLoginState = false
-
-            guard isSuccess, let response = response?.responseObject else { return }
-            let config = response as! YXConfigModel
-            
-            guard config.baseConfig.learning else {
-                self.performSegue(withIdentifier: "AddBookFromHomeWithoutAnimation", sender: self)
-                return
-            }
-            
-            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-            self.loadData()
-        })
-    }
-    
     private func loadData() {
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
@@ -156,9 +134,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 self.homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
+                
+                if self.homeModel.bookId == 0 {
+                    self.performSegue(withIdentifier: "AddBookFromHomeWithoutAnimation", sender: self)
+                    return
+                }
+                
                 self.adjustStartStudyButtonState()
-
-                YXConfigure.shared().currLearningBookId = "\(self.homeModel.bookId ?? 0)"
 
                 self.bookNameButton.setTitle(self.homeModel.bookName, for: .normal)
                 self.unitNameButton.setTitle(self.homeModel.unitName, for: .normal)
@@ -170,11 +152,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
                 
-                var wordBook = YXWordBookModel()
-                wordBook.bookId = self.homeModel.bookId
-                wordBook.bookJsonSourcePath = self.homeModel.bookSource
-                wordBook.bookHash = self.homeModel.bookHash
-                YXWordBookResourceManager.shared.download(wordBook, nil)
+                YXWordBookResourceManager.shared.download(by: self.homeModel.bookId) { (isSucess) in
+                    guard isSucess else { return }
+                    YXUserModel.default.didFinishDownloadCurrentStudyWordBook = true
+                    
+                    YXWordBookResourceManager.shared.download { (isSucess) in
+                        guard isSucess else { return }
+                        YXUserModel.default.didFinishDownloadAllStudyWordBooks = true
+                    }
+                }
                 
             } catch {
                 print(error)
