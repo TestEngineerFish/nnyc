@@ -68,6 +68,7 @@ struct YXWordModel: YXBaseWordModel {
     
     init?(map: Map) {
         self.mapping(map: map)
+        isComplexWord <- map["is_synthesis"]
     }
     
 }

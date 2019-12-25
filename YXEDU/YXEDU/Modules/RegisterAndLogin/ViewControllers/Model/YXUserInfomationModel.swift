@@ -10,8 +10,6 @@ import ObjectMapper
 
 struct YXUserInfomationModel: Mappable {
     var didBindPhone: Int?
-    var didSelectWordBook: Int? = 1
-
     
     init?(map: Map) {
         self.mapping(map: map)
@@ -19,6 +17,5 @@ struct YXUserInfomationModel: Mappable {
     
     mutating func mapping(map: Map) {
         didBindPhone <- map["is_bind_mobile"]
-        didSelectWordBook <- map[""]
     }
 }

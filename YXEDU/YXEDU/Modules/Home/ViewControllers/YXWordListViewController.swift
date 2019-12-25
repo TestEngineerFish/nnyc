@@ -19,7 +19,8 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
     var wordId: Int!
-
+    var isComplexWord: Int!
+    
     private var learnedWords: [YXWordModel]!
     private var notLearnedWords: [YXWordModel]!
     private var collectedWords: [YXWordModel]!
@@ -135,6 +136,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         } else if segue.identifier == "WordDetail" {
             let wordDetailViewController = segue.destination as! YXWordDetailViewControllerNew
             wordDetailViewController.wordId = wordId
+            wordDetailViewController.isComplexWord = isComplexWord
         }
     }
     

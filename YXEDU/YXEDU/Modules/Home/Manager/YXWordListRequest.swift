@@ -20,10 +20,10 @@ public enum YXWordListRequest: YYBaseRequest {
 extension YXWordListRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .wordList, .wrongWordList:
+        case .wordList, .wrongWordList, .didCollectWord:
             return .get
             
-        case .collectWord, .cancleCollectWord, .deleteWrongWord, .didCollectWord:
+        case .collectWord, .cancleCollectWord, .deleteWrongWord:
             return .post
         }
     }

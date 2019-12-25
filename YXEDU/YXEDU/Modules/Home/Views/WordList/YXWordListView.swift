@@ -321,6 +321,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         cell.showWordDetailClosure = {
             if let wordListViewController = self.parentViewController() as? YXWordListViewController {
                 wordListViewController.wordId = word.wordId
+                wordListViewController.isComplexWord = word.isComplexWord
                 wordListViewController.performSegue(withIdentifier: "WordDetail", sender: nil)
             }
         }
