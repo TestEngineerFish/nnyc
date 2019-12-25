@@ -18,7 +18,7 @@ protocol BPSegmentDataSource: NSObjectProtocol {
     func segment(_ segment: BPSegmentView, itemForRowAt indexPath: IndexPath) -> UIView
     /// 自定义Content视图
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView
-    /// 点击Item视图
+    /// 选中Item视图
     func segment(_ segment: BPSegmentView, didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath)
 }
 
@@ -138,7 +138,28 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         return self.delegate?.pagesNumber() ?? 0
     }
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView == contentScrollView {
+            guard let contentView = cell as? BPItemContentView else {
+                return
+            }
+
+            print("=====将要显示IndexPath\(indexPath)")
+        }
+
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView == contentScrollView {
+            print("移除IndexPath\(indexPath)")
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        if collectionView == contentScrollView {
+            print("返回IndexPath\(indexPath)")
+        }
         guard let segmentView = collectionView as? BPSegmentView else {
             return UICollectionViewCell()
         }
@@ -177,12 +198,6 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
                     make.edges.equalToSuperview()
                 }
             }
-            // 设置选中状态
-            if self.lastSelectedIndex == indexPath {
-                _contentView.isSelected = true
-            } else {
-                _contentView.isSelected = false
-            }
             // 设置标识符
             _contentView.tag = indexPath.row
             return _contentView
@@ -217,62 +232,8 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
             if indexPath != self.lastSelectedIndex {
                 self.selectItem(with: indexPath, in: self.headerScrollView)
             }
-            // 清除当前Item左右的选中效果
-            let currentIndex = self.lastSelectedIndex.item
-            if currentIndex > 0 {
-                if let previoustItem = self.headerScrollView.cellForItem(at: IndexPath(item: currentIndex - 1, section: 0)) as? BPItemHeaderView {
-                    previoustItem.isSelected = false
-                }
-            }
-            if currentIndex + 1 < self.headerScrollView.numberOfItems(inSection: 0) {
-                if let nextItem = self.headerScrollView.cellForItem(at: IndexPath(item: currentIndex + 1, section: 0)) {
-                    nextItem.isSelected = false
-                }
-            }
         }
     }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == self.contentScrollView {
-            // 计算往左滑动还是往右滑动
-            let relativeX = (self.config.contentItemSize.width + self.config.contentItemSpacing) * CGFloat(self.lastSelectedIndex.item)
-            let offsetX   =  scrollView.contentOffset.x - relativeX
-            if offsetX > 0 {
-                // 往左滑动
-                guard let currentItem = self.headerScrollView.cellForItem(at: self.lastSelectedIndex) as? BPItemHeaderView else {
-                    return
-                }
-                var progress = offsetX / self.contentScrollView.width
-                progress = progress > 1.0 ? 1.0 : progress
-                currentItem.switchOut(progress: progress, direction: .left)
-                // 下一个Item
-                let nextIndex = self.lastSelectedIndex.item + 1
-                if nextIndex < self.contentScrollView.numberOfItems(inSection: 0) {
-                    guard let nextItem = self.headerScrollView.cellForItem(at: IndexPath(item: nextIndex, section: 0)) as? BPItemHeaderView  else {
-                        return
-                    }
-                    nextItem.switchIn(progress: progress, direction: .left)
-                }
-            } else {
-                // 往右滑动
-                guard let currentItem = self.headerScrollView.cellForItem(at: self.lastSelectedIndex) as? BPItemHeaderView else {
-                    return
-                }
-                var progress = -offsetX / self.contentScrollView.width
-                progress = progress > 1.0 ? 1.0 : progress
-                currentItem.switchOut(progress: progress, direction: .right)
-                // 下一个Item
-                let nextIndex = self.lastSelectedIndex.item - 1
-                if nextIndex >= 0 {
-                    guard let nextItem = self.headerScrollView.cellForItem(at: IndexPath(item: nextIndex, section: 0)) as? BPItemHeaderView  else {
-                        return
-                    }
-                    nextItem.switchIn(progress: progress, direction: .right)
-                }
-            }
-        }
-    }
-
 
     // TODO: ==== Event ====
 
@@ -284,15 +245,9 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
         // 通知业务层处理点击事件
         self.delegate?.segment(collectionView, didSelectRowAt: indexPath, previousSelectRowAt: self.lastSelectedIndex)
+
         // 如果选中不是已选中的Item,则更新最后选中位置
         if indexPath != self.lastSelectedIndex {
-            // 移除上一次选中效果
-            if let lastCell = self.headerScrollView.cellForItem(at: self.lastSelectedIndex) as? BPItemHeaderView {
-                lastCell.isSelected = false
-            }
-            if let lastCell = self.contentScrollView.cellForItem(at: self.lastSelectedIndex) as? BPItemContentView {
-                lastCell.isSelected = false
-            }
             // 滑动到中间
             self.scrollView(to: indexPath, in: collectionView)
             // 更新选中
