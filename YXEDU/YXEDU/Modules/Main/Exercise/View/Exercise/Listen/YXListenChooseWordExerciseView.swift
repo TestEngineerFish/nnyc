@@ -12,7 +12,6 @@ import UIKit
 class YXListenChooseWordExerciseView: YXBaseExerciseView {
         
     override func createSubview() {
-        super.createSubview()
         questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
 
@@ -23,6 +22,7 @@ class YXListenChooseWordExerciseView: YXBaseExerciseView {
         answerView?.answerDelegate = self
         (answerView as! YXItemAnswerView).titleLabel.font = UIFont.boldSystemFont(ofSize: AdaptSize(14))
         self.scrollView.addSubview(answerView!)
+        super.createSubview()
     }
 
     override func layoutSubviews() {

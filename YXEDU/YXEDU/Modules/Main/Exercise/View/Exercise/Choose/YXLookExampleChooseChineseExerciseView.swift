@@ -14,7 +14,6 @@ class YXLookExampleChooseChineseExerciseView: YXBaseExerciseView {
     private let answerHeight: CGFloat = 42 * 4 + 13 * 3
     
     override func createSubview() {
-        super.createSubview()
         questionView = YXExampleQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
         
@@ -24,6 +23,7 @@ class YXLookExampleChooseChineseExerciseView: YXBaseExerciseView {
         answerView = YXItemAnswerView(exerciseModel: exerciseModel)
         answerView?.answerDelegate = self
         self.scrollView.addSubview(answerView!)
+        super.createSubview()
     }
 
     override func layoutSubviews() {

@@ -12,7 +12,6 @@ import UIKit
 class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        super.createSubview()
         questionView = YXListenAndLackWordQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
@@ -28,6 +27,7 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
             self.questionView?.audioPlayerView?.play()
         }
+        super.createSubview()
     }
 
     override func layoutSubviews() {

@@ -12,8 +12,7 @@ import UIKit
 class YXListenChooseChineseExerciseView: YXBaseExerciseView {
         
     override func createSubview() {
-        super.createSubview()
-        questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)        
+        questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)       
         self.addSubview(questionView!)
         
         remindView = YXRemindView(exerciseModel: exerciseModel)
@@ -22,7 +21,7 @@ class YXListenChooseChineseExerciseView: YXBaseExerciseView {
         answerView = YXItemAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.scrollView.addSubview(answerView!)
-        
+        super.createSubview()
     }
     
     

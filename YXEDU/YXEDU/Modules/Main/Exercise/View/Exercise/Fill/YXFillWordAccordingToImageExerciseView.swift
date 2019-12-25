@@ -12,7 +12,6 @@ import UIKit
 class YXFillWordAccordingToImageExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        super.createSubview()
         questionView = YXWordAndImage_FillQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
 
@@ -24,6 +23,7 @@ class YXFillWordAccordingToImageExerciseView: YXBaseExerciseView {
 
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
+        super.createSubview()
     }
 
     override func layoutSubviews() {

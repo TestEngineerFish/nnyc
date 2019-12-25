@@ -9,6 +9,16 @@
 import Foundation
 import ObjectMapper
 
+struct YXChallengeUnlockModel: Mappable {
+
+    var state: Int = 0
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        state <- map["state"]
+    }
+}
 
 struct YXChallengeModel: Mappable {
 
@@ -89,6 +99,4 @@ struct YXChallengeUserModel: Mappable {
         gameStatus      <- map["status"]
         myCoins         <- map["credits"]
     }
-
-
 }

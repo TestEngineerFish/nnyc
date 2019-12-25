@@ -13,7 +13,6 @@ class YXValidationWordAndChineseExerciseView: YXBaseExerciseView {
     private let answerHeight: CGFloat = 42
         
     override func createSubview() {
-        super.createSubview()
         questionView = YXWordAndChineseQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
         
@@ -23,6 +22,7 @@ class YXValidationWordAndChineseExerciseView: YXBaseExerciseView {
         answerView = YXRightOrWrongAnswerView(exerciseModel: exerciseModel)
         answerView?.answerDelegate = self
         self.scrollView.addSubview(answerView!)
+        super.createSubview()
     }
     
     override func layoutSubviews() {

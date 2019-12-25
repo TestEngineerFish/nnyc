@@ -13,6 +13,7 @@ public enum YXChallengeRequest: YYBaseRequest {
     case rankedList
     case playGame
     case report(version: Int, totalTime: Double, number: Int)
+    case unlock
 }
 
 extension YXChallengeRequest {
@@ -20,7 +21,7 @@ extension YXChallengeRequest {
         switch self {
         case .challengeModel, .playGame, .rankedList:
             return .get
-        case .report:
+        case .report, .unlock:
             return .post
         }
     }
@@ -37,6 +38,8 @@ extension YXChallengeRequest {
             return YXAPI.Challenge.gameReport
         case .rankedList:
             return YXAPI.Challenge.rankedList
+        case .unlock:
+            return YXAPI.Challenge.unlock
         }
     }
 }
@@ -52,6 +55,8 @@ extension YXChallengeRequest {
             return ["game_lined_id": version, "gameId": 1, "total_time" : totalTime, "num" : number]
         case .rankedList:
             return ["gameId": 1, "flag" : "pre"]
+        case .unlock:
+            return ["gameId": 1]
         }
     }
 }

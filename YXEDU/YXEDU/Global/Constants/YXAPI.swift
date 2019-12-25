@@ -113,11 +113,13 @@ struct YXAPI {
         /// 挑战页面接口
         static let challengeModel = "/api/v1/game/ranking"
         /// 开始游戏接口
-        static let playGame = "/api/v1/game/starting"
+        static let playGame       = "/api/v1/game/starting"
         /// 游戏结果上报接口
-        static let gameReport = "/api/v1/game/stopping"
+        static let gameReport     = "/api/v1/game/stopping"
         /// 挑战排名接口
-        static let rankedList = "/api/v1/game/ranking"
+        static let rankedList     = "/api/v1/game/ranking"
+        /// 解锁挑战
+        static let unlock         = "/api/v1/game/undo"
     }
     
     //MARK: - 设置模块

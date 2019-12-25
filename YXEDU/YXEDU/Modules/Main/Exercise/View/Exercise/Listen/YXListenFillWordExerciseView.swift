@@ -11,8 +11,7 @@ import UIKit
 class YXListenFillWordExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        
-        
+
         questionView = YXListenFillQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
 
@@ -22,7 +21,6 @@ class YXListenFillWordExerciseView: YXBaseExerciseView {
         answerView = YXListenFillAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         questionView?.addSubview(answerView!)
-        
         super.createSubview()
     }
 

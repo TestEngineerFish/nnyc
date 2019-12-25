@@ -48,11 +48,65 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         }
     }
 
+    private func requestUnlockGame() {
+        let request = YXChallengeRequest.unlock
+        YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
+            if let statusModel = response.data {
+                if statusModel.state == 1 {
+                    self.requestChallengeData()
+                }
+            }
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error)")
+        }
+    }
+
     // MARK: ==== Event ====
-    @objc private func playGame(){
+    @objc private func clickPlayButton(){
+        guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
+            return
+        }
+
+        switch userModel.gameStatus {
+        case .lock:
+            let alertView = YXAlertView(type: .normal)
+            alertView.descriptionLabel.text = "确定花费\(gameInfo.unlockCoin)松鼠币解锁游戏吗？"
+            alertView.doneClosure = { _ in
+                self.requestUnlockGame()
+            }
+
+        case .task:
+            let alertView = YXAlertView(type: .normal)
+            alertView.descriptionLabel.text = "背完今天的单词可以获得一次免费挑战机会！"
+            alertView.leftButton.setTitle("直接挑战", for: .normal)
+            alertView.rightOrCenterButton.setTitle("去背单词", for: .normal)
+            alertView.cancleClosure = {
+                self.requestUnlockGame()
+            }
+            alertView.doneClosure = { _ in
+                print("跳转到背单词页面")
+            }
+            alertView.show()
+        case .free:
+            self.playGame()
+        case .again:
+            if userModel.myCoins < gameInfo.unitCoin {
+                let alertView = YXAlertView(type: .normal)
+                alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
+                alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
+                alertView.shouldOnlyShowOneButton = true
+                alertView.show()
+            } else {
+                self.playGame()
+            }
+        }
+
+    }
+
+    private func playGame() {
         let vc = YXGameViewController()
-//        let vc = YXShareViewController()
-//        vc.titleString = "挑战分享"
+        //        let vc = YXShareViewController()
+        //        vc.titleString = "挑战分享"
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -86,7 +140,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         view.backgroundColor = UIColor.hex(0xE9DDC4)
         view.addSubview(headerView)
         view.addSubview(top3View)
-        headerView.startButton.addTarget(self, action: #selector(playGame), for: .touchUpInside)
+        headerView.startButton.addTarget(self, action: #selector(clickPlayButton), for: .touchUpInside)
         headerView.previousRankButton.addTarget(self, action: #selector(previousRank), for: .touchUpInside)
         headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()

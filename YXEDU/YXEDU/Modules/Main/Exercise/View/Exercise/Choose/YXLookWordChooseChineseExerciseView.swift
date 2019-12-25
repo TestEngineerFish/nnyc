@@ -12,7 +12,6 @@ import UIKit
 class YXLookWordChooseChineseExerciseView: YXBaseExerciseView {
     
     override func createSubview() {
-        super.createSubview()
         questionView = YXWordQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
         
@@ -22,6 +21,7 @@ class YXLookWordChooseChineseExerciseView: YXBaseExerciseView {
         answerView = YXItemAnswerView(exerciseModel: exerciseModel)
         answerView?.answerDelegate = self
         self.scrollView.addSubview(answerView!)
+        super.createSubview()
     }
     
     override func layoutSubviews() {

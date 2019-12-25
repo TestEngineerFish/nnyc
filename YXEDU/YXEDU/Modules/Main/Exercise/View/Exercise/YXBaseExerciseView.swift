@@ -59,7 +59,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     /// 答案view
     var answerView: YXBaseAnswerView?
     var answerViewHeight: CGFloat {
-        return self.height - questionViewHeight - remindViewDefaultHeight
+        return YXExerciseConfig.exerciseViewHeight - questionViewHeight - remindViewDefaultHeight
     }
     
     weak var exerciseDelegate: YXExerciseViewDelegate?
@@ -83,7 +83,6 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     /// 子类需要设置问题的视图的高度
     override func layoutSubviews() {
         super.layoutSubviews()
-
     }
 
     func bindData() {}
@@ -109,15 +108,15 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
         if let remindView = self.remindView {
             remindView.snp.makeConstraints { (make) in
                 make.top.equalToSuperview().offset(AdaptSize(16))
-                make.left.right.equalToSuperview()
+                make.left.equalToSuperview()
+                make.width.equalTo(questionView)
                 make.height.equalTo(remindViewDefaultHeight)
             }
             answerView?.snp.makeConstraints { (make) in
-                make.top.equalTo(remindView.snp.bottom).priorityLow()
-                make.width.equalTo(questionView)
-                make.left.right.equalToSuperview()
-                make.bottom.equalTo(self).priorityHigh()
+                make.bottom.equalTo(self)
                 make.height.equalTo(answerViewHeight)
+                make.width.equalTo(questionView)
+                make.centerX.equalTo(self)
             }
         }
     }

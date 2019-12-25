@@ -81,7 +81,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     }
     
     private func setPath() {
-        guard var word = self.exerciseModel.question?.word else {
+        guard var word = self.exerciseModel.question?.word, itemNumberH != 0 && itemNumberW != 0 else {
             return
         }
         word = word.replacingOccurrences(of: "[", with: "")

@@ -12,7 +12,6 @@ import UIKit
 class YXListenChooseImageExerciseView: YXBaseExerciseView {
             
     override func createSubview() {
-        super.createSubview()
         questionView = YXListenQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
 
@@ -22,6 +21,7 @@ class YXListenChooseImageExerciseView: YXBaseExerciseView {
         answerView = YXImageAnswerView(exerciseModel: self.exerciseModel)
         answerView?.answerDelegate = self
         self.scrollView.addSubview(answerView!)
+        super.createSubview()
     }
 
     override func layoutSubviews() {
