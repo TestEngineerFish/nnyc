@@ -35,7 +35,7 @@ struct YXAPI {
     //MARK: - 练习模块
     struct Exercise {
         /// 练习接口
-        static let exercise = "/api/v1/learn/exercise"
+        static let exercise = "/api/v1/learn/getsteps"
         /// 学习地图
         static let learnMap = "/api/v1/learn/getbookunitstatus"
         /// 学习结果页

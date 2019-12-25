@@ -217,8 +217,6 @@ class YXReviewHeaderView: YXView {
         createReviewPlanButton.setTitle("制定复习计划", for: .normal)
         createReviewPlanButton.setTitleColor(UIColor.white, for: .normal)
         createReviewPlanButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(12))
-        createReviewPlanButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: AS(15), bottom: 0, right: 0)
-        createReviewPlanButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: AS(-50), bottom: 0, right: 0)
         createReviewPlanButton.addTarget(self, action: #selector(clickCreateReviewPlanButton), for: .touchUpInside)
     }
     

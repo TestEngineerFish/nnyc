@@ -11,7 +11,7 @@ import ObjectMapper
 
 /// 当天学习数据总j模型
 struct YXExerciseResultModel: Mappable {
-
+    var type: YXExerciseDataType = .normal
     var bookId: Int?
     var unitId: Int?
     var newWordIds: [Int]?
@@ -22,6 +22,7 @@ struct YXExerciseResultModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
+        type <- (map[""], YXExerciseDataTypeTransform())
         bookId <- map["book_id"]
         newWordIds <- map["new_word_list"]
         reviewWordIds <- map["review_word_list"]
@@ -101,4 +102,27 @@ struct YXOptionItemModel: Mappable {
         optionId <- map["option_id"]
         content <- map["content"]
     }
+}
+
+
+
+
+struct YXExerciseDataTypeTransform: TransformType {
+        
+    typealias Object = YXExerciseDataType
+    typealias JSON = Int
+    
+    init() {}
+    
+    func transformFromJSON(_ value: Any?) -> YXExerciseDataType? {
+        if let v = value as? Int, let state = YXExerciseDataType(rawValue: v) {
+            return state
+        }
+        return .normal
+    }
+    
+    func transformToJSON(_ value: YXExerciseDataType?) -> Int? {
+        return value?.rawValue
+    }
+
 }

@@ -32,7 +32,7 @@ class YXReviewViewController: YXTableViewController {
         self.tableView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(41 + kSafeBottomMargin))
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(AS(-kSafeBottomMargin - kTabBarHeight))
+            make.bottom.equalTo(AS(-kTabBarHeight))
         }
     }
     

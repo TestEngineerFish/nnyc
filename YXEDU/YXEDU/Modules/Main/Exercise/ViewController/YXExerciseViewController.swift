@@ -21,6 +21,8 @@
     
     public var bookId: Int = 0
     public var unitId: Int = 0
+    public var dataType: YXExerciseDataType = .normal
+    
     
     // 数据管理器
     private var dataManager: YXExerciseDataManager!
@@ -141,7 +143,7 @@
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        dataManager.fetchTodayExerciseResultModels { [weak self] (result, msg) in
+        dataManager.fetchTodayExerciseResultModels(type: dataType) { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
                 DispatchQueue.main.async {

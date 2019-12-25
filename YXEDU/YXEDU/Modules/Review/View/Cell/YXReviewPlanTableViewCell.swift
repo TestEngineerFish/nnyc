@@ -21,8 +21,8 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     var titleLabel = UILabel()
     var countLabel = UILabel()
     var subTitleLabel = UILabel()
-    var listenStarView = YXReviewPlanStarContainerView()
-    var reviewStarView = YXReviewPlanStarContainerView()
+    var listenStarView = YXReviewPlanStarContainerView(type: .listen)
+    var reviewStarView = YXReviewPlanStarContainerView(type: .plan)
     var reviewProgressView = YXReviewPlanProgressView()
     var listenImageView = UIImageView()
     var listenButton = UIButton()
@@ -95,7 +95,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        bgView.snp.makeConstraints { (make) in
+        bgView.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(6.5))
             make.left.equalTo(AS(22))
             make.right.equalTo(AS(-22))
@@ -103,7 +103,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         }
         
         let titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(21)) ?? 0
-        titleLabel.snp.makeConstraints { (make) in
+        titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(15))
             make.left.equalTo(AS(22))
             make.width.equalTo(titleWidth)
@@ -111,7 +111,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         }
         
         let countWidth = countLabel.text?.textWidth(font: countLabel.font, height: AS(17)) ?? 0
-        countLabel.snp.makeConstraints { (make) in
+        countLabel.snp.remakeConstraints { (make) in
             make.centerY.equalTo(titleLabel)
             make.left.equalTo(titleLabel.snp.right).offset(AS(10))
             make.width.equalTo(countWidth)
@@ -119,9 +119,11 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         }
         
         
+        subTitleLabel.isHidden = true
         if reviewPlanModel?.listenState != .normal {
+            subTitleLabel.isHidden = false
             let subTitleWidth = subTitleLabel.text?.textWidth(font: subTitleLabel.font, height: AS(17)) ?? 0
-            subTitleLabel.snp.makeConstraints { (make) in
+            subTitleLabel.snp.remakeConstraints { (make) in
                 make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
                 make.left.equalTo(titleLabel)
                 make.width.equalTo(subTitleWidth)
@@ -129,24 +131,25 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             }
         }
         
-        
+        listenStarView.isHidden = true
         if reviewPlanModel?.listenState == .finish {
-            listenStarView.snp.makeConstraints { (make) in
+            listenStarView.isHidden = false
+            listenStarView.snp.remakeConstraints { (make) in
                 make.centerY.equalTo(subTitleLabel)
                 make.left.equalTo(subTitleLabel.snp.right).offset(AS(1))
-                make.width.equalTo(AS(14))
-                make.height.equalTo(AS(48))
+                make.width.equalTo(AS(48))
+                make.height.equalTo(AS(14))
             }
         }
         
         
-        listenImageView.snp.makeConstraints { (make) in
+        listenImageView.snp.remakeConstraints { (make) in
             make.left.equalTo(AS(23))
             make.bottom.equalTo(AS(-23))
             make.width.height.equalTo(AS(15))
         }
         
-        listenButton.snp.makeConstraints { (make) in
+        listenButton.snp.remakeConstraints { (make) in
             make.left.equalTo(listenImageView.snp.right).offset(AS(7))
             make.width.equalTo(AS(49))
             make.height.equalTo(AS(17))
@@ -154,32 +157,35 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         }
         
         
-        reviewButton.snp.makeConstraints { (make) in
+        reviewButton.snp.remakeConstraints { (make) in
             make.right.equalTo(AS(-9))
             make.bottom.equalTo(AS(-14))
             make.width.equalTo(AS(96))
             make.height.equalTo(AS(30))
         }
         
-        
+        reviewProgressView.isHidden = true
         if reviewPlanModel?.reviewState == .learning {
-            reviewProgressView.snp.makeConstraints { (make) in
-                make.top.equalTo(AS(26))
-                make.right.equalTo(AS(17))
-                make.width.equalTo(AS(81))
-                make.height.equalTo(AS(27))
+            reviewProgressView.isHidden = false
+            reviewProgressView.snp.remakeConstraints { (make) in
+                make.top.equalTo(AS(18))
+                make.right.equalTo(AS(-35))
+                make.size.equalTo(AS(40))
             }
         }
         
+        reviewStarView.isHidden = true
         if reviewPlanModel?.reviewState == .finish {
-            reviewStarView.snp.makeConstraints { (make) in
+            reviewStarView.isHidden = false
+            reviewStarView.snp.remakeConstraints { (make) in
                 make.top.equalTo(AS(26))
-                make.right.equalTo(AS(17))
+                make.right.equalTo(AS(-17))
                 make.width.equalTo(AS(81))
                 make.height.equalTo(AS(27))
             }
         }
         
+        self.layoutIfNeeded()
     }
     
     
@@ -187,11 +193,25 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         titleLabel.text = reviewPlanModel?.planName
         countLabel.text = "单词: " + (reviewPlanModel?.wordCount.string ?? "")
         
+        
+        if reviewPlanModel?.listenState == .learning {
+            subTitleLabel.text = "听写进度：\(reviewPlanModel?.listen ?? 0)%"
+        } else if reviewPlanModel?.listenState == .finish {
+            subTitleLabel.text = "听写成绩："
+            listenStarView.count = reviewPlanModel?.listen ?? 0
+        }
+        
+        
         if reviewPlanModel?.reviewState == .normal {
             reviewButton.setTitle("开始复习", for: .normal)
-        } else {
+        } else if reviewPlanModel?.reviewState == .learning {
             reviewButton.setTitle("继续复习", for: .normal)
+            reviewProgressView.progress = 0.8 //reviewPlanModel?.review ?? 0
+        } else if reviewPlanModel?.reviewState == .finish {
+            reviewButton.setTitle("继续复习", for: .normal)
+            reviewStarView.count = reviewPlanModel?.review ?? 0
         }
+        
     }
     
     
@@ -214,13 +234,168 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
 
 
 
-class YXReviewPlanStarContainerView: UIView {
+class YXReviewPlanStarContainerView: YXView {
+    enum StarType {
+        case listen
+        case plan
+    }
     
+    public var count: Int = 0 {
+        didSet { bindData() }
+    }
+    
+    private var type: StarType = .listen
+    private var imageView1 = UIImageView()
+    private var imageView2 = UIImageView()
+    private var imageView3 = UIImageView()
+    
+    init(type: StarType) {
+        super.init(frame: .zero)
+        
+        self.type = type
+        self.createSubviews()
+        self.bindProperty()
+    }
+
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func createSubviews() {
+        self.addSubview(imageView1)
+        self.addSubview(imageView2)
+        self.addSubview(imageView3)
+    }
+    
+    override func bindProperty() {
+        imageView1.image = UIImage(named: "review_finish_star_dis")
+        imageView2.image = UIImage(named: "review_finish_star_dis")
+        imageView3.image = UIImage(named: "review_finish_star_dis")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let imageWidth: CGFloat = type == .listen ? 14 : 28
+        let imageHeight: CGFloat = type == .listen ? 14 : 27
+        
+        imageView1.snp.makeConstraints { (make) in
+            make.centerY.left.equalToSuperview()
+            make.width.equalTo(AS(imageWidth))
+            make.height.equalTo(AS(imageHeight))
+        }
+        
+        imageView2.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalTo(AS(imageWidth))
+            make.height.equalTo(AS(imageHeight))
+        }
+        
+        imageView3.snp.makeConstraints { (make) in
+            make.centerY.right.equalToSuperview()
+            make.width.equalTo(AS(imageWidth))
+            make.height.equalTo(AS(imageHeight))
+        }
+        
+    }
+        
+    override func bindData() {
+        if count >= 1 {
+            imageView1.image = UIImage(named: "review_finish_star")
+        }
+        if count >= 2 {
+            imageView2.image = UIImage(named: "review_finish_star")
+        }
+        if count >= 3 {
+            imageView3.image = UIImage(named: "review_finish_star")
+        }
+    }
     
 }
 
 
-class YXReviewPlanProgressView: UIView {
+class YXReviewPlanProgressView: YXView {
     
+    var progress: CGFloat = 0 {
+        didSet { bindData() }
+    }
+    
+    private var titleLabel = UILabel()
+    private var shapeLayer: CAShapeLayer?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.createSubviews()
+        self.bindProperty()
+        self.backgroundARC()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func createSubviews() {
+        self.addSubview(titleLabel)
+    }
+    
+    override func bindProperty() {
+        titleLabel.font = UIFont.semiboldFont(ofSize: AS(17))
+        titleLabel.textColor = UIColor.black1
+        titleLabel.textAlignment = .center
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        titleLabel.snp.makeConstraints { (make) in
+            make.center.size.equalToSuperview()
+        }
+    }
+    
+    override func bindData() {
+        
+        titleLabel.text = "\(progress)"
+            
+        shapeLayer?.removeFromSuperlayer()
+
+        let beginAngle = CGFloat(Double.pi * (-0.5)) // 起点
+        let finishAngle = CGFloat(Double.pi) * (2 * progress - 0.5) // 终点
+
+        let centerP = CGPoint(x: AS(20), y: AS(20))
+        let path = UIBezierPath(arcCenter: centerP, radius: AS(20),
+                                startAngle: beginAngle, endAngle: finishAngle, clockwise: true)
+
+        shapeLayer = CAShapeLayer()
+        shapeLayer?.lineWidth = AS(6.0)
+        shapeLayer?.lineCap = .round
+        shapeLayer?.strokeColor = UIColor.orange1.cgColor
+        shapeLayer?.fillColor = UIColor.clear.cgColor
+
+        shapeLayer?.path = path.cgPath
+        shapeLayer?.frame = self.bounds
+
+        self.layer.addSublayer(shapeLayer!)
+    }
+    
+    func backgroundARC() {
+        let beginAngle = CGFloat(Double.pi * (-0.5)) // 起点
+        let finishAngle = CGFloat(Double.pi * 3 / 2) // 终点
+        
+        let centerP = CGPoint(x: AS(20), y: AS(20))
+        let path = UIBezierPath(arcCenter: centerP, radius: AS(20),
+                                startAngle: beginAngle, endAngle: finishAngle, clockwise: true)
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.lineWidth = AS(6.0)
+        shapeLayer.lineCap = .round
+        shapeLayer.strokeColor = UIColor.hex(0xEBEBEB).cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+
+        shapeLayer.path = path.cgPath
+        shapeLayer.frame = CGRect(x: 0, y: 0, width: AS(40), height: AS(40))
+        
+        self.layer.addSublayer(shapeLayer)
+    }
 }
 

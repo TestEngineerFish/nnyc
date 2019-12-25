@@ -9,6 +9,13 @@
 import UIKit
 import ObjectMapper
 
+enum YXExerciseDataType: Int {
+    case normal = 1             // 基础学习
+    case aiReview = 5           // 智能复习
+    case listenReview = 3       // 计划——听力
+    case normalReview = 4       // 计划——复习
+    case wrong = 2              // 抽查
+}
 
 /// 练习的数据管理器
 class YXExerciseDataManager: NSObject {
@@ -54,8 +61,8 @@ class YXExerciseDataManager: NSObject {
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
-    func fetchTodayExerciseResultModels(completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
-        let request = YXExerciseRequest.exercise
+    func fetchTodayExerciseResultModels(type: YXExerciseDataType, planId: Int? = nil, completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
+        let request = YXExerciseRequest.exercise(type: type.rawValue, planId: planId)
         YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
             self.processExerciseData(result: response.data)
             completion(true, nil)

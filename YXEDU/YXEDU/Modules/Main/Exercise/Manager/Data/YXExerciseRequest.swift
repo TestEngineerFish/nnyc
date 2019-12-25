@@ -9,7 +9,7 @@
 import UIKit
 
 public enum YXExerciseRequest: YYBaseRequest {
-    case exercise
+    case exercise(type: Int, planId: Int?)
     case learnMap(bookId: Int)
     case learnResult(bookId: Int, unitId: Int)
     case report(json: String)
@@ -44,6 +44,8 @@ extension YXExerciseRequest {
 
     var parameters: [String : Any?]? {
         switch self {
+        case.exercise(let type, let planId):
+            return ["learn_type" : type, "review_id" : planId]
         case .learnMap(let bookId):
             return ["book_id" : bookId]
         case .learnResult(let bookId, let unitId):
