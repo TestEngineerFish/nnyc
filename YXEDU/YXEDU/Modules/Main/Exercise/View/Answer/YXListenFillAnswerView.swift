@@ -160,7 +160,6 @@ class YXListenFillAnswerLineView: YXView {
             let label = UILabel()
             label.textColor = UIColor.black1
             label.font = UIFont.mediumFont(ofSize: AS(26))
-//            label.text = "a"
             label.textAlignment = .center
             label.frame = CGRect(x: AS(lineX), y: 0, width: AS(lineWidth + interval), height: AS(37))
             self.addSubview(label)

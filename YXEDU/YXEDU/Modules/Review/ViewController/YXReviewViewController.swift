@@ -130,7 +130,10 @@ extension YXReviewViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = dataSource[indexPath.row] as! YXReviewPlanModel
+        
         let vc = YXReviewPlanDetailViewController()
+        vc.planId = model.planId
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -140,13 +143,16 @@ extension YXReviewViewController {
 extension YXReviewViewController {
     
     func favoriteEvent() {
-        let vc = YXReviewPlanDetailViewController()
+        let vc = YXWordListViewController()
+        vc.wordListType = .collected
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func wrongWordEvent() {
-        let vc = YXReviewPlanDetailViewController()
+        let vc = YXWordListViewController()
+        vc.wordListType = .wrongWords
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -179,7 +185,8 @@ extension YXReviewViewController {
     
     
     func createReviewEvent() {
-        let vc = YXReviewPlanDetailViewController()
+        let vc = MakeReviewPlanViewController()
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

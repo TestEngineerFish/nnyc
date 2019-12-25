@@ -218,7 +218,7 @@ class YXReviewHeaderView: YXView {
         createReviewPlanButton.setTitleColor(UIColor.white, for: .normal)
         createReviewPlanButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(12))
         createReviewPlanButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: AS(15), bottom: 0, right: 0)
-        createReviewPlanButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: AS(-70), bottom: 0, right: 0)
+        createReviewPlanButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: AS(-50), bottom: 0, right: 0)
         createReviewPlanButton.addTarget(self, action: #selector(clickCreateReviewPlanButton), for: .touchUpInside)
     }
     
@@ -408,10 +408,10 @@ class YXReviewHeaderView: YXView {
         }
         
         countLabel.text = "\(reviewModel?.learnNum ?? 0)"
-        familiarLabel.text = "熟悉的单词  \(reviewModel?.familiarNum ?? 0)"
-        iKnowLabel.text = "认识的单词  \(reviewModel?.knowNum ?? 0)"
-        fuzzyLabel.text = "模糊的单词  \(reviewModel?.fuzzyNum ?? 0)"
-        forgetLabel.text = "忘记的单词  \(reviewModel?.forgetNum ?? 0)"
+        familiarLabel.text = "熟悉的单词  \(reviewModel?.familiarNum ?? 0)个"
+        iKnowLabel.text = "认识的单词  \(reviewModel?.knowNum ?? 0)个"
+        fuzzyLabel.text = "模糊的单词  \(reviewModel?.fuzzyNum ?? 0)个"
+        forgetLabel.text = "忘记的单词  \(reviewModel?.forgetNum ?? 0)个"
         
         familiarProgressLabel.text = progressStringValue(num: reviewModel?.familiarNum)
         iKnowProgressLabel.text = progressStringValue(num: reviewModel?.knowNum)
@@ -423,13 +423,14 @@ class YXReviewHeaderView: YXView {
     }
     
     private func progressStringValue(num: Int?) -> String {
-        return "\(progressValue(num: num))"
+        return "\(Int(progressValue(num: num) *  100))%"
     }
+    
     private func progressValue(num: Int?) -> CGFloat {
         guard let n = num, let model = self.reviewModel, model.learnNum > 0 else {
             return 0
         }
-        return CGFloat(100 * n / model.learnNum)
+        return CGFloat(n) / CGFloat(model.learnNum)
     }
     
     private class func pointLabel() -> UILabel {

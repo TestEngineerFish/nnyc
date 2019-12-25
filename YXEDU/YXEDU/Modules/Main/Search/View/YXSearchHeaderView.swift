@@ -53,6 +53,11 @@ class YXSearchHeaderView: YXView {
         searchTextFeild.clearButtonMode = .always
         searchTextFeild.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 0))
         searchTextFeild.leftViewMode = .always
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+            self?.searchTextFeild.becomeFirstResponder()
+        }
+        
     }
     
     

@@ -115,21 +115,21 @@ class YXSearchTableViewCell: YXTableViewCell<YXSearchWordModel> {
         super.layoutSubviews()
         
         let wordWidth = wordLabel.text?.textWidth(font: wordLabel.font, height: 22) ?? 0
-        wordLabel.snp.makeConstraints { (make) in
+        wordLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(9)
             make.left.equalTo(23)
             make.width.equalTo(wordWidth)
             make.height.equalTo(22)
         }
         
-        soundmarkLabel.snp.makeConstraints { (make) in
+        soundmarkLabel.snp.remakeConstraints { (make) in
             make.centerY.equalTo(wordLabel)
             make.left.equalTo(wordLabel.snp.right).offset(20)
             make.right.equalTo(-23)
             make.height.equalTo(20)
         }
         
-        descLabel.snp.makeConstraints { (make) in
+        descLabel.snp.remakeConstraints { (make) in
             make.left.equalTo(23)
             make.right.equalTo(-23)
             make.height.equalTo(20)
