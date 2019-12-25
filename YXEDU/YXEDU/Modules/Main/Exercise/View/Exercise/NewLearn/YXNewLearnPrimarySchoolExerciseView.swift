@@ -54,6 +54,9 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             make.height.equalTo(AdaptSize(145))
             make.width.equalToSuperview()
         })
+        detailView?.snp.makeConstraints({ (make) in
+            make.edges.equalToSuperview()
+        })
         self.rightContentView.snp.makeConstraints({ (make) in
             make.top.bottom.width.equalToSuperview()
             make.left.equalTo(self.snp.right)

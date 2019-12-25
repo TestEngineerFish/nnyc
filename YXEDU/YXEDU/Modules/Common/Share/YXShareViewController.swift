@@ -8,6 +8,14 @@
 
 import UIKit
 
+enum YXShareType {
+    case learnResult
+    case reviewResult
+    case reviewAIReuslt
+    case reviewListenResult
+    case challengeResult
+}
+
 class YXShareViewController: YXViewController {
 
     var shareImageView: YXKVOImageView = {
@@ -58,8 +66,14 @@ class YXShareViewController: YXViewController {
 
     var wechatImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "gameShareWX")
+        imageView.image = UIImage(named: "gameShareWechat")
         imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
+
+    var goldImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "challengeGoldIcon")
         return imageView
     }()
 
@@ -117,6 +131,7 @@ class YXShareViewController: YXViewController {
         self.view.addSubview(wechatLabel)
         self.view.addSubview(timeLineImageView)
         self.view.addSubview(timeLineLabel)
+        self.view.addSubview(goldImageView)
         shareImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(300), height: AdaptSize(388)))
@@ -165,6 +180,11 @@ class YXShareViewController: YXViewController {
             make.right.equalToSuperview().offset(AdaptSize(-70))
             make.size.equalTo(CGSize(width: AdaptSize(38), height: AdaptSize(38)))
         }
+        goldImageView.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: AdaptSize(25), height: AdaptSize(25)))
+            make.right.equalTo(timeLineLabel).offset(AdaptSize(15))
+            make.top.equalTo(timeLineLabel).offset(AdaptSize(-6))
+        }
         timeLineLabel.sizeToFit()
         timeLineLabel.snp.makeConstraints { (make) in
             make.top.equalTo(qqLabel)
@@ -173,7 +193,7 @@ class YXShareViewController: YXViewController {
         }
     }
 
-    // MARK: ==== Event ====
+    // MARK: ==== Share Event ====
     @objc private func shareToQQ() {
         QQApiManager.shared()?.share(shareImageView.image, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
     }
@@ -184,6 +204,11 @@ class YXShareViewController: YXViewController {
 
     @objc private func shareToTimeLine() {
         WXApiManager.shared()?.share(shareImageView.image, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+    }
+
+    // MARK: ==== Tools ====
+    private func createShareImageView(_ type: YXShareType, wordNum: Int, days: Int) {
+        
     }
 }
 
