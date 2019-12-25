@@ -99,7 +99,7 @@
                 <constraint firstItem="Y7d-xJ-we1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="slY-vo-5Do"/>
                 <constraint firstItem="krV-F4-QQf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="uo7-IZ-cCF"/>
                 <constraint firstAttribute="trailing" secondItem="cO4-0T-jiD" secondAttribute="trailing" constant="20" id="vnL-fr-3Cc"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="krV-F4-QQf" secondAttribute="trailing" constant="24" id="yfs-sR-Wlb"/>
+                <constraint firstAttribute="trailing" secondItem="krV-F4-QQf" secondAttribute="trailing" constant="24" id="yfs-sR-Wlb"/>
                 <constraint firstAttribute="bottom" secondItem="5KF-Sy-Uh7" secondAttribute="bottom" id="ygs-nk-prZ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

@@ -9,13 +9,13 @@
 import UIKit
 
 class BPSegmentView: UICollectionView {
-    var isHeaderView = false
-    var lastSelectedIndex =  IndexPath()
+    var isHeaderView      = false
+    var lastSelectedIndex = IndexPath()
 
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
-        self.backgroundColor = UIColor.white
-        self.showsVerticalScrollIndicator  = false
+        self.backgroundColor                = UIColor.clear
+        self.showsVerticalScrollIndicator   = false
         self.showsHorizontalScrollIndicator = false
     }
 

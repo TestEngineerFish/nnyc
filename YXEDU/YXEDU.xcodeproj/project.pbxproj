@@ -1989,10 +1989,10 @@
 		223D267D239B4A70008DED9E /* SegmentController */ = {
 			isa = PBXGroup;
 			children = (
-				223D267E239B4A70008DED9E /* BPItemContentView.swift */,
 				223D267F239B4A70008DED9E /* BPSegmentView.swift */,
 				223D2680239B4A70008DED9E /* BPSegmentControllerView.swift */,
 				223D2681239B4A70008DED9E /* BPItemHeaderView.swift */,
+				223D267E239B4A70008DED9E /* BPItemContentView.swift */,
 			);
 			path = SegmentController;
 			sourceTree = "<group>";
