@@ -12,6 +12,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     var orderClosure: ((_ orderType: YXWordListOrderType) -> Void)?
     var editClosure: (() -> Void)?
+    var startReviewClosure: ((_ exerciseResultModel: YXExerciseResultModel) -> Void)?
 
     var isWrongWordList = false
     
@@ -170,6 +171,17 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         editClosure?()
     }
     
+    @IBAction func startReview(_ sender: Any) {
+        let request = YXExerciseRequest.exercise(type: 2, planId: nil)
+        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
+            guard let exerciseResultModel = response.data else { return }
+            self.startReviewClosure?(exerciseResultModel)
+
+        }) { (error) in
+
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         initializationFromNib()
@@ -185,11 +197,12 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         addSubview(contentView)
         contentView.frame = self.bounds
         
-        tableView.register(UINib(nibName: "YXWordListEmptyCell", bundle: nil), forCellReuseIdentifier: "YXWordListEmptyCell")
         tableView.register(UINib(nibName: "YXWordListCell", bundle: nil), forCellReuseIdentifier: "YXWordListCell")
+        tableView.register(UINib(nibName: "YXWordListEmptyCell", bundle: nil), forCellReuseIdentifier: "YXWordListEmptyCell")
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.reloadData()
     }
     
     
@@ -327,6 +340,18 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
             
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, isWrongWordList {
+            return 44
+
+        } else if words.count > 0 {
+            return 44
+
+        } else {
+            return tableView.estimatedRowHeight
+        }
     }
     
     func parentViewController() -> UIViewController? {

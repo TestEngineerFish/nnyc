@@ -189,7 +189,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         let scetionType = sections[section].keys.first
                
         if scetionType == SectionType.featured.rawValue {
-            return 0
+            return 0.01
             
         } else {
             return 54
@@ -197,14 +197,14 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let scetionType = sections[section].keys.first
-               
-        if (section + 1) < sections.count, scetionType == SectionType.examples.rawValue, sections[section + 1].keys.first == SectionType.featured.rawValue {
-            return 0
-            
-        } else {
-            return 20
-        }
+//        let scetionType = sections[section].keys.first
+//
+//        if (section + 1) < sections.count, scetionType == SectionType.examples.rawValue, sections[section + 1].keys.first == SectionType.featured.rawValue {
+//            return 0
+//
+//        } else {
+            return 0.01
+//        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -258,25 +258,26 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailExampleCell", for: indexPath) as! YXWordDetailExampleCell
             let examples = section.values.first as? [YXWordExampleModel]
             let example = examples?[indexPath.row]
-
             let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
             
-            let firstRightBracket = combineExample.firstIndex(of: ">")!
-            let startHighLightIndex = combineExample.index(firstRightBracket, offsetBy: 1)
-            let lastLeftBracket = combineExample.lastIndex(of: "<")!
-            let highLightString = String(combineExample[startHighLightIndex..<lastLeftBracket])
+            if let firstAddressSymbolIndex = combineExample.firstIndex(of: "@"), let lastAddressSymbolIndex = combineExample.lastIndex(of: "@") {
+                let startHighLightIndex = combineExample.index(firstAddressSymbolIndex, offsetBy: 1)
+                let endHighLightIndex = combineExample.index(lastAddressSymbolIndex, offsetBy: 1)
+                let highLightString = String(combineExample[startHighLightIndex..<lastAddressSymbolIndex])
+                let string = String(combineExample[combineExample.startIndex..<firstAddressSymbolIndex]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
+                
+                let attrString = NSMutableAttributedString(string: string)
+                let highLightRange = string.range(of: highLightString)!
+                let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
+                attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
+                
+                cell.label.attributedText = attrString
+                
+            } else {
+                cell.label.text = combineExample
+            }
             
-            let firstLeftBracket = combineExample.firstIndex(of: "<")!
-            let lastRightBracket = combineExample.lastIndex(of: ">")!
-            let endHighLightIndex = combineExample.index(lastRightBracket, offsetBy: 1)
-            let string = String(combineExample[combineExample.startIndex..<firstLeftBracket]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
-            
-            let attrString = NSMutableAttributedString(string: string)
-            let highLightRange = string.range(of: highLightString)!
-            let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
-            attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
-            
-            cell.label.attributedText = attrString
+            cell.pronunciation = example?.pronunciation
             
             return cell
             
@@ -334,11 +335,54 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         let section = sections[indexPath.section]
 
         switch section.keys.first {
+        case SectionType.deformation.rawValue:
+            return 20
+
+        case SectionType.examples.rawValue:
+            let examples = section.values.first as? [YXWordExampleModel]
+            let example = examples?[indexPath.row]
+            let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
+
+            let height = combineExample.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 110) + 4
+            return height
+
+        case SectionType.synonym.rawValue:
+            let synonyms = section.values.first as? [String]
+
+            var text = ""
+            for index in 0..<(synonyms?.count ?? 0) {
+                if index == 0 {
+                    text = synonyms?[0] ?? ""
+
+                } else {
+                    text = text + ", " + (synonyms?[index] ?? "")
+                }
+            }
+
+            let height = text.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 50) + 4
+            return height
+
+        case SectionType.antonym.rawValue:
+            let antonyms = section.values.first as? [String]
+
+            var text = ""
+            for index in 0..<(antonyms?.count ?? 0) {
+                if index == 0 {
+                    text = antonyms?[0] ?? ""
+                    
+                } else {
+                    text = text + ", " + (antonyms?[index] ?? "")
+                }
+            }
+            
+            let height = text.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 50) + 4
+            return height
+            
         case SectionType.featured.rawValue:
             return featuredViewheight
             
         default:
-            return tableView.estimatedRowHeight
+            return 0
         }
     }
 }

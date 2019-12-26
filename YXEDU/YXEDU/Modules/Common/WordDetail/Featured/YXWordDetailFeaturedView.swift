@@ -100,7 +100,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     private func heightChange() {
         tableView.layoutIfNeeded()
         
-        let height = tableView.contentSize.height + 86
+        let height = tableView.contentSize.height + 64
         
         self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: height)
         contentView.frame = self.bounds
@@ -144,7 +144,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 28
+        return 28   
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

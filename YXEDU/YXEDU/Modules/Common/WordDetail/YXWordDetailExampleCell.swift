@@ -9,7 +9,7 @@
 import UIKit
 
 class YXWordDetailExampleCell: UITableViewCell {
-    var pronunciationUrl: URL!
+    var pronunciation: String?
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var playAuoidButton: UIButton!
@@ -31,7 +31,7 @@ class YXWordDetailExampleCell: UITableViewCell {
             playAuoidButton.layer.removeFlickerAnimation()
             
         } else {
-            guard let pronunciationUrl = pronunciationUrl else { return }
+            guard let pronunciation = pronunciation, let pronunciationUrl = URL(string: pronunciation) else { return }
             playAuoidButton.layer.addFlickerAnimation()
             
             YXAVPlayerManager.share.playAudio(pronunciationUrl) {

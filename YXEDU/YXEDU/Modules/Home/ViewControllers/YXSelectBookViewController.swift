@@ -57,8 +57,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     self.bookCollectionView.reloadData()
                     
                     YXWordBookDaoImpl().deleteBook(bookId: selectedBookId)
-                    YXWordBookDaoImpl().deleteWord(bookId: selectedBookId)
-                    try? FileManager.default.removeItem(at: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(selectedBookId)"))
+//                    try? FileManager.default.removeItem(at: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(selectedBookId)"))
                 }
                 
                 break
@@ -114,13 +113,13 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         super.viewDidLoad()
 
         bookCollectionView.register(UINib(nibName: "YXWordBookCell", bundle: nil), forCellWithReuseIdentifier: "YXWordBookCell")
-        
-        fetchWordBooks()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xF5F5F5)
+        
+        fetchWordBooks()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

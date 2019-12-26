@@ -23,7 +23,7 @@
                     <rect key="frame" x="10" y="72" width="394" height="780"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="JZG-RF-5nI">
-                            <rect key="frame" x="0.0" y="24" width="394" height="732"/>
+                            <rect key="frame" x="0.0" y="24" width="394" height="756"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         </tableView>
                     </subviews>
@@ -31,7 +31,7 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="JZG-RF-5nI" secondAttribute="trailing" id="3Og-ut-jij"/>
                         <constraint firstItem="JZG-RF-5nI" firstAttribute="top" secondItem="QvV-Cw-EDc" secondAttribute="top" constant="24" id="aDK-15-9Hi"/>
-                        <constraint firstAttribute="bottom" secondItem="JZG-RF-5nI" secondAttribute="bottom" constant="24" id="c3z-BG-yl7"/>
+                        <constraint firstAttribute="bottom" secondItem="JZG-RF-5nI" secondAttribute="bottom" id="c3z-BG-yl7"/>
                         <constraint firstItem="JZG-RF-5nI" firstAttribute="leading" secondItem="QvV-Cw-EDc" secondAttribute="leading" id="k1r-7B-jzB"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
