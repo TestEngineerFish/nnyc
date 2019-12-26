@@ -38,7 +38,7 @@ struct YXAPI {
         static let exercise = "/api/v1/learn/getsteps"
         /// 学习地图
         static let learnMap = "/api/v1/learn/getbookunitstatus"
-        /// 学习结果页
+        /// 基础学习结果页
         static let learnResult = "/api/v1/learn/getcurrentunitstatus"
         /// 上报接口
         static let report = "/api/v1/result"
@@ -69,7 +69,7 @@ struct YXAPI {
         /// 获得复习计划详情
         static let reviewPlanDetail = "/api/v1/learn/getreviewplaninfo"
         /// 口令查询
-        static let checkCommand = "/api/v1/learn/getsharereviewplan"        
+        static let checkCommand = "/api/v1/learn/getsharereviewplan"
         /// 复习结果页
         static let reviewResult = "/api/v1/learn/result"
     }

@@ -58,36 +58,44 @@ struct YYNetworkService {
         }
         
         
-        if request.method == .post {
-            var urlRequest = URLRequest(url: request.url)
-            urlRequest.httpMethod = request.method.rawValue
-            urlRequest.allHTTPHeaderFields = request.handleHeader(parameters: removeNilValue(request.parameters))
-            
-            do {
-                if let params = removeNilValue(request.parameters) {
-                    if request.isHttpBody {
-                        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                        urlRequest.httpBody = (params["json"] as? String)?.data(using: .utf8)
-                    } else {
-                        try urlRequest.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
-                    }
-                }
-                return self.post(type, request: urlRequest, success: { (response, httpStatusCode) in
-                    self.handleStatusCodeLogicResponseObject(response, statusCode: httpStatusCode, request: request, success: success, fail: fail)
-                }, fail: { (error) in
-                    fail?(error as NSError)
-                })
-            } catch let parseError {
-                fail?(parseError as NSError)
-                return nil
-            }
-        } else {
-            return self.get(type, request: request, header: request.handleHeader(parameters: removeNilValue(request.parameters)), success: { (response, httpStatusCode) in
-                self.handleStatusCodeLogicResponseObject(response, statusCode: httpStatusCode, request: request, success: success, fail: fail)
-            }, fail: { (error) in
-                fail?(error as NSError)
-            })
+        return self.httpRequest(type, request: request, success: { (response, statusCode) in
+            self.handleStatusCodeLogicResponseObject(response, statusCode: statusCode, request: request, success: success, fail: fail)
+        }) { (error) -> Void? in
+            fail?(error as NSError)
         }
+        
+        
+        
+//        if request.method == .post {
+//            var urlRequest = URLRequest(url: request.url)
+//            urlRequest.httpMethod = request.method.rawValue
+//            urlRequest.allHTTPHeaderFields = request.handleHeader(parameters: removeNilValue(request.parameters))
+//
+//            do {
+//                if let params = removeNilValue(request.parameters) {
+//                    if request.isHttpBody {
+//                        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//                        urlRequest.httpBody = (params["json"] as? String)?.data(using: .utf8)
+//                    } else {
+//                        try urlRequest.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+//                    }
+//                }
+//                return self.post(type, request: urlRequest, success: { (response, httpStatusCode) in
+//                    self.handleStatusCodeLogicResponseObject(response, statusCode: httpStatusCode, request: request, success: success, fail: fail)
+//                }, fail: { (error) in
+//                    fail?(error as NSError)
+//                })
+//            } catch let parseError {
+//                fail?(parseError as NSError)
+//                return nil
+//            }
+//        } else {
+//            return self.get(type, request: request, header: request.handleHeader(parameters: removeNilValue(request.parameters)), success: { (response, httpStatusCode) in
+//                self.handleStatusCodeLogicResponseObject(response, statusCode: httpStatusCode, request: request, success: success, fail: fail)
+//            }, fail: { (error) in
+//                fail?(error as NSError)
+//            })
+//        }
     }
     
     
@@ -173,30 +181,55 @@ struct YYNetworkService {
     
     //MARK: ----------------- Method -----------------
     
-    @discardableResult
-    private func get <T>(_ type: T.Type, request: YYBaseRequest, header:[String:String], success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
-        let encoding: ParameterEncoding = (.get == request.method ? URLEncoding.default : JSONEncoding.default)
-        let request = sessionManager.request(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: removeNilValue(request.parameters), encoding: encoding, headers: header).responseObject { (response: DataResponse <T>) in
-
-            switch response.result {
-            case .success(var x):
-                x.response = response.response
-                x.request = response.request
-                success(x, (response.response?.statusCode) ?? 0)
-            case .failure(let error):                
-                fail(error as NSError)
-            }
-        }
-        
-        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: request)
-        return taskRequest
-    }
+//    @discardableResult
+//    private func get <T>(_ type: T.Type, request: YYBaseRequest, header:[String:String], success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
+//        let encoding: ParameterEncoding = (.get == request.method ? URLEncoding.default : JSONEncoding.default)
+//        let request = sessionManager.request(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: removeNilValue(request.parameters), encoding: encoding, headers: header).responseObject { (response: DataResponse <T>) in
+//
+//            switch response.result {
+//            case .success(var x):
+//                x.response = response.response
+//                x.request = response.request
+//                success(x, (response.response?.statusCode) ?? 0)
+//            case .failure(let error):                
+//                fail(error as NSError)
+//            }
+//        }
+//        
+//        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: request)
+//        return taskRequest
+//    }
+//    
+//    
+//    @discardableResult
+//    private func post <T> (_ type: T.Type, request: URLRequest, success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void?, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
+//        
+//        let request = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
+//            switch response.result {
+//            case .success(var x):
+//                x.response = response.response
+//                x.request = response.request
+//                success(x, (response.response?.statusCode) ?? 0)
+//            case .failure(let error):
+//                fail(error as NSError)
+//            }
+//        }
+//        
+//        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: request)
+//        return taskRequest
+//    }
     
     
-    @discardableResult
-    private func post <T> (_ type: T.Type, request: URLRequest, success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void?, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
+    //MARK: Process
+    private func httpRequest <T>(_ type: T.Type, request: YYBaseRequest, success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest? where T: YYBaseResopnse {
         
-        let request = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
+        let params = removeNilValue(request.parameters)
+        let header = request.handleHeader(parameters: params)
+        let encoding: ParameterEncoding = (request.method == .get) ? URLEncoding.default : URLEncoding.httpBody
+        let method = HTTPMethod(rawValue: request.method.rawValue) ?? .get
+        
+        let task = sessionManager.request(request.url, method: method, parameters: params, encoding: encoding, headers: header)
+        task.responseObject { (response: DataResponse <T>) in
             switch response.result {
             case .success(var x):
                 x.response = response.response
@@ -207,9 +240,12 @@ struct YYNetworkService {
             }
         }
         
-        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: request)
+        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: task)
         return taskRequest
     }
+    
+    
+    
     
     //MARK: ----------------- Response -----------------
     /**R
