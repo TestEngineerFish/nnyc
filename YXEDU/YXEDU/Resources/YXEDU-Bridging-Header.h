@@ -60,3 +60,6 @@
 #import "MJRefresh.h"
 #import "USCRecognizer.h"
 #import "UIScrollView+EmptyDataSet.h"
+
+#import "YXShareImageGenerator.h"
+#import "YXShareHelper.h"

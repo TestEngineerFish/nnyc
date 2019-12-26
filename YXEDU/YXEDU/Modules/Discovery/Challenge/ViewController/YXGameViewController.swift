@@ -115,6 +115,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
                     YRRouter.popViewController(false)
                     let shareVC = YXShareViewController()
                     shareVC.titleString = "挑战分享"
+                    shareVC.shareType   = .challengeResult
                     shareVC.hidesBottomBarWhenPushed = true
                     YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
 

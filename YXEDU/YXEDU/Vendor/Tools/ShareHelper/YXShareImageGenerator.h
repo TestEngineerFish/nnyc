@@ -19,7 +19,7 @@
                     describtion:(NSString *)des
                            link:(NSString *)link;
 + (UIImage *)generatorQRCodeImageWith:(NSString *)info;
-
++ (UIImage *)generatorQRCodeImageWith:(NSString *)info withSize:(CGFloat)qrWH;
 //+ (UIImage *)generateGameResultImage:(YXGameResultModel *)model
 //                            platform:(YXSharePalform)platform;
 @end
