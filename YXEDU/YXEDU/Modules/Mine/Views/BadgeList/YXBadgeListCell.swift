@@ -10,6 +10,7 @@ import UIKit
 
 class YXBadgeListCell: UITableViewCell {
 
+    @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     

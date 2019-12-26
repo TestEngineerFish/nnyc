@@ -600,7 +600,7 @@
                                     <action selector="feedbackWord:" destination="DDF-Ya-OXu" id="JWt-Li-0RD"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="collectWord" id="siM-eu-dO6">
+                            <barButtonItem image="collectWord" style="plain" id="siM-eu-dO6">
                                 <connections>
                                     <action selector="collectWord:" destination="DDF-Ya-OXu" id="ibd-wq-PYQ"/>
                                 </connections>

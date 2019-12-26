@@ -149,17 +149,28 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             guard let badgesList = response.dataArray else { return }
             self.badgeLists = badgesList
             
+            var earnedBadgeCount = 0
             for a in 0..<badgesList.count {
                 guard let badges = (badgesList[a]).badges else { continue }
                 
                 for b in 0..<badges.count {
                     let badge = badges[b]
+                    
+                    if badge.finishDate != Date(timeIntervalSince1970: 0) {
+                        earnedBadgeCount = earnedBadgeCount + 1
+                    }
+                        
                     self.badges.append(badge)
                 }
             }
-            
-//            self.ownedMedalLabel.text = "\(earnedBadgeCount)"
+
+            self.ownedMedalLabel.text = "\(earnedBadgeCount)"
             self.totalMedalLabel.text = "/\(self.badges.count)"
+            
+            self.badges.sort { (one, two) -> Bool in
+                return one.finishDate > two.finishDate
+            }
+            
             self.collectionView.reloadData()
             
         }) { (error) in
@@ -312,18 +323,18 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let imageView = cell.viewWithTag(1) as! UIImageView
         
-//        if badge.finishDate == "0" {
-//            imageView.sd_setImage(with: URL(string: badge.incompleteBadgeImageUrl), completed: nil)
-//            
-//        } else {
-//            imageView.sd_setImage(with: URL(string: badge.completedBadgeImageUrl), completed: nil)
-//        }
+        if badge.finishDate != Date(timeIntervalSince1970: 0), let imageOfCompletedStatus = badge.imageOfCompletedStatus {
+            imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
+            
+        } else if let imageOfIncompletedStatus = badge.imageOfIncompletedStatus {
+            imageView.sd_setImage(with: URL(string: imageOfIncompletedStatus), completed: nil)
+        }
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "Badge", sender: self)
+        self.performSegue(withIdentifier: "BadgeList", sender: self)
     }
     
     
