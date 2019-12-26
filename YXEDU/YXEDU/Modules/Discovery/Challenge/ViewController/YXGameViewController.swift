@@ -108,10 +108,11 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             self.gameResultMode?.consumeTime    = time
             self.gameResultMode?.questionNumber = number
             if number > 0 {
-                self.resultView.showSuccessView(self.gameResultMode!)
+                if let model = self.gameResultMode {
+                    self.resultView.showSuccessView(model)
+                }
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
                     self.resultView.closeView()
-                    print("-----跳转----")
                     YRRouter.popViewController(false)
                     let shareVC = YXShareViewController()
                     shareVC.titleString = "挑战分享"

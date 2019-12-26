@@ -51,7 +51,7 @@ extension YXReviewRequest {
         case .reviewWordList(let bookId, let bookType):
             return ["review_book_id" : bookId, "review_book_type" : bookType]
         case .makeReviewPlan(let name, let code, let idsList):
-            return ["review_plan_name" : name, "review_share_code" : code, "review_word_ids" : idsList]
+            return ["review_plan_name" : name, "review_plan_id" : code, "review_word_ids" : idsList]
         case .reviewPlanDetail(let planId):
             return ["review_plan_id" : planId]
         case .reviewResult(let type, let planId):

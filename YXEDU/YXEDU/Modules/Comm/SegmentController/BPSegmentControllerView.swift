@@ -9,9 +9,6 @@
 import UIKit
 
 protocol BPSegmentDataSource: NSObjectProtocol {
-
-    /// 首选中Index
-    func firstSelectedIndex() -> IndexPath?
     /// 页面数
     func pagesNumber() -> Int
     /// 自定义Item视图
@@ -19,15 +16,10 @@ protocol BPSegmentDataSource: NSObjectProtocol {
     /// 自定义Content视图
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView
     /// 选中Item视图
-    func segment(_ segment: BPSegmentView, didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath)
+    func segment(didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath)
 }
 
 extension BPSegmentDataSource {
-
-    /// 首选中Index
-    func firstSelectedIndex() -> IndexPath? {
-        return nil
-    }
     /// 页面数
     func pagesNumber() -> Int {
         return 0
@@ -41,7 +33,7 @@ extension BPSegmentDataSource {
         return UIView()
     }
     /// 点击Item视图
-    func segment(_ segment: BPSegmentView, didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
+    func segment(didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
         
     }
 }
@@ -61,7 +53,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     final let headerItemIdf  = "BPItemView"
     final let contentItemIdf = "BPItemContentView"
     var config: BPSegmentConfig
-    var lastSelectedIndex: IndexPath!
+    var lastSelectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     // ---- 子视图
     var headerScrollView: BPSegmentView!
     var contentScrollView: BPSegmentView!
@@ -87,10 +79,6 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func bindData() {
-        self.lastSelectedIndex = self.delegate?.firstSelectedIndex() ?? IndexPath(item: 0, section: 0)
     }
 
     func reloadData() {
@@ -138,28 +126,8 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         return self.delegate?.pagesNumber() ?? 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView == contentScrollView {
-            guard let contentView = cell as? BPItemContentView else {
-                return
-            }
-
-            print("=====将要显示IndexPath\(indexPath)")
-        }
-
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView == contentScrollView {
-            print("移除IndexPath\(indexPath)")
-        }
-    }
-
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        if collectionView == contentScrollView {
-            print("返回IndexPath\(indexPath)")
-        }
         guard let segmentView = collectionView as? BPSegmentView else {
             return UICollectionViewCell()
         }
@@ -175,12 +143,6 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
                 itemSubview.snp.makeConstraints { (make) in
                     make.edges.equalToSuperview()
                 }
-            }
-            // 设置选中状态
-            if self.lastSelectedIndex == indexPath {
-                _itemView.isSelected = true
-            } else {
-                _itemView.isSelected = false
             }
             // 设置标识符
             _itemView.tag = indexPath.row
@@ -209,7 +171,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         guard let segmentView = collectionView as? BPSegmentView else {
             return
         }
-        self.selectItem(with: indexPath, in: segmentView)
+        self.selectItem(with: indexPath)
     }
 
     // TODO: ==== UICollectionViewDelegateFlowLayout ====
@@ -230,7 +192,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
             // 计算偏移
             let indexPath = self.shouldIndexPath(offset: scrollView.contentOffset.x, in: self.contentScrollView)
             if indexPath != self.lastSelectedIndex {
-                self.selectItem(with: indexPath, in: self.headerScrollView)
+                self.selectItem(with: indexPath)
             }
         }
     }
@@ -241,22 +203,22 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     /// - Parameters:
     ///   - indexPath: 选中的位置
     ///   - collectionView: 视图对象
-    private func selectItem(with indexPath: IndexPath, in collectionView: BPSegmentView) {
+    func selectItem(with indexPath: IndexPath) {
 
         // 通知业务层处理点击事件
-        self.delegate?.segment(collectionView, didSelectRowAt: indexPath, previousSelectRowAt: self.lastSelectedIndex)
+        self.delegate?.segment(didSelectRowAt: indexPath, previousSelectRowAt: self.lastSelectedIndex)
 
         // 如果选中不是已选中的Item,则更新最后选中位置
         if indexPath != self.lastSelectedIndex {
             // 滑动到中间
-            self.scrollView(to: indexPath, in: collectionView)
+            self.scrollView(to: indexPath)
             // 更新选中
             self.lastSelectedIndex = indexPath
         }
     }
 
     /// 滑动到对应位置
-    private func scrollView(to indexPath: IndexPath, in collectionView: BPSegmentView) {
+    private func scrollView(to indexPath: IndexPath) {
         self.headerScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         self.contentScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }

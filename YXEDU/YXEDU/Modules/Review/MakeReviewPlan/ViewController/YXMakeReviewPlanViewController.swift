@@ -73,13 +73,15 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
             guard let _model = response.data else {
                 return
             }
-            _model.list.forEach { (bookModel) in
+            for (index, bookModel) in _model.list.enumerated() {
                 if bookModel.isLearning {
                     _model.modelDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
                     bookModel.isSelected = true
+                   self.segmentControllerView.selectItem(with: IndexPath(item: index, section: 0))
                 }
             }
             self.model = _model
+
             self.segmentControllerView.reloadData()
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
@@ -110,7 +112,9 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
         let idsList = self.selectedWordsListView.wordsModelList.map { (wordModel) -> Int in
             return wordModel.id
         }
-        let jsonData = try! JSONSerialization.data(withJSONObject: idsList, options: JSONSerialization.WritingOptions.prettyPrinted)
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: idsList, options: []) else {
+            return
+        }
         let idsStr = String(data: jsonData, encoding: String.Encoding.utf8)!
         let request = YXReviewRequest.makeReviewPlan(name: name, code: nil, idsList: idsStr)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
@@ -160,10 +164,6 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
     }
 
     // MARK: ==== BPSegmentDataSource ====
-    /// 首选中Index
-    func firstSelectedIndex() -> IndexPath? {
-        return IndexPath(item: 0, section: 0)
-    }
 
     func pagesNumber() -> Int {
         return self.model?.list.count ?? 0
@@ -197,12 +197,12 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
         }
     }
 
-    func segment(_ segment: BPSegmentView, didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
+    func segment(didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
         guard let model = self.model else {
             return
         }
         model.list[indexPath.row].isSelected    = true
         model.list[preIndexPath.row].isSelected = false
-        segment.reloadData()
+        self.segmentControllerView.reloadData()
     }
 }
