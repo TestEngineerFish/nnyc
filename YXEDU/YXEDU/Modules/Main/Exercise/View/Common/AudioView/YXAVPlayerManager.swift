@@ -54,8 +54,10 @@ class YXAVPlayerManager: NSObject {
     }
     /// 停止播放
     func pauseAudio() {
-        self.player.pause()
-        self.isPlaying = false
+        if isPlaying {
+            self.player.pause()
+            self.isPlaying = false
+        }
     }
 
 

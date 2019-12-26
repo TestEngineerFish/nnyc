@@ -156,25 +156,27 @@ extension YXReviewViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    /// 开始智能复习
+    /// 智能复习
     func startReviewEvent() {
         let vc = YXExerciseViewController()
         vc.dataType = .aiReview
-//        vc.bookId = homeModel?.bookId ?? 0
-//        vc.unitId = homeModel?.unitId ?? 0
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     /// 开始复习 —— 复习计划
     func startReviewPlanEvent() {
-        let vc = YXReviewPlanDetailViewController()
+        let vc = YXExerciseViewController()
+        vc.dataType = .normalReview
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     /// 开始听力 —— 复习计划
     func startListenPlanEvent() {
-        let vc = YXReviewPlanDetailViewController()
+        let vc = YXExerciseViewController()
+        vc.dataType = .listenReview
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -185,9 +187,9 @@ extension YXReviewViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func reviewDetailEvent() {
-        let vc = YXReviewPlanDetailViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    func reviewDetailEvent() {
+//        let vc = YXReviewPlanDetailViewController()
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
     
 }

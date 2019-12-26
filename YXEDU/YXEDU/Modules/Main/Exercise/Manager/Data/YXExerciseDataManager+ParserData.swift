@@ -14,6 +14,10 @@ extension YXExerciseDataManager {
     /// 处理从网络请求的数据
     /// - Parameter result: 网络数据
     func processExerciseData(result: YXExerciseResultModel?) {
+        if (result?.newWordIds?.count ?? 0 == 0 && result?.steps?.count ?? 0 == 0) {
+            dataStatus = .empty
+        }
+        
         self.processNewWord(result: result)
         self.processReviewWord(result: result)
         
@@ -55,11 +59,21 @@ extension YXExerciseDataManager {
     /// 处理复习单词
     /// - Parameter result:
     func processReviewWord(result: YXExerciseResultModel?) {
+        // 设置为最大的数据，防止有时候前面1、2、3 步没有时，娶不到第四步的数据
+        currentTurnIndex = 4
         
         for step in result?.steps ?? [] {
 
             for subStep in step {
                 var exercise = createExerciseModel(step: subStep)
+                
+                if exercise.step < currentTurnIndex + 1 {
+                    currentTurnIndex = exercise.step - 1
+                }
+                
+                
+                
+                
                 if exercise.type == .connectionWordAndImage || exercise.type == .connectionWordAndChinese {
                     for option in exercise.option?.firstItems ?? [] {
                         exercise.word = fetchWord(wordId: option.optionId)
@@ -67,6 +81,15 @@ extension YXExerciseDataManager {
                     }
                 } else {
                     exercise.word = fetchWord(wordId: subStep.wordId)
+                    
+                    if (exercise.type != .fillWordGroup
+                        && exercise.type != .fillWordAccordingToImage
+                        && exercise.type != .fillWordAccordingToListen
+                        && exercise.type != .fillWordAccordingToChinese
+                        && exercise.type != .fillWordAccordingToChinese_Connection) {
+                        exercise.question = exercise.word
+                    }
+                    
                     self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)
                 }
             }

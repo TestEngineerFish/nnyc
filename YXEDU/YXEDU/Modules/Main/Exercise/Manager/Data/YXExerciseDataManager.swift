@@ -17,6 +17,13 @@ enum YXExerciseDataType: Int {
     case wrong = 2              // 抽查
 }
 
+
+/// 数据状态
+enum YXExerciseDataStatus: Int {
+    case empty  // 没数据
+    case finish // 学完
+}
+
 /// 练习的数据管理器
 class YXExerciseDataManager: NSObject {
     /// 哪本书，哪个单元
@@ -24,6 +31,7 @@ class YXExerciseDataManager: NSObject {
     /// 进度管理器
     public var progressManager: YXExcerciseProgressManager!
     
+    public var dataStatus: YXExerciseDataStatus = .finish
     
     /// 当前第几轮, 从第一轮开始
     var currentTurnIndex = 0

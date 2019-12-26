@@ -41,7 +41,7 @@ struct YXAPI {
         /// 基础学习结果页
         static let learnResult = "/api/v1/learn/getcurrentunitstatus"
         /// 上报接口
-        static let report = "/api/v1/result"
+        static let report = "/api/v1/learn/report"
     }
     
     

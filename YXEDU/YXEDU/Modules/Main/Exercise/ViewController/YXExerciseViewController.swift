@@ -25,7 +25,7 @@
     
     
     // 数据管理器
-    private var dataManager: YXExerciseDataManager!
+    public var dataManager: YXExerciseDataManager!
     
     
     // 练习view容器，用于动画切题
@@ -75,6 +75,7 @@
     
     deinit {
         print("练习 VC 释放")
+        YXAVPlayerManager.share.pauseAudio()
     }
     
     override func viewWillLayoutSubviews() {
@@ -111,6 +112,17 @@
     
     private func initManager() {
         dataManager = YXExerciseDataManager(bookId: bookId, unitId: unitId)
+        
+        
+        var array: [YXExerciseDataType] = [.normal, .aiReview, .listenReview, .normalReview, .wrong]
+        array = []
+        for type in array {
+            dataManager.progressManager.dataType = type
+            dataManager.progressManager.completionExercise()
+            dataManager.progressManager.completionReport()
+        }
+        
+        dataManager.progressManager.dataType = self.dataType
     }
     
     /// 开始学习
@@ -191,38 +203,12 @@
             exerciseView.exerciseDelegate = self
             exerciseView.answerView?.connectionAnswerViewDelegate = self
             loadExerciseView(exerciseView: exerciseView)
-        } else {
-            // 没有数据，就是完成了练习
-            dataManager.progressManager.completionExercise()
-            
-            // 学完，上报
-            dataManager.reportUnit(type: dataType, time: 0) { [weak self] (result, errorMsg) in
-                guard let self = self else {return}
-                if result {
-                    let progress = self.dataManager.progressManager.loadLocalWordsProgress()
-                    // 上报结束, 清空数据
-                    self.dataManager.progressManager.completionReport()
-                    
-                    let vc = YXLearningResultViewController()
-                    vc.bookId = self.dataManager.bookId
-                    vc.unitId = self.dataManager.unitId
-                    vc.newLearnAmount = progress.0.count
-                    vc.reviewLearnAmount = progress.1.count
-                                        
-                    self.navigationController?.popViewController(animated: false)
-                    vc.hidesBottomBarWhenPushed = true
-                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-                } else {
-                    YXUtils.showHUD(self.view, title: "上报关卡失败")
-                    self.navigationController?.popViewController(animated: true)
-                }
-                print("学完")
-            }
-            
-            
+        } else {            
+            self.report()
         }
         
     }
+    
     
     /// 加载一个练习
     /// - Parameter exerciseView: 新的练习view

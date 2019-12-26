@@ -24,7 +24,7 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        subTitleLabel?.snp.makeConstraints({ (make) in
+        subTitleLabel?.snp.remakeConstraints({ (make) in
             let height = self.subTitleLabel?.attributedText?.string.textHeight(font: subTitleLabel!.font, width: self.width - AdaptSize(60)) ?? 0
             make.centerY.equalToSuperview()
             make.left.equalTo(AdaptSize(30))

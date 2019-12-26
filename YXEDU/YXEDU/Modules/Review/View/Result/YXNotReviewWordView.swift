@@ -12,6 +12,8 @@ import UIKit
 /// 没有复习的单词弹框
 class YXNotReviewWordView: YXTopWindowView {
     
+    var doneEvent: (() -> Void)?
+    
     var imageView = UIImageView()
     var titleLabel = UILabel()
     var descLabel = UILabel()
@@ -104,6 +106,7 @@ class YXNotReviewWordView: YXTopWindowView {
     }
     
     @objc func clickDoneButton() {
+        self.doneEvent?()
         self.removeFromSuperview()
     }
 
