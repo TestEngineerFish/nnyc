@@ -168,9 +168,6 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     // TODO: ==== UICollectionViewDelegate ====
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let segmentView = collectionView as? BPSegmentView else {
-            return
-        }
         self.selectItem(with: indexPath)
     }
 

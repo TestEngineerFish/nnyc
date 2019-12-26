@@ -20,12 +20,11 @@ class YXAlertView: UIView, UITextFieldDelegate {
     var shouldOnlyShowOneButton = false {
         didSet {
             if shouldOnlyShowOneButton {
-                cancelButtonRightDistance.constant = ((screenWidth - 88) / 2) + 10
-                doneButtonLeftDistance.constant = ((screenWidth - 88) / 2) + 10
-                
-            } else {
                 cancelButtonRightDistance.constant = 20
                 doneButtonLeftDistance.constant = 20
+            } else {
+                cancelButtonRightDistance.constant = ((screenWidth - 88) / 2) + 10
+                doneButtonLeftDistance.constant = ((screenWidth - 88) / 2) + 10
             }
         }
     }
