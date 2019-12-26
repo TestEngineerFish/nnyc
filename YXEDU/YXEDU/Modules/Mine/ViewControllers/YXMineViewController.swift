@@ -173,8 +173,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             self.collectionView.reloadData()
             
-        }) { (error) in
-
+        }) { error in
+            print("❌❌❌\(error)")
         }
     }
     

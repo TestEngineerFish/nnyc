@@ -27,8 +27,8 @@ class YXWordDetailViewControllerNew: UIViewController {
                 self.collectionButton.image = #imageLiteral(resourceName: "collectWord")
             }
             
-        }) { (error) in
-            
+        }) { error in
+            print("❌❌❌\(error)")
         }
         
         if let word = YXWordBookDaoImpl().selectWord(wordId: wordId) {
@@ -47,8 +47,8 @@ class YXWordDetailViewControllerNew: UIViewController {
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 self.collectionButton.image = #imageLiteral(resourceName: "collectWord")
 
-            }) { (error) in
-                
+            }) { error in
+                print("❌❌❌\(error)")
             }
             
         } else {
@@ -56,8 +56,8 @@ class YXWordDetailViewControllerNew: UIViewController {
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 self.collectionButton.image = #imageLiteral(resourceName: "unCollectWord")
 
-            }) { (error) in
-                
+            }) { error in
+                print("❌❌❌\(error)")
             }
         }
     }

@@ -71,8 +71,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
                 self.redClosure(self.indexs)
                 self.navigationController?.popViewController(animated: true)
 
-            }) { (error) in
-                
+            }) { error in
+                print("❌❌❌\(error)")
             }
             
         } else {
@@ -94,8 +94,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
                 self.redClosure(self.indexs)
                 self.navigationController?.popViewController(animated: true)
 
-            }) { (error) in
-                
+            }) { error in
+                print("❌❌❌\(error)")
             }
         }
     }

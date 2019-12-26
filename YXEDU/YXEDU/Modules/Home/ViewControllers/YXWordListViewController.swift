@@ -183,8 +183,9 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     self.learnedWords = learnedWords
                     wordListView.words = self.learnedWords
                     
-                }) { (error) in
+                }) { error in
                     wordListView.words = []
+                    print("❌❌❌\(error)")
                 }
                 
             } else {
@@ -209,8 +210,9 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     self.notLearnedWords = notLearnedWords
                     wordListView.words = self.notLearnedWords
                     
-                }) { (error) in
+                }) { error in
                     wordListView.words = []
+                    print("❌❌❌\(error)")
                 }
                 
             } else {
@@ -235,8 +237,9 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     self.collectedWords = collectedWords
                     wordListView.words = self.collectedWords
                     
-                }) { (error) in
+                }) { error in
                     wordListView.words = []
+                    print("❌❌❌\(error)")
                 }
                 
             } else {
@@ -261,8 +264,9 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     self.wrongWordList = wrongWordList
                     wordListView.wrongWordList = self.wrongWordList
                     
-                }) { (error) in
+                }) { error in
                     wordListView.wrongWordList = nil
+                    print("❌❌❌\(error)")
                 }
                 
             } else {

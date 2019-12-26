@@ -37,8 +37,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             self.taskCenterData = response.data
             self.reloadDailyData()
             
-        }) { (error) in
-            
+        }) { error in
+            print("❌❌❌\(error)")
         }
     }
     
@@ -53,8 +53,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             self.taskCenterData = response.data
             self.reloadDailyData()
 
-        }) { (error) in
-
+        }) { error in
+            print("❌❌❌\(error)")
         }
         
         let taskListRequest = YXTaskCenterRequest.taskList
@@ -64,8 +64,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
 
             self.taskTableView.reloadData()
 
-        }) { (error) in
-
+        }) { error in
+            print("❌❌❌\(error)")
         }
     }
     
@@ -266,9 +266,9 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                     self.taskLists[collectionView.tag].list?[indexPath.row].state = 2
                     self.taskTableView.reloadData()
-
-                }) { (error) in
-
+                    
+                }) { error in
+                    print("❌❌❌\(error)")
                 }
             }
             

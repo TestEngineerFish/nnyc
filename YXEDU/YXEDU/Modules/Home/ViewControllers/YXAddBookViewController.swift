@@ -155,9 +155,9 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
                     self.navigationController?.popViewController(animated: true)
                 }
                 
-            }, fail: { error in
-
-            })
+            }) { error in
+                print("❌❌❌\(error)")
+            }
         }
         
         seleceUnitView.show()

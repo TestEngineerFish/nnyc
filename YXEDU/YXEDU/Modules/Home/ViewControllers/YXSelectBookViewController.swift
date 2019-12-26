@@ -101,9 +101,9 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     self.navigationController?.popViewController(animated: true)
                 }
                 
-            }, fail: { error in
-                print(error)
-            })
+            }) { error in
+                print("❌❌❌\(error)")
+            }
             
             break
         }

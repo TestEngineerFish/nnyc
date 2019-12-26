@@ -24,8 +24,8 @@ class YXWordDetailView: UIView {
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 self.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
                 
-            }) { (error) in
-                
+            }) { error in
+                print("❌❌❌\(error)")
             }
             
         } else {
@@ -33,8 +33,8 @@ class YXWordDetailView: UIView {
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 self.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
                 
-            }) { (error) in
-                
+            }) { error in
+                print("❌❌❌\(error)")
             }
         }
     }
@@ -76,8 +76,8 @@ class YXWordDetailView: UIView {
                 self.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
             }
             
-        }) { (error) in
-            
+        }) { error in
+            print("❌❌❌\(error)")
         }
     }
 }

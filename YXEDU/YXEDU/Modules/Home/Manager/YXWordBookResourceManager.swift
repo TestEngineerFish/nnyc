@@ -50,9 +50,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 closure?(false)
             }
             
-        }, fail: { error in
-            closure?(false)
-        })
+        }) { error in
+            print("❌❌❌\(error)")
+        }
     }
     
     private func downloadSingleWordBook(from wordBookDownloadModel: YXWordBookDownloadModel) {

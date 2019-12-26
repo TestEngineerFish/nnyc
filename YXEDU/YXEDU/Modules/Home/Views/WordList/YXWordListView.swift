@@ -177,8 +177,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             guard let exerciseResultModel = response.data else { return }
             self.startReviewClosure?(exerciseResultModel)
 
-        }) { (error) in
-
+        }) { error in
+            print("❌❌❌\(error)")
         }
     }
     

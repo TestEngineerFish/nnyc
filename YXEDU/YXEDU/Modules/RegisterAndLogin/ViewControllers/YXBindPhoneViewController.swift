@@ -162,8 +162,8 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
                 }
             }
             
-        }) { (error) in
-
+        }) { error in
+            print("❌❌❌\(error)")
         }
     }
 

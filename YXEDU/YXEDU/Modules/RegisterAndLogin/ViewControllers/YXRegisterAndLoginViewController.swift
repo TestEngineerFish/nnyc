@@ -199,8 +199,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 }
             }
             
-        }) { (error) in
-
+        }) { error in
+            print("❌❌❌\(error)")
         }
     }
     
@@ -240,8 +240,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.didLogin = true
             YXUserModel.default.login()
             
-        }) { (error) in
-            
+        }) { error in
+            print("❌❌❌\(error)")
         }
     }
     
