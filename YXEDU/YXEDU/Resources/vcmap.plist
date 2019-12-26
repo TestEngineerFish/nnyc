@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>storyboard</key>
+	<dict>
+		<key>Home</key>
+		<dict>
+			<key>word/list</key>
+			<string>YXWordListViewController</string>
+			<key>setting/feedback</key>
+			<string>YWFeedbackViewController</string>
+		</dict>
+	</dict>
+	<key>setting</key>
+	<string>YWSettingViewController</string>
+	<key>setting/report</key>
+	<string>YWReportViewController</string>
+	<key>global/web</key>
+	<string>YWWebViewController</string>
+</dict>
+</plist>

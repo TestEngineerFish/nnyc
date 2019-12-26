@@ -274,6 +274,7 @@
 		EE3DABA02375124B00B2FF40 /* YXWordBookDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3DAB9F2375124B00B2FF40 /* YXWordBookDaoImpl.swift */; };
 		EE4584E923B3ACEF00E45367 /* YXReviewResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4584E823B3ACEF00E45367 /* YXReviewResultModel.swift */; };
 		EE4584ED23B4BB2500E45367 /* YXExerciseViewController+Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4584EC23B4BB2400E45367 /* YXExerciseViewController+Report.swift */; };
+		EE4584EF23B4D86400E45367 /* vcmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE4584EE23B4D86400E45367 /* vcmap.plist */; };
 		EE4C7CD9236816840092751D /* YXBaseExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4C7CD8236816840092751D /* YXBaseExerciseView.swift */; };
 		EE4C7CDB236817550092751D /* YXLookWordChooseImageExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4C7CDA236817550092751D /* YXLookWordChooseImageExerciseView.swift */; };
 		EE4E6B1E2398F04A002B845A /* YXExerciseDataManager+ParserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4E6B182398F049002B845A /* YXExerciseDataManager+ParserData.swift */; };
@@ -1031,6 +1032,7 @@
 		EE3DAB9F2375124B00B2FF40 /* YXWordBookDaoImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookDaoImpl.swift; sourceTree = "<group>"; };
 		EE4584E823B3ACEF00E45367 /* YXReviewResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewResultModel.swift; sourceTree = "<group>"; };
 		EE4584EC23B4BB2400E45367 /* YXExerciseViewController+Report.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YXExerciseViewController+Report.swift"; sourceTree = "<group>"; };
+		EE4584EE23B4D86400E45367 /* vcmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = vcmap.plist; sourceTree = "<group>"; };
 		EE4C7CD8236816840092751D /* YXBaseExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBaseExerciseView.swift; sourceTree = "<group>"; };
 		EE4C7CDA236817550092751D /* YXLookWordChooseImageExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLookWordChooseImageExerciseView.swift; sourceTree = "<group>"; };
 		EE4E6B182398F049002B845A /* YXExerciseDataManager+ParserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YXExerciseDataManager+ParserData.swift"; sourceTree = "<group>"; };
@@ -1961,6 +1963,7 @@
 				D665A09B20902B3D00FBC9D2 /* YXEDU.entitlements */,
 				D62D6AB9204FEF7A005E3273 /* Assets.xcassets */,
 				D62D6ABE204FEF7A005E3273 /* Info.plist */,
+				EE4584EE23B4D86400E45367 /* vcmap.plist */,
 				2059176E216AF01400254705 /* PrefixHeader.pch */,
 				224529022327A34300510507 /* YXEDU-Bridging-Header.h */,
 			);
@@ -5583,6 +5586,7 @@
 				202C7A21218FED8E00EFD072 /* FresherGuide in Resources */,
 				202709B821DE3A3000E88457 /* oneDrawgameGuide1@3x.png in Resources */,
 				77626C0D239E439E00B9407A /* YXWordListOrderView.xib in Resources */,
+				EE4584EF23B4D86400E45367 /* vcmap.plist in Resources */,
 				77F69A622361495300E55185 /* Main.storyboard in Resources */,
 				7786D620236C66B100741DCE /* YXSeleceUnitView.xib in Resources */,
 				77626BF9239E250800B9407A /* YXWordListView.xib in Resources */,

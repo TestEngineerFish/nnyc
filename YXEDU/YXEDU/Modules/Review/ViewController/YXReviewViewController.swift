@@ -143,17 +143,27 @@ extension YXReviewViewController {
 extension YXReviewViewController {
     
     func favoriteEvent() {
-        let vc = YXWordListViewController()
-        vc.wordListType = .collected
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+//        guard let vc = UIViewController.storyboard(withName: "Home", identifier: "YXWordListViewController") as? YXWordListViewController else {
+//            return
+//        }
+//
+//        vc.wordListType = .collected
+//        vc.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(vc, animated: true)
+        
+        YRRouter.openURL("word/list", query: ["type" : YXWordListType.collected], animated: true)
     }
     
     func wrongWordEvent() {
-        let vc = YXWordListViewController()
-        vc.wordListType = .wrongWords
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+//        guard let vc = UIViewController.storyboard(withName: "Home", identifier: "YXWordListViewController") as? YXWordListViewController else {
+//            return
+//        }
+//
+//        vc.wordListType = .wrongWords
+//        vc.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(vc, animated: true)
+        
+        YRRouter.openURL("word/list", query: ["type" : YXWordListType.wrongWords], animated: true)
     }
     
     /// 智能复习

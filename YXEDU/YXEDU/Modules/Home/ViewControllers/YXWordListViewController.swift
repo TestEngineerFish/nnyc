@@ -75,6 +75,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         navigationController?.popViewController(animated: true)
     }
     
+    override func handleData(withQuery query: [AnyHashable : Any]!) {
+        self.wordListType = (query["type"] as? YXWordListType) ?? .learned
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
