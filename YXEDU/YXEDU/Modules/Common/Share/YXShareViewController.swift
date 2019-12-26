@@ -23,7 +23,6 @@ class YXShareViewController: YXViewController {
         imageView.layer.setDefaultShadow()
         imageView.layer.borderColor  = UIColor.white.cgColor
         imageView.layer.borderWidth  = AdaptSize(8)
-        imageView.image = UIImage(named: "guide_320x480_2")
         return imageView
     }()
 
@@ -103,6 +102,7 @@ class YXShareViewController: YXViewController {
     }()
 
     var titleString = ""
+    var imageUrlStr = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,11 +113,12 @@ class YXShareViewController: YXViewController {
 
     private func bindProperty() {
         let tapQQ = UITapGestureRecognizer(target: self, action: #selector(shareToQQ))
-        self.qqImageView.addGestureRecognizer(tapQQ)
         let tapWechat = UITapGestureRecognizer(target: self, action: #selector(shareToWechat))
-        self.wechatImageView.addGestureRecognizer(tapWechat)
         let tapTimeLine = UITapGestureRecognizer(target: self, action: #selector(shareToTimeLine))
+        self.qqImageView.addGestureRecognizer(tapQQ)
+        self.wechatImageView.addGestureRecognizer(tapWechat)
         self.timeLineImageView.addGestureRecognizer(tapTimeLine)
+        self.shareImageView.showImage(with: imageUrlStr)
     }
 
     private func createSubviews() {
@@ -207,8 +208,46 @@ class YXShareViewController: YXViewController {
     }
 
     // MARK: ==== Tools ====
-    private func createShareImageView(_ type: YXShareType, wordNum: Int, days: Int) {
-        
+    private func createShareImageView(_ type: YXShareType, wordNum: Int, days: Int) -> UIImage? {
+
+        // ---- 数据准备 ----
+        guard let url = URL(string: self.imageUrlStr) else {
+            return nil
+        }
+        let data = try? Data(contentsOf: url)
+        guard let _data = data, let backgroundImage = UIImage(data: _data) else {
+            return nil
+        }
+        let iconImage = UIImage(named: "gameShareLogo")
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.text          = "我在念念有词背单词"
+            label.textColor     = UIColor.white
+            label.font          = UIFont.mediumFont(ofSize: AdaptSize(15))
+            label.textAlignment = .center
+            return label
+        }()
+        var contentView: UIView = {
+            let view = UIView()
+            view.backgroundColor     = UIColor.white
+            view.layer.cornerRadius  = AdaptSize(8)
+            view.layer.masksToBounds = true
+            return view
+        }()
+
+        // ---- 内容绘制 ----
+        let imageSize = CGSize(width: AdaptSize(375), height: AdaptSize(513))
+        UIGraphicsBeginImageContext(imageSize)
+        backgroundImage.draw(in: CGRect(origin: CGPoint.zero, size: imageSize))
+        iconImage?.draw(in: CGRect(x: AdaptSize(20), y: AdaptSize(16), width: AdaptSize(37), height: AdaptSize(37)))
+        titleLabel.drawText(in: CGRect(x: AdaptSize(67), y: AdaptSize(23), width: AdaptSize(136), height: AdaptSize(21)))
+
+
+        guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
+            return nil
+        }
+        return shareImage
+
     }
 }
 

@@ -48,15 +48,15 @@ extension YXChallengeRequest {
     public var parameters: [String : Any?]? {
         switch self {
         case .challengeModel:
-            return ["gameId": 1]
+            return ["game_id": 1]
         case .playGame:
-            return ["gameId": 1]
+            return ["game_id": 1]
         case .report(let version, let totalTime, let number):
-            return ["game_lined_id": version, "gameId": 1, "total_time" : totalTime, "num" : number]
+            return ["game_lined_id": version, "game_id": 1, "total_time" : totalTime, "num" : number]
         case .rankedList:
-            return ["gameId": 1, "flag" : "pre"]
+            return ["game_id": 1, "flag" : "pre"]
         case .unlock:
-            return ["gameId": 1]
+            return ["game_id": 1]
         }
     }
 }
