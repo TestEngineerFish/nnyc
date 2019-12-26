@@ -247,7 +247,7 @@ struct YYNetworkService {
                 // 当登录状态失效时，通知上层
 //                let loginExpired = Notification.Name(YYNotificationCenter.kLoginStatusExpired)
 //                NotificationCenter.default.post(name: loginExpired, object: nil)
-            } else if responseStatusCode == 10109 {
+            } else if responseStatusCode == 6666 {
                 // 停服
                 let serviceStop = YXNotification.kServiceStop
                 NotificationCenter.default.post(name: serviceStop, object: baseResponse.statusMessage)

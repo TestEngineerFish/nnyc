@@ -193,6 +193,7 @@
                 self.bottomView.tipsButton.setTitle("提示一下", for: .normal)
             }
             self.bottomView.layoutSubviews()
+            
             // 连线未选中时，禁用提示
             let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese)
             self.bottomView.tipsButton.isEnabled = tipsEnabled
@@ -202,6 +203,7 @@
             self.delegate = exerciseView
             exerciseView.exerciseDelegate = self
             exerciseView.answerView?.connectionAnswerViewDelegate = self
+            
             loadExerciseView(exerciseView: exerciseView)
         } else {            
             self.report()

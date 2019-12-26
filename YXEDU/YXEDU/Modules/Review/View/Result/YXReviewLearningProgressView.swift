@@ -29,8 +29,13 @@ class YXReviewLearningProgressView: YXTopWindowView {
     var reviewButton = UIButton()
     var closeButton = UIButton()
     
-    var model: YXReviewPlanCommandModel? {
+    var model: YXReviewResultModel? {
         didSet { bindData() }
+    }
+    
+    deinit {
+        reviewButton.removeTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
+        closeButton.removeTarget(self, action: #selector(clickCloseButton), for: .touchUpInside)
     }
     
     override init(frame: CGRect) {
@@ -177,14 +182,20 @@ class YXReviewLearningProgressView: YXTopWindowView {
     }
     
     override func bindData() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.progressView.progress = 0.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+            guard let self = self else { return }
+            let score = CGFloat(self.model?.score ?? 0)
+            self.progressView.progress = score / 100.0
         }
-                
+        
+        let lenght1 = "\(model?.allWordNum ?? 0)".count
+        let lenght2 = "\(model?.knowWordNum ?? 0)".count
+        let lenght3 = "\(model?.remainWordNum ?? 0)".count
+        
         titleLabel.attributedText = attrString()
-        subTitleLable1.attributedText = attrString("巩固了 32 个单词", 4, 2)
-        subTitleLable2.attributedText = attrString("20 个单词掌握的很好", 0, 2)
-        subTitleLable3.attributedText = attrString("该计划下剩余 20 个单词待复习", 7, 2)
+        subTitleLable1.attributedText = attrString("巩固了 \(model?.allWordNum ?? 0) 个单词", 4, lenght1)
+        subTitleLable2.attributedText = attrString("\(model?.knowWordNum ?? 0) 个单词掌握的很好", 0, lenght2)
+        subTitleLable3.attributedText = attrString("该计划下剩余 \(model?.remainWordNum ?? 0) 个单词待复习", 7, lenght3)
 
     }
     
@@ -199,16 +210,16 @@ class YXReviewLearningProgressView: YXTopWindowView {
 
     
     func attrString() -> NSAttributedString {
+        let score = model?.score ?? 0
         
-        
-        let attrString = NSMutableAttributedString(string: "<复习计划> 完成 50%")
-        let start = attrString.length - "50%".count
+        let attrString = NSMutableAttributedString(string: "<\(model?.planName ?? "")> 完成 \(score)%")
+        let start = attrString.length - "\(score)%".count
         
         let all: [NSAttributedString.Key : Any] = [.font: UIFont.mediumFont(ofSize: AS(17)),.foregroundColor: UIColor.black1]
         attrString.addAttributes(all, range: NSRange(location: 0, length: attrString.length))
         
         let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.mediumFont(ofSize: AS(17)),.foregroundColor: UIColor.orange1]
-        attrString.addAttributes(nicknameAttr, range: NSRange(location: start, length: "50%".count))
+        attrString.addAttributes(nicknameAttr, range: NSRange(location: start, length: "\(score)%".count))
 
         return attrString
     }

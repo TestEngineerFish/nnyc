@@ -32,7 +32,7 @@ class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSourc
         self.tableView.dataSource = self
         self.tableView.register(YXReviewResultTableViewCell.classForCoder(), forCellReuseIdentifier: "YXReviewResultTableViewCell")
         
-        let headerView = UILabel(frame: CGRect(x: 0, y: 0, width: 127, height: 20))
+        let headerView = UILabel(frame: CGRect(x: 0, y: 0, width: AS(127), height: AS(20)))
         headerView.text = "这些单词还需要加强"
         headerView.font = UIFont.regularFont(ofSize: AS(14))
         headerView.textColor = UIColor.black3
@@ -124,6 +124,6 @@ class YXReviewResultTableViewCell: YXTableViewCell<YXBaseWordModel> {
     }
     
     override class func viewHeight(model: YXBaseWordModel) -> CGFloat {
-        return 38
+        return AS(38)
     }
 }

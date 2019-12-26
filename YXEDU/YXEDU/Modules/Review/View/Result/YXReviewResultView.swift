@@ -11,16 +11,10 @@ import UIKit
 
 /// 复习结果页
 class YXReviewResultView: YXTopWindowView {
-    
-    enum ReviewType {
-        case ai         // 智能
-        case listen     // 听力
-        case plan       // 计划
-    }
 
-    var shareEvent: (() -> ())?
+//    var shareEvent: (() -> ())?
     
-    var type: ReviewType = .ai
+    var type: YXExerciseDataType = .aiReview
     
     var imageView = UIImageView()
     var starView = YXReviewResultStarView()
@@ -39,15 +33,16 @@ class YXReviewResultView: YXTopWindowView {
     var shareButton = UIButton()
     var closeButton = UIButton()
     
-    var model: YXReviewPlanCommandModel? {
+    var model: YXReviewResultModel? {
         didSet { bindData() }
     }
     
     deinit {
         shareButton.removeTarget(self, action: #selector(clickShareButton), for: .touchUpInside)
+        closeButton.removeTarget(self, action: #selector(clickCloseButton), for: .touchUpInside)
     }
     
-    init(type: ReviewType) {
+    init(type: YXExerciseDataType) {
         super.init(frame: .zero)
         self.createSubviews()
         self.bindProperty()
@@ -201,7 +196,7 @@ class YXReviewResultView: YXTopWindowView {
     }
     
     override func bindData() {
-        if type == .ai {
+        if type == .aiReview {
             titleLabel.text = "恭喜完成智能复习"
         } else {
             titleLabel.text = "恭喜完成<\("xxxxx")>的复习"
@@ -215,7 +210,31 @@ class YXReviewResultView: YXTopWindowView {
     }
     
     @objc func clickShareButton() {
-        self.shareEvent?()
+//        self.shareEvent?()
+        
+        let shareVC = YXShareViewController()
+        shareVC.shareType = shareType()
+        shareVC.titleString = model?.planName ?? ""
+        shareVC.wordsAmount = model?.allWordNum ?? 0
+        shareVC.daysAmount = model?.studyDay ?? 0
+        
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+    }
+    
+
+    private func shareType() -> YXShareType {
+        switch type {
+        case .aiReview:
+            return .aiReviewReuslt
+        case .listenReview:
+            return .listenReviewResult
+        case .normalReview:
+            return .planReviewResult
+        case .wrong:
+            return .aiReviewReuslt
+        default:
+            return .aiReviewReuslt
+        }
     }
     
     
