@@ -77,7 +77,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
                 if bookModel.isLearning {
                     _model.modelDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
                     bookModel.isSelected = true
-                   self.segmentControllerView.selectItem(with: IndexPath(item: index, section: 0))
+//                   self.segmentControllerView.selectItem(with: IndexPath(item: index, section: 0))
                 }
             }
             self.model = _model
@@ -120,8 +120,14 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
         YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
             self.navigationController?.popViewController(animated: true)
         }) { (error) in
-            // 如果名称重复错误,也需要处理哦
-            YXUtils.showHUD(self.view, title: "\(error)")
+            if error.code == 101 {
+                let alertView = YXAlertView(type: .normal)
+                alertView.descriptionLabel.text   = error.message
+                alertView.shouldOnlyShowOneButton = true
+                alertView.show()
+            } else {
+                YXUtils.showHUD(self.view, title: "\(error)")
+            }
         }
     }
 
