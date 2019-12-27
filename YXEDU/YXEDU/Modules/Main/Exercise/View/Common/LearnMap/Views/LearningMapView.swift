@@ -12,7 +12,18 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
 
     var modelArray: [YXLearnMapUnitModel]
     var avatarPinView: YXAvatarPinView?
-    var learnNewUnit:((Int?)->Void)?
+    var learnButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("开始复习", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.layer.cornerRadius = AdaptSize(14)
+        button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptSize(13))
+        button.size = CGSize(width: AdaptSize(89), height: AdaptSize(28))
+        button.backgroundColor = UIColor.gradientColor(with: button.size, colors: [UIColor.hex(0xFFBE34), UIColor.hex(0xFF790C)], direction: .vertical)
+        button.isHidden = true
+        return button
+    }()
+//    var learnNewUnit:((Int?)->Void)?
     var currentUnitId: Int?
     // 间距
     let margin = CGFloat(130)
@@ -81,6 +92,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
     private func createSubview() {
         self.setLayerPath()
         self.setUnitView()
+        self.addSubview(learnButton)
     }
 
     /// 设置路径
@@ -157,10 +169,6 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
                 // 显示选中视图的进度条
                 unitView.showProgressAnimation()
             }
-            if unitView.tag < self.modelArray.count {
-                let model = self.modelArray[unitView.tag]
-                self.learnNewUnit?(model.unitID)
-            }
         } else {
             avatarPinView?.frame = targetFrame
         }
@@ -172,22 +180,32 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         if view == self.currentUnitView {
             return
         }
-        if self.currentUnitView?.model.status == .some(.uniteIng) {
-            let currentUnitName = self.currentUnitView?.model.unitName ?? ""
-            let toUnitName = view.model.unitName ?? ""
-            let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
-            
-            let alertView = YXAlertView()
-            alertView.descriptionLabel.text = content
-            alertView.doneClosure = { _ in
-                self.movePinView(to: view)
-            }
-            
-            alertView.show()
-            
-        } else {
-            self.movePinView(to: view)
+        self.showLearnButton(to: view)
+    }
+
+    // MARK: ==== Event ====
+
+    private func showLearnButton(to view: YXSexangleView) {
+        if learnButton.isHidden {
+            self.hideLearnButton()
         }
+        learnButton.tag = view.model.unitID ?? 0
+        switch view.model.status {
+        case .uniteUnstart, .uniteIngProgressZero:
+            self.learnButton.setTitle("开始学习", for: .normal)
+        case .uniteIng:
+            self.learnButton.setTitle("继续学习", for: .normal)
+        case .uniteEnd:
+            self.learnButton.setTitle("开始复习", for: .normal)
+        }
+        let center = CGPoint(x: view.frame.midX, y: view.frame.maxY)
+        self.learnButton.center = center
+        self.learnButton.isHidden = false
+        self.learnButton.layer.addJellyAnimation()
+    }
+
+    private func hideLearnButton() {
+        self.learnButton.isHidden = true
     }
 
 }

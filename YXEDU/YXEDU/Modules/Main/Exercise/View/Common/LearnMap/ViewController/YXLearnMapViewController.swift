@@ -15,6 +15,7 @@ class YXLearnMapViewController: UIViewController {
     var backButton = UIButton()
     var leftCloud  = UIImageView()
     var rightCloud = UIImageView()
+    var learningPath: LearningMapView?
     var bookId: Int?
     var unitId: Int?
 
@@ -89,22 +90,22 @@ class YXLearnMapViewController: UIViewController {
             return
         }
         // 学习路径
-        let learningPath = LearningMapView(units: modelList, frame: self.view.bounds, unitId: unitId)
-        learningPath.learnNewUnit = { (unitId: Int?) -> Void in
-            guard let id = unitId else {
-                return
-            }
-            self.learnUnit(id)
-        }
-        self.view.addSubview(learningPath)
+        self.learningPath = LearningMapView(units: modelList, frame: self.view.bounds, unitId: unitId)
+        self.learningPath?.learnButton.addTarget(self, action: #selector(startLearn(_:)), for: .touchUpInside)
+        self.view.addSubview(learningPath!)
         self.view.bringSubviewToFront(backButton)
-        learningPath.snp.makeConstraints { (make) in
+        learningPath?.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
     }
 
+    // MARK: ==== Event ====
     @objc private func backClick() {
         self.navigationController?.popViewController(animated: true)
+    }
+
+    @objc private func startLearn(_ button:UIButton) {
+        self.learnUnit(button.tag)
     }
 
 
@@ -129,6 +130,11 @@ class YXLearnMapViewController: UIViewController {
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
             print("学习新单元成功")
+            YRRouter.popViewController(false)
+            let vc = YXExerciseViewController()
+            vc.dataType = .normal
+            vc.hidesBottomBarWhenPushed = true
+            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
         }

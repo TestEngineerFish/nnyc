@@ -92,6 +92,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
     func showDetailView() {
         UIView.animate(withDuration: 0.5) {
             self.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
+//            self.frame = CGRect(x: self.frame.minX - screenWidth, y: self.frame.minY, width: self.frame.width, height: self.frame.height)
         }
     }
 
