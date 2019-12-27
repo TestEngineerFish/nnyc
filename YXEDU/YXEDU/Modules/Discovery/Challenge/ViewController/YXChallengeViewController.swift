@@ -21,6 +21,10 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.hex(0xE9DDC4)
         self.setSubviews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.requestChallengeData()
     }
 

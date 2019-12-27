@@ -199,7 +199,7 @@
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
-        if var model = data.2 {
+        if let model = data.2 {
 //            model.type = .listenFillWord
             
             // 新学隐藏提示
