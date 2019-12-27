@@ -89,7 +89,7 @@ class YXReviewPlanShareDetailHeaderView: YXView {
 
 
 class YXReviewPlanDetailHeaderView: YXView {
-    var nickname: String = "老王"
+
     var reviewPlanModel: YXReviewPlanDetailModel? {
         didSet { bindData() }
     }
@@ -203,9 +203,11 @@ class YXReviewPlanDetailHeaderView: YXView {
     
     override func bindData() {
         reviewPlanLabel.text = reviewPlanModel?.planName
+        
         subTitleLabel.text = "听写成绩：" + (reviewPlanModel?.wordCount.string ?? "")
-        fromLabel.text = "来自\(nickname)分享的复习计划"
-//        reviewProgressView.
+        if let nickname = reviewPlanModel?.fromUser {
+            fromLabel.text = "来自\(nickname)分享的复习计划"
+        }
     }
     
 

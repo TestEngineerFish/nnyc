@@ -12,7 +12,7 @@ public enum YXReviewRequest: YYBaseRequest {
     case makeReviewPlan(name: String, code: String?, idsList:String?)
     case reviewPlan
     case reviewPlanDetail(planId: Int)
-    case reviewResult(type: Int, planId: Int)
+    case reviewResult(type: Int, planId: Int?)
 }
 
 extension YXReviewRequest {

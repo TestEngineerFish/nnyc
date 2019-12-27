@@ -24,15 +24,15 @@ class YXReviewPlanDetailViewController: YXViewController {
         self.fetchDetailData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.setNavigationBarHidden(true, animated: animated)
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        navigationController?.setNavigationBarHidden(false, animated: animated)
+//    }
     
     func createSubView() {
         self.view.addSubview(self.headerView)
@@ -41,7 +41,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     }
     
     func bindProperty() {
-        self.customNavigationBar?.rightButtonTitle = ""
+        self.customNavigationBar?.title = "复习计划"
         
         
         wordListView.isWrongWordList = false
@@ -102,12 +102,20 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     
     func listenEvent() {
-        
+        let vc = YXExerciseViewController()
+        vc.dataType = .planListenReview
+        vc.planId = planId
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
     func reviewEvent() {
-        
+        let vc = YXExerciseViewController()
+        vc.dataType = .planReview
+        vc.planId = planId
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

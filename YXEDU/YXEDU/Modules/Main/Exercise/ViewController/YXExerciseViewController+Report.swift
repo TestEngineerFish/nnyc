@@ -79,7 +79,7 @@ extension YXExerciseViewController {
     
     /// 处理复习结果页
     func processReviewResult() {
-        YXReviewDataManager().fetchReviewResult(type: dataType, planId: planId ?? 0) { [weak self] (resultModel, error) in
+        YXReviewDataManager().fetchReviewResult(type: dataType, planId: planId) { [weak self] (resultModel, error) in
             guard let self = self else {return}
             
             if let model = resultModel {
@@ -91,7 +91,7 @@ extension YXExerciseViewController {
                 }
                                 
             } else {
-                YXUtils.showHUD(self.view, title: "上报关卡失败")
+                UIView.toast("上报关卡失败")
                 self.navigationController?.popViewController(animated: true)
             }
             
@@ -104,6 +104,9 @@ extension YXExerciseViewController {
     func processAIReviewProgressResult(model: YXReviewResultModel) {
         let aiView = YXReviewLearningProgressView()
         aiView.model = model
+        aiView.reviewEvent = {
+            
+        }
         aiView.show()
     }
     

@@ -185,8 +185,9 @@
                         self?.switchExerciseView()
                     }
                 }
-            } else {//
-                YXUtils.showHUD(self.view, title: "加载数据失败")
+            } else {
+                UIView.toast("加载数据失败")
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }

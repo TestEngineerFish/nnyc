@@ -10,7 +10,7 @@ import UIKit
 
 class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSource {
 
-    var words: [YXBaseWordModel] = []
+    var words: [YXBaseWordModel] = [] { didSet{ bindData() } }
     var tableView = UITableView()
     
     override init(frame: CGRect) {
@@ -41,6 +41,7 @@ class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSourc
     }
             
     override func bindData() {
+        self.tableView.isHidden = (words.count == 0)
         self.tableView.reloadData()
     }
     

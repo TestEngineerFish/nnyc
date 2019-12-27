@@ -205,8 +205,8 @@ class YXReviewResultView: YXTopWindowView {
         subTitleLable1.attributedText = attrString("巩固了 32 个单词", 4, 2)
         subTitleLable2.attributedText = attrString("20 个单词掌握的更好了", 0, 2)
         
-        tableView.words = []
-        starView.count = 2
+        tableView.words = model?.words ?? []
+        starView.count = model?.score ?? 0
     }
     
     @objc func clickShareButton() {
@@ -217,6 +217,8 @@ class YXReviewResultView: YXTopWindowView {
         shareVC.titleString = model?.planName ?? ""
         shareVC.wordsAmount = model?.allWordNum ?? 0
         shareVC.daysAmount = model?.studyDay ?? 0
+        
+        self.removeFromSuperview()
         
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
     }

@@ -79,6 +79,10 @@ extension YXExerciseDataManager {
         
         self.progressManager.updateScore(wordId: wordId, score: score)
         
+        if !right { // 错误次数
+            self.progressManager.updateErrorCount(wordId: wordId)
+        }
+        
     }
     
     /// 更新每个Step的 对错

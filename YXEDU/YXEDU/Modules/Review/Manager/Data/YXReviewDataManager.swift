@@ -35,7 +35,7 @@ struct YXReviewDataManager {
     ///   - type: <#type description#>
     ///   - planId: <#planId description#>
     ///   - completion: <#completion description#>
-    func fetchReviewResult(type: YXExerciseDataType, planId: Int, completion: ((_ model: YXReviewResultModel?, _ errorMsg: String?) -> Void)?) {
+    func fetchReviewResult(type: YXExerciseDataType, planId: Int?, completion: ((_ model: YXReviewResultModel?, _ errorMsg: String?) -> Void)?) {
         let request = YXReviewRequest.reviewResult(type: type.rawValue, planId: planId)
         YYNetworkService.default.request(YYStructResponse<YXReviewResultModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
