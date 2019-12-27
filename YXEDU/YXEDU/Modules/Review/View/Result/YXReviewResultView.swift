@@ -199,11 +199,15 @@ class YXReviewResultView: YXTopWindowView {
         if type == .aiReview {
             titleLabel.text = "恭喜完成智能复习"
         } else {
-            titleLabel.text = "恭喜完成<\("xxxxx")>的复习"
+            titleLabel.text = "恭喜完成<\(model?.planName ?? "")>的复习"
         }
-        starTitleLabel.text = " 太棒了，获得了\(3)星呢！"
-        subTitleLable1.attributedText = attrString("巩固了 32 个单词", 4, 2)
-        subTitleLable2.attributedText = attrString("20 个单词掌握的更好了", 0, 2)
+        
+        let lenght1 = "\(model?.allWordNum ?? 0)".count
+        let lenght2 = "\(model?.knowWordNum ?? 0)".count
+        
+        starTitleLabel.text = " 太棒了，获得了\(model?.score ?? 0)星呢！"
+        subTitleLable1.attributedText = attrString("巩固了 \(model?.allWordNum ?? 0) 个单词", 4, lenght1)
+        subTitleLable2.attributedText = attrString("\(model?.knowWordNum ?? 0) 个单词掌握的更好了", 0, lenght2)
         
         tableView.words = model?.words ?? []
         starView.count = model?.score ?? 0
