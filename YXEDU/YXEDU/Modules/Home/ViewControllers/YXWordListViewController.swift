@@ -8,18 +8,16 @@
 
 import UIKit
 
-enum YXWordListType {
-    case learned
-    case notLearned
-    case collected
-    case wrongWords
+enum YXWordListType: Int {
+    case learned = 0
+    case notLearned = 1
+    case collected = 2
+    case wrongWords = 3
 }
 
 class YXWordListViewController: UIViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
-    var wordId: Int!
-    var isComplexWord: Int!
     
     private var learnedWords: [YXWordModel]!
     private var notLearnedWords: [YXWordModel]!
@@ -82,7 +80,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        wordListView = BPSegmentControllerView(BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0), frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
+        wordListView = BPSegmentControllerView(BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0, firstIndexPath: IndexPath(item: wordListType.rawValue, section: 0)), frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
         wordListView.delegate = self
         
         self.view.addSubview(wordListView)
@@ -136,33 +134,12 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 break
             }
             
-        } else if segue.identifier == "WordDetail" {
-            let wordDetailViewController = segue.destination as! YXWordDetailViewControllerNew
-            wordDetailViewController.wordId = wordId
-            wordDetailViewController.isComplexWord = isComplexWord
         }
     }
     
     
     
     // MARK: -
-    func firstSelectedIndex() -> IndexPath? {
-        switch wordListType {
-        case .learned:
-            return IndexPath(row: 0, section: 0)
-            
-        case .notLearned:
-            return IndexPath(row: 1, section: 0)
-
-        case .collected:
-            return IndexPath(row: 2, section: 0)
-
-        case .wrongWords:
-            return IndexPath(row: 3, section: 0)
-        }
-    }
-    
-    
     func pagesNumber() -> Int {
         return wordListHeaderViews.count
     }
@@ -175,6 +152,14 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         let wordListView = YXWordListView(frame: .zero)
         wordListView.editClosure = {
             self.performSegue(withIdentifier: "EditWordList", sender: self)
+        }
+        
+        wordListView.showWordDetialClosure = { (wordId, isComplexWord) in
+            let home = UIStoryboard(name: "Home", bundle: nil)
+            let wordDetialViewController = home.instantiateViewController(withIdentifier: "WordDetail") as! YXWordDetailViewControllerNew
+            wordDetialViewController.wordId = wordId
+            wordDetialViewController.isComplexWord = isComplexWord
+            self.navigationController?.pushViewController(wordDetialViewController, animated: true)
         }
         
         switch indexPath.row {
@@ -298,7 +283,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         return wordListView
     }
     
-    func segment(_ segment: BPSegmentView, didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
+    func segment(didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
         switch indexPath.row {
         case 0:
             wordListType = .learned

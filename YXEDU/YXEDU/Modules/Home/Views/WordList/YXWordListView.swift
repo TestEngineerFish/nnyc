@@ -12,6 +12,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     var orderClosure: ((_ orderType: YXWordListOrderType) -> Void)?
     var editClosure: (() -> Void)?
+    var showWordDetialClosure: ((_ wordId: Int, _ isComplexWord: Int) -> Void)?
     var startReviewClosure: (() -> Void)?
 
     var isWrongWordList = false
@@ -32,10 +33,12 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     var shouldShowBottomView = false {
         didSet {
             if shouldShowBottomView {
-                bottonViewHeight.constant = 68 + kSafeBottomMargin
+                bottomViewHeight.constant = 68 + kSafeBottomMargin
+                bottomView.isHidden = false
                 
             } else {
-                bottonViewHeight.constant = 0
+                bottomViewHeight.constant = 0
+                bottomView.isHidden = true
             }
         }
     }
@@ -155,7 +158,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var editButton: YXDesignableButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bottomView: UIView!
-    @IBOutlet weak var bottonViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!
     
     @IBAction func order(_ sender: Any) {
         let view = YXWordListOrderView(frame: CGRect(x: screenWidth - orderButtonDistance.constant - 120, y: 44, width: 120, height: 120), orderType: orderType)
@@ -217,7 +220,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         let wordListHeaderView = YXWordListHeaderView()
         wordListHeaderView.titleLabel.text = wrongWordSection?.keys.first
         
-        if section == 0 {
+        if wrongWordSection?.keys.first?.contains("熟识的单词") ?? false {
             wordListHeaderView.editButton.isHidden = false
             wordListHeaderView.editClosure = editClosure
         }
@@ -325,11 +328,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         
         cell.showWordDetailClosure = {
-            if let wordListViewController = self.parentViewController() as? YXWordListViewController {
-                wordListViewController.wordId = word.wordId
-                wordListViewController.isComplexWord = word.isComplexWord
-                wordListViewController.performSegue(withIdentifier: "WordDetail", sender: nil)
-            }
+            self.showWordDetialClosure?(word.wordId ?? 0, word.isComplexWord ?? 0)
         }
             
         return cell
@@ -345,21 +344,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         } else {
             return tableView.estimatedRowHeight
         }
-    }
-    
-    func parentViewController() -> UIViewController? {
-
-        var n = self.next
-        
-        while n != nil {
-            if (n is UIViewController) {
-                return n as? UIViewController
-            }
-            
-            n = n?.next
-        }
-        
-        return nil
     }
     
     private func atoz(words: [YXWordModel]) -> [YXWordModel] {

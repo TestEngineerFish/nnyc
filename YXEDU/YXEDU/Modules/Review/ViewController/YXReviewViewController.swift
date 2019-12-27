@@ -29,7 +29,7 @@ class YXReviewViewController: YXTableViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
