@@ -12,7 +12,7 @@ class BPItemContentView: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = self.shouldRandomColor()
+        self.backgroundColor = UIColor.white
     }
 
     required init?(coder: NSCoder) {

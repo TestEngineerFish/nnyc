@@ -44,6 +44,7 @@ struct BPSegmentConfig {
     var headerItemSpacing  = CGFloat.zero
     var contentItemSize    = CGSize.zero
     var contentItemSpacing = CGFloat.zero
+    var firstIndexPaht     = IndexPath(item: 0, section: 0)
 }
 
 class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -64,6 +65,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     init(_ config: BPSegmentConfig, frame: CGRect) {
         self.config = config
+        self.lastSelectedIndex = config.firstIndexPaht
         super.init(frame: frame)
         self.createSubviews()
     }
@@ -82,6 +84,9 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     }
 
     func reloadData() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.selectItem(with: self.lastSelectedIndex)
+        }
         self.headerScrollView.reloadData()
         self.contentScrollView.reloadData()
     }
@@ -206,12 +211,12 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         self.delegate?.segment(didSelectRowAt: indexPath, previousSelectRowAt: self.lastSelectedIndex)
 
         // 如果选中不是已选中的Item,则更新最后选中位置
-        if indexPath != self.lastSelectedIndex {
+//        if indexPath != self.lastSelectedIndex {
             // 滑动到中间
             self.scrollView(to: indexPath)
             // 更新选中
             self.lastSelectedIndex = indexPath
-        }
+//        }
     }
 
     /// 滑动到对应位置
