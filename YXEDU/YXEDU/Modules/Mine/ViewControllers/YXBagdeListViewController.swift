@@ -60,9 +60,9 @@ class YXBagdeListViewController: UIViewController, UITableViewDelegate, UITableV
         let badge = badgeLists[collectionView.tag].badges?[indexPath.row]
         
         cell.titleLabel.text = badge?.name
-        cell.descriptionLabel.text = badge?.finishDateString ?? ""
+        cell.descriptionLabel.text = ""
         
-        if badge?.finishDate != Date(timeIntervalSince1970: 0), let imageOfCompletedStatus = badge?.imageOfCompletedStatus {
+        if badge?.finishDateTimeInterval != nil, let imageOfCompletedStatus = badge?.imageOfCompletedStatus {
             cell.imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
             
         } else if let imageOfIncompletedStatus = badge?.imageOfIncompletedStatus {
@@ -73,7 +73,9 @@ class YXBagdeListViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let badge = badgeLists[collectionView.tag].badges?[indexPath.row]
+        guard let badge = badgeLists[collectionView.tag].badges?[indexPath.row] else { return }
+        let badgeDetailView = YXBadgeDetailView(badge: badge, didCompleted: badge.finishDateTimeInterval != nil)
+        badgeDetailView.show()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

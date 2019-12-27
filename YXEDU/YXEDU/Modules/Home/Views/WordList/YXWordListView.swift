@@ -12,7 +12,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     var orderClosure: ((_ orderType: YXWordListOrderType) -> Void)?
     var editClosure: (() -> Void)?
-    var startReviewClosure: ((_ exerciseResultModel: YXExerciseResultModel) -> Void)?
+    var startReviewClosure: (() -> Void)?
 
     var isWrongWordList = false
     
@@ -172,14 +172,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func startReview(_ sender: Any) {
-        let request = YXExerciseRequest.exercise(type: 2, planId: nil)
-        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
-            guard let exerciseResultModel = response.data else { return }
-            self.startReviewClosure?(exerciseResultModel)
-
-        }) { error in
-            print("❌❌❌\(error)")
-        }
+        startReviewClosure?()
     }
     
     override init(frame: CGRect) {
