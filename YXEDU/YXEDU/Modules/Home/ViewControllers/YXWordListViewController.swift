@@ -18,13 +18,8 @@ enum YXWordListType: Int {
 class YXWordListViewController: UIViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
-    
-    private var learnedWords: [YXWordModel]!
-    private var notLearnedWords: [YXWordModel]!
-    private var collectedWords: [YXWordModel]!
-    private var wrongWordList: YXWrongWordListModel!
-    private var orderType: [YXWordListOrderType] = [.default, .default, .default, .default]
 
+    private var wordListControllerView: BPSegmentControllerView!
     private var wordListHeaderViews: [UIView] = {
         var views: [UIView] = []
         
@@ -67,7 +62,8 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         
         return views
     }()
-    private var wordListView: BPSegmentControllerView!
+    
+    private var wordListViews: [YXWordListView?] = [nil, nil, nil, nil]
     
     @IBAction func back(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -80,10 +76,11 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        wordListView = BPSegmentControllerView(BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0, firstIndexPath: IndexPath(item: wordListType.rawValue, section: 0)), frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
-        wordListView.delegate = self
+        wordListControllerView = BPSegmentControllerView(BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0, firstIndexPath: IndexPath(item: wordListType.rawValue, section: 0)), frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
+        wordListControllerView.delegate = self
+        wordListControllerView.reloadData()
         
-        self.view.addSubview(wordListView)
+        self.view.addSubview(wordListControllerView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,25 +106,28 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             switch wordListType {
             case .collected:
                 editWordListViewController.editWordListType = .collected
-                editWordListViewController.words = collectedWords ?? []
+                editWordListViewController.words = wordListViews[2]?.words ?? []
                 editWordListViewController.redClosure = { indexs in
-                    for index in indexs {
-                        self.collectedWords.remove(at: index)
-                    }
+                    var sordedIndex = indexs
+                    sordedIndex.sort() { $0 > $1 }
                     
-                    self.wordListView.reloadData()
+                    for index in sordedIndex {
+                        self.wordListViews[2]?.words.remove(at: index)
+                        self.wordListViews[2]?.tableView.reloadData()
+                    }
                 }
                 
             case .wrongWords:
                 editWordListViewController.editWordListType = .familiar
-                editWordListViewController.words = wrongWordList?.familiarList ?? []
+                editWordListViewController.words = wordListViews[3]?.wrongWordList?.familiarList ?? []
                 editWordListViewController.redClosure = { indexs in
-                    for index in indexs {
-                        guard let familiarList = self.wrongWordList.familiarList, index < familiarList.count - 1 else { continue }
-                        self.wrongWordList.familiarList!.remove(at: index)
-                    }
+                    var sordedIndex = indexs
+                    sordedIndex.sort() { $0 > $1 }
                     
-                    self.wordListView.reloadData()
+                    for index in sordedIndex {
+                        self.wordListViews[3]?.wrongWordList?.familiarList!.remove(at: index)
+                        self.wordListViews[3]?.tableView.reloadData()
+                    }
                 }
                 
             default:
@@ -149,138 +149,80 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     }
     
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
-        let wordListView = YXWordListView(frame: .zero)
-        wordListView.editClosure = {
-            self.performSegue(withIdentifier: "EditWordList", sender: self)
-        }
-        
-        wordListView.showWordDetialClosure = { (wordId, isComplexWord) in
-            let home = UIStoryboard(name: "Home", bundle: nil)
-            let wordDetialViewController = home.instantiateViewController(withIdentifier: "WordDetail") as! YXWordDetailViewControllerNew
-            wordDetialViewController.wordId = wordId
-            wordDetialViewController.isComplexWord = isComplexWord
-            self.navigationController?.pushViewController(wordDetialViewController, animated: true)
-        }
-        
-        switch indexPath.row {
-        case 0:
-            if learnedWords == nil {
-                let request = YXWordListRequest.wordList(type: 0)
+        if wordListViews[indexPath.row] == nil {
+            let wordListView = YXWordListView(frame: .zero)
+            wordListView.editClosure = {
+                self.performSegue(withIdentifier: "EditWordList", sender: self)
+            }
+            
+            wordListView.showWordDetialClosure = { (wordId, isComplexWord) in
+                let home = UIStoryboard(name: "Home", bundle: nil)
+                let wordDetialViewController = home.instantiateViewController(withIdentifier: "WordDetail") as! YXWordDetailViewControllerNew
+                wordDetialViewController.wordId = wordId
+                wordDetialViewController.isComplexWord = isComplexWord
+                self.navigationController?.pushViewController(wordDetialViewController, animated: true)
+            }
+            
+            switch indexPath.row {
+            case 0, 1:
+                self.wordListViews[indexPath.row] = wordListView
+                self.wordListViews[indexPath.row]?.isWrongWordList = false
+                self.wordListViews[indexPath.row]?.shouldShowEditButton = false
+                self.wordListViews[indexPath.row]?.shouldShowBottomView = false
+                
+                let request = YXWordListRequest.wordList(type: indexPath.row)
                 YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
                     guard let learnedWords = response.dataArray else { return }
-                    self.learnedWords = learnedWords
-                    wordListView.words = self.learnedWords
+                    self.wordListViews[indexPath.row]?.words = learnedWords
                     
                 }) { error in
-                    wordListView.words = []
+                    self.wordListViews[indexPath.row]?.words = []
                     print("❌❌❌\(error)")
                 }
                 
-            } else {
-                wordListView.words = learnedWords
-            }
-            
-            wordListView.isWrongWordList = false
-            wordListView.shouldShowEditButton = false
-            wordListView.shouldShowBottomView = false
-            wordListView.orderType = orderType[0]
-            wordListView.orderClosure = { type in
-                self.orderType[0] = type
-            }
-            
-            break
-            
-        case 1:
-            if notLearnedWords == nil {
-                let request = YXWordListRequest.wordList(type: 1)
+            case 2:
+                self.wordListViews[indexPath.row] = wordListView
+                self.wordListViews[indexPath.row]?.isWrongWordList = false
+                self.wordListViews[indexPath.row]?.shouldShowEditButton = true
+                self.wordListViews[indexPath.row]?.shouldShowBottomView = false
+                
+                let request = YXWordListRequest.wordList(type: indexPath.row)
                 YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
-                    guard let notLearnedWords = response.dataArray else { return }
-                    self.notLearnedWords = notLearnedWords
-                    wordListView.words = self.notLearnedWords
+                    guard let learnedWords = response.dataArray else { return }
+                    self.wordListViews[indexPath.row]?.words = learnedWords
                     
                 }) { error in
-                    wordListView.words = []
+                    self.wordListViews[indexPath.row]?.words = []
                     print("❌❌❌\(error)")
                 }
                 
-            } else {
-                wordListView.words = notLearnedWords
-            }
-            
-            wordListView.isWrongWordList = false
-            wordListView.shouldShowEditButton = false
-            wordListView.shouldShowBottomView = false
-            wordListView.orderType = orderType[1]
-            wordListView.orderClosure = { type in
-                self.orderType[1] = type
-            }
-            
-            break
-            
-        case 2:
-            if collectedWords == nil {
-                let request = YXWordListRequest.wordList(type: 2)
-                YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
-                    guard let collectedWords = response.dataArray else { return }
-                    self.collectedWords = collectedWords
-                    wordListView.words = self.collectedWords
-                    
-                }) { error in
-                    wordListView.words = []
-                    print("❌❌❌\(error)")
+            case 3:
+                self.wordListViews[indexPath.row] = wordListView
+                self.wordListViews[indexPath.row]?.isWrongWordList = true
+                self.wordListViews[indexPath.row]?.shouldShowEditButton = false
+                self.wordListViews[indexPath.row]?.shouldShowBottomView = true
+                self.wordListViews[indexPath.row]?.startReviewClosure = {
+                    let exerciseViewController = YXExerciseViewController()
+                    exerciseViewController.dataType = .wrong
+                    self.navigationController?.pushViewController(exerciseViewController, animated: true)
                 }
                 
-            } else {
-                wordListView.words = collectedWords
-            }
-            
-            wordListView.isWrongWordList = false
-            wordListView.shouldShowEditButton = true
-            wordListView.shouldShowBottomView = false
-            wordListView.orderType = orderType[2]
-            wordListView.orderClosure = { type in
-                self.orderType[2] = type
-            }
-            
-            break
-            
-        case 3:
-            if wrongWordList == nil {
                 let request = YXWordListRequest.wrongWordList
                 YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { (response) in
                     guard let wrongWordList = response.data else { return }
-                    self.wrongWordList = wrongWordList
-                    wordListView.wrongWordList = self.wrongWordList
+                    self.wordListViews[indexPath.row]?.wrongWordList = wrongWordList
                     
                 }) { error in
-                    wordListView.wrongWordList = nil
+                    self.wordListViews[indexPath.row]?.wrongWordList = nil
                     print("❌❌❌\(error)")
                 }
                 
-            } else {
-                wordListView.wrongWordList = wrongWordList
+            default:
+                break
             }
-            
-            wordListView.isWrongWordList = true
-            wordListView.shouldShowEditButton = false
-            wordListView.orderType = orderType[3]
-            wordListView.orderClosure = { type in
-                self.orderType[3] = type
-            }
-            
-            wordListView.startReviewClosure = {
-                let exerciseViewController = YXExerciseViewController()
-                exerciseViewController.dataType = .wrong
-                self.navigationController?.pushViewController(exerciseViewController, animated: true)
-            }
-            
-            break
-            
-        default:
-            break
         }
         
-        return wordListView
+        return wordListViews[indexPath.row]!
     }
     
     func segment(didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {

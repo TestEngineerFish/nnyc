@@ -371,7 +371,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             guard let score = resultDict["score"] as? Double else {
                 return
             }
-            YXUtils.showHUD(self, title: "当前得分: \(score)")
+//            YXUtils.showHUD(self, title: "当前得分: \(score)")
             self.lastLevel = {
                 if score > 90 {
                     return 3
@@ -413,7 +413,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     func onUpdateVolume(_ volume: Int32) {
 //        print("onUpdateVolume: \(volume)")
         YXRecordAudioView.share.updateVolume(volume)
-        print(volume)
+//        print(volume)
         return
     }
 

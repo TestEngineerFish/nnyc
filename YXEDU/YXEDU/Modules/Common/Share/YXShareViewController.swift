@@ -109,6 +109,7 @@ class YXShareViewController: YXViewController {
     var daysAmount  = 0
     var gameModel: YXGameResultModel?
     var shareType: YXShareType = .challengeResult
+    var shareImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,19 +126,19 @@ class YXShareViewController: YXViewController {
         self.wechatImageView.addGestureRecognizer(tapWechat)
         self.timeLineImageView.addGestureRecognizer(tapTimeLine)
 
-        self.shareImageView.image = self.createListenReviewShareImage()
         switch self.shareType {
         case .learnResult:
-            self.shareImageView.image = self.createLearnResultShareImage()
+            self.shareImage = self.createLearnResultShareImage()
         case .aiReviewReuslt:
-            self.shareImageView.image = self.createAIReviewShareImage()
+            self.shareImage = self.createAIReviewShareImage()
         case .planReviewResult:
-            self.shareImageView.image = self.createPlanReviewShareImage()
+            self.shareImage = self.createPlanReviewShareImage()
         case .listenReviewResult:
-            self.shareImageView.image = self.createListenReviewShareImage()
+            self.shareImage = self.createListenReviewShareImage()
         case .challengeResult:
-            self.shareImageView.image = self.createChallengeReviewShareImage()
+            self.shareImage = self.createChallengeReviewShareImage()
         }
+        self.shareImageView.image = self.shareImage
     }
 
     private func createSubviews() {
@@ -215,15 +216,15 @@ class YXShareViewController: YXViewController {
 
     // MARK: ==== Share Event ====
     @objc private func shareToQQ() {
-        QQApiManager.shared()?.share(shareImageView.image, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+        QQApiManager.shared()?.share(shareImage, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
     }
 
     @objc private func shareToWechat() {
-        WXApiManager.shared()?.share(shareImageView.image, toPaltform: .wxSession, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+        WXApiManager.shared()?.share(shareImage, toPaltform: .wxSession, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
     }
 
     @objc private func shareToTimeLine() {
-        WXApiManager.shared()?.share(shareImageView.image, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+        WXApiManager.shared()?.share(shareImage, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
     }
 
     // MARK: ==== Tools ====

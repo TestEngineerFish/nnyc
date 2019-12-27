@@ -76,7 +76,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
             for (index, bookModel) in _model.list.enumerated() {
                 if bookModel.isLearning {
                     _model.modelDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
-                    self.segmentControllerView.lastSelectedIndex = IndexPath(item: 1, section: 0)
+                    self.segmentControllerView.lastSelectedIndex = IndexPath(item: index, section: 0)
                 }
             }
             self.model = _model

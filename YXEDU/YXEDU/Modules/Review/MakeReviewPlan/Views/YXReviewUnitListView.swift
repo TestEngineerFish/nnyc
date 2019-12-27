@@ -55,15 +55,19 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     private func selectCell(with indexPath: IndexPath) {
         let unitModel = self.unitModelList[indexPath.section]
         let wordModel = unitModel.list[indexPath.row]
+//        guard let cell = self.tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell else {
+//            return
+//        }
+
         wordModel.bookId = self.tag
         wordModel.unitId = unitModel.id
+        wordModel.isSelected = !wordModel.isSelected
+        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
         if wordModel.isSelected {
             self.delegate?.unselectWord(wordModel)
         } else {
             self.delegate?.selectedWord(wordModel)
         }
-        wordModel.isSelected = !wordModel.isSelected
-        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
     }
 
     // MARK: ==== UIGestureRecognizerDelegate ====
@@ -83,38 +87,34 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     @objc private func pan(_ pan: UIPanGestureRecognizer) {
         if pan.state == .began {
             self.lastPassByIndexPath = nil
-            self.previousLocation    = pan.location(in: self.tableView)
+            self.previousLocation    = pan.location(in: pan.view)
         } else if pan.state == .changed {
-            let newLocation = pan.location(in: self.tableView)
+            let newLocation = pan.location(in: pan.view)
             self.commitNewLocation(newLocation)
             self.previousLocation = newLocation
         }
     }
 
     private func commitNewLocation(_ newLocation: CGPoint) {
-//        guard let previousLocation = self.previousLocation else {
-//            return
-//        }
-//        let offsetX = newLocation.x - previousLocation.x
-//        let offsetY = newLocation.y - previousLocation.y
-//        if offsetY > offsetX {
+        guard let previousLocation = self.previousLocation else {
+            return
+        }
+        let offsetX = newLocation.x - previousLocation.x
+        let offsetY = newLocation.y - previousLocation.y
+        if offsetY > offsetX {
             guard let indexPath = self.tableView.indexPathForRow(at: newLocation) else {
                 return
             }
             if self.lastPassByIndexPath != indexPath {
+                print(indexPath)
                 self.updateWordSelectStatus(indexPath)
                 self.lastPassByIndexPath = indexPath
             }
-//        }
+        }
     }
 
     private func updateWordSelectStatus(_ indexPath: IndexPath) {
         self.selectCell(with: indexPath)
-//        guard let cell = self.tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell, let wordModel = cell.model else {
-//            return
-//        }
-//        cell.model?.isSelected = !wordModel.isSelected
-//        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
 
     // MARK: ==== UITableViewDataSource ====

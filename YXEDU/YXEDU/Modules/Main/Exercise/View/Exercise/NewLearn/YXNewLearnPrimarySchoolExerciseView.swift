@@ -11,37 +11,55 @@ import UIKit
 /// 小学新学
 class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtocol {
 
-    var detailView: YXNewLearnJuniorHighSchoolQuestionView?
-    var rightContentView: UIView = {
-        let view = UIView()
-        return view
-    }()
     var guideView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         return view
     }()
+    var detailView: YXNewLearnJuniorHighSchoolQuestionView?
+    var rightContentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    var leftContentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
     override func createSubview() {
+        self.addSubview(contentView)
+        self.contentView.addSubview(leftContentView)
         questionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel)
         if exerciseModel.question?.example != nil {
             (questionView as! YXNewLearnPrimarySchoolQuestionView).showImageView()
             (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
         }
-        self.addSubview(questionView!)
+        self.leftContentView.addSubview(questionView!)
         
         answerView = YXNewLearnAnswerView(exerciseModel: self.exerciseModel)
         (answerView as! YXNewLearnAnswerView).newLearnDelegate = self
         answerView?.answerDelegate  = self
-        self.addSubview(answerView!)
+        self.leftContentView.addSubview(answerView!)
 
-        self.addSubview(rightContentView)
         detailView = YXNewLearnJuniorHighSchoolQuestionView(exerciseModel: exerciseModel)
-        self.addSubview(rightContentView)
+        self.contentView.addSubview(rightContentView)
         self.rightContentView.addSubview(detailView!)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        contentView.snp.makeConstraints { (make) in
+            make.left.top.bottom.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(2)
+        }
+        leftContentView.snp.makeConstraints { (make) in
+            make.left.top.bottom.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.5)
+        }
         questionView?.snp.makeConstraints({ (make) in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
@@ -57,9 +75,9 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         detailView?.snp.makeConstraints({ (make) in
             make.edges.equalToSuperview()
         })
-        self.rightContentView.snp.makeConstraints({ (make) in
-            make.top.bottom.width.equalToSuperview()
-            make.left.equalTo(self.snp.right)
+        rightContentView.snp.makeConstraints({ (make) in
+            make.top.bottom.right.equalToSuperview()
+            make.left.equalTo(leftContentView.snp.right)
         })
     }
 
@@ -91,16 +109,13 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
 
     func showDetailView() {
         UIView.animate(withDuration: 0.5) {
-            self.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
-//            self.frame = CGRect(x: self.frame.minX - screenWidth, y: self.frame.minY, width: self.frame.width, height: self.frame.height)
+            self.contentView.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
         }
     }
 
     // MARK: ==== YXAnswerViewDelegate ====
 
     override func switchQuestionView() -> Bool {
-        //显示单词详情
-
         return true
     }
 

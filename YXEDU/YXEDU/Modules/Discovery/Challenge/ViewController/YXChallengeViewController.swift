@@ -21,6 +21,10 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.hex(0xE9DDC4)
         self.setSubviews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.requestChallengeData()
     }
 
@@ -63,6 +67,13 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func clickPlayButton(){
+//        let shareVC = YXShareViewController()
+//        shareVC.titleString = "挑战分享"
+//        shareVC.shareType   = .challengeResult
+//        shareVC.gameModel   = YXGameResultModel()
+//        shareVC.hidesBottomBarWhenPushed = true
+//        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+//        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
             return
         }

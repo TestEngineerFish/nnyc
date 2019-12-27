@@ -411,8 +411,10 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         if let button = self.selectedBtnArray.first {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + config.resultAnimationTime) {
                 self.clickButton(button)
-                self.allButtonArray.forEach { (letterButton) in
-                    letterButton.status = self.config.initButtonStatus
+                if !self.config.showFirstButton {
+                    self.allButtonArray.forEach { (letterButton) in
+                        letterButton.status = self.config.initButtonStatus
+                    }
                 }
             }
         }
