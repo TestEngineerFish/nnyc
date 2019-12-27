@@ -44,7 +44,7 @@ struct BPSegmentConfig {
     var headerItemSpacing  = CGFloat.zero
     var contentItemSize    = CGSize.zero
     var contentItemSpacing = CGFloat.zero
-    var firstIndexPaht     = IndexPath(item: 0, section: 0)
+    var firstIndexPath     = IndexPath(item: 0, section: 0)
 }
 
 class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -65,7 +65,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     init(_ config: BPSegmentConfig, frame: CGRect) {
         self.config = config
-        self.lastSelectedIndex = config.firstIndexPaht
+        self.lastSelectedIndex = config.firstIndexPath
         super.init(frame: frame)
         self.createSubviews()
     }
