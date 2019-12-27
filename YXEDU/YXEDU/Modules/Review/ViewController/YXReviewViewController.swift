@@ -119,13 +119,17 @@ extension YXReviewViewController {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let _cell = cell as? YXReviewPlanTableViewCell else { return }
-        _cell.reviewPlanModel = dataSource[indexPath.row] as? YXReviewPlanModel
+        guard let _cell = cell as? YXReviewPlanTableViewCell,
+              let model = dataSource[indexPath.row] as? YXReviewPlanModel else {
+            return
+        }
+        
+        _cell.reviewPlanModel = model
         _cell.startListenPlanEvent = { [weak self] in
-            self?.startListenPlanEvent()
+            self?.startListenPlanEvent(planId: model.planId)
         }
         _cell.startReviewPlanEvent = { [weak self] in
-            self?.startListenPlanEvent()
+            self?.startReviewPlanEvent(planId: model.planId)
         }
     }
     
@@ -143,31 +147,17 @@ extension YXReviewViewController {
 extension YXReviewViewController {
     
     func favoriteEvent() {
-//        guard let vc = UIViewController.storyboard(withName: "Home", identifier: "YXWordListViewController") as? YXWordListViewController else {
-//            return
-//        }
-//
-//        vc.wordListType = .collected
-//        vc.hidesBottomBarWhenPushed = true
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
         YRRouter.openURL("word/list", query: ["type" : YXWordListType.collected], animated: true)
     }
     
     func wrongWordEvent() {
-//        guard let vc = UIViewController.storyboard(withName: "Home", identifier: "YXWordListViewController") as? YXWordListViewController else {
-//            return
-//        }
-//
-//        vc.wordListType = .wrongWords
-//        vc.hidesBottomBarWhenPushed = true
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
         YRRouter.openURL("word/list", query: ["type" : YXWordListType.wrongWords], animated: true)
     }
     
     /// 智能复习
     func startReviewEvent() {
+//        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.aiReview.rawValue], animated: true)
+        
         let vc = YXExerciseViewController()
         vc.dataType = .aiReview
         vc.hidesBottomBarWhenPushed = true
@@ -175,17 +165,24 @@ extension YXReviewViewController {
     }
     
     /// 开始复习 —— 复习计划
-    func startReviewPlanEvent() {
+    func startReviewPlanEvent(planId: Int) {
+//        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.normalReview.rawValue], animated: true)
+        
         let vc = YXExerciseViewController()
         vc.dataType = .normalReview
+        vc.planId = planId
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     /// 开始听力 —— 复习计划
-    func startListenPlanEvent() {
+    func startListenPlanEvent(planId: Int) {
+//        let url = "exercise/study?type=" + "\(YXExerciseDataType.listenReview.rawValue)"
+//        YRRouter.openURL(url, query: nil, animated: true)
+        
         let vc = YXExerciseViewController()
         vc.dataType = .listenReview
+        vc.planId = planId
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }

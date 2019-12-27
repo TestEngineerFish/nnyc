@@ -127,7 +127,7 @@ struct YXAPI {
     //MARK: - 设置模块
     struct Setting {
         /// 检查版本接口
-        static let checkVersion = "/api/v1/check-version"
+        static let checkVersion = "/api/v1/checkversion"
 
     }
 }

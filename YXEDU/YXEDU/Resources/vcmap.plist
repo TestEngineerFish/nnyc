@@ -12,8 +12,8 @@
 			<string>YWFeedbackViewController</string>
 		</dict>
 	</dict>
-	<key>setting</key>
-	<string>YWSettingViewController</string>
+	<key>exercise/study</key>
+	<string>YXExerciseViewController</string>
 	<key>setting/report</key>
 	<string>YWReportViewController</string>
 	<key>global/web</key>

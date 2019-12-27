@@ -90,6 +90,9 @@ static NSMutableDictionary *sbMap;
         } else {// xib或者纯代码UI
             
             Class class = NSClassFromString(vcString);
+            if (class == nil) {
+                class = NSClassFromString([NSString stringWithFormat:@"YXEDU.%@",vcString]);
+            }
             if (nil == query) {
                 viewController = [[class alloc] initWithURL:url];
             } else {

@@ -17,12 +17,12 @@
  }
  
  /// 练习模块，主控制器
- class YXExerciseViewController: UIViewController {
+ class YXExerciseViewController: YXViewController {
     
     public var bookId: Int = 0
     public var unitId: Int = 0
     public var dataType: YXExerciseDataType = .normal
-    
+    public var planId: Int?
     
     // 数据管理器
     public var dataManager: YXExerciseDataManager!
@@ -51,17 +51,24 @@
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+//        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.hideLoadAnimation(nil)
+    }
+    
+    override func handleData(withQuery query: [AnyHashable : Any]!) {
+//        let value = (self.query["type"] as? Int) ?? 1
+//        self.dataType = YXExerciseDataType(rawValue: value) ?? .normal
+//        self.bookId = self.query["book_id"] as? Int ?? 0
+//        self.unitId = self.query["unit_id"] as? Int ?? 0
     }
     
     override func viewDidLoad() {
@@ -103,6 +110,7 @@
     
     private func bindProperty() {
         self.view.backgroundColor = UIColor.white
+        self.customNavigationBar?.isHidden = true
         
         self.switchAnimation.owenrView = self.view
         self.switchAnimation.animationDidStop = { [weak self] (right) in
@@ -123,6 +131,7 @@
         }
         
         dataManager.progressManager.dataType = self.dataType
+        dataManager.progressManager.planId = self.planId
     }
     
     /// 开始学习
@@ -132,15 +141,17 @@
             // 先加载本地数据
             dataManager.fetchLocalExerciseModels()
             
-            // 先上报关卡
-            dataManager.reportUnit(type: dataType, time: 0) {[weak self] (result, msg) in
-                guard let self = self else { return }
-                if result {
-                    self.fetchExerciseData()
-                } else {//
-                    YXUtils.showHUD(self.view, title: "上报失败")
-                }
-            }
+            // 再上报关卡
+            self.report()
+                        
+//            dataManager.reportUnit(type: dataType, time: 0) {[weak self] (result, msg) in
+//                guard let self = self else { return }
+//                if result {
+//                    self.fetchExerciseData()
+//                } else {//
+//                    YXUtils.showHUD(self.view, title: "上报失败")
+//                }
+//            }
         } else if !dataManager.progressManager.isCompletion() {// 存在未学完的关卡
             dataManager.fetchLocalExerciseModels()
             self.hideLoadAnimation { [weak self] in
@@ -155,7 +166,7 @@
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        dataManager.fetchTodayExerciseResultModels(type: dataType) { [weak self] (result, msg) in
+        dataManager.fetchTodayExerciseResultModels(type: dataType, planId: planId) { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
                 DispatchQueue.main.async {

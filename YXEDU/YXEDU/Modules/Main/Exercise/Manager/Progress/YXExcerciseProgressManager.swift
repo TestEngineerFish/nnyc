@@ -14,6 +14,7 @@ class YXExcerciseProgressManager: NSObject {
     public var bookId: Int = 0
     public var unitId: Int = 0
     public var dataType: YXExerciseDataType = .normal
+    public var planId: Int?
     
     /// 本地存储Key
     enum LocalKey: String {
@@ -225,7 +226,8 @@ class YXExcerciseProgressManager: NSObject {
     
     //MARK: - Private
     private func key(_ key: LocalKey) -> String {
-        return "\(dataType.rawValue)_\(bookId)_\(unitId)_\(YXConfigure.shared().uuid ?? "")_" + key.rawValue
+        let pre = "\(planId ?? 0)_"
+        return pre + "\(dataType.rawValue)_\(bookId)_\(unitId)_\(YXConfigure.shared().uuid ?? "")_" + key.rawValue
     }
     
     /// 保持到本地文件

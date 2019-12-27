@@ -25,6 +25,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         self.addSubview(textField)
         self.addSubview(lineView)
         self.addSubview(audioPlayerView)
+        self.layer.setDefaultShadow()
     }
     
     override func bindProperty() {
@@ -85,23 +86,25 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             return
         }
         
-        if text.count < 5 {
+        let wordLength = exerciseModel.word?.word?.count ?? 0
+        
+        if text.count <= wordLength {
             lineView.text = text
             
-            if lineView.text.count == 4 {
+            if lineView.text.count == wordLength {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
                     self?.processAnswer(text: text)
                 }
             }
         } else {
-            textField.text = text.subString(location: 0, length: 4)
+            textField.text = text.subString(location: 0, length: wordLength)
         }
     }
     
     
     func processAnswer(text: String) {
         
-        if exerciseModel.word?.word == text {
+        if exerciseModel.word?.word?.uppercased() == text.uppercased() {
             textField.resignFirstResponder()
             answerCompletion(right: true)
         } else {

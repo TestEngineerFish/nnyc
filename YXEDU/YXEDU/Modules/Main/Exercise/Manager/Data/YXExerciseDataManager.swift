@@ -11,10 +11,10 @@ import ObjectMapper
 
 enum YXExerciseDataType: Int {
     case normal = 1             // 基础学习
-    case aiReview = 5           // 智能复习
+    case wrong = 2              // 抽查
     case listenReview = 3       // 计划——听力
     case normalReview = 4       // 计划——复习
-    case wrong = 2              // 抽查
+    case aiReview = 5           // 智能复习
 }
 
 
