@@ -179,12 +179,14 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     private func sendSMS() {
+        self.startCountingDown()
+        self.authCodeTextField.becomeFirstResponder()
+        
         let request = YXRegisterAndLoginRequest.sendSms(phoneNumber: phoneNumberTextField.text ?? "", loginType: "login", SlidingVerificationCode: slidingVerificationCode)
         YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { (response) in
             guard let slidingVerificationCodeModel = response.data else { return }
             
             if slidingVerificationCodeModel.isSuccessSendSms == 1 {
-                self.startCountingDown()
                 self.authCodeTextField.becomeFirstResponder()
 
             } else if slidingVerificationCodeModel.shouldShowSlidingVerification == 1 {

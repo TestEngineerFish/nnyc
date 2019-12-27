@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXWordListView" customModule="YXEDU" customModuleProvider="target">
             <connections>
                 <outlet property="bottomView" destination="u48-m5-JVG" id="o3D-In-R5A"/>
-                <outlet property="bottonViewHeight" destination="Wxl-lp-ZKx" id="bCl-Li-cEZ"/>
+                <outlet property="bottomViewHeight" destination="Wxl-lp-ZKx" id="bCl-Li-cEZ"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="q8w-mW-av2"/>
                 <outlet property="editButton" destination="ZI0-jX-cg2" id="chm-TX-aiD"/>
                 <outlet property="orderButton" destination="uaw-3w-z0S" id="zjF-ar-nBG"/>
