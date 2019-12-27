@@ -40,7 +40,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    private var originWords: [YXWordModel]?
+    var originWords: [YXWordModel]?
     var words: [YXWordModel] = [] {
         didSet {
             if originWords == nil {
@@ -102,7 +102,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    private var originWrongWordSectionData: [[String: [YXWordModel]]]?
+    var originWrongWordSectionData: [[String: [YXWordModel]]]?
     private var wrongWordSectionData: [[String: [YXWordModel]]]?
     
     var orderType: YXWordListOrderType = .default {

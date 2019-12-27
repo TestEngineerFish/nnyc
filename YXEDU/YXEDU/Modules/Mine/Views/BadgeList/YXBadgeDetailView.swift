@@ -60,6 +60,8 @@ class YXBadgeDetailView: UIView {
                 let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: time))
                 descriptionLabel.text = "已获得：\(dateString)"
             }
+            
+            completedDescriptionLabel.text = badge.description
 
             backgroundImageView.image = #imageLiteral(resourceName: "badgeCompletedBackground")
             completedImageView.isHidden = false
@@ -74,6 +76,8 @@ class YXBadgeDetailView: UIView {
                 badgeImageView.sd_setImage(with: URL(string: imageOfIncompletedStatus), completed: nil)
             }
             
+            descriptionLabel.text = badge.description
+
             if let currentProgress = badge.currentProgress, let totalProgress = badge.totalProgress {
                 progressBar.setProgress(Float(currentProgress / totalProgress), animated: true)
                 currentProgressLabel.text = "\(currentProgress)"

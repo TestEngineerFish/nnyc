@@ -113,7 +113,32 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     
                     for index in sordedIndex {
                         self.wordListViews[2]?.words.remove(at: index)
-                        self.wordListViews[2]?.tableView.reloadData()
+                    }
+                    
+                    if let words = self.wordListViews[2]?.words, let originWords = self.wordListViews[2]?.originWords {
+                        if originWords.count != words.count {
+                            var differentIndexs: [Int] = []
+                            
+                            for index in 0..<originWords.count {
+                                var differentIndex: Int? = index
+
+                                for word in words {
+                                    if word.wordId == originWords[index].wordId {
+                                        differentIndex = nil
+                                        break
+                                    }
+                                }
+                                
+                                if let index = differentIndex {
+                                    differentIndexs.append(index)
+                                }
+                            }
+                            
+                            differentIndexs.sort() { $0 > $1 }
+                            for index in differentIndexs {
+                                self.wordListViews[2]?.originWords!.remove(at: index)
+                            }
+                        }
                     }
                 }
                 
@@ -126,7 +151,37 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     
                     for index in sordedIndex {
                         self.wordListViews[3]?.wrongWordList?.familiarList!.remove(at: index)
-                        self.wordListViews[3]?.tableView.reloadData()
+                    }
+                    
+                    if let wrongWordList = self.wordListViews[3]?.wrongWordList, let familiarList = wrongWordList.familiarList, let originWrongWordSectionData = self.wordListViews[3]?.originWrongWordSectionData {
+                        for index in 0..<originWrongWordSectionData.count {
+                            guard let key = originWrongWordSectionData[index].keys.first, key.contains("熟识的单词"), var words = originWrongWordSectionData[index].values.first else { continue }
+                            if familiarList.count != words.count {
+                                var differentIndexs: [Int] = []
+                                
+                                for index in 0..<words.count {
+                                    var differentIndex: Int? = index
+
+                                    for word in familiarList {
+                                        if word.wordId == words[index].wordId {
+                                            differentIndex = nil
+                                            break
+                                        }
+                                    }
+                                    
+                                    if let index = differentIndex {
+                                        differentIndexs.append(index)
+                                    }
+                                }
+                                
+                                differentIndexs.sort() { $0 > $1 }
+                                for index in differentIndexs {
+                                    words.remove(at: index)
+                                }
+                                
+                                self.wordListViews[3]?.originWrongWordSectionData?[index] = [key: words]
+                            }
+                        }
                     }
                 }
                 
