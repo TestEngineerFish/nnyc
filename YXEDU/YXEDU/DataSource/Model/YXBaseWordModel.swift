@@ -47,7 +47,9 @@ protocol YXBaseWordModel: Mappable {
     
     // 语法详解
     var detailedSyntaxs: [YXWordDetailedSyntaxModel]? {set get}
-
+    // Matrix
+    var column: Int {set get}
+    var row: Int    {set get}
     // 同反义词
     var synonyms: [String]? {set get}
     var antonyms: [String]? {set get}
@@ -92,6 +94,10 @@ extension YXBaseWordModel {
     // 语法详解
     var detailedSyntaxs: [YXWordDetailedSyntaxModel]? {set{} get{return nil}}
 
+    // Matrix
+    var column: Int {set{} get{return 0}}
+    var row: Int    {set{} get{return 0}}
+
     // 同反义词
     var synonyms: [String]? {set{} get{return nil}}
     var antonyms: [String]? {set{} get{return nil}}
@@ -124,6 +130,8 @@ extension YXBaseWordModel {
         antonyms                <- map["antonym"]
         bookId                  <- map["book_id"]
         unitId                  <- map["unit_id"]
+        column                  <- map["column"]
+        row                     <- map["row"]
     }
     
     ///根据本地设置，获取音标
@@ -142,7 +150,9 @@ extension YXBaseWordModel {
     
     var meaning: String? {
         set {
-            partOfSpeechAndMeanings?[0].meaning = newValue
+            if !(partOfSpeechAndMeanings?.isEmpty ?? false) {
+                partOfSpeechAndMeanings?[0].meaning = newValue
+            }
         }
         
         get {

@@ -81,14 +81,14 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
         self.imageView?.layer.cornerRadius = 3.78
         self.imageView?.backgroundColor = UIColor.orange1
         self.addSubview(imageView!)
-        if let urlStr = self.exerciseModel.question?.imageUrl {
+        if let urlStr = self.exerciseModel.word?.imageUrl {
             self.imageView?.showImage(with: urlStr)
         }
     }
 
     func initAudioPlayerView() {
         self.audioPlayerView = YXAudioPlayerView()
-        self.audioPlayerView?.urlStr = self.exerciseModel.question?.voice
+        self.audioPlayerView?.urlStr = self.exerciseModel.word?.voice
         self.addSubview(audioPlayerView!)
     }
 

@@ -23,7 +23,7 @@ class YXChineseFillConnectionLetterQuestionView: YXBaseQuestionView {
 
     override func bindData() {
         super.bindData()
-        guard let property = self.exerciseModel.question?.partOfSpeech, let meaning = self.exerciseModel.question?.meaning else {
+        guard let property = self.exerciseModel.word?.partOfSpeech, let meaning = self.exerciseModel.word?.meaning else {
             return
         }
         self.titleLabel?.text = property + meaning

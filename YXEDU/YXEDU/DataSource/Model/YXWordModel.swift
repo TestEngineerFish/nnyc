@@ -51,10 +51,6 @@ struct YXWordModel: YXBaseWordModel {
     var synonyms: [String]?
     var antonyms: [String]?
     
-    // Matrix
-    var column: Int = 0
-    var row: Int = 0
-    
     // 是否是综合词
     var isComplexWord: Int?
     
@@ -63,7 +59,9 @@ struct YXWordModel: YXBaseWordModel {
     
     // 是否被選中
     var isSelected = false
-    
+
+    var column: Int = 0
+    var row: Int = 0
     init() {}
     
     init?(map: Map) {
