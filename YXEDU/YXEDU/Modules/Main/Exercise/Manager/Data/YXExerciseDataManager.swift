@@ -83,12 +83,13 @@ class YXExerciseDataManager: NSObject {
     /// 加载本地未学完的关卡数据
     func fetchLocalExerciseModels() {
         
-        let bau = progressManager.fetchBookIdAndUnitId()
-        self.bookId = bau.0
-        self.unitId = bau.1
-        progressManager.bookId = self.bookId
-        progressManager.unitId = self.unitId        
-        
+        if progressManager.dataType != .base {
+            let bau = progressManager.fetchBookIdAndUnitId()
+            self.bookId = bau.0
+            self.unitId = bau.1
+            progressManager.bookId = self.bookId
+            progressManager.unitId = self.unitId
+        }
         
         let data = progressManager.loadLocalExerciseModels()
         newExerciseArray = data.0

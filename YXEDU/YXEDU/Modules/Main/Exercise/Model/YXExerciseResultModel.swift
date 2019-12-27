@@ -22,8 +22,9 @@ struct YXExerciseResultModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        type <- (map[""], YXExerciseDataTypeTransform())
+        type <- (map["review_type"], YXExerciseDataTypeTransform())
         bookId <- map["book_id"]
+        unitId <- map["unit_id"]
         newWordIds <- map["new_word_list"]
         reviewWordIds <- map["review_word_list"]
         steps <- map["step_list"]

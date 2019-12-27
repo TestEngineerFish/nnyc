@@ -122,11 +122,13 @@
     private func initManager() {
         dataManager = YXExerciseDataManager()
         
-        dataManager.bookId = bookId
-        dataManager.unitId = unitId
-        
-        dataManager.progressManager.bookId = bookId
-        dataManager.progressManager.unitId = unitId
+        if dataType == .base {
+            dataManager.bookId = bookId
+            dataManager.unitId = unitId
+            
+            dataManager.progressManager.bookId = bookId
+            dataManager.progressManager.unitId = unitId
+        }
         
         dataManager.progressManager.planId = planId
         dataManager.progressManager.dataType = dataType
