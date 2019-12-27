@@ -50,7 +50,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     deinit {

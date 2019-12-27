@@ -95,7 +95,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
