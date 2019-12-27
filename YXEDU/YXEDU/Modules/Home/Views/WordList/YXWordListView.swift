@@ -10,12 +10,9 @@ import UIKit
 
 class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     
-    var orderClosure: ((_ orderType: YXWordListOrderType) -> Void)?
     var editClosure: (() -> Void)?
     var showWordDetialClosure: ((_ wordId: Int, _ isComplexWord: Int) -> Void)?
     var startReviewClosure: (() -> Void)?
-
-    var isWrongWordList = false
     
     var shouldShowEditButton = false {
         didSet {
@@ -63,6 +60,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    var isWrongWordList = false
     var wrongWordList: YXWrongWordListModel? {
         didSet {
             wrongWordSectionData = []
@@ -86,7 +84,9 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 wordsCount = wordsCount + reviewListCount
             }
             
-            originWrongWordSectionData = wrongWordSectionData
+            if originWrongWordSectionData == nil {
+                originWrongWordSectionData = wrongWordSectionData
+            }
             
             if wordsCount == 0 {
                 topViewHeight.constant = 0
@@ -115,37 +115,59 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                     words = originWords
                 }
                 
-                if let originWrongWordSectionData = originWrongWordSectionData {
-                    wrongWordSectionData = originWrongWordSectionData
+                if let data = originWrongWordSectionData {
+                    for index in 0..<data.count {
+                        guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
+                        if key.contains("熟识的单词") {
+                            wrongWordList?.familiarList = words
+                            
+                        } else if key.contains("最近错词") {
+                            wrongWordList?.recentWrongList = words
+
+                        } else if key.contains("待复习错词") {
+                            wrongWordList?.reviewList = words
+                        }
+                    }
                 }
-                break
                 
             case .az:
                 if let data = wrongWordSectionData {
                     for index in 0..<data.count {
                         guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
-                        wrongWordSectionData?[index] = [key: atoz(words: words)]
+                        if key.contains("熟识的单词") {
+                            wrongWordList?.familiarList = atoz(words: words)
+                            
+                        } else if key.contains("最近错词") {
+                            wrongWordList?.recentWrongList = atoz(words: words)
+
+                        } else if key.contains("待复习错词") {
+                            wrongWordList?.reviewList = atoz(words: words)
+                        }
                     }
                     
                 } else {
                     words = atoz(words: words)
                 }
-                break
 
             case .za:
                 if let data = wrongWordSectionData {
                     for index in 0..<data.count {
                         guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
-                        wrongWordSectionData?[index] = [key: ztoa(words: words)]
+                        if key.contains("熟识的单词") {
+                            wrongWordList?.familiarList = ztoa(words: words)
+                            
+                        } else if key.contains("最近错词") {
+                            wrongWordList?.recentWrongList = ztoa(words: words)
+
+                        } else if key.contains("待复习错词") {
+                            wrongWordList?.reviewList = ztoa(words: words)
+                        }
                     }
                     
                 } else {
                     words = ztoa(words: words)
                 }
-                break
             }
-            
-            tableView.reloadData()
         }
     }
 
@@ -164,7 +186,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         let view = YXWordListOrderView(frame: CGRect(x: screenWidth - orderButtonDistance.constant - 120, y: 44, width: 120, height: 120), orderType: orderType)
         view.orderClosure = { type in
             self.orderType = type
-            self.orderClosure?(type)
         }
         
         self.addSubview(view)
