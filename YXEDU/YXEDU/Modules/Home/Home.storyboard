@@ -405,7 +405,7 @@
                         <viewLayoutGuide key="safeArea" id="iDo-k0-cvx"/>
                     </view>
                     <navigationItem key="navigationItem" id="M2E-eE-5Jo">
-                        <barButtonItem key="backBarButtonItem" title=" " id="EAK-EO-eoG"/>
+                        <barButtonItem key="backBarButtonItem" id="EAK-EO-eoG"/>
                     </navigationItem>
                     <connections>
                         <outlet property="bookNameButton" destination="2F3-bO-dki" id="fNy-kV-ZJ4"/>
@@ -1222,6 +1222,6 @@
         <image name="unitIndicator" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kVR-sK-4gc"/>
+        <segue reference="CTN-wc-He9"/>
     </inferredMetricsTieBreakers>
 </document>

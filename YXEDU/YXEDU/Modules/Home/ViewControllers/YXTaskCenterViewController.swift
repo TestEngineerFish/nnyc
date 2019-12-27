@@ -28,7 +28,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     @IBAction func tapQuestionIcon(_ sender: UIBarButtonItem) {
-        
+        YXAlertWebView.share.show("http://www.baidu.com")
     }
     
     @IBAction func punchIn(_ sender: Any) {

@@ -13,25 +13,26 @@
             <objects>
                 <viewController storyboardIdentifier="review" id="roF-6T-5ZF" customClass="YXReviewViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vJZ-VS-sFH">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="rmJ-ZG-y4T"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xqM-0V-eZY"/>
+                    <navigationItem key="navigationItem" id="1aT-Rw-bu4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZId-81-GE5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-328" y="183"/>
+            <point key="canvasLocation" x="-499" y="183"/>
         </scene>
         <!--复习-->
         <scene sceneID="2QG-Ei-65x">
             <objects>
                 <navigationController id="fls-3p-mHj" customClass="YXNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="复习" image="tabReview" selectedImage="tabReviewSelected" id="x5m-BG-ldx"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MeM-hC-B8c">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" shadowImage="nil" id="MeM-hC-B8c">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                     </navigationBar>
                     <connections>
                         <segue destination="roF-6T-5ZF" kind="relationship" relationship="rootViewController" id="bec-R9-89x"/>
@@ -43,6 +44,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="nil" width="16" height="16"/>
         <image name="tabReview" width="22" height="22"/>
         <image name="tabReviewSelected" width="22" height="22"/>
     </resources>

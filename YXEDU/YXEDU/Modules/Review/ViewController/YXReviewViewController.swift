@@ -13,10 +13,6 @@ class YXReviewViewController: YXTableViewController {
     var headerView = YXReviewHeaderView()
     var footerView = YXReviewPlanEmptyView()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
@@ -24,6 +20,17 @@ class YXReviewViewController: YXTableViewController {
         self.configTableView()
         
         self.headerBeginRefreshing()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewWillLayoutSubviews() {
