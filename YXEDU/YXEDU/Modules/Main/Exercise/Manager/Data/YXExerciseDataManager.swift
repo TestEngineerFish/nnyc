@@ -10,10 +10,10 @@ import UIKit
 import ObjectMapper
 
 enum YXExerciseDataType: Int {
-    case normal = 1             // 基础学习
+    case base = 1               // 基础学习
     case wrong = 2              // 抽查
-    case listenReview = 3       // 计划——听力
-    case normalReview = 4       // 计划——复习
+    case planListenReview = 3   // 计划——听力复习
+    case planReview = 4         // 计划——复习
     case aiReview = 5           // 智能复习
 }
 
@@ -27,7 +27,7 @@ enum YXExerciseDataStatus: Int {
 /// 练习的数据管理器
 class YXExerciseDataManager: NSObject {
     /// 哪本书，哪个单元
-    public var bookId: Int = 0, unitId: Int = 0
+    public var bookId: Int?, unitId: Int?
     /// 进度管理器
     public var progressManager: YXExcerciseProgressManager!
     
@@ -54,14 +54,15 @@ class YXExerciseDataManager: NSObject {
     var optionManager: YXExerciseOptionManager!
     
     
-    init(bookId: Int, unitId: Int) {
+    override init() {
         super.init()
-        self.bookId     = bookId
-        self.unitId     = unitId
-        
         dao             = YXWordBookDaoImpl()
         optionManager   = YXExerciseOptionManager()
-        progressManager = YXExcerciseProgressManager(bookId: bookId, unitId: unitId)
+        progressManager = YXExcerciseProgressManager()
+                
+//        let data = progressManager.fetchBookIdAndUnitId()
+//        self.bookId = data.0
+//        self.unitId = data.1
     }
     
     
@@ -81,6 +82,14 @@ class YXExerciseDataManager: NSObject {
     
     /// 加载本地未学完的关卡数据
     func fetchLocalExerciseModels() {
+        
+        let bau = progressManager.fetchBookIdAndUnitId()
+        self.bookId = bau.0
+        self.unitId = bau.1
+        progressManager.bookId = self.bookId
+        progressManager.unitId = self.unitId        
+        
+        
         let data = progressManager.loadLocalExerciseModels()
         newExerciseArray = data.0
         reviewWordArray = data.1
@@ -234,9 +243,10 @@ class YXExerciseDataManager: NSObject {
                 
                 var report = YXExerciseReportModel()
                 report.wordId = word.wordId
-                report.bookId = e?.word?.bookId ?? 0
-                report.unitId = e?.word?.unitId ?? 0
+                report.bookId = self.bookId
+                report.unitId = self.unitId
                 report.score  = progressManager.fetchScore(wordId: word.wordId)
+                report.errorCount = progressManager.fetchErrorCount(wordId: word.wordId)
                 report.result = YXExerciseReportModel.ResultModel()
                 
                 map[word.wordId]  = report

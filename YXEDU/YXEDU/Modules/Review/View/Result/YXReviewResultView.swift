@@ -226,9 +226,9 @@ class YXReviewResultView: YXTopWindowView {
         switch type {
         case .aiReview:
             return .aiReviewReuslt
-        case .listenReview:
+        case .planListenReview:
             return .listenReviewResult
-        case .normalReview:
+        case .planReview:
             return .planReviewResult
         case .wrong:
             return .aiReviewReuslt

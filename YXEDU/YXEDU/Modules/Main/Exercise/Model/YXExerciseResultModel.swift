@@ -11,7 +11,7 @@ import ObjectMapper
 
 /// 当天学习数据总j模型
 struct YXExerciseResultModel: Mappable {
-    var type: YXExerciseDataType = .normal
+    var type: YXExerciseDataType = .base
     var bookId: Int?
     var unitId: Int?
     var newWordIds: [Int]?
@@ -118,7 +118,7 @@ struct YXExerciseDataTypeTransform: TransformType {
         if let v = value as? Int, let state = YXExerciseDataType(rawValue: v) {
             return state
         }
-        return .normal
+        return .base
     }
     
     func transformToJSON(_ value: YXExerciseDataType?) -> Int? {

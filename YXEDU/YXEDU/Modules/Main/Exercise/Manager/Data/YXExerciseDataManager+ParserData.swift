@@ -18,13 +18,23 @@ extension YXExerciseDataManager {
             dataStatus = .empty
         }
         
+        // 为base时进入就带过来了
+        if progressManager.dataType != .base {
+            self.bookId = result?.bookId
+            self.unitId = result?.unitId
+            
+            progressManager.bookId = self.bookId
+            progressManager.unitId = self.unitId
+        }
+        
         self.processNewWord(result: result)
         self.processReviewWord(result: result)
         
         // 处理练习答案选项
         optionManager.initData(newArray: newExerciseArray, reviewArray: self.reviewWords())
-        
+                        
         // 处理进度状态
+
         progressManager.initProgressStatus(newWordIds: result?.newWordIds, reviewWordIds: result?.reviewWordIds)
         
         // 保存数据

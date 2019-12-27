@@ -46,7 +46,7 @@ extension YXExerciseViewController {
                 self.dataManager.progressManager.completionReport()
                 
                 switch self.dataType {
-                case .normal:
+                case .base:
                     self.processBaseExerciseResult(newCount: progress.0.count, reviewCount: progress.1.count)
                 default:
                     self.processReviewResult()

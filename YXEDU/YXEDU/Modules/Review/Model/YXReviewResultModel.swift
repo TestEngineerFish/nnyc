@@ -14,7 +14,7 @@ struct YXReviewResultModel: Mappable {
     var processStatus: Bool = false
     
     /// 学习类型
-    var type: YXExerciseDataType = .normal
+    var type: YXExerciseDataType = .base
     
     var planName: String?
     var allWordNum: Int = 0

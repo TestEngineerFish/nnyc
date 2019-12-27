@@ -60,8 +60,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YYCache.set(Date(), forKey: "LastStoredDate")
 
             let vc = YXExerciseViewController()
-            vc.bookId = homeModel?.bookId ?? 0
-            vc.unitId = homeModel?.unitId ?? 0
+            vc.bookId = homeModel?.bookId
+            vc.unitId = homeModel?.unitId
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }

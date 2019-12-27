@@ -132,7 +132,7 @@ class YXLearnMapViewController: UIViewController {
             print("学习新单元成功")
             YRRouter.popViewController(false)
             let vc = YXExerciseViewController()
-            vc.dataType = .normal
+            vc.dataType = .base
             vc.bookId   = bookId
             vc.unitId   = unitId
             vc.hidesBottomBarWhenPushed = true

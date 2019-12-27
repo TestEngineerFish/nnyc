@@ -20,6 +20,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubView()
+        self.bindProperty()
         self.fetchDetailData()
     }
     

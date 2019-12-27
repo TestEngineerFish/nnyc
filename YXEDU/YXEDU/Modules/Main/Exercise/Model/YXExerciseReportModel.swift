@@ -12,8 +12,8 @@ import ObjectMapper
 struct YXExerciseReportModel: Mappable {
     
     var wordId: Int = -1
-    var bookId: Int = -1
-    var unitId: Int = -1
+    var bookId: Int?
+    var unitId: Int?
     var score: Int = 0
     var errorCount: Int = 0
     var result: ResultModel?
@@ -31,7 +31,7 @@ struct YXExerciseReportModel: Mappable {
         unitId   <- map["unit_id"]
         score   <- map["score"]
         errorCount  <- map["error_count"]
-        result  <- map["result"]        
+        result  <- map["result"]
     }
     
     

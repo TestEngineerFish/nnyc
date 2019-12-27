@@ -176,7 +176,7 @@ extension YXReviewViewController {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.normalReview.rawValue], animated: true)
         
         let vc = YXExerciseViewController()
-        vc.dataType = .normalReview
+        vc.dataType = .planReview
         vc.planId = planId
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
@@ -188,7 +188,7 @@ extension YXReviewViewController {
 //        YRRouter.openURL(url, query: nil, animated: true)
         
         let vc = YXExerciseViewController()
-        vc.dataType = .listenReview
+        vc.dataType = .planListenReview
         vc.planId = planId
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)

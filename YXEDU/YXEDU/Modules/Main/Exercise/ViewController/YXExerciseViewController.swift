@@ -19,10 +19,11 @@
  /// 练习模块，主控制器
  class YXExerciseViewController: YXViewController {
     
-    public var bookId: Int = 0
-    public var unitId: Int = 0
-    public var dataType: YXExerciseDataType = .normal
+    // 基础学习时，必须要传 bookId和unitId，要缓存进度
+    public var bookId: Int?
+    public var unitId: Int?
     public var planId: Int?
+    public var dataType: YXExerciseDataType = .base
     
     // 数据管理器
     public var dataManager: YXExerciseDataManager!
@@ -119,10 +120,19 @@
     }
     
     private func initManager() {
-        dataManager = YXExerciseDataManager(bookId: bookId, unitId: unitId)
+        dataManager = YXExerciseDataManager()
         
+        dataManager.bookId = bookId
+        dataManager.unitId = unitId
         
-        var array: [YXExerciseDataType] = [.normal, .aiReview, .listenReview, .normalReview, .wrong]
+        dataManager.progressManager.bookId = bookId
+        dataManager.progressManager.unitId = unitId
+        
+        dataManager.progressManager.planId = planId
+        dataManager.progressManager.dataType = dataType
+        
+                        
+        var array: [YXExerciseDataType] = [.base, .aiReview, .planListenReview, .planReview, .wrong]
         array = []
         for type in array {
             dataManager.progressManager.dataType = type
@@ -130,8 +140,7 @@
             dataManager.progressManager.completionReport()
         }
         
-        dataManager.progressManager.dataType = self.dataType
-        dataManager.progressManager.planId = self.planId
+
     }
     
     /// 开始学习

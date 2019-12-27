@@ -11,9 +11,11 @@ import ObjectMapper
 /// 练习进度管理器
 class YXExcerciseProgressManager: NSObject {
     
-    public var bookId: Int = 0
-    public var unitId: Int = 0
-    public var dataType: YXExerciseDataType = .normal
+//    static var`default` = YXExcerciseProgressManager()
+    
+    public var bookId: Int? { didSet { updateBookId() } }
+    public var unitId: Int? { didSet { updateUnitId() } }
+    public var dataType: YXExerciseDataType = .base
     public var planId: Int?
     
     /// 本地存储Key
@@ -23,6 +25,9 @@ class YXExcerciseProgressManager: NSObject {
         case current = "current.txt"
         case previous = "previous.txt"
         
+        case bookId = "Book_Id"
+        case unitId = "Unit_Id"
+        
         case currentTurnIndex = "Exercise_Current_Turn"
         case report = "Exercise_Report_Status"
         case completion = "Exercise_Completion_Status"
@@ -31,20 +36,30 @@ class YXExcerciseProgressManager: NSObject {
         case reviewWordIds = "Review_Word_Id_List"
     
         case score = "Exercise_Score"
+        case errorCount = "Exercise_Error_Count"
         case skipNewWord = "Skip_New_Word"
-        case showGuideView = "a"
     }
     
-    
+
     override init() {
         super.init()
     }
     
-    init(bookId: Int, unitId: Int) {
-        super.init()
-        self.bookId = bookId
-        self.unitId = unitId        
-    }
+//    init(bookId: Int?, unitId: Int?) {
+//        super.init()
+//
+//        self.bookId = bookId
+//        self.unitId = unitId
+//
+//        // 如果传过来是空的，就从本地获取
+//        let data = fetchBookIdAndUnitId()
+//        if self.bookId == nil {
+//            self.bookId = data.0
+//        }
+//        if self.unitId == nil {
+//            self.unitId = data.1
+//        }
+//    }
     
     
     //MARK: - Get
@@ -103,11 +118,31 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
+    func fetchErrorCount(wordId: Int) -> Int {
+        guard let map = YYCache.object(forKey: key(.errorCount)) as? [Int : Int]  else {
+            return 0
+        }
+        return map[wordId] ?? 0
+    }
+    
+    
     func fetchScore(wordId: Int) -> Int {
         guard let map = YYCache.object(forKey: key(.score)) as? [Int : Int]  else {
             return 10
         }
         return map[wordId] ?? 10
+    }
+    
+    
+    func fetchBookIdAndUnitId() -> (Int?, Int?) {
+        var bookId: Int?, unitId: Int?
+        if let b = YYCache.object(forKey: key(.bookId)) as? Int {
+            bookId = b
+        }
+        if let u = YYCache.object(forKey: key(.unitId)) as? Int {
+            unitId = u
+        }
+        return (bookId, unitId)
     }
     
     
@@ -181,14 +216,22 @@ class YXExcerciseProgressManager: NSObject {
     
     
     func updateScore(wordId: Int, score: Int) {
-        
         if var map = YYCache.object(forKey: key(.score)) as? [Int : Int] {
             map[wordId] = score
             YYCache.set(map, forKey: key(.score))
         } else {
             YYCache.set([wordId : score], forKey: key(.score))
         }
-
+    }
+    
+    
+    func updateErrorCount(wordId: Int) {
+        if var map = YYCache.object(forKey: key(.errorCount)) as? [Int : Int] {
+            map[wordId] = (map[wordId] ?? 0) + 1
+            YYCache.set(map, forKey: key(.errorCount))
+        } else {
+            YYCache.set([wordId : 1], forKey: key(.errorCount))
+        }
     }
 
     
@@ -200,6 +243,23 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
+    private func updateBookId() {
+        YYCache.set(bookId, forKey: key(.bookId))
+    }
+
+    private func updateUnitId() {
+        YYCache.set(unitId, forKey: key(.unitId))
+    }
+    
+//    func initBookIdAndUnitId(bookId: Int?, unitId: Int?) {
+//        self.bookId = bookId
+//        self.unitId = unitId
+//
+//        YYCache.set(bookId, forKey: key(.bookId))
+//        YYCache.set(unitId, forKey: key(.unitId))
+//    }
+    
+    
     /// 完成答题
     func completionExercise() {
         YYCache.remove(forKey: key(.completion))
@@ -209,8 +269,11 @@ class YXExcerciseProgressManager: NSObject {
 
     /// 完成上报
     func completionReport() {
+        YYCache.remove(forKey: key(.bookId))
+        YYCache.remove(forKey: key(.unitId))
         YYCache.remove(forKey: key(.report))
         YYCache.remove(forKey: key(.score))
+        YYCache.remove(forKey: key(.errorCount))
         YYCache.remove(forKey: key(.currentTurnIndex))
         YYCache.remove(forKey: key(.newWordIds))
         YYCache.remove(forKey: key(.reviewWordIds))
@@ -226,8 +289,16 @@ class YXExcerciseProgressManager: NSObject {
     
     //MARK: - Private
     private func key(_ key: LocalKey) -> String {
-        let pre = "\(planId ?? 0)_"
-        return pre + "\(dataType.rawValue)_\(bookId)_\(unitId)_\(YXConfigure.shared().uuid ?? "")_" + key.rawValue
+        
+        let bid = bookId == nil ? "b_" :  "\(bookId!)_"
+        let uid = unitId == nil ? "c_" :  "\(unitId!)_"
+        let uuid = YXConfigure.shared().uuid ?? ""
+        let pid = planId == nil ? "a_" :  "\(planId!)_"
+                
+        if dataType == .base {
+            return "\(dataType.rawValue)_\(bid)_\(uid)_\(uuid)_pNull" + key.rawValue
+        }
+        return "\(dataType.rawValue)_bNull_uNull_\(uuid)_\(pid)" + key.rawValue
     }
     
     /// 保持到本地文件
