@@ -25,6 +25,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     private var wrongWordList: YXWrongWordListModel!
     private var orderType: [YXWordListOrderType] = [.default, .default, .default, .default]
 
+    private var wordListView: BPSegmentControllerView!
     private var wordListHeaderViews: [UIView] = {
         var views: [UIView] = []
         
@@ -67,7 +68,6 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         
         return views
     }()
-    private var wordListView: BPSegmentControllerView!
     
     @IBAction func back(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -82,6 +82,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         
         wordListView = BPSegmentControllerView(BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0, firstIndexPath: IndexPath(item: wordListType.rawValue, section: 0)), frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
         wordListView.delegate = self
+        wordListView.reloadData()
         
         self.view.addSubview(wordListView)
     }
@@ -111,7 +112,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 editWordListViewController.editWordListType = .collected
                 editWordListViewController.words = collectedWords ?? []
                 editWordListViewController.redClosure = { indexs in
-                    for index in indexs {
+                    var sordedIndex = indexs
+                    sordedIndex.sort() { $0 > $1 }
+                    
+                    for index in sordedIndex {
                         self.collectedWords.remove(at: index)
                     }
                     
@@ -122,8 +126,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 editWordListViewController.editWordListType = .familiar
                 editWordListViewController.words = wrongWordList?.familiarList ?? []
                 editWordListViewController.redClosure = { indexs in
-                    for index in indexs {
-                        guard let familiarList = self.wrongWordList.familiarList, index < familiarList.count - 1 else { continue }
+                    var sordedIndex = indexs
+                    sordedIndex.sort() { $0 > $1 }
+                    
+                    for index in sordedIndex {                        guard let familiarList = self.wrongWordList.familiarList, index < familiarList.count - 1 else { continue }
                         self.wrongWordList.familiarList!.remove(at: index)
                     }
                     
