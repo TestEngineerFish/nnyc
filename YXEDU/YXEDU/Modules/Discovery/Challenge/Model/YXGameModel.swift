@@ -67,6 +67,8 @@ struct YXGameResultModel: Mappable {
     var ranking: Int        = 0
     var questionNumber: Int = 0
     var consumeTime: Double = 0
+    init() {
+    }
 
     init?(map: Map) {}
 

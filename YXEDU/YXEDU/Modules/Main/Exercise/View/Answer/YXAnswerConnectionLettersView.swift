@@ -11,8 +11,12 @@ import UIKit
 struct YXConnectionLettersConfig {
     var itemSize   = CGSize(width: AdaptSize(48), height: AdaptSize(48))
     var itemMargin = AdaptSize(8)
-    var itemBgImage: UIImage?
     var itemFont = UIFont.pfSCRegularFont(withSize: AdaptSize(19.2))
+    var backgroundNormalImage: UIImage?   = nil
+    var backgroundSelectedImage: UIImage? = nil
+    var backgroundErrorImage: UIImage?    = nil
+    var backgroundRightImage: UIImage?    = nil
+    var backgroundDisableImage: UIImage?  = nil
     var backgroundNormalColor   = UIColor.white
     var backgroundSelectedColor = UIColor.orange1
     var backgroundErrorColor    = UIColor.white

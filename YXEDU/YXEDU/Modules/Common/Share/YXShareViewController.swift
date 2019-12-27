@@ -51,7 +51,7 @@ class YXShareViewController: YXViewController {
     }()
 
     var qqImageView: UIImageView = {
-        let imageView = UIImageView()
+        let imageView   = UIImageView()
         imageView.image = UIImage(named: "gameShareQQ")
         imageView.isUserInteractionEnabled = true
         return imageView
@@ -107,6 +107,7 @@ class YXShareViewController: YXViewController {
     var titleString = ""
     var wordsAmount = 0
     var daysAmount  = 0
+    var gameModel: YXGameResultModel?
     var shareType: YXShareType = .challengeResult
 
     override func viewDidLoad() {
@@ -135,7 +136,7 @@ class YXShareViewController: YXViewController {
         case .listenReviewResult:
             self.shareImageView.image = self.createListenReviewShareImage()
         case .challengeResult:
-            self.shareImageView.image = self.createListenReviewShareImage()
+            self.shareImageView.image = self.createChallengeReviewShareImage()
         }
     }
 
@@ -231,15 +232,8 @@ class YXShareViewController: YXViewController {
     private func createLearnResultShareImage() -> UIImage? {
 
         // ---- 数据准备 ----
-//        guard let url = URL(string: self.imageUrlStr) else {
-//            return nil
-//        }
-//        let data = try? Data(contentsOf: url)
-//        guard let _data = data, let backgroundImage = UIImage(data: _data) else {
-//            return nil
-//        }
         let shareBgImage = UIImage(named: "learnShareBgImage")
-        let iconImage = UIImage(named: "gameShareLogo")
+        let iconImage    = UIImage(named: "gameShareLogo")
         let titleLabel: UILabel = {
             let label = UILabel()
             label.text          = "我在念念有词背单词"
@@ -303,7 +297,7 @@ class YXShareViewController: YXViewController {
 
     /// 创建听写复习打卡分享页面
     private func createListenReviewShareImage() -> UIImage? {
-        let logoImage = UIImage(named: "gameShareLogo2")
+        let logoImage    = UIImage(named: "gameShareLogo2")
         let shareBgImage = UIImage(named: "ListenReviewShareBgImage")
         let aboveLabel: UILabel = {
             let label = UILabel()
@@ -370,7 +364,7 @@ class YXShareViewController: YXViewController {
 
     /// 创建听写复习打卡分享页面
     private func createAIReviewShareImage() -> UIImage? {
-        let logoImage = UIImage(named: "gameShareLogo2")
+        let logoImage    = UIImage(named: "gameShareLogo2")
         let shareBgImage = UIImage(named: "reviewAIShareBgImage")
         let aboveLabel: UILabel = {
             let label = UILabel()
@@ -437,7 +431,7 @@ class YXShareViewController: YXViewController {
 
     /// 创建听写复习打卡分享页面
     private func createPlanReviewShareImage() -> UIImage? {
-        let logoImage = UIImage(named: "gameShareLogo2")
+        let logoImage    = UIImage(named: "gameShareLogo2")
         let shareBgImage = UIImage(named: "reviewPlanShareBgImage")
         let aboveLabel: UILabel = {
             let label = UILabel()
@@ -496,6 +490,78 @@ class YXShareViewController: YXViewController {
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
         qrcordImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
         qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
+        guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
+            return nil
+        }
+        return shareImage
+    }
+
+    /// 创建挑战打卡分享页面
+    private func createChallengeReviewShareImage() -> UIImage? {
+        guard let model = self.gameModel else {
+            return nil
+        }
+        let shareBgImage = UIImage(named: "challengeShareBgImage")
+        let contentImage = UIImage(named: "reviewShareContent")
+        let flagImage    = UIImage(named: "flagImage")
+        let rankTitleLabel: UILabel = {
+            let label = UILabel()
+            label.text          = "排名"
+            label.textColor     = UIColor.hex(0xFFD9D9)
+            label.font          = UIFont.regularFont(ofSize: 14)
+            label.textAlignment = .center
+            return label
+        }()
+        let rankLabel: UILabel = {
+            let label = UILabel()
+            label.text          = "\(model.ranking)"
+            label.textColor     = UIColor.white
+            label.font          = UIFont.DINAlternateBold(ofSize: 24)
+            label.textAlignment = .center
+            return label
+        }()
+        let questionAmountLabel: UILabel = {
+            let label = UILabel()
+            let mAttr =
+                NSMutableAttributedString(string: "答对\(model.questionNumber)题", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.regularFont(ofSize: 14)])
+            mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: 18)], range: NSMakeRange(2, "\(model.questionNumber)".count))
+            label.attributedText = mAttr
+            label.textAlignment  = .center
+            return label
+        }()
+        let consumeTimeLabel: UILabel = {
+            let label = UILabel()
+            let mAttr =
+                NSMutableAttributedString(string: "用时\(model.consumeTime)秒", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.regularFont(ofSize: 14)])
+            mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: 18)], range: NSMakeRange(2, "\(model.consumeTime)".count))
+            label.attributedText = mAttr
+            label.textAlignment  = .center
+            return label
+        }()
+        let qrcordImage = UIImage(named: "shareQRCode")
+        let qrcordLabel: UILabel = {
+            let label = UILabel()
+            label.text          = "扫码下载  智能背词"
+            label.textColor     = UIColor.black2
+            label.font          = UIFont.regularFont(ofSize: 10)
+            label.textAlignment = .center
+            return label
+        }()
+        let treeBranchImage = UIImage(named: "treeBranchImage")
+
+        // ---- 内容绘制 ----
+        let imageSize = CGSize(width: 375, height: 514)
+        UIGraphicsBeginImageContext(imageSize)
+        shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 513))
+        contentImage?.draw(in: CGRect(x: 0, y: 430, width: 375, height: 83))
+        flagImage?.draw(in: CGRect(x: 28, y: 427, width: 75, height: 77))
+        rankTitleLabel.drawText(in: CGRect(x: 54, y: 436, width: 29, height: 20))
+        rankLabel.drawText(in: CGRect(x: 45, y: 455, width: 47, height: 28))
+        questionAmountLabel.drawText(in: CGRect(x: 125, y: 449, width: 66, height: 21))
+        consumeTimeLabel.drawText(in: CGRect(x: 125, y: 474, width: 89, height: 21))
+        qrcordImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
+        qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
+        treeBranchImage?.draw(in: CGRect(x: 265, y: 314, width: 110, height: 123))
         guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
             return nil
         }

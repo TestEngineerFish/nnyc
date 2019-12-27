@@ -110,16 +110,16 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             if number > 0 {
                 if let model = self.gameResultMode {
                     self.resultView.showSuccessView(model)
-                }
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
-                    self.resultView.closeView()
-                    YRRouter.popViewController(false)
-                    let shareVC = YXShareViewController()
-                    shareVC.titleString = "挑战分享"
-                    shareVC.shareType   = .challengeResult
-                    shareVC.hidesBottomBarWhenPushed = true
-                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
-
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+                        self.resultView.closeView()
+                        YRRouter.popViewController(false)
+                        let shareVC = YXShareViewController()
+                        shareVC.titleString = "挑战分享"
+                        shareVC.shareType   = .challengeResult
+                        shareVC.gameModel   = model
+                        shareVC.hidesBottomBarWhenPushed = true
+                        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+                    }
                 }
             } else {
                 self.resultView.showFailView {

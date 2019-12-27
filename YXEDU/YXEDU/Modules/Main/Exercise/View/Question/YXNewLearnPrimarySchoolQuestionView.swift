@@ -19,8 +19,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
     var exampleLabel: UILabel = {
         let label = UILabel()
-        label.textColor     = UIColor.black1
-        label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptSize(16))
+        label.numberOfLines = 0
         label.textAlignment = .center
         return label
     }()
@@ -46,16 +45,46 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
         self.titleLabel?.text            = wordModel.word
         self.subTitleLabel?.text         = wordModel.meaning
-        self.exampleLabel.text           = wordModel.example
         self.chineseExampleLabel.text    = wordModel.chineseExample
-//        self.exampleLabel.attributedText = {
-//            guard let attributionStr = (wordModel.example ?? "").html2AttributedString else {
-//                return nil
-//            }
-//            let mAttr = NSMutableAttributedString(attributedString: attributionStr)
-//            mAttr.addAttributes([NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(16)), NSAttributedString.Key.foregroundColor : UIColor.black1], range: NSRange(location: 0, length: attributionStr.length))
-//            return mAttr
-//        }()
+        self.exampleLabel.attributedText = {
+
+            guard let example = wordModel.example else {
+                return nil
+            }
+
+            var newExample   = example
+            var newRangeList = [NSRange]()
+            var examplePattern = ""
+            var wordPattern = ""
+
+            if example.contains("@") {
+                examplePattern = "@[^*]+?@"
+                wordPattern    = "@"
+            } else {
+                examplePattern = "<font[^*]+?font>"
+                wordPattern    = "<[^>]*>"
+            }
+            ///1、提取
+            let htmlRangeList = example.textRegex(pattern: examplePattern)
+            ///2、剔除标签
+            for (index, range) in htmlRangeList.enumerated() {
+                let htmlStr = example.substring(fromIndex: range.location, length: range.length)
+                let word = htmlStr.pregReplace(pattern: wordPattern, with: "")
+                var offset = 0
+                if index > 0 {
+                    offset = example.count - newExample.count
+                }
+                ///3、替换原内容
+                newExample = newExample.pregReplace(pattern: htmlStr, with: word)
+                newRangeList.append(NSRange(location: range.location - offset, length: word.count))
+            }
+
+            let mAttr = NSMutableAttributedString(string: newExample, attributes: [NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(16)), NSAttributedString.Key.foregroundColor : UIColor.black1])
+            newRangeList.forEach { (range) in
+                mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
+            }
+            return mAttr
+        }()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -120,8 +149,9 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     func showExample() {
         self.exampleLabel.isHidden = false
         self.exampleLabel.sizeToFit()
+        let h = self.exampleLabel.text?.textHeight(font: exampleLabel.font, width: screenWidth - AdaptSize(44)) ?? CGFloat.zero
         self.exampleLabel.snp.updateConstraints { (make) in
-            make.height.equalTo(exampleLabel.height)
+            make.height.equalTo(h)
         }
     }
 

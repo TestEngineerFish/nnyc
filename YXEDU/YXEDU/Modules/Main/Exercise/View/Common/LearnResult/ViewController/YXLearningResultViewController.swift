@@ -20,6 +20,7 @@ class YXLearningResultViewController: UIViewController {
 
     var newLearnAmount: Int = 0 // 新学单词数
     var reviewLearnAmount: Int = 0 // 复习单词数量
+    var daysAmount = 0
     var bookId: Int? // 书ID
     var unitId: Int? // 单元ID
 
@@ -174,8 +175,11 @@ class YXLearningResultViewController: UIViewController {
     }
 
     @objc private func punchEvent() {
-        //        let vc = YXLearnMapViewController()
-        //        self.navigationController?.pushViewController(vc, animated: true)
-        //        self.hidesBottomBarWhenPushed = false
+        let vc = YXShareViewController()
+        vc.titleString = "分享学习结果"
+        vc.shareType   = .learnResult
+        vc.wordsAmount = self.newLearnAmount + self.reviewLearnAmount
+        vc.daysAmount  = self.daysAmount
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }

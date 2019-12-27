@@ -81,10 +81,18 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             alertView.leftButton.setTitle("直接挑战", for: .normal)
             alertView.rightOrCenterButton.setTitle("去背单词", for: .normal)
             alertView.cancleClosure = {
-                self.playGame()
+                if userModel.myCoins >= gameInfo.unitCoin {
+                    self.playGame()
+                } else {
+                    let alertView = YXAlertView(type: .normal)
+                    alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
+                    alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
+                    alertView.shouldOnlyShowOneButton = true
+                    alertView.show()
+                }
             }
             alertView.doneClosure = { _ in
-                print("跳转到背单词页面")
+                self.tabBarController?.selectedIndex = 0
             }
             alertView.show()
         case .free:

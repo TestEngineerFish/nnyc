@@ -40,6 +40,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
         let request = YXChallengeRequest.rankedList
         YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
             self.challengeModel = response.data
+            self.customNavigationBar?.title = self.challengeModel?.title
             self.tableView.reloadData()
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")

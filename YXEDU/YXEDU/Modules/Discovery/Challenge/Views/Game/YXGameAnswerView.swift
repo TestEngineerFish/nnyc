@@ -79,7 +79,11 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
         let h = (answerViewSize.height + config.itemMargin) / CGFloat(wordModel.row) - config.itemMargin
         config.itemSize = CGSize(width: w, height: h)
         config.itemFont = UIFont.pfSCMediumFont(withSize: AdaptSize(24))
-        config.itemBgImage = UIImage(named: "gameButtonNormal")
+        config.backgroundNormalImage   = UIImage(named: "gameButtonNormal")
+        config.backgroundSelectedImage = UIImage(named: "gameButtonSelected")
+        config.backgroundErrorImage    = UIImage(named: "gameButtonError")
+        config.backgroundRightImage    = UIImage(named: "gameButtonRight")
+        config.backgroundDisableImage  = UIImage(named: "gameButtonNormal")
         config.backgroundNormalColor   = UIColor.clear
         config.backgroundSelectedColor = UIColor.clear
         config.backgroundErrorColor    = UIColor.clear
@@ -95,11 +99,11 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
         config.textErrorColor          = UIColor.hex(0xD64A29)
         config.textRightColor          = UIColor.hex(0x347E3A)
         config.textDisableColor        = UIColor.hex(0x7F4722)
-        config.showFirstButton  = false
-        config.initButtonStatus = .normal
-        config.showAllRightView = true
-        config.showAllErrorView = true
-        config.resultAnimationTime = 1.0
+        config.showFirstButton         = false
+        config.initButtonStatus        = .normal
+        config.showAllRightView        = true
+        config.showAllErrorView        = true
+        config.resultAnimationTime     = 1.0
         return config
     }
 

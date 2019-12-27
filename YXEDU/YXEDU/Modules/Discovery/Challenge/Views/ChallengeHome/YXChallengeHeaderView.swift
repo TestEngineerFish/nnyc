@@ -110,9 +110,4 @@ class YXChallengeHeaderView: UIView {
             make.size.equalTo(CGSize(width: AdaptSize(73), height: AdaptSize(17)))
         }
     }
-
-    // MARK: ==== Event ====
-    func updateStartButtonStatus(_ type: YXChallengeStatusType) {
-        
-    }
 }

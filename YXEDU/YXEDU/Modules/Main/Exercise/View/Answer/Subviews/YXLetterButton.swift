@@ -47,32 +47,32 @@ class YXLetterButton: UIButton {
                 self.backgroundColor   = config.backgroundNormalColor
                 self.layer.borderColor = config.borderNormalColor.cgColor
                 self.setTitleColor(config.textNormalColor, for: .normal)
-                self.backgroundImageView.image = UIImage(named: "gameButtonNormal")
+                self.backgroundImageView.image = config.backgroundNormalImage
             case .selected:
                 self.isEnabled         = true
                 self.backgroundColor   = config.backgroundSelectedColor
                 self.layer.borderColor = config.borderSelectedColor.cgColor
                 self.setTitleColor(config.textSelectedColor, for: .normal)
-                self.backgroundImageView.image = UIImage(named: "gameButtonSelected")
+                self.backgroundImageView.image = config.backgroundSelectedImage
             case .error:
                 self.isEnabled         = true
                 self.backgroundColor   = config.backgroundErrorColor
                 self.layer.borderColor = config.borderErrorColor.cgColor
                 self.setTitleColor(config.textErrorColor, for: .normal)
-                self.backgroundImageView.image = UIImage(named: "gameButtonError")
+                self.backgroundImageView.image = config.backgroundErrorImage
                 self.layer.showBlowUpAnimation()
             case .right:
                 self.isEnabled         = true
                 self.backgroundColor   = config.backgroundRightColor
                 self.layer.borderColor = config.borderRightColor.cgColor
                 self.setTitleColor(config.textRightColor, for: .normal)
-                self.backgroundImageView.image = UIImage(named: "gameButtonRight")
+                self.backgroundImageView.image = config.backgroundRightImage
             case .disable:
                 self.isEnabled         = false
                 self.backgroundColor   = config.backgroundDisableColor
                 self.layer.borderColor = config.borderDisableColor.cgColor
                 self.setTitleColor(config.textDisableColor, for: .normal)
-                self.backgroundImageView.image = UIImage(named: "gameButtonNormal")
+                self.backgroundImageView.image = config.backgroundDisableImage
             }
         }
     }

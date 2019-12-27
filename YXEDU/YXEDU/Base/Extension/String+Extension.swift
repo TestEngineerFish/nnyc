@@ -168,6 +168,36 @@ public extension String {
         }
         return number
     }
+
+    func pregReplace(pattern: String, with: String,
+                     options: NSRegularExpression.Options = []) -> String {
+        let regex = try! NSRegularExpression(pattern: pattern, options: options)
+        return regex.stringByReplacingMatches(in: self, options: [],
+                                              range: NSMakeRange(0, self.count),
+                                              withTemplate: with)
+    }
+    // 1.匹配纯文本
+    func textRegex(pattern: String) -> [NSRange]{
+
+        //富文本设置
+        var rangeList = [NSRange]()
+        do {
+            // 1.1.创建正则表达式对象
+            let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
+            // 1.2.开始匹配
+            let res = regex.matches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count))
+
+            for checkingRes in res
+            {
+                rangeList.append(checkingRes.range)
+                print("range\(checkingRes.range)")
+            }
+        } catch {
+
+            print(error)
+        }
+        return rangeList
+    }
 }
 
 

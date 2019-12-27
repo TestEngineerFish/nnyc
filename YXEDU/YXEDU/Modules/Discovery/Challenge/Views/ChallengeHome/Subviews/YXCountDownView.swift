@@ -18,8 +18,8 @@ class YXCountDownView: UIView {
     /// - Parameter time: 单位秒
     private func setCountDownView(_ time: Int) {
         let day = 3600 * 24
-        let dayNumber = Int(time) / day
-        let hourNumber  = (Int(time) % day) / 3600
+        let dayNumber    = Int(time) / day
+        let hourNumber   = (Int(time) % day) / 3600
         let minuteNumber = (Int(time) % 3600) / 60
 
         var dayLeft  = "0"

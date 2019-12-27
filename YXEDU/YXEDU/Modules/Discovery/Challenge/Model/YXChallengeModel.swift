@@ -26,6 +26,7 @@ struct YXChallengeModel: Mappable {
     var gameInfo: YXChallengeGameInfo?
     var userModel: YXChallengeUserModel?
     var rankedList: [YXChallengeUserModel] = [] // 排行榜数据列表
+    var title = ""
 
     init?(map: Map) {
     }
@@ -35,6 +36,7 @@ struct YXChallengeModel: Mappable {
         gameInfo    <- map["game_info"]
         userModel   <- map["user_info"]
         rankedList  <- map["list"]
+        title       <- map["title"]
     }
 }
 
@@ -69,7 +71,6 @@ struct YXChallengeGameInfo: Mappable {
 enum YXChallengeResultType: Int {
     case success = 1
     case notInvolved = 2
-//    case notList = 3
 }
 
 struct YXChallengeUserModel: Mappable {
