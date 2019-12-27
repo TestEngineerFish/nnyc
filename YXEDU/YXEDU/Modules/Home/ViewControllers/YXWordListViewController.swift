@@ -283,7 +283,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 self.orderType[3] = type
             }
             
-            wordListView.startReviewClosure = { exerciseResultModel in
+            wordListView.startReviewClosure = {
                 let exerciseViewController = YXExerciseViewController()
                 exerciseViewController.dataType = .wrong
                 self.navigationController?.pushViewController(exerciseViewController, animated: true)

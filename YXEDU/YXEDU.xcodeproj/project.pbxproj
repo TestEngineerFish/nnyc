@@ -150,6 +150,8 @@
 		77322CC723687ABB00EAC8B6 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77322CC323687ABB00EAC8B6 /* libWeChatSDK.a */; };
 		773452CA236A7EFA00801FDD /* YXAccountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */; };
 		773452CC236A7F1A00801FDD /* YXAccountInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */; };
+		773B4C6123B5A3D600E8E395 /* YXBadgeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B4C6023B5A3D600E8E395 /* YXBadgeDetailView.swift */; };
+		773B4C6323B5A3E200E8E395 /* YXBadgeDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 773B4C6223B5A3E200E8E395 /* YXBadgeDetailView.xib */; };
 		7748D15E239F3F4700182611 /* YXWordListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748D15D239F3F4700182611 /* YXWordListRequest.swift */; };
 		7748D161239FB75400182611 /* YXWordDeformationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748D15F239FB75400182611 /* YXWordDeformationsCell.swift */; };
 		7748D162239FB75400182611 /* YXWordDeformationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7748D160239FB75400182611 /* YXWordDeformationsCell.xib */; };
@@ -906,6 +908,8 @@
 		77322CC623687ABB00EAC8B6 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAccountInfoView.swift; sourceTree = "<group>"; };
 		773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAccountInfoView.xib; sourceTree = "<group>"; };
+		773B4C6023B5A3D600E8E395 /* YXBadgeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeDetailView.swift; sourceTree = "<group>"; };
+		773B4C6223B5A3E200E8E395 /* YXBadgeDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXBadgeDetailView.xib; sourceTree = "<group>"; };
 		7748D15D239F3F4700182611 /* YXWordListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordListRequest.swift; sourceTree = "<group>"; };
 		7748D15F239FB75400182611 /* YXWordDeformationsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXWordDeformationsCell.swift; sourceTree = "<group>"; };
 		7748D160239FB75400182611 /* YXWordDeformationsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YXWordDeformationsCell.xib; sourceTree = "<group>"; };
@@ -2672,6 +2676,8 @@
 				77D2777C23B37CEE00AA4BF2 /* YXBadgeListCell.xib */,
 				77D2777F23B37D0B00AA4BF2 /* YXBadgeCell.swift */,
 				77D2778023B37D0B00AA4BF2 /* YXBadgeCell.xib */,
+				773B4C6023B5A3D600E8E395 /* YXBadgeDetailView.swift */,
+				773B4C6223B5A3E200E8E395 /* YXBadgeDetailView.xib */,
 			);
 			path = BadgeList;
 			sourceTree = "<group>";
@@ -5580,6 +5586,7 @@
 				77B7C6F523A77B7A00149ACE /* YXTaskCenterDateCell.xib in Resources */,
 				227C6EEC228A5AA800282EA1 /* iconfont.ttf in Resources */,
 				202709BA21DE3A3000E88457 /* oneDrawgameGuide2@2x.png in Resources */,
+				773B4C6323B5A3E200E8E395 /* YXBadgeDetailView.xib in Resources */,
 				77CCB9B823794CCB004EB781 /* YXWordDetailHeaderView.xib in Resources */,
 				200338DA21B93A25009165DF /* shareBadgeBG@2x.png in Resources */,
 				7709751F239925E00071A779 /* YXWordDetailFeaturedSectionFooterView.xib in Resources */,
@@ -6350,6 +6357,7 @@
 				EE5E016C232754FA00655654 /* YXLog.m in Sources */,
 				EE5EF255232740B800655654 /* UIView+Layout.m in Sources */,
 				224352D123A2593600F278E6 /* YXChallengeRankCell.swift in Sources */,
+				773B4C6123B5A3D600E8E395 /* YXBadgeDetailView.swift in Sources */,
 				EE5E023C232756C000655654 /* Colours.m in Sources */,
 				2202D27523A9166F00882E5D /* YXGameLaunchView.swift in Sources */,
 				EE5E008A23274FEB00655654 /* YXCalendarStudyDayData.m in Sources */,

@@ -25,13 +25,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4l6-Zn-9mj">
-                        <rect key="frame" x="115" y="98" width="12.5" height="16"/>
+                        <rect key="frame" x="115" y="100" width="12.5" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j6j-Zs-6gf">
-                        <rect key="frame" x="115.5" y="114" width="11.5" height="14.5"/>
+                        <rect key="frame" x="115.5" y="124" width="11.5" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -40,9 +40,9 @@
             </view>
             <constraints>
                 <constraint firstItem="glh-Oe-Fuz" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="20" id="3IJ-mJ-XVt"/>
-                <constraint firstItem="j6j-Zs-6gf" firstAttribute="top" secondItem="4l6-Zn-9mj" secondAttribute="bottom" id="HdH-tM-cQd"/>
+                <constraint firstItem="j6j-Zs-6gf" firstAttribute="top" secondItem="4l6-Zn-9mj" secondAttribute="bottom" constant="8" id="HdH-tM-cQd"/>
                 <constraint firstItem="glh-Oe-Fuz" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="LV9-PZ-LEV"/>
-                <constraint firstItem="4l6-Zn-9mj" firstAttribute="top" secondItem="glh-Oe-Fuz" secondAttribute="bottom" constant="6" id="dxz-fG-kdN"/>
+                <constraint firstItem="4l6-Zn-9mj" firstAttribute="top" secondItem="glh-Oe-Fuz" secondAttribute="bottom" constant="8" id="dxz-fG-kdN"/>
                 <constraint firstItem="4l6-Zn-9mj" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="iIL-i0-Ysg"/>
                 <constraint firstItem="j6j-Zs-6gf" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="mK4-Oh-YOO"/>
             </constraints>

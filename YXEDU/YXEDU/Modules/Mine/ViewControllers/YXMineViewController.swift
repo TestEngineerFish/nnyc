@@ -156,7 +156,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 for b in 0..<badges.count {
                     let badge = badges[b]
                     
-                    if badge.finishDate != Date(timeIntervalSince1970: 0) {
+                    if badge.finishDateTimeInterval != nil {
                         earnedBadgeCount = earnedBadgeCount + 1
                     }
                         
@@ -168,7 +168,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.totalMedalLabel.text = "/\(self.badges.count)"
             
             self.badges.sort { (one, two) -> Bool in
-                return one.finishDate > two.finishDate
+                return (one.finishDateTimeInterval ?? 0) > (two.finishDateTimeInterval ?? 0)
             }
             
             self.collectionView.reloadData()
@@ -323,7 +323,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let imageView = cell.viewWithTag(1) as! UIImageView
         
-        if badge.finishDate != Date(timeIntervalSince1970: 0), let imageOfCompletedStatus = badge.imageOfCompletedStatus {
+        if badge.finishDateTimeInterval != nil, let imageOfCompletedStatus = badge.imageOfCompletedStatus {
             imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
             
         } else if let imageOfIncompletedStatus = badge.imageOfIncompletedStatus {

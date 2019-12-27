@@ -560,7 +560,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lAT-aI-CFm">
-                                                <rect key="frame" x="20" y="235" width="323" height="36"/>
+                                                <rect key="frame" x="20" y="241" width="323" height="36"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="36" id="Ova-FD-Rhi"/>
@@ -601,7 +601,7 @@
                                                 </connections>
                                             </collectionView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fl-TC-wcP">
-                                                <rect key="frame" x="343" y="245" width="32" height="16"/>
+                                                <rect key="frame" x="343" y="251" width="32" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="IQ1-0r-g7d"/>
                                                     <constraint firstAttribute="width" constant="32" id="ngg-f6-57W"/>
@@ -612,14 +612,14 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXr-TQ-XFQ">
-                                                <rect key="frame" x="0.0" y="289" width="375" height="6"/>
+                                                <rect key="frame" x="0.0" y="295" width="375" height="6"/>
                                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="6" id="eFC-rR-wIB"/>
                                                 </constraints>
                                             </view>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2Il-AC-eOh">
-                                                <rect key="frame" x="0.0" y="295" width="375" height="395"/>
+                                                <rect key="frame" x="0.0" y="301" width="375" height="389"/>
                                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellOne" id="sZp-tt-Jw2">
@@ -939,7 +939,7 @@
                                             <constraint firstItem="ZxI-93-Dkk" firstAttribute="top" secondItem="x0p-vt-y9f" secondAttribute="top" constant="36" id="1Cc-Il-oHW"/>
                                             <constraint firstItem="OVR-Vz-uaZ" firstAttribute="top" secondItem="teA-Xd-wb3" secondAttribute="bottom" constant="32" id="3MX-O0-ghl"/>
                                             <constraint firstAttribute="trailing" secondItem="2Il-AC-eOh" secondAttribute="trailing" id="AzH-iB-q2f"/>
-                                            <constraint firstItem="lAT-aI-CFm" firstAttribute="top" secondItem="OVR-Vz-uaZ" secondAttribute="bottom" constant="2" id="Bhz-zI-oxl"/>
+                                            <constraint firstItem="lAT-aI-CFm" firstAttribute="top" secondItem="OVR-Vz-uaZ" secondAttribute="bottom" constant="8" id="Bhz-zI-oxl"/>
                                             <constraint firstItem="teA-Xd-wb3" firstAttribute="leading" secondItem="x0p-vt-y9f" secondAttribute="leading" constant="20" id="CAJ-P3-iKw"/>
                                             <constraint firstItem="CXr-TQ-XFQ" firstAttribute="top" secondItem="lAT-aI-CFm" secondAttribute="bottom" constant="18" id="IvU-my-N4L"/>
                                             <constraint firstAttribute="trailing" secondItem="1QP-WT-1ZU" secondAttribute="trailing" constant="20" id="Jc6-fy-kHg"/>

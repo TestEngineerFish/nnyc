@@ -214,6 +214,10 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 break
                 
             case .today:
+                if dailyData.didPunchIn == 1 {
+                    cell.circleView.backgroundColor = UIColor.hex(0xFCD096)
+                }
+                
                 cell.integralStatusLabel.text = "今天"
                 cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
                 cell.circleView.layer.setDefaultShadow()

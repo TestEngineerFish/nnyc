@@ -28,9 +28,9 @@ struct YXBadgeModel: Mappable {
     var ID: Int?
     var name: String?
     var description: String?
-    var finishDateString: String?
-    var currentProgress: String?
-    var totalProgress: String?
+    var finishDateTimeInterval: Double?
+    var currentProgress: Double?
+    var totalProgress: Double?
     var imageOfCompletedStatus: String?
     var imageOfIncompletedStatus: String?
 
@@ -40,18 +40,12 @@ struct YXBadgeModel: Mappable {
     
     mutating func mapping(map: Map) {
         ID <- map["badgeId"]
-        name <- map["badgeName"]
+        name <- map["name"]
         description <- map["desc"]
-        finishDate <- map[""]
-        currentProgress <- map[""]
-        totalProgress <- map[""]
+        finishDateTimeInterval <- map["finish_time"]
+        currentProgress <- map["done"]
+        totalProgress <- map["total"]
         imageOfCompletedStatus <- map["realize"]
-        imageOfIncompletedStatus <- map["unRealized"]
+        imageOfIncompletedStatus <- map["un_realized"]
     }
-    
-    private(set) var finishDate: Date! = {
-        var date: Date?
-    
-        return date ?? Date(timeIntervalSince1970: 0)
-    }()
 }
