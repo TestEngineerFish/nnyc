@@ -280,7 +280,7 @@ class YXShareViewController: YXViewController {
 
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 513)
-        UIGraphicsBeginImageContext(imageSize)
+        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(origin: CGPoint.zero, size: imageSize))
         iconImage?.draw(in: CGRect(x: 20, y: 16, width: 37, height: 37))
         titleLabel.drawText(in: CGRect(x: 67, y: 23, width: 136, height: 21))
@@ -347,7 +347,7 @@ class YXShareViewController: YXViewController {
 
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
-        UIGraphicsBeginImageContext(imageSize)
+        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
         logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
         aboveLabel.drawText(in: CGRect(x: 56, y: 147, width: 181, height: 28))
@@ -414,7 +414,7 @@ class YXShareViewController: YXViewController {
 
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
-        UIGraphicsBeginImageContext(imageSize)
+        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
         logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
         aboveLabel.drawText(in: CGRect(x: 72, y: 152, width: 241, height: 28))
@@ -481,7 +481,7 @@ class YXShareViewController: YXViewController {
 
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
-        UIGraphicsBeginImageContext(imageSize)
+        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
         logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
         aboveLabel.drawText(in: CGRect(x: 46, y: 147, width: 181, height: 28))
@@ -552,7 +552,7 @@ class YXShareViewController: YXViewController {
 
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
-        UIGraphicsBeginImageContext(imageSize)
+        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 513))
         contentImage?.draw(in: CGRect(x: 0, y: 430, width: 375, height: 83))
         flagImage?.draw(in: CGRect(x: 28, y: 427, width: 75, height: 77))
