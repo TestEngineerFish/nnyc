@@ -133,6 +133,8 @@ class YXLearnMapViewController: UIViewController {
             YRRouter.popViewController(false)
             let vc = YXExerciseViewController()
             vc.dataType = .normal
+            vc.bookId   = bookId
+            vc.unitId   = unitId
             vc.hidesBottomBarWhenPushed = true
             YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
         }) { (error) in

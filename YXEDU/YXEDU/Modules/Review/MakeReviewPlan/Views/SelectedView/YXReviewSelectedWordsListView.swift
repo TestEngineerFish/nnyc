@@ -99,10 +99,11 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
     }
 
     @objc func clickRemoveBtn(_ button: YXButton) {
-        if button.tag < self.wordsModelList.count {
-            let wordModel = self.wordsModelList[button.tag]
-            self.delegate?.remove(wordModel)
-            self.removedWord(wordModel, index: button.tag)
+        for (index, wordModel) in self.wordsModelList.enumerated() {
+            if wordModel.id == button.tag {
+                self.delegate?.remove(wordModel)
+                self.removedWord(wordModel, index: index)
+            }
         }
     }
 
@@ -134,6 +135,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         }
         self.wordsModelList.remove(at: _index)
         self.tableView.deleteRows(at: [IndexPath(row: _index, section: 0)], with: .left)
+        self.setNeedsLayout()
     }
 
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
@@ -148,14 +150,14 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         }
         let wordModel = self.wordsModelList[indexPath.row]
         cell.bindData(wordModel)
+        cell.removeButton.tag = wordModel.id
+        cell.removeButton.addTarget(self, action: #selector(clickRemoveBtn(_:)), for: .touchUpInside)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXReviewSelectedWordCell) as? YXReviewSelectedWordCell else {
             return UITableViewCell()
         }
-        cell.removeButton.tag = indexPath.row
-        cell.removeButton.addTarget(self, action: #selector(clickRemoveBtn(_:)), for: .touchUpInside)
         return cell
     }
 

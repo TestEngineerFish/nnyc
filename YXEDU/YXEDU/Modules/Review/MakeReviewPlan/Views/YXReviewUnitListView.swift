@@ -63,7 +63,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             self.delegate?.selectedWord(wordModel)
         }
         wordModel.isSelected = !wordModel.isSelected
-        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
     }
 
     // MARK: ==== UIGestureRecognizerDelegate ====
