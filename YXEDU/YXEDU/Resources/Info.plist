@@ -155,6 +155,7 @@
     <array>
         <!-- 微信 URL Scheme 白名单-->
         <string>wechat</string>
+        <string>weixin</string>
         <string>mqq</string>
         <string>mqqapi</string>
         <string>mqqwpa</string>
