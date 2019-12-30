@@ -12,7 +12,6 @@
 #import "YXWordModelManager.h"
 #import "YXMyWordListDetailModel.h"
 #import "YXBaseWebViewController.h"
-#import "YXShareCodeView.h"
 
 @interface YXProgressElementView : UIView
 @property (nonatomic, strong) UIView *dotView;
@@ -83,7 +82,6 @@ static NSString *const kYXMyWordDetailCellID = @"YXMyWordDetailCellID";
 @property (nonatomic, strong) YXMyWordListDetailModel *wordListDetailModel;
 @property (nonatomic, weak) YXProgressElementView *shareSourceView;
 @property (nonatomic, weak) YXSpringAnimateButton *listReportButton;
-@property (nonatomic, weak) YXShareCodeView *shareView;
 @property (nonatomic, weak) YXSpringAnimateButton *saveToMyWordList;
 @end
 
@@ -202,11 +200,6 @@ static NSString *const kYXMyWordDetailCellID = @"YXMyWordDetailCellID";
 
 
 - (void)rightBarItemClick:(UIButton *)btn {
-//    NSString *shareCode = self.myWordBookModel.shareCode;
-    NSString *shareCode = self.wordListDetailModel.descShareCode;
-    YXShareCodeView *shareView = [[YXShareCodeView alloc] initWithCodeStr:shareCode];
-    [self.navigationController.view addSubview:shareView];
-    _shareView = shareView;
 }
 
 - (void)handleData:(BOOL)success {

@@ -222,7 +222,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             return AdaptSize(67)
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         guard let rankedList = self.challengeModel?.rankedList else {
             return AdaptSize(20)
@@ -242,4 +242,4 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
 
 }
- 
+

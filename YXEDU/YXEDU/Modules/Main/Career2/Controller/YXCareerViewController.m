@@ -12,7 +12,6 @@
 #import "YXCareerWordListViewController.h"
 #import "YXCareerWordListModel.h"
 #import "YXCareerWordListTableViewCell.h"
-#import "YXShareCodeView.h"
 #import "YXCareerGuideMaskView.h"
 
 static NSString *const kYXCareerWordListTableViewCellID = @"YXCareerWordListTableViewCellID";
