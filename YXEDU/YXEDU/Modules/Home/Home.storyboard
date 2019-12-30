@@ -581,7 +581,7 @@
         <!--Word Detail View Controller New-->
         <scene sceneID="y8k-uf-WSX">
             <objects>
-                <viewController storyboardIdentifier="WordDetail" id="DDF-Ya-OXu" customClass="YXWordDetailViewControllerNew" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="YXWordDetailViewControllerNew" id="DDF-Ya-OXu" customClass="YXWordDetailViewControllerNew" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pb8-4I-APZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

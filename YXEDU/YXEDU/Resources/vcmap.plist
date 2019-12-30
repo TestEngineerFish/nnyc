@@ -10,6 +10,8 @@
 			<string>YXWordListViewController</string>
 			<key>setting/feedback</key>
 			<string>YWFeedbackViewController</string>
+			<key>word/detail</key>
+			<string>YXWordDetailViewControllerNew</string>
 		</dict>
 	</dict>
 	<key>exercise/study</key>

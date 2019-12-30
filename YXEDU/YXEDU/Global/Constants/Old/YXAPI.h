@@ -508,7 +508,7 @@ V = nil;\
 #define DOMAIN_USERWORDHANDLEWORDTOOLKIT STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/handlewordtoolkit"))
 
 /** 日历-月汇总数据 */
-#define DOMAIN_CALENDARMONTHLYDATA STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/punch/monthly")) // ⭐️
+#define DOMAIN_CALENDARMONTHLYDATA STRCAT(SCHEME,STRCAT(YX_IP,@"/api/v1/user/punch/monthly")) // ⭐️
 
 /** 日历-日汇总数据 */
 #define DOMAIN_CALENDARDAILYDATA STRCAT(SCHEME,STRCAT(YX_IP,@"/api/v1/user/punch/daily")) // ⭐️

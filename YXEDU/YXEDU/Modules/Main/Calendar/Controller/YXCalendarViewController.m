@@ -475,11 +475,11 @@ static CGFloat const kPickViewHeight = 272.f;
         [dataArray addObject: [NSMutableDictionary dictionaryWithDictionary:dict]];
     }
     //根据后台返回数据,修改有数据天的值
-    for (YXNodeModel *node in self.monthData.studyDetail) {
+    for (YXNodeModel *node in self.monthData.study_detail) {
         NSDate *date = [dateFormatter dateFromString:node.date];
         int index = (int)[date day] - 1;
         dataArray[index][@"numWord"] = [node.num isEqualToNumber:@0] ? @1 : node.num;
-        dataArray[index][@"costTime"] = node.costTime;
+        dataArray[index][@"costTime"] = node.cost_time;
         dataArray[index][@"status"] = node.status;
     }
     return dataArray;
@@ -775,11 +775,11 @@ static CGFloat const kPickViewHeight = 272.f;
         model = self.dayData.studiedCellList[indexPath.row];
     }
 
-    if (!model || !model.wordModel) {
+    if (!model || model.word_id == 0) {
         return;
     }
-    YXWordDetailViewControllerOld *wdvc = [YXWordDetailViewControllerOld wordDetailWith:model.wordModel bookId:model.wordModel.bookId];
-    [self.navigationController pushViewController:wdvc animated:YES];
+
+    [YRRouter openURL:@"word/detail" query:@{@"word_id" : @(model.word_id), @"is_complex_word" : @(NO)} animated:YES];
 }
 
 #pragma mark - ScrollViewDelegate

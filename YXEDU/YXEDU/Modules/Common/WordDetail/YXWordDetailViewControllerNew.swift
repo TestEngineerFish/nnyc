@@ -11,10 +11,15 @@ import UIKit
 class YXWordDetailViewControllerNew: UIViewController {
     @IBOutlet weak var collectionButton: UIBarButtonItem!
 
-    var wordId: Int!
-    var isComplexWord: Int!
+    @objc var wordId: Int = -1
+    @objc var isComplexWord: Int = 0
     private var wordDetailView: YXWordDetailCommonView!
-    
+
+    override func handleData(withQuery query: [AnyHashable : Any]!) {
+        self.wordId = query["word_id"] as? Int ?? -1
+        self.isComplexWord = query["is_complex_word"] as? Int ?? 0
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

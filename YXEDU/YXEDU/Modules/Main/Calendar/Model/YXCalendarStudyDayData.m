@@ -23,12 +23,7 @@
         @"words" : [YXCalendarWordsModel class]
     };
 }
-//- (NSString *)book_name {
-//    if (!_book_name) {
-//        _book_name = @"";
-//    }
-//    return _book_name;
-//}
+
 @end
 
 @implementation YXCalendarLearningModel
@@ -54,32 +49,24 @@ return @{
 - (NSMutableArray<YXCalendarCellModel *> *)reviewCellList {
     if (!_reviewCellList) {
         NSMutableArray<YXCalendarCellModel *> *tmpArray = [[NSMutableArray alloc] init];
-//        for (YXCalendarWordsModel *model in self.learning_data.review_words) {
-//            NSString *bookIdStr = [NSString stringWithFormat:@"%zd", model.book_id];
-//            NSString *bookName = [[YXConfigure shared].confModel getBookNameWithId:bookIdStr];
-//            [YXWordModelManager quardWithWordIds:model.wordIds completeBlock:^(id obj, BOOL result) {
-//                if (result) {
-//                    NSArray<YXWordDetailModel *> *wordsList = obj;//词单列表
-//                    YXCalendarBookModel *bookModel = [[YXCalendarBookModel alloc] init];
-//                    bookModel.title = bookName;
-//                    bookModel.descValue = [NSString stringWithFormat: @"%zu", wordsList.count];
-//                    bookModel.isWork = NO;
-//                    bookModel.wordModel = nil;
-//                    [tmpArray addObject:bookModel];
-//                    for (YXWordDetailModel *wordModel in wordsList) {
-//                        wordModel.bookId = [NSString stringWithFormat:@"%zd", model.book_id];
-//                        YXCalendarBookModel *bookModel = [[YXCalendarBookModel alloc] init];
-//                        bookModel.title = wordModel.word;
-//                        bookModel.descValue = wordModel.explainText;
-//                        bookModel.isWork = YES;
-//                        bookModel.wordModel = wordModel;
-//                        [tmpArray addObject:bookModel];
-//                    }
-//                } else {
-//                    NSLog(@"查询数据失败");
-//                }
-//            }];
-//        }
+        for (YXCalendarNewBookModel *bookModel in self.learning_data.review_words) {
+            NSString *bookName = bookModel.book_name;
+            YXCalendarCellModel *headerModel = [[YXCalendarCellModel alloc] init];
+            headerModel.isWord = NO;
+            headerModel.title = bookName;
+            headerModel.descValue = [NSString stringWithFormat:@"%lu", bookModel.words.count];
+            // add
+            [tmpArray addObject:headerModel];
+            for (YXCalendarWordsModel *wordModel in bookModel.words) {
+                YXCalendarCellModel *cellModel = [[YXCalendarCellModel alloc] init];
+                cellModel.isWord = YES;
+                cellModel.title = wordModel.word;
+                cellModel.word_id = wordModel.word_id;
+                cellModel.descValue = [NSString stringWithFormat:@"%@%@", wordModel.word_property, wordModel.paraphrase];
+                // add
+                [tmpArray addObject:cellModel];
+            }
+        }
         _reviewCellList = tmpArray;
     }
     return _reviewCellList;
@@ -88,33 +75,23 @@ return @{
 - (NSMutableArray<YXCalendarCellModel *> *)studiedCellList {
     if (!_studiedCellList) {
         NSMutableArray<YXCalendarCellModel *> *tmpArray = [[NSMutableArray alloc] init];
-//        for (YXCalendarWordsModel *model in self.learning_data.study_words) {
-//            NSString *bookIdStr = [NSString stringWithFormat:@"%zd", model.word_id];
-//            NSString *bookName = [[YXConfigure shared].confModel getBookNameWithId:bookIdStr];
-//            [YXWordModelManager quardWithWordIds:model.wordIds completeBlock:^(id obj, BOOL result) {
-//                if (result) {
-//                    NSArray<YXWordDetailModel *> *wordsList = obj;//词单列表
-//                    YXCalendarBookModel *bookModel = [[YXCalendarBookModel alloc] init];
-//                    bookModel.title = bookName;
-//                    bookModel.descValue = [NSString stringWithFormat: @"%lu", wordsList.count];
-//                    bookModel.isWork = NO;
-//                    bookModel.wordModel = nil;
-//                    [tmpArray addObject:bookModel];
-//
-//                    for (YXWordDetailModel *wordModel in wordsList) {
-//                        wordModel.bookId = [NSString stringWithFormat:@"%zd", model.book_id];
-//                        YXCalendarBookModel *bookModel = [[YXCalendarBookModel alloc] init];
-//                        bookModel.title = wordModel.word;
-//                        bookModel.descValue = wordModel.explainText;
-//                        bookModel.isWork = YES;
-//                        bookModel.wordModel = wordModel;
-//                        [tmpArray addObject:bookModel];
-//                    }
-//                } else {
-//                    NSLog(@"查询数据失败");
-//                }
-//            }];
-//        }
+        for (YXCalendarNewBookModel *bookModel in self.learning_data.study_words) {
+            NSString *bookName = bookModel.book_name;
+            YXCalendarCellModel *headerModel = [[YXCalendarCellModel alloc] init];
+            headerModel.isWord = NO;
+            headerModel.title = bookName;
+            headerModel.descValue = [NSString stringWithFormat:@"%lu", bookModel.words.count];
+            // add
+            [tmpArray addObject:headerModel];
+            for (YXCalendarWordsModel *wordModel in bookModel.words) {
+                YXCalendarCellModel *cellModel = [[YXCalendarCellModel alloc] init];
+                cellModel.isWord = YES;
+                cellModel.title = wordModel.word;
+                cellModel.descValue = [NSString stringWithFormat:@"%@%@", wordModel.word_property, wordModel.paraphrase];
+                // add
+                [tmpArray addObject:cellModel];
+            }
+        }
         _studiedCellList = tmpArray;
     }
     return _studiedCellList;

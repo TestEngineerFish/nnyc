@@ -112,17 +112,17 @@
 }
 
 - (void)updateView: (YXStudyMonthSummaryModel *)model {
-    NSString *daysStr = [NSString stringWithFormat:@"%ld天", model.studyDays];
+    NSString *daysStr = [NSString stringWithFormat:@"%ld天", model.study_days];
     NSMutableAttributedString *attrStr1 = [[NSMutableAttributedString alloc] initWithString:daysStr attributes:@{NSFontAttributeName: [UIFont semiboldFontOfSize:14],NSForegroundColorAttributeName: UIColorOfHex(0x8095AB)}];
     [attrStr1 addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: UIColorOfHex(0xFBA217)} range:NSMakeRange(0, daysStr.length - 1)];
     self.studyDaysLabel.attributedText = attrStr1;
 
-    NSString *wordsStr =[NSString stringWithFormat:@"%ld个", model.studyWords];;
+    NSString *wordsStr =[NSString stringWithFormat:@"%ld个", model.study_words];;
     NSMutableAttributedString *attrStr2 = [[NSMutableAttributedString alloc] initWithString:wordsStr attributes:@{NSFontAttributeName: [UIFont semiboldFontOfSize:14],NSForegroundColorAttributeName: UIColorOfHex(0x8095AB)}];
     [attrStr2 addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: UIColorOfHex(0xFBA217)} range:NSMakeRange(0, wordsStr.length - 1)];
     self.studyWordsLabel.attributedText = attrStr2;
 
-    NSString *minuteStr = [[NSString stringWithFormat:@"%zd", model.studyTimes] getMinuteFromSecond];
+    NSString *minuteStr = [[NSString stringWithFormat:@"%zd", model.study_times] getMinuteFromSecond];
     NSString *timesStr = [NSString stringWithFormat:@"%@分钟", minuteStr];
     NSMutableAttributedString *attrStr3 = [[NSMutableAttributedString alloc] initWithString:timesStr attributes:@{NSFontAttributeName: [UIFont semiboldFontOfSize:14],NSForegroundColorAttributeName: UIColorOfHex(0x8095AB)}];
     [attrStr3 addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: UIColorOfHex(0xFBA217)} range:NSMakeRange(0, timesStr.length - 2)];

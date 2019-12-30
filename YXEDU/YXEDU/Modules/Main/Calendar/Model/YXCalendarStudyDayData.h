@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 //最终使用的Model
 @interface YXCalendarCellModel : NSObject
-@property (nonatomic, strong, nullable) YXWordDetailModel *wordModel;
+@property (nonatomic, assign) NSInteger word_id;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *descValue;
 @property (nonatomic, assign) BOOL isWord;
@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YXCalendarWordsModel : NSObject
 @property (nonatomic, strong) NSString *word;
+@property (nonatomic, assign) NSInteger word_id;
 @property (nonatomic, strong) NSString *word_property;
 @property (nonatomic, strong) NSString *paraphrase;
 @end

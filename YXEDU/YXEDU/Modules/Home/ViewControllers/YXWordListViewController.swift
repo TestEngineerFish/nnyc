@@ -213,7 +213,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             
             wordListView.showWordDetialClosure = { (wordId, isComplexWord) in
                 let home = UIStoryboard(name: "Home", bundle: nil)
-                let wordDetialViewController = home.instantiateViewController(withIdentifier: "WordDetail") as! YXWordDetailViewControllerNew
+                let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
                 wordDetialViewController.wordId = wordId
                 wordDetialViewController.isComplexWord = isComplexWord
                 self.navigationController?.pushViewController(wordDetialViewController, animated: true)
