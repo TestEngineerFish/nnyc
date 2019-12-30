@@ -11,7 +11,7 @@
 
 @interface YXCalendarWordCell : UITableViewCell
 
-- (void)setCell:(YXCalendarBookModel *)model;
+- (void)setCell:(YXCalendarCellModel *)model;
 
 @end
 

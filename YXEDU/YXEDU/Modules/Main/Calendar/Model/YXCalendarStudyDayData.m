@@ -9,7 +9,7 @@
 #import "YXCalendarStudyDayData.h"
 #import "YXWordModelManager.h"
 
-@implementation YXCalendarBookModel
+@implementation YXCalendarCellModel
 
 @end
 
@@ -18,29 +18,42 @@
 
 @implementation YXCalendarNewBookModel
 
-+(NSDictionary *)mj_objectClassInArray {
++ (NSDictionary *)mj_objectClassInArray {
     return @{
         @"words" : [YXCalendarWordsModel class]
     };
 }
-
+//- (NSString *)book_name {
+//    if (!_book_name) {
+//        _book_name = @"";
+//    }
+//    return _book_name;
+//}
 @end
 
 @implementation YXCalendarLearningModel
+
 +(NSDictionary *)mj_objectClassInArray {
-    return @{
-             @"review_words" : [YXCalendarNewBookModel class],
-             @"study_words"  : [YXCalendarNewBookModel class]
-             };
+return @{
+         @"review_words" : [YXCalendarNewBookModel class],
+         @"study_words"  : [YXCalendarNewBookModel class]
+         };
 }
 @end
 
 
 @implementation YXCalendarStudyDayData
 
-- (NSMutableArray<YXCalendarBookModel *> *)reviewBooksList {
-    if (!_reviewBooksList) {
-        NSMutableArray<YXCalendarBookModel *> *tmpArray = [[NSMutableArray alloc] init];
+- (YXCalendarLearningModel *)learning_data {
+    if (!_learning_data) {
+        _learning_data = [[YXCalendarLearningModel alloc] init];
+    }
+    return _learning_data;
+}
+
+- (NSMutableArray<YXCalendarCellModel *> *)reviewCellList {
+    if (!_reviewCellList) {
+        NSMutableArray<YXCalendarCellModel *> *tmpArray = [[NSMutableArray alloc] init];
 //        for (YXCalendarWordsModel *model in self.learning_data.review_words) {
 //            NSString *bookIdStr = [NSString stringWithFormat:@"%zd", model.book_id];
 //            NSString *bookName = [[YXConfigure shared].confModel getBookNameWithId:bookIdStr];
@@ -67,14 +80,14 @@
 //                }
 //            }];
 //        }
-        _reviewBooksList = tmpArray;
+        _reviewCellList = tmpArray;
     }
-    return _reviewBooksList;
+    return _reviewCellList;
 }
 
-- (NSMutableArray<YXCalendarBookModel *> *)studiedBooksList {
-    if (!_studiedBooksList) {
-        NSMutableArray<YXCalendarBookModel *> *tmpArray = [[NSMutableArray alloc] init];
+- (NSMutableArray<YXCalendarCellModel *> *)studiedCellList {
+    if (!_studiedCellList) {
+        NSMutableArray<YXCalendarCellModel *> *tmpArray = [[NSMutableArray alloc] init];
 //        for (YXCalendarWordsModel *model in self.learning_data.study_words) {
 //            NSString *bookIdStr = [NSString stringWithFormat:@"%zd", model.word_id];
 //            NSString *bookName = [[YXConfigure shared].confModel getBookNameWithId:bookIdStr];
@@ -102,8 +115,8 @@
 //                }
 //            }];
 //        }
-        _studiedBooksList = tmpArray;
+        _studiedCellList = tmpArray;
     }
-    return _studiedBooksList;
+    return _studiedCellList;
 }
 @end

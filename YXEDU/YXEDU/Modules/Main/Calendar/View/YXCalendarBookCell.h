@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YXCalendarBookCell : UITableViewCell
 
-- (void)setCell:(YXCalendarBookModel *)model;
+- (void)setCell:(YXCalendarCellModel *)model;
 
 @end
 
