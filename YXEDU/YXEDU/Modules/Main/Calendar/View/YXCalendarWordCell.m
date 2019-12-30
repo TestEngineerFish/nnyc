@@ -41,13 +41,13 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.font = [UIFont systemFontOfSize:AdaptSize(14)];
+        titleLabel.font = [UIFont systemFontOfSize:AdaptSize(12)];
         titleLabel.textColor = UIColorOfHex(0x9BB0C6);
         titleLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:titleLabel];
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self);
-            make.left.equalTo(self).with.offset(AdaptSize(16));
+            make.left.equalTo(self).with.offset(AdaptSize(40));
             make.width.mas_equalTo((SCREEN_WIDTH - 30.f)/3);
         }];
         _titleLabel = titleLabel;
@@ -58,7 +58,7 @@
 - (UILabel *)valueLabel {
     if (!_valueLabel) {
         UILabel *valueLabel = [[UILabel alloc] init];
-        valueLabel.font = [UIFont systemFontOfSize:AdaptSize(14)];
+        valueLabel.font = [UIFont systemFontOfSize:AdaptSize(12)];
         valueLabel.textColor = UIColorOfHex(0x9BB0C6);
         valueLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:valueLabel];

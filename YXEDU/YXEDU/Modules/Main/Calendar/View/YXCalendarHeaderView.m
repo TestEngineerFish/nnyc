@@ -62,7 +62,7 @@
     if (section == 0) {
         [self.icon setImage:[UIImage imageNamed:@"calendar_icon_review"]];
         [self.titleLabel setText:@"完成复习"];
-        NSUInteger amountBook = day.learningData.reviewWords.count;
+        NSUInteger amountBook = day.learning_data.review_words.count;
         NSUInteger amountCell = day.reviewBooksList.count;
         [self.amountLabel setText:[NSString stringWithFormat:@"%lu", amountCell - amountBook]];
         NSString *imageName = day.showReviewList ? @"list_open" : @"list_close";
@@ -70,7 +70,7 @@
     } else if (section == 1) {
         [self.icon setImage:[UIImage imageNamed:@"calendar_icon_ab"]];
         [self.titleLabel setText:@"新学单词"];
-        NSUInteger amountBook = day.learningData.studyWords.count;
+        NSUInteger amountBook = day.learning_data.study_words.count;
         NSUInteger amountCell = day.studiedBooksList.count;
         [self.amountLabel setText:[NSString stringWithFormat:@"%lu", amountCell - amountBook]];
         NSString *imageName = day.showStudiedList ? @"list_open" : @"list_close";
@@ -78,7 +78,7 @@
     } else {
         [self.icon setImage:[UIImage imageNamed:@"calendar_icon_time"]];
         [self.titleLabel setText:@"当天学习时长"];
-        [self.amountLabel setText: [NSString stringWithFormat:@"%02lu:%02lu", day.learningData.studyTimes.integerValue/60, day.learningData.studyTimes.integerValue%60]];
+        [self.amountLabel setText: [NSString stringWithFormat:@"%02lu:%02lu", day.learning_data.study_times/60, day.learning_data.study_times%60]];
         [self.amountLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.contentView).with.offset(AdaptSize(-18));
         }];
@@ -126,7 +126,7 @@
 - (UIView *)separatorView {
     if (!_separatorView) {
         UIView *sepView = [[UIView alloc] init];
-        sepView.backgroundColor = UIColorOfHex(0xE1EBF0);
+        sepView.backgroundColor = [UIColorOfHex(0xDCDCDC) colorWithAlphaComponent:0.5f];
         _separatorView = sepView;
     }
     return _separatorView;

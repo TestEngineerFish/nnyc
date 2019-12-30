@@ -107,7 +107,8 @@ static CGFloat const kPickViewHeight = 272.f;
     _dayData = dayData;
     if (dayData == nil) {
         [self showNoNetWorkView];
-    } else if ([dayData.learningData.studyTimes isEqualToString:@"0"]) {
+
+    } else if (dayData.learning_data.study_times == 0) {
         [self showNoResultsView];
     } else {
         [self showTableView];
@@ -532,6 +533,7 @@ static CGFloat const kPickViewHeight = 272.f;
             self.dayData = nil;
         }
     }];
+    
 }
 
 # pragma mark - Event

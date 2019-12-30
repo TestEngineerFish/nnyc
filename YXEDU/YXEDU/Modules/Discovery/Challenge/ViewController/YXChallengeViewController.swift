@@ -48,7 +48,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             self.challengeModel = response.data
             self.tableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
+            YXUtils.showHUD(self.view, title: "\(error.message)")
         }
     }
 
@@ -61,7 +61,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
                 }
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
+            YXUtils.showHUD(self.view, title: "\(error.message)")
         }
     }
 

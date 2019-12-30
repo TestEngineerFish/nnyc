@@ -37,13 +37,14 @@
 - (UIView *)signView {
     if (!_signView) {
         UIView *signView = [[UIView alloc] init];
-        signView.backgroundColor = UIColorOfHex(0x9BB0C6);
+        signView.backgroundColor    = UIColorOfHex(0x9BB0C6);
+        signView.layer.cornerRadius = AdaptSize(2);
         [self addSubview:signView];
         [signView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self);
+            make.left.equalTo(self).with.offset(AdaptSize(29));
             make.centerY.equalTo(self);
-            make.width.mas_equalTo(1.5f);
-            make.height.mas_equalTo(AdaptSize(14.f));
+            make.width.mas_equalTo(AdaptSize(4));
+            make.height.mas_equalTo(AdaptSize(4));
         }];
         _signView = signView;
     }
@@ -59,8 +60,8 @@
         [self.contentView addSubview:titleLable];
         [titleLable mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self);
-            make.left.equalTo(self.signView.mas_right).with.offset(AdaptSize(16));
-            make.width.mas_equalTo(AdaptSize(260));
+            make.left.equalTo(self).with.offset(AdaptSize(40));
+            make.right.equalTo(self.valueLabel.mas_left).offset(AdaptSize(-5));
         }];
         _titleLabel = titleLable;
     }
@@ -70,14 +71,14 @@
 - (UILabel *)valueLabel {
     if (!_valueLabel) {
         UILabel *valueLable = [[UILabel alloc] init];
-        valueLable.font = [UIFont systemFontOfSize:AdaptSize(14)];
-        valueLable.textColor = UIColorOfHex(0x9BB0C6);
+        valueLable.font          = [UIFont systemFontOfSize:AdaptSize(14)];
+        valueLable.textColor     = UIColorOfHex(0x9BB0C6);
         valueLable.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:valueLable];
         [valueLable mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self);
             make.right.equalTo(self).with.offset(AdaptSize(-18));
-            make.left.equalTo(self.titleLabel.mas_right);
+            make.width.mas_equalTo(AdaptSize(45));
         }];
         _valueLabel = valueLable;
     }
@@ -85,7 +86,7 @@
 }
 
 - (void)setCell:(YXCalendarBookModel *)model {
-    self.titleLabel.text = [NSString stringWithFormat:@" %@", model.title];;
+    self.titleLabel.text = [NSString stringWithFormat:@"%@", model.title];;
     self.valueLabel.text = model.descValue;
 }
 
