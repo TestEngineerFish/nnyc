@@ -84,9 +84,14 @@ class YXNewLearnResultView: UIView {
     func show(_ star: Int) {
         self.titleLabel.text = "Try again"
         self.squirrelmageView.image = UIImage(named: "learnResult\(star)")
-
+        firstStarImageView.image    = UIImage(named: "star_h_disable")
+        secondStarImageView.image   = UIImage(named: "star_h_disable")
+        thirdStarImageView.image    = UIImage(named: "star_h_disable")
         if star > 0 {
             firstStarImageView.image = UIImage(named: "star_h_enable")
+        } else {
+            bonusLabel.isHidden    = true
+            goldImageView.isHidden = true
         }
         if star > 1 {
             goldImageView.isHidden = false

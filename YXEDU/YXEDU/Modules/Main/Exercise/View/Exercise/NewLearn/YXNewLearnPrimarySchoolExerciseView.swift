@@ -167,6 +167,12 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         if exerciseModel.question?.example != nil {
             self.exerciseDelegate?.showTipsButton()
         }
-        self.exerciseDelegate?.showNextButton()
+        self.exerciseDelegate?.showRightNextView()
+    }
+
+    /// 显示新学单词详情
+    func showNewLearnWordDetail() {
+        self.showDetailView()
+        self.exerciseDelegate?.showCenterNextButton()
     }
 }

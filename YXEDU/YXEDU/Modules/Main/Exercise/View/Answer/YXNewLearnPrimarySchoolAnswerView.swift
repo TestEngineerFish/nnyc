@@ -14,6 +14,8 @@ protocol YXNewLearnProtocol: NSObjectProtocol {
     func playWordAndExampleFinished()
     /// 单词和单词播放结束
     func playWordAndWordFinished()
+    /// 显示单词详情
+    func showNewLearnWordDetail()
 }
 
 /// 答题区状态
@@ -163,18 +165,27 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 长按跟读按钮
     @objc private func startRecordAction(_ ges: UILongPressGestureRecognizer) {
-        switch ges.state {
-        case .began:
-            guard let word = self.exerciseModel.question?.word else {
+        if ges.state == .began {
+            YXAuthorizationManager.authorizeMicrophoneWith { (isAuth) in
+                if isAuth {
+                    self.endRecordAction()
+                }
+            }
+        } else {
+            switch ges.state {
+            case .began:
+                guard let word = self.exerciseModel.question?.word else {
+                    return
+                }
+                self.enginer?.oralText = word
+                self.enginer?.start()
+            case .ended:
+                self.endRecordAction()
+            default:
                 return
             }
-            self.enginer?.oralText = word
-            self.enginer?.start()
-        case .ended:
-            self.endRecordAction()
-        default:
-            return
         }
+
     }
 
     private func endRecordAction() {
@@ -310,7 +321,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             YXNewLearnResultView.share.hide()
             if self.lastLevel > 1 {
-                self.answerCompletion(right: true)
+                self.newLearnDelegate?.showNewLearnWordDetail()
             }
         }
     }
@@ -365,6 +376,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     func onResult(_ result: String!, isLast: Bool) {
 //        print("============录音结果: " + result)
         if isLast {
+            self.lastLevel = 0
             // 录音结束,清除临时录音缓存
             self.resetOpusTempData()
             let resultDict = result.convertToDictionary()
