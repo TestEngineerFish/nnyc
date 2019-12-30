@@ -81,7 +81,7 @@ class YXBadgeDetailView: UIView {
             if let currentProgress = badge.currentProgress, let totalProgress = badge.totalProgress {
                 progressBar.setProgress(Float(currentProgress / totalProgress), animated: true)
                 currentProgressLabel.text = "\(currentProgress)"
-                totalProgressLabel.text = "\(totalProgress)"
+                totalProgressLabel.text = "/\(totalProgress)"
             }
             
             backgroundImageView.image = #imageLiteral(resourceName: "badgeIncompleteBackground")
@@ -95,7 +95,7 @@ class YXBadgeDetailView: UIView {
         }
     }
 
-    @IBAction func close(_ sender: UIButton) {
+    @IBAction func close(_ sender: Any) {
         UIView.animate(withDuration: 0.2, animations: {
             self.contentView.alpha = 0
             

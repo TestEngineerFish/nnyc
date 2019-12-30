@@ -62,7 +62,7 @@ class YXBagdeListViewController: UIViewController, UITableViewDelegate, UITableV
         cell.titleLabel.text = badge?.name
         cell.descriptionLabel.text = ""
         
-        if badge?.finishDateTimeInterval != nil, let imageOfCompletedStatus = badge?.imageOfCompletedStatus {
+        if let finishDateTimeInterval = badge?.finishDateTimeInterval, finishDateTimeInterval != 0, let imageOfCompletedStatus = badge?.imageOfCompletedStatus {
             cell.imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
             
         } else if let imageOfIncompletedStatus = badge?.imageOfIncompletedStatus {
@@ -74,7 +74,15 @@ class YXBagdeListViewController: UIViewController, UITableViewDelegate, UITableV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let badge = badgeLists[collectionView.tag].badges?[indexPath.row] else { return }
-        let badgeDetailView = YXBadgeDetailView(badge: badge, didCompleted: badge.finishDateTimeInterval != nil)
+        
+        var badgeDetailView: YXBadgeDetailView!
+        if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0 {
+            badgeDetailView = YXBadgeDetailView(badge: badge, didCompleted: true)
+
+        } else {
+            badgeDetailView = YXBadgeDetailView(badge: badge, didCompleted: false)
+        }
+        
         badgeDetailView.show()
     }
     

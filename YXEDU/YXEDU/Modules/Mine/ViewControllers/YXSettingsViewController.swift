@@ -62,7 +62,13 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
             break
             
         case 1:
-//            self.performSegue(withIdentifier: "", sender: self)
+            YXSettingDataManager().checkVersion { (version, error) in
+                if version?.state == .recommend || version?.state == .force {
+                    UIApplication.shared.open(URL(string: "https://apps.apple.com/cn/app/id1379948642")!, options: [:]) { (isSuccess) in
+                        
+                    }
+                }
+            }
             break
             
         default:
