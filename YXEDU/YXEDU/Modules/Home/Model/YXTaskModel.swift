@@ -39,7 +39,7 @@ struct YXTaskModel: Mappable {
         name <- map["task_name"]
         taskColor <- map["type"]
         actionType <- map["action"]
-        integral <- map["credit"]
+        integral <- map["credits"]
         state <- map["state"]
     }
 }
