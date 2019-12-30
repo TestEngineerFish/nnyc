@@ -17,10 +17,11 @@ class YXCountDownView: UIView {
     /// 设置倒计时视图
     /// - Parameter time: 单位秒
     private func setCountDownView(_ time: Int) {
+        let _time = time < 0 ? 0 : time
         let day = 3600 * 24
-        let dayNumber    = Int(time) / day
-        let hourNumber   = (Int(time) % day) / 3600
-        let minuteNumber = (Int(time) % 3600) / 60
+        let dayNumber    = Int(_time) / day
+        let hourNumber   = (Int(_time) % day) / 3600
+        let minuteNumber = (Int(_time) % 3600) / 60
 
         var dayLeft  = "0"
         var dayRight = "\(dayNumber)"

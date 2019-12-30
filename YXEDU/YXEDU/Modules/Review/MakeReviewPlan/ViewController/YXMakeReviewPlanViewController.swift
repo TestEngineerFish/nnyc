@@ -9,6 +9,10 @@
 import UIKit
 import ObjectMapper
 
+protocol YXMakeReviewPlanProtocol: NSObjectProtocol {
+    func makeReivewPlanFinised()
+}
+
 class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
 
     // ---- 子视图
@@ -27,6 +31,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
     var selectedWordsListView = YXReviewSelectedWordsListView()
 
     var bottomView = YXReviewBottomView()
+    var delegate: YXMakeReviewPlanProtocol?
 
     // ---- 数据对象
     var model: YXReviewBookModel?
@@ -116,6 +121,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
         let idsStr = String(data: jsonData, encoding: String.Encoding.utf8)!
         let request = YXReviewRequest.makeReviewPlan(name: name, code: nil, idsList: idsStr)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
+            self.delegate?.makeReivewPlanFinised()
             self.navigationController?.popViewController(animated: true)
         }) { (error) in
             if error.code == 101 {

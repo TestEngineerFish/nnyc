@@ -55,18 +55,14 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     private func selectCell(with indexPath: IndexPath) {
         let unitModel = self.unitModelList[indexPath.section]
         let wordModel = unitModel.list[indexPath.row]
-//        guard let cell = self.tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell else {
-//            return
-//        }
-
         wordModel.bookId = self.tag
         wordModel.unitId = unitModel.id
         wordModel.isSelected = !wordModel.isSelected
         tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
         if wordModel.isSelected {
-            self.delegate?.unselectWord(wordModel)
-        } else {
             self.delegate?.selectedWord(wordModel)
+        } else {
+            self.delegate?.unselectWord(wordModel)
         }
     }
 
