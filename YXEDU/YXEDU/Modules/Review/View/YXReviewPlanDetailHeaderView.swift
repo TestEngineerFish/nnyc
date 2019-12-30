@@ -133,17 +133,17 @@ class YXReviewPlanDetailHeaderView: YXView {
         bgView.layer.setDefaultShadow(radius: AS(4))
         
         reviewPlanLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
-        reviewPlanLabel.text = "我的复习计划1"
+//        reviewPlanLabel.text = "我的复习计划1"
         reviewPlanLabel.textColor = UIColor.black1
 
         
         subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-        subTitleLabel.text = "听写成绩：9"
+//        subTitleLabel.text = "听写成绩：9"
         subTitleLabel.textColor = UIColor.black3
                                 
         
         fromLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-        fromLabel.text = "听写成绩：9"
+//        fromLabel.text = "听写成绩：9"
         fromLabel.textColor = UIColor.black3
         
         editButton.setImage(UIImage(named: "review_plan_detail_edit"), for: .normal)
@@ -205,9 +205,9 @@ class YXReviewPlanDetailHeaderView: YXView {
         reviewPlanLabel.text = reviewPlanModel?.planName
         
         subTitleLabel.text = "听写成绩：" + (reviewPlanModel?.wordCount.string ?? "")
-        if let nickname = reviewPlanModel?.fromUser {
-            fromLabel.text = "来自\(nickname)分享的复习计划"
-        }
+//        if let nickname = reviewPlanModel?.fromUser {
+//            fromLabel.text = "来自\(nickname)分享的复习计划"
+//        }
     }
     
 

@@ -206,6 +206,9 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         }
     }
     
+    
+    /// 手机号登陆
+    /// - Parameter loginModel:
     private func login(_ loginModel: YXLoginSendModel) {
     let parameters = loginModel.yrModelToDictionary() as! [AnyHashable : Any]
     YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
@@ -232,6 +235,10 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
             guard let userInfomation = response.data else { return }
             
+            if let updateMsg = userInfomation.oldUserUpdateMessage, updateMsg.isNotEmpty {
+                YYCache.set(updateMsg, forKey: YXLocalKey.oldUserVersionTips.rawValue)
+            }
+                        
             guard userInfomation.didBindPhone == 1 else {
                 self.performSegue(withIdentifier: "Bind", sender: self)
                 return

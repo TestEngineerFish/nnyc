@@ -108,6 +108,8 @@ extension YXExerciseViewController {
             
         }
         aiView.show()
+        
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -116,5 +118,7 @@ extension YXExerciseViewController {
         let resultView = YXReviewResultView(type: dataType)
         resultView.model = model
         resultView.show()
+        
+        self.navigationController?.popViewController(animated: true)
     }
 }

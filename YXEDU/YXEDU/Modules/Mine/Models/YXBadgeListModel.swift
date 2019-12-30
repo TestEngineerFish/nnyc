@@ -33,7 +33,7 @@ struct YXBadgeModel: Mappable {
     var totalProgress: Double?
     var imageOfCompletedStatus: String?
     var imageOfIncompletedStatus: String?
-
+    
     init?(map: Map) {
         self.mapping(map: map)
     }
@@ -47,5 +47,9 @@ struct YXBadgeModel: Mappable {
         totalProgress <- map["total"]
         imageOfCompletedStatus <- map["realize"]
         imageOfIncompletedStatus <- map["un_realized"]
+        
     }
 }
+
+
+

@@ -10,12 +10,13 @@ import UIKit
 
 public enum YXMineRequest: YYBaseRequest {
     case badgeList
+    case latestBadge
 }
 
 extension YXMineRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .badgeList:
+        case .badgeList, .latestBadge:
             return .get
         }
     }
@@ -26,6 +27,8 @@ extension YXMineRequest {
         switch self {
         case .badgeList:
             return YXAPI.Profile.badgeList
+        case .latestBadge:
+            return YXAPI.Profile.latestBadge
         }
     }
 }

@@ -30,6 +30,9 @@ struct YXAPI {
         
         // 徽章信息
         static let badgeList = "/api/v1/user/getbadgelist"
+                
+        /// 最新徽章
+        static let latestBadge = "/api/v1/user/badge/new"
     }
     
     //MARK: - 练习模块
