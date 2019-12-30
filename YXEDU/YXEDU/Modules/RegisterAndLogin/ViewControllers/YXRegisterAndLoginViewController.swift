@@ -314,8 +314,15 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                         if isSuccess, let response = response?.responseObject {
                             YXUserModel.default.token = (response as! [String: Any])["token"] as? String
                             YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
+                            YXUserModel.default.username = (response as! [String: Any])["nick"] as? String
+                            YXUserModel.default.userAvatarPath = (response as! [String: Any])["avatar"] as? String
                             
-                            self.checkUserInfomation()
+                            YXConfigure.shared().token = YXUserModel.default.token
+                            YXConfigure.shared().uuid = YXUserModel.default.uuid
+                            
+                            YXConfigure.shared().saveCurrentToken()
+                            YXUserModel.default.didLogin = true
+                            YXUserModel.default.login()
 
                         } else if let error = response?.error {
                             print(error.desc)

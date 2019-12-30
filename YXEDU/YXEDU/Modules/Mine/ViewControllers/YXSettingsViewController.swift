@@ -35,14 +35,14 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
+//        case 0:
+//            return tableView.dequeueReusableCell(withIdentifier: "CellOne")!
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "CellOne")!
-        case 1:
             return tableView.dequeueReusableCell(withIdentifier: "CellTwo")!
         default:
             return tableView.dequeueReusableCell(withIdentifier: "CellThree")!
@@ -53,15 +53,15 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
     tableView.deselectRow(at: indexPath, animated: false)
     
         switch indexPath.row {
-        case 0:
-            self.performSegue(withIdentifier: "ManageMaterial", sender: self)
-            break
+//        case 0:
+//            self.performSegue(withIdentifier: "ManageMaterial", sender: self)
+//            break
             
-        case 1:
+        case 0:
             self.performSegue(withIdentifier: "AboutUs", sender: self)
             break
             
-        case 2:
+        case 1:
 //            self.performSegue(withIdentifier: "", sender: self)
             break
             

@@ -8,9 +8,7 @@
 
 import UIKit
 
-class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    var finishClosure: (() -> Void)?
-    
+class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {    
     private var grades: [YXGradeWordBookListModel] = []
     private var filterGrades: [YXGradeWordBookListModel] = []
     private var selectGradeView: YXSelectGradeView!
@@ -152,7 +150,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 YXWordBookResourceManager.shared.download(by: bookId) { (isSuccess) in
                     guard isSuccess else { return }
-                    self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.popToRootViewController(animated: true)
                 }
                 
             }) { error in

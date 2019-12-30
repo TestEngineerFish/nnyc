@@ -268,7 +268,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             case 3:
                 cell.colorView.backgroundColor = UIColor(red: 255/255, green: 244/255, blue: 225/255, alpha: 1)
                 cell.iconView.image = #imageLiteral(resourceName: "homeSelectWords")
-                cell.titleLabel.text = "自选单词"
+                cell.titleLabel.text = "单词挑战"
                 break
                 
             default:
@@ -284,22 +284,21 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             switch indexPath.row {
             case 0:
                 wordListType = .learned
-                self.performSegue(withIdentifier: "WordList", sender: self)
                 break
                 
             case 1:
                 wordListType = .collected
-                self.performSegue(withIdentifier: "WordList", sender: self)
                 break
                 
             case 2:
                 wordListType = .wrongWords
-                self.performSegue(withIdentifier: "WordList", sender: self)
                 break
                 
             default:
                 break
             }
+            
+            self.performSegue(withIdentifier: "WordList", sender: self)
             
         } else {
             switch indexPath.row {
@@ -325,7 +324,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 break
                 
             case 3:
-                self.performSegue(withIdentifier: "PickUpWords", sender: self)
+                tabBarController?.selectedIndex = 2
                 break
                 
             default:
