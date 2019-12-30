@@ -11,6 +11,7 @@ import Foundation
 
 enum YXLocalKey: String {
     case updateVersionTips = "kUpdateVersionTips" // 版本更新提示
+    case oldUserVersionTips = "kOldUserVersionTips" // 版本更新提示
     case alreadShowNewLearnGuideView = "kAlreadShowNewLearnGuideView"
     case learningState = "kLearningState"      // 学习中状态
     

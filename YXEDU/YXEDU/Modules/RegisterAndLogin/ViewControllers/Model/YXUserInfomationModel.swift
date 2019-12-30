@@ -10,12 +10,14 @@ import ObjectMapper
 
 struct YXUserInfomationModel: Mappable {
     var didBindPhone: Int?
+    var oldUserUpdateMessage: String?
     
     init?(map: Map) {
         self.mapping(map: map)
     }
     
     mutating func mapping(map: Map) {
+        oldUserUpdateMessage <- map["old_user_update_msg"]
         didBindPhone <- map["is_bind_mobile"]
     }
 }

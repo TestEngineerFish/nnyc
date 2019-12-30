@@ -79,6 +79,39 @@ class YXAlertManager {
     }
     
     
+    
+    
+    /// 老用户提示
+    func checkOldUser() {
+        
+        let request = YXRegisterAndLoginRequest.userInfomation
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
+            guard let userInfomation = response.data else { return }
+            
+            let key = YXLocalKey.oldUserVersionTips.rawValue
+            if let _ = YYCache.object(forKey: key) {
+                // 老用户更新，只提示一次
+                return
+            }
+            
+            // 保存提示状态
+            YYCache.set(true, forKey: key)
+            
+            let alertView = YXAlertView()
+            alertView.titleLabel.text = "版本更新"
+            alertView.descriptionLabel.text = userInfomation.oldUserUpdateMessage
+            alertView.shouldOnlyShowOneButton = true
+            alertView.show()
+            
+        }) { error in
+            print("❌❌❌\(error)")
+        }
+        
+        
+    }
+    
+    
+    
     @objc private func processServiceStop(notification: Notification) {
         let alertView = YXAlertView()
         

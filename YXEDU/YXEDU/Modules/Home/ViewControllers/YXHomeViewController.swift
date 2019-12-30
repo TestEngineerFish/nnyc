@@ -83,6 +83,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
+        
+        YXAlertManager.default.checkOldUser()
     }
     
     override func viewWillAppear(_ animated: Bool) {
