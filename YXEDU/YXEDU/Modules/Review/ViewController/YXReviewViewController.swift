@@ -154,7 +154,10 @@ extension YXReviewViewController {
 extension YXReviewViewController {
     
     func favoriteEvent() {
-        YRRouter.openURL("word/list", query: ["type" : YXWordListType.collected], animated: true)
+        let home = UIStoryboard(name: "Home", bundle: nil)
+        let wordListViewController = home.instantiateViewController(withIdentifier: "YXWordListViewController") as! YXWordListViewController
+        self.navigationController?.pushViewController(wordListViewController, animated: true)
+//        YRRouter.openURL("word/list", query: ["type" : YXWordListType.collected], animated: true)
     }
     
     func wrongWordEvent() {
