@@ -54,7 +54,7 @@
 {
     self = [super init];
     if (self) {
-        self.feedViewModel = [[YXFeedBackViewModel alloc]init];
+//        self.feedViewModel = [[YXFeedBackViewModel alloc]init];
     }
     return self;
 }
@@ -62,7 +62,8 @@
 - (void)viewDidLoad {
     self.backType = BackWhite;
     [super viewDidLoad];
-    
+    self.feedViewModel = [[YXFeedBackViewModel alloc]init];
+
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewEditChanged:) name:UITextViewTextDidChangeNotification object:self.feedBackTextView];
 
     self.view.backgroundColor = UIColorOfHex(0xF6F8FA);

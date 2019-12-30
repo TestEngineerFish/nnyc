@@ -129,6 +129,8 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
             timer?.invalidate()
             timer = nil
             
+            countingDown = 60
+
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitle("重新获取", for: .normal)
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
@@ -151,7 +153,8 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
             
             if slidingVerificationCodeModel.isSuccessSendSms == 1 {
                 self.authCodeTextField.becomeFirstResponder()
-
+                self.slidingVerificationCode = nil
+                
             } else if slidingVerificationCodeModel.shouldShowSlidingVerification == 1 {
                 RegisterSliderView.show(.puzzle) { (isSuccess) in
                     if isSuccess {

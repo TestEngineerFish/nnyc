@@ -118,7 +118,8 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xF5F5F5)
-        
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+
         fetchWordBooks()
     }
     

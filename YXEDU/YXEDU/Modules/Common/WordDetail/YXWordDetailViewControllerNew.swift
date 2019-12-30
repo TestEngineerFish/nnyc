@@ -18,8 +18,8 @@ class YXWordDetailViewControllerNew: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let request = YXWordListRequest.didCollectWord(wordId: wordId)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+        let didCollectWordRequest = YXWordListRequest.didCollectWord(wordId: wordId)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: didCollectWordRequest, success: { (response) in
             if response.data?.didCollectWord == 1 {
                 self.collectionButton.image = #imageLiteral(resourceName: "unCollectWord")
 
@@ -31,10 +31,26 @@ class YXWordDetailViewControllerNew: UIViewController {
             print("❌❌❌\(error)")
         }
         
-        if let word = YXWordBookDaoImpl().selectWord(wordId: wordId) {
-            wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
-            self.view.addSubview(wordDetailView)
+        let wordDetailRequest = YXWordBookRequest.wordDetail(wordId: wordId, isComplexWord: isComplexWord)
+        YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { (response) in
+            guard let word = response.data else { return }
+            
+            self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
+            self.view.addSubview(self.wordDetailView)
+            
+        }) { error in
+            print("❌❌❌\(error)")
         }
+        
+//        if let word = YXWordBookDaoImpl().selectWord(wordId: wordId) {
+//            wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
+//            self.view.addSubview(wordDetailView)
+//        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {

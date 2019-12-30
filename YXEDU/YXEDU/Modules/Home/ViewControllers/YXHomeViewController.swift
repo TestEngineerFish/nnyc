@@ -94,11 +94,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
         loadData()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let careerModel = YXCareerModel(item: "learn", bookId: 0, sort: 1)
