@@ -225,7 +225,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 self.wordListViews[indexPath.row]?.shouldShowEditButton = false
                 self.wordListViews[indexPath.row]?.shouldShowBottomView = false
                 
-                let request = YXWordListRequest.wordList(type: indexPath.row)
+                let request = YXWordListRequest.wordList(type: indexPath.row + 1)
                 YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
                     guard let learnedWords = response.dataArray else { return }
                     self.wordListViews[indexPath.row]?.words = learnedWords
@@ -241,7 +241,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 self.wordListViews[indexPath.row]?.shouldShowEditButton = true
                 self.wordListViews[indexPath.row]?.shouldShowBottomView = false
                 
-                let request = YXWordListRequest.wordList(type: indexPath.row)
+                let request = YXWordListRequest.wordList(type: 0)
                 YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
                     guard let learnedWords = response.dataArray else { return }
                     self.wordListViews[indexPath.row]?.words = learnedWords
