@@ -11,6 +11,10 @@ import UIKit
  * 所有需要显示到最顶层的页面，必须继承自该View
  */
 class YXTopWindowView: YXView {
+    
+    var closeEvent: (() -> Void)?
+    
+    
     var contentView = UIView()
     
     override init(frame: CGRect) {

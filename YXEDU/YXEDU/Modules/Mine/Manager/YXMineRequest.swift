@@ -11,6 +11,7 @@ import UIKit
 public enum YXMineRequest: YYBaseRequest {
     case badgeList
     case latestBadge
+    case badgeDisplayReport
 }
 
 extension YXMineRequest {
@@ -18,6 +19,8 @@ extension YXMineRequest {
         switch self {
         case .badgeList, .latestBadge:
             return .get
+        case .badgeDisplayReport:
+            return .post
         }
     }
 }
@@ -29,6 +32,8 @@ extension YXMineRequest {
             return YXAPI.Profile.badgeList
         case .latestBadge:
             return YXAPI.Profile.latestBadge
+        case .badgeDisplayReport:
+                return YXAPI.Profile.badgeDisplayReport
         }
     }
 }

@@ -25,30 +25,30 @@ class YXSearchHistoryDaoImpl: YYDatabase, YXSearchHistoryDao {
         while result.next() {
             var word = YXSearchWordModel()
             
-            let partOfSpeechAndMeaningsData: Data! = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]").data(using: .utf8)!
-            let deformationsData: Data! = (result.string(forColumn: "deformations") ?? "[]").data(using: .utf8)!
-            let examplessData: Data! = (result.string(forColumn: "examples") ?? "[]").data(using: .utf8)!
-            let fixedMatchsData: Data! = (result.string(forColumn: "fixedMatchs") ?? "[]").data(using: .utf8)!
-            let commonPhrasesData: Data! = (result.string(forColumn: "commonPhrases") ?? "[]").data(using: .utf8)!
-            let wordAnalysisData: Data! = (result.string(forColumn: "wordAnalysis") ?? "[]").data(using: .utf8)!
-            let detailedSyntaxsData: Data! = (result.string(forColumn: "detailedSyntaxs") ?? "[]").data(using: .utf8)!
+            let partOfSpeechAndMeaningsDataString: String! = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]")
+            let deformationsDataString: String! = (result.string(forColumn: "deformations") ?? "[]")
+            let examplessDatStringa: String! = (result.string(forColumn: "examples") ?? "[]")
+            let fixedMatchsDataString: String! = (result.string(forColumn: "fixedMatchs") ?? "[]")
+            let commonPhrasesDataString: String! = (result.string(forColumn: "commonPhrases") ?? "[]")
+            let wordAnalysisDataString: String! = (result.string(forColumn: "wordAnalysis") ?? "[]")
+            let detailedSyntaxsDataString: String! = (result.string(forColumn: "detailedSyntaxs") ?? "[]")
             let synonymsData: Data! = (result.string(forColumn: "synonyms") ?? "[]").data(using: .utf8)!
             let antonymsData: Data! = (result.string(forColumn: "antonyms") ?? "[]").data(using: .utf8)!
             
             word.wordId = Int(result.int(forColumn: "wordId"))
             word.word = result.string(forColumn: "word")
-            word.partOfSpeechAndMeanings = try? (JSONSerialization.jsonObject(with: partOfSpeechAndMeaningsData, options: .mutableContainers) as! [YXWordPartOfSpeechAndMeaningModel])
+            word.partOfSpeechAndMeanings = [YXWordPartOfSpeechAndMeaningModel](JSONString: partOfSpeechAndMeaningsDataString)
             word.imageUrl = result.string(forColumn: "imageUrl")
             word.americanPhoneticSymbol = result.string(forColumn: "americanPhoneticSymbol")
             word.englishPhoneticSymbol = result.string(forColumn: "englishPhoneticSymbol")
             word.americanPronunciation = result.string(forColumn: "americanPronunciation")
             word.englishPronunciation = result.string(forColumn: "englishPronunciation")
-            word.deformations = try? (JSONSerialization.jsonObject(with: deformationsData, options: .mutableContainers) as! [YXWordDeformationModel])
-            word.examples = try? (JSONSerialization.jsonObject(with: examplessData, options: .mutableContainers) as! [YXWordExampleModel])
-            word.fixedMatchs = try? (JSONSerialization.jsonObject(with: fixedMatchsData, options: .mutableContainers) as! [YXWordFixedMatchModel])
-            word.commonPhrases = try? (JSONSerialization.jsonObject(with: commonPhrasesData, options: .mutableContainers) as! [YXWordCommonPhrasesModel])
-            word.wordAnalysis = try? (JSONSerialization.jsonObject(with: wordAnalysisData, options: .mutableContainers) as! [YXWordAnalysisModel])
-            word.detailedSyntaxs = try? (JSONSerialization.jsonObject(with: detailedSyntaxsData, options: .mutableContainers) as! [YXWordDetailedSyntaxModel])
+            word.deformations = [YXWordDeformationModel](JSONString: deformationsDataString)
+            word.examples = [YXWordExampleModel](JSONString: examplessDatStringa)
+            word.fixedMatchs = [YXWordFixedMatchModel](JSONString: fixedMatchsDataString)
+            word.commonPhrases = [YXWordCommonPhrasesModel](JSONString: commonPhrasesDataString)
+            word.wordAnalysis = [YXWordAnalysisModel](JSONString: wordAnalysisDataString)
+            word.detailedSyntaxs = [YXWordDetailedSyntaxModel](JSONString: detailedSyntaxsDataString)
             word.synonyms = try? (JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers) as! [String])
             word.antonyms = try? (JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers) as! [String])
             word.gradeId = Int(result.int(forColumn: "gradeId"))

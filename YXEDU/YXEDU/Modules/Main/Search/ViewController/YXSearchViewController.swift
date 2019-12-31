@@ -20,6 +20,18 @@ class YXSearchViewController: YXTableViewController {
         return .lightContent
     }
 
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.setNavigationBarHidden(true, animated: animated)
+//    }
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        navigationController?.setNavigationBarHidden(false, animated: animated)
+//    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
@@ -80,8 +92,16 @@ class YXSearchViewController: YXTableViewController {
     }
     
     func loadHistoryData() {
-        self.tableView.tableHeaderView = tableHeaderView
+        
         self.dataSource = dao.selectWord()
+        
+        if self.dataSource.count == 0 {
+            self.isHiddenEmptyView = false
+            self.tableView.tableHeaderView = nil
+        } else {
+            self.tableView.tableHeaderView = tableHeaderView
+        }
+        
         self.tableView.reloadData()
     }
 }
@@ -111,8 +131,13 @@ extension YXSearchViewController {
         guard let model = dataSource[indexPath.row] as? YXSearchWordModel else { return }
         let result = dao.insertWord(word: model)
         print(result)
-        let vc = YXReviewPlanDetailViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        let home = UIStoryboard(name: "Home", bundle: nil)
+        let wordDetialViewController = home.instantiateViewController(withIdentifier: "WordDetail") as! YXWordDetailViewControllerNew
+        wordDetialViewController.wordId = model.wordId ?? 0
+        wordDetialViewController.isComplexWord = model.isComplexWord
+        self.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        
     }
 }
 

@@ -60,6 +60,7 @@ struct YXWordExerciseModel: Mappable {
         
     /// 得分
     var score: Int = 10
+    var listenScore: Int = 0
         
     //MARK: - 以下几个属性用于本地记录进度时使用
     /// 是否根据得分选择题型

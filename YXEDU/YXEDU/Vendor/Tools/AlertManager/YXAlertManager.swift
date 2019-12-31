@@ -98,6 +98,21 @@ class YXAlertManager {
         
     }
     
+    /// 检查最新徽章
+    func checkLatestBadge() {
+        let request = YXMineRequest.latestBadge
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXBadgeModel>.self, request: request, success: { (response) in
+            guard let badgeList = response.dataArray, badgeList.count > 0 else { return }
+            
+            let badgeDetailView = YXBadgeDetailView(badge: badgeList.first!, didCompleted: true)
+            badgeDetailView.show()
+            
+                        
+        }) { error in
+            print("❌❌❌\(error)")
+        }
+    }
+    
     
     
     @objc private func processServiceStop(notification: Notification) {

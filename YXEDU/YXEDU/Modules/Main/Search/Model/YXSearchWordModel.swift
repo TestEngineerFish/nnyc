@@ -20,6 +20,8 @@ struct YXSearchWordModel: YXBaseWordModel {
     var englishPhoneticSymbol: String?
     
     var isLearn: Bool = false
+    // 是否是综合词
+    var isComplexWord: Int?
     
     init() {}
     init?(map: Map) {
@@ -29,6 +31,7 @@ struct YXSearchWordModel: YXBaseWordModel {
     mutating func mapping(map: Map) {
         baseMapping(map: map)
         isLearn <- map["is_learn"]
+        isComplexWord <- map["is_synthesis"]
     }
 }
 

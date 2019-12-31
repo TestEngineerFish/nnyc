@@ -33,6 +33,10 @@ struct YXAPI {
                 
         /// 最新徽章
         static let latestBadge = "/api/v1/user/badge/new"
+        
+        /// 徽章展示上报接口
+        static let badgeDisplayReport = "api/v1/user/badge/report"
+        
     }
     
     //MARK: - 练习模块

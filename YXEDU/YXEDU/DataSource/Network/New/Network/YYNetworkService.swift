@@ -12,7 +12,7 @@ import AlamofireObjectMapper
 import ObjectMapper
 import CocoaLumberjack
 
-@objc class YYNetworkService: NSObject {
+struct YYNetworkService {
     public static let `default` = YYNetworkService()
     public let networkManager = NetworkReachabilityManager()
     
@@ -21,25 +21,19 @@ import CocoaLumberjack
     
     private var sessionManager: SessionManager!
     
-//    private var defaultConfiguration: URLSessionConfiguration {
-//        let _configuration = URLSessionConfiguration.default
-//        _configuration.timeoutIntervalForRequest = timeout
-//        return _configuration
-//    }
+    private var defaultConfiguration: URLSessionConfiguration {
+        let _configuration = URLSessionConfiguration.default
+        _configuration.timeoutIntervalForRequest = timeout
+        return _configuration
+    }
     
     
-    private override init() {
-        super.init()
-        
+    private init() {
         // 网络权限管理
         YXNetworkAuthManager.default.check()
         
-        let _configuration = URLSessionConfiguration.default
-        _configuration.timeoutIntervalForRequest = timeout
-        
-        sessionManager = Alamofire.SessionManager.init(configuration: _configuration)
+        sessionManager = Alamofire.SessionManager.init(configuration: self.defaultConfiguration)
         sessionManager.session.delegateQueue.maxConcurrentOperationCount = maxOperationCount
-        
     }
     
     //MARK: ----------------- Request -----------------
