@@ -142,7 +142,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     func showImageView() {
         self.imageView?.isHidden = false
         self.imageView?.snp.updateConstraints({ (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(150), height: AdaptSize(109)))
+            make.size.equalTo(CGSize(width: AdaptSize(150), height: AdaptSize(108 + 1/3)))
         })
     }
 

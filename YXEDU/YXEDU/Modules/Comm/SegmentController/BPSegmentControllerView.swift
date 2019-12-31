@@ -85,7 +85,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     func reloadData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            self.selectItem(with: self.lastSelectedIndex)
+            self.selectItem(with: self.lastSelectedIndex, animation: false)
         }
         self.headerScrollView.reloadData()
         self.contentScrollView.reloadData()
@@ -205,7 +205,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     /// - Parameters:
     ///   - indexPath: 选中的位置
     ///   - collectionView: 视图对象
-    func selectItem(with indexPath: IndexPath) {
+    func selectItem(with indexPath: IndexPath, animation: Bool = true) {
 
         // 通知业务层处理点击事件
         self.delegate?.segment(didSelectRowAt: indexPath, previousSelectRowAt: self.lastSelectedIndex)
@@ -213,16 +213,16 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         // 如果选中不是已选中的Item,则更新最后选中位置
 //        if indexPath != self.lastSelectedIndex {
             // 滑动到中间
-            self.scrollView(to: indexPath)
+            self.scrollView(to: indexPath, animation: animation)
             // 更新选中
             self.lastSelectedIndex = indexPath
 //        }
     }
 
     /// 滑动到对应位置
-    private func scrollView(to indexPath: IndexPath) {
-        self.headerScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        self.contentScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    private func scrollView(to indexPath: IndexPath, animation: Bool) {
+        self.headerScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        self.contentScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
     }
 
     // TODO: ==== Tools ===

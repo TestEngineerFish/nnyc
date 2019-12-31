@@ -396,6 +396,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 }
             }()
             // 显示结果动画
+            self.exerciseModel.score = self.lastLevel
             self.showResultAnimation()
             self.status = .showResult
             self.recordAudioLabel.text = "按住跟读"
