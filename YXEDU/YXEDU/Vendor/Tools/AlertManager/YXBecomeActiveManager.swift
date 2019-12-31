@@ -17,7 +17,7 @@ class YXBecomeActiveManager: NSObject {
      * 检测口令 [回到前台时]
      * @params startUp  是否刚启动
      */
-    public func check() {
+    public func check(_ completion: (() -> Void)? ) {
         // 学习中，不要识别口令
         if let _ = YYCache.object(forKey: .learningState) {
             return
@@ -28,12 +28,18 @@ class YXBecomeActiveManager: NSObject {
                 if let commandModel = model {
                     let commandView = YXReviewPlanCommandView()
                     commandView.model = commandModel
-                    commandView.show()
-                    
                     commandView.detailEvent = {
                         self.goToReviewPlanDetail(planId: commandModel.planId, fromUser: commandModel.nickname)
                         commandView.removeFromSuperview()
                     }
+                    
+                    if completion == nil {
+                        commandView.show()
+                    } else {
+                        completion?()
+                    }
+                } else {
+                    completion?()
                 }
                 
                 UIPasteboard.general.string = ""
@@ -42,13 +48,13 @@ class YXBecomeActiveManager: NSObject {
         
     }
     
-    public func startupCheck() {
+    public func startupCheck(_ completion: (() -> Void)? ) {
         if isStartUp {
             return
         }
         isStartUp = true
         
-        check()
+        check(completion)
     }
     
     

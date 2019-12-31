@@ -52,4 +52,15 @@ struct YXBadgeModel: Mappable {
 }
 
 
+struct YXBadgeReportModel: Mappable {
+    var state: Int?
+    
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        state <- map["state"]        
+    }
+}
 

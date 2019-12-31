@@ -138,6 +138,10 @@ struct YXAPI {
     struct Setting {
         /// 检查版本接口
         static let checkVersion = "/api/v1/checkversion"
+        
+        /// 老用户更新版本后的提示，上报接口
+        static let oldUserReport = "api/v1/user/setting"
+        
 
     }
 }

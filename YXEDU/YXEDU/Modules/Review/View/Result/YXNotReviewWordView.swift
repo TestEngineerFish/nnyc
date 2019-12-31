@@ -36,10 +36,10 @@ class YXNotReviewWordView: YXTopWindowView {
     
     override func createSubviews() {
         
-        contentView.addSubview(imageView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(descLabel)
-        contentView.addSubview(doneButton)
+        mainView.addSubview(imageView)
+        mainView.addSubview(titleLabel)
+        mainView.addSubview(descLabel)
+        mainView.addSubview(doneButton)
     }
     
     
@@ -68,7 +68,7 @@ class YXNotReviewWordView: YXTopWindowView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        contentView.snp.makeConstraints { (make) in
+        mainView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.width.equalTo(AS(267))
             make.height.equalTo(AS(303))

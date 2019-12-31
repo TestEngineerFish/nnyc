@@ -8,8 +8,9 @@
 
 import UIKit
 
-class YXBadgeDetailView: UIView {
+class YXBadgeDetailView: YXTopWindowView {
 
+    public var isReport: Bool = false
     private var badge: YXBadgeModel!
     private var didCompleted = false
 
@@ -96,6 +97,16 @@ class YXBadgeDetailView: UIView {
     }
 
     @IBAction func close(_ sender: Any) {
+        if isReport {
+            let request = YXMineRequest.badgeDisplayReport(badgeId: badge.ID ?? 0)
+            YYNetworkService.default.request(YYStructResponse<YXBadgeReportModel>.self, request: request, success: { (response) in
+                guard let model = response.data else { return }
+                print("徽章显示，上报状态: ", model.state == 1)
+            }) { error in
+                print("❌❌❌\(error)")
+            }
+        }
+        
         UIView.animate(withDuration: 0.2, animations: {
             self.contentView.alpha = 0
             
@@ -104,7 +115,7 @@ class YXBadgeDetailView: UIView {
         })
     }
     
-    func show() {
+    override func show() {
         kWindow.addSubview(self)
         containerView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         containerView.alpha = 0

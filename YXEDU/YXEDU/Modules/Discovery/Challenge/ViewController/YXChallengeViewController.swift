@@ -26,6 +26,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.requestChallengeData()
+        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
     }
 
     private func setSubviews() {

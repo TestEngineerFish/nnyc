@@ -54,22 +54,22 @@ class YXReviewResultView: YXTopWindowView {
     }
         
     override func createSubviews() {
-        contentView.addSubview(imageView)
-        contentView.addSubview(starView)
+        mainView.addSubview(imageView)
+        mainView.addSubview(starView)
         
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(starTitleLabel)
+        mainView.addSubview(titleLabel)
+        mainView.addSubview(starTitleLabel)
         
-        contentView.addSubview(subTitleLable1)
-        contentView.addSubview(subTitleLable2)
+        mainView.addSubview(subTitleLable1)
+        mainView.addSubview(subTitleLable2)
         
-        contentView.addSubview(pointLabel1)
-        contentView.addSubview(pointLabel2)
+        mainView.addSubview(pointLabel1)
+        mainView.addSubview(pointLabel2)
         
-        contentView.addSubview(tableView)
+        mainView.addSubview(tableView)
         
-        contentView.addSubview(shareButton)
-        contentView.addSubview(closeButton)
+        mainView.addSubview(shareButton)
+        mainView.addSubview(closeButton)
     }
     
     override func bindProperty() {
@@ -111,7 +111,7 @@ class YXReviewResultView: YXTopWindowView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        contentView.snp.makeConstraints { (make) in
+        mainView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
         

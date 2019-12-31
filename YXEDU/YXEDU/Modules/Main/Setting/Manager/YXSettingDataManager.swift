@@ -30,4 +30,13 @@ struct YXSettingDataManager {
         }
     }
     
+    func reportOldUserTips(completion: ((_ model: YXBadgeReportModel?, _ errorMsg: String?) -> Void)?) {
+        let request = YXSettingRequest.oldUserReport(data: "{\"old_user_update_msg\" : 1}")
+        YYNetworkService.default.request(YYStructResponse<YXBadgeReportModel>.self, request: request, success: { (response) in
+            completion?(response.data, nil)
+        }) { (error) in
+            completion?(nil, error.message)
+        }
+    }
+    
 }

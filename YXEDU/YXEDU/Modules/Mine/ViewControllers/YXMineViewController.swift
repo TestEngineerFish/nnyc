@@ -46,6 +46,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         navigationController?.setNavigationBarHidden(true, animated: animated)
         
         loadData()
+        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

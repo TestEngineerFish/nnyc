@@ -83,8 +83,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
-        
-        YXAlertManager.default.checkOldUser()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +91,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         navigationController?.setNavigationBarHidden(true, animated: animated)
 
         loadData()
+        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

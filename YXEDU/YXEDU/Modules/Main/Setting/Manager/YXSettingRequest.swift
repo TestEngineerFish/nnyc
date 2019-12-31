@@ -12,6 +12,7 @@ import UIKit
 public enum YXSettingRequest: YYBaseRequest {
     case checkVersion
     case checkCommand(command: String)
+    case oldUserReport(data: String)
 }
 
 extension YXSettingRequest {
@@ -19,6 +20,8 @@ extension YXSettingRequest {
      switch self {
      case .checkVersion, .checkCommand:
          return .get
+     case .oldUserReport:
+        return .post
      }
  }
 }
@@ -30,6 +33,8 @@ extension YXSettingRequest {
             return YXAPI.Setting.checkVersion
         case .checkCommand:
             return YXAPI.Review.checkCommand
+        case .oldUserReport:
+            return YXAPI.Setting.oldUserReport
         }
     }
 }
@@ -39,6 +44,8 @@ extension YXSettingRequest {
         switch self {
         case .checkCommand(let command):
             return ["code" : command]
+        case .oldUserReport(let data):
+            return ["data" : data]
         default:
         return nil
         }

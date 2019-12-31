@@ -11,7 +11,7 @@ import UIKit
 public enum YXMineRequest: YYBaseRequest {
     case badgeList
     case latestBadge
-    case badgeDisplayReport
+    case badgeDisplayReport(badgeId: Int)
 }
 
 extension YXMineRequest {
@@ -23,9 +23,7 @@ extension YXMineRequest {
             return .post
         }
     }
-}
 
-extension YXMineRequest {
     var path: String {
         switch self {
         case .badgeList:
@@ -34,6 +32,15 @@ extension YXMineRequest {
             return YXAPI.Profile.latestBadge
         case .badgeDisplayReport:
                 return YXAPI.Profile.badgeDisplayReport
+        }
+    }
+    
+    var parameters: [String : Any?]? {
+        switch self {
+        case .badgeDisplayReport(let badgeId):
+            return ["user_badge_id" : badgeId]
+        default:
+            return nil
         }
     }
 }

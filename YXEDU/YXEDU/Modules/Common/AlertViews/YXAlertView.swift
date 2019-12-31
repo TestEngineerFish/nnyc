@@ -13,7 +13,7 @@ enum YXAlertViewType {
     case inputable
 }
 
-class YXAlertView: UIView, UITextFieldDelegate {
+class YXAlertView: YXTopWindowView, UITextFieldDelegate {
 
     var cancleClosure: (() -> Void)?
     var doneClosure: ((_ string: String?) -> Void)?
@@ -145,7 +145,7 @@ class YXAlertView: UIView, UITextFieldDelegate {
         clearButton.isHidden = true
     }
     
-    func show() {
+    override func show() {
         kWindow.addSubview(self)
         containerView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         containerView.alpha = 0

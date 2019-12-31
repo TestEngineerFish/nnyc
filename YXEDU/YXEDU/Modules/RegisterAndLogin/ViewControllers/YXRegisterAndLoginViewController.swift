@@ -236,10 +236,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
             guard let userInfomation = response.data else { return }
             
-            if let updateMsg = userInfomation.oldUserUpdateMessage, updateMsg.isNotEmpty {
-                YYCache.set(updateMsg, forKey: YXLocalKey.oldUserVersionTips.rawValue)
-            }
-                        
             guard userInfomation.didBindPhone == 1 else {
                 self.performSegue(withIdentifier: "Bind", sender: self)
                 return

@@ -39,14 +39,14 @@ class YXReviewPlanCommandView: YXTopWindowView {
         
     override func createSubviews() {
         
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(subTitleLable)
-        contentView.addSubview(descLabel)
-        contentView.addSubview(iconImageView)
+        mainView.addSubview(titleLabel)
+        mainView.addSubview(subTitleLable)
+        mainView.addSubview(descLabel)
+        mainView.addSubview(iconImageView)
         
-        contentView.addSubview(shareImageView)
-        contentView.addSubview(detailButton)
-        contentView.addSubview(closeButton)
+        mainView.addSubview(shareImageView)
+        mainView.addSubview(detailButton)
+        mainView.addSubview(closeButton)
     }
     
     override func bindProperty() {        
@@ -80,7 +80,7 @@ class YXReviewPlanCommandView: YXTopWindowView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        contentView.snp.makeConstraints { (make) in
+        mainView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.width.equalTo(AS(304))
             make.height.equalTo(AS(214))
