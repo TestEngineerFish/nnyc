@@ -44,12 +44,15 @@ class YXBecomeActiveManager: NSObject {
                 
                 UIPasteboard.general.string = ""
             }
+        } else {
+            completion?()
         }
         
     }
     
     public func startupCheck(_ completion: (() -> Void)? ) {
         if isStartUp {
+            completion?()
             return
         }
         isStartUp = true

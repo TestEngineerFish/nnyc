@@ -20,6 +20,8 @@ class YXExcerciseProgressManager: NSObject {
     
     /// 本地存储Key
     enum LocalKey: String {
+        case daliyKeys = "Exercise_Daliy_Key_List"
+        
         case new = "new.txt"
         case review = "review.txt"
         case current = "current.txt"
@@ -45,27 +47,14 @@ class YXExcerciseProgressManager: NSObject {
         super.init()
     }
     
-//    init(bookId: Int?, unitId: Int?) {
-//        super.init()
-//
-//        self.bookId = bookId
-//        self.unitId = unitId
-//
-//        // 如果传过来是空的，就从本地获取
-//        let data = fetchBookIdAndUnitId()
-//        if self.bookId == nil {
-//            self.bookId = data.0
-//        }
-//        if self.unitId == nil {
-//            self.unitId = data.1
-//        }
-//    }
-    
     
     //MARK: - Get
     
     /// 关卡是否上报
     func isReport() -> Bool {
+        // 清除之前的数据
+        clearBeforeData()
+        
         if let _ = YYCache.object(forKey: key(.report)) as? Bool {
             return false
         }
@@ -74,6 +63,9 @@ class YXExcerciseProgressManager: NSObject {
     
     /// 关卡是否学完
     func isCompletion() -> Bool {
+        // 清除之前的数据
+        clearBeforeData()
+        
         if let _ = YYCache.object(forKey: key(.completion)) as? Bool {
             return false
         }
@@ -187,7 +179,6 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    
     //MARK: - Set
     
     func setSkipNewWord() {
@@ -251,6 +242,17 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.set(unitId, forKey: key(.unitId))
     }
     
+    private func addDaliyKey(daliy: String) {
+        if var list = YYCache.object(forKey: LocalKey.daliyKeys.rawValue) as? [String] {
+            if !list.contains(daliy) {
+                list.append(daliy)
+                YYCache.set(list, forKey: LocalKey.daliyKeys.rawValue)
+            }
+        } else {
+            YYCache.set([daliy], forKey: LocalKey.daliyKeys.rawValue)
+        }
+    }
+    
 //    func initBookIdAndUnitId(bookId: Int?, unitId: Int?) {
 //        self.bookId = bookId
 //        self.unitId = unitId
@@ -268,7 +270,7 @@ class YXExcerciseProgressManager: NSObject {
     
 
     /// 完成上报
-    func completionReport() {
+    func completionReport(daliy: String? = nil) {
         YYCache.remove(forKey: key(.bookId))
         YYCache.remove(forKey: key(.unitId))
         YYCache.remove(forKey: key(.report))
@@ -290,16 +292,40 @@ class YXExcerciseProgressManager: NSObject {
     //MARK: - Private
     private func key(_ key: LocalKey) -> String {
         
+        let today = self.today()
         let bid = bookId == nil ? "b_" :  "\(bookId!)_"
         let uid = unitId == nil ? "c_" :  "\(unitId!)_"
         let uuid = YXConfigure.shared().uuid ?? ""
         let pid = planId == nil ? "a_" :  "\(planId!)_"
                 
+        self.addDaliyKey(daliy: today)
+        
         if dataType == .base {
-            return "\(dataType.rawValue)_\(bid)_\(uid)_\(uuid)_pNull" + key.rawValue
+            return today + "_\(dataType.rawValue)_\(bid)_\(uid)_\(uuid)_pNull" + key.rawValue
         }
-        return "\(dataType.rawValue)_bNull_uNull_\(uuid)_\(pid)" + key.rawValue
+        return today + "_\(dataType.rawValue)_bNull_uNull_\(uuid)_\(pid)" + key.rawValue
     }
+    
+    private func today() -> String {
+        let format = DateFormatter()
+        format.dateFormat = "yyyyMMdd"
+        return format.string(from: Date())
+    }
+    
+    
+    private func clearBeforeData() {
+        guard let list = YYCache.object(forKey: LocalKey.daliyKeys.rawValue) as? [String]  else {
+            return
+        }
+        
+        let today = self.today()
+        for daliy in list {
+            if daliy != today {
+                completionReport(daliy: daliy)
+            }
+        }        
+    }
+    
     
     /// 保持到本地文件
     /// - Parameter exerciseModels: 数据

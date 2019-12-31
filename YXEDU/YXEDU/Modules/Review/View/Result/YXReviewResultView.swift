@@ -11,8 +11,6 @@ import UIKit
 
 /// 复习结果页
 class YXReviewResultView: YXTopWindowView {
-
-//    var shareEvent: (() -> ())?
     
     var type: YXExerciseDataType = .aiReview
     
@@ -105,7 +103,6 @@ class YXReviewResultView: YXTopWindowView {
         closeButton.setImage(UIImage(named: "review_learning_close"), for: .normal)
         closeButton.addTarget(self, action: #selector(clickCloseButton), for: .touchUpInside)
         
-        tableView.backgroundColor = UIColor.red.withAlphaComponent(0.4)
     }
     
     override func layoutSubviews() {

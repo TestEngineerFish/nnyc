@@ -90,15 +90,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 网络状态监听
         YYNetworkService.default.startMonitorNetwork()
         YXAlertCheckManager.default.checkServiceState()
-//        YXAlertManager.default.checkVersion()
         
+        // 启动时，删除学习中状态
         YYCache.remove(forKey: .learningState)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//            let vc = YXReviewResultView(type: .ai)
-//            vc.model = nil
-//            vc.show()
-        }
 
     }
 }

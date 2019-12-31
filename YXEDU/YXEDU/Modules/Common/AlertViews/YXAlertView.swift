@@ -32,8 +32,7 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
     var shouldDismissWhenTapBackground = false {
         didSet {
             if shouldDismissWhenTapBackground {
-                backgroundView.isUserInteractionEnabled = true
-                
+                backgroundView.isUserInteractionEnabled = true                
             } else {
                 backgroundView.isUserInteractionEnabled = false
             }

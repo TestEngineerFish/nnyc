@@ -66,7 +66,8 @@ class YXAlertCheckManager {
                     alertView.shouldOnlyShowOneButton = true
                     alertView.tag = YXAlertWeightType.updateVersion
                 }
-                                                
+                
+                alertView.shouldDismissWhenTapBackground = false
                 alertView.titleLabel.text = "版本更新"
                 alertView.descriptionLabel.text = versionModel.content
                 alertView.doneClosure = { (str) in
@@ -97,9 +98,10 @@ class YXAlertCheckManager {
             }
             
             let alertView = YXAlertView()
-            alertView.titleLabel.text = "版本更新"
+            alertView.titleLabel.text = "提示"
             alertView.descriptionLabel.text = userInfomation.oldUserUpdateMessage
             alertView.shouldOnlyShowOneButton = true
+//            alertView.shouldDismissWhenTapBackground = false
             alertView.tag = YXAlertWeightType.oldUserTips
             alertView.doneClosure = { (string) in
                 YXSettingDataManager().reportOldUserTips { (model, msg) in

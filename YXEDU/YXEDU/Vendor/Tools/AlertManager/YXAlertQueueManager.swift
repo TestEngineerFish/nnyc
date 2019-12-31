@@ -66,6 +66,7 @@ class YXAlertQueueManager: NSObject {
         group.enter()
         queue.async(group: group) {
             YXAlertCheckManager.default.checkVersion {
+                print("====================== 检查版本结束")
                 group.leave()
             }
         }
@@ -73,6 +74,7 @@ class YXAlertQueueManager: NSObject {
         group.enter()
         queue.async(group: group) {
             YXAlertCheckManager.default.checkOldUser {
+                print("====================== 检查老用户结束")
                 group.leave()
             }
         }
@@ -80,6 +82,7 @@ class YXAlertQueueManager: NSObject {
         group.enter()
         queue.async(group: group) {
             YXAlertCheckManager.default.checkCommand(isStartup: true) {
+                print("====================== 检查口令结束")
                 group.leave()
             }
         }
@@ -87,13 +90,17 @@ class YXAlertQueueManager: NSObject {
         group.enter()
         queue.async(group: group) {
             YXAlertCheckManager.default.checkLatestBadge {
+                print("====================== 检查最新徽章结束")
                 group.leave()
             }
         }
         
         // 数据都处理完，才开始弹窗
         group.notify(queue: queue) { [weak self] in
-            self?.showAlert()
+            print("====================== 队列结束")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                 self?.showAlert()
+            }            
         }
     }
     

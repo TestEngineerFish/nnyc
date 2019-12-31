@@ -95,6 +95,11 @@ class YXExerciseDataManager: NSObject {
         newExerciseArray = data.0
         reviewWordArray = data.1
         
+        
+        if (newExerciseArray.count == 0 && reviewWordArray.count == 0) {
+            dataStatus = .empty
+        }
+        
         let turnData = progressManager.loadLocalTurnData()
         currentTurnArray = turnData.0
         previousTurnArray = turnData.1
