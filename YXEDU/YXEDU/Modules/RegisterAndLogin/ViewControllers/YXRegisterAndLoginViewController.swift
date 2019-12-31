@@ -92,6 +92,16 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
         
@@ -369,13 +379,15 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         configure.clOrientationLayOutPortrait = layoutConfigure
         
         configure.customAreaView = { view in
+            let iconBackgroundImageView = UIImageView()
+            iconBackgroundImageView.contentMode = .scaleAspectFill
+            iconBackgroundImageView.image = #imageLiteral(resourceName: "registerAndLoginBackground")
+            
             let iconImageView = UIImageView()
             iconImageView.contentMode = .scaleAspectFill
             iconImageView.image = #imageLiteral(resourceName: "Logo")
             
             let containerView = UIView()
-            containerView.backgroundColor = .white
-            containerView.layer.setDefaultShadow()
             
             let otherLoginButton = UIButton()
             otherLoginButton.setTitle("其他手机号登录", for: .normal)
@@ -403,40 +415,38 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             wechatLoginButton.tag = 2
             wechatLoginButton.setImage(#imageLiteral(resourceName: "Wechat"), for: .normal)
             wechatLoginButton.addTarget(self, action: #selector(self.clickOtherLoginButton), for: .touchUpInside)
-
-            let bottomImageView = UIImageView()
-            bottomImageView.contentMode = .scaleAspectFill
-            bottomImageView.image = #imageLiteral(resourceName: "LoginBackground")
-            
-            view.addSubview(iconImageView)
-            iconImageView.snp.makeConstraints { (make) in
-                make.top.equalTo(94)
-                make.centerX.equalToSuperview()
-                make.height.equalTo(36)
-                make.width.equalTo(150)
-            }
             
             view.addSubview(containerView)
             containerView.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                let a = ((screenHeight - heightOfNavigationBar - heightOfSafeBotom) / 2) + heightOfSafeBotom
-                let b = screenHeight / 2
-                let offset = b - a
-                make.centerY.equalToSuperview().offset(offset - 44)
+                make.center.equalToSuperview()
                 make.leading.trailing.equalToSuperview().inset(20)
-                make.height.equalTo((screenHeight - heightOfNavigationBar) * (246 / 667))
+                make.height.equalTo(screenHeight * (246 / 667))
             }
             
-            view.addSubview(otherLoginButton)
+            view.addSubview(iconBackgroundImageView)
+            iconBackgroundImageView.snp.makeConstraints { (make) in
+                make.top.left.right.equalToSuperview()
+                make.height.lessThanOrEqualTo(196).priorityRequired()
+                make.bottom.lessThanOrEqualTo(containerView.snp.top).offset(-32).priorityRequired()
+            }
+            
+            iconBackgroundImageView.addSubview(iconImageView)
+            iconImageView.snp.makeConstraints { (make) in
+                make.center.equalToSuperview()
+                make.height.equalToSuperview().multipliedBy(0.6)
+                make.width.equalTo(iconBackgroundImageView.snp.height).multipliedBy(0.6)
+            }
+            
+            containerView.addSubview(otherLoginButton)
             otherLoginButton.snp.makeConstraints { (make) in
-                make.top.equalTo(containerView.snp.bottom).offset(12)
-                make.right.equalToSuperview().offset(-20)
+                make.bottom.equalToSuperview()
+                make.centerX.equalToSuperview()
             }
             
             view.addSubview(quickLoginLabel)
             quickLoginLabel.snp.makeConstraints { (make) in
-                make.bottom.greaterThanOrEqualToSuperview().offset(-142).priorityRequired()
-                make.bottom.equalToSuperview().offset(-(142 / 667) * screenHeight).priorityHigh()
+                make.bottom.greaterThanOrEqualToSuperview().offset(-100).priorityRequired()
+                make.bottom.equalToSuperview().offset(-(100 / 667) * screenHeight).priorityHigh()
                 make.centerX.equalToSuperview()
                 make.height.equalTo(17)
                 make.width.equalTo(50)
@@ -470,12 +480,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 make.top.equalTo(lineView2.snp.bottom).offset(32)
                 make.height.width.equalTo(40)
                 make.centerX.equalTo(lineView2).offset(-20)
-            }
-            
-            view.addSubview(bottomImageView)
-            bottomImageView.snp.makeConstraints { (make) in
-                make.left.right.bottom.equalToSuperview()
-                make.height.equalTo(130)
             }
         }
         

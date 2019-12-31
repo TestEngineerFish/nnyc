@@ -18,9 +18,9 @@ PODS:
   - AlamofireObjectMapper (5.1.0):
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 3.3)
-  - BMKLocationKit (1.8.2)
+  - BMKLocationKit (1.8.5)
   - Bugly (2.5.2)
-  - CL_ShanYanSDK (2.3.0.2)
+  - CL_ShanYanSDK (2.3.0.3)
   - CocoaAsyncSocket (7.6.3)
   - CocoaLumberjack (3.6.0):
     - CocoaLumberjack/Core (= 3.6.0)
@@ -33,11 +33,11 @@ PODS:
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - FSCalendar (2.8.1)
-  - Growing (2.8.7)
-  - GrowingAutoTrackKit (2.8.7):
-    - GrowingCoreKit (= 2.8.7)
-  - GrowingCoreKit (2.8.7):
-    - Growing (= 2.8.7)
+  - Growing (2.8.8)
+  - GrowingAutoTrackKit (2.8.8):
+    - GrowingCoreKit (= 2.8.8)
+  - GrowingCoreKit (2.8.8):
+    - Growing (= 2.8.8)
   - HWWeakTimer (1.0)
   - IQKeyboardManager (6.2.1)
   - JCore (2.1.8)
@@ -63,9 +63,9 @@ PODS:
   - Reachability (3.2)
   - SDCycleScrollView (1.75):
     - SDWebImage (>= 4.0.0)
-  - SDWebImage (4.4.7):
-    - SDWebImage/Core (= 4.4.7)
-  - SDWebImage/Core (4.4.7)
+  - SDWebImage (4.4.8):
+    - SDWebImage/Core (= 4.4.8)
+  - SDWebImage/Core (4.4.8)
   - SGQRCode (3.0.1)
   - SnapKit (4.0.1)
   - SSKeychain (1.4.1)
@@ -191,18 +191,18 @@ SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AlamofireObjectMapper: 3395e698901d8b0e6f48b7d0c43bd47875325102
-  BMKLocationKit: 59b49b08dce2dd17bd4b8862d86d2cd3fd3f6b8e
+  BMKLocationKit: fd3d6b4a9a3a1a2763819f56b780bda5fc5b8726
   Bugly: dbac48b55ad469a97cc4321045cd50df8f63d44f
-  CL_ShanYanSDK: 20ef68b3cc6f9e978c49c16b5c5fbaaefcff63b9
+  CL_ShanYanSDK: ca5c2d266ad6dc66865fc53abdd9de3c698ec66b
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaLumberjack: 78b0c238666f4f58db069738ec176f4519557516
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
-  Growing: 00a416c9a7fcb65ee073e8f60758529a3c49602a
-  GrowingAutoTrackKit: 21e73b250a56b37f9dead410e8369009e110fea9
-  GrowingCoreKit: dc334babbca2fedac15191cc116cdf74b23e97aa
+  Growing: 30f5b2e1268936d81dfd80cddafeb94ef468f943
+  GrowingAutoTrackKit: cf6fa2fb93107d83cc0ca0cb354721240fc73390
+  GrowingCoreKit: 6ed1395ef987aeaaf2f0ffe9fc7ee3b5c80eebeb
   HWWeakTimer: 79488095ef2dd8937f94b676d12bd5fa954486e6
   IQKeyboardManager: 964638372b4a61892cc74fdfa6fd26de8c9464a2
   JCore: a7f1dead960d77a97717c73ea8b0aa5b33706491
@@ -220,7 +220,7 @@ SPEC CHECKSUMS:
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
-  SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
+  SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   SGQRCode: bf02d60e18d6660a9d75ff1c8b9b467f064f054e
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
