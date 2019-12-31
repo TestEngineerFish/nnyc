@@ -27,11 +27,11 @@ class RegisterSliderView: UIView {
     var progressView    = UIView()
     let sliderView      = UIView()
     let refreshBtn      = UIButton()
-    let sliderHeight    = CGFloat(20) // 滑动栏高度
+    let sliderHeight    = CGFloat(47) // 滑动栏高度
     let thumbSize       = CGSize(width: 40, height: 40) //滑动栏上滑块的大小
-    let puzzleSize      = CGSize(width: 50, height: 50) //拼图块🧩大小
+    let puzzleSize      = CGSize(width: 52, height: 52) //拼图块🧩大小
     var randomPoint     = CGPoint.zero // 拼图块随机位置
-    let sliderBgColor   = UIColor(red: 212/255, green: 212/255, blue: 212/255, alpha: 1.0)
+    let sliderBgColor   = UIColor.hex(0xEBEBEB)
     var puzzleThumbOffsetX: CGFloat {
         get {
             return margin + (puzzleSize.width - thumbSize.width)/2
@@ -61,20 +61,22 @@ class RegisterSliderView: UIView {
     // ======== 通用视图相关 ========
     let contentView     = UIView() // 容器视图
     let shadowView      = UIView() // 背景视图
-    lazy var resultView: UIView = {
-        // 失败提示视图
-        let view = UIView(frame: CGRect(x: 0, y: imageHeight, width: imageWidth, height: 20))
-        let icon = UIImageView(frame: CGRect(x: margin, y: 2.5, width: view.bounds.height - 5, height: view.bounds.height - 5))
-        let text = UILabel(frame: CGRect(x: icon.frame.maxX + 5, y: 0, width: imageWidth - icon.frame.maxX - 20, height: view.bounds.height))
-        view.addSubview(icon)
-        view.addSubview(text)
-        view.backgroundColor = UIColor.gray.withAlphaComponent(0.25)
-        icon.image = UIImage(named: "send_error")
-        let attrStr = NSMutableAttributedString(string: "验证失败: 手残了吧,别不承认!再试一下吧~", attributes: [NSAttributedString.Key.foregroundColor:UIColor.black])
-        attrStr.addAttributes([NSAttributedString.Key.foregroundColor:UIColor.red], range: NSRange(location: 0, length: 5))
-        text.attributedText = attrStr
-        text.font = UIFont.systemFont(ofSize: 11)
-        self.imageView.insertSubview(view, at: 0)
+    var resultView: UIView = {
+        let view = UIView()
+        var iconImageView: UIImageView = {
+            let imageView = UIImageView()
+            imageView.image = UIImage(named: "send_error")
+            return imageView
+        }()
+        var tipsLabel: UILabel = {
+            let label = UILabel()
+            label.text          = "验证失败，再试一下吧！"
+            label.textColor     = UIColor.hex(0xFF532B)
+            label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
+            label.textAlignment = .center
+            return label
+        }()
+        view.isHidden = true
         return view
     }()
 
@@ -102,7 +104,7 @@ class RegisterSliderView: UIView {
     class func show(_ type: VerifyType, completeBlock block: ((Bool) -> Void)?) {
         let view = RegisterSliderView(frame: UIScreen.main.bounds, type: type)
         view.completeBlock = block
-        UIApplication.shared.keyWindow?.addSubview(view)
+        kWindow.addSubview(view)
     }
 
     init(frame: CGRect, type: VerifyType) {
@@ -454,13 +456,7 @@ class RegisterSliderView: UIView {
         if isSuccess {
             close()
         } else {
-            UIView.animate(withDuration: 0.25, animations: {
-                self.resultView.transform = CGAffineTransform(translationX: 0, y: -20)
-            }) { (finish) in
-                UIView.animate(withDuration: 0.15, delay: 0.75, options: UIView.AnimationOptions.allowUserInteraction, animations: {
-                    self.resultView.transform = .identity
-                }, completion: nil)
-            }
+            self.resultView.isHidden = false
             switch currentType {
             case .puzzle:
                 UIView.animate(withDuration: 0.15) {

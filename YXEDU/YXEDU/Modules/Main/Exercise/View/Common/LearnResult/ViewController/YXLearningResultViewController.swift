@@ -74,7 +74,7 @@ class YXLearningResultViewController: UIViewController {
 
         // 打卡按钮
         let punchSize = CGSize(width: screenWidth - AdaptSize(100), height: AdaptSize(42))
-        punchButton.setTitle("打卡", for: .normal)
+        punchButton.setTitle("打卡分享", for: .normal)
         punchButton.setTitleColor(UIColor.white, for: .normal)
         punchButton.size = punchSize
         punchButton.cornerRadius = punchButton.size.height/2

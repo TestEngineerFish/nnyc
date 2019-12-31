@@ -180,7 +180,18 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         if view == self.currentUnitView {
             return
         }
-        self.showLearnButton(to: view)
+        if self.currentUnitView?.model.status == .some(.uniteIng) {
+            let currentUnitName = self.currentUnitView?.model.unitName ?? ""
+            let toUnitName = view.model.unitName ?? ""
+            let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
+            YXComAlertView.show(.common, in: kWindow, info: "提示", content: content, firstBlock: { (obj) in
+                self.showLearnButton(to: view)
+                self.movePinView(to: view)
+            }, secondBlock: nil)
+        } else {
+            self.showLearnButton(to: view)
+            self.movePinView(to: view)
+        }
     }
 
     // MARK: ==== Event ====

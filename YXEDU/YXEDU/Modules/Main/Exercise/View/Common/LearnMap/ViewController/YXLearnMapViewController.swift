@@ -106,6 +106,20 @@ class YXLearnMapViewController: UIViewController {
 
     @objc private func startLearn(_ button:UIButton) {
         self.learnUnit(button.tag)
+//        guard let selectedModel = self.mapModelList?.filter({ (unitModel) -> Bool in
+//            return unitModel.unitID == button.tag
+//        }).first else {
+//            return
+//        }
+//        if selectedModel.status == .uniteEnd {
+//            let alertView = YXAlertView()
+//            alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
+//            alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
+//            alertView.shouldOnlyShowOneButton = true
+//            alertView.show()
+//        } else {
+//            self.learnUnit(button.tag)
+//        }
     }
 
 
