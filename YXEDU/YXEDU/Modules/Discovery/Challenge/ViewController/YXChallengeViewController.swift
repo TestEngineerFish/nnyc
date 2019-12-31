@@ -10,8 +10,6 @@ import UIKit
 
 class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var headerView = YXChallengeHeaderView()
-    var top3View   = YXChallengeRankTop3View()
     final let kYXChallengeRankCell   = "YXChallengeRankCell"
 
     var challengeModel: YXChallengeModel?
@@ -68,13 +66,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func clickPlayButton(){
-//        let shareVC = YXShareViewController()
-//        shareVC.titleString = "挑战分享"
-//        shareVC.shareType   = .challengeResult
-//        shareVC.gameModel   = YXGameResultModel()
-//        shareVC.hidesBottomBarWhenPushed = true
-//        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
-//        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
             return
         }
@@ -126,6 +117,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func playGame() {
         let vc = YXGameViewController()
         vc.hidesBottomBarWhenPushed = true
+        vc.gameLineId = self.challengeModel?.gameInfo?.gameLinedId
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -157,7 +149,9 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         guard let model = self.challengeModel else {
             return nil
         }
-        let view = UIView()
+        let view       = UIView()
+        let headerView = YXChallengeHeaderView()
+        let top3View   = YXChallengeRankTop3View()
         view.backgroundColor = UIColor.hex(0xE9DDC4)
         view.addSubview(headerView)
         view.addSubview(top3View)

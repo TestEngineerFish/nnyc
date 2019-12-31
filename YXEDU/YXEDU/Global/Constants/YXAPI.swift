@@ -133,6 +133,11 @@ struct YXAPI {
         /// 解锁挑战
         static let unlock         = "/api/v1/game/undo"
     }
+
+    // MARK: - 分享
+    struct Share {
+        static let punch = "/api/v1/user/punch/clock"
+    }
     
     //MARK: - 设置模块
     struct Setting {

@@ -24,6 +24,7 @@ class YXChallengeRankTopView: UIView {
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
         imageView.image = UIImage(named: "challengeAvatar")
+        imageView.layer.masksToBounds = true
         return imageView
     }()
 
@@ -134,6 +135,7 @@ class YXChallengeRankTopView: UIView {
                 make.top.equalToSuperview().offset(AdaptSize(22))
                 make.size.equalTo(CGSize(width: AdaptSize(70), height: AdaptSize(70)))
             }
+            avatarImageView.layer.cornerRadius = AdaptSize(35)
             crownImageView.snp.makeConstraints { (make) in
                 make.left.equalTo(avatarImageView).offset(AdaptSize(-4))
                 make.bottom.equalTo(avatarImageView).offset(AdaptSize(4))
@@ -145,6 +147,7 @@ class YXChallengeRankTopView: UIView {
                 make.top.equalToSuperview().offset(AdaptSize(18))
                 make.size.equalTo(CGSize(width: AdaptSize(59), height: AdaptSize(59)))
             }
+            avatarImageView.layer.cornerRadius = AdaptSize(29.5)
             crownImageView.snp.makeConstraints { (make) in
                 make.left.equalTo(avatarImageView).offset(AdaptSize(-3))
                 make.bottom.equalTo(avatarImageView).offset(AdaptSize(3))

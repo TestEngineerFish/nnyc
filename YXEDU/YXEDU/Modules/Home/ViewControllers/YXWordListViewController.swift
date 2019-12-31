@@ -75,8 +75,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        wordListControllerView = BPSegmentControllerView(BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0, firstIndexPath: IndexPath(item: wordListType.rawValue, section: 0)), frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
+        var config = BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0, firstIndexPath: IndexPath(item: wordListType.rawValue, section: 0))
+        config.headerBackgroundColor  = UIColor.orange1
+        config.contentBackgroundColor = UIColor.orange1
+        wordListControllerView = BPSegmentControllerView(config, frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
         wordListControllerView.delegate = self
         wordListControllerView.reloadData()
         

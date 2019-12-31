@@ -176,12 +176,14 @@ class YXGameHeaderView: UIView {
             guard let config = self.configModel else {
                 return
             }
-            print("header \(self.consumeTime)")
+
             self.consumeTime += 1
             var margin = Double(config.totalTime) - self.consumeTime
             margin = margin < 0 ? 0 : margin
             self.timeLabel.text = self.getCountDownText(Int(margin))
+            print("header \(margin)")
             if margin <= 0 {
+                print("跳转")
                 self.vcDelegate?.showResultView()
                 timer.invalidate()
             }

@@ -20,6 +20,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     var gameModel: YXGameModel?
     var gameResultMode: YXGameResultModel?
     var currentQuestionIndex = 0
+    var gameLineId: Int?
 
     var launchView: YXGameLaunchView?
     var headerView   = YXGameHeaderView()
@@ -92,7 +93,10 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
 
     // MARK: ==== Request ===
     private func requestData() {
-        let request = YXChallengeRequest.playGame
+        guard let gameLineId = self.gameLineId else {
+            return
+        }
+        let request = YXChallengeRequest.playGame(gameId: gameLineId)
         YYNetworkService.default.request(YYStructResponse<YXGameModel>.self, request: request, success: { (response) in
             self.gameModel = response.data
             self.bindData()
@@ -128,7 +132,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
                 }
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
+            YXUtils.showHUD(self.view, title: "\(error.message)")
         }
     }
 
@@ -187,13 +191,13 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     }
 
     func showResultView() {
-        guard let gameModel = self.gameModel, let config = gameModel.config else {
+        guard let version = self.gameLineId else {
             return
         }
         let result = self.headerView.getTimeAndQuestionNumber()
         self.headerView.timer?.invalidate()
         self.questionView.timer?.invalidate()
         self.answerView.isUserInteractionEnabled = false
-        self.requestReport(config.version, total: result.0, question: result.1)
+        self.requestReport(version, total: result.0, question: result.1)
     }
 }

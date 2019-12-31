@@ -11,7 +11,7 @@ import Foundation
 public enum YXChallengeRequest: YYBaseRequest {
     case challengeModel
     case rankedList
-    case playGame
+    case playGame(gameId: Int)
     case report(version: Int, totalTime: Double, number: Int)
     case unlock
 }
@@ -49,10 +49,10 @@ extension YXChallengeRequest {
         switch self {
         case .challengeModel:
             return ["game_id": 1]
-        case .playGame:
-            return ["game_id": 1]
+        case .playGame(let gameId):
+            return ["game_lined_id": gameId]
         case .report(let version, let totalTime, let number):
-            return ["game_lined_id": version, "game_id": 1, "total_time" : totalTime, "num" : number]
+            return ["game_lined_id": version, "total_time" : totalTime, "num" : number]
         case .rankedList:
             return ["game_id": 1, "flag" : "pre"]
         case .unlock:

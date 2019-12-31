@@ -45,6 +45,8 @@ struct BPSegmentConfig {
     var contentItemSize    = CGSize.zero
     var contentItemSpacing = CGFloat.zero
     var firstIndexPath     = IndexPath(item: 0, section: 0)
+    var headerBackgroundColor  = UIColor.clear
+    var contentBackgroundColor = UIColor.clear
 }
 
 class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -106,8 +108,10 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         
         let headerFrame  = CGRect(x: 0, y: 0, width: self.frame.width, height: self.config.headerHeight)
         headerScrollView = BPSegmentView(frame: headerFrame, collectionViewLayout: headerFlowLayout)
+        headerScrollView.backgroundColor = self.config.headerBackgroundColor
         let contentFrame = CGRect(x: 0, y: headerScrollView.frame.maxY, width: self.frame.width, height: self.frame.height - headerScrollView.frame.height)
         contentScrollView = BPSegmentView(frame: contentFrame, collectionViewLayout: contentFlowLayout)
+        contentScrollView.backgroundColor = self.config.contentBackgroundColor
         self.addSubview(headerScrollView)
         self.addSubview(contentScrollView)
 
@@ -174,6 +178,16 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     // TODO: ==== UICollectionViewDelegate ====
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectItem(with: indexPath)
+    }
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        guard let segmentView = collectionView as? BPSegmentView else {
+            return false
+        }
+        if segmentView.isHeaderView {
+            return true
+        } else {
+            return false
+        }
     }
 
     // TODO: ==== UICollectionViewDelegateFlowLayout ====

@@ -70,9 +70,9 @@ class YXChallengeStartButton: UIButton {
             self.setBackgroundImage(UIImage(named: "challengeLockButton"), for: .normal)
         } else {
             if userModel.ranking == 0 {
-                self.customTitleLabel.text = "开始学习"
+                self.customTitleLabel.text = "立即挑战"
             } else {
-                self.customTitleLabel.text = "再来一次"
+                self.customTitleLabel.text = "再战一次"
             }
             self.setBackgroundImage(UIImage(named: "challengeButton"), for: .normal)
         }

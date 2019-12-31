@@ -92,6 +92,9 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
     }
 
     func unselectAnswerButton(_ button: YXLetterButton) {
+        if self.selectedButtonList.isEmpty {
+            return
+        }
         var lackWord = self.wordLabel.text ?? ""
         lackWord.removeLast()
         self.wordLabel.text = lackWord

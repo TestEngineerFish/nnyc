@@ -55,16 +55,20 @@ struct YXChallengeBanner: Mappable {
 
 struct YXChallengeGameInfo: Mappable {
 
-    var unitCoin: Int   = 0
-    var unlockCoin: Int = 0
-    var timeLeft: Int   = 0
+    var unitCoin: Int     = 0
+    var unlockCoin: Int   = 0
+    var timeLeft: Int     = 0
+    var lastRanking: Bool = false
+    var gameLinedId: Int  = 0
 
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        unitCoin   <- map["pre_coin"]
-        unlockCoin <- map["unlock_coin"]
-        timeLeft   <- map["end_time"]
+        unitCoin    <- map["pre_coin"]
+        unlockCoin  <- map["unlock_coin"]
+        timeLeft    <- map["end_time"]
+        lastRanking <- map["last_ranking"]
+        gameLinedId <- map["game_lined_id"]
     }
 }
 

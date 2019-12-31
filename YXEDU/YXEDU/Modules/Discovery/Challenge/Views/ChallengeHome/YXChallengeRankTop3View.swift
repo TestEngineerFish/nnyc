@@ -80,6 +80,8 @@ class YXChallengeRankTop3View: UIView {
             self.emptyImageView.isHidden = false
             self.emptyLabel.isHidden     = false
         } else {
+            self.emptyImageView.isHidden = true
+            self.emptyLabel.isHidden     = true
             self.firstView.isHidden  = false
             self.secondView.isHidden = false
             self.thirdView.isHidden  = false

@@ -214,17 +214,37 @@ class YXShareViewController: YXViewController {
         }
     }
 
+    // MARK: ==== Request ====
+    private func punch() {
+        let request = YXShareRequest.punch
+        YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { (response) in
+            guard let model = response.data else {
+                return
+            }
+            if model.state {
+                print("打卡成功")
+            } else {
+                print("打卡失败")
+            }
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error.message)")
+        }
+    }
+
     // MARK: ==== Share Event ====
     @objc private func shareToQQ() {
         QQApiManager.shared()?.share(shareImage, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+        self.punch()
     }
 
     @objc private func shareToWechat() {
         WXApiManager.shared()?.share(shareImage, toPaltform: .wxSession, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+        self.punch()
     }
 
     @objc private func shareToTimeLine() {
         WXApiManager.shared()?.share(shareImage, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+        self.punch()
     }
 
     // MARK: ==== Tools ====
