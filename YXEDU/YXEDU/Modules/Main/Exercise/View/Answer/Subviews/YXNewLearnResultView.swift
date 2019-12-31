@@ -82,21 +82,20 @@ class YXNewLearnResultView: UIView {
     }
 
     func show(_ star: Int) {
-        self.titleLabel.text = "Try again"
         self.squirrelmageView.image = UIImage(named: "learnResult\(star)")
         firstStarImageView.image    = UIImage(named: "star_h_disable")
         secondStarImageView.image   = UIImage(named: "star_h_disable")
         thirdStarImageView.image    = UIImage(named: "star_h_disable")
+        bonusLabel.text             = "+\(star)"
+        titleLabel.text             = "Try again"
+        bonusLabel.isHidden         = true
+        goldImageView.isHidden      = true
         if star > 0 {
             firstStarImageView.image = UIImage(named: "star_h_enable")
-        } else {
-            bonusLabel.isHidden    = true
-            goldImageView.isHidden = true
         }
         if star > 1 {
             goldImageView.isHidden = false
             bonusLabel.isHidden    = false
-            bonusLabel.text        = "+\(star)"
             titleLabel.text        = "太棒啦"
             secondStarImageView.image = UIImage(named: "star_h_enable")
         }
@@ -128,6 +127,10 @@ class YXNewLearnResultView: UIView {
             self.contentView.snp.updateConstraints { (make) in
                 make.height.equalTo(AdaptSize(211))
             }
+        } else {
+            self.contentView.snp.updateConstraints { (make) in
+                make.height.equalTo(AdaptSize(226))
+            }
         }
     }
 
@@ -156,19 +159,19 @@ class YXNewLearnResultView: UIView {
             make.size.equalTo(CGSize(width: AdaptSize(233), height: AdaptSize(109)))
         }
         firstStarImageView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(squirrelmageView).offset(AdaptSize(6))
-            make.right.equalTo(secondStarImageView.snp.left)
-            make.size.equalTo(CGSize(width: AdaptSize(27), height: AdaptSize(45)))
+            make.centerY.equalTo(secondStarImageView).offset(AdaptSize(2))
+            make.right.equalTo(secondStarImageView.snp.left).offset(AdaptSize(6))
+            make.size.equalTo(CGSize(width: AdaptSize(31.5), height: AdaptSize(31.5)))
         }
         secondStarImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(squirrelmageView).offset(AdaptSize(8))
-            make.size.equalTo(CGSize(width: AdaptSize(38), height: AdaptSize(45)))
+            make.size.equalTo(CGSize(width: AdaptSize(45), height: AdaptSize(45)))
         }
         thirdStarImageView.snp.makeConstraints { (make) in
-            make.left.equalTo(secondStarImageView.snp.right)
-            make.bottom.equalTo(firstStarImageView)
-            make.size.equalTo(CGSize(width: AdaptSize(27), height: AdaptSize(45)))
+            make.left.equalTo(secondStarImageView.snp.right).offset(AdaptSize(-6))
+            make.centerY.equalTo(secondStarImageView).offset(AdaptSize(2))
+            make.size.equalTo(CGSize(width: AdaptSize(31.5), height: AdaptSize(31.5)))
         }
         titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -177,8 +180,8 @@ class YXNewLearnResultView: UIView {
         }
         goldImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(116))
-            make.bottom.equalToSuperview().offset(AdaptSize(-18))
-            make.size.equalTo(CGSize(width: AdaptSize(19.6), height: AdaptSize(20.26)))
+            make.top.equalTo(titleLabel.snp.bottom).offset(AdaptSize(6))
+            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
         }
         bonusLabel.snp.makeConstraints { (make) in
             make.left.equalTo(goldImageView.snp.right).offset(AdaptSize(5))

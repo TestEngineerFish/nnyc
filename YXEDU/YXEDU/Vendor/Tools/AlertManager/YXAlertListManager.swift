@@ -46,7 +46,7 @@ class YXAlertListManager: NSObject {
 //            }
 //            
 //        }
-//        
+//
 //        alertView?.show()
         
     }
