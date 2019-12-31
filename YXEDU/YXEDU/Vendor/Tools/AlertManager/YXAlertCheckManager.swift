@@ -101,7 +101,7 @@ class YXAlertCheckManager {
             alertView.titleLabel.text = "提示"
             alertView.descriptionLabel.text = userInfomation.oldUserUpdateMessage
             alertView.shouldOnlyShowOneButton = true
-//            alertView.shouldDismissWhenTapBackground = false
+            alertView.shouldDismissWhenTapBackground = false
             alertView.tag = YXAlertWeightType.oldUserTips
             alertView.doneClosure = { (string) in
                 YXSettingDataManager().reportOldUserTips { (model, msg) in

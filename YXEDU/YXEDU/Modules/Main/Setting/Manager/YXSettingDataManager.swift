@@ -31,7 +31,11 @@ struct YXSettingDataManager {
     }
     
     func reportOldUserTips(completion: ((_ model: YXBadgeReportModel?, _ errorMsg: String?) -> Void)?) {
-        let request = YXSettingRequest.oldUserReport(data: "{\"old_user_update_msg\" : 1}")
+        let dic = ["old_user_update_msg" : 1]
+        let data = try? JSONSerialization.data(withJSONObject: dic, options: [])
+        guard let str = String(data: data!, encoding: .utf8) else { return }
+        
+        let request = YXSettingRequest.oldUserReport(data: str)
         YYNetworkService.default.request(YYStructResponse<YXBadgeReportModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in

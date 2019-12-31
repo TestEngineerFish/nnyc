@@ -200,7 +200,7 @@ class YXReviewHeaderView: YXView {
         
         
         wrongWordButton.setBackgroundImage(UIImage(named: "review_wrong_icon"), for: .normal)
-        wrongWordButton.setTitle("错题本", for: .normal)
+        wrongWordButton.setTitle("错词本", for: .normal)
         wrongWordButton.setTitleColor(UIColor.brown1, for: .normal)
         wrongWordButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
         wrongWordButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: AS(-60), bottom: 0, right: 0)
