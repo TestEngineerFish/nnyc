@@ -27,7 +27,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     
     // MARK: - 下载词书
     func download(by bookId: Int? = nil, _ closure: ((_ isSuccess: Bool) -> Void)? = nil) {
-        guard isDownloading == false else { return }
+        if isDownloading, bookId == nil {
+            return
+        }
         
         let request = YXWordBookRequest.downloadWordBook(bookId: bookId)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordBookDownloadModel>.self, request: request, success: { (response) in
