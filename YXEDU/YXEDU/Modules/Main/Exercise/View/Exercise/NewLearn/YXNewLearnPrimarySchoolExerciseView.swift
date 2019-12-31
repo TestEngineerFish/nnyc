@@ -11,11 +11,8 @@ import UIKit
 /// 小学新学
 class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtocol {
 
-    var guideView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
-        return view
-    }()
+    var guideView = YXNewLearnGuideView()
+
     var detailView: YXNewLearnJuniorHighSchoolQuestionView?
     var rightContentView: UIView = {
         let view = UIView()
@@ -91,17 +88,17 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
 
     // MARK: ==== Event ====
     private func showGuideView() {
-        kWindow.addSubview(guideView)
-        guideView.snp.remakeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-        let tap = UITapGestureRecognizer(target: self, action: #selector(hideGuideView))
-        guideView.addGestureRecognizer(tap)
+        let roundSize  = CGSize(width: AdaptSize(110), height: AdaptSize(110))
+        let audioView  = (answerView as! YXNewLearnAnswerView).recordAudioButton
+        let audioFrame = audioView.convert(audioView.frame, to: kWindow)
+        self.guideView.show(CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.maxY - AdaptSize(roundSize.height/2), width: roundSize.width, height: roundSize.height))
         YYCache.set(true, forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideGuideView))
+        self.guideView.addGestureRecognizer(tap)
     }
 
     @objc private func hideGuideView() {
-        guideView.removeFromSuperview()
+        self.guideView.removeFromSuperview()
         guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
             return
         }
@@ -166,7 +163,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             _answerView.status.forward()
         }
         if exerciseModel.question?.example != nil {
-            self.exerciseDelegate?.showTipsButton()
+            self.exerciseDelegate?.enableTipsButton()
         }
         self.exerciseDelegate?.showRightNextView()
     }

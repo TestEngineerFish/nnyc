@@ -56,7 +56,8 @@ class YXGameHeaderView: UIView {
 
     var timer: Timer?
     var configModel: YXGameConfig?
-    var consumeTime: Double = 0.0
+    var consumeTime: Int = 0 //毫秒
+    var lastQuestionTime = 0
     var currentQuestionNumber = 0
     var vcDelegate: YXGameViewControllerProtocol?
 
@@ -140,7 +141,7 @@ class YXGameHeaderView: UIView {
 
     func bindData(_ config: YXGameConfig) {
         self.configModel = config
-        self.consumeTime = 0.0
+        self.consumeTime = 0
         self.timeLabel.text = getCountDownText(config.totalTime)
     }
 
@@ -155,32 +156,35 @@ class YXGameHeaderView: UIView {
     }
 
     private func getCountDownText(_ time: Int) -> String {
-        let hour   = time / 3600
-        let minute = (time % 3600) / 60
-        let second = time % 60
+        let secondTime = time / 1000
+        let hour   = secondTime / 3600
+        let minute = (secondTime % 3600) / 60
+        let second = secondTime % 60
         return String(format: "%02d:%02d:%02d", hour, minute, second)
     }
     // MARK: ==== Event ====
     func addQuestionNumber() {
         currentQuestionNumber += 1
+        // 记录最近一次答对的时间
+        self.lastQuestionTime = self.currentQuestionNumber
         self.recordImageView.image = UIImage(named: "gameQuestion-\(currentQuestionNumber)")
     }
 
-    func getTimeAndQuestionNumber() -> (Double, Int) {
+    func getTimeAndQuestionNumber() -> (Int, Int) {
         return (self.consumeTime, self.currentQuestionNumber)
     }
 
     func startTimer() {
         self.stopTimer()
-        timer = Timer(fire: Date(), interval: 1.0, repeats: true, block: { (timer) in
+        timer = Timer(fire: Date(), interval: 0.001, repeats: true, block: { (timer) in
             guard let config = self.configModel else {
                 return
             }
 
             self.consumeTime += 1
-            var margin = Double(config.totalTime) - self.consumeTime
+            var margin = config.totalTime * 1000 - self.consumeTime
             margin = margin < 0 ? 0 : margin
-            self.timeLabel.text = self.getCountDownText(Int(margin))
+            self.timeLabel.text = self.getCountDownText(margin)
             print("header \(margin)")
             if margin <= 0 {
                 print("跳转")

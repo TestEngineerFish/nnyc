@@ -105,7 +105,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
         }
     }
 
-    private func requestReport(_ version: Int, total time: Double, question number: Int) {
+    private func requestReport(_ version: Int, total time: Int, question number: Int) {
         let request = YXChallengeRequest.report(version: version, totalTime: time, number: number)
         YYNetworkService.default.request(YYStructResponse<YXGameResultModel>.self, request: request, success: { (response) in
             self.gameResultMode                 = response.data
@@ -166,7 +166,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
         }
         if self.currentQuestionIndex < gameModel.wordModelList.count {
             let wordModel = gameModel.wordModelList[currentQuestionIndex]
-            questionView.bindData(wordModel, timeout: Double(config.timeOut))
+            questionView.bindData(wordModel, timeout: config.timeOut)
             answerView.bindData(wordModel)
             currentQuestionIndex += 1
         } else {
@@ -178,6 +178,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     // MARK: ==== YXGameViewControllerProtocol ====
     func switchQuestion() {
         self.headerView.addQuestionNumber()
+
         self.showNextQuestion(true)
     }
 

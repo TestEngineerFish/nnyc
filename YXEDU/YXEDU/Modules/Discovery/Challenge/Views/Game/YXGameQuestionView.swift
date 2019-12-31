@@ -65,9 +65,9 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
 
     weak var vcDelegate: YXGameViewControllerProtocol?
     var timer: Timer?
-    var consumeTime = Double.zero
+    var consumeTime = Int.zero
     var wordModel: YXGameWordModel?
-    var timeout = Double.zero
+    var timeout = Int.zero
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -139,7 +139,7 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
         consumeTime = .zero
     }
 
-    func bindData(_ wordModel: YXGameWordModel, timeout: Double) {
+    func bindData(_ wordModel: YXGameWordModel, timeout: Int) {
         self.wordModel = wordModel
         self.timeout   = timeout
         self.switchAnimation()

@@ -107,7 +107,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
         // 延迟播放.(因为在切题的时候会有动画)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.2) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.2) { [weak self] in
+            guard let self = self else { return }
             self.playByStatus()
         }
     }
@@ -212,7 +213,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         case .playingFirstWordInSecondStage:
             self.playWord()
         case .playedFirstWrodInSecondStage:
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                guard let self = self else { return }
                 self.status.forward()
                 self.playWord()
             }
@@ -233,7 +235,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             return
         }
         self.showPlayAnimation()
-        YXAVPlayerManager.share.playAudio(url) {
+        YXAVPlayerManager.share.playAudio(url) { [weak self] in
+            guard let self = self else { return }
             self.hidePlayAnimation()
             if self.status.rawValue < AnswerStatus.showGuideView.rawValue {
                 self.status.forward()
@@ -249,8 +252,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             return
         }
         self.showPlayAnimation()
-        YXAVPlayerManager.share.playAudio(url) {
-            self.hidePlayAnimation()
+        YXAVPlayerManager.share.playAudio(url) { [weak self] in
+            self?.hidePlayAnimation()
+            guard let self = self else { return }
             if self.status.rawValue < AnswerStatus.showGuideView.rawValue {
                 self.status.forward()
                 self.playByStatus()

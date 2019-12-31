@@ -82,7 +82,7 @@ class YXChallengeRankCell: UITableViewCell {
 
         self.levelLabel.text          = "\(userModel.ranking)"
         self.nameLabel.text           = userModel.name
-        self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
+        self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time/1000)
         self.bonusLabel.text          = "+\(userModel.bonus)"
         self.avatarImageView.showImage(with: userModel.avatarStr)
 
@@ -129,6 +129,8 @@ class YXChallengeRankCell: UITableViewCell {
             make.height.equalTo(AdaptSize(38))
             make.left.equalToSuperview().offset(AdaptSize(47))
         }
+        avatarImageView.layer.cornerRadius  = AdaptSize(19)
+        avatarImageView.layer.masksToBounds = true
 
         nameLabel.sizeToFit()
         nameLabel.snp.makeConstraints { (make) in

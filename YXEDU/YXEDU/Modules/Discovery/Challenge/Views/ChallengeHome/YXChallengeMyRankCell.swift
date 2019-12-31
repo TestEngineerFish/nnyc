@@ -123,6 +123,7 @@ class YXChallengeMyRankCell: UITableViewCell {
             self.nameLabel.textColor        = UIColor.white
             self.descriptionLabel.text      = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
             self.descriptionLabel.textColor = UIColor.white
+            self.descriptionLabel.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
             self.goldIconImageView.isHidden = false
             self.bonusLabel.isHidden        = false
             self.descriptionLabel.isHidden  = false
@@ -143,7 +144,7 @@ class YXChallengeMyRankCell: UITableViewCell {
             self.bonusLabel.snp.updateConstraints { (make) in
                 make.width.equalTo(self.bonusLabel.width)
             }
-        case .notInvolved:
+        case .unanswered:
             self.nameLabel.text                = "本期内尚未完成过学习计划"
             self.nameLabel.textColor           = UIColor.hex(0xFFF7EB)
             self.descriptionLabel.text         = ""
@@ -155,10 +156,30 @@ class YXChallengeMyRankCell: UITableViewCell {
             self.levelHighlightLabel.text      = "未上榜"
             self.levelHighlightLabel.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
             self.levelHighlightLabel.textColor = UIColor.hex(0xB3A394)
-            self.tagImageView.image = UIImage(named: "challengeLevelTag2")
+            self.tagImageView.image            = UIImage(named: "challengeLevelTag2")
             self.shadowView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
             self.nameLabel.snp.updateConstraints { (make) in
                 make.centerY.equalTo(avatarImageView)
+            }
+        case .fail:
+            self.nameLabel.text                = "挑战失败"
+            self.nameLabel.textColor           = UIColor.hex(0xFFF7EB)
+            self.descriptionLabel.text         = "别灰心，再接再厉哦"
+            self.descriptionLabel.isHidden     = false
+            self.descriptionLabel.font         = UIFont.regularFont(ofSize: AdaptSize(12))
+            self.descriptionLabel.textColor    = UIColor.hex(0xFFF7EB)
+            self.goldIconImageView.isHidden    = true
+            self.bonusLabel.isHidden           = true
+            self.leftTopLayer.fillColor        = UIColor.hex(0xA47528).cgColor
+            self.rightTopLayer.fillColor       = UIColor.hex(0xA47528).cgColor
+            self.levelHighlightLabel.text      = "未上榜"
+            self.levelHighlightLabel.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+            self.levelHighlightLabel.textColor = UIColor.hex(0xB3A394)
+            self.tagImageView.image            = UIImage(named: "challengeLevelTag2")
+            self.shadowView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
+            self.descriptionLabel.sizeToFit()
+            self.descriptionLabel.snp.updateConstraints { (make) in
+                make.width.equalTo(descriptionLabel.width)
             }
         }
 
@@ -210,7 +231,7 @@ class YXChallengeMyRankCell: UITableViewCell {
         tagImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(12))
-            make.width.equalTo(AdaptSize(levelHighlightLabel.width + 13))
+            make.width.equalTo(AdaptSize(levelHighlightLabel.width + AdaptSize(13)))
             make.height.equalTo(AdaptSize(19))
         }
 

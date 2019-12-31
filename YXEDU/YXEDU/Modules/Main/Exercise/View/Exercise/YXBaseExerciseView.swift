@@ -15,7 +15,7 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
     /// - Parameter right: 是否答对
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool)
     /// 隐藏底部右侧视图
-    func showTipsButton()
+    func enableTipsButton()
     /// 显示底部右侧视图
     func showRightNextView()
     /// 显示下一步按钮

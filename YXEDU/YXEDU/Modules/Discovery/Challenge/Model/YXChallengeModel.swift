@@ -73,8 +73,9 @@ struct YXChallengeGameInfo: Mappable {
 }
 
 enum YXChallengeResultType: Int {
-    case success = 1
-    case notInvolved = 2
+    case success    = 1 // 有挑战、有排名
+    case unanswered = 2 // 有挑战、无排名(未作答)
+    case fail       = 3 // 未挑战、无排名
 }
 
 struct YXChallengeUserModel: Mappable {
@@ -82,12 +83,12 @@ struct YXChallengeUserModel: Mappable {
     var ranking: Int       = 0
     var name: String       = ""
     var avatarStr: String  = ""
-    var time: Float        = 0
+    var time: Float        = 0 // 毫秒单位
     var questionCount: Int = 0
     var bonus: Int         = 0
     // ---- 当前用户独有字段 ----
     var gameStatus: YXChallengeStatusType      = .lock
-    var challengeResult: YXChallengeResultType = .notInvolved
+    var challengeResult: YXChallengeResultType = .unanswered
     var myCoins: Int = 0
 
 

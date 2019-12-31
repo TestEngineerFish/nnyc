@@ -47,7 +47,6 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
             make.height.equalTo(AdaptSize(37))
             make.width.equalTo(selectedWordView.maxWidth)
         })
-
     }
 
     // MARK: ==== Tools ====

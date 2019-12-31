@@ -204,13 +204,11 @@
 //            model.type = .listenFillWord
             
             // 新学隐藏提示
-            let tipsHidden = (model.type == .newLearnPrimarySchool_Group || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
-            let nextHidden = (model.type != .newLearnPrimarySchool && model.type != .newLearnPrimarySchool_Group)
-            self.bottomView.tipsButton.isHidden = tipsHidden
-            self.bottomView.nextView.isHidden   = nextHidden
+            let tipsHidden = (model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
+            let nextHidden = (model.type == .newLearnPrimarySchool || model.type == .newLearnPrimarySchool_Group)
+            self.bottomView.tipsButton.isHidden  = tipsHidden
+            self.bottomView.nextView.isHidden    = nextHidden
             if model.type == .newLearnPrimarySchool {
-                self.bottomView.tipsButton.isHidden = true
-                self.bottomView.nextView.isHidden   = true
                 self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
             } else {
                 self.bottomView.tipsButton.setTitle("提示一下", for: .normal)
@@ -218,7 +216,7 @@
             self.bottomView.layoutSubviews()
             
             // 连线未选中时，禁用提示
-            let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese)
+            let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese || model.type == .newLearnPrimarySchool_Group || model.type == .newLearnPrimarySchool)
             self.bottomView.tipsButton.isEnabled = tipsEnabled
                                     
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
@@ -290,9 +288,9 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         switchAnimation.show(isRight: right)
     }
 
-    /// 显示底部左侧视图
-    func showTipsButton() {
-        self.bottomView.tipsButton.isHidden = false
+    /// 启用底部左侧视图
+    func enableTipsButton() {
+        self.bottomView.tipsButton.isEnabled = true
     }
 
     /// 显示底部右侧视图
@@ -300,6 +298,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         self.bottomView.nextView.isHidden = false
     }
 
+    /// 显示中间下一步按钮
     func showCenterNextButton() {
         self.bottomView.clickNextView()
     }

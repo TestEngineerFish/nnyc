@@ -375,6 +375,11 @@ static CGFloat const kPickViewHeight = 272.f;
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame));
+}
+
 - (void)_initUI {
 
     self.currentSelectedDate = [NSDate new];
@@ -402,7 +407,6 @@ static CGFloat const kPickViewHeight = 272.f;
         make.top.equalTo(self.view).with.offset(kNavHeight);
         make.bottom.equalTo(self.view).with.offset(-kSafeBottomMargin);
     }];
-    self.contentScroll.contentSize = self.view.size;
 
     [self.monthDataView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentScroll);
@@ -595,7 +599,6 @@ static CGFloat const kPickViewHeight = 272.f;
     }];
     self.contentScroll.contentSize = CGSizeMake(size.width, finalScrollHeight);
     [self.tableView reloadData];
-
 }
 
 - (void)showStudyWordsList: (UITapGestureRecognizer *)sender {

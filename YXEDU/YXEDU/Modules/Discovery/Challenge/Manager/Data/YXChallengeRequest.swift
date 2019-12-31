@@ -12,7 +12,7 @@ public enum YXChallengeRequest: YYBaseRequest {
     case challengeModel
     case rankedList
     case playGame(gameId: Int)
-    case report(version: Int, totalTime: Double, number: Int)
+    case report(version: Int, totalTime: Int, number: Int)
     case unlock
 }
 
