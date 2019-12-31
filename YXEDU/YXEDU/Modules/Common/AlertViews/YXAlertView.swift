@@ -146,6 +146,11 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
     }
     
     override func show() {
+        if type == .normal, let text = descriptionLabel.text, text.isEmpty == false {
+            let textHeight = text.textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 128)
+            alertHeight.constant = 168 + textHeight
+        }
+        
         kWindow.addSubview(self)
         containerView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         containerView.alpha = 0

@@ -36,7 +36,7 @@ class YXTopWindowView: YXView {
         mainView.layer.masksToBounds = true
         mainView.layer.cornerRadius = 6
         
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+//        self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
     }
     
     required init?(coder: NSCoder) {

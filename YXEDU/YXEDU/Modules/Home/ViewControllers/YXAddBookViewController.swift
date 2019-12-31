@@ -167,6 +167,6 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (screenWidth - 96) / 3, height: 136)
+        return CGSize(width: (screenWidth - 100) / 3, height: 136)
     }
 }
