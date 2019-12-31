@@ -85,7 +85,8 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+
         self.navigationController?.navigationBar.barTintColor = UIColor.orange1
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
         self.navigationController?.navigationBar.tintColor = UIColor.white
@@ -93,7 +94,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         self.navigationController?.navigationBar.tintColor = UIColor.black
@@ -212,7 +213,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             
             wordListView.showWordDetialClosure = { (wordId, isComplexWord) in
                 let home = UIStoryboard(name: "Home", bundle: nil)
-                let wordDetialViewController = home.instantiateViewController(withIdentifier: "WordDetail") as! YXWordDetailViewControllerNew
+                let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
                 wordDetialViewController.wordId = wordId
                 wordDetialViewController.isComplexWord = isComplexWord
                 self.navigationController?.pushViewController(wordDetialViewController, animated: true)

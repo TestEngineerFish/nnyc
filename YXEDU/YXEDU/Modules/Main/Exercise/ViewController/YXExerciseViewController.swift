@@ -296,10 +296,13 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     }
 
     /// 显示底部右侧视图
-    func showNextButton() {
+    func showRightNextView() {
         self.bottomView.nextView.isHidden = false
     }
-    
+
+    func showCenterNextButton() {
+        self.bottomView.clickNextView()
+    }
     
     /// 动画停止后回调
     /// - Parameter isRight: 对错

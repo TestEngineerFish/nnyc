@@ -13,22 +13,21 @@ NS_ASSUME_NONNULL_BEGIN
 @interface YXStudyMonthSummaryModel : NSObject
 @property (nonatomic, copy) NSString *year;
 @property (nonatomic, copy) NSString *month;
-@property (nonatomic, assign) NSInteger studyDays;
-@property (nonatomic, assign) NSInteger studyWords;
-@property (nonatomic, assign) NSInteger studyTimes;
+@property (nonatomic, assign) NSInteger study_days;
+@property (nonatomic, assign) NSInteger study_words;
+@property (nonatomic, assign) NSInteger study_times;
 @end
 
 @interface YXNodeModel : NSObject
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, assign) NSNumber *num;
-@property (nonatomic, assign) NSNumber *costTime;
+@property (nonatomic, assign) NSNumber *cost_time;
 @property (nonatomic, assign) NSNumber *status;
 @end
 
 @interface YXCalendarStudyMonthData : NSObject
-@property (nonatomic, strong) NSString *userReg;
 @property (nonatomic, strong) YXStudyMonthSummaryModel *summary;
-@property (nonatomic, strong) NSMutableArray<YXNodeModel *> *studyDetail;
+@property (nonatomic, strong) NSMutableArray<YXNodeModel *> *study_detail;
 @property (nonatomic, strong) NSDictionary<NSString *, UIImage *> *punchedDateDict;//显示已打卡状态
 @property (nonatomic, strong) NSDictionary<NSString *, UIColor *> *studiedDateDict;//显示已学习状态
 

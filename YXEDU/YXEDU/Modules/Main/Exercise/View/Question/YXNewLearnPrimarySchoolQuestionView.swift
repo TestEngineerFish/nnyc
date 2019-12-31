@@ -44,7 +44,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         }
 
         self.titleLabel?.text            = wordModel.word
-        self.subTitleLabel?.text         = wordModel.meaning
+        self.subTitleLabel?.text         = (wordModel.partOfSpeech ?? "") + (wordModel.meaning ?? "")
         self.chineseExampleLabel.text    = wordModel.chineseExample
         self.exampleLabel.attributedText = {
 
@@ -176,6 +176,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         self.titleLabel?.snp.updateConstraints({ (make) in
             make.height.equalTo(titleLabel!.height)
         })
+        self.subTitleLabel?.isHidden = false
         self.subTitleLabel?.sizeToFit()
         self.subTitleLabel?.snp.updateConstraints({ (make) in
             make.height.equalTo(subTitleLabel!.height)

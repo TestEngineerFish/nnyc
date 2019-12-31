@@ -71,6 +71,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
 
         self.navigationController?.navigationBar.barTintColor = UIColor.orange1
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
@@ -146,12 +147,14 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             }
         }
         
+        let exIntegral = punchCount * (self.taskCenterData.exIntegral ?? 0)
+        dailyDatas[6].integral = 10 + exIntegral
         self.dailyDatas = dailyDatas
         
         self.integralLabel.text = "\(self.taskCenterData.integral ?? 0)"
         self.todayPunchLabel.text = "\(todayIntegral)"
         self.totalPunchLabel.text = "\(punchCount)"
-        self.weekendPunchLabel.text = "\(punchCount * (self.taskCenterData.exIntegral ?? 0))"
+        self.weekendPunchLabel.text = "\(exIntegral)"
 
         self.dailyDataCollectionView.reloadData()
     }

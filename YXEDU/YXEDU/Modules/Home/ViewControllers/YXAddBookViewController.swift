@@ -41,6 +41,11 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         loadData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     private func loadData() {
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [Any] else { return }

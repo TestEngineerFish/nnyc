@@ -72,7 +72,7 @@
     return _valueLabel;
 }
 
-- (void)setCell:(YXCalendarBookModel *)model {
+- (void)setCell:(YXCalendarCellModel *)model {
     self.titleLabel.text = model.title;
     self.valueLabel.text = model.descValue;
     self.backgroundColor = UIColor.clearColor;

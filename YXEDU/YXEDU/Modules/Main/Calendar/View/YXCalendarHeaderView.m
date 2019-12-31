@@ -63,7 +63,7 @@
         [self.icon setImage:[UIImage imageNamed:@"calendar_icon_review"]];
         [self.titleLabel setText:@"完成复习"];
         NSUInteger amountBook = day.learning_data.review_words.count;
-        NSUInteger amountCell = day.reviewBooksList.count;
+        NSUInteger amountCell = day.reviewCellList.count;
         [self.amountLabel setText:[NSString stringWithFormat:@"%lu", amountCell - amountBook]];
         NSString *imageName = day.showReviewList ? @"list_open" : @"list_close";
         [self.openIndicator setImage:[UIImage imageNamed:imageName]];
@@ -71,7 +71,7 @@
         [self.icon setImage:[UIImage imageNamed:@"calendar_icon_ab"]];
         [self.titleLabel setText:@"新学单词"];
         NSUInteger amountBook = day.learning_data.study_words.count;
-        NSUInteger amountCell = day.studiedBooksList.count;
+        NSUInteger amountCell = day.studiedCellList.count;
         [self.amountLabel setText:[NSString stringWithFormat:@"%lu", amountCell - amountBook]];
         NSString *imageName = day.showStudiedList ? @"list_open" : @"list_close";
         [self.openIndicator setImage:[UIImage imageNamed:imageName]];

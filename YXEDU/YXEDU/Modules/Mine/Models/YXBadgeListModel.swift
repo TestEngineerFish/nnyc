@@ -29,8 +29,8 @@ struct YXBadgeModel: Mappable {
     var name: String?
     var description: String?
     var finishDateTimeInterval: Double?
-    var currentProgress: Double?
-    var totalProgress: Double?
+    var currentProgress: Int?
+    var totalProgress: Int?
     var imageOfCompletedStatus: String?
     var imageOfIncompletedStatus: String?
     

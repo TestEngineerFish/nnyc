@@ -156,7 +156,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 for b in 0..<badges.count {
                     let badge = badges[b]
                     
-                    if badge.finishDateTimeInterval != nil {
+                    if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0 {
                         earnedBadgeCount = earnedBadgeCount + 1
                     }
                         
@@ -323,7 +323,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let imageView = cell.viewWithTag(1) as! UIImageView
         
-        if badge.finishDateTimeInterval != nil, let imageOfCompletedStatus = badge.imageOfCompletedStatus {
+        if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0, let imageOfCompletedStatus = badge.imageOfCompletedStatus {
             imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
             
         } else if let imageOfIncompletedStatus = badge.imageOfIncompletedStatus {

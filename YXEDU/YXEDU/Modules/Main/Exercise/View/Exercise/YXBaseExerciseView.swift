@@ -17,7 +17,9 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
     /// 隐藏底部右侧视图
     func showTipsButton()
     /// 显示底部右侧视图
-    func showNextButton()
+    func showRightNextView()
+    /// 显示下一步按钮
+    func showCenterNextButton()
 }
 
 

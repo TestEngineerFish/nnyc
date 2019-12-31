@@ -11,15 +11,20 @@ import UIKit
 class YXWordDetailViewControllerNew: UIViewController {
     @IBOutlet weak var collectionButton: UIBarButtonItem!
 
-    var wordId: Int!
-    var isComplexWord: Int!
+    @objc var wordId: Int = -1
+    @objc var isComplexWord: Int = 0
     private var wordDetailView: YXWordDetailCommonView!
-    
+
+    override func handleData(withQuery query: [AnyHashable : Any]!) {
+        self.wordId = query["word_id"] as? Int ?? -1
+        self.isComplexWord = query["is_complex_word"] as? Int ?? 0
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let request = YXWordListRequest.didCollectWord(wordId: wordId)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+        let didCollectWordRequest = YXWordListRequest.didCollectWord(wordId: wordId)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: didCollectWordRequest, success: { (response) in
             if response.data?.didCollectWord == 1 {
                 self.collectionButton.image = #imageLiteral(resourceName: "unCollectWord")
 
@@ -31,10 +36,26 @@ class YXWordDetailViewControllerNew: UIViewController {
             print("❌❌❌\(error)")
         }
         
-        if let word = YXWordBookDaoImpl().selectWord(wordId: wordId) {
-            wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
-            self.view.addSubview(wordDetailView)
+        let wordDetailRequest = YXWordBookRequest.wordDetail(wordId: wordId, isComplexWord: isComplexWord)
+        YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { (response) in
+            guard let word = response.data else { return }
+            
+            self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
+            self.view.addSubview(self.wordDetailView)
+            
+        }) { error in
+            print("❌❌❌\(error)")
         }
+        
+//        if let word = YXWordBookDaoImpl().selectWord(wordId: wordId) {
+//            wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
+//            self.view.addSubview(wordDetailView)
+//        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {

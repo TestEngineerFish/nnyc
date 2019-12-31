@@ -475,11 +475,11 @@ static CGFloat const kPickViewHeight = 272.f;
         [dataArray addObject: [NSMutableDictionary dictionaryWithDictionary:dict]];
     }
     //根据后台返回数据,修改有数据天的值
-    for (YXNodeModel *node in self.monthData.studyDetail) {
+    for (YXNodeModel *node in self.monthData.study_detail) {
         NSDate *date = [dateFormatter dateFromString:node.date];
         int index = (int)[date day] - 1;
         dataArray[index][@"numWord"] = [node.num isEqualToNumber:@0] ? @1 : node.num;
-        dataArray[index][@"costTime"] = node.costTime;
+        dataArray[index][@"costTime"] = node.cost_time;
         dataArray[index][@"status"] = node.status;
     }
     return dataArray;
@@ -533,7 +533,6 @@ static CGFloat const kPickViewHeight = 272.f;
             self.dayData = nil;
         }
     }];
-    
 }
 
 # pragma mark - Event
@@ -571,7 +570,7 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (void)showReviewWordsList: (UITapGestureRecognizer *)sender {
     self.dayData.showReviewList       = !self.dayData.showReviewList;
-    NSUInteger amountCell             = self.dayData.reviewBooksList.count;
+    NSUInteger amountCell             = self.dayData.reviewCellList.count;
     CGFloat amountCellHeight          = amountCell * AdaptSize(kCellHeight);
     CGFloat finalTalbeViewHeight      = self.tableView.contentSize.height;
     CGFloat finalTableContainerHeight = self.tableContainerView.height;
@@ -601,7 +600,7 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (void)showStudyWordsList: (UITapGestureRecognizer *)sender {
     self.dayData.showStudiedList      = !self.dayData.showStudiedList;
-    NSUInteger amountCell             = self.dayData.studiedBooksList.count;
+    NSUInteger amountCell             = self.dayData.studiedCellList.count;
     CGFloat amountCellHeight         = amountCell * AdaptSize(kCellHeight);
     CGFloat finalTalbeViewHeight      = self.tableView.contentSize.height;
     CGFloat finalTableContainerHeight = self.tableContainerView.height;
@@ -702,12 +701,12 @@ static CGFloat const kPickViewHeight = 272.f;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         if (self.dayData) {
-            return self.dayData.showReviewList ? self.dayData.reviewBooksList.count : 0;
+            return self.dayData.showReviewList ? self.dayData.reviewCellList.count : 0;
         }
         return 0;
     } else if (section == 1) {
         if (self.dayData) {
-            return self.dayData.showStudiedList? self.dayData.studiedBooksList.count : 0;
+            return self.dayData.showStudiedList? self.dayData.studiedCellList.count : 0;
         }
         return 0;
     } else {
@@ -737,11 +736,11 @@ static CGFloat const kPickViewHeight = 272.f;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-        if (indexPath.row >= self.dayData.reviewBooksList.count) {
+        if (indexPath.row >= self.dayData.reviewCellList.count) {
             return [UITableViewCell new];
         }
-        YXCalendarBookModel *book = self.dayData.reviewBooksList[indexPath.row];
-        if (book.isWork) {
+        YXCalendarCellModel *book = self.dayData.reviewCellList[indexPath.row];
+        if (book.isWord) {
             YXCalendarWordCell *cell = [tableView dequeueReusableCellWithIdentifier:kYXCalendarCellID forIndexPath:indexPath];
             [cell setCell:book];
             return cell;
@@ -751,11 +750,11 @@ static CGFloat const kPickViewHeight = 272.f;
             return cell;
         }
     } else if (indexPath.section == 1) {
-        if (indexPath.row >= self.dayData.studiedBooksList.count) {
+        if (indexPath.row >= self.dayData.studiedCellList.count) {
             return [UITableViewCell new];
         }
-        YXCalendarBookModel *book = self.dayData.studiedBooksList[indexPath.row];
-        if (book.isWork) {
+        YXCalendarCellModel *book = self.dayData.studiedCellList[indexPath.row];
+        if (book.isWord) {
             YXCalendarWordCell *cell = [tableView dequeueReusableCellWithIdentifier:kYXCalendarCellID forIndexPath:indexPath];
             [cell setCell:book];
             return cell;
@@ -769,18 +768,18 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    YXCalendarBookModel *model;
+    YXCalendarCellModel *model;
     if (indexPath.section == 0) {
-        model = self.dayData.reviewBooksList[indexPath.row];
+        model = self.dayData.reviewCellList[indexPath.row];
     } else if (indexPath.section == 1) {
-        model = self.dayData.studiedBooksList[indexPath.row];
+        model = self.dayData.studiedCellList[indexPath.row];
     }
 
-    if (!model || !model.wordModel) {
+    if (!model || model.word_id == 0) {
         return;
     }
-    YXWordDetailViewControllerOld *wdvc = [YXWordDetailViewControllerOld wordDetailWith:model.wordModel bookId:model.wordModel.bookId];
-    [self.navigationController pushViewController:wdvc animated:YES];
+
+    [YRRouter openURL:@"word/detail" query:@{@"word_id" : @(model.word_id), @"is_complex_word" : @(NO)} animated:YES];
 }
 
 #pragma mark - ScrollViewDelegate

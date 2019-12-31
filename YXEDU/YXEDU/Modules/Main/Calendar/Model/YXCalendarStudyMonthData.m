@@ -19,15 +19,15 @@
 @implementation YXCalendarStudyMonthData
 +(NSDictionary *)mj_objectClassInArray {
     return @{
-             @"studyDetail" : [YXNodeModel class]
+             @"study_detail" : [YXNodeModel class]
              };
 }
 
 - (NSDictionary<NSString *,UIImage *> *)punchedDateDict {
     NSMutableDictionary<NSString *,UIImage *> *images = [NSMutableDictionary dictionaryWithCapacity:0];
-    if (self.studyDetail) {
-        for (YXNodeModel *model in self.studyDetail) {
-            if ([model.status  isEqual: @1]) {
+    if (self.study_detail) {
+        for (YXNodeModel *model in self.study_detail) {
+            if ([model.status isEqual: @1]) {
                 [images setValue:[UIImage imageNamed:@"calendar_icon_punched"] forKey:model.date];
             }
         }
@@ -37,9 +37,9 @@
 
 - (NSDictionary<NSString *,UIColor *> *)studiedDateDict {
     NSMutableDictionary *colors = [NSMutableDictionary dictionaryWithCapacity:0];
-    if (self.studyDetail) {
-        for (YXNodeModel *model in self.studyDetail) {
-            if ([model.status  isEqual: @0]) {
+    if (self.study_detail) {
+        for (YXNodeModel *model in self.study_detail) {
+            if ([model.status isEqual: @0]) {
                 [colors setValue:UIColorOfHex(0xBEEEFD) forKey:model.date];
             }
         }

@@ -35,6 +35,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="BXD-jz-Lkt" appends="YES" id="MiG-J3-Oz7"/>
+                    </connections>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y9x-dN-hFl">
                     <rect key="frame" x="191" y="556" width="32" height="32"/>
@@ -156,6 +159,11 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="137.68115942028987" y="153.34821428571428"/>
         </view>
+        <tapGestureRecognizer id="BXD-jz-Lkt">
+            <connections>
+                <action selector="close:" destination="-1" id="rOJ-8i-Q7g"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="badgeCompleted" width="16" height="16"/>

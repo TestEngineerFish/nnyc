@@ -24,15 +24,15 @@ class YXReviewPlanDetailViewController: YXViewController {
         self.fetchDetailData()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: animated)
-//    }
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.setNavigationBarHidden(false, animated: animated)
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
     
     func createSubView() {
         self.view.addSubview(self.headerView)
@@ -50,7 +50,7 @@ class YXReviewPlanDetailViewController: YXViewController {
         wordListView.orderType = .default
         wordListView.showWordDetialClosure = { (wordId, isComplexWord) in
             let home = UIStoryboard(name: "Home", bundle: nil)
-            let wordDetialViewController = home.instantiateViewController(withIdentifier: "WordDetail") as! YXWordDetailViewControllerNew
+            let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
             wordDetialViewController.wordId = wordId
             wordDetialViewController.isComplexWord = isComplexWord
             self.navigationController?.pushViewController(wordDetialViewController, animated: true)
