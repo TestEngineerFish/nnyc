@@ -38,6 +38,7 @@
     YXCalendarFresherGuideView *guideView = [[YXCalendarFresherGuideView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     guideView.delegate = delegate;
     [view addSubview:guideView];
+    guideView.tapNum = 1;
     [guideView tapAction];
     return guideView;
 }

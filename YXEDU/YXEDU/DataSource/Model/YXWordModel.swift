@@ -55,11 +55,14 @@ struct YXWordModel: YXBaseWordModel {
     var isComplexWord: Int?
     
     // 是否隱藏詞義
-    var hidePartOfSpeechAndMeanings = false
+    var hidePartOfSpeechAndMeanings = true
     
     // 是否被選中
     var isSelected = false
 
+    // 默認排序序號
+    var index: Int!
+    
     var column: Int = 0
     var row: Int = 0
     init() {}

@@ -13,62 +13,88 @@
                 <outlet property="azButton" destination="cNK-4r-nMt" id="M3Z-5v-8Cm"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="J4c-CG-Wh6"/>
                 <outlet property="defaultButton" destination="UQE-Yt-PzT" id="2nB-n1-jz3"/>
+                <outlet property="orderViewLeftDistance" destination="xAF-0O-6cg" id="a9L-JK-aJn"/>
+                <outlet property="orderViewTopDistance" destination="18N-fN-i2f" id="BUE-oz-RGN"/>
                 <outlet property="zaButton" destination="9zJ-st-dtF" id="JY0-GN-PtJ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQE-Yt-PzT">
-                    <rect key="frame" x="178" y="16" width="58" height="29"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <state key="normal" title="默认排序">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <connections>
-                        <action selector="tapDefault:" destination="-1" eventType="touchUpInside" id="hTa-Qt-Yen"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cNK-4r-nMt">
-                    <rect key="frame" x="174.66666666666666" y="353.66666666666669" width="65" height="29"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <state key="normal" title="字母 A - Z">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <connections>
-                        <action selector="tapAZ:" destination="-1" eventType="touchUpInside" id="IDU-nU-bmZ"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9zJ-st-dtF">
-                    <rect key="frame" x="174.66666666666666" y="691" width="65" height="29"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <state key="normal" title="字母 Z - A">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <connections>
-                        <action selector="tapZA:" destination="-1" eventType="touchUpInside" id="9ke-vr-O9I"/>
-                    </connections>
-                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dU-U3-KHa" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="116" height="120"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cNK-4r-nMt">
+                            <rect key="frame" x="25.666666666666671" y="40" width="65" height="40"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="字母 A - Z">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="tapAZ:" destination="-1" eventType="touchUpInside" id="IDU-nU-bmZ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9zJ-st-dtF">
+                            <rect key="frame" x="25.666666666666671" y="80" width="65" height="40"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="字母 Z - A">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="tapZA:" destination="-1" eventType="touchUpInside" id="9ke-vr-O9I"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQE-Yt-PzT">
+                            <rect key="frame" x="29" y="0.0" width="58" height="40"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="默认排序">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="tapDefault:" destination="-1" eventType="touchUpInside" id="hTa-Qt-Yen"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="UQE-Yt-PzT" firstAttribute="top" secondItem="5dU-U3-KHa" secondAttribute="top" id="2Wy-Xi-IE4"/>
+                        <constraint firstItem="cNK-4r-nMt" firstAttribute="centerX" secondItem="5dU-U3-KHa" secondAttribute="centerX" id="B8n-Vk-dqR"/>
+                        <constraint firstItem="cNK-4r-nMt" firstAttribute="top" secondItem="UQE-Yt-PzT" secondAttribute="bottom" id="GCZ-Vo-5vA"/>
+                        <constraint firstItem="UQE-Yt-PzT" firstAttribute="centerX" secondItem="5dU-U3-KHa" secondAttribute="centerX" id="Mgz-mI-IsD"/>
+                        <constraint firstItem="9zJ-st-dtF" firstAttribute="top" secondItem="cNK-4r-nMt" secondAttribute="bottom" id="RXA-DG-GhD"/>
+                        <constraint firstItem="UQE-Yt-PzT" firstAttribute="height" secondItem="5dU-U3-KHa" secondAttribute="height" multiplier="1:3" id="Rd7-gV-2t0"/>
+                        <constraint firstItem="9zJ-st-dtF" firstAttribute="centerX" secondItem="5dU-U3-KHa" secondAttribute="centerX" id="Ujq-Uz-VoL"/>
+                        <constraint firstAttribute="width" constant="116" id="aSP-qc-qYq"/>
+                        <constraint firstItem="cNK-4r-nMt" firstAttribute="height" secondItem="5dU-U3-KHa" secondAttribute="height" multiplier="1:3" id="fXI-g9-7dt"/>
+                        <constraint firstItem="9zJ-st-dtF" firstAttribute="height" secondItem="5dU-U3-KHa" secondAttribute="height" multiplier="1:3" id="iMF-3b-l8g"/>
+                        <constraint firstAttribute="height" constant="120" id="oZq-Gh-36e"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="6"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="UQE-Yt-PzT" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="8ta-h9-OLR"/>
-                <constraint firstItem="cNK-4r-nMt" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JXV-88-Vik"/>
-                <constraint firstItem="UQE-Yt-PzT" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="VK7-eN-Gl4"/>
-                <constraint firstItem="9zJ-st-dtF" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="bar-mS-60J"/>
-                <constraint firstAttribute="bottom" secondItem="9zJ-st-dtF" secondAttribute="bottom" constant="16" id="lVw-Oy-EcI"/>
-                <constraint firstItem="cNK-4r-nMt" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="x91-Db-ZKL"/>
+                <constraint firstItem="5dU-U3-KHa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="18N-fN-i2f"/>
+                <constraint firstItem="5dU-U3-KHa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xAF-0O-6cg"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                    <real key="value" value="6"/>
-                </userDefinedRuntimeAttribute>
-                <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
-            </userDefinedRuntimeAttributes>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="U2k-BO-Z9R" appends="YES" id="gkP-gt-J8v"/>
+            </connections>
             <point key="canvasLocation" x="139" y="154"/>
         </view>
+        <tapGestureRecognizer id="U2k-BO-Z9R">
+            <connections>
+                <action selector="close:" destination="-1" id="Fc6-eg-Thw"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

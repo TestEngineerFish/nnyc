@@ -168,24 +168,18 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         if ges.state == .began {
             YXAuthorizationManager.authorizeMicrophoneWith { (isAuth) in
                 if isAuth {
-                    self.endRecordAction()
+                    guard let word = self.exerciseModel.question?.word else {
+                        return
+                    }
+                    self.enginer?.oralText = word
+                    self.enginer?.start()
+                } else {
+                     self.endRecordAction()
                 }
             }
-        } else {
-            switch ges.state {
-            case .began:
-                guard let word = self.exerciseModel.question?.word else {
-                    return
-                }
-                self.enginer?.oralText = word
-                self.enginer?.start()
-            case .ended:
-                self.endRecordAction()
-            default:
-                return
-            }
+        } else if ges.state == .ended {
+            self.endRecordAction()
         }
-
     }
 
     private func endRecordAction() {
@@ -396,6 +390,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 }
             }()
             // 显示结果动画
+            self.exerciseModel.listenScore = self.lastLevel
             self.showResultAnimation()
             self.status = .showResult
             self.recordAudioLabel.text = "按住跟读"

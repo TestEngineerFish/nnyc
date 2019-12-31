@@ -90,6 +90,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         self.navigationController?.navigationBar.barTintColor = UIColor.orange1
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
         self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+        if wordListType == .collected {
+            wordListControllerView.selectItem(with: IndexPath(item: 2, section: 0))
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -107,7 +111,14 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             switch wordListType {
             case .collected:
                 editWordListViewController.editWordListType = .collected
-                editWordListViewController.words = wordListViews[2]?.words ?? []
+                
+                var words: [YXWordModel] = []
+                for var word in wordListViews[2]?.words ?? [] {
+                    word.hidePartOfSpeechAndMeanings = true
+                    words.append(word)
+                }
+                
+                editWordListViewController.words = words
                 editWordListViewController.redClosure = { indexs in
                     var sordedIndex = indexs
                     sordedIndex.sort() { $0 > $1 }
@@ -115,37 +126,18 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     for index in sordedIndex {
                         self.wordListViews[2]?.words.remove(at: index)
                     }
-                    
-                    if let words = self.wordListViews[2]?.words, let originWords = self.wordListViews[2]?.originWords {
-                        if originWords.count != words.count {
-                            var differentIndexs: [Int] = []
-                            
-                            for index in 0..<originWords.count {
-                                var differentIndex: Int? = index
-
-                                for word in words {
-                                    if word.wordId == originWords[index].wordId {
-                                        differentIndex = nil
-                                        break
-                                    }
-                                }
-                                
-                                if let index = differentIndex {
-                                    differentIndexs.append(index)
-                                }
-                            }
-                            
-                            differentIndexs.sort() { $0 > $1 }
-                            for index in differentIndexs {
-                                self.wordListViews[2]?.originWords!.remove(at: index)
-                            }
-                        }
-                    }
                 }
                 
             case .wrongWords:
                 editWordListViewController.editWordListType = .familiar
-                editWordListViewController.words = wordListViews[3]?.wrongWordList?.familiarList ?? []
+                
+                var words: [YXWordModel] = []
+                for var word in wordListViews[3]?.wrongWordList?.familiarList ?? [] {
+                    word.hidePartOfSpeechAndMeanings = true
+                    words.append(word)
+                }
+                
+                editWordListViewController.words = words
                 editWordListViewController.redClosure = { indexs in
                     var sordedIndex = indexs
                     sordedIndex.sort() { $0 > $1 }
@@ -153,43 +145,11 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     for index in sordedIndex {
                         self.wordListViews[3]?.wrongWordList?.familiarList!.remove(at: index)
                     }
-                    
-                    if let wrongWordList = self.wordListViews[3]?.wrongWordList, let familiarList = wrongWordList.familiarList, let originWrongWordSectionData = self.wordListViews[3]?.originWrongWordSectionData {
-                        for index in 0..<originWrongWordSectionData.count {
-                            guard let key = originWrongWordSectionData[index].keys.first, key.contains("熟识的单词"), var words = originWrongWordSectionData[index].values.first else { continue }
-                            if familiarList.count != words.count {
-                                var differentIndexs: [Int] = []
-                                
-                                for index in 0..<words.count {
-                                    var differentIndex: Int? = index
-
-                                    for word in familiarList {
-                                        if word.wordId == words[index].wordId {
-                                            differentIndex = nil
-                                            break
-                                        }
-                                    }
-                                    
-                                    if let index = differentIndex {
-                                        differentIndexs.append(index)
-                                    }
-                                }
-                                
-                                differentIndexs.sort() { $0 > $1 }
-                                for index in differentIndexs {
-                                    words.remove(at: index)
-                                }
-                                
-                                self.wordListViews[3]?.originWrongWordSectionData?[index] = [key: words]
-                            }
-                        }
-                    }
                 }
                 
             default:
                 break
             }
-            
         }
     }
     
@@ -293,6 +253,33 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             
         case 2:
             wordListType = .collected
+            
+            if wordListViews[2] != nil {
+                let request = YXWordListRequest.wordList(type: 0)
+                YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
+                    guard let learnedWords = response.dataArray else { return }
+                    
+                    var newWords: [YXWordModel] = []
+                    for var learnedWord in learnedWords {
+                        for word in self.wordListViews[indexPath.row]?.words ?? [] {
+                            if learnedWord.wordId == word.wordId {
+                                learnedWord.hidePartOfSpeechAndMeanings = word.hidePartOfSpeechAndMeanings
+                            }
+                        }
+                                            
+                        newWords.append(learnedWord)
+                    }
+                    
+                    self.wordListViews[indexPath.row]?.words = newWords
+                    
+                    let orderType = self.wordListViews[indexPath.row]?.orderType ?? .default
+                    self.wordListViews[indexPath.row]?.orderType = orderType
+                    
+                }) { error in
+                    self.wordListViews[indexPath.row]?.words = []
+                    print("❌❌❌\(error)")
+                }
+            }
             break
             
         case 3:
