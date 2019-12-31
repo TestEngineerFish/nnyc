@@ -58,7 +58,7 @@ class YXBadgeDetailView: UIView {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .long
                 let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: time))
-                descriptionLabel.text = "已获得：\(dateString)"
+                descriptionLabel.text = "\(dateString) 获得"
             }
             
             completedDescriptionLabel.text = badge.description

@@ -40,11 +40,12 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    var originWords: [YXWordModel]?
     var words: [YXWordModel] = [] {
         didSet {
-            if originWords == nil {
-                originWords = words
+            for index in 0..<words.count {
+                if words[index].index == nil {
+                    words[index].index = index
+                }
             }
             
             let wordsCount = words.count
@@ -68,24 +69,41 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             
             if let familiarList = wrongWordList?.familiarList, familiarList.count > 0 {
                 let familiarListCount = familiarList.count
+                
+                for index in 0..<familiarListCount {
+                    if wrongWordList?.familiarList?[index].index == nil {
+                        wrongWordList?.familiarList?[index].index = index
+                    }
+                }
+                
                 wrongWordSectionData?.append(["熟识的单词（\(familiarListCount)）": familiarList])
                 wordsCount = wordsCount + familiarListCount
             }
             
             if let recentWrongList = wrongWordList?.recentWrongList, recentWrongList.count > 0 {
                 let recentWrongListCount = recentWrongList.count
+                
+                for index in 0..<recentWrongListCount {
+                    if wrongWordList?.recentWrongList?[index].index == nil {
+                        wrongWordList?.recentWrongList?[index].index = index
+                    }
+                }
+                
                 wrongWordSectionData?.append(["最近错词（\(recentWrongListCount)）": recentWrongList])
                 wordsCount = wordsCount + recentWrongListCount
             }
             
             if let reviewList = wrongWordList?.reviewList, reviewList.count > 0 {
                 let reviewListCount = reviewList.count
+                
+                for index in 0..<reviewListCount {
+                    if wrongWordList?.reviewList?[index].index == nil {
+                        wrongWordList?.reviewList?[index].index = index
+                    }
+                }
+                
                 wrongWordSectionData?.append(["待复习错词（\(reviewListCount)）": reviewList])
                 wordsCount = wordsCount + reviewListCount
-            }
-            
-            if originWrongWordSectionData == nil {
-                originWrongWordSectionData = wrongWordSectionData
             }
             
             if wordsCount == 0 {
@@ -102,7 +120,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    var originWrongWordSectionData: [[String: [YXWordModel]]]?
     private var wrongWordSectionData: [[String: [YXWordModel]]]?
     
     var orderType: YXWordListOrderType = .default {
@@ -111,23 +128,22 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
 
             switch orderType {
             case .default:
-                if let originWords = originWords {
-                    words = originWords
-                }
-                
-                if let data = originWrongWordSectionData {
+                if let data = wrongWordSectionData {
                     for index in 0..<data.count {
                         guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
                         if key.contains("熟识的单词") {
-                            wrongWordList?.familiarList = words
+                            wrongWordList?.familiarList = defaultOrder(words: words)
                             
                         } else if key.contains("最近错词") {
-                            wrongWordList?.recentWrongList = words
-
+                            wrongWordList?.recentWrongList = defaultOrder(words: words)
+                            
                         } else if key.contains("待复习错词") {
-                            wrongWordList?.reviewList = words
+                            wrongWordList?.reviewList = defaultOrder(words: words)
                         }
                     }
+                    
+                } else {
+                    words = defaultOrder(words: words)
                 }
                 
             case .az:
@@ -342,10 +358,10 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         cell.englishPronunciation = word.englishPronunciation
         
         if word.hidePartOfSpeechAndMeanings {
-            cell.meaningLabelMask.image = nil
+            cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
             
         } else {
-            cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
+            cell.meaningLabelMask.image = nil
         }
         
         cell.showWordDetailClosure = {
@@ -365,6 +381,15 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         } else {
             return tableView.estimatedRowHeight
         }
+    }
+    
+    private func defaultOrder(words: [YXWordModel]) -> [YXWordModel] {
+        var newWords = words
+        newWords.sort { (a, z) -> Bool in
+            a.index < z.index
+        }
+        
+        return newWords
     }
     
     private func atoz(words: [YXWordModel]) -> [YXWordModel] {

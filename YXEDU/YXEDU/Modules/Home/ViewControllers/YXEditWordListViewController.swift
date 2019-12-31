@@ -157,10 +157,10 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
         cell.englishPronunciation = word.englishPronunciation
         
         if word.hidePartOfSpeechAndMeanings {
-            cell.meaningLabelMask.image = nil
+            cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
             
         } else {
-            cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
+            cell.meaningLabelMask.image = nil
         }
         
         cell.removeMaskClosure = {
