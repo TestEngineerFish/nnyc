@@ -20,17 +20,10 @@ class YXSearchViewController: YXTableViewController {
         return .lightContent
     }
 
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: animated)
-//    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.setNavigationBarHidden(false, animated: animated)
-//    }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,9 +126,9 @@ extension YXSearchViewController {
         print(result)
         
         let home = UIStoryboard(name: "Home", bundle: nil)
-        let wordDetialViewController = home.instantiateViewController(withIdentifier: "WordDetail") as! YXWordDetailViewControllerNew
+        let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
         wordDetialViewController.wordId = model.wordId ?? 0
-        wordDetialViewController.isComplexWord = model.isComplexWord
+        wordDetialViewController.isComplexWord = model.isComplexWord ?? 0
         self.navigationController?.pushViewController(wordDetialViewController, animated: true)
         
     }

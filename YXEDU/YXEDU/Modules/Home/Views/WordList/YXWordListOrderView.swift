@@ -17,17 +17,21 @@ enum YXWordListOrderType: String {
 class YXWordListOrderView: UIView {
     var orderClosure: ((_ orderType: YXWordListOrderType) -> Void)?
     
+    private var orderViewLeftTopPoint: CGPoint!
     private var orderType: YXWordListOrderType = .default
     
-    @IBOutlet var contentView: YXDesignableView!
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var orderViewTopDistance: NSLayoutConstraint!
+    @IBOutlet weak var orderViewLeftDistance: NSLayoutConstraint!
     @IBOutlet weak var defaultButton: UIButton!
     @IBOutlet weak var azButton: UIButton!
     @IBOutlet weak var zaButton: UIButton!
 
-    init(frame: CGRect, orderType: YXWordListOrderType) {
-        super.init(frame: frame)
+    init(orderViewLeftTopPoint: CGPoint, orderType: YXWordListOrderType) {
+        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+        self.orderViewLeftTopPoint = orderViewLeftTopPoint
         self.orderType = orderType
-        
+
         initializationFromNib()
     }
     
@@ -40,6 +44,8 @@ class YXWordListOrderView: UIView {
         Bundle.main.loadNibNamed("YXWordListOrderView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
+        orderViewTopDistance.constant = orderViewLeftTopPoint.y
+        orderViewLeftDistance.constant = orderViewLeftTopPoint.x
         
         switch orderType {
         case .default:
@@ -74,6 +80,10 @@ class YXWordListOrderView: UIView {
     
     @IBAction func tapZA(_ sender: Any) {
         orderClosure?(YXWordListOrderType.za)
+        self.removeFromSuperview()
+    }
+    
+    @IBAction func close(_ sender: Any) {
         self.removeFromSuperview()
     }
 }

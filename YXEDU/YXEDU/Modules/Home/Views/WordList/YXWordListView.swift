@@ -183,12 +183,12 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!
     
     @IBAction func order(_ sender: Any) {
-        let view = YXWordListOrderView(frame: CGRect(x: screenWidth - orderButtonDistance.constant - 120, y: 44, width: 120, height: 120), orderType: orderType)
+        let view = YXWordListOrderView(orderViewLeftTopPoint: CGPoint(x: screenWidth - orderButtonDistance.constant - 116, y: kNavHeight + 88), orderType: orderType)
         view.orderClosure = { type in
             self.orderType = type
         }
         
-        self.addSubview(view)
+        kWindow.addSubview(view)
     }
     
     @IBAction func edit(_ sender: Any) {

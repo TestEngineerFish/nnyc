@@ -34,20 +34,20 @@ class YXAlertListManager: NSObject {
     
     public func showAlert() {
         
-        var alertView: YXTopWindowView?
-        for (i, alert) in alertArray.enumerated() {
-            
-            if alertView == nil {
-                alertView = alert
-            }
-            
-            if alert.tag < alertView.tag {
-                alertView = alert
-            }
-            
-        }
-        
-        alertView?.show()
+//        var alertView: YXTopWindowView?
+//        for (i, alert) in alertArray.enumerated() {
+//            
+//            if alertView == nil {
+//                alertView = alert
+//            }
+//            
+//            if alert.tag < alertView.tag {
+//                alertView = alert
+//            }
+//            
+//        }
+//        
+//        alertView?.show()
         
     }
     
