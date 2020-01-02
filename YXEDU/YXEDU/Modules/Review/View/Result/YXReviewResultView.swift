@@ -274,6 +274,8 @@ class YXReviewResultView: YXTopWindowView {
         
         
         tableView.words = model?.words ?? []
+        tableView.isHidden = (tableView.words.count == 0)
+        
         starView.count = model?.score ?? 0
         
         self.layoutSubviews()
