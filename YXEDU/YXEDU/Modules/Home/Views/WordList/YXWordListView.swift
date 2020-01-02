@@ -51,9 +51,11 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             let wordsCount = words.count
             if wordsCount == 0 {
                 topViewHeight.constant = 0
+                topView.isHidden = true
 
             } else {
                 topViewHeight.constant = 44
+                topView.isHidden = false
             }
             
             wordCountLabel.text = "\(wordsCount)"
@@ -84,10 +86,12 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             
             if wordsCount == 0 {
                 topViewHeight.constant = 0
+                topView.isHidden = true
                 shouldShowBottomView = false
                 
             } else {
                 topViewHeight.constant = 44
+                topView.isHidden = false
                 shouldShowBottomView = true
             }
             
