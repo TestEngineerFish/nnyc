@@ -176,7 +176,6 @@ class YXLearningResultViewController: UIViewController {
 
     @objc private func punchEvent() {
         let vc = YXShareViewController()
-        vc.titleString = "分享学习结果"
         vc.shareType   = .learnResult
         vc.wordsAmount = self.newLearnAmount + self.reviewLearnAmount
         vc.daysAmount  = self.daysAmount

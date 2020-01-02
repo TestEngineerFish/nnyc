@@ -137,13 +137,17 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
 
     // MARK: ==== Event ====
     @objc private func makeReivewPlan() {
-        // 显示弹框
-        let name = self.getPlanName()
-        let alertView = YXAlertView(type: .inputable, placeholder: name)
-        alertView.doneClosure = { (text: String?) in
-            self.requestMakeReviewPlan(text)
+        if self.selectedWordsListView.wordsModelList.count < 4 {
+            YXUtils.showHUD(self.view, title: "请至少选择4个单词")
+        } else {
+            // 显示弹框
+            let name = self.getPlanName()
+            let alertView = YXAlertView(type: .inputable, placeholder: name)
+            alertView.doneClosure = { (text: String?) in
+                self.requestMakeReviewPlan(text)
+            }
+            alertView.show()
         }
-        alertView.show()
     }
 
     // MARK: ==== Tools ====

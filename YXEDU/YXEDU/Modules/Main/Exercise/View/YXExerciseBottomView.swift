@@ -142,7 +142,7 @@ class YXExerciseBottomView: UIView {
     @objc func clickNextButton() {
         self.nextButton.isHidden = true
         self.tipsButton.isHidden = false
-        self.nextView.isHidden   = false
+        self.nextView.isHidden   = true
         self.delegate?.clickNextButtonEvent()
     }
     

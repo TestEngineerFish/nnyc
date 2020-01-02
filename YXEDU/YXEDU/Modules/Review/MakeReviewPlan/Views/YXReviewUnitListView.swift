@@ -170,7 +170,12 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     // MARK: ==== UITableViewDelegate ====
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectCell(with: indexPath)
+        let wordModel = self.unitModelList[indexPath.section].list[indexPath.row]
+        let home = UIStoryboard(name: "Home", bundle: nil)
+        let wordDetialViewController           = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
+        wordDetialViewController.wordId        = wordModel.id
+        wordDetialViewController.isComplexWord = 0
+        self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)
     }
 
     // MARK: ==== YXReviewUnitListHeaderProtocol ====

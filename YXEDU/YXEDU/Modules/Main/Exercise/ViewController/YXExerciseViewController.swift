@@ -205,9 +205,7 @@
             
             // 新学隐藏提示
             let tipsHidden = (model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
-            let nextHidden = (model.type == .newLearnPrimarySchool || model.type == .newLearnPrimarySchool_Group)
             self.bottomView.tipsButton.isHidden  = tipsHidden
-            self.bottomView.nextView.isHidden    = nextHidden
             if model.type == .newLearnPrimarySchool {
                 self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
             } else {

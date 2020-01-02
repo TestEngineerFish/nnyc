@@ -70,10 +70,9 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
     @IBAction func done(_ sender: UIButton) {
         UIView.animate(withDuration: 0.2, animations: {
             self.contentView.alpha = 0
-            
         }, completion: { completed in
             var text = self.textField.text
-            if text?.isEmpty ?? false {
+            if text?.trimed.isEmpty ?? false {
                 text = self.textField.placeholder
             }
             self.doneClosure?(text)
