@@ -44,6 +44,8 @@ class YXNotReviewWordView: YXTopWindowView {
     
     
     override func bindProperty() {
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        
         imageView.image = UIImage(named: "review_not_review_word")
         
         titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))

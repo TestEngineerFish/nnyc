@@ -53,7 +53,7 @@ class YXExcerciseProgressManager: NSObject {
     /// 关卡是否上报
     func isReport() -> Bool {
         // 清除之前的数据
-        clearBeforeData()
+//        clearBeforeData()
         
         if let _ = YYCache.object(forKey: key(.report)) as? Bool {
             return false
@@ -64,7 +64,7 @@ class YXExcerciseProgressManager: NSObject {
     /// 关卡是否学完
     func isCompletion() -> Bool {
         // 清除之前的数据
-        clearBeforeData()
+//        clearBeforeData()
         
         if let _ = YYCache.object(forKey: key(.completion)) as? Bool {
             return false
@@ -298,12 +298,12 @@ class YXExcerciseProgressManager: NSObject {
         let uuid = YXConfigure.shared().uuid ?? ""
         let pid = planId == nil ? "a_" :  "\(planId!)_"
                 
-        self.addDaliyKey(daliy: today)
+//        self.addDaliyKey(daliy: today)
         
         if dataType == .base {
-            return today + "_\(dataType.rawValue)_\(bid)_\(uid)_\(uuid)_pNull" + key.rawValue
+            return today + "_\(uuid)_\(dataType.rawValue)_\(bid)_\(uid)_pNull" + key.rawValue
         }
-        return today + "_\(dataType.rawValue)_bNull_uNull_\(uuid)_\(pid)" + key.rawValue
+        return today + "_\(uuid)_\(dataType.rawValue)_bNull_uNull_\(pid)" + key.rawValue
     }
     
     private func today() -> String {
@@ -323,7 +323,7 @@ class YXExcerciseProgressManager: NSObject {
             if daliy != today {
                 completionReport(daliy: daliy)
             }
-        }        
+        }
     }
     
     

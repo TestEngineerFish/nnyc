@@ -50,6 +50,7 @@ class YXReviewPlanCommandView: YXTopWindowView {
     }
     
     override func bindProperty() {        
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         
         iconImageView.image = UIImage(named: "share_scan_book")
         shareImageView.image = UIImage(named: "share_scan_share")

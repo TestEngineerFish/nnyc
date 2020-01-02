@@ -146,6 +146,7 @@ extension YXReviewViewController {
         
         let vc = YXReviewPlanDetailViewController()
         vc.planId = model.planId
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -201,6 +202,7 @@ extension YXReviewViewController {
     
     func createReviewEvent() {
         let vc = YXMakeReviewPlanViewController()
+        vc.delegate = self
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -210,4 +212,11 @@ extension YXReviewViewController {
 //        self.navigationController?.pushViewController(vc, animated: true)
 //    }
     
+}
+
+
+extension YXReviewViewController: YXMakeReviewPlanProtocol {
+    func makeReivewPlanFinised() {
+        self.headerBeginRefreshing()
+    }
 }

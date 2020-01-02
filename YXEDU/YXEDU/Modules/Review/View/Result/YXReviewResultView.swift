@@ -71,6 +71,7 @@ class YXReviewResultView: YXTopWindowView {
     }
     
     override func bindProperty() {
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         
         imageView.image = UIImage(named: "review_finish_result")
         
