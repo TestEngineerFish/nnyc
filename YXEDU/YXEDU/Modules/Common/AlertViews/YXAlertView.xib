@@ -21,7 +21,7 @@
                 <outlet property="doneButtonLeftDistance" destination="kR9-Af-ICs" id="wSr-i5-tA8"/>
                 <outlet property="leftButton" destination="o0l-c1-Doe" id="vxg-Og-Hek"/>
                 <outlet property="rightOrCenterButton" destination="VSr-wl-KM8" id="mC9-cd-VYb"/>
-                <outlet property="textCountLabel" destination="viN-5F-SYu" id="zwY-jq-PF5"/>
+                <outlet property="textCountLabel" destination="OZe-ha-hBW" id="tUd-yi-i5U"/>
                 <outlet property="textField" destination="KVv-Wb-Aw6" id="AoV-ey-TrU"/>
                 <outlet property="textFieldView" destination="rrr-rd-sKa" id="Plr-Oh-IQ5"/>
                 <outlet property="titleLabel" destination="bwl-R0-as1" id="UQp-S5-724"/>
@@ -97,11 +97,11 @@
                                 <action selector="done:" destination="-1" eventType="touchUpInside" id="ex4-AR-Mn2"/>
                             </connections>
                         </button>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rrr-rd-sKa">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rrr-rd-sKa">
                             <rect key="frame" x="0.0" y="65" width="326" height="60"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--/20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="viN-5F-SYu">
-                                    <rect key="frame" x="275.5" y="45.5" width="30.5" height="14.5"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="viN-5F-SYu">
+                                    <rect key="frame" x="287" y="45" width="19" height="15"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" red="0.75294117647058822" green="0.75294117647058822" blue="0.75294117647058822" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -110,7 +110,7 @@
                                     <rect key="frame" x="20" y="0.0" width="286" height="40"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KVv-Wb-Aw6">
-                                            <rect key="frame" x="0.0" y="11.5" width="250" height="17"/>
+                                            <rect key="frame" x="16" y="11.5" width="234" height="17"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
@@ -134,7 +134,7 @@
                                         <constraint firstAttribute="height" constant="40" id="PHJ-d8-0Ag"/>
                                         <constraint firstItem="KVv-Wb-Aw6" firstAttribute="centerY" secondItem="mSF-0n-uUn" secondAttribute="centerY" id="Zcf-Qm-9c2"/>
                                         <constraint firstItem="sYH-8X-j99" firstAttribute="centerY" secondItem="mSF-0n-uUn" secondAttribute="centerY" id="gpB-lt-6oz"/>
-                                        <constraint firstItem="KVv-Wb-Aw6" firstAttribute="leading" secondItem="mSF-0n-uUn" secondAttribute="leading" id="h4h-Bh-49e"/>
+                                        <constraint firstItem="KVv-Wb-Aw6" firstAttribute="leading" secondItem="mSF-0n-uUn" secondAttribute="leading" constant="16" id="h4h-Bh-49e"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -142,15 +142,23 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZe-ha-hBW">
+                                    <rect key="frame" x="279" y="45" width="8" height="15"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="viN-5F-SYu" secondAttribute="trailing" constant="20" id="9Gl-qy-qv7"/>
                                 <constraint firstItem="mSF-0n-uUn" firstAttribute="leading" secondItem="rrr-rd-sKa" secondAttribute="leading" constant="20" id="AZ0-If-Meb"/>
                                 <constraint firstAttribute="bottom" secondItem="viN-5F-SYu" secondAttribute="bottom" id="PJS-6v-NVJ"/>
+                                <constraint firstItem="viN-5F-SYu" firstAttribute="leading" secondItem="OZe-ha-hBW" secondAttribute="trailing" id="VlH-lI-oJi"/>
                                 <constraint firstAttribute="trailing" secondItem="mSF-0n-uUn" secondAttribute="trailing" constant="20" id="bHR-6i-iWV"/>
                                 <constraint firstItem="mSF-0n-uUn" firstAttribute="top" secondItem="rrr-rd-sKa" secondAttribute="top" id="gDA-dL-1KE"/>
                                 <constraint firstAttribute="height" constant="60" id="twL-rb-sPd"/>
+                                <constraint firstAttribute="bottom" secondItem="OZe-ha-hBW" secondAttribute="bottom" id="xN2-2r-yqV"/>
                             </constraints>
                         </view>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Vh-iI-Pge">

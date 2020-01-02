@@ -64,10 +64,11 @@ class YXWordDetailViewControllerNew: UIViewController {
     
     @IBAction func collectWord(_ sender: UIBarButtonItem) {
         if self.collectionButton.image == #imageLiteral(resourceName: "unCollectWord") {
-            let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(wordId ?? 0),\"is\":\(isComplexWord ?? 0)}]")
+            let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(wordId),\"is\":\(isComplexWord)}]")
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 self.collectionButton.image = #imageLiteral(resourceName: "collectWord")
-
+                UIView.toast("取消收藏")
+                
             }) { error in
                 print("❌❌❌\(error)")
             }
@@ -76,6 +77,7 @@ class YXWordDetailViewControllerNew: UIViewController {
             let request = YXWordListRequest.collectWord(wordId: wordId, isComplexWord: isComplexWord)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 self.collectionButton.image = #imageLiteral(resourceName: "unCollectWord")
+                UIView.toast("已收藏")
 
             }) { error in
                 print("❌❌❌\(error)")

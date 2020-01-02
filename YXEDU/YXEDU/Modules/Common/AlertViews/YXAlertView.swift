@@ -128,9 +128,16 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
     
     @objc
     private func changeTextField() {
-        if var text = textField.text, text.count >= 20 {
-            textField.text = text.substring(maxIndex: 20)
-            text = textField.text!
+        if var text = textField.text, text.isEmpty == false {
+            if text.count >= 20  {
+                textField.text = text.substring(maxIndex: 20)
+                text = textField.text!
+            }
+            
+            textCountLabel.text = "\(text.count)"
+
+        } else {
+            textCountLabel.text = "0"
         }
     }
     

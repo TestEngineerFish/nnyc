@@ -95,6 +95,9 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         
         if wordListType == .collected {
             wordListControllerView.selectItem(with: IndexPath(item: 2, section: 0))
+            
+        } else if wordListType == .wrongWords {
+            wordListControllerView.selectItem(with: IndexPath(item: 3, section: 0))
         }
     }
     
@@ -109,49 +112,36 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditWordList" {
             let editWordListViewController = segue.destination as! YXEditWordListViewController
-            
+            var words: [YXWordModel] = []
+
             switch wordListType {
             case .collected:
                 editWordListViewController.editWordListType = .collected
                 
-                var words: [YXWordModel] = []
                 for var word in wordListViews[2]?.words ?? [] {
                     word.hidePartOfSpeechAndMeanings = true
                     words.append(word)
                 }
-                
-                editWordListViewController.words = words
-                editWordListViewController.redClosure = { indexs in
-                    var sordedIndex = indexs
-                    sordedIndex.sort() { $0 > $1 }
-                    
-                    for index in sordedIndex {
-                        self.wordListViews[2]?.words.remove(at: index)
-                    }
-                }
-                
+                                
             case .wrongWords:
                 editWordListViewController.editWordListType = .familiar
                 
-                var words: [YXWordModel] = []
-                for var word in wordListViews[3]?.wrongWordList?.familiarList ?? [] {
-                    word.hidePartOfSpeechAndMeanings = true
-                    words.append(word)
-                }
-                
-                editWordListViewController.words = words
-                editWordListViewController.redClosure = { indexs in
-                    var sordedIndex = indexs
-                    sordedIndex.sort() { $0 > $1 }
+                guard let wrongWordSectionData = wordListViews[3]?.wrongWordSectionData else { return }
+                for sectionData in wrongWordSectionData {
                     
-                    for index in sordedIndex {
-                        self.wordListViews[3]?.wrongWordList?.familiarList!.remove(at: index)
+                    guard let key = sectionData.keys.first, key.contains("熟识的单词"), let wrongWords = sectionData.values.first else { continue }
+                    for var word in wrongWords {
+                        word.hidePartOfSpeechAndMeanings = true
+                        words.append(word)
                     }
                 }
+                
                 
             default:
                 break
             }
+            
+            editWordListViewController.words = words
         }
     }
     
@@ -228,10 +218,33 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 let request = YXWordListRequest.wrongWordList
                 YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { (response) in
                     guard let wrongWordList = response.data else { return }
-                    self.wordListViews[indexPath.row]?.wrongWordList = wrongWordList
+                    
+                    var wrongWordSectionData: [[String: [YXWordModel]]]?
+                    if let familiarList = wrongWordList.familiarList, familiarList.count > 0 {
+                        if wrongWordSectionData == nil {
+                            wrongWordSectionData = []
+                        }
+                        wrongWordSectionData?.append(["熟识的单词（\(familiarList.count)）": familiarList])
+                    }
+                    
+                    if let recentWrongList = wrongWordList.recentWrongList, recentWrongList.count > 0 {
+                        if wrongWordSectionData == nil {
+                            wrongWordSectionData = []
+                        }
+                        wrongWordSectionData?.append(["最近错词（\(recentWrongList.count)）": recentWrongList])
+                    }
+                    
+                    if let reviewList = wrongWordList.reviewList, reviewList.count > 0 {
+                        if wrongWordSectionData == nil {
+                            wrongWordSectionData = []
+                        }
+                        wrongWordSectionData?.append(["待复习错词（\(reviewList.count)）": reviewList])
+                    }
+                    
+                    self.wordListViews[indexPath.row]?.wrongWordSectionData = wrongWordSectionData
                     
                 }) { error in
-                    self.wordListViews[indexPath.row]?.wrongWordList = nil
+                    self.wordListViews[indexPath.row]?.wrongWordSectionData = nil
                     print("❌❌❌\(error)")
                 }
                 
@@ -286,6 +299,80 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             
         case 3:
             wordListType = .wrongWords
+            
+            if wordListViews[3] != nil, let wrongWordSectionData = self.wordListViews[3]?.wrongWordSectionData {
+               let request = YXWordListRequest.wrongWordList
+                YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { (response) in
+                    guard let wrongWordList = response.data else { return }
+                    
+                    var newWrongWordSectionData: [[String: [YXWordModel]]]?
+                    if var familiarList = wrongWordList.familiarList, familiarList.count > 0 {
+                        if newWrongWordSectionData == nil {
+                            newWrongWordSectionData = []
+                        }
+                        
+                        for sectionData in wrongWordSectionData {
+                            guard let key = sectionData.keys.first, key.contains("熟识的单词"), let wrongWords = sectionData.values.first else { continue }
+                            for word in wrongWords {
+                                for index in 0..<familiarList.count {
+                                    if word.wordId == familiarList[index].wordId {
+                                        familiarList[index].hidePartOfSpeechAndMeanings = word.hidePartOfSpeechAndMeanings
+                                    }
+                                }
+                            }
+                        }
+                        
+                        newWrongWordSectionData?.append(["熟识的单词（\(familiarList.count)）": familiarList])
+                    }
+                    
+                    if var recentWrongList = wrongWordList.recentWrongList, recentWrongList.count > 0 {
+                        if newWrongWordSectionData == nil {
+                            newWrongWordSectionData = []
+                        }
+                        
+                        for sectionData in wrongWordSectionData {
+                            guard let key = sectionData.keys.first, key.contains("最近错词"), let wrongWords = sectionData.values.first else { continue }
+                            for word in wrongWords {
+                                for index in 0..<recentWrongList.count {
+                                    if word.wordId == recentWrongList[index].wordId {
+                                        recentWrongList[index].hidePartOfSpeechAndMeanings = word.hidePartOfSpeechAndMeanings
+                                    }
+                                }
+                            }
+                        }
+                        
+                        newWrongWordSectionData?.append(["最近错词（\(recentWrongList.count)）": recentWrongList])
+                    }
+                    
+                    if var reviewList = wrongWordList.reviewList, reviewList.count > 0 {
+                        if newWrongWordSectionData == nil {
+                            newWrongWordSectionData = []
+                        }
+                        
+                        for sectionData in wrongWordSectionData {
+                            guard let key = sectionData.keys.first, key.contains("待复习错词"), let wrongWords = sectionData.values.first else { continue }
+                            for word in wrongWords {
+                                for index in 0..<reviewList.count {
+                                    if word.wordId == reviewList[index].wordId {
+                                        reviewList[index].hidePartOfSpeechAndMeanings = word.hidePartOfSpeechAndMeanings
+                                    }
+                                }
+                            }
+                        }
+                        
+                        newWrongWordSectionData?.append(["待复习错词（\(reviewList.count)）": reviewList])
+                    }
+                   
+                    self.wordListViews[indexPath.row]?.wrongWordSectionData = newWrongWordSectionData
+                    
+                    let orderType = self.wordListViews[indexPath.row]?.orderType ?? .default
+                    self.wordListViews[indexPath.row]?.orderType = orderType
+                    
+                }) { error in
+                    self.wordListViews[indexPath.row]?.wrongWordSectionData = nil
+                    print("❌❌❌\(error)")
+                }
+            }
             break
             
         default:

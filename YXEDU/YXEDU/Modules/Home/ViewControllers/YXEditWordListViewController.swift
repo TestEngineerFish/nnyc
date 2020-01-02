@@ -34,8 +34,6 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
 
     var editWordListType: YXEditWordListType!
     var words: [YXWordModel] = []
-    var redClosure: ((_ indexs: [Int]) -> Void)!
-    private var indexs: [Int] = []
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -56,8 +54,6 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
                 let word = words[index]
                 
                 guard word.isSelected else { continue }
-                indexs.append(index)
-
                 var collectWord = CollectWord()
                 collectWord.wordId = word.wordId ?? 0
                 collectWord.isComplexWord = word.isSelected ? 1 : 0
@@ -68,7 +64,6 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
             
             let request = YXWordListRequest.cancleCollectWord(wordIds: cancleCollectWordInfoString)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                self.redClosure(self.indexs)
                 self.navigationController?.popViewController(animated: true)
 
             }) { error in
@@ -82,8 +77,6 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
                 let word = words[index]
                 
                 guard word.isSelected else { continue }
-                indexs.append(index)
-
                 wrongWordIds.append(word.wordId ?? 0)
             }
             
@@ -91,7 +84,6 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
             
             let request = YXWordListRequest.deleteWrongWord(wordIds: string)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                self.redClosure(self.indexs)
                 self.navigationController?.popViewController(animated: true)
 
             }) { error in
