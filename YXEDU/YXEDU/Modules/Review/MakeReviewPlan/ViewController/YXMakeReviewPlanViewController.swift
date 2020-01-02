@@ -216,6 +216,11 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         }
         let bookModel = model.list[indexPath.row]
         if let unitModelList = model.modelDict["\(bookModel.id)"] {
+            if bookModel.type != 3 {
+                unitModelList.forEach { (unitModel) in
+                    unitModel.isOpenUp = true
+                }
+            }
             let unitListView = YXReviewUnitListView(unitModelList, frame: CGRect.zero)
             unitListView.tag      = bookModel.id
             unitListView.delegate = self.selectedWordsListView

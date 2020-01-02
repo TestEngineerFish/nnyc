@@ -106,6 +106,7 @@
 		22D50B3723BB203000AB2421 /* YXShareRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D50B3623BB203000AB2421 /* YXShareRequest.swift */; };
 		22D50B3B23BB212D00AB2421 /* YXShareModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D50B3A23BB212D00AB2421 /* YXShareModel.swift */; };
 		22D50B3D23BB4FCF00AB2421 /* YXNewLearnGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D50B3C23BB4FCF00AB2421 /* YXNewLearnGuideView.swift */; };
+		22D6FA0023BDCAC900B05BC8 /* YXMakeReviewGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6F9FF23BDCAC900B05BC8 /* YXMakeReviewGuideView.swift */; };
 		22DC471F2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC471E2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift */; };
 		22DC4726238BC140002F7120 /* libusc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DC4725238BC140002F7120 /* libusc.a */; };
 		22DEA77023B9914300E30FB7 /* YXShareCordeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEA76F23B9914300E30FB7 /* YXShareCordeView.swift */; };
@@ -860,6 +861,7 @@
 		22D50B3623BB203000AB2421 /* YXShareRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareRequest.swift; sourceTree = "<group>"; };
 		22D50B3A23BB212D00AB2421 /* YXShareModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareModel.swift; sourceTree = "<group>"; };
 		22D50B3C23BB4FCF00AB2421 /* YXNewLearnGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnGuideView.swift; sourceTree = "<group>"; };
+		22D6F9FF23BDCAC900B05BC8 /* YXMakeReviewGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMakeReviewGuideView.swift; sourceTree = "<group>"; };
 		22DC471E2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChineseFillConnectionLetterQuestionView.swift; sourceTree = "<group>"; };
 		22DC4724238BC140002F7120 /* USCRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCRecognizer.h; sourceTree = "<group>"; };
 		22DC4725238BC140002F7120 /* libusc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libusc.a; sourceTree = "<group>"; };
@@ -2305,6 +2307,7 @@
 				2296F76E239B8F5500C50660 /* YXReviewBookItem.swift */,
 				2252EFE3239BC1D900A98BFB /* YXReviewUnitListHeaderView.swift */,
 				2296F776239BBC3600C50660 /* YXReviewUnitListView.swift */,
+				22D6F9FF23BDCAC900B05BC8 /* YXMakeReviewGuideView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6319,6 +6322,7 @@
 				77B7C70923AA484A00149ACE /* YXSlidingVerificationCodeModel.swift in Sources */,
 				EE5E001A23274FEB00655654 /* YXWordDetailShareView.m in Sources */,
 				EE54F7E12362AA3100EC605A /* YXWordQuestionView.swift in Sources */,
+				22D6FA0023BDCAC900B05BC8 /* YXMakeReviewGuideView.swift in Sources */,
 				EE5EF20E23273BAE00655654 /* NSString+extension.m in Sources */,
 				EE5E00E623274FEC00655654 /* YXFresherGuideView.m in Sources */,
 				EE5EF2B62327423F00655654 /* YXInterfaceCacheService.m in Sources */,
