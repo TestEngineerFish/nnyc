@@ -28,15 +28,10 @@ class RegisterSliderView: UIView {
     let sliderView      = UIView()
     let refreshBtn      = UIButton()
     let sliderHeight    = CGFloat(47) // 滑动栏高度
-    let thumbSize       = CGSize(width: 40, height: 40) //滑动栏上滑块的大小
+    let thumbSize       = CGSize(width: 84, height: 67) //滑动栏上滑块的大小
     let puzzleSize      = CGSize(width: 52, height: 52) //拼图块🧩大小
     var randomPoint     = CGPoint.zero // 拼图块随机位置
     let sliderBgColor   = UIColor.hex(0xEBEBEB)
-    var puzzleThumbOffsetX: CGFloat {
-        get {
-            return margin + (puzzleSize.width - thumbSize.width)/2
-        }
-    }
 
     // ======== 字符校验视图相关 ========
     let hintLabel       = UILabel()
@@ -73,9 +68,20 @@ class RegisterSliderView: UIView {
             label.text          = "验证失败，再试一下吧！"
             label.textColor     = UIColor.hex(0xFF532B)
             label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
-            label.textAlignment = .center
+            label.textAlignment = .left
             return label
         }()
+        view.addSubview(iconImageView)
+        view.addSubview(tipsLabel)
+        iconImageView.snp.makeConstraints { (make) in
+            make.left.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: 14, height: 14))
+        }
+        tipsLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(iconImageView.snp.right).offset(5)
+            make.centerY.height.equalToSuperview()
+            make.right.equalToSuperview()
+        }
         view.isHidden = true
         return view
     }()
@@ -150,35 +156,37 @@ class RegisterSliderView: UIView {
         addSubview(shadowView)
         addSubview(contentView)
         addSubview(refreshBtn)
+        addSubview(resultView)
 
         shadowView.frame            = self.bounds
-        contentView.frame           = CGRect(x: 0, y: 0, width: 350, height: 310)
+        contentView.frame           = CGRect(x: 0, y: 0, width: 330, height: 320)
         contentView.center          = center
-        refreshBtn.frame            = CGRect(x: contentView.frame.maxX - 45, y: contentView.frame.maxY - 45, width: 30, height: 30)
+        resultView.frame            = CGRect(x: contentView.frame.minX + 12, y: contentView.frame.maxY - 32, width: 170, height: 18)
+        refreshBtn.frame            = CGRect(x: contentView.frame.maxX - 38, y: contentView.frame.maxY - 35, width: 22, height: 22)
         backgroundColor             = UIColor.clear
         contentView.backgroundColor = UIColor.white
         shadowView.backgroundColor  = UIColor.black.withAlphaComponent(0.2)
-
+        self.layer.cornerRadius     = 6
+        self.layer.masksToBounds    = true
         shadowView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(close))
         shadowView.addGestureRecognizer(tap)
         refreshBtn.setImage(UIImage(named: "refresh"), for: .normal)
         refreshBtn.addTarget(self, action: #selector(refresh(_:)), for: .touchUpInside)
-
     }
 
     /// 初始化拼图校验视图
     func _initPuzzleFrame() {
         imageView.frame       = CGRect(x: margin, y: margin, width: imageWidth, height: imageHeight)
-        puzzleMoveView.frame  = CGRect(x: margin, y: randomPoint.y, width: puzzleSize.width, height: puzzleSize.height)
+        puzzleMoveView.frame  = CGRect(x: (margin + thumbSize.width - puzzleSize.width)/2, y: randomPoint.y, width: puzzleSize.width, height: puzzleSize.height)
         puzzleMaskLayer.frame = CGRect(x: randomPoint.x, y: randomPoint.y, width: puzzleSize.width, height: puzzleSize.height)
         sliderView.frame      = CGRect(x: margin, y: imageView.frame.maxY + margin * 2, width: imageWidth, height: sliderHeight)
-        thumbImgView.frame    = CGRect(x: puzzleThumbOffsetX, y: (sliderHeight - thumbSize.height)/2, width: thumbSize.width, height: thumbSize.height)
+        thumbImgView.frame    = CGRect(x: margin/2, y: (sliderHeight - thumbSize.height)/2, width: thumbSize.width, height: thumbSize.height)
         progressView.frame    = CGRect(x: 0, y: 0, width: thumbImgView.frame.midX, height: sliderHeight)
         hintView.frame        = CGRect(x: 0, y: 0, width: hintViewWidht, height: sliderHeight)
         sliderView.addSubview({
             let label       = UILabel(frame: sliderView.bounds)
-            label.text      = "拖动滑块,将图片拼合完整"
+            label.text      = "向右滑动滑块完成拼图"
             label.textColor = UIColor.black.withAlphaComponent(0.6)
             label.font      = UIFont.systemFont(ofSize: 12)
             label.textAlignment = .center
@@ -229,14 +237,16 @@ class RegisterSliderView: UIView {
     /// 设置拼图验证的内容
     func _setPuzzleContent() {
         guard var image = UIImage(named: "template") else { return }
+        self.layer.cornerRadius          = 6.0
         image                            = image.rescaleSize(CGSize(width: imageWidth, height: imageHeight))
         imageView.image                  = image
         thumbImgView.image               = UIImage(named: "slide_button")
         imageView.contentMode            = .scaleAspectFill
         imageView.clipsToBounds          = true
+        imageView.layer.cornerRadius     = 6.0
         sliderView.backgroundColor       = sliderBgColor
-        sliderView.layer.cornerRadius    = sliderHeight/2
-        progressView.layer.cornerRadius  = sliderHeight/2
+        sliderView.layer.cornerRadius    = 8.0
+        progressView.layer.cornerRadius  = 8.0
         progressView.backgroundColor     = UIColor.orange
         hintView.layer.setGradient(colors: [sliderBgColor.withAlphaComponent(0), UIColor.white.withAlphaComponent(0.8), sliderBgColor.withAlphaComponent(0)], startPoint: CGPoint(x: 0, y: 0.5), endPoint: CGPoint(x: 1, y: 0.5))
 
@@ -249,10 +259,19 @@ class RegisterSliderView: UIView {
         guard var partImage = self.imageView.image?.clipImage(rect: CGRect(origin: puzzleMaskLayer.frame.origin, size: path.bounds.size)) else { return }
         partImage = partImage.clipPathImage(with: path) ?? partImage
 
-        puzzleMoveView.image        = partImage
-        puzzleMaskLayer.path        = path.cgPath
-        puzzleMaskLayer.strokeColor = UIColor.orange.cgColor
-        puzzleMaskLayer.fillColor   = UIColor.gray.withAlphaComponent(0.5).cgColor
+//        puzzleMoveView.image          = partImage
+//        let maskLayer = CAShapeLayer()
+//        maskLayer.path = path.cgPath
+//        maskLayer.strokeColor = UIColor.white.cgColor
+//        puzzleMoveView.layer.mask = maskLayer
+        puzzleMoveView.image          = partImage
+        puzzleMaskLayer.path          = path.cgPath
+        puzzleMaskLayer.strokeColor   = UIColor.white.cgColor
+        puzzleMaskLayer.shadowOffset  = CGSize(width: 0, height: 3)
+        puzzleMaskLayer.shadowColor   = UIColor.black.cgColor
+        puzzleMaskLayer.shadowOpacity = 1
+        puzzleMaskLayer.shadowRadius  = 1
+        puzzleMaskLayer.fillColor    = UIColor.white.withAlphaComponent(0.34).cgColor
 
         thumbImgView.isUserInteractionEnabled = true
         let pan = UIPanGestureRecognizer(target: self, action: #selector(slidThumbView(sender:)))
@@ -471,6 +490,9 @@ class RegisterSliderView: UIView {
                 }
             default:
                 refresh(refreshBtn)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.resultView.isHidden = true
             }
         }
     }

@@ -397,7 +397,7 @@ class YXShareViewController: YXViewController {
         return shareImage
     }
 
-    /// 创建听写复习打卡分享页面
+    /// 创建智能复习打卡分享页面
     private func createAIReviewShareImage() -> UIImage? {
         let logoImage    = UIImage(named: "gameShareLogo2")
         let shareBgImage = UIImage(named: "reviewAIShareBgImage")
@@ -429,7 +429,7 @@ class YXShareViewController: YXViewController {
         let contentImage = UIImage(named: "reviewShareContent")
         let bottomLabel: UILabel = {
             let label = UILabel()
-            label.text          = "听写不求人\n自己就能做听写练习"
+            label.text          = "智能计划复习内容\n高效背单词"
             label.textColor     = UIColor.black1
             label.font          = UIFont.regularFont(ofSize: 15)
             label.numberOfLines = 2
@@ -464,7 +464,7 @@ class YXShareViewController: YXViewController {
         return shareImage
     }
 
-    /// 创建听写复习打卡分享页面
+    /// 创建复习计划打卡分享页面
     private func createPlanReviewShareImage() -> UIImage? {
         let logoImage    = UIImage(named: "gameShareLogo2")
         let shareBgImage = UIImage(named: "reviewPlanShareBgImage")
@@ -487,7 +487,7 @@ class YXShareViewController: YXViewController {
         }()
         let belowLabel: UILabel = {
             let label = UILabel()
-            label.text          = "个"
+            label.text          = "个单词的自动复习"
             label.textColor     = UIColor.hex(0x44107A)
             label.font          = UIFont.regularFont(ofSize: 20)
             label.textAlignment = .center
@@ -496,7 +496,7 @@ class YXShareViewController: YXViewController {
         let contentImage = UIImage(named: "reviewShareContent")
         let bottomLabel: UILabel = {
             let label = UILabel()
-            label.text          = "听写不求人\n自己就能做听写练习"
+            label.text          = "智能计划复习内容\n高效背单词"
             label.textColor     = UIColor.black1
             label.font          = UIFont.regularFont(ofSize: 15)
             label.numberOfLines = 2

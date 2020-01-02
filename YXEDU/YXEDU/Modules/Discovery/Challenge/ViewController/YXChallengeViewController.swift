@@ -78,11 +78,15 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func clickPlayButton(){
-        let vc = YXShareViewController()
-        vc.gameModel = YXGameResultModel()
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+        RegisterSliderView.show(.puzzle) { (success) in
+            print(success)
+        }
         return
+//        let vc = YXShareViewController()
+//        vc.gameModel = YXGameResultModel()
+//        vc.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(vc, animated: true)
+//        return
 //            YXShareCordeView.share.showView("分享给你这次要复习的单词计划：【测试1111】，复制口令后打开念念有词App，就能马上开始学习 分享口令：￥FSUL91YHQiYrW￥")
 //        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
