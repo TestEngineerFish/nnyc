@@ -206,7 +206,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             reviewButton.setTitle("开始复习", for: .normal)
         } else if reviewPlanModel?.reviewState == .learning {
             reviewButton.setTitle("继续复习", for: .normal)
-            reviewProgressView.progress = 0.8 //reviewPlanModel?.review ?? 0
+            reviewProgressView.progress = CGFloat(reviewPlanModel?.review ?? 0) / 100.0
         } else if reviewPlanModel?.reviewState == .finish {
             reviewButton.setTitle("继续复习", for: .normal)
             reviewStarView.count = reviewPlanModel?.review ?? 0
@@ -216,7 +216,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     
     override class func viewHeight(model: YXReviewPlanModel) -> CGFloat {
-        let vHeight: CGFloat = model.listenState != .normal || model.reviewState != .normal ? 120 : 103
+        let vHeight: CGFloat = model.listenState != .normal || model.reviewState != .normal ? 133 : 106
         return AS(vHeight)
     }
     
@@ -340,7 +340,7 @@ class YXReviewPlanProgressView: YXView {
     }
     
     override func bindProperty() {
-        titleLabel.font = UIFont.semiboldFont(ofSize: AS(17))
+        titleLabel.font = UIFont.DINAlternateBold(ofSize: AS(17))
         titleLabel.textColor = UIColor.black1
         titleLabel.textAlignment = .center
     }
@@ -355,7 +355,7 @@ class YXReviewPlanProgressView: YXView {
     
     override func bindData() {
         
-        titleLabel.text = "\(progress)"
+        titleLabel.text = "\(Int(progress * 100))%"
             
         shapeLayer?.removeFromSuperlayer()
 
@@ -367,7 +367,7 @@ class YXReviewPlanProgressView: YXView {
                                 startAngle: beginAngle, endAngle: finishAngle, clockwise: true)
 
         shapeLayer = CAShapeLayer()
-        shapeLayer?.lineWidth = AS(6.0)
+        shapeLayer?.lineWidth = AS(5.0)
         shapeLayer?.lineCap = .round
         shapeLayer?.strokeColor = UIColor.orange1.cgColor
         shapeLayer?.fillColor = UIColor.clear.cgColor
@@ -387,7 +387,7 @@ class YXReviewPlanProgressView: YXView {
                                 startAngle: beginAngle, endAngle: finishAngle, clockwise: true)
         
         let shapeLayer = CAShapeLayer()
-        shapeLayer.lineWidth = AS(6.0)
+        shapeLayer.lineWidth = AS(5.0)
         shapeLayer.lineCap = .round
         shapeLayer.strokeColor = UIColor.hex(0xEBEBEB).cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor

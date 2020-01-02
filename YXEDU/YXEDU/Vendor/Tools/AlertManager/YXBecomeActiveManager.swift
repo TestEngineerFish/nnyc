@@ -42,7 +42,7 @@ class YXBecomeActiveManager: NSObject {
                     completion?()
                 }
                 
-                UIPasteboard.general.string = ""
+//                UIPasteboard.general.string = ""
             }
         } else {
             completion?()

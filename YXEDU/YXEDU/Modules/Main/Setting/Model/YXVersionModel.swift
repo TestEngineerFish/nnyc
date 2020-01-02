@@ -57,9 +57,20 @@ struct YXReviewPlanCommandModel: Mappable {
 
     mutating func mapping(map: Map) {
         userId <- map["user_info.user_id"]
-        nickname <- map["user_info.nickname"]
-        planId <- map["share_plan_id"]
+        nickname <- map["user_info.nick"]
+        planId <- map["review_plan_id"]
         planName <- map["share_plan_name"]
         wordCount <- map["review_word_num"]
     }
 }
+
+
+struct YXReviewPlanShareCommandModel: Mappable {
+    var content: String?
+    init?(map: Map) {
+    }
+    mutating func mapping(map: Map) {
+        content <- map["content"]
+    }
+}
+

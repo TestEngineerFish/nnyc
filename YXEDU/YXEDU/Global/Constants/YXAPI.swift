@@ -80,6 +80,8 @@ struct YXAPI {
         static let reviewPlanDetail = "/api/v1/learn/getreviewplaninfo"
         /// 口令查询
         static let checkCommand = "/api/v1/learn/getsharereviewplan"
+        /// 获取分享口令
+        static let shareCommand = "/api/v1/learn/setsharereviewplan"
         /// 复习结果页
         static let reviewResult = "/api/v1/learn/result"
     }

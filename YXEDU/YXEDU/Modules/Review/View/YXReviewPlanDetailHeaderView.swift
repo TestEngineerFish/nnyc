@@ -235,7 +235,7 @@ class YXReviewPlanDetailHeaderView: YXView {
         
         
         if reviewPlanModel?.reviewState == .learning {
-            reviewProgressView.progress = 0.8 //reviewPlanModel?.review ?? 0
+            reviewProgressView.progress = CGFloat(reviewPlanModel?.review ?? 0) / 100.0
         } else if reviewPlanModel?.reviewState == .finish {
             reviewStarView.count = reviewPlanModel?.review ?? 0
         }

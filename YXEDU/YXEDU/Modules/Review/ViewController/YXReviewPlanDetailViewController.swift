@@ -16,6 +16,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     var headerView = YXReviewPlanDetailHeaderView()
     var wordListView = YXWordListView()
     var bottomView = YXReviewPlanDetailBottomView()
+    var shareButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,17 +25,19 @@ class YXReviewPlanDetailViewController: YXViewController {
         self.fetchDetailData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.setNavigationBarHidden(true, animated: animated)
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        navigationController?.setNavigationBarHidden(false, animated: animated)
+//    }
+    
     
     func createSubView() {
+        self.addShareButton()
         self.view.addSubview(self.headerView)
         self.view.addSubview(self.wordListView)
         self.view.addSubview(self.bottomView)
@@ -118,4 +121,31 @@ class YXReviewPlanDetailViewController: YXViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    
+    private func addShareButton() {
+        shareButton.setImage(UIImage(named: "review_share_icon"), for: .normal)
+        
+        self.customNavigationBar?.addSubview(shareButton)
+        shareButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalTo(-15)
+            make.size.equalTo(CGSize(width: 20, height: 22))
+        }
+        
+        shareButton.addTarget(self, action: #selector(clickShareButton), for: .touchUpInside)
+    }
+    
+    @objc func clickShareButton() {
+        
+        YXSettingDataManager().fetchShareCommand(planId: planId) { (model, msg) in
+            if let commandModel = model, let content = commandModel.content {
+                YXShareCordeView.share.showView(content)
+            } else {
+                UIView.toast(msg)
+            }
+        }
+//        http://nnyc-api-test.xstudyedu.com/api/v1/learn/getsharereviewplan
+        
+//
+    }
 }

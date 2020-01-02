@@ -30,6 +30,15 @@ struct YXSettingDataManager {
         }
     }
     
+    func fetchShareCommand(planId: Int, completion: ((_ model: YXReviewPlanShareCommandModel?, _ errorMsg: String?) -> Void)?) {
+        let request = YXSettingRequest.shareCommand(plandId: planId)
+        YYNetworkService.default.request(YYStructResponse<YXReviewPlanShareCommandModel>.self, request: request, success: { (response) in
+            completion?(response.data, nil)
+        }) { (error) in
+            completion?(nil, error.message)
+        }
+    }
+    
     func reportOldUserTips(completion: ((_ model: YXBadgeReportModel?, _ errorMsg: String?) -> Void)?) {
         let data = "{\"old_user_update_msg\" : 1}"
         let request = YXSettingRequest.oldUserReport(data: data)

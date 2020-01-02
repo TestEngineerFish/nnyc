@@ -416,7 +416,7 @@ class YXReviewHeaderView: YXView {
         fuzzyProgressLabel.text = progressStringValue(num: reviewModel?.fuzzyNum)
         forgetProgressLabel.text  = progressStringValue(num: reviewModel?.forgetNum)
         
-        createReviewPlanButton.isHidden = (reviewModel?.reviewPlans?.count ?? 0 == 0)
+//        createReviewPlanButton.isHidden = (reviewModel?.reviewPlans?.count ?? 0 == 0)
         
     }
     
