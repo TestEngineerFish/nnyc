@@ -304,13 +304,13 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                let request = YXWordListRequest.wrongWordList
                 YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { (response) in
                     guard let wrongWordList = response.data else { return }
-                    
+
                     var newWrongWordSectionData: [[String: [YXWordModel]]]?
                     if var familiarList = wrongWordList.familiarList, familiarList.count > 0 {
                         if newWrongWordSectionData == nil {
                             newWrongWordSectionData = []
                         }
-                        
+
                         for sectionData in wrongWordSectionData {
                             guard let key = sectionData.keys.first, key.contains("熟识的单词"), let wrongWords = sectionData.values.first else { continue }
                             for word in wrongWords {
@@ -321,15 +321,15 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                                 }
                             }
                         }
-                        
+
                         newWrongWordSectionData?.append(["熟识的单词（\(familiarList.count)）": familiarList])
                     }
-                    
+
                     if var recentWrongList = wrongWordList.recentWrongList, recentWrongList.count > 0 {
                         if newWrongWordSectionData == nil {
                             newWrongWordSectionData = []
                         }
-                        
+
                         for sectionData in wrongWordSectionData {
                             guard let key = sectionData.keys.first, key.contains("最近错词"), let wrongWords = sectionData.values.first else { continue }
                             for word in wrongWords {
@@ -340,15 +340,15 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                                 }
                             }
                         }
-                        
+
                         newWrongWordSectionData?.append(["最近错词（\(recentWrongList.count)）": recentWrongList])
                     }
-                    
+
                     if var reviewList = wrongWordList.reviewList, reviewList.count > 0 {
                         if newWrongWordSectionData == nil {
                             newWrongWordSectionData = []
                         }
-                        
+
                         for sectionData in wrongWordSectionData {
                             guard let key = sectionData.keys.first, key.contains("待复习错词"), let wrongWords = sectionData.values.first else { continue }
                             for word in wrongWords {
@@ -359,15 +359,15 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                                 }
                             }
                         }
-                        
+
                         newWrongWordSectionData?.append(["待复习错词（\(reviewList.count)）": reviewList])
                     }
-                   
+
                     self.wordListViews[indexPath.row]?.wrongWordSectionData = newWrongWordSectionData
-                    
+
                     let orderType = self.wordListViews[indexPath.row]?.orderType ?? .default
                     self.wordListViews[indexPath.row]?.orderType = orderType
-                    
+
                 }) { error in
                     self.wordListViews[indexPath.row]?.wrongWordSectionData = nil
                     print("❌❌❌\(error)")

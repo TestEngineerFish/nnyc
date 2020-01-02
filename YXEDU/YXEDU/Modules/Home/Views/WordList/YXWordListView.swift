@@ -189,7 +189,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.reloadData()
     }
     
     
@@ -270,8 +269,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 }
                 
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
-                return cell
+                let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
+                return emptyCell
             }
             
         } else {
@@ -284,8 +283,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 }
                 
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
-                return cell
+                let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
+                return emptyCell
             }
         }
         
@@ -333,6 +332,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             return 44
 
         } else {
+//            return 356
             return tableView.estimatedRowHeight
         }
     }
