@@ -178,25 +178,34 @@ extension YXBaseWordModel {
     }
     
     var englishExampleAttributedString: NSAttributedString? {
-        guard let englishExample = examples?.first?.english else { return nil }
+        var englishExampleAttributedString: NSMutableAttributedString?
 
-//        let firstRightBracket = englishExample.firstIndex(of: ">")!
-//        let startHighLightIndex = englishExample.index(firstRightBracket, offsetBy: 1)
-//        let lastLeftBracket = englishExample.lastIndex(of: "<")!
-//        let highLightString = String(englishExample[startHighLightIndex..<lastLeftBracket])
-//
-//        let firstLeftBracket = englishExample.firstIndex(of: "<")!
-//        let lastRightBracket = englishExample.lastIndex(of: ">")!
-//        let endHighLightIndex = englishExample.index(lastRightBracket, offsetBy: 1)
-//        let string = String(englishExample[englishExample.startIndex..<firstLeftBracket]) + highLightString + String(englishExample[endHighLightIndex..<englishExample.endIndex])
-//
-//        let attrString = NSMutableAttributedString(string: string)
-//        let highLightRange = string.range(of: highLightString)!
-//        let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
-//        attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
-                
-//        return attrString
+        guard let englishExample = examples?.first?.english else { return englishExampleAttributedString }
+        if let firstAddressSymbolIndex = englishExample.firstIndex(of: "@"), let lastAddressSymbolIndex = englishExample.lastIndex(of: "@") {
+            let startHighLightIndex = englishExample.index(firstAddressSymbolIndex, offsetBy: 1)
+            let endHighLightIndex = englishExample.index(lastAddressSymbolIndex, offsetBy: 1)
+            let highLightString = String(englishExample[startHighLightIndex..<lastAddressSymbolIndex])
+            let string = String(englishExample[englishExample.startIndex..<firstAddressSymbolIndex]) + highLightString + String(englishExample[endHighLightIndex..<englishExample.endIndex])
+            
+            let highLightRange = string.range(of: highLightString)!
+            let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
+            
+            englishExampleAttributedString = NSMutableAttributedString(string: string)
+            englishExampleAttributedString?.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
+                        
+        } else if let firstRightBracket = englishExample.firstIndex(of: ">"), let lastLeftBracket = englishExample.lastIndex(of: "<"), let firstLeftBracket = englishExample.firstIndex(of: "<"), let lastRightBracket = englishExample.lastIndex(of: ">") {
+            let startHighLightIndex = englishExample.index(firstRightBracket, offsetBy: 1)
+            let endHighLightIndex = englishExample.index(lastRightBracket, offsetBy: 1)
+            let highLightString = String(englishExample[startHighLightIndex..<lastLeftBracket])
+            let string = String(englishExample[englishExample.startIndex..<firstLeftBracket]) + highLightString + String(englishExample[endHighLightIndex..<englishExample.endIndex])
+            
+            let highLightRange = string.range(of: highLightString)!
+            let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
+            
+            englishExampleAttributedString = NSMutableAttributedString(string: string)
+            englishExampleAttributedString?.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
+        }
         
-        return nil
+        return englishExampleAttributedString
     }
 }

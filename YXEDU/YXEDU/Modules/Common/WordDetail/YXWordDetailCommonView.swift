@@ -266,9 +266,10 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 let highLightString = String(combineExample[startHighLightIndex..<lastAddressSymbolIndex])
                 let string = String(combineExample[combineExample.startIndex..<firstAddressSymbolIndex]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
                 
-                let attrString = NSMutableAttributedString(string: string)
                 let highLightRange = string.range(of: highLightString)!
                 let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
+                
+                let attrString = NSMutableAttributedString(string: string)
                 attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
                 
                 cell.label.attributedText = attrString
@@ -279,9 +280,10 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 let highLightString = String(combineExample[startHighLightIndex..<lastLeftBracket])
                 let string = String(combineExample[combineExample.startIndex..<firstLeftBracket]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
                 
-                let attrString = NSMutableAttributedString(string: string)
                 let highLightRange = string.range(of: highLightString)!
                 let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
+                
+                let attrString = NSMutableAttributedString(string: string)
                 attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
                 
                 cell.label.attributedText = attrString
