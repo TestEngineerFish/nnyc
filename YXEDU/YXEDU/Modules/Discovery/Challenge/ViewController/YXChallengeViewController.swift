@@ -56,6 +56,18 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
             if let statusModel = response.data {
                 if statusModel.state == 1 {
+                    guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
+                        return
+                    }
+                    if userModel.myCoins >= gameInfo.unitCoin {
+                        self.playGame()
+                    } else {
+                        let alertView = YXAlertView(type: .normal)
+                        alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
+                        alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
+                        alertView.shouldOnlyShowOneButton = true
+                        alertView.show()
+                    }
                     self.requestChallengeData()
                 }
             }
@@ -66,10 +78,11 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func clickPlayButton(){
-//        let vc = YXShareViewController()
-//        vc.gameModel = YXGameResultModel()
-//        self.navigationController?.pushViewController(vc, animated: true)
-//        return
+        let vc = YXShareViewController()
+        vc.gameModel = YXGameResultModel()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+        return
 //            YXShareCordeView.share.showView("分享给你这次要复习的单词计划：【测试1111】，复制口令后打开念念有词App，就能马上开始学习 分享口令：￥FSUL91YHQiYrW￥")
 //        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {

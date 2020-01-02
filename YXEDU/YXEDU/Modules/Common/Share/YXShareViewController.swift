@@ -23,9 +23,14 @@ enum YXShareType {
 
 class YXShareViewController: YXViewController {
 
+    var shareImageBorderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.white
+        return view
+    }()
     var shareImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.setDefaultShadow(radius: AdaptSize(13))
+        imageView.backgroundColor = UIColor.white
         return imageView
     }()
 
@@ -109,7 +114,6 @@ class YXShareViewController: YXViewController {
     var daysAmount  = 0
     var gameModel: YXGameResultModel?
     var shareType: YXShareType = .challengeResult
-    var shareImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,21 +132,23 @@ class YXShareViewController: YXViewController {
 
         switch self.shareType {
         case .learnResult:
-            self.shareImage = self.createLearnResultShareImage()
+            self.shareImageView.image = self.createLearnResultShareImage()
         case .aiReviewReuslt:
-            self.shareImage = self.createAIReviewShareImage()
+            self.shareImageView.image = self.createAIReviewShareImage()
         case .planReviewResult:
-            self.shareImage = self.createPlanReviewShareImage()
+            self.shareImageView.image = self.createPlanReviewShareImage()
         case .listenReviewResult:
-            self.shareImage = self.createListenReviewShareImage()
+            self.shareImageView.image = self.createListenReviewShareImage()
         case .challengeResult:
-            self.shareImage = self.createChallengeReviewShareImage()
+            self.shareImageView.image = self.createChallengeReviewShareImage()
         }
-        self.shareImageView.image = self.shareImage
     }
 
     private func createSubviews() {
-        self.view.addSubview(shareImageView)
+        let imageViewSize = CGSize(width: AdaptSize(319), height: AdaptSize(436))
+
+        self.view.addSubview(shareImageBorderView)
+        shareImageBorderView.addSubview(shareImageView)
         self.view.addSubview(leftLineView)
         self.view.addSubview(rightLineView)
         self.view.addSubview(descriptionLabel)
@@ -153,15 +159,20 @@ class YXShareViewController: YXViewController {
         self.view.addSubview(timeLineImageView)
         self.view.addSubview(timeLineLabel)
         self.view.addSubview(goldImageView)
-        shareImageView.snp.makeConstraints { (make) in
+        shareImageBorderView.size = imageViewSize
+        shareImageBorderView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(319), height: AdaptSize(436)))
-            make.top.equalToSuperview().offset(AdaptSize(35) + kNavHeight)
+            make.size.equalTo(imageViewSize)
+            make.top.equalToSuperview().offset(AdaptSize(6) + kNavHeight)
+        }
+        shareImageView.size = imageViewSize
+        shareImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
         descriptionLabel.sizeToFit()
         descriptionLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(shareImageView.snp.bottom).offset(AdaptSize(48))
+            make.bottom.equalToSuperview().offset(AdaptSize(-115))
             make.size.equalTo(descriptionLabel.size)
         }
         leftLineView.snp.makeConstraints { (make) in
@@ -212,6 +223,9 @@ class YXShareViewController: YXViewController {
             make.centerX.equalTo(timeLineImageView)
             make.size.equalTo(timeLineLabel.size)
         }
+
+        shareImageBorderView.layer.setDefaultShadow()
+        shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))
     }
 
     // MARK: ==== Request ====
@@ -233,17 +247,17 @@ class YXShareViewController: YXViewController {
 
     // MARK: ==== Share Event ====
     @objc private func shareToQQ() {
-        QQApiManager.shared()?.share(shareImage, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+        QQApiManager.shared()?.share(self.shareImageView.image, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
         self.punch()
     }
 
     @objc private func shareToWechat() {
-        WXApiManager.shared()?.share(shareImage, toPaltform: .wxSession, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+        WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxSession, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
         self.punch()
     }
 
     @objc private func shareToTimeLine() {
-        WXApiManager.shared()?.share(shareImage, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
+        WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
         self.punch()
     }
 
@@ -574,7 +588,7 @@ class YXShareViewController: YXViewController {
         let imageSize = CGSize(width: 375, height: 514)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 513))
-        contentImage?.draw(in: CGRect(x: 0, y: 430, width: 375, height: 83))
+        contentImage?.draw(in: CGRect(x: 0, y: 430, width: 375, height: 84))
         flagImage?.draw(in: CGRect(x: 28, y: 427, width: 75, height: 77))
         rankTitleLabel.drawText(in: CGRect(x: 54, y: 436, width: 29, height: 20))
         rankLabel.drawText(in: CGRect(x: 45, y: 455, width: 47, height: 28))
