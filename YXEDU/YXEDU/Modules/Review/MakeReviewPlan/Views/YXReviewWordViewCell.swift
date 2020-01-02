@@ -49,16 +49,34 @@ class YXReviewWordViewCell: UITableViewCell {
         return button
     }()
 
-    var model: YXReviewWordModel?
+    var model: YXReviewWordModel? {
+        willSet {
+            guard let model = newValue else {
+                return
+            }
+            if model.isSelected {
+                self.barImageView.image = UIImage(named: "word_selected")
+            } else {
+                self.barImageView.image = nil
+            }
+        }
+    }
+    var indexPath: IndexPath?
+    var clickBlock: ((IndexPath?)->Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         self.setSubviews()
+        self.bindPropertry()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func bindPropertry() {
+        self.selectBarBtn.addTarget(self, action: #selector(clickStatusButton), for: .touchUpInside)
     }
 
     func bindData(_ model: YXReviewWordModel) {
@@ -128,4 +146,12 @@ class YXReviewWordViewCell: UITableViewCell {
             make.right.greaterThanOrEqualToSuperview().priorityHigh()
         }
     }
+
+    // MARK: ==== Event ====
+    @objc private func clickStatusButton() {
+        self.clickBlock?(self.indexPath)
+    }
+
+
+
 }

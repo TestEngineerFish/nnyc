@@ -170,14 +170,16 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     // MARK: ==== Tools ====
     private func getPlanName() -> String {
-        var bookName = "我的复习计划"
+        var bookName = ""
         var bookIdList: Set<Int> = []
         self.selectedWordsListView.wordsModelList.forEach { (wordModel) in
             bookIdList.insert(wordModel.bookId)
         }
         if bookIdList.count > 1 {
-            return bookName
+            // 如果只选择了多本书中的单词
+            bookName = "我的复习计划"
         } else {
+            // 如果只选择了一本书中的单词
             guard let list = self.model?.list, let bookId = bookIdList.first else {
                 return bookName
             }
@@ -187,12 +189,37 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                         bookName = "错词本复习计划"
                     } else if bookModel.type == 2 {
                         bookName = "收藏单词复习计划"
+                    } else if bookModel.type == 3 {
+                        bookName = bookModel.name + "复习计划"
+                    } else {
+                        bookName = "我的复习计划"
                     }
                 }
             }
+        }
+        // 去除重复
+        var isExist = true
+        var repeatNumber = 0
+        var editBookName = bookName
+        guard let list = self.model?.list else {
             return bookName
         }
-
+        while isExist {
+            let existModel = list.filter { (bookModel) -> Bool in
+                return bookModel.name == editBookName
+            }.first
+            if existModel != nil {
+                if repeatNumber > 0 {
+                    editBookName.removeLast()
+                }
+                repeatNumber += 1
+                editBookName += "\(repeatNumber)"
+            } else {
+                isExist = false
+                bookName = editBookName
+            }
+        }
+        return bookName
     }
 
     // MARK: ==== BPSegmentDataSource ====

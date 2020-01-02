@@ -15,6 +15,7 @@ protocol YXReviewUnitListViewProtocol: NSObjectProtocol {
 
 class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, YXReviewUnitListHeaderProtocol, YXReviewSelectedWordsListViewProtocol {
 
+    var guideView = YXMakeReviewGuideView()
     var tableView = UITableView()
     var pan: UIPanGestureRecognizer?
     var lastPassByIndexPath: IndexPath?
@@ -53,12 +54,15 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     // MARK: ==== Event ====
 
     private func selectCell(with indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell else {
+            return
+        }
         let unitModel = self.unitModelList[indexPath.section]
         let wordModel = unitModel.list[indexPath.row]
         wordModel.bookId = self.tag
         wordModel.unitId = unitModel.id
         wordModel.isSelected = !wordModel.isSelected
-        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
+        cell.model = wordModel
         if wordModel.isSelected {
             self.delegate?.selectedWord(wordModel)
         } else {
@@ -73,6 +77,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             return true
         }
         let point = gestureRecognizer.location(in: self.tableView)
+        print(point)
         if point.x <= AdaptSize(56) {
             return true
         } else {
@@ -86,6 +91,9 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             self.previousLocation    = pan.location(in: pan.view)
         } else if pan.state == .changed {
             let newLocation = pan.location(in: pan.view)
+            if newLocation.x > AdaptSize(56) {
+                return
+            }
             self.commitNewLocation(newLocation)
             self.previousLocation = newLocation
         }
@@ -97,8 +105,9 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         }
         let offsetX = newLocation.x - previousLocation.x
         let offsetY = newLocation.y - previousLocation.y
-        if offsetY > offsetX {
-            guard let indexPath = self.tableView.indexPathForRow(at: newLocation) else {
+        if fabsf(Float(offsetY)) > fabsf(Float(offsetX)) {
+            let point = newLocation
+            guard let indexPath = self.tableView.indexPathForRow(at: point) else {
                 return
             }
             if self.lastPassByIndexPath != indexPath {
@@ -122,6 +131,9 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let unitModel = self.unitModelList[section]
         if unitModel.isOpenUp {
+            if !(YYCache.object(forKey: YXLocalKey.alreadShowMakeReviewGuideView.rawValue) as? Bool ?? false) {
+                self.guideView.show()
+            }
             return unitModel.list.count
         } else {
             return 0
@@ -151,6 +163,13 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         }
         let wordModel = self.unitModelList[indexPath.section].list[indexPath.row]
         cell.bindData(wordModel)
+        cell.indexPath = indexPath
+        cell.clickBlock = { [weak self] (indexPath: IndexPath?) in
+            guard let self = self, let indexPath = indexPath else {
+                return
+            }
+            self.selectCell(with: indexPath)
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

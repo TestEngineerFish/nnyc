@@ -39,10 +39,16 @@ class YXMakeReviewGuideView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubview()
+        self.bindPropertry()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func bindPropertry() {
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        self.confirmButton.addTarget(self, action: #selector(hide), for: .touchUpInside)
     }
 
     private func createSubview() {
@@ -62,24 +68,35 @@ class YXMakeReviewGuideView: UIView {
         }
         confirmButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(AdaptSize(130) + kSafeBottomMargin)
+            make.bottom.equalToSuperview().offset(AdaptSize(-130) - kSafeBottomMargin)
             make.size.equalTo(CGSize(width: AdaptSize(230), height: AdaptSize(42)))
         }
     }
 
     // MARK: ==== Event ====
     func show() {
-        
+        kWindow.addSubview(self)
+        self.size = kWindow.size
+        self.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        let maskLayer   = CAShapeLayer()
+        let bezierPath  = UIBezierPath(rect: self.bounds)
+        maskLayer.path  = bezierPath.cgPath
+        self.layer.mask = maskLayer
+        self.startAnimation()
     }
 
-    func hide() {
-
+    @objc private func hide() {
+        YYCache.set(true, forKey: YXLocalKey.alreadShowMakeReviewGuideView.rawValue)
+        self.stopAnimation()
+        self.removeFromSuperview()
     }
 
     private func startAnimation() {
         let animation = CABasicAnimation(keyPath: "position.y")
         animation.duration       = 0.75
-        animation.toValue        = CGPoint(x: AdaptSize(16), y: AdaptSize(AdaptSize(400)))
+        animation.toValue        = AdaptSize(400)
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         animation.repeatCount    = MAXFLOAT
         animation.autoreverses   = false

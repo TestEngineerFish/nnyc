@@ -24,7 +24,7 @@ class YXReviewBookModel: Mappable {
 
 class YXReviewWordBookItemModel: Mappable {
     var id: Int          = 0
-    var type: Int        = 0
+    var type: Int        = 0 //1-错词本 2-收藏夹 3-年级词书 4-复习计划
     var name             = ""
     var wordsNumber: Int = 0
     var versionName      = ""
