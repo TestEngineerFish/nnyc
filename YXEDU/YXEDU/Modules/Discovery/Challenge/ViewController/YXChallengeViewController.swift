@@ -152,7 +152,10 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     }
 
     @objc private func showRuleView() {
-        YXAlertWebView.share.show("http://www.baidu.com")
+        guard let url = YXUserModel.default.gameExplainUrl else {
+            return
+        }
+        YXAlertWebView.share.show(url)
     }
 
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====

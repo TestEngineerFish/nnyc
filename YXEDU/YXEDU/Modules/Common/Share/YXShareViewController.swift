@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum YXShareType {
+enum YXShareImageType {
     /// 学习结果分享
     case learnResult
     /// 智能复习分享
@@ -19,6 +19,12 @@ enum YXShareType {
     case listenReviewResult
     /// 挑战结果分享
     case challengeResult
+}
+
+enum YXShareType: Int {
+    case QQ       = 1
+    case wechat   = 2
+    case timeLine = 3
 }
 
 class YXShareViewController: YXViewController {
@@ -113,7 +119,7 @@ class YXShareViewController: YXViewController {
     var wordsAmount = 0
     var daysAmount  = 0
     var gameModel: YXGameResultModel?
-    var shareType: YXShareType = .challengeResult
+    var shareType: YXShareImageType = .challengeResult
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -229,8 +235,8 @@ class YXShareViewController: YXViewController {
     }
 
     // MARK: ==== Request ====
-    private func punch() {
-        let request = YXShareRequest.punch
+    private func punch(_ type: YXShareType) {
+        let request = YXShareRequest.punch(type: type.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { (response) in
             guard let model = response.data else {
                 return
@@ -248,17 +254,35 @@ class YXShareViewController: YXViewController {
     // MARK: ==== Share Event ====
     @objc private func shareToQQ() {
         QQApiManager.shared()?.share(self.shareImageView.image, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
-        self.punch()
+        self.punch(.QQ)
+        WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+            guard let self = self else {
+                return
+            }
+            print("恭喜恭喜🎉")
+        }
     }
 
     @objc private func shareToWechat() {
         WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxSession, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
-        self.punch()
+        self.punch(.wechat)
+        WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+            guard let self = self else {
+                return
+            }
+            print("恭喜恭喜🎉")
+        }
     }
 
     @objc private func shareToTimeLine() {
         WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
-        self.punch()
+        self.punch(.timeLine)
+        WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+            guard let self = self else {
+                return
+            }
+            print("恭喜恭喜🎉")
+        }
     }
 
     // MARK: ==== Tools ====

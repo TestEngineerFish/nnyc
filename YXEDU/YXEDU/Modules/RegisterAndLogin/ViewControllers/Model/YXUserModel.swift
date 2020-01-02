@@ -33,6 +33,14 @@ class YXUserModel: NSObject {
         if let userAvatarPath = YYCache.object(forKey: "UserAvatarPath") as? String {
             self.userAvatarPath = userAvatarPath
         }
+
+        if let gameExplainUrl = YYCache.object(forKey: "GameExplainUrl") as? String {
+            self.gameExplainUrl = gameExplainUrl
+        }
+
+        if let coinExplainUrl = YYCache.object(forKey: "CoinExplainUrl") as? String {
+            self.coinExplainUrl = coinExplainUrl
+        }
     }
     
     var didLogin = false {
@@ -68,6 +76,18 @@ class YXUserModel: NSObject {
     var userAvatarPath: String? {
         didSet {
             YYCache.set(userAvatarPath, forKey: "UserAvatarPath")
+        }
+    }
+
+    var coinExplainUrl: String? {
+        didSet {
+            YYCache.set(coinExplainUrl, forKey: "UoinExplainUrl")
+        }
+    }
+
+    var gameExplainUrl: String? {
+        didSet {
+            YYCache.set(gameExplainUrl, forKey: "GameExplainUrl")
         }
     }
     

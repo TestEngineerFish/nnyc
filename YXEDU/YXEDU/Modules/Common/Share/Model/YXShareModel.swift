@@ -12,10 +12,12 @@ import ObjectMapper
 struct YXShareModel: Mappable {
 
     var state: Bool = true
+    var coin: Int   = 0
 
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
         state <- map["state"]
+        coin  <- map["credits"]
     }
 }

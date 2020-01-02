@@ -106,7 +106,7 @@
         if ([response.state isEqualToString:kWechatLogin]) {
             [Growing track:kGrowingTracePlatformLoginResult withVariable:@{@"platform_result":resp, @"platform_type":@"WeChat"}];
         }
-//        self.finishBlock(code, YES);
+        self.finishBlock(code, YES);
 
 //        [[NSNotificationCenter defaultCenter]postNotificationName:@"CompletedBind" object:@"wechat" userInfo:@{@"token":code}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CompletedBind" object:nil userInfo:@{@"platfrom":@"wechat", @"token":code}];
