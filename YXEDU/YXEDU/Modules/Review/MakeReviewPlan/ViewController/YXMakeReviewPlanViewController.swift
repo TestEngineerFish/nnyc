@@ -13,7 +13,7 @@ protocol YXMakeReviewPlanProtocol: NSObjectProtocol {
     func makeReivewPlanFinised()
 }
 
-class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
+class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXReviewSelectedArrowProtocol {
 
     // ---- 子视图
     var segmentControllerView: BPSegmentControllerView = {
@@ -28,10 +28,15 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
         let segmentControllerView = BPSegmentControllerView(config, frame: segmentFrame)
         return segmentControllerView
     }()
+    var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.01)
+        view.isHidden        = true
+        return view
+    }()
     var selectedWordsListView = YXReviewSelectedWordsListView()
-
-    var bottomView = YXReviewBottomView()
-    var delegate: YXMakeReviewPlanProtocol?
+    var bottomView            = YXReviewBottomView()
+    weak var delegate: YXMakeReviewPlanProtocol?
 
     // ---- 数据对象
     var model: YXReviewBookModel?
@@ -48,14 +53,17 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
         self.customNavigationBar?.title = "选择单词"
         self.view.addSubview(segmentControllerView)
         self.view.addSubview(bottomView)
+        self.view.addSubview(backgroundView)
         self.view.addSubview(selectedWordsListView)
         self.view.backgroundColor = UIColor.white
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
         bottomView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview().offset(kSafeBottomMargin)
             make.left.right.equalToSuperview()
             make.height.equalTo(AdaptSize(60) + kSafeBottomMargin)
         }
-
         selectedWordsListView.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-10))
             make.width.equalTo(AdaptSize(155))
@@ -66,8 +74,11 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
 
     private func bindData() {
         self.segmentControllerView.delegate           = self
+        self.selectedWordsListView.delegateArrow      = self
         self.selectedWordsListView.delegateBottomView = self.bottomView
         self.bottomView.makeButton.addTarget(self, action: #selector(makeReivewPlan), for: .touchUpInside)
+        let tapAction = UITapGestureRecognizer(target: self, action: #selector(hideBackgroundView))
+        self.backgroundView.addGestureRecognizer(tapAction)
     }
 
     // MARK: ==== Request ====
@@ -150,6 +161,11 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
         }
     }
 
+    @objc private func hideBackgroundView() {
+        self.closeDownList()
+        self.selectedWordsListView.closeDownList()
+    }
+
     // MARK: ==== Tools ====
     private func getPlanName() -> String {
         var bookName = "我的复习计划"
@@ -218,5 +234,14 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource {
         model.list[preIndexPath.row].isSelected = false
         model.list[indexPath.row].isSelected    = true
         self.segmentControllerView.headerScrollView.reloadData()
+    }
+
+    // MARK: ==== YXReviewSelectedArrowProtocol ====
+    func closeDownList() {
+        self.backgroundView.isHidden = true
+    }
+
+    func openUpList() {
+        self.backgroundView.isHidden = false
     }
 }

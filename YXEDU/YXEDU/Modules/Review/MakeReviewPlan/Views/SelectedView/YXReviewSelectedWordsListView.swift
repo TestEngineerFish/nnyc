@@ -12,6 +12,11 @@ protocol YXReviewSelectedWordsListViewProtocol: NSObjectProtocol {
     func remove(_ word: YXReviewWordModel)
 }
 
+protocol YXReviewSelectedArrowProtocol: NSObjectProtocol {
+    func closeDownList()
+    func openUpList()
+}
+
 class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewDelegate, YXReviewUnitListViewProtocol {
 
     var wordsModelList: [YXReviewWordModel] = []
@@ -21,6 +26,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
     final let kYXReviewSelectedWordCell = "YXReviewSelectedWordCell"
 
     weak var delegate: YXReviewSelectedWordsListViewProtocol?
+    weak var delegateArrow: YXReviewSelectedArrowProtocol?
     weak var delegateBottomView: YXReviewBottomView?
 
     var titleLabel: UILabel = {
@@ -85,16 +91,12 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
 
     // MARK: ==== Event ====
     @objc func clickArrowBtn(_ button: UIButton) {
-        var h = CGFloat.zero
         if button.transform == .identity {
-            h = self.getMaxHeight()
-            button.transform = CGAffineTransform(rotationAngle: .pi)
+            self.openUpList()
+            self.delegateArrow?.openUpList()
         } else {
-            h = self.defalutHeight
-            button.transform = .identity
-        }
-        self.snp.updateConstraints { (make) in
-            make.height.equalTo(h)
+            self.closeDownList()
+            self.delegateArrow?.closeDownList()
         }
     }
 
@@ -104,6 +106,22 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
                 self.delegate?.remove(wordModel)
                 self.removedWord(wordModel, index: index)
             }
+        }
+    }
+
+    func openUpList() {
+        let h = self.getMaxHeight()
+         self.snp.updateConstraints { (make) in
+             make.height.equalTo(h)
+         }
+        self.arrowButton.transform = CGAffineTransform(rotationAngle: .pi)
+    }
+
+    func closeDownList() {
+        self.arrowButton.transform = .identity
+        let h = self.defalutHeight
+        self.snp.updateConstraints { (make) in
+            make.height.equalTo(h)
         }
     }
 
