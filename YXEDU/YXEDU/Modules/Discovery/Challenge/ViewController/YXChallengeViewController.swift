@@ -78,10 +78,10 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func clickPlayButton(){
-        RegisterSliderView.show(.puzzle) { (success) in
-            print(success)
-        }
-        return
+//        RegisterSliderView.show(.puzzle) { (success) in
+//            print(success)
+//        }
+//        return
 //        let vc = YXShareViewController()
 //        vc.gameModel = YXGameResultModel()
 //        vc.hidesBottomBarWhenPushed = true
