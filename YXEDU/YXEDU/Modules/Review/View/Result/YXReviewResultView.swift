@@ -296,7 +296,7 @@ class YXReviewResultView: YXTopWindowView {
     }
     
 
-    private func shareType() -> YXShareType {
+    private func shareType() -> YXShareImageType {
         switch type {
         case .aiReview:
             return .aiReviewReuslt

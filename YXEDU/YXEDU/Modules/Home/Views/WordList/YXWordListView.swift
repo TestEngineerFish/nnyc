@@ -51,9 +51,11 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             let wordsCount = words.count
             if wordsCount == 0 {
                 topViewHeight.constant = 0
+                topView.isHidden = true
 
             } else {
                 topViewHeight.constant = 44
+                topView.isHidden = false
             }
             
             wordCountLabel.text = "\(wordsCount)"
@@ -84,10 +86,12 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             
             if wordsCount == 0 {
                 topViewHeight.constant = 0
+                topView.isHidden = true
                 shouldShowBottomView = false
                 
             } else {
                 topViewHeight.constant = 44
+                topView.isHidden = false
                 shouldShowBottomView = true
             }
             
@@ -185,7 +189,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.reloadData()
     }
     
     
@@ -266,8 +269,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 }
                 
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
-                return cell
+                let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
+                return emptyCell
             }
             
         } else {
@@ -280,8 +283,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 }
                 
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
-                return cell
+                let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell", for: indexPath) as! YXWordListEmptyCell
+                return emptyCell
             }
         }
         
@@ -329,6 +332,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             return 44
 
         } else {
+//            return 356
             return tableView.estimatedRowHeight
         }
     }

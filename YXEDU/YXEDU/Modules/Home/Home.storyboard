@@ -98,7 +98,7 @@
             <objects>
                 <navigationController id="y1G-4r-ZDj" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="学习" image="tabLearn" selectedImage="tabLearnSelected" id="YlJ-gd-SKR"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" shadowImage="nil" id="D96-NT-1dR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="D96-NT-1dR">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1213,7 +1213,6 @@
         <image name="homeProgressBar" width="259" height="8"/>
         <image name="homeProgressBarTrack" width="259" height="8"/>
         <image name="homeSearch" width="22" height="22"/>
-        <image name="nil" width="16" height="16"/>
         <image name="questionIcon" width="22" height="22"/>
         <image name="showSelectGrade" width="14" height="14"/>
         <image name="tabLearn" width="22" height="22"/>

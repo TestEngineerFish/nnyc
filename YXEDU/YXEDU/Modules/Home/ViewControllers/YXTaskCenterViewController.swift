@@ -211,18 +211,19 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                     cell.integralStatusLabel.font = UIFont.systemFont(ofSize: 10)
                 }
                 
-                cell.circleView.backgroundColor = UIColor.hex(0xFCD096)
                 cell.integralStatusLabel.textColor = UIColor.hex(0xD98F36)
+                cell.circleView.backgroundColor = UIColor.hex(0xFCD096)
                 cell.indicatorImageView.isHidden = true
                 break
                 
             case .today:
+                cell.integralStatusLabel.text = "今天"
+                cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
+
                 if dailyData.didPunchIn == 1 {
                     cell.circleView.backgroundColor = UIColor.hex(0xFCD096)
                 }
                 
-                cell.integralStatusLabel.text = "今天"
-                cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
                 cell.circleView.layer.setDefaultShadow()
                 cell.circleView.layer.cornerRadius = 16
                 cell.circleView.layer.shadowColor = UIColor.hex(0xFFBB00).cgColor
@@ -231,6 +232,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             case .tomorrow:
                 cell.integralStatusLabel.text = "+\(dailyData.integral ?? 0)"
                 cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
+                cell.circleView.backgroundColor = .white
                 cell.indicatorImageView.isHidden = true
                 break
             }

@@ -128,11 +128,11 @@ extension CALayer {
     
     /// 设置默认阴影效果
     @objc func setDefaultShadow(radius: CGFloat = 10) {
-        self.cornerRadius  = 6
+        self.cornerRadius  = radius
         self.shadowColor   = UIColor.hex(0xc7c7c7).withAlphaComponent(0.5).cgColor
         self.shadowOffset  = CGSize.zero
         self.shadowOpacity = 1
-        self.shadowRadius  = radius
+        self.shadowRadius  = 10
         self.masksToBounds = false
     }
 
@@ -145,7 +145,7 @@ extension CALayer {
     /// - parameter opacity: 阴影的透明度, 默认0.8
     /// - parameter shadowRadius: 阴影半径长度,长度越大,阴影越大,默认3.0
     /// - parameter cornerRadius: 阴影圆角,默认当前View的一半
-    func configPathShadow(opacity: Float = 1, shadowRadius: CGFloat = 10, cornerRadius: CGFloat) {
+    func configPathShadow(opacity: Float = 1, shadowRadius: CGFloat = 3.0, cornerRadius: CGFloat) {
 
         // 设置阴影Layer
         let shadowLayer           = CALayer()

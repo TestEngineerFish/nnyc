@@ -177,8 +177,9 @@ class YXTaskCenterCardCell: UICollectionViewCell {
         getCoinButton.layoutSubviews()
         getCoinButton.contentEdgeInsets.left = 16
         getCoinButton.contentEdgeInsets.right = 16
-        getCoinButton.titleEdgeInsets.left = -getCoinButton.imageView!.bounds.width - 16
-        getCoinButton.imageEdgeInsets.left = getCoinButton.titleLabel!.bounds.width
+        getCoinButton.titleEdgeInsets.left = -getCoinButton.imageView!.bounds.width - 20
+        getCoinButton.imageEdgeInsets.left = getCoinButton.titleLabel!.bounds.width + 4
+        getCoinButton.imageEdgeInsets.right = -4
         
         switch cardStatus {
         case .incomplete:
