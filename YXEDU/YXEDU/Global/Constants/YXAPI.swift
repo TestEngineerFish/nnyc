@@ -35,7 +35,7 @@ struct YXAPI {
         static let latestBadge = "/api/v1/user/badge/new"
         
         /// 徽章展示上报接口
-        static let badgeDisplayReport = "api/v1/user/badge/report"
+        static let badgeDisplayReport = "/api/v1/user/badge/report"
         
     }
     

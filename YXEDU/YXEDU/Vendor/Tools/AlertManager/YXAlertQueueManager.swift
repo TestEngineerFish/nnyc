@@ -14,13 +14,16 @@ import UIKit
 class YXAlertQueueManager: NSObject {
         
     static var `default` = YXAlertQueueManager()
-    
-    private var alertArray: [YXTopWindowView] = []
-    private var isStart: Bool = false
+
+    public var processStatus = false
     public var queueCount: Int {
         return self.alertArray.count
     }
+        
+    private var alertArray: [YXTopWindowView] = []
+    private var isStart: Bool = false
     private override init() {}
+    
     
     public func start() {
         if self.isStart {
@@ -99,8 +102,9 @@ class YXAlertQueueManager: NSObject {
         group.notify(queue: queue) { [weak self] in
             print("====================== 队列结束")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                 self?.showAlert()
-            }            
+                self?.processStatus = true
+                self?.showAlert()
+            }
         }
     }
     

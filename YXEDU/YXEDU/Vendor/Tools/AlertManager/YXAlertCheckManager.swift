@@ -142,7 +142,7 @@ class YXAlertCheckManager {
     
     
     func checkLatestBadgeWhenBackTabPage() {
-        if YXAlertQueueManager.default.queueCount == 0 {
+        if YXAlertQueueManager.default.queueCount == 0 && YXAlertQueueManager.default.processStatus {
             self.checkLatestBadge {
                 YXAlertQueueManager.default.showAlert()
             }

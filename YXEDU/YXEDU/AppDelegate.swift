@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /** 每次启动时，都执行，但这个方法太过灵敏，App显示通知栏、双击home等情况，App没有完全退到后台时，也会调用，因此只是App每次启动时调用一次 */
     func applicationDidBecomeActive(_ application: UIApplication) {
         // 仅刚启动时调用一次
-//        YXAlertQueueManager.default.start()
+        YXAlertQueueManager.default.start()
     }
     
     
@@ -92,6 +92,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 启动时，删除学习中状态
         YYCache.remove(forKey: .learningState)
-
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//            self.processReviewResult()
+            
+            
+//            let vc = YXReviewResultView(type: .planListenReview)
+//            vc.model = nil
+//            vc.show()
+        }
     }
+    
+//    /// 处理复习结果页
+//    func processReviewResult() {
+//        YXReviewDataManager().fetchReviewResult(type: .planListenReview, planId: 13) { [weak self] (resultModel, error) in
+//            guard let self = self else {return}
+//
+//            if var model = resultModel {
+//
+//                model.planId = 13
+//                if model.planState {
+//                    self.processReviewResult(model: model)
+//                } else {
+////                    self.processReviewProgressResult(model: model)
+//                }
+//
+//            } else {
+//                UIView.toast("上报关卡失败")
+////                self.navigationController?.popViewController(animated: true)
+//            }
+//
+//        }
+//    }
+//
+//        /// 听力复习结果页
+//        func processReviewResult(model: YXReviewResultModel) {
+//    //        let resultView = YXReviewResultView(type: dataType)
+//    //        resultView.model = model
+//    //        resultView.show()
+//
+////            self.navigationController?.popViewController(animated: false)
+//
+//            let vc = YXReviewResultViewController(type: .planListenReview, model: model)
+//            vc.hidesBottomBarWhenPushed = true
+//            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+//        }
+    
 }
+

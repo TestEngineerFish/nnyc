@@ -62,7 +62,11 @@ extension YYBaseRequest {
     }
     
     public var url: URL {
-        return URL(string: baseURL.absoluteString + path)!
+        let bUrl = baseURL.absoluteString
+        if bUrl.hasSuffix("/") == false && path.hasPrefix("/") == false {
+            return URL(string: bUrl + "/" + path)!
+        }                
+        return URL(string: bUrl + path)!
     }
     
     public var path: String { return "" }

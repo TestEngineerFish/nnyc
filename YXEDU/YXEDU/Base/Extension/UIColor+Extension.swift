@@ -162,6 +162,9 @@ public extension UIColor {
     /// 提示 0x888888
     class var gray1: UIColor { return UIColor.hex(0x888888) }
     
+    /// D8D8D8
+    class var colorD8D8D8: UIColor { return UIColor.hex(0xD8D8D8) }
+    
     /// 进度条底色 EBEBEB
     class var gray2: UIColor { return UIColor.hex(0xEBEBEB) }
     

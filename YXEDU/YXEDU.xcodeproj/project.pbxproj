@@ -713,6 +713,7 @@
 		EE88DF5923AF871E004DFF10 /* YXReviewPlanCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE88DF5823AF871E004DFF10 /* YXReviewPlanCommandView.swift */; };
 		EEA50FE023BA3C7400518BE8 /* YXAlertQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA50FDF23BA3C7400518BE8 /* YXAlertQueueManager.swift */; };
 		EEA50FE423BDDA2A00518BE8 /* YXReviewPlanEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA50FE323BDDA2A00518BE8 /* YXReviewPlanEditView.swift */; };
+		EEA50FE623BE18CD00518BE8 /* YXReviewResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA50FE523BE18CC00518BE8 /* YXReviewResultViewController.swift */; };
 		EEACEB06239E62160036B3A2 /* YXReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB05239E62160036B3A2 /* YXReviewViewController.swift */; };
 		EEACEB1E239F9DA90036B3A2 /* YXReviewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB1A239F9DA90036B3A2 /* YXReviewHeaderView.swift */; };
 		EEACEB1F239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */; };
@@ -1857,6 +1858,7 @@
 		EE88DF5823AF871E004DFF10 /* YXReviewPlanCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanCommandView.swift; sourceTree = "<group>"; };
 		EEA50FDF23BA3C7400518BE8 /* YXAlertQueueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAlertQueueManager.swift; sourceTree = "<group>"; };
 		EEA50FE323BDDA2A00518BE8 /* YXReviewPlanEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanEditView.swift; sourceTree = "<group>"; };
+		EEA50FE523BE18CC00518BE8 /* YXReviewResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewResultViewController.swift; sourceTree = "<group>"; };
 		EEACEB05239E62160036B3A2 /* YXReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewViewController.swift; sourceTree = "<group>"; };
 		EEACEB1A239F9DA90036B3A2 /* YXReviewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewHeaderView.swift; sourceTree = "<group>"; };
 		EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewPlanTableViewCell.swift; sourceTree = "<group>"; };
@@ -5334,6 +5336,7 @@
 				EEACEB05239E62160036B3A2 /* YXReviewViewController.swift */,
 				EEACEB6D23A8BCD90036B3A2 /* YXReviewPlanDetailViewController.swift */,
 				EE6C7D1723B0A073009DCC0C /* YXReviewPlanShareDetailViewController.swift */,
+				EEA50FE523BE18CC00518BE8 /* YXReviewResultViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -6210,6 +6213,7 @@
 				EE88DF5723AF7BCA004DFF10 /* YXBecomeActiveManager.swift in Sources */,
 				77626BF7239E24FD00B9407A /* YXWordListView.swift in Sources */,
 				7759A89223793E2800C63199 /* YXWordDetailCommonView.swift in Sources */,
+				EEA50FE623BE18CD00518BE8 /* YXReviewResultViewController.swift in Sources */,
 				2290EACF23701210000BCA47 /* YXNewLearnJuniorHighSchoolExerciseView.swift in Sources */,
 				7786B6D02361C3820027D0E3 /* YXGroupWordBookCell.swift in Sources */,
 				771E88682362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift in Sources */,

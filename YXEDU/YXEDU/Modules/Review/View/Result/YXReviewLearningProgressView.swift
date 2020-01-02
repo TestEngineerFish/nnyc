@@ -13,6 +13,7 @@ import UIKit
 class YXReviewLearningProgressView: YXTopWindowView {
 
     var reviewEvent: (() -> ())?
+    var type: YXExerciseDataType = .aiReview
         
     var imageView = UIImageView()
     var titleLabel = UILabel()
@@ -38,8 +39,9 @@ class YXReviewLearningProgressView: YXTopWindowView {
         closeButton.removeTarget(self, action: #selector(clickCloseButton), for: .touchUpInside)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(type: YXExerciseDataType) {
+        super.init(frame: .zero)
+        self.type = type
         self.createSubviews()
         self.bindProperty()
     }
@@ -187,15 +189,23 @@ class YXReviewLearningProgressView: YXTopWindowView {
             let score = CGFloat(self.model?.score ?? 0)
             self.progressView.progress = score / 100.0
         }
-        
-        let lenght1 = "\(model?.allWordNum ?? 0)".count
-        let lenght2 = "\(model?.knowWordNum ?? 0)".count
-        let lenght3 = "\(model?.remainWordNum ?? 0)".count
-        
+                        
         titleLabel.attributedText = attrString()
-        subTitleLable1.attributedText = attrString("巩固了 \(model?.allWordNum ?? 0) 个单词", 4, lenght1)
-        subTitleLable2.attributedText = attrString("\(model?.knowWordNum ?? 0) 个单词掌握的很好", 0, lenght2)
-        subTitleLable3.attributedText = attrString("该计划下剩余 \(model?.remainWordNum ?? 0) 个单词待复习", 7, lenght3)
+        
+        if let num = model?.allWordNum, num > 0 {
+            let length = "\(num)".count
+            subTitleLable1.attributedText = attrString(subTitle(num), 3, length)
+        }
+        if let num = model?.knowWordNum, num > 0 {
+            let length = "\(num)".count
+            subTitleLable2.attributedText = attrString("\(num)个单词掌握的更好了", 0, length)
+        }
+        
+        if let num = model?.remainWordNum, num > 0 {
+            let length = "\(num)".count
+            subTitleLable3.attributedText = attrString("该计划下剩余\(model?.remainWordNum ?? 0)个单词待复习", 6, length)
+        }
+
 
     }
     
@@ -212,7 +222,7 @@ class YXReviewLearningProgressView: YXTopWindowView {
     func attrString() -> NSAttributedString {
         let score = model?.score ?? 0
         
-        let attrString = NSMutableAttributedString(string: "<\(model?.planName ?? "")> 完成 \(score)%")
+        let attrString = NSMutableAttributedString(string: "\(model?.planName ?? "")完成 \(score)%")
         let start = attrString.length - "\(score)%".count
         
         let all: [NSAttributedString.Key : Any] = [.font: UIFont.mediumFont(ofSize: AS(17)),.foregroundColor: UIColor.black1]
@@ -235,5 +245,12 @@ class YXReviewLearningProgressView: YXTopWindowView {
         attrString.addAttributes(nicknameAttr, range: NSRange(location: start, length: lenght))
 
         return attrString
+    }
+    
+    private func subTitle(_ num: Int) -> String {
+        if type == .planListenReview {
+            return "听写了\(num)个单词"
+        }
+        return "巩固了\(num)个单词"
     }
 }

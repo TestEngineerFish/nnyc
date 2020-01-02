@@ -103,7 +103,7 @@ extension YXExerciseViewController {
     /// 智能复习结果页
     /// - Parameter model:
     func processReviewProgressResult(model: YXReviewResultModel) {
-        let aiView = YXReviewLearningProgressView()
+        let aiView = YXReviewLearningProgressView(type: dataType)
         aiView.model = model
         aiView.reviewEvent = {
             let vc = YXExerciseViewController()
@@ -120,10 +120,14 @@ extension YXExerciseViewController {
     
     /// 听力复习结果页
     func processReviewResult(model: YXReviewResultModel) {
-        let resultView = YXReviewResultView(type: dataType)
-        resultView.model = model
-        resultView.show()
+//        let resultView = YXReviewResultView(type: dataType)
+//        resultView.model = model
+//        resultView.show()
         
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: false)
+        
+        let vc = YXReviewResultViewController(type: dataType, model: model)
+        vc.hidesBottomBarWhenPushed = true        
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }

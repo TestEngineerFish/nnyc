@@ -29,6 +29,8 @@ class YXReviewResultView: YXTopWindowView {
     var tableView = YXReviewResultTableView()
     
     var shareButton = UIButton()
+    var tipsLabel = UILabel()
+    
     var closeButton = UIButton()
     
     var model: YXReviewResultModel? {
@@ -42,6 +44,8 @@ class YXReviewResultView: YXTopWindowView {
     
     init(type: YXExerciseDataType) {
         super.init(frame: .zero)
+        self.type = type
+        
         self.createSubviews()
         self.bindProperty()
     }
@@ -67,13 +71,12 @@ class YXReviewResultView: YXTopWindowView {
         mainView.addSubview(tableView)
         
         mainView.addSubview(shareButton)
+        mainView.addSubview(tipsLabel)
         mainView.addSubview(closeButton)
     }
     
     override func bindProperty() {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-        
-        imageView.image = UIImage(named: "review_finish_result")
         
         titleLabel.font = UIFont.regularFont(ofSize: AS(17))
         titleLabel.textAlignment = .center
@@ -82,7 +85,7 @@ class YXReviewResultView: YXTopWindowView {
         starTitleLabel.font = UIFont.regularFont(ofSize: AS(14))
         starTitleLabel.textAlignment = .center
         starTitleLabel.textColor = UIColor.black3
-        
+        starTitleLabel.numberOfLines = 0
         
         pointLabel1.layer.masksToBounds = true
         pointLabel1.layer.cornerRadius = AS(2)
@@ -92,75 +95,104 @@ class YXReviewResultView: YXTopWindowView {
         pointLabel2.layer.masksToBounds = true
         pointLabel2.layer.cornerRadius = AS(2)
         pointLabel2.backgroundColor = UIColor.black4
+
         
         shareButton.layer.masksToBounds = true
         shareButton.layer.cornerRadius = AS(21)
         shareButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
-        shareButton.setTitle("打卡分享", for: .normal)
+        
         shareButton.setTitleColor(UIColor.white, for: .normal)
         shareButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
         shareButton.addTarget(self, action: #selector(clickShareButton), for: .touchUpInside)
         
+        tipsLabel.font = UIFont.regularFont(ofSize: AS(12))
+        tipsLabel.textAlignment = .center
+        tipsLabel.textColor = UIColor.black3
+        tipsLabel.text = "*已经熟识的单词，可以在错词本中清除哦～"
+                
         closeButton.setImage(UIImage(named: "review_learning_close"), for: .normal)
         closeButton.addTarget(self, action: #selector(clickCloseButton), for: .touchUpInside)
+        
+        
+        if type == .wrong {
+            imageView.image = UIImage(named: "review_wrong_finish_result")
+            shareButton.setTitle("完成", for: .normal)
+            tipsLabel.isHidden = false
+            starView.isHidden = true
+            starTitleLabel.isHidden = true
+        } else {
+            imageView.image = UIImage(named: "review_finish_result")
+            shareButton.setTitle("打卡分享", for: .normal)
+            tipsLabel.isHidden = true
+            starView.isHidden = false
+            starTitleLabel.isHidden = false
+        }
+        
         
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        mainView.snp.makeConstraints { (make) in
+        mainView.snp.remakeConstraints { (make) in
             make.edges.equalToSuperview()
         }
         
-        imageView.snp.makeConstraints { (make) in
+        imageView.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(kNavHeight))
             make.centerX.equalToSuperview()
             make.width.equalTo(AS(233))
             make.height.equalTo(AS(141))
         }
         
-        starView.snp.makeConstraints { (make) in
-            make.centerX.bottom.equalTo(imageView)
-            make.width.equalTo(AS(27 * 2 + 38 + 6))
+        starView.snp.remakeConstraints { (make) in
+            make.centerX.equalTo(imageView)
+            make.bottom.equalTo(imageView).offset(AS(6))
+            make.width.equalTo(AS(27 * 2 + 38 + 2))
             make.height.equalTo(AS(45))
         }
         
-        titleLabel.snp.makeConstraints { (make) in
+        let titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(24)) ?? 0
+        titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(AS(16))
-            make.left.right.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalTo(titleWidth)
             make.height.equalTo(AS(24))
         }
 
         
-        starTitleLabel.snp.makeConstraints { (make) in
+        starTitleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
             make.left.right.equalToSuperview()
             make.height.equalTo(AS(20))
         }
         
-        
-        pointLabel1.snp.makeConstraints { (make) in
+
+        pointLabel1.snp.remakeConstraints { (make) in
             make.top.equalTo(starTitleLabel.snp.bottom).offset(AS(50))
-            make.left.equalTo(AS(32))
+            if (model?.words?.count ?? 0) == 0 {
+                make.left.equalTo(titleLabel).offset(AS(-10))
+            } else {
+                make.left.equalTo(AS(32))
+            }
             make.width.height.equalTo(AS(4))
         }
         
-        pointLabel2.snp.makeConstraints { (make) in
-            make.top.equalTo(starTitleLabel.snp.bottom).offset(AS(72))
-            make.left.equalTo(AS(32))
+        pointLabel2.snp.remakeConstraints { (make) in
+            make.top.equalTo(pointLabel1.snp.bottom).offset(AS(18))
+            make.left.equalTo(pointLabel1)
             make.width.height.equalTo(AS(4))
         }
         
         
-        subTitleLable1.snp.makeConstraints { (make) in
+        subTitleLable1.snp.remakeConstraints { (make) in
             make.centerY.equalTo(pointLabel1)
             make.left.equalTo(pointLabel1.snp.right).offset(AS(12))
             make.right.equalTo(AS(-85))
             make.height.equalTo(AS(20))
         }
         
-        subTitleLable2.snp.makeConstraints { (make) in
+        subTitleLable2.snp.remakeConstraints { (make) in
             make.centerY.equalTo(pointLabel2)
             make.left.equalTo(pointLabel2.snp.right).offset(AS(12))
             make.right.equalTo(AS(-85))
@@ -168,22 +200,38 @@ class YXReviewResultView: YXTopWindowView {
         }
     
         
-        tableView.snp.makeConstraints { (make) in
+        tableView.snp.remakeConstraints { (make) in
             make.top.equalTo(subTitleLable2.snp.bottom).offset(14)
             make.left.equalTo(29)
             make.right.equalTo(AS(-29))
         }
         
-        
-        shareButton.snp.makeConstraints { (make) in
-            make.top.equalTo(tableView.snp.bottom).offset(AS(30))
-            make.left.equalTo(AS(51))
-            make.right.equalTo(AS(-51))
-            make.height.equalTo(AS(42))
-            make.bottom.equalTo(-AS(kSafeBottomMargin + 29))
+        if type == .wrong {
+            shareButton.snp.remakeConstraints { (make) in
+                make.top.equalTo(tableView.snp.bottom).offset(AS(30))
+                make.left.equalTo(AS(51))
+                make.right.equalTo(AS(-51))
+                make.height.equalTo(AS(42))
+            }
+            
+            tipsLabel.snp.remakeConstraints { (make) in
+                make.top.equalTo(shareButton.snp.bottom).offset(AS(12))
+                make.left.right.equalToSuperview()
+                make.height.equalTo(AS(17))
+                make.bottom.equalTo(-AS(kSafeBottomMargin + 29))
+            }
+        } else {
+            shareButton.snp.remakeConstraints { (make) in
+                make.top.equalTo(tableView.snp.bottom).offset(AS(30))
+                make.left.equalTo(AS(51))
+                make.right.equalTo(AS(-51))
+                make.height.equalTo(AS(42))
+                make.bottom.equalTo(-AS(kSafeBottomMargin + 29))
+            }
         }
+
         
-        closeButton.snp.makeConstraints { (make) in
+        closeButton.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(29 + kSafeBottomMargin))
             make.left.equalTo(AS(15))
             make.width.equalTo(AS(28))
@@ -196,32 +244,54 @@ class YXReviewResultView: YXTopWindowView {
     override func bindData() {
         if type == .aiReview {
             titleLabel.text = "恭喜完成智能复习"
-        } else {
-            titleLabel.text = "恭喜完成<\(model?.planName ?? "")>的复习"
+        } else if type == .planListenReview {
+            titleLabel.text = "恭喜完成\(model?.planName ?? "")的听力"
+        } else if type == .planReview {
+            titleLabel.text = "恭喜完成\(model?.planName ?? "")的复习"
+        } else if type == .wrong {
+            titleLabel.text = "恭喜完成抽查复习"
         }
         
-        let lenght1 = "\(model?.allWordNum ?? 0)".count
-        let lenght2 = "\(model?.knowWordNum ?? 0)".count
+        if let score = model?.score {
+            if score == 0 || score == 1 {
+                starTitleLabel.text = " 还有些词需要多多练习才行哦！"
+            } else if score == 2 {
+                starTitleLabel.text = " 再巩固一下，向3星冲刺哦！"
+            } else if score == 3 {
+                starTitleLabel.text = " 太棒了，获得了3星呢！"
+            }
+        }
+    
         
-        starTitleLabel.text = " 太棒了，获得了\(model?.score ?? 0)星呢！"
-        subTitleLable1.attributedText = attrString("巩固了 \(model?.allWordNum ?? 0) 个单词", 4, lenght1)
-        subTitleLable2.attributedText = attrString("\(model?.knowWordNum ?? 0) 个单词掌握的更好了", 0, lenght2)
+        if let num = model?.allWordNum, num > 0 {
+            let length = "\(num)".count
+            subTitleLable1.attributedText = attrString(subTitle(num), 3, length)
+        }
+        if let num = model?.knowWordNum, num > 0 {
+            let length = "\(num)".count
+            subTitleLable2.attributedText = attrString("\(num)个单词掌握的更好了", 0, length)
+        }
+        
         
         tableView.words = model?.words ?? []
         starView.count = model?.score ?? 0
+        
+        self.layoutSubviews()
     }
     
     @objc func clickShareButton() {
-//        self.shareEvent?()
+        
+        if type == .wrong {
+            YRRouter.popViewController(true)
+            return
+        }
         
         let shareVC = YXShareViewController()
         shareVC.shareType = shareType()
         shareVC.titleString = model?.planName ?? ""
         shareVC.wordsAmount = model?.allWordNum ?? 0
         shareVC.daysAmount = model?.studyDay ?? 0
-        
-        self.removeFromSuperview()
-        
+        shareVC.hidesBottomBarWhenPushed = true
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
     }
     
@@ -242,11 +312,11 @@ class YXReviewResultView: YXTopWindowView {
     }
     
     
-    @objc func clickCloseButton() {
-        self.removeFromSuperview()
+    @objc private func clickCloseButton() {
+        YRRouter.popViewController(true)
     }
     
-    func attrString(_ text: String, _ start: Int, _ lenght: Int) -> NSAttributedString {
+    private func attrString(_ text: String, _ start: Int, _ lenght: Int) -> NSAttributedString {
         
         let attrString = NSMutableAttributedString(string: text)
                         
@@ -258,7 +328,17 @@ class YXReviewResultView: YXTopWindowView {
 
         return attrString
     }
-
+    
+    private func subTitle(_ num: Int) -> String {
+        if type == .planListenReview {
+            return "听写了\(num)个单词"
+        } else if type == .wrong {
+            return "复习了\(num)个单词"
+        }
+        return "巩固了\(num)个单词"
+    }
+    
+    
 }
 
 
@@ -299,20 +379,20 @@ class YXReviewResultStarView: YXView {
         
         imageView1.snp.makeConstraints { (make) in
             make.centerY.left.equalToSuperview()
-            make.width.equalTo(27)
-            make.height.equalTo(45)
+            make.width.equalTo(AS(27))
+            make.height.equalTo(AS(45))
         }
         
         imageView2.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.equalTo(38)
-            make.height.equalTo(45)
+            make.width.equalTo(AS(38))
+            make.height.equalTo(AS(45 * 38 / 27))
         }
         
         imageView3.snp.makeConstraints { (make) in
             make.centerY.right.equalToSuperview()
-            make.width.equalTo(27)
-            make.height.equalTo(45)
+            make.width.equalTo(AS(27))
+            make.height.equalTo(AS(45))
         }
         
     }
