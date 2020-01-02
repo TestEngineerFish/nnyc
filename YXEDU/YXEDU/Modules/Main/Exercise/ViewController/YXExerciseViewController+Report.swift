@@ -82,12 +82,13 @@ extension YXExerciseViewController {
         YXReviewDataManager().fetchReviewResult(type: dataType, planId: planId) { [weak self] (resultModel, error) in
             guard let self = self else {return}
             
-            if let model = resultModel {
-                
-                if self.dataType == .aiReview && model.planState != .finish {
-                    self.processAIReviewProgressResult(model: model)
-                } else {
+            if var model = resultModel {
+                             
+                model.planId = self.planId ?? 0
+                if model.planState {
                     self.processReviewResult(model: model)
+                } else {
+                    self.processReviewProgressResult(model: model)
                 }
                                 
             } else {
@@ -101,11 +102,15 @@ extension YXExerciseViewController {
     
     /// 智能复习结果页
     /// - Parameter model:
-    func processAIReviewProgressResult(model: YXReviewResultModel) {
+    func processReviewProgressResult(model: YXReviewResultModel) {
         let aiView = YXReviewLearningProgressView()
         aiView.model = model
         aiView.reviewEvent = {
-            
+            let vc = YXExerciseViewController()
+            vc.dataType = aiView.model?.type ?? .aiReview
+            vc.planId = model.planId
+            vc.hidesBottomBarWhenPushed = true
+            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
         }
         aiView.show()
         

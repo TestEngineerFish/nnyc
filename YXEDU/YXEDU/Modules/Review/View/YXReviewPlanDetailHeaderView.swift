@@ -90,18 +90,22 @@ class YXReviewPlanShareDetailHeaderView: YXView {
 
 class YXReviewPlanDetailHeaderView: YXView {
 
+    
+    var startReviewPlanEvent: (() -> Void)?
+    var startListenPlanEvent: (() -> Void)?
+    
     var reviewPlanModel: YXReviewPlanDetailModel? {
         didSet { bindData() }
     }
     
     var bgView = UIView()
     
-    var reviewPlanLabel = UILabel()
-    var subTitleLabel = UILabel()
-    var fromLabel = UILabel()
-    var reviewProgressView = YXReviewPlanProgressView()
+    var titleLabel = UILabel()
     var editButton = UIButton()
-    
+    var subTitleLabel = UILabel()
+    var listenStarView = YXReviewPlanStarContainerView(type: .listen)
+    var reviewStarView = YXReviewPlanStarContainerView(type: .plan)
+    var reviewProgressView = YXReviewPlanProgressView()
     
     deinit {
         editButton.removeTarget(self, action: #selector(clickEditButton), for: .touchUpInside)
@@ -116,110 +120,138 @@ class YXReviewPlanDetailHeaderView: YXView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     override func createSubviews() {
         self.addSubview(bgView)
         
-        bgView.addSubview(reviewPlanLabel)
-        bgView.addSubview(subTitleLabel)
-        bgView.addSubview(fromLabel)
-        bgView.addSubview(reviewProgressView)
+        bgView.addSubview(titleLabel)
         bgView.addSubview(editButton)
-        
+        bgView.addSubview(subTitleLabel)
+        bgView.addSubview(listenStarView)
+        bgView.addSubview(reviewStarView)
+        bgView.addSubview(reviewProgressView)
     }
     
     override func bindProperty() {
         bgView.backgroundColor = UIColor.white
         bgView.layer.setDefaultShadow(radius: AS(4))
         
-        reviewPlanLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
-//        reviewPlanLabel.text = "我的复习计划1"
-        reviewPlanLabel.textColor = UIColor.black1
-
+        titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
+        titleLabel.textColor = UIColor.black1
         
         subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-//        subTitleLabel.text = "听写成绩：9"
         subTitleLabel.textColor = UIColor.black3
-                                
-        
-        fromLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-//        fromLabel.text = "听写成绩：9"
-        fromLabel.textColor = UIColor.black3
-        
+
         editButton.setImage(UIImage(named: "review_plan_detail_edit"), for: .normal)
+        editButton.addTarget(self, action: #selector(clickEditButton), for: .touchUpInside)
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        bgView.snp.makeConstraints { (make) in
-            make.top.equalTo(0)
+        bgView.snp.remakeConstraints { (make) in
+            make.top.equalTo(AS(6.5))
             make.left.equalTo(AS(22))
             make.right.equalTo(AS(-22))
-            make.height.equalTo(AS(108))
+            make.bottom.equalTo(AS(-6.5))
         }
         
-        let titleWidth = reviewPlanLabel.text?.textWidth(font: reviewPlanLabel.font, height: AS(21)) ?? 0
-        reviewPlanLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(20))
-            make.left.equalTo(AS(20))
+        let titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(21)) ?? 0
+        titleLabel.snp.remakeConstraints { (make) in
+            make.top.equalTo(AS(15))
+            make.left.equalTo(AS(22))
             make.width.equalTo(titleWidth)
             make.height.equalTo(AS(21))
         }
         
         
-        editButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(reviewPlanLabel)
-            make.left.equalTo(reviewPlanLabel.snp.right).offset(AS(13))
+        editButton.snp.remakeConstraints { (make) in
+            make.centerY.equalTo(titleLabel)
+            make.left.equalTo(titleLabel.snp.right).offset(AS(13))
             make.width.equalTo(AS(15))
             make.height.equalTo(AS(15))
         }
         
-        subTitleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(reviewPlanLabel.snp.bottom).offset(AS(3))
-            make.left.equalTo(reviewPlanLabel)
-            make.right.equalTo(reviewProgressView.snp.left).offset(AS(-20))
-            make.height.equalTo(AS(17))
+        
+        subTitleLabel.isHidden = true
+        if reviewPlanModel?.listenState != .normal {
+            subTitleLabel.isHidden = false
+            let subTitleWidth = subTitleLabel.text?.textWidth(font: subTitleLabel.font, height: AS(17)) ?? 0
+            subTitleLabel.snp.remakeConstraints { (make) in
+                make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
+                make.left.equalTo(titleLabel)
+                make.width.equalTo(subTitleWidth)
+                make.height.equalTo(AS(17))
+            }
         }
         
-        
-        fromLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(subTitleLabel.snp.bottom).offset(AS(14))
-            make.left.equalTo(reviewPlanLabel)
-            make.right.equalTo(reviewProgressView.snp.left).offset(AS(-20))
-            make.height.equalTo(AS(17))
+        listenStarView.isHidden = true
+        if reviewPlanModel?.listenState == .finish {
+            listenStarView.isHidden = false
+            listenStarView.snp.remakeConstraints { (make) in
+                make.centerY.equalTo(subTitleLabel)
+                make.left.equalTo(subTitleLabel.snp.right).offset(AS(1))
+                make.width.equalTo(AS(48))
+                make.height.equalTo(AS(14))
+            }
         }
         
-        
-        reviewProgressView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(19))
-            make.right.equalTo(AS(-19))
-            make.width.equalTo(AS(41))
-            make.height.equalTo(AS(41))
+        reviewProgressView.isHidden = true
+        if reviewPlanModel?.reviewState == .learning {
+            reviewProgressView.isHidden = false
+            reviewProgressView.snp.remakeConstraints { (make) in
+                make.top.equalTo(AS(18))
+                make.right.equalTo(AS(-35))
+                make.size.equalTo(AS(40))
+            }
         }
+        
+        reviewStarView.isHidden = true
+        if reviewPlanModel?.reviewState == .finish {
+            reviewStarView.isHidden = false
+            reviewStarView.snp.remakeConstraints { (make) in
+                make.top.equalTo(AS(26))
+                make.right.equalTo(AS(-17))
+                make.width.equalTo(AS(81))
+                make.height.equalTo(AS(27))
+            }
+        }
+        
+//        self.layoutIfNeeded()
     }
     
     
     override func bindData() {
-        reviewPlanLabel.text = reviewPlanModel?.planName
+        titleLabel.text = reviewPlanModel?.planName
         
-        subTitleLabel.text = "听写成绩：" + (reviewPlanModel?.wordCount.string ?? "")
-//        if let nickname = reviewPlanModel?.fromUser {
-//            fromLabel.text = "来自\(nickname)分享的复习计划"
-//        }
+        
+        if reviewPlanModel?.listenState == .learning {
+            subTitleLabel.text = "听写进度：\(reviewPlanModel?.listen ?? 0)%"
+        } else if reviewPlanModel?.listenState == .finish {
+            subTitleLabel.text = "听写成绩："
+            listenStarView.count = reviewPlanModel?.listen ?? 0
+        }
+        
+        
+        if reviewPlanModel?.reviewState == .learning {
+            reviewProgressView.progress = 0.8 //reviewPlanModel?.review ?? 0
+        } else if reviewPlanModel?.reviewState == .finish {
+            reviewStarView.count = reviewPlanModel?.review ?? 0
+        }
+        
+        self.setNeedsLayout()
     }
     
+    
+//    override class func viewHeight(model: YXReviewPlanModel) -> CGFloat {
+//        let vHeight: CGFloat = model.listenState != .normal || model.reviewState != .normal ? 120 : 103
+//        return AS(vHeight)
+//    }
+
 
     
-    
-    
     @objc func clickEditButton() {
-    }
-    
-    
-    @objc func clickListenButton() {
-        
     }
     
 }
