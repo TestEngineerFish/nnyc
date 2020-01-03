@@ -18,6 +18,10 @@ class YXReviewPlanDetailViewController: YXViewController {
     var bottomView = YXReviewPlanDetailBottomView()
     var shareButton = UIButton()
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: YXNotification.kUpdatePlanName, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubView()
@@ -34,7 +38,9 @@ class YXReviewPlanDetailViewController: YXViewController {
 //        super.viewWillDisappear(animated)
 //        navigationController?.setNavigationBarHidden(false, animated: animated)
 //    }
-    
+    override func addNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchDetailData), name: YXNotification.kUpdatePlanName, object: nil)
+    }
     
     func createSubView() {
         self.addShareButton()
@@ -91,7 +97,7 @@ class YXReviewPlanDetailViewController: YXViewController {
         
     }
     
-    func fetchDetailData() {
+    @objc func fetchDetailData() {
         YXReviewDataManager().fetchReviewPlanDetailData(planId: planId) { [weak self] (detailModel, error) in
             guard let self = self else { return }
             if let msg = error {

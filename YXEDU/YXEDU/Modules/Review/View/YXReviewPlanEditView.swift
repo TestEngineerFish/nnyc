@@ -87,7 +87,29 @@ class YXReviewPlanEditView: YXTopWindowView {
 
 
     @objc private func clickEditButton() {
-    
+        let pid = self.planId
+        
+        // 显示弹框
+        let placeholder = "请输入复习计划名称"
+        let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
+        alertView.titleLabel.text = "请设置复习计划名称"
+        alertView.doneClosure = {(text: String?) in
+
+            guard let planName = text, placeholder != planName else { return }
+            YXReviewDataManager().updateReviewPlanName(planId: pid, planName: planName) { (result, msg) in
+                if let r = result, r {
+                    NotificationCenter.default.post(name: YXNotification.kCloseResultPage, object: nil)
+                    NotificationCenter.default.post(name: YXNotification.kUpdatePlanName, object: nil)
+                    UIView.toast("修改成功")
+                } else {
+                    UIView.toast(msg)
+                }
+            }
+            
+        }
+        alertView.show()
+        
+        self.removeFromSuperview()
     }
     
     @objc private func clickRemoveButton() {
@@ -213,7 +235,7 @@ class YXReviewPlanRemoveView: YXTopWindowView {
                 self?.removeFromSuperview()
                 YRRouter.popViewController(true)
                 NotificationCenter.default.post(name: YXNotification.kCloseResultPage, object: nil)
-                UIView.toast("复习计划删除成功")
+                UIView.toast("删除成功")
             } else {
                 UIView.toast(msg)
             }

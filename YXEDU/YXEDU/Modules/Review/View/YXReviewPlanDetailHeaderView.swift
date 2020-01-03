@@ -174,11 +174,7 @@ class YXReviewPlanDetailHeaderView: YXView {
         }
         
         
-//        subTitleLabel.isHidden = true
-        if reviewPlanModel?.listenState != .normal {
-//            subTitleLabel.isHidden = false
 
-        }
         let subTitleWidth = subTitleLabel.text?.textWidth(font: subTitleLabel.font, height: AS(17)) ?? 0
         subTitleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
