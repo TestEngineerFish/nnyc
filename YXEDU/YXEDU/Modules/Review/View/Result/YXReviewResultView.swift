@@ -315,6 +315,7 @@ class YXReviewResultView: YXTopWindowView {
     
     
     @objc private func clickCloseButton() {
+        NotificationCenter.default.post(name: YXNotification.kCloseResultPage, object: nil)
         YRRouter.popViewController(true)
     }
     

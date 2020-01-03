@@ -74,7 +74,7 @@ class YXReviewPlanDetailViewController: YXViewController {
         headerView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(4 + kNavHeight))
             make.left.right.equalTo(0)
-            make.height.equalTo(AS(108))
+            make.height.equalTo(AS(90))
         }
         
         wordListView.snp.makeConstraints { (make) in

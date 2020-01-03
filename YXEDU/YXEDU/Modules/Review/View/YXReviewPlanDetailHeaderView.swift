@@ -174,16 +174,17 @@ class YXReviewPlanDetailHeaderView: YXView {
         }
         
         
-        subTitleLabel.isHidden = true
+//        subTitleLabel.isHidden = true
         if reviewPlanModel?.listenState != .normal {
-            subTitleLabel.isHidden = false
-            let subTitleWidth = subTitleLabel.text?.textWidth(font: subTitleLabel.font, height: AS(17)) ?? 0
-            subTitleLabel.snp.remakeConstraints { (make) in
-                make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
-                make.left.equalTo(titleLabel)
-                make.width.equalTo(subTitleWidth)
-                make.height.equalTo(AS(17))
-            }
+//            subTitleLabel.isHidden = false
+
+        }
+        let subTitleWidth = subTitleLabel.text?.textWidth(font: subTitleLabel.font, height: AS(17)) ?? 0
+        subTitleLabel.snp.remakeConstraints { (make) in
+            make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
+            make.left.equalTo(titleLabel)
+            make.width.equalTo(subTitleWidth)
+            make.height.equalTo(AS(17))
         }
         
         listenStarView.isHidden = true
@@ -198,7 +199,7 @@ class YXReviewPlanDetailHeaderView: YXView {
         }
         
         reviewProgressView.isHidden = true
-        if reviewPlanModel?.reviewState == .learning {
+        if reviewPlanModel?.reviewState != .finish {
             reviewProgressView.isHidden = false
             reviewProgressView.snp.remakeConstraints { (make) in
                 make.top.equalTo(AS(18))
@@ -225,16 +226,26 @@ class YXReviewPlanDetailHeaderView: YXView {
     override func bindData() {
         titleLabel.text = reviewPlanModel?.planName
         
+        if reviewPlanModel?.listenState == .normal {
+            let attrString = NSMutableAttributedString(string: "听写成绩：尚未听写")
         
-        if reviewPlanModel?.listenState == .learning {
+            let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: AS(12)),.foregroundColor: UIColor.black1]
+            attrString.addAttributes(all, range: NSRange(location: 0, length: attrString.length))
+            
+            let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.regularFont(ofSize: AS(12)),.foregroundColor: UIColor.black3]
+            attrString.addAttributes(nicknameAttr, range: NSRange(location: 5, length: 4))
+            
+            subTitleLabel.attributedText = attrString
+        } else if reviewPlanModel?.listenState == .learning {
             subTitleLabel.text = "听写进度：\(reviewPlanModel?.listen ?? 0)%"
         } else if reviewPlanModel?.listenState == .finish {
             subTitleLabel.text = "听写成绩："
             listenStarView.count = reviewPlanModel?.listen ?? 0
         }
         
-        
-        if reviewPlanModel?.reviewState == .learning {
+        if reviewPlanModel?.reviewState == .normal {
+            reviewProgressView.progress = 0
+        } else if reviewPlanModel?.reviewState == .learning {
             reviewProgressView.progress = CGFloat(reviewPlanModel?.review ?? 0) / 100.0
         } else if reviewPlanModel?.reviewState == .finish {
             reviewStarView.count = reviewPlanModel?.review ?? 0
@@ -252,6 +263,13 @@ class YXReviewPlanDetailHeaderView: YXView {
 
     
     @objc func clickEditButton() {
+        var p = self.convert(editButton.origin, to: editButton.superview?.superview?.superview)
+        p.x -= AS(14)
+        p.y += AS(15 + 8)
+
+        let editView = YXReviewPlanEditView(point: p)
+        editView.show()
+        
     }
     
 }

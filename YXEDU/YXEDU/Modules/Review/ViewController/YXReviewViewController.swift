@@ -44,6 +44,11 @@ class YXReviewViewController: YXTableViewController {
         }
     }
     
+    
+    override func addNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchDataWhenResultPageClosed), name: YXNotification.kCloseResultPage, object: nil)
+    }
+    
     override func monitorNetwork(isReachable: Bool) {
         if dataSource.count == 0 && isReachable {
             self.fetchData()
@@ -108,6 +113,10 @@ class YXReviewViewController: YXTableViewController {
             }
             self.finishLoading()
         }
+    }
+    
+    @objc private func fetchDataWhenResultPageClosed() {
+        self.headerBeginRefreshing()
     }
     
 }

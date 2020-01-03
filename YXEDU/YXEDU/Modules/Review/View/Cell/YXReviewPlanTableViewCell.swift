@@ -79,11 +79,13 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         listenButton.setTitle("听写练习", for: .normal)
         listenButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(12))
         listenButton.setTitleColor(UIColor.orange1, for: .normal)
+        listenButton.setTitleColor(UIColor.black3, for: .highlighted)
         listenButton.addTarget(self, action: #selector(clickListenButton), for: .touchUpInside)
                                     
         
         reviewButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
         reviewButton.setTitleColor(UIColor.black2, for: .normal)
+        reviewButton.setTitleColor(UIColor.black3, for: .highlighted)
         reviewButton.layer.masksToBounds = true
         reviewButton.layer.cornerRadius = AS(15)
         reviewButton.layer.borderColor = UIColor.black4.cgColor
@@ -208,7 +210,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             reviewButton.setTitle("继续复习", for: .normal)
             reviewProgressView.progress = CGFloat(reviewPlanModel?.review ?? 0) / 100.0
         } else if reviewPlanModel?.reviewState == .finish {
-            reviewButton.setTitle("继续复习", for: .normal)
+            reviewButton.setTitle("巩固复习", for: .normal)
             reviewStarView.count = reviewPlanModel?.review ?? 0
         }
         

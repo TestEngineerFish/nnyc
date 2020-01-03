@@ -77,16 +77,17 @@ class YXReviewLearningProgressView: YXTopWindowView {
         pointLabel1.layer.masksToBounds = true
         pointLabel1.layer.cornerRadius = AS(2)
         pointLabel1.backgroundColor = UIColor.black4
-        
+        pointLabel1.isHidden = true
         
         pointLabel2.layer.masksToBounds = true
         pointLabel2.layer.cornerRadius = AS(2)
         pointLabel2.backgroundColor = UIColor.black4
-        
+        pointLabel2.isHidden = true
         
         pointLabel3.layer.masksToBounds = true
         pointLabel3.layer.cornerRadius = AS(2)
         pointLabel3.backgroundColor = UIColor.black4
+        pointLabel3.isHidden = true
         
         reviewButton.layer.masksToBounds = true
         reviewButton.layer.cornerRadius = AS(21)
@@ -193,15 +194,21 @@ class YXReviewLearningProgressView: YXTopWindowView {
         titleLabel.attributedText = attrString()
         
         if let num = model?.allWordNum, num > 0 {
+            pointLabel1.isHidden = false
+            
             let length = "\(num)".count
             subTitleLable1.attributedText = attrString(subTitle(num), 3, length)
         }
         if let num = model?.knowWordNum, num > 0 {
+            pointLabel2.isHidden = false
+            
             let length = "\(num)".count
             subTitleLable2.attributedText = attrString("\(num)个单词掌握的更好了", 0, length)
         }
         
         if let num = model?.remainWordNum, num > 0 {
+            pointLabel3.isHidden = false
+            
             let length = "\(num)".count
             subTitleLable3.attributedText = attrString("该计划下剩余\(model?.remainWordNum ?? 0)个单词待复习", 6, length)
         }
@@ -216,6 +223,7 @@ class YXReviewLearningProgressView: YXTopWindowView {
     
     
     @objc func clickCloseButton() {
+        NotificationCenter.default.post(name: YXNotification.kCloseResultPage, object: nil)
         self.removeFromSuperview()
     }
 
