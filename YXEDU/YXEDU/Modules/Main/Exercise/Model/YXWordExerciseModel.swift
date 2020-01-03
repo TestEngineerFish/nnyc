@@ -97,7 +97,7 @@ struct YXWordExerciseModel: Mappable {
         option   <- map["option"]
         answers  <- map["answer_list"]
         score    <- map["score"]
-                
+
         isCareScore <- map["is_care_score"]
         isBackup    <- map["is_backup"]
         isNewWord <- map["is_new_word"]

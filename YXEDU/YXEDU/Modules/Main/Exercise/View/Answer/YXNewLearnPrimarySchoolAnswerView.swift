@@ -169,7 +169,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         if ges.state == .began {
             YXAuthorizationManager.authorizeMicrophoneWith { (isAuth) in
                 if isAuth {
-                    guard let word = self.exerciseModel.question?.word else {
+                    guard let word = self.exerciseModel.word?.word else {
                         return
                     }
                     self.enginer?.oralText = word
@@ -272,6 +272,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         animation.repeatCount  = MAXFLOAT
         self.playAudioButton.layer.add(animation, forKey: "flickerAnimation")
         timer?.invalidate()
+        self.playAudioLabel.textAlignment = .left
         timer = Timer(timeInterval: 0.4, repeats: true, block: { (timer) in
             if self.status == .playingExampleInFristStage {
                 self.playAudioLabel.textColor = UIColor.orange1
@@ -309,6 +310,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         dotNumber = 0
         timer?.invalidate()
         self.playAudioLabel.text = "播放"
+        self.playAudioLabel.textAlignment = .center
         self.playAudioLabel.textColor = UIColor.black2
         self.playAudioButton.layer.removeAllAnimations()
     }

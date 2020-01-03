@@ -96,7 +96,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
             make.edges.equalToSuperview()
         }
     }
-
+    
     /// 添加提示气泡
     private func addTipsView() {
         guard let currentModel = self.currentModel else {
@@ -110,10 +110,10 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
             if currentModel.stars > 0 {
                 return "有些单词还掌握的不太好呢,再练习一下吧～"
             } else if currentModel.stars > 1 {
-                return "厉害~再巩固一下就冲 向三星了哦！"
+                return "厉害~再巩固一下就冲向三星了哦！"
             } else if currentModel.stars > 2 {
                 if currentModel.ext == nil {
-                    return "您可以进入下一个单元 进行学习哦！"
+                    return "您可以进入下一个单元进行学习哦！"
                 } else {
                     return "来试试拓展单元吧，可以学到更多有用的词汇哦~"
                 }

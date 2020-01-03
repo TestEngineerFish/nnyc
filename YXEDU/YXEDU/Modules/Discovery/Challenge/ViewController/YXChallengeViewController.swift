@@ -66,6 +66,12 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func clickPlayButton(){
+//        let vc = YXLearningResultViewController()
+//        vc.bookId = 1
+//        vc.unitId = 1
+//        vc.newLearnAmount = 1
+//        vc.reviewLearnAmount = 1
+
 //        RegisterSliderView.show(.puzzle) { (success) in
 //            print(success)
 //        }
