@@ -84,6 +84,7 @@
     deinit {
         print("练习 VC 释放")
         YXAVPlayerManager.share.pauseAudio()
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     override func viewWillLayoutSubviews() {
@@ -112,7 +113,7 @@
     private func bindProperty() {
         self.view.backgroundColor = UIColor.white
         self.customNavigationBar?.isHidden = true
-        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.switchAnimation.owenrView = self.view
         self.switchAnimation.animationDidStop = { [weak self] (right) in
             self?.animationDidStop(isRight: right)

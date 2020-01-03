@@ -316,7 +316,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 显示结果动画
     private func showResultAnimation() {
         YXNewLearnResultView.share.show(self.lastLevel)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             YXNewLearnResultView.share.hide()
             if self.lastLevel > 1 {
                 self.newLearnDelegate?.showNewLearnWordDetail()

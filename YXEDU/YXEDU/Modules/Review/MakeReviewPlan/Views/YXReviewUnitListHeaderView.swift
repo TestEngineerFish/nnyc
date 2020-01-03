@@ -82,7 +82,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
                 selectedNum += 1
             }
         }
-        let numberColor = selectedNum > 0 ? UIColor.orange1 : UIColor.black4
+        let numberColor = selectedNum > 0 ? UIColor.orange1 : UIColor.black6
         let statisticsText = String(format: "（%d/%d词）", selectedNum, model.list.count)
         let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
         attrStr.addAttributes([NSAttributedString.Key.foregroundColor : numberColor], range: NSRange(location: 1, length: "\(selectedNum)".count))

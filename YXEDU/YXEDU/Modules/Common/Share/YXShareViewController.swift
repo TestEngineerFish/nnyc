@@ -26,18 +26,37 @@ enum YXShareType: Int {
     case wechat   = 2
     case timeLine = 3
 }
-
+//0.68
 class YXShareViewController: YXViewController {
+
+    var headerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
+
+    var footerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
     
     var shareImageBorderView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
         return view
     }()
+
     var shareImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.white
         return imageView
+    }()
+
+    var shareTypeBorderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
     }()
     
     var descriptionLabel: UILabel = {
@@ -129,8 +148,8 @@ class YXShareViewController: YXViewController {
     }
     
     private func bindProperty() {
-        let tapQQ = UITapGestureRecognizer(target: self, action: #selector(shareToQQ))
-        let tapWechat = UITapGestureRecognizer(target: self, action: #selector(shareToWechat))
+        let tapQQ       = UITapGestureRecognizer(target: self, action: #selector(shareToQQ))
+        let tapWechat   = UITapGestureRecognizer(target: self, action: #selector(shareToWechat))
         let tapTimeLine = UITapGestureRecognizer(target: self, action: #selector(shareToTimeLine))
         self.qqImageView.addGestureRecognizer(tapQQ)
         self.wechatImageView.addGestureRecognizer(tapWechat)
@@ -151,34 +170,56 @@ class YXShareViewController: YXViewController {
     }
     
     private func createSubviews() {
-        let imageViewSize = CGSize(width: AdaptSize(319), height: AdaptSize(436))
-        
-        self.view.addSubview(shareImageBorderView)
+        self.view.addSubview(headerView)
+        self.view.addSubview(footerView)
+
+        headerView.addSubview(shareImageBorderView)
         shareImageBorderView.addSubview(shareImageView)
-        self.view.addSubview(leftLineView)
-        self.view.addSubview(rightLineView)
-        self.view.addSubview(descriptionLabel)
-        self.view.addSubview(qqImageView)
-        self.view.addSubview(qqLabel)
-        self.view.addSubview(wechatImageView)
-        self.view.addSubview(wechatLabel)
-        self.view.addSubview(timeLineImageView)
-        self.view.addSubview(timeLineLabel)
-        self.view.addSubview(goldImageView)
+        footerView.addSubview(shareTypeBorderView)
+
+        shareTypeBorderView.addSubview(leftLineView)
+        shareTypeBorderView.addSubview(rightLineView)
+        shareTypeBorderView.addSubview(descriptionLabel)
+        shareTypeBorderView.addSubview(qqImageView)
+        shareTypeBorderView.addSubview(qqLabel)
+        shareTypeBorderView.addSubview(wechatImageView)
+        shareTypeBorderView.addSubview(wechatLabel)
+        shareTypeBorderView.addSubview(timeLineImageView)
+        shareTypeBorderView.addSubview(timeLineLabel)
+        shareTypeBorderView.addSubview(goldImageView)
+
+        let headerViewH = (screenHeight - kNavHeight - kSafeBottomMargin) * 0.68
+        headerView.snp.makeConstraints { (make) in
+            make.height.equalTo(headerViewH)
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(kNavHeight)
+        }
+        footerView.snp.makeConstraints { (make) in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(headerView.snp.bottom)
+        }
+
+        let imageViewSize = CGSize(width: AdaptSize(319), height: AdaptSize(436))
         shareImageBorderView.size = imageViewSize
         shareImageBorderView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
+            make.center.equalToSuperview()
             make.size.equalTo(imageViewSize)
-            make.top.equalToSuperview().offset(AdaptSize(6) + kNavHeight)
         }
         shareImageView.size = imageViewSize
         shareImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+
+        shareTypeBorderView.snp.makeConstraints { (make) in
+            make.height.equalTo(AdaptSize(100))
+            make.width.equalToSuperview()
+            make.center.equalToSuperview()
+        }
+
         descriptionLabel.sizeToFit()
         descriptionLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(AdaptSize(-115))
+            make.top.equalToSuperview()
             make.size.equalTo(descriptionLabel.size)
         }
         leftLineView.snp.makeConstraints { (make) in
@@ -585,7 +626,7 @@ class YXShareViewController: YXViewController {
                 NSMutableAttributedString(string: "答对\(model.questionNumber)题", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.regularFont(ofSize: 14)])
             mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: 18)], range: NSMakeRange(2, "\(model.questionNumber)".count))
             label.attributedText = mAttr
-            label.textAlignment  = .center
+            label.textAlignment  = .left
             return label
         }()
         let consumeTimeLabel: UILabel = {
@@ -594,7 +635,7 @@ class YXShareViewController: YXViewController {
                 NSMutableAttributedString(string: "用时\(model.consumeTime)秒", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.regularFont(ofSize: 14)])
             mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: 18)], range: NSMakeRange(2, "\(model.consumeTime)".count))
             label.attributedText = mAttr
-            label.textAlignment  = .center
+            label.textAlignment  = .left
             return label
         }()
         let qrcordImage = UIImage(named: "shareQRCode")

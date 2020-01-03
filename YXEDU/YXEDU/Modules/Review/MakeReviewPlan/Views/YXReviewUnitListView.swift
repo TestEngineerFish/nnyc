@@ -132,9 +132,6 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let unitModel = self.unitModelList[section]
         if unitModel.isOpenUp {
-            if !(YYCache.object(forKey: YXLocalKey.alreadShowMakeReviewGuideView.rawValue) as? Bool ?? false) {
-                self.guideView.show()
-            }
             return unitModel.list.count
         } else {
             return 0
@@ -223,6 +220,11 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     }
 
     func clickHeaderView(_ section: Int) {
+        if self.unitModelList[section].isOpenUp {
+            if !(YYCache.object(forKey: YXLocalKey.alreadShowMakeReviewGuideView.rawValue) as? Bool ?? false) {
+                self.guideView.show()
+            }
+        }
         tableView.reloadSections(IndexSet(integer: section), with: .automatic)
     }
 
