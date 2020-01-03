@@ -89,7 +89,10 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
                 }
             }
         }
-        self.buttonArray2 = wordsBtnArray2
+
+        self.buttonArray2 = wordsBtnArray2.filter { (buttonList: [YXLetterButton]) -> Bool in
+            return !buttonList.isEmpty
+        }
     }
 
     /// 创建单词按钮

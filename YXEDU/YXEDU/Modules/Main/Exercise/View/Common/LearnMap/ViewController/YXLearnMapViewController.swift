@@ -158,7 +158,7 @@ class YXLearnMapViewController: UIViewController {
             vc.bookId   = bookId
             vc.unitId   = unitId
             vc.hidesBottomBarWhenPushed = true
-            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: false)
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
         }

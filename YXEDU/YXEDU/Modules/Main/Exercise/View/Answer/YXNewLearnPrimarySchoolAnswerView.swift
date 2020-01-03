@@ -19,22 +19,22 @@ protocol YXNewLearnProtocol: NSObjectProtocol {
 }
 
 /// 答题区状态
- enum AnswerStatus: Int {
-     case playingWordInFristStage        = 0   // 第一阶段单词播放中
-     case playedWordInFristStage         = 1   // 第一阶段单词播放结束
-     case playingExampleInFristStage     = 2   // 第一阶段例句播放中
-     case playedExampleInFristStage      = 3   // 第一阶段例句播放结束
-     case playingFirstWordInSecondStage  = 4   // 第二阶段第一遍单词播放中
-     case playedFirstWrodInSecondStage   = 5   // 第二阶段第一遍单词播放结束
-     case playingSecondWordInSecondStage = 6   // 第二阶段第二遍单词播放中
-     case playedSecondWordInSecondStage  = 7   // 第二阶段第二遍单词播放结束
-     case showGuideView                  = 8   // 显示引导图
-     case prepareRecord                  = 9   // 准备录音
-     case recording                      = 10  // 录音中
-     case reporting                      = 11  // 上报云知声中
-     case showResult                     = 12  // 显示结果
-     case alreadLearn                    = 13  // 已学习
-     case normal                         = -1  //初始状态
+enum AnswerStatus: Int {
+    case normal                         = -1  //初始状态
+    case playingWordInFristStage        = 0   // 第一阶段单词播放中
+    case playedWordInFristStage         = 1   // 第一阶段单词播放结束
+    case playingExampleInFristStage     = 2   // 第一阶段例句播放中
+    case playedExampleInFristStage      = 3   // 第一阶段例句播放结束
+    case playingFirstWordInSecondStage  = 4   // 第二阶段第一遍单词播放中
+    case playedFirstWordInSecondStage   = 5   // 第二阶段第一遍单词播放结束
+    case playingSecondWordInSecondStage = 6   // 第二阶段第二遍单词播放中
+    case playedSecondWordInSecondStage  = 7   // 第二阶段第二遍单词播放结束
+    case showGuideView                  = 8   // 显示引导图
+    case prepareRecord                  = 9   // 准备录音
+    case recording                      = 10  // 录音中
+    case reporting                      = 11  // 上报云知声中
+    case showResult                     = 12  // 显示结果
+    case alreadLearn                    = 13  // 已学习
 
     mutating func forward() {
         if self.rawValue < 13 {
@@ -43,7 +43,7 @@ protocol YXNewLearnProtocol: NSObjectProtocol {
             self = .alreadLearn
         }
     }
- }
+}
 
 class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
@@ -65,7 +65,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var recordAudioButton: YXButton = {
         let button = YXButton()
         button.setImage(UIImage(named: "recordAudio"), for: .normal)
-        button.isEnabled = false
+        button.isEnabled     = false
+        button.layer.opacity = 0.3
         return button
     }()
 
@@ -75,6 +76,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         label.textColor     = UIColor.black2
         label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
         label.textAlignment = .center
+        label.layer.opacity = 0.3
         return label
     }()
 
@@ -83,7 +85,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var enginer: USCRecognizer?
     var status: AnswerStatus = .normal
     var lastLevel    = 0 // 最近一次跟读评分
-
     // TODO: ---- 缓存重传机制
     var tempOpusData = Data() // 缓存当前录音
     var retryCount   = 0
@@ -136,7 +137,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playAudioLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(playAudioButton)
             make.top.equalTo(playAudioButton.snp.bottom).offset(AdaptSize(8))
-            make.size.equalTo(CGSize(width: AdaptSize(80), height: AdaptSize(18)))
+            make.size.equalTo(CGSize(width: AdaptSize(100), height: AdaptSize(18)))
         }
         self.recordAudioButton.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
@@ -175,7 +176,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                     self.enginer?.oralText = word
                     self.enginer?.start()
                 } else {
-                     self.endRecordAction()
+                    self.endRecordAction()
                 }
             }
         } else if ges.state == .ended {
@@ -193,6 +194,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     func playByStatus() {
         switch self.status {
         case .normal:
+            self.showPlayAnimation()
             self.status.forward()
             self.playWord()
         case .playingWordInFristStage:
@@ -212,7 +214,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             }
         case .playingFirstWordInSecondStage:
             self.playWord()
-        case .playedFirstWrodInSecondStage:
+        case .playedFirstWordInSecondStage:
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 guard let self = self else { return }
                 self.status.forward()
@@ -222,8 +224,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.playWord()
         case .playedSecondWordInSecondStage:
             self.status.forward()
+            self.hidePlayAnimation()
             self.newLearnDelegate?.playWordAndWordFinished()
-            self.recordAudioButton.isEnabled = true
+            self.recordAudioButton.isEnabled     = true
+            self.recordAudioLabel.layer.opacity  = 1.0
+            self.recordAudioButton.layer.opacity = 1.0
         default:
             break
         }
@@ -234,10 +239,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         guard let wordUrlStr = self.exerciseModel.word?.voice, let url = URL(string: wordUrlStr) else {
             return
         }
-        self.showPlayAnimation()
         YXAVPlayerManager.share.playAudio(url) { [weak self] in
             guard let self = self else { return }
-            self.hidePlayAnimation()
             if self.status.rawValue < AnswerStatus.showGuideView.rawValue {
                 self.status.forward()
                 self.playByStatus()
@@ -251,9 +254,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         guard let exampleUrlStr = self.exerciseModel.word?.examplePronunciation, let url = URL(string: exampleUrlStr) else {
             return
         }
-        self.showPlayAnimation()
         YXAVPlayerManager.share.playAudio(url) { [weak self] in
-            self?.hidePlayAnimation()
             guard let self = self else { return }
             if self.status.rawValue < AnswerStatus.showGuideView.rawValue {
                 self.status.forward()
@@ -272,32 +273,32 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         animation.repeatCount  = MAXFLOAT
         self.playAudioButton.layer.add(animation, forKey: "flickerAnimation")
         timer?.invalidate()
-        self.playAudioLabel.textAlignment = .left
         timer = Timer(timeInterval: 0.4, repeats: true, block: { (timer) in
+            self.playAudioLabel.textAlignment = .left
             if self.status == .playingExampleInFristStage {
                 self.playAudioLabel.textColor = UIColor.orange1
                 switch self.dotNumber {
                 case 0:
-                    self.playAudioLabel.text = "例句播放中"
+                    self.playAudioLabel.text = "   例句播放中"
                 case 1:
-                    self.playAudioLabel.text = "例句播放中."
+                    self.playAudioLabel.text = "   例句播放中."
                 case 2:
-                    self.playAudioLabel.text = "例句播放中.."
+                    self.playAudioLabel.text = "   例句播放中.."
                 default:
-                    self.playAudioLabel.text = "例句播放中..."
+                    self.playAudioLabel.text = "   例句播放中..."
                 }
             } else {
                 self.playAudioLabel.textColor = UIColor.orange1
-                   switch self.dotNumber {
-                   case 0:
-                       self.playAudioLabel.text = "单词播放中"
-                   case 1:
-                       self.playAudioLabel.text = "单词播放中."
-                   case 2:
-                       self.playAudioLabel.text = "单词播放中.."
-                   default:
-                       self.playAudioLabel.text = "单词播放中..."
-                   }
+                switch self.dotNumber {
+                case 0:
+                    self.playAudioLabel.text = "   单词播放中"
+                case 1:
+                    self.playAudioLabel.text = "   单词播放中."
+                case 2:
+                    self.playAudioLabel.text = "   单词播放中.."
+                default:
+                    self.playAudioLabel.text = "   单词播放中..."
+                }
             }
             self.dotNumber += 1
             self.dotNumber = self.dotNumber > 3 ? 0 : self.dotNumber
@@ -341,7 +342,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 进入后台, 停止播放音频和语音监听
     @objc private func didEnterBackgroundNotification() {
-//        print("进入后台, 停止播放音频和语音监听")
+        //        print("进入后台, 停止播放音频和语音监听")
         self.pauseView()
     }
 
@@ -356,7 +357,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     // MARK: ==== 云知声SDK: USCRecognizerDelegate ====
     func oralEngineDidInit(_ error: Error!) {
-//        print("初始化结束,错误内容: " + String(describing: error))
+        //        print("初始化结束,错误内容: " + String(describing: error))
         return
     }
 
@@ -374,7 +375,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onResult(_ result: String!, isLast: Bool) {
-//        print("============录音结果: " + result)
+        //        print("============录音结果: " + result)
         if isLast {
             self.lastLevel = 0
             // 录音结束,清除临时录音缓存
@@ -383,7 +384,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             guard let score = resultDict["score"] as? Double else {
                 return
             }
-//            YXUtils.showHUD(self, title: "当前得分: \(score)")
+            //            YXUtils.showHUD(self, title: "当前得分: \(score)")
             self.lastLevel = {
                 if score > 90 {
                     return 3
@@ -419,41 +420,41 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onVADTimeout() {
-//        print("VAD超时啦")
+        //        print("VAD超时啦")
         return
     }
 
     func onUpdateVolume(_ volume: Int32) {
-//        print("onUpdateVolume: \(volume)")
+        //        print("onUpdateVolume: \(volume)")
         YXRecordAudioView.share.updateVolume(volume)
-//        print(volume)
+        //        print(volume)
         return
     }
 
     func onRecordingBuffer(_ recordingData: Data!) {
-//        print("录音数据: " + String(describing: recordingData))
+        //        print("录音数据: " + String(describing: recordingData))
         return
     }
 
     func onRecordingOpusBuffer(_ opusData: Data!) {
-//        print("音频编码数据: " + String(describing: opusData))
+        //        print("音频编码数据: " + String(describing: opusData))
         // 存当前音频数据
         tempOpusData.append(opusData)
         return
     }
 
     func audioFileDidRecord(_ url: String!) {
-//        print("audio file url" + url)
+        //        print("audio file url" + url)
         return
     }
 
     func onAsyncResult(_ url: String!) {
-//        print("result url: " + url)
+        //        print("result url: " + url)
         return
     }
 
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
-//        print("lifecycle: \(lifecycle)")
+        //        print("lifecycle: \(lifecycle)")
         return
     }
 

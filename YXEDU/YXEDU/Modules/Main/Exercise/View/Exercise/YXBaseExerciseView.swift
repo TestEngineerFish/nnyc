@@ -46,8 +46,8 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
 
     /// 提醒view
     var remindView: YXRemindView?
-    let remindViewDefaultHeight = AdaptSize(135)
-    var remindViewHeight = AdaptSize(135) {
+    let remindViewDefaultHeight = AdaptSize(90)
+    var remindViewHeight = AdaptSize(90) {
         willSet {
             remindView?.snp.updateConstraints({ (make) in
                 make.height.equalTo(newValue)
@@ -90,7 +90,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     func bindData() {}
 
     func createSubview() {
-        self.scrollView.isScrollEnabled = false
+        self.scrollView.isScrollEnabled                = false
         self.scrollView.showsVerticalScrollIndicator   = false
         self.scrollView.showsHorizontalScrollIndicator = false
         self.addSubview(scrollView)
@@ -107,16 +107,16 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
             make.left.right.equalTo(questionView)
             make.bottom.equalToSuperview()
         }
-        if let remindView = self.remindView {
+        if let remindView = self.remindView, let answerView = answerView {
             remindView.snp.makeConstraints { (make) in
                 make.top.equalToSuperview().offset(AdaptSize(16))
                 make.left.equalToSuperview()
                 make.width.equalTo(questionView)
                 make.height.equalTo(remindViewDefaultHeight)
             }
-            answerView?.snp.makeConstraints { (make) in
+            answerView.snp.makeConstraints { (make) in
                 make.bottom.equalTo(self)
-                make.height.equalTo(answerViewHeight)
+                make.top.equalTo(remindView.snp.bottom).offset(AdaptSize(10))
                 make.width.equalTo(questionView)
                 make.centerX.equalTo(self)
             }

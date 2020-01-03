@@ -27,7 +27,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     var chineseExampleLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black1
-        label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptSize(16))
+        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
         label.textAlignment = .center
         return label
     }()
@@ -36,6 +36,14 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         super.init(exerciseModel: exerciseModel)
         self.layer.removeShadow()
         self.clipsToBounds = true
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let height = self.chineseExampleLabel.text?.textHeight(font: chineseExampleLabel.font, width: screenWidth - AdaptSize(74)) ?? 0
+        self.chineseExampleLabel.snp.updateConstraints { (make) in
+            make.height.equalTo(height)
+        }
     }
 
     override func bindData() {
@@ -52,10 +60,10 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
                 return nil
             }
 
-            var newExample   = example
-            var newRangeList = [NSRange]()
+            var newExample     = example
+            var newRangeList   = [NSRange]()
             var examplePattern = ""
-            var wordPattern = ""
+            var wordPattern    = ""
 
             if example.contains("@") {
                 examplePattern = "@[^*]+?@"
@@ -85,6 +93,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
             }
             return mAttr
         }()
+        self.layoutIfNeeded()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -126,7 +135,8 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         }
 
         self.chineseExampleLabel.snp.makeConstraints { (make) in
-            make.centerX.width.equalToSuperview()
+            make.width.equalToSuperview().offset(AdaptSize(-30))
+            make.centerX.equalToSuperview()
             make.top.equalTo(exampleLabel.snp.bottom).offset(AdaptSize(2))
             make.height.equalTo(0)
         }
@@ -158,15 +168,8 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     func showChineseExample() {
         if self.chineseExampleLabel.isHidden {
             self.chineseExampleLabel.isHidden = false
-            self.chineseExampleLabel.sizeToFit()
-            self.chineseExampleLabel.snp.updateConstraints { (make) in
-                make.height.equalTo(chineseExampleLabel.height)
-            }
         } else {
             self.chineseExampleLabel.isHidden = true
-            self.chineseExampleLabel.snp.updateConstraints { (make) in
-                make.height.equalTo(0)
-            }
         }
     }
 

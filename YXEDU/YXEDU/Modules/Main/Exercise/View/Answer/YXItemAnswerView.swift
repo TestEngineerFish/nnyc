@@ -12,7 +12,7 @@ import UIKit
 class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     enum Config {
-        static var itemHeight: CGFloat = AdaptSize(42)
+        static var itemHeight: CGFloat = AdaptSize(45)
         static var itemWidth: CGFloat = screenWidth - AdaptSize(35) * 2
         static var itemInterval: CGFloat = AdaptSize(13)
     }

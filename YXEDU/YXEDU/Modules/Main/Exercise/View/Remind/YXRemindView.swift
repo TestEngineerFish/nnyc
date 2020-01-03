@@ -193,8 +193,34 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
 
     private func remindExampleWithDigWord() {
-        if let word = exerciseModel.word?.word {
-            titleLabel.text = exerciseModel.word?.example?.replacingOccurrences(of: word, with: "____")
+        if let wordModel = exerciseModel.word, let example = wordModel.example {
+            var newExample     = example
+            var newRangeList   = [NSRange]()
+            var examplePattern = ""
+//            var wordPattern    = ""
+
+            if example.contains("@") {
+                examplePattern = "@[^*]+?@"
+//                wordPattern    = "@"
+            } else {
+                examplePattern = "<font[^*]+?font>"
+//                wordPattern    = "<[^>]*>"
+            }
+            ///1、提取
+            let htmlRangeList = example.textRegex(pattern: examplePattern)
+            ///2、剔除标签
+            for (index, range) in htmlRangeList.enumerated() {
+                let htmlStr = example.substring(fromIndex: range.location, length: range.length)
+//                let word = htmlStr.pregReplace(pattern: wordPattern, with: "")
+                var offset = 0
+                if index > 0 {
+                    offset = example.count - newExample.count
+                }
+                ///3、替换原内容
+                newExample = newExample.pregReplace(pattern: htmlStr, with: "____")
+                newRangeList.append(NSRange(location: range.location - offset, length: 4))
+            }
+            titleLabel.text = newExample
         }
         setAllSubviewStatus()
     }
@@ -262,9 +288,9 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
             return
         }
         self.setNeedsLayout()
-        remindLabel.isHidden = false
-        titleLabel.isHidden = !hasText()
-        imageView.isHidden = !hasImage()
+        remindLabel.isHidden     = false
+        titleLabel.isHidden      = !hasText()
+        imageView.isHidden       = !hasImage()
         audioPlayerView.isHidden = !hasAudio()
         UIView.animate(withDuration: 0.5) {
             self.remindLabel.transform = CGAffineTransform(translationX: 0, y: -self.height)
@@ -282,9 +308,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
                 self.audioPlayerView.transform = CGAffineTransform(translationX: 0, y: -self.height)
             }
         }
-
     }
-    
     
     /// 是否有文本提示
     private func hasText() -> Bool {

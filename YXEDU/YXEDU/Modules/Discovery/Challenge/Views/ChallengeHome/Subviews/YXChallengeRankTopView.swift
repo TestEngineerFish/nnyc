@@ -72,7 +72,7 @@ class YXChallengeRankTopView: UIView {
     var bonusLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0xEE531A)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(11))
         label.textAlignment = .center
         label.isHidden      = true
         return label
@@ -158,7 +158,7 @@ class YXChallengeRankTopView: UIView {
         nameLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(AdaptSize(-43))
-            make.width.equalToSuperview()
+            make.width.equalToSuperview().offset(AdaptSize(-10))
             make.height.equalTo(AdaptSize(20))
         }
 
