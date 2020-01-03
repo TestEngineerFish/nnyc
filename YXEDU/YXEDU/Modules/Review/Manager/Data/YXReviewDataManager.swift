@@ -20,6 +20,27 @@ struct YXReviewDataManager {
     }
     
     
+    
+    
+    func updateReviewPlanName(planId: Int, planName: String, completion: ((_ result: Bool?, _ errorMsg: String?) -> Void)?) {
+        let request = YXReviewRequest.updateReviewPlan(planId: planId, planName: planName)
+        YYNetworkService.default.request(YYStructResponse<YXReviewPageModel>.self, request: request, success: { (response) in
+            completion?(true, nil)
+        }) { (error) in
+            completion?(nil, error.message)
+        }
+    }
+    
+    func removeReviewPlan(planId: Int, completion: ((_ result: Bool?, _ errorMsg: String?) -> Void)?) {
+        let request = YXReviewRequest.removeReviewPlan(planId: planId)
+        YYNetworkService.default.request(YYStructResponse<YXReviewPageModel>.self, request: request, success: { (response) in
+            completion?(true, nil)
+        }) { (error) in
+            completion?(nil, error.message)
+        }
+    }
+    
+    
     func fetchReviewPlanDetailData(planId: Int, completion: ((_ model: YXReviewPlanDetailModel?, _ errorMsg: String?) -> Void)?) {
         let request = YXReviewRequest.reviewPlanDetail(planId: planId)
         YYNetworkService.default.request(YYStructResponse<YXReviewPlanDetailModel>.self, request: request, success: { (response) in
@@ -32,9 +53,9 @@ struct YXReviewDataManager {
     
     /// 上报复习结果
     /// - Parameters:
-    ///   - type: <#type description#>
-    ///   - planId: <#planId description#>
-    ///   - completion: <#completion description#>
+    ///   - type:
+    ///   - planId:
+    ///   - completion:
     func fetchReviewResult(type: YXExerciseDataType, planId: Int?, completion: ((_ model: YXReviewResultModel?, _ errorMsg: String?) -> Void)?) {
         let request = YXReviewRequest.reviewResult(type: type.rawValue, planId: planId)
         YYNetworkService.default.request(YYStructResponse<YXReviewResultModel>.self, request: request, success: { (response) in

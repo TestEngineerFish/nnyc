@@ -10,6 +10,8 @@ public enum YXReviewRequest: YYBaseRequest {
     case reviewBookList
     case reviewWordList(bookId: Int, bookType: Int)
     case makeReviewPlan(name: String, code: String?, idsList:String?)
+    case updateReviewPlan(planId: Int, planName: String)
+    case removeReviewPlan(planId: Int)
     case reviewPlan
     case reviewPlanDetail(planId: Int)
     case reviewResult(type: Int, planId: Int?)
@@ -20,7 +22,7 @@ extension YXReviewRequest {
         switch self {
         case .reviewBookList, .reviewWordList, .reviewPlan, .reviewPlanDetail, .reviewResult:
             return .get
-        case .makeReviewPlan:
+        case .makeReviewPlan, .updateReviewPlan, .removeReviewPlan:
             return .post
         }
     }
@@ -35,6 +37,10 @@ extension YXReviewRequest {
             return YXAPI.Review.reviewWordList
         case .makeReviewPlan:
             return YXAPI.Review.maekReviewPlan
+        case .updateReviewPlan:
+            return YXAPI.Review.updateReviewPlan
+        case .removeReviewPlan:
+            return YXAPI.Review.removeReviewPlan
         case .reviewPlan:
             return YXAPI.Review.reviewPlan
         case .reviewPlanDetail:
@@ -53,6 +59,10 @@ extension YXReviewRequest {
         case .makeReviewPlan(let name, let code, let idsList):
             return ["review_plan_name" : name, "review_plan_id" : code, "review_word_ids" : idsList]
         case .reviewPlanDetail(let planId):
+            return ["review_plan_id" : planId]
+        case .updateReviewPlan(let planId, let planName):
+            return ["review_plan_id" : planId, "review_plan_name" : planName]
+        case .removeReviewPlan(let planId):
             return ["review_plan_id" : planId]
         case .reviewResult(let type, let planId):
             return ["learn_type" : type, "review_id" : planId]

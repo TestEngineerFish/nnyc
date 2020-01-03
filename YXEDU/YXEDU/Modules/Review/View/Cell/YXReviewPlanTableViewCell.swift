@@ -182,8 +182,8 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             reviewStarView.snp.remakeConstraints { (make) in
                 make.top.equalTo(AS(26))
                 make.right.equalTo(AS(-17))
-                make.width.equalTo(AS(81))
-                make.height.equalTo(AS(27))
+                make.width.equalTo(AS(85))
+                make.height.equalTo(AS(31))
             }
         }
         
@@ -271,16 +271,16 @@ class YXReviewPlanStarContainerView: YXView {
     }
     
     override func bindProperty() {
-        imageView1.image = UIImage(named: "review_finish_star_dis")
-        imageView2.image = UIImage(named: "review_finish_star_dis")
-        imageView3.image = UIImage(named: "review_finish_star_dis")
+        imageView1.image = UIImage(named: "review_cell_star_gray")
+        imageView2.image = UIImage(named: "review_cell_star_gray")
+        imageView3.image = UIImage(named: "review_cell_star_gray")
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let imageWidth: CGFloat = type == .listen ? 14 : 28
-        let imageHeight: CGFloat = type == .listen ? 14 : 27
+        let imageWidth: CGFloat = type == .listen ? 14 : 31
+        let imageHeight: CGFloat = type == .listen ? 14 : 29
         
         imageView1.snp.makeConstraints { (make) in
             make.centerY.left.equalToSuperview()
@@ -304,15 +304,17 @@ class YXReviewPlanStarContainerView: YXView {
         
     override func bindData() {
         if count >= 1 {
-            imageView1.image = UIImage(named: "review_finish_star")
+            imageView1.image = UIImage(named: "review_cell_star")
         }
         if count >= 2 {
-            imageView2.image = UIImage(named: "review_finish_star")
+            imageView2.image = UIImage(named: "review_cell_star")
         }
         if count >= 3 {
-            imageView3.image = UIImage(named: "review_finish_star")
+            imageView3.image = UIImage(named: "review_cell_star")
         }
     }
+    
+    
     
 }
 

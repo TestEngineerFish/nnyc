@@ -61,5 +61,6 @@
 #import "USCRecognizer.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "BiggerClickAreaButton.h"
 #import "YXShareImageGenerator.h"
 #import "YXShareHelper.h"

@@ -74,6 +74,10 @@ struct YXAPI {
         static let reviewWordList = "/api/v1/learn/getreviewwordlist"
         /// 创建复习计划
         static let maekReviewPlan = "/api/v1/learn/createreviewplan"
+        /// 修改复习计划名称
+        static let updateReviewPlan = "/api/v1/learn/updatereviewplan"
+        /// 删除复习计划
+        static let removeReviewPlan = "/api/v1/learn/delreviewplan"
         /// 获得复习计划列表
         static let reviewPlan = "/api/v1/learn/getreviewplanlist"
         /// 获得复习计划详情

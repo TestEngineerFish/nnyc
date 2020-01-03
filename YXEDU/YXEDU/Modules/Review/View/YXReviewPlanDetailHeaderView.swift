@@ -101,7 +101,7 @@ class YXReviewPlanDetailHeaderView: YXView {
     var bgView = UIView()
     
     var titleLabel = UILabel()
-    var editButton = UIButton()
+    var editButton = BiggerClickAreaButton()
     var subTitleLabel = UILabel()
     var listenStarView = YXReviewPlanStarContainerView(type: .listen)
     var reviewStarView = YXReviewPlanStarContainerView(type: .plan)
@@ -214,8 +214,8 @@ class YXReviewPlanDetailHeaderView: YXView {
             reviewStarView.snp.remakeConstraints { (make) in
                 make.top.equalTo(AS(26))
                 make.right.equalTo(AS(-17))
-                make.width.equalTo(AS(81))
-                make.height.equalTo(AS(27))
+                make.width.equalTo(AS(85))
+                make.height.equalTo(AS(31))
             }
         }
         
@@ -268,6 +268,7 @@ class YXReviewPlanDetailHeaderView: YXView {
         p.y += AS(15 + 8)
 
         let editView = YXReviewPlanEditView(point: p)
+        editView.planId = reviewPlanModel?.planId ?? 0
         editView.show()
         
     }
