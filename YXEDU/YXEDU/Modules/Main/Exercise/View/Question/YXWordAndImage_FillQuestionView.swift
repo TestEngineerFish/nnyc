@@ -23,7 +23,7 @@ class YXWordAndImage_FillQuestionView: YXBaseQuestionView {
 
     override func bindData() {
         super.bindData()
-        guard let imageUrl = self.exerciseModel.question?.imageUrl else {
+        guard let imageUrl = self.exerciseModel.word?.imageUrl else {
             return
         }
         self.imageView?.showImage(with: imageUrl)

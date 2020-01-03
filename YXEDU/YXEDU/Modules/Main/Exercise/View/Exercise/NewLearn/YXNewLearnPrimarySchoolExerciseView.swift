@@ -31,7 +31,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         self.addSubview(contentView)
         self.contentView.addSubview(leftContentView)
         questionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel)
-        if exerciseModel.question?.example != nil {
+        if exerciseModel.word?.example != nil {
             (questionView as! YXNewLearnPrimarySchoolQuestionView).showImageView()
             (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
         }
@@ -162,7 +162,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         } else {
             _answerView.status.forward()
         }
-        if exerciseModel.question?.example != nil {
+        if exerciseModel.word?.example != nil {
             self.exerciseDelegate?.enableTipsButton()
         }
         self.exerciseDelegate?.showRightNextView()

@@ -27,7 +27,7 @@ class YXImageQuestionView: YXBaseQuestionView {
     }
     
     override func bindData() {
-        if let url = self.exerciseModel.question?.imageUrl {
+        if let url = self.exerciseModel.word?.imageUrl {
             self.imageView?.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
         }
     }

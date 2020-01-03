@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// 中文+填词词义题目
+/// 中文+单词词义题目
 class YXChineseQuestionView: YXBaseQuestionView {
 
     override func createSubviews() {
@@ -35,7 +35,7 @@ class YXChineseQuestionView: YXBaseQuestionView {
     }
     
     override func bindData() {
-        titleLabel?.text = exerciseModel.question?.meaning
-        subTitleLabel?.text = exerciseModel.question?.partOfSpeech
+        titleLabel?.text = exerciseModel.word?.meaning
+        subTitleLabel?.text = exerciseModel.word?.partOfSpeech
     }
 }

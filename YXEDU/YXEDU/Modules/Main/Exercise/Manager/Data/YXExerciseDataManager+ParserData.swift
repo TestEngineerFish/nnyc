@@ -50,7 +50,7 @@ extension YXExerciseDataManager {
             
             if let word = self.fetchWord(wordId: wordId) {
                 var exercise = YXWordExerciseModel()
-                exercise.question = word
+                exercise.question = createQuestionModel(word: word)
                 exercise.word = word
                 exercise.isNewWord = true
                 
@@ -75,14 +75,12 @@ extension YXExerciseDataManager {
         for step in result?.steps ?? [] {
 
             for subStep in step {
-                var exercise = createExerciseModel(step: subStep)
+                var exercise = subStep
                 
                 if exercise.step < currentTurnIndex + 1 {
                     currentTurnIndex = exercise.step - 1
                 }
-                
-                
-                
+                                                
                 
                 if exercise.type == .connectionWordAndImage || exercise.type == .connectionWordAndChinese {
                     for option in exercise.option?.firstItems ?? [] {
@@ -90,14 +88,14 @@ extension YXExerciseDataManager {
                         self.addWordStep(exerciseModel: exercise, isBackup: false)
                     }
                 } else {
-                    exercise.word = fetchWord(wordId: subStep.wordId)
+                    exercise.word = fetchWord(wordId: subStep.question?.wordId ?? 0)
                     
                     if (exercise.type != .fillWordGroup
                         && exercise.type != .fillWordAccordingToImage
                         && exercise.type != .fillWordAccordingToListen
                         && exercise.type != .fillWordAccordingToChinese
                         && exercise.type != .fillWordAccordingToChinese_Connection) {
-                        exercise.question = exercise.word
+                        exercise.question = createQuestionModel(word: exercise.word)
                     }
                     
                     self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)
@@ -142,18 +140,29 @@ extension YXExerciseDataManager {
     }
     
     
-    func createExerciseModel(step: YXExerciseStepModel) -> YXWordExerciseModel {
-        var exercise = YXWordExerciseModel()
-        exercise.type        = YXExerciseType(rawValue: step.type ?? "") ?? .none
-        exercise.question    = step.question
-        exercise.option      = step.option
-        exercise.answers     = step.answers
-        exercise.step        = step.step
-        exercise.isCareScore = step.isCareScore
-        exercise.isNewWord   = step.isNewWord
-        
-        return exercise
+    func createQuestionModel(word: YXBaseWordModel?) -> YXExerciseQuestionModel? {
+        guard let w = word else { return nil }
+        var question = YXExerciseQuestionModel()
+        question.wordId = w.wordId
+        question.word   = w.word
+//        question.column = word.column
+//        question.row = word.row
+        return question
     }
+    
+    
+//    func createExerciseModel(step: YXExerciseStepModel) -> YXWordExerciseModel {
+//        var exercise = YXWordExerciseModel()
+//        exercise.type        = YXExerciseType(rawValue: step.type ?? "") ?? .none
+//        exercise.question    = step.question
+//        exercise.option      = step.option
+//        exercise.answers     = step.answers
+//        exercise.step        = step.step
+//        exercise.isCareScore = step.isCareScore
+//        exercise.isNewWord   = step.isNewWord
+//
+//        return exercise
+//    }
     
     func reviewWords() -> [YXWordExerciseModel] {
         var array: [YXWordExerciseModel] = []

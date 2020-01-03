@@ -51,8 +51,8 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
     override func bindData() {
         let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
         self.titleLabel?.text     = word
-        self.subTitleLabel?.text  = exerciseModel.question?.soundmark
-        self.descTitleLabel?.text = (exerciseModel.question?.partOfSpeech ?? "") + " " + (exerciseModel.question?.meaning ?? "")
+        self.subTitleLabel?.text  = exerciseModel.word?.soundmark
+        self.descTitleLabel?.text = (exerciseModel.word?.partOfSpeech ?? "") + " " + (exerciseModel.word?.meaning ?? "")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
             self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice

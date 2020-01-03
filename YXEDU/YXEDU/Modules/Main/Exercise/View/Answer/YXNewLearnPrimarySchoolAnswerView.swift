@@ -97,7 +97,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     override init(exerciseModel: YXWordExerciseModel) {
         super.init(exerciseModel: exerciseModel)
         // 如果没有例句,则跳过第一阶段
-        if exerciseModel.question?.example == nil {
+        if exerciseModel.word?.example == nil {
             self.status = .playedExampleInFristStage
             self.newLearnDelegate?.playWordAndExampleFinished()
         }
@@ -231,7 +231,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 播放单词
     private func playWord() {
-        guard let wordUrlStr = self.exerciseModel.question?.voice, let url = URL(string: wordUrlStr) else {
+        guard let wordUrlStr = self.exerciseModel.word?.voice, let url = URL(string: wordUrlStr) else {
             return
         }
         self.showPlayAnimation()
@@ -248,7 +248,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 播放例句
     /// - Parameter block: 完成回调
     private func playExample() {
-        guard let exampleUrlStr = self.exerciseModel.question?.examplePronunciation, let url = URL(string: exampleUrlStr) else {
+        guard let exampleUrlStr = self.exerciseModel.word?.examplePronunciation, let url = URL(string: exampleUrlStr) else {
             return
         }
         self.showPlayAnimation()

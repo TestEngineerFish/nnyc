@@ -9,36 +9,36 @@
 import ObjectMapper
 
 /// 问题数据模型
-struct YXExerciseQuestionModel2: YXBaseWordModel {
-
-
-    var wordId: Int? = -1
-    var word: String?
-    var partOfSpeechAndMeanings: [YXWordPartOfSpeechAndMeaningModel]?
-    var imageUrl: String?
-    
-    // 音标
-    var americanPhoneticSymbol: String?
-    var englishPhoneticSymbol: String?
-    
-    // 发音
-    var americanPronunciation: String?
-    var englishPronunciation: String?
-    
-    
-    // 例句
-    var examples: [YXWordExampleModel]?
-    
-    // Matrix
-    var column: Int = 0
-    var row: Int = 0
-    
-    init() {}
-    init?(map: Map) {
-        mapping(map: map)
-    }
-    
-}
+//struct YXExerciseQuestionModel2: YXBaseWordModel {
+//
+//
+//    var wordId: Int? = -1
+//    var word: String?
+//    var partOfSpeechAndMeanings: [YXWordPartOfSpeechAndMeaningModel]?
+//    var imageUrl: String?
+//
+//    // 音标
+//    var americanPhoneticSymbol: String?
+//    var englishPhoneticSymbol: String?
+//
+//    // 发音
+//    var americanPronunciation: String?
+//    var englishPronunciation: String?
+//
+//
+//    // 例句
+//    var examples: [YXWordExampleModel]?
+//
+//    // Matrix
+//    var column: Int = 0
+//    var row: Int = 0
+//
+//    init() {}
+//    init?(map: Map) {
+//        mapping(map: map)
+//    }
+//
+//}
 
 
 
@@ -52,7 +52,7 @@ struct YXWordExerciseModel: Mappable {
     var word: YXWordModel?
     
     /// 问题（使用 word 模型）
-    var question: YXWordModel?
+    var question: YXExerciseQuestionModel?
     /// 选项
     var option: YXExerciseOptionModel?
     /// 答案
@@ -66,6 +66,7 @@ struct YXWordExerciseModel: Mappable {
     /// 是否根据得分选择题型
     var isCareScore: Bool = false
     
+    var isBackup: Bool = false
     var isNewWord: Bool = false
     
     /// 第几步
@@ -90,7 +91,7 @@ struct YXWordExerciseModel: Mappable {
     }
         
     mutating func mapping(map: Map) {
-        type     <- map["type"]
+        type     <- (map["type"], EnumTransform<YXExerciseType>())
         word     <- map["word"]
         question <- map["question"]
         option   <- map["option"]
@@ -98,6 +99,7 @@ struct YXWordExerciseModel: Mappable {
         score    <- map["score"]
                 
         isCareScore <- map["is_care_score"]
+        isBackup    <- map["is_backup"]
         isNewWord <- map["is_new_word"]
         
         step <- map["step"]

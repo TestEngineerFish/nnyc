@@ -161,8 +161,8 @@ class YXExerciseOptionManager: NSObject {
         let num = self.random(max: max)
         if num % 2 == 1 {// 对
             exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
-            exerciseModel.question?.meaning = exerciseModel.word?.meaning
-            exerciseModel.question?.imageUrl = exerciseModel.word?.imageUrl
+//            exerciseModel.word?.meaning = exerciseModel.word?.meaning
+//            exerciseModel.word?.imageUrl = exerciseModel.word?.imageUrl
 
             var item = YXOptionItemModel()
             item.optionId = -1
@@ -177,8 +177,8 @@ class YXExerciseOptionManager: NSObject {
             }
             
             let exercise = wordArray[random(max: wordArray.count)]
-            exerciseModel.question?.meaning = exercise.word?.meaning
-            exerciseModel.question?.imageUrl = exercise.word?.imageUrl
+            exerciseModel.word?.meaning = exercise.word?.meaning
+            exerciseModel.word?.imageUrl = exercise.word?.imageUrl
             
             var item = YXOptionItemModel()
             item.optionId = -1

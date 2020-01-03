@@ -56,9 +56,9 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
     override func bindData() {
         let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
         self.titleLabel?.text    = word
-        self.subTitleLabel?.text = exerciseModel.question?.soundmark
+        self.subTitleLabel?.text = exerciseModel.word?.soundmark
         
-        if let url = self.exerciseModel.question?.imageUrl {
+        if let url = self.exerciseModel.word?.imageUrl {
             self.imageView?.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
         }
         

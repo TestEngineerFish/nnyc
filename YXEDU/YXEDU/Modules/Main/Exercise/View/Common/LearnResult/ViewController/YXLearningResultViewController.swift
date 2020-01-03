@@ -97,8 +97,8 @@ class YXLearningResultViewController: UIViewController {
         let taskMapViewSize = CGSize(width: AdaptSize(307), height: AdaptSize(245))
         let taskMapFrame    = CGRect(origin: CGPoint.zero, size: taskMapViewSize)
         let taskMapView     = YXTaskMapView(modelArray, frame: taskMapFrame, currentModel: currentModel)
-        taskMapView.learnNewUnit = { (unitId: Int?) -> Void in
-            guard let id = unitId else {
+        taskMapView.learnNewUnit = { [weak self] (unitId: Int?) -> Void in
+            guard let self = self, let id = unitId else {
                 return
             }
             self.learnUnit(id)
