@@ -54,22 +54,10 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func requestUnlockGame() {
         let request = YXChallengeRequest.unlock
         YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
-            if let statusModel = response.data {
-                if statusModel.state == 1 {
-                    guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
-                        return
-                    }
-                    if userModel.myCoins >= gameInfo.unitCoin {
-                        self.playGame()
-                    } else {
-                        let alertView = YXAlertView(type: .normal)
-                        alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
-                        alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
-                        alertView.shouldOnlyShowOneButton = true
-                        alertView.show()
-                    }
-                    self.requestChallengeData()
-                }
+            if let statusModel = response.data, statusModel.state == 1 {
+                self.requestChallengeData()
+            } else {
+                self.showGoldLackAlert()
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")
@@ -98,7 +86,11 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             let alertView = YXAlertView(type: .normal)
             alertView.descriptionLabel.text = "确定花费\(gameInfo.unlockCoin)松鼠币解锁游戏吗？"
             alertView.doneClosure = { _ in
-                self.requestUnlockGame()
+                if userModel.myCoins >= gameInfo.unlockCoin {
+                    self.requestUnlockGame()
+                } else {
+                    self.showGoldLackAlert()
+                }
             }
             alertView.show()
         case .task:
@@ -110,11 +102,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
                 if userModel.myCoins >= gameInfo.unitCoin {
                     self.playGame()
                 } else {
-                    let alertView = YXAlertView(type: .normal)
-                    alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
-                    alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
-                    alertView.shouldOnlyShowOneButton = true
-                    alertView.show()
+                    self.showGoldLackAlert()
                 }
             }
             alertView.doneClosure = { _ in
@@ -125,16 +113,11 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             self.playGame()
         case .again:
             if userModel.myCoins < gameInfo.unitCoin {
-                let alertView = YXAlertView(type: .normal)
-                alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
-                alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
-                alertView.shouldOnlyShowOneButton = true
-                alertView.show()
+                self.showGoldLackAlert()
             } else {
                 self.playGame()
             }
         }
-
     }
 
     private func playGame() {
@@ -158,6 +141,13 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         YXAlertWebView.share.show(url)
     }
 
+    private func showGoldLackAlert() {
+        let alertView = YXAlertView(type: .normal)
+        alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
+        alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
+        alertView.shouldOnlyShowOneButton = true
+        alertView.show()
+    }
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let amount = self.challengeModel?.rankedList.count ?? 0

@@ -110,7 +110,7 @@ class YXLearnMapViewController: UIViewController {
         }).first else {
             return
         }
-        if selectedModel.status == .uniteEnd {
+        if (selectedModel.reviewNumber + selectedModel.newNumber) <= 0 {
             let alertView = YXAlertView()
             alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
             alertView.rightOrCenterButton.setTitle("换单元", for: .normal)

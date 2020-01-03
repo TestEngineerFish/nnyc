@@ -15,22 +15,26 @@ struct YXLearnMapUnitModel: Mappable {
     var unitName: String?
     var wordsNumber: Int?
     var bookID: Int?
-    var rate: Float = 0.0
-    var stars: Int = 0
+    var rate: Float       = 0.0
+    var stars: Int        = 0
+    var newNumber: Int    = 0
+    var reviewNumber: Int = 0
     var status = YXUnitLearnStatusType.uniteUnstart
     var ext: YXLearnMapUnitExtModel?
 
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        unitID      <- map["unit_id"]
-        unitName    <- map["unit_name"]
-        wordsNumber <- map["words_num"]
-        bookID      <- map["book_id"]
-        rate        <- map["rate"]
-        stars       <- map["stars"]
-        status      <- map["status"]
-        ext         <- map["ext"]
+        unitID       <- map["unit_id"]
+        unitName     <- map["unit_name"]
+        wordsNumber  <- map["words_num"]
+        bookID       <- map["book_id"]
+        rate         <- map["rate"]
+        stars        <- map["stars"]
+        status       <- map["status"]
+        newNumber    <- map["new_num"]
+        reviewNumber <- map["review_num"]
+        ext          <- map["ext"]
         if status == .uniteIng && rate == .zero {
             status = .uniteIngProgressZero
         }
