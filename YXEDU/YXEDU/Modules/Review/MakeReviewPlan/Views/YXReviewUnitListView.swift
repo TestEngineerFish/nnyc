@@ -14,7 +14,7 @@ protocol YXReviewUnitListViewProtocol: NSObjectProtocol {
 }
 
 class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, YXReviewUnitListHeaderProtocol, YXReviewSelectedWordsListViewProtocol {
-
+    
     var guideView = YXMakeReviewGuideView()
     var tableView = UITableView()
     var pan: UIPanGestureRecognizer?
@@ -24,17 +24,17 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     weak var delegate: YXReviewUnitListViewProtocol?
     final let kYXReviewUnitListCell       = "YXReviewUnitListCell"
     final let kYXReviewUnitListHeaderView = "YXReviewUnitListHeaderView"
-
+    
     init(_ listModel: [YXReviewUnitModel], frame: CGRect) {
         self.unitModelList = listModel
         super.init(frame: frame)
         self.setSubviews()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setSubviews() {
         self.addSubview(tableView)
         self.tableView.delegate   = self
@@ -50,9 +50,9 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             make.edges.equalToSuperview()
         }
     }
-
+    
     // MARK: ==== Event ====
-
+    
     private func selectCell(with indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell, let headerCell = tableView.headerView(forSection: indexPath.section) else {
             return
@@ -70,9 +70,9 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         }
         headerCell.layoutSubviews()
     }
-
+    
     // MARK: ==== UIGestureRecognizerDelegate ====
-
+    
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let _pan = self.pan, _pan == gestureRecognizer else {
             return true
@@ -85,7 +85,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             return false
         }
     }
-
+    
     @objc private func pan(_ pan: UIPanGestureRecognizer) {
         if pan.state == .began {
             self.lastPassByIndexPath = nil
@@ -99,7 +99,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             self.previousLocation = newLocation
         }
     }
-
+    
     private func commitNewLocation(_ newLocation: CGPoint) {
         guard let previousLocation = self.previousLocation else {
             return
@@ -118,17 +118,17 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             }
         }
     }
-
+    
     private func updateWordSelectStatus(_ indexPath: IndexPath) {
         self.selectCell(with: indexPath)
     }
-
+    
     // MARK: ==== UITableViewDataSource ====
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.unitModelList.count
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let unitModel = self.unitModelList[section]
         if unitModel.isOpenUp {
@@ -137,7 +137,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             return 0
         }
     }
-
+    
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let headerView = view as? YXReviewUnitListHeaderView else {
             return
@@ -145,7 +145,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         let unitModel = self.unitModelList[section]
         headerView.bindData(unitModel)
     }
-
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: kYXReviewUnitListHeaderView) as? YXReviewUnitListHeaderView else {
             return nil
@@ -154,7 +154,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         headerView.delegate = self
         return headerView
     }
-
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? YXReviewWordViewCell else {
             return
@@ -169,23 +169,23 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             self.selectCell(with: indexPath)
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXReviewUnitListCell) as? YXReviewWordViewCell else {
             return UITableViewCell()
         }
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return AdaptSize(58)
     }
-
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return AdaptSize(33)
     }
     // MARK: ==== UITableViewDelegate ====
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let wordModel = self.unitModelList[indexPath.section].list[indexPath.row]
         let home = UIStoryboard(name: "Home", bundle: nil)
@@ -194,7 +194,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         wordDetialViewController.isComplexWord = 0
         self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)
     }
-
+    
     // MARK: ==== YXReviewUnitListHeaderProtocol ====
     func checkAll(_ unitModel: YXReviewUnitModel, section: Int) {
         let unitModel = self.unitModelList[section]
@@ -208,7 +208,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         }
         self.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
     }
-
+    
     func uncheckAll(_ unitModel: YXReviewUnitModel, section: Int) {
         unitModel.list.forEach { (wordModel) in
             if wordModel.isSelected {
@@ -218,7 +218,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         }
         self.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
     }
-
+    
     func clickHeaderView(_ section: Int) {
         if self.unitModelList[section].isOpenUp {
             if !(YYCache.object(forKey: YXLocalKey.alreadShowMakeReviewGuideView.rawValue) as? Bool ?? false) {
@@ -227,7 +227,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         }
         tableView.reloadSections(IndexSet(integer: section), with: .automatic)
     }
-
+    
     // MARK: ==== YXReviewSelectedWordsListViewProtocol ====
     func remove(_ word: YXReviewWordModel) {
         if self.tag == word.bookId {
@@ -243,5 +243,5 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             }
         }
     }
-
+    
 }

@@ -26,7 +26,7 @@ enum YXShareType: Int {
     case wechat   = 2
     case timeLine = 3
 }
-//0.68
+
 class YXShareViewController: YXViewController {
 
     var headerView: UIView = {
