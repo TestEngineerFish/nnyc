@@ -85,6 +85,22 @@ extension YXExerciseDataManager {
         
     }
     
+    
+    /// 更新新学单词跟读得分
+    /// - Parameters:
+    ///   - wordId:
+    ///   - score:
+    public func updateNewWordReadScore(exerciseModel: YXWordExerciseModel) {
+        // 只有新学题型才算听力分，否则其他题型的分数把听力发给覆盖了
+        if exerciseModel.type == .newLearnPrimarySchool || exerciseModel.type == .newLearnPrimarySchool_Group {
+            if let wordId = exerciseModel.word?.wordId {
+                let score = exerciseModel.listenScore
+                self.progressManager.updateNewWordReadScore(wordId: wordId, score: score)
+            }
+        }
+
+    }
+    
     /// 更新每个Step的 对错
     /// - Parameters:
     ///   - exerciseModel: 数据

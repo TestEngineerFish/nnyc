@@ -98,7 +98,7 @@ class YXBadgeDetailView: YXTopWindowView {
 
     @IBAction func close(_ sender: Any) {
         if isReport {
-            let request = YXMineRequest.badgeDisplayReport(badgeId: badge.ID ?? 0)
+            let request = YXMineRequest.badgeDisplayReport(badgeId: badge.badgeId ?? 0)
             YYNetworkService.default.request(YYStructResponse<YXBadgeReportModel>.self, request: request, success: { (response) in
                 guard let model = response.data else { return }
                 print("徽章显示，上报状态: ", model.state == 1)

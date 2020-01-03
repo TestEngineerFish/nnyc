@@ -38,7 +38,8 @@ class YXExcerciseProgressManager: NSObject {
         case reviewWordIds = "Review_Word_Id_List"
     
         case score = "Exercise_Score"
-        case errorCount = "Exercise_Error_Count"
+        case errorCount = "Error_Count"
+        case newWordReadScore = "New_Word_Read_Score"   // 新学跟读得分
         case skipNewWord = "Skip_New_Word"
     }
     
@@ -123,6 +124,13 @@ class YXExcerciseProgressManager: NSObject {
             return 10
         }
         return map[wordId] ?? 10
+    }
+    
+    func fetchNewWordReadScore(wordId: Int) -> Int {
+        guard let map = YYCache.object(forKey: key(.newWordReadScore)) as? [Int : Int]  else {
+            return 0
+        }
+        return map[wordId] ?? 0
     }
     
     
@@ -225,6 +233,15 @@ class YXExcerciseProgressManager: NSObject {
         }
     }
 
+    func updateNewWordReadScore(wordId: Int, score: Int) {
+        if var map = YYCache.object(forKey: key(.newWordReadScore)) as? [Int : Int] {
+            map[wordId] = score
+            YYCache.set(map, forKey: key(.newWordReadScore))
+        } else {
+            YYCache.set([wordId : score], forKey: key(.newWordReadScore))
+        }
+    }
+    
     
     func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?) {
         YYCache.set(false, forKey: key(.completion))

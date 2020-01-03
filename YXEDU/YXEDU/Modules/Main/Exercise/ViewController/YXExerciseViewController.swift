@@ -200,8 +200,8 @@
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
-        if let model = data.2 {
-//            model.type = .listenFillWord
+        if var model = data.2 {
+//            model.type = .lookExampleChooseImage
             
             // 新学隐藏提示
             let tipsHidden = (model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)

@@ -211,6 +211,7 @@ class YXReviewLearningProgressView: YXTopWindowView {
     
     @objc func clickReviewButton() {
         self.reviewEvent?()
+        self.removeFromSuperview()
     }
     
     

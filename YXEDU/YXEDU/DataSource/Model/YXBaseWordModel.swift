@@ -22,6 +22,7 @@ protocol YXBaseWordModel: Mappable {
     var partOfSpeechAndMeanings: [YXWordPartOfSpeechAndMeaningModel]? {set get}
     var imageUrl: String? {set get}
     
+//    var phrase: 
     // 音标
     var americanPhoneticSymbol: String? {set get}
     var englishPhoneticSymbol: String? {set get}

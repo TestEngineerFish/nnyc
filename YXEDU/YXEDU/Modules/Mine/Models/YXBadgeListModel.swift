@@ -26,6 +26,7 @@ struct YXBadgeListModel: Mappable {
 
 struct YXBadgeModel: Mappable {
     var ID: Int?
+    var badgeId: Int?
     var name: String?
     var description: String?
     var finishDateTimeInterval: Double?
@@ -40,6 +41,7 @@ struct YXBadgeModel: Mappable {
     
     mutating func mapping(map: Map) {
         ID <- map["badge_id"]
+        badgeId <- map["user_badge_id"]
         name <- map["name"]
         description <- map["desc"]
         finishDateTimeInterval <- map["finish_time"]
@@ -60,7 +62,7 @@ struct YXBadgeReportModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        state <- map["state"]        
+        state <- map["state"]
     }
 }
 
