@@ -34,32 +34,32 @@ class YXNewLearnGuideView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-        self.createSubviews()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func createSubviews() {
+    private func createSubviews(_ frame:CGRect) {
         self.addSubview(squirrelImageView)
         self.addSubview(descriptionLabel)
         self.addSubview(arrowImageView)
-        squirrelImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(112))
-            make.top.equalToSuperview().offset(AdaptSize(316))
-            make.size.equalTo(CGSize(width: AdaptSize(153), height: AdaptSize(105)))
+
+        arrowImageView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(frame.minX - AdaptSize(20 + 45))
+            make.top.equalToSuperview().offset(frame.minY - AdaptSize(10))
+            make.size.equalTo(CGSize(width: AdaptSize(45), height: AdaptSize(63)))
         }
         descriptionLabel.sizeToFit()
         descriptionLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(80))
-            make.top.equalTo(squirrelImageView.snp.bottom).offset(AdaptSize(4))
+            make.right.equalToSuperview().offset(AdaptSize(-5))
+            make.bottom.equalTo(arrowImageView.snp.top).offset(AdaptSize(-6))
             make.size.equalTo(descriptionLabel.size)
         }
-        arrowImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(146))
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(AdaptSize(6))
-            make.size.equalTo(CGSize(width: AdaptSize(45), height: 63))
+        squirrelImageView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(descriptionLabel.snp.top).offset(AdaptSize(-4))
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(153), height: AdaptSize(105)))
         }
     }
 
@@ -75,6 +75,7 @@ class YXNewLearnGuideView: UIView {
         bezierPath.append(rountBezier)
         maskLayer.path = bezierPath.cgPath
         self.layer.mask = maskLayer
+        self.createSubviews(hollowFrame)
     }
 
     func hide() {

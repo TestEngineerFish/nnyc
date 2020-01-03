@@ -41,9 +41,10 @@ class YXReviewWordViewCell: UITableViewCell {
         let button = YXButton()
         button.setTitle("未学", for: .normal)
         button.setTitleColor(UIColor.hex(0xCDB387), for: .normal)
-        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(10))
-        button.layer.borderWidth = AdaptSize(1)
-        button.layer.borderColor = UIColor.hex(0xCDB387).cgColor
+        button.titleLabel?.font   = UIFont.pfSCRegularFont(withSize: AdaptSize(10))
+        button.layer.borderWidth  = AdaptSize(1)
+        button.layer.borderColor  = UIColor.hex(0xCDB387).cgColor
+        button.layer.cornerRadius = AdaptSize(7)
         button.isEnabled = false
         button.isHidden  = true
         return button
@@ -99,17 +100,6 @@ class YXReviewWordViewCell: UITableViewCell {
         self.setNeedsLayout()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        guard let model = self.model else {
-            return
-        }
-        let titleWidth = model.word.textWidth(font: self.titleLabel.font, height: AdaptSize(21))
-        self.titleLabel.snp.updateConstraints { (make) in
-            make.width.equalTo(titleWidth)
-        }
-    }
-
     private func setSubviews() {
         self.contentView.addSubview(selectBarBtn)
         selectBarBtn.addSubview(barImageView)
@@ -130,8 +120,8 @@ class YXReviewWordViewCell: UITableViewCell {
         self.titleLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.selectBarBtn.snp.right)
             make.top.equalToSuperview().offset(AdaptSize(9))
+            make.right.equalTo(statusButton.snp.left).offset(AdaptSize(-6))
             make.height.equalTo(AdaptSize(21))
-            make.width.equalTo(CGFloat.zero)
         }
         self.descriptionLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.titleLabel.snp.bottom)
@@ -140,10 +130,9 @@ class YXReviewWordViewCell: UITableViewCell {
             make.height.equalTo(AdaptSize(20))
         }
         self.statusButton.snp.makeConstraints { (make) in
-            make.left.equalTo(self.titleLabel.snp.right).offset(AdaptSize(13))
+            make.right.equalToSuperview().offset(AdaptSize(-13))
             make.size.equalTo(CGSize(width: AdaptSize(41), height: AdaptSize(14)))
             make.centerY.equalTo(self.titleLabel)
-            make.right.greaterThanOrEqualToSuperview().priorityHigh()
         }
     }
 

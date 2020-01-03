@@ -235,8 +235,8 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     /// 滑动到对应位置
     private func scrollView(to indexPath: IndexPath, animation: Bool) {
-        self.headerScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
-        self.contentScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        self.headerScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animation)
+        self.contentScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animation)
     }
 
     // TODO: ==== Tools ===

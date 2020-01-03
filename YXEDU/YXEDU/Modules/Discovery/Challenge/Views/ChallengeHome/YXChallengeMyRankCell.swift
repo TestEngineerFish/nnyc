@@ -145,7 +145,7 @@ class YXChallengeMyRankCell: UITableViewCell {
                 make.width.equalTo(self.bonusLabel.width)
             }
         case .unanswered:
-            self.nameLabel.text                = "本期内尚未完成过学习计划"
+            self.nameLabel.text                = "本期内尚未参加过挑战"
             self.nameLabel.textColor           = UIColor.hex(0xFFF7EB)
             self.descriptionLabel.text         = ""
             self.descriptionLabel.isHidden     = true

@@ -64,18 +64,10 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     func bindData(_ model: YXReviewUnitModel) {
         self.model = model
         self.unitNameLabel.text = model.name
-        var selectedNum = 0
-        model.list.forEach { (wordModel) in
-            if wordModel.isSelected {
-                selectedNum += 1
-            }
+        let unitWidth = model.name.textWidth(font: self.unitNameLabel.font, height: self.height)
+        self.unitNameLabel.snp.updateConstraints { (make) in
+            make.width.equalTo(unitWidth)
         }
-        let checkAllText = model.isCheckAll ? "取消全选" : "全选"
-        self.checkAllButton.setTitle(checkAllText, for: .normal)
-        let statisticsText = String(format: "（%d/%d词）", selectedNum, model.list.count)
-        let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
-        attrStr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: NSRange(location: 1, length: "\(selectedNum)".count))
-        self.statisticsLabel.attributedText = attrStr
         self.setNeedsLayout()
     }
 
@@ -84,10 +76,20 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         guard let model = self.model else {
             return
         }
-        let unitWidth = model.name.textWidth(font: self.unitNameLabel.font, height: self.height)
-        self.unitNameLabel.snp.updateConstraints { (make) in
-            make.width.equalTo(unitWidth)
+        var selectedNum = 0
+        model.list.forEach { (wordModel) in
+            if wordModel.isSelected {
+                selectedNum += 1
+            }
         }
+        let numberColor = selectedNum > 0 ? UIColor.orange1 : UIColor.black4
+        let statisticsText = String(format: "（%d/%d词）", selectedNum, model.list.count)
+        let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
+        attrStr.addAttributes([NSAttributedString.Key.foregroundColor : numberColor], range: NSRange(location: 1, length: "\(selectedNum)".count))
+        self.statisticsLabel.attributedText = attrStr
+        let checkAllText = model.isCheckAll ? "取消全选" : "全选"
+        self.checkAllButton.setTitle(checkAllText, for: .normal)
+        self.checkAllButton.isHidden = !model.isOpenUp
     }
 
     private func setSubviews() {
@@ -134,6 +136,8 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         self.addGestureRecognizer(tap)
     }
 
+    // MARK: ==== Event ====
+
     @objc private func clickCheckAllBtn(_ button: YXButton) {
         guard let unitModel = self.model else {
             return
@@ -159,5 +163,4 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         }
         self.delegate?.clickHeaderView(self.tag)
     }
-
 }

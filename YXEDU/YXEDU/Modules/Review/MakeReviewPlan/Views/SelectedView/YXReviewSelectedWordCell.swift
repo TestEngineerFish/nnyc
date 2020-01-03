@@ -13,7 +13,7 @@ class YXReviewSelectedWordCell: UITableViewCell {
     var removeButton: YXButton = {
         let button = YXButton()
         button.setImage(UIImage(named: "word_delete"), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        button.imageEdgeInsets = UIEdgeInsets(top: AdaptSize(11), left: AdaptSize(10), bottom: AdaptSize(11), right: AdaptSize(6))
         return button
     }()
 
@@ -52,12 +52,13 @@ class YXReviewSelectedWordCell: UITableViewCell {
 
         removeButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(AdaptSize(20))
-            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
+            make.left.equalToSuperview().offset(AdaptSize(10))
+            make.width.equalTo(AdaptSize(24))
+            make.height.equalTo(AdaptSize(30))
         }
 
         wordLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(removeButton.snp.right).offset(AdaptSize(6))
+            make.left.equalTo(removeButton.snp.right)
             make.right.equalTo(paraphraseLabel.snp.left).offset(AdaptSize(-12))
             make.height.equalToSuperview()
         }

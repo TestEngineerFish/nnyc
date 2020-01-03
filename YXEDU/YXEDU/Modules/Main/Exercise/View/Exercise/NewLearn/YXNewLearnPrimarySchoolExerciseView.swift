@@ -88,7 +88,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
 
     // MARK: ==== Event ====
     private func showGuideView() {
-        let roundSize  = CGSize(width: AdaptSize(110), height: AdaptSize(110))
+        let roundSize  = CGSize(width: AdaptSize(115), height: AdaptSize(115))
         let audioView  = (answerView as! YXNewLearnAnswerView).recordAudioButton
         let audioFrame = audioView.convert(audioView.frame, to: kWindow)
         self.guideView.show(CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.maxY - AdaptSize(roundSize.height/2), width: roundSize.width, height: roundSize.height))

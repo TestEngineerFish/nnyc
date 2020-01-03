@@ -68,7 +68,7 @@ class YXLearningResultViewController: UIViewController {
         backButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(16))
             make.top.equalToSuperview().offset(AdaptSize(32))
-            make.width.height.equalTo(AdaptSize(22))
+            make.width.height.equalTo(AdaptSize(28))
         }
         backButton.addTarget(self, action: #selector(backClick), for: .touchUpInside)
 

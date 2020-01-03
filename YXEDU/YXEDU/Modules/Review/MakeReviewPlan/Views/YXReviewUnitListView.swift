@@ -54,20 +54,21 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     // MARK: ==== Event ====
 
     private func selectCell(with indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell else {
+        guard let cell = tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell, let headerCell = tableView.headerView(forSection: indexPath.section) else {
             return
         }
         let unitModel = self.unitModelList[indexPath.section]
         let wordModel = unitModel.list[indexPath.row]
-        wordModel.bookId = self.tag
-        wordModel.unitId = unitModel.id
+        wordModel.bookId     = self.tag
+        wordModel.unitId     = unitModel.id
         wordModel.isSelected = !wordModel.isSelected
-        cell.model = wordModel
+        cell.model           = wordModel
         if wordModel.isSelected {
             self.delegate?.selectedWord(wordModel)
         } else {
             self.delegate?.unselectWord(wordModel)
         }
+        headerCell.layoutSubviews()
     }
 
     // MARK: ==== UIGestureRecognizerDelegate ====
@@ -152,7 +153,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: kYXReviewUnitListHeaderView) as? YXReviewUnitListHeaderView else {
             return nil
         }
-        headerView.tag = section
+        headerView.tag      = section
         headerView.delegate = self
         return headerView
     }
@@ -203,8 +204,8 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         unitModel.list.forEach { (wordModel) in
             if !wordModel.isSelected {
                 wordModel.isSelected = true
-                wordModel.bookId = self.tag
-                wordModel.unitId = unitModel.id
+                wordModel.bookId     = self.tag
+                wordModel.unitId     = unitModel.id
                 self.delegate?.selectedWord(wordModel)
             }
         }

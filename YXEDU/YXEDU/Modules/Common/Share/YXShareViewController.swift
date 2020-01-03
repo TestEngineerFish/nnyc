@@ -28,7 +28,7 @@ enum YXShareType: Int {
 }
 
 class YXShareViewController: YXViewController {
-
+    
     var shareImageBorderView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
@@ -39,7 +39,7 @@ class YXShareViewController: YXViewController {
         imageView.backgroundColor = UIColor.white
         return imageView
     }()
-
+    
     var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text          = "炫耀一下"
@@ -48,26 +48,26 @@ class YXShareViewController: YXViewController {
         label.textAlignment = .center
         return label
     }()
-
+    
     var leftLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black4.withAlphaComponent(0.5)
         return view
     }()
-
+    
     var rightLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black4.withAlphaComponent(0.5)
         return view
     }()
-
+    
     var qqImageView: UIImageView = {
         let imageView   = UIImageView()
         imageView.image = UIImage(named: "gameShareQQ")
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-
+    
     var qqLabel: UILabel = {
         let label = UILabel()
         label.text          = "QQ"
@@ -76,20 +76,20 @@ class YXShareViewController: YXViewController {
         label.textAlignment = .center
         return label
     }()
-
+    
     var wechatImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "gameShareWechat")
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-
+    
     var goldImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "challengeGoldIcon")
         return imageView
     }()
-
+    
     var wechatLabel: UILabel = {
         let label = UILabel()
         label.text          = "微信"
@@ -98,14 +98,14 @@ class YXShareViewController: YXViewController {
         label.textAlignment = .center
         return label
     }()
-
+    
     var timeLineImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "gameShareTimeLine")
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-
+    
     var timeLineLabel: UILabel = {
         let label = UILabel()
         label.text          = "朋友圈"
@@ -114,20 +114,20 @@ class YXShareViewController: YXViewController {
         label.textAlignment = .center
         return label
     }()
-
+    
     var titleString = ""
     var wordsAmount = 0
     var daysAmount  = 0
     var gameModel: YXGameResultModel?
     var shareType: YXShareImageType = .challengeResult
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bindProperty()
         self.createSubviews()
         self.customNavigationBar?.title = titleString
     }
-
+    
     private func bindProperty() {
         let tapQQ = UITapGestureRecognizer(target: self, action: #selector(shareToQQ))
         let tapWechat = UITapGestureRecognizer(target: self, action: #selector(shareToWechat))
@@ -135,7 +135,7 @@ class YXShareViewController: YXViewController {
         self.qqImageView.addGestureRecognizer(tapQQ)
         self.wechatImageView.addGestureRecognizer(tapWechat)
         self.timeLineImageView.addGestureRecognizer(tapTimeLine)
-
+        
         switch self.shareType {
         case .learnResult:
             self.shareImageView.image = self.createLearnResultShareImage()
@@ -149,10 +149,10 @@ class YXShareViewController: YXViewController {
             self.shareImageView.image = self.createChallengeReviewShareImage()
         }
     }
-
+    
     private func createSubviews() {
         let imageViewSize = CGSize(width: AdaptSize(319), height: AdaptSize(436))
-
+        
         self.view.addSubview(shareImageBorderView)
         shareImageBorderView.addSubview(shareImageView)
         self.view.addSubview(leftLineView)
@@ -229,11 +229,11 @@ class YXShareViewController: YXViewController {
             make.centerX.equalTo(timeLineImageView)
             make.size.equalTo(timeLineLabel.size)
         }
-
+        
         shareImageBorderView.layer.setDefaultShadow()
         shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))
     }
-
+    
     // MARK: ==== Request ====
     private func punch(_ type: YXShareType) {
         let request = YXShareRequest.punch(type: type.rawValue)
@@ -252,7 +252,7 @@ class YXShareViewController: YXViewController {
             YXUtils.showHUD(self.view, title: "\(error.message)")
         }
     }
-
+    
     // MARK: ==== Share Event ====
     @objc private func shareToQQ() {
         QQApiManager.shared()?.share(self.shareImageView.image, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
@@ -262,9 +262,9 @@ class YXShareViewController: YXViewController {
             }
             self.punch(.QQ)
         }
-
+        
     }
-
+    
     @objc private func shareToWechat() {
         WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxSession, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
         WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
@@ -274,7 +274,7 @@ class YXShareViewController: YXViewController {
             self.punch(.wechat)
         }
     }
-
+    
     @objc private func shareToTimeLine() {
         WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
         WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
@@ -284,12 +284,12 @@ class YXShareViewController: YXViewController {
             self.punch(.timeLine)
         }
     }
-
+    
     // MARK: ==== Tools ====
-
+    
     /// 创建学习结果打卡页面
     private func createLearnResultShareImage() -> UIImage? {
-
+        
         // ---- 数据准备 ----
         let shareBgImage = UIImage(named: "learnShareBgImage")
         let iconImage    = UIImage(named: "gameShareLogo")
@@ -335,7 +335,7 @@ class YXShareViewController: YXViewController {
             return label
         }()
         let qrcordImage = UIImage(named: "shareQRCode")
-
+        
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 513)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
@@ -353,7 +353,7 @@ class YXShareViewController: YXViewController {
         }
         return shareImage
     }
-
+    
     /// 创建听写复习打卡分享页面
     private func createListenReviewShareImage() -> UIImage? {
         let logoImage    = UIImage(named: "gameShareLogo2")
@@ -402,7 +402,7 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
-
+        
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
@@ -420,7 +420,7 @@ class YXShareViewController: YXViewController {
         }
         return shareImage
     }
-
+    
     /// 创建智能复习打卡分享页面
     private func createAIReviewShareImage() -> UIImage? {
         let logoImage    = UIImage(named: "gameShareLogo2")
@@ -469,7 +469,7 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
-
+        
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
@@ -487,7 +487,7 @@ class YXShareViewController: YXViewController {
         }
         return shareImage
     }
-
+    
     /// 创建复习计划打卡分享页面
     private func createPlanReviewShareImage() -> UIImage? {
         let logoImage    = UIImage(named: "gameShareLogo2")
@@ -536,7 +536,7 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
-
+        
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
@@ -554,7 +554,7 @@ class YXShareViewController: YXViewController {
         }
         return shareImage
     }
-
+    
     /// 创建挑战打卡分享页面
     private func createChallengeReviewShareImage() -> UIImage? {
         guard let model = self.gameModel else {
@@ -607,7 +607,7 @@ class YXShareViewController: YXViewController {
             return label
         }()
         let treeBranchImage = UIImage(named: "treeBranchImage")
-
+        
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)

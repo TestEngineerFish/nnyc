@@ -166,8 +166,6 @@ class RegisterSliderView: UIView {
         backgroundColor             = UIColor.clear
         contentView.backgroundColor = UIColor.white
         shadowView.backgroundColor  = UIColor.black.withAlphaComponent(0.2)
-        self.layer.cornerRadius     = 6
-        self.layer.masksToBounds    = true
         shadowView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(close))
         shadowView.addGestureRecognizer(tap)
@@ -236,8 +234,10 @@ class RegisterSliderView: UIView {
 
     /// 设置拼图验证的内容
     func _setPuzzleContent() {
-        guard var image = UIImage(named: "template") else { return }
-        self.layer.cornerRadius          = 6.0
+        let page = Int.random(in: 0...3)
+        guard var image = UIImage(named: "template\(page)") else { return }
+        contentView.layer.cornerRadius   = 6.0
+        contentView.layer.masksToBounds  = true
         image                            = image.rescaleSize(CGSize(width: imageWidth, height: imageHeight))
         imageView.image                  = image
         thumbImgView.image               = UIImage(named: "slide_button")
@@ -282,7 +282,8 @@ class RegisterSliderView: UIView {
 
     /// 设置字符校验(随机位置)的内容
     func _setRandomCharContent() {
-        guard var image = UIImage(named: "template") else { return }
+        let page = Int.random(in: 0...3)
+        guard var image = UIImage(named: "template\(page)") else { return }
         image                   = image.rescaleSize(CGSize(width: imageWidth, height: imageHeight))
         imageView.image         = image
         imageView.contentMode   = .scaleAspectFill
@@ -338,7 +339,8 @@ class RegisterSliderView: UIView {
 
     /// 设置字符校验(九宫格位置)的内容
     func _setTrimCharContent() {
-        guard var image = UIImage(named: "template") else { return }
+        let page = Int.random(in: 0...3)
+        guard var image = UIImage(named: "template\(page)") else { return }
         image                              = image.rescaleSize(CGSize(width: imageWidth, height: imageHeight))
         imageView.image                    = image
         hintLabel.textAlignment            = .center

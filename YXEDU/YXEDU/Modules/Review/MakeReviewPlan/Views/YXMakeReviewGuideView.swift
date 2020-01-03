@@ -95,7 +95,7 @@ class YXMakeReviewGuideView: UIView {
 
     private func startAnimation() {
         let animation = CABasicAnimation(keyPath: "position.y")
-        animation.duration       = 0.75
+        animation.duration       = 1.75
         animation.toValue        = AdaptSize(400)
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         animation.repeatCount    = MAXFLOAT

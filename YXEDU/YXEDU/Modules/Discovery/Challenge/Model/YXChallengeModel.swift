@@ -74,8 +74,8 @@ struct YXChallengeGameInfo: Mappable {
 
 enum YXChallengeResultType: Int {
     case success    = 1 // 有挑战、有排名
-    case unanswered = 2 // 有挑战、无排名(未作答)
-    case fail       = 3 // 未挑战、无排名
+    case fail       = 2 // 有挑战、无排名(未作答)
+    case unanswered = 3 // 未挑战、无排名
 }
 
 struct YXChallengeUserModel: Mappable {

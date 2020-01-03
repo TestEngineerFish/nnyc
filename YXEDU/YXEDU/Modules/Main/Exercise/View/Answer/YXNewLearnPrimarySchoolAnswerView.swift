@@ -34,7 +34,7 @@ protocol YXNewLearnProtocol: NSObjectProtocol {
      case reporting                      = 11  // 上报云知声中
      case showResult                     = 12  // 显示结果
      case alreadLearn                    = 13  // 已学习
-     case normal                         = -1 //初始状态
+     case normal                         = -1  //初始状态
 
     mutating func forward() {
         if self.rawValue < 13 {

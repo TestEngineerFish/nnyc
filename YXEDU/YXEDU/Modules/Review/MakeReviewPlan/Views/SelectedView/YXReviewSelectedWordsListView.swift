@@ -111,9 +111,9 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
 
     func openUpList() {
         let h = self.getMaxHeight()
-         self.snp.updateConstraints { (make) in
-             make.height.equalTo(h)
-         }
+        self.snp.updateConstraints { (make) in
+            make.height.equalTo(h)
+        }
         self.arrowButton.transform = CGAffineTransform(rotationAngle: .pi)
     }
 
@@ -153,6 +153,9 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         }
         self.wordsModelList.remove(at: _index)
         self.tableView.deleteRows(at: [IndexPath(row: _index, section: 0)], with: .left)
+        if self.wordsModelList.isEmpty {
+            self.delegateArrow?.closeDownList()
+        }
         self.setNeedsLayout()
     }
 

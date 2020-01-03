@@ -8,117 +8,168 @@
 
 import UIKit
 
-class YXNewLearnPrimarySchoolWordGroupExerciseView: YXBaseExerciseView {
-    
-    var firstQuestionView: YXNewLearnPrimarySchoolWordGroupQuestionView?
-    var secondQuestionView: YXNewLearnPrimarySchoolWordGroupQuestionView?
-    var currentQuestionView: YXNewLearnPrimarySchoolWordGroupQuestionView?
-    
-    var contentView = UIScrollView()
-    let contentViewW = screenWidth - AdaptSize(44)
-    
+class YXNewLearnPrimarySchoolWordGroupExerciseView: YXBaseExerciseView, YXNewLearnProtocol {
+
+    var guideView = YXNewLearnGuideView()
+
+    var detailView: YXNewLearnJuniorHighSchoolQuestionView?
+    var rightContentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    var leftContentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
     override func createSubview() {
-        super.createSubview()
         self.addSubview(contentView)
-        
-        firstQuestionView  = YXNewLearnPrimarySchoolWordGroupQuestionView(exerciseModel: exerciseModel, type: .wordAndAudio)
-        secondQuestionView = YXNewLearnPrimarySchoolWordGroupQuestionView(exerciseModel: exerciseModel, type: .wordAndImageAndAudio)
-        self.contentView.addSubview(firstQuestionView!)
-        self.contentView.addSubview(secondQuestionView!)
-        self.currentQuestionView = firstQuestionView
-        
-        answerView = YXNewLearnAnswerView(exerciseModel: self.exerciseModel)
-        self.addSubview(answerView!)
-        
-        answerView?.delegate        = firstQuestionView
-        answerView?.answerDelegate  = self
-        
-        firstQuestionView?.audioPlayerView?.delegate = answerView
-        
-        // 延迟播放.(因为在切题的时候会有动画)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.2) {
-            var isPlay = true
-            kWindow.subviews.forEach { (subview) in
-                if subview.tag != 0 {
-                    isPlay = false
-                }
-            }
-            if isPlay {
-                self.playerAudio()
-            }
+        self.contentView.addSubview(leftContentView)
+        questionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel)
+        if exerciseModel.question?.example != nil {
+            (questionView as! YXNewLearnPrimarySchoolQuestionView).showImageView()
+            (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
         }
+        self.leftContentView.addSubview(questionView!)
+
+        answerView = YXNewLearnAnswerView(exerciseModel: self.exerciseModel)
+        (answerView as! YXNewLearnAnswerView).newLearnDelegate = self
+        answerView?.answerDelegate  = self
+        self.leftContentView.addSubview(answerView!)
+
+        detailView = YXNewLearnJuniorHighSchoolQuestionView(exerciseModel: exerciseModel)
+        self.contentView.addSubview(rightContentView)
+        self.rightContentView.addSubview(detailView!)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = CGRect(x: AdaptSize(22), y: AdaptSize(37), width: contentViewW, height: AdaptSize(250))
-        
-        firstQuestionView?.snp.makeConstraints({ (make) in
+        contentView.snp.makeConstraints { (make) in
             make.left.top.bottom.equalToSuperview()
-            make.height.equalTo(AdaptSize(250))
-            make.width.equalTo(contentViewW)
-        })
-        
-        secondQuestionView?.snp.makeConstraints({ (make) in
-            make.left.equalTo(firstQuestionView!.snp.right)
+            make.width.equalToSuperview().multipliedBy(2)
+        }
+        leftContentView.snp.makeConstraints { (make) in
+            make.left.top.bottom.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.5)
+        }
+        questionView?.snp.makeConstraints({ (make) in
             make.top.equalToSuperview()
-            make.width.height.equalTo(firstQuestionView!)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(AdaptSize(-44))
+            make.bottom.equalTo(answerView!.snp.top)
         })
-        
-        contentView.contentSize = CGSize(width: contentViewW*3, height: AdaptSize(250))
-        
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.width.equalToSuperview().offset(AdaptSize(-44))
-            make.height.equalTo(AdaptSize(200))
+            make.height.equalTo(AdaptSize(145))
+            make.width.equalToSuperview()
+        })
+        detailView?.snp.makeConstraints({ (make) in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalToSuperview().offset(5)
+        })
+        rightContentView.snp.makeConstraints({ (make) in
+            make.top.bottom.right.equalToSuperview()
+            make.left.equalTo(leftContentView.snp.right)
         })
     }
-    
+
     deinit {
         guard let _answerView = answerView else {
             return
         }
         NotificationCenter.default.removeObserver(_answerView)
     }
-    
-    /// 播放音频
-    private func playerAudio() {
-        guard let currentQuestionView = currentQuestionView else {
+
+    // MARK: ==== Event ====
+    private func showGuideView() {
+        let roundSize  = CGSize(width: AdaptSize(115), height: AdaptSize(115))
+        let audioView  = (answerView as! YXNewLearnAnswerView).recordAudioButton
+        let audioFrame = audioView.convert(audioView.frame, to: kWindow)
+        self.guideView.show(CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.maxY - AdaptSize(roundSize.height/2), width: roundSize.width, height: roundSize.height))
+        YYCache.set(true, forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideGuideView))
+        self.guideView.addGestureRecognizer(tap)
+    }
+
+    @objc private func hideGuideView() {
+        self.guideView.removeFromSuperview()
+        guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
             return
         }
-        currentQuestionView.playAudio()
+        _answerView.status.forward()
     }
-    
-    // MARK: YXAnswerViewDelegate
-    
+
+    func showDetailView() {
+        UIView.animate(withDuration: 0.5) {
+            self.contentView.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
+        }
+    }
+
+    // MARK: ==== YXAnswerViewDelegate ====
+
     override func switchQuestionView() -> Bool {
-        guard let currentQuestionView = self.currentQuestionView else {
-            return false
-        }
-        var offsetX = CGFloat.zero
-        switch currentQuestionView {
-        case firstQuestionView:
-            offsetX = contentViewW
-            // 更新当前视图
-            self.currentQuestionView = secondQuestionView
-            // 重新指定Delegate
-            secondQuestionView?.audioPlayerView?.delegate = answerView
-            answerView?.delegate = secondQuestionView
-        case secondQuestionView:
-            return false
-        default:
-            break
-        }
-        self.contentView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
         return true
     }
 
-    func showTipButton() {
-
+    // MARK: ==== YXExerciseViewControllerProtocol ====
+    override func backHomeEvent() {
+        super.backHomeEvent()
+        // 暂停播放
+        YXAVPlayerManager.share.pauseAudio()
+        USCRecognizer.sharedManager()?.cancel()
     }
 
-    func showNextButton() {
-        
+    override func showAlertEvnet() {
+        super.showAlertEvnet()
+        guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
+            return
+        }
+        _answerView.pauseView()
+    }
+
+    override func hideAlertEvent() {
+        super.hideAlertEvent()
+        guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
+            return
+        }
+        _answerView.playByStatus()
+    }
+
+    // MARK: ==== YXNewLearnProtocol ===
+
+    /// 单词和例句播放结束
+    func playWordAndExampleFinished() {
+        guard let question = questionView as? YXNewLearnPrimarySchoolQuestionView else {
+            return
+        }
+        question.showWordView()
+    }
+
+    /// 单词和单词播放结束
+    func playWordAndWordFinished() {
+        guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
+            return
+        }
+        _answerView.status = .showGuideView
+        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
+            self.showGuideView()
+        } else {
+            _answerView.status.forward()
+        }
+        if exerciseModel.question?.example != nil {
+            self.exerciseDelegate?.enableTipsButton()
+        }
+        self.exerciseDelegate?.showRightNextView()
+    }
+
+    /// 显示新学单词详情
+    func showNewLearnWordDetail() {
+        self.showDetailView()
+        self.exerciseDelegate?.showCenterNextButton()
     }
 }
