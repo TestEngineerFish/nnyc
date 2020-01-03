@@ -122,9 +122,10 @@
         [MobClick event:kTracePunchCardResult attributes:@{kTraceDescKey : des}];
         [MobClick event:kTracePunchCardResult attributes:@{kTraceDescKey : kPlatformWX}];
         SendMessageToWXResp *messageResps = (SendMessageToWXResp *)resp;
-        
+
         if (messageResps.errCode == 0){
-            [YXUtils showHUD:nil title:@"分享成功！"];
+//            [YXUtils showHUD:nil title:@"分享成功！"];
+            self.finishBlock(messageResps, YES);
         }
         else {
             [YXUtils showHUD:nil title:@"分享未成功！"];

@@ -158,7 +158,8 @@
             [MobClick event:kTracePunchCardResult attributes:@{kTraceDescKey : des}];
             
             if ([resp.result isEqualToString:@"0"]){
-                [YXUtils showHUD:nil title:@"分享成功！"];
+                self.finishBlock(resp.result, resp.errorDescription, YES);
+//                [YXUtils showHUD:nil title:@"分享成功！"];
             }
             else{
                 [YXUtils showHUD:nil title:@"分享未成功！"];

@@ -241,10 +241,12 @@ class YXShareViewController: YXViewController {
             guard let model = response.data else {
                 return
             }
-            if model.state {
-                print("打卡成功")
-            } else {
-                print("打卡失败")
+            if model.state && model.coin > 0 {
+                let alertView = YXAlertView(type: .normal)
+                alertView.descriptionLabel.text = "恭喜获得\(model.coin)个松果币奖励"
+                alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
+                alertView.shouldOnlyShowOneButton = true
+                alertView.show()
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")
@@ -254,34 +256,32 @@ class YXShareViewController: YXViewController {
     // MARK: ==== Share Event ====
     @objc private func shareToQQ() {
         QQApiManager.shared()?.share(self.shareImageView.image, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
-        self.punch(.QQ)
-        WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+        QQApiManager.shared()?.finishBlock = { [weak self] (obj1: Any, obj2: Any, result: Bool) in
             guard let self = self else {
                 return
             }
-            print("恭喜恭喜🎉")
+            self.punch(.QQ)
         }
+
     }
 
     @objc private func shareToWechat() {
         WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxSession, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
-        self.punch(.wechat)
         WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
             guard let self = self else {
                 return
             }
-            print("恭喜恭喜🎉")
+            self.punch(.wechat)
         }
     }
 
     @objc private func shareToTimeLine() {
         WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
-        self.punch(.timeLine)
         WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
             guard let self = self else {
                 return
             }
-            print("恭喜恭喜🎉")
+            self.punch(.timeLine)
         }
     }
 
