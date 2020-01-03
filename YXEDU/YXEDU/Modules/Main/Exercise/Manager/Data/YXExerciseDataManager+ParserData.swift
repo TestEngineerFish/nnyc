@@ -95,7 +95,7 @@ extension YXExerciseDataManager {
                         && exercise.type != .fillWordAccordingToListen
                         && exercise.type != .fillWordAccordingToChinese
                         && exercise.type != .fillWordAccordingToChinese_Connection) {
-                        exercise.question = createQuestionModel(word: exercise.word)
+//                        exercise.question = createQuestionModel(word: exercise.word)
                     }
                     
                     self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)

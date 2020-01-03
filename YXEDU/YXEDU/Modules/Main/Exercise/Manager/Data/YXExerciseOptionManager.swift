@@ -47,7 +47,9 @@ class YXExerciseOptionManager: NSObject {
     }
 
     func reviewWordOption(exercise: YXWordExerciseModel)  -> YXWordExerciseModel? {
-
+        // 选项个数
+        let itemCount = exercise.question?.itemCount ?? 4
+        
         var exerciseModel = exercise
         var items         = [YXOptionItemModel]()
         // 提高查找速度,拿空间换时间
@@ -66,13 +68,13 @@ class YXExerciseOptionManager: NSObject {
             let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
             items.append(itemModel)
             whiteList.append(wordModel.wordId)
-            if items.count > 2 {
+            if items.count > itemCount - 2 {
                 break
             }
         }
 
         // 从学习流程获取数据
-        if items.count < 3 {
+        if items.count < itemCount - 1 {
             // 防止无限随机同一个对象
             var tmpReviewWordArray = reviewWordArray
             for _ in 0..<reviewWordArray.count {
@@ -88,13 +90,13 @@ class YXExerciseOptionManager: NSObject {
                 whiteList.append(wordModel.wordId)
                 // 移除已经随机过的对象
                 tmpReviewWordArray.remove(at: randomInt)
-                if items.count > 2 {
+                if items.count > itemCount - 2 {
                     break
                 }
             }
         }
         // 从单元词书获取数据
-        if items.count < 3 {
+        if items.count < itemCount - 1 {
             if let unitId = exerciseModel.word?.unitId {
                 let wordModelArray = YXWordBookDaoImpl().selectWordByUnitId(unitId: unitId)
                 var tmpWordModelArray = wordModelArray
@@ -108,14 +110,14 @@ class YXExerciseOptionManager: NSObject {
                     whiteList.append(wordModel.wordId)
                     // 移除已经随机过的对象
                     tmpWordModelArray.remove(at: randomInt)
-                    if items.count > 2 {
+                    if items.count > itemCount - 2 {
                         break
                     }
                 }
             }
         }
         // 从书中获取数据
-        if items.count < 3 {
+        if items.count < itemCount - 1 {
             if let bookId = exerciseModel.word?.bookId {
                 let wordModelArray = YXWordBookDaoImpl().selectWordByBookId(bookId)
                 var tmpWordModelArray = wordModelArray
@@ -129,7 +131,7 @@ class YXExerciseOptionManager: NSObject {
                     whiteList.append(wordModel.wordId)
                     // 移除已经随机过的对象
                     tmpWordModelArray.remove(at: randomInt)
-                    if items.count > 2 {
+                    if items.count > itemCount - 2 {
                         break
                     }
                 }
