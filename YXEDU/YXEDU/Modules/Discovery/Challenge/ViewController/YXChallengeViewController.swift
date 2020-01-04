@@ -78,6 +78,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        return
 //        let vc = YXShareViewController()
 //        vc.gameModel = YXGameResultModel()
+//        vc.shareType = .aiReviewReuslt
 //        vc.hidesBottomBarWhenPushed = true
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        return

@@ -37,7 +37,8 @@
         calendarView.headerHeight                     = 0.f;
         calendarView.scrollDirection                  = FSCalendarScrollDirectionHorizontal;
         calendarView.backgroundColor                  = UIColor.whiteColor;
-        calendarView.appearance.weekdayTextColor      = UIColorOfHex(0xDCDCDC);
+        calendarView.appearance.weekdayTextColor      = UIColorOfHex(0xC0C0C0);
+        calendarView.appearance.weekdayFont           = [UIFont mediumFontOfSize:12];
         calendarView.appearance.titleDefaultColor     = UIColorOfHex(0x323232);
         calendarView.appearance.titleTodayColor       = UIColorOfHex(0xFBA217);
         calendarView.appearance.todayColor            = UIColor.clearColor;

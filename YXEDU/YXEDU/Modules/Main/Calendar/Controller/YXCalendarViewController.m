@@ -107,12 +107,11 @@ static CGFloat const kPickViewHeight = 272.f;
     _dayData = dayData;
     if (dayData == nil) {
         [self showNoNetWorkView];
-
-    } else if (dayData.learning_data.study_times == 0) {
-        [self showNoResultsView];
-    } else {
+    } else if (dayData.learning_data.review_words.count > 0 || dayData.learning_data.study_words.count > 0) {
         [self showTableView];
         [self.tableView reloadData];
+    } else {
+        [self showNoResultsView];
     }
 }
 
@@ -536,6 +535,7 @@ static CGFloat const kPickViewHeight = 272.f;
         }else {
             self.dayData = nil;
         }
+        [self.tableView reloadData];
     }];
 }
 
@@ -830,7 +830,7 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 - (NSDate *)maximumDateForCalendar:(FSCalendar *)calendar {
-    return [NSDate new];
+    return [[NSDate new] lastdayOfMonth];
 }
 
 #pragma mark - FSCalendarDelegateAppearance
