@@ -10,10 +10,20 @@ import UIKit
 
 
 class YXSearchTableHeaderView: YXView {
+    
+    var removeEvent: (() -> Void)?
+    
     var historyLabel = UILabel()
+    var removeButton = BiggerClickAreaButton()
+    
+    deinit {
+        removeButton.removeTarget(self, action: #selector(clickRemoveButton), for: .touchUpInside)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
+        self.bindProperty()
     }
     
     required init?(coder: NSCoder) {
@@ -22,16 +32,38 @@ class YXSearchTableHeaderView: YXView {
     
     override func createSubviews() {
         self.addSubview(historyLabel)
+        self.addSubview(removeButton)
+    }
+    
+    override func layoutSubviews() {
         historyLabel.snp.makeConstraints { (make) in
             make.top.equalTo(15)
             make.left.equalTo(22)
             make.height.equalTo(18)
             make.width.equalTo(53)
         }
+        
+        removeButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(historyLabel)
+            make.right.equalTo(AS(-25))
+            make.width.equalTo(AS(125))
+            make.height.equalTo(AS(13))
+        }
+    }
+    
+    override func bindProperty() {
         historyLabel.text = "历史搜索"
         historyLabel.textColor = UIColor.black3
         historyLabel.font = UIFont.mediumFont(ofSize: 13)
+        
+        removeButton.setImage(UIImage(named: "search_remove"), for: .normal)
+        removeButton.addTarget(self, action: #selector(clickRemoveButton), for: .touchUpInside)
     }
+    
+    @objc private func clickRemoveButton() {
+        self.removeEvent?()
+    }
+    
 }
 
 class YXSearchEmptyDataView: YXView {
@@ -73,6 +105,8 @@ class YXSearchEmptyDataView: YXView {
             make.height.equalTo(17)
         }
     }
+    
+    
 }
 
 

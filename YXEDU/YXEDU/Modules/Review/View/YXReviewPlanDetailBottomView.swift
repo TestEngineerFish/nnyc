@@ -91,6 +91,9 @@ class YXReviewPlanDetailBottomView: YXView {
     }
     
     override func bindProperty() {
+        self.backgroundColor = UIColor.white
+        self.layer.setDefaultShadow(radius: AS(0))
+        
         listenButton.layer.masksToBounds = true
         listenButton.layer.cornerRadius = AS(21)
         listenButton.layer.borderColor = UIColor.black6.cgColor

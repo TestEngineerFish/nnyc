@@ -134,11 +134,11 @@ import UIKit
     
     /** 左边的返回按钮 */
     @objc public lazy var leftButton: UIButton = {
-        let backButton = UIButton(frame: CGRect(x: 6, y: 9, width: 40, height: 26))
-        backButton.setTitleColor(UIColor.black2, for: .normal)
-        backButton.setTitleColor(UIColor.black2.withAlphaComponent(0.3), for: .highlighted)
+        let backButton = UIButton(frame: CGRect(x: 16, y: 9, width: 40, height: 26))
+        backButton.setTitleColor(UIColor.black1, for: .normal)
+        backButton.setTitleColor(UIColor.black3, for: .highlighted)
         backButton.setTitle(kIconFont_back, for: .normal)
-        backButton.titleLabel?.font = UIFont.iconfont(size: 22)
+        backButton.titleLabel?.font = UIFont.iconfont(size: 18)
         backButton.contentHorizontalAlignment = .left
         backButton.addTarget(self, action: #selector(backViewController), for: .touchUpInside)
         

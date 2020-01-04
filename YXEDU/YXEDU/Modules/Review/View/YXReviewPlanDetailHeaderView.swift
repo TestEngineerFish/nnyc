@@ -134,7 +134,7 @@ class YXReviewPlanDetailHeaderView: YXView {
     
     override func bindProperty() {
         bgView.backgroundColor = UIColor.white
-        bgView.layer.setDefaultShadow(radius: AS(4))
+        bgView.layer.setDefaultShadow(radius: AS(6))
         
         titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
         titleLabel.textColor = UIColor.black1

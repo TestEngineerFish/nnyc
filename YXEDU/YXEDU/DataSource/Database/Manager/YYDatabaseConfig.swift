@@ -298,5 +298,9 @@ extension YYSQLManager {
             insert or replace into search_history_table(word_id) values(?)
         """
         
+        case deleteWord =
+        """
+            delete from search_history_table
+        """
     }
 }

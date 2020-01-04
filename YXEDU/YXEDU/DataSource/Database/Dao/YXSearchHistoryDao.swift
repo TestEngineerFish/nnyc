@@ -17,4 +17,7 @@ protocol YXSearchHistoryDao {
     /// 查询单词
     /// - Parameter wordId: 单词 id
     func selectWord() -> [YXSearchWordModel]
+    
+    /// 删除所有的历史单词
+    func deleteAllWord() -> Bool
 }

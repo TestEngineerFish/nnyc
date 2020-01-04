@@ -153,8 +153,8 @@ class YXShareCordeView: UIView {
             make.size.equalTo(contentView.size)
         }
         closeButton.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(AdaptSize(-2))
-            make.top.equalToSuperview().offset(AdaptSize(2))
+            make.right.equalToSuperview().offset(AdaptSize(-8))
+            make.top.equalToSuperview().offset(AdaptSize(8))
             make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
         }
         codeBackgroundView.snp.makeConstraints { (make) in
@@ -184,7 +184,7 @@ class YXShareCordeView: UIView {
             make.size.equalTo(CGSize(width: AdaptSize(83), height: AdaptSize(1)))
         }
         rightLine.snp.makeConstraints { (make) in
-            make.left.equalTo(shareLabel.snp.right).offset(AdaptSize(-25))
+            make.left.equalTo(shareLabel.snp.right).offset(AdaptSize(25))
             make.centerY.equalTo(shareLabel)
             make.size.equalTo(CGSize(width: AdaptSize(83), height: AdaptSize(1)))
         }

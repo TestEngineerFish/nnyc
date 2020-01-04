@@ -55,6 +55,17 @@ class YXSearchViewController: YXTableViewController {
         searchView.searchEvent = { [weak self] (text) in
             self?.fetchData(text: text)
         }
+        
+        tableHeaderView.removeEvent = {
+            let alertView = YXAlertView()
+            alertView.titleLabel.text = "确定要清空搜索记录吗？"
+            alertView.leftButton.setTitle("清空", for: .normal)
+            alertView.rightOrCenterButton.setTitle("取消", for: .normal)
+            alertView.doneClosure = { (text) in
+                
+            }
+            alertView.show()
+        }
     }
     
     

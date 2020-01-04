@@ -65,5 +65,8 @@ class YXSearchHistoryDaoImpl: YYDatabase, YXSearchHistoryDao {
         return words
     }
     
-    
+    func deleteAllWord() -> Bool {
+        let sql = YYSQLManager.SearchHistory.deleteWord.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])
+    }
 }
