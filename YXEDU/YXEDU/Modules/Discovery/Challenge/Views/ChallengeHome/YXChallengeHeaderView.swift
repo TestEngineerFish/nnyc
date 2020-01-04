@@ -23,6 +23,21 @@ class YXChallengeHeaderView: UIView {
         label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
         return label
     }()
+    var leftGoldImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "challengeGoldIcon")
+        return imageView
+    }()
+    var centerGoldImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "challengeGoldIcon")
+        return imageView
+    }()
+    var rightGoldImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "challengeGoldIcon")
+        return imageView
+    }()
 
     var propertyView  = YXChallengePropertyView()
 
@@ -49,6 +64,13 @@ class YXChallengeHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setSubviews()
+        self.startLeftGoldAnimation()
+        self.startCenterGoldAnimation()
+        self.startRightGoldAnimation()
+    }
+
+    deinit {
+        self.stopGoldAnimation()
     }
 
     required init?(coder: NSCoder) {
@@ -69,6 +91,9 @@ class YXChallengeHeaderView: UIView {
         self.addSubview(startButton)
         self.addSubview(previousRankButton)
         self.addSubview(gameRuleButton)
+        self.addSubview(leftGoldImageView)
+        self.addSubview(centerGoldImageView)
+        self.addSubview(rightGoldImageView)
 
         backgroundImage.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
@@ -109,14 +134,57 @@ class YXChallengeHeaderView: UIView {
             make.top.equalTo(startButton.snp.bottom).offset(AdaptSize(8))
             make.size.equalTo(CGSize(width: AdaptSize(73), height: AdaptSize(17)))
         }
+        leftGoldImageView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(50))
+            make.top.equalToSuperview().offset(AdaptSize(-55))
+            make.size.equalTo(CGSize(width: AdaptSize(55), height: AdaptSize(55)))
+        }
+        centerGoldImageView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(-22))
+            make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
+        }
+        rightGoldImageView.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().offset(AdaptSize(-50))
+            make.top.equalToSuperview().offset(AdaptSize(-55))
+            make.size.equalTo(CGSize(width: AdaptSize(55), height: AdaptSize(55)))
+        }
     }
 
     // MARK: ==== Animation ====
-    private func startGoldAnimation() {
+    private func startLeftGoldAnimation() {
+        let animation = CABasicAnimation(keyPath: "position.y")
+        animation.duration = 1
+        animation.toValue  = AdaptSize(360)
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.autoreverses = false
+        animation.repeatCount = MAXFLOAT
+        self.leftGoldImageView.layer.add(animation, forKey: nil)
+    }
 
+    private func startCenterGoldAnimation() {
+        let animation = CABasicAnimation(keyPath: "position.y")
+        animation.duration = 1.5
+        animation.toValue  = AdaptSize(330)
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.autoreverses = false
+        animation.repeatCount = MAXFLOAT
+        self.centerGoldImageView.layer.add(animation, forKey: nil)
+    }
+
+    private func startRightGoldAnimation() {
+        let animation = CABasicAnimation(keyPath: "position.y")
+        animation.duration = 1.2
+        animation.toValue  = AdaptSize(360)
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.autoreverses = false
+        animation.repeatCount = MAXFLOAT
+        self.rightGoldImageView.layer.add(animation, forKey: nil)
     }
 
     private func stopGoldAnimation() {
-        
+        self.leftGoldImageView.layer.removeAllAnimations()
+        self.centerGoldImageView.layer.removeAllAnimations()
+        self.rightGoldImageView.layer.removeAllAnimations()
     }
 }

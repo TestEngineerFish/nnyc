@@ -53,13 +53,13 @@ class YXExerciseOptionManager: NSObject {
         var exerciseModel = exercise
         var items         = [YXOptionItemModel]()
         // 提高查找速度,拿空间换时间
-        var whiteList = [Int?]()
+        var whiteList = [String?]()
 
-        guard let currentWordId = exerciseModel.word?.wordId else {
+        guard let wordModel = exerciseModel.word, let currentWordId = exerciseModel.word?.wordId else {
             return nil
         }
         // 从新学单词获取数据
-        whiteList.append(currentWordId)
+        whiteList.append(wordModel.word)
         let otherNewWordArray = self.otherNewWordArray(wordId: currentWordId)
         for _wordExerciseModel in otherNewWordArray {
             guard let wordModel = _wordExerciseModel.word else {
@@ -67,7 +67,7 @@ class YXExerciseOptionManager: NSObject {
             }
             let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
             items.append(itemModel)
-            whiteList.append(wordModel.wordId)
+            whiteList.append(wordModel.word)
             if items.count > itemCount - 2 {
                 break
             }
@@ -83,11 +83,11 @@ class YXExerciseOptionManager: NSObject {
                 guard let wordModel = _wordExerciseModel.word else {
                     continue
                 }
-                if !whiteList.contains(wordModel.wordId) {
+                if !whiteList.contains(wordModel.word) {
                     let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
                     items.append(itemModel)
                 }
-                whiteList.append(wordModel.wordId)
+                whiteList.append(wordModel.word)
                 // 移除已经随机过的对象
                 tmpReviewWordArray.remove(at: randomInt)
                 if items.count > itemCount - 2 {
@@ -103,11 +103,11 @@ class YXExerciseOptionManager: NSObject {
                 for _ in 0..<wordModelArray.count {
                     let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
                     let wordModel = tmpWordModelArray[randomInt]
-                    if !whiteList.contains(wordModel.wordId) {
+                    if !whiteList.contains(wordModel.word) {
                         let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
                         items.append(itemModel)
                     }
-                    whiteList.append(wordModel.wordId)
+                    whiteList.append(wordModel.word)
                     // 移除已经随机过的对象
                     tmpWordModelArray.remove(at: randomInt)
                     if items.count > itemCount - 2 {
@@ -124,11 +124,11 @@ class YXExerciseOptionManager: NSObject {
                 for _ in 0..<wordModelArray.count {
                     let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
                     let wordModel = tmpWordModelArray[randomInt]
-                    if !whiteList.contains(wordModel.wordId) {
+                    if !whiteList.contains(wordModel.word) {
                         let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
                         items.append(itemModel)
                     }
-                    whiteList.append(wordModel.wordId)
+                    whiteList.append(wordModel.word)
                     // 移除已经随机过的对象
                     tmpWordModelArray.remove(at: randomInt)
                     if items.count > itemCount - 2 {

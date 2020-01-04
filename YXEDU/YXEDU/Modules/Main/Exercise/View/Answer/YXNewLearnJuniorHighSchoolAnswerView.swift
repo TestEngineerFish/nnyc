@@ -18,6 +18,8 @@ class YXNewLearnJuniorHighSchool: YXBaseAnswerView {
         unknownButton.backgroundColor      = UIColor.white
         masteredButton.layer.cornerRadius  = defaultH/2
         unknownButton.layer.cornerRadius   = defaultH/2
+        masteredButton.layer.borderWidth   = AdaptSize(1)
+        unknownButton.layer.borderWidth    = AdaptSize(1)
         masteredButton.layer.borderColor   = UIColor.black6.cgColor
         unknownButton.layer.borderColor    = UIColor.black6.cgColor
         masteredButton.layer.masksToBounds = true

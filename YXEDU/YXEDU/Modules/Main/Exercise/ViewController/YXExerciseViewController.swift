@@ -99,7 +99,7 @@
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.height.equalTo(YXExerciseConfig.exerciseViewBottom)
-            make.bottom.equalTo(YXExerciseConfig.bottomViewBottom)
+            make.bottom.equalToSuperview()
         }
     }
     

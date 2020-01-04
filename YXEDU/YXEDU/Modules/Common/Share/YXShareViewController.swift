@@ -288,6 +288,7 @@ class YXShareViewController: YXViewController {
                 alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
                 alertView.shouldOnlyShowOneButton = true
                 alertView.show()
+                self.goldImageView.isHidden = true
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")
@@ -666,5 +667,12 @@ class YXShareViewController: YXViewController {
             return nil
         }
         return shareImage
+    }
+
+    // MARK: ==== Animation ====
+    private func startGoldAnimation() {
+//        let animation = CAKeyframeAnimation(keyPath: "postion.y")
+//        animation.values = []
+
     }
 }
