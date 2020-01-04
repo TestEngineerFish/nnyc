@@ -233,12 +233,11 @@
  **/
 -(NSString *)getMinuteFromSecond {
     NSInteger seconds = [self integerValue];
-    //format of minute
-    NSString *str_minute = [NSString stringWithFormat:@"%02d",(seconds%3600)/60];
-    // 向上取整
+    NSInteger minute = seconds/60;
     if (seconds % 60 > 0) {
-        str_minute = [NSString stringWithFormat:@"%02d",str_minute.integerValue + 1];
+        minute++;
     }
+    NSString *str_minute = [NSString stringWithFormat:@"%ld",minute];
     return str_minute;
 }
 
@@ -248,7 +247,7 @@
 -(NSString *)getHourFromSecond {
     NSInteger seconds = [self integerValue];
     //format of hour
-    NSString *str_hour = [NSString stringWithFormat:@"%02d",seconds/3600];
+    NSString *str_hour = [NSString stringWithFormat:@"%ld",seconds/3600];
     return str_hour;
 }
 
