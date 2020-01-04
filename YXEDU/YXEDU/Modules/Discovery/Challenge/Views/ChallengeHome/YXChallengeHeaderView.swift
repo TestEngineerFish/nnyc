@@ -110,4 +110,13 @@ class YXChallengeHeaderView: UIView {
             make.size.equalTo(CGSize(width: AdaptSize(73), height: AdaptSize(17)))
         }
     }
+
+    // MARK: ==== Animation ====
+    private func startGoldAnimation() {
+
+    }
+
+    private func stopGoldAnimation() {
+        
+    }
 }
