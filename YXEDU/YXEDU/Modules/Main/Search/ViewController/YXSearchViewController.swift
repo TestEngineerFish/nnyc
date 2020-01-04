@@ -27,51 +27,51 @@ class YXSearchViewController: YXTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.customNavigationBar?.isHidden = true
-        self.isHideRefresh = true
-        
-        self.configHeaderView()
-        self.configTableView()
+        self.createSubviews()
+        self.bingProperty()
         self.loadHistoryData()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    func createSubviews() {
         
-        tableHeaderView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 41)
         
+        self.view.addSubview(searchView)
         searchView.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
-            make.height.equalTo(86 + kSafeBottomMargin)
+            make.height.equalTo(AS(86 + kSafeBottomMargin))
         }
-        tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(searchView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
-        }
+//        tableView.snp.makeConstraints { (make) in
+//            make.top.equalTo(searchView.snp.bottom)
+//            make.left.right.bottom.equalToSuperview()
+//        }
+        
+        tableHeaderView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: AS(41))
+        tableView.frame = CGRect(x: 0, y: AS(86 + kSafeBottomMargin), width: screenWidth, height: screenHeight - AS(86 + kSafeBottomMargin))
     }
     
-    func configHeaderView() {
-        self.view.addSubview(searchView)
+    func bingProperty() {
+        self.customNavigationBar?.isHidden = true
+        self.isHideRefresh = true
+        
+        
         searchView.searchEvent = { [weak self] (text) in
             self?.fetchData(text: text)
         }
         
-        tableHeaderView.removeEvent = {
-            let alertView = YXAlertView()
-            alertView.titleLabel.text = "确定要清空搜索记录吗？"
-            alertView.leftButton.setTitle("清空", for: .normal)
-            alertView.rightOrCenterButton.setTitle("取消", for: .normal)
-            alertView.doneClosure = { (text) in
-                
+        tableHeaderView.removeEvent = { [weak self] in
+            self?.searchView.searchTextFeild.resignFirstResponder()
+            
+            let alertView = YXHistorySearchRemoveAlertView()
+            alertView.removeEvent = {
+                let _ = self?.dao.deleteAllWord()
+                self?.loadHistoryData()
             }
             alertView.show()
         }
-    }
-    
-    
-    func configTableView() {
+        
         self.tableView.register(YXSearchTableViewCell.classForCoder(), forCellReuseIdentifier: "YXSearchTableViewCell")
     }
+    
     
     func fetchData(text: String) {
         if text.count == 0 {
@@ -150,12 +150,12 @@ extension YXSearchViewController {
     func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
         emptyDataView.snp.makeConstraints { (make) in
             make.width.equalTo(screenWidth)
-            make.height.equalTo(299)
+            make.height.equalTo(AS(299))
         }
         return emptyDataView
     }
     
     override func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
-        return -(tableView.height - 299) / 2 + 37
+        return -(tableView.height - AS(299)) / 2 + AS(37)
     }
 }

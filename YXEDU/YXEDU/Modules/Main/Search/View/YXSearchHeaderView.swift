@@ -36,22 +36,22 @@ class YXSearchHeaderView: YXView {
     }
     
     override func bindProperty() {
-        self.backgroundColor = UIColor.gradientColor(with: CGSize(width: screenWidth, height: 86), colors: [UIColor.hex(0xFFC671), UIColor.hex(0xFFA83E)], direction: .leftTop)
+        self.backgroundColor = UIColor.gradientColor(with: CGSize(width: screenWidth, height: AS(86)), colors: [UIColor.hex(0xFFC671), UIColor.hex(0xFFA83E)], direction: .leftTop)
         
         cancelButton.setTitle("取消", for: .normal)
-        cancelButton.titleLabel?.font = UIFont.regularFont(ofSize: 14)
+        cancelButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
         cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.addTarget(self, action: #selector(clickCancelButton), for: .touchUpInside)
         
         searchTextFeild.backgroundColor = UIColor.white
         searchTextFeild.layer.masksToBounds = true
-        searchTextFeild.layer.cornerRadius = 17
+        searchTextFeild.layer.cornerRadius = AS(17)
         searchTextFeild.addTarget(self, action: #selector(didSearchTextFeildChanged), for: .editingChanged)
         searchTextFeild.placeholder = "请输入要查询的单词和中文"
         searchTextFeild.textColor = UIColor.black1
-        searchTextFeild.font = UIFont.regularFont(ofSize: 15)
+        searchTextFeild.font = UIFont.regularFont(ofSize: AS(15))
         searchTextFeild.clearButtonMode = .always
-        searchTextFeild.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 0))
+        searchTextFeild.leftView = UIView(frame: CGRect(x: 0, y: 0, width: AS(20), height: 0))
         searchTextFeild.leftViewMode = .always
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
@@ -65,16 +65,16 @@ class YXSearchHeaderView: YXView {
         super.layoutSubviews()
         
         searchTextFeild.snp.makeConstraints { (make) in
-            make.left.equalTo(20)
-            make.right.equalTo(-71)
-            make.height.equalTo(34)
-            make.bottom.equalTo(-17)
+            make.left.equalTo(AS(20))
+            make.right.equalTo(AS(-71))
+            make.height.equalTo(AS(34))
+            make.bottom.equalTo(AS(-17))
         }
         
         cancelButton.snp.makeConstraints { (make) in
             make.centerY.height.equalTo(searchTextFeild)
-            make.left.equalTo(searchTextFeild.snp.right).offset(5)
-            make.right.equalTo(-5)
+            make.left.equalTo(searchTextFeild.snp.right).offset(AS(5))
+            make.right.equalTo(AS(-5))
         }
     }
     

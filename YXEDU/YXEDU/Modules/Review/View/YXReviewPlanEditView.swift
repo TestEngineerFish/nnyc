@@ -206,9 +206,9 @@ class YXReviewPlanRemoveView: YXTopWindowView {
        
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(AS(31))
-            make.centerX.equalToSuperview()
-            make.width.equalTo(AS(181))
-            make.height.equalTo(AS(42))
+            make.left.equalTo(AS(16))
+            make.right.equalTo(AS(-16))
+            make.height.equalTo(AS(44))
         }
         
         removeButton.snp.makeConstraints { (make) in

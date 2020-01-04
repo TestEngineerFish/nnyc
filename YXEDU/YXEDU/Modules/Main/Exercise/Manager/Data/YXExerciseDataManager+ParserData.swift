@@ -80,8 +80,7 @@ extension YXExerciseDataManager {
                 if exercise.step < currentTurnIndex + 1 {
                     currentTurnIndex = exercise.step - 1
                 }
-                                                
-                
+                                                                
                 if exercise.type == .connectionWordAndImage || exercise.type == .connectionWordAndChinese {
                     for option in exercise.option?.firstItems ?? [] {
                         exercise.word = fetchWord(wordId: option.optionId)
@@ -89,15 +88,6 @@ extension YXExerciseDataManager {
                     }
                 } else {
                     exercise.word = fetchWord(wordId: subStep.question?.wordId ?? 0)
-                    
-                    if (exercise.type != .fillWordGroup
-                        && exercise.type != .fillWordAccordingToImage
-                        && exercise.type != .fillWordAccordingToListen
-                        && exercise.type != .fillWordAccordingToChinese
-                        && exercise.type != .fillWordAccordingToChinese_Connection) {
-//                        exercise.question = createQuestionModel(word: exercise.word)
-                    }
-                    
                     self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)
                 }
             }
