@@ -27,8 +27,8 @@ class YXReviewResultViewController: YXViewController {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
         
-        let resultView = YXReviewResultView(type: type)
-        resultView.model = model
+        let resultView = YXReviewResultView(type: type, model: model)
+//        resultView.model = model
         self.view.addSubview(resultView)
         resultView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()

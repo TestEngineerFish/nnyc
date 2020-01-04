@@ -26,16 +26,14 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
 
         rightButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview()
-            make.height.equalTo(AdaptSize(42))
-            make.width.equalTo(AdaptSize(154))
+            make.right.equalTo(self.snp.centerX).offset(AS(-19))
+            make.height.width.equalTo(AdaptSize(110))
         }
         
         wrongButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(42))
-            make.width.equalTo(AdaptSize(154))
+            make.left.equalTo(rightButton.snp.right).offset(AS(36))
+            make.height.width.equalTo(AdaptSize(110))
         }
     }
     
@@ -45,8 +43,10 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
         self.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .selected)
         self.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .highlighted)
         self.rightButton.setImage(UIImage(named: "exercise_answer_right"), for: .normal)
+        self.rightButton.setImage(UIImage(named: "exercise_answer_right_sel"), for: .selected)
+        self.rightButton.setImage(UIImage(named: "exercise_answer_right_sel"), for: .highlighted)
         self.rightButton.layer.masksToBounds = true
-        self.rightButton.layer.cornerRadius = 21
+        self.rightButton.layer.cornerRadius = AS(23.5)
         self.rightButton.layer.borderWidth = 1
         self.rightButton.layer.borderColor = UIColor.black6.cgColor
 
@@ -56,8 +56,10 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
         self.wrongButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .selected)
         self.wrongButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .highlighted)
         self.wrongButton.setImage(UIImage(named: "exercise_answer_wrong"), for: .normal)
+        self.wrongButton.setImage(UIImage(named: "exercise_answer_wrong_sel"), for: .selected)
+        self.wrongButton.setImage(UIImage(named: "exercise_answer_wrong_sel"), for: .highlighted)
         self.wrongButton.layer.masksToBounds = true
-        self.wrongButton.layer.cornerRadius = 21
+        self.wrongButton.layer.cornerRadius = AS(23.5)
         self.wrongButton.layer.borderWidth = 1
         self.wrongButton.layer.borderColor = UIColor.black6.cgColor
     }

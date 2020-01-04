@@ -44,7 +44,7 @@ extension YYBaseRequest {
                        "NNYC-REQUESTTIME" : YXConfigure.shared()?.time ?? "",
                        "NNYC-PLATFORM" : kPlatformValue,
                        "NNYC-VERSION" : UIDevice().appVersion()?.replacingOccurrences(of: ".", with: "") ?? "",
-                       "NNYC-VERSION_NAME" : UIDevice().appVersion() ?? ""]
+                       "NNYC-VERSION-NAME" : UIDevice().appVersion() ?? ""]
         
         return _header
     }

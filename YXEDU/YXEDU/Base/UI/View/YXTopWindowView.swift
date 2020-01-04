@@ -25,7 +25,10 @@ class YXTopWindowView: YXView {
     
     var closeEvent: (() -> Void)?
     
-    var weightType: Int = YXAlertWeightType.stopService
+    // 是否允许关闭窗口，默认 true，强制更新时，不能关闭窗口
+    var shouldClose: Bool = true
+    
+//    var weightType: Int = YXAlertWeightType.stopService
     var mainView = UIView()
     
     override init(frame: CGRect) {

@@ -167,7 +167,7 @@ class YXReviewPlanRemoveView: YXTopWindowView {
                         
         
         titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = UIColor.black1
         titleLabel.text = "该复习计划删除后无法恢复\n是否确认删除？"
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0

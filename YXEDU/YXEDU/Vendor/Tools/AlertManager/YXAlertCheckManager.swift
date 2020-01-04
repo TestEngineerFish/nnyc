@@ -63,6 +63,7 @@ class YXAlertCheckManager {
                     YYCache.set(appVersion, forKey: key)
                     alertView.tag = YXAlertWeightType.recommendUpdateVersion
                 } else if versionModel.state == .force {
+                    alertView.shouldClose = false
                     alertView.shouldOnlyShowOneButton = true
                     alertView.tag = YXAlertWeightType.updateVersion
                 }

@@ -69,14 +69,16 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
     
     @IBAction func done(_ sender: UIButton) {
         UIView.animate(withDuration: 0.2, animations: {
-            self.contentView.alpha = 0
+            self.contentView.alpha = self.shouldClose ? 0 : 1
         }, completion: { completed in
             var text = self.textField.text
             if text?.trimed.isEmpty ?? false {
                 text = self.textField.placeholder
             }
             self.doneClosure?(text)
-            self.removeFromSuperview()
+            if self.shouldClose { // 是否允许关闭窗口，默认 true
+                self.removeFromSuperview()
+            }
         })
     }
     

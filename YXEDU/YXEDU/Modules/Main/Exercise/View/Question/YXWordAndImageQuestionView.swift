@@ -17,7 +17,6 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
         
         self.initImageView()
         self.initTitleLabel()
-        self.initSubTitleLabel()
         self.initAudioPlayerView()
     }
     
@@ -25,25 +24,12 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        imageView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(38)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(130)
-            make.height.equalTo(94)
-        })
-        
         let titleWidth = self.exerciseModel.question?.word?.textWidth(font: titleLabel!.font, height: 28) ?? 0
         titleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(imageView!.snp.bottom).offset(12)
+            make.top.equalTo(24)
             make.centerX.equalToSuperview()
             make.width.equalTo(titleWidth)
             make.height.equalTo(28)
-        })
-        
-        subTitleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(titleLabel!.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(20)
         })
         
         audioPlayerView?.snp.makeConstraints({ (make) in
@@ -51,12 +37,19 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
             make.left.equalTo(titleLabel!.snp.right).offset(3)
             make.width.height.equalTo(22)
         })
+        
+        imageView?.snp.makeConstraints({ (make) in
+            make.top.equalTo(titleLabel!.snp.bottom).offset(28)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(130)
+            make.height.equalTo(94)
+        })
+        
     }
     
     override func bindData() {
         let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
         self.titleLabel?.text    = word
-        self.subTitleLabel?.text = exerciseModel.word?.soundmark
         
         if let url = self.exerciseModel.word?.imageUrl {
             self.imageView?.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))

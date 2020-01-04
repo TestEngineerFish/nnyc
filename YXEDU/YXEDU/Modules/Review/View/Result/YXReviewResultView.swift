@@ -33,21 +33,21 @@ class YXReviewResultView: YXTopWindowView {
     
     var closeButton = UIButton()
     
-    var model: YXReviewResultModel? {
-        didSet { bindData() }
-    }
+    private var model: YXReviewResultModel?
     
     deinit {
         shareButton.removeTarget(self, action: #selector(clickShareButton), for: .touchUpInside)
         closeButton.removeTarget(self, action: #selector(clickCloseButton), for: .touchUpInside)
     }
     
-    init(type: YXExerciseDataType) {
+    init(type: YXExerciseDataType, model: YXReviewResultModel?) {
         super.init(frame: .zero)
         self.type = type
+        self.model = model
         
         self.createSubviews()
         self.bindProperty()
+        self.bindData()
     }
     
 
@@ -201,8 +201,8 @@ class YXReviewResultView: YXTopWindowView {
     
         
         tableView.snp.remakeConstraints { (make) in
-            make.top.equalTo(subTitleLable2.snp.bottom).offset(14)
-            make.left.equalTo(29)
+            make.top.equalTo(subTitleLable2.snp.bottom).offset(AS(14))
+            make.left.equalTo(AS(29))
             make.right.equalTo(AS(-29))
         }
         
@@ -278,7 +278,7 @@ class YXReviewResultView: YXTopWindowView {
         
         starView.count = model?.score ?? 0
         
-        self.layoutSubviews()
+//        self.layoutSubviews()
     }
     
     @objc func clickShareButton() {

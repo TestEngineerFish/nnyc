@@ -190,7 +190,11 @@ class YXReviewLearningProgressView: YXTopWindowView {
             let score = CGFloat(self.model?.score ?? 0)
             self.progressView.progress = score / 100.0
         }
-                        
+        
+        pointLabel1.isHidden = true
+        pointLabel2.isHidden = true
+        pointLabel3.isHidden = true
+        
         titleLabel.attributedText = attrString()
         
         if let num = model?.allWordNum, num > 0 {
