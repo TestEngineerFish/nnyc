@@ -10,8 +10,6 @@ import UIKit
 
 /// 看例句选中文
 class YXLookExampleChooseChineseExerciseView: YXBaseExerciseView {
-
-    private let answerHeight: CGFloat = 42 * 4 + 13 * 3
     
     override func createSubview() {
         questionView = YXExampleQuestionView(exerciseModel: exerciseModel)

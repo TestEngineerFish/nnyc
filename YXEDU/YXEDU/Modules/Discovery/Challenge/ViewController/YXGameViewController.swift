@@ -121,7 +121,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
                         shareVC.shareType   = .challengeResult
                         shareVC.gameModel   = model
                         shareVC.hidesBottomBarWhenPushed = true
-                        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+                        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: false)
                     }
                 }
             } else {

@@ -37,7 +37,7 @@
 - (UIView *)signView {
     if (!_signView) {
         UIView *signView = [[UIView alloc] init];
-        signView.backgroundColor    = UIColorOfHex(0x9BB0C6);
+        signView.backgroundColor    = UIColorOfHex(0x888888);
         signView.layer.cornerRadius = AdaptSize(2);
         [self addSubview:signView];
         [signView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -54,8 +54,8 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         UILabel *titleLable = [[UILabel alloc] init];
-        titleLable.font = [UIFont systemFontOfSize:AdaptSize(14)];
-        titleLable.textColor = UIColorOfHex(0x9BB0C6);
+        titleLable.font = [UIFont systemFontOfSize:AdaptSize(12)];
+        titleLable.textColor = UIColorOfHex(0x888888);
         titleLable.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:titleLable];
         [titleLable mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -71,8 +71,8 @@
 - (UILabel *)valueLabel {
     if (!_valueLabel) {
         UILabel *valueLable = [[UILabel alloc] init];
-        valueLable.font          = [UIFont systemFontOfSize:AdaptSize(14)];
-        valueLable.textColor     = UIColorOfHex(0x9BB0C6);
+        valueLable.font          = [UIFont systemFontOfSize:AdaptSize(12)];
+        valueLable.textColor     = UIColorOfHex(0x888888);
         valueLable.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:valueLable];
         [valueLable mas_makeConstraints:^(MASConstraintMaker *make) {

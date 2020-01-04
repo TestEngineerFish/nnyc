@@ -12,7 +12,7 @@ class YXChallengeRankCell: UITableViewCell {
 
     var bgContentView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.hex(0xF4EEE2)
+        view.backgroundColor = UIColor.clear
         return view
     }()
 

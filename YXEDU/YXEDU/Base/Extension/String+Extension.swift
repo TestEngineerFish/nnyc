@@ -198,6 +198,42 @@ public extension String {
         }
         return rangeList
     }
+
+    /// 格式化标签: @@ 和 <font></font>
+    /// - Parameter isHollow: 是否挖空内容
+    /// - returns: (匹配的范围,结果内容)
+    func formartTag(isHollow: Bool = false) -> ([NSRange], String) {
+        var newExample     = self
+        var newRangeList   = [NSRange]()
+        var examplePattern = ""
+        var wordPattern    = ""
+
+        if self.contains("@") {
+            examplePattern = "@[^*]+?@"
+            wordPattern    = "@"
+        } else {
+            examplePattern = "<font[^*]+?font>"
+            wordPattern    = "<[^>]*>"
+        }
+        ///1、提取
+        let htmlRangeList = self.textRegex(pattern: examplePattern)
+        ///2、剔除标签
+        for (index, range) in htmlRangeList.enumerated() {
+            let htmlStr = self.substring(fromIndex: range.location, length: range.length)
+            var word = htmlStr.pregReplace(pattern: wordPattern, with: "")
+            var offset = 0
+            if index > 0 {
+                offset = self.count - newExample.count
+            }
+            ///3、替换原内容
+            if isHollow {
+                word = "____"
+            }
+            newExample = newExample.pregReplace(pattern: htmlStr, with: word)
+            newRangeList.append(NSRange(location: range.location - offset, length: word.count))
+        }
+        return (newRangeList, newExample)
+    }
 }
 
 

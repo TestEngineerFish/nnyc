@@ -120,7 +120,7 @@ class YXGameResultView: UIView {
         mAttrRanking.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(12))], range: NSRange(location: questionStr.count - 1, length: 1))
         questionLabel.attributedText = mAttrRanking
 
-        let timeStr = String(format: "%0.2f秒", model.consumeTime)
+        let timeStr = String(format: "%0.2f秒", Float(model.consumeTime) / 1000)
         let mAttrTime = NSMutableAttributedString(string:timeStr, attributes: [NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(24)), NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11)])
         mAttrTime.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(12))], range: NSRange(location: timeStr.count - 1, length: 1))
         timeLabel.attributedText = mAttrTime
@@ -141,13 +141,13 @@ class YXGameResultView: UIView {
             make.edges.equalToSuperview()
         }
         resultImageView.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(328), height: AdaptSize(464)))
-            make.top.equalToSuperview().offset(AdaptSize(41))
+            make.size.equalTo(CGSize(width: AdaptSize(375), height: AdaptSize(485)))
+            make.top.equalToSuperview().offset(AdaptSize(24))
             make.centerX.equalToSuperview()
         }
         avatarImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(200))
+            make.top.equalToSuperview().offset(AdaptSize(217))
             make.size.equalTo(CGSize(width: AdaptSize(47), height: AdaptSize(47)))
         }
         rankingTitleLabel.snp.makeConstraints { (make) in
@@ -203,18 +203,18 @@ class YXGameResultView: UIView {
             make.edges.equalToSuperview()
         }
         resultImageView.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(298), height: AdaptSize(415)))
-            make.top.equalToSuperview().offset(AdaptSize(90))
+            make.size.equalTo(CGSize(width: AdaptSize(358), height: AdaptSize(498)))
+            make.top.equalToSuperview().offset(AdaptSize(50))
             make.centerX.equalToSuperview()
         }
         closeButton.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(AdaptSize(-140))
-            make.size.equalTo(CGSize(width: AdaptSize(136), height: AdaptSize(36)))
+            make.bottom.equalToSuperview().offset(AdaptSize(-171))
+            make.size.equalTo(CGSize(width: AdaptSize(190), height: AdaptSize(50)))
             make.centerX.equalToSuperview()
         }
         descriptionLabel.sizeToFit()
         descriptionLabel.snp.makeConstraints { (make) in
-            make.bottom.equalTo(closeButton.snp.top).offset(AdaptSize(-35))
+            make.bottom.equalTo(closeButton.snp.top).offset(AdaptSize(-33))
             make.size.equalTo(descriptionLabel.size)
             make.centerX.equalToSuperview()
         }
