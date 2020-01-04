@@ -132,7 +132,10 @@ class YXLearningResultViewController: UIViewController {
             return
         }
         let request = YXExerciseRequest.learnResult(bookId: bookId, unitId: unitId)
-        YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else {
+                return
+            }
             // 如果后台还在计算,则重新请求
             if response.data?.countStatus == .some(.ing) {
                 // 如果请求次数超过五次,则退出

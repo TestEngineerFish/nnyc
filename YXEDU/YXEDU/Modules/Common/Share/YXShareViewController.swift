@@ -133,8 +133,7 @@ class YXShareViewController: YXViewController {
         label.textAlignment = .center
         return label
     }()
-    
-    var titleString = ""
+
     var wordsAmount = 0
     var daysAmount  = 0
     var gameModel: YXGameResultModel?
@@ -144,7 +143,6 @@ class YXShareViewController: YXViewController {
         super.viewDidLoad()
         self.bindProperty()
         self.createSubviews()
-        self.customNavigationBar?.title = titleString
     }
     
     private func bindProperty() {

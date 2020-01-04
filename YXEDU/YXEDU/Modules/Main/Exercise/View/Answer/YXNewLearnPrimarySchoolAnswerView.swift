@@ -85,6 +85,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var enginer: USCRecognizer?
     var status: AnswerStatus = .normal
     var lastLevel    = 0 // 最近一次跟读评分
+    var isReport     = false // 是否播完并通知
     // TODO: ---- 缓存重传机制
     var tempOpusData = Data() // 缓存当前录音
     var retryCount   = 0
@@ -197,41 +198,57 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.showPlayAnimation()
             self.status.forward()
             self.playWord()
+            print("0")
         case .playingWordInFristStage:
             self.playWord()
+            print("1")
         case .playedWordInFristStage:
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.status.forward()
                 self.playExample()
             }
+            print("2")
         case .playingExampleInFristStage:
             self.playExample()
+            print("3")
         case .playedExampleInFristStage:
             self.newLearnDelegate?.playWordAndExampleFinished()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.status.forward()
                 self.playWord()
             }
+            print("4")
         case .playingFirstWordInSecondStage:
             self.playWord()
+            print("5")
         case .playedFirstWordInSecondStage:
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 guard let self = self else { return }
                 self.status.forward()
                 self.playWord()
             }
+            print("6")
         case .playingSecondWordInSecondStage:
             self.playWord()
+            print("7")
         case .playedSecondWordInSecondStage:
             self.status.forward()
-            self.hidePlayAnimation()
-            self.newLearnDelegate?.playWordAndWordFinished()
-            self.recordAudioButton.isEnabled     = true
-            self.recordAudioLabel.layer.opacity  = 1.0
-            self.recordAudioButton.layer.opacity = 1.0
+            self.isReport = true
+            self.autoPlayFinished()
         default:
+            if !self.isReport {
+                self.autoPlayFinished()
+            }
             break
         }
+    }
+
+    private func autoPlayFinished() {
+        self.hidePlayAnimation()
+        self.newLearnDelegate?.playWordAndWordFinished()
+        self.recordAudioButton.isEnabled     = true
+        self.recordAudioLabel.layer.opacity  = 1.0
+        self.recordAudioButton.layer.opacity = 1.0
     }
 
     /// 播放单词
