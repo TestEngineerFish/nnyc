@@ -106,7 +106,9 @@
         if ([response.state isEqualToString:kWechatLogin]) {
             [Growing track:kGrowingTracePlatformLoginResult withVariable:@{@"platform_result":resp, @"platform_type":@"WeChat"}];
         }
-        self.finishBlock(code, YES);
+        if (self.finishBlock != nil) {
+            self.finishBlock(code, YES);
+        }
 
 //        [[NSNotificationCenter defaultCenter]postNotificationName:@"CompletedBind" object:@"wechat" userInfo:@{@"token":code}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CompletedBind" object:nil userInfo:@{@"platfrom":@"wechat", @"token":code}];
@@ -125,7 +127,9 @@
 
         if (messageResps.errCode == 0){
 //            [YXUtils showHUD:nil title:@"分享成功！"];
-            self.finishBlock(messageResps, YES);
+            if (self.finishBlock != nil) {
+                self.finishBlock(messageResps, YES);
+            }
         }
         else {
             [YXUtils showHUD:nil title:@"分享未成功！"];
