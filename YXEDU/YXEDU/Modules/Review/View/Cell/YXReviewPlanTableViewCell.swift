@@ -104,13 +104,6 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             make.bottom.equalTo(AS(-6.5))
         }
         
-        let titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(21)) ?? 0
-        titleLabel.snp.remakeConstraints { (make) in
-            make.top.equalTo(AS(15))
-            make.left.equalTo(AS(22))
-            make.width.equalTo(titleWidth)
-            make.height.equalTo(AS(21))
-        }
         
         let countWidth = countLabel.text?.textWidth(font: countLabel.font, height: AS(17)) ?? 0
         countLabel.snp.remakeConstraints { (make) in
@@ -118,6 +111,17 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             make.left.equalTo(titleLabel.snp.right).offset(AS(10))
             make.width.equalTo(countWidth)
             make.height.equalTo(AS(17))
+        }
+        
+        var titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(21)) ?? 0
+        let maxTitleWidth = screenWidth - AS(44 + 10 + 5 + 5 + 41 + 56) - countWidth
+        titleWidth = titleWidth > maxTitleWidth ? maxTitleWidth : titleWidth
+        
+        titleLabel.snp.remakeConstraints { (make) in
+            make.top.equalTo(AS(15))
+            make.left.equalTo(AS(22))
+            make.width.equalTo(titleWidth)
+            make.height.equalTo(AS(21))
         }
         
         

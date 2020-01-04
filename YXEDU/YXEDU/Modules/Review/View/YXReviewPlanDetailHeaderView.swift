@@ -157,7 +157,9 @@ class YXReviewPlanDetailHeaderView: YXView {
             make.bottom.equalTo(AS(-6.5))
         }
         
-        let titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(21)) ?? 0
+        var titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(21)) ?? 0
+        let maxTitleWidth = screenWidth - AS(44 + 10 + 15 + 5 + 41 + 56 )
+        titleWidth = titleWidth > maxTitleWidth ? maxTitleWidth : titleWidth
         titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(15))
             make.left.equalTo(AS(22))
