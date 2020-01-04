@@ -77,6 +77,9 @@ class YXChallengePropertyView: UIView {
 
     // MARK: ==== UIGestureRecognizer ====
     @objc private func clickGoldImage() {
-        YXAlertWebView.share.show("http://www.baidu.com")
+        guard let urlStr = YXUserModel.default.coinExplainUrl else {
+            return
+        }
+        YXAlertWebView.share.show(urlStr)
     }
 }
