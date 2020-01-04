@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *const qqId = @"101475072";
-static NSString *const wechatId = @"wxa16b70cc1b2c98a0";
+static NSString *const qqId            = @"1110115761";
+static NSString *const wechatId        = @"wxa16b70cc1b2c98a0";
 static NSString *const wechatAppSerect = @"23a8ccc80c48dea4337d6856d192a8d0";
-static NSString *const jgId = @"18071adc0320639477f";
-static NSString *const baiduId = @"1cjX8tynOTDsXpfpmvv3rtM7PQDRcVtO";
-static NSString *const jpushId = @"1839fa8b64ddd41f7859f81d"; // 测试
+static NSString *const jgId            = @"18071adc0320639477f";
+static NSString *const baiduId         = @"1cjX8tynOTDsXpfpmvv3rtM7PQDRcVtO";
+static NSString *const jpushId         = @"1839fa8b64ddd41f7859f81d"; // 测试
 //static NSString *const jpushId = @"af610b352424e1fc7b70b0b2"; // 正式
 
 static NSString *const AppStoreLink = @"itms-apps://itunes.apple.com/cn/app/id1379948642?mt=8";

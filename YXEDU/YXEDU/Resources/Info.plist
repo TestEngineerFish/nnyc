@@ -24,10 +24,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>QQ</string>
+			<string>tencent</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>QQ101475072</string>
+				<string>QQ1110115761</string>
 			</array>
 		</dict>
 		<dict>
@@ -43,7 +43,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tencent101475072</string>
+				<string>tencent1110115761</string>
 			</array>
 		</dict>
 		<dict>
@@ -80,6 +80,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>growing.0c60060749881f7b</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>QQ</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>nnyc</string>
 			</array>
 		</dict>
 	</array>
