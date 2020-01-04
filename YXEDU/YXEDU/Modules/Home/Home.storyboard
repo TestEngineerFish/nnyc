@@ -123,7 +123,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fo0-y4-QGD">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="590"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="600"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAx-HE-Hhk">
                                                 <rect key="frame" x="372" y="10" width="22" height="22"/>
@@ -137,16 +137,17 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Udq-Hf-n6w" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="44" width="374" height="382"/>
+                                                <rect key="frame" x="20" y="44" width="374" height="392"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeBackground" translatesAutoresizingMaskIntoConstraints="NO" id="7ey-RK-d8S">
-                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="382"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="392"/>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2F3-bO-dki">
                                                         <rect key="frame" x="10" y="10" width="30" height="18"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="18" id="Cvr-VQ-pYt"/>
                                                         </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <state key="normal" title="--">
                                                             <color key="titleColor" red="1" green="0.92941176470588238" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
@@ -156,7 +157,7 @@
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="待学习" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ife-Vw-839">
                                                         <rect key="frame" x="165.5" y="64" width="43" height="17"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -197,10 +198,10 @@
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jIQ-cl-KIq" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                                        <rect key="frame" x="40" y="209" width="294" height="40"/>
+                                                        <rect key="frame" x="40" y="209" width="294" height="50"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="i90-O1-anl"/>
+                                                            <constraint firstAttribute="height" constant="50" id="i90-O1-anl"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -213,11 +214,11 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evR-by-lhD" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                                                        <rect key="frame" x="40" y="209" width="294" height="40"/>
+                                                        <rect key="frame" x="40" y="209" width="294" height="50"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="Iq6-3n-kUJ"/>
+                                                            <constraint firstAttribute="height" constant="50" id="Iq6-3n-kUJ"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                         <state key="normal" title="开始背单词">
                                                             <color key="titleColor" red="0.98431372549019602" green="0.63529411764705879" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
@@ -250,7 +251,7 @@
                                                         </connections>
                                                     </button>
                                                     <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spb-lT-D93" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                                        <rect key="frame" x="10" y="277" width="354" height="95"/>
+                                                        <rect key="frame" x="10" y="287" width="354" height="95"/>
                                                         <subviews>
                                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AZn-be-OuY">
                                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="95"/>
@@ -323,7 +324,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="spb-lT-D93" secondAttribute="trailing" constant="10" id="dxt-mZ-0qr"/>
                                                     <constraint firstItem="7ey-RK-d8S" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="top" id="gSb-0h-ukB"/>
                                                     <constraint firstItem="gMI-oo-EEp" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="gc7-Td-1AQ"/>
-                                                    <constraint firstAttribute="height" constant="382" id="i3F-Hz-9UF"/>
+                                                    <constraint firstAttribute="height" constant="392" id="i3F-Hz-9UF"/>
                                                     <constraint firstAttribute="trailing" secondItem="evR-by-lhD" secondAttribute="trailing" constant="40" id="jtp-Tf-bbP"/>
                                                     <constraint firstItem="ife-Vw-839" firstAttribute="centerX" secondItem="Udq-Hf-n6w" secondAttribute="centerX" id="mhi-fb-7se"/>
                                                     <constraint firstAttribute="trailing" secondItem="rVY-bt-TOH" secondAttribute="trailing" constant="40" id="nmb-Fm-PMA"/>
@@ -343,7 +344,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="q7v-mq-Dhk">
-                                                <rect key="frame" x="20" y="446" width="374" height="144"/>
+                                                <rect key="frame" x="20" y="456" width="374" height="144"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="144" id="8rc-ny-2CG"/>
