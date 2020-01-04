@@ -182,7 +182,7 @@ extension YXBaseWordModel {
         var englishExampleAttributedString: NSMutableAttributedString?
         guard let englishExample = examples?.first?.english else { return englishExampleAttributedString }
         let result = englishExample.formartTag()
-        englishExampleAttributedString = NSMutableAttributedString(string: result.1, attributes: [NSAttributedString.Key.foregroundColor : UIColor.black2, NSAttributedString.Key.font : UIFont.mediumFont(ofSize: AdaptSize(20))])
+        englishExampleAttributedString = NSMutableAttributedString(string: result.1)
         result.0.forEach { (range) in
             englishExampleAttributedString?.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
         }
