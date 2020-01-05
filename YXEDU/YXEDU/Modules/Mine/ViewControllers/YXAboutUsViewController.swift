@@ -16,7 +16,7 @@ class YXAboutUsViewController: UIViewController {
     }
     
     @IBAction func showUserAgreement(_ sender: UITapGestureRecognizer) {
-        navigationController?.pushViewController(YXPolicyVC(), animated: true)
+        performSegue(withIdentifier: "UserAgreement", sender: nil)
     }
     
     override func viewDidLoad() {

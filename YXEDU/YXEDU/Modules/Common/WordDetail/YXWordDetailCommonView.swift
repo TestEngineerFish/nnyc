@@ -116,7 +116,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 
         if let deformations = word.deformations, deformations.count > 0 {
             sections.append([SectionType.deformation.rawValue: deformations])
-            sectionExpandStatus.append(false)
+            sectionExpandStatus.append(true)
             
             var mostWidth: CGFloat = 0
             
@@ -169,17 +169,17 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         } else {
             let view = YXWordDetailHeaderView(headerTitle: scetionType ?? "")
             
-            if scetionType == SectionType.deformation.rawValue {
-                view.shouldShowExpand = true
-                view.isExpand = sectionExpandStatus[section]
-                view.expandClosure = {
-                    self.sectionExpandStatus[section] = !self.sectionExpandStatus[section]
-                    self.tableView.reloadData()
-                }
-                
-            } else {
+//            if scetionType == SectionType.deformation.rawValue {
+//                view.shouldShowExpand = true
+//                view.isExpand = sectionExpandStatus[section]
+//                view.expandClosure = {
+//                    self.sectionExpandStatus[section] = !self.sectionExpandStatus[section]
+//                    self.tableView.reloadData()
+//                }
+//
+//            } else {
                 view.shouldShowExpand = false
-            }
+//            }
             
             return view
         }

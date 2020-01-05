@@ -358,7 +358,7 @@
     
     NSString *imageURLString = self.userModel.avatar;
     NSURL *imageURL = [NSURL URLWithString:imageURLString];
-    [self.avatarImageView sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [self.avatarImageView sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"challengeAvatar"]];
 }
 
 - (void)takePhoto {

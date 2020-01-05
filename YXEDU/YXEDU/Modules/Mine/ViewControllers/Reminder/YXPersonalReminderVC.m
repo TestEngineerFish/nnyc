@@ -19,6 +19,9 @@
 @end
 
 @implementation YXPersonalReminderVC
+- (IBAction)back:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,7 +51,7 @@
     self.isReminderSwitch.onTintColor = UIColorOfHex(0x60B6F8);
     
     UIView *intervalView = [[UIView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 44)];
-    intervalView.backgroundColor = UIColorOfHex(0xF6F8FA);
+    intervalView.backgroundColor = UIColorOfHex(0xF5F5F5);
     UILabel *intervalLabel = [[UILabel alloc] init];
     intervalLabel.text = @"开启每日提醒，不错过每天的背单词计划";
     [intervalLabel setFont:[UIFont systemFontOfSize:14]];
@@ -86,7 +89,7 @@
         make.left.equalTo(self.view).offset(16);
         make.centerY.equalTo(intervalView);
     }];
-    self.view.backgroundColor = UIColorOfHex(0xF6F8FA);
+    self.view.backgroundColor = UIColorOfHex(0xF5F5F5);
     
     UIView *bottomView = [[UIView alloc] init];
     bottomView.backgroundColor = [UIColor whiteColor];

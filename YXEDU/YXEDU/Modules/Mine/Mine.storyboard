@@ -26,23 +26,29 @@
             </objects>
             <point key="canvasLocation" x="-4596" y="1562"/>
         </scene>
-        <!--Personal Material ManageVC-->
+        <!--用户协议-->
         <scene sceneID="gkS-gr-pRx">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="qtl-Ce-pZ3" customClass="YXPersonalMaterialManageVC" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="qtl-Ce-pZ3" customClass="YXPolicyVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dgb-2B-Ssq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="0oZ-iY-Ue5"/>
                     </view>
-                    <navigationItem key="navigationItem" id="MEh-Zj-34l"/>
+                    <navigationItem key="navigationItem" title="用户协议" id="3P2-ua-gIf">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="uov-s6-zib">
+                            <connections>
+                                <action selector="back:" destination="qtl-Ce-pZ3" id="TiD-Xn-6HM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0av-zE-2SQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-551" y="3168"/>
         </scene>
-        <!--Personal ReminderVC-->
+        <!--每日提醒-->
         <scene sceneID="ax0-xE-fF5">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="uqt-Ds-8nr" customClass="YXPersonalReminderVC" sceneMemberID="viewController">
@@ -52,6 +58,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="dGc-bJ-vgy"/>
                     </view>
+                    <navigationItem key="navigationItem" title="每日提醒" id="kjE-Ay-vsw">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="EMa-he-g2P">
+                            <connections>
+                                <action selector="back:" destination="uqt-Ds-8nr" id="739-zO-jrq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HGL-xf-nws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -156,6 +169,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="versionLabel" destination="qei-kz-KWI" id="E94-4h-WJV"/>
+                        <segue destination="qtl-Ce-pZ3" kind="show" identifier="UserAgreement" id="i5p-fi-cOn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qzn-Zh-3td" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -167,7 +181,7 @@
             </objects>
             <point key="canvasLocation" x="-1346" y="3168"/>
         </scene>
-        <!--Personal Feed BackVC-->
+        <!--意见反馈-->
         <scene sceneID="2VM-r5-xUU">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="Vjr-94-3PN" customClass="YXPersonalFeedBackVC" sceneMemberID="viewController">
@@ -177,6 +191,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="9le-v3-MiF"/>
                     </view>
+                    <navigationItem key="navigationItem" title="意见反馈" id="a6k-tH-YzM">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="hDe-EJ-dS5">
+                            <connections>
+                                <action selector="back:" destination="Vjr-94-3PN" id="Zdh-gf-SnH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ukG-8L-yVB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -393,7 +414,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="l3L-5F-dZQ" id="xPy-XY-T94"/>
-                        <segue destination="qtl-Ce-pZ3" kind="show" identifier="ManageMaterial" id="pHZ-ZV-F9Z"/>
                         <segue destination="s7t-zN-0Ja" kind="show" identifier="AboutUs" id="Uzs-9t-EKE"/>
                     </connections>
                 </viewController>
@@ -1071,7 +1091,7 @@
                         <viewLayoutGuide key="safeArea" id="u9Z-5F-ZSr"/>
                     </view>
                     <navigationItem key="navigationItem" title="我的徽章" id="3EA-bq-hUt">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="back" id="N9q-jd-gG2">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="N9q-jd-gG2">
                             <connections>
                                 <action selector="back:" destination="Kmr-3i-3ce" id="qI5-yF-TXi"/>
                             </connections>
@@ -1105,15 +1125,15 @@
     <resources>
         <image name="MineBigLogo" width="93" height="122"/>
         <image name="back" width="22" height="22"/>
-        <image name="go" width="8" height="14"/>
-        <image name="mineAccountInfo" width="18" height="18"/>
+        <image name="go" width="8" height="15"/>
+        <image name="mineAccountInfo" width="22" height="22"/>
         <image name="mineBackground" width="375" height="137"/>
         <image name="mineCalendar" width="43" height="43"/>
-        <image name="mineFeedback" width="18" height="18"/>
+        <image name="mineFeedback" width="22" height="22"/>
         <image name="mineIntegral" width="36" height="36"/>
-        <image name="minePronunciation" width="18" height="18"/>
-        <image name="mineReminder" width="18" height="18"/>
-        <image name="mineSettings" width="18" height="18"/>
+        <image name="minePronunciation" width="22" height="22"/>
+        <image name="mineReminder" width="22" height="22"/>
+        <image name="mineSettings" width="22" height="22"/>
         <image name="tabMine" width="22" height="22"/>
         <image name="tabMineSelected" width="22" height="22"/>
     </resources>
