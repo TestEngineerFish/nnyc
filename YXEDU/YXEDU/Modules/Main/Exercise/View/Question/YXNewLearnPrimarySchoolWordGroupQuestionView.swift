@@ -45,35 +45,10 @@ class YXNewLearnPrimarySchoolWordGroupQuestionView: YXBaseQuestionView {
                 return nil
             }
 
-            var newExample   = example
-            var newRangeList = [NSRange]()
-            var examplePattern = ""
-            var wordPattern = ""
+            let result = example.formartTag()
 
-            if example.contains("@") {
-                examplePattern = "@[^*]+?@"
-                wordPattern    = "@"
-            } else {
-                examplePattern = "<font[^*]+?font>"
-                wordPattern    = "<[^>]*>"
-            }
-            ///1、提取
-            let htmlRangeList = example.textRegex(pattern: examplePattern)
-            ///2、剔除标签
-            for (index, range) in htmlRangeList.enumerated() {
-                let htmlStr = example.substring(fromIndex: range.location, length: range.length)
-                let word = htmlStr.pregReplace(pattern: wordPattern, with: "")
-                var offset = 0
-                if index > 0 {
-                    offset = example.count - newExample.count
-                }
-                ///3、替换原内容
-                newExample = newExample.pregReplace(pattern: htmlStr, with: word)
-                newRangeList.append(NSRange(location: range.location - offset, length: word.count))
-            }
-
-            let mAttr = NSMutableAttributedString(string: newExample, attributes: [NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(16)), NSAttributedString.Key.foregroundColor : UIColor.black1])
-            newRangeList.forEach { (range) in
+            let mAttr = NSMutableAttributedString(string: result.1, attributes: [NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(16)), NSAttributedString.Key.foregroundColor : UIColor.black1])
+            result.0.forEach { (range) in
                 mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
             }
             return mAttr

@@ -17,7 +17,8 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.hex(0xE9DDC4)
+        let tableViewSize = CGSize(width: screenWidth, height: screenHeight - tabBar_Height - kSafeBottomMargin + kStatusBarHeight)
+        self.view.backgroundColor = UIColor.gradientColor(with: tableViewSize, colors: [UIColor.hex(0xFEDC4A), UIColor.hex(0xFDAD2F)], direction: .vertical)
         self.setSubviews()
     }
     
@@ -32,8 +33,8 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         self.tableView.delegate        = self
         self.tableView.dataSource      = self
         self.tableView.separatorStyle  = .none
-        self.tableView.backgroundColor = UIColor.hex(0xE9DDC4)
         self.tableView.register(YXChallengeRankCell.classForCoder(), forCellReuseIdentifier: kYXChallengeRankCell)
+        self.tableView.backgroundColor = UIColor.clear
         self.tableView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(-kStatusBarHeight)
             make.left.right.bottom.equalToSuperview()

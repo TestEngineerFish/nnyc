@@ -31,8 +31,11 @@ class YXWordBookCell: UICollectionViewCell {
             currentStudyMark.isHidden = true
             finishedMark.isHidden = true
             indicatorIcon.isHidden = true
+            countOfWordsLabel.isHidden = true
 
         } else {
+            countOfWordsLabel.isHidden = false
+
             if isSelected {
                 bookCover.image = #imageLiteral(resourceName: "selectedBook")
                 indicatorIcon.isHidden = false

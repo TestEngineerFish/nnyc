@@ -42,7 +42,7 @@
     if (!_titleLabel) {
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.font = [UIFont systemFontOfSize:AdaptSize(12)];
-        titleLabel.textColor = UIColorOfHex(0x9BB0C6);
+        titleLabel.textColor = UIColorOfHex(0x888888);
         titleLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:titleLabel];
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -59,7 +59,7 @@
     if (!_valueLabel) {
         UILabel *valueLabel = [[UILabel alloc] init];
         valueLabel.font = [UIFont systemFontOfSize:AdaptSize(12)];
-        valueLabel.textColor = UIColorOfHex(0x9BB0C6);
+        valueLabel.textColor = UIColorOfHex(0x888888);
         valueLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:valueLabel];
         [valueLabel mas_makeConstraints:^(MASConstraintMaker *make) {

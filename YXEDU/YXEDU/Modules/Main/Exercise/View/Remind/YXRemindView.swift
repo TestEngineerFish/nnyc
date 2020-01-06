@@ -183,87 +183,89 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     private func remindWord() {
-        titleLabel.text = exerciseModel.word?.word
+        guard let wordModel = exerciseModel.word, let word = wordModel.word else {
+            self.show()
+            return
+        }
+        titleLabel.text = word
         setAllSubviewStatus()
     }
     
     private func remindExample() {
-        titleLabel.attributedText = exerciseModel.word?.englishExampleAttributedString
+        guard let wordModel = exerciseModel.word, let englishExample = wordModel.englishExampleAttributedString else {
+            self.show()
+            return
+        }
+        titleLabel.attributedText = englishExample
         setAllSubviewStatus()
     }
 
     private func remindExampleWithDigWord() {
-        if let wordModel = exerciseModel.word, let example = wordModel.example {
-            var newExample     = example
-            var newRangeList   = [NSRange]()
-            var examplePattern = ""
-//            var wordPattern    = ""
-
-            if example.contains("@") {
-                examplePattern = "@[^*]+?@"
-//                wordPattern    = "@"
-            } else {
-                examplePattern = "<font[^*]+?font>"
-//                wordPattern    = "<[^>]*>"
-            }
-            ///1、提取
-            let htmlRangeList = example.textRegex(pattern: examplePattern)
-            ///2、剔除标签
-            for (index, range) in htmlRangeList.enumerated() {
-                let htmlStr = example.substring(fromIndex: range.location, length: range.length)
-//                let word = htmlStr.pregReplace(pattern: wordPattern, with: "")
-                var offset = 0
-                if index > 0 {
-                    offset = example.count - newExample.count
-                }
-                ///3、替换原内容
-                newExample = newExample.pregReplace(pattern: htmlStr, with: "____")
-                newRangeList.append(NSRange(location: range.location - offset, length: 4))
-            }
-            titleLabel.text = newExample
+        guard let wordModel = exerciseModel.word, let example = wordModel.example else {
+            self.show()
+            return
         }
+        titleLabel.text = example.formartTag(isHollow: true).1
         setAllSubviewStatus()
     }
     
     private func remindImage() {
-        if let url = exerciseModel.word?.imageUrl {
-            imageView.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
+        guard let wordModel = exerciseModel.word, let imageUrl = wordModel.imageUrl else {
+            self.show()
+            return
         }
+        imageView.showImage(with: imageUrl, placeholder: UIImage.imageWithColor(UIColor.orange7))
         setAllSubviewStatus()
     }
     
     private func remindSoundmark() {
-        titleLabel.text = exerciseModel.word?.soundmark
+        guard let wordModel = exerciseModel.word, let soundmark = wordModel.soundmark else {
+            self.show()
+            return
+        }
+        titleLabel.text = soundmark
         setAllSubviewStatus()
     }
     
     private func remindWordAudio() {
-        if let url = exerciseModel.word?.voice {
-            audioList.append(url)
-            if remindSteps[currentRemindIndex].last == .wordAudio {
-                playAudio()
-                setAllSubviewStatus()
-            }
+        guard let wordModel = exerciseModel.word, let voiceUrl = wordModel.voice else {
+            self.show()
+            return
+        }
+        audioList.append(voiceUrl)
+        if remindSteps[currentRemindIndex].last == .wordAudio {
+            playAudio()
+            setAllSubviewStatus()
         }
     }
     
     private func remindExampleAudio() {
-        if let url = exerciseModel.word?.examplePronunciation {
-            audioList.append(url)
-            if remindSteps[currentRemindIndex].last == .exampleAudio {
-                playAudio()
-                setAllSubviewStatus()
-            }
+        guard let wordModel = exerciseModel.word, let voiceUrl = wordModel.voice else {
+            self.show()
+            return
+        }
+        audioList.append(voiceUrl)
+        if remindSteps[currentRemindIndex].last == .exampleAudio {
+            playAudio()
+            setAllSubviewStatus()
         }
     }
     
     private func remindWordChinese() {
-        titleLabel.text = exerciseModel.word?.meaning
+        guard let wordModel = exerciseModel.word, let meaning = wordModel.meaning else {
+            self.show()
+            return
+        }
+        titleLabel.text = meaning
         setAllSubviewStatus()
     }
     
     private func remindExampleChinese() {
-        titleLabel.text = exerciseModel.word?.chineseExample
+        guard let wordModel = exerciseModel.word, let chineseExample = wordModel.chineseExample else {
+            self.show()
+            return
+        }
+        titleLabel.text = chineseExample
         setAllSubviewStatus()
     }
     
@@ -341,7 +343,6 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         }
         return false
     }
-    
     
     /// 播放语音
     private func playAudio() {

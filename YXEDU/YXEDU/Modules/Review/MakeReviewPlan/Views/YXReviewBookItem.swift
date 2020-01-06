@@ -21,6 +21,7 @@ class YXReviewBookItem: UIView {
         let label = UILabel()
         label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(10))
         label.textColor = UIColor.black2
+        label.lineBreakMode = .byTruncatingMiddle
         return label
     }()
 

@@ -133,8 +133,7 @@ class YXShareViewController: YXViewController {
         label.textAlignment = .center
         return label
     }()
-    
-    var titleString = ""
+
     var wordsAmount = 0
     var daysAmount  = 0
     var gameModel: YXGameResultModel?
@@ -144,7 +143,6 @@ class YXShareViewController: YXViewController {
         super.viewDidLoad()
         self.bindProperty()
         self.createSubviews()
-        self.customNavigationBar?.title = titleString
     }
     
     private func bindProperty() {
@@ -631,10 +629,11 @@ class YXShareViewController: YXViewController {
             return label
         }()
         let consumeTimeLabel: UILabel = {
-            let label = UILabel()
-            let mAttr =
-                NSMutableAttributedString(string: "用时\(model.consumeTime)秒", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.regularFont(ofSize: 14)])
-            mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: 18)], range: NSMakeRange(2, "\(model.consumeTime)".count))
+            let label   = UILabel()
+            let timeStr = String(format: "%0.2f", Float(model.consumeTime)/1000)
+            let mAttr   =
+                NSMutableAttributedString(string: "用时" + timeStr + "秒", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.regularFont(ofSize: 14)])
+            mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: 18)], range: NSMakeRange(2, timeStr.count))
             label.attributedText = mAttr
             label.textAlignment  = .left
             return label
@@ -667,12 +666,5 @@ class YXShareViewController: YXViewController {
             return nil
         }
         return shareImage
-    }
-
-    // MARK: ==== Animation ====
-    private func startGoldAnimation() {
-//        let animation = CAKeyframeAnimation(keyPath: "postion.y")
-//        animation.values = []
-
     }
 }

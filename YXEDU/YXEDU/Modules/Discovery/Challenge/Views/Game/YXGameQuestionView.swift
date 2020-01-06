@@ -36,7 +36,7 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
     var wordMeaningLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0x9E653D)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(26))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(20))
         label.textAlignment = .center
         return label
     }()
@@ -44,7 +44,7 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
     var wordPhoneticSymbolLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0x9E653D)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(22))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(18))
         label.textAlignment = .center
         return label
     }()

@@ -303,7 +303,6 @@ class YXReviewResultView: YXTopWindowView {
         
         let shareVC = YXShareViewController()
         shareVC.shareType = shareType()
-        shareVC.titleString = model?.planName ?? ""
         shareVC.wordsAmount = model?.allWordNum ?? 0
         shareVC.daysAmount = model?.studyDay ?? 0
         shareVC.hidesBottomBarWhenPushed = true

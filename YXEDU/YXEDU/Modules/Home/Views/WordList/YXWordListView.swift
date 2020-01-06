@@ -349,7 +349,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     private func atoz(words: [YXWordModel]) -> [YXWordModel] {
         var newWords = words
         newWords.sort { (a, z) -> Bool in
-            a.word ?? "" < z.word ?? ""
+            a.word?.lowercased() ?? "" < z.word?.lowercased() ?? ""
         }
         
         return newWords
@@ -358,7 +358,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     private func ztoa(words: [YXWordModel]) -> [YXWordModel] {
         var newWords = words
         newWords.sort { (a, z) -> Bool in
-            a.word ?? "" > z.word ?? ""
+            a.word?.lowercased() ?? "" > z.word?.lowercased() ?? ""
         }
         
         return newWords

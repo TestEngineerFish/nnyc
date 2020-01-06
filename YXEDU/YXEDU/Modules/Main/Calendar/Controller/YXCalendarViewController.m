@@ -29,7 +29,7 @@ static NSString *const kYXCalendarHeaderViewID = @"YXCalendarHeaderViewID";
 static NSString *const kRemoveDatePickView     = @"RemovePickerView";
 
 static CGFloat const kHeaderHeight   = 44.f;
-static CGFloat const kCellHeight     = 40.f;
+static CGFloat const kCellHeight     = 25.f;
 static CGFloat const kPickViewHeight = 272.f;
 
 @interface YXCalendarViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance, YXBasePickverViewDelegate, YXCalendarFresherGuideViewDelegate, YXCalendarUpdateData>

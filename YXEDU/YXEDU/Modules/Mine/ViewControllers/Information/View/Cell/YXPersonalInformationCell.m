@@ -15,19 +15,19 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self.titleLabel = [[UILabel alloc] init];
-        self.titleLabel.font = [UIFont systemFontOfSize:16];
-        self.titleLabel.textColor = UIColorOfHex(0x8095AB);
+        self.titleLabel.font = [UIFont systemFontOfSize:14];
+        self.titleLabel.textColor = [UIColor blackColor];
 
         self.rightDetailLabel = [[UILabel alloc] init];
-        self.rightDetailLabel.font = [UIFont systemFontOfSize:15];
+        self.rightDetailLabel.font = [UIFont systemFontOfSize:12];
         if ([self.rightDetailLabel.text isEqual: @"未设置"]) {
-            self.rightDetailLabel.textColor = UIColorOfHex(0x8095AB);
+            self.rightDetailLabel.textColor = UIColorOfHex(0xC0C0C0);
         } else {
-            self.rightDetailLabel.textColor = UIColorOfHex(0x485461);
+            self.rightDetailLabel.textColor = UIColorOfHex(0xC0C0C0);
         }
 
         self.accessoryImage = [[UIImageView alloc] init];
-        self.accessoryImage.tintColor = UIColorOfHex(0xCCCCCC);
+        self.accessoryImage.tintColor = UIColorOfHex(0xC0C0C0);
         self.accessoryImage.contentMode = UIViewContentModeScaleAspectFit;
 
         self.lineView = [[UIView alloc] init];
@@ -57,7 +57,7 @@
         [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).offset(16);
             make.right.equalTo(self.contentView).offset(-16);
-            make.height.mas_equalTo(1);
+            make.height.mas_equalTo(0.5);
             make.bottom.equalTo(self.contentView);
         }];
     }
@@ -74,13 +74,13 @@
     }
     
     if (model.isShowBottomLine) {
-        self.lineView.backgroundColor = UIColorOfHex(0xEAF4FC);
+        self.lineView.backgroundColor = UIColorOfHex(0xDCDCDC);
     }
     
     if ([self.rightDetailLabel.text isEqual: @"未设置"]) {
-        self.rightDetailLabel.textColor = UIColorOfHex(0x8095AB);
+        self.rightDetailLabel.textColor = UIColorOfHex(0xC0C0C0);
     } else {
-        self.rightDetailLabel.textColor = UIColorOfHex(0x485461);
+        self.rightDetailLabel.textColor = UIColorOfHex(0xC0C0C0);
     }
 }
 

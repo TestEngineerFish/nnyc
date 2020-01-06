@@ -166,12 +166,12 @@ class YXGameHeaderView: UIView {
     func addQuestionNumber() {
         currentQuestionNumber += 1
         // 记录最近一次答对的时间
-        self.lastQuestionTime = self.currentQuestionNumber
+        self.lastQuestionTime      = self.consumeTime
         self.recordImageView.image = UIImage(named: "gameQuestion-\(currentQuestionNumber)")
     }
 
     func getTimeAndQuestionNumber() -> (Int, Int) {
-        return (self.consumeTime, self.currentQuestionNumber)
+        return (self.lastQuestionTime, self.currentQuestionNumber)
     }
 
     func startTimer() {
@@ -185,9 +185,7 @@ class YXGameHeaderView: UIView {
             var margin = config.totalTime * 1000 - self.consumeTime
             margin = margin < 0 ? 0 : margin
             self.timeLabel.text = self.getCountDownText(margin)
-            print("header \(margin)")
             if margin <= 0 {
-                print("跳转")
                 self.vcDelegate?.showResultView()
                 timer.invalidate()
             }

@@ -50,6 +50,9 @@ class YXBadgeDetailView: YXTopWindowView {
         titleLabel.text = badge.name
         descriptionLabel.text = badge.description
         
+        let textHeight = badge.description?.textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 120)
+        viewHeight.constant = viewHeight.constant - 20 + (textHeight ?? 0)
+        
         if didCompleted {
             if let imageOfCompletedStatus = badge?.imageOfCompletedStatus {
                 badgeImageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)

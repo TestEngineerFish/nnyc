@@ -2503,6 +2503,8 @@
 				77B0A59A23ACB4750093A181 /* YXSettingsViewController.swift */,
 				7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */,
 				77D2777823B37B6A00AA4BF2 /* YXBagdeListViewController.swift */,
+				EE5EFFC223274FEA00655654 /* FeedBack */,
+				EE5EFFBF23274FEA00655654 /* Reminder */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2529,6 +2531,7 @@
 			children = (
 				771E88672362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift */,
 				771E88692362ACFB000BFAAD /* YXBindPhoneViewController.swift */,
+				7781C72B23C17DB80079F8E8 /* Policy */,
 				77B7C70523AA44CE00149ACE /* Manager */,
 				77B7C70423AA44B700149ACE /* Model */,
 			);
@@ -2656,6 +2659,15 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		7781C72B23C17DB80079F8E8 /* Policy */ = {
+			isa = PBXGroup;
+			children = (
+				EE5EFC4923274BBB00655654 /* YXPolicyVC.h */,
+				EE5EFC3823274BBB00655654 /* YXPolicyVC.m */,
+			);
+			path = Policy;
+			sourceTree = "<group>";
+		};
 		77B0A59923AC784B0093A181 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2737,11 +2749,11 @@
 			isa = PBXGroup;
 			children = (
 				77F69A632361496C00E55185 /* YXHomeViewController.swift */,
-				77F69A652361499E00E55185 /* YXSelectBookViewController.swift */,
 				77F69A67236149B300E55185 /* YXAddBookViewController.swift */,
 				77626BEF239DFE1100B9407A /* YXWordListViewController.swift */,
 				77626BF1239E1FE800B9407A /* YXEditWordListViewController.swift */,
 				77B7C6ED23A7254200149ACE /* YXTaskCenterViewController.swift */,
+				77F69A652361499E00E55185 /* YXSelectBookViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3849,8 +3861,6 @@
 			children = (
 				EE5EFC3B23274BBB00655654 /* Model */,
 				EE5EFC3423274BBB00655654 /* ViewModel */,
-				EE5EFC4923274BBB00655654 /* YXPolicyVC.h */,
-				EE5EFC3823274BBB00655654 /* YXPolicyVC.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -4912,8 +4922,6 @@
 				EE5EFF9C23274FEA00655654 /* PersonCenterURLs.h */,
 				EE5EFFAE23274FEA00655654 /* AboutUs */,
 				EE5EFFB123274FEA00655654 /* Center */,
-				EE5EFFBF23274FEA00655654 /* Reminder */,
-				EE5EFFC223274FEA00655654 /* FeedBack */,
 				EE5EFFCE23274FEA00655654 /* Model */,
 				EE5EFFD323274FEA00655654 /* MyBadges */,
 				EE5EFFEF23274FEA00655654 /* Bind */,

@@ -64,9 +64,9 @@ class YXChallengeHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setSubviews()
-        self.startLeftGoldAnimation()
-        self.startCenterGoldAnimation()
-        self.startRightGoldAnimation()
+//        self.startLeftGoldAnimation()
+//        self.startCenterGoldAnimation()
+//        self.startRightGoldAnimation()
     }
 
     deinit {
@@ -107,7 +107,7 @@ class YXChallengeHeaderView: UIView {
 
         propertyView.snp.makeConstraints { (make) in
             make.right.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(25))
+            make.top.equalToSuperview().offset(AdaptSize(35))
             make.size.equalTo(CGSize(width: AdaptSize(44), height: AdaptSize(23)))
         }
 
@@ -135,18 +135,18 @@ class YXChallengeHeaderView: UIView {
             make.size.equalTo(CGSize(width: AdaptSize(73), height: AdaptSize(17)))
         }
         leftGoldImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(50))
-            make.top.equalToSuperview().offset(AdaptSize(-55))
+            make.left.equalToSuperview().offset(AdaptSize(-25))
+            make.top.equalToSuperview().offset(AdaptSize(26))
             make.size.equalTo(CGSize(width: AdaptSize(55), height: AdaptSize(55)))
         }
         centerGoldImageView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(-22))
+            make.right.equalTo(startButton.snp.left).offset(AdaptSize(-10))
+            make.top.equalTo(startButton.snp.top).offset(AdaptSize(11))
             make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
         }
         rightGoldImageView.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(AdaptSize(-50))
-            make.top.equalToSuperview().offset(AdaptSize(-55))
+            make.right.equalToSuperview().offset(AdaptSize(25))
+            make.top.equalToSuperview().offset(AdaptSize(127))
             make.size.equalTo(CGSize(width: AdaptSize(55), height: AdaptSize(55)))
         }
     }
