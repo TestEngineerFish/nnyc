@@ -220,7 +220,7 @@ static CGFloat const kPickViewHeight = 272.f;
     if (!_tableContainerView) {
         UIView * view = [[UIView alloc] init];
         view.backgroundColor = UIColor.whiteColor;
-        [view.layer setDefaultShadowWithRadius:10.0];
+        [view.layer setDefaultShadowWithCornerRadius:10.0 shadowRadius:10.0];
         _tableContainerView = view;
     }
     return _tableContainerView;

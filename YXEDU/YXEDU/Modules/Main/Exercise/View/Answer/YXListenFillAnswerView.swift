@@ -13,6 +13,9 @@ class YXListenFillAnswerView: YXBaseAnswerView {
     var textField = UITextField()
     var lineView = YXListenFillAnswerLineView()
     var audioPlayerView = YXAudioPlayerView()
+    
+    private var audioBackgroundView: UIView = UIView()
+    
     private var errorCount = 0
     
     deinit {
@@ -24,11 +27,19 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         
         self.addSubview(textField)
         self.addSubview(lineView)
+        self.addSubview(audioBackgroundView)
         self.addSubview(audioPlayerView)
         self.layer.setDefaultShadow()
     }
     
     override func bindProperty() {
+        
+        self.audioBackgroundView.backgroundColor = UIColor.orange3
+        self.audioBackgroundView.layer.masksToBounds = true
+        self.audioBackgroundView.layer.cornerRadius = AdaptSize(26)
+        self.audioBackgroundView.layer.borderWidth = 3
+        self.audioBackgroundView.layer.borderColor = UIColor.orange2.cgColor
+        
 //        textField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
         textField.textColor = UIColor.clear
         textField.autocorrectionType = .no
@@ -49,23 +60,25 @@ class YXListenFillAnswerView: YXBaseAnswerView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        textField.snp.makeConstraints { (make) in
+        audioBackgroundView.snp.makeConstraints({ (make) in
+            make.top.equalTo(AS(35))
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(AS(-20))
-            make.width.equalTo(AS(textWidth()))
-            make.height.equalTo(AS(30))
-        }
-        
-        lineView.snp.makeConstraints { (make) in
-            make.top.left.right.equalTo(textField)
-            make.height.equalTo(AS(43))
-        }
-        
-        audioPlayerView.snp.makeConstraints({ (make) in
-            make.top.equalTo(lineView.snp.bottom).offset(AS(5))
-            make.centerX.equalToSuperview()
-            make.width.height.equalTo(AS(37))
+            make.width.height.equalTo(AS(52))
         })
+
+        audioPlayerView.snp.makeConstraints({ (make) in
+            make.center.equalTo(audioBackgroundView)
+            make.width.height.equalTo(AdaptSize(37))
+        })
+    
+        lineView.snp.makeConstraints { (make) in
+            make.left.right.equalTo(textField)
+            make.height.equalTo(AS(43))
+            make.bottom.equalTo(AS(-39))
+        }
+        
+        
+
     }
     
     override func bindData() {
@@ -82,7 +95,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
 
     
     @objc func textChanged() {
-        guard let text = textField.text else {
+        guard let text = textField.text?.trimed else {
             return
         }
         
@@ -90,6 +103,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         
         if text.count <= wordLength {
             lineView.text = text
+            textField.text = text //去除了空格的，重新设置到文本框中
             
             if lineView.text.count == wordLength {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in

@@ -47,7 +47,7 @@ class YXReviewPlanShareDetailBottomView: YXView {
         super.layoutSubviews()
         
         saveButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(0)
+            make.centerY.equalToSuperview()
             make.left.equalTo(AS(50))
             make.right.equalTo(AS(-50))
             make.height.equalTo(AS(42))
@@ -96,7 +96,7 @@ class YXReviewPlanDetailBottomView: YXView {
     
     override func bindProperty() {
         self.backgroundColor = UIColor.white
-        self.layer.setDefaultShadow(radius: AS(0))
+        self.layer.setDefaultShadow(cornerRadius: AS(0))
         
         listenButton.layer.masksToBounds = true
         listenButton.layer.cornerRadius = AS(21)

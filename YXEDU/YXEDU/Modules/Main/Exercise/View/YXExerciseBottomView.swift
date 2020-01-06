@@ -137,7 +137,7 @@ class YXExerciseBottomView: UIView {
         self.tipsButton.isHidden = true
         self.nextView.isHidden   = true
         self.delegate?.clickNextViewEvent()
-        self.layer.setDefaultShadow(radius: 0)
+        self.layer.setDefaultShadow(cornerRadius: 0)
     }
 
     @objc func clickNextButton() {

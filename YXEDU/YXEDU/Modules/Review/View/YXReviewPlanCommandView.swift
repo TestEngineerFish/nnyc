@@ -23,14 +23,14 @@ class YXReviewPlanCommandView: YXTopWindowView {
     var detailButton = UIButton()
     var closeButton = UIButton()
     
-    var model: YXReviewPlanCommandModel? {
-        didSet { bindData() }
-    }
+    var model: YXReviewPlanCommandModel?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(model: YXReviewPlanCommandModel) {
+        super.init(frame: .zero)
+        self.model = model
+        self.bindData()
         self.createSubviews()
-        self.bindProperty()
+        self.bindProperty()        
     }
     
     required init?(coder: NSCoder) {
@@ -62,8 +62,8 @@ class YXReviewPlanCommandView: YXTopWindowView {
         subTitleLable.textColor = UIColor.black3
         subTitleLable.font = UIFont.regularFont(ofSize: AS(14))
         
-//        descLabel.textColor = UIColor.black3
-//        descLabel.font = UIFont.regularFont(ofSize: AS(14))
+        descLabel.textColor = UIColor.black3
+        descLabel.font = UIFont.regularFont(ofSize: AS(14))
                 
         
         detailButton.layer.masksToBounds = true
@@ -108,17 +108,21 @@ class YXReviewPlanCommandView: YXTopWindowView {
             make.height.equalTo(AS(20))
         }
         
+        
+        
         shareImageView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(96))
-            make.left.equalTo(AS(49))
             make.width.equalTo(AS(19))
             make.height.equalTo(AS(19))
         }
         
+        let descWidth = descLabel.attributedText?.string.textWidth(font: descLabel.font, height: AS(20)) ?? 0
         descLabel.snp.makeConstraints { (make) in
             make.top.equalTo(AS(98))
-            make.left.equalTo(shareImageView.snp.right).offset(AS(49))
-            make.right.equalTo(AS(-20))
+            
+            let right = (screenWidth - descWidth - AS(26)) / 2
+            make.left.equalTo(shareImageView.snp.right).offset(AS(7))
+            make.right.equalTo(AS(right))
             make.height.equalTo(AS(20))
         }
         

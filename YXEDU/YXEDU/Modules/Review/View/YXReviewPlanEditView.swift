@@ -90,9 +90,9 @@ class YXReviewPlanEditView: YXTopWindowView {
         let pid = self.reviewPlanModel?.planId ?? 0
         
         // 显示弹框
-        let placeholder = "请输入复习计划名称"
+        let placeholder = self.reviewPlanModel?.planName ?? ""
         let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
-        alertView.titleLabel.text = self.reviewPlanModel?.planName
+        alertView.titleLabel.text = "请设置复习计划名称"
         alertView.shouldOnlyShowOneButton = false
         alertView.doneClosure = {(text: String?) in
 

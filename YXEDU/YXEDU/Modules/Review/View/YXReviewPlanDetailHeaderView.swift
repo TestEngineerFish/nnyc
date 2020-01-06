@@ -38,7 +38,7 @@ class YXReviewPlanShareDetailHeaderView: YXView {
     
     override func bindProperty() {
         bgView.backgroundColor = UIColor.white
-        bgView.layer.setDefaultShadow(radius: AS(4))
+        bgView.layer.setDefaultShadow(cornerRadius: AS(4))
         
         reviewPlanLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
         reviewPlanLabel.text = "我的复习计划1"
@@ -134,7 +134,7 @@ class YXReviewPlanDetailHeaderView: YXView {
     
     override func bindProperty() {
         bgView.backgroundColor = UIColor.white
-        bgView.layer.setDefaultShadow(radius: AS(6))
+        bgView.layer.setDefaultShadow(cornerRadius: AS(6))
         
         titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
         titleLabel.textColor = UIColor.black1
@@ -201,7 +201,7 @@ class YXReviewPlanDetailHeaderView: YXView {
             reviewProgressView.isHidden = false
             reviewProgressView.snp.remakeConstraints { (make) in
                 make.top.equalTo(AS(18))
-                make.right.equalTo(AS(-35))
+                make.right.equalTo(AS(-18))
                 make.size.equalTo(AS(40))
             }
         }

@@ -22,12 +22,14 @@ class YXBecomeActiveManager: NSObject {
         if let _ = YYCache.object(forKey: .learningState) {
             return
         }
-        
+        // 没登录，不要识别口令
+        if YXUserModel.default.didLogin == false {
+            return
+        }
         if let command = UIPasteboard.general.string, command.isNotEmpty {
             YXSettingDataManager().checkCommand(command: command) { (model, error) in
                 if let commandModel = model {
-                    let commandView = YXReviewPlanCommandView()
-                    commandView.model = commandModel
+                    let commandView = YXReviewPlanCommandView(model: commandModel)
                     commandView.detailEvent = {
                         self.goToReviewPlanDetail(planId: commandModel.planId, fromUser: commandModel.nickname)
                         commandView.removeFromSuperview()

@@ -19,7 +19,7 @@ class YXReviewViewController: YXTableViewController {
         self.isMonitorNetwork = true
         self.configTableView()
         
-        self.headerBeginRefreshing()
+        self.fetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,7 +116,7 @@ class YXReviewViewController: YXTableViewController {
     }
     
     @objc private func fetchDataWhenResultPageClosed() {
-        self.headerBeginRefreshing()
+        self.fetchData()
     }
     
 }
@@ -223,6 +223,6 @@ extension YXReviewViewController {
 
 extension YXReviewViewController: YXMakeReviewPlanProtocol {
     func makeReivewPlanFinised() {
-        self.headerBeginRefreshing()
+        self.fetchData()
     }
 }

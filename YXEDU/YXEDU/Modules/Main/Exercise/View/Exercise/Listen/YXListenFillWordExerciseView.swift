@@ -26,7 +26,7 @@ class YXListenFillWordExerciseView: YXBaseExerciseView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.questionViewHeight = AdaptSize(160)
+        self.questionViewHeight = AdaptSize(181)
         
         answerView?.snp.remakeConstraints { (make) in
             make.edges.equalToSuperview()

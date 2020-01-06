@@ -9,7 +9,7 @@
 public enum YXReviewRequest: YYBaseRequest {
     case reviewBookList
     case reviewWordList(bookId: Int, bookType: Int)
-    case makeReviewPlan(name: String, code: String?, idsList:String?)
+    case makeReviewPlan(name: String, code: Int?, idsList:String?)
     case updateReviewPlan(planId: Int, planName: String)
     case removeReviewPlan(planId: Int)
     case reviewPlan

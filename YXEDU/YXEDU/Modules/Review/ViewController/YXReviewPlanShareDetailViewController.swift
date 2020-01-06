@@ -15,6 +15,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     var planId: Int = -1
     var fromUser: String?
     
+    var reviewPlanModel: YXReviewPlanModel?
     var headerView = YXReviewPlanShareDetailHeaderView()
     var wordListView = YXWordListView()
     var bottomView = YXReviewPlanShareDetailBottomView()
@@ -34,10 +35,19 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     
     
     func bindProperty() {
+        self.customNavigationBar?.title = "复习计划"
+        
         wordListView.isWrongWordList = false
         wordListView.shouldShowEditButton = false
         wordListView.shouldShowBottomView = false
         wordListView.orderType = .default
+        wordListView.showWordDetialClosure = { (wordId, isComplexWord) in
+            let home = UIStoryboard(name: "Home", bundle: nil)
+            let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
+            wordDetialViewController.wordId = wordId
+            wordDetialViewController.isComplexWord = isComplexWord
+            self.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        }
         
         bottomView.saveReviewPlanEvent = { [weak self] in
             self?.saveReviewPlanEvent()
@@ -74,6 +84,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
                 UIView.toast(msg)
             } else {
                 detailModel?.fromUser = self.fromUser
+                self.reviewPlanModel = detailModel
                 self.headerView.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []
             }
@@ -81,7 +92,35 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     }
     
     func saveReviewPlanEvent() {
+        let pid = self.reviewPlanModel?.planId ?? 0
         
+        // 显示弹框
+        let placeholder = self.reviewPlanModel?.planName ?? ""
+        let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
+        alertView.titleLabel.text = "请设置复习计划名称"
+        alertView.shouldOnlyShowOneButton = false
+        alertView.doneClosure = {(text: String?) in
+            guard let name = text else {
+                return
+            }
+            
+            let request = YXReviewRequest.makeReviewPlan(name: name, code: pid, idsList: nil)
+            YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
+                UIView.toast("保持成功")
+                YRRouter.popViewController(true)
+            }) { (error) in
+                if error.code == 101 {
+                    let alertView = YXAlertView(type: .normal)
+                    alertView.descriptionLabel.text   = error.message
+                    alertView.shouldOnlyShowOneButton = true
+                    alertView.show()
+                } else {
+                    YXUtils.showHUD(self.view, title: "\(error)")
+                }
+            }
+            
+        }
+        alertView.show()
     }
 
 }

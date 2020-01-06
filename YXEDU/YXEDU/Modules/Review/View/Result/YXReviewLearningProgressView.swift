@@ -27,6 +27,8 @@ class YXReviewLearningProgressView: YXTopWindowView {
     var pointLabel2 = UILabel()
     var pointLabel3 = UILabel()
     
+    var tableView = YXReviewResultTableView()
+    
     var reviewButton = YXButton()
     var closeButton = UIButton()
     
@@ -64,6 +66,7 @@ class YXReviewLearningProgressView: YXTopWindowView {
         mainView.addSubview(pointLabel2)
         mainView.addSubview(pointLabel3)
         
+        mainView.addSubview(tableView)
         mainView.addSubview(reviewButton)
         mainView.addSubview(closeButton)
     }

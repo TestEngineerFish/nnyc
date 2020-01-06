@@ -61,7 +61,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     override func bindProperty() {
         bgView.backgroundColor = UIColor.white
-        bgView.layer.setDefaultShadow(radius: AS(4))
+        bgView.layer.setDefaultShadow(cornerRadius: AS(8), shadowRadius: AS(3))
         
         titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
         titleLabel.text = "我的复习计划1"
@@ -101,10 +101,10 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         super.layoutSubviews()
         
         bgView.snp.remakeConstraints { (make) in
-            make.top.equalTo(AS(6.5))
+            make.top.equalTo(AS(7.5))
             make.left.equalTo(AS(22))
             make.right.equalTo(AS(-22))
-            make.bottom.equalTo(AS(-6.5))
+            make.bottom.equalTo(AS(-8.5))
         }
         
         
@@ -225,7 +225,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     
     override class func viewHeight(model: YXReviewPlanModel) -> CGFloat {
-        let vHeight: CGFloat = model.listenState != .normal || model.reviewState != .normal ? 133 : 106
+        let vHeight: CGFloat = model.listenState != .normal || model.reviewState != .normal ? 136 : 109
         return AS(vHeight)
     }
     
@@ -278,16 +278,14 @@ class YXReviewPlanStarContainerView: YXView {
     }
     
     override func bindProperty() {
-        imageView1.image = UIImage(named: "review_cell_star_gray")
-        imageView2.image = UIImage(named: "review_cell_star_gray")
-        imageView3.image = UIImage(named: "review_cell_star_gray")
+
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
         let imageWidth: CGFloat = type == .listen ? 14 : 31
-        let imageHeight: CGFloat = type == .listen ? 14 : 29
+        let imageHeight: CGFloat = type == .listen ? 12 : 29
         
         imageView1.snp.makeConstraints { (make) in
             make.centerY.left.equalToSuperview()
@@ -310,14 +308,43 @@ class YXReviewPlanStarContainerView: YXView {
     }
         
     override func bindData() {
-        if count >= 1 {
-            imageView1.image = UIImage(named: "review_cell_star")
+        imageView1.isHidden = true
+        imageView2.isHidden = true
+        imageView3.isHidden = true
+        
+        var imageName = "review_cell_star_gray"
+        if type == .listen {
+            imageName = "review_cell_star_listen"
         }
-        if count >= 2 {
-            imageView2.image = UIImage(named: "review_cell_star")
-        }
-        if count >= 3 {
-            imageView3.image = UIImage(named: "review_cell_star")
+                
+        imageView1.image = UIImage(named: imageName)
+        imageView2.image = UIImage(named: imageName)
+        imageView3.image = UIImage(named: imageName)
+        
+        
+        if type == .listen {
+            if count >= 1 {
+                imageView1.isHidden = false
+            }
+            if count >= 2 {
+                imageView2.isHidden = false
+            }
+            if count >= 3 {
+                imageView3.isHidden = false
+            }
+        } else {
+            if count >= 1 {
+                imageView1.isHidden = false
+                imageView1.image = UIImage(named: "review_cell_star")
+            }
+            if count >= 2 {
+                imageView2.isHidden = false
+                imageView2.image = UIImage(named: "review_cell_star")
+            }
+            if count >= 3 {
+                imageView3.isHidden = false
+                imageView3.image = UIImage(named: "review_cell_star")
+            }
         }
     }
     
