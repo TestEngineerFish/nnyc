@@ -155,17 +155,11 @@
             
             // 再上报关卡
             self.report()
-                        
-//            dataManager.reportUnit(type: dataType, time: 0) {[weak self] (result, msg) in
-//                guard let self = self else { return }
-//                if result {
-//                    self.fetchExerciseData()
-//                } else {//
-//                    YXUtils.showHUD(self.view, title: "上报失败")
-//                }
-//            }
         } else if !dataManager.progressManager.isCompletion() {// 存在未学完的关卡
+            // 先加载本地数据
             dataManager.fetchLocalExerciseModels()
+            
+            // 开始答题
             self.hideLoadAnimation { [weak self] in
                 self?.switchExerciseView()
             }

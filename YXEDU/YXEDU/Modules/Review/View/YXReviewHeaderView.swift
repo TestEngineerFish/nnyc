@@ -48,7 +48,7 @@ class YXReviewHeaderView: YXView {
     var forgetProgressLabel = UILabel()
     
     /// 智能复习
-    var reviewButton = UIButton()
+    var reviewButton = YXButton()
     var subTitleLabel = UILabel()
     
     
@@ -180,7 +180,9 @@ class YXReviewHeaderView: YXView {
         
         reviewButton.layer.masksToBounds = true
         reviewButton.layer.cornerRadius = AS(21)
-        reviewButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
+//        reviewButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
+        let bgColor = UIColor.gradientColor(with: CGSize(width: AS(273), height: AS(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
+        reviewButton.backgroundColor = bgColor
         reviewButton.setTitle("智能复习", for: .normal)
         reviewButton.setTitleColor(UIColor.white, for: .normal)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))

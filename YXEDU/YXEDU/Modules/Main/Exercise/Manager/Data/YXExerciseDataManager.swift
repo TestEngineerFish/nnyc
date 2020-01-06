@@ -47,6 +47,8 @@ class YXExerciseDataManager: NSObject {
     /// 上一轮
     var previousTurnArray: [YXWordExerciseModel] = []
 
+    var startTime: Long = 0
+    var endTime: Long = 0
     
     /// 本地数据库访问
     var dao: YXWordBookDao!
@@ -196,7 +198,7 @@ class YXExerciseDataManager: NSObject {
     /// 上报关卡
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
-    func reportUnit(type: YXExerciseDataType, time: Int, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+    func reportExercise(type: YXExerciseDataType, time: Int, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let result = self.reportJson()
         let request = YXExerciseRequest.report(type: type.rawValue, time: time, result: result)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in

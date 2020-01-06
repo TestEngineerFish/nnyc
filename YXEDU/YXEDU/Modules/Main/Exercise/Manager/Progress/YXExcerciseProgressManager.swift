@@ -11,8 +11,6 @@ import ObjectMapper
 /// 练习进度管理器
 class YXExcerciseProgressManager: NSObject {
     
-//    static var`default` = YXExcerciseProgressManager()
-    
     public var bookId: Int? { didSet { updateBookId() } }
     public var unitId: Int? { didSet { updateUnitId() } }
     public var dataType: YXExerciseDataType = .base
@@ -40,6 +38,8 @@ class YXExcerciseProgressManager: NSObject {
         case score = "Exercise_Score"
         case errorCount = "Error_Count"
         case newWordReadScore = "New_Word_Read_Score"   // 新学跟读得分
+        
+        case studyDuration = "Study_Duration"
         case skipNewWord = "Skip_New_Word"
     }
     
@@ -243,6 +243,15 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
+    func updateStudyDuration(duration: Int) {
+        if var d = YYCache.object(forKey: key(.studyDuration)) as? Int {
+            d += duration
+            YYCache.set(d, forKey: key(.studyDuration))
+        } else {
+            YYCache.set(duration, forKey: key(.studyDuration))
+        }                
+    }
+    
     func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?) {
         YYCache.set(false, forKey: key(.completion))
         
@@ -270,14 +279,6 @@ class YXExcerciseProgressManager: NSObject {
         }
     }
     
-//    func initBookIdAndUnitId(bookId: Int?, unitId: Int?) {
-//        self.bookId = bookId
-//        self.unitId = unitId
-//
-//        YYCache.set(bookId, forKey: key(.bookId))
-//        YYCache.set(unitId, forKey: key(.unitId))
-//    }
-    
     
     /// 完成答题
     func completionExercise() {
@@ -296,6 +297,7 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.remove(forKey: key(.currentTurnIndex))
         YYCache.remove(forKey: key(.newWordIds))
         YYCache.remove(forKey: key(.reviewWordIds))
+        YYCache.remove(forKey: key(.studyDuration))
         YYCache.remove(forKey: key(.skipNewWord))
         
         removeLocalFile(.new)

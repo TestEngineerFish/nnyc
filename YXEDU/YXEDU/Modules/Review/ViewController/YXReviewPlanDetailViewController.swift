@@ -20,6 +20,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: YXNotification.kUpdatePlanName, object: nil)
+        NotificationCenter.default.removeObserver(self, name: YXNotification.kCloseResultPage, object: nil)
     }
     
     override func viewDidLoad() {
@@ -40,6 +41,7 @@ class YXReviewPlanDetailViewController: YXViewController {
 //    }
     override func addNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(fetchDetailData), name: YXNotification.kUpdatePlanName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchDetailData), name: YXNotification.kCloseResultPage, object: nil)
     }
     
     func createSubView() {

@@ -12,12 +12,13 @@ class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSourc
 
     var words: [YXBaseWordModel] = [] { didSet{ bindData() } }
     var tableView = UITableView()
-    
-    private let leftView = YXReviewResultTableLeftView()
+    let headerLabel = UILabel()
+    var imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
+        self.bindProperty()
     }
     
     required init?(coder: NSCoder) {
@@ -25,52 +26,64 @@ class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSourc
     }
     
     override func createSubviews() {
-        let headerLabel = UILabel(frame: CGRect(x: 40, y: 23, width: AS(127), height: AS(20)))
-        headerLabel.text = "这些单词还需要加强"
-        headerLabel.font = UIFont.regularFont(ofSize: AS(14))
-        headerLabel.textColor = UIColor.black3
-        
-//        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: AS(200), height: AS(23 + 20 + 9)))
-//        headerView.addSubview(headerLabel)
-
+        self.addSubview(imageView)
         self.addSubview(headerLabel)
         self.addSubview(tableView)
-        self.addSubview(leftView)
-        leftView.snp.makeConstraints { (make) in
-            make.left.top.bottom.equalToSuperview()
-            make.width.equalTo(AS(26))
+    }
+    
+    override func bindProperty() {
+//        self.backgroundColor = UIColor.white
+//        self.layer.masksToBounds = true
+//        self.layer.cornerRadius = AS(5)
+//        self.layer.setDefaultShadow()
+        
+        self.headerLabel.text = "这些单词还需要加强"
+        self.headerLabel.font = UIFont.regularFont(ofSize: AS(14))
+        self.headerLabel.textColor = UIColor.black3
+        
+        
+        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.register(YXReviewResultTableViewCell.classForCoder(), forCellReuseIdentifier: "YXReviewResultTableViewCell")
+        
+        self.setShadowsView()
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        
+        imageView.snp.makeConstraints { (make) in
+            make.top.bottom.equalTo(0)
+            make.left.equalTo(AS(19))
+            make.right.equalTo(AS(-19))
         }
         
-    
-        self.backgroundColor = UIColor.white
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = AS(5)
-        self.layer.setDefaultShadow()
+        headerLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(AS(23))
+            make.left.equalTo(AS(69))
+            make.size.equalTo(CGSize(width: AS(127), height: AS(20)))
+        }
         
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(51))
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(AS(-14))
+            make.left.equalTo(AS(69))
+            make.right.equalTo(AS(-49))
+            make.bottom.equalTo(AS(-27))
         }
-        
-        
-        
-        
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-
-        self.tableView.register(YXReviewResultTableViewCell.classForCoder(), forCellReuseIdentifier: "YXReviewResultTableViewCell")
-        
-        setBottomView()
-        
-        leftView.maxHeight = screenHeight
-        
-
     }
     
     override func bindData() {
         self.tableView.isHidden = (words.count == 0)
         self.tableView.reloadData()
+        
+        if words.count > 3 {
+            self.imageView.image = UIImage(named: "review_result_table_bg_b")
+        } else {
+            self.imageView.image = UIImage(named: "review_result_table_bg_s")
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -94,23 +107,20 @@ class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSourc
         _cell.word = words[indexPath.row]
     }
     
-    private func setBottomView() {
-        let layerView = UIView()
-//        layerView.frame = CGRect(x: 58, y: 525, width: 276, height: 24)
-        // fillCode
-        let bgLayer1 = CAGradientLayer()
-        bgLayer1.colors = [UIColor(red: 1, green: 1, blue: 1, alpha: 0).cgColor, UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor]
-        bgLayer1.locations = [0, 1]
-        bgLayer1.frame = layerView.bounds
-        bgLayer1.startPoint = CGPoint(x: 0.5, y: 0)
-        bgLayer1.endPoint = CGPoint(x: 0.72, y: 0.72)
-        layerView.layer.addSublayer(bgLayer1)
+    private func setShadowsView() {
         
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: screenWidth - AS(99), height: AS(24))
+        gradient.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.cgColor]
+        gradient.startPoint = CGPoint(x: 0.5, y: 0)
+        gradient.endPoint = CGPoint(x: 0.5, y: 1)
         
-        self.addSubview(layerView)
-        layerView.snp.makeConstraints { (make) in
-            make.left.equalTo(AS(29))
-            make.right.equalTo(AS(-12))
+        let sview = UIView()
+        sview.layer.addSublayer(gradient)
+        self.addSubview(sview)
+        sview.snp.makeConstraints { (make) in
+            make.left.equalTo(AS(58))
+            make.right.equalTo(AS(-41))
             make.height.equalTo(AS(24))
             make.bottom.equalTo(AS(-14))
         }
@@ -143,6 +153,8 @@ class YXReviewResultTableViewCell: YXTableViewCell<YXBaseWordModel> {
     }
             
     override func bindProperty() {
+        self.backgroundColor = UIColor.clear
+        
         titleLabel.font = UIFont.mediumFont(ofSize: AS(17))
         titleLabel.textColor = UIColor.black1
         
@@ -155,15 +167,14 @@ class YXReviewResultTableViewCell: YXTableViewCell<YXBaseWordModel> {
         super.layoutSubviews()
         
         titleLabel.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.left.equalTo(AS(40))
+            make.centerY.left.equalToSuperview()
             make.height.equalTo(AS(24))
         }
         
         meaningLabel.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            make.centerY.right.equalToSuperview()
             make.left.equalTo(titleLabel.snp.right).offset(AS(10))
-            make.right.equalTo(AS(-20))
+//            make.right.equalTo(AS(-20))
             make.width.equalTo(titleLabel)
             make.height.equalTo(AS(20))
         }

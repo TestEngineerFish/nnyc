@@ -38,7 +38,7 @@ extension YXExerciseViewController {
     //MARK: submit report
     /// 上报数据
     func submitResult() {
-        dataManager.reportUnit(type: dataType, time: 0) { [weak self] (result, errorMsg) in
+        dataManager.reportExercise(type: dataType, time: 0) { [weak self] (result, errorMsg) in
             guard let self = self else {return}
             if result {
                 let progress = self.dataManager.progressManager.loadLocalWordsProgress()
@@ -103,16 +103,15 @@ extension YXExerciseViewController {
     /// 智能复习结果页
     /// - Parameter model:
     func processReviewProgressResult(model: YXReviewResultModel) {
-        let aiView = YXReviewLearningProgressView(type: dataType)
-        aiView.model = model
-        aiView.reviewEvent = {
+        let progressView = YXReviewLearningProgressView(type: dataType, model: model)
+        progressView.reviewEvent = {
             let vc = YXExerciseViewController()
-            vc.dataType = aiView.model?.type ?? .aiReview
+            vc.dataType = progressView.model?.type ?? .aiReview
             vc.planId = model.planId
             vc.hidesBottomBarWhenPushed = true
             YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
         }
-        aiView.show()
+        progressView.show()
         
         self.navigationController?.popViewController(animated: true)
     }

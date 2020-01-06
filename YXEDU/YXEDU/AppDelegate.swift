@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YYCache.remove(forKey: .learningState)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//            self.processReviewResult()
+            self.processReviewResult()
             
             
 //            let vc = YXReviewResultView(type: .planListenReview)
@@ -105,40 +105,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-//    /// 处理复习结果页
-//    func processReviewResult() {
-//        YXReviewDataManager().fetchReviewResult(type: .planListenReview, planId: 13) { [weak self] (resultModel, error) in
-//            guard let self = self else {return}
-//
-//            if var model = resultModel {
-//
+    /// 处理复习结果页
+    func processReviewResult() {
+        YXReviewDataManager().fetchReviewResult(type: .planReview, planId: 13) { [weak self] (resultModel, error) in
+            guard let self = self else {return}
+
+            if var model = resultModel {
+
 //                model.planId = 13
 //                if model.planState {
 //                    self.processReviewResult(model: model)
 //                } else {
 ////                    self.processReviewProgressResult(model: model)
 //                }
-//
-//            } else {
-//                UIView.toast("上报关卡失败")
-////                self.navigationController?.popViewController(animated: true)
-//            }
-//
-//        }
-//    }
-//
-//        /// 听力复习结果页
-//        func processReviewResult(model: YXReviewResultModel) {
-//    //        let resultView = YXReviewResultView(type: dataType)
-//    //        resultView.model = model
-//    //        resultView.show()
-//
-////            self.navigationController?.popViewController(animated: false)
-//
-//            let vc = YXReviewResultViewController(type: .planListenReview, model: model)
-//            vc.hidesBottomBarWhenPushed = true
-//            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-//        }
+                self.processReviewProgressResult(model: model)
+            } else {
+                UIView.toast("上报关卡失败")
+//                self.navigationController?.popViewController(animated: true)
+            }
+
+        }
+    }
+
+        /// 听力复习结果页
+        func processReviewResult(model: YXReviewResultModel) {
+    //        let resultView = YXReviewResultView(type: dataType)
+    //        resultView.model = model
+    //        resultView.show()
+
+//            self.navigationController?.popViewController(animated: false)
+
+            let vc = YXReviewResultViewController(type: .planReview, model: model)
+            vc.hidesBottomBarWhenPushed = true
+            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        }
     
+    
+    /// 智能复习结果页
+    /// - Parameter model:
+    func processReviewProgressResult(model: YXReviewResultModel) {
+        let progressView = YXReviewLearningProgressView(type: .planReview, model: model)
+        progressView.reviewEvent = {
+            let vc = YXExerciseViewController()
+            vc.dataType = progressView.model?.type ?? .aiReview
+            vc.planId = model.planId
+            vc.hidesBottomBarWhenPushed = true
+            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        }
+        progressView.show()
+    }
 }
 

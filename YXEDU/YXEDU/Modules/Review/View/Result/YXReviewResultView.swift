@@ -28,7 +28,7 @@ class YXReviewResultView: YXTopWindowView {
     
     var tableView = YXReviewResultTableView()
     
-    var shareButton = UIButton()
+    var shareButton = YXButton()
     var tipsLabel = UILabel()
     
     var closeButton = UIButton()
@@ -99,7 +99,9 @@ class YXReviewResultView: YXTopWindowView {
         
         shareButton.layer.masksToBounds = true
         shareButton.layer.cornerRadius = AS(21)
-        shareButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
+        let bgColor = UIColor.gradientColor(with: CGSize(width: AS(273), height: AS(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
+//        shareButton.setBackgroundImage(UIImage.imageWithColor(bgColor ?? UIColor.orange1), for: .normal)
+        shareButton.backgroundColor = bgColor
         
         shareButton.setTitleColor(UIColor.white, for: .normal)
         shareButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
@@ -121,7 +123,13 @@ class YXReviewResultView: YXTopWindowView {
             starView.isHidden = true
             starTitleLabel.isHidden = true
         } else {
-            imageView.image = UIImage(named: "review_finish_result")
+            
+            if type == .planListenReview {
+                imageView.image = UIImage(named: "review_listen_finish_result")
+            } else {
+                imageView.image = UIImage(named: "review_finish_result")
+            }
+            
             shareButton.setTitle("打卡分享", for: .normal)
             tipsLabel.isHidden = true
             starView.isHidden = false
@@ -139,7 +147,7 @@ class YXReviewResultView: YXTopWindowView {
         }
         
         imageView.snp.remakeConstraints { (make) in
-            make.top.equalTo(AS(kNavHeight))
+            make.top.equalTo(AS(kSafeBottomMargin + 34))
             make.centerX.equalToSuperview()
             make.width.equalTo(AS(233))
             make.height.equalTo(AS(141))
@@ -199,18 +207,23 @@ class YXReviewResultView: YXTopWindowView {
             make.height.equalTo(AS(20))
         }
     
-        
+    
         tableView.snp.remakeConstraints { (make) in
-            make.top.equalTo(subTitleLable2.snp.bottom).offset(AS(14))
-            make.left.equalTo(AS(29))
-            make.right.equalTo(AS(-29))
+            make.top.equalTo(subTitleLable2.snp.bottom).offset(AS(4))
+            make.left.right.equalToSuperview()
+            if (model?.words?.count ?? 0) > 3 {
+                make.height.equalTo(AS(268))
+            } else {
+                make.height.equalTo(AS(173))
+            }
+            
         }
         
         if type == .wrong {
             shareButton.snp.remakeConstraints { (make) in
-                make.top.equalTo(tableView.snp.bottom).offset(AS(30))
-                make.left.equalTo(AS(51))
-                make.right.equalTo(AS(-51))
+//                make.top.equalTo(tableView.snp.bottom).offset(AS(30))
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AS(273))
                 make.height.equalTo(AS(42))
             }
             
@@ -222,9 +235,9 @@ class YXReviewResultView: YXTopWindowView {
             }
         } else {
             shareButton.snp.remakeConstraints { (make) in
-                make.top.equalTo(tableView.snp.bottom).offset(AS(30))
-                make.left.equalTo(AS(51))
-                make.right.equalTo(AS(-51))
+//                make.top.equalTo(tableView.snp.bottom).offset(AS(30))
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AS(273))
                 make.height.equalTo(AS(42))
                 make.bottom.equalTo(-AS(kSafeBottomMargin + 29))
             }

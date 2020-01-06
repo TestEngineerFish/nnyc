@@ -20,6 +20,7 @@ class YXLearningResultViewController: UIViewController {
 
     var newLearnAmount: Int = 0 // 新学单词数
     var reviewLearnAmount: Int = 0 // 复习单词数量
+    var allWordCount = 0
     var daysAmount = 0
     var bookId: Int? // 书ID
     var unitId: Int? // 单元ID
@@ -143,6 +144,7 @@ class YXLearningResultViewController: UIViewController {
                     self.bindData()
                 }
             } else {
+                self.allWordCount = response.data?.allWordCount ?? 0
                 self.mapModelList = response.data?.unitList
                 self.currentModel = self.mapModelList?.filter({ (model) -> Bool in
                     return model.unitID == unitId
@@ -177,7 +179,7 @@ class YXLearningResultViewController: UIViewController {
     @objc private func punchEvent() {
         let vc = YXShareViewController()
         vc.shareType   = .learnResult
-        vc.wordsAmount = self.newLearnAmount + self.reviewLearnAmount
+        vc.wordsAmount = self.allWordCount
         vc.daysAmount  = self.daysAmount
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }

@@ -27,23 +27,23 @@ class YXReviewLearningProgressView: YXTopWindowView {
     var pointLabel2 = UILabel()
     var pointLabel3 = UILabel()
     
-    var reviewButton = UIButton()
+    var reviewButton = YXButton()
     var closeButton = UIButton()
     
-    var model: YXReviewResultModel? {
-        didSet { bindData() }
-    }
+    var model: YXReviewResultModel?
     
     deinit {
         reviewButton.removeTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
         closeButton.removeTarget(self, action: #selector(clickCloseButton), for: .touchUpInside)
     }
     
-    init(type: YXExerciseDataType) {
+    init(type: YXExerciseDataType, model: YXReviewResultModel?) {
         super.init(frame: .zero)
         self.type = type
+        self.model = model
         self.createSubviews()
         self.bindProperty()
+        self.bindData()
     }
     
     required init?(coder: NSCoder) {
@@ -91,7 +91,9 @@ class YXReviewLearningProgressView: YXTopWindowView {
         
         reviewButton.layer.masksToBounds = true
         reviewButton.layer.cornerRadius = AS(21)
-        reviewButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
+        let bgColor = UIColor.gradientColor(with: CGSize(width: AS(273), height: AS(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
+//        reviewButton.setBackgroundImage(UIImage.imageWithColor(bgColor ?? UIColor.orange1), for: .normal)
+        reviewButton.backgroundColor = bgColor
         reviewButton.setTitle("继续复习", for: .normal)
         reviewButton.setTitleColor(UIColor.white, for: .normal)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
@@ -139,12 +141,6 @@ class YXReviewLearningProgressView: YXTopWindowView {
             make.width.height.equalTo(AS(4))
         }
         
-        pointLabel3.snp.makeConstraints { (make) in
-            make.top.equalTo(progressView.snp.bottom).offset(AS(81))
-            make.left.equalTo(AS(85))
-            make.width.height.equalTo(AS(4))
-        }
-        
         
         subTitleLable1.snp.makeConstraints { (make) in
             make.centerY.equalTo(pointLabel1)
@@ -160,20 +156,35 @@ class YXReviewLearningProgressView: YXTopWindowView {
             make.width.height.equalTo(AS(20))
         }
         
-        subTitleLable3.snp.makeConstraints { (make) in
-            make.centerY.equalTo(pointLabel3)
-            make.left.equalTo(pointLabel3.snp.right).offset(AS(12))
-            make.right.equalTo(AS(-20))
-            make.width.height.equalTo(AS(20))
+        if type == .planListenReview {
+            reviewButton.snp.makeConstraints { (make) in
+                make.top.equalTo(subTitleLable2.snp.bottom).offset(AS(41))
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AS(273))
+                make.height.equalTo(AS(42))
+            }
+        } else {
+            pointLabel3.snp.makeConstraints { (make) in
+                make.top.equalTo(progressView.snp.bottom).offset(AS(81))
+                make.left.equalTo(AS(85))
+                make.width.height.equalTo(AS(4))
+            }
+            subTitleLable3.snp.makeConstraints { (make) in
+                make.centerY.equalTo(pointLabel3)
+                make.left.equalTo(pointLabel3.snp.right).offset(AS(12))
+                make.right.equalTo(AS(-20))
+                make.width.height.equalTo(AS(20))
+            }
+            
+            reviewButton.snp.makeConstraints { (make) in
+                make.top.equalTo(subTitleLable3.snp.bottom).offset(AS(41))
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AS(273))
+                make.height.equalTo(AS(42))
+            }
         }
-        
-        reviewButton.snp.makeConstraints { (make) in
-            make.top.equalTo(subTitleLable3.snp.bottom).offset(AS(41))
-            make.left.equalTo(AS(51))
-            make.right.equalTo(AS(-51))
-            make.height.equalTo(AS(42))
-        }
-        
+
+    
         closeButton.snp.makeConstraints { (make) in
             make.top.equalTo(AS(29 + kSafeBottomMargin))
             make.left.equalTo(AS(15))
@@ -210,7 +221,7 @@ class YXReviewLearningProgressView: YXTopWindowView {
             subTitleLable2.attributedText = attrString("\(num)个单词掌握的更好了", 0, length)
         }
         
-        if let num = model?.remainWordNum, num > 0 {
+        if let num = model?.remainWordNum, num > 0, type != .planListenReview {
             pointLabel3.isHidden = false
             
             let length = "\(num)".count
