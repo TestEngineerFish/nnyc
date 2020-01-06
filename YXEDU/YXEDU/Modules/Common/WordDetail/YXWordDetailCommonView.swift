@@ -370,6 +370,9 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 let endHighLightIndex = combineExample.index(lastRightBracket, offsetBy: 1)
                 let highLightString = String(combineExample[startHighLightIndex..<lastLeftBracket])
                 string = String(combineExample[combineExample.startIndex..<firstLeftBracket]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
+            
+            } else {
+                string = combineExample
             }
             
             let height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 110) + 4

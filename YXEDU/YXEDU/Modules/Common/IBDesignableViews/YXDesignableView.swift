@@ -36,9 +36,6 @@ class YXDesignableView: UIView {
     var enableShadow: Bool = false
     
     @IBInspectable
-    var enableClip: Bool = false
-    
-    @IBInspectable
     var shadowColor: UIColor = UIColor.hex(0xc7c7c7).withAlphaComponent(0.5) {
         didSet {
             layer.shadowColor = shadowColor.cgColor
@@ -52,7 +49,6 @@ class YXDesignableView: UIView {
             self.layer.setDefaultShadow()
             self.layer.shadowColor = shadowColor.cgColor
             self.layer.cornerRadius = cornerRadius
-            self.clipsToBounds = enableClip
         }
     }
 }

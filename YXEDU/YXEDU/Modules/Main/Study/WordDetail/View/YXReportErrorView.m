@@ -18,7 +18,7 @@
     UILabel *placeHolderLabel = [[UILabel alloc] init];
     placeHolderLabel.text = placeholdStr;
     placeHolderLabel.numberOfLines = 0;
-    placeHolderLabel.textColor = UIColorOfHex(0x8095AB);
+    placeHolderLabel.textColor = placeholdColor;
     placeHolderLabel.font = self.font;
     [placeHolderLabel sizeToFit];
     [self addSubview:placeHolderLabel];
@@ -113,7 +113,7 @@ static const NSInteger MAX_NAME_LENGTH = 50;
         CGFloat contentlrMargin = 22;
         UILabel *tipsLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentlrMargin, 27, 250, 17)];
         tipsLabel.font = [UIFont boldSystemFontOfSize:15];
-        tipsLabel.textColor = UIColorOfHex(0x485461);
+        tipsLabel.textColor = UIColorOfHex(0x000000);
         tipsLabel.text = @"请选择报错原因：（可多选）";
         [self.contentView addSubview:tipsLabel];
         
@@ -131,10 +131,10 @@ static const NSInteger MAX_NAME_LENGTH = 50;
             UIButton *btn = [[UIButton alloc] init];
             btn.layer.cornerRadius = 15;
             btn.layer.masksToBounds = YES;
-            btn.layer.borderColor = UIColorOfHex(0x485461).CGColor;
+            btn.layer.borderColor = UIColorOfHex(0xC0C0C0).CGColor;
             btn.layer.borderWidth = 1;
             btn.titleLabel.font = [UIFont systemFontOfSize:14];
-            [btn setTitleColor:UIColorOfHex(0x485461) forState:UIControlStateNormal];
+            [btn setTitleColor:UIColorOfHex(0x323232) forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
             [self.contentView addSubview:btn];
             [btn addTarget:self action:@selector(selectMark:) forControlEvents:UIControlEventTouchUpInside];
@@ -148,7 +148,7 @@ static const NSInteger MAX_NAME_LENGTH = 50;
         }
         
         self.feedBackTextView = [[UITextView alloc] initWithFrame:CGRectMake(contentlrMargin, 160, contentSize.width - 2 * contentlrMargin, 90)];
-        self.feedBackTextView.backgroundColor = UIColorOfHex(0xEFF7F7);//[UIColor whiteColor ];
+        self.feedBackTextView.backgroundColor = UIColorOfHex(0xF2F2F2);//[UIColor whiteColor ];
         //    self.feedBackTextView.delegate = self;
         
         self.feedBackTextView.font = [UIFont systemFontOfSize:14];
@@ -156,22 +156,22 @@ static const NSInteger MAX_NAME_LENGTH = 50;
         self.feedBackTextView.delegate = self;
         self.feedBackTextView.layer.masksToBounds = YES;
         self.feedBackTextView.layer.borderWidth = 1;
-        self.feedBackTextView.layer.borderColor = UIColorOfHex(0xe3ebf1).CGColor;
+        self.feedBackTextView.layer.borderColor = UIColorOfHex(0xF2F2F2).CGColor;
         self.feedBackTextView.contentInset = UIEdgeInsetsMake(0, 8, 0, 8);
-        [self.feedBackTextView setPlaceholder:@"  若有其他原因，请轻点编辑" placeholdColor:[UIColor lightGrayColor]];
+        [self.feedBackTextView setPlaceholder:@"  若有其他原因，请轻点编辑" placeholdColor:UIColorOfHex(0xC0C0C0)];
         [self.contentView addSubview:self.feedBackTextView];
         self.textNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(contentSize.width- 32 - 60, 228, 60, 14)];
         self.textNumberLabel.textAlignment = NSTextAlignmentRight;
-        [self.textNumberLabel setTextColor:UIColorOfHex(0x8095ab)];
+        [self.textNumberLabel setTextColor:UIColorOfHex(0x323232)];
         [self.textNumberLabel setText:@"0/50"];
         [self.textNumberLabel setFont:[UIFont systemFontOfSize:13]];
         [self.contentView addSubview:self.textNumberLabel];
     
-        YXCustomButton *submit = [YXCustomButton comBlueShadowBtnWithSize:CGSizeMake(196, 44)];
-        submit.disableColor = UIColorOfHex(0xEFF4F7);
+        YXCustomButton *submit = [YXCustomButton commonBlueWithCornerRadius: 20];
+        submit.disableColor = UIColorOfHex(0xFFF4E9);
         [submit setTitle:@"提交" forState:UIControlStateNormal];
         submit.userInteractionEnabled = NO;
-        [submit setTitleColor:UIColorOfHex(0x8095AB) forState:UIControlStateNormal];
+        [submit setTitleColor:UIColorOfHex(0xFFFFFF) forState:UIControlStateNormal];
         submit.frame = CGRectMake((contentSize.width - 196) * 0.5, 276, 196, 44);
         [self.contentView addSubview:submit];
         [submit addTarget:self action:@selector(submitAction) forControlEvents:UIControlEventTouchUpInside];
@@ -271,14 +271,14 @@ static const NSInteger MAX_NAME_LENGTH = 50;
     button.selected = !button.selected;
     NSString *title = button.titleLabel.text;
     button.selected ? [self.selTitles addObject:title] : [self.selTitles removeObject:title];
-    button.backgroundColor = button.selected ? UIColorOfHex(0x26E4BE) : [UIColor whiteColor];
-    button.layer.borderColor = button.selected ? UIColorOfHex(0x26E4BE).CGColor : UIColorOfHex(0x485461).CGColor;
+    button.backgroundColor = button.selected ? UIColorOfHex(0xFBA217) : [UIColor whiteColor];
+    button.layer.borderColor = button.selected ? UIColorOfHex(0xFBA217).CGColor : UIColorOfHex(0xC0C0C0).CGColor;
     [self checkSubmitState];
 }
 
 - (void)checkSubmitState {
     self.submit.userInteractionEnabled = (self.selTitles.count || self.feedBackTextView.text.length);
-    UIColor *textColor = self.submit.userInteractionEnabled ? [UIColor whiteColor] : UIColorOfHex(0x8095AB);
+    UIColor *textColor = self.submit.userInteractionEnabled ? [UIColor whiteColor] : UIColorOfHex(0xEAD2BA);
     [self.submit setTitleColor:textColor forState:UIControlStateNormal];
 }
 
