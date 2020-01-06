@@ -167,12 +167,12 @@ static const NSInteger MAX_NAME_LENGTH = 50;
         [self.textNumberLabel setFont:[UIFont systemFontOfSize:13]];
         [self.contentView addSubview:self.textNumberLabel];
     
-        YXCustomButton *submit = [YXCustomButton commonBlueWithCornerRadius: 20];
+        YXCustomButton *submit = [YXCustomButton commonBlueWithCornerRadius: 22];
         submit.disableColor = UIColorOfHex(0xFFF4E9);
         [submit setTitle:@"提交" forState:UIControlStateNormal];
         submit.userInteractionEnabled = NO;
         [submit setTitleColor:UIColorOfHex(0xEAD2BA) forState:UIControlStateNormal];
-        submit.frame = CGRectMake((contentSize.width - 196) * 0.5, 276, 196, 44);
+        submit.frame = CGRectMake((contentSize.width - 196) * 0.5, 276, 196, 40);
         [self.contentView addSubview:submit];
         [submit addTarget:self action:@selector(submitAction) forControlEvents:UIControlEventTouchUpInside];
         self.submit = submit;

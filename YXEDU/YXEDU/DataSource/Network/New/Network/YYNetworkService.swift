@@ -238,20 +238,29 @@ struct YYNetworkService {
      */
     private func handleStatusCodeLogicResponseObject <T> (_ response: T, statusCode: Int, request: YYBaseRequest, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
         let baseResponse = response as YYBaseResopnse
-        let responseStatusCode : Int = baseResponse.statusCode
+        let responseStatusCode: Int = baseResponse.statusCode
         
         if responseStatusCode == 0 {
             success?(response)
+            
         } else {
             if responseStatusCode == 10106 {
                 // 当登录状态失效时，通知上层
 //                let loginExpired = Notification.Name(YYNotificationCenter.kLoginStatusExpired)
 //                NotificationCenter.default.post(name: loginExpired, object: nil)
+                
             } else if responseStatusCode == 6666 {
                 // 停服
                 let serviceStop = YXNotification.kServiceStop
                 NotificationCenter.default.post(name: serviceStop, object: baseResponse.statusMessage)
+            
+            } else if responseStatusCode == 10003 {
+                YXMediator.shared().userKickedOut()
+                
+            } else if let errorMsg = baseResponse.statusMessage {
+                fail?(NSError(domain: "com.youyou.httpError", code: responseStatusCode, userInfo: [NSLocalizedDescriptionKey : errorMsg]))
             }
+            
 //            else if responseStatusCode == 10107 {
 //                //用户资料信息审核不通过
 //                let infoBlocked = Notification.Name(YYNotificationCenter.kUserInfoHasBeenBlocked)
@@ -265,10 +274,6 @@ struct YYNetworkService {
 //                let nicknameBlocked = Notification.Name(YYNotificationCenter.kUserNicknameInfoHasBeenBlocked)
 //                NotificationCenter.default.post(name: nicknameBlocked, object: nil)
 //            }
-            
-            if let errorMsg = baseResponse.statusMessage {
-                fail?(NSError(domain: "com.youyou.httpError", code: responseStatusCode, userInfo: [NSLocalizedDescriptionKey : errorMsg]))
-            }
         }
     }
 

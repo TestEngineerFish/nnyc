@@ -225,6 +225,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 
                 cell.integralStatusLabel.textColor = UIColor.hex(0xD98F36)
                 cell.circleView.backgroundColor = UIColor.hex(0xFCD096)
+                cell.circleView.layer.removeShadow()
                 cell.indicatorImageView.isHidden = true
                 break
                 
@@ -248,6 +249,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 }
                 cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
                 cell.circleView.backgroundColor = .white
+                cell.circleView.layer.removeShadow()
                 cell.indicatorImageView.isHidden = true
                 break
             }

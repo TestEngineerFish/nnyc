@@ -178,6 +178,10 @@ extension YXBaseWordModel {
         }
     }
     
+    var isPhrase: Bool {
+        return partOfSpeechAndMeanings?.first?.partOfSpeech == "phrase"
+    }
+    
     var englishExampleAttributedString: NSAttributedString? {
         var englishExampleAttributedString: NSMutableAttributedString?
         guard let englishExample = examples?.first?.english else { return englishExampleAttributedString }
