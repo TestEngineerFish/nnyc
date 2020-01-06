@@ -100,6 +100,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UINavigationBar.appearance().barStyle = .black
         navigationController?.setNavigationBarHidden(false, animated: animated)
 
         self.navigationController?.navigationBar.barTintColor = UIColor.orange1
@@ -116,6 +117,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        UINavigationBar.appearance().barStyle = .default
 
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
