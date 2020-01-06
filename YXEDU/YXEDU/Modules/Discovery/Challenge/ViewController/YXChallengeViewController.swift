@@ -82,7 +82,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        return
 //        let vc = YXShareViewController()
 //        vc.gameModel = YXGameResultModel()
-//        vc.shareType = .aiReviewReuslt
+//        vc.shareType = .challengeResult
 //        vc.hidesBottomBarWhenPushed = true
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        return
@@ -145,13 +145,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    @objc private func showRuleView() {
-        guard let url = YXUserModel.default.gameExplainUrl else {
-            return
-        }
-        YXAlertWebView.share.show(url)
-    }
-
     private func showGoldLackAlert() {
         let alertView = YXAlertView(type: .normal)
         alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
@@ -166,13 +159,11 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
-        let top3View   = YXChallengeHeaderView()
-        top3View.challengeHeaderView.startButton.addTarget(self, action: #selector(clickPlayButton), for: .touchUpInside)
-        top3View.previousRankButton.addTarget(self, action: #selector(previousRank), for: .touchUpInside)
-        top3View.challengeHeaderView.gameRuleButton.addTarget(self, action: #selector(showRuleView), for: .touchUpInside)
-        top3View.bindData(self.challengeModel)
-        return top3View
+        let headerView = YXChallengeHeaderView(false)
+        headerView.challengeHeaderView.startButton.addTarget(self, action: #selector(clickPlayButton), for: .touchUpInside)
+        headerView.previousRankButton.addTarget(self, action: #selector(previousRank), for: .touchUpInside)
+        headerView.bindData(self.challengeModel)
+        return headerView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -195,25 +186,20 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             return AdaptSize(408)
         }
         return AdaptSize(437)
-
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return AdaptSize(81)
-        } else {
-            return AdaptSize(67)
-        }
+        return AdaptSize(67)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         guard let rankedList = self.challengeModel?.rankedList else {
             return AdaptSize(20)
         }
-        if rankedList.count > 3 {
+        if rankedList.count > 0 {
             return AdaptSize(20)
         } else {
-            return AdaptSize(30)
+            return AdaptSize(244)
         }
     }
 

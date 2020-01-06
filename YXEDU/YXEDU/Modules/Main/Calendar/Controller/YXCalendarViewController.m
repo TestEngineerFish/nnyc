@@ -364,9 +364,9 @@ static CGFloat const kPickViewHeight = 272.f;
     [self _initUI];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePickerView:) name:kRemoveDatePickView object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkChanged) name:kReachabilityChangedNotification object:nil];
-    if (![YXCalendarFresherGuideView isFresherGuideShowed]) {
-        _fresherGuideView = [YXCalendarFresherGuideView showGuideViewToView:self.tabBarController.view delegate:self];
-    }
+//    if (![YXCalendarFresherGuideView isFresherGuideShowed]) {
+//        _fresherGuideView = [YXCalendarFresherGuideView showGuideViewToView:self.tabBarController.view delegate:self];
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

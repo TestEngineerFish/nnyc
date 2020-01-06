@@ -52,16 +52,16 @@ return @{
         for (YXCalendarNewBookModel *bookModel in self.learning_data.review_words) {
             NSString *bookName = bookModel.book_name;
             YXCalendarCellModel *headerModel = [[YXCalendarCellModel alloc] init];
-            headerModel.isWord = NO;
-            headerModel.title = bookName;
+            headerModel.isWord    = NO;
+            headerModel.title     = bookName;
             headerModel.descValue = [NSString stringWithFormat:@"%lu", bookModel.words.count];
             // add
             [tmpArray addObject:headerModel];
             for (YXCalendarWordsModel *wordModel in bookModel.words) {
                 YXCalendarCellModel *cellModel = [[YXCalendarCellModel alloc] init];
-                cellModel.isWord = YES;
-                cellModel.title = wordModel.word;
-                cellModel.word_id = wordModel.word_id;
+                cellModel.isWord    = YES;
+                cellModel.title     = wordModel.word;
+                cellModel.word_id   = wordModel.word_id;
                 cellModel.descValue = [NSString stringWithFormat:@"%@%@", wordModel.word_property, wordModel.paraphrase];
                 // add
                 [tmpArray addObject:cellModel];
@@ -78,15 +78,16 @@ return @{
         for (YXCalendarNewBookModel *bookModel in self.learning_data.study_words) {
             NSString *bookName = bookModel.book_name;
             YXCalendarCellModel *headerModel = [[YXCalendarCellModel alloc] init];
-            headerModel.isWord = NO;
-            headerModel.title = bookName;
+            headerModel.isWord    = NO;
+            headerModel.title     = bookName;
             headerModel.descValue = [NSString stringWithFormat:@"%lu", bookModel.words.count];
             // add
             [tmpArray addObject:headerModel];
             for (YXCalendarWordsModel *wordModel in bookModel.words) {
                 YXCalendarCellModel *cellModel = [[YXCalendarCellModel alloc] init];
-                cellModel.isWord = YES;
-                cellModel.title = wordModel.word;
+                cellModel.isWord    = YES;
+                cellModel.title     = wordModel.word;
+                cellModel.word_id   = wordModel.word_id;
                 cellModel.descValue = [NSString stringWithFormat:@"%@%@", wordModel.word_property, wordModel.paraphrase];
                 // add
                 [tmpArray addObject:cellModel];

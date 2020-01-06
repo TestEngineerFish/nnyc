@@ -35,8 +35,9 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
     }
 
     func bindData(_ wordModel: YXGameWordModel) {
-        selectedButtonList = []
-        self.wordModel = wordModel
+        selectedButtonList  = []
+        self.wordLabel.text = ""
+        self.wordModel      = wordModel
     }
 
     private func createSubviews() {

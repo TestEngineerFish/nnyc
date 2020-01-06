@@ -97,5 +97,11 @@ class YXAlertWebView: UIView, WKNavigationDelegate {
     // MARK: ==== WKNavigationDelegate ====
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.indicatorView.stopAnimating()
+        // 修改字体大小
+//         NSString *headerString = @"<header><meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'><style>img{max-width:100%}</style></header>";
+//            [self.wkWebView loadHTMLString:[headerString stringByAppendingString:self.detailModel.content] baseURL:nil];
+
+        let fontSize = "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '100%'"
+        self.webView.evaluateJavaScript(fontSize, completionHandler: nil)
     }
 }

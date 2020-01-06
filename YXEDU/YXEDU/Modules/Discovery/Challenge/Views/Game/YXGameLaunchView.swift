@@ -64,7 +64,7 @@ class YXGameLaunchView: UIView {
             make.edges.equalToSuperview()
         }
         backgroundImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(AdaptSize(100))
+            make.centerY.equalToSuperview().offset(AdaptSize(-20))
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(328), height: AdaptSize(340)))
         }

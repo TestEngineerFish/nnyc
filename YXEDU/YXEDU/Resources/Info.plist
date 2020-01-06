@@ -170,6 +170,10 @@
 		<string>iconfont.ttf</string>
 		<string>iconfont_back.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>processing</string>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

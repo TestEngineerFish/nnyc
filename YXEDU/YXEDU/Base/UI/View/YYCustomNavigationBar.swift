@@ -211,13 +211,19 @@ import UIKit
 extension YYCustomNavigationBar {
     
     @objc fileprivate func backViewController() {
-        self.leftButtonAction?()
+
+
         
         leftButton.removeTarget(self, action: #selector(backViewController), for: .touchUpInside)
         rightButton.removeTarget(self, action: #selector(rightButtonDidClick), for: .touchUpInside)
         rightSecondButton.removeTarget(self, action: #selector(rightSecondButtonDidClick), for: .touchUpInside)
         
-        YRRouter.sharedInstance()?.currentNavigationController()?.popViewController(animated: true)
+
+        if let action = self.leftButtonAction {
+            action()
+        } else {
+            YRRouter.sharedInstance()?.currentNavigationController()?.popViewController(animated: true)
+        }
     }
     
     @objc fileprivate func rightButtonDidClick() {

@@ -196,11 +196,11 @@
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
-        if var model = data.2 {
+        if let model = data.2 {
 //            model.type = .lookExampleChooseImage
             
             // 新学隐藏提示
-            let tipsHidden = (model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
+            let tipsHidden = (model.type == .newLearnPrimarySchool_Group || model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
             self.bottomView.tipsButton.isHidden  = tipsHidden
             if model.type == .newLearnPrimarySchool {
                 self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
@@ -212,13 +212,28 @@
             // 连线未选中时，禁用提示
             let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese || model.type == .newLearnPrimarySchool_Group || model.type == .newLearnPrimarySchool)
             self.bottomView.tipsButton.isEnabled = tipsEnabled
-                                    
+            // 如果是高中新学，则隐藏底部栏
+            var exerciseViewHeight = YXExerciseConfig.exerciseViewHeight
+            if model.type == .newLearnJuniorHighSchool {
+                self.bottomView.snp.remakeConstraints { (make) in
+                    make.left.right.equalToSuperview()
+                    make.height.equalTo(0)
+                    make.bottom.equalToSuperview()
+                }
+                exerciseViewHeight += YXExerciseConfig.exerciseViewBottom
+            } else {
+                self.bottomView.snp.remakeConstraints { (make) in
+                    make.left.right.equalToSuperview()
+                    make.height.equalTo(YXExerciseConfig.exerciseViewBottom)
+                    make.bottom.equalToSuperview()
+                }
+            }
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
-            exerciseView.frame = CGRect(x: screenWidth, y: self.headerView.frame.maxY, width: screenWidth, height: YXExerciseConfig.exerciseViewHeight)
+            exerciseView.frame = CGRect(x: screenWidth, y: self.headerView.frame.maxY, width: screenWidth, height: exerciseViewHeight)
             self.delegate = exerciseView
             exerciseView.exerciseDelegate = self
             exerciseView.answerView?.connectionAnswerViewDelegate = self
-            
+
             loadExerciseView(exerciseView: exerciseView)
         } else {            
             self.report()
@@ -285,8 +300,8 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     }
 
     /// 启用底部左侧视图
-    func enableTipsButton() {
-        self.bottomView.tipsButton.isEnabled = true
+    func showTipsButton() {
+        self.bottomView.tipsButton.isHidden = false
     }
 
     /// 显示底部右侧视图

@@ -163,7 +163,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             _answerView.status.forward()
         }
         if exerciseModel.word?.example != nil {
-            self.exerciseDelegate?.enableTipsButton()
+            self.exerciseDelegate?.showTipsButton()
         }
         self.exerciseDelegate?.showRightNextView()
     }

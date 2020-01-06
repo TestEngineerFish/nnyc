@@ -36,25 +36,25 @@ class YXNewLearnJuniorHighSchool: YXBaseAnswerView {
         self.addSubview(masteredButton)
         self.addSubview(unknownButton)
         masteredButton.snp.makeConstraints { (make) in
-            make.left.top.equalToSuperview()
+            make.left.equalToSuperview().offset(AdaptSize(27))
+            make.top.equalToSuperview().offset(AdaptSize(11))
             make.width.equalTo(AdaptSize(154))
             make.height.equalTo(defaultH)
         }
         unknownButton.snp.makeConstraints { (make) in
-            make.right.top.equalToSuperview()
+            make.right.equalToSuperview().offset(AdaptSize(-27))
+            make.top.equalToSuperview().offset(AdaptSize(11))
             make.width.equalTo(AdaptSize(154))
             make.height.equalTo(AdaptSize(defaultH))
         }
     }
 
     @objc private func clickMastered() {
-        print("已掌握")
         self.exerciseModel.score = 7
         self.answerDelegate?.answerCompletion(self.exerciseModel, true)
     }
 
     @objc private func clickUnknown() {
-        print("不认识")
         self.exerciseModel.score = 0
         self.answerDelegate?.answerCompletion(self.exerciseModel, true)
     }

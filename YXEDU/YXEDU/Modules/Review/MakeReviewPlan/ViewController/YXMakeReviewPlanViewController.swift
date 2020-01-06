@@ -245,6 +245,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             return UIView()
         }
         let bookModel = model.list[indexPath.row]
+        print(bookModel.id)
         if let unitModelList = model.modelDict["\(bookModel.id)"] {
             if bookModel.type != 3 {
                 unitModelList.forEach { (unitModel) in

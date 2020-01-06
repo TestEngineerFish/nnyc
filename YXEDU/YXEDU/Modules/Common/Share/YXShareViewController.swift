@@ -138,9 +138,11 @@ class YXShareViewController: YXViewController {
     var daysAmount  = 0
     var gameModel: YXGameResultModel?
     var shareType: YXShareImageType = .challengeResult
+    var backAction: (()->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.customNavigationBar?.leftButtonAction = backAction
         self.bindProperty()
         self.createSubviews()
     }
@@ -166,6 +168,8 @@ class YXShareViewController: YXViewController {
             self.shareImageView.image = self.createChallengeReviewShareImage()
         }
     }
+
+
     
     private func createSubviews() {
         self.view.addSubview(headerView)
@@ -396,7 +400,7 @@ class YXShareViewController: YXViewController {
     
     /// 创建听写复习打卡分享页面
     private func createListenReviewShareImage() -> UIImage? {
-        let logoImage    = UIImage(named: "gameShareLogo2")
+        let logoImage    = UIImage(named: "gameShareLogo_blue")
         let shareBgImage = UIImage(named: "ListenReviewShareBgImage")
         let aboveLabel: UILabel = {
             let label = UILabel()
@@ -463,7 +467,7 @@ class YXShareViewController: YXViewController {
     
     /// 创建智能复习打卡分享页面
     private func createAIReviewShareImage() -> UIImage? {
-        let logoImage    = UIImage(named: "gameShareLogo2")
+        let logoImage    = UIImage(named: "gameShareLogo_orange")
         let shareBgImage = UIImage(named: "reviewAIShareBgImage")
         let aboveLabel: UILabel = {
             let label = UILabel()
@@ -530,7 +534,7 @@ class YXShareViewController: YXViewController {
     
     /// 创建复习计划打卡分享页面
     private func createPlanReviewShareImage() -> UIImage? {
-        let logoImage    = UIImage(named: "gameShareLogo2")
+        let logoImage    = UIImage(named: "gameShareLogo_purple")
         let shareBgImage = UIImage(named: "reviewPlanShareBgImage")
         let aboveLabel: UILabel = {
             let label = UILabel()
