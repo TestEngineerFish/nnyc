@@ -553,7 +553,7 @@ extension YXConnectionView {
         case .selected:
             lineColor = UIColor.black1
         case .right:
-            lineColor = UIColor.green
+            lineColor = UIColor.green1
         case .wrong:
             lineColor = UIColor.red1
         case .end:

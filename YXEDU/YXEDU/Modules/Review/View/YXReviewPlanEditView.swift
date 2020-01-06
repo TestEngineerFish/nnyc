@@ -10,7 +10,7 @@ import UIKit
 
 class YXReviewPlanEditView: YXTopWindowView {
     
-    var planId: Int = 0
+    var reviewPlanModel: YXReviewPlanDetailModel?
     
     /// 智能复习
     var editButton = UIButton()
@@ -87,12 +87,12 @@ class YXReviewPlanEditView: YXTopWindowView {
 
 
     @objc private func clickEditButton() {
-        let pid = self.planId
+        let pid = self.reviewPlanModel?.planId ?? 0
         
         // 显示弹框
         let placeholder = "请输入复习计划名称"
         let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
-        alertView.titleLabel.text = "请设置复习计划名称"
+        alertView.titleLabel.text = self.reviewPlanModel?.planName
         alertView.shouldOnlyShowOneButton = false
         alertView.doneClosure = {(text: String?) in
 
@@ -115,7 +115,7 @@ class YXReviewPlanEditView: YXTopWindowView {
     
     @objc private func clickRemoveButton() {
         let removeView = YXReviewPlanRemoveView()
-        removeView.planId = planId
+        removeView.planId = self.reviewPlanModel?.planId ?? 0
         removeView.show()
         
         self.removeFromSuperview()

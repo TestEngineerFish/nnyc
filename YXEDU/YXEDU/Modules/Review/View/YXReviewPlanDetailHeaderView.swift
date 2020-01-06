@@ -266,7 +266,7 @@ class YXReviewPlanDetailHeaderView: YXView {
         p.y += AS(15 + 8)
 
         let editView = YXReviewPlanEditView(point: p)
-        editView.planId = reviewPlanModel?.planId ?? 0
+        editView.reviewPlanModel = reviewPlanModel
         editView.show()
         
     }

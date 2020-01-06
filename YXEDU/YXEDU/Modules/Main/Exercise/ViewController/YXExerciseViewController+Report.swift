@@ -16,6 +16,8 @@ extension YXExerciseViewController {
         } else {
             // 没有数据，就是完成了练习
             dataManager.progressManager.completionExercise()
+            
+            dataManager.progressManager.setStopStudyTime()
             // 学完，上报
             submitResult()
         }
@@ -38,7 +40,7 @@ extension YXExerciseViewController {
     //MARK: submit report
     /// 上报数据
     func submitResult() {
-        dataManager.reportExercise(type: dataType, time: 0) { [weak self] (result, errorMsg) in
+        dataManager.reportExercise(type: dataType) { [weak self] (result, errorMsg) in
             guard let self = self else {return}
             if result {
                 let progress = self.dataManager.progressManager.loadLocalWordsProgress()

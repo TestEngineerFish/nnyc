@@ -106,6 +106,7 @@ class YXReviewPlanDetailViewController: YXViewController {
                 UIView.toast(msg)
             } else {
                 self.headerView.reviewPlanModel = detailModel
+                self.bottomView.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []
             }
         }

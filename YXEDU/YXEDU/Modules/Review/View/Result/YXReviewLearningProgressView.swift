@@ -94,7 +94,12 @@ class YXReviewLearningProgressView: YXTopWindowView {
         let bgColor = UIColor.gradientColor(with: CGSize(width: AS(273), height: AS(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
 //        reviewButton.setBackgroundImage(UIImage.imageWithColor(bgColor ?? UIColor.orange1), for: .normal)
         reviewButton.backgroundColor = bgColor
-        reviewButton.setTitle("继续复习", for: .normal)
+        if type == .planListenReview {
+            reviewButton.setTitle("继续听写", for: .normal)
+        } else if type == .planReview {
+            reviewButton.setTitle("继续复习", for: .normal)
+        }
+        
         reviewButton.setTitleColor(UIColor.white, for: .normal)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
         reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
@@ -244,9 +249,11 @@ class YXReviewLearningProgressView: YXTopWindowView {
 
     
     func attrString() -> NSAttributedString {
+        let typeName = type == .planListenReview ? "听写" : ""
+        
         let score = model?.score ?? 0
         
-        let attrString = NSMutableAttributedString(string: "\(model?.planName ?? "")完成 \(score)%")
+        let attrString = NSMutableAttributedString(string: "\(model?.planName ?? "")\(typeName)完成 \(score)%")
         let start = attrString.length - "\(score)%".count
         
         let all: [NSAttributedString.Key : Any] = [.font: UIFont.mediumFont(ofSize: AS(17)),.foregroundColor: UIColor.black1]

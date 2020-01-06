@@ -52,12 +52,12 @@
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -113,7 +113,6 @@
     private func bindProperty() {
         self.view.backgroundColor = UIColor.white
         self.customNavigationBar?.isHidden = true
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.switchAnimation.owenrView = self.view
         self.switchAnimation.animationDidStop = { [weak self] (right) in
             self?.animationDidStop(isRight: right)
@@ -161,6 +160,7 @@
             
             // 开始答题
             self.hideLoadAnimation { [weak self] in
+                self?.dataManager.progressManager.setStartStudyTime()
                 self?.switchExerciseView()
             }
         } else {
@@ -177,6 +177,7 @@
             if result {
                 DispatchQueue.main.async {
                     self.hideLoadAnimation { [weak self] in
+                        self?.dataManager.progressManager.setStartStudyTime()
                         self?.switchExerciseView()
                     }
                 }
@@ -397,10 +398,12 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
         
         let alertView = YXAlertView()
         alertView.descriptionLabel.text = "是否放弃本次学习并退出?"
-        alertView.doneClosure = { _ in
+        alertView.doneClosure = {[weak self] _ in
             YYCache.remove(forKey: .learningState)
-            self.delegate?.backHomeEvent()
-            self.navigationController?.popViewController(animated: true)
+            self?.dataManager.progressManager.setStopStudyTime()
+            
+            self?.delegate?.backHomeEvent()
+            YRRouter.popViewController(true)
         }
         alertView.cancleClosure = {
             self.delegate?.hideAlertEvent()

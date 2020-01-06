@@ -143,6 +143,10 @@ extension YXSearchViewController {
         self.navigationController?.pushViewController(wordDetialViewController, animated: true)
         
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchView.searchTextFeild.resignFirstResponder()
+    }
 }
 
 

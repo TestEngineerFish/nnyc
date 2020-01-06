@@ -30,7 +30,6 @@ class YXReviewPlanShareDetailBottomView: YXView {
     
     override func createSubviews() {
         self.addSubview(saveButton)
-        
     }
     
     override func bindProperty() {
@@ -64,6 +63,11 @@ class YXReviewPlanShareDetailBottomView: YXView {
 
 
 class YXReviewPlanDetailBottomView: YXView {
+    
+    var reviewPlanModel: YXReviewPlanDetailModel? {
+        didSet { bindData() }
+    }
+    
     var listenEvent: (() -> ())?
     var reviewEvent: (() -> ())?
     
@@ -135,6 +139,23 @@ class YXReviewPlanDetailBottomView: YXView {
         }
     }
 
+    override func bindData() {
+        if reviewPlanModel?.listenState == .learning {
+            listenButton.setTitle("继续听写", for: .normal)
+        } else {
+            listenButton.setTitle("听写练习", for: .normal)
+        }
+        
+        
+        if reviewPlanModel?.reviewState == .normal {
+            reviewButton.setTitle("开始复习", for: .normal)
+        } else if reviewPlanModel?.reviewState == .learning {
+            reviewButton.setTitle("继续复习", for: .normal)
+        } else if reviewPlanModel?.reviewState == .finish {
+            reviewButton.setTitle("巩固复习", for: .normal)
+        }
+    }
+    
     @objc func clickListenButton() {
         listenEvent?()
     }

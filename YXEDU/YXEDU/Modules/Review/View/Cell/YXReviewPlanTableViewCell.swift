@@ -27,6 +27,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     var listenImageView = UIImageView()
     var listenButton = UIButton()
     var reviewButton = UIButton()
+    let tap = UITapGestureRecognizer(target: self, action: #selector(clickListenButton))
     
     deinit {
         listenButton.removeTarget(self, action: #selector(clickListenButton), for: .touchUpInside)
@@ -73,8 +74,10 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         subTitleLabel.text = "听写进度：80%"
         subTitleLabel.textColor = UIColor.black3
         
-                
+        
+        
         listenImageView.image = UIImage(named: "review_listen_icon")
+        listenImageView.addGestureRecognizer(tap)
         
         listenButton.setTitle("听写练习", for: .normal)
         listenButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(12))

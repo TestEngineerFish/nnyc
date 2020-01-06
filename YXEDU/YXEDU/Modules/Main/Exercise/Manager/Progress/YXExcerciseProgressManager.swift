@@ -39,6 +39,7 @@ class YXExcerciseProgressManager: NSObject {
         case errorCount = "Error_Count"
         case newWordReadScore = "New_Word_Read_Score"   // 新学跟读得分
         
+        case startStudyTime = "Start_Study_Time"
         case studyDuration = "Study_Duration"
         case skipNewWord = "Skip_New_Word"
     }
@@ -242,16 +243,6 @@ class YXExcerciseProgressManager: NSObject {
         }
     }
     
-    
-    func updateStudyDuration(duration: Int) {
-        if var d = YYCache.object(forKey: key(.studyDuration)) as? Int {
-            d += duration
-            YYCache.set(d, forKey: key(.studyDuration))
-        } else {
-            YYCache.set(duration, forKey: key(.studyDuration))
-        }                
-    }
-    
     func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?) {
         YYCache.set(false, forKey: key(.completion))
         
@@ -297,7 +288,10 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.remove(forKey: key(.currentTurnIndex))
         YYCache.remove(forKey: key(.newWordIds))
         YYCache.remove(forKey: key(.reviewWordIds))
+        
+        YYCache.remove(forKey: key(.startStudyTime))
         YYCache.remove(forKey: key(.studyDuration))
+        
         YYCache.remove(forKey: key(.skipNewWord))
         
         removeLocalFile(.new)
@@ -309,7 +303,7 @@ class YXExcerciseProgressManager: NSObject {
     
     
     //MARK: - Private
-    private func key(_ key: LocalKey) -> String {
+    func key(_ key: LocalKey) -> String {
         
         let today = self.today()
         let bid = bookId == nil ? "b_" :  "\(bookId!)_"

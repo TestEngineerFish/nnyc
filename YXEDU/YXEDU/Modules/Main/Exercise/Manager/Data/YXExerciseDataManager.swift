@@ -198,9 +198,10 @@ class YXExerciseDataManager: NSObject {
     /// 上报关卡
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
-    func reportExercise(type: YXExerciseDataType, time: Int, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+    func reportExercise(type: YXExerciseDataType, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let result = self.reportJson()
-        let request = YXExerciseRequest.report(type: type.rawValue, time: time, result: result)
+        let duration = progressManager.fetchStudyDuration()
+        let request = YXExerciseRequest.report(type: type.rawValue, time: duration, result: result)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
             completion?(response.dataArray != nil, nil)
         }) { (error) in

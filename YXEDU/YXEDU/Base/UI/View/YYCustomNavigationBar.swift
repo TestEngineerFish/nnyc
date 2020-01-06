@@ -138,7 +138,7 @@ import UIKit
         backButton.setTitleColor(UIColor.black1, for: .normal)
         backButton.setTitleColor(UIColor.black3, for: .highlighted)
         backButton.setTitle(kIconFont_back, for: .normal)
-        backButton.titleLabel?.font = UIFont.iconfont(size: 18)
+        backButton.titleLabel?.font = UIFont.iconfont(size: 16)
         backButton.contentHorizontalAlignment = .left
         backButton.addTarget(self, action: #selector(backViewController), for: .touchUpInside)
         
