@@ -9,6 +9,7 @@
 import UIKit
 
 class YXChallengeHeaderView: UIView {
+    var isPreviousRank: Bool
     let challengeHeaderView = YXChallengeHeaderTopView()
     let myRankView          = YXChallengeMyRankCell(style: .default, reuseIdentifier: nil)
     var headerBackgroundView: UIView = {
@@ -37,8 +38,9 @@ class YXChallengeHeaderView: UIView {
         return button
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(_ isPeviousRank: Bool) {
+        self.isPreviousRank = isPeviousRank
+        super.init(frame: CGRect.zero)
         self.createSubviews()
         self.bindProperty()
     }
@@ -52,20 +54,23 @@ class YXChallengeHeaderView: UIView {
     }
 
     private func createSubviews() {
-        self.addSubview(challengeHeaderView)
-        self.addSubview(myRankView.contentView)
+        if !isPreviousRank {
+            self.addSubview(challengeHeaderView)
+            challengeHeaderView.snp.makeConstraints { (make) in
+                make.left.top.right.equalToSuperview()
+                make.height.equalTo(AdaptSize(268))
+            }
+        }
+        self.addSubview(myRankView)
         self.addSubview(headerBackgroundView)
         headerBackgroundView.addSubview(iconImageView)
         headerBackgroundView.addSubview(titleLabel)
         headerBackgroundView.addSubview(previousRankButton)
-        challengeHeaderView.snp.makeConstraints { (make) in
-            make.left.top.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(268))
-        }
-        myRankView.contentView.snp.remakeConstraints { (make) in
-            make.top.equalTo(challengeHeaderView.snp.bottom)
+        self.previousRankButton.isHidden = isPreviousRank
+        myRankView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(headerBackgroundView.snp.top).offset(AdaptSize(-11))
             make.centerX.equalToSuperview()
-            make.width.equalTo(challengeHeaderView)
+            make.width.equalToSuperview()
             make.height.equalTo(AdaptSize(83))
         }
         headerBackgroundView.size = CGSize(width: AdaptSize(349), height: AdaptSize(48))
@@ -95,7 +100,9 @@ class YXChallengeHeaderView: UIView {
         guard let challengeModel = challengeModel, let userModel = challengeModel.userModel else {
             return
         }
-        self.challengeHeaderView.bindData(challengeModel)
+        if !isPreviousRank {
+            self.challengeHeaderView.bindData(challengeModel)
+        }
         self.myRankView.bindData(userModel)
         if challengeModel.rankedList.count > 0 {
             myRankView.isHidden = false

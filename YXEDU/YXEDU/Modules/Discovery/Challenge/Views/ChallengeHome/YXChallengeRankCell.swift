@@ -18,7 +18,6 @@ class YXChallengeRankCell: UITableViewCell {
 
     var levelImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image    = UIImage(named: "")
         imageView.isHidden = true
         return imageView
     }()
@@ -131,7 +130,7 @@ class YXChallengeRankCell: UITableViewCell {
 
         levelLabel.sizeToFit()
         levelLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(16))
+            make.centerX.equalTo(levelImageView)
             make.centerY.equalToSuperview()
             make.height.equalTo(AdaptSize(21))
             make.width.equalTo(levelLabel.width)

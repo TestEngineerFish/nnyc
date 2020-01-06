@@ -93,25 +93,28 @@ class YXAlertCheckManager {
     func checkOldUser(_ completion: (() -> Void)? ) {
         let request = YXRegisterAndLoginRequest.userInfomation
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
-            guard let userInfomation = response.data, userInfomation.oldUserUpdateMessage?.isNotEmpty ?? false else {
-                completion?()
+            guard let userInfomation = response.data else {
                 return
             }
-            
-            let alertView = YXAlertView()
-            alertView.titleLabel.text = "提示"
-            alertView.descriptionLabel.text = userInfomation.oldUserUpdateMessage
-            alertView.shouldOnlyShowOneButton = true
-            alertView.shouldDismissWhenTapBackground = false
-            alertView.tag = YXAlertWeightType.oldUserTips
-            alertView.doneClosure = { (string) in
-                YXSettingDataManager().reportOldUserTips { (model, msg) in
-                    print("老用户更新提示，上报：", model?.state ?? 0)
+            YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
+            YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
+            if userInfomation.oldUserUpdateMessage?.isNotEmpty ?? false {
+                let alertView = YXAlertView()
+                alertView.titleLabel.text = "提示"
+                alertView.descriptionLabel.text = userInfomation.oldUserUpdateMessage
+                alertView.shouldOnlyShowOneButton = true
+                alertView.shouldDismissWhenTapBackground = false
+                alertView.tag = YXAlertWeightType.oldUserTips
+                alertView.doneClosure = { (string) in
+                    YXSettingDataManager().reportOldUserTips { (model, msg) in
+                        print("老用户更新提示，上报：", model?.state ?? 0)
+                    }
                 }
+                YXAlertQueueManager.default.addAlert(alertView: alertView)
+                completion?()
+            } else {
+                completion?()
             }
-            
-            YXAlertQueueManager.default.addAlert(alertView: alertView)
-            completion?()
         }) { error in
             print("❌❌❌\(error)")
             completion?()

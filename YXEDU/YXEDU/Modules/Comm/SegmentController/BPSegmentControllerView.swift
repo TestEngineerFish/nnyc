@@ -135,6 +135,10 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         return self.delegate?.pagesNumber() ?? 0
     }
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(indexPath)
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         guard let segmentView = collectionView as? BPSegmentView else {

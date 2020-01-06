@@ -21,6 +21,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     var gameResultMode: YXGameResultModel?
     var currentQuestionIndex = 0
     var gameLineId: Int?
+    var timeOffset = 0 //记录退到后台时长
 
     var launchView: YXGameLaunchView?
     var headerView   = YXGameHeaderView()
@@ -41,6 +42,10 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
         self.questionView.timer?.invalidate()
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     private func bindData() {
         guard let gameModel = self.gameModel, let config = gameModel.config else {
             return
@@ -55,7 +60,18 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
         self.headerView.vcDelegate   = self
         self.questionView.vcDelegate = self
         self.answerView.selectedWordView.vcDelegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
+
+    @objc private func didEnterBackground() {
+        print("进入后台")
+    }
+
+    @objc private func willEnterForeground() {
+        print("进入前台")
+    }
+
 
     private func setSubviews() {
         let backgroundImageView: UIImageView = {
@@ -116,12 +132,15 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
                     self.resultView.showSuccessView(model)
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
                         self.resultView.closeView()
-                        YRRouter.popViewController(false)
+
                         let shareVC = YXShareViewController()
                         shareVC.shareType   = .challengeResult
                         shareVC.gameModel   = model
+                        shareVC.backAction  = {
+                            YRRouter.popViewController(2, animated: true)
+                        }
                         shareVC.hidesBottomBarWhenPushed = true
-                        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: false)
+                        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
                     }
                 }
             } else {

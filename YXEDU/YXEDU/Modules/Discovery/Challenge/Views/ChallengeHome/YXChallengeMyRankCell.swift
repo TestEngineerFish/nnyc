@@ -22,6 +22,15 @@ class YXChallengeMyRankCell: UITableViewCell {
         return imageView
     }()
 
+    var levelLabel: UILabel = {
+        let label = UILabel()
+        label.text          = ""
+        label.textColor     = UIColor.orange1
+        label.font          = UIFont.mediumFont(ofSize: AdaptSize(15))
+        label.textAlignment = .center
+        return label
+    }()
+
     var levelHighlightLabel: UILabel = {
         let label = UILabel()
         label.text          = "--"
@@ -75,7 +84,7 @@ class YXChallengeMyRankCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.hex(0xE9DDC4)
+        self.backgroundColor = UIColor.clear
         self.selectionStyle = .none
         self.setSubviews()
     }
@@ -86,15 +95,18 @@ class YXChallengeMyRankCell: UITableViewCell {
 
     func bindData(_ userModel: YXChallengeUserModel) {
         if userModel.challengeResult == .success {
-            self.nameLabel.text             = userModel.name
-            self.nameLabel.textColor        = UIColor.white
-            self.descriptionLabel.text      = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
-            self.descriptionLabel.textColor = UIColor.white
-            self.descriptionLabel.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
-            self.goldIconImageView.isHidden = false
-            self.bonusLabel.isHidden        = false
-            self.descriptionLabel.isHidden  = false
-            self.bonusLabel.text            = "+\(userModel.bonus)"
+            self.nameLabel.text               = userModel.name
+            self.nameLabel.textColor          = UIColor.hex(0x4F381D)
+            self.descriptionLabel.text        = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
+            self.descriptionLabel.textColor   = UIColor.hex(0xA18266)
+            self.descriptionLabel.font        = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+            self.goldIconImageView.isHidden   = false
+            self.bonusLabel.isHidden          = false
+            self.descriptionLabel.isHidden    = false
+            self.tagImageView.isHidden        = true
+            self.levelHighlightLabel.isHidden = true
+            self.levelLabel.isHidden          = false
+            self.bonusLabel.text              = "+\(userModel.bonus)"
             self.descriptionLabel.sizeToFit()
             self.descriptionLabel.snp.updateConstraints { (make) in
                 make.width.equalTo(self.descriptionLabel.width)
@@ -105,6 +117,11 @@ class YXChallengeMyRankCell: UITableViewCell {
             self.bonusLabel.sizeToFit()
             self.bonusLabel.snp.updateConstraints { (make) in
                 make.width.equalTo(self.bonusLabel.width)
+            }
+            self.levelLabel.text = "\(userModel.ranking)"
+            levelLabel.sizeToFit()
+            levelLabel.snp.updateConstraints { (make) in
+                make.width.equalTo(levelLabel.width)
             }
         } else {
             if userModel.challengeResult == .unanswered {
@@ -117,30 +134,28 @@ class YXChallengeMyRankCell: UITableViewCell {
             self.descriptionLabel.isHidden     = true
             self.goldIconImageView.isHidden    = true
             self.bonusLabel.isHidden           = true
+            self.tagImageView.isHidden         = false
+            self.levelHighlightLabel.isHidden  = false
+            self.levelLabel.isHidden           = true
             self.levelHighlightLabel.text      = "未上榜"
             self.nameLabel.snp.updateConstraints { (make) in
                 make.centerY.equalTo(avatarImageView)
             }
+            self.levelHighlightLabel.sizeToFit()
+            self.tagImageView.snp.updateConstraints { (make) in
+                make.width.equalTo(AdaptSize(levelHighlightLabel.width + AdaptSize(13)))
+            }
         }
 
-        self.avatarImageView.layer.cornerRadius = AdaptSize(47/2)
-        self.avatarImageView.snp.updateConstraints { (make) in
-            make.width.equalTo(AdaptSize(47))
-            make.height.equalTo(AdaptSize(47))
-        }
         self.nameLabel.sizeToFit()
         self.nameLabel.snp.updateConstraints { (make) in
             make.width.equalTo(self.nameLabel.width)
         }
-        self.levelHighlightLabel.sizeToFit()
-        self.tagImageView.snp.updateConstraints { (make) in
-            make.width.equalTo(AdaptSize(levelHighlightLabel.width + AdaptSize(13)))
-        }
     }
 
     private func setSubviews() {
-        self.contentView.addSubview(bgContentView)
-
+        self.addSubview(bgContentView)
+        bgContentView.addSubview(levelLabel)
         bgContentView.addSubview(avatarImageView)
         bgContentView.addSubview(nameLabel)
         bgContentView.addSubview(descriptionLabel)
@@ -149,6 +164,13 @@ class YXChallengeMyRankCell: UITableViewCell {
         bgContentView.addSubview(tagImageView)
         tagImageView.addSubview(levelHighlightLabel)
 
+        levelLabel.sizeToFit()
+        levelLabel.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(16))
+            make.centerY.equalToSuperview()
+            make.height.equalTo(AdaptSize(21))
+            make.width.equalTo(levelLabel.width)
+        }
         bgContentView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(AdaptSize(13))
@@ -194,7 +216,7 @@ class YXChallengeMyRankCell: UITableViewCell {
 
         goldIconImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(28), height: AdaptSize(28)))
+            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
             make.right.equalTo(bonusLabel.snp.left).offset(AdaptSize(-5))
         }
 
@@ -203,7 +225,7 @@ class YXChallengeMyRankCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.width.equalTo(bonusLabel.width)
             make.height.equalTo(AdaptSize(21))
-            make.right.equalToSuperview().offset(AdaptSize(-19))
+            make.right.equalToSuperview().offset(AdaptSize(-14))
         }
 
     }

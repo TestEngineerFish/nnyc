@@ -15,7 +15,6 @@ class YXChallengeHeaderTopView: UIView {
         imageView.image = UIImage(named: "challengeSquirrel")
         return imageView
     }()
-
     var gameTitleLabel: UILabel = {
         let label = UILabel()
         label.text      = "本活动距离结束还有："
@@ -57,6 +56,7 @@ class YXChallengeHeaderTopView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
         self.setSubviews()
+        self.bindProperty()
 //        self.startLeftGoldAnimation()
 //        self.startCenterGoldAnimation()
 //        self.startRightGoldAnimation()
@@ -74,6 +74,10 @@ class YXChallengeHeaderTopView: UIView {
         propertyView.bindData(challengeModel.userModel?.myCoins ?? 0)
         countDownView.bindData(challengeModel.gameInfo?.timeLeft ?? 0)
         startButton.bindData(challengeModel)
+    }
+
+    private func bindProperty() {
+        self.gameRuleButton.addTarget(self, action: #selector(showRuleView), for: .touchUpInside)
     }
 
     private func setSubviews() {
@@ -94,7 +98,7 @@ class YXChallengeHeaderTopView: UIView {
         }
         gameTitleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(150))
-            make.top.equalToSuperview().offset(AdaptSize(102))
+            make.top.equalToSuperview().offset(AdaptSize(110))
             make.size.equalTo(CGSize(width: AdaptSize(121), height: AdaptSize(17)))
         }
         propertyView.snp.makeConstraints { (make) in
@@ -132,6 +136,14 @@ class YXChallengeHeaderTopView: UIView {
             make.top.equalToSuperview().offset(AdaptSize(127))
             make.size.equalTo(CGSize(width: AdaptSize(55), height: AdaptSize(55)))
         }
+    }
+
+    // MARK: ==== Event ====
+    @objc private func showRuleView() {
+        guard let url = YXUserModel.default.gameExplainUrl else {
+            return
+        }
+        YXAlertWebView.share.show(url)
     }
 
     // MARK: ==== Animation ====

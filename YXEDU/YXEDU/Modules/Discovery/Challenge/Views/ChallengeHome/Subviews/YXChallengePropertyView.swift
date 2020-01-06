@@ -22,6 +22,7 @@ class YXChallengePropertyView: UIView {
         label.text      = "0"
         label.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
         label.textColor = UIColor.white
+        label.isUserInteractionEnabled = true
         return label
     }()
 
@@ -54,8 +55,10 @@ class YXChallengePropertyView: UIView {
     }
 
     private func bindProprety() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(clickGoldImage))
-        self.goldImageView.addGestureRecognizer(tap)
+        let tapImage = UITapGestureRecognizer(target: self, action: #selector(clickGoldImage))
+        self.goldImageView.addGestureRecognizer(tapImage)
+        let tapLabel = UITapGestureRecognizer(target: self, action: #selector(clickGoldImage))
+        self.numberLabel.addGestureRecognizer(tapLabel)
     }
 
     private func setSubviews(){
@@ -76,7 +79,7 @@ class YXChallengePropertyView: UIView {
     }
 
     // MARK: ==== UIGestureRecognizer ====
-    @objc private func clickGoldImage() {
+    @objc func clickGoldImage() {
         guard let urlStr = YXUserModel.default.coinExplainUrl else {
             return
         }

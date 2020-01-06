@@ -16,6 +16,7 @@ class YXNewLearnJuniorHighSchoolExerciseView: YXBaseExerciseView {
 
         answerView = YXNewLearnJuniorHighSchool(exerciseModel: exerciseModel)
         self.addSubview(answerView!)
+        answerView?.layer.setDefaultShadow()
 
         answerView?.answerDelegate = self
     }
@@ -23,8 +24,8 @@ class YXNewLearnJuniorHighSchoolExerciseView: YXBaseExerciseView {
     override func layoutSubviews() {
         super.layoutSubviews()
         answerView?.snp.makeConstraints({ (make) in
-            make.left.right.equalTo(questionView!)
-            make.height.equalTo(AdaptSize(42))
+            make.left.right.equalToSuperview()
+            make.height.equalTo(YXExerciseConfig.exerciseViewBottom)
             make.bottom.equalToSuperview()
         })
 

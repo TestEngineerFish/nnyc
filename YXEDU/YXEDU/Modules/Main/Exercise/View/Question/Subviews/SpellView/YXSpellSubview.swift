@@ -107,7 +107,7 @@ class YXSpellSubview: UIView {
     private func resetConstraints() {
         maxX = 0
         self.wordViewList.forEach { (view) in
-            var _width = CGFloat(AdaptSize(20))
+            var _width = CGFloat(AdaptSize(14))
             if !view.text.isEmpty {
                 let w = view.text.textWidth(font: view.textField.font!, height: charH)
                 _width = w > _width ? w : _width

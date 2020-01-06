@@ -186,7 +186,6 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
 
     // 重新开始计时
     func restartTimer() {
-        self.stopTimer()
         self.skipButton.isHidden = true
         self.consumeTime = 0
         self.startTimer()

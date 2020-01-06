@@ -12,7 +12,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
 
     var gameVersion: Int?
     var challengeModel: YXChallengeModel?
-    var tableView = UITableView(frame: .zero, style: .plain)
+    var tableView = UITableView(frame: .zero, style: .grouped)
     final let kYXChallengeRankCell   = "YXChallengeRankCell"
 
     override func viewDidLoad() {
@@ -52,27 +52,23 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
         return self.challengeModel?.rankedList.count ?? 0
     }
 
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView   = YXChallengeHeaderView(true)
+        headerView.bindData(self.challengeModel)
+        return headerView
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let model = self.challengeModel else {
             return UITableViewCell()
         }
-        if indexPath.row == 0 {
-            let cell = YXChallengeMyRankCell(style: .default, reuseIdentifier: nil)
-            guard let userModel = model.userModel else {
-                return cell
-            }
-            cell.backgroundColor = UIColor.clear
-            cell.bindData(userModel)
-            return cell
-        } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXChallengeRankCell) as? YXChallengeRankCell, indexPath.row <= model.rankedList.count else {
-                return UITableViewCell()
-            }
-            let otherUserModel = model.rankedList[indexPath.row - 1]
-            cell.backgroundColor = UIColor.clear
-            cell.bindData(otherUserModel)
-            return cell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXChallengeRankCell) as? YXChallengeRankCell, indexPath.row <= model.rankedList.count else {
+            return UITableViewCell()
         }
+        let otherUserModel = model.rankedList[indexPath.row]
+        cell.backgroundColor = UIColor.clear
+        cell.bindData(otherUserModel)
+        return cell
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -82,7 +78,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.01
+        return AdaptSize(140)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

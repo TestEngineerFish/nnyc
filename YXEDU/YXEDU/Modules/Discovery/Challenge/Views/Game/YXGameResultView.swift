@@ -142,7 +142,7 @@ class YXGameResultView: UIView {
         }
         resultImageView.snp.makeConstraints { (make) in
             make.size.equalTo(CGSize(width: AdaptSize(375), height: AdaptSize(485)))
-            make.top.equalToSuperview().offset(AdaptSize(24))
+            make.centerY.equalToSuperview().offset(AdaptSize(-70))
             make.centerX.equalToSuperview()
         }
         avatarImageView.snp.makeConstraints { (make) in
@@ -189,7 +189,6 @@ class YXGameResultView: UIView {
         }
     }
 
-//    func showFailView(_ block: (()->Void)) {
     func showFailView(_ block: (()->Void)?) {
         self.closeBlock = block
         resultImageView.image = UIImage(named: "gameResultFailBgImage")
@@ -204,7 +203,7 @@ class YXGameResultView: UIView {
         }
         resultImageView.snp.makeConstraints { (make) in
             make.size.equalTo(CGSize(width: AdaptSize(358), height: AdaptSize(498)))
-            make.top.equalToSuperview().offset(AdaptSize(50))
+            make.centerY.equalToSuperview().offset(AdaptSize(-40))
             make.centerX.equalToSuperview()
         }
         closeButton.snp.makeConstraints { (make) in

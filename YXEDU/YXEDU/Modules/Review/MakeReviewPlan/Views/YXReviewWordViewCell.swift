@@ -88,7 +88,7 @@ class YXReviewWordViewCell: UITableViewCell {
             self.barImageView.image = nil
         }
         self.titleLabel.text       = model.word
-        self.statusButton.isHidden = model.isLearn
+        self.statusButton.isHidden = !model.isLearn
         self.descriptionLabel.text = {
             var text = ""
             for p in model.paraphrase {

@@ -137,6 +137,7 @@ class YXExerciseBottomView: UIView {
         self.tipsButton.isHidden = true
         self.nextView.isHidden   = true
         self.delegate?.clickNextViewEvent()
+        self.superview?.bringSubviewToFront(self)
         self.layer.setDefaultShadow(cornerRadius: 0)
     }
 
