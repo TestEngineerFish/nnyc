@@ -116,11 +116,13 @@ class YXReviewPlanCommandView: YXTopWindowView {
             make.height.equalTo(AS(19))
         }
         
-        let descWidth = descLabel.attributedText?.string.textWidth(font: descLabel.font, height: AS(20)) ?? 0
+        var descWidth = descLabel.attributedText?.string.textWidth(font: descLabel.font, height: AS(20)) ?? 0
+        let descMax: CGFloat = AS(304 - 26 - 40)
+        descWidth = descWidth > descMax ? descMax : descWidth
         descLabel.snp.makeConstraints { (make) in
             make.top.equalTo(AS(98))
             
-            let right = (screenWidth - descWidth - AS(26)) / 2
+            let right = (304 - descWidth - AS(26)) / 2
             make.left.equalTo(shareImageView.snp.right).offset(AS(7))
             make.right.equalTo(AS(-right))
             make.height.equalTo(AS(20))
