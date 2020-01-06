@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initThirdPartyServices() {
-        QQApiManager.shared().registerQQ("1110115761")
+        QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
         
 //        Growing.start(withAccountId: kGrowingIOID)

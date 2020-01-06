@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *const qqId            = @"1110115761";
+static NSString *const qqId            = @"101475072";
 static NSString *const wechatId        = @"wxa16b70cc1b2c98a0";
 static NSString *const wechatAppSerect = @"23a8ccc80c48dea4337d6856d192a8d0";
 static NSString *const jgId            = @"18071adc0320639477f";

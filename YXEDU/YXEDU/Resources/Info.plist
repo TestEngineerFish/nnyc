@@ -27,7 +27,7 @@
 			<string>tencent</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>QQ1110115761</string>
+				<string>QQ101475072</string>
 			</array>
 		</dict>
 		<dict>
@@ -43,7 +43,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tencent1110115761</string>
+				<string>tencent101475072</string>
 			</array>
 		</dict>
 		<dict>

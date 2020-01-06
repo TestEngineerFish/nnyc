@@ -127,20 +127,20 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
 
         return fooderView
     }
-
+    
     // TODO: ==== Tools ====
     private func getRandomTips() -> String {
-        let tipsArray = ["阅读碰到不认识的单词，主页点击右上角放大镜图片",                                                 "已经学会的单词，可以点击已掌握，增加学习效率",
-                         "遇到实用的词，可以收藏起来，经常看看",
-                         "错词本就在首页，经常温习，错误就会越来越少",
-                         "好用的话记得给我们的App来个五星好评",
-                         "分享给你的好朋友，一起进步，才是牢固的羁绊"]
-        let encourageArray = ["学习虽然反人类，但是人生如逆水行舟，不进则退",
-                              "学习不在于学习的量有多少，而在于坚持与质量",
-                              "天天要读书，是很累，不过累着累着就突破了",
+        let tipsArray = ["阅读碰到不认识的单词\n主页点击右上角放大镜图片",
+                         "已经学会的单词，可以点击已掌握\n增加学习效率",
+                         "遇到实用的词，可以收藏起来\n经常看看，可以温故而知新",
+                         "错词本就在首页，经常温习\n错误就会越来越少",
+                         "好用的话记得给我们的App来个五星好评哦",
+                         "分享给你的好朋友\n一起进步，才是牢固的羁绊"]
+        let encourageArray = ["学习不在于学习的量有多少\n而在于坚持与质量",
+                              "天天要读书是很累\n不过累着累着就突破了",
                               "学霸就是要在别人不知道的时候努力",
                               "越倒霉越努力，努力着努力着就顺了",
-                              "要说天才的优势是什么，那就是他天生会学习"]
+                              "要说天才的优势是什么\n那就是他天生会学习"]
         let totalArray = tipsArray + encourageArray
         return totalArray.randomElement() ?? ""
     }

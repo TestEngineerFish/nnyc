@@ -137,7 +137,7 @@
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
-    if ([url.absoluteString hasPrefix:@"tencent1110115761"]) {
+    if ([url.absoluteString hasPrefix:@"tencent101475072"]) {
         [[QQApiManager shared] handleOpenURL:url];
     } else {
         [[WXApiManager shared] handleOpenURL:url];
