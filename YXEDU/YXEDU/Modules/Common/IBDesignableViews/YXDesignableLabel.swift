@@ -39,29 +39,30 @@ class YXDesignableLabel: UILabel {
         }
     }
     
-    fileprivate var animationDuration = 2.0
+    private var animationDuration = 2.0
     
-    fileprivate var startingValue: Float = 0
-    fileprivate var destinationValue: Float = 0
-    fileprivate var progress: TimeInterval = 0
+    private var startingValue: Float = 0
+    private var destinationValue: Float = 0
+    private var progress: TimeInterval = 0
     
-    fileprivate var lastUpdateTime: TimeInterval = 0
-    fileprivate var totalTime: TimeInterval = 0
+    private var lastUpdateTime: TimeInterval = 0
+    private var totalTime: TimeInterval = 0
     
-    fileprivate var timer: CADisplayLink?
+    private var timer: CADisplayLink?
     
-    fileprivate var currentValue: Float {
+    private var symbol: String?
+    private var currentValue: Float {
         if progress >= totalTime { return destinationValue }
         return startingValue + Float(progress / totalTime) * (destinationValue - startingValue)
     }
     
-    fileprivate func addDisplayLink() {
+    private func addDisplayLink() {
         timer = CADisplayLink(target: self, selector: #selector(self.updateValue(timer:)))
         timer?.add(to: .main, forMode: .default)
         timer?.add(to: .main, forMode: .tracking)
     }
     
-    @objc fileprivate func updateValue(timer: Timer) {
+    @objc private func updateValue(timer: Timer) {
         let now: TimeInterval = Date.timeIntervalSinceReferenceDate
         progress += now - lastUpdateTime
         lastUpdateTime = now
@@ -75,15 +76,15 @@ class YXDesignableLabel: UILabel {
         setTextValue(value: currentValue)
     }
     
-    fileprivate func setTextValue(value: Float) {
-        text = String(format: "%.0f", value)
+    private func setTextValue(value: Float) {
+        text = String(format: "\(symbol ?? "")%.0f", value)
     }
 }
 
 
 
 extension YXDesignableLabel {
-    func count(from: Float, to: Float, duration: TimeInterval? = nil) {
+    func count(from: Float, to: Float, duration: TimeInterval? = nil, anySymbol: String? = nil) {
         startingValue = from
         destinationValue = to
         
@@ -100,10 +101,11 @@ extension YXDesignableLabel {
         totalTime = duration ?? animationDuration
         lastUpdateTime = Date.timeIntervalSinceReferenceDate
         
+        symbol = anySymbol
         addDisplayLink()
     }
     
-    func countFromCurrent(to: Float, duration: TimeInterval? = nil) {
-        count(from: currentValue, to: to, duration: duration ?? nil)
+    func countFromCurrent(to: Float, duration: TimeInterval? = nil, anySymbol: String? = nil) {
+        count(from: currentValue, to: to, duration: duration ?? nil, anySymbol: anySymbol)
     }
 }

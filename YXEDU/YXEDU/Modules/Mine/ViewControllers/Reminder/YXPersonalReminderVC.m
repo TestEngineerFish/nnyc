@@ -55,7 +55,7 @@
     UILabel *intervalLabel = [[UILabel alloc] init];
     intervalLabel.text = @"开启每日提醒，不错过每天的背单词计划";
     [intervalLabel setFont:[UIFont systemFontOfSize:14]];
-    intervalLabel.textColor = UIColorOfHex(0x8095AB);
+    intervalLabel.textColor = UIColorOfHex(0x888888);
     
     [self.view addSubview:switchLabel];
     [self.view addSubview:self.isReminderSwitch];

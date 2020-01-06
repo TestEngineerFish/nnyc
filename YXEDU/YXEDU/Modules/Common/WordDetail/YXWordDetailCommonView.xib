@@ -25,8 +25,8 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11v-Vb-OEW">
-                    <rect key="frame" x="28" y="0.0" width="21.5" height="29"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <rect key="frame" x="28" y="0.0" width="22" height="29"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -70,7 +70,7 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkP-Fs-mzR">
-                    <rect key="frame" x="57.5" y="4.5" width="20" height="20"/>
+                    <rect key="frame" x="58" y="4.5" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="ByM-2N-VKy"/>
                         <constraint firstAttribute="height" constant="20" id="UZo-zk-dTC"/>

@@ -30,8 +30,8 @@ class YXNewLearnJuniorHighSchoolExerciseView: YXBaseExerciseView {
 
         questionView?.snp.makeConstraints({ (make) in
             make.top.equalTo(32)
-            make.left.equalTo(22)
-            make.right.equalTo(-22)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
             make.bottom.equalTo(answerView!.snp.top).offset(-AdaptSize(15))
         })
     }

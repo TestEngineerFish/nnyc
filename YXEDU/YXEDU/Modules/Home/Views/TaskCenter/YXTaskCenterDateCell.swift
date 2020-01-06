@@ -12,7 +12,7 @@ class YXTaskCenterDateCell: UICollectionViewCell {
 
     @IBOutlet weak var weekLabel: UILabel!
     @IBOutlet weak var circleView: YXDesignableView!
-    @IBOutlet weak var integralStatusLabel: UILabel!
+    @IBOutlet weak var integralStatusLabel: YXDesignableLabel!
     @IBOutlet weak var indicatorImageView: UIImageView!
     
     override func awakeFromNib() {

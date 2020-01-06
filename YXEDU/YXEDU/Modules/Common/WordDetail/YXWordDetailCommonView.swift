@@ -357,8 +357,22 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             let examples = section.values.first as? [YXWordExampleModel]
             let example = examples?[indexPath.row]
             let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
-
-            let height = combineExample.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 110) + 4
+            var string = ""
+            
+            if let firstAddressSymbolIndex = combineExample.firstIndex(of: "@"), let lastAddressSymbolIndex = combineExample.lastIndex(of: "@") {
+                let startHighLightIndex = combineExample.index(firstAddressSymbolIndex, offsetBy: 1)
+                let endHighLightIndex = combineExample.index(lastAddressSymbolIndex, offsetBy: 1)
+                let highLightString = String(combineExample[startHighLightIndex..<lastAddressSymbolIndex])
+                string = String(combineExample[combineExample.startIndex..<firstAddressSymbolIndex]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
+                                
+            } else if let firstRightBracket = combineExample.firstIndex(of: ">"), let lastLeftBracket = combineExample.lastIndex(of: "<"), let firstLeftBracket = combineExample.firstIndex(of: "<"), let lastRightBracket = combineExample.lastIndex(of: ">") {
+                let startHighLightIndex = combineExample.index(firstRightBracket, offsetBy: 1)
+                let endHighLightIndex = combineExample.index(lastRightBracket, offsetBy: 1)
+                let highLightString = String(combineExample[startHighLightIndex..<lastLeftBracket])
+                string = String(combineExample[combineExample.startIndex..<firstLeftBracket]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
+            }
+            
+            let height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 110) + 4
             return height
 
         case SectionType.synonym.rawValue:

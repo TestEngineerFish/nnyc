@@ -63,7 +63,6 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                 <real key="value" value="1"/>
                             </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="enableImageRightAligned" value="NO"/>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="enableGradientBackground" value="YES"/>
                         </userDefinedRuntimeAttributes>
                         <connections>

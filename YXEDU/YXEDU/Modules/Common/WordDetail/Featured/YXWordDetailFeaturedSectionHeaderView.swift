@@ -12,6 +12,7 @@ class YXWordDetailFeaturedSectionHeaderView: UIView {
     private var headerTitle: String = ""
 
     @IBOutlet var contentView: UIView!
+    @IBOutlet weak var headerImage: UIImageView!
     @IBOutlet weak var headerLabel: UILabel!
     
     init(headerTitle: String) {
@@ -31,6 +32,7 @@ class YXWordDetailFeaturedSectionHeaderView: UIView {
         addSubview(contentView)
         contentView.frame = self.frame
         
-        headerLabel.text = headerTitle
+        headerImage.image = UIImage(named: headerTitle)
+//        headerLabel.text = headerTitle
     }
 }

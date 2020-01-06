@@ -43,6 +43,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UINavigationBar.appearance().barStyle = .default
         navigationController?.setNavigationBarHidden(true, animated: animated)
         
         loadData()

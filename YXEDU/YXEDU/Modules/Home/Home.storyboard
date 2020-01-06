@@ -214,9 +214,9 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evR-by-lhD" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                                                        <rect key="frame" x="40" y="209" width="294" height="40"/>
+                                                        <rect key="frame" x="40" y="209" width="294" height="44"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="y8i-cX-VvE"/>
+                                                            <constraint firstAttribute="height" constant="44" id="y8i-cX-VvE"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                         <state key="normal" title="开始背单词">
@@ -224,7 +224,7 @@
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="20"/>
+                                                                <real key="value" value="22"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                                 <real key="value" value="0.10000000000000001"/>
@@ -251,10 +251,10 @@
                                                         </connections>
                                                     </button>
                                                     <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spb-lT-D93" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                                        <rect key="frame" x="10" y="277" width="354" height="97"/>
+                                                        <rect key="frame" x="10" y="281" width="354" height="93"/>
                                                         <subviews>
                                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AZn-be-OuY">
-                                                                <rect key="frame" x="0.0" y="0.0" width="354" height="97"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="354" height="93"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="eZg-wp-HEa">
                                                                     <size key="itemSize" width="98" height="86"/>

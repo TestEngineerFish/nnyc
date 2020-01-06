@@ -28,7 +28,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     @IBAction func tapQuestionIcon(_ sender: UIBarButtonItem) {
-        YXAlertWebView.share.show("http://www.baidu.com")
+        YXAlertWebView.share.show(YXUserModel.default.coinExplainUrl ?? "")
     }
     
     @IBAction func punchIn(_ sender: Any) {
@@ -139,6 +139,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 todayIntegral = dailyDatas[index].integral ?? 0
                 
                 if dailyDatas[index].didPunchIn == 1 {
+                    punchButton.setTitle("已签到", for: .normal)
                     punchButton.isEnabled = false
                     punchButton.alpha = 0.3
                     
@@ -230,12 +231,17 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 cell.circleView.layer.setDefaultShadow()
                 cell.circleView.layer.cornerRadius = 16
                 cell.circleView.layer.shadowColor = UIColor.hex(0xFF5400).cgColor
-                cell.circleView.layer.shadowRadius  = 6
+                cell.circleView.layer.shadowRadius  = 4
                 cell.indicatorImageView.isHidden = false
                 break
                 
             case .tomorrow:
-                cell.integralStatusLabel.text = "+\(dailyData.integral ?? 0)"
+                if indexPath.row == 6, cell.integralStatusLabel.text != "--" {
+                    cell.integralStatusLabel.countFromCurrent(to: Float(dailyData.integral ?? 0), duration: 1, anySymbol: "+")
+
+                } else {
+                    cell.integralStatusLabel.text = "+\(dailyData.integral ?? 0)"
+                }
                 cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
                 cell.circleView.backgroundColor = .white
                 cell.indicatorImageView.isHidden = true
@@ -280,7 +286,11 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                     self.taskLists[collectionView.tag].list?[indexPath.row].state = 2
                     self.taskTableView.reloadData()
-                    
+
+                    if let currentIntegral = Int(self.integralLabel.text ?? "0") {
+                        self.integralLabel.countFromCurrent(to: Float(currentIntegral + (task?.integral ?? 0)), duration: 1)
+                    }
+
                 }) { error in
                     print("❌❌❌\(error)")
                 }

@@ -100,12 +100,20 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     private func heightChange() {
         tableView.layoutIfNeeded()
         
-        let height = tableView.contentSize.height + 64
+        var heightOfTableView: CGFloat = 0
+
+        let cells = tableView.visibleCells
+        for cell in cells {
+            heightOfTableView = heightOfTableView + cell.frame.height
+        }
         
-        self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: height)
+        heightOfTableView = heightOfTableView + CGFloat((16 + 28) * sections.count)
+        heightOfTableView = heightOfTableView + 78
+        
+        self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: heightOfTableView)
         contentView.frame = self.bounds
         
-        heightChangeClosure?(height)
+        heightChangeClosure?(heightOfTableView)
     }
     
     
@@ -125,21 +133,23 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let sectionType = sections[section].keys.first
-        
-        if sectionType == SectionType.fixedMatch.rawValue || sectionType == SectionType.commonPhrases.rawValue {
-            let view = YXWordDetailFeaturedSectionFooterView()
-            view.isExpand = sectionExpandStatus[section]
-            view.expandClosure = {
-                self.sectionExpandStatus[section] = !self.sectionExpandStatus[section]
-                self.tableView.reloadData()
-                self.heightChange()
-            }
-            
+        let view = YXWordDetailFeaturedSectionFooterView()
+        view.isExpand = sectionExpandStatus[section]
+        view.expandClosure = {
+            self.sectionExpandStatus[section] = !self.sectionExpandStatus[section]
+            self.tableView.reloadData()
+            self.heightChange()
+        }
+
+        if sectionType == SectionType.fixedMatch.rawValue, let sectionData = sections[section].values.first as? [YXWordFixedMatchModel], sectionData.count > 1 {
+            return view
+
+        } else if sectionType == SectionType.commonPhrases.rawValue, let sectionData = sections[section].values.first as? [YXWordCommonPhrasesModel], sectionData.count > 1 {
             return view
 
         } else {
-            let view = UIView()
-            return view
+            let blackView = UIView()
+            return blackView
         }
     }
     
