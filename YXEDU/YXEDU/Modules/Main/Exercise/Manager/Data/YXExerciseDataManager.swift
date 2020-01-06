@@ -47,8 +47,8 @@ class YXExerciseDataManager: NSObject {
     /// 上一轮
     var previousTurnArray: [YXWordExerciseModel] = []
 
-    var startTime: Long = 0
-    var endTime: Long = 0
+//    var startTime: Long = 0
+//    var endTime: Long = 0
     
     /// 本地数据库访问
     var dao: YXWordBookDao!

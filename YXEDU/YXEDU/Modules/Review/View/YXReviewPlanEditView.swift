@@ -93,6 +93,7 @@ class YXReviewPlanEditView: YXTopWindowView {
         let placeholder = "请输入复习计划名称"
         let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
         alertView.titleLabel.text = "请设置复习计划名称"
+        alertView.shouldOnlyShowOneButton = false
         alertView.doneClosure = {(text: String?) in
 
             guard let planName = text, placeholder != planName else { return }

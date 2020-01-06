@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YYCache.remove(forKey: .learningState)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.processReviewResult()
+//            self.processReviewResult()
             
             
 //            let vc = YXReviewResultView(type: .planListenReview)

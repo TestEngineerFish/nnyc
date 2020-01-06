@@ -154,6 +154,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             // 显示弹框
             let name = self.getPlanName()
             let alertView = YXAlertView(type: .inputable, placeholder: name)
+            alertView.shouldOnlyShowOneButton = false
             alertView.titleLabel.text = "请设置复习计划名称"
             alertView.doneClosure = { (text: String?) in
                 self.requestMakeReviewPlan(text)
