@@ -33,6 +33,10 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.performSegue(withIdentifier: "Edit", sender: self)
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customNavigationBar?.isHidden = true
@@ -43,7 +47,6 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UINavigationBar.appearance().barStyle = .default
         navigationController?.setNavigationBarHidden(true, animated: animated)
         
         loadData()

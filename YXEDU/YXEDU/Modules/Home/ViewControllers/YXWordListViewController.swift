@@ -86,6 +86,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         self.wordListType = (query["type"] as? YXWordListType) ?? .learned
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         var config = BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0, firstIndexPath: IndexPath(item: wordListType.rawValue, section: 0))
@@ -100,9 +104,9 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UINavigationBar.appearance().barStyle = .black
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-
+        self.navigationController?.navigationBar.barStyle = .black
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        
         self.navigationController?.navigationBar.barTintColor = UIColor.orange1
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
         self.navigationController?.navigationBar.tintColor = UIColor.white
@@ -117,7 +121,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UINavigationBar.appearance().barStyle = .default
+        self.navigationController?.navigationBar.barStyle = .default
 
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]

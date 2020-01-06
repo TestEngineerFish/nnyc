@@ -42,6 +42,10 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         }
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -71,7 +75,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UINavigationBar.appearance().barStyle = .black
+        self.navigationController?.navigationBar.barStyle = .black
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
 
         self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xFFA83E)
@@ -81,7 +85,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UINavigationBar.appearance().barStyle = .default
+        self.navigationController?.navigationBar.barStyle = .default
 
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]

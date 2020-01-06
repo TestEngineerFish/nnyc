@@ -34,7 +34,6 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UINavigationBar.appearance().barStyle = .default
     }
     
 
