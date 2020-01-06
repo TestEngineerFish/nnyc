@@ -75,13 +75,9 @@ class YXDesignableLabel: UILabel {
         setTextValue(value: currentValue)
     }
     
-    // update UILabel.text
     fileprivate func setTextValue(value: Float) {
-        text = String(format: "$ %.1f", value)
+        text = String(format: "%.0f", value)
     }
-    
-
-    
 }
 
 

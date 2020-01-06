@@ -228,6 +228,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 cell.circleView.layer.setDefaultShadow()
                 cell.circleView.layer.cornerRadius = 16
                 cell.circleView.layer.shadowColor = UIColor.hex(0xFF5400).cgColor
+                cell.circleView.layer.shadowRadius  = 6
                 cell.indicatorImageView.isHidden = false
                 break
                 
