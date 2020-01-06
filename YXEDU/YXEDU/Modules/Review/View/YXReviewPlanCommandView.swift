@@ -122,7 +122,7 @@ class YXReviewPlanCommandView: YXTopWindowView {
             
             let right = (screenWidth - descWidth - AS(26)) / 2
             make.left.equalTo(shareImageView.snp.right).offset(AS(7))
-            make.right.equalTo(AS(right))
+            make.right.equalTo(AS(-right))
             make.height.equalTo(AS(20))
         }
         
