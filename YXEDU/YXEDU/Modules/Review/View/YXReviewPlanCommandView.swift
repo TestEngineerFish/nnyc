@@ -111,7 +111,7 @@ class YXReviewPlanCommandView: YXTopWindowView {
         
         
         shareImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(96))
+            make.top.equalTo(AS(98.5))
             make.width.equalTo(AS(19))
             make.height.equalTo(AS(19))
         }
