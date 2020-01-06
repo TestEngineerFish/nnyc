@@ -151,7 +151,12 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         dailyDatas[6].integral = 10 + exIntegral
         self.dailyDatas = dailyDatas
         
-        self.integralLabel.text = "\(self.taskCenterData.integral ?? 0)"
+        let integral = self.taskCenterData.integral ?? 0
+        if self.integralLabel.text == "--" {
+            self.integralLabel.count(from: 0, to: Float(integral), duration: 1)
+        } else {
+            self.integralLabel.countFromCurrent(to: Float(integral), duration: 1)
+        }
         self.todayPunchLabel.text = "\(todayIntegral)"
         self.totalPunchLabel.text = "\(punchCount)"
         self.weekendPunchLabel.text = "\(exIntegral)"
@@ -222,7 +227,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 cell.circleView.backgroundColor = .white
                 cell.circleView.layer.setDefaultShadow()
                 cell.circleView.layer.cornerRadius = 16
-                cell.circleView.layer.shadowColor = UIColor.hex(0xFFBB00).cgColor
+                cell.circleView.layer.shadowColor = UIColor.hex(0xFF5400).cgColor
                 cell.indicatorImageView.isHidden = false
                 break
                 
