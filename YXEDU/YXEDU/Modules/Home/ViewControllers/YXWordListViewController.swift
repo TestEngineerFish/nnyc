@@ -57,6 +57,19 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 make.center.equalToSuperview()
             }
             
+            let bottomView = YXDesignableView()
+            bottomView.tag = 2
+            bottomView.backgroundColor = .white
+            bottomView.cornerRadius = 2
+            
+            view.addSubview(bottomView)
+            bottomView.snp.makeConstraints { (make) in
+                make.width.equalTo(50)
+                make.height.equalTo(4)
+                make.bottom.equalToSuperview().offset(-4)
+                make.centerX.equalToSuperview()
+            }
+            
             views.append(view)
         }
         
@@ -381,12 +394,15 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         
         for index in 0..<wordListHeaderViews.count {
             let label = wordListHeaderViews[index].viewWithTag(1) as! UILabel
+            let view = wordListHeaderViews[index].viewWithTag(2) as! YXDesignableView
 
             if index == indexPath.row {
                 label.textColor = .white
+                view.isHidden = false
                 
             } else {
                 label.textColor = UIColor.hex(0xFFD99E)
+                view.isHidden = true
             }
         }
     }

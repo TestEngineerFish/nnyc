@@ -73,7 +73,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
 
-        self.navigationController?.navigationBar.barTintColor = UIColor.orange1
+        self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xFFA83E)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
         self.navigationController?.navigationBar.tintColor = UIColor.white
     }
@@ -223,6 +223,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 cell.circleView.layer.setDefaultShadow()
                 cell.circleView.layer.cornerRadius = 16
                 cell.circleView.layer.shadowColor = UIColor.hex(0xFFBB00).cgColor
+                cell.indicatorImageView.isHidden = false
                 break
                 
             case .tomorrow:

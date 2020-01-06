@@ -164,7 +164,7 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
             cell.selectButton.setImage(#imageLiteral(resourceName: "word_selected"), for: .normal)
             
         } else {
-            cell.selectButton.setImage(nil, for: .normal)
+            cell.selectButton.setImage(#imageLiteral(resourceName: "word_unselected"), for: .normal)
         }
         
         cell.selectClosure = {

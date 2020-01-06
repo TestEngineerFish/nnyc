@@ -2749,11 +2749,11 @@
 			isa = PBXGroup;
 			children = (
 				77F69A632361496C00E55185 /* YXHomeViewController.swift */,
+				77F69A652361499E00E55185 /* YXSelectBookViewController.swift */,
 				77F69A67236149B300E55185 /* YXAddBookViewController.swift */,
 				77626BEF239DFE1100B9407A /* YXWordListViewController.swift */,
 				77626BF1239E1FE800B9407A /* YXEditWordListViewController.swift */,
 				77B7C6ED23A7254200149ACE /* YXTaskCenterViewController.swift */,
-				77F69A652361499E00E55185 /* YXSelectBookViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
