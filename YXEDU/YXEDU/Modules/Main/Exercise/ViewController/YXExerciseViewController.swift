@@ -241,6 +241,8 @@
         exerciseViewArray.append(exerciseView)
         exerciseView.animateAdmission(isFirst, nil)
         
+        YYCache.set(true, forKey: .learningState)
+        
     }
     
     /// 显示loading动画
@@ -396,6 +398,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
         let alertView = YXAlertView()
         alertView.descriptionLabel.text = "是否放弃本次学习并退出?"
         alertView.doneClosure = { _ in
+            YYCache.remove(forKey: .learningState)
             self.delegate?.backHomeEvent()
             self.navigationController?.popViewController(animated: true)
         }
