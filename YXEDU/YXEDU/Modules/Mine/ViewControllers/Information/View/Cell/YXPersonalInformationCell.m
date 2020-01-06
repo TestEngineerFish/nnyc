@@ -19,7 +19,7 @@
         self.titleLabel.textColor = [UIColor blackColor];
 
         self.rightDetailLabel = [[UILabel alloc] init];
-        self.rightDetailLabel.font = [UIFont systemFontOfSize:12];
+        self.rightDetailLabel.font = [UIFont systemFontOfSize:14];
         if ([self.rightDetailLabel.text isEqual: @"未设置"]) {
             self.rightDetailLabel.textColor = UIColorOfHex(0xC0C0C0);
         } else {

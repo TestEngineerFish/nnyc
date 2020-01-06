@@ -2498,11 +2498,11 @@
 		771512E5236717E000F6D400 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				EE5EFF9D23274FEA00655654 /* Information */,
 				771512E3236713E600F6D400 /* YXMineViewController.swift */,
 				77B0A59A23ACB4750093A181 /* YXSettingsViewController.swift */,
 				7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */,
 				77D2777823B37B6A00AA4BF2 /* YXBagdeListViewController.swift */,
+				EE5EFF9D23274FEA00655654 /* Information */,
 				EE5EFFC223274FEA00655654 /* FeedBack */,
 				EE5EFFBF23274FEA00655654 /* Reminder */,
 			);

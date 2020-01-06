@@ -25,12 +25,12 @@
     YXCustomButton *button = [self buttonWithType:UIButtonTypeCustom];
     button.cornerRadius = cornerRadius;
     button.exclusiveTouch = YES;
-    if (cornerRadius) {
-        button.layer.shadowRadius = 2.5;
-        button.layer.shadowOpacity = 0.53;
-        button.layer.shadowOffset = CGSizeMake(0, 2);
-        button.layer.shadowColor = UIColorOfHex(0xFB8417).CGColor;
-    }
+//    if (cornerRadius) {
+//        button.layer.shadowRadius = 2.5;
+//        button.layer.shadowOpacity = 0.53;
+//        button.layer.shadowOffset = CGSizeMake(0, 2);
+//        button.layer.shadowColor = UIColorOfHex(0xFB8417).CGColor;
+//    }
     return button;
 }
 

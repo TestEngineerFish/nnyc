@@ -113,7 +113,7 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        redButton.setTitleColor(UIColor.hex(0xFF532B), for: .normal)
+        redButton.setTitleColor(UIColor.hex(0xFF532B), for: .normal)        
     }
        
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

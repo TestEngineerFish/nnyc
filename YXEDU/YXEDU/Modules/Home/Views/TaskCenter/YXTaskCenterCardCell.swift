@@ -116,7 +116,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
             todoButton.setTitleColor(UIColor.hex(0x649224), for: .normal)
             getCoinButton.setTitleColor(UIColor.hex(0x649224), for: .normal)
             getCoinButton.originTextColor = UIColor.hex(0x649224)
-            getCoinButton.borderColor = UIColor.hex(0x7EAF39)
+            getCoinButton.borderColor = UIColor.hex(0x89B44C)
             getCoinButton.gradientColor1 = UIColor.hex(0xFFFFFF)
             getCoinButton.gradientColor2 = UIColor.hex(0xE5FFD2)
             break
