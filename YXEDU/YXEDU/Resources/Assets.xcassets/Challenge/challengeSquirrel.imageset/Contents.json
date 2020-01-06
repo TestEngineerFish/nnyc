@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "pic／tiaozhan／paihangbang／bg.png",
+      "filename" : "pic／tiaozhan／songshu.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "pic／tiaozhan／paihangbang／bg@2x.png",
+      "filename" : "pic／tiaozhan／songshu@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "pic／tiaozhan／paihangbang／bg@3x.png",
+      "filename" : "pic／tiaozhan／songshu@3x.png",
       "scale" : "3x"
     }
   ],

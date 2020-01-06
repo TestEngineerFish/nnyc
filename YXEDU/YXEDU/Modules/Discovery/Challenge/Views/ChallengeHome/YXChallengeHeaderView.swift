@@ -1,5 +1,5 @@
 //
-//  YXChallengeHeaderView.swift
+//  YXChallengeRankTopView.swift
 //  YXEDU
 //
 //  Created by 沙庭宇 on 2019/12/11.
@@ -9,182 +9,106 @@
 import UIKit
 
 class YXChallengeHeaderView: UIView {
-
-    let backgroundImage: UIImageView = {
+    let challengeHeaderView = YXChallengeHeaderTopView()
+    let myRankView          = YXChallengeMyRankCell(style: .default, reuseIdentifier: nil)
+    var headerBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.hex(0xEFE1CE)
+        return view
+    }()
+    var iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "challengeBackgroundImage")
+        imageView.image = UIImage(named: "cupIcon")
         return imageView
     }()
-
-    var gameTitleLabel: UILabel = {
+    var titleLabel: UILabel = {
         let label = UILabel()
-        label.text      = "本活动距离结束还有："
-        label.textColor = UIColor.hex(0xE59000)
-        label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.text          = "本期排行榜"
+        label.textColor     = UIColor.hex(0x4F381D)
+        label.font          = UIFont.mediumFont(ofSize: AdaptSize(15))
+        label.textAlignment = .center
         return label
     }()
-    var leftGoldImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "challengeGoldIcon")
-        return imageView
-    }()
-    var centerGoldImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "challengeGoldIcon")
-        return imageView
-    }()
-    var rightGoldImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "challengeGoldIcon")
-        return imageView
-    }()
-
-    var propertyView  = YXChallengePropertyView()
-
-    var countDownView = YXCountDownView()
-
-    var startButton   = YXChallengeStartButton()
-
     var previousRankButton: YXButton = {
         let button = YXButton()
-        button.setTitle("查看上期排名", for: .normal)
-        button.setTitleColor(UIColor.hex(0xD18714), for: .normal)
-        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
-        return button
-    }()
-
-    var gameRuleButton: YXButton = {
-        let button = YXButton()
-        button.setTitle("查看游戏规则", for: .normal)
-        button.setTitleColor(UIColor.hex(0xD18714), for: .normal)
-        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        button.setTitle("上期排名", for: .normal)
+        button.setTitleColor(UIColor.hex(0xB18550), for: .normal)
+        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(12))
         return button
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setSubviews()
-//        self.startLeftGoldAnimation()
-//        self.startCenterGoldAnimation()
-//        self.startRightGoldAnimation()
-    }
-
-    deinit {
-        self.stopGoldAnimation()
+        self.createSubviews()
+        self.bindProperty()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bindData(_ challengeModel: YXChallengeModel) {
-        propertyView.bindData(challengeModel.userModel?.myCoins ?? 0)
-        countDownView.bindData(challengeModel.gameInfo?.timeLeft ?? 0)
-        startButton.bindData(challengeModel)
+    private func bindProperty() {
+        self.backgroundColor = UIColor.clear
     }
 
-    private func setSubviews() {
-        self.addSubview(backgroundImage)
-        self.addSubview(gameTitleLabel)
-        self.addSubview(propertyView)
-        self.addSubview(countDownView)
-        self.addSubview(startButton)
-        self.addSubview(previousRankButton)
-        self.addSubview(gameRuleButton)
-        self.addSubview(leftGoldImageView)
-        self.addSubview(centerGoldImageView)
-        self.addSubview(rightGoldImageView)
-
-        backgroundImage.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+    private func createSubviews() {
+        self.addSubview(challengeHeaderView)
+        self.addSubview(myRankView.contentView)
+        self.addSubview(headerBackgroundView)
+        headerBackgroundView.addSubview(iconImageView)
+        headerBackgroundView.addSubview(titleLabel)
+        headerBackgroundView.addSubview(previousRankButton)
+        challengeHeaderView.snp.makeConstraints { (make) in
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(AdaptSize(268))
         }
-
-        gameTitleLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(150))
-            make.top.equalToSuperview().offset(AdaptSize(102))
-            make.size.equalTo(CGSize(width: AdaptSize(121), height: AdaptSize(17)))
-        }
-
-        propertyView.snp.makeConstraints { (make) in
-            make.right.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(35))
-            make.size.equalTo(CGSize(width: AdaptSize(44), height: AdaptSize(23)))
-        }
-
-        countDownView.snp.makeConstraints { (make) in
-            make.left.equalTo(gameTitleLabel)
-            make.top.equalTo(gameTitleLabel.snp.bottom).offset(AdaptSize(4))
-            make.size.equalTo(CGSize(width: AdaptSize(170), height: AdaptSize(18)))
-        }
-
-        startButton.snp.makeConstraints { (make) in
+        myRankView.contentView.snp.remakeConstraints { (make) in
+            make.top.equalTo(challengeHeaderView.snp.bottom)
             make.centerX.equalToSuperview()
-            make.top.equalTo(countDownView.snp.bottom).offset(AdaptSize(33))
-            make.size.equalTo(CGSize(width: AdaptSize(230), height: AdaptSize(57)))
+            make.width.equalTo(challengeHeaderView)
+            make.height.equalTo(AdaptSize(83))
         }
-
+        headerBackgroundView.size = CGSize(width: AdaptSize(349), height: AdaptSize(48))
+        headerBackgroundView.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.size.equalTo(headerBackgroundView.size)
+        }
+        headerBackgroundView.clipRectCorner(directionList: [.topLeft, .topRight], cornerRadius: AdaptSize(10))
+        iconImageView.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalTo(titleLabel.snp.left).offset(AdaptSize(-6))
+            make.size.equalTo(CGSize(width: AdaptSize(18), height: AdaptSize(18)))
+        }
+        titleLabel.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(76), height: AdaptSize(21)))
+        }
         previousRankButton.snp.makeConstraints { (make) in
-            make.left.equalTo(startButton).offset(AdaptSize(30))
-            make.top.equalTo(startButton.snp.bottom).offset(AdaptSize(8))
-            make.size.equalTo(CGSize(width: AdaptSize(73), height: AdaptSize(17)))
-        }
-
-        gameRuleButton.snp.makeConstraints { (make) in
-            make.right.equalTo(startButton).offset(AdaptSize(-30))
-            make.top.equalTo(startButton.snp.bottom).offset(AdaptSize(8))
-            make.size.equalTo(CGSize(width: AdaptSize(73), height: AdaptSize(17)))
-        }
-        leftGoldImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(-25))
-            make.top.equalToSuperview().offset(AdaptSize(26))
-            make.size.equalTo(CGSize(width: AdaptSize(55), height: AdaptSize(55)))
-        }
-        centerGoldImageView.snp.makeConstraints { (make) in
-            make.right.equalTo(startButton.snp.left).offset(AdaptSize(-10))
-            make.top.equalTo(startButton.snp.top).offset(AdaptSize(11))
-            make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
-        }
-        rightGoldImageView.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(AdaptSize(25))
-            make.top.equalToSuperview().offset(AdaptSize(127))
-            make.size.equalTo(CGSize(width: AdaptSize(55), height: AdaptSize(55)))
+            make.right.equalToSuperview().offset(AdaptSize(-14))
+            make.bottom.equalTo(titleLabel)
+            make.size.equalTo(CGSize(width: AdaptSize(50), height: 17))
         }
     }
 
-    // MARK: ==== Animation ====
-    private func startLeftGoldAnimation() {
-        let animation = CABasicAnimation(keyPath: "position.y")
-        animation.duration = 1
-        animation.toValue  = AdaptSize(360)
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation.autoreverses = false
-        animation.repeatCount = MAXFLOAT
-        self.leftGoldImageView.layer.add(animation, forKey: nil)
+    func bindData(_ challengeModel: YXChallengeModel?) {
+        guard let challengeModel = challengeModel, let userModel = challengeModel.userModel else {
+            return
+        }
+        self.challengeHeaderView.bindData(challengeModel)
+        self.myRankView.bindData(userModel)
+        if challengeModel.rankedList.count > 0 {
+            myRankView.isHidden = false
+            myRankView.snp.updateConstraints { (make) in
+                make.height.equalTo(AdaptSize(81))
+            }
+        } else {
+            myRankView.isHidden = true
+            myRankView.snp.updateConstraints { (make) in
+                make.height.equalTo(AdaptSize(12))
+            }
+        }
     }
 
-    private func startCenterGoldAnimation() {
-        let animation = CABasicAnimation(keyPath: "position.y")
-        animation.duration = 1.5
-        animation.toValue  = AdaptSize(330)
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation.autoreverses = false
-        animation.repeatCount = MAXFLOAT
-        self.centerGoldImageView.layer.add(animation, forKey: nil)
-    }
-
-    private func startRightGoldAnimation() {
-        let animation = CABasicAnimation(keyPath: "position.y")
-        animation.duration = 1.2
-        animation.toValue  = AdaptSize(360)
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation.autoreverses = false
-        animation.repeatCount = MAXFLOAT
-        self.rightGoldImageView.layer.add(animation, forKey: nil)
-    }
-
-    private func stopGoldAnimation() {
-        self.leftGoldImageView.layer.removeAllAnimations()
-        self.centerGoldImageView.layer.removeAllAnimations()
-        self.rightGoldImageView.layer.removeAllAnimations()
-    }
 }
+

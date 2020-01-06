@@ -9,41 +9,10 @@
 import UIKit
 
 class YXChallengeMyRankCell: UITableViewCell {
-
-    var leftTopLayer: CAShapeLayer = {
-        let layer = CAShapeLayer()
-        let path = UIBezierPath()
-        path.move(to: CGPoint.zero)
-        path.addLine(to: CGPoint(x: AdaptSize(5), y: 0))
-        path.addLine(to: CGPoint(x: AdaptSize(5), y: AdaptSize(6)))
-        path.close()
-        layer.path = path.cgPath
-        layer.fillColor = UIColor.hex(0xCF6900).cgColor
-        return layer
-    }()
-
-    var rightTopLayer: CAShapeLayer = {
-        let layer = CAShapeLayer()
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: AdaptSize(6)))
-        path.addLine(to: CGPoint(x: AdaptSize(0), y: 0))
-        path.addLine(to: CGPoint(x: AdaptSize(5), y: 0))
-        path.close()
-        layer.path      = path.cgPath
-        layer.fillColor = UIColor.hex(0xCF6900).cgColor
-        return layer
-    }()
-
-    var shadowView: UIView =  {
-        let view = UIView()
-        view.size     = CGSize(width: AdaptSize(359), height: AdaptSize(81))
-        view.clipRectCorner(directionList: [.topLeft, .topRight], cornerRadius: AdaptSize(6))
-        return view
-    }()
-
     var bgContentView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.hex(0xF4EEE2)
+        view.backgroundColor = UIColor.hex(0xF5E8D6)
+        view.layer.cornerRadius = AdaptSize(10)
         return view
     }()
 
@@ -56,8 +25,8 @@ class YXChallengeMyRankCell: UITableViewCell {
     var levelHighlightLabel: UILabel = {
         let label = UILabel()
         label.text          = "--"
-        label.textColor     = UIColor.hex(0xFFF039)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
+        label.textColor     = UIColor.white
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
         label.textAlignment = .center
         return label
     }()
@@ -116,9 +85,7 @@ class YXChallengeMyRankCell: UITableViewCell {
     }
 
     func bindData(_ userModel: YXChallengeUserModel) {
-
-        switch userModel.challengeResult {
-        case .success:
+        if userModel.challengeResult == .success {
             self.nameLabel.text             = userModel.name
             self.nameLabel.textColor        = UIColor.white
             self.descriptionLabel.text      = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
@@ -127,12 +94,7 @@ class YXChallengeMyRankCell: UITableViewCell {
             self.goldIconImageView.isHidden = false
             self.bonusLabel.isHidden        = false
             self.descriptionLabel.isHidden  = false
-            self.leftTopLayer.fillColor     = UIColor.hex(0xCF6900).cgColor
-            self.rightTopLayer.fillColor    = UIColor.hex(0xCF6900).cgColor
             self.bonusLabel.text            = "+\(userModel.bonus)"
-            self.levelHighlightLabel.text   = "\(userModel.ranking)"
-            self.levelHighlightLabel.font   = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
-            self.shadowView.layer.setGradient(colors: [UIColor.hex(0xFDB832), UIColor.orange1], direction: .vertical)
             self.descriptionLabel.sizeToFit()
             self.descriptionLabel.snp.updateConstraints { (make) in
                 make.width.equalTo(self.descriptionLabel.width)
@@ -144,42 +106,20 @@ class YXChallengeMyRankCell: UITableViewCell {
             self.bonusLabel.snp.updateConstraints { (make) in
                 make.width.equalTo(self.bonusLabel.width)
             }
-        case .unanswered:
-            self.nameLabel.text                = "本期内尚未参加过挑战"
-            self.nameLabel.textColor           = UIColor.hex(0xFFF7EB)
+        } else {
+            if userModel.challengeResult == .unanswered {
+                self.nameLabel.text            = "本期内尚未参加过挑战"
+            } else {
+                self.nameLabel.text            = "挑战失败"
+            }
+            self.nameLabel.textColor           = UIColor.hex(0x4F381D)
             self.descriptionLabel.text         = ""
             self.descriptionLabel.isHidden     = true
             self.goldIconImageView.isHidden    = true
             self.bonusLabel.isHidden           = true
-            self.leftTopLayer.fillColor        = UIColor.hex(0xA47528).cgColor
-            self.rightTopLayer.fillColor       = UIColor.hex(0xA47528).cgColor
             self.levelHighlightLabel.text      = "未上榜"
-            self.levelHighlightLabel.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
-            self.levelHighlightLabel.textColor = UIColor.hex(0xB3A394)
-            self.tagImageView.image            = UIImage(named: "challengeLevelTag2")
-            self.shadowView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
             self.nameLabel.snp.updateConstraints { (make) in
                 make.centerY.equalTo(avatarImageView)
-            }
-        case .fail:
-            self.nameLabel.text                = "挑战失败"
-            self.nameLabel.textColor           = UIColor.hex(0xFFF7EB)
-            self.descriptionLabel.text         = "别灰心，再接再厉哦"
-            self.descriptionLabel.isHidden     = false
-            self.descriptionLabel.font         = UIFont.regularFont(ofSize: AdaptSize(12))
-            self.descriptionLabel.textColor    = UIColor.hex(0xFFF7EB)
-            self.goldIconImageView.isHidden    = true
-            self.bonusLabel.isHidden           = true
-            self.leftTopLayer.fillColor        = UIColor.hex(0xA47528).cgColor
-            self.rightTopLayer.fillColor       = UIColor.hex(0xA47528).cgColor
-            self.levelHighlightLabel.text      = "未上榜"
-            self.levelHighlightLabel.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
-            self.levelHighlightLabel.textColor = UIColor.hex(0xB3A394)
-            self.tagImageView.image            = UIImage(named: "challengeLevelTag2")
-            self.shadowView.layer.setGradient(colors: [UIColor.hex(0xFADEA8), UIColor.hex(0xB29568)], direction: .vertical)
-            self.descriptionLabel.sizeToFit()
-            self.descriptionLabel.snp.updateConstraints { (make) in
-                make.width.equalTo(descriptionLabel.width)
             }
         }
 
@@ -200,16 +140,13 @@ class YXChallengeMyRankCell: UITableViewCell {
 
     private func setSubviews() {
         self.contentView.addSubview(bgContentView)
-        self.contentView.addSubview(shadowView)
-        self.contentView.layer.addSublayer(leftTopLayer)
-        self.contentView.layer.addSublayer(rightTopLayer)
 
-        shadowView.addSubview(avatarImageView)
-        shadowView.addSubview(nameLabel)
-        shadowView.addSubview(descriptionLabel)
-        shadowView.addSubview(goldIconImageView)
-        shadowView.addSubview(bonusLabel)
-        shadowView.addSubview(tagImageView)
+        bgContentView.addSubview(avatarImageView)
+        bgContentView.addSubview(nameLabel)
+        bgContentView.addSubview(descriptionLabel)
+        bgContentView.addSubview(goldIconImageView)
+        bgContentView.addSubview(bonusLabel)
+        bgContentView.addSubview(tagImageView)
         tagImageView.addSubview(levelHighlightLabel)
 
         bgContentView.snp.makeConstraints { (make) in
@@ -217,15 +154,6 @@ class YXChallengeMyRankCell: UITableViewCell {
             make.left.equalToSuperview().offset(AdaptSize(13))
             make.right.equalToSuperview().offset(AdaptSize(-13))
         }
-
-        shadowView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(8))
-            make.right.equalToSuperview().offset(AdaptSize(-8))
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview().offset(AdaptSize(-6))
-        }
-        leftTopLayer.frame  = CGRect(x: AdaptSize(8), y: AdaptSize(81), width: AdaptSize(5), height: AdaptSize(6))
-        rightTopLayer.frame = CGRect(x: screenWidth - AdaptSize(13), y: AdaptSize(81), width: AdaptSize(5), height: AdaptSize(6))
 
         levelHighlightLabel.sizeToFit()
         tagImageView.snp.makeConstraints { (make) in

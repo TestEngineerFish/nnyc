@@ -12,8 +12,15 @@ class YXChallengeRankCell: UITableViewCell {
 
     var bgContentView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.clear
+        view.backgroundColor = UIColor.hex(0xF4EEE2)
         return view
+    }()
+
+    var levelImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image    = UIImage(named: "")
+        imageView.isHidden = true
+        return imageView
     }()
 
     var levelLabel: UILabel = {
@@ -69,9 +76,9 @@ class YXChallengeRankCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.hex(0xE9DDC4)
+        self.backgroundColor = UIColor.clear
         self.selectionStyle = .none
-        self.setSubviews()
+        self.createSubviews()
     }
     
     required init?(coder: NSCoder) {
@@ -79,12 +86,19 @@ class YXChallengeRankCell: UITableViewCell {
     }
 
     func bindData(_ userModel: YXChallengeUserModel) {
-
-        self.levelLabel.text          = "\(userModel.ranking)"
         self.nameLabel.text           = userModel.name
         self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time/1000)
         self.bonusLabel.text          = "+\(userModel.bonus)"
         self.avatarImageView.showImage(with: userModel.avatarStr)
+        if userModel.ranking <= 3 {
+            self.levelLabel.isHidden     = true
+            self.levelImageView.isHidden = false
+            self.levelImageView.image    = UIImage(named: "challengeRanking\(userModel.ranking)")
+        } else {
+            self.levelLabel.isHidden     = false
+            self.levelImageView.isHidden = true
+            self.levelLabel.text          = "\(userModel.ranking)"
+        }
 
         self.nameLabel.sizeToFit()
         self.nameLabel.snp.updateConstraints { (make) in
@@ -100,15 +114,15 @@ class YXChallengeRankCell: UITableViewCell {
         }
     }
 
-    private func setSubviews() {
-        self.contentView.addSubview(bgContentView)
+    private func createSubviews() {
+        self.addSubview(bgContentView)
         bgContentView.addSubview(levelLabel)
+        bgContentView.addSubview(levelImageView)
         bgContentView.addSubview(avatarImageView)
         bgContentView.addSubview(nameLabel)
         bgContentView.addSubview(descriptionLabel)
         bgContentView.addSubview(goldIconImageView)
         bgContentView.addSubview(bonusLabel)
-
         bgContentView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(AdaptSize(13))
@@ -122,7 +136,11 @@ class YXChallengeRankCell: UITableViewCell {
             make.height.equalTo(AdaptSize(21))
             make.width.equalTo(levelLabel.width)
         }
-
+        levelImageView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(8))
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(25), height: AdaptSize(22)))
+        }
         avatarImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.width.equalTo(AdaptSize(38))

@@ -17,6 +17,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.customNavigationBar?.isHidden = true
         let tableViewSize = CGSize(width: screenWidth, height: screenHeight - tabBar_Height - kSafeBottomMargin + kStatusBarHeight)
         self.view.backgroundColor = UIColor.gradientColor(with: tableViewSize, colors: [UIColor.hex(0xFEDC4A), UIColor.hex(0xFDAD2F)], direction: .vertical)
         self.setSubviews()
@@ -33,6 +34,8 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         self.tableView.delegate        = self
         self.tableView.dataSource      = self
         self.tableView.separatorStyle  = .none
+        self.tableView.showsVerticalScrollIndicator   = false
+        self.tableView.showsHorizontalScrollIndicator = false
         self.tableView.register(YXChallengeRankCell.classForCoder(), forCellReuseIdentifier: kYXChallengeRankCell)
         self.tableView.backgroundColor = UIColor.clear
         self.tableView.snp.makeConstraints { (make) in
@@ -159,65 +162,26 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let amount = self.challengeModel?.rankedList.count ?? 0
-        if amount >= 3 {
-            /// 移除前三名,默认显示自己当前状态
-            return amount - 3 + 1
-        } else if amount == 0 {
-            return 0
-        } else {
-            return 1
-        }
+        return amount
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let model = self.challengeModel else {
-            return nil
-        }
-        let view       = UIView()
-        let headerView = YXChallengeHeaderView()
-        let top3View   = YXChallengeRankTop3View()
-        view.backgroundColor = UIColor.hex(0xE9DDC4)
-        view.addSubview(headerView)
-        view.addSubview(top3View)
-        headerView.startButton.addTarget(self, action: #selector(clickPlayButton), for: .touchUpInside)
-        headerView.previousRankButton.addTarget(self, action: #selector(previousRank), for: .touchUpInside)
-        headerView.gameRuleButton.addTarget(self, action: #selector(showRuleView), for: .touchUpInside)
-        headerView.snp.makeConstraints { (make) in
-            make.left.top.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(297))
-        }
 
-        top3View.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(AdaptSize(-25))
-            make.top.equalTo(headerView.snp.bottom).offset(AdaptSize(-13))
-            make.bottom.equalToSuperview()
-        }
-        headerView.bindData(model)
-        let top3ModelList = Array(model.rankedList.prefix(3))
-        top3View.bindData(top3ModelList)
-        return view
+        let top3View   = YXChallengeHeaderView()
+        top3View.challengeHeaderView.startButton.addTarget(self, action: #selector(clickPlayButton), for: .touchUpInside)
+        top3View.previousRankButton.addTarget(self, action: #selector(previousRank), for: .touchUpInside)
+        top3View.challengeHeaderView.gameRuleButton.addTarget(self, action: #selector(showRuleView), for: .touchUpInside)
+        top3View.bindData(self.challengeModel)
+        return top3View
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let model = self.challengeModel else {
+        guard let model = self.challengeModel, let cell = tableView.dequeueReusableCell(withIdentifier: kYXChallengeRankCell) as? YXChallengeRankCell else {
             return UITableViewCell()
         }
-        if indexPath.row == 0 {
-            let cell = YXChallengeMyRankCell(style: .default, reuseIdentifier: nil)
-            guard let userModel = model.userModel else {
-                return cell
-            }
-            cell.bindData(userModel)
-            return cell
-        } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXChallengeRankCell) as? YXChallengeRankCell, indexPath.row + 2 < model.rankedList.count else {
-                return UITableViewCell()
-            }
-            let otherUserModel = model.rankedList[indexPath.row + 2]
-            cell.bindData(otherUserModel)
-            return cell
-        }
+        let userModel = model.rankedList[indexPath.row]
+        cell.bindData(userModel)
+        return cell
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -228,9 +192,9 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let rankedList = self.challengeModel?.rankedList, rankedList.isEmpty else {
-            return AdaptSize(481)
+            return AdaptSize(408)
         }
-        return AdaptSize(583)
+        return AdaptSize(437)
 
     }
 
