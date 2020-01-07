@@ -483,7 +483,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2v-RP-URZ">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="--" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e2v-RP-URZ">
                                                         <rect key="frame" x="108.00000000000001" y="17.666666666666657" width="42.666666666666671" height="18.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="16"/>
                                                         <nil key="textColor"/>
@@ -491,6 +491,7 @@
                                                     </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstItem="e2v-RP-URZ" firstAttribute="centerY" secondItem="teA-Xd-wb3" secondAttribute="centerY" id="BgZ-qR-kmI"/>
                                                     <constraint firstItem="e2v-RP-URZ" firstAttribute="leading" secondItem="Muf-32-5CY" secondAttribute="trailing" constant="6" id="QrR-Lk-kTQ"/>
@@ -507,6 +508,9 @@
                                                         <real key="value" value="14"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="Ddg-zg-kBK" appends="YES" id="TN6-KC-heh"/>
+                                                </connections>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QP-WT-1ZU" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                                                 <rect key="frame" x="194.33333333333337" y="130" width="160.66666666666663" height="54"/>
@@ -1049,6 +1053,11 @@
                 <tapGestureRecognizer id="70J-wn-gbf">
                     <connections>
                         <action selector="edit:" destination="Dnk-I2-j8M" id="6iT-XW-gL9"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Ddg-zg-kBK">
+                    <connections>
+                        <action selector="tapCoin:" destination="Dnk-I2-j8M" id="lTn-Ga-pCk"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
