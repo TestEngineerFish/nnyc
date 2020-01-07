@@ -292,7 +292,7 @@ static CGFloat const kPickViewHeight = 272.f;
         }];
 
         aboveNoNetworkLabel.text = @"网络有些问题";
-        aboveNoNetworkLabel.textColor = UIColorOfHex(0x849EC5);
+        aboveNoNetworkLabel.textColor = UIColorOfHex(0x888888);
         aboveNoNetworkLabel.font = [UIFont systemFontOfSize:AdaptSize(13.f)];
         aboveNoNetworkLabel.textAlignment = NSTextAlignmentCenter;
         [aboveNoNetworkLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -301,7 +301,7 @@ static CGFloat const kPickViewHeight = 272.f;
         }];
 
         belowNoNetworkLabel.text = @"点击屏幕重试";
-        belowNoNetworkLabel.textColor = UIColorOfHex(0x849EC5);
+        belowNoNetworkLabel.textColor = UIColorOfHex(0x888888);
         belowNoNetworkLabel.font = [UIFont systemFontOfSize:AdaptSize(13.f)];
         aboveNoNetworkLabel.textAlignment = NSTextAlignmentCenter;
         [belowNoNetworkLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -25,15 +25,15 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
     override func layoutSubviews() {
 
         rightButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            make.centerY.equalToSuperview().offset(AdaptSize(15))
             make.right.equalTo(self.snp.centerX).offset(AS(-19))
-            make.height.width.equalTo(AdaptSize(110))
+            make.height.width.equalTo(AdaptSize(100))
         }
         
         wrongButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            make.centerY.equalToSuperview().offset(AdaptSize(15))
             make.left.equalTo(rightButton.snp.right).offset(AS(36))
-            make.height.width.equalTo(AdaptSize(110))
+            make.height.width.equalTo(AdaptSize(100))
         }
     }
     
@@ -47,7 +47,7 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
         self.rightButton.setImage(UIImage(named: "exercise_answer_right_sel"), for: .highlighted)
         self.rightButton.layer.masksToBounds = true
         self.rightButton.layer.cornerRadius = AS(23.5)
-        self.rightButton.layer.borderWidth = 1
+        self.rightButton.layer.borderWidth = 0.5
         self.rightButton.layer.borderColor = UIColor.black6.cgColor
 
         
@@ -60,7 +60,7 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
         self.wrongButton.setImage(UIImage(named: "exercise_answer_wrong_sel"), for: .highlighted)
         self.wrongButton.layer.masksToBounds = true
         self.wrongButton.layer.cornerRadius = AS(23.5)
-        self.wrongButton.layer.borderWidth = 1
+        self.wrongButton.layer.borderWidth = 0.5
         self.wrongButton.layer.borderColor = UIColor.black6.cgColor
     }
     

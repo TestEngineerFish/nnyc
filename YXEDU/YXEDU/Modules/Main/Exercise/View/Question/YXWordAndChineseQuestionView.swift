@@ -13,8 +13,9 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
     override func createSubviews() {
         super.createSubviews()
         self.initTitleLabel()
-        self.initSubTitleLabel()
         self.initDescTitleLabel()
+        self.descTitleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(16))
+        self.descTitleLabel?.textColor = UIColor.black1
         self.initAudioPlayerView()
     }
     
@@ -23,35 +24,29 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
         
         let titleWidth = self.exerciseModel.question?.word?.textWidth(font: titleLabel!.font, height: 28) ?? 0
         titleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(40)
+            make.top.equalTo(AdaptSize(33))
             make.centerX.equalToSuperview()
             make.width.equalTo(titleWidth)
-            make.height.equalTo(28)
-        })
-        
-        subTitleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(titleLabel!.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(20)
+            make.height.equalTo(AdaptSize(37))
         })
         
         descTitleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(subTitleLabel!.snp.bottom).offset(12)
-            make.left.right.equalToSuperview()
+            make.top.equalTo(titleLabel!.snp.bottom).offset(AdaptSize(28))
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview()
             make.height.equalTo(20)
         })
         
         audioPlayerView?.snp.makeConstraints({ (make) in
             make.centerY.equalTo(titleLabel!)
-            make.left.equalTo(titleLabel!.snp.right).offset(3)
-            make.width.height.equalTo(22)
+            make.left.equalTo(titleLabel!.snp.right).offset(AdaptSize(3))
+            make.width.height.equalTo(AdaptSize(22))
         })
     }
     
     override func bindData() {
         let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
         self.titleLabel?.text     = word
-//        self.subTitleLabel?.text  = exerciseModel.word?.soundmark
         self.descTitleLabel?.text = (exerciseModel.word?.partOfSpeech ?? "") + " " + (exerciseModel.word?.meaning ?? "")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
