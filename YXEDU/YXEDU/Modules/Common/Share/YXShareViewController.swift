@@ -340,7 +340,7 @@ class YXShareViewController: YXViewController {
         let titleLabel: UILabel = {
             let label = UILabel()
             label.text          = "我在念念有词背单词"
-            label.textColor     = UIColor.white
+            label.textColor     = UIColor.black2
             label.font          = UIFont.mediumFont(ofSize: 15)
             label.textAlignment = .center
             return label

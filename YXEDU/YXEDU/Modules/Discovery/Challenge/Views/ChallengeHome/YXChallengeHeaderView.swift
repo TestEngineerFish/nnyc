@@ -67,12 +67,7 @@ class YXChallengeHeaderView: UIView {
         headerBackgroundView.addSubview(titleLabel)
         headerBackgroundView.addSubview(previousRankButton)
         self.previousRankButton.isHidden = isPreviousRank
-        myRankView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(headerBackgroundView.snp.top).offset(AdaptSize(-11))
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalTo(AdaptSize(83))
-        }
+
         headerBackgroundView.size = CGSize(width: AdaptSize(349), height: AdaptSize(48))
         headerBackgroundView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
@@ -80,6 +75,12 @@ class YXChallengeHeaderView: UIView {
             make.size.equalTo(headerBackgroundView.size)
         }
         headerBackgroundView.clipRectCorner(directionList: [.topLeft, .topRight], cornerRadius: AdaptSize(10))
+        myRankView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(headerBackgroundView.snp.top).offset(AdaptSize(-11))
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(AdaptSize(81))
+        }
         iconImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.right.equalTo(titleLabel.snp.left).offset(AdaptSize(-6))
@@ -111,7 +112,10 @@ class YXChallengeHeaderView: UIView {
             }
         } else {
             myRankView.isHidden = true
-            myRankView.snp.updateConstraints { (make) in
+            myRankView.snp.remakeConstraints { (make) in
+                make.bottom.equalTo(headerBackgroundView.snp.top).offset(AdaptSize(-11))
+                make.centerX.equalToSuperview()
+                make.width.equalToSuperview()
                 make.height.equalTo(AdaptSize(12))
             }
         }

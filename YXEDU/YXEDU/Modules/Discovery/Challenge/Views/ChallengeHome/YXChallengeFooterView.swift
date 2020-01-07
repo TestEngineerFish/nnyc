@@ -16,6 +16,12 @@ class YXChallengeFooterView: UIView {
         return view
     }()
 
+    var squirrelImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "challengeEmptyResult")
+        return imageView
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
@@ -28,12 +34,18 @@ class YXChallengeFooterView: UIView {
 
     private func createSubviews() {
         self.addSubview(contentView)
+        contentView.addSubview(squirrelImageView)
         contentView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(AdaptSize(13))
             make.right.equalToSuperview().offset(AdaptSize(-13))
             make.bottom.equalToSuperview().offset(AdaptSize(-10))
             make.top.equalToSuperview()
+        }
+        squirrelImageView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(60))
+            make.top.equalToSuperview().offset(AdaptSize(11))
+            make.size.equalTo(CGSize(width: AdaptSize(222), height: AdaptSize(179)))
         }
     }
 
