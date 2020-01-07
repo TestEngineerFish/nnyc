@@ -13,7 +13,7 @@ protocol YXMakeReviewPlanProtocol: NSObjectProtocol {
     func makeReivewPlanFinised()
 }
 
-class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXReviewSelectedArrowProtocol {
+class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXReviewSelectedArrowProtocol, YXReviewSelectedWordsListViewProtocol {
 
     // ---- 子视图
     var segmentControllerView: BPSegmentControllerView = {
@@ -37,6 +37,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     var selectedWordsListView = YXReviewSelectedWordsListView()
     var bottomView            = YXReviewBottomView()
     weak var delegate: YXMakeReviewPlanProtocol?
+    weak var reviewDelegate: YXReviewUnitListUpdateProtocol?
 
     // ---- 数据对象
     var model: YXReviewBookModel?
@@ -245,7 +246,6 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             return UIView()
         }
         let bookModel = model.list[indexPath.row]
-        print(bookModel.id)
         if let unitModelList = model.modelDict["\(bookModel.id)"] {
             if bookModel.type != 3 {
                 unitModelList.forEach { (unitModel) in
@@ -255,7 +255,8 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             let unitListView = YXReviewUnitListView(unitModelList, frame: CGRect.zero)
             unitListView.tag      = bookModel.id
             unitListView.delegate = self.selectedWordsListView
-            self.selectedWordsListView.delegate = unitListView
+            self.reviewDelegate   = unitListView
+            self.selectedWordsListView.delegate = self
             return unitListView
         } else {
             self.requestWordsList(bookModel.id, type: bookModel.type)
@@ -279,5 +280,24 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     func openUpList() {
         self.backgroundView.isHidden = false
+    }
+
+    // MARK: ==== YXReviewSelectedWordsListViewProtocol ====
+    func unselect(_ word: YXReviewWordModel) {
+        guard let model = self.model else {
+            return
+        }
+        if let unitModelList = model.modelDict["\(word.bookId)"] {
+            unitModelList.forEach { (unitModel) in
+                if unitModel.id == word.unitId {
+                    unitModel.list.forEach { (wordModel) in
+                        if wordModel.id == word.id {
+                            wordModel.isSelected = false
+                        }
+                    }
+                }
+            }
+        }
+        self.reviewDelegate?.updateSelectStatus(word)
     }
 }

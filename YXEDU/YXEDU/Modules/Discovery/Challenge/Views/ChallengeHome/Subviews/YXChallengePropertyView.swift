@@ -29,8 +29,8 @@ class YXChallengePropertyView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.hex(0xE69829).withAlphaComponent(0.62)
+        self.isUserInteractionEnabled = true
         self.setSubviews()
-        self.bindProprety()
     }
 
     required init?(coder: NSCoder) {
@@ -54,13 +54,6 @@ class YXChallengePropertyView: UIView {
         self.setNeedsLayout()
     }
 
-    private func bindProprety() {
-        let tapImage = UITapGestureRecognizer(target: self, action: #selector(clickGoldImage))
-        self.goldImageView.addGestureRecognizer(tapImage)
-        let tapLabel = UITapGestureRecognizer(target: self, action: #selector(clickGoldImage))
-        self.numberLabel.addGestureRecognizer(tapLabel)
-    }
-
     private func setSubviews(){
         self.addSubview(goldImageView)
         self.addSubview(numberLabel)
@@ -76,13 +69,5 @@ class YXChallengePropertyView: UIView {
             make.centerY.height.equalTo(goldImageView)
             make.width.equalTo(numberLabel.width)
         }
-    }
-
-    // MARK: ==== UIGestureRecognizer ====
-    @objc func clickGoldImage() {
-        guard let urlStr = YXUserModel.default.coinExplainUrl else {
-            return
-        }
-        YXAlertWebView.share.show(urlStr)
     }
 }

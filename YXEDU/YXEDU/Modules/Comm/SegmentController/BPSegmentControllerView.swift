@@ -56,7 +56,7 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     final let headerItemIdf  = "BPItemView"
     final let contentItemIdf = "BPItemContentView"
     var config: BPSegmentConfig
-    var lastSelectedIndex: IndexPath = IndexPath(item: 0, section: 0)
+    var lastSelectedIndex: IndexPath
     // ---- 子视图
     var headerScrollView: BPSegmentView!
     var contentScrollView: BPSegmentView!
@@ -136,11 +136,35 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(indexPath)
+        guard let segmentView = collectionView as? BPSegmentView else {
+            return
+        }
+        if segmentView.isHeaderView {
+            // 获取自定义View,如果有的话
+            if let itemSubview = self.delegate?.segment(segmentView, itemForRowAt: indexPath) {
+                cell.contentView.removeAllSubviews()
+                cell.contentView.addSubview(itemSubview)
+                itemSubview.snp.makeConstraints { (make) in
+                    make.edges.equalToSuperview()
+                }
+            }
+            // 设置标识符
+            cell.tag = indexPath.row
+        } else {
+            // 获取自定义View,如果有的话
+            if let contentSubview = self.delegate?.segment(segmentView, contentForRowAt: indexPath){
+                cell.contentView.removeAllSubviews()
+                cell.contentView.addSubview(contentSubview)
+                contentSubview.snp.makeConstraints { (make) in
+                    make.edges.equalToSuperview()
+                }
+            }
+            // 设置标识符
+            cell.tag = indexPath.row
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         guard let segmentView = collectionView as? BPSegmentView else {
             return UICollectionViewCell()
         }
@@ -149,32 +173,35 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
             guard let _itemView = collectionView.dequeueReusableCell(withReuseIdentifier: headerItemIdf, for: indexPath) as? BPItemHeaderView else {
                 return UICollectionViewCell()
             }
-            // 获取自定义View,如果有的话
-            if let itemSubview = self.delegate?.segment(segmentView, itemForRowAt: indexPath) {
-                _itemView.contentView.removeAllSubviews()
-                _itemView.contentView.addSubview(itemSubview)
-                itemSubview.snp.makeConstraints { (make) in
-                    make.edges.equalToSuperview()
-                }
-            }
-            // 设置标识符
-            _itemView.tag = indexPath.row
+//            // 获取自定义View,如果有的话
+//            if let itemSubview = self.delegate?.segment(segmentView, itemForRowAt: indexPath) {
+//                _itemView.contentView.removeAllSubviews()
+//                _itemView.contentView.addSubview(itemSubview)
+//                itemSubview.snp.makeConstraints { (make) in
+//                    make.edges.equalToSuperview()
+//                }
+//            }
+//            // 设置标识符
+//            _itemView.tag = indexPath.row
             return _itemView
         } else {
             // 通过注册获取View
             guard let _contentView = collectionView.dequeueReusableCell(withReuseIdentifier: contentItemIdf, for: indexPath) as? BPItemContentView else {
                 return UICollectionViewCell()
             }
-            // 获取自定义View,如果有的话
-            if let contentSubview = self.delegate?.segment(segmentView, contentForRowAt: indexPath){
-                _contentView.contentView.removeAllSubviews()
-                _contentView.contentView.addSubview(contentSubview)
-                contentSubview.snp.makeConstraints { (make) in
-                    make.edges.equalToSuperview()
-                }
-            }
-            // 设置标识符
-            _contentView.tag = indexPath.row
+//            if indexPath == self.selectIndexPath {
+//                // 获取自定义View,如果有的话
+//                if let contentSubview = self.delegate?.segment(segmentView, contentForRowAt: indexPath){
+//                    _contentView.contentView.removeAllSubviews()
+//                    _contentView.contentView.addSubview(contentSubview)
+//                    contentSubview.snp.makeConstraints { (make) in
+//                        make.edges.equalToSuperview()
+//                    }
+//                }
+//                // 设置标识符
+//                _contentView.tag = indexPath.row
+//                print(indexPath)
+//            }
             return _contentView
         }
     }

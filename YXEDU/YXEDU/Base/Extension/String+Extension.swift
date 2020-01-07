@@ -234,6 +234,25 @@ public extension String {
         }
         return (newRangeList, newExample)
     }
+
+    func formartTag2(isHollow: Bool = false) -> [NSRange]{
+        let newExample     = self
+        var newRangeList   = [NSRange]()
+        var examplePattern = ""
+
+        examplePattern = "\\[[^*]+?\\]"
+        ///1、提取
+        let htmlRangeList = self.textRegex(pattern: examplePattern)
+        ///2、剔除标签
+        for (index, range) in htmlRangeList.enumerated() {
+            var offset = 0
+            if index > 0 {
+                offset = self.count - newExample.count
+            }
+            newRangeList.append(NSRange(location: range.location - offset, length: range.length))
+        }
+        return newRangeList
+    }
 }
 
 

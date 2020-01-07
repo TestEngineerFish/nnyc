@@ -9,7 +9,7 @@
 import UIKit
 
 protocol YXReviewSelectedWordsListViewProtocol: NSObjectProtocol {
-    func remove(_ word: YXReviewWordModel)
+    func unselect(_ word: YXReviewWordModel)
 }
 
 protocol YXReviewSelectedArrowProtocol: NSObjectProtocol {
@@ -39,7 +39,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
     var arrowButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "arrow_select"), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        button.imageEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
         return button
     }()
 
@@ -70,7 +70,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         arrowButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-5))
             make.centerY.equalTo(titleLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(25), height: AdaptSize(18)))
+            make.size.equalTo(CGSize(width: AdaptSize(29), height: AdaptSize(22)))
         }
 
         titleLabel.snp.makeConstraints { (make) in
@@ -103,7 +103,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
     @objc func clickRemoveBtn(_ button: YXButton) {
         for (index, wordModel) in self.wordsModelList.enumerated() {
             if wordModel.id == button.tag {
-                self.delegate?.remove(wordModel)
+                self.delegate?.unselect(wordModel)
                 self.removedWord(wordModel, index: index)
             }
         }

@@ -13,7 +13,11 @@ protocol YXReviewUnitListViewProtocol: NSObjectProtocol {
     func unselectWord(_ word: YXReviewWordModel)
 }
 
-class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, YXReviewUnitListHeaderProtocol, YXReviewSelectedWordsListViewProtocol {
+protocol YXReviewUnitListUpdateProtocol: NSObjectProtocol {
+    func updateSelectStatus(_ wordModel: YXReviewWordModel)
+}
+
+class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, YXReviewUnitListHeaderProtocol, YXReviewUnitListUpdateProtocol {
     
     var guideView = YXMakeReviewGuideView()
     var tableView = UITableView()
@@ -227,21 +231,10 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         }
         tableView.reloadSections(IndexSet(integer: section), with: .automatic)
     }
-    
-    // MARK: ==== YXReviewSelectedWordsListViewProtocol ====
-    func remove(_ word: YXReviewWordModel) {
-        if self.tag == word.bookId {
-            for unitModel in self.unitModelList {
-                if unitModel.id == word.unitId {
-                    guard let wordIndex = unitModel.list.firstIndex(of: word) else {
-                        return
-                    }
-                    unitModel.list[wordIndex].isSelected = false
-                    self.tableView.reloadData()
-                    break
-                }
-            }
-        }
+
+    // MARK: ==== YXReviewUnitListUpdateProtocol ====
+    func updateSelectStatus(_ wordModel: YXReviewWordModel) {
+        self.tableView.reloadData()
     }
     
 }

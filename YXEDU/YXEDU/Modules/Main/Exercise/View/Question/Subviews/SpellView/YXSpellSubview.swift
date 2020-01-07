@@ -30,7 +30,7 @@ class YXSpellSubview: UIView {
 
     var exerciseModel: YXWordExerciseModel
     var wordViewList = [YXLackWordView]()
-    var resultArrary: [NSTextCheckingResult]?
+    var resultArrary: [NSRange]?
 
     init(_ model: YXWordExerciseModel, isTitle: Bool) {
         self.exerciseModel = model
@@ -49,14 +49,7 @@ class YXSpellSubview: UIView {
         guard let question = self.exerciseModel.question, let word = question.word else {
             return
         }
-        do {
-            let regular = "(\\[\\w+\\])"
-            let regex = try NSRegularExpression(pattern: regular, options: .caseInsensitive)
-            resultArrary = regex.matches(in: word, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: word.count))
-
-        } catch {
-
-        }
+        resultArrary = word.formartTag2()
     }
 
     private func createUI() {
@@ -64,9 +57,9 @@ class YXSpellSubview: UIView {
             return
         }
         var offset = 0
-        for (index, _result) in array.enumerated() {
+        for (index, range) in array.enumerated() {
             // 添加可见字母
-            let lackWord = word.substring(fromIndex: offset, length: _result.range.location - offset)
+            let lackWord = word.substring(fromIndex: offset, length: range.location - offset)
             if !lackWord.isEmpty {
                 let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
                 wordView.textField.text = lackWord
@@ -76,7 +69,7 @@ class YXSpellSubview: UIView {
                 self.wordViewList.append(wordView)
             }
             // 添加不可见字母
-            var letter2 = word.substring(fromIndex: _result.range.location, length: _result.range.length)
+            var letter2 = word.substring(fromIndex: range.location, length: range.length)
             letter2.removeFirst()
             letter2.removeLast()
             if !letter2.isEmpty {
@@ -87,7 +80,7 @@ class YXSpellSubview: UIView {
                 self.addSubview(wordView)
                 self.wordViewList.append(wordView)
             }
-            offset = _result.range.location + _result.range.length
+            offset = range.location + range.length
             if index >= array.count - 1 {
                 // 添加可见字母
                 let lackWord = word.substring(fromIndex: offset, length: word.count - offset)

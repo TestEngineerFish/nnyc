@@ -78,6 +78,8 @@ class YXChallengeHeaderTopView: UIView {
 
     private func bindProperty() {
         self.gameRuleButton.addTarget(self, action: #selector(showRuleView), for: .touchUpInside)
+        let tapAction = UITapGestureRecognizer(target: self, action: #selector(clickGoldView))
+        self.propertyView.addGestureRecognizer(tapAction)
     }
 
     private func setSubviews() {
@@ -144,6 +146,15 @@ class YXChallengeHeaderTopView: UIView {
             return
         }
         YXAlertWebView.share.show(url)
+    }
+
+    // MARK: ==== UIGestureRecognizer ====
+    @objc func clickGoldView() {
+        guard let urlStr = YXUserModel.default.coinExplainUrl else {
+            return
+        }
+        YXAlertWebView.share.show(urlStr)
+//        YXAlertWebView.share.show("http://www.baidu.com")
     }
 
     // MARK: ==== Animation ====

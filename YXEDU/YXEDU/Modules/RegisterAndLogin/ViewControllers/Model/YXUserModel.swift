@@ -81,7 +81,7 @@ class YXUserModel: NSObject {
 
     var coinExplainUrl: String? {
         didSet {
-            YYCache.set(coinExplainUrl, forKey: "UoinExplainUrl")
+            YYCache.set(coinExplainUrl, forKey: "CoinExplainUrl")
         }
     }
 
