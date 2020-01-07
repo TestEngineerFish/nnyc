@@ -27,6 +27,9 @@ class YXAVPlayerManager: NSObject {
 
     /// 播放音频(移除掉)
     func playAudio(_ url: URL, finish block: FinishedBlock? = nil) {
+        if self.finishedBlock != nil {
+            self.finishedBlock?()
+        }
         self.finishedBlock = block
         self.play(url)
     }
@@ -86,11 +89,11 @@ class YXAVPlayerManager: NSObject {
     // MARK: Event
     /// 播放结束事件
     @objc private func playFinished() {
-        print("播放结束")
         self.sourceIndex += 1
         self.isPlaying = false
         if self.sourceIndex >= self.sourceList.count {
             self.finishedBlock?()
+            self.finishedBlock = nil
         } else {
             guard let url = URL(string: self.sourceList[sourceIndex]) else {
                 return
