@@ -180,6 +180,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                     self.endRecordAction()
                 }
             }
+            YXAVPlayerManager.share.pauseAudio()
         } else if ges.state == .ended {
             self.endRecordAction()
         }
