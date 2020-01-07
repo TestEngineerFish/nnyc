@@ -183,6 +183,8 @@
 		776F7480238BC7690027D166 /* YXBadgeListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F747F238BC7690027D166 /* YXBadgeListModel.swift */; };
 		77706E402372EBCF00149D09 /* YXAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77706E3F2372EBCF00149D09 /* YXAlertView.swift */; };
 		777C1E2A236BDF380097A822 /* YXHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C1E29236BDF380097A822 /* YXHomeModel.swift */; };
+		777FAA0E23C4812500FCC976 /* YXOldUserUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777FAA0C23C4812500FCC976 /* YXOldUserUpdateView.swift */; };
+		777FAA0F23C4812500FCC976 /* YXOldUserUpdateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 777FAA0D23C4812500FCC976 /* YXOldUserUpdateView.xib */; };
 		7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */; };
 		7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */; };
 		7786B6D02361C3820027D0E3 /* YXGroupWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6CE2361C3820027D0E3 /* YXGroupWordBookCell.swift */; };
@@ -948,6 +950,8 @@
 		776F747F238BC7690027D166 /* YXBadgeListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeListModel.swift; sourceTree = "<group>"; };
 		77706E3F2372EBCF00149D09 /* YXAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAlertView.swift; sourceTree = "<group>"; };
 		777C1E29236BDF380097A822 /* YXHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeModel.swift; sourceTree = "<group>"; };
+		777FAA0C23C4812500FCC976 /* YXOldUserUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXOldUserUpdateView.swift; sourceTree = "<group>"; };
+		777FAA0D23C4812500FCC976 /* YXOldUserUpdateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YXOldUserUpdateView.xib; sourceTree = "<group>"; };
 		7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookCell.swift; sourceTree = "<group>"; };
 		7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordBookCell.xib; sourceTree = "<group>"; };
 		7786B6CE2361C3820027D0E3 /* YXGroupWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGroupWordBookCell.swift; sourceTree = "<group>"; };
@@ -2582,6 +2586,8 @@
 				77706E3F2372EBCF00149D09 /* YXAlertView.swift */,
 				77CBFD6E2372EBF000A670D7 /* YXAlertView.xib */,
 				22F8211B23B3452300CC3379 /* YXAlertWebView.swift */,
+				777FAA0C23C4812500FCC976 /* YXOldUserUpdateView.swift */,
+				777FAA0D23C4812500FCC976 /* YXOldUserUpdateView.xib */,
 			);
 			path = AlertViews;
 			sourceTree = "<group>";
@@ -5639,6 +5645,7 @@
 				202709B821DE3A3000E88457 /* oneDrawgameGuide1@3x.png in Resources */,
 				77626C0D239E439E00B9407A /* YXWordListOrderView.xib in Resources */,
 				EE4584EF23B4D86400E45367 /* vcmap.plist in Resources */,
+				777FAA0F23C4812500FCC976 /* YXOldUserUpdateView.xib in Resources */,
 				77F69A622361495300E55185 /* Main.storyboard in Resources */,
 				7786D620236C66B100741DCE /* YXSeleceUnitView.xib in Resources */,
 				77626BF9239E250800B9407A /* YXWordListView.xib in Resources */,
@@ -5832,6 +5839,7 @@
 				EEACEB9323AA27930036B3A2 /* YXTableViewCell.swift in Sources */,
 				EE6C7D1A23B0A785009DCC0C /* YXTopWindowView.swift in Sources */,
 				EE5E010323274FEC00655654 /* YXPersonalBadgeCell.m in Sources */,
+				777FAA0E23C4812500FCC976 /* YXOldUserUpdateView.swift in Sources */,
 				EE5E004E23274FEB00655654 /* YXReportErrorView.m in Sources */,
 				EE5EFCE823274E5500655654 /* YXCommonMaskView.m in Sources */,
 				EE5E0233232756C000655654 /* XStackAreaLineChartConfiguration.m in Sources */,

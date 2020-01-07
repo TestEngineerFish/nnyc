@@ -94,18 +94,15 @@ class YXAlertCheckManager {
             }
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
+            
             if userInfomation.oldUserUpdateMessage?.isNotEmpty ?? false {
-                let alertView = YXAlertView()
-                alertView.titleLabel.text = "提示"
-                alertView.descriptionLabel.text = userInfomation.oldUserUpdateMessage
-                alertView.shouldOnlyShowOneButton = true
-                alertView.shouldDismissWhenTapBackground = false
-                alertView.tag = YXAlertWeightType.oldUserTips
-                alertView.doneClosure = { (string) in
+                let alertView = YXOldUserUpdateView()
+                alertView.closure = {
                     YXSettingDataManager().reportOldUserTips { (model, msg) in
                         print("老用户更新提示，上报：", model?.state ?? 0)
                     }
                 }
+                
                 YXAlertQueueManager.default.addAlert(alertView: alertView)
                 completion?()
             } else {
