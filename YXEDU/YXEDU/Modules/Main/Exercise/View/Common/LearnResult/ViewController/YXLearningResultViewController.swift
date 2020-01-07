@@ -176,7 +176,7 @@ class YXLearningResultViewController: UIViewController {
     // MARK: Event
 
     @objc private func backClick() {
-        NotificationCenter.default.post(name: YXNotification.kCloseResultPage, object: nil)
+        NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
         self.navigationController?.popViewController(animated: true)
     }
 

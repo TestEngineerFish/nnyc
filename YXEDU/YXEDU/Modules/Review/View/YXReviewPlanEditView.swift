@@ -99,8 +99,8 @@ class YXReviewPlanEditView: YXTopWindowView {
             guard let planName = text, placeholder != planName else { return }
             YXReviewDataManager().updateReviewPlanName(planId: pid, planName: planName) { (result, msg) in
                 if let r = result, r {
-                    NotificationCenter.default.post(name: YXNotification.kCloseResultPage, object: nil)
-                    NotificationCenter.default.post(name: YXNotification.kUpdatePlanName, object: nil)
+                    NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
+                    NotificationCenter.default.post(name: YXNotification.kRefreshReviewDetailPage, object: nil)
                     UIView.toast("修改成功")
                 } else {
                     UIView.toast(msg)
@@ -235,7 +235,7 @@ class YXReviewPlanRemoveView: YXTopWindowView {
             if let r = result, r {
                 self?.removeFromSuperview()
                 YRRouter.popViewController(true)
-                NotificationCenter.default.post(name: YXNotification.kCloseResultPage, object: nil)
+                NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
                 UIView.toast("删除成功")
             } else {
                 UIView.toast(msg)

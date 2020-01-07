@@ -15,7 +15,8 @@ struct YXNotification {
     
     static let kServiceStop = NSNotification.Name("kServiceStopNotification")   // 停服
     
+    static let kRefreshReviewTabPage = NSNotification.Name("kRefreshReviewTabPage")   // 刷新review tab页
+    static let kRefreshReviewDetailPage = NSNotification.Name("kRefreshReviewDetailPage")   // 刷新review tab页
+    
     static let kCloseWordDetailPage = NSNotification.Name("kCloseWordDetailPage")   // 详情页关闭的时候
-    static let kCloseResultPage = NSNotification.Name("kCloseResultPage")   // 学习结果页关闭的时候
-    static let kUpdatePlanName = NSNotification.Name("kUpdatePlanName")   // 
 }

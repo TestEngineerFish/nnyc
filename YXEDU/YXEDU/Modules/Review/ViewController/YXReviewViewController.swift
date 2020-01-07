@@ -13,6 +13,10 @@ class YXReviewViewController: YXTableViewController {
     var headerView: YXReviewHeaderView!
     var footerView = YXReviewPlanEmptyView()
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: YXNotification.kRefreshReviewTabPage, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
@@ -45,7 +49,8 @@ class YXReviewViewController: YXTableViewController {
     
     
     override func addNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchDataWhenResultPageClosed), name: YXNotification.kCloseResultPage, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchDataWhenResultPageClosed), name: YXNotification.kRefreshReviewTabPage, object: nil)
     }
     
     override func monitorNetwork(isReachable: Bool) {

@@ -166,6 +166,7 @@ class YXAlertCheckManager {
         alertView.tag = YXAlertWeightType.stopService
         
         YXAlertQueueManager.default.addAlert(alertView: alertView)
+        YXAlertQueueManager.default.showAlert()
     }
 
     

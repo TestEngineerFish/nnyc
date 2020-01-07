@@ -258,7 +258,8 @@ class YXReviewLearningProgressView: YXTopWindowView {
     
     
     @objc func clickCloseButton() {
-        NotificationCenter.default.post(name: YXNotification.kCloseResultPage, object: nil)
+        NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
+        NotificationCenter.default.post(name: YXNotification.kRefreshReviewDetailPage, object: nil)
         self.removeFromSuperview()
     }
 
@@ -300,3 +301,99 @@ class YXReviewLearningProgressView: YXTopWindowView {
         return "巩固了\(num)个单词"
     }
 }
+
+
+
+class YXReviewResultTipsView: YXView, UITableViewDelegate, UITableViewDataSource {
+    
+    var dataSource: [String] = []
+    var textAlignment: NSTextAlignment = .center
+        
+    private var maxWidth: CGFloat = screenWidth
+    private var tableView = UITableView()
+    
+    private static let cellHeight: CGFloat = AS(22)
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.createSubviews()
+        self.bindProperty()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func createSubviews() {
+        self.addSubview(tableView)
+    }
+    
+    override func bindProperty() {
+        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.separatorColor = UIColor.clear
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "UITableViewCell")
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalTo(AS(51))
+            make.left.equalTo(AS(69))
+            make.right.equalTo(AS(-49))
+            make.bottom.equalTo(AS(-27))
+        }
+    }
+    
+    override func bindData() {
+        self.tableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return YXReviewResultTipsView.cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        cell.selectionStyle = .none
+            
+        
+        let pointLabel = self.createPointLabel()
+        cell.contentView.addSubview(pointLabel)
+        
+        
+        
+        
+        
+        
+        return cell
+    }
+    
+    
+    private func createPointLabel() -> UILabel {
+        let pointLabel1 = UILabel()
+        pointLabel1.layer.masksToBounds = true
+        pointLabel1.layer.cornerRadius = AS(2)
+        pointLabel1.backgroundColor = UIColor.black4
+        return pointLabel1
+    }
+    
+    
+    private func processMaxContentWidth() {
+        for content in dataSource {
+            
+        }
+    }
+    
+    static func viewHeight(count: Int) -> CGFloat {
+        return cellHeight * CGFloat(count)
+    }
+    
+}
+

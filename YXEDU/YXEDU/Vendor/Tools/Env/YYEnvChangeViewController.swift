@@ -66,7 +66,7 @@ typealias YYEVC = YYEnvChangeViewController
         EnvType.dev  : ["title" : "开发环境", "api" : "http://common.api.xstudyedu.com",  "h5" : "http://common.api.xstudyedu.com"],
         EnvType.test : ["title" : "测试环境", "api" : "http://nnyc-api-test.xstudyedu.com", "h5" : "http://nnyc-api-test.xstudyedu.com"],
         EnvType.pre  : ["title" : "预发环境", "api" : "http://121.43.184.190",  "h5" : "https://pre.helloyouyou.com"],
-        EnvType.release : ["title" : "正式环境", "api" : "http://app.xstudyedu.com",   "h5" : "https://app.xstudyedu.com"]
+        EnvType.release : ["title" : "正式环境", "api" : "http://nnyc-api.xstudyedu.com",   "h5" : "http://nnyc-api.xstudyedu.com"]
     ]
 
     private lazy var tableView: UITableView = {
