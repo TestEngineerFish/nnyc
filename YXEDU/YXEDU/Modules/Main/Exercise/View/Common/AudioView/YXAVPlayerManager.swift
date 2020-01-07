@@ -34,10 +34,15 @@ class YXAVPlayerManager: NSObject {
     /// 播放音频
     func play(_ url: URL) {
         let playerItem = YYMediaCache.default.playerItem(url)
-        self.player.replaceCurrentItem(with: playerItem)
-        self.player.play()
-        self.isPlaying = true
-        self.addObservers()
+        if playerItem.asset.isPlayable {
+            self.player.replaceCurrentItem(with: playerItem)
+            self.player.play()
+            self.isPlaying = true
+            self.addObservers()
+        } else {
+            YXUtils.showHUD(kWindow, title: "无效音频")
+            self.playFinished()
+        }
     }
 
     /// 支持播放一组音频

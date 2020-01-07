@@ -150,11 +150,11 @@ class YXChallengeHeaderTopView: UIView {
 
     // MARK: ==== UIGestureRecognizer ====
     @objc func clickGoldView() {
-        guard let urlStr = YXUserModel.default.coinExplainUrl else {
-            return
-        }
-        YXAlertWebView.share.show(urlStr)
-//        YXAlertWebView.share.show("http://cdn.xstudyedu.com/res/html/game_explain_202001071529.html")
+//        guard let urlStr = YXUserModel.default.coinExplainUrl else {
+//            return
+//        }
+//        YXAlertWebView.share.show(urlStr)
+        YXAlertWebView.share.show("http://10.173.6.40:8020/hb-test/song_guo_bi.html?__hbt=1578382496725")
     }
 
     // MARK: ==== Animation ====

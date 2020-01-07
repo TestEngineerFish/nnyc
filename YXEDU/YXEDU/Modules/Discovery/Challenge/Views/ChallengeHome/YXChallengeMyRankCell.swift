@@ -97,7 +97,7 @@ class YXChallengeMyRankCell: UITableViewCell {
         if userModel.challengeResult == .success {
             self.nameLabel.text               = userModel.name
             self.nameLabel.textColor          = UIColor.hex(0x4F381D)
-            self.descriptionLabel.text        = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time)
+            self.descriptionLabel.text        = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time/1000)
             self.descriptionLabel.textColor   = UIColor.hex(0xA18266)
             self.descriptionLabel.font        = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
             self.goldIconImageView.isHidden   = false

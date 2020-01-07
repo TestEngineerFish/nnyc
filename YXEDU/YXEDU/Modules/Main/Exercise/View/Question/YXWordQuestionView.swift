@@ -21,25 +21,24 @@ class YXWordQuestionView: YXBaseQuestionView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let titleWidth = self.exerciseModel.question?.word?.textWidth(font: titleLabel!.font, height: 28) ?? 0
+        let titleWidth = self.exerciseModel.question?.word?.textWidth(font: titleLabel!.font, height: AdaptSize(37)) ?? 0
         titleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(56)
+            make.top.equalTo(AdaptSize(49))
             make.centerX.equalToSuperview()
             make.width.equalTo(titleWidth)
-            make.height.equalTo(28)
+            make.height.equalTo(AdaptSize(37))
         })
         
         subTitleLabel?.snp.makeConstraints({ (make) in
             make.top.equalTo(titleLabel!.snp.bottom)
             make.left.right.equalToSuperview()
-            make.height.equalTo(20)
+            make.height.equalTo(AdaptSize(20))
         })
-        
         
         audioPlayerView?.snp.makeConstraints({ (make) in
             make.centerY.equalTo(titleLabel!)
-            make.left.equalTo(titleLabel!.snp.right).offset(3)
-            make.width.height.equalTo(22)
+            make.left.equalTo(titleLabel!.snp.right).offset(AdaptSize(3))
+            make.width.height.equalTo(AdaptSize(22))
         })
     }
     
@@ -51,13 +50,9 @@ class YXWordQuestionView: YXBaseQuestionView {
             self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice
             self?.audioPlayerView?.play()
         }
-        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.audioPlayerView?.play()
     }
 }
-
-
-

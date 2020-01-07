@@ -107,16 +107,16 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
         bubbleImageView.size = bubbleSize
         let label = UILabel()
         label.text = {
-            if currentModel.stars > 0 {
-                return "有些单词还掌握的不太好呢,再练习一下吧～"
-            } else if currentModel.stars > 1 {
-                return "厉害~再巩固一下就冲向三星了哦！"
-            } else if currentModel.stars > 2 {
+            if currentModel.stars > 2 {
                 if currentModel.ext == nil {
                     return "您可以进入下一个单元进行学习哦！"
                 } else {
                     return "来试试拓展单元吧，可以学到更多有用的词汇哦~"
                 }
+            } else if currentModel.stars > 1 {
+                return "厉害~再巩固一下就冲向三星了哦！"
+            } else if currentModel.stars > 0 {
+                return "有些单词还掌握的不太好呢,再练习一下吧～"
             } else {
                 return "学得不错，继续学习就 可以推进这个单元的进度哦~"
             }
@@ -160,7 +160,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
         }
         if unitView.tag < self.modelArray.count {
             let model = self.modelArray[unitView.tag]
-            self.currentModel = model
+//            self.currentModel = model
             self.learnNewUnit?(model.unitID)
         }
 

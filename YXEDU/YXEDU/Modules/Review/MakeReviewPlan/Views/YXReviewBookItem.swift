@@ -25,13 +25,26 @@ class YXReviewBookItem: UIView {
         return label
     }()
 
+    var arrowImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image    = UIImage(named: "reviewArrowIcon")
+        imageView.isHidden = true
+        return imageView
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setSubviews()
     }
 
     func bindData(_ bookModel: YXReviewWordBookItemModel) {
-        self.bookImageView.image = bookModel.isSelected ? UIImage(named: "book_selected") : UIImage(named: "book_unselect")
+        if bookModel.isSelected {
+            self.bookImageView.image     = UIImage(named: "book_selected")
+            self.arrowImageView.isHidden = false
+        } else {
+            self.bookImageView.image     = UIImage(named: "book_unselect")
+            self.arrowImageView.isHidden = true
+        }
         let versionName          = bookModel.versionName.isEmpty ? "" : bookModel.versionName + "\n"
         self.infolabel.text      = String(format: "%@%d词", versionName, bookModel.wordsNumber)
         self.titleLabel.text     = bookModel.name
@@ -41,6 +54,7 @@ class YXReviewBookItem: UIView {
         self.addSubview(bookImageView)
         self.addSubview(infolabel)
         self.addSubview(titleLabel)
+        self.addSubview(arrowImageView)
 
         self.infolabel.numberOfLines   = 0
         self.titleLabel.textAlignment  = .center
@@ -58,6 +72,11 @@ class YXReviewBookItem: UIView {
             make.top.equalTo(self.bookImageView.snp.bottom).offset(AdaptSize(4))
             make.left.right.equalToSuperview()
             make.height.equalTo(AdaptSize(15))
+        }
+        self.arrowImageView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(11), height: AdaptSize(5)))
         }
     }
 
