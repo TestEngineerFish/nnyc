@@ -228,9 +228,9 @@ class YXExerciseDataManager: NSObject {
     }
     
 
-    func fetchWord(wordId: Int) -> YXWordModel? {                         
-        return dao.selectWord(wordId: wordId)
-    }
+//    func fetchWord(bookId: Int, wordId: Int) -> YXWordModel? {
+//        return dao.selectWord(bookId: bookId, wordId: wordId)
+//    }
     
     
     private func reportJson() -> String {

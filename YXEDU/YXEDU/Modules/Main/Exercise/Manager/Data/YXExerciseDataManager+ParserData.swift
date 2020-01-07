@@ -47,8 +47,8 @@ extension YXExerciseDataManager {
     func processNewWord(result: YXExerciseResultModel?) {
         // 处理新学单词
         for wordId in result?.newWordIds ?? [] {
-            
-            if let word = self.fetchWord(wordId: wordId) {
+            let bookId = result?.bookId ?? 0
+            if let word = dao.selectWord(bookId: bookId, wordId: wordId) {
                 var exercise = YXWordExerciseModel()
                 exercise.question = createQuestionModel(word: word)
                 exercise.word = word
@@ -58,7 +58,7 @@ extension YXExerciseDataManager {
                     exercise.type = .newLearnPrimarySchool
                     if word.isPhrase {
                         exercise.type = .newLearnPrimarySchool_Group
-                    }                    
+                    }
                 } else if (word.gradeId ?? 0) <= 9 { // 初中
                     exercise.type = .newLearnJuniorHighSchool
                 }
@@ -86,11 +86,11 @@ extension YXExerciseDataManager {
                                                                 
                 if exercise.type == .connectionWordAndImage || exercise.type == .connectionWordAndChinese {
                     for option in exercise.option?.firstItems ?? [] {
-                        exercise.word = fetchWord(wordId: option.optionId)
+                        exercise.word = dao.selectWord(wordId: option.optionId)
                         self.addWordStep(exerciseModel: exercise, isBackup: false)
                     }
-                } else {
-                    exercise.word = fetchWord(wordId: subStep.question?.wordId ?? 0)
+                } else {                    
+                    exercise.word = dao.selectWord(wordId: subStep.question?.wordId ?? 0)
                     self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)
                 }
             }

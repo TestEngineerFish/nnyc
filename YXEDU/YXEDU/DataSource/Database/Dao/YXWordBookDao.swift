@@ -45,4 +45,6 @@ protocol YXWordBookDao {
     /// 查询单词
     /// - Parameter wordId: 单词 id
     func selectWord(wordId: Int) -> YXWordModel?
+    func selectWord(bookId: Int, wordId: Int) -> YXWordModel?
+    
 }
