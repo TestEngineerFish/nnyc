@@ -240,7 +240,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     private func remindExampleAudio() {
-        guard let wordModel = exerciseModel.word, let voiceUrl = wordModel.voice else {
+        guard let wordModel = exerciseModel.word, let voiceUrl = wordModel.examplePronunciation else {
             self.show()
             return
         }
