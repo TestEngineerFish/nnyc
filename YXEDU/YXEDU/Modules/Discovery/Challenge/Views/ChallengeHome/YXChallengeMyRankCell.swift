@@ -42,10 +42,11 @@ class YXChallengeMyRankCell: UITableViewCell {
 
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
-        imageView.layer.cornerRadius = AdaptSize(38/2)
-        imageView.layer.borderColor  = UIColor.white.cgColor
-        imageView.layer.borderWidth  = AdaptSize(2)
-        imageView.image              = UIImage(named: "challengeAvatar")
+        imageView.layer.cornerRadius  = AdaptSize(38/2)
+        imageView.layer.borderColor   = UIColor.white.cgColor
+        imageView.layer.borderWidth   = AdaptSize(2)
+        imageView.layer.masksToBounds = true
+        imageView.image               = UIImage(named: "challengeAvatar")
         return imageView
     }()
 

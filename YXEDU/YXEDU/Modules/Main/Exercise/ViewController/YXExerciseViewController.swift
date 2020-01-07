@@ -83,6 +83,7 @@
     
     deinit {
         print("练习 VC 释放")
+        YXAVPlayerManager.share.finishedBlock = nil
         YXAVPlayerManager.share.pauseAudio()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
