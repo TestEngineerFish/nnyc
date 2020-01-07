@@ -10,14 +10,13 @@ import UIKit
 
 class YXReviewViewController: YXTableViewController {
         
-    var headerView = YXReviewHeaderView()
+    var headerView: YXReviewHeaderView!
     var footerView = YXReviewPlanEmptyView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
         self.isMonitorNetwork = true
-        self.configTableView()
         
         self.fetchData()
     }
@@ -67,50 +66,44 @@ class YXReviewViewController: YXTableViewController {
         self.tableView.register(YXReviewPlanTableViewCell.classForCoder(), forCellReuseIdentifier: "YXReviewPlanTableViewCell")
     }
     
-    
     func configHeaderView() {
-        self.headerView.size = CGSize(width: screenWidth, height: AS(453.5))
-        
         self.headerView.startReviewEvent = { [weak self] in
             self?.startReviewEvent()
         }
         self.headerView.createReviewPlanEvent = { [weak self] in
-             self?.createReviewEvent()
-         }
-        self.headerView.favoriteEvent = { [weak self] in
-            self?.favoriteEvent()
-        }
-        self.headerView.wrongWordEvent = { [weak self] in
-            self?.wrongWordEvent()
+            self?.createReviewEvent()
         }
     }
     
-    
     func configFooterView() {
-        self.footerView.size = CGSize(width: screenWidth, height: AS(251))
+        self.footerView.size = CGSize(width: screenWidth, height: AS(72))
         self.footerView.createReviewPlanEvent = { [weak self] in
             self?.createReviewEvent()
         }
     }
     
-    
-    
     func fetchData() {
         YXReviewDataManager().fetchReviewPlanData { [weak self] (pageModel, errorMsg) in
             guard let self = self else { return }
-            if let msg = errorMsg {
-                UIView.toast(msg)
-            } else {
-                self.headerView.reviewModel = pageModel
-                self.dataSource = pageModel?.reviewPlans ?? []
-                
+            if let reviewModel = pageModel {
+                self.dataSource = reviewModel.reviewPlans ?? []
+                self.headerView = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: AS(400)), reviewModel: reviewModel)
+                self.headerView.reviewModel = reviewModel
+                                
                 if self.dataSource.count == 0 {
                     self.tableView.tableFooterView = self.footerView
+                
                 } else {
                     self.tableView.tableFooterView = nil
                 }
+                
+                self.configTableView()
                 self.tableView.reloadData()
+                
+            } else if let msg = errorMsg {
+                UIView.toast(msg)
             }
+            
             self.finishLoading()
         }
     }
@@ -163,15 +156,6 @@ extension YXReviewViewController {
 
 
 extension YXReviewViewController {
-    
-    func favoriteEvent() {
-        YRRouter.openURL("word/list", query: ["type" : YXWordListType.collected], animated: true)
-    }
-    
-    func wrongWordEvent() {
-        YRRouter.openURL("word/list", query: ["type" : YXWordListType.wrongWords], animated: true)
-    }
-    
     /// 智能复习
     func startReviewEvent() {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.aiReview.rawValue], animated: true)

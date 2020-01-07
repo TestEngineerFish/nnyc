@@ -72,11 +72,11 @@
     </scenes>
     <resources>
         <image name="nil" width="16" height="16"/>
-        <image name="tabLearn" width="22" height="22"/>
-        <image name="tabLearnSelected" width="22" height="22"/>
-        <image name="tabMine" width="22" height="22"/>
-        <image name="tabMineSelected" width="22" height="22"/>
-        <image name="tabReview" width="22" height="22"/>
-        <image name="tabReviewSelected" width="22" height="22"/>
+        <image name="tabLearn" width="27" height="27"/>
+        <image name="tabLearnSelected" width="27" height="27"/>
+        <image name="tabMine" width="27" height="27"/>
+        <image name="tabMineSelected" width="27" height="27"/>
+        <image name="tabReview" width="27" height="27"/>
+        <image name="tabReviewSelected" width="27" height="27"/>
     </resources>
 </document>

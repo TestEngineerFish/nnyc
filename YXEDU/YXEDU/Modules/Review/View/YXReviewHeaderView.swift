@@ -9,16 +9,13 @@
 import UIKit
 
 class YXReviewHeaderView: YXView {
+    var reviewModel: YXReviewPageModel! { didSet {bindData()} }
     var startReviewEvent: (() -> Void)?
     var createReviewPlanEvent: (() -> Void)?
-    var favoriteEvent: (() -> Void)?
-    var wrongWordEvent: (() -> Void)?
-    var reviewModel: YXReviewPageModel? { didSet {bindData()} }
     
     var bgView = UIView()
+    var circlrImageView = UIImageView()
     var contentView = UIView()
-    
-    var imageView = UIImageView()
     
     var titleLabel = UILabel()
     var countLabel = UILabel()
@@ -48,27 +45,18 @@ class YXReviewHeaderView: YXView {
     var forgetProgressLabel = UILabel()
     
     /// 智能复习
-    var reviewButton = YXButton()
+    var reviewButton = YXDesignableButton()
     var subTitleLabel = UILabel()
-    
-    
-    var favoriteButton = UIButton()
-    var wrongWordButton = UIButton()
-    
     
     var reviewPlanLabel = UILabel()
     var createReviewPlanButton = UIButton()
     
+    var cannotReviewImageView = UIImageView()
+    var cannotReviewLabel = UILabel()
     
-    deinit {
-        reviewButton.removeTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
-        createReviewPlanButton.removeTarget(self, action: #selector(clickCreateReviewPlanButton), for: .touchUpInside)
-        favoriteButton.removeTarget(self, action: #selector(clickFavoriteButton), for: .touchUpInside)
-        wrongWordButton.removeTarget(self, action: #selector(clickWrongWordButton), for: .touchUpInside)
-    }
-    
-    override init(frame: CGRect) {
+    init(frame: CGRect, reviewModel: YXReviewPageModel) {
         super.init(frame: frame)
+        self.reviewModel = reviewModel
         self.createSubviews()
         self.bindProperty()
     }
@@ -79,69 +67,68 @@ class YXReviewHeaderView: YXView {
     
     override func createSubviews() {
         self.addSubview(bgView)
-        self.addSubview(imageView)
-        self.addSubview(favoriteButton)
-        self.addSubview(wrongWordButton)
+        self.addSubview(circlrImageView)
         self.addSubview(reviewPlanLabel)
-        self.addSubview(createReviewPlanButton)
-        
-        
+        if let reviewPlans = reviewModel.reviewPlans, reviewPlans.count > 0 {
+            self.addSubview(createReviewPlanButton)
+        }
         bgView.addSubview(contentView)
-        
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(countLabel)
-        
-        contentView.addSubview(familiarPointLabel)
-        contentView.addSubview(familiarLabel)
-        contentView.addSubview(familiarProgressView)
-        contentView.addSubview(familiarProgressLabel)
-        
-        contentView.addSubview(iKnowPointLabel)
-        contentView.addSubview(iKnowLabel)
-        contentView.addSubview(iKnowProgressView)
-        contentView.addSubview(iKnowProgressLabel)
-        
-        contentView.addSubview(fuzzyPointLabel)
-        contentView.addSubview(fuzzyLabel)
-        contentView.addSubview(fuzzyProgressView)
-        contentView.addSubview(fuzzyProgressLabel)
-        
-        contentView.addSubview(forgetPointLabel)
-        contentView.addSubview(forgetLabel)
-        contentView.addSubview(forgetProgressView)
-        contentView.addSubview(forgetProgressLabel)
-        
         contentView.addSubview(reviewButton)
-        contentView.addSubview(subTitleLabel)
-                
+
+        if reviewModel.canMakeReviewPlans == 1 {
+            contentView.addSubview(titleLabel)
+            contentView.addSubview(countLabel)
+            
+            contentView.addSubview(familiarPointLabel)
+            contentView.addSubview(familiarLabel)
+            contentView.addSubview(familiarProgressView)
+            contentView.addSubview(familiarProgressLabel)
+            
+            contentView.addSubview(iKnowPointLabel)
+            contentView.addSubview(iKnowLabel)
+            contentView.addSubview(iKnowProgressView)
+            contentView.addSubview(iKnowProgressLabel)
+            
+            contentView.addSubview(fuzzyPointLabel)
+            contentView.addSubview(fuzzyLabel)
+            contentView.addSubview(fuzzyProgressView)
+            contentView.addSubview(fuzzyProgressLabel)
+            
+            contentView.addSubview(forgetPointLabel)
+            contentView.addSubview(forgetLabel)
+            contentView.addSubview(forgetProgressView)
+            contentView.addSubview(forgetProgressLabel)
+
+            contentView.addSubview(subTitleLabel)
+            
+        } else {
+            contentView.addSubview(cannotReviewImageView)
+            contentView.addSubview(cannotReviewLabel)
+        }
     }
     
     
     override func bindProperty() {
-        imageView.image = UIImage(named: "review_circle_icon")
+        circlrImageView.image = UIImage(named: "review_circle_icon")
         
         bgView.backgroundColor = UIColor.orange1
         bgView.layer.masksToBounds = true
         bgView.layer.cornerRadius = AS(20)
         
-                
         contentView.backgroundColor = UIColor.white
         contentView.layer.masksToBounds = true
         contentView.layer.cornerRadius = AS(15)
-        
         
         titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(14))
         titleLabel.text = "背过的单词"
         titleLabel.textColor = UIColor.black2
         titleLabel.textAlignment = .center
         
-        
-        countLabel.font = UIFont.pfSCSemiboldFont(withSize: AS(35))
+        countLabel.font = UIFont(name: "DIN Alternate", size: 36)
         countLabel.text = "200"
         countLabel.textColor = UIColor.black1
         countLabel.textAlignment = .center
-        
-        
+                
         familiarLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
         familiarLabel.textColor = UIColor.black1
         familiarLabel.text = "熟悉的单词"
@@ -149,8 +136,7 @@ class YXReviewHeaderView: YXView {
         familiarProgressLabel.textColor = UIColor.orange5
         familiarProgressLabel.text = "50%"
         familiarPointLabel.backgroundColor = UIColor.orange5
-                        
-        
+                                
         iKnowLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
         iKnowLabel.textColor = UIColor.black1
         iKnowLabel.text = "认识的单词"
@@ -158,7 +144,6 @@ class YXReviewHeaderView: YXView {
         iKnowProgressLabel.textColor = UIColor.orange1
         iKnowProgressLabel.text = "60%"
         iKnowPointLabel.backgroundColor = UIColor.orange1
-        
         
         fuzzyLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
         fuzzyLabel.textColor = UIColor.black1
@@ -168,7 +153,6 @@ class YXReviewHeaderView: YXView {
         fuzzyProgressLabel.text = "80%"
         fuzzyPointLabel.backgroundColor = UIColor.green2
         
-        
         forgetLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
         forgetLabel.textColor = UIColor.black1
         forgetLabel.text = "忘记的单词"
@@ -176,37 +160,22 @@ class YXReviewHeaderView: YXView {
         forgetProgressLabel.textColor = UIColor.blue1
         forgetProgressLabel.text = "10%"
         forgetPointLabel.backgroundColor = UIColor.blue1
-
         
-        reviewButton.layer.masksToBounds = true
-        reviewButton.layer.cornerRadius = AS(21)
-//        reviewButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
-        let bgColor = UIColor.gradientColor(with: CGSize(width: AS(273), height: AS(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
-        reviewButton.backgroundColor = bgColor
+        reviewButton.cornerRadius = 20
+        reviewButton.enableGradientBackground = true
         reviewButton.setTitle("智能复习", for: .normal)
-        reviewButton.setTitleColor(UIColor.white, for: .normal)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
         reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
         
+        if reviewModel.canMakeReviewPlans == 0 {
+            reviewButton.alpha = 0.3
+            reviewButton.isEnabled = false
+            reviewButton.setTitle("学习后开启智能复习", for: .normal)
+        }
+                
         subTitleLabel.textColor = UIColor.black6
         subTitleLabel.text = "智能计划复习内容巩固薄弱单词"
         subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-        
-        
-        favoriteButton.setBackgroundImage(UIImage(named: "review_favorite_icon"), for: .normal)
-        favoriteButton.setTitle("收藏夹", for: .normal)
-        favoriteButton.setTitleColor(UIColor.brown1, for: .normal)
-        favoriteButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
-        favoriteButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: AS(-60), bottom: 0, right: 0)
-        favoriteButton.addTarget(self, action: #selector(clickFavoriteButton), for: .touchUpInside)
-        
-        
-        wrongWordButton.setBackgroundImage(UIImage(named: "review_wrong_icon"), for: .normal)
-        wrongWordButton.setTitle("错词本", for: .normal)
-        wrongWordButton.setTitleColor(UIColor.brown1, for: .normal)
-        wrongWordButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
-        wrongWordButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: AS(-60), bottom: 0, right: 0)
-        wrongWordButton.addTarget(self, action: #selector(clickWrongWordButton), for: .touchUpInside)
         
         reviewPlanLabel.font = UIFont.mediumFont(ofSize: AS(15))
         reviewPlanLabel.textColor = UIColor.black1
@@ -214,18 +183,25 @@ class YXReviewHeaderView: YXView {
         
         createReviewPlanButton.layer.masksToBounds = true
         createReviewPlanButton.layer.cornerRadius = AS(12.5)
-        createReviewPlanButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
         createReviewPlanButton.setImage(UIImage(named: "review_add_icon"), for: .normal)
         createReviewPlanButton.setTitle("制定复习计划", for: .normal)
-        createReviewPlanButton.setTitleColor(UIColor.white, for: .normal)
+        createReviewPlanButton.setTitleColor(UIColor.hex(0x323232), for: .normal)
         createReviewPlanButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(12))
+        createReviewPlanButton.layer.borderWidth = 0.5
+        createReviewPlanButton.layer.borderColor = UIColor.black4.cgColor
         createReviewPlanButton.addTarget(self, action: #selector(clickCreateReviewPlanButton), for: .touchUpInside)
+        
+        cannotReviewImageView.image = UIImage(named: "cannotReview")
+        cannotReviewImageView.contentMode = .scaleAspectFit
+        
+        cannotReviewLabel.text = "直击薄弱 稳固提分"
+        cannotReviewLabel.textColor = UIColor.black3
+        cannotReviewLabel.font = UIFont.pfSCRegularFont(withSize: AS(14))
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         
         bgView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
@@ -234,7 +210,7 @@ class YXReviewHeaderView: YXView {
             make.height.equalTo(AS(339))
         }
         
-        imageView.snp.makeConstraints { (make) in
+        circlrImageView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(8))
             make.left.equalTo(AS(11))
             make.width.equalTo(AS(42))
@@ -247,152 +223,150 @@ class YXReviewHeaderView: YXView {
             make.right.equalTo(AS(-8))
             make.bottom.equalTo(AS(-10))
         }
-                
-        titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(23))
-            make.centerX.equalToSuperview()
-            make.width.equalTo(AS(71))
-            make.height.equalTo(AS(20))
-        }
-        
-        countLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(40))
-            make.centerX.equalToSuperview()
-            make.width.equalTo(AS(300))
-            make.height.equalTo(AS(41))
-        }
-        
-        
-        familiarPointLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(familiarLabel)
-            make.right.equalTo(familiarLabel.snp.left).offset(AS(-4))
-            make.width.height.equalTo(AS(5))
-        }
-        familiarLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(100))
-            make.left.right.equalTo(familiarProgressView)
-            make.height.equalTo(AS(17))
-        }
-        familiarProgressView.snp.makeConstraints { (make) in
-            make.top.equalTo(familiarLabel.snp.bottom).offset(AS(4))
-            make.left.equalTo(AS(26))
-            make.height.equalTo(AS(10))
-        }
-        familiarProgressLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(familiarProgressView.snp.bottom).offset(AS(3))
-            make.left.right.equalTo(familiarProgressView)
-            make.height.equalTo(AS(14))
-        }
-        
-        
-                                            
-        iKnowPointLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(iKnowLabel)
-            make.right.equalTo(iKnowLabel.snp.left).offset(AS(-4))
-            make.width.height.equalTo(AS(5))
-        }
-        iKnowLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(100))
-            make.left.right.equalTo(iKnowProgressView)
-            make.height.equalTo(AS(17))
-        }
-        iKnowProgressView.snp.makeConstraints { (make) in
-            make.top.equalTo(iKnowLabel.snp.bottom).offset(AS(4))
-            make.left.equalTo(familiarProgressView.snp.right).offset(AS(35))
-            make.right.equalTo(AS(-15))
-            make.width.equalTo(familiarProgressView)
-            make.height.equalTo(AS(10))
-        }
-        iKnowProgressLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(iKnowProgressView.snp.bottom).offset(AS(3))
-            make.left.right.equalTo(iKnowProgressView)
-            make.height.equalTo(AS(14))
-        }
-
-        
-        fuzzyPointLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(fuzzyLabel)
-            make.right.equalTo(fuzzyLabel.snp.left).offset(AS(-4))
-            make.width.height.equalTo(AS(5))
-        }
-        fuzzyLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(165))
-            make.left.right.height.equalTo(familiarLabel)
-        }
-        fuzzyProgressView.snp.makeConstraints { (make) in
-            make.top.equalTo(fuzzyLabel.snp.bottom).offset(AS(4))
-            make.left.right.height.equalTo(familiarProgressView)
-        }
-        fuzzyProgressLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(fuzzyProgressView.snp.bottom).offset(AS(3))
-            make.left.right.equalTo(fuzzyProgressView)
-            make.height.equalTo(AS(14))
-        }
-        
-                                    
-        forgetPointLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(forgetLabel)
-            make.right.equalTo(forgetLabel.snp.left).offset(AS(-4))
-            make.width.height.equalTo(AS(5))
-        }
-        forgetLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(165))
-            make.left.right.height.equalTo(iKnowLabel)
-        }
-        forgetProgressView.snp.makeConstraints { (make) in
-            make.top.equalTo(forgetLabel.snp.bottom).offset(AS(4))
-            make.left.right.height.equalTo(iKnowProgressView)
-        }
-        forgetProgressLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(forgetProgressView.snp.bottom).offset(AS(3))
-            make.left.right.equalTo(forgetProgressView)
-            make.height.equalTo(AS(14))
-        }
-        
-        
         
         reviewButton.snp.makeConstraints { (make) in
-            make.top.equalTo(forgetProgressLabel.snp.bottom).offset(AS(14))
-            make.left.equalTo(AS(45))
-            make.right.equalTo(AS(-45))
+            if reviewModel.canMakeReviewPlans == 1 {
+                make.bottom.equalToSuperview().offset(-44)
+                
+            } else {
+                make.bottom.equalToSuperview().offset(-34)
+            }
+            
+            make.left.equalTo(AS(44))
+            make.right.equalTo(AS(-44))
             make.height.equalTo(AS(42))
         }
         
-        
-        subTitleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(reviewButton.snp.bottom).offset(AS(8))
-            make.centerX.equalToSuperview()
-            make.width.equalTo(AS(169))
-            make.height.equalTo(AS(17))
+        if reviewModel.canMakeReviewPlans == 1 {
+            titleLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(AS(23))
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AS(71))
+                make.height.equalTo(AS(20))
+            }
+            
+            countLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(AS(40))
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AS(300))
+                make.height.equalTo(AS(41))
+            }
+            
+            familiarPointLabel.snp.makeConstraints { (make) in
+                make.centerY.equalTo(familiarLabel)
+                make.right.equalTo(familiarLabel.snp.left).offset(AS(-4))
+                make.width.height.equalTo(AS(5))
+            }
+            familiarLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(AS(100))
+                make.left.right.equalTo(familiarProgressView)
+                make.height.equalTo(AS(17))
+            }
+            familiarProgressView.snp.makeConstraints { (make) in
+                make.top.equalTo(familiarLabel.snp.bottom).offset(AS(4))
+                make.left.equalTo(AS(26))
+                make.height.equalTo(AS(10))
+            }
+            familiarProgressLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(familiarProgressView.snp.bottom).offset(AS(3))
+                make.left.right.equalTo(familiarProgressView)
+                make.height.equalTo(AS(14))
+            }
+                                                            
+            iKnowPointLabel.snp.makeConstraints { (make) in
+                make.centerY.equalTo(iKnowLabel)
+                make.right.equalTo(iKnowLabel.snp.left).offset(AS(-4))
+                make.width.height.equalTo(AS(5))
+            }
+            iKnowLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(AS(100))
+                make.left.right.equalTo(iKnowProgressView)
+                make.height.equalTo(AS(17))
+            }
+            iKnowProgressView.snp.makeConstraints { (make) in
+                make.top.equalTo(iKnowLabel.snp.bottom).offset(AS(4))
+                make.left.equalTo(familiarProgressView.snp.right).offset(AS(35))
+                make.right.equalTo(AS(-15))
+                make.width.equalTo(familiarProgressView)
+                make.height.equalTo(AS(10))
+            }
+            iKnowProgressLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(iKnowProgressView.snp.bottom).offset(AS(3))
+                make.left.right.equalTo(iKnowProgressView)
+                make.height.equalTo(AS(14))
+            }
+
+            fuzzyPointLabel.snp.makeConstraints { (make) in
+                make.centerY.equalTo(fuzzyLabel)
+                make.right.equalTo(fuzzyLabel.snp.left).offset(AS(-4))
+                make.width.height.equalTo(AS(5))
+            }
+            fuzzyLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(AS(165))
+                make.left.right.height.equalTo(familiarLabel)
+            }
+            fuzzyProgressView.snp.makeConstraints { (make) in
+                make.top.equalTo(fuzzyLabel.snp.bottom).offset(AS(4))
+                make.left.right.height.equalTo(familiarProgressView)
+            }
+            fuzzyProgressLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(fuzzyProgressView.snp.bottom).offset(AS(3))
+                make.left.right.equalTo(fuzzyProgressView)
+                make.height.equalTo(AS(14))
+            }
+            
+            forgetPointLabel.snp.makeConstraints { (make) in
+                make.centerY.equalTo(forgetLabel)
+                make.right.equalTo(forgetLabel.snp.left).offset(AS(-4))
+                make.width.height.equalTo(AS(5))
+            }
+            forgetLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(AS(165))
+                make.left.right.height.equalTo(iKnowLabel)
+            }
+            forgetProgressView.snp.makeConstraints { (make) in
+                make.top.equalTo(forgetLabel.snp.bottom).offset(AS(4))
+                make.left.right.height.equalTo(iKnowProgressView)
+            }
+            forgetProgressLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(forgetProgressView.snp.bottom).offset(AS(3))
+                make.left.right.equalTo(forgetProgressView)
+                make.height.equalTo(AS(14))
+            }
+            
+            subTitleLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(reviewButton.snp.bottom).offset(AS(8))
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AS(169))
+                make.height.equalTo(AS(17))
+            }
+            
+        } else {
+            cannotReviewImageView.snp.makeConstraints { (make) in
+                make.top.left.right.equalToSuperview().inset(20)
+                make.bottom.equalTo(reviewButton.snp.top).offset(-44)
+            }
+            
+            cannotReviewLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(cannotReviewImageView.snp.bottom).offset(8)
+                make.centerX.equalToSuperview()
+            }
         }
-        
-        favoriteButton.snp.makeConstraints { (make) in
-            make.top.equalTo(bgView.snp.bottom).offset(AS(10))
-            make.left.equalTo(AS(22))
-            make.height.equalTo(AS(51))
-        }
-        
-        wrongWordButton.snp.makeConstraints { (make) in
-            make.top.equalTo(bgView.snp.bottom).offset(AS(10))
-            make.left.equalTo(favoriteButton.snp.right).offset(AS(12))
-            make.right.equalTo(AS(-22))
-            make.width.equalTo(AS(160))
-            make.height.equalTo(AS(51))
-        }
-        
         
         reviewPlanLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(favoriteButton.snp.bottom).offset(AS(25))
+            make.top.equalTo(bgView.snp.bottom).offset(AS(20))
             make.left.equalTo(AS(22))
             make.width.equalTo(AS(61))
             make.height.equalTo(AS(21))
         }
         
-        createReviewPlanButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(reviewPlanLabel)
-            make.right.equalTo(AS(-22))
-            make.width.equalTo(AS(104))
-            make.height.equalTo(AS(25))
+        if let reviewPlans = reviewModel.reviewPlans, reviewPlans.count > 0 {
+            createReviewPlanButton.snp.makeConstraints { (make) in
+                make.centerY.equalTo(reviewPlanLabel)
+                make.right.equalTo(AS(-22))
+                make.width.equalTo(AS(104))
+                make.height.equalTo(AS(25))
+            }
         }
         
         super.layoutIfNeeded()
@@ -442,20 +416,13 @@ class YXReviewHeaderView: YXView {
     }
     
     @objc private func clickReviewButton() {
+        guard reviewButton.isEnabled else { return }
         self.startReviewEvent?()
     }
+    
     @objc private func clickCreateReviewPlanButton() {        
         self.createReviewPlanEvent?()
     }
-    @objc private func clickFavoriteButton() {
-       self.favoriteEvent?()
-    }
-       
-    @objc private func clickWrongWordButton() {
-        self.wrongWordEvent?()
-    }
-       
-    
 }
 
 

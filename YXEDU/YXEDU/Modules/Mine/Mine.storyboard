@@ -474,15 +474,18 @@
                                                             <constraint firstAttribute="height" constant="36" id="s3t-Rx-h6A"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="松果币" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Muf-32-5CY">
-                                                        <rect key="frame" x="64" y="20" width="37" height="14.333333333333336"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="松果币" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Muf-32-5CY">
+                                                        <rect key="frame" x="64" y="20" width="38" height="14.333333333333336"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="38" id="wRO-51-Q0f"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2v-RP-URZ">
-                                                        <rect key="frame" x="107" y="15" width="18" height="24"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2v-RP-URZ">
+                                                        <rect key="frame" x="108.00000000000001" y="17.666666666666657" width="42.666666666666671" height="18.666666666666671"/>
+                                                        <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -492,6 +495,7 @@
                                                     <constraint firstItem="e2v-RP-URZ" firstAttribute="centerY" secondItem="teA-Xd-wb3" secondAttribute="centerY" id="BgZ-qR-kmI"/>
                                                     <constraint firstItem="e2v-RP-URZ" firstAttribute="leading" secondItem="Muf-32-5CY" secondAttribute="trailing" constant="6" id="QrR-Lk-kTQ"/>
                                                     <constraint firstItem="vfS-OS-Shj" firstAttribute="centerY" secondItem="teA-Xd-wb3" secondAttribute="centerY" id="Wjr-T3-Ioa"/>
+                                                    <constraint firstAttribute="trailing" secondItem="e2v-RP-URZ" secondAttribute="trailing" constant="10" id="Zb3-qI-UDd"/>
                                                     <constraint firstItem="vfS-OS-Shj" firstAttribute="leading" secondItem="teA-Xd-wb3" secondAttribute="leading" constant="16" id="Zb9-2z-Eop"/>
                                                     <constraint firstAttribute="height" constant="54" id="jxv-By-VWU"/>
                                                     <constraint firstItem="Muf-32-5CY" firstAttribute="leading" secondItem="vfS-OS-Shj" secondAttribute="trailing" constant="12" id="lDm-LW-U2T"/>

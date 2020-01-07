@@ -17,8 +17,8 @@ enum ReviewPlanState: Int {
 
 class YXReviewPageModel: Mappable {
 
+    var canMakeReviewPlans: Int = 0
     var learnNum: Int = 0
-    
     var familiarNum: Int = 0
     var knowNum: Int = 0
     var fuzzyNum: Int = 0
@@ -30,6 +30,7 @@ class YXReviewPageModel: Mappable {
     }
 
     func mapping(map: Map) {
+        canMakeReviewPlans <- map["is_can_artificial_review"]
         learnNum <- map["learn_num"]
         familiarNum <- map["familiar_num"]
         knowNum <- map["know_num"]

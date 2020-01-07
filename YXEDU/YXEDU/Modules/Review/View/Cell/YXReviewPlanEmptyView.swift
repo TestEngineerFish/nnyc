@@ -11,13 +11,9 @@ import UIKit
 class YXReviewPlanEmptyView: YXView {
     var createReviewPlanEvent: (() -> Void)?
     
-    var imageView = UIImageView()
+    var backgroundImageView = UIImageView()
+    var plusIconImageView = UIImageView()
     var reviewLabel = UILabel()
-    var createReviewPlanButton = UIButton()
-    
-    deinit {
-        createReviewPlanButton.removeTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,56 +26,47 @@ class YXReviewPlanEmptyView: YXView {
     }
     
     override func createSubviews() {
-        self.addSubview(imageView)
-        self.addSubview(reviewLabel)
-        self.addSubview(createReviewPlanButton)
+        self.addSubview(backgroundImageView)
+        backgroundImageView.addSubview(plusIconImageView)
+        backgroundImageView.addSubview(reviewLabel)
     }
     
-    
     override func bindProperty() {
-        imageView.image = UIImage(named: "review_empty_data")
+        backgroundImageView.image = UIImage(named: "newReviewPlan")
+        backgroundImageView.isUserInteractionEnabled = true
+        backgroundImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(createReviewPlan)))
+
+        plusIconImageView.image = UIImage(named: "newReviewPlanIcon")
         
-        reviewLabel.text = "您还没创建复习计划，快去创建一个吧！"
+        reviewLabel.text = "快来创建一个复习计划吧"
         reviewLabel.font = UIFont.regularFont(ofSize: AS(14))
         reviewLabel.textColor = UIColor.black2
         reviewLabel.textAlignment = .center
-        
-        createReviewPlanButton.layer.masksToBounds = true
-        createReviewPlanButton.layer.cornerRadius = AS(21)
-        createReviewPlanButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
-        createReviewPlanButton.setTitle("制定复习计划", for: .normal)
-        createReviewPlanButton.setTitleColor(UIColor.white, for: .normal)
-        createReviewPlanButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
-        createReviewPlanButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        imageView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(4))
-            make.centerX.equalToSuperview()
-            make.width.equalTo(AS(222))
-            make.height.equalTo(AS(176))
+        backgroundImageView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview().inset(20)
+            make.height.equalTo(70)
+        }
+        
+        plusIconImageView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview().offset(-88)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(44)
         }
         
         reviewLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom).offset(AS(-5))
-            make.left.right.equalToSuperview()
-            make.height.equalTo(AS(20))
-        }
-        
-        createReviewPlanButton.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom).offset(AS(29))
-            make.left.equalTo(AS(51))
-            make.right.equalTo(AS(-51))
-            make.height.equalTo(AS(42))
-            make.bottom.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.left.equalTo(plusIconImageView.snp.right).offset(10)
         }
     }
     
     
-    @objc func clickReviewButton() {
+    @objc func createReviewPlan() {
         self.createReviewPlanEvent?()
     }
 }
