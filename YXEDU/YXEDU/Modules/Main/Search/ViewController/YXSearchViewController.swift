@@ -79,6 +79,7 @@ class YXSearchViewController: YXTableViewController {
             loadHistoryData()
             return
         }
+        
         YXSearchDataManager().searchData(keyword: text)  { [weak self] (model, errorMsg) in
             guard let self = self else { return }
             self.finishLoading()
