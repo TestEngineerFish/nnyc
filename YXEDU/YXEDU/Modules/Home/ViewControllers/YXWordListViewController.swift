@@ -178,16 +178,16 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
         if wordListViews[indexPath.row] == nil {
             let wordListView = YXWordListView(frame: .zero)
-            wordListView.editClosure = {
-                self.performSegue(withIdentifier: "EditWordList", sender: self)
+            wordListView.editClosure = { [weak self] in
+                self?.performSegue(withIdentifier: "EditWordList", sender: self)
             }
             
-            wordListView.showWordDetialClosure = { (wordId, isComplexWord) in
+            wordListView.showWordDetialClosure = { [weak self] (wordId, isComplexWord) in
                 let home = UIStoryboard(name: "Home", bundle: nil)
                 let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
                 wordDetialViewController.wordId = wordId
                 wordDetialViewController.isComplexWord = isComplexWord
-                self.navigationController?.pushViewController(wordDetialViewController, animated: true)
+                self?.navigationController?.pushViewController(wordDetialViewController, animated: true)
             }
             
             switch indexPath.row {

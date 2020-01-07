@@ -148,6 +148,8 @@ class YXChallengeMyRankCell: UITableViewCell {
             }
         }
 
+        self.avatarImageView.showImage(with: userModel.avatarStr)
+        
         self.nameLabel.sizeToFit()
         self.nameLabel.snp.updateConstraints { (make) in
             make.width.equalTo(self.nameLabel.width)

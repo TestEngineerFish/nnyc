@@ -141,7 +141,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     @IBOutlet weak var wordCountLabel: UILabel!
@@ -154,8 +154,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func order(_ sender: Any) {
         let view = YXWordListOrderView(orderViewLeftTopPoint: CGPoint(x: screenWidth - orderButtonDistance.constant - 116, y: kNavHeight + 88), orderType: orderType)
-        view.orderClosure = { type in
-            self.orderType = type
+        view.orderClosure = { [weak self] type in
+            self?.orderType = type
         }
         
         kWindow.addSubview(view)
@@ -191,7 +191,9 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
     }
     
-    
+    deinit {
+        print("❌")
+    }
     
     // MARK: - table view
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -317,8 +319,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             cell.meaningLabelMask.image = nil
         }
         
-        cell.showWordDetailClosure = {
-            self.showWordDetialClosure?(word.wordId ?? 0, word.isComplexWord ?? 0)
+        cell.showWordDetailClosure = { [weak self] in
+            self?.showWordDetialClosure?(word.wordId ?? 0, word.isComplexWord ?? 0)
         }
             
         return cell

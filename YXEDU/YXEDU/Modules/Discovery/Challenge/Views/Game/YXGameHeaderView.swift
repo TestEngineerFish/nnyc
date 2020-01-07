@@ -59,7 +59,7 @@ class YXGameHeaderView: UIView {
     var consumeTime: Int = 0 //毫秒
     var lastQuestionTime = 0
     var currentQuestionNumber = 0
-    var vcDelegate: YXGameViewControllerProtocol?
+    weak var vcDelegate: YXGameViewControllerProtocol?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
