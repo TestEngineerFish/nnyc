@@ -164,12 +164,23 @@ class YXReviewLearningProgressView: YXTopWindowView {
             make.width.height.equalTo(AS(20))
         }
         
+        tableView.snp.remakeConstraints { (make) in
+            make.top.equalTo(subTitleLable2.snp.bottom).offset(AS(24))
+            make.left.right.equalToSuperview()
+            if (model?.words?.count ?? 0) > 3 {
+                make.height.equalTo(AS(268))
+            } else {
+                make.height.equalTo(AS(173))
+            }
+            
+        }
+        
         if type == .planListenReview {
             reviewButton.snp.makeConstraints { (make) in
-                make.top.equalTo(subTitleLable2.snp.bottom).offset(AS(41))
                 make.centerX.equalToSuperview()
                 make.width.equalTo(AS(273))
                 make.height.equalTo(AS(42))
+                make.bottom.equalTo(-AS(kSafeBottomMargin + 29))
             }
         } else {
             pointLabel3.snp.makeConstraints { (make) in
@@ -185,10 +196,10 @@ class YXReviewLearningProgressView: YXTopWindowView {
             }
             
             reviewButton.snp.makeConstraints { (make) in
-                make.top.equalTo(subTitleLable3.snp.bottom).offset(AS(41))
                 make.centerX.equalToSuperview()
                 make.width.equalTo(AS(273))
                 make.height.equalTo(AS(42))
+                make.bottom.equalTo(-AS(kSafeBottomMargin + 29))
             }
         }
 
@@ -236,7 +247,8 @@ class YXReviewLearningProgressView: YXTopWindowView {
             subTitleLable3.attributedText = attrString("该计划下剩余\(model?.remainWordNum ?? 0)个单词待复习", 6, length)
         }
 
-
+        tableView.words = model?.words ?? []
+        tableView.isHidden = (tableView.words.count == 0)
     }
     
     @objc func clickReviewButton() {
