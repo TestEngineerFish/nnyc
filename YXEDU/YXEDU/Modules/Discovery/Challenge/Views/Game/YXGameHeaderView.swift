@@ -176,17 +176,16 @@ class YXGameHeaderView: UIView {
 
     func startTimer() {
         self.stopTimer()
-        timer = Timer(fire: Date(), interval: 0.001, repeats: true, block: { (timer) in
-            guard let config = self.configModel else {
+        timer = Timer(fire: Date(), interval: 0.001, repeats: true, block: { [weakself = self] (timer) in
+            guard let config = weakself.configModel else {
                 return
             }
-
-            self.consumeTime += 1
-            var margin = config.totalTime * 1000 - self.consumeTime
+            weakself.consumeTime += 1
+            var margin = config.totalTime * 1000 - weakself.consumeTime
             margin = margin < 0 ? 0 : margin
-            self.timeLabel.text = self.getCountDownText(margin)
+            weakself.timeLabel.text = self.getCountDownText(margin)
             if margin <= 0 {
-                self.vcDelegate?.showResultView()
+                weakself.vcDelegate?.showResultView()
                 timer.invalidate()
             }
         })

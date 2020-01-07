@@ -32,7 +32,7 @@ public struct YYStructResponse<T: Mappable> : YYBaseResopnse {
     private var status: Int = 0
     private var message: String?
     private var warning: String?
-    private var time: Int?
+    public var time: Int?
     
     public var data:T?
     

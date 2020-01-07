@@ -21,7 +21,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     var gameResultMode: YXGameResultModel?
     var currentQuestionIndex = 0
     var gameLineId: Int?
-    var timeOffset = 0 //记录退到后台时长
+    var lastTimestamp = 0 //最后一次退到后台的时间戳
 
     var launchView: YXGameLaunchView?
     var headerView   = YXGameHeaderView()
@@ -65,13 +65,25 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     }
 
     @objc private func didEnterBackground() {
-        print("进入后台")
+        let request = YXRegisterAndLoginRequest.userInfomation
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
+            guard let time = response.time else { return }
+            self.lastTimestamp = time
+            self.stopTimer()
+        }, fail: nil)
     }
 
     @objc private func willEnterForeground() {
-        print("进入前台")
+        let request = YXRegisterAndLoginRequest.userInfomation
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
+            guard let time = response.time, self.lastTimestamp > 0 else { return }
+            let timeOffline = time - self.lastTimestamp
+            self.updateTimer(offSet: timeOffline)
+        }, fail: { (error) in
+            // 哪怕失败，也需要重新启动计时器
+            self.updateTimer(offSet: 0)
+        })
     }
-
 
     private func setSubviews() {
         let backgroundImageView: UIImageView = {
@@ -191,6 +203,19 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             // 显示结果视图
             self.showResultView()
         }
+    }
+
+    private func stopTimer() {
+        self.headerView.stopTimer()
+        self.questionView.stopTimer()
+    }
+
+    private func updateTimer(offSet time: Int) {
+        print(time)
+        self.headerView.consumeTime   += time * 1000
+        self.questionView.consumeTime += time * 1000
+        self.headerView.startTimer()
+        self.questionView.startTimer()
     }
 
     // MARK: ==== YXGameViewControllerProtocol ====
