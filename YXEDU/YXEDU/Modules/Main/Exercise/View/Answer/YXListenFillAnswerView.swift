@@ -26,7 +26,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         super.createSubviews()
         
         self.addSubview(textField)
-        self.addSubview(lineView)
+        textField.addSubview(lineView)
         self.addSubview(audioBackgroundView)
         self.addSubview(audioPlayerView)
         self.layer.setDefaultShadow()
@@ -70,15 +70,17 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             make.center.equalTo(audioBackgroundView)
             make.width.height.equalTo(AdaptSize(37))
         })
-    
-        lineView.snp.makeConstraints { (make) in
-            make.left.right.equalTo(textField)
-            make.height.equalTo(AS(43))
+        let textFieldWidth = CGFloat(exerciseModel.word?.word?.count ?? 0) * AdaptSize(20 + 5) - AdaptSize(5)
+        textField.snp.makeConstraints { (make) in
+            make.width.equalTo(textFieldWidth)
+            make.height.equalTo(AdaptSize(43))
+            make.centerX.equalToSuperview()
             make.bottom.equalTo(AS(-39))
         }
-        
-        
 
+        lineView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
     }
     
     override func bindData() {
@@ -155,8 +157,8 @@ class YXListenFillAnswerLineView: YXView {
     }
     
     private var labels: [UILabel] = []
-    private var lineWidth: CGFloat = 20
-    private var interval: CGFloat = 5
+    private var lineWidth: CGFloat = AdaptSize(20)
+    private var interval: CGFloat = AdaptSize(5)
     
     override func bindData() {
         for label in labels {

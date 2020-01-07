@@ -154,7 +154,7 @@ class YXChallengeHeaderTopView: UIView {
             return
         }
         YXAlertWebView.share.show(urlStr)
-//        YXAlertWebView.share.show("http://www.baidu.com")
+        YXAlertWebView.share.show("http://cdn.xstudyedu.com/res/html/game_explain_202001071529.html")
     }
 
     // MARK: ==== Animation ====
