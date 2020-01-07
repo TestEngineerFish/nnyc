@@ -81,6 +81,7 @@ class YXReviewResultView: YXTopWindowView {
         titleLabel.font = UIFont.regularFont(ofSize: AS(17))
         titleLabel.textAlignment = .center
         titleLabel.textColor = UIColor.black1
+        titleLabel.numberOfLines = 0
         
         starTitleLabel.font = UIFont.regularFont(ofSize: AS(14))
         starTitleLabel.textAlignment = .center
@@ -160,12 +161,11 @@ class YXReviewResultView: YXTopWindowView {
             make.height.equalTo(AS(45))
         }
         
-        let titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(24)) ?? 0
+        let titleHeight = titleLabel.text?.textHeight(font: titleLabel.font, width: AS(233)) ?? 0
         titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(AS(16))
-            make.centerX.equalToSuperview()
-            make.width.equalTo(titleWidth)
-            make.height.equalTo(AS(24))
+            make.left.right.equalTo(imageView)
+            make.height.equalTo(titleHeight)
         }
 
         

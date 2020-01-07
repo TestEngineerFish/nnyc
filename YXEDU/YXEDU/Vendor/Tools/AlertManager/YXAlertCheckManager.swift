@@ -31,16 +31,6 @@ class YXAlertCheckManager {
     
     /// 检查版本
     func checkVersion(_ completion: (() -> Void)? ) {
-                
-        let appVersion = UIDevice().appVersion()
-        let key = YXLocalKey.updateVersionTips.rawValue
-        if let cacheVersion = YYCache.object(forKey: key) as? String {
-            if appVersion != cacheVersion {
-                // 清空提示 【提示后，更了版本，再有新的版本，需要重新提示】
-                YYCache.remove(forKey: key)
-            }
-        }
-        
         
         YXSettingDataManager().checkVersion { (model, error) in
             if let versionModel = model {
@@ -50,34 +40,40 @@ class YXAlertCheckManager {
                     return
                 }
                 
-                let alertView = YXAlertView()
+                var alertView: YXAlertView?
                 
                 if versionModel.state == .recommend {
+                    
+                    let key = versionModel.latestVersion ?? ""
                     if let _ = YYCache.object(forKey: key) {
                         // 推荐更新，只提示一次
                         completion?()
                         return
                     }
-                    
                     // 保存提示状态
-                    YYCache.set(appVersion, forKey: key)
-                    alertView.tag = YXAlertWeightType.recommendUpdateVersion
+                    YYCache.set(key, forKey: key)
+                    
+                    alertView = YXAlertView()
+                    alertView?.tag = YXAlertWeightType.recommendUpdateVersion
                 } else if versionModel.state == .force {
-                    alertView.shouldClose = false
-                    alertView.shouldOnlyShowOneButton = true
-                    alertView.tag = YXAlertWeightType.updateVersion
+                    alertView = YXAlertView()
+                    alertView?.shouldClose = false
+                    alertView?.shouldOnlyShowOneButton = true
+                    alertView?.tag = YXAlertWeightType.updateVersion
                 }
                 
-                alertView.shouldDismissWhenTapBackground = false
-                alertView.titleLabel.text = "版本更新"
-                alertView.descriptionLabel.text = versionModel.content
-                alertView.doneClosure = { (str) in
+                alertView?.shouldDismissWhenTapBackground = false
+                alertView?.titleLabel.text = "版本更新"
+                alertView?.descriptionLabel.text = versionModel.content
+                alertView?.doneClosure = { (str) in
                     guard let url = URL(string: versionModel.url ?? "") else { return }
                     UIApplication.shared.open(url, options: [:]) { (result) in                        
                     }
                 }
+                if let alert = alertView {
+                    YXAlertQueueManager.default.addAlert(alertView: alert)
+                }
                 
-                YXAlertQueueManager.default.addAlert(alertView: alertView)
                 completion?()
             } else {
                 completion?()
@@ -124,6 +120,12 @@ class YXAlertCheckManager {
     
     /// 检查最新徽章
     func checkLatestBadge(_ completion: (() -> Void)? ) {
+        // 没登录，不要识别口令
+        if YXUserModel.default.didLogin == false {
+            completion?()
+            return
+        }
+        
         let request = YXMineRequest.latestBadge
         YYNetworkService.default.request(YYStructDataArrayResponse<YXBadgeModel>.self, request: request, success: { (response) in
             guard let badgeList = response.dataArray, badgeList.count > 0 else {

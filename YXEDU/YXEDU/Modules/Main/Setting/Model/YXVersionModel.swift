@@ -19,6 +19,7 @@ struct YXVersionModel: Mappable {
     var forceFlag: Int = 0
     var url: String?
     var content: String?
+    var latestVersion: String?
     
     var state: UpdateState {
         if forceFlag == 1 {
@@ -39,6 +40,7 @@ struct YXVersionModel: Mappable {
         forceFlag <- map["force_flag"]
         url <- map["url"]
         content <- map["content"]
+        latestVersion <- map["last_version"]
     }
 }
 

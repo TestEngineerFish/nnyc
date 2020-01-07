@@ -20,16 +20,21 @@ class YXBecomeActiveManager: NSObject {
     public func check(_ completion: (() -> Void)? ) {
         // 学习中，不要识别口令
         if let _ = YYCache.object(forKey: .learningState) {
+            print("学习中")
+            completion?()
             return
         }
         // 没登录，不要识别口令
         if YXUserModel.default.didLogin == false {
+            print("未登陆")
+            completion?()
             return
         }
         if let command = UIPasteboard.general.string, command.isNotEmpty {
             YXSettingDataManager().checkCommand(command: command) { (model, error) in
                 if let commandModel = model {
                     let commandView = YXReviewPlanCommandView(model: commandModel)
+                    commandView.tag = YXAlertWeightType.scanCommand
                     commandView.detailEvent = {
                         self.goToReviewPlanDetail(planId: commandModel.planId, fromUser: commandModel.nickname)
                         commandView.removeFromSuperview()
@@ -38,13 +43,14 @@ class YXBecomeActiveManager: NSObject {
                     if completion == nil {
                         commandView.show()
                     } else {
+                        YXAlertQueueManager.default.addAlert(alertView: commandView)
                         completion?()
                     }
                 } else {
                     completion?()
                 }
                 
-//                UIPasteboard.general.string = ""
+                UIPasteboard.general.string = ""
             }
         } else {
             completion?()

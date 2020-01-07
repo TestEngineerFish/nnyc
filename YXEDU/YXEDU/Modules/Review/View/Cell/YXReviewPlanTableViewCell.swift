@@ -117,7 +117,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         }
         
         var titleWidth = titleLabel.text?.textWidth(font: titleLabel.font, height: AS(21)) ?? 0
-        let maxTitleWidth = screenWidth - AS(44 + 10 + 5 + 5 + 41 + 56) - countWidth
+        let maxTitleWidth = screenWidth - AS(44 + 10 + 5 + 5 + 41 + 56 + 20) - countWidth
         titleWidth = titleWidth > maxTitleWidth ? maxTitleWidth : titleWidth
         
         titleLabel.snp.remakeConstraints { (make) in

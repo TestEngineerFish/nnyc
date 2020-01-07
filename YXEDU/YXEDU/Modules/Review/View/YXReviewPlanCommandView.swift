@@ -122,7 +122,7 @@ class YXReviewPlanCommandView: YXTopWindowView {
         descLabel.snp.makeConstraints { (make) in
             make.top.equalTo(AS(98))
             
-            let right = (304 - descWidth - AS(26)) / 2
+            let right = (AS(304) - descWidth - AS(26)) / 2
             make.left.equalTo(shareImageView.snp.right).offset(AS(7))
             make.right.equalTo(AS(-right))
             make.height.equalTo(AS(20))

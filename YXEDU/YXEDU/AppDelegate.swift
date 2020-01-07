@@ -107,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// 处理复习结果页
     func processReviewResult() {
-        YXReviewDataManager().fetchReviewResult(type: .planReview, planId: 13) { [weak self] (resultModel, error) in
+        YXReviewDataManager().fetchReviewResult(type: .planListenReview, planId: 13) { [weak self] (resultModel, error) in
             guard let self = self else {return}
 
             if var model = resultModel {
@@ -118,7 +118,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                } else {
 ////                    self.processReviewProgressResult(model: model)
 //                }
-                self.processReviewProgressResult(model: model)
+//                self.processReviewProgressResult(model: model)
+                
+                self.processReviewResult(model: model)
             } else {
                 UIView.toast("上报关卡失败")
 //                self.navigationController?.popViewController(animated: true)
@@ -135,7 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //            self.navigationController?.popViewController(animated: false)
 
-            let vc = YXReviewResultViewController(type: .planReview, model: model)
+            let vc = YXReviewResultViewController(type: .planListenReview, model: model)
             vc.hidesBottomBarWhenPushed = true
             YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
         }
@@ -144,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// 智能复习结果页
     /// - Parameter model:
     func processReviewProgressResult(model: YXReviewResultModel) {
-        let progressView = YXReviewLearningProgressView(type: .planReview, model: model)
+        let progressView = YXReviewLearningProgressView(type: .planListenReview, model: model)
         progressView.reviewEvent = {
             let vc = YXExerciseViewController()
             vc.dataType = progressView.model?.type ?? .aiReview

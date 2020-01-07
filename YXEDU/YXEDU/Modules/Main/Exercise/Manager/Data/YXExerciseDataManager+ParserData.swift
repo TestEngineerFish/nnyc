@@ -56,6 +56,9 @@ extension YXExerciseDataManager {
                 
                 if (word.gradeId ?? 0) <= 6 {// 小学
                     exercise.type = .newLearnPrimarySchool
+                    if word.isPhrase {
+                        exercise.type = .newLearnPrimarySchool_Group
+                    }                    
                 } else if (word.gradeId ?? 0) <= 9 { // 初中
                     exercise.type = .newLearnJuniorHighSchool
                 }

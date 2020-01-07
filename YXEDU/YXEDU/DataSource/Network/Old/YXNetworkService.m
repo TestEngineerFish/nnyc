@@ -175,7 +175,10 @@
         } else if (error.code == SYS_TOKEN_FAILURE_CODE) { // 被踢出
 //            [[YXMediator shared] clearData];
             [[YXMediator shared] userKickedOut];
+        } else  if (error.code == 6666) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"kServiceStopNotification" object:nil];
         }
+        
         YRHttpResponse *httpResponse = [[YRHttpResponse alloc] initWithResponseObject:responseObject
                                                                            statusCode:[responseObject[@"code"] intValue]
                                                                               message:@""

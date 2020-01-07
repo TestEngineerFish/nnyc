@@ -244,11 +244,9 @@ struct YYNetworkService {
             success?(response)
             
         } else {
-            if responseStatusCode == 10106 {
+            if responseStatusCode == 10002 {
                 // 当登录状态失效时，通知上层
-//                let loginExpired = Notification.Name(YYNotificationCenter.kLoginStatusExpired)
-//                NotificationCenter.default.post(name: loginExpired, object: nil)
-                
+                YXMediator.shared()?.tokenExpired()
             } else if responseStatusCode == 6666 {
                 // 停服
                 let serviceStop = YXNotification.kServiceStop
@@ -257,23 +255,13 @@ struct YYNetworkService {
             } else if responseStatusCode == 10003 {
                 YXMediator.shared().userKickedOut()
                 
-            } else if let errorMsg = baseResponse.statusMessage {
+            }
+            
+            // 把错误抛会上层
+            if let errorMsg = baseResponse.statusMessage {
                 fail?(NSError(domain: "com.youyou.httpError", code: responseStatusCode, userInfo: [NSLocalizedDescriptionKey : errorMsg]))
             }
             
-//            else if responseStatusCode == 10107 {
-//                //用户资料信息审核不通过
-//                let infoBlocked = Notification.Name(YYNotificationCenter.kUserInfoHasBeenBlocked)
-//                NotificationCenter.default.post(name: infoBlocked, object: nil)
-//            } else if responseStatusCode == 10105 {
-//                //用户头像信息审核不通过
-//                let avatarBlocked = Notification.Name(YYNotificationCenter.kUserAvatarInfoHasBeenBlocked)
-//                NotificationCenter.default.post(name: avatarBlocked, object: nil)
-//            } else if responseStatusCode == 10108 {
-//                //用户昵称信息审核不通过
-//                let nicknameBlocked = Notification.Name(YYNotificationCenter.kUserNicknameInfoHasBeenBlocked)
-//                NotificationCenter.default.post(name: nicknameBlocked, object: nil)
-//            }
         }
     }
 
