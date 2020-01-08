@@ -18,6 +18,11 @@ struct YXAPI {
         static let sendSms = "/api/v1/user/sendsms"
     }
     
+    //MARK: - 主页
+    struct Home {
+        static let report = "api/v1/userlearnreport"
+    }
+    
     //MARK: - 用户模块
     struct User {
         

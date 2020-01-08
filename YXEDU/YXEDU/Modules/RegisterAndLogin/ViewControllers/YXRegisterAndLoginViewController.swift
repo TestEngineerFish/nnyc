@@ -246,8 +246,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         let request = YXRegisterAndLoginRequest.userInfomation
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
             guard let userInfomation = response.data else { return }
-            YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
-            YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
+            
             guard userInfomation.didBindPhone == 1 else {
                 self.performSegue(withIdentifier: "Bind", sender: self)
                 return

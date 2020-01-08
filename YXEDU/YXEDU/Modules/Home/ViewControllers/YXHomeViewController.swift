@@ -320,18 +320,19 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 break
                 
             case 2:
-                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/user/learnreport", parameters: [:]) { (response, isSuccess) in
-                    guard isSuccess, let response = response?.responseObject else { return }
-                    let data = (response as! [String: Any])["learnReport"] as? [String: Any]
-                    
-                    guard data?.count != nil, let learnReportModel = YXLearnReportModel.mj_object(withKeyValues: data), learnReportModel.reportUrl != "" else {
-                        self.view.toast("学习报告未生成，赶紧去学习吧！")
-                        return
+                let request = YXHomeRequest.report
+                YYNetworkService.default.request(YYStructResponse<YXReportModel>.self, request: request, success: { (response) in
+                    if let report = response.data, let url = report.reportUrl {
+                        let baseWebViewController = YXBaseWebViewController(link: url, title: "学习报告")
+                        baseWebViewController?.hidesBottomBarWhenPushed = true
+                        self.navigationController?.pushViewController(baseWebViewController!, animated: true)
+                        
+                    } else if let report = response.data, let description = report.description {
+                        self.view.toast(description)
                     }
                     
-                    let baseWebViewController = YXBaseWebViewController(link: learnReportModel.reportUrl, title: "学习报告")
-                    baseWebViewController?.hidesBottomBarWhenPushed = true
-                    self.navigationController?.pushViewController(baseWebViewController!, animated: true)
+                }) { error in
+                    print("❌❌❌\(error)")
                 }
                 
                 break
