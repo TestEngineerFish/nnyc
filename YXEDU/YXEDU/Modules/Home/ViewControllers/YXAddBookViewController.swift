@@ -121,7 +121,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let count = filterGrades[indexPath.row].wordBooks?.count {
             let countOfRow = Int(count / 3) + ((count % 3 != 0) ? 1 : 0)
-            return CGFloat(208 + ((countOfRow - 1) * 162))
+            return CGFloat(228 + ((countOfRow - 1) * 182))
             
         } else {
             return 0
@@ -167,6 +167,6 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (screenWidth - 100) / 3, height: 136)
+        return CGSize(width: (screenWidth - 100) / 3, height: 156)
     }
 }

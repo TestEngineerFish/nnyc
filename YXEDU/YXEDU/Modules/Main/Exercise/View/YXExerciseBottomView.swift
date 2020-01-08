@@ -122,7 +122,7 @@ class YXExerciseBottomView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.tipsButton.titleLabel?.sizeToFit()
-        let w = (self.tipsButton.titleLabel?.width ?? 0) + AdaptSize(18)
+        let w = (self.tipsButton.titleLabel?.width ?? 0) + AdaptSize(20)
         self.tipsButton.snp.updateConstraints { (make) in
             make.width.equalTo(w)
         }

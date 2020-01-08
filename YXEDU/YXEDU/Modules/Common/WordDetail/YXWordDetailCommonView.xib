@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXWordDetailCommonView" customModule="YXEDU" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="c29-AM-MxI"/>
+                <outlet property="dividingView" destination="Y7d-xJ-we1" id="m8f-dS-Rwk"/>
                 <outlet property="imageView" destination="krV-F4-QQf" id="BpD-rG-Z5L"/>
                 <outlet property="partOfSpeechAndSenseLabel" destination="cO4-0T-jiD" id="v7Z-zE-c0t"/>
                 <outlet property="phoneticSymbolLabel" destination="9G4-gA-ave" id="jNZ-B4-lqv"/>

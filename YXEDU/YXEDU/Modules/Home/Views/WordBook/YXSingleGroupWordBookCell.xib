@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,11 +17,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="156" height="295"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZJF-26-tPD">
-                        <rect key="frame" x="0.0" y="0.0" width="156" height="270.5"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZJF-26-tPD" customClass="YXDesignableImageView" customModule="YXEDU" customModuleProvider="target">
+                        <rect key="frame" x="37" y="0.0" width="82" height="118"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="82" id="1oJ-YI-WfE"/>
+                            <constraint firstAttribute="height" constant="118" id="vXh-Ct-3oT"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z1A-3M-cJ9">
-                        <rect key="frame" x="0.0" y="280.5" width="156" height="14.5"/>
+                        <rect key="frame" x="0.0" y="128" width="156" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -30,12 +39,10 @@
             </view>
             <constraints>
                 <constraint firstItem="z1A-3M-cJ9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="C1J-vV-SVX"/>
-                <constraint firstItem="ZJF-26-tPD" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GPC-X9-yx5"/>
-                <constraint firstAttribute="bottom" secondItem="z1A-3M-cJ9" secondAttribute="bottom" id="OFk-cr-W58"/>
                 <constraint firstItem="z1A-3M-cJ9" firstAttribute="top" secondItem="ZJF-26-tPD" secondAttribute="bottom" constant="10" id="fUp-MK-j7Y"/>
                 <constraint firstAttribute="trailing" secondItem="z1A-3M-cJ9" secondAttribute="trailing" id="hF0-HY-d4Z"/>
                 <constraint firstItem="ZJF-26-tPD" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="sUt-He-6Lg"/>
-                <constraint firstAttribute="trailing" secondItem="ZJF-26-tPD" secondAttribute="trailing" id="sY4-nr-Uby"/>
+                <constraint firstItem="ZJF-26-tPD" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="zm7-UB-6Tk"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="156" height="295"/>

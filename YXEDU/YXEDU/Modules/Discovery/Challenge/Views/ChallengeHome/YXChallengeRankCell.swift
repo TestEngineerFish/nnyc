@@ -36,7 +36,6 @@ class YXChallengeRankCell: UITableViewCell {
         imageView.layer.cornerRadius = AdaptSize(38/2)
         imageView.layer.borderColor  = UIColor.white.cgColor
         imageView.layer.borderWidth  = AdaptSize(2)
-        imageView.image              = UIImage(named: "challengeAvatar")
         return imageView
     }()
 
@@ -88,7 +87,11 @@ class YXChallengeRankCell: UITableViewCell {
         self.nameLabel.text           = userModel.name
         self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time/1000)
         self.bonusLabel.text          = "+\(userModel.bonus)"
-        self.avatarImageView.showImage(with: userModel.avatarStr)
+        if userModel.avatarStr.isEmpty {
+            self.avatarImageView.image = UIImage(named: "challengeAvatar")
+        } else {
+            self.avatarImageView.showImage(with: userModel.avatarStr)
+        }
         if userModel.ranking <= 3 {
             self.levelLabel.isHidden     = true
             self.levelImageView.isHidden = false

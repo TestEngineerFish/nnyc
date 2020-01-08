@@ -141,10 +141,12 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         self.processRedmine(remindStep: step)
         // 更新高度
         let maxHeirht: CGFloat = {
-            if self.titleLabel.isHidden {
+            if !self.imageView.isHidden {
                 return self.imageView.frame.maxY
-            } else {
+            } else if !self.titleLabel.isHidden {
                 return self.titleLabel.frame.maxY
+            } else {
+                return self.audioPlayerView.frame.maxY
             }
         }()
         self.delegate?.updateHeightConstraints?(maxHeirht)
@@ -310,6 +312,14 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
                 self.audioPlayerView.transform = CGAffineTransform(translationX: 0, y: -self.height)
             }
         }
+    }
+
+    /// 隐藏所有子视图
+    func hideSubviews() {
+        self.remindLabel.isHidden     = true
+        self.titleLabel.isHidden      = true
+        self.imageView.isHidden       = true
+        self.audioPlayerView.isHidden = true
     }
     
     /// 是否有文本提示

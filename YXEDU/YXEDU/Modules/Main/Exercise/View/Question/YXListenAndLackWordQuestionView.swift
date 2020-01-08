@@ -30,7 +30,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview().offset(topPadding)
                 make.width.equalTo(w)
-                make.height.equalTo(30)
+                make.height.equalTo(AdaptSize(28))
             }
             audioPlayerView?.snp.makeConstraints({ (make) in
                 make.top.equalTo(_spellView.snp.bottom).offset(10)

@@ -10,8 +10,8 @@ import UIKit
 
 class YXChallengeHeaderView: UIView {
     var isPreviousRank: Bool
-    let challengeHeaderView = YXChallengeHeaderTopView()
-    let myRankView          = YXChallengeMyRankCell(style: .default, reuseIdentifier: nil)
+    let headerView = YXChallengeHeaderTopView()
+    let myRankView = YXChallengeMyRankCell(style: .default, reuseIdentifier: nil)
     var headerBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.hex(0xEFE1CE)
@@ -32,6 +32,7 @@ class YXChallengeHeaderView: UIView {
     }()
     var previousRankButton: YXButton = {
         let button = YXButton()
+        button.isHidden = true
         button.setTitle("上期排名", for: .normal)
         button.setTitleColor(UIColor.hex(0xB18550), for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(12))
@@ -55,8 +56,8 @@ class YXChallengeHeaderView: UIView {
 
     private func createSubviews() {
         if !isPreviousRank {
-            self.addSubview(challengeHeaderView)
-            challengeHeaderView.snp.makeConstraints { (make) in
+            self.addSubview(headerView)
+            headerView.snp.makeConstraints { (make) in
                 make.left.top.right.equalToSuperview()
                 make.height.equalTo(AdaptSize(268))
             }
@@ -66,7 +67,6 @@ class YXChallengeHeaderView: UIView {
         headerBackgroundView.addSubview(iconImageView)
         headerBackgroundView.addSubview(titleLabel)
         headerBackgroundView.addSubview(previousRankButton)
-        self.previousRankButton.isHidden = isPreviousRank
 
         headerBackgroundView.size = CGSize(width: AdaptSize(349), height: AdaptSize(48))
         headerBackgroundView.snp.makeConstraints { (make) in
@@ -102,7 +102,10 @@ class YXChallengeHeaderView: UIView {
             return
         }
         if !isPreviousRank {
-            self.challengeHeaderView.bindData(challengeModel)
+            self.headerView.bindData(challengeModel)
+        }
+        if (challengeModel.gameInfo?.lastRanking ?? false) && !self.isPreviousRank {
+            self.previousRankButton.isHidden = false
         }
         self.myRankView.bindData(userModel)
         if challengeModel.rankedList.count > 0 {
