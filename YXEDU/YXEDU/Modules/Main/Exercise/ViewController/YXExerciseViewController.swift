@@ -74,11 +74,18 @@
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.showLoadAnimation()
-        self.createSubviews()
-        self.bindProperty()
-        self.initManager()
-        self.startStudy()
+        
+        if YXUserModel.default.didFinishDownloadAllStudyWordBooks {
+            self.showLoadAnimation()
+            self.createSubviews()
+            self.bindProperty()
+            self.initManager()
+            self.startStudy()
+        } else {
+            YRRouter.popViewController(true)
+            UIView.toast("正在下载词书，请稍后再试！")
+        }
+
     }
     
     deinit {

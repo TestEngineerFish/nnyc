@@ -19,7 +19,7 @@ extension YXExerciseDataManager {
         return findType()
     }
     
-    
+//    13800070
     /// 筛选数据
     func filterExercise() {
         // 当前轮次的完成数
@@ -37,6 +37,7 @@ extension YXExerciseDataManager {
             self.previousTurnArray = self.currentTurnArray
             self.currentTurnArray.removeAll()
             
+            var jumpStep = 0
             for (i, word) in reviewWordArray.enumerated() {
                 for (j, step) in word.exerciseSteps.enumerated() {
                     if var exericse = fetchExerciseOfStep(exerciseArray: step) {
@@ -57,6 +58,13 @@ extension YXExerciseDataManager {
                                 currentTurnArray.append(exericse)
                                 break
                             } else if currentTurnIndex >= exericse.step {// 复习，到指定轮次和 step 相同是才开始训练
+                                currentTurnArray.append(exericse)
+                                break
+                            } else if currentTurnArray.count == 0 { // 第1轮做对，进入第2轮，但其他的单词没有step1和step2，只有s3或者s4的情况
+                                jumpStep = exericse.step // 保存跳跃的step下标
+                                currentTurnArray.append(exericse)
+                                break
+                            } else if jumpStep == exericse.step {
                                 currentTurnArray.append(exericse)
                                 break
                             }
