@@ -58,7 +58,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     }
     
     private func downloadSingleWordBook(from wordBookDownloadModel: YXWordBookDownloadModel) {
-        guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash, let downloadUrl = wordBookDownloadModel.downloadUrl else { return }
+        guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash, let downloadUrl = wordBookDownloadModel.downloadUrl, downloadUrl.isEmpty == false else { return }
         
         if let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId), wordBook.bookHash == bookHash {
             self.closure?(true)
@@ -66,10 +66,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         } else {
             self.isDownloading = true
 
-            let downloadUrl = URL(string: downloadUrl)!
-            let downloadTask = self.urlSession.downloadTask(with: downloadUrl) { (loaction, response, error) in
+            guard let url = URL(string: downloadUrl) else { return }
+            let downloadTask = self.urlSession.downloadTask(with: url) { (loaction, response, error) in
                 guard let loaction = loaction else { return }
-                let isSuccess = self.unzipDownloadFile(url: downloadUrl, location: loaction, identifier: bookHash)
+                let isSuccess = self.unzipDownloadFile(url: url, location: loaction, identifier: bookHash)
                 
                 DispatchQueue.main.async {
                     self.isDownloading = false
@@ -88,7 +88,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         let queue = DispatchQueue.global()
         
         for wordBookDownloadModel in allWordBookDownloadModels {
-            guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash, let downloadUrl = wordBookDownloadModel.downloadUrl else { return }
+            guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash, let downloadUrl = wordBookDownloadModel.downloadUrl, downloadUrl.isEmpty == false else { continue }
             
             if let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId), wordBook.bookHash == bookHash {
                 queue.async(group: group) {
@@ -99,10 +99,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 queue.async(group: group) {
                     self.isDownloading = true
 
-                    let downloadUrl = URL(string: downloadUrl)!
-                    let downloadTask = self.urlSession.downloadTask(with: downloadUrl) { (loaction, response, error) in
+                    guard let url = URL(string: downloadUrl) else { return }
+                    let downloadTask = self.urlSession.downloadTask(with: url) { (loaction, response, error) in
                         guard let loaction = loaction else { return }
-                        let isSuccess = self.unzipDownloadFile(url: downloadUrl, location: loaction, identifier: bookHash)
+                        let isSuccess = self.unzipDownloadFile(url: url, location: loaction, identifier: bookHash)
                         didFinishAllDownload = isSuccess
                     }
                     
