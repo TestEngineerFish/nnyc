@@ -92,8 +92,6 @@ class YXAlertCheckManager {
             guard let userInfomation = response.data else {
                 return
             }
-            YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
-            YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
             
             if userInfomation.oldUserUpdateMessage?.isNotEmpty ?? false {
                 let alertView = YXOldUserUpdateView()

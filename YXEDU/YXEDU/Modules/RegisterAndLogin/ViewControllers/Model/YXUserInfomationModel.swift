@@ -10,6 +10,7 @@ import ObjectMapper
 
 struct YXUserInfomationModel: Mappable {
     var didBindPhone: Int?
+    var didSelectBook: Int?
     var oldUserUpdateMessage: String?
     var coinExplainUrl: String?  //松果币H5文件
     var gameExplainUrl: String? //游戏挑战H5文件
@@ -20,6 +21,7 @@ struct YXUserInfomationModel: Mappable {
     mutating func mapping(map: Map) {
         oldUserUpdateMessage <- map["old_user_update_msg"]
         didBindPhone         <- map["is_bind_mobile"]
+        didSelectBook        <- map["is_selected_book"]
         coinExplainUrl       <- map["coin_explain_url"]
         gameExplainUrl       <- map["game_explain_url"]
     }

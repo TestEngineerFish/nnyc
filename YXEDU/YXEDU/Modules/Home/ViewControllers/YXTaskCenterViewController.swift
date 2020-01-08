@@ -28,14 +28,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     @IBAction func tapQuestionIcon(_ sender: UIBarButtonItem) {
-        let request = YXRegisterAndLoginRequest.userInfomation
-        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
-            guard let userInfomation = response.data else { return }
-            YXAlertWebView.share.show(userInfomation.coinExplainUrl ?? "")
-            
-        }) { error in
-            print("❌❌❌\(error)")
-        }
+        YXAlertWebView.share.show(YXUserModel.default.coinExplainUrl ?? "")
     }
     
     @IBAction func punchIn(_ sender: Any) {

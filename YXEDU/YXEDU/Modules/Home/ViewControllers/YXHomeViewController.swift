@@ -76,8 +76,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         let lineView = UIView(frame: CGRect(x: 0, y: -0.5, width: screenWidth, height: 0.5))
         lineView.backgroundColor = UIColor.hex(0xDCDCDC)
         self.tabBarController?.tabBar.addSubview(lineView)
-
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        
+        checkUser()
         
         progressBar.progressImage = progressBar.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
         
@@ -123,6 +123,26 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    private func checkUser() {
+        let request = YXRegisterAndLoginRequest.userInfomation
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
+            guard let userInfomation = response.data else { return }
+            
+            if userInfomation.didSelectBook == 0 {
+                self.performSegue(withIdentifier: "AddBookFromHomeWithoutAnimation", sender: self)
+                
+            } else {
+                self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+            }
+            
+            YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
+            YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
+
+        }) { error in
+            print("❌❌❌\(error)")
+        }
+    }
+    
     private func loadData() {
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
@@ -130,11 +150,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 self.homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
-                
-                if self.homeModel.bookId == 0 {
-                    self.performSegue(withIdentifier: "AddBookFromHomeWithoutAnimation", sender: self)
-                    return
-                }
                 
                 self.adjustStartStudyButtonState()
 
