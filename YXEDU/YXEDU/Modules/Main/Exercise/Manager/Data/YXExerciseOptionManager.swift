@@ -189,7 +189,7 @@ class YXExerciseOptionManager: NSObject {
             // 其他的新学单词集合，排除当前的单词
             var wordArray = self.otherNewWordArray(wordId: exerciseModel.word?.wordId ?? 0)
             if wordArray.count == 0 {
-                wordArray = reviewWordArray
+                wordArray = self.otherReviewWordArray(wordId: exerciseModel.word?.wordId ?? 0)
             }
             
             let exercise = wordArray[random(max: wordArray.count)]
@@ -254,6 +254,14 @@ class YXExerciseOptionManager: NSObject {
     /// - Parameter index: 需要排除的
     func otherNewWordArray(wordId: Int) ->  [YXWordExerciseModel] {
         let array = self.newWordArray.filter { (wordModel) -> Bool in
+            return wordModel.word?.wordId != wordId
+        }
+        return array
+    }
+    
+    
+    func otherReviewWordArray(wordId: Int) ->  [YXWordExerciseModel] {
+        let array = self.reviewWordArray.filter { (wordModel) -> Bool in
             return wordModel.word?.wordId != wordId
         }
         return array
