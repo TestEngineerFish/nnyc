@@ -287,6 +287,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                     break
 
                 case 2:
+                    self.navigationController?.popViewController(animated: true)
                     break
                     
                 default:

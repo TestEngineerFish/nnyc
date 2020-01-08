@@ -38,6 +38,7 @@ static const NSInteger MAX_NAME_LENGTH = 50;
 @property (nonatomic, assign)CGSize contentSize;
 @property (nonatomic, weak)UIView *maskView;
 @property (nonatomic, strong)NSMutableArray *selTitles;
+@property (nonatomic, strong)NSMutableArray *errorIds;
 @property (nonatomic, strong) UILabel *textNumberLabel;
 @property (nonatomic, strong) UITextView *feedBackTextView;
 @property (nonatomic, weak) UIButton *submit;
@@ -96,7 +97,7 @@ static const NSInteger MAX_NAME_LENGTH = 50;
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
 //        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewEditChanged:) name:UITextViewTextDidChangeNotification object:self.feedBackTextView];
-        self.markTitles = @[@"单词发音",@"单词拼写",@"单词释义",@"例句",@"图片不对",@"答案有误"];
+        self.markTitles = @[@"单词发音",@"图片问题",@"单词释义",@"答案有误",@"例句",@"单词拼写"];
         UIView *maskView = [[UIView alloc] init];
         [self addSubview:maskView];
         maskView.backgroundColor = [UIColor blackColor];
@@ -129,6 +130,7 @@ static const NSInteger MAX_NAME_LENGTH = 50;
         CGFloat gapMargin = (contentSize.width - 3 * marksize.width - 2 * contentlrMargin) * 0.5;
         for (NSInteger i = 0; i < self.markTitles.count; i++) {
             UIButton *btn = [[UIButton alloc] init];
+            btn.tag = i + 1;
             btn.layer.cornerRadius = 15;
             btn.layer.masksToBounds = YES;
             btn.layer.borderColor = UIColorOfHex(0xC0C0C0).CGColor;
@@ -223,6 +225,22 @@ static const NSInteger MAX_NAME_LENGTH = 50;
 }
 
 - (void)submitAction {//当前question_id: 单词发音;好多好多简单就
+    if (self.questionId) {
+        NSDictionary *param = @{
+            @"word" : self.questionId,
+            @"content" : self.feedBackTextView.text,
+            @"type" : self.errorIds.mj_JSONString
+        };
+        NSString *url = [NSString stringWithFormat:@"%@/api/v1/errorwordfeedback", [YXEvnOC baseUrl]];
+        [YXDataProcessCenter POST:url parameters:param finshedBlock:^(YRHttpResponse *response, BOOL result) {
+            if (result) {
+                [self close];
+                [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:@"提交成功"];
+            }
+        }];
+        return;
+    };
+    
     NSString *markStr = [self.selTitles componentsJoinedByString:@";"];
     NSString *feed = [NSString stringWithFormat:@"当前question_id:%@%@;%@",self.questionId,markStr,self.feedBackTextView.text];
     NSString *env = [NSString stringWithFormat:@"%@;%@;%@;%@;%@;%@;%@", [YXUtils machineName], [YXUtils systemVersion],[YXUtils appVersion],[YXUtils carrierName],[YXUtils networkType],[YXUtils screenInch],[YXUtils screenResolution]];
@@ -267,12 +285,26 @@ static const NSInteger MAX_NAME_LENGTH = 50;
     self.contentView.center = CGPointMake(self.center.x, self.center.y - 30);//self.center;
     self.maskView.frame = self.bounds;
 }
+- (NSMutableArray *)errorIds {
+    if (!_errorIds) {
+        _errorIds = [[NSMutableArray alloc] init];
+    }
+    return _errorIds;
+}
 - (void)selectMark:(UIButton *)button {
     button.selected = !button.selected;
     NSString *title = button.titleLabel.text;
     button.selected ? [self.selTitles addObject:title] : [self.selTitles removeObject:title];
     button.backgroundColor = button.selected ? UIColorOfHex(0xFBA217) : [UIColor whiteColor];
     button.layer.borderColor = button.selected ? UIColorOfHex(0xFBA217).CGColor : UIColorOfHex(0xC0C0C0).CGColor;
+    
+    if (button.selected) {
+        [self.errorIds addObject: @(button.tag)];
+
+    } else {
+        [self.errorIds removeObject: @(button.tag)];
+    }
+    
     [self checkSubmitState];
 }
 

@@ -86,6 +86,6 @@ class YXWordDetailViewControllerNew: UIViewController {
     }
     
     @IBAction func feedbackWord(_ sender: UIBarButtonItem) {
-        YXReportErrorView.show(to: kWindow)
+        YXReportErrorView.show(to: kWindow, withQuestionId: "\(wordId)")
     }
 }

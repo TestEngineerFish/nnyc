@@ -40,7 +40,7 @@ class YXWordDetailView: UIView {
     }
     
     @IBAction func feedbackWord(_ sender: UIButton) {
-        YXReportErrorView.show(to: self)
+        YXReportErrorView.show(to: kWindow, withQuestionId: "\(word.wordId ?? 0)")
     }
     
     @IBAction func continueStudy(_ sender: UIButton) {

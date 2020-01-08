@@ -342,7 +342,7 @@
 - (UILabel *)descriptionLabel {
     if (!_descriptionLabel) {
         _descriptionLabel = [[UILabel alloc] init];
-        _descriptionLabel.textColor = UIColorOfHex(0x8095AB);
+        _descriptionLabel.textColor = UIColorOfHex(0x888888);
         
         switch (self.type) {
             case SexType:
@@ -488,18 +488,19 @@
         }
         
         NSInteger yearIndex = [pickerView selectedRowInComponent:0];
-        
+
         NSString *selectYear = self.yearsArray[yearIndex];
-        if (yearIndex == 0){
-            selectYear = self.yearsArray.lastObject;
-        }
+//        if (yearIndex == 0){
+//            selectYear = self.yearsArray.lastObject;
+//        }
+        
         NSString *currentYear = [NSString stringWithFormat:@"%lu", (unsigned long)[NSDate new].year];
         NSUInteger monthCount = self.monthsArray.count;
         if ([selectYear isEqualToString:currentYear]) {
             monthCount = [NSDate new].month;
         }
-        return monthCount;
-        
+
+        return 12;
     }
     else if (self.type == ClassType) {
         return self.classArray.count;
@@ -589,12 +590,16 @@
             [pickerView selectRow:0 inComponent:1 animated:YES];
         }
     }
+    
     if (self.type == CalendarType) {
         if(component == 0) {
             [pickerView reloadComponent:1];
+            
+        } else {
+            [pickerView reloadAllComponents];
         }
-    }
-    else {
+        
+    } else {
         [pickerView reloadAllComponents];
     }
     

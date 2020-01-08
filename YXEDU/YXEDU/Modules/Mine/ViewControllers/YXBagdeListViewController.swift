@@ -60,13 +60,17 @@ class YXBagdeListViewController: UIViewController, UITableViewDelegate, UITableV
         let badge = badgeLists[collectionView.tag].badges?[indexPath.row]
         
         cell.titleLabel.text = badge?.name
-        cell.descriptionLabel.text = ""
         
         if let finishDateTimeInterval = badge?.finishDateTimeInterval, finishDateTimeInterval != 0, let imageOfCompletedStatus = badge?.imageOfCompletedStatus {
             cell.imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
-            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .long
+            let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: finishDateTimeInterval))
+            cell.descriptionLabel.text = "\(dateString)"
+
         } else if let imageOfIncompletedStatus = badge?.imageOfIncompletedStatus {
             cell.imageView.sd_setImage(with: URL(string: imageOfIncompletedStatus), completed: nil)
+            cell.descriptionLabel.text = "未获得"
         }
         
         return cell

@@ -830,7 +830,7 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 - (NSDate *)maximumDateForCalendar:(FSCalendar *)calendar {
-    return [[NSDate new] lastdayOfMonth];
+    return [[NSDate new] offsetYears:1];
 }
 
 #pragma mark - FSCalendarDelegateAppearance
@@ -880,6 +880,7 @@ static CGFloat const kPickViewHeight = 272.f;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM"];
     NSDate *date = [dateFormatter dateFromString:title];
+    self.currentSelectedDate = date;
     self.currentTitleDate = date;
     [[NSNotificationCenter defaultCenter] postNotificationName:kRemoveDatePickView object:nil];
 }
