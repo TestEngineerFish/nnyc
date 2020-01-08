@@ -180,14 +180,14 @@ class YXListenFillAnswerLineView: YXView {
             label.textColor = UIColor.black1
             label.font = UIFont.mediumFont(ofSize: AS(26))
             label.textAlignment = .center
-            label.frame = CGRect(x: AS(lineX), y: 0, width: AS(lineWidth + interval), height: AS(37))
+            label.frame = CGRect(x: lineX, y: 0, width: lineWidth + interval, height: AS(37))
             self.addSubview(label)
             
             labels.append(label)
             
             let lineView = UIView()
             lineView.backgroundColor = UIColor.black4
-            lineView.frame = CGRect(x: AS(lineX + 2.5), y: AS(41), width: AS(lineWidth), height: AS(2))
+            lineView.frame = CGRect(x: lineX + interval / 2, y: AS(41), width: lineWidth, height: AS(1))
             
             self.addSubview(lineView)
         }

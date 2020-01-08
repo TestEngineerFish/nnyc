@@ -333,16 +333,17 @@ class YXReviewPlanStarContainerView: YXView {
                 imageView3.isHidden = false
             }
         } else {
+            imageView1.isHidden = false
+            imageView2.isHidden = false
+            imageView3.isHidden = false
+            
             if count >= 1 {
-                imageView1.isHidden = false
                 imageView1.image = UIImage(named: "review_cell_star")
             }
             if count >= 2 {
-                imageView2.isHidden = false
                 imageView2.image = UIImage(named: "review_cell_star")
             }
             if count >= 3 {
-                imageView3.isHidden = false
                 imageView3.image = UIImage(named: "review_cell_star")
             }
         }
