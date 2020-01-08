@@ -67,7 +67,6 @@ class YXChallengeHeaderView: UIView {
         headerBackgroundView.addSubview(iconImageView)
         headerBackgroundView.addSubview(titleLabel)
         headerBackgroundView.addSubview(previousRankButton)
-        self.previousRankButton.isHidden = isPreviousRank
 
         headerBackgroundView.size = CGSize(width: AdaptSize(349), height: AdaptSize(48))
         headerBackgroundView.snp.makeConstraints { (make) in
@@ -105,7 +104,9 @@ class YXChallengeHeaderView: UIView {
         if !isPreviousRank {
             self.headerView.bindData(challengeModel)
         }
-        self.previousRankButton.isHidden = !(challengeModel.gameInfo?.lastRanking ?? false)
+        if (challengeModel.gameInfo?.lastRanking ?? false) && !self.isPreviousRank {
+            self.previousRankButton.isHidden = false
+        }
         self.myRankView.bindData(userModel)
         if challengeModel.rankedList.count > 0 {
             myRankView.isHidden = false
