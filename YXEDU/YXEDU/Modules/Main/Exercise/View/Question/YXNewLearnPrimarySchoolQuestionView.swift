@@ -88,6 +88,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         self.exampleLabel.isHidden        = true
         self.chineseExampleLabel.isHidden = true
         self.imageView?.isHidden          = true
+        self.imageView?.backgroundColor   = UIColor.clear
 
         self.titleLabel?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
