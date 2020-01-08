@@ -8,12 +8,13 @@
 
 import UIKit
 
-class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSource {
+class YXReviewResultWordTableView: YXView, UITableViewDelegate, UITableViewDataSource {
 
     var words: [YXBaseWordModel] = [] { didSet{ bindData() } }
     var tableView = UITableView()
     let headerLabel = UILabel()
     var imageView = UIImageView()
+    var shadowsView = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,13 +30,10 @@ class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSourc
         self.addSubview(imageView)
         self.addSubview(headerLabel)
         self.addSubview(tableView)
+        self.addSubview(shadowsView)
     }
     
     override func bindProperty() {
-//        self.backgroundColor = UIColor.white
-//        self.layer.masksToBounds = true
-//        self.layer.cornerRadius = AS(5)
-//        self.layer.setDefaultShadow()
         
         self.headerLabel.text = "这些单词还需要加强"
         self.headerLabel.font = UIFont.regularFont(ofSize: AS(14))
@@ -47,31 +45,44 @@ class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSourc
         self.tableView.dataSource = self
         self.tableView.register(YXReviewResultTableViewCell.classForCoder(), forCellReuseIdentifier: "YXReviewResultTableViewCell")
         
-        self.setShadowsView()
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: screenWidth - AS(99), height: AS(24))
+        gradient.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.cgColor]
+        gradient.startPoint = CGPoint(x: 0.5, y: 0)
+        gradient.endPoint = CGPoint(x: 0.5, y: 1)
+        shadowsView.layer.addSublayer(gradient)
+        
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        
-        imageView.snp.makeConstraints { (make) in
+                
+        imageView.snp.remakeConstraints { (make) in
             make.top.bottom.equalTo(0)
             make.left.equalTo(AS(19))
             make.right.equalTo(AS(-19))
         }
         
-        headerLabel.snp.makeConstraints { (make) in
+        headerLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(23))
             make.left.equalTo(AS(69))
             make.size.equalTo(CGSize(width: AS(127), height: AS(20)))
         }
         
-        tableView.snp.makeConstraints { (make) in
+        tableView.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(51))
             make.left.equalTo(AS(69))
             make.right.equalTo(AS(-49))
             make.bottom.equalTo(AS(-27))
+        }
+        
+        shadowsView.snp.remakeConstraints { (make) in
+            make.left.equalTo(AS(58))
+            make.right.equalTo(AS(-41))
+            make.height.equalTo(AS(24))
+            make.bottom.equalTo(AS(-14))
         }
     }
     
@@ -105,25 +116,6 @@ class YXReviewResultTableView: YXView, UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let _cell = cell as? YXReviewResultTableViewCell else { return }
         _cell.word = words[indexPath.row]
-    }
-    
-    private func setShadowsView() {
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = CGRect(x: 0, y: 0, width: screenWidth - AS(99), height: AS(24))
-        gradient.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.cgColor]
-        gradient.startPoint = CGPoint(x: 0.5, y: 0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 1)
-        
-        let sview = UIView()
-        sview.layer.addSublayer(gradient)
-        self.addSubview(sview)
-        sview.snp.makeConstraints { (make) in
-            make.left.equalTo(AS(58))
-            make.right.equalTo(AS(-41))
-            make.height.equalTo(AS(24))
-            make.bottom.equalTo(AS(-14))
-        }
     }
     
 }
@@ -166,15 +158,14 @@ class YXReviewResultTableViewCell: YXTableViewCell<YXBaseWordModel> {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        titleLabel.snp.makeConstraints { (make) in
+        titleLabel.snp.remakeConstraints { (make) in
             make.centerY.left.equalToSuperview()
             make.height.equalTo(AS(24))
         }
         
-        meaningLabel.snp.makeConstraints { (make) in
+        meaningLabel.snp.remakeConstraints { (make) in
             make.centerY.right.equalToSuperview()
             make.left.equalTo(titleLabel.snp.right).offset(AS(10))
-//            make.right.equalTo(AS(-20))
             make.width.equalTo(titleLabel)
             make.height.equalTo(AS(20))
         }
@@ -190,44 +181,5 @@ class YXReviewResultTableViewCell: YXTableViewCell<YXBaseWordModel> {
         return AS(30)
     }
 }
-
-
-class YXReviewResultTableLeftView: YXView {
-    var maxHeight: CGFloat = screenHeight {
-        didSet { bindData() }
-    }
-    
-    override func createSubviews() {
-        self.backgroundColor = UIColor.clear
-        self.clipsToBounds = true
-//        self.frame = CGRect(x: 0, y: 0 , width: 26, height: maxHeight)
-        
-//        let top: CGFloat = 13
-        let left: CGFloat = 9
-        let count = Int(maxHeight / 21) + 1
-        for i in 0..<count {
-            let view = self.grayView()
-            view.frame = CGRect(x: AS(left), y: AS(CGFloat(i * 29 + 13)) , width: AS(16), height: AS(16))
-            self.addSubview(view)
-        }
-        
-    }
-    
-    override func bindData() {
-        self.createSubviews()
-    }
-    
-    private func grayView() -> UIView {
-        let view = UIView()
-        view.layer.masksToBounds = true
-        view.layer.cornerRadius = AS(5)
-        view.backgroundColor = UIColor.colorD8D8D8
-        return view
-    }
-    
-    
-}
-
-
 
 

@@ -19,3 +19,4 @@ class YXReviewPlanDetailModel: YXReviewPlanModel {
         fromUser <- map["share_plan_name"]
     }
 }
+

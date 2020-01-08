@@ -47,7 +47,7 @@ class YXSearchHeaderView: YXView {
         searchTextFeild.layer.masksToBounds = true
         searchTextFeild.layer.cornerRadius = AS(17)
         searchTextFeild.addTarget(self, action: #selector(didSearchTextFeildChanged), for: .editingChanged)
-        searchTextFeild.placeholder = "请输入要查询的单词和中文"
+        searchTextFeild.placeholder = "请输入要查询的单词"
         searchTextFeild.textColor = UIColor.black1
         searchTextFeild.font = UIFont.regularFont(ofSize: AS(15))
         searchTextFeild.clearButtonMode = .always

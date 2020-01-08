@@ -16,6 +16,9 @@ class YXReviewPlanDetailViewController: YXViewController {
     var headerView = YXReviewPlanDetailHeaderView()
     var wordListView = YXWordListView()
     var bottomView = YXReviewPlanDetailBottomView()
+    
+    
+    var model: YXReviewPlanDetailModel?
     var shareButton = UIButton()
     
     deinit {
@@ -77,18 +80,24 @@ class YXReviewPlanDetailViewController: YXViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        headerView.snp.makeConstraints { (make) in
+        headerView.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(4 + kNavHeight))
             make.left.right.equalTo(0)
-            make.height.equalTo(AS(90))
+            
+            if let from = model?.fromUser, from.isNotEmpty {
+                make.height.equalTo(AS(108))
+            } else {
+                make.height.equalTo(AS(90))
+            }
+            
         }
         
-        wordListView.snp.makeConstraints { (make) in
+        wordListView.snp.remakeConstraints { (make) in
             make.top.equalTo(headerView.snp.bottom).offset(AS(13))
             make.left.right.equalTo(0)
         }
         
-        bottomView.snp.makeConstraints { (make) in
+        bottomView.snp.remakeConstraints { (make) in
             make.top.equalTo(wordListView.snp.bottom)
             make.left.right.equalToSuperview()
             make.height.equalTo(AS(60))
@@ -103,9 +112,12 @@ class YXReviewPlanDetailViewController: YXViewController {
             if let msg = error {
                 UIView.toast(msg)
             } else {
+                self.model = detailModel
                 self.headerView.reviewPlanModel = detailModel
                 self.bottomView.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []
+                
+                self.viewDidLayoutSubviews()
             }
         }
     }

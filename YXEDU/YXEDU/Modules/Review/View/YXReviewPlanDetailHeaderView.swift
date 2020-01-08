@@ -103,6 +103,8 @@ class YXReviewPlanDetailHeaderView: YXView {
     var titleLabel = UILabel()
     var editButton = BiggerClickAreaButton()
     var subTitleLabel = UILabel()
+    var fromLabel = UILabel()
+    
     var listenStarView = YXReviewPlanStarContainerView(type: .listen)
     var reviewStarView = YXReviewPlanStarContainerView(type: .plan)
     var reviewProgressView = YXReviewPlanProgressView()
@@ -127,6 +129,7 @@ class YXReviewPlanDetailHeaderView: YXView {
         bgView.addSubview(titleLabel)
         bgView.addSubview(editButton)
         bgView.addSubview(subTitleLabel)
+        bgView.addSubview(fromLabel)
         bgView.addSubview(listenStarView)
         bgView.addSubview(reviewStarView)
         bgView.addSubview(reviewProgressView)
@@ -141,6 +144,9 @@ class YXReviewPlanDetailHeaderView: YXView {
         
         subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
         subTitleLabel.textColor = UIColor.black3
+        
+        fromLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
+        fromLabel.textColor = UIColor.black3
 
         editButton.setImage(UIImage(named: "review_plan_detail_edit"), for: .normal)
         editButton.addTarget(self, action: #selector(clickEditButton), for: .touchUpInside)
@@ -184,6 +190,17 @@ class YXReviewPlanDetailHeaderView: YXView {
             make.width.equalTo(subTitleWidth)
             make.height.equalTo(AS(17))
         }
+        
+        
+        if let _ = reviewPlanModel?.fromUser {
+            fromLabel.snp.makeConstraints { (make) in
+                make.left.equalTo(titleLabel)
+                make.right.equalTo(AS(-50))
+                make.height.equalTo(AS(17))
+                make.bottom.equalTo(AS(-16))
+            }
+        }
+        
         
         listenStarView.isHidden = true
         if reviewPlanModel?.listenState == .finish {
@@ -240,6 +257,12 @@ class YXReviewPlanDetailHeaderView: YXView {
             subTitleLabel.text = "听写成绩："
             listenStarView.count = reviewPlanModel?.listen ?? 0
         }
+        
+        
+        if let nickname = reviewPlanModel?.fromUser, nickname.isNotEmpty {
+            fromLabel.text = nickname
+        }
+        
         
         if reviewPlanModel?.reviewState == .normal {
             reviewProgressView.progress = 0

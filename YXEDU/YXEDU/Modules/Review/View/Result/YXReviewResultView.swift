@@ -20,13 +20,8 @@ class YXReviewResultView: YXTopWindowView {
     var titleLabel = UILabel()
     var starTitleLabel = UILabel()
     
-    var subTitleLable1 = UILabel()
-    var subTitleLable2 = UILabel()
-    
-    var pointLabel1 = UILabel()
-    var pointLabel2 = UILabel()
-    
-    var tableView = YXReviewResultTableView()
+    var tipsView = YXReviewResultTipsView()
+    var tableView = YXReviewResultWordTableView()
     
     var shareButton = YXButton()
     var tipsLabel = UILabel()
@@ -62,12 +57,8 @@ class YXReviewResultView: YXTopWindowView {
         mainView.addSubview(titleLabel)
         mainView.addSubview(starTitleLabel)
         
-        mainView.addSubview(subTitleLable1)
-        mainView.addSubview(subTitleLable2)
-        
-        mainView.addSubview(pointLabel1)
-        mainView.addSubview(pointLabel2)
-        
+
+        mainView.addSubview(tipsView)        
         mainView.addSubview(tableView)
         
         mainView.addSubview(shareButton)
@@ -87,15 +78,6 @@ class YXReviewResultView: YXTopWindowView {
         starTitleLabel.textAlignment = .center
         starTitleLabel.textColor = UIColor.black3
         starTitleLabel.numberOfLines = 0
-        
-        pointLabel1.layer.masksToBounds = true
-        pointLabel1.layer.cornerRadius = AS(2)
-        pointLabel1.backgroundColor = UIColor.black4
-        
-        
-        pointLabel2.layer.masksToBounds = true
-        pointLabel2.layer.cornerRadius = AS(2)
-        pointLabel2.backgroundColor = UIColor.black4
 
         
         shareButton.layer.masksToBounds = true
@@ -176,52 +158,26 @@ class YXReviewResultView: YXTopWindowView {
         }
         
 
-        pointLabel1.snp.remakeConstraints { (make) in
-            make.top.equalTo(starTitleLabel.snp.bottom).offset(AS(50))
-            if (model?.words?.count ?? 0) == 0 {
-                make.left.equalTo(titleLabel).offset(AS(-10))
-            } else {
-                make.left.equalTo(AS(32))
-            }
-            make.width.height.equalTo(AS(4))
-        }
-        
-        pointLabel2.snp.remakeConstraints { (make) in
-            make.top.equalTo(pointLabel1.snp.bottom).offset(AS(18))
-            make.left.equalTo(pointLabel1)
-            make.width.height.equalTo(AS(4))
-        }
-        
-        
-        subTitleLable1.snp.remakeConstraints { (make) in
-            make.centerY.equalTo(pointLabel1)
-            make.left.equalTo(pointLabel1.snp.right).offset(AS(12))
-            make.right.equalTo(AS(-85))
-            make.height.equalTo(AS(20))
-        }
-        
-        subTitleLable2.snp.remakeConstraints { (make) in
-            make.centerY.equalTo(pointLabel2)
-            make.left.equalTo(pointLabel2.snp.right).offset(AS(12))
-            make.right.equalTo(AS(-85))
-            make.height.equalTo(AS(20))
+        let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
+        tipsView.snp.remakeConstraints { (make) in
+            make.top.equalTo(starTitleLabel.snp.bottom).offset(AS(42))
+            make.left.right.equalToSuperview()
+            make.height.equalTo(tipsHeight)
         }
     
     
         tableView.snp.remakeConstraints { (make) in
-            make.top.equalTo(subTitleLable2.snp.bottom).offset(AS(4))
+            make.top.equalTo(tipsView.snp.bottom).offset(AS(14))
             make.left.right.equalToSuperview()
             if (model?.words?.count ?? 0) > 3 {
                 make.height.equalTo(AS(268))
             } else {
                 make.height.equalTo(AS(173))
             }
-            
         }
         
         if type == .wrong {
             shareButton.snp.remakeConstraints { (make) in
-//                make.top.equalTo(tableView.snp.bottom).offset(AS(30))
                 make.centerX.equalToSuperview()
                 make.width.equalTo(AS(273))
                 make.height.equalTo(AS(42))
@@ -235,7 +191,6 @@ class YXReviewResultView: YXTopWindowView {
             }
         } else {
             shareButton.snp.remakeConstraints { (make) in
-//                make.top.equalTo(tableView.snp.bottom).offset(AS(30))
                 make.centerX.equalToSuperview()
                 make.width.equalTo(AS(273))
                 make.height.equalTo(AS(42))
@@ -265,7 +220,7 @@ class YXReviewResultView: YXTopWindowView {
             titleLabel.text = "恭喜完成抽查复习"
         }
         
-        if let score = model?.score {
+        if let score = model?.score, type != .aiReview {
             if score == 0 || score == 1 {
                 starTitleLabel.text = " 还有些词需要多多练习才行哦！"
             } else if score == 2 {
@@ -274,24 +229,14 @@ class YXReviewResultView: YXTopWindowView {
                 starTitleLabel.text = " 太棒了，获得了3星呢！"
             }
         }
-    
         
-        if let num = model?.allWordNum, num > 0 {
-            let length = "\(num)".count
-            subTitleLable1.attributedText = attrString(subTitle(num), 3, length)
-        }
-        if let num = model?.knowWordNum, num > 0 {
-            let length = "\(num)".count
-            subTitleLable2.attributedText = attrString("\(num)个单词掌握的更好了", 0, length)
-        }
-        
+        tipsView.textAlignment = (model?.words?.count ?? 0) > 0 ? .left : .center
+        tipsView.dataSource = self.createDataSource()
         
         tableView.words = model?.words ?? []
         tableView.isHidden = (tableView.words.count == 0)
         
         starView.count = model?.score ?? 0
-        
-//        self.layoutSubviews()
     }
     
     @objc func clickShareButton() {
@@ -354,6 +299,25 @@ class YXReviewResultView: YXTopWindowView {
         return "巩固了\(num)个单词"
     }
     
+    
+    private func createDataSource() -> [NSAttributedString] {
+        var attrs: [NSAttributedString] = []
+        
+        if let num = model?.allWordNum, num > 0 {
+            let length = "\(num)".count
+            attrs.append(attrString(subTitle(num), 3, length))
+        }
+        if let num = model?.knowWordNum, num > 0 {
+            let length = "\(num)".count
+            attrs.append(attrString("\(num)个单词掌握的更好了", 0, length))
+        }
+        if let num = model?.remainWordNum, num > 0 {
+            let length = "\(num)".count
+            attrs.append(attrString("该计划下剩余\(model?.remainWordNum ?? 0)个单词待复习", 6, length))
+        }
+        
+        return attrs
+    }
     
 }
 

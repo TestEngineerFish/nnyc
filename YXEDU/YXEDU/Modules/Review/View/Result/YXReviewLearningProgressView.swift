@@ -18,16 +18,9 @@ class YXReviewLearningProgressView: YXTopWindowView {
     var imageView = UIImageView()
     var titleLabel = UILabel()
     var progressView = YXReviewProgressView(type: .iKnow, cornerRadius: AS(4))
-    
-    var subTitleLable1 = UILabel()
-    var subTitleLable2 = UILabel()
-    var subTitleLable3 = UILabel()
-    
-    var pointLabel1 = UILabel()
-    var pointLabel2 = UILabel()
-    var pointLabel3 = UILabel()
-    
-    var tableView = YXReviewResultTableView()
+
+    var tipsView = YXReviewResultTipsView()
+    var tableView = YXReviewResultWordTableView()
     
     var reviewButton = YXButton()
     var closeButton = UIButton()
@@ -57,15 +50,7 @@ class YXReviewLearningProgressView: YXTopWindowView {
         mainView.addSubview(imageView)
         mainView.addSubview(titleLabel)
         mainView.addSubview(progressView)
-        
-        mainView.addSubview(subTitleLable1)
-        mainView.addSubview(subTitleLable2)
-        mainView.addSubview(subTitleLable3)
-        
-        mainView.addSubview(pointLabel1)
-        mainView.addSubview(pointLabel2)
-        mainView.addSubview(pointLabel3)
-        
+        mainView.addSubview(tipsView)
         mainView.addSubview(tableView)
         mainView.addSubview(reviewButton)
         mainView.addSubview(closeButton)
@@ -76,26 +61,12 @@ class YXReviewLearningProgressView: YXTopWindowView {
         imageView.image = UIImage(named: "review_learning_progress")
         
         titleLabel.textAlignment = .center
-        
-        pointLabel1.layer.masksToBounds = true
-        pointLabel1.layer.cornerRadius = AS(2)
-        pointLabel1.backgroundColor = UIColor.black4
-        pointLabel1.isHidden = true
-        
-        pointLabel2.layer.masksToBounds = true
-        pointLabel2.layer.cornerRadius = AS(2)
-        pointLabel2.backgroundColor = UIColor.black4
-        pointLabel2.isHidden = true
-        
-        pointLabel3.layer.masksToBounds = true
-        pointLabel3.layer.cornerRadius = AS(2)
-        pointLabel3.backgroundColor = UIColor.black4
-        pointLabel3.isHidden = true
+        titleLabel.numberOfLines = 0
         
         reviewButton.layer.masksToBounds = true
         reviewButton.layer.cornerRadius = AS(21)
         let bgColor = UIColor.gradientColor(with: CGSize(width: AS(273), height: AS(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
-//        reviewButton.setBackgroundImage(UIImage.imageWithColor(bgColor ?? UIColor.orange1), for: .normal)
+
         reviewButton.backgroundColor = bgColor
         if type == .planListenReview {
             reviewButton.setTitle("继续听写", for: .normal)
@@ -114,97 +85,56 @@ class YXReviewLearningProgressView: YXTopWindowView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        mainView.snp.makeConstraints { (make) in
+        mainView.snp.remakeConstraints { (make) in
             make.edges.equalToSuperview()
         }
         
-        imageView.snp.makeConstraints { (make) in
+        imageView.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(103))
             make.centerX.equalToSuperview()
             make.width.equalTo(AS(233))
             make.height.equalTo(AS(109))
         }
-        
-        titleLabel.snp.makeConstraints { (make) in
+        let titleHeight = titleLabel.text?.textHeight(font: titleLabel.font, width: screenWidth - AS(40)) ?? 0
+        titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(AS(13))
-            make.left.right.equalToSuperview()
-            make.height.equalTo(AS(24))
+            make.left.equalTo(AS(20))
+            make.right.equalTo(AS(-20))
+            make.height.equalTo(titleHeight)
         }
         
-        progressView.snp.makeConstraints { (make) in
+        progressView.snp.remakeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(AS(11))
             make.left.right.equalTo(imageView)
             make.height.equalTo(AS(8))
         }
         
-        pointLabel1.snp.makeConstraints { (make) in
-            make.top.equalTo(progressView.snp.bottom).offset(AS(36))
-            make.left.equalTo(AS(85))
-            make.width.height.equalTo(AS(4))
+        let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
+        tipsView.snp.remakeConstraints { (make) in
+            make.top.equalTo(progressView.snp.bottom).offset(AS(28))
+            make.left.right.equalToSuperview()
+            make.height.equalTo(tipsHeight)
         }
-        
-        pointLabel2.snp.makeConstraints { (make) in
-            make.top.equalTo(progressView.snp.bottom).offset(AS(58))
-            make.left.equalTo(AS(85))
-            make.width.height.equalTo(AS(4))
-        }
-        
-        
-        subTitleLable1.snp.makeConstraints { (make) in
-            make.centerY.equalTo(pointLabel1)
-            make.left.equalTo(pointLabel1.snp.right).offset(AS(12))
-            make.right.equalTo(AS(-85))
-            make.width.height.equalTo(AS(20))
-        }
-        
-        subTitleLable2.snp.makeConstraints { (make) in
-            make.centerY.equalTo(pointLabel2)
-            make.left.equalTo(pointLabel2.snp.right).offset(AS(12))
-            make.right.equalTo(AS(-85))
-            make.width.height.equalTo(AS(20))
-        }
+
         
         tableView.snp.remakeConstraints { (make) in
-            make.top.equalTo(subTitleLable2.snp.bottom).offset(AS(24))
+            make.top.equalTo(tipsView.snp.bottom).offset(AS(14))
             make.left.right.equalToSuperview()
             if (model?.words?.count ?? 0) > 3 {
                 make.height.equalTo(AS(268))
             } else {
                 make.height.equalTo(AS(173))
             }
-            
         }
-        
-        if type == .planListenReview {
-            reviewButton.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.width.equalTo(AS(273))
-                make.height.equalTo(AS(42))
-                make.bottom.equalTo(-AS(kSafeBottomMargin + 29))
-            }
-        } else {
-            pointLabel3.snp.makeConstraints { (make) in
-                make.top.equalTo(progressView.snp.bottom).offset(AS(81))
-                make.left.equalTo(AS(85))
-                make.width.height.equalTo(AS(4))
-            }
-            subTitleLable3.snp.makeConstraints { (make) in
-                make.centerY.equalTo(pointLabel3)
-                make.left.equalTo(pointLabel3.snp.right).offset(AS(12))
-                make.right.equalTo(AS(-20))
-                make.width.height.equalTo(AS(20))
-            }
-            
-            reviewButton.snp.makeConstraints { (make) in
-                make.centerX.equalToSuperview()
-                make.width.equalTo(AS(273))
-                make.height.equalTo(AS(42))
-                make.bottom.equalTo(-AS(kSafeBottomMargin + 29))
-            }
+                
+        reviewButton.snp.remakeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(AS(273))
+            make.height.equalTo(AS(42))
+            make.bottom.equalTo(-AS(kSafeBottomMargin + 29))
         }
-
     
-        closeButton.snp.makeConstraints { (make) in
+        closeButton.snp.remakeConstraints { (make) in
             make.top.equalTo(AS(29 + kSafeBottomMargin))
             make.left.equalTo(AS(15))
             make.width.equalTo(AS(28))
@@ -221,32 +151,11 @@ class YXReviewLearningProgressView: YXTopWindowView {
             self.progressView.progress = score / 100.0
         }
         
-        pointLabel1.isHidden = true
-        pointLabel2.isHidden = true
-        pointLabel3.isHidden = true
-        
         titleLabel.attributedText = attrString()
+                
+        tipsView.textAlignment = (model?.words?.count ?? 0) > 0 ? .left : .center
+        tipsView.dataSource = self.createDataSource()
         
-        if let num = model?.allWordNum, num > 0 {
-            pointLabel1.isHidden = false
-            
-            let length = "\(num)".count
-            subTitleLable1.attributedText = attrString(subTitle(num), 3, length)
-        }
-        if let num = model?.knowWordNum, num > 0 {
-            pointLabel2.isHidden = false
-            
-            let length = "\(num)".count
-            subTitleLable2.attributedText = attrString("\(num)个单词掌握的更好了", 0, length)
-        }
-        
-        if let num = model?.remainWordNum, num > 0, type != .planListenReview {
-            pointLabel3.isHidden = false
-            
-            let length = "\(num)".count
-            subTitleLable3.attributedText = attrString("该计划下剩余\(model?.remainWordNum ?? 0)个单词待复习", 6, length)
-        }
-
         tableView.words = model?.words ?? []
         tableView.isHidden = (tableView.words.count == 0)
     }
@@ -263,6 +172,24 @@ class YXReviewLearningProgressView: YXTopWindowView {
         self.removeFromSuperview()
     }
 
+    private func createDataSource() -> [NSAttributedString] {
+        var attrs: [NSAttributedString] = []
+        
+        if let num = model?.allWordNum, num > 0 {
+            let length = "\(num)".count
+            attrs.append(attrString(subTitle(num), 3, length))
+        }
+        if let num = model?.knowWordNum, num > 0 {
+            let length = "\(num)".count
+            attrs.append(attrString("\(num)个单词掌握的更好了", 0, length))
+        }
+        if let num = model?.remainWordNum, num > 0 {
+            let length = "\(num)".count
+            attrs.append(attrString("该计划下剩余\(model?.remainWordNum ?? 0)个单词待复习", 6, length))
+        }
+        
+        return attrs
+    }
     
     func attrString() -> NSAttributedString {
         let typeName = type == .planListenReview ? "听写" : ""
@@ -306,13 +233,15 @@ class YXReviewLearningProgressView: YXTopWindowView {
 
 class YXReviewResultTipsView: YXView, UITableViewDelegate, UITableViewDataSource {
     
-    var dataSource: [String] = []
-    var textAlignment: NSTextAlignment = .center
+    var dataSource: [NSAttributedString] = [] {
+        didSet { bindData() }
+    }
+    var textAlignment: NSTextAlignment = .left
         
-    private var maxWidth: CGFloat = screenWidth
+    private var maxWidth: CGFloat = 0
     private var tableView = UITableView()
     
-    private static let cellHeight: CGFloat = AS(22)
+    private let cellHeight: CGFloat = AS(22)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -339,15 +268,13 @@ class YXReviewResultTipsView: YXView, UITableViewDelegate, UITableViewDataSource
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(51))
-            make.left.equalTo(AS(69))
-            make.right.equalTo(AS(-49))
-            make.bottom.equalTo(AS(-27))
+        tableView.snp.remakeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
     }
     
     override func bindData() {
+        self.processMaxContentWidth()
         self.tableView.reloadData()
     }
     
@@ -356,7 +283,7 @@ class YXReviewResultTipsView: YXView, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return YXReviewResultTipsView.cellHeight
+        return cellHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -365,12 +292,28 @@ class YXReviewResultTipsView: YXView, UITableViewDelegate, UITableViewDataSource
             
         
         let pointLabel = self.createPointLabel()
-        cell.contentView.addSubview(pointLabel)
+        let titleLabel = self.createTitleLabel(attr: dataSource[indexPath.row])
         
+        cell.addSubview(pointLabel)
+        cell.addSubview(titleLabel)
         
+        var lr: CGFloat = AS(32)
+        if textAlignment == .center {
+            lr = (screenWidth - maxWidth - AS(12)) / 2
+        }
         
-        
-        
+        pointLabel.snp.remakeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(lr)
+            make.width.height.equalTo(AS(4))
+        }
+
+        titleLabel.snp.remakeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(pointLabel.snp.right).offset(AS(12))
+            make.width.equalTo(maxWidth)
+            make.height.equalTo(AS(20))
+        }
         
         return cell
     }
@@ -384,14 +327,20 @@ class YXReviewResultTipsView: YXView, UITableViewDelegate, UITableViewDataSource
         return pointLabel1
     }
     
+    private func createTitleLabel(attr: NSAttributedString) -> UILabel {
+        let titleLabel = UILabel()
+        titleLabel.attributedText = attr
+        return titleLabel
+    }
     
     private func processMaxContentWidth() {
         for content in dataSource {
-            
+            let w: CGFloat = content.string.textWidth(font: UIFont.regularFont(ofSize: AS(14)), height: AS(20))
+            maxWidth = (w > maxWidth) ? w : maxWidth
         }
     }
     
-    static func viewHeight(count: Int) -> CGFloat {
+    func viewHeight(count: Int) -> CGFloat {
         return cellHeight * CGFloat(count)
     }
     
