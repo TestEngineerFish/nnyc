@@ -21,7 +21,7 @@
 @property (nonatomic, strong) UIImage *originImage;// 保存nav原始图片
 @property (nonatomic, strong) UIColor *currentColor;//后台通过URL传过来title的颜色
 @property (nonatomic, strong) NSMutableArray *colorList;//后台传过来的背景色数组
-@property (nonatomic, strong) UIView *navBackgroundView;//显示后台传过来的渐变色view
+//@property (nonatomic, strong) UIView *navBackgroundView;//显示后台传过来的渐变色view
 @end
 
 @implementation YXBaseWebViewController
@@ -49,45 +49,51 @@
     if (self.hideNavi) {
         [self.navigationController setNavigationBarHidden:YES animated:animated];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:@"  " forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"comNaviBack_white_normal"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"comNaviBack_white_press"] forState:UIControlStateHighlighted];
+        [button setTitle:@"" forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"back"] forState:UIControlStateHighlighted];
         button.frame = CGRectMake(0, kStatusBarHeight, 50, 44);// CGSizeMake(80, 40);
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];
+        
     }else {
         [self.navigationController setNavigationBarHidden:NO animated:animated];
+
+        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+        self.navigationItem.leftBarButtonItems = @[button];
+        
     }
-    if (self.currentColor) {
-        [self setTitleAndBackViewColor:self.currentColor];
-    }
-    if (self.colorList) {
-        if (self.navBackgroundView.isHidden) {
-            [self.navBackgroundView setHidden:NO];
-        }
-        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-        gradientLayer.colors = self.colorList;
-        gradientLayer.locations = @[@0.3, @0.5, @1.0];
-        gradientLayer.startPoint = CGPointMake(0, 0);
-        gradientLayer.endPoint = CGPointMake(1.0, 0);
-        gradientLayer.frame = self.navBackgroundView.bounds;
-        [self.navBackgroundView.layer addSublayer:gradientLayer];
-    }
+    
+//    if (self.currentColor) {
+//        [self setTitleAndBackViewColor:self.currentColor];
+//    }
+//    if (self.colorList) {
+//        if (self.navBackgroundView.isHidden) {
+//            [self.navBackgroundView setHidden:NO];
+//        }
+//        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+//        gradientLayer.colors = self.colorList;
+//        gradientLayer.locations = @[@0.3, @0.5, @1.0];
+//        gradientLayer.startPoint = CGPointMake(0, 0);
+//        gradientLayer.endPoint = CGPointMake(1.0, 0);
+//        gradientLayer.frame = self.navBackgroundView.bounds;
+//        [self.navBackgroundView.layer addSublayer:gradientLayer];
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     // 如果标题颜色被更改,则在退出时恢复之前颜色
-    if (self.orignColor) {
-        [self setTitleAndBackViewColor:self.orignColor];
-    }
-    if (self.navBackgroundView) {
-        [self.navBackgroundView removeFromSuperview];
-        [self.navBackgroundView setHidden:YES];
-        self.navBackgroundView = nil;
-    }
+//    if (self.orignColor) {
+//        [self setTitleAndBackViewColor:self.orignColor];
+//    }
+//    if (self.navBackgroundView) {
+//        [self.navBackgroundView removeFromSuperview];
+//        [self.navBackgroundView setHidden:YES];
+//        self.navBackgroundView = nil;
+//    }
 }
 
 - (void)back {
@@ -116,8 +122,8 @@
             gradientLayer.locations = @[@0.3, @0.5, @1.0];
             gradientLayer.startPoint = CGPointMake(0, 0);
             gradientLayer.endPoint = CGPointMake(1.0, 0);
-            gradientLayer.frame = self.navBackgroundView.bounds;
-            [self.navBackgroundView.layer addSublayer:gradientLayer];
+//            gradientLayer.frame = self.navBackgroundView.bounds;
+//            [self.navBackgroundView.layer addSublayer:gradientLayer];
         }
         if (parameters[@"txt_color"]) {
             //保存原本颜色
@@ -145,18 +151,18 @@
     }
 }
 
-- (UIView *)navBackgroundView{
-    if (!_navBackgroundView) {
-        UIView *subView = [[UIView alloc] init];
-        subView.frame = CGRectMake(0, -kStatusBarHeight, SCREEN_WIDTH, kNavHeight);
-        //添加view遮盖着nav
-        UINavigationBar *bar = self.navigationController.navigationBar;
-        [bar addSubview:subView];
-        [bar insertSubview:subView atIndex:2];
-        _navBackgroundView = subView;
-    }
-    return _navBackgroundView;
-}
+//- (UIView *)navBackgroundView{
+//    if (!_navBackgroundView) {
+//        UIView *subView = [[UIView alloc] init];
+//        subView.frame = CGRectMake(0, -kStatusBarHeight, SCREEN_WIDTH, kNavHeight);
+//        //添加view遮盖着nav
+//        UINavigationBar *bar = self.navigationController.navigationBar;
+//        [bar addSubview:subView];
+//        [bar insertSubview:subView atIndex:2];
+//        _navBackgroundView = subView;
+//    }
+//    return _navBackgroundView;
+//}
 
 - (NSMutableArray *)colorList {
     if (!_colorList) {
