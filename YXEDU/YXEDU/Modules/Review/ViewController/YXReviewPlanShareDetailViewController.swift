@@ -106,7 +106,8 @@ class YXReviewPlanShareDetailViewController: YXViewController {
             
             let request = YXReviewRequest.makeReviewPlan(name: name, code: pid, idsList: nil)
             YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
-                UIView.toast("保持成功")
+                NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
+                UIView.toast("保存成功")
                 YRRouter.popViewController(true)
             }) { (error) in
                 if error.code == 101 {
