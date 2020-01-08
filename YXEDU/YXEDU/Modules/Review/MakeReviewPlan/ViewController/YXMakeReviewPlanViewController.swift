@@ -61,7 +61,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             make.edges.equalToSuperview()
         }
         bottomView.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(kSafeBottomMargin)
+            make.bottom.equalToSuperview()
             make.left.right.equalToSuperview()
             make.height.equalTo(AdaptSize(60) + kSafeBottomMargin)
         }
@@ -69,7 +69,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             make.right.equalToSuperview().offset(AdaptSize(-10))
             make.width.equalTo(AdaptSize(155))
             make.height.equalTo(selectedWordsListView.defalutHeight)
-            make.bottom.equalToSuperview().offset(AdaptSize(-90))
+            make.bottom.equalTo(bottomView.snp.top).offset(AdaptSize(-30))
         }
     }
 
