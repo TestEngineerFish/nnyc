@@ -138,7 +138,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         guard let _answerView = self.answerView as? YXNewLearnAnswerView else {
             return
         }
-        _answerView.playByStatus()
+        _answerView.startView()
     }
 
     // MARK: ==== YXNewLearnProtocol ===

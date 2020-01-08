@@ -152,6 +152,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
                             YRRouter.popViewController(2, animated: true)
                         }
                         shareVC.hidesBottomBarWhenPushed = true
+                        NotificationCenter.default.removeObserver(self)
                         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
                     }
                 }

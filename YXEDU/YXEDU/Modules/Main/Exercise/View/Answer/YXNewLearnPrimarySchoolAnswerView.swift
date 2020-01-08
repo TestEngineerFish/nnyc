@@ -86,6 +86,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var status: AnswerStatus = .normal
     var lastLevel    = 0 // 最近一次跟读评分
     var isReport     = false // 是否播完并通知
+    var isViewPause  = false // 弹框，页面暂停播放
     // TODO: ---- 缓存重传机制
     var tempOpusData = Data() // 缓存当前录音
     var retryCount   = 0
@@ -256,10 +257,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 播放单词
     private func playWord() {
-        guard let wordUrlStr = self.exerciseModel.word?.voice, let url = URL(string: wordUrlStr) else {
+        guard let wordUrlStr = self.exerciseModel.word?.voice, let url = URL(string: wordUrlStr), !self.isViewPause else {
             return
         }
-        
         YXAVPlayerManager.share.playAudio(url) { [weak self] in
             guard let self = self else { return }
             if self.status.rawValue < AnswerStatus.showGuideView.rawValue {
@@ -272,7 +272,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 播放例句
     /// - Parameter block: 完成回调
     private func playExample() {
-        guard let exampleUrlStr = self.exerciseModel.word?.examplePronunciation, let url = URL(string: exampleUrlStr) else {
+        guard let exampleUrlStr = self.exerciseModel.word?.examplePronunciation, let url = URL(string: exampleUrlStr), !self.isViewPause else {
             return
         }
         YXAVPlayerManager.share.playAudio(url) { [weak self] in
@@ -355,8 +355,16 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 页面暂停
     func pauseView() {
+        self.isViewPause = true
         YXAVPlayerManager.share.pauseAudio()
+        YXAVPlayerManager.share.finishedBlock = nil
         self.enginer?.cancel()
+    }
+
+    // 页面播放
+    func startView() {
+        self.isViewPause = false
+        self.playByStatus()
     }
 
     // MARK: ==== Notification ====

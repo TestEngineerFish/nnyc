@@ -211,7 +211,7 @@
             self.bottomView.layoutSubviews()
             
             // 连线未选中时，禁用提示
-            let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese || model.type == .newLearnPrimarySchool_Group || model.type == .newLearnPrimarySchool)
+            let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese)
             self.bottomView.tipsButton.isEnabled = tipsEnabled
             // 如果是高中新学，则隐藏底部栏
             var exerciseViewHeight = YXExerciseConfig.exerciseViewHeight
@@ -414,6 +414,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
         
         let alertView = YXAlertView()
         alertView.descriptionLabel.text = "是否放弃本次学习并退出?"
+        alertView.backgroundView.isUserInteractionEnabled = false
         alertView.doneClosure = {[weak self] _ in
             YYCache.remove(forKey: .learningState)
             self?.dataManager.progressManager.setStopStudyTime()
