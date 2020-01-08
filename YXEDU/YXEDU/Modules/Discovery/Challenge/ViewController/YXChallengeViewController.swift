@@ -160,7 +160,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = YXChallengeHeaderView(false)
-        headerView.challengeHeaderView.startButton.addTarget(self, action: #selector(clickPlayButton), for: .touchUpInside)
+        headerView.headerView.startButton.addTarget(self, action: #selector(clickPlayButton), for: .touchUpInside)
         headerView.previousRankButton.addTarget(self, action: #selector(previousRank), for: .touchUpInside)
         headerView.bindData(self.challengeModel)
         return headerView
