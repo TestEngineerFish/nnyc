@@ -91,7 +91,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         })
         
         wordLabel.text = word.word
-        phoneticSymbolLabel.text = word.soundmark
+        phoneticSymbolLabel.text = "\(YXUserModel.default.didUseAmericanPronunciation ? "美" : "英")" + (word.soundmark ?? "")
 
         if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
             var text = ""
