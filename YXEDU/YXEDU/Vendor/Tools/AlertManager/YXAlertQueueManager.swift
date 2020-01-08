@@ -24,7 +24,7 @@ class YXAlertQueueManager: NSObject {
     private var isStart: Bool = false
     private override init() {}
     
-    
+    // 在未知登陆状态下调用
     public func start() {
         if self.isStart {
             return
@@ -32,7 +32,12 @@ class YXAlertQueueManager: NSObject {
         self.isStart = true
         self.processQueue()
     }
-
+    
+    // 登陆后再调用一次
+    public func restart() {
+        self.processQueue()
+    }
+    
     public func addAlert(alertView: YXTopWindowView) {
         self.alertArray.append(alertView)
     }
@@ -66,6 +71,33 @@ class YXAlertQueueManager: NSObject {
         // 创建并发队列
         let queue = DispatchQueue.global()
         
+        // 如果登陆过
+        if YXUserModel.default.didLogin {
+            group.enter()
+            queue.async(group: group) {
+                YXAlertCheckManager.default.checkOldUser {
+                    print("====================== 检查老用户结束")
+                    group.leave()
+                }
+            }
+            
+            group.enter()
+            queue.async(group: group) {
+                YXAlertCheckManager.default.checkCommand(isStartup: true) {
+                    print("====================== 检查口令结束")
+                    group.leave()
+                }
+            }
+            
+            group.enter()
+            queue.async(group: group) {
+                YXAlertCheckManager.default.checkLatestBadge {
+                    print("====================== 检查最新徽章结束")
+                    group.leave()
+                }
+            }
+        }
+        
         group.enter()
         queue.async(group: group) {
             YXAlertCheckManager.default.checkVersion {
@@ -74,34 +106,10 @@ class YXAlertQueueManager: NSObject {
             }
         }
         
-        group.enter()
-        queue.async(group: group) {
-            YXAlertCheckManager.default.checkOldUser {
-                print("====================== 检查老用户结束")
-                group.leave()
-            }
-        }
-        
-        group.enter()
-        queue.async(group: group) {
-            YXAlertCheckManager.default.checkCommand(isStartup: true) {
-                print("====================== 检查口令结束")
-                group.leave()
-            }
-        }
-        
-        group.enter()
-        queue.async(group: group) {
-            YXAlertCheckManager.default.checkLatestBadge {
-                print("====================== 检查最新徽章结束")
-                group.leave()
-            }
-        }
-        
         // 数据都处理完，才开始弹窗
         group.notify(queue: queue) { [weak self] in
             print("====================== 队列结束")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self?.processStatus = true
                 self?.showAlert()
             }

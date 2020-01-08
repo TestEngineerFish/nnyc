@@ -149,6 +149,7 @@ extension YXExerciseDataManager {
                         if e.step == step {
                             reviewWordArray[i].exerciseSteps[j][z].isFinish = finish
                             if right == false {
+                                // 如果做错，下一轮需要重做
                                 reviewWordArray[i].exerciseSteps[j][z].isContinue = true
                             }
                         }
@@ -213,21 +214,15 @@ extension YXExerciseDataManager {
                 }
             }
         }
-        
+        print("----------------- 听写数量：", map.count)
         needReviewCount = map.count
-    }
-    
-
-    
-    
-
-    
-    
-    
-    /// 错题本数据处理
-    /// - Parameter wrongExercise: 练习Model
-    func addWrongBook(exerciseModel: YXWordExerciseModel) {
+        
+        if needReviewCount == 0 {
+            
+        }
+        
         
     }
+    
         
 }

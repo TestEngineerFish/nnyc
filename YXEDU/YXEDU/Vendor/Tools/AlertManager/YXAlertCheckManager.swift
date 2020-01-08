@@ -155,10 +155,12 @@ class YXAlertCheckManager {
     
     @objc private func processServiceStop(notification: Notification) {
         
+//        print("停服打印：", notification.object)
+        
         let alertView = YXAlertView()
         
         alertView.titleLabel.text = "念念有词正在进行维护"
-        alertView.descriptionLabel.text = notification.object as? String
+        alertView.descriptionLabel.text = (notification.object as? String) ?? "为了给您更好的体验，念念有词正在系统维护中，请稍后再试！"
         
         alertView.leftButton.isHidden = true
         alertView.rightOrCenterButton.isHidden = true
@@ -171,3 +173,4 @@ class YXAlertCheckManager {
 
     
 }
+

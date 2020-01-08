@@ -257,6 +257,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.didLogin = true
             YXUserModel.default.login()
             
+            YXAlertQueueManager.default.restart()
+            
         }) { error in
             print("❌❌❌\(error)")
         }

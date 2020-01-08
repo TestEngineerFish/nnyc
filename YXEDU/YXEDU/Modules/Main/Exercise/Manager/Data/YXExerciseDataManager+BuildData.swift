@@ -44,9 +44,10 @@ extension YXExerciseDataManager {
                         exericse.isRight = nil
                         
                         if exericse.isFinish {// 做过
-                            if exericse.isContinue == true {// 如果上一轮有做错过，需要继续做
+                            if exericse.isContinue == true {// 如果上一轮有做错，需要继续做
                                 for z in 0..<step.count {
                                     reviewWordArray[i].exerciseSteps[j][z].isContinue = nil
+                                    reviewWordArray[i].exerciseSteps[j][z].isFinish = false
                                 }
                                 currentTurnArray.append(exericse)
                                 break
