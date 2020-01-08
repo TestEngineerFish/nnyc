@@ -171,9 +171,7 @@
 		<string>iconfont_back.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
-	<array>
-		<string>processing</string>
-	</array>
+	<array/>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
