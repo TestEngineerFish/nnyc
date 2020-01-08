@@ -315,6 +315,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                     }
                     
                     let baseWebViewController = YXBaseWebViewController(link: learnReportModel.reportUrl, title: "学习报告")
+                    baseWebViewController?.hidesBottomBarWhenPushed = true
                     self.navigationController?.pushViewController(baseWebViewController!, animated: true)
                 }
                 
