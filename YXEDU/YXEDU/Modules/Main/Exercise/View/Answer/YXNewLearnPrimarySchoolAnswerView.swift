@@ -116,6 +116,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     deinit {
+        self.endRecordAction()
         self.timer?.invalidate()
         self.timer = nil
     }
@@ -169,7 +170,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 长按跟读按钮
     @objc private func startRecordAction(_ ges: UILongPressGestureRecognizer) {
         if ges.state == .began {
-            YXAuthorizationManager.authorizeMicrophoneWith { (isAuth) in
+            YXAuthorizationManager.authorizeMicrophoneWith { [weak self] (isAuth) in
+                guard let self = self else { return }
                 if isAuth {
                     guard let word = self.exerciseModel.word?.word else {
                         return

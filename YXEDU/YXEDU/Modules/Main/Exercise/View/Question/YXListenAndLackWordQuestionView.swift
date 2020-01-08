@@ -17,6 +17,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
         super.createSubviews()
 
         self.spellView = YXSpellSubview(self.exerciseModel, isTitle: true)
+        self.spellView?.backgroundColor = UIColor.yellow
         addSubview(spellView!)
 
         self.initAudioPlayerView()
@@ -30,7 +31,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview().offset(topPadding)
                 make.width.equalTo(w)
-                make.height.equalTo(30)
+                make.height.equalTo(AdaptSize(28))
             }
             audioPlayerView?.snp.makeConstraints({ (make) in
                 make.top.equalTo(_spellView.snp.bottom).offset(10)
