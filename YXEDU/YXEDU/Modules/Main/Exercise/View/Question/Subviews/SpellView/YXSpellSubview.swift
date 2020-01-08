@@ -116,7 +116,6 @@ class YXSpellSubview: UIView {
         if self.superview != nil {
             self.snp.remakeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalToSuperview().offset(CGFloat(54))
                 make.width.equalTo(maxX - margin)
                 make.height.equalTo(charH)
             }
