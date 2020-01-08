@@ -14,16 +14,14 @@ class YXLearningResultViewController: UIViewController {
     var backButton        = UIButton()
     var contentScrollView = UIScrollView()
     var punchButton       = YXButton()
-    var mapModelList: [YXLearnMapUnitModel]? // 总单元
     var currentModel: YXLearnMapUnitModel? // 当前单元
     var requestCount = 0
 
     var newLearnAmount: Int = 0 // 新学单词数
     var reviewLearnAmount: Int = 0 // 复习单词数量
-    var allWordCount = 0
-    var daysAmount = 0
     var bookId: Int? // 书ID
     var unitId: Int? // 单元ID
+    var model: YXLearnResultModel?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -91,7 +89,7 @@ class YXLearningResultViewController: UIViewController {
 
     /// 设置任务地图
     private func createTaskMap() {
-        guard let modelArray = self.mapModelList else {
+        guard let modelArray = self.model?.unitList else {
             return
         }
         // 任务地图视图
@@ -147,9 +145,8 @@ class YXLearningResultViewController: UIViewController {
                     self.bindData()
                 }
             } else {
-                self.allWordCount = response.data?.allWordCount ?? 0
-                self.mapModelList = response.data?.unitList
-                self.currentModel = self.mapModelList?.filter({ (model) -> Bool in
+                self.model = response.data
+                self.currentModel = self.model?.unitList?.filter({ (model) -> Bool in
                     return model.unitID == unitId
                 }).first
                 self.createSubviews()
@@ -181,10 +178,14 @@ class YXLearningResultViewController: UIViewController {
     }
 
     @objc private func punchEvent() {
+        guard let model = self.model else {
+            YXUtils.showHUD(kWindow, title: "数据请求失败，请稍后再试～")
+            return
+        }
         let vc = YXShareViewController()
         vc.shareType   = .learnResult
-        vc.wordsAmount = self.allWordCount
-        vc.daysAmount  = self.daysAmount
+        vc.wordsAmount = model.studyDay
+        vc.daysAmount  = model.allWordCount
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }

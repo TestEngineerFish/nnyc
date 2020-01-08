@@ -77,7 +77,7 @@ class YXAuthorizationManager: NSObject {
         case .undetermined:
             AVAudioSession.sharedInstance().requestRecordPermission { (allow) in
                 DispatchQueue.main.async {
-                    completion(allow)
+//                    completion(allow)
                     if (!allow && autoAlert) { showMicrophoneAlert() }
                 }
             }
