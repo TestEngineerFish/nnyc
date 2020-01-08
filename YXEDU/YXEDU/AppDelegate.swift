@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YYCache.remove(forKey: .learningState)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.processReviewResult()
+//            self.processReviewResult()
             
             
 //            let vc = YXReviewResultView(type: .planListenReview)
@@ -107,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// 处理复习结果页
     func processReviewResult() {
-        YXReviewDataManager().fetchReviewResult(type: .planListenReview, planId: 13) { [weak self] (resultModel, error) in
+        YXReviewDataManager().fetchReviewResult(type: .aiReview, planId: 13) { [weak self] (resultModel, error) in
             guard let self = self else {return}
 
             if var model = resultModel {
@@ -132,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /// 听力复习结果页
         func processReviewResult(model: YXReviewResultModel) {
 
-            let vc = YXReviewResultViewController(type: .planListenReview, model: model)
+            let vc = YXReviewResultViewController(type: .aiReview, model: model)
             vc.hidesBottomBarWhenPushed = true
             YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
         }
