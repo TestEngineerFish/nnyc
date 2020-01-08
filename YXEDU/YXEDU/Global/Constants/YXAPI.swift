@@ -20,7 +20,7 @@ struct YXAPI {
     
     //MARK: - 主页
     struct Home {
-        static let report = "api/v1/userlearnreport"
+        static let report = "api/v1/user/learnreport"
     }
     
     //MARK: - 用户模块

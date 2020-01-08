@@ -322,7 +322,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             case 2:
                 let request = YXHomeRequest.report
                 YYNetworkService.default.request(YYStructResponse<YXReportModel>.self, request: request, success: { (response) in
-                    if let report = response.data, let url = report.reportUrl {
+                    if let report = response.data, let url = report.reportUrl, url.isEmpty == false {
                         let baseWebViewController = YXBaseWebViewController(link: url, title: "学习报告")
                         baseWebViewController?.hidesBottomBarWhenPushed = true
                         self.navigationController?.pushViewController(baseWebViewController!, animated: true)
