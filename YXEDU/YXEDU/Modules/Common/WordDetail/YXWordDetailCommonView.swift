@@ -30,6 +30,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var partOfSpeechAndSenseLabel: UILabel!
     @IBOutlet weak var playAuoidButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var dividingView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func playAudio(_ sender: UIButton) {
@@ -91,23 +92,32 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         })
         
         wordLabel.text = word.word
-        phoneticSymbolLabel.text = "\(YXUserModel.default.didUseAmericanPronunciation ? "美" : "英")" + (word.soundmark ?? "")
+        if let pronunciation = word.soundmark, pronunciation.isEmpty == false {
+            phoneticSymbolLabel.text = "\(YXUserModel.default.didUseAmericanPronunciation ? "美" : "英")" + pronunciation
+            
+        } else {
+            phoneticSymbolLabel.text = ""
+        }
 
         if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
-            var text = ""
-
-            for index in 0..<partOfSpeechAndMeanings.count {
-                guard let partOfSpeech = partOfSpeechAndMeanings[index].partOfSpeech, let meaning = partOfSpeechAndMeanings[index].meaning else { continue }
+            if partOfSpeechAndMeanings[0].partOfSpeech == "phrase" {
+                partOfSpeechAndSenseLabel.text = partOfSpeechAndMeanings[0].meaning
                 
-                if index == 0 {
-                    text = partOfSpeech + meaning
+            } else {
+                var text = ""
+                for index in 0..<partOfSpeechAndMeanings.count {
+                    guard let partOfSpeech = partOfSpeechAndMeanings[index].partOfSpeech, let meaning = partOfSpeechAndMeanings[index].meaning else { continue }
                     
-                } else {
-                    text = text + "\n" + partOfSpeech + meaning
+                    if index == 0 {
+                        text = partOfSpeech + meaning
+                        
+                    } else {
+                        text = text + "\n" + partOfSpeech + meaning
+                    }
                 }
+                
+                partOfSpeechAndSenseLabel.text = text
             }
-            
-            partOfSpeechAndSenseLabel.text = text
         }
         
         if let imageUrl = word.imageUrl {

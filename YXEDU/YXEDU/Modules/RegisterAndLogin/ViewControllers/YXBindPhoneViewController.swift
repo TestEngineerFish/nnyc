@@ -147,7 +147,7 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
         self.startCountingDown()
         self.authCodeTextField.becomeFirstResponder()
         
-        let request = YXRegisterAndLoginRequest.sendSms(phoneNumber: phoneNumberTextField.text ?? "", loginType: "login", SlidingVerificationCode: slidingVerificationCode)
+        let request = YXRegisterAndLoginRequest.sendSms(phoneNumber: phoneNumberTextField.text ?? "", loginType: "editMobile", SlidingVerificationCode: slidingVerificationCode)
         YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { (response) in
             guard let slidingVerificationCodeModel = response.data else { return }
             
