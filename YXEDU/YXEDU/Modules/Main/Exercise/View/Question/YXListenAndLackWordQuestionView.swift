@@ -17,7 +17,6 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
         super.createSubviews()
 
         self.spellView = YXSpellSubview(self.exerciseModel, isTitle: true)
-        self.spellView?.backgroundColor = UIColor.yellow
         addSubview(spellView!)
 
         self.initAudioPlayerView()

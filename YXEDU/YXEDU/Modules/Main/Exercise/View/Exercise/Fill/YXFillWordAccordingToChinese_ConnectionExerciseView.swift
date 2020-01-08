@@ -80,7 +80,6 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         let remindViewH = self.height - self.contentView.frame.maxY
         let lackH = height - remindViewH
         if lackH > 0 {
-            self.remindView?.isHidden = false
             UIView.animate(withDuration: 0.5) {
                 self.transform = CGAffineTransform(translationX: 0, y: -lackH)
             }
@@ -88,7 +87,7 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
                 UIView.animate(withDuration: 0.5) {
                     self.transform = .identity
                 }
-                self.remindView?.isHidden = true
+                self.remindView?.hideSubviews()
             }
         }
     }
