@@ -159,6 +159,8 @@
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>我们将为您推荐适合您地区的教材版本</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>我们将为您推荐适合您地区的教材版本</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>我们将为您推荐适合您地区的教材版本</string>
 	<key>NSMicrophoneUsageDescription</key>
