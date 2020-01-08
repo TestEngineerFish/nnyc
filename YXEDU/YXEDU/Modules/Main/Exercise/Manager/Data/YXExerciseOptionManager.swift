@@ -31,11 +31,12 @@ class YXExerciseOptionManager: NSObject {
     func processReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
         
         switch exercise.type {
-        case .lookWordChooseImage, .lookExampleChooseImage, .lookWordChooseChinese,
-             .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord,
-             .listenChooseWord, .listenChooseChinese, .listenChooseImage:
-
+        case .lookWordChooseImage, .lookExampleChooseImage, .listenChooseImage:
             return reviewWordOption(exercise: exercise)
+        case .lookWordChooseChinese,
+        .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord,
+        .listenChooseWord, .listenChooseChinese:
+            return reviewWordOption(exercise: exercise, isFilterNilImage: false)
         case .validationImageAndWord, .validationWordAndChinese:
 
             return validReviewWordOption(exercise: exercise)
@@ -46,7 +47,8 @@ class YXExerciseOptionManager: NSObject {
         }
     }
 
-    func reviewWordOption(exercise: YXWordExerciseModel)  -> YXWordExerciseModel? {
+    /// 默认过滤没有图片的单词
+    func reviewWordOption(exercise: YXWordExerciseModel, isFilterNilImage: Bool = true)  -> YXWordExerciseModel? {
         // 选项个数
         let itemCount = exercise.question?.itemCount ?? 4
         
@@ -65,6 +67,9 @@ class YXExerciseOptionManager: NSObject {
             guard let wordModel = _wordExerciseModel.word else {
                 continue
             }
+            if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
+                continue
+            }
             let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
             items.append(itemModel)
             whiteList.append(wordModel.word)
@@ -81,6 +86,9 @@ class YXExerciseOptionManager: NSObject {
                 let randomInt = Int.random(in: 0..<tmpReviewWordArray.count)
                 let _wordExerciseModel = tmpReviewWordArray[randomInt]
                 guard let wordModel = _wordExerciseModel.word else {
+                    continue
+                }
+                if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
                     continue
                 }
                 if !whiteList.contains(wordModel.word) {
@@ -103,6 +111,9 @@ class YXExerciseOptionManager: NSObject {
                 for _ in 0..<wordModelArray.count {
                     let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
                     let wordModel = tmpWordModelArray[randomInt]
+                    if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
+                        continue
+                    }
                     if !whiteList.contains(wordModel.word) {
                         let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
                         items.append(itemModel)
@@ -124,6 +135,9 @@ class YXExerciseOptionManager: NSObject {
                 for _ in 0..<wordModelArray.count {
                     let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
                     let wordModel = tmpWordModelArray[randomInt]
+                    if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
+                        continue
+                    }
                     if !whiteList.contains(wordModel.word) {
                         let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
                         items.append(itemModel)
