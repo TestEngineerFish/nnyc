@@ -284,9 +284,14 @@
                     <connections>
                         <outlet property="authCodeTextField" destination="5Iy-1d-nE3" id="Sca-dd-Qcs"/>
                         <outlet property="clearPhoneNumberTextFieldButton" destination="oSW-8X-rVz" id="QJZ-wB-ZFx"/>
+                        <outlet property="fastLoginLabel" destination="hEL-EI-oR4" id="dxh-D1-l17"/>
+                        <outlet property="fastLoginLeftLineView" destination="7cO-0l-n5N" id="80m-52-6yu"/>
+                        <outlet property="fastLoginRightLineView" destination="2qQ-ga-3x0" id="L5v-in-uz4"/>
                         <outlet property="loginButton" destination="1ep-af-AAr" id="gqU-eH-z9o"/>
                         <outlet property="phoneNumberTextField" destination="Soa-Pc-TqK" id="sip-WG-SY0"/>
+                        <outlet property="qqButton" destination="IdG-Oj-rHD" id="Atp-2h-GEo"/>
                         <outlet property="sendSMSButton" destination="xD3-cB-wBR" id="Bmw-43-TX9"/>
+                        <outlet property="wechatButton" destination="xaB-jt-wPd" id="iwY-mQ-Sou"/>
                         <segue destination="Js3-Wc-5eS" kind="show" identifier="Bind" id="ZFP-c1-D4D"/>
                     </connections>
                 </viewController>

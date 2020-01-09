@@ -28,6 +28,12 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     @IBOutlet weak var authCodeTextField: UITextField!
     @IBOutlet weak var sendSMSButton: UIButton!
     @IBOutlet weak var loginButton: YXDesignableButton!
+    
+    @IBOutlet weak var wechatButton: UIButton!
+    @IBOutlet weak var qqButton: UIButton!
+    @IBOutlet weak var fastLoginLabel: UILabel!
+    @IBOutlet weak var fastLoginLeftLineView: UIView!
+    @IBOutlet weak var fastLoginRightLineView: UIView!
 
     @IBAction func clearphoneNumberTextField(_ sender: UIButton) {
         clearPhoneNumberTextFieldButton.isHidden = true
@@ -90,6 +96,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
         }
+        
+        checkThirdPartyApp()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -278,7 +286,19 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         clearPhoneNumberTextFieldButton.isHidden = true
     }
     
-    
+    private func checkThirdPartyApp() {        
+        let canOpenQQ = YXCheckApp.canOpen(type: .qq)
+        let canOpenWechat = YXCheckApp.canOpen(type: .wechatSession)
+        
+        if !canOpenQQ && !canOpenWechat {
+            fastLoginLeftLineView.isHidden = true
+            fastLoginRightLineView.isHidden = true
+            fastLoginLabel.isHidden = true
+        }
+        
+        qqButton.isHidden = !canOpenQQ
+        wechatButton.isHidden = !canOpenWechat
+    }
     
     // MARK: - 第三方登录
     @objc
