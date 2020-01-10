@@ -98,6 +98,8 @@ struct YXWordExampleModel: Mappable {
     var pronunciation: String?
     var imageUrl: String?
 
+    init() {}
+
     init?(map: Map) {
         self.mapping(map: map)
     }
