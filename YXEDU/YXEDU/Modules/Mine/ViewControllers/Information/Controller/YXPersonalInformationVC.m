@@ -125,12 +125,24 @@
     }
     
     NSString *grade = @"未设置";
-    if ([self.userModel.grade isEqualToString:@"7"]) {
-        grade = @"初一";
+    if ([self.userModel.grade isEqualToString:@"1"]) {
+        grade = @"一年级";
+    } else if ([self.userModel.grade isEqualToString:@"2"]) {
+        grade = @"二年级";
+    } else if ([self.userModel.grade isEqualToString:@"3"]) {
+        grade = @"三年级";
+    } else if ([self.userModel.grade isEqualToString:@"4"]) {
+        grade = @"四年级";
+    } else if ([self.userModel.grade isEqualToString:@"5"]) {
+        grade = @"五年级";
+    } else if ([self.userModel.grade isEqualToString:@"6"]) {
+        grade = @"六年级";
+    } else if ([self.userModel.grade isEqualToString:@"7"]) {
+        grade = @"七年级";
     } else if ([self.userModel.grade isEqualToString:@"8"]) {
-        grade = @"初二";
+        grade = @"八年级";
     } else if ([self.userModel.grade isEqualToString:@"9"]) {
-        grade = @"初三";
+        grade = @"九年级";
     } else if ([self.userModel.grade isEqualToString:@"10"]) {
         grade = @"其他";
     }

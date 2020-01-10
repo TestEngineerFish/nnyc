@@ -65,7 +65,7 @@
 
 - (NSArray *)gradeArray {
     if (!_gradeArray) {
-        _gradeArray = @[@"初一", @"初二", @"初三", @"其他"];
+        _gradeArray = @[@"一年级", @"二年级", @"三年级", @"四年级", @"五年级", @"六年级", @"七年级", @"八年级", @"九年级", @"其他"];
     }
     
     return _gradeArray;
@@ -183,7 +183,7 @@
                         
                     case GradeType:
                     {
-                        NSInteger index = [self.gradeArray indexOfObject:@"初一"];
+                        NSInteger index = [self.gradeArray indexOfObject:@"一年级"];
                         [self.customPicker selectRow:index inComponent:0 animated:YES];
                     }
                         break;
@@ -649,11 +649,23 @@
     } else if (self.type == GradeType) {
         result = self.gradeArray[[self.customPicker selectedRowInComponent:0]];
         
-        if ([result isEqualToString:@"初一"]) {
+        if ([result isEqualToString:@"一年级"]) {
             [self setUpKey:@"grade" withValue:@"7"];
-        } else if ([result isEqualToString:@"初二"]) {
+        } else if ([result isEqualToString:@"二年级"]) {
             [self setUpKey:@"grade" withValue:@"8"];
-        } else if ([result isEqualToString:@"初三"]) {
+        } else if ([result isEqualToString:@"三年级"]) {
+            [self setUpKey:@"grade" withValue:@"9"];
+        } else if ([result isEqualToString:@"四年级"]) {
+            [self setUpKey:@"grade" withValue:@"7"];
+        } else if ([result isEqualToString:@"五年级"]) {
+            [self setUpKey:@"grade" withValue:@"8"];
+        } else if ([result isEqualToString:@"六年级"]) {
+            [self setUpKey:@"grade" withValue:@"9"];
+        } else if ([result isEqualToString:@"七年级"]) {
+            [self setUpKey:@"grade" withValue:@"7"];
+        } else if ([result isEqualToString:@"八年级"]) {
+            [self setUpKey:@"grade" withValue:@"8"];
+        } else if ([result isEqualToString:@"九年级"]) {
             [self setUpKey:@"grade" withValue:@"9"];
         } else {
             [self setUpKey:@"grade" withValue:@"10"];
@@ -663,11 +675,23 @@
         
         result = self.classArray[[self.customPicker selectedRowInComponent:0]];
         
-        if ([result isEqualToString:@"初一"]) {
+        if ([result isEqualToString:@"一年级"]) {
             [self setUpKey:@"grade" withValue:@"7"];
-        } else if ([result isEqualToString:@"初二"]) {
+        } else if ([result isEqualToString:@"二年级"]) {
             [self setUpKey:@"grade" withValue:@"8"];
-        } else if ([result isEqualToString:@"初三"]) {
+        } else if ([result isEqualToString:@"三年级"]) {
+            [self setUpKey:@"grade" withValue:@"9"];
+        } else if ([result isEqualToString:@"四年级"]) {
+            [self setUpKey:@"grade" withValue:@"7"];
+        } else if ([result isEqualToString:@"五年级"]) {
+            [self setUpKey:@"grade" withValue:@"8"];
+        } else if ([result isEqualToString:@"六年级"]) {
+            [self setUpKey:@"grade" withValue:@"9"];
+        } else if ([result isEqualToString:@"七年级"]) {
+            [self setUpKey:@"grade" withValue:@"7"];
+        } else if ([result isEqualToString:@"八年级"]) {
+            [self setUpKey:@"grade" withValue:@"8"];
+        } else if ([result isEqualToString:@"九年级"]) {
             [self setUpKey:@"grade" withValue:@"9"];
         } else {
             [self setUpKey:@"grade" withValue:@"10"];
@@ -677,11 +701,23 @@
         
         result = self.bookEditionArray[[self.customPicker selectedRowInComponent:0]];
         
-        if ([result isEqualToString:@"初一"]) {
+        if ([result isEqualToString:@"一年级"]) {
             [self setUpKey:@"grade" withValue:@"7"];
-        } else if ([result isEqualToString:@"初二"]) {
+        } else if ([result isEqualToString:@"二年级"]) {
             [self setUpKey:@"grade" withValue:@"8"];
-        } else if ([result isEqualToString:@"初三"]) {
+        } else if ([result isEqualToString:@"三年级"]) {
+            [self setUpKey:@"grade" withValue:@"9"];
+        } else if ([result isEqualToString:@"四年级"]) {
+            [self setUpKey:@"grade" withValue:@"7"];
+        } else if ([result isEqualToString:@"五年级"]) {
+            [self setUpKey:@"grade" withValue:@"8"];
+        } else if ([result isEqualToString:@"六年级"]) {
+            [self setUpKey:@"grade" withValue:@"9"];
+        } else if ([result isEqualToString:@"七年级"]) {
+            [self setUpKey:@"grade" withValue:@"7"];
+        } else if ([result isEqualToString:@"八年级"]) {
+            [self setUpKey:@"grade" withValue:@"8"];
+        } else if ([result isEqualToString:@"九年级"]) {
             [self setUpKey:@"grade" withValue:@"9"];
         } else {
             [self setUpKey:@"grade" withValue:@"10"];
