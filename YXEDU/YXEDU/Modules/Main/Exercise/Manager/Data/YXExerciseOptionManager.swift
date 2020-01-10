@@ -197,6 +197,10 @@ class YXExerciseOptionManager: NSObject {
                         meaning  = otherWordModel.meaning
                         imageUrl = otherWordModel.imageUrl
                     }
+                } else {
+                    let wordExerciseModel = wordArray.randomElement()
+                    meaning  = wordExerciseModel?.word?.meaning
+                    imageUrl = wordExerciseModel?.word?.imageUrl
                 }
             } else {
                 let wordExerciseModel = wordArray.randomElement()

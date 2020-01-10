@@ -212,7 +212,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     private func remindImage() {
-        guard let wordModel = exerciseModel.word, let imageUrl = wordModel.imageUrl else {
+        guard let wordModel = exerciseModel.word, let imageUrl = wordModel.imageUrl, !imageUrl.isEmpty else {
             self.show()
             return
         }
