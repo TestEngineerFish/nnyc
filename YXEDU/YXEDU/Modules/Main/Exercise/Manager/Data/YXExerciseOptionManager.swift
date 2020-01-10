@@ -298,7 +298,7 @@ class YXExerciseOptionManager: NSObject {
 
         // 从学习流程获取数据
         // 防止无限随机同一个对象
-        var tmpReviewWordArray = reviewWordArray
+        let tmpReviewWordArray = reviewWordArray
         for _ in 0..<reviewWordArray.count {
             let randomInt = Int.random(in: 0..<tmpReviewWordArray.count)
             let _wordExerciseModel = tmpReviewWordArray[randomInt]
@@ -315,7 +315,7 @@ class YXExerciseOptionManager: NSObject {
         // 从单元词书获取数据
         if let unitId = wordModel.unitId {
             let wordModelArray = YXWordBookDaoImpl().selectWordByUnitId(unitId: unitId)
-            var tmpWordModelArray = wordModelArray
+            let tmpWordModelArray = wordModelArray
             for _ in 0..<wordModelArray.count {
                 let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
                 let otherWordModel = tmpWordModelArray[randomInt]
@@ -330,7 +330,7 @@ class YXExerciseOptionManager: NSObject {
         // 从书中获取数据
         if let bookId = wordModel.bookId {
             let wordModelArray = YXWordBookDaoImpl().selectWordByBookId(bookId)
-            var tmpWordModelArray = wordModelArray
+            let tmpWordModelArray = wordModelArray
             for _ in 0..<wordModelArray.count {
                 let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
                 let otherWordModel = tmpWordModelArray[randomInt]
