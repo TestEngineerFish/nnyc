@@ -285,11 +285,7 @@ class YXShareViewController: YXViewController {
                 return
             }
             if model.state && model.coin > 0 {
-                let alertView = YXAlertView(type: .normal)
-                alertView.descriptionLabel.text = "恭喜获得\(model.coin)个松果币奖励"
-                alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
-                alertView.shouldOnlyShowOneButton = true
-                alertView.show()
+                YXToastView.share.showCoinView(model.coin)
                 self.goldImageView.isHidden = true
             }
         }) { (error) in
