@@ -143,6 +143,8 @@ struct YXAPI {
         static let rankedList     = "/api/v1/game/ranking"
         /// 解锁挑战
         static let unlock         = "/api/v1/game/undo"
+        /// 上期挑战是否向用户展示过接口
+        static let showPrevious   = "/api/v1/game/pre/show"
     }
 
     // MARK: - 分享

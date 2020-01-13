@@ -50,6 +50,9 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
             self.challengeModel = response.data
             self.tableView.reloadData()
+            if let version = self.challengeModel?.gameInfo?.gameLinedId {
+                self.checkShowResult(version)
+            }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")
         }
@@ -65,6 +68,36 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")
+        }
+    }
+
+    /// 是否向用户展示过上期排名
+    private func checkShowResult(_ version: Int) {
+        let request = YXChallengeRequest.showPrevious(version: version)
+        YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
+            if let data = response.data, data.state == 0 {
+                self.requestPreviousResult()
+            }
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error.message)")
+        }
+    }
+
+    /// 展示上期结果弹框
+    private func requestPreviousResult() {
+        let request = YXChallengeRequest.rankedList
+        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
+            guard let challengeModel = response.data, let userModel = challengeModel.userModel, userModel.ranking > 0 else {
+                return
+            }
+            let previousResultView = YXPreviousResultView()
+            previousResultView.bindData(userModel)
+            kWindow.addSubview(previousResultView)
+            previousResultView.snp.makeConstraints { (make) in
+                make.edges.equalToSuperview()
+            }
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error)")
         }
     }
 
