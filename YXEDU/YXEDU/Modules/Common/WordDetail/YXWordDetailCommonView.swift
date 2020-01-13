@@ -302,7 +302,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 cell.label.text = combineExample
             }
             
-            cell.pronunciation = example?.pronunciation
+            cell.pronunciation = example?.vocie
             
             return cell
             

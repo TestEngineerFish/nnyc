@@ -42,7 +42,7 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
         self.subTitleLabel?.attributedText = exerciseModel.word?.englishExampleAttributedString
         
         self.audioList.append(self.exerciseModel.word?.voice ?? "")
-        self.audioList.append(self.exerciseModel.word?.examplePronunciation ?? "")
+        self.audioList.append(self.exerciseModel.word?.examples?.first?.vocie ?? "")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
             self?.playAudio()

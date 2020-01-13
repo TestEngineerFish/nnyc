@@ -100,7 +100,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     override init(exerciseModel: YXWordExerciseModel) {
         super.init(exerciseModel: exerciseModel)
         // 如果没有例句,则跳过第一阶段
-        if !(exerciseModel.word?.example?.isNotEmpty ?? true) {
+        if !(exerciseModel.word?.examples?.first?.english?.isNotEmpty ?? true) {
             self.status = .playedExampleInFristStage
             self.newLearnDelegate?.playWordAndExampleFinished()
         }
@@ -272,7 +272,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 播放例句
     /// - Parameter block: 完成回调
     private func playExample() {
-        guard let exampleUrlStr = self.exerciseModel.word?.examplePronunciation, let url = URL(string: exampleUrlStr), !self.isViewPause else {
+        guard let exampleUrlStr = self.exerciseModel.word?.examples?.first?.vocie, let url = URL(string: exampleUrlStr), !self.isViewPause else {
             return
         }
         YXAVPlayerManager.share.playAudio(url) { [weak self] in

@@ -34,7 +34,7 @@ protocol YXBaseWordModel: Mappable {
     // 单词变形
     var deformations: [YXWordDeformationModel]? {set get}
     
-    // 例句
+    // 例句，词书词只有一条例句（做题），综合词有多条（搜索）
     var examples: [YXWordExampleModel]? {set get}
         
     // 固定搭配
@@ -160,22 +160,12 @@ extension YXBaseWordModel {
             return partOfSpeechAndMeanings?.first?.meaning
         }
     }
-    var example: String? {
-        return examples?.first?.english
-    }
+//    var example: String? {
+//        return examples?.first?.english
+//    }
     
     var chineseExample: String? {
         return examples?.first?.chinese
-    }
-    
-    var examplePronunciation: String? {
-        set {
-            examples?[0].pronunciation = newValue
-        }
-        
-        get {
-            return examples?.first?.pronunciation
-        }
     }
     
     var isPhrase: Bool {

@@ -95,9 +95,26 @@ struct YXWordPartOfSpeechAndMeaningModel: Mappable {
 struct YXWordExampleModel: Mappable {
     var english: String?
     var chinese: String?
-    var pronunciation: String?
+    var pronunciationUS: String?
+    var pronunciationUK: String?
     var imageUrl: String?
+    
+    // 例句读音，根据本地美式或者英式设置来获取
+    var vocie: String {
+        return (YXUserModel.default.didUseAmericanPronunciation ? pronunciationUS : pronunciationUK) ?? ""
+    }
 
+    var englishExampleAttributedString: NSAttributedString? {
+        var englishExampleAttributedString: NSMutableAttributedString?
+        guard let englishExample = english else { return englishExampleAttributedString }
+        let result = englishExample.formartTag()
+        englishExampleAttributedString = NSMutableAttributedString(string: result.1)
+        result.0.forEach { (range) in
+            englishExampleAttributedString?.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
+        }
+        return englishExampleAttributedString
+    }
+    
     init() {}
 
     init?(map: Map) {
@@ -107,7 +124,8 @@ struct YXWordExampleModel: Mappable {
     mutating func mapping(map: Map) {
         english <- map["en"]
         chinese <- map["cn"]
-        pronunciation <- map["voice"]
+        pronunciationUS <- map["voice_us"]
+        pronunciationUK <- map["voice_uk"]
         imageUrl <- map["image"]
     }
 }

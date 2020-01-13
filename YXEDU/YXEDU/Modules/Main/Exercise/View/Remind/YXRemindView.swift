@@ -203,7 +203,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
 
     private func remindExampleWithDigWord() {
-        guard let wordModel = exerciseModel.word, let example = wordModel.example else {
+        guard let wordModel = exerciseModel.word, let example = wordModel.examples?.first?.english else {
             self.show()
             return
         }
@@ -242,7 +242,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     private func remindExampleAudio() {
-        guard let wordModel = exerciseModel.word, let voiceUrl = wordModel.examplePronunciation else {
+        guard let wordModel = exerciseModel.word, let voiceUrl = wordModel.examples?.first?.vocie else {
             self.show()
             return
         }
