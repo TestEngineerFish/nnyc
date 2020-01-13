@@ -18,13 +18,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mha-yg-xUf">
-                        <rect key="frame" x="30" y="0.0" width="399" height="215"/>
+                        <rect key="frame" x="30" y="0.0" width="419" height="215"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAD-JR-5co">
-                        <rect key="frame" x="459" y="0.0" width="20" height="20"/>
+                        <rect key="frame" x="469" y="0.0" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="rpz-Ep-SpZ"/>
                             <constraint firstAttribute="height" constant="20" id="zih-Lq-A2g"/>
@@ -34,20 +34,37 @@
                             <action selector="playAudio:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="KYX-oi-R3f"/>
                         </connections>
                     </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NHK-UC-gVM" customClass="YXDesignableImageView" customModule="YXEDU" customModuleProvider="target">
+                        <rect key="frame" x="421" y="0.0" width="68" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="fIL-yv-3WM"/>
+                            <constraint firstAttribute="width" constant="68" id="oqo-Ih-7xF"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="Mha-yg-xUf" secondAttribute="trailing" constant="80" id="1Ie-zU-6Cl"/>
+                    <constraint firstAttribute="trailing" secondItem="Mha-yg-xUf" secondAttribute="trailing" constant="60" id="1Ie-zU-6Cl"/>
+                    <constraint firstAttribute="trailing" secondItem="NHK-UC-gVM" secondAttribute="trailing" constant="20" id="HIx-wg-cQ9"/>
                     <constraint firstAttribute="bottom" secondItem="Mha-yg-xUf" secondAttribute="bottom" constant="4" id="KcC-PR-Kyn"/>
                     <constraint firstItem="Mha-yg-xUf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="Oia-Df-VDD"/>
-                    <constraint firstAttribute="trailing" secondItem="bAD-JR-5co" secondAttribute="trailing" constant="30" id="hCI-ID-GVZ"/>
+                    <constraint firstItem="NHK-UC-gVM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gXX-ZR-nQe"/>
+                    <constraint firstAttribute="trailing" secondItem="bAD-JR-5co" secondAttribute="trailing" constant="20" id="hCI-ID-GVZ"/>
                     <constraint firstItem="Mha-yg-xUf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="muH-Pd-0Xp"/>
                     <constraint firstItem="bAD-JR-5co" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="oZ1-QJ-Rsi"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="exampleImageView" destination="NHK-UC-gVM" id="ndz-AQ-vQK"/>
                 <outlet property="label" destination="Mha-yg-xUf" id="qEv-jG-4yl"/>
+                <outlet property="labelDistance" destination="1Ie-zU-6Cl" id="ze0-aT-qlZ"/>
                 <outlet property="playAuoidButton" destination="bAD-JR-5co" id="llU-LG-zjW"/>
+                <outlet property="playAuoidButtonDistance" destination="hCI-ID-GVZ" id="TJp-tq-ia3"/>
             </connections>
             <point key="canvasLocation" x="274.63768115942031" y="211.94196428571428"/>
         </tableViewCell>

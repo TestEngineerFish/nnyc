@@ -120,7 +120,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             }
         }
         
-        if let imageUrl = word.imageUrl {
+        if let imageUrl = word.imageUrl, word?.isComplexWord != 1 {
             imageView.sd_setImage(with: URL(string: imageUrl), completed: nil)
         }
                 
@@ -268,8 +268,20 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailExampleCell", for: indexPath) as! YXWordDetailExampleCell
             let examples = section.values.first as? [YXWordExampleModel]
             let example = examples?[indexPath.row]
-            let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
             
+            if word?.isComplexWord == 1 {
+                cell.labelDistance.constant = 128
+                cell.playAuoidButtonDistance.constant = 98
+                cell.exampleImageView.isHidden = false
+                cell.exampleImageView.sd_setImage(with: URL(string: example?.imageUrl ?? ""))
+                
+            } else {
+                cell.labelDistance.constant = 60
+                cell.playAuoidButtonDistance.constant = 20
+                cell.exampleImageView.isHidden = true
+            }
+            
+            let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
             if let firstAddressSymbolIndex = combineExample.firstIndex(of: "@"), let lastAddressSymbolIndex = combineExample.lastIndex(of: "@") {
                 let startHighLightIndex = combineExample.index(firstAddressSymbolIndex, offsetBy: 1)
                 let endHighLightIndex = combineExample.index(lastAddressSymbolIndex, offsetBy: 1)
@@ -385,7 +397,11 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 string = combineExample
             }
             
-            let height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 110) + 4
+            var height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 80) + 4
+            if word?.isComplexWord == 1 {
+                height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 148) + 4
+            }
+            
             return height
 
         case SectionType.synonym.rawValue:
