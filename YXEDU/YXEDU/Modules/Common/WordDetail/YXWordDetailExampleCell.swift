@@ -13,7 +13,10 @@ class YXWordDetailExampleCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var playAuoidButton: UIButton!
-    
+    @IBOutlet weak var exampleImageView: UIImageView!
+    @IBOutlet weak var playAuoidButtonDistance: NSLayoutConstraint!
+    @IBOutlet weak var labelDistance: NSLayoutConstraint!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

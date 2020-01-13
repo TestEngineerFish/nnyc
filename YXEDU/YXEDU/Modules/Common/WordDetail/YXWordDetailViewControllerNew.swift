@@ -37,8 +37,9 @@ class YXWordDetailViewControllerNew: UIViewController {
         }
         
         let wordDetailRequest = YXWordBookRequest.wordDetail(wordId: wordId, isComplexWord: isComplexWord)
-        YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { (response) in
-            guard let word = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { [weak self] (response) in
+            guard let self = self, var word = response.data else { return }
+            word.isComplexWord = self.isComplexWord
             
             self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
             self.view.addSubview(self.wordDetailView)
