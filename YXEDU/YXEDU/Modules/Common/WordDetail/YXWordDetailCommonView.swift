@@ -378,9 +378,9 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         case SectionType.examples.rawValue:
             let examples = section.values.first as? [YXWordExampleModel]
             let example = examples?[indexPath.row]
-            let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
-            var string = ""
             
+            var string = ""
+            let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
             if let firstAddressSymbolIndex = combineExample.firstIndex(of: "@"), let lastAddressSymbolIndex = combineExample.lastIndex(of: "@") {
                 let startHighLightIndex = combineExample.index(firstAddressSymbolIndex, offsetBy: 1)
                 let endHighLightIndex = combineExample.index(lastAddressSymbolIndex, offsetBy: 1)
@@ -399,9 +399,10 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             
             var height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 80) + 4
             if word?.isComplexWord == 1 {
-                height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 148) + 4
+                height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 148) + 4 + 10
+                height = height > 60 ? height : 60
             }
-            
+                        
             return height
 
         case SectionType.synonym.rawValue:
