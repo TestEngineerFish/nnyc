@@ -109,18 +109,27 @@ class YXChallengeHeaderView: UIView {
         }
         self.myRankView.bindData(userModel)
         if challengeModel.rankedList.count > 0 {
-            myRankView.isHidden = false
             myRankView.snp.updateConstraints { (make) in
                 make.height.equalTo(AdaptSize(81))
             }
+            myRankView.isHidden = false
+//            myRankView.snp.remakeConstraints { (make) in
+//                make.bottom.equalTo(headerBackgroundView.snp.top).offset(AdaptSize(-11))
+//                make.centerX.equalToSuperview()
+//                make.width.equalToSuperview()
+//                make.height.equalTo(AdaptSize(81))
+//            }
         } else {
-            myRankView.isHidden = true
-            myRankView.snp.remakeConstraints { (make) in
-                make.bottom.equalTo(headerBackgroundView.snp.top).offset(AdaptSize(-11))
-                make.centerX.equalToSuperview()
-                make.width.equalToSuperview()
+            myRankView.snp.updateConstraints { (make) in
                 make.height.equalTo(AdaptSize(12))
             }
+            myRankView.isHidden = true
+//            myRankView.snp.remakeConstraints { (make) in
+//                make.bottom.equalTo(headerBackgroundView.snp.top).offset(AdaptSize(-11))
+//                make.centerX.equalToSuperview()
+//                make.width.equalToSuperview()
+//                make.height.equalTo(AdaptSize(12))
+//            }
         }
     }
 
