@@ -24,8 +24,8 @@ struct YXReviewResultModel: Mappable {
     var score: Int = 0
     var studyDay: Int = 0
     
-    /// 本计划完成状态
-    var planState: Bool = false
+    /// 完成状态
+    var state: Bool = false
     var words: [YXWordModel]?
     
     init?(map: Map) {
@@ -33,7 +33,7 @@ struct YXReviewResultModel: Mappable {
 
     mutating func mapping(map: Map) {
         processStatus <- map["count_status"]
-        planState <- map["plan_status"]
+        state <- map["plan_status"]
         type <- (map["learn_type"], EnumTransform<YXExerciseDataType>())
         planName <- map["learn_name"]
         allWordNum <- map["all_words_num"]

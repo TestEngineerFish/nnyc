@@ -87,7 +87,7 @@ extension YXExerciseViewController {
             if var model = resultModel {
                              
                 model.planId = self.planId ?? 0
-                if model.planState {
+                if model.state {
                     self.processReviewResult(model: model)
                 } else {
                     self.processReviewProgressResult(model: model)
