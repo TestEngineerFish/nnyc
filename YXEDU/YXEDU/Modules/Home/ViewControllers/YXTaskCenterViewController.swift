@@ -36,6 +36,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             self.taskCenterData = response.data
             self.reloadDailyData()
             
+            YXToastView.share.showCoinView(self.dailyDatas[(self.taskCenterData.today ?? 1) - 1].integral ?? 0)
+            
         }) { error in
             print("❌❌❌\(error)")
         }
@@ -271,11 +273,11 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 if indexPath.row == 6 {
                     cell.coinImageView.image = #imageLiteral(resourceName: "coins")
                     
-                    if cell.integralLabel.text != "--" {
-                        cell.integralLabel.countFromCurrent(to: Float(dailyData.integral ?? 0), duration: 1, anySymbol: "+")
+                    if cell.integralLabel.text == "--" {
+                        cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
                         
                     } else {
-                        cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
+                        cell.integralLabel.countFromCurrent(to: Float(dailyData.integral ?? 0), duration: 1, anySymbol: "+")
                     }
                     
                     cell.giftImageView.isHidden = false

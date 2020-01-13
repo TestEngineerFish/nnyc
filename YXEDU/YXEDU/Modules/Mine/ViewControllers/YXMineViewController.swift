@@ -26,7 +26,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func tapCoin(_ sender: UITapGestureRecognizer) {
-        YXAlertWebView.share.show(YXUserModel.default.coinExplainUrl ?? "")
+        self.performSegue(withIdentifier: "Coin", sender: self)
     }
     
     @IBAction func tapCalendar(_ sender: UITapGestureRecognizer) {

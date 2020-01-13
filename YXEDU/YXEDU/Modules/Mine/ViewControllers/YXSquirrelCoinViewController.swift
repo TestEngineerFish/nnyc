@@ -78,6 +78,13 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
         super.viewDidLoad()
         self.bindProperty()
         self.createSubviews()
+        
+        self.taskButton.addTarget(self, action: #selector(goToEarnCoin), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     private func bindProperty() {
@@ -149,6 +156,15 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
             make.center.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(34), height: AdaptSize(34)))
         }
+    }
+    
+    @objc
+    private func goToEarnCoin() {
+        self.navigationController?.popViewController(animated: false)
+        
+        guard let keyWindow = UIApplication.shared.delegate?.window, let tabbarViewController = keyWindow?.rootViewController as? UITabBarController, let navigationController = tabbarViewController.viewControllers?[0] as? UINavigationController, let homeViewController = navigationController.viewControllers[0] as? YXHomeViewController else { return }
+        tabbarViewController.selectedIndex = 0
+        homeViewController.performSegue(withIdentifier: "TaskCenter", sender: nil)
     }
 
     // MARK: ==== WKNavigationDelegate ====

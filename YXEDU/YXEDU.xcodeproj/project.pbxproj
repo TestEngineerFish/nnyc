@@ -2527,6 +2527,7 @@
 				77B0A59A23ACB4750093A181 /* YXSettingsViewController.swift */,
 				7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */,
 				77D2777823B37B6A00AA4BF2 /* YXBagdeListViewController.swift */,
+				2227629B23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift */,
 				EE5EFF9D23274FEA00655654 /* Information */,
 				EE5EFFC223274FEA00655654 /* FeedBack */,
 				EE5EFFBF23274FEA00655654 /* Reminder */,
@@ -2784,7 +2785,6 @@
 				77626BEF239DFE1100B9407A /* YXWordListViewController.swift */,
 				77626BF1239E1FE800B9407A /* YXEditWordListViewController.swift */,
 				77B7C6ED23A7254200149ACE /* YXTaskCenterViewController.swift */,
-				2227629B23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
