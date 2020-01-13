@@ -160,26 +160,9 @@ extension YXBaseWordModel {
             return partOfSpeechAndMeanings?.first?.meaning
         }
     }
-//    var example: String? {
-//        return examples?.first?.english
-//    }
-    
-    var chineseExample: String? {
-        return examples?.first?.chinese
-    }
+
     
     var isPhrase: Bool {
         return partOfSpeechAndMeanings?.first?.partOfSpeech == "phrase"
-    }
-    
-    var englishExampleAttributedString: NSAttributedString? {
-        var englishExampleAttributedString: NSMutableAttributedString?
-        guard let englishExample = examples?.first?.english else { return englishExampleAttributedString }
-        let result = englishExample.formartTag()
-        englishExampleAttributedString = NSMutableAttributedString(string: result.1)
-        result.0.forEach { (range) in
-            englishExampleAttributedString?.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
-        }
-        return englishExampleAttributedString
     }
 }

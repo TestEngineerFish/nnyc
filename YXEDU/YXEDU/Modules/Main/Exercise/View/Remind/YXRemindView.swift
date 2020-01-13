@@ -194,7 +194,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     private func remindExample() {
-        guard let wordModel = exerciseModel.word, let englishExample = wordModel.englishExampleAttributedString else {
+        guard let wordModel = exerciseModel.word, let englishExample = wordModel.examples?.first?.englishExampleAttributedString else {
             self.show()
             return
         }
@@ -263,7 +263,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     }
     
     private func remindExampleChinese() {
-        guard let wordModel = exerciseModel.word, let chineseExample = wordModel.chineseExample else {
+        guard let wordModel = exerciseModel.word, let chineseExample = wordModel.examples?.first?.chinese else {
             self.show()
             return
         }

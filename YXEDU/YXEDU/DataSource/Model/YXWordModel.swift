@@ -105,12 +105,11 @@ struct YXWordExampleModel: Mappable {
     }
 
     var englishExampleAttributedString: NSAttributedString? {
-        var englishExampleAttributedString: NSMutableAttributedString?
-        guard let englishExample = english else { return englishExampleAttributedString }
+        guard let englishExample = english else { return nil }
         let result = englishExample.formartTag()
-        englishExampleAttributedString = NSMutableAttributedString(string: result.1)
+        let englishExampleAttributedString = NSMutableAttributedString(string: result.1)
         result.0.forEach { (range) in
-            englishExampleAttributedString?.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
+            englishExampleAttributedString.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
         }
         return englishExampleAttributedString
     }

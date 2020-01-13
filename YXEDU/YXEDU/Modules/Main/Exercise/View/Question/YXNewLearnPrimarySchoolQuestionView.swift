@@ -53,7 +53,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
         self.titleLabel?.text            = wordModel.word
         self.subTitleLabel?.text         = (wordModel.partOfSpeech ?? "") + (wordModel.meaning ?? "")
-        self.chineseExampleLabel.text    = wordModel.chineseExample
+        self.chineseExampleLabel.text    = wordModel.examples?.first?.chinese
         self.exampleLabel.attributedText = {
 
             guard let example = wordModel.examples?.first?.english else {

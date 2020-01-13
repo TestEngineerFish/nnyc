@@ -39,7 +39,7 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
     }
     
     override func bindData() {
-        self.subTitleLabel?.attributedText = exerciseModel.word?.englishExampleAttributedString
+        self.subTitleLabel?.attributedText = exerciseModel.word?.examples?.first?.englishExampleAttributedString
         
         self.audioList.append(self.exerciseModel.word?.voice ?? "")
         self.audioList.append(self.exerciseModel.word?.examples?.first?.vocie ?? "")
