@@ -145,6 +145,7 @@ extension YXBaseWordModel {
         return YXUserModel.default.didUseAmericanPronunciation ? americanPronunciation : englishPronunciation
     }
     
+    
     var partOfSpeech: String? {
         return partOfSpeechAndMeanings?.first?.partOfSpeech
     }
@@ -161,8 +162,4 @@ extension YXBaseWordModel {
         }
     }
 
-    
-    var isPhrase: Bool {
-        return partOfSpeechAndMeanings?.first?.partOfSpeech == "phrase"
-    }
 }

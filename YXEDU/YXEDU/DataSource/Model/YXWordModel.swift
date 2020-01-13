@@ -80,6 +80,10 @@ struct YXWordPartOfSpeechAndMeaningModel: Mappable {
     var partOfSpeech: String?
     var meaning: String?
 
+    var isPhrase: Bool {
+        return partOfSpeech == "phrase"
+    }
+    
     init?(map: Map) {
         self.mapping(map: map)
     }
