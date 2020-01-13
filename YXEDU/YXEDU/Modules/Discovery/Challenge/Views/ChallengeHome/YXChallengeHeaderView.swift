@@ -113,23 +113,11 @@ class YXChallengeHeaderView: UIView {
                 make.height.equalTo(AdaptSize(81))
             }
             myRankView.isHidden = false
-//            myRankView.snp.remakeConstraints { (make) in
-//                make.bottom.equalTo(headerBackgroundView.snp.top).offset(AdaptSize(-11))
-//                make.centerX.equalToSuperview()
-//                make.width.equalToSuperview()
-//                make.height.equalTo(AdaptSize(81))
-//            }
         } else {
             myRankView.snp.updateConstraints { (make) in
                 make.height.equalTo(AdaptSize(12))
             }
             myRankView.isHidden = true
-//            myRankView.snp.remakeConstraints { (make) in
-//                make.bottom.equalTo(headerBackgroundView.snp.top).offset(AdaptSize(-11))
-//                make.centerX.equalToSuperview()
-//                make.width.equalToSuperview()
-//                make.height.equalTo(AdaptSize(12))
-//            }
         }
     }
 

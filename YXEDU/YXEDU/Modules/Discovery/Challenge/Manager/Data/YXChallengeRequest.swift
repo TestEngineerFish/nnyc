@@ -14,12 +14,13 @@ public enum YXChallengeRequest: YYBaseRequest {
     case playGame(gameId: Int)
     case report(version: Int, totalTime: Int, number: Int)
     case unlock
+    case showPrevious(version: Int)
 }
 
 extension YXChallengeRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .challengeModel, .playGame, .rankedList:
+        case .challengeModel, .playGame, .rankedList, .showPrevious:
             return .get
         case .report, .unlock:
             return .post
@@ -40,6 +41,8 @@ extension YXChallengeRequest {
             return YXAPI.Challenge.rankedList
         case .unlock:
             return YXAPI.Challenge.unlock
+        case .showPrevious:
+            return YXAPI.Challenge.showPrevious
         }
     }
 }
@@ -57,6 +60,8 @@ extension YXChallengeRequest {
             return ["game_id": 1, "flag" : "pre"]
         case .unlock:
             return ["game_id": 1]
+        case .showPrevious(let version):
+            return ["game_lined_id": version]
         }
     }
 }
