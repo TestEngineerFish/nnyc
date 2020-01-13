@@ -17,7 +17,6 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var integralLabel: YXDesignableLabel!
     @IBOutlet weak var dailyDataCollectionView: UICollectionView!
     @IBOutlet weak var punchButton: YXDesignableButton!
-    @IBOutlet weak var todayPunchLabel: UILabel!
     @IBOutlet weak var totalPunchLabel: UILabel!
     @IBOutlet weak var weekendPunchLabel: UILabel!
     @IBOutlet weak var taskTableView: UITableView!
@@ -96,7 +95,6 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         var dailyDatas = self.taskCenterData.dailyData ?? []
         
         var punchCount = 0
-        var todayIntegral = 0
         var didFindWitchDayIsToday = false
         for index in 0..<dailyDatas.count {
             
@@ -140,7 +138,6 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             if let today = self.taskCenterData.today, index == today - 1 {
                 didFindWitchDayIsToday = true
                 dailyDatas[index].dailyStatus = .today
-                todayIntegral = dailyDatas[index].integral ?? 0
                 
                 if dailyDatas[index].didPunchIn == 1 {
                     punchButton.setTitle("已签到", for: .normal)
@@ -164,7 +161,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         } else {
             self.integralLabel.countFromCurrent(to: Float(integral), duration: 1)
         }
-        self.todayPunchLabel.text = "\(todayIntegral)"
+
         self.totalPunchLabel.text = "\(punchCount)"
         self.weekendPunchLabel.text = "\(exIntegral)"
 
@@ -215,42 +212,81 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             
             switch dailyData.dailyStatus {
             case .yesterday:
+                cell.containerView.backgroundColor = UIColor.hex(0xF3F3F3)
+                cell.containerView.borderWidth = 0
+                cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
+                cell.integralLabel.textColor = UIColor.hex(0xD0D0D0)
+                cell.weekLabel.textColor = UIColor.hex(0xCDB291)
+
                 if dailyData.didPunchIn == 1 {
-                    cell.integralStatusLabel.text = "+\(dailyData.integral ?? 0)"
+                    cell.noCoinView.isHidden = true
+                    cell.coinImageView.isHidden = false
+                    cell.coinImageView.image = #imageLiteral(resourceName: "coinGot")
 
                 } else {
-                    cell.integralStatusLabel.text = "未获得"
-                    cell.integralStatusLabel.font = UIFont.systemFont(ofSize: 10)
+                    cell.noCoinView.isHidden = false
+                    cell.coinImageView.isHidden = true
                 }
                 
-                cell.integralStatusLabel.textColor = UIColor.hex(0xD98F36)
-                cell.circleView.backgroundColor = UIColor.hex(0xFCD096)
-                cell.circleView.layer.removeShadow()
-                cell.indicatorImageView.isHidden = true
+                cell.giftImageView.isHidden = true
                 break
                 
             case .today:
-                cell.integralStatusLabel.text = "今天"
-                cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
-                cell.circleView.backgroundColor = .white
-                cell.circleView.layer.setDefaultShadow()
-                cell.circleView.layer.cornerRadius = 16
-                cell.circleView.layer.shadowColor = UIColor.hex(0xFF5400).cgColor
-                cell.circleView.layer.shadowRadius  = 4
-                cell.indicatorImageView.isHidden = false
+                cell.weekLabel.text = "今天"
+
+                cell.containerView.backgroundColor = UIColor.hex(0xFFF7EC)
+                cell.containerView.borderWidth = 1
+                cell.containerView.borderColor = UIColor.hex(0xFFA913)
+                cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
+                cell.integralLabel.textColor = UIColor.hex(0xFF8000)
+                cell.weekLabel.textColor = UIColor.hex(0xFF8000)
+                cell.noCoinView.isHidden = true
+                cell.coinImageView.isHidden = false
+
+                if dailyData.didPunchIn == 1 {
+                    cell.coinImageView.image = #imageLiteral(resourceName: "coinGot")
+                    cell.giftImageView.isHidden = true
+
+                } else {
+                    if indexPath.row == 6 {
+                        cell.coinImageView.image = #imageLiteral(resourceName: "coins")
+                        cell.giftImageView.isHidden = false
+
+                    } else {
+                        cell.coinImageView.image = #imageLiteral(resourceName: "coin")
+                        cell.giftImageView.isHidden = true
+                    }
+                }
+                
                 break
                 
             case .tomorrow:
-                if indexPath.row == 6, cell.integralStatusLabel.text != "--" {
-                    cell.integralStatusLabel.countFromCurrent(to: Float(dailyData.integral ?? 0), duration: 1, anySymbol: "+")
+                cell.containerView.backgroundColor = UIColor.hex(0xFFF7EC)
+                cell.containerView.borderWidth = 0
+                cell.integralLabel.textColor = UIColor.hex(0xFF8000)
+                cell.weekLabel.textColor = UIColor.hex(0xCDB291)
+                cell.noCoinView.isHidden = true
+                cell.coinImageView.isHidden = false
+                
+                if indexPath.row == 6 {
+                    cell.coinImageView.image = #imageLiteral(resourceName: "coins")
+                    
+                    if cell.integralLabel.text != "--" {
+                        cell.integralLabel.countFromCurrent(to: Float(dailyData.integral ?? 0), duration: 1, anySymbol: "+")
+                        
+                    } else {
+                        cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
+                    }
+                    
+                    cell.giftImageView.isHidden = false
 
                 } else {
-                    cell.integralStatusLabel.text = "+\(dailyData.integral ?? 0)"
+                    cell.coinImageView.image = #imageLiteral(resourceName: "coin")
+                    cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
+                    
+                    cell.giftImageView.isHidden = true
                 }
-                cell.integralStatusLabel.textColor = UIColor.hex(0xFF9B00)
-                cell.circleView.backgroundColor = .white
-                cell.circleView.layer.removeShadow()
-                cell.indicatorImageView.isHidden = true
+                
                 break
             }
             
@@ -262,44 +298,58 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             let task = taskList.list?[indexPath.row]
             
             cell.titleLabel.text = task?.name
-            cell.integral = task?.integral ?? 0
-            cell.taskColor = YXTaskCardType(rawValue: task?.taskColor  ?? 0) ?? .cyanBlueCard
+            cell.rewardLabel.text = "+\(task?.integral ?? 0)"
+            cell.taskType = YXTaskCardType(rawValue: task?.taskType  ?? 0) ?? .smartReview
             cell.cardStatus = YXTaskCardStatus(rawValue: task?.state ?? 0) ?? .incomplete
             cell.didRepeat = taskList.typeName == "每日任务" ? true : false
             cell.adjustCell()
 
             cell.todoClosure = {
-                switch task?.actionType {
-                case 0:
-                    self.navigationController?.popViewController(animated: true)
+                switch cell.cardStatus {
+                case .incomplete:
+                    switch task?.actionType {
+                    case 0:
+                        self.navigationController?.popViewController(animated: true)
+                        break
+                        
+                    case 1:
+                        self.tabBarController?.selectedIndex = 2
+                        self.navigationController?.popViewController(animated: true)
+                        break
+
+                    case 2:
+                        self.navigationController?.popViewController(animated: true)
+                        break
+                        
+                    default:
+                        break
+                    }
                     break
                     
-                case 1:
-                    self.tabBarController?.selectedIndex = 2
-                    self.navigationController?.popViewController(animated: true)
-                    break
+                case .completed:
+                    let request = YXTaskCenterRequest.getIntegral(taskId: task?.id ?? 0)
+                    YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+                        
+                        if cell.didRepeat {
+                            self.taskLists[collectionView.tag].list?[indexPath.row].state = 2
+                            self.taskTableView.reloadData()
 
-                case 2:
-                    self.navigationController?.popViewController(animated: true)
+                        } else {
+                            self.taskLists[collectionView.tag].list?.remove(at: indexPath.row)
+                            self.taskTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
+                        }
+                        
+                        if let currentIntegral = Int(self.integralLabel.text ?? "0") {
+                            self.integralLabel.countFromCurrent(to: Float(currentIntegral + (task?.integral ?? 0)), duration: 1)
+                        }
+
+                    }) { error in
+                        print("❌❌❌\(error)")
+                    }
                     break
                     
                 default:
                     break
-                }
-            }
-
-            cell.getRewardClosure = {
-                let request = YXTaskCenterRequest.getIntegral(taskId: task?.id ?? 0)
-                YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                    self.taskLists[collectionView.tag].list?[indexPath.row].state = 2
-                    self.taskTableView.reloadData()
-
-                    if let currentIntegral = Int(self.integralLabel.text ?? "0") {
-                        self.integralLabel.countFromCurrent(to: Float(currentIntegral + (task?.integral ?? 0)), duration: 1)
-                    }
-
-                }) { error in
-                    print("❌❌❌\(error)")
                 }
             }
             
@@ -309,11 +359,11 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView.tag == 999 {
-            let width  = (screenWidth - 40) / 7
-            return CGSize(width: width, height: 72)
+            let width  = (screenWidth - 60) / 7
+            return CGSize(width: width, height: 90)
 
         } else {
-            return CGSize(width: 174, height: 138)
+            return CGSize(width: 170, height: 110)
         }
     }
 }

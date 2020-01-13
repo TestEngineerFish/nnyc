@@ -352,7 +352,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             return CGSize(width: (screenWidth - 60) / 3, height: 88)
             
         } else {
-            return CGSize(width: (screenWidth - 40 - 12) / 2, height: 66)
+            return CGSize(width: (screenWidth - 40 - 12) / 2, height: 60)
         }
     }
 }
