@@ -20,6 +20,7 @@
     [aCoder encodeObject:self.pf forKey:@"pf"];
     [aCoder encodeObject:self.code forKey:@"code"];
     [aCoder encodeObject:self.openid forKey:@"openid"];
+    [aCoder encodeObject:self.unionid forKey:@"unionid"];
     [aCoder encodeObject:self.mobile forKey:@"mobile"];
 }
 
@@ -28,6 +29,7 @@
         self.pf = [aDecoder decodeObjectForKey:@"pf"];
         self.code = [aDecoder decodeObjectForKey:@"code"];
         self.openid = [aDecoder decodeObjectForKey:@"openid"];
+        self.unionid = [aDecoder decodeObjectForKey:@"unionid"];
         self.mobile = [aDecoder decodeObjectForKey:@"mobile"];
     }
     return self;

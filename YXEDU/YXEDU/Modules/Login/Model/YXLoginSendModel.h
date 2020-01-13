@@ -12,6 +12,7 @@
 @property (nonatomic, strong) NSString *pf;
 @property (nonatomic, strong) NSString *code;
 @property (nonatomic, strong) NSString *openid;
+@property (nonatomic, strong) NSString *unionid;
 @property (nonatomic, strong) NSString *mobile;
 @property (nonatomic, copy) NSString *type;
 @end
