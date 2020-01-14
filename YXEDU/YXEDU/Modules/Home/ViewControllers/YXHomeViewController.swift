@@ -31,7 +31,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXUtils.showHUD(kWindow, title: "数据请求中，请稍后再试～")
             return
         }
+        sender.isEnabled = false
         YXWordBookResourceManager.shared.contrastBookData(by: homeModel.bookId, { [weak self] (isSuccess) in
+            sender.isEnabled = true
             guard let self = self else { return }
             if isSuccess {
                 if self.countOfWaitForStudyWords.text == "0" {
@@ -94,9 +96,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.startStudyButton.isEnabled   = true
         tabBarController?.tabBar.isHidden = false
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        
         loadData()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
     }

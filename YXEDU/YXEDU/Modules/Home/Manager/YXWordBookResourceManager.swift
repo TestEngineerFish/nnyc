@@ -45,34 +45,32 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             }
         }) { error in
             print("❌❌❌\(error)")
+            closure?(false)
         }
     }
 
     /// 检测本地词书是否需要更新
     private func checkLocalBookStatus(with wordBookDownloadModelList: [YXWordBookDownloadModel], showToast: Bool = false) {
-        var isShowWarning = false
+        var updateAmount = 0
         for wordBookDownloadModel in wordBookDownloadModelList {
             guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash, let downloadUrl = wordBookDownloadModel.downloadUrl, downloadUrl.isEmpty == false else { continue }
             let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId)
             // 本地不存在，或者本地Hash值与后台不一致，则更新
             if (wordBook == nil || wordBook?.bookHash != .some(bookHash)) {
-                /// 需要更新
-                if !isShowWarning {
-                    YXUtils.showProgress(kWindow, info: "正在下载词书，请稍后再试～")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        YXUtils.hidenProgress(kWindow)
-                    }
-                }
-                isShowWarning = true
-                print("更新啦")
+                updateAmount += 1
                 DispatchQueue.global().async {
                     self.downloadSingleWordBook(with: bookId, newHash: bookHash)
                 }
             }
         }
-        
-        // 如果没有需要更新的，则执行闭包函数
-        if !isShowWarning && showToast {
+        /// 需要更新
+        if updateAmount > 0 && showToast {
+            DispatchQueue.main.async {
+                YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
+            }
+            self.closure?(false)
+        } else if updateAmount == 0 {
+            // 如果没有需要更新的，则执行闭包函数
             self.closure?(true)
         }
     }
@@ -96,16 +94,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     private func saveBook(with bookModel: YXWordBookModel) {
         guard let bookId = bookModel.bookId else { return }
         /// 删除旧数据
-        let result = YXWordBookDaoImpl().deleteBook(bookId: bookId)
-        if result {
-            print("删除词书成功🙆‍♂️")
-        }
-        let isSuccess = YXWordBookDaoImpl().insertBook(book: bookModel)
-        if isSuccess {
-            print("====更新词书成功🙆‍♂️===")
-        } else {
-            print("====更新词书失败🙆‍♂️===")
-        }
+        YXWordBookDaoImpl().deleteBook(bookId: bookId)
+        YXWordBookDaoImpl().insertBook(book: bookModel)
     }
 
     /// 保存、更新单词
@@ -114,10 +104,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             return
         }
         /// 删除旧数据
-         let result = YXWordBookDaoImpl().deleteWord(bookId: bookId)
-         if result {
-             print("删除词书单词成功🙆")
-         }
+         YXWordBookDaoImpl().deleteWord(bookId: bookId)
         /// 赋值自定义数据
         for unitModel in unitsList {
             guard let wordsList = unitModel.words else {
@@ -130,12 +117,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 wordModel.unitId    = unitModel.unitId
                 wordModel.unitName  = unitModel.unitName
                 wordModel.isExtensionUnit = unitModel.isExtensionUnit
-                let isSuccess = YXWordBookDaoImpl().insertWord(word: wordModel)
-                if isSuccess {
-                    print("====更新单词成功🙆===")
-                } else {
-                    print("====更新单词失败🙆===")
-                }
+                YXWordBookDaoImpl().insertWord(word: wordModel)
             }
         }
     }
