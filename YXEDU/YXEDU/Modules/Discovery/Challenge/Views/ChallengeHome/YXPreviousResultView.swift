@@ -204,7 +204,7 @@ class YXPreviousResultView: UIView {
         }
         rankLabel.text = "\(userModel.ranking)"
         let questionValue = String(format: "%ld", userModel.questionCount)
-        let timeValue     = String(format: "%0.2f", userModel.time)
+        let timeValue     = String(format: "%0.2f", userModel.time / 1000)
         let coinValue     = String(format: "%ld", userModel.bonus)
         let questionMAttr = NSMutableAttributedString(string: questionValue + "题", attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11), NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12))])
         questionMAttr.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(24))], range: NSRange(location: 0, length: questionValue.count))

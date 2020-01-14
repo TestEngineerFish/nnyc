@@ -89,7 +89,9 @@ struct YXChallengeUserModel: Mappable {
     // ---- 当前用户独有字段 ----
     var gameStatus: YXChallengeStatusType      = .lock
     var challengeResult: YXChallengeResultType = .unanswered
-    var myCoins: Int = 0
+    var myCoins: Int             = 0
+    var isShowed: Bool           = true
+    var previousRankVersion: Int = 0
 
 
     init?(map: Map) { }
@@ -104,5 +106,7 @@ struct YXChallengeUserModel: Mappable {
         challengeResult <- map["state"]
         gameStatus      <- map["status"]
         myCoins         <- map["credits"]
+        isShowed        <- map["last_show_code"]
+        previousRankVersion <- map["last_game_lined_id"]
     }
 }

@@ -48,10 +48,13 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func requestChallengeData() {
         let request = YXChallengeRequest.challengeModel
         YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
-            self.challengeModel = response.data
+            guard let _challengeModel = response.data, let userModel = _challengeModel.userModel else {
+                return
+            }
+            self.challengeModel = _challengeModel
             self.tableView.reloadData()
-            if let version = self.challengeModel?.gameInfo?.gameLinedId {
-                self.checkShowResult(version)
+            if userModel.isShowed {
+                self.requestPreviousResult()
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")
@@ -71,13 +74,11 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         }
     }
 
-    /// 是否向用户展示过上期排名
-    private func checkShowResult(_ version: Int) {
+    /// 上报已查看上期排名
+    private func requestReportShowPreviousResult(_ version: Int) {
         let request = YXChallengeRequest.showPrevious(version: version)
         YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
-            if let data = response.data, data.state == 0 {
-                self.requestPreviousResult()
-            }
+            print("获得上期排行积分")
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")
         }
@@ -96,6 +97,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             previousResultView.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
             }
+            self.requestReportShowPreviousResult(userModel.previousRankVersion)
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
         }
