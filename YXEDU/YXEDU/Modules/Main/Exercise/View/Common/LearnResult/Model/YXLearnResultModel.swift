@@ -14,16 +14,32 @@ struct YXLearnResultModel: Mappable {
     }
     var countStatus: CountStatusType?
     var unitList: [YXLearnMapUnitModel]?
-    var allWordCount: Int     = 0
-    var studyDay: Int         = 0
-    var learnWordsNumber: Int = 0
     
-
+    /// 所学单词数
+    var allWordCount: Int     = 0
+    
+    /// 巩固的单词数
+    var knowWordNum: Int      = 0
+//    var remainWordNum: Int    = 0
+    var studyDay: Int         = 0
+    
+    ///新学或新掌握的
+    var learnWordsNum: Int = 0
+    var unitName: String?
+    var score: Int            = 0
+    var status: Bool           = false
+    
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
         countStatus      <- map["count_status"]
+        
+        status           <- map["status"]
+        unitName         <- map["unit_name"]
         allWordCount     <- map["all_words_num"]
+        learnWordsNum <- map["learn_words_num"]
+        knowWordNum      <- map["know_words_num"]
+//        remainWordNum    <- map["remain_words_num"]
         unitList         <- map["list"]
         studyDay         <- map["study_day"]
     }

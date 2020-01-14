@@ -11,14 +11,15 @@ import UIKit
 class YXExerciseResultView: YXView {
 
     var processEvent: (() -> ())?
-    var model: YXReviewResultModel?
+    var model: YXExerciseResultDisplayModel!
     
-    var bgView = UIView()
+    var contentView = UIView()
     
     var imageView = UIImageView()
     var titleLabel = UILabel()
-    var starView = YXReviewResultStarView()
+    var subTitleLabel = UILabel()
     
+    var starView = YXReviewResultStarView()
     var progressView = YXReviewProgressView(type: .iKnow, cornerRadius: AS(4))
 
     var tipsView = YXReviewResultTipsListView()
@@ -29,7 +30,7 @@ class YXExerciseResultView: YXView {
         operateButton.removeTarget(self, action: #selector(clickOperateButton), for: .touchUpInside)
     }
     
-    init(model: YXReviewResultModel?) {
+    init(model: YXExerciseResultDisplayModel) {
         super.init(frame: .zero)
         self.model = model
         self.createSubviews()
@@ -42,18 +43,19 @@ class YXExerciseResultView: YXView {
     }
         
     override func createSubviews() {
-        self.addSubview(bgView)
-        bgView.addSubview(imageView)
-        bgView.addSubview(titleLabel)
-        bgView.addSubview(starView)
-        bgView.addSubview(progressView)
-        bgView.addSubview(tipsView)
-//        bgView.addSubview(tableView)
-        bgView.addSubview(operateButton)
+        self.addSubview(contentView)
+        contentView.addSubview(imageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(subTitleLabel)
+        contentView.addSubview(starView)
+        contentView.addSubview(progressView)
+        contentView.addSubview(tipsView)
+        contentView.addSubview(operateButton)
     }
     
     override func bindProperty() {
-        bgView.layer.setDefaultShadow()
+        contentView.backgroundColor = UIColor.white
+        contentView.layer.setDefaultShadow()
         
         titleLabel.font = UIFont.regularFont(ofSize: AS(17))
         titleLabel.textAlignment = .center
@@ -74,24 +76,18 @@ class YXExerciseResultView: YXView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        bgView.snp.remakeConstraints { (make) in
-            make.top.equalTo(AS(68 + kSafeBottomMargin))
+        contentView.snp.remakeConstraints { (make) in
+            make.top.equalToSuperview()
             make.left.equalTo(AS(21))
             make.right.equalTo(AS(-21))
             make.height.equalTo(AS(406))
         }
         
         imageView.snp.remakeConstraints { (make) in
-            
+            make.top.equalTo(AS(24))
             make.centerX.equalToSuperview()
             make.width.equalTo(AS(233))
-            if model?.type == .base {
-                make.top.equalTo(AS(24))
-                make.height.equalTo(AS(109))
-            } else {
-                make.top.equalTo(AS(-8))
-                make.height.equalTo(AS(144))
-            }
+            make.height.equalTo(AS(109))
         }
         
         starView.snp.remakeConstraints { (make) in
@@ -101,26 +97,41 @@ class YXExerciseResultView: YXView {
             make.height.equalTo(AS(45))
         }
         
-        let titleHeight = titleLabel.text?.textHeight(font: titleLabel.font, width: screenWidth - AS(40)) ?? 0
         titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(AS(11))
             make.left.equalTo(AS(20))
             make.right.equalTo(AS(-20))
-            make.height.equalTo(titleHeight)
+            make.height.equalTo(titleHeight())
         }
         
-        progressView.snp.remakeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(AS(11))
-            make.left.right.equalTo(imageView)
-            make.height.equalTo(AS(8))
+        if isHiddenSubTitleLabel {
+            progressView.snp.remakeConstraints { (make) in
+                make.top.equalTo(titleLabel.snp.bottom).offset(AS(11))
+                make.left.right.equalTo(imageView)
+                make.height.equalTo(AS(8))
+            }
+            
+            let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
+            tipsView.snp.remakeConstraints { (make) in
+                make.top.equalTo(progressView.snp.bottom).offset(AS(28))
+                make.left.right.equalToSuperview()
+                make.height.equalTo(tipsHeight)
+            }
+        } else {
+            subTitleLabel.snp.remakeConstraints { (make) in
+                make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
+                make.left.right.equalToSuperview()
+                make.height.equalTo(AS(20))
+            }
+            
+            let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
+            tipsView.snp.remakeConstraints { (make) in
+                make.top.equalTo(subTitleLabel.snp.bottom).offset(AS(28))
+                make.left.right.equalToSuperview()
+                make.height.equalTo(tipsHeight)
+            }
         }
-        
-        let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
-        tipsView.snp.remakeConstraints { (make) in
-            make.top.equalTo(progressView.snp.bottom).offset(AS(28))
-            make.left.right.equalToSuperview()
-            make.height.equalTo(tipsHeight)
-        }
+
                 
         operateButton.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -135,19 +146,18 @@ class YXExerciseResultView: YXView {
     override func bindData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
             guard let self = self else { return }
-            let score = CGFloat(self.model?.score ?? 0)
+            let score = CGFloat(self.model.score)
             self.progressView.progress = score / 100.0
         }
-        
-        self.setTitleValue()
+                
         self.setImageValue()
+        self.setTitleValue()
+        self.setSubTitleValue()
         self.setShareButtonValue()
         
-
-        starView.isHidden = isHiddenTipsLabel
                 
-        tipsView.textAlignment = (model?.words?.count ?? 0) > 0 ? .left : .center
-//        tipsView.dataSource = self.createDataSource()
+        tipsView.textAlignment = (model.words?.count ?? 0) > 0 ? .left : .center
+        tipsView.dataSource = self.createDataSource()
 
     }
     
@@ -164,31 +174,61 @@ class YXExerciseResultView: YXView {
 
     
     private func setTitleValue() {
-        if model?.state ?? false {
+        if model.state {
             titleLabel.attributedText = attrString()
         } else {
-            if model?.type == .aiReview {
+            if model.type == .aiReview {
                 titleLabel.text = "恭喜完成智能复习"
-            } else if model?.type == .planListenReview {
-                titleLabel.text = "恭喜完成\(model?.planName ?? "")的听力"
-            } else if model?.type == .planReview {
-                titleLabel.text = "恭喜完成\(model?.planName ?? "")的复习"
-            } else if model?.type == .wrong {
+            } else if model.type == .planListenReview {
+                titleLabel.text = "恭喜完成\(model.title ?? "")的听力"
+            } else if model.type == .planReview {
+                titleLabel.text = "恭喜完成\(model.title ?? "")的复习"
+            } else if model.type == .wrong {
                 titleLabel.text = "恭喜完成抽查复习"
             }
         }
 
     }
     
+    private func setSubTitleValue() {
+        
+        if model.state {// 学完
+            if model.type == .base {
+                if model.score == 1 {
+                    subTitleLabel.text = " 有些单词还掌握的不太好呢\n再练习一下吧~"
+                } else if model.score == 2 {
+                    subTitleLabel.text = " 学得不错，有时间可以再回头巩固一下哦！"
+                } else if model.score == 3 {
+                    subTitleLabel.text = " 您可以进入下一个单元进行学习哦！"
+                }
+            } else if model.type != .aiReview {
+                if model.score == 0 || model.score == 1 {
+                    subTitleLabel.text = " 还有些词需要多多练习才行哦！"
+                } else if model.score == 2 {
+                    subTitleLabel.text = " 再巩固一下，向3星冲刺哦！"
+                } else if model.score == 3 {
+                    subTitleLabel.text = " 太棒了，获得了3星呢！"
+                }
+            }
+            
+        } else {
+            if model.type == .base {
+                subTitleLabel.text = " 学得不错，继续学习就可以推进这个单元的进度哦~"
+            }
+        }
+        
+        subTitleLabel.isHidden = subTitleLabel.text?.isEmpty ?? true
+    }
+    
     private func setImageValue() {
-        if model?.state ?? false {
+        if model.state {
             imageView.image = UIImage(named: "review_learning_progress")
         } else {
-            if model?.type == .base {
-                imageView.image = UIImage(named: "learnResult\(model?.score ?? 0)")
-            } else if model?.type == .wrong {
+            if model.type == .base {
+                imageView.image = UIImage(named: "learnResult\(model.score)")
+            } else if model.type == .wrong {
                 imageView.image = UIImage(named: "review_wrong_finish_result")
-            } else if model?.type == .planListenReview {
+            } else if model.type == .planListenReview {
                 imageView.image = UIImage(named: "review_listen_finish_result")
             } else {// 计划或者智能
                 imageView.image = UIImage(named: "review_finish_result")
@@ -198,14 +238,14 @@ class YXExerciseResultView: YXView {
     
     private func setShareButtonValue() {
                 
-        if model?.state ?? false {
-            if model?.type == .planListenReview {
+        if model.state {
+            if model.type == .planListenReview {
                 operateButton.setTitle("继续听写", for: .normal)
-            } else if model?.type == .planReview {
+            } else if model.type == .planReview {
                 operateButton.setTitle("继续复习", for: .normal)
             }
         } else {
-            if model?.type == .wrong {
+            if model.type == .wrong {
                 operateButton.setTitle("完成", for: .normal)
             } else {
                 operateButton.setTitle("打卡分享", for: .normal)
@@ -215,42 +255,41 @@ class YXExerciseResultView: YXView {
     }
     
     
-    
-
-    
-    private func createDataSource() -> [NSAttributedString] {
-        var attrs: [NSAttributedString] = []
-        
-        if let num = model?.allWordNum, num > 0 {
-            let length = "\(num)".count
-            attrs.append(attrString(subTitle(num), 3, length))
+    private func createDataSource() -> [(String, Int)] {
+        var ds: [(String, Int)] = []
+        if model.newStudyWordNum > 0 {
+            ds.append(("新学的单词", model.newStudyWordNum))
         }
-        if let num = model?.knowWordNum, num > 0 {
-            let length = "\(num)".count
-            attrs.append(attrString("\(num)个单词掌握的更好了", 0, length))
+        if model.reviewWordNum > 0 {
+            ds.append(("巩固的单词", model.reviewWordNum))
         }
-        if let num = model?.remainWordNum, num > 0 {
-            let length = "\(num)".count
-            attrs.append(attrString("该计划下剩余\(model?.remainWordNum ?? 0)个单词待复习", 6, length))
+        if model.knowWordNum > 0 {
+            ds.append(("掌握的更好的单词", model.knowWordNum))
         }
-        
-        return attrs
+        if model.remainWordNum > 0 {
+            ds.append(("剩余待复习的单词", model.remainWordNum))
+        }
+        if let num = model.words?.count, num > 0 {
+            ds.append(("需要加强的单词", num))
+        }
+        return ds
     }
+    
     
     
     func attrString() -> NSAttributedString {
         var typeName = ""
-        if model?.type == .base {
+        if model.type == .base {
             typeName = "已学"
-        } else if model?.type == .planListenReview {
+        } else if model.type == .planListenReview {
             typeName = "听写完成"
         } else {
             typeName = "完成"
         }
         
-        let score = model?.score ?? 0
+        let score = model.score
         
-        let attrString = NSMutableAttributedString(string: "\(model?.planName ?? "")\(typeName) \(score)%")
+        let attrString = NSMutableAttributedString(string: "\(model.title ?? "")\(typeName) \(score)%")
         let start = attrString.length - "\(score)%".count
         
         let all: [NSAttributedString.Key : Any] = [.font: UIFont.mediumFont(ofSize: AS(17)),.foregroundColor: UIColor.black1]
@@ -275,17 +314,56 @@ class YXExerciseResultView: YXView {
         return attrString
     }
     
-    private func subTitle(_ num: Int) -> String {
-        if model?.type == .planListenReview {
-            return "听写了\(num)个单词"
-        }
-        return "巩固了\(num)个单词"
-    }
+//    private func subTitle() -> String {
+//        if model.type == .planListenReview {
+//            return "听写的单词"
+//        }
+//        return "巩固的单词"
+//    }
 
     
-    private var isHiddenTipsLabel: Bool {
-        return (model?.state == false) ||  (model?.type == .wrong)
+    private var isHiddenSubTitleLabel: Bool {
+        return (model.state == false) ||  (model.type == .wrong)
     }
+    
+    
+    private func titleHeight() -> CGFloat {
+        let font = UIFont.regularFont(ofSize: AS(17))
+        let titleWidth = screenWidth - AS(40)
+        
+        if let text = titleLabel.text {
+            return text.textHeight(font: font, width: titleWidth)
+        }
+        
+        if let text = titleLabel.attributedText?.string {
+            return text.textHeight(font: font, width: titleWidth)
+        }
+        return 0
+    }
+    
+    
+    /// 高度
+    private func viewHeight() -> CGFloat {
+        var allHeight: CGFloat = 0
+        allHeight += AS(24 + 109 + 11)
+        allHeight += titleHeight()
+                
+        if isHiddenSubTitleLabel == false {
+            allHeight += AS(5 + 17)
+        }
+        
+        if model.state {
+            allHeight += AS(6 + 8)
+        }
+        
+        let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
+        allHeight += tipsHeight
+        
+        allHeight += AS(25 + 42 + 25)
+        
+        return allHeight
+    }
+    
 }
 
 
@@ -321,7 +399,7 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
     
     override func bindProperty() {
         self.tableView.backgroundColor = UIColor.clear
-        self.tableView.separatorColor = UIColor.clear
+        self.tableView.separatorColor = UIColor.black4.withAlphaComponent(0.5)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "UITableViewCell")
@@ -376,7 +454,7 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
 //            make.width.equalTo(maxWidth)
 //            make.height.equalTo(AS(20))
 //        }
-//        
+//
         return cell
     }
     

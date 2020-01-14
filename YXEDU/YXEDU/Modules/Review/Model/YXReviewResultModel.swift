@@ -45,3 +45,100 @@ struct YXReviewResultModel: Mappable {
     }
     
 }
+
+
+
+struct YXExerciseResultDisplayModel {
+    /// 学习类型
+    var type: YXExerciseDataType = .base
+    
+    /// 完成状态
+    var state: Bool = false
+    
+    var id: Int = 0
+    var title: String?
+    
+    /// 所有的单词
+    var allWordNum: Int = 0
+        
+    /// 新学的单词
+    var newStudyWordNum: Int = 0
+    
+    /// 巩固的单词
+    var reviewWordNum: Int = 0
+    
+    /// 掌握的单词（更好）
+    var knowWordNum: Int = 0
+
+    /// 剩余的单词
+    var remainWordNum: Int = 0
+        
+    var score: Int = 0
+    var studyDay: Int = 0
+    
+    
+    /// 需要加强的单词
+    var words: [YXWordModel]?
+    var unitList: [YXLearnMapUnitModel]?
+    
+    static func displayModel(model: YXReviewResultModel) -> YXExerciseResultDisplayModel {
+        var displayModel = YXExerciseResultDisplayModel()
+        displayModel.type = model.type
+        displayModel.id = model.planId
+        displayModel.title = model.planName
+        displayModel.reviewWordNum = model.allWordNum
+        displayModel.knowWordNum = model.knowWordNum
+        displayModel.remainWordNum = model.remainWordNum
+        displayModel.score = model.score
+        displayModel.studyDay = model.studyDay
+        displayModel.state = model.state
+        displayModel.words = model.words
+        
+        return displayModel
+    }
+    
+    static func displayModel(unitId: Int, newStudyWordCount: Int, reviewWordCount: Int, model: YXLearnResultModel) -> YXExerciseResultDisplayModel {
+        let currentUnit = model.unitList?.filter({ (model) -> Bool in
+            return model.unitID == unitId
+        }).first
+        
+        var displayModel = YXExerciseResultDisplayModel()
+        displayModel.type = .base
+        displayModel.title = currentUnit?.unitName
+        
+        displayModel.allWordNum = model.allWordCount
+        displayModel.newStudyWordNum = newStudyWordCount
+        displayModel.reviewWordNum = reviewWordCount
+
+        displayModel.score = currentUnit?.stars ?? 0
+        displayModel.studyDay = model.studyDay
+        displayModel.state = true
+        displayModel.unitList = model.unitList
+        
+        return displayModel
+    }
+}
+
+
+
+
+struct YXLearnResultModel2: Mappable {
+    enum CountStatusType: Int {
+        case end, ing
+    }
+    var countStatus: CountStatusType?
+    var unitList: [YXLearnMapUnitModel]?
+    var allWordCount: Int     = 0
+    var studyDay: Int         = 0
+    var learnWordsNumber: Int = 0
+    
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        countStatus      <- map["count_status"]
+        allWordCount     <- map["all_words_num"]
+        unitList         <- map["list"]
+        studyDay         <- map["study_day"]
+    }
+}

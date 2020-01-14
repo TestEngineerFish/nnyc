@@ -10,7 +10,7 @@ import UIKit
 
 class YXExerciseResultViewController: YXViewController {
 
-    var model: YXReviewResultModel!
+    var model: YXExerciseResultDisplayModel!
     var resultView: YXExerciseResultView!
 //    var
     deinit {
@@ -18,7 +18,7 @@ class YXExerciseResultViewController: YXViewController {
     }
     
     
-    init(model: YXReviewResultModel) {
+    init(model: YXExerciseResultDisplayModel) {
         super.init(nibName: nil, bundle: nil)
         self.model = model
         resultView = YXExerciseResultView(model: model)
@@ -58,7 +58,7 @@ class YXExerciseResultViewController: YXViewController {
     private func reviewEvent() {
         let vc = YXExerciseViewController()
         vc.dataType = model?.type ?? .aiReview
-        vc.planId = model.planId
+        vc.planId = model.id
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     

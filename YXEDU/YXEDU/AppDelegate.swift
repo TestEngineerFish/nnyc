@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YYCache.remove(forKey: .learningState)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.processReviewResult()
+//            self.processReviewResult()
             
             
 //            let vc = YXReviewResultView(type: .planListenReview)
@@ -121,7 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                self.processReviewProgressResult(model: model)
                 
 //                self.processReviewResult(model: model)
-//                self.newResultVC(model: model)
+                self.newResultVC(model: model)
             } else {
                 UIView.toast("上报关卡失败")
 //                self.navigationController?.popViewController(animated: true)
@@ -155,7 +155,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func newResultVC(model: YXReviewResultModel) {
-        let vc = YXExerciseResultViewController(model: model)
+        let m = YXExerciseResultDisplayModel.displayModel(model: model)
+        let vc = YXExerciseResultViewController(model: m)
         
         vc.hidesBottomBarWhenPushed = true
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
