@@ -194,7 +194,7 @@ class YXExerciseOptionManager: NSObject {
             var wordArray = self.otherNewWordArray(wordId: exerciseModel.word?.wordId ?? 0)
             var meaning: String?
             var imageUrl: String?
-            if wordArray.count == 0, let wordModel = exerciseModel.word{
+            if wordArray.count == 0, let wordModel = exerciseModel.word {
                 wordArray = self.otherReviewWordArray(wordId: wordModel.wordId ?? 0)
                 if wordArray.isEmpty {
                     if let otherWordModel = self.otherWordExampleModel(wordModel: wordModel){
@@ -212,7 +212,7 @@ class YXExerciseOptionManager: NSObject {
                 imageUrl = wordExerciseModel?.word?.imageUrl
             }
             
-//            let exercise = wordArray[random(max: wordArray.count)]
+            
             exerciseModel.word?.meaning  = meaning
             exerciseModel.word?.imageUrl = imageUrl
             
@@ -220,7 +220,7 @@ class YXExerciseOptionManager: NSObject {
             item.optionId = -1
 
             items.append(item)
-            items.append(itemModel(word: exerciseModel.word!, type: exerciseModel.type))
+            items.append(itemModel(replace: false, word: exerciseModel.word!, type: exerciseModel.type))
         }
 
         var option = YXExerciseOptionModel()
@@ -289,37 +289,7 @@ class YXExerciseOptionManager: NSObject {
 
     /// 获取一个其他单词选项
     func otherWordExampleModel(wordModel: YXWordModel, isFilterNilImage: Bool = true) -> YXWordModel? {
-
-        guard let currentWordId = wordModel.wordId else {
-            return nil
-        }
-        let otherNewWordArray = self.otherNewWordArray(wordId: currentWordId)
-        for _wordExerciseModel in otherNewWordArray {
-            guard let wordModel = _wordExerciseModel.word else {
-                continue
-            }
-            if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
-                continue
-            }
-            return wordModel
-        }
-
-        // 从学习流程获取数据
-        // 防止无限随机同一个对象
-        let tmpReviewWordArray = reviewWordArray
-        for _ in 0..<reviewWordArray.count {
-            let randomInt = Int.random(in: 0..<tmpReviewWordArray.count)
-            let _wordExerciseModel = tmpReviewWordArray[randomInt]
-            guard let otherWordModel = _wordExerciseModel.word else {
-                continue
-            }
-            if isFilterNilImage && (otherWordModel.imageUrl?.isEmpty ?? true) {
-                continue
-            }
-            if otherWordModel.word != wordModel.word {
-                return otherWordModel
-            }
-        }
+        
         // 从单元词书获取数据
         if let unitId = wordModel.unitId {
             let wordModelArray = YXWordBookDaoImpl().selectWordByUnitId(unitId: unitId)
@@ -366,13 +336,18 @@ class YXExerciseOptionManager: NSObject {
     }
     
     
-    func itemModel(word: YXWordModel, type: YXExerciseType) -> YXOptionItemModel {
+    /// 构造选项
+    /// - Parameters:
+    ///   - replace: 判断题使用，不能把错的选项用对的覆盖了
+    ///   - word:
+    ///   - type: 
+    func itemModel(replace: Bool = true, word: YXWordModel, type: YXExerciseType) -> YXOptionItemModel {
         var item = YXOptionItemModel()
         item.optionId = word.wordId ?? -1
         
         var newWord = word
         // 为什么要查询一次，因为出题后，数据缓存了，后面更新了词书，没有使用最新的，需要时时查询，后续要优化
-        if let w = YXWordBookDaoImpl().selectWord(wordId: item.optionId) {
+        if replace, let w = YXWordBookDaoImpl().selectWord(wordId: item.optionId) {
             newWord = w
         }
         
