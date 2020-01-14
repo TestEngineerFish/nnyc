@@ -46,8 +46,7 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
     
     override func bindData() {
         let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-        self.titleLabel?.text     = word
-//        self.descTitleLabel?.text = (exerciseModel.word?.partOfSpeech ?? "") + " " + (exerciseModel.word?.meaning ?? "")
+        self.titleLabel?.text = word
         
         for item in self.exerciseModel.option?.firstItems ?? [] {
              if let meaning = item.content, item.optionId != -1 {

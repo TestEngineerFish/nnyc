@@ -49,7 +49,7 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
     
     override func bindData() {
         let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-        self.titleLabel?.text    = word
+        self.titleLabel?.text = word
         
         for item in self.exerciseModel.option?.firstItems ?? [] {
             if let url = item.content, item.optionId != -1 {

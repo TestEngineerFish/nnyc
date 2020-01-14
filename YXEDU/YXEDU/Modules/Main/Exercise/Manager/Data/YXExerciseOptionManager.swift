@@ -175,8 +175,8 @@ class YXExerciseOptionManager: NSObject {
         let wordId = exercise.word?.wordId ?? 0
         var exerciseModel = exercise
         
-        print("正确:", exercise.word?.wordId, exercise.word?.word, exercise.word?.meaning, exercise.word?.imageUrl)
-        //        exerciseModel.question?.soundmark = exerciseModel.word?.soundmark
+//        print("正确:", exercise.word?.wordId, exercise.word?.word, exercise.word?.meaning, exercise.word?.imageUrl)
+        
         var items: [YXOptionItemModel] = []
         
         let max = self.reviewWordArray.count
@@ -213,10 +213,10 @@ class YXExerciseOptionManager: NSObject {
             item.optionId = -1
 
             items.append(item)
-            items.append(itemModel(replace: false, word: tmpWord!, type: exerciseModel.type))
+            items.append(itemModel(word: tmpWord!, type: exerciseModel.type))
             
-            print("错误1:\(tmpWord?.wordId), \(tmpWord?.word), \(tmpWord?.meaning), \(tmpWord?.imageUrl)")
-            print("错误2:\(exerciseModel.word?.wordId), \(exerciseModel.word?.word), \(exerciseModel.word?.meaning), \(exerciseModel.word?.imageUrl)")
+//            print("错误1:\(tmpWord?.wordId), \(tmpWord?.word), \(tmpWord?.meaning), \(tmpWord?.imageUrl)")
+//            print("错误2:\(exerciseModel.word?.wordId), \(exerciseModel.word?.word), \(exerciseModel.word?.meaning), \(exerciseModel.word?.imageUrl)")
             
             exerciseModel.answers = [tmpWord?.wordId ?? 0]
         }
@@ -335,16 +335,15 @@ class YXExerciseOptionManager: NSObject {
     
     /// 构造选项
     /// - Parameters:
-    ///   - replace: 判断题使用，不能把错的选项用对的覆盖了
     ///   - word:
     ///   - type:
-    func itemModel(replace: Bool = true, word: YXWordModel, type: YXExerciseType) -> YXOptionItemModel {
+    func itemModel(word: YXWordModel, type: YXExerciseType) -> YXOptionItemModel {
         var item = YXOptionItemModel()
         item.optionId = word.wordId ?? -1
         
         var newWord = word
         // 为什么要查询一次，因为出题后，数据缓存了，后面更新了词书，没有使用最新的，需要时时查询，后续要优化
-        if replace, let w = YXWordBookDaoImpl().selectWord(wordId: item.optionId) {
+        if let w = YXWordBookDaoImpl().selectWord(wordId: item.optionId) {
             newWord = w
         }
         
