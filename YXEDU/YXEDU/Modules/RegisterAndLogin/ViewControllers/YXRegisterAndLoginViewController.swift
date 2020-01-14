@@ -341,22 +341,22 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         }) { (resultOfLogin) in
             if let _ = resultOfLogin.error {
                 CLShanYanSDKManager.finishAuthControllerCompletion(nil)
-                
+
             } else {
                 YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/mobile/\(resultOfLogin.data?["token"] ?? "")", parameters: [:]) { (response, isSuccess) in
                     guard isSuccess, let response = response else { return }
                     let phoneNumber = response.responseObject as! [String]
-                    
+
                     YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/login/\(phoneNumber[0])", parameters: [:]) { (response, isSuccess) in
                         if isSuccess, let response = response?.responseObject {
                             YXUserModel.default.token = (response as! [String: Any])["token"] as? String
                             YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
                             YXUserModel.default.username = (response as! [String: Any])["nick"] as? String
                             YXUserModel.default.userAvatarPath = (response as! [String: Any])["avatar"] as? String
-                            
+
                             YXConfigure.shared().token = YXUserModel.default.token
                             YXConfigure.shared().uuid = YXUserModel.default.uuid
-                            
+
                             YXConfigure.shared().saveCurrentToken()
                             YXUserModel.default.didLogin = true
                             YXUserModel.default.login()
@@ -452,8 +452,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             iconBackgroundImageView.addSubview(iconImageView)
             iconImageView.snp.makeConstraints { (make) in
                 make.center.equalToSuperview()
-                make.height.equalToSuperview().multipliedBy(0.6)
-                make.width.equalTo(iconBackgroundImageView.snp.height).multipliedBy(0.6)
+                make.height.equalToSuperview().multipliedBy(0.5)
+                make.width.equalTo(iconBackgroundImageView.snp.height).multipliedBy(0.5)
             }
             
             containerView.addSubview(otherLoginButton)

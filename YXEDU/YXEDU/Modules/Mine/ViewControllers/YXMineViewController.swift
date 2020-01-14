@@ -74,6 +74,10 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else if segue.identifier == "BadgeList" {
             let destinationViewController = segue.destination as! YXBagdeListViewController
             destinationViewController.badgeLists = badgeLists
+            
+        } else if segue.identifier == "Coin" {
+            let squirrelCoinViewController = segue.destination as! YXSquirrelCoinViewController
+            squirrelCoinViewController.coinAmount = self.myIntegralLabel.text
         }
     }
     
