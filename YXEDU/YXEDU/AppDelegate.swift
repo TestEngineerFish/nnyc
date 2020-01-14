@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import Bugly
 import GrowingCoreKit
 import GrowingAutoTrackKit
 
@@ -42,8 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initThirdPartyServices() {
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
-        
-//        Growing.start(withAccountId: kGrowingIOID)
+        Bugly.start(withAppId: kBuglyAppId)
+        Growing.start(withAccountId: kGrowingIOID)
     }
     
     func initViewAndData() {
