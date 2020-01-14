@@ -10,8 +10,6 @@ import UIKit
 
 /// 判断图片和单词对错
 class YXValidationImageAndWordExerciseView: YXBaseExerciseView {
-
-    private let answerHeight: CGFloat = 42
         
     override func createSubview() {
         questionView = YXWordAndImageQuestionView(exerciseModel: exerciseModel)

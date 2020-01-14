@@ -84,6 +84,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             return
         }
         NotificationCenter.default.removeObserver(_answerView)
+        self.hideGuideView()
     }
 
     // MARK: ==== Event ====
