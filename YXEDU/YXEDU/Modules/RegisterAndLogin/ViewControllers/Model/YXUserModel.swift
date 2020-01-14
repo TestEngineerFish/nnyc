@@ -91,7 +91,6 @@ class YXUserModel: NSObject {
         }
     }
     
-    var didFinishDownloadCurrentStudyWordBook = false
     var didFinishDownloadAllStudyWordBooks = false
 
     func login() {

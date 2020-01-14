@@ -163,14 +163,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
                 
-                YXWordBookResourceManager.shared.download(by: self.homeModel.bookId) { (isSucess) in
+                YXWordBookResourceManager.shared.download { (isSucess) in
                     guard isSucess else { return }
-                    YXUserModel.default.didFinishDownloadCurrentStudyWordBook = true
-                    
-                    YXWordBookResourceManager.shared.download { (isSucess) in
-                        guard isSucess else { return }
-                        YXUserModel.default.didFinishDownloadAllStudyWordBooks = true
-                    }
+                    YXUserModel.default.didFinishDownloadAllStudyWordBooks = true
                 }
                 
             } catch {

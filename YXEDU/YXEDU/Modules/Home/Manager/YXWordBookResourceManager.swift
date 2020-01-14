@@ -69,9 +69,20 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             guard let url = URL(string: downloadUrl) else { return }
             let downloadTask = self.urlSession.downloadTask(with: url) { (loaction, response, error) in
                 guard let loaction = loaction else { return }
-                let isSuccess = self.unzipDownloadFile(url: url, location: loaction, identifier: bookHash)
+                
+                var isSuccess = YXWordBookDaoImpl().deleteBook(bookId: bookId)
+                
+                if isSuccess {
+                    isSuccess = YXWordBookDaoImpl().deleteWord(bookId: bookId)
+                }
+                
+                if isSuccess {
+                    isSuccess = self.unzipDownloadFile(url: url, location: loaction, identifier: bookHash)
+                }
                 
                 DispatchQueue.main.async {
+                    print("下載單本詞書（ID：\(bookId)）下載並保存完成？\(isSuccess)")
+
                     self.isDownloading = false
                     self.closure?(isSuccess)
                 }
@@ -83,7 +94,14 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     
     private func downloadAllUndownloadWordBook(from allWordBookDownloadModels: [YXWordBookDownloadModel]) {
         var didFinishAllDownload = true
-        
+        var didFinishDownload = true {
+            didSet {
+                if didFinishDownload == false {
+                    didFinishAllDownload = false
+                }
+            }
+        }
+
         let group = DispatchGroup()
         let queue = DispatchQueue.global()
         
@@ -91,19 +109,29 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash, let downloadUrl = wordBookDownloadModel.downloadUrl, downloadUrl.isEmpty == false else { continue }
             
             if let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId), wordBook.bookHash == bookHash {
-                queue.async(group: group) {
-
-                }
                 
             } else {
+                group.enter()
                 queue.async(group: group) {
                     self.isDownloading = true
 
                     guard let url = URL(string: downloadUrl) else { return }
                     let downloadTask = self.urlSession.downloadTask(with: url) { (loaction, response, error) in
                         guard let loaction = loaction else { return }
-                        let isSuccess = self.unzipDownloadFile(url: url, location: loaction, identifier: bookHash)
-                        didFinishAllDownload = isSuccess
+                        
+                        var isSuccess = YXWordBookDaoImpl().deleteBook(bookId: bookId)
+                        
+                        if isSuccess {
+                            isSuccess = YXWordBookDaoImpl().deleteWord(bookId: bookId)
+                        }
+                        
+                        if isSuccess {
+                            isSuccess = self.unzipDownloadFile(url: url, location: loaction, identifier: bookHash)
+                        }
+                        
+                        print("下載所有詞書 - 當前詞書（ID：\(bookId)）下載並保存完成？\(isSuccess)")
+                        didFinishDownload = isSuccess
+                        group.leave()
                     }
                     
                     downloadTask.resume()
@@ -113,6 +141,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         
         group.notify(queue: queue) {
             DispatchQueue.main.async {
+                print("下載所有詞書 - 完成？\(didFinishAllDownload)")
+
                 self.isDownloading = false
                 self.closure?(didFinishAllDownload)
             }
