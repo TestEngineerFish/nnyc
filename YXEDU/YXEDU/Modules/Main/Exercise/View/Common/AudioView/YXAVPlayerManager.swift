@@ -16,6 +16,15 @@ class YXAVPlayerManager: NSObject {
     var player: AVPlayer = {
         let player = AVPlayer()
         player.volume = 1.0
+        
+        if #available(iOS 10.0, *) {
+            do {// 静音键打开的时候，播放也需要有声音
+                let session = AVAudioSession.sharedInstance()
+                try session.setCategory(.playback, mode: .default, options: [])
+            } catch _ as NSError {
+            }
+        }
+        
         return player
     }()
 
