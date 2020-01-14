@@ -172,18 +172,18 @@ class YXExerciseOptionManager: NSObject {
     
     
     func validReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
+        let wordId = exercise.word?.wordId ?? 0
         var exerciseModel = exercise
         
+        print("正确:", exercise.word?.wordId, exercise.word?.word, exercise.word?.meaning, exercise.word?.imageUrl)
         //        exerciseModel.question?.soundmark = exerciseModel.word?.soundmark
         var items: [YXOptionItemModel] = []
         
         let max = self.reviewWordArray.count
         let num = self.random(max: max)
         if num % 2 == 1 {// 对
-            exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
-//            exerciseModel.word?.meaning = exerciseModel.word?.meaning
-//            exerciseModel.word?.imageUrl = exerciseModel.word?.imageUrl
-
+            exerciseModel.answers = [wordId]
+            
             var item = YXOptionItemModel()
             item.optionId = -1
             
@@ -192,44 +192,41 @@ class YXExerciseOptionManager: NSObject {
         } else {// 错
             // 其他的新学单词集合，排除当前的单词
             var wordArray = self.otherNewWordArray(wordId: exerciseModel.word?.wordId ?? 0)
-            var meaning: String?
-            var imageUrl: String?
+            
+            var tmpWord: YXWordModel?
             if wordArray.count == 0, let wordModel = exerciseModel.word {
                 wordArray = self.otherReviewWordArray(wordId: wordModel.wordId ?? 0)
                 if wordArray.isEmpty {
                     if let otherWordModel = self.otherWordExampleModel(wordModel: wordModel){
-                        meaning  = otherWordModel.meaning
-                        imageUrl = otherWordModel.imageUrl
+                        tmpWord = otherWordModel
                     }
                 } else {
                     let wordExerciseModel = wordArray.randomElement()
-                    meaning  = wordExerciseModel?.word?.meaning
-                    imageUrl = wordExerciseModel?.word?.imageUrl
+                    tmpWord = wordExerciseModel?.word
                 }
             } else {
                 let wordExerciseModel = wordArray.randomElement()
-                meaning  = wordExerciseModel?.word?.meaning
-                imageUrl = wordExerciseModel?.word?.imageUrl
+                tmpWord = wordExerciseModel?.word
             }
-            
-            
-            exerciseModel.word?.meaning  = meaning
-            exerciseModel.word?.imageUrl = imageUrl
             
             var item = YXOptionItemModel()
             item.optionId = -1
 
             items.append(item)
-            items.append(itemModel(replace: false, word: exerciseModel.word!, type: exerciseModel.type))
+            items.append(itemModel(replace: false, word: tmpWord!, type: exerciseModel.type))
+            
+            print("错误1:\(tmpWord?.wordId), \(tmpWord?.word), \(tmpWord?.meaning), \(tmpWord?.imageUrl)")
+            print("错误2:\(exerciseModel.word?.wordId), \(exerciseModel.word?.word), \(exerciseModel.word?.meaning), \(exerciseModel.word?.imageUrl)")
+            
+            exerciseModel.answers = [tmpWord?.wordId ?? 0]
         }
 
         var option = YXExerciseOptionModel()
         option.firstItems = items
         
         exerciseModel.option = option
-        exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
         
-        //        reviewWordArray[index] = exerciseModel
+        
         return exerciseModel
     }
     
@@ -340,7 +337,7 @@ class YXExerciseOptionManager: NSObject {
     /// - Parameters:
     ///   - replace: 判断题使用，不能把错的选项用对的覆盖了
     ///   - word:
-    ///   - type: 
+    ///   - type:
     func itemModel(replace: Bool = true, word: YXWordModel, type: YXExerciseType) -> YXOptionItemModel {
         var item = YXOptionItemModel()
         item.optionId = word.wordId ?? -1
@@ -370,6 +367,10 @@ class YXExerciseOptionManager: NSObject {
             item.content = newWord.meaning
         case .listenChooseImage:
             item.content = newWord.imageUrl
+        case .validationImageAndWord:
+            item.content = newWord.imageUrl
+        case .validationWordAndChinese:
+            item.content = (newWord.partOfSpeech ?? "") + " " + (newWord.meaning ?? "")
         default:
             break
         }

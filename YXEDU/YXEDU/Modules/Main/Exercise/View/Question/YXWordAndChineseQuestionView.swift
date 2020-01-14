@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// 单词+音标+词义题目
+/// 单词+音标+词义题目 (判断题)
 class YXWordAndChineseQuestionView: YXBaseQuestionView {
     override func createSubviews() {
         super.createSubviews()
@@ -47,7 +47,13 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
     override func bindData() {
         let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
         self.titleLabel?.text     = word
-        self.descTitleLabel?.text = (exerciseModel.word?.partOfSpeech ?? "") + " " + (exerciseModel.word?.meaning ?? "")
+//        self.descTitleLabel?.text = (exerciseModel.word?.partOfSpeech ?? "") + " " + (exerciseModel.word?.meaning ?? "")
+        
+        for item in self.exerciseModel.option?.firstItems ?? [] {
+             if let meaning = item.content, item.optionId != -1 {
+                self.descTitleLabel?.text = meaning
+             }
+         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
             self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice
