@@ -15,217 +15,129 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     static let shared = YXWordBookResourceManager()
     private override init() {
         super.init()
-        
-        urlSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
     }
     
     private var isDownloading = false
-    private var urlSession: URLSession!
     private var closure: ((_ isSuccess: Bool) -> Void)?
     
-    
-    
+
     // MARK: - 下载词书
-    func download(by bookId: Int? = nil, _ closure: ((_ isSuccess: Bool) -> Void)? = nil) {
+    func contrastBookData(by bookId: Int? = nil, _ closure: ((_ isSuccess: Bool) -> Void)? = nil, showToast: Bool = false) {
         if isDownloading, bookId == nil {
             return
         }
-        
+        self.closure = closure
         let request = YXWordBookRequest.downloadWordBook(bookId: bookId)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXWordBookDownloadModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXWordBookDownloadModel>.self, request: request, success: {  [weak self] (response) in
+            guard let self = self else { return }
             if let wordBookDownloadModels = response.dataArray {
                 if let bookId = bookId {
                     for wordBookDownloadModel in wordBookDownloadModels {
                         if wordBookDownloadModel.id == bookId {
-                            self.closure = closure
-                            self.downloadSingleWordBook(from: wordBookDownloadModel)
-                            break
+                            self.checkLocalBookStatus(with: [wordBookDownloadModel], showToast: showToast)
                         }
                     }
-                    
                 } else {
-                    self.closure = closure
-                    self.downloadAllUndownloadWordBook(from: wordBookDownloadModels)
+                    self.checkLocalBookStatus(with: wordBookDownloadModels)
                 }
-                
             } else {
                 closure?(false)
             }
-            
         }) { error in
             print("❌❌❌\(error)")
         }
     }
-    
-    private func downloadSingleWordBook(from wordBookDownloadModel: YXWordBookDownloadModel) {
-        guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash, let downloadUrl = wordBookDownloadModel.downloadUrl, downloadUrl.isEmpty == false else { return }
-        
-        if let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId), wordBook.bookHash == bookHash {
-            self.closure?(true)
-            
-        } else {
-            self.isDownloading = true
 
-            guard let url = URL(string: downloadUrl) else { return }
-            let downloadTask = self.urlSession.downloadTask(with: url) { (loaction, response, error) in
-                guard let loaction = loaction else { return }
-                let isSuccess = self.unzipDownloadFile(url: url, location: loaction, identifier: bookHash)
-                
-                DispatchQueue.main.async {
-                    self.isDownloading = false
-                    self.closure?(isSuccess)
-                }
-            }
-            
-            downloadTask.resume()
-        }
-    }
-    
-    private func downloadAllUndownloadWordBook(from allWordBookDownloadModels: [YXWordBookDownloadModel]) {
-        var didFinishAllDownload = true
-        
-        let group = DispatchGroup()
-        let queue = DispatchQueue.global()
-        
-        for wordBookDownloadModel in allWordBookDownloadModels {
+    /// 检测本地词书是否需要更新
+    private func checkLocalBookStatus(with wordBookDownloadModelList: [YXWordBookDownloadModel], showToast: Bool = false) {
+        var isShowWarning = false
+        for wordBookDownloadModel in wordBookDownloadModelList {
             guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash, let downloadUrl = wordBookDownloadModel.downloadUrl, downloadUrl.isEmpty == false else { continue }
-            
-            if let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId), wordBook.bookHash == bookHash {
-                queue.async(group: group) {
-
-                }
-                
-            } else {
-                queue.async(group: group) {
-                    self.isDownloading = true
-
-                    guard let url = URL(string: downloadUrl) else { return }
-                    let downloadTask = self.urlSession.downloadTask(with: url) { (loaction, response, error) in
-                        guard let loaction = loaction else { return }
-                        let isSuccess = self.unzipDownloadFile(url: url, location: loaction, identifier: bookHash)
-                        didFinishAllDownload = isSuccess
+            let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId)
+            // 本地不存在，或者本地Hash值与后台不一致，则更新
+            if (wordBook == nil || wordBook?.bookHash != .some(bookHash)) {
+                /// 需要更新
+                if !isShowWarning {
+                    YXUtils.showProgress(kWindow, info: "正在下载词书，请稍后再试～")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        YXUtils.hidenProgress(kWindow)
                     }
-                    
-                    downloadTask.resume()
+                }
+                isShowWarning = true
+                print("更新啦")
+                DispatchQueue.global().async {
+                    self.downloadSingleWordBook(with: bookId, newHash: bookHash)
                 }
             }
         }
         
-        group.notify(queue: queue) {
-            DispatchQueue.main.async {
-                self.isDownloading = false
-                self.closure?(didFinishAllDownload)
+        // 如果没有需要更新的，则执行闭包函数
+        if !isShowWarning && showToast {
+            self.closure?(true)
+        }
+    }
+
+    /// 下载单本词书
+    private func downloadSingleWordBook(with bookId: Int, newHash: String) {
+        let request = YXWordBookRequest.getBookWord(bookId: bookId)
+        YYNetworkService.default.request(YYStructResponse<YXWordBookModel>.self, request: request, success: { (response) in
+            guard var bookModel = response.data else {
+                return
             }
+            bookModel.bookHash = newHash
+            self.saveBook(with: bookModel)
+            self.saveWords(with: bookModel)
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: "\(error.message)")
         }
     }
 
-    private func unzipDownloadFile(url: URL, location: URL, identifier: String) -> Bool {
-        let zipUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent(url.lastPathComponent)
-        try? FileManager.default.removeItem(at: zipUrl)
-        
-        do {
-            try FileManager.default.moveItem(at: location, to: zipUrl)
-            
-            let unzipUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("\(identifier)/")
-            try Zip.unzipFile(zipUrl, destination: unzipUrl, overwrite: true, password: nil)
-            
-            return self.saveWordBook(from: unzipUrl, with: identifier)
-            
-        } catch {
-            return false
+    /// 保存、更新词书
+    private func saveBook(with bookModel: YXWordBookModel) {
+        guard let bookId = bookModel.bookId else { return }
+        /// 删除旧数据
+        let result = YXWordBookDaoImpl().deleteBook(bookId: bookId)
+        if result {
+            print("删除词书成功🙆‍♂️")
+        }
+        let isSuccess = YXWordBookDaoImpl().insertBook(book: bookModel)
+        if isSuccess {
+            print("====更新词书成功🙆‍♂️===")
+        } else {
+            print("====更新词书失败🙆‍♂️===")
         }
     }
-    
-    private func saveWordBook(from jsonUrl: URL, with identifier: String) -> Bool {
-        do {
-            let jsonData = try Data(contentsOf: jsonUrl.appendingPathComponent("word.json"))
-            guard let jsonString = String(data: jsonData, encoding: .utf8), var wordBook = YXWordBookModel(JSONString: jsonString), let units = wordBook.units else { return false }
-            wordBook.bookHash = identifier
-            
-            let isSuccess = YXWordBookDaoImpl().insertBook(book: wordBook)
-            guard isSuccess else { return false }
-            
-            for unit in units {
-                guard let words = unit.words else { continue }
-                for var word in words {
-                    word.gradeId = wordBook.gradeId
-                    word.gardeType = wordBook.gradeType
-                    word.bookId = wordBook.bookId
-                    word.unitId = unit.unitId
-                    word.unitName = unit.unitName
-                    word.isExtensionUnit = unit.isExtensionUnit
 
-                    let isSuccess = YXWordBookDaoImpl().insertWord(word: word)
-                    guard isSuccess else { return false }
+    /// 保存、更新单词
+    private func saveWords(with bookModel: YXWordBookModel) {
+        guard let unitsList = bookModel.units, let bookId = bookModel.bookId else {
+            return
+        }
+        /// 删除旧数据
+         let result = YXWordBookDaoImpl().deleteWord(bookId: bookId)
+         if result {
+             print("删除词书单词成功🙆")
+         }
+        /// 赋值自定义数据
+        for unitModel in unitsList {
+            guard let wordsList = unitModel.words else {
+                continue
+            }
+            for var wordModel in wordsList {
+                wordModel.gradeId   = bookModel.gradeId
+                wordModel.gardeType = bookModel.gradeType
+                wordModel.bookId    = bookModel.bookId
+                wordModel.unitId    = unitModel.unitId
+                wordModel.unitName  = unitModel.unitName
+                wordModel.isExtensionUnit = unitModel.isExtensionUnit
+                let isSuccess = YXWordBookDaoImpl().insertWord(word: wordModel)
+                if isSuccess {
+                    print("====更新单词成功🙆===")
+                } else {
+                    print("====更新单词失败🙆===")
                 }
             }
-            
-            return true
-                        
-        } catch {
-            return false
         }
-    }
-    
-    
-    func downloadMaterial(in wordBook: YXWordBookModel, _ closure: ((_ isSuccess: Bool) -> Void)?) {
-//        guard let bookID = wordBook.bookId else {
-//            self.closure?(false)
-//            return
-//        }
-//
-//        YXWordBookDaoImpl().selectBook(bookId: bookID) { (result, isSuccess) in
-//            if isSuccess, let result = result as? YXWordBookModel, wordBook.bookHash == result.bookHash {
-//                self.closure?(false)
-//
-//            } else {
-//                let downloadTask = urlSession.downloadTask(with: URL(string: wordBook.bookSourcePath!)!)
-//                downloadTask.resume()
-//            }
-//        }
-    }
-    
-    private func saveWordBookMaterial(with url: URL) {
-//        let wordBooksJsonUrl = url.appendingPathComponent("words.json")
-//
-//        do {
-//            let data = try Data(contentsOf: wordBooksJsonUrl)
-//            let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
-//            guard let jsonString = String(data: jsonData, encoding: .utf8), let wordBook = YXWordBookModel(JSONString: jsonString), let units = wordBook.units else {
-//                self.closure?(false)
-//                return
-//            }
-//
-//            for unit in units {
-//                guard let words = unit.words else { continue }
-//                for var word in words {
-//                    word.gradeId = wordBook.gradeId
-//                    word.gardeType = wordBook.gradeType
-//                    word.bookId = wordBook.bookId
-//                    word.unitId = unit.unitId
-//                    word.unitName = unit.unitName
-//                    word.isExtensionUnit = unit.isExtensionUnit
-//
-//                    word.imageUrl = replaceResourceUrl(resourcePath: word.imageUrl, wordBooksResourcePath: url.path)
-//                    word.americanPronunciation = replaceResourceUrl(resourcePath: word.americanPronunciation, wordBooksResourcePath: url.path)
-//                    word.englishPronunciation = replaceResourceUrl(resourcePath: word.englishPronunciation, wordBooksResourcePath: url.path)
-//                    word.examplePronunciation = replaceResourceUrl(resourcePath: word.examplePronunciation, wordBooksResourcePath: url.path)
-//
-//                    YXWordBookDaoImpl().insertWord(word: word) { (result, isSuccess) in
-//                        print(isSuccess)
-//                    }
-//                }
-//            }
-//
-//            self.closure?(true)
-//
-//        } catch {
-//            self.closure?(false)
-//        }
-//    }
-//
-//    private func replaceResourceUrl(resourcePath: String?, wordBooksResourcePath: String) -> String? {
-//        guard let newPath = resourcePath?.replacingOccurrences(of: "http://cdn.xstudyedu.com", with: wordBooksResourcePath) else { return resourcePath }
-//        return newPath
     }
 }
+

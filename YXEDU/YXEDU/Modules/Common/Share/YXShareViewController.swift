@@ -105,7 +105,8 @@ class YXShareViewController: YXViewController {
     
     var goldImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "challengeGoldIcon")
+        imageView.image    = UIImage(named: "challengeGoldIcon")
+        imageView.isHidden = true
         return imageView
     }()
     
@@ -136,6 +137,7 @@ class YXShareViewController: YXViewController {
 
     var wordsAmount = 0
     var daysAmount  = 0
+    var hideCoin    = true
     var gameModel: YXGameResultModel?
     var shareType: YXShareImageType = .challengeResult
     var backAction: (()->Void)?
@@ -154,7 +156,7 @@ class YXShareViewController: YXViewController {
         self.qqImageView.addGestureRecognizer(tapQQ)
         self.wechatImageView.addGestureRecognizer(tapWechat)
         self.timeLineImageView.addGestureRecognizer(tapTimeLine)
-        
+        self.goldImageView.isHidden = hideCoin
         switch self.shareType {
         case .learnResult:
             self.shareImageView.image = self.createLearnResultShareImage()

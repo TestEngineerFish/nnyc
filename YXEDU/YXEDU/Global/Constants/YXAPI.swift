@@ -61,14 +61,14 @@ struct YXAPI {
     struct Word {
         // 下載词书
         static let downloadWordBook = "/api/v1/book/getstudybooklist"
-        
         // 下載词书
-        static let wordDetail = "/api/v1/word/info"
-        
+        static let wordDetail       = "/api/v1/word/info"
         /// 用户添加词书
-        static let addUserBook = "/api/v1/book/adduserbook"
+        static let addUserBook      = "/api/v1/book/adduserbook"
         /// 搜索单词
-        static let searchWord = "/api/v1/search"
+        static let searchWord       = "/api/v1/search"
+        /// 获得词书中所有单词
+        static let getBookWords     = "/api/v1/book/getbookwords"
     }
 
     // MARK: - 复习模块

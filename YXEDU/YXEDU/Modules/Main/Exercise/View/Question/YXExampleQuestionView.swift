@@ -16,16 +16,16 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
     
     override func createSubviews() {
         super.createSubviews()
-        self.initSubTitleLabel()
-        self.subTitleLabel?.font = UIFont.pfSCMediumFont(withSize: AdaptSize(20))
+        self.initTitleLabel()
+        self.titleLabel?.font = UIFont.pfSCMediumFont(withSize: AdaptSize(20))
         self.initAudioPlayerView()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        subTitleLabel?.snp.remakeConstraints({ (make) in
-            let height = self.subTitleLabel?.attributedText?.string.textHeight(font: subTitleLabel!.font, width: self.width - AdaptSize(60)) ?? 0
+        titleLabel?.snp.remakeConstraints({ (make) in
+            let height = self.titleLabel?.attributedText?.string.textHeight(font: titleLabel!.font, width: self.width - AdaptSize(60)) ?? 0
             make.centerY.equalToSuperview()
             make.left.equalTo(AdaptSize(30))
             make.right.equalTo(AdaptSize(-30))
@@ -39,7 +39,7 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
     }
     
     override func bindData() {
-        self.subTitleLabel?.attributedText = exerciseModel.word?.examples?.first?.englishExampleAttributedString
+        self.titleLabel?.attributedText = exerciseModel.word?.examples?.first?.englishExampleAttributedString
         
         self.audioList.append(self.exerciseModel.word?.voice ?? "")
         self.audioList.append(self.exerciseModel.word?.examples?.first?.vocie ?? "")

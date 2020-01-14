@@ -53,6 +53,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
         self.titleLabel?.textColor     = UIColor.black1
         self.titleLabel?.textAlignment = .center
         self.titleLabel?.text          = ""
+        self.titleLabel?.numberOfLines = 0
         
         self.addSubview(titleLabel!)
     }

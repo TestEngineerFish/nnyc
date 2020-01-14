@@ -91,6 +91,8 @@
 		227F477923CC466200D6C603 /* YXWrongWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F477823CC466200D6C603 /* YXWrongWordCell.swift */; };
 		227F477E23CC540D00D6C603 /* YXToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F477D23CC540D00D6C603 /* YXToastView.swift */; };
 		227F478023CC638F00D6C603 /* YXPreviousResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F477F23CC638F00D6C603 /* YXPreviousResultView.swift */; };
+		227F478223CD967900D6C603 /* wrong.json in Resources */ = {isa = PBXBuildFile; fileRef = 227F478123CD967900D6C603 /* wrong.json */; };
+		227F478423CD968800D6C603 /* right.json in Resources */ = {isa = PBXBuildFile; fileRef = 227F478323CD968800D6C603 /* right.json */; };
 		228F9D4623A099C300F15F19 /* Discovery.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 228F9D4523A099C300F15F19 /* Discovery.storyboard */; };
 		2290EAC1236DB036000BCA47 /* YXRemindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2290EAC0236DB036000BCA47 /* YXRemindView.swift */; };
 		2290EAC4236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2290EAC3236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift */; };
@@ -861,6 +863,8 @@
 		227F477823CC466200D6C603 /* YXWrongWordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWrongWordCell.swift; sourceTree = "<group>"; };
 		227F477D23CC540D00D6C603 /* YXToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXToastView.swift; sourceTree = "<group>"; };
 		227F477F23CC638F00D6C603 /* YXPreviousResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXPreviousResultView.swift; sourceTree = "<group>"; };
+		227F478123CD967900D6C603 /* wrong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = wrong.json; sourceTree = "<group>"; };
+		227F478323CD968800D6C603 /* right.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = right.json; sourceTree = "<group>"; };
 		228F9D4523A099C300F15F19 /* Discovery.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discovery.storyboard; sourceTree = "<group>"; };
 		2290EAC0236DB036000BCA47 /* YXRemindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRemindView.swift; sourceTree = "<group>"; };
 		2290EAC3236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnPrimarySchoolExerciseView.swift; sourceTree = "<group>"; };
@@ -2316,6 +2320,8 @@
 		2290EAD223714AB9000BCA47 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				227F478323CD968800D6C603 /* right.json */,
+				227F478123CD967900D6C603 /* wrong.json */,
 				22B1F20F2382CDAC00A84F61 /* learnLoading.json */,
 				2290EAD323714AD2000BCA47 /* readAnimation.json */,
 			);
@@ -5678,9 +5684,11 @@
 				20C86B9C217873FE00FCAAED /* WaveLoadingImages in Resources */,
 				7759A898237943C700C63199 /* YXWordDetailExampleCell.xib in Resources */,
 				23FD6CE622952E5400334321 /* 答题引导1@3x.png in Resources */,
+				227F478223CD967900D6C603 /* wrong.json in Resources */,
 				23708FDE2269B6FC0082106A /* sharePosterResultBG@3x.png in Resources */,
 				EE5E01122327528600655654 /* right.mp3 in Resources */,
 				23FD6CE922952E5400334321 /* 答题引导1@2x.png in Resources */,
+				227F478423CD968800D6C603 /* right.json in Resources */,
 				7709752D23992B880071A779 /* YXWordDetailCommonPhrasesCell.xib in Resources */,
 				7759A89123793E2800C63199 /* YXWordDetailCommonView.xib in Resources */,
 				77B7C6F523A77B7A00149ACE /* YXTaskCenterDateCell.xib in Resources */,

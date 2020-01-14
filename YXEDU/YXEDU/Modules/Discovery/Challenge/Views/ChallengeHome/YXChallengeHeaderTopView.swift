@@ -63,7 +63,7 @@ class YXChallengeHeaderTopView: UIView {
     }
 
     deinit {
-        self.stopGoldAnimation()
+//        self.stopGoldAnimation()
     }
 
     required init?(coder: NSCoder) {
@@ -78,8 +78,6 @@ class YXChallengeHeaderTopView: UIView {
 
     private func bindProperty() {
         self.gameRuleButton.addTarget(self, action: #selector(showRuleView), for: .touchUpInside)
-        let tapAction = UITapGestureRecognizer(target: self, action: #selector(clickGoldView))
-        self.propertyView.addGestureRecognizer(tapAction)
     }
 
     private func setSubviews() {
@@ -148,48 +146,40 @@ class YXChallengeHeaderTopView: UIView {
         YXAlertWebView.share.show(url)
     }
 
-    // MARK: ==== UIGestureRecognizer ====
-    @objc func clickGoldView() {
-        let vc = YXSquirrelCoinViewController()
-        vc.coinAmount               = propertyView.numberLabel.text
-        vc.hidesBottomBarWhenPushed = true
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-    }
-
     // MARK: ==== Animation ====
-    private func startLeftGoldAnimation() {
-        let animation = CABasicAnimation(keyPath: "position.y")
-        animation.duration = 1
-        animation.toValue  = AdaptSize(360)
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation.autoreverses = false
-        animation.repeatCount = MAXFLOAT
-        self.leftGoldImageView.layer.add(animation, forKey: nil)
-    }
-
-    private func startCenterGoldAnimation() {
-        let animation = CABasicAnimation(keyPath: "position.y")
-        animation.duration = 1.5
-        animation.toValue  = AdaptSize(330)
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation.autoreverses = false
-        animation.repeatCount = MAXFLOAT
-        self.centerGoldImageView.layer.add(animation, forKey: nil)
-    }
-
-    private func startRightGoldAnimation() {
-        let animation = CABasicAnimation(keyPath: "position.y")
-        animation.duration = 1.2
-        animation.toValue  = AdaptSize(360)
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation.autoreverses = false
-        animation.repeatCount = MAXFLOAT
-        self.rightGoldImageView.layer.add(animation, forKey: nil)
-    }
-
-    private func stopGoldAnimation() {
-        self.leftGoldImageView.layer.removeAllAnimations()
-        self.centerGoldImageView.layer.removeAllAnimations()
-        self.rightGoldImageView.layer.removeAllAnimations()
-    }
+//    private func startLeftGoldAnimation() {
+//        let animation = CABasicAnimation(keyPath: "position.y")
+//        animation.duration = 1
+//        animation.toValue  = AdaptSize(360)
+//        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+//        animation.autoreverses = false
+//        animation.repeatCount = MAXFLOAT
+//        self.leftGoldImageView.layer.add(animation, forKey: nil)
+//    }
+//
+//    private func startCenterGoldAnimation() {
+//        let animation = CABasicAnimation(keyPath: "position.y")
+//        animation.duration = 1.5
+//        animation.toValue  = AdaptSize(330)
+//        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+//        animation.autoreverses = false
+//        animation.repeatCount = MAXFLOAT
+//        self.centerGoldImageView.layer.add(animation, forKey: nil)
+//    }
+//
+//    private func startRightGoldAnimation() {
+//        let animation = CABasicAnimation(keyPath: "position.y")
+//        animation.duration = 1.2
+//        animation.toValue  = AdaptSize(360)
+//        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+//        animation.autoreverses = false
+//        animation.repeatCount = MAXFLOAT
+//        self.rightGoldImageView.layer.add(animation, forKey: nil)
+//    }
+//
+//    private func stopGoldAnimation() {
+//        self.leftGoldImageView.layer.removeAllAnimations()
+//        self.centerGoldImageView.layer.removeAllAnimations()
+//        self.rightGoldImageView.layer.removeAllAnimations()
+//    }
 }

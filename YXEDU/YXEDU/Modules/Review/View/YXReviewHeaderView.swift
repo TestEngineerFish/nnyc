@@ -417,7 +417,10 @@ class YXReviewHeaderView: YXView {
     
     @objc private func clickReviewButton() {
         guard reviewButton.isEnabled else { return }
-        self.startReviewEvent?()
+        YXWordBookResourceManager.shared.contrastBookData(by: nil, { [weak self] (isSuccess) in
+            guard let self = self else { return }
+            self.startReviewEvent?()
+        }, showToast: true)
     }
     
     @objc private func clickCreateReviewPlanButton() {        

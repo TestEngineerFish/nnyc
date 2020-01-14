@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 
 /// 练习题切换，显示的动画
@@ -14,18 +15,6 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
 
     public var animationDidStop: ((_ isRight: Bool) -> Void)?
     public var owenrView: UIView?
-    
-    private let isRightKey = "Is_Right_Key"
-    private var resultView = UIImageView()
-    
-    deinit {
-        self.resultView.removeAllSubviews()
-    }
-    
-    override init() {
-        super.init()
-        self.createSubviews()
-    }
     
     public func show(isRight: Bool) {
         if isRight {
@@ -38,50 +27,39 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
         feedback()
     }
     
-    
-    private func createSubviews() {
-        self.resultView.isHidden = true
-        
-        kWindow.addSubview(resultView)
-        self.resultView.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 120, height: 120))
-        }
-    }
-    
     /// 显示正确动画
     private func showRightAnimation() {
+        let resultView = AnimationView(name: "right")
+        kWindow.addSubview(resultView)
+        resultView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(180), height: AdaptSize(180)))
+        }
         self.owenrView?.isUserInteractionEnabled = false
-        self.resultView.isHidden = false
-        self.resultView.image = UIImage(named: "success")
-        let animation = YXExerciseAnimation.zoomInHideAnimation()
-        animation.delegate = self
-        animation.setValue(true, forKey: isRightKey)
-        self.resultView.layer.add(animation, forKey: nil)
+        resultView.play()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            resultView.removeFromSuperview()
+            self.owenrView?.isUserInteractionEnabled = true
+            self.animationDidStop?(true)
+        }
     }
 
     /// 显示错误动画
     private func showWrongAnimation() {
+        let resultView = AnimationView(name: "wrong")
+        kWindow.addSubview(resultView)
+        resultView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(180), height: AdaptSize(180)))
+        }
         self.owenrView?.isUserInteractionEnabled = false
-        self.resultView.isHidden = false
-        self.resultView.image = UIImage(named: "error")
-        let animation = YXExerciseAnimation.zoomInHideAnimation()
-        animation.delegate = self
-        animation.setValue(false, forKey: isRightKey)
-        self.resultView.layer.add(animation, forKey: nil)
-    }
-    
-    
-    // TODO: CAAnimationDelegate
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        self.resultView.isHidden = true
-        self.owenrView?.isUserInteractionEnabled = true
-        self.resultView.layer.removeAllAnimations()
-        if let isRight = anim.value(forKey: isRightKey) as? Bool {
-            self.animationDidStop?(isRight)
+        resultView.play()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            resultView.removeFromSuperview()
+            self.owenrView?.isUserInteractionEnabled = true
+            self.animationDidStop?(false)
         }
     }
-    
     
     /// 震动效果
     func feedback() {

@@ -74,18 +74,11 @@
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if YXUserModel.default.didFinishDownloadAllStudyWordBooks {
-            self.showLoadAnimation()
-            self.createSubviews()
-            self.bindProperty()
-            self.initManager()
-            self.startStudy()
-        } else {
-            YRRouter.popViewController(true)
-            UIView.toast("正在下载词书，请稍后再试！")
-        }
-
+        self.showLoadAnimation()
+        self.createSubviews()
+        self.bindProperty()
+        self.initManager()
+        self.startStudy()
     }
     
     deinit {
@@ -95,27 +88,23 @@
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    private func createSubviews() {
+        headerView.delegate = self
+        bottomView.delegate = self
+        self.view.addSubview(headerView)
+        self.view.addSubview(bottomView)
         
         self.headerView.snp.makeConstraints { (make) in
             make.top.equalTo(YXExerciseConfig.headerViewTop)
             make.left.right.equalToSuperview()
             make.height.equalTo(YXExerciseConfig.headerViewHeight)
         }
-        
+
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.height.equalTo(YXExerciseConfig.exerciseViewBottom)
             make.bottom.equalToSuperview()
         }
-    }
-    
-    private func createSubviews() {
-        headerView.delegate = self
-        bottomView.delegate = self
-        self.view.addSubview(headerView)
-        self.view.addSubview(bottomView)
     }
     
     private func bindProperty() {

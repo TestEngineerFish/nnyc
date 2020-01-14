@@ -96,11 +96,11 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                YXWordBookResourceManager.shared.download(by: bookId) { (isSuccess) in
-                    guard isSuccess else { return }
-                    self.navigationController?.popViewController(animated: true)
-                }
-                
+                YXWordBookResourceManager.shared.contrastBookData(by: bookId, { (isSuccess) in
+                    if isSuccess {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }, showToast: true)
             }) { error in
                 print("❌❌❌\(error)")
             }

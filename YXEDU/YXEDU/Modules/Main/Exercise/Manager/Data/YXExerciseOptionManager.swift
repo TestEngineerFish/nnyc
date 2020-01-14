@@ -57,13 +57,16 @@ class YXExerciseOptionManager: NSObject {
         // 提高查找速度,拿空间换时间
         var whiteList = [String?]()
 
-        guard let wordModel = exerciseModel.word, let currentWordId = exerciseModel.word?.wordId else {
+        guard let wordModel = exerciseModel.word, let currentWordId = wordModel.wordId else {
             return nil
         }
         // 从新学单词获取数据
         whiteList.append(wordModel.word)
         let otherNewWordArray = self.otherNewWordArray(wordId: currentWordId)
-        for _wordExerciseModel in otherNewWordArray {
+        var tmpOtherNewWordArray = otherNewWordArray
+        for _ in otherNewWordArray {
+            let randomInt = Int.random(in: 0..<tmpOtherNewWordArray.count)
+            let _wordExerciseModel = tmpOtherNewWordArray[randomInt]
             guard let wordModel = _wordExerciseModel.word else {
                 continue
             }
@@ -73,6 +76,7 @@ class YXExerciseOptionManager: NSObject {
             let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
             items.append(itemModel)
             whiteList.append(wordModel.word)
+            tmpOtherNewWordArray.remove(at: randomInt)
             if items.count > itemCount - 2 {
                 break
             }

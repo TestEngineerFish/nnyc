@@ -123,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                self.processReviewResult(model: model)
                 self.newResultVC(model: model)
             } else {
-                UIView.toast("上报关卡失败")
+//                UIView.toast("上报关卡失败")
 //                self.navigationController?.popViewController(animated: true)
             }
 

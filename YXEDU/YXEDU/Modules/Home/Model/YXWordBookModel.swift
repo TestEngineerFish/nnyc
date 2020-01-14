@@ -54,16 +54,16 @@ struct YXWordBookModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        gradeId <- map["grade_id"]
-        bookId <- map["book_id"]
-        bookName <- map["book_name"]
-        bookWordSourcePath <- map["book_json_url"]
+        gradeId                <- map["grade_id"]
+        bookId                 <- map["book_id"]
+        bookName               <- map["book_name"]
+        bookWordSourcePath     <- map["book_json_url"]
         bookMaterialSourcePath <- map["book_url"]
-        coverImagePath <- map["cover"]
-        countOfWords <- map["words_num"]
-        didFinished <- map["is_learn_finish"]
-        bookHash <- map["hash"]
-        units <- map["unit_list"]
+        coverImagePath         <- map["cover"]
+        countOfWords           <- map["words_num"]
+        didFinished            <- map["is_learn_finish"]
+        bookHash               <- map["hash"]
+        units                  <- map["unit_list"]
     }
 }
 

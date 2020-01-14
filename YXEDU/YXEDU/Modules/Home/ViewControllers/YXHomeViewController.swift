@@ -27,47 +27,54 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var subItemCollectionView: UICollectionView!
 
     @IBAction func startExercise(_ sender: UIButton) {
-        if countOfWaitForStudyWords.text == "0" {
-            guard let homeData = homeModel else { return }
-            
-            let alertView = YXAlertView(type: .normal)
-            if homeData.isLastUnit == 1 {
-                alertView.descriptionLabel.text = "你太厉害了，已经背完这本书拉，你可以……"
-                alertView.closeButton.isHidden = false
-                alertView.leftButton.setTitle("换单元", for: .normal)
-                alertView.rightOrCenterButton.setTitle("换本书学", for: .normal)
-                
-                alertView.cancleClosure = {
-                    self.showLearnMap(alertView.rightOrCenterButton)
-                }
-                
-                alertView.doneClosure = { _ in
-                    self.performSegue(withIdentifier: "AddBookFromHome", sender: self)
-                }
-                
-            } else {
-                alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
-                alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
-                alertView.doneClosure = { _ in
-                    self.showLearnMap(alertView.rightOrCenterButton)
+        guard let homeModel = self.homeModel else {
+            YXUtils.showHUD(kWindow, title: "数据请求中，请稍后再试～")
+            return
+        }
+        YXWordBookResourceManager.shared.contrastBookData(by: homeModel.bookId, { [weak self] (isSuccess) in
+            guard let self = self else { return }
+            if isSuccess {
+                if self.countOfWaitForStudyWords.text == "0" {
+                    guard let homeData = self.homeModel else { return }
+
+                    let alertView = YXAlertView(type: .normal)
+                    if homeData.isLastUnit == 1 {
+                        alertView.descriptionLabel.text = "你太厉害了，已经背完这本书拉，你可以……"
+                        alertView.closeButton.isHidden = false
+                        alertView.leftButton.setTitle("换单元", for: .normal)
+                        alertView.rightOrCenterButton.setTitle("换本书学", for: .normal)
+
+                        alertView.cancleClosure = {
+                            self.showLearnMap(alertView.rightOrCenterButton)
+                        }
+
+                        alertView.doneClosure = { _ in
+                            self.performSegue(withIdentifier: "AddBookFromHome", sender: self)
+                        }
+
+                    } else {
+                        alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
+                        alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
+                        alertView.doneClosure = { _ in
+                            self.showLearnMap(alertView.rightOrCenterButton)
+                        }
+                    }
+
+                    alertView.adjustAlertHeight()
+                    alertView.show()
+
+                } else {
+                    YYCache.set(Date(), forKey: "LastStoredDate")
+
+                    let vc = YXExerciseViewController()
+                    vc.bookId = self.homeModel?.bookId
+                    vc.unitId = self.homeModel?.unitId
+                    vc.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
-            
-            alertView.adjustAlertHeight()
-            alertView.show()
-            
-        } else {
-            YYCache.set(Date(), forKey: "LastStoredDate")
-
-            let vc = YXExerciseViewController()
-            vc.bookId = homeModel?.bookId
-            vc.unitId = homeModel?.unitId
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        }, showToast: true)
     }
-
-    
     
     // MARK: -
     override func viewDidLoad() {
@@ -162,17 +169,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
                 self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
-                
-                YXWordBookResourceManager.shared.download(by: self.homeModel.bookId) { (isSucess) in
-                    guard isSucess else { return }
-                    YXUserModel.default.didFinishDownloadCurrentStudyWordBook = true
-                    
-                    YXWordBookResourceManager.shared.download { (isSucess) in
-                        guard isSucess else { return }
-                        YXUserModel.default.didFinishDownloadAllStudyWordBooks = true
-                    }
-                }
-                
+                YXWordBookResourceManager.shared.contrastBookData()
             } catch {
                 print(error)
             }

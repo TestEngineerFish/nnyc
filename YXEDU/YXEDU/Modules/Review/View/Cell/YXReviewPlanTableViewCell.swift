@@ -232,12 +232,22 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     
     @objc func clickReviewButton() {
-        self.startReviewPlanEvent?()
+        YXWordBookResourceManager.shared.contrastBookData(by: nil, { [weak self] (isSuccess) in
+            guard let self = self else { return }
+            if isSuccess {
+                self.startReviewPlanEvent?()
+            }
+        }, showToast: true)
     }
     
     
     @objc func clickListenButton() {
-        self.startListenPlanEvent?()
+        YXWordBookResourceManager.shared.contrastBookData(by: nil, { [weak self] (isSuccess) in
+            guard let self = self else { return }
+            if isSuccess {
+                self.startListenPlanEvent?()
+            }
+        }, showToast: true)
     }
 }
 
