@@ -16,12 +16,7 @@ extension YXExerciseDataManager {
         self.filterExercise()
         
         // 查找类型
-        var exercise = findType()
-        
-        let wid = exercise?.word?.wordId ?? 0
-        exercise?.word = dao.selectWord(wordId: wid)
-        
-        return exercise
+        return findType()
     }
     
 //    13800070

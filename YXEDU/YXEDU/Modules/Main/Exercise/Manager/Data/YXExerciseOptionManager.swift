@@ -370,25 +370,31 @@ class YXExerciseOptionManager: NSObject {
         var item = YXOptionItemModel()
         item.optionId = word.wordId ?? -1
         
+        var newWord = word
+        // 为什么要查询一次，因为出题后，数据缓存了，后面更新了词书，没有使用最新的，需要时时查询，后续要优化
+        if let w = YXWordBookDaoImpl().selectWord(wordId: item.optionId) {
+            newWord = w
+        }
+        
         switch type {
         case .lookWordChooseImage:
-            item.content = word.imageUrl
+            item.content = newWord.imageUrl
         case .lookExampleChooseImage:
-            item.content = word.imageUrl
+            item.content = newWord.imageUrl
         case .lookWordChooseChinese:
-            item.content = word.meaning
+            item.content = newWord.meaning
         case .lookExampleChooseChinese:
-            item.content = word.meaning
+            item.content = newWord.meaning
         case .lookChineseChooseWord:
-            item.content = word.word
+            item.content = newWord.word
         case .lookImageChooseWord:
-            item.content = word.word
+            item.content = newWord.word
         case .listenChooseWord:
-            item.content = word.word
+            item.content = newWord.word
         case .listenChooseChinese:
-            item.content = word.meaning
+            item.content = newWord.meaning
         case .listenChooseImage:
-            item.content = word.imageUrl
+            item.content = newWord.imageUrl
         default:
             break
         }
