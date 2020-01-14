@@ -110,26 +110,27 @@
             self.finishBlock(code, YES);
         }
 
-        NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",wechatId,wechatAppSerect,code];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            NSURL *zoneUrl = [NSURL URLWithString:url];
-            NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
-            NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (data){
-                    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                    NSString *token = dic[@"access_token"];
-                    NSString *openID = dic[@"openid"];
-                    NSString *unionID = dic[@"unionid"];
-
-                    if (token){
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"CompletedBind" object:nil userInfo:@{@"token":token, @"openID":openID, @"unionID":unionID}];
-                    }
-                }
-            });
-        });
+//        NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",wechatId,wechatAppSerect,code];
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//
+//            NSURL *zoneUrl = [NSURL URLWithString:url];
+//            NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+//            NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
+//
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                if (data){
+//                    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//                    NSString *token = dic[@"access_token"];
+//                    NSString *openID = dic[@"openid"];
+//                    NSString *unionID = dic[@"unionid"];
+//
+//                    if (token){
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"CompletedBind" object:nil userInfo:@{@"token":token, @"openID":openID, @"unionID":unionID}];
+//                    }
+//                }
+//            });
+//        });
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CompletedBind" object:nil userInfo:@{@"platfrom":@"wechat", @"token":code}];
 
     }else if([resp isKindOfClass:[SendMessageToWXResp class]]) {
         NSString *platform = @"";

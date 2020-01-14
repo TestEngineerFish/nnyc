@@ -308,21 +308,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         let loginModel = YXLoginSendModel()
         loginModel.pf = userInfo["platfrom"] as? String
         loginModel.code = userInfo["token"] as? String
-        
-        if let openID = userInfo["openID"] as? String {
-            loginModel.openid = openID
-            
-        } else {
-            loginModel.openid = ""
-        }
+        loginModel.openid = (userInfo["openID"] as? String == nil) ? "" : userInfo["openID"] as? String
 
-        if let unionID = userInfo["unionID"] as? String {
-            loginModel.unionid = unionID
-            
-        } else {
-            loginModel.unionid = ""
-        }
-        
         self.platform = loginModel.pf
         
         login(loginModel)
