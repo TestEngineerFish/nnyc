@@ -9,13 +9,13 @@
 import UIKit
 
 
-/// 图片+单词+音标题目
+/// 图片+单词+音标题目 （判断题）
 class YXWordAndImageQuestionView: YXBaseQuestionView {
 
     override func createSubviews() {
         super.createSubviews()
         
-        self.initImageView()
+        self.initImageView(set: false)
         self.initTitleLabel()
         self.initAudioPlayerView()
     }
@@ -49,10 +49,12 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
     
     override func bindData() {
         let word = (exerciseModel.question?.word ?? "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-        self.titleLabel?.text    = word
+        self.titleLabel?.text = word
         
-        if let url = self.exerciseModel.word?.imageUrl {
-            self.imageView?.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
+        for item in self.exerciseModel.option?.firstItems ?? [] {
+            if let url = item.content, item.optionId != -1 {
+                self.imageView?.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
+            }
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in

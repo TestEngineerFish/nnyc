@@ -373,6 +373,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     private func customShanYanView() -> CLUIConfigure {
         let configure = CLUIConfigure()
         configure.viewController = self
+        configure.manualDismiss = true
         configure.clAuthWindowPresentingAnimate = false
         configure.clNavigationBarHidden = true
         configure.clPhoneNumberFont = UIFont.systemFont(ofSize: 20, weight: .regular)

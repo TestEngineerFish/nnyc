@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import Bugly
 import GrowingCoreKit
 import GrowingAutoTrackKit
 
@@ -42,8 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initThirdPartyServices() {
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
-        
-//        Growing.start(withAccountId: kGrowingIOID)
+        Bugly.start(withAppId: kBuglyAppId)
+        Growing.start(withAccountId: kGrowingIOID)
     }
     
     func initViewAndData() {
@@ -95,7 +96,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 启动时，删除学习中状态
         YYCache.remove(forKey: .learningState)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            let random = Int.random(in: 0..<10)
+            if random % 2 == 0 {
+                // 人造崩溃
+//                let array = [1, 2, 3]
+//                print(array[5])
+            }
+            
+
+            
 //            self.processReviewResult()
             
             

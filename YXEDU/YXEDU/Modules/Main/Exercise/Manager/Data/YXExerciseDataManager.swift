@@ -124,14 +124,20 @@ class YXExerciseDataManager: NSObject {
         if !progressManager.isSkipNewWord() {
             for exercise in self.newExerciseArray {
                 if exercise.isFinish == false {
-                    return (needNewStudyCount, needReviewCount, exercise)
+                    var e = exercise                
+                    let wid = e.word?.wordId ?? 0
+                    let bid = e.word?.bookId ?? 0
+                    e.word = dao.selectWord(bookId: bid, wordId: wid)
+                    return (needNewStudyCount, needReviewCount, e)
                 }
             }
         }
         
         
         // 生成题型
-        let e = buildExercise()
+        var e = buildExercise()
+        let wid = e?.word?.wordId ?? 0
+        e?.word = dao.selectWord(wordId: wid)
         
         // 打印
         printCurrentTurn()

@@ -11,7 +11,6 @@ import UIKit
 
 /// 例句题目
 class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
-    
     private var audioList: [String] = []
     
     override func createSubviews() {

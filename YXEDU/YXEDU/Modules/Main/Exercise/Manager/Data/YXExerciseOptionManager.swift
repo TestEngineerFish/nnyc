@@ -81,7 +81,7 @@ class YXExerciseOptionManager: NSObject {
                 break
             }
         }
-
+        
         // 从学习流程获取数据
         if items.count < itemCount - 1 {
             // 防止无限随机同一个对象
@@ -172,18 +172,18 @@ class YXExerciseOptionManager: NSObject {
     
     
     func validReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
+        let wordId = exercise.word?.wordId ?? 0
         var exerciseModel = exercise
         
-        //        exerciseModel.question?.soundmark = exerciseModel.word?.soundmark
+//        print("正确:", exercise.word?.wordId, exercise.word?.word, exercise.word?.meaning, exercise.word?.imageUrl)
+        
         var items: [YXOptionItemModel] = []
         
         let max = self.reviewWordArray.count
         let num = self.random(max: max)
         if num % 2 == 1 {// 对
-            exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
-//            exerciseModel.word?.meaning = exerciseModel.word?.meaning
-//            exerciseModel.word?.imageUrl = exerciseModel.word?.imageUrl
-
+            exerciseModel.answers = [wordId]
+            
             var item = YXOptionItemModel()
             item.optionId = -1
             
@@ -192,44 +192,41 @@ class YXExerciseOptionManager: NSObject {
         } else {// 错
             // 其他的新学单词集合，排除当前的单词
             var wordArray = self.otherNewWordArray(wordId: exerciseModel.word?.wordId ?? 0)
-            var meaning: String?
-            var imageUrl: String?
-            if wordArray.count == 0, let wordModel = exerciseModel.word{
+            
+            var tmpWord: YXWordModel?
+            if wordArray.count == 0, let wordModel = exerciseModel.word {
                 wordArray = self.otherReviewWordArray(wordId: wordModel.wordId ?? 0)
                 if wordArray.isEmpty {
                     if let otherWordModel = self.otherWordExampleModel(wordModel: wordModel){
-                        meaning  = otherWordModel.meaning
-                        imageUrl = otherWordModel.imageUrl
+                        tmpWord = otherWordModel
                     }
                 } else {
                     let wordExerciseModel = wordArray.randomElement()
-                    meaning  = wordExerciseModel?.word?.meaning
-                    imageUrl = wordExerciseModel?.word?.imageUrl
+                    tmpWord = wordExerciseModel?.word
                 }
             } else {
                 let wordExerciseModel = wordArray.randomElement()
-                meaning  = wordExerciseModel?.word?.meaning
-                imageUrl = wordExerciseModel?.word?.imageUrl
+                tmpWord = wordExerciseModel?.word
             }
-            
-//            let exercise = wordArray[random(max: wordArray.count)]
-            exerciseModel.word?.meaning  = meaning
-            exerciseModel.word?.imageUrl = imageUrl
             
             var item = YXOptionItemModel()
             item.optionId = -1
 
             items.append(item)
-            items.append(itemModel(word: exerciseModel.word!, type: exerciseModel.type))
+            items.append(itemModel(word: tmpWord!, type: exerciseModel.type))
+            
+//            print("错误1:\(tmpWord?.wordId), \(tmpWord?.word), \(tmpWord?.meaning), \(tmpWord?.imageUrl)")
+//            print("错误2:\(exerciseModel.word?.wordId), \(exerciseModel.word?.word), \(exerciseModel.word?.meaning), \(exerciseModel.word?.imageUrl)")
+            
+            exerciseModel.answers = [tmpWord?.wordId ?? 0]
         }
 
         var option = YXExerciseOptionModel()
         option.firstItems = items
         
         exerciseModel.option = option
-        exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
         
-        //        reviewWordArray[index] = exerciseModel
+        
         return exerciseModel
     }
     
@@ -289,37 +286,7 @@ class YXExerciseOptionManager: NSObject {
 
     /// 获取一个其他单词选项
     func otherWordExampleModel(wordModel: YXWordModel, isFilterNilImage: Bool = true) -> YXWordModel? {
-
-        guard let currentWordId = wordModel.wordId else {
-            return nil
-        }
-        let otherNewWordArray = self.otherNewWordArray(wordId: currentWordId)
-        for _wordExerciseModel in otherNewWordArray {
-            guard let wordModel = _wordExerciseModel.word else {
-                continue
-            }
-            if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
-                continue
-            }
-            return wordModel
-        }
-
-        // 从学习流程获取数据
-        // 防止无限随机同一个对象
-        let tmpReviewWordArray = reviewWordArray
-        for _ in 0..<reviewWordArray.count {
-            let randomInt = Int.random(in: 0..<tmpReviewWordArray.count)
-            let _wordExerciseModel = tmpReviewWordArray[randomInt]
-            guard let otherWordModel = _wordExerciseModel.word else {
-                continue
-            }
-            if isFilterNilImage && (otherWordModel.imageUrl?.isEmpty ?? true) {
-                continue
-            }
-            if otherWordModel.word != wordModel.word {
-                return otherWordModel
-            }
-        }
+        
         // 从单元词书获取数据
         if let unitId = wordModel.unitId {
             let wordModelArray = YXWordBookDaoImpl().selectWordByUnitId(unitId: unitId)
@@ -366,29 +333,43 @@ class YXExerciseOptionManager: NSObject {
     }
     
     
+    /// 构造选项
+    /// - Parameters:
+    ///   - word:
+    ///   - type:
     func itemModel(word: YXWordModel, type: YXExerciseType) -> YXOptionItemModel {
         var item = YXOptionItemModel()
         item.optionId = word.wordId ?? -1
         
+        var newWord = word
+        // 为什么要查询一次，因为出题后，数据缓存了，后面更新了词书，没有使用最新的，需要时时查询，后续要优化
+        if let w = YXWordBookDaoImpl().selectWord(wordId: item.optionId) {
+            newWord = w
+        }
+        
         switch type {
         case .lookWordChooseImage:
-            item.content = word.imageUrl
+            item.content = newWord.imageUrl
         case .lookExampleChooseImage:
-            item.content = word.imageUrl
+            item.content = newWord.imageUrl
         case .lookWordChooseChinese:
-            item.content = word.meaning
+            item.content = newWord.meaning
         case .lookExampleChooseChinese:
-            item.content = word.meaning
+            item.content = newWord.meaning
         case .lookChineseChooseWord:
-            item.content = word.word
+            item.content = newWord.word
         case .lookImageChooseWord:
-            item.content = word.word
+            item.content = newWord.word
         case .listenChooseWord:
-            item.content = word.word
+            item.content = newWord.word
         case .listenChooseChinese:
-            item.content = word.meaning
+            item.content = newWord.meaning
         case .listenChooseImage:
-            item.content = word.imageUrl
+            item.content = newWord.imageUrl
+        case .validationImageAndWord:
+            item.content = newWord.imageUrl
+        case .validationWordAndChinese:
+            item.content = (newWord.partOfSpeech ?? "") + " " + (newWord.meaning ?? "")
         default:
             break
         }

@@ -89,9 +89,13 @@ extension YXExerciseDataManager {
                         exercise.word = dao.selectWord(wordId: option.optionId)
                         self.addWordStep(exerciseModel: exercise, isBackup: false)
                     }
-                } else {                    
-                    exercise.word = dao.selectWord(wordId: subStep.question?.wordId ?? 0)
-                    self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)
+                } else {
+                    if let e = dao.selectWord(wordId: subStep.question?.wordId ?? 0) {
+                        exercise.word = e
+                        self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)
+                    } else {
+                        print("单词不存在 id：",subStep.question?.wordId ?? 0)
+                    }
                 }
             }
 

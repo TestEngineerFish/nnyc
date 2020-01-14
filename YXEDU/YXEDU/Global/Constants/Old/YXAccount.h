@@ -19,11 +19,14 @@ static NSString *const jpushId         = @"1839fa8b64ddd41f7859f81d"; // 测试
 static NSString *const AppStoreLink = @"itms-apps://itunes.apple.com/cn/app/id1379948642?mt=8";
 static NSString *const kUmengAppKey = @"5bf7b6c0b465f5795e000425";
 
+#if DEBUG
+// 测试
+static NSString *const kBuglyAppId = @"c1901849b0";
+#else
 // 正式
 static NSString *const kBuglyAppId = @"8d2147f017";
-static NSString *const kBuglyAppKey = @"2134e337-24e7-461c-841d-9b8a7cacba0c";
-// 测试
-//static NSString *const kBuglyAppId = @"7fb30d809a";
-//static NSString *const kBuglyAppId = @"dc4fd7e0-63c7-4c2f-8971-f6ddd9b9de4e";
+#endif
+//static NSString *const kBuglyAppKey = @"2134e337-24e7-461c-841d-9b8a7cacba0c";
+
 
 static NSString *const kGrowingIOID = @"ab8175453123d5b2";
