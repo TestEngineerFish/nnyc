@@ -63,7 +63,10 @@ class YXExerciseOptionManager: NSObject {
         // 从新学单词获取数据
         whiteList.append(wordModel.word)
         let otherNewWordArray = self.otherNewWordArray(wordId: currentWordId)
-        for _wordExerciseModel in otherNewWordArray {
+        var tmpOtherNewWordArray = otherNewWordArray
+        for _ in otherNewWordArray {
+            let randomInt = Int.random(in: 0..<tmpOtherNewWordArray.count)
+            let _wordExerciseModel = tmpOtherNewWordArray[randomInt]
             guard let wordModel = _wordExerciseModel.word else {
                 continue
             }
@@ -73,11 +76,12 @@ class YXExerciseOptionManager: NSObject {
             let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
             items.append(itemModel)
             whiteList.append(wordModel.word)
+            tmpOtherNewWordArray.remove(at: randomInt)
             if items.count > itemCount - 2 {
                 break
             }
         }
-
+        
         // 从学习流程获取数据
         if items.count < itemCount - 1 {
             // 防止无限随机同一个对象
