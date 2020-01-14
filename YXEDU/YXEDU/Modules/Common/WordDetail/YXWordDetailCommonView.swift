@@ -270,8 +270,8 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             let example = examples?[indexPath.row]
             
             if word?.isComplexWord == 1 {
-                cell.labelDistance.constant = 128
-                cell.playAuoidButtonDistance.constant = 98
+                cell.labelDistance.constant = 144
+                cell.playAuoidButtonDistance.constant = 114
                 cell.exampleImageView.isHidden = false
                 cell.exampleImageView.sd_setImage(with: URL(string: example?.imageUrl ?? ""))
                 
@@ -399,8 +399,8 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             
             var height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 80) + 4
             if word?.isComplexWord == 1 {
-                height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 148) + 4 + 10
-                height = height > 60 ? height : 60
+                height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 164) + 4 + 10
+                height = height > 70 ? height : 70
             }
                         
             return height
