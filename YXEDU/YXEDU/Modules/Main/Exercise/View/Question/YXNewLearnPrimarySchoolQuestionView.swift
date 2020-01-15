@@ -8,13 +8,6 @@
 
 import UIKit
 
-
-enum NewLearnSubviewType: Int {
-    case imageAndAudio
-    case wordAndAudio
-    case wordAndImageAndAudio
-}
-
 class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
     var exampleLabel: UILabel = {
@@ -128,7 +121,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     func showImageView() {
         self.imageView?.isHidden = false
         self.imageView?.snp.updateConstraints({ (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(150), height: AdaptSize(108 + 1/3)))
+            make.size.equalTo(CGSize(width: AdaptSize(177), height: AdaptSize(128)))
         })
     }
 

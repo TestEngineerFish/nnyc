@@ -40,8 +40,8 @@ struct YXConnectionWordAndImageConfig: YXConnectionItemConfigProtocol {
     var leftItemHeight: CGFloat { return AdaptSize(30)}
     var leftInterval: CGFloat { return AdaptSize(54)}
 
-    var rightItemWidth: CGFloat { return AdaptSize(89)}
-    var rightItemHeight: CGFloat { return AdaptSize(59)}
+    var rightItemWidth: CGFloat { return AdaptSize(90)}
+    var rightItemHeight: CGFloat { return AdaptSize(66)}
     var rightInterval: CGFloat { return AdaptSize(24)}
 }
 
@@ -151,7 +151,7 @@ class YXConnectionView: UIView {
                 self?.itemEvent(index: index, type: type)
             }
             itemView.layer.masksToBounds = true
-            itemView.layer.cornerRadius = itemView.rightItemType == .text ? itemConfig.rightItemHeight/2 : 4
+            itemView.layer.cornerRadius = itemView.rightItemType == .text ? itemConfig.rightItemHeight/2 : AdaptSize(4)
             
             rightItemArray.append(itemView)
             self.addSubview(itemView)

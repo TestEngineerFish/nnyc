@@ -90,6 +90,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     func bindData() {}
 
     func createSubview() {
+        self.scrollView.clipsToBounds                  = false
         self.scrollView.isScrollEnabled                = false
         self.scrollView.showsVerticalScrollIndicator   = false
         self.scrollView.showsHorizontalScrollIndicator = false

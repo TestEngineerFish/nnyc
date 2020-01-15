@@ -128,6 +128,8 @@
         [self clearData];
         
         [[YXUserModel default] logout];
+    } else {
+        [[YXUserModel default] logout];
     }
 }
 

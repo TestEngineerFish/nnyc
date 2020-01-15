@@ -78,7 +78,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     func initImageView(set: Bool = true) {
         self.imageView = YXKVOImageView()
         self.imageView?.layer.masksToBounds = true
-        self.imageView?.layer.cornerRadius = 3.78
+        self.imageView?.layer.cornerRadius = AdaptSize(3.78)
         self.imageView?.backgroundColor = UIColor.orange1
         self.addSubview(imageView!)
         if set, let urlStr = self.exerciseModel.word?.imageUrl {

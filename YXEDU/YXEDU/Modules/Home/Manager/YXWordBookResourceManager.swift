@@ -7,9 +7,7 @@
 //
 
 import Foundation
-import CoreData
 import ObjectMapper
-import Zip
 
 class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     static let shared = YXWordBookResourceManager()

@@ -258,6 +258,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 播放单词
     private func playWord() {
         guard let wordUrlStr = self.exerciseModel.word?.voice, let url = URL(string: wordUrlStr), !self.isViewPause else {
+            self.status.forward()
+            self.playByStatus()
             return
         }
         YXAVPlayerManager.share.playAudio(url) { [weak self] in
@@ -273,6 +275,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// - Parameter block: 完成回调
     private func playExample() {
         guard let exampleUrlStr = self.exerciseModel.word?.examples?.first?.vocie, let url = URL(string: exampleUrlStr), !self.isViewPause else {
+            self.status.forward()
+            self.playByStatus()
             return
         }
         YXAVPlayerManager.share.playAudio(url) { [weak self] in

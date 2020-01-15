@@ -81,8 +81,8 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         self.imageView.snp.remakeConstraints { (make) in
             make.top.equalTo(self.snp.bottom)
             make.left.equalTo(remindLabel.snp.right)
-            make.width.equalTo(AdaptSize(89))
-            make.height.equalTo(AdaptSize(70))
+            make.width.equalTo(AdaptSize(90))
+            make.height.equalTo(AdaptSize(66))
         }
     }
     

@@ -115,8 +115,9 @@ struct YXExerciseOptionModel: Mappable {
 
 
 struct YXOptionItemModel: Mappable {
-    var optionId: Int = -1
+    var optionId: Int    = -1
     var content: String?
+    var isDisable: Bool = false
     
     init() {}
             
