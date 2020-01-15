@@ -53,7 +53,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             }
             self.challengeModel = _challengeModel
             self.tableView.reloadData()
-            if userModel.isShowed {
+            if !userModel.isShowed {
                 self.requestPreviousResult()
             }
         }) { (error) in

@@ -75,6 +75,9 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let idf  = "UICollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: idf, for: indexPath)
+        if cell.contentView.subviews.count > 0 {
+            cell.contentView.removeAllSubviews()
+        }
 
         let iv = self.imageView
         let shadowView = UIView()
@@ -117,12 +120,12 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
             for index in 0..<itemModelList.count {
                 exerciseModel.option?.firstItems?[index].isDisable = indexPath.row != index
             }
-            collectionView.reloadData()
+            collectionView.reloadSections(IndexSet(integer: 0))
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weakSelf = self] in
                 for index in 0..<itemModelList.count {
                     weakSelf.exerciseModel.option?.firstItems?[index].isDisable = false
                 }
-                collectionView.reloadData()
+                collectionView.reloadSections(IndexSet(integer: 0))
             }
         }
 

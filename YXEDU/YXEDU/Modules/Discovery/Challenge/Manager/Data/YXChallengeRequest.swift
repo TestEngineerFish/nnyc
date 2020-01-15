@@ -20,9 +20,9 @@ public enum YXChallengeRequest: YYBaseRequest {
 extension YXChallengeRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .challengeModel, .playGame, .rankedList, .showPrevious:
+        case .challengeModel, .playGame, .rankedList:
             return .get
-        case .report, .unlock:
+        case .report, .unlock, .showPrevious:
             return .post
         }
     }

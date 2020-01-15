@@ -250,38 +250,30 @@
                                                             <action selector="startExercise:" destination="nnd-vG-UVX" eventType="touchUpInside" id="JBh-gf-B1W"/>
                                                         </connections>
                                                     </button>
-                                                    <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spb-lT-D93" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
+                                                    <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spb-lT-D93" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                                                         <rect key="frame" x="10" y="281" width="354" height="93"/>
-                                                        <subviews>
-                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AZn-be-OuY">
-                                                                <rect key="frame" x="0.0" y="0.0" width="354" height="93"/>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="eZg-wp-HEa">
-                                                                    <size key="itemSize" width="98" height="86"/>
-                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                                </collectionViewFlowLayout>
-                                                                <cells/>
-                                                                <connections>
-                                                                    <outlet property="dataSource" destination="nnd-vG-UVX" id="Ivc-Ci-pto"/>
-                                                                    <outlet property="delegate" destination="nnd-vG-UVX" id="CTi-08-1p2"/>
-                                                                </connections>
-                                                            </collectionView>
-                                                        </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstItem="AZn-be-OuY" firstAttribute="leading" secondItem="spb-lT-D93" secondAttribute="leading" id="Kdy-cf-i6B"/>
-                                                            <constraint firstItem="AZn-be-OuY" firstAttribute="top" secondItem="spb-lT-D93" secondAttribute="top" id="RKF-xd-VjC"/>
-                                                            <constraint firstAttribute="bottom" secondItem="AZn-be-OuY" secondAttribute="bottom" id="VG7-KU-opP"/>
-                                                            <constraint firstAttribute="trailing" secondItem="AZn-be-OuY" secondAttribute="trailing" id="sMK-Ln-O2h"/>
-                                                        </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                 <real key="value" value="10"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AZn-be-OuY">
+                                                        <rect key="frame" x="10" y="281" width="354" height="93"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="eZg-wp-HEa">
+                                                            <size key="itemSize" width="98" height="86"/>
+                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        </collectionViewFlowLayout>
+                                                        <cells/>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="nnd-vG-UVX" id="Ivc-Ci-pto"/>
+                                                            <outlet property="delegate" destination="nnd-vG-UVX" id="CTi-08-1p2"/>
+                                                        </connections>
+                                                    </collectionView>
                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progressImage="homeProgressBar" trackImage="homeProgressBarTrack" translatesAutoresizingMaskIntoConstraints="NO" id="rVY-bt-TOH">
                                                         <rect key="frame" x="40" y="181" width="294" height="8"/>
                                                         <constraints>
@@ -306,8 +298,10 @@
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
                                                     <constraint firstItem="Fae-CO-v6Q" firstAttribute="top" secondItem="ife-Vw-839" secondAttribute="bottom" id="01u-Ql-86s"/>
+                                                    <constraint firstItem="AZn-be-OuY" firstAttribute="height" secondItem="spb-lT-D93" secondAttribute="height" id="1y3-U9-Alf"/>
                                                     <constraint firstItem="rVY-bt-TOH" firstAttribute="top" secondItem="gMI-oo-EEp" secondAttribute="bottom" constant="4" id="76M-GO-0lg"/>
                                                     <constraint firstItem="ife-Vw-839" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="top" constant="64" id="AZc-7x-ISv"/>
+                                                    <constraint firstItem="AZn-be-OuY" firstAttribute="top" secondItem="spb-lT-D93" secondAttribute="top" id="DFx-NV-tYd"/>
                                                     <constraint firstAttribute="trailing" secondItem="jIQ-cl-KIq" secondAttribute="trailing" constant="40" id="F3J-p1-7V5"/>
                                                     <constraint firstItem="wrk-54-5fD" firstAttribute="leading" secondItem="2F3-bO-dki" secondAttribute="trailing" constant="2" id="F7J-Mq-uDw"/>
                                                     <constraint firstItem="evR-by-lhD" firstAttribute="top" secondItem="rVY-bt-TOH" secondAttribute="bottom" constant="20" id="H9F-FM-8uG"/>
@@ -321,6 +315,8 @@
                                                     <constraint firstItem="wrk-54-5fD" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="top" constant="10" id="bpL-F2-Dx7"/>
                                                     <constraint firstItem="GK7-CR-ePQ" firstAttribute="centerY" secondItem="gMI-oo-EEp" secondAttribute="centerY" id="dm4-md-Brs"/>
                                                     <constraint firstAttribute="trailing" secondItem="spb-lT-D93" secondAttribute="trailing" constant="10" id="dxt-mZ-0qr"/>
+                                                    <constraint firstItem="AZn-be-OuY" firstAttribute="width" secondItem="spb-lT-D93" secondAttribute="width" id="e2m-n1-HpY"/>
+                                                    <constraint firstItem="AZn-be-OuY" firstAttribute="leading" secondItem="spb-lT-D93" secondAttribute="leading" id="eh5-IX-nDZ"/>
                                                     <constraint firstItem="7ey-RK-d8S" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="top" id="gSb-0h-ukB"/>
                                                     <constraint firstItem="gMI-oo-EEp" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="gc7-Td-1AQ"/>
                                                     <constraint firstAttribute="height" constant="392" id="i3F-Hz-9UF"/>
@@ -1195,7 +1191,7 @@
         <image name="showSelectGrade" width="14" height="14"/>
         <image name="tabLearn" width="27" height="27"/>
         <image name="tabLearnSelected" width="27" height="27"/>
-        <image name="taskCenterBackground" width="375" height="376"/>
+        <image name="taskCenterBackground" width="375" height="375"/>
         <image name="unitIndicator" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
