@@ -99,6 +99,20 @@ class YXUserModel: NSObject {
         UIApplication.shared.keyWindow?.rootViewController = tabBarController
     }
     
+    func updateToken() {
+        let request = YXHomeRequest.updateToken
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            guard let date = response.data else { return }
+            
+            YXUserModel.default.token = date.token
+            YXConfigure.shared().token = YXUserModel.default.token
+            YXConfigure.shared().saveCurrentToken()
+
+        }) { error in
+            print("❌❌❌\(error)")
+        }
+    }
+    
     @objc
     func logout() {
         self.didLogin = false

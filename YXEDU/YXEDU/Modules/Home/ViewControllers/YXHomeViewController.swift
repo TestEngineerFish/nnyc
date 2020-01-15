@@ -85,13 +85,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         let lineView = UIView(frame: CGRect(x: 0, y: -0.5, width: screenWidth, height: 0.5))
         lineView.backgroundColor = UIColor.hex(0xDCDCDC)
         self.tabBarController?.tabBar.addSubview(lineView)
-        
-        checkUser()
-        
+                
         progressBar.progressImage = progressBar.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
         
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
+        
+        checkUserState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -132,7 +132,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
-    private func checkUser() {
+    private func checkUserState() {
         let request = YXRegisterAndLoginRequest.userInfomation
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
             guard let userInfomation = response.data else { return }

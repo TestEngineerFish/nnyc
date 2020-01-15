@@ -48,7 +48,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initViewAndData() {
-        if YXUserModel.default.didLogin == false {
+        if YXUserModel.default.didLogin {
+            if let lastStoredDate = YYCache.object(forKey: "LastStoreTokenDate") as? Date {
+                if Calendar.current.isDateInToday(lastStoredDate) == false {
+                    YXUserModel.default.updateToken()
+                    YYCache.set(Date(), forKey: "LastStoreTokenDate")
+                }
+
+            } else {
+                YXUserModel.default.updateToken()
+                YYCache.set(Date(), forKey: "LastStoreTokenDate")
+            }
+            
+        } else {
             window = UIWindow(frame: UIScreen.main.bounds)
             window?.rootViewController = nil
 

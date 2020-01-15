@@ -171,7 +171,7 @@
             [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:error.desc];
         } else if (error.code == SYS_TOKEN_CODE) { // TOKEN失效，弹出登录页面
 //            [[YXMediator shared] afterLogout];
-            [[YXMediator shared] tokenExpired];
+//            [[YXMediator shared] tokenExpired];
         } else if (error.code == SYS_TOKEN_FAILURE_CODE) { // 被踢出
 //            [[YXMediator shared] clearData];
             [[YXMediator shared] userKickedOut];

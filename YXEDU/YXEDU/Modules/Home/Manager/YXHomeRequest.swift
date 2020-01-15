@@ -10,10 +10,11 @@ import UIKit
 
 public enum YXHomeRequest: YYBaseRequest {
     case report
+    case updateToken
 
     var method: YYHTTPMethod {
         switch self {
-        case .report:
+        case .report, .updateToken:
             return .get
         }
     }
@@ -22,6 +23,9 @@ public enum YXHomeRequest: YYBaseRequest {
         switch self {
         case .report:
             return YXAPI.Home.report
+            
+        case .updateToken:
+            return YXAPI.User.updateToken
         }
     }
 }
