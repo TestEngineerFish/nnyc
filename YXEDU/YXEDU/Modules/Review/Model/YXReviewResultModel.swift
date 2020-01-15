@@ -23,7 +23,7 @@ struct YXReviewResultModel: Mappable {
     var remainWordNum: Int = 0
     var score: Int = 0
     var studyDay: Int = 0
-    
+    var isShowCoin = false
     /// 完成状态
     var state: Bool = false
     var words: [YXWordModel]?
@@ -41,6 +41,7 @@ struct YXReviewResultModel: Mappable {
         remainWordNum <- map["remain_words_num"]
         score <- map["score"]
         studyDay <- map["study_day"]
+        isShowCoin <- map["is_show_coin"]
         words <- map["list"]
     }
     
@@ -75,7 +76,7 @@ struct YXExerciseResultDisplayModel {
         
     var score: Int = 0
     var studyDay: Int = 0
-    
+    var isShowCoin = false
     
     /// 需要加强的单词
     var words: [YXWordModel]?
@@ -91,6 +92,7 @@ struct YXExerciseResultDisplayModel {
         displayModel.remainWordNum = model.remainWordNum
         displayModel.score = model.score
         displayModel.studyDay = model.studyDay
+        displayModel.isShowCoin = model.isShowCoin
         displayModel.state = model.state
         displayModel.words = model.words
         
@@ -112,6 +114,7 @@ struct YXExerciseResultDisplayModel {
 
         displayModel.score = currentUnit?.stars ?? 0
         displayModel.studyDay = model.studyDay
+        displayModel.isShowCoin = model.isShowCoin
         displayModel.state = true
         displayModel.unitList = model.unitList
         

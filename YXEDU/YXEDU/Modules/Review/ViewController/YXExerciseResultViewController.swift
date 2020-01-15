@@ -77,12 +77,23 @@ class YXExerciseResultViewController: YXViewController {
     
     
     private func shareEvent() {
-        let shareVC = YXShareViewController()
-        shareVC.shareType = shareType()
-        shareVC.wordsAmount = model?.allWordNum ?? 0
-        shareVC.daysAmount = model?.studyDay ?? 0
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+        if model.type == .base {
+            let vc = YXShareViewController()
+            vc.shareType   = .learnResult
+            vc.wordsAmount = model.studyDay
+            vc.daysAmount  = model.allWordNum
+            vc.hideCoin = !model.isShowCoin
+            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        } else {
+            let shareVC = YXShareViewController()
+            shareVC.shareType = shareType()
+            shareVC.wordsAmount = model?.allWordNum ?? 0
+            shareVC.daysAmount = model?.studyDay ?? 0
+            shareVC.hideCoin = !model.isShowCoin
+            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+        }
     }
+
     
     private func shareType() -> YXShareImageType {
         switch model?.type {

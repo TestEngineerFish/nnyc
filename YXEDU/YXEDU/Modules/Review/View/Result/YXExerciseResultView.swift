@@ -178,17 +178,10 @@ class YXExerciseResultView: YXView {
 
     
     private func setImageValue() {
-        if model.state {
-            if model.type == .wrong {
-                starView.isHidden = true
-                imageView.image = UIImage(named: "review_wrong_finish_result")
-            } else {
-                starView.isHidden = false
-                starView.count = model?.score ?? 0
-                imageView.image = UIImage(named: "review_learning_progress")
-            }
-        } else {
-            starView.isHidden = true
+        if model.state { // 完成
+            starView.isHidden = false
+            starView.count = model?.score ?? 0
+            
             if model.type == .base {
                 imageView.image = UIImage(named: "learnResult\(model.score)")
             } else if model.type == .wrong {
@@ -198,6 +191,9 @@ class YXExerciseResultView: YXView {
             } else {// 计划或者智能
                 imageView.image = UIImage(named: "review_finish_result")
             }
+        } else { // 未完成
+            starView.isHidden = true
+            imageView.image = UIImage(named: "review_learning_progress")
         }
     }
     

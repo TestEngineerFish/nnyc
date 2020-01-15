@@ -213,8 +213,9 @@ class YXExerciseOptionManager: NSObject {
             item.optionId = -1
 
             items.append(item)
-            items.append(itemModel(word: tmpWord!, type: exerciseModel.type))
-            
+            if tmpWord != nil {
+                items.append(itemModel(word: tmpWord!, type: exerciseModel.type))
+            }
 //            print("错误1:\(tmpWord?.wordId), \(tmpWord?.word), \(tmpWord?.meaning), \(tmpWord?.imageUrl)")
 //            print("错误2:\(exerciseModel.word?.wordId), \(exerciseModel.word?.word), \(exerciseModel.word?.meaning), \(exerciseModel.word?.imageUrl)")
             

@@ -21,7 +21,6 @@ class YXReviewViewController: YXTableViewController {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
         self.isMonitorNetwork = true
-        
         self.fetchData()
     }
     
@@ -30,6 +29,8 @@ class YXReviewViewController: YXTableViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.setNavigationBarHidden(true, animated: animated)
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
+        
+//        YXTest.default.test()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

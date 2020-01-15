@@ -103,6 +103,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
             return
         }
         let bubbleImageView = UIImageView(image: UIImage(named: "bubble"))
+        bubbleImageView.isHidden = true
         let bubbleSize = CGSize(width: AdaptSize(170), height: AdaptSize(60))
         bubbleImageView.size = bubbleSize
         let label = UILabel()
