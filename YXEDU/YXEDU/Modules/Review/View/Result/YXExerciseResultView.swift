@@ -93,7 +93,6 @@ class YXExerciseResultView: YXView {
             make.top.bottom.equalToSuperview()
             make.left.equalTo(AS(21))
             make.right.equalTo(AS(-21))
-//            make.height.equalTo(AS(406))
         }
         
         imageView.snp.remakeConstraints { (make) in
@@ -117,34 +116,31 @@ class YXExerciseResultView: YXView {
             make.height.equalTo(titleHeight())
         }
         
-        if isHiddenSubTitleLabel {
-            progressView.snp.remakeConstraints { (make) in
-                make.top.equalTo(titleLabel.snp.bottom).offset(AS(11))
-                make.left.right.equalTo(imageView)
-                make.height.equalTo(AS(8))
-            }
-            
-            let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
-            tipsView.snp.remakeConstraints { (make) in
-                make.top.equalTo(progressView.snp.bottom).offset(AS(28))
-                make.left.right.equalToSuperview()
-                make.height.equalTo(tipsHeight)
-            }
-        } else {
+        var topView: UIView = titleLabel
+        if subTitleLabel.isHidden == false {
             subTitleLabel.snp.remakeConstraints { (make) in
                 make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
                 make.left.right.equalToSuperview()
                 make.height.equalTo(AS(17))
             }
-            
-            let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
-            tipsView.snp.remakeConstraints { (make) in
-                make.top.equalTo(subTitleLabel.snp.bottom).offset(AS(28))
-                make.left.right.equalToSuperview()
-                make.height.equalTo(tipsHeight)
-            }
+            topView = subTitleLabel
         }
-
+                
+        if model.state == false {
+            progressView.snp.remakeConstraints { (make) in
+                make.top.equalTo(topView.snp.bottom).offset(AS(11))
+                make.left.right.equalTo(imageView)
+                make.height.equalTo(AS(8))
+            }
+            topView = progressView
+        }
+        
+        let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
+        tipsView.snp.remakeConstraints { (make) in
+            make.top.equalTo(topView.snp.bottom).offset(AS(28))
+            make.left.right.equalToSuperview()
+            make.height.equalTo(tipsHeight)
+        }
                 
         operateButton.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -183,9 +179,14 @@ class YXExerciseResultView: YXView {
     
     private func setImageValue() {
         if model.state {
-            starView.isHidden = false
-            starView.count = model?.score ?? 0
-            imageView.image = UIImage(named: "review_learning_progress")
+            if model.type == .wrong {
+                starView.isHidden = true
+                imageView.image = UIImage(named: "review_wrong_finish_result")
+            } else {
+                starView.isHidden = false
+                starView.count = model?.score ?? 0
+                imageView.image = UIImage(named: "review_learning_progress")
+            }
         } else {
             starView.isHidden = true
             if model.type == .base {
@@ -230,7 +231,7 @@ class YXExerciseResultView: YXView {
                 } else if model.score == 3 {
                     subTitleLabel.text = " 您可以进入下一个单元进行学习哦！"
                 }
-            } else if model.type != .aiReview {
+            } else if model.type != .aiReview && model.type != .wrong {
                 if model.score == 0 || model.score == 1 {
                     subTitleLabel.text = " 还有些词需要多多练习才行哦！"
                 } else if model.score == 2 {
@@ -340,7 +341,21 @@ class YXExerciseResultView: YXView {
     }
     
     private var isHiddenSubTitleLabel: Bool {
-        return (model.state == false) ||  (model.type == .wrong)
+        var has = false
+        if model.state {// 学完
+            if model.type == .base {
+                if model.score >= 1 {
+                    has = true
+                }
+            } else if model.type != .aiReview && model.type != .wrong {
+                has = true
+            }
+        } else {
+            if model.type == .base {
+                has = true
+            }
+        }
+        return !has // (model.state == false) ||  (model.type == .wrong)
     }
     
     

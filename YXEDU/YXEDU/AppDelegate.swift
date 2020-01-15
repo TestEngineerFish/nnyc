@@ -44,7 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
         Bugly.start(withAppId: kBuglyAppId)
+        
+        #if !DEBUG
         Growing.start(withAccountId: kGrowingIOID)
+        #endif
     }
     
     func initViewAndData() {
@@ -99,7 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    
     func initConfig() {
         // 网络状态监听
         YYNetworkService.default.startMonitorNetwork()
@@ -107,81 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 启动时，删除学习中状态
         YYCache.remove(forKey: .learningState)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            let random = Int.random(in: 0..<10)
-            if random % 2 == 0 {
-                // 人造崩溃
-//                let array = [1, 2, 3]
-//                print(array[5])
-            }
-            
-
-            
-//            self.processReviewResult()
-            
-            
-//            let vc = YXReviewResultView(type: .planListenReview)
-//            vc.model = nil
-//            vc.show()
-        }
     }
     
-    /// 处理复习结果页
-    func processReviewResult() {
-        YXReviewDataManager().fetchReviewResult(type: .aiReview, planId: 13) { [weak self] (resultModel, error) in
-            guard let self = self else {return}
-
-            if var model = resultModel {
-
-//                model.planId = 13
-//                if model.planState {
-//                    self.processReviewResult(model: model)
-//                } else {
-////                    self.processReviewProgressResult(model: model)
-//                }
-//                self.processReviewProgressResult(model: model)
-                
-//                self.processReviewResult(model: model)
-                self.newResultVC(model: model)
-            } else {
-//                UIView.toast("上报关卡失败")
-//                self.navigationController?.popViewController(animated: true)
-            }
-
-        }
-    }
-
-        /// 听力复习结果页
-        func processReviewResult(model: YXReviewResultModel) {
-
-            let vc = YXReviewResultViewController(type: .aiReview, model: model)
-            vc.hidesBottomBarWhenPushed = true
-            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-        }
-    
-    
-    /// 智能复习结果页
-    /// - Parameter model:
-    func processReviewProgressResult(model: YXReviewResultModel) {
-        let progressView = YXReviewLearningProgressView(type: .planListenReview, model: model)
-        progressView.reviewEvent = {
-            let vc = YXExerciseViewController()
-            vc.dataType = progressView.model?.type ?? .aiReview
-            vc.planId = model.planId
-            vc.hidesBottomBarWhenPushed = true
-            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-        }
-        progressView.show()
-    }
-    
-    
-    func newResultVC(model: YXReviewResultModel) {
-        let m = YXExerciseResultDisplayModel.displayModel(model: model)
-        let vc = YXExerciseResultViewController(model: m)
-        
-        vc.hidesBottomBarWhenPushed = true
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-    }
 }
 
