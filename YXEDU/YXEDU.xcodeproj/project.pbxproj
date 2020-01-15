@@ -5402,8 +5402,8 @@
 				EEACEB05239E62160036B3A2 /* YXReviewViewController.swift */,
 				EEACEB6D23A8BCD90036B3A2 /* YXReviewPlanDetailViewController.swift */,
 				EE6C7D1723B0A073009DCC0C /* YXReviewPlanShareDetailViewController.swift */,
-				EEA50FE523BE18CC00518BE8 /* YXReviewResultViewController.swift */,
 				EE9434DD23CC8FF2005319EC /* YXExerciseResultViewController.swift */,
+				EEA50FE523BE18CC00518BE8 /* YXReviewResultViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

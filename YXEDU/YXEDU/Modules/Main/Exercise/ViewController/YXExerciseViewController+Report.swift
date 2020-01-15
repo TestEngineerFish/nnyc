@@ -72,9 +72,9 @@ extension YXExerciseViewController {
         vc.unitId = self.dataManager.unitId
         vc.newLearnAmount = newCount
         vc.reviewLearnAmount = reviewCount
-                            
-        self.navigationController?.popViewController(animated: false)
         vc.hidesBottomBarWhenPushed = true
+        
+        YRRouter.popViewController(false)        
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
@@ -86,7 +86,7 @@ extension YXExerciseViewController {
             
             if var model = resultModel {
                              
-                model.planId = self.planId ?? 0                
+                model.planId = self.planId ?? 0
                 self.navigationController?.popViewController(animated: false)
                 
                 let m = YXExerciseResultDisplayModel.displayModel(model: model)

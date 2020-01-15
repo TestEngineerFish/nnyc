@@ -80,14 +80,14 @@ class YXExerciseResultViewController: YXViewController {
         if model.type == .base {
             let vc = YXShareViewController()
             vc.shareType   = .learnResult
-            vc.wordsAmount = model.studyDay
-            vc.daysAmount  = model.allWordNum
+            vc.wordsAmount = model.allWordNum
+            vc.daysAmount  = model.studyDay
             vc.hideCoin = !model.isShowCoin
             YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
         } else {
             let shareVC = YXShareViewController()
             shareVC.shareType = shareType()
-            shareVC.wordsAmount = model?.allWordNum ?? 0
+            shareVC.wordsAmount = model?.reviewWordNum ?? 0
             shareVC.daysAmount = model?.studyDay ?? 0
             shareVC.hideCoin = !model.isShowCoin
             YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)

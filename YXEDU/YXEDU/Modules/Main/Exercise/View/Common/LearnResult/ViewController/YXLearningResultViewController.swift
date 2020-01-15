@@ -148,8 +148,8 @@ class YXLearningResultViewController: YXViewController {
         }
         let vc = YXShareViewController()
         vc.shareType   = .learnResult
-        vc.wordsAmount = model.studyDay
-        vc.daysAmount  = model.allWordCount
+        vc.wordsAmount = model.allWordCount
+        vc.daysAmount  = model.studyDay
         vc.hideCoin    = !model.isShowCoin
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
