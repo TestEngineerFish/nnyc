@@ -5327,10 +5327,8 @@
 		EE6C7D2123B0F303009DCC0C /* Result */ = {
 			isa = PBXGroup;
 			children = (
-				EE6C7D2423B0F3D0009DCC0C /* YXReviewResultView.swift */,
 				EE6C7D2623B0F477009DCC0C /* YXNotReviewWordView.swift */,
 				EE6C7D2823B0F6CA009DCC0C /* YXReviewLearningProgressView.swift */,
-				EE6C7D2A23B1C292009DCC0C /* YXReviewResultWordTableView.swift */,
 				EE9434DF23CC908A005319EC /* YXExerciseResultView.swift */,
 			);
 			path = Result;
@@ -5391,6 +5389,7 @@
 				EE88DF5823AF871E004DFF10 /* YXReviewPlanCommandView.swift */,
 				EE6C7D1D23B0BC56009DCC0C /* YXReviewPlanDetailHeaderView.swift */,
 				EE6C7D1F23B0DE23009DCC0C /* YXReviewPlanDetailBottomView.swift */,
+				EE6C7D2423B0F3D0009DCC0C /* YXReviewResultView.swift */,
 				EEA50FE323BDDA2A00518BE8 /* YXReviewPlanEditView.swift */,
 				227F477623CC459400D6C603 /* YXWrongWordsListView.swift */,
 			);
@@ -5412,6 +5411,7 @@
 		EEACEB1B239F9DA90036B3A2 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				EE6C7D2A23B1C292009DCC0C /* YXReviewResultWordTableView.swift */,
 				EEACEB6B23A7AA850036B3A2 /* YXReviewPlanEmptyView.swift */,
 				EEACEB1C239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift */,
 				227F477823CC466200D6C603 /* YXWrongWordCell.swift */,

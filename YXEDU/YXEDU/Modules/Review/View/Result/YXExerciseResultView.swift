@@ -261,19 +261,18 @@ class YXExerciseResultView: YXView {
     }
     
     
-    private func setShareButtonValue() {
-                
+    private func setShareButtonValue() {                
         if model.state {
-            if model.type == .planListenReview {
-                operateButton.setTitle("继续听写", for: .normal)
-            } else if model.type == .planReview {
-                operateButton.setTitle("继续复习", for: .normal)
-            }
-        } else {
             if model.type == .wrong {
                 operateButton.setTitle("完成", for: .normal)
             } else {
                 operateButton.setTitle("打卡分享", for: .normal)
+            }
+        } else {
+            if model.type == .planListenReview {
+                operateButton.setTitle("继续听写", for: .normal)
+            } else if model.type == .planReview {
+                operateButton.setTitle("继续复习", for: .normal)
             }
         }
 
@@ -339,14 +338,6 @@ class YXExerciseResultView: YXView {
 
         return attrString
     }
-    
-//    private func subTitle() -> String {
-//        if model.type == .planListenReview {
-//            return "听写的单词"
-//        }
-//        return "巩固的单词"
-//    }
-
     
     private var isHiddenSubTitleLabel: Bool {
         return (model.state == false) ||  (model.type == .wrong)
@@ -455,18 +446,21 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let value = dataSource[indexPath.row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         cell.selectionStyle = .none
-            
-        let value = dataSource[indexPath.row]
+        cell.accessoryType = value.2 ? .disclosureIndicator : .none
+        
         let titleLabel = self.createTitleLabel()
         let countLabel = self.createCountLabel()
         
         titleLabel.text = value.0
         countLabel.text = "\(value.1)"
-            
-        cell.addSubview(titleLabel)
-        cell.addSubview(countLabel)
+        
+        cell.contentView.removeAllSubviews()
+        cell.contentView.addSubview(titleLabel)
+        cell.contentView.addSubview(countLabel)
         
         titleLabel.snp.remakeConstraints { (make) in
             make.centerY.equalToSuperview()
@@ -478,7 +472,7 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
             make.centerY.equalToSuperview()
             make.left.equalTo(titleLabel.snp.right).offset(AS(10))
             make.width.equalTo(AS(80))
-            make.right.equalTo(AS(-34))
+            make.right.equalTo(AS(value.2 ? -2 : -34))
         }
         
         return cell

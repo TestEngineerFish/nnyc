@@ -12,7 +12,7 @@ class YXExerciseResultViewController: YXViewController {
 
     var model: YXExerciseResultDisplayModel!
     var resultView: YXExerciseResultView!
-//    var
+
     deinit {
         resultView.removeFromSuperview()
     }
@@ -61,6 +61,8 @@ class YXExerciseResultViewController: YXViewController {
     }
     
     private func reviewEvent() {
+        YRRouter.popViewController(false)
+        
         let vc = YXExerciseViewController()
         vc.dataType = model?.type ?? .aiReview
         vc.planId = model.id

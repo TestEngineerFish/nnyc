@@ -240,7 +240,7 @@ extension YYEnvChangeViewController {
 
         
         
-        if (YXConfigure.shared()?.token.count ?? 0) > 0 {
+        if (YXConfigure.shared()?.token?.count ?? 0) > 0 {
             let logoutModel = YXLogoutModel()
             logoutModel.jp_devices_id = YXConfigure.shared()?.deviceId
             logoutModel.jp_registration_id = jgId
