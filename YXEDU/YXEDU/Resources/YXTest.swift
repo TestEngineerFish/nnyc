@@ -10,7 +10,7 @@ import UIKit
 
 class YXTest: NSObject {
     
-    class func Test() {
+    func Test() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             let random = Int.random(in: 0..<10)
             if random % 2 == 0 {
