@@ -37,10 +37,15 @@ class YXExerciseResultViewController: YXViewController {
         resultView.processEvent = { [weak self] in
             self?.processEvent()
         }
+        resultView.showWordListEvent = { [weak self] in
+            self?.showWordListEvent()
+        }
         
         self.view.addSubview(resultView)
         resultView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.top.equalTo(AS(68 + kSafeBottomMargin))
+            make.left.right.equalToSuperview()
+            make.height.equalTo(resultView.viewHeight())
         }
     }
     
@@ -60,6 +65,12 @@ class YXExerciseResultViewController: YXViewController {
         vc.dataType = model?.type ?? .aiReview
         vc.planId = model.id
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+    }
+    
+    private func showWordListEvent() {
+        let wrongWordListView = YXWrongWordsListView()
+        wrongWordListView.bindData(model.words ?? [])
+        YXAlertCustomView.share.show(wrongWordListView)
     }
     
     

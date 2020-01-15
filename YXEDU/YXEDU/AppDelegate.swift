@@ -118,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
 
             
-//            self.processReviewResult()
+            self.processReviewResult()
             
             
 //            let vc = YXReviewResultView(type: .planListenReview)
