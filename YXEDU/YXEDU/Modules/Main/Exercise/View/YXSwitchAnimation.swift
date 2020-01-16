@@ -21,7 +21,7 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
             showRightAnimation()
             YXAVPlayerManager.share.playRightAudio()
         } else {
-//            showWrongAnimation()
+            showWrongAnimation()
             YXAVPlayerManager.share.playWrongAudio()
         }
         feedback()
