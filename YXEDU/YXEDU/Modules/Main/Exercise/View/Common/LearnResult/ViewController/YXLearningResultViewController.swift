@@ -10,9 +10,10 @@ import UIKit
 
 
 class YXLearningResultViewController: YXViewController {
-
-    var contentScrollView = UIScrollView()
+    
+    var backButton        = BiggerClickAreaButton()
     var headerView: YXExerciseResultView?
+    var taskMapView: YXTaskMapView?
     var currentModel: YXLearnMapUnitModel? // 当前单元
     var requestCount = 0
 
@@ -31,40 +32,29 @@ class YXLearningResultViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        self.customNavigationBar?.backgroundColor = UIColor.clear
+        self.customNavigationBar?.isHidden = true
         self.bindData()
     }
-
+    
+    
+    private func loadSubViews() {
+        createSubviews()
+        bindProperty()
+        setLayout()
+    }
+    
+    
     private func createSubviews() {
-        guard let _currentModel = self.currentModel else {
-            return
-        }
-        
-        // 内容视图,支持滑动
-        self.view.addSubview(self.contentScrollView)
-        
-        let contentScrollViewH = screenHeight - AS(68 + kSafeBottomMargin)
-        self.contentScrollView.contentSize = CGSize(width: screenWidth, height: contentScrollViewH)
-        self.contentScrollView.isScrollEnabled = true
-        self.contentScrollView.showsVerticalScrollIndicator   = false
-        self.contentScrollView.showsHorizontalScrollIndicator = false
-        self.contentScrollView.frame = CGRect(x: 0, y: AS(68 + kSafeBottomMargin), width: screenWidth, height: contentScrollViewH)
-
-        
-        
         // 结果视图
         let newModel = YXExerciseResultDisplayModel.displayModel(unitId: unitId ?? 0, newStudyWordCount: newLearnAmount, reviewWordCount: reviewLearnAmount, model: model!)
         headerView = YXExerciseResultView(model: newModel)
-        self.contentScrollView.addSubview(headerView!)
-//        headerView?.snp.makeConstraints { (make) in
-//            make.top.left.right.equalToSuperview()
-//            make.height.equalTo(headerView!.viewHeight()) //AdaptSize(244)
-//        }
-        self.headerView?.frame = CGRect(x: 0, y: 0, width: screenWidth, height: headerView!.viewHeight())
-        self.headerView?.processEvent = { [weak self] in
-            self?.punchEvent()
-        }
-    
+        self.view.addSubview(headerView!)
+        
+        // 返回按钮
+        self.view.addSubview(backButton)
+ 
+        // 设置任务地图
+        self.createTaskMap()
     }
 
     /// 设置任务地图
@@ -76,24 +66,50 @@ class YXLearningResultViewController: YXViewController {
         let h = screenHeight - AS(68 + kSafeBottomMargin) - headerView!.viewHeight() - AS(10 + kSafeBottomMargin + 21)
         // 任务地图视图
         let taskMapViewSize = CGSize(width: w, height: h)
-        let taskMapViewPoint = CGPoint(x: AS(20), y: headerView!.viewHeight() + AS(10))
-        let taskMapFrame    = CGRect(origin: taskMapViewPoint, size: taskMapViewSize)
-        let taskMapView     = YXTaskMapView(modelArray, frame: taskMapFrame, currentModel: currentModel)
-        taskMapView.learnNewUnit = { [weak self] (unitId: Int?) -> Void in
+        let taskMapFrame    = CGRect(origin: .zero, size: taskMapViewSize)
+        taskMapView     = YXTaskMapView(modelArray, frame: taskMapFrame, currentModel: currentModel)
+        self.view.addSubview(taskMapView!)
+    }
+    
+    
+    private func bindProperty() {
+        backButton.setImage(UIImage(named: "back_gray"), for: .normal)
+        backButton.addTarget(self, action: #selector(backClick), for: .touchUpInside)
+        
+        self.headerView?.processEvent = { [weak self] in
+            self?.punchEvent()
+        }
+        
+        taskMapView?.layer.setDefaultShadow()
+        taskMapView?.backgroundColor    = UIColor.white
+        taskMapView?.layer.cornerRadius = 6
+        taskMapView?.learnNewUnit = { [weak self] (unitId: Int?) -> Void in
             guard let self = self, let id = unitId else {
                 return
             }
             self.learnUnit(id)
         }
-        taskMapView.backgroundColor    = UIColor.white
-        taskMapView.layer.cornerRadius = 6
-        self.contentScrollView.addSubview(taskMapView)
-//        taskMapView.snp.makeConstraints { (make) in
-//            make.centerX.equalToSuperview()
-//            make.size.equalTo(taskMapViewSize)
-//            make.bottom.equalToSuperview().offset(AS(-kSafeBottomMargin))
-//        }
-        taskMapView.layer.setDefaultShadow()
+        
+    }
+    
+    private func setLayout() {
+        backButton.snp.makeConstraints { (make) in
+            make.left.equalTo(AS(14))
+            make.top.equalTo(AS(32 + kSafeBottomMargin))
+            make.width.height.equalTo(AS(22))
+        }
+        
+        headerView?.snp.makeConstraints { (make) in
+            make.top.equalTo(AS(68 + kSafeBottomMargin))
+            make.left.right.equalToSuperview()
+            make.height.equalTo(headerView?.viewHeight() ?? 0)
+        }
+        
+        taskMapView?.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.size.equalTo(taskMapView?.size ?? CGSize.zero)
+            make.bottom.equalToSuperview().offset(AS(-kSafeBottomMargin - 21))
+        }
     }
 
     private func bindData() {
@@ -119,8 +135,7 @@ class YXLearningResultViewController: YXViewController {
                 self.currentModel = self.model?.unitList?.filter({ (model) -> Bool in
                     return model.unitID == unitId
                 }).first
-                self.createSubviews()
-                self.createTaskMap()
+                self.loadSubViews()
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
@@ -141,6 +156,11 @@ class YXLearningResultViewController: YXViewController {
     }
 
     // MARK: Event
+    @objc private func backClick() {
+//        NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @objc private func punchEvent() {
         guard let model = self.model else {
             YXUtils.showHUD(kWindow, title: "数据请求失败，请稍后再试～")

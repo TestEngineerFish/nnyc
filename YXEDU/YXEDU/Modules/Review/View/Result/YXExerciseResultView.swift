@@ -183,7 +183,7 @@ class YXExerciseResultView: YXView {
                 starView.isHidden = true
                 imageView.image = UIImage(named: "review_result_wrong")
             } else {
-                starView.count = model.score
+                starView.count = (model.score == 0 ? 1 : model.score)
                 
                 if starView.count <= 1 {
                     imageView.image = UIImage(named: "review_result_1star")

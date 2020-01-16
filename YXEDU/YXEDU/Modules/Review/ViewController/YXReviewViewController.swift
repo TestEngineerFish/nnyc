@@ -30,7 +30,7 @@ class YXReviewViewController: YXTableViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
         
-//        YXTest.default.test()
+        YXTest.default.test()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,13 +44,11 @@ class YXReviewViewController: YXTableViewController {
         self.tableView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(41 + kSafeBottomMargin))
             make.left.right.bottom.equalToSuperview()
-//            make.bottom.equalTo(AS(-kTabBarHeight))
         }
     }
     
     
     override func addNotification() {
-        
         NotificationCenter.default.addObserver(self, selector: #selector(fetchDataWhenResultPageClosed), name: YXNotification.kRefreshReviewTabPage, object: nil)
     }
     

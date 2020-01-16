@@ -10,10 +10,11 @@ import UIKit
 
 class YXTest: NSObject {
     static let `default` = YXTest()
+    
     func test() {
-    #if DEBUG
+        #if DEBUG
         testA()
-    #endif
+        #endif
     }
     
     func testA() {
@@ -21,10 +22,9 @@ class YXTest: NSObject {
             let random = Int.random(in: 0..<10)
             if random % 2 == 0 {
                 // 人造崩溃
-    //                let array = [1, 2, 3]
-    //                print(array[5])
+//                let array = [1, 2, 3]
+//                print(array[5])
             }
-            
 //            self.processReviewResult()
             self.processBaseExerciseResult()
         }
@@ -48,48 +48,15 @@ class YXTest: NSObject {
         YXReviewDataManager().fetchReviewResult(type: .aiReview, planId: 13) { [weak self] (resultModel, error) in
             guard let self = self else {return}
 
-            if var model = resultModel {
-
-//                model.planId = 13
-//                if model.planState {
-//                    self.processReviewResult(model: model)
-//                } else {
-////                    self.processReviewProgressResult(model: model)
-//                }
-//                self.processReviewProgressResult(model: model)
-                
-//                self.processReviewResult(model: model)
+            if let model = resultModel {
                 self.newResultVC(model: model)
             } else {
-//                UIView.toast("上报关卡失败")
-//                self.navigationController?.popViewController(animated: true)
+                UIView.toast("结果页，Test数据失败")
             }
 
         }
     }
 
-        /// 听力复习结果页
-        func processReviewResult(model: YXReviewResultModel) {
-
-            let vc = YXReviewResultViewController(type: .aiReview, model: model)
-            vc.hidesBottomBarWhenPushed = true
-            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-        }
-    
-    
-    /// 智能复习结果页
-    /// - Parameter model:
-    func processReviewProgressResult(model: YXReviewResultModel) {
-        let progressView = YXReviewLearningProgressView(type: .planListenReview, model: model)
-        progressView.reviewEvent = {
-            let vc = YXExerciseViewController()
-            vc.dataType = progressView.model?.type ?? .aiReview
-            vc.planId = model.planId
-            vc.hidesBottomBarWhenPushed = true
-            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-        }
-        progressView.show()
-    }
     
     
     func newResultVC(model: YXReviewResultModel) {
