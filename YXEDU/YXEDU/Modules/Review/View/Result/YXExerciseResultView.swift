@@ -103,7 +103,7 @@ class YXExerciseResultView: YXView {
         }
         
         starView.snp.remakeConstraints { (make) in
-            make.centerX.equalTo(imageView).offset(AS(-3))
+            make.centerX.equalTo(imageView)
             make.bottom.equalTo(imageView).offset(AS(6))
             make.width.equalTo(AS(94))
             make.height.equalTo(AS(45))
@@ -437,6 +437,7 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
     override func bindProperty() {
         self.tableView.backgroundColor = UIColor.clear
         self.tableView.separatorColor = UIColor.black4.withAlphaComponent(0.5)
+        self.tableView.separatorInset = UIEdgeInsets(top: 0, left: AS(31), bottom: 0, right: AS(34))
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "UITableViewCell")
@@ -468,7 +469,7 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         cell.selectionStyle = .none
-        cell.accessoryType = value.2 ? .disclosureIndicator : .none
+//        cell.accessoryType = value.2 ? .disclosureIndicator : .none
         
         let titleLabel = self.createTitleLabel()
         let countLabel = self.createCountLabel()
@@ -490,7 +491,19 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
             make.centerY.equalToSuperview()
             make.left.equalTo(titleLabel.snp.right).offset(AS(10))
             make.width.equalTo(AS(80))
-            make.right.equalTo(AS(value.2 ? -2 : -34))
+            make.right.equalTo(AS(value.2 ? -44 : -34))
+        }
+        
+        if value.2 {
+            let imageView = createArrowImageView()
+            cell.contentView.addSubview(imageView)
+            imageView.snp.remakeConstraints { (make) in
+                make.centerY.equalToSuperview()
+                make.right.equalTo(AS(-33))
+                make.width.equalTo(AS(8))
+                make.height.equalTo(AS(15))
+            }
+            
         }
         
         return cell
@@ -519,6 +532,12 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
         return titleLabel
     }
     
+    
+    private func createArrowImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "review_result_arrow")
+        return imageView
+    }
     
     private func processMaxContentWidth() {
         for content in dataSource {
