@@ -96,10 +96,10 @@ class YXExerciseResultView: YXView {
         }
         
         imageView.snp.remakeConstraints { (make) in
-            make.top.equalTo(AS(24))
+            make.top.equalTo(AS(-8))
             make.centerX.equalToSuperview()
             make.width.equalTo(AS(233))
-            make.height.equalTo(AS(109))
+            make.height.equalTo(AS(141))
         }
         
         starView.snp.remakeConstraints { (make) in
@@ -179,22 +179,28 @@ class YXExerciseResultView: YXView {
     
     private func setImageValue() {
         if model.state { // 完成
-            starView.isHidden = false
-            starView.count = model?.score ?? 0
-            
-            if model.type == .base {
-                imageView.image = UIImage(named: "learnResult\(model.score)")
-            } else if model.type == .wrong {
+            if model.type == .wrong { // 抽查只有一个图，不显示星星
                 starView.isHidden = true
-                imageView.image = UIImage(named: "review_wrong_finish_result")
-            } else if model.type == .planListenReview {
-                imageView.image = UIImage(named: "review_listen_finish_result")
-            } else {// 计划或者智能
-                imageView.image = UIImage(named: "review_finish_result")
+                imageView.image = UIImage(named: "review_result_wrong")
+            } else {
+                starView.count = model.score
+                
+                if starView.count <= 1 {
+                    imageView.image = UIImage(named: "review_result_1star")
+                } else {
+                    if model.type == .base {
+                        imageView.image = UIImage(named: "review_result_base_\(model.score)star")
+                    } else if model.type == .planListenReview {
+                        imageView.image = UIImage(named: "review_result_listen_\(model.score)star")
+                    } else {// 计划或者智能
+                        imageView.image = UIImage(named: "review_result_\(model.score)star")
+                    }
+                }
             }
+            
         } else { // 未完成
             starView.isHidden = true
-            imageView.image = UIImage(named: "review_learning_progress")
+            imageView.image = UIImage(named: "review_result_progress")
         }
     }
     

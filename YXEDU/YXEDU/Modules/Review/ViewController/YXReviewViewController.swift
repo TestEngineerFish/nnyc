@@ -203,11 +203,6 @@ extension YXReviewViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-//    func reviewDetailEvent() {
-//        let vc = YXReviewPlanDetailViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
-    
 }
 
 

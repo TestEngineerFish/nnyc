@@ -40,7 +40,7 @@ class YXReviewPlanEmptyView: YXView {
         
         reviewLabel.text = "快来创建一个复习计划吧"
         reviewLabel.font = UIFont.regularFont(ofSize: AS(14))
-        reviewLabel.textColor = UIColor.black2
+        reviewLabel.textColor = UIColor.black3
         reviewLabel.textAlignment = .center
     }
     
