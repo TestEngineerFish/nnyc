@@ -39,6 +39,7 @@
 		22164C0423A0DFAA00E9252D /* YXChallengeHeaderTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22164C0323A0DFAA00E9252D /* YXChallengeHeaderTopView.swift */; };
 		22164C0B23A1190D00E9252D /* YXCountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22164C0A23A1190D00E9252D /* YXCountDownView.swift */; };
 		22164C0F23A11E4200E9252D /* YXChallengeStartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22164C0E23A11E4200E9252D /* YXChallengeStartButton.swift */; };
+		2218AE3323D0608800EF2E42 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2218AE3223D0608800EF2E42 /* TencentOpenAPI.framework */; };
 		2227629C23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2227629B23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift */; };
 		22298BF8237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */; };
 		22298BFA237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BF9237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift */; };
@@ -105,7 +106,6 @@
 		2296F775239B9DE600C50660 /* YXReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296F774239B9DE600C50660 /* YXReviewRequest.swift */; };
 		2296F777239BBC3600C50660 /* YXReviewUnitListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296F776239BBC3600C50660 /* YXReviewUnitListView.swift */; };
 		2297D98523AE37EA00DAF3B0 /* YXShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2297D98423AE37EA00DAF3B0 /* YXShareViewController.swift */; };
-		229A513123C5DFAD00B88540 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 229A513023C5DFAD00B88540 /* TencentOpenAPI.framework */; };
 		22A27F2723B206D300E71CD3 /* YXPreviousRankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A27F2623B206D300E71CD3 /* YXPreviousRankViewController.swift */; };
 		22A5AFB8236C53E900FBFABD /* YXExerciseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A5AFB7236C53E900FBFABD /* YXExerciseAnimation.swift */; };
 		22AC8E74238783A1000E477B /* YXExerciseLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AC8E73238783A1000E477B /* YXExerciseLoadingView.swift */; };
@@ -808,6 +808,7 @@
 		22164C0323A0DFAA00E9252D /* YXChallengeHeaderTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeHeaderTopView.swift; sourceTree = "<group>"; };
 		22164C0A23A1190D00E9252D /* YXCountDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCountDownView.swift; sourceTree = "<group>"; };
 		22164C0E23A11E4200E9252D /* YXChallengeStartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeStartButton.swift; sourceTree = "<group>"; };
+		2218AE3223D0608800EF2E42 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		2227629B23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSquirrelCoinViewController.swift; sourceTree = "<group>"; };
 		22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnJuniorHighSchoolQuestionView.swift; sourceTree = "<group>"; };
 		22298BF9237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnJuniorHighSchoolAnswerView.swift; sourceTree = "<group>"; };
@@ -875,7 +876,6 @@
 		2296F774239B9DE600C50660 /* YXReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewRequest.swift; sourceTree = "<group>"; };
 		2296F776239BBC3600C50660 /* YXReviewUnitListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewUnitListView.swift; sourceTree = "<group>"; };
 		2297D98423AE37EA00DAF3B0 /* YXShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareViewController.swift; sourceTree = "<group>"; };
-		229A513023C5DFAD00B88540 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		22A27F2623B206D300E71CD3 /* YXPreviousRankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXPreviousRankViewController.swift; sourceTree = "<group>"; };
 		22A5AFB7236C53E900FBFABD /* YXExerciseAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseAnimation.swift; sourceTree = "<group>"; };
 		22AC8E73238783A1000E477B /* YXExerciseLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseLoadingView.swift; sourceTree = "<group>"; };
@@ -1943,7 +1943,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D665A0B82091A43200FBC9D2 /* libresolv.tbd in Frameworks */,
-				229A513123C5DFAD00B88540 /* TencentOpenAPI.framework in Frameworks */,
+				2218AE3323D0608800EF2E42 /* TencentOpenAPI.framework in Frameworks */,
 				D665A0B62091A42700FBC9D2 /* UserNotifications.framework in Frameworks */,
 				D62C1E2920897EDF002BB11A /* AdSupport.framework in Frameworks */,
 				D665A0B42091A41300FBC9D2 /* libz.tbd in Frameworks */,
@@ -3371,7 +3371,7 @@
 		EE5E017E232756BE00655654 /* TencentAPI */ = {
 			isa = PBXGroup;
 			children = (
-				229A513023C5DFAD00B88540 /* TencentOpenAPI.framework */,
+				2218AE3223D0608800EF2E42 /* TencentOpenAPI.framework */,
 			);
 			path = TencentAPI;
 			sourceTree = "<group>";
