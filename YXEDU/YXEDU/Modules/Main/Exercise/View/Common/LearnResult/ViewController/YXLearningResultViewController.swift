@@ -14,9 +14,11 @@ class YXLearningResultViewController: YXViewController {
     var backButton        = BiggerClickAreaButton()
     var headerView: YXExerciseResultView?
     var taskMapView: YXTaskMapView?
+    var leftImageView = UIImageView()
+    var rightImageView = UIImageView()
+    
     var currentModel: YXLearnMapUnitModel? // 当前单元
     var requestCount = 0
-
     var newLearnAmount: Int = 0 // 新学单词数
     var reviewLearnAmount: Int = 0 // 复习单词数量
     var bookId: Int? // 书ID
@@ -55,6 +57,9 @@ class YXLearningResultViewController: YXViewController {
  
         // 设置任务地图
         self.createTaskMap()
+        
+        self.view.addSubview(leftImageView)
+        self.view.addSubview(rightImageView)
     }
     
 
@@ -91,6 +96,8 @@ class YXLearningResultViewController: YXViewController {
             self.learnUnit(id)
         }
         
+        leftImageView.image = UIImage(named: "review_result_connection")
+        rightImageView.image = UIImage(named: "review_result_connection")
     }
     
     private func setLayout() {
@@ -110,6 +117,21 @@ class YXLearningResultViewController: YXViewController {
             make.centerX.equalToSuperview()
             make.size.equalTo(taskMapView?.size ?? CGSize.zero)
             make.bottom.equalToSuperview().offset(AS(-kSafeBottomMargin - 21))
+        }
+        
+        if headerView != nil {
+            leftImageView.snp.makeConstraints { (make) in
+                make.top.equalTo(headerView!.snp.bottom).offset(AS(-15))
+                make.left.equalTo(AS(33))
+                make.height.equalTo(AS(16))
+                make.width.equalTo(AS(41))
+                
+            }
+            
+            rightImageView.snp.makeConstraints { (make) in
+                make.top.height.width.equalTo(leftImageView)
+                make.right.equalTo(AS(-33))
+            }
         }
     }
     
