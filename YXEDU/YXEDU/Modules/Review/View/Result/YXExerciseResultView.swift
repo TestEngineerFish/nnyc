@@ -208,7 +208,11 @@ class YXExerciseResultView: YXView {
     private func setTitleValue() {
         if model.state {
             if model.type == .base {
-                titleLabel.text = "恭喜完成\(model.title ?? "")学习"
+                if model.score <= 1 {
+                    titleLabel.text = "恭喜完成\(model.title ?? "")学习"
+                } else {
+                    titleLabel.text = "\(model.title ?? "")学习完成"
+                }                
             } else if model.type == .aiReview {
                 titleLabel.text = "恭喜完成智能复习"
             } else if model.type == .planListenReview {
@@ -227,7 +231,7 @@ class YXExerciseResultView: YXView {
         
         if model.state {// 学完
             if model.type == .base {
-                if model.score == 1 {
+                if model.score <= 1 {
                     subTitleLabel.text = " 有些单词还掌握的不太好呢\n再练习一下吧~"
                 } else if model.score == 2 {
                     subTitleLabel.text = " 学得不错，有时间可以再回头巩固一下哦！"
@@ -347,9 +351,7 @@ class YXExerciseResultView: YXView {
         var has = false
         if model.state {// 学完
             if model.type == .base {
-                if model.score >= 1 {
-                    has = true
-                }
+                has = true
             } else if model.type != .aiReview && model.type != .wrong {
                 has = true
             }

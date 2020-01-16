@@ -42,8 +42,8 @@ class YXReviewViewController: YXTableViewController {
         super.viewWillLayoutSubviews()
         
         self.tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(41 + kSafeBottomMargin))
-            make.left.right.bottom.equalToSuperview()
+//            make.top.equalTo(AS(41 + kSafeBottomMargin))
+            make.top.left.right.bottom.equalToSuperview()
         }
     }
     
@@ -91,7 +91,7 @@ class YXReviewViewController: YXTableViewController {
             guard let self = self else { return }
             if let reviewModel = pageModel {
                 self.dataSource = reviewModel.reviewPlans ?? []
-                self.headerView = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: AS(400)), reviewModel: reviewModel)
+                self.headerView = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: AS(441 + kSafeBottomMargin)), reviewModel: reviewModel)
                 self.headerView.reviewModel = reviewModel
                                 
                 if self.dataSource.count == 0 {

@@ -204,14 +204,16 @@ class YXReviewHeaderView: YXView {
         super.layoutSubviews()
         
         bgView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
+            make.top.equalTo(AS(41 + kSafeBottomMargin))
+//            make.top.equalToSuperview()
             make.left.equalTo(AS(22))
             make.right.equalTo(AS(-22))
             make.height.equalTo(AS(339))
         }
         
         circlrImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(8))
+//            make.top.equalTo(AS(8))
+            make.top.equalTo(AS(49 + kSafeBottomMargin))
             make.left.equalTo(AS(11))
             make.width.equalTo(AS(42))
             make.height.equalTo(AS(29))
