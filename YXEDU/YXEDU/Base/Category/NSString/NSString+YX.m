@@ -96,21 +96,22 @@
     return[scan scanFloat:&val] && [scan isAtEnd];
 }
 
-- (NSString *)stringByTrimmingCharactersInSet:(NSCharacterSet *)characterSet {
-    NSUInteger length = [self length];
-    unichar charBuffer[length];
-    [self getCharacters:charBuffer range:NSMakeRange(0, length)];
-    
-    NSUInteger subLength = 0;
-    for (NSInteger i = length; i > 0; i--) {
-        if (![characterSet characterIsMember:charBuffer[i - 1]]) {
-            subLength = i;
-            break;
-        }
-    }
-    
-    return [self substringWithRange:NSMakeRange(0, subLength)];
-}
+// 终于找到了点击顶部或者截屏必崩点了，谁干的？？？？
+//- (NSString *)stringByTrimmingCharactersInSet:(NSCharacterSet *)characterSet {
+//    NSUInteger length = [self length];
+//    unichar charBuffer[length];
+//    [self getCharacters:charBuffer range:NSMakeRange(0, length)];
+//
+//    NSUInteger subLength = 0;
+//    for (NSInteger i = length; i > 0; i--) {
+//        if (![characterSet characterIsMember:charBuffer[i - 1]]) {
+//            subLength = i;
+//            break;
+//        }
+//    }
+//
+//    return [self substringWithRange:NSMakeRange(0, subLength)];
+//}
 
 - (NSNumber *)transitionNumber {
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
