@@ -82,10 +82,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 return
             }
             bookModel.bookHash = newHash
-            if bookModel.bookId != 1 {
-                self.saveBook(with: bookModel)
-                self.saveWords(with: bookModel)
-            }
+            self.saveBook(with: bookModel)
+            self.saveWords(with: bookModel)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: "\(error.message)")
         }
