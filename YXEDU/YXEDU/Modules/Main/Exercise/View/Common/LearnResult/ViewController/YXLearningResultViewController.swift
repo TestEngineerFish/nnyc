@@ -56,6 +56,7 @@ class YXLearningResultViewController: YXViewController {
         // 设置任务地图
         self.createTaskMap()
     }
+    
 
     /// 设置任务地图
     private func createTaskMap() {
@@ -111,6 +112,7 @@ class YXLearningResultViewController: YXViewController {
             make.bottom.equalToSuperview().offset(AS(-kSafeBottomMargin - 21))
         }
     }
+    
 
     private func bindData() {
         guard let bookId = self.bookId, let unitId = self.unitId else {

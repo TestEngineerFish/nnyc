@@ -103,9 +103,9 @@ class YXExerciseResultView: YXView {
         }
         
         starView.snp.remakeConstraints { (make) in
-            make.centerX.equalTo(imageView)
+            make.centerX.equalTo(imageView).offset(AS(-3))
             make.bottom.equalTo(imageView).offset(AS(6))
-            make.width.equalTo(AS(27 * 2 + 38 + 2))
+            make.width.equalTo(AS(94))
             make.height.equalTo(AS(45))
         }
         

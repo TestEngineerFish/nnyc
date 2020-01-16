@@ -74,7 +74,7 @@ extension YXExerciseViewController {
         vc.reviewLearnAmount = reviewCount
         vc.hidesBottomBarWhenPushed = true
         
-        YRRouter.popViewController(false)        
+        YRRouter.popViewController(false)
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
@@ -102,34 +102,4 @@ extension YXExerciseViewController {
         }
     }
     
-    
-    /// 智能复习结果页
-    /// - Parameter model:
-//    func processReviewProgressResult(model: YXReviewResultModel) {
-//        let progressView = YXReviewLearningProgressView(type: dataType, model: model)
-//        progressView.reviewEvent = {
-//            let vc = YXExerciseViewController()
-//            vc.dataType = progressView.model?.type ?? .aiReview
-//            vc.planId = model.planId
-//            vc.hidesBottomBarWhenPushed = true
-//            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-//        }
-//        progressView.show()
-//
-//        self.navigationController?.popViewController(animated: true)
-//    }
-    
-    
-//    /// 听力复习结果页
-//    func processReviewResult(model: YXReviewResultModel) {
-////        let resultView = YXReviewResultView(type: dataType)
-////        resultView.model = model
-////        resultView.show()
-//
-//        self.navigationController?.popViewController(animated: false)
-//
-//        let vc = YXReviewResultViewController(type: dataType, model: model)
-//        vc.hidesBottomBarWhenPushed = true
-//        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-//    }
 }
