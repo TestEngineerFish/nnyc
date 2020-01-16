@@ -52,6 +52,9 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.navigationBar.barTintColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navigationController?.navigationBar.tintColor = UIColor.black
         
         loadData()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
@@ -122,13 +125,11 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
                 // 发音
                 let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as? UILabel
-                if loginModel.user.speech == "0" {
-                    speechLabel?.text = "英式"
-                    YXUserModel.default.didUseAmericanPronunciation = false
+                if YXUserModel.default.didUseAmericanPronunciation {
+                    speechLabel?.text = "美式"
                     
                 } else {
-                    speechLabel?.text = "美式"
-                    YXUserModel.default.didUseAmericanPronunciation = true
+                    speechLabel?.text = "英式"
                 }
                 
                 // 每日提醒
@@ -269,21 +270,16 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         case 1:
             let alertController = UIAlertController(title: "选择音标和发音", message: nil, preferredStyle: .actionSheet)
-            
             let englishAction = UIAlertAction(title: "英式音标和发音", style: .default) { (action) in
-                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/setup", parameters: ["speech": "0"]) { (response, isSuccess) in
-                    guard isSuccess, let _ = response else { return }
-                    YXConfigure.shared().isUSVoice = false
-                    self.loadData()
-                }
+                YXUserModel.default.didUseAmericanPronunciation = false
+                YXConfigure.shared().isUSVoice = false
+                self.loadData()
             }
             
             let usAction = UIAlertAction(title: "美式音标和发音", style: .default) { (action) in
-                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/setup", parameters: ["speech": "1"]) { (response, isSuccess) in
-                    guard isSuccess, let _ = response else { return }
-                    YXConfigure.shared().isUSVoice = true
-                    self.loadData()
-                }
+                YXUserModel.default.didUseAmericanPronunciation = true
+                YXConfigure.shared().isUSVoice = true
+                self.loadData()
             }
             
             let cancleAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)

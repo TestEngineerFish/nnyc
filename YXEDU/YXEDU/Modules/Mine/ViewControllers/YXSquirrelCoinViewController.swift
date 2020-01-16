@@ -160,11 +160,11 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
     
     @objc
     private func goToEarnCoin() {
-        self.navigationController?.popViewController(animated: false)
+        let home = UIStoryboard(name: "Home", bundle: nil)
+        let taskCenterViewController = home.instantiateViewController(withIdentifier: "YXTaskCenterViewController") as! YXTaskCenterViewController
+        taskCenterViewController.fromYXSquirrelCoinViewController = true
         
-        guard let keyWindow = UIApplication.shared.delegate?.window, let tabbarViewController = keyWindow?.rootViewController as? UITabBarController, let navigationController = tabbarViewController.viewControllers?[0] as? UINavigationController, let homeViewController = navigationController.viewControllers[0] as? YXHomeViewController else { return }
-        tabbarViewController.selectedIndex = 0
-        homeViewController.performSegue(withIdentifier: "TaskCenter", sender: nil)
+        self.navigationController?.pushViewController(taskCenterViewController, animated: true)
     }
 
     // MARK: ==== WKNavigationDelegate ====

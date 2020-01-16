@@ -10,6 +10,7 @@ import UIKit
 
 class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     
+    var fromYXSquirrelCoinViewController = false
     private var taskCenterData: YXTaskCenterDataModel!
     private var dailyDatas: [YXTaskCenterDailyDataModel] = []
     private var taskLists: [YXTaskListModel] = []
@@ -23,7 +24,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var taskTableViewHeight: NSLayoutConstraint!
     
     @IBAction func back(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func tapQuestionIcon(_ sender: UIBarButtonItem) {
@@ -86,11 +87,13 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.barStyle = .default
 
-        self.navigationController?.navigationBar.barTintColor = UIColor.white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        self.navigationController?.navigationBar.tintColor = UIColor.black
+        if fromYXSquirrelCoinViewController == false {
+            self.navigationController?.navigationBar.barStyle = .default
+            self.navigationController?.navigationBar.barTintColor = UIColor.white
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            self.navigationController?.navigationBar.tintColor = UIColor.black
+        }
     }
     
     private func reloadDailyData() {
@@ -311,16 +314,18 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 case .incomplete:
                     switch task?.actionType {
                     case 0:
-                        self.navigationController?.popViewController(animated: true)
+                        self.tabBarController?.selectedIndex = 0
+                        self.navigationController?.popToRootViewController(animated: true)
                         break
                         
                     case 1:
                         self.tabBarController?.selectedIndex = 2
-                        self.navigationController?.popViewController(animated: true)
+                        self.navigationController?.popToRootViewController(animated: true)
                         break
 
                     case 2:
-                        self.navigationController?.popViewController(animated: true)
+                        self.tabBarController?.selectedIndex = 0
+                        self.navigationController?.popToRootViewController(animated: true)
                         break
                         
                     default:

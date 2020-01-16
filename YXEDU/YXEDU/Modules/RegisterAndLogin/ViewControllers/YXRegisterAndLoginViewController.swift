@@ -108,11 +108,11 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
-        
         timer?.invalidate()
         timer = nil
     }
