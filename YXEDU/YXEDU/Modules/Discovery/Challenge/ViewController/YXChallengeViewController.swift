@@ -31,6 +31,10 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         self.requestChallengeData()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     private func setSubviews() {
         self.view.addSubview(backgroundImageView)
