@@ -123,9 +123,8 @@ class YXLearningResultViewController: YXViewController {
             leftImageView.snp.makeConstraints { (make) in
                 make.top.equalTo(headerView!.snp.bottom).offset(AS(-15))
                 make.left.equalTo(AS(33))
-                make.height.equalTo(AS(16))
-                make.width.equalTo(AS(41))
-                
+                make.width.equalTo(AS(16))
+                make.height.equalTo(AS(41))
             }
             
             rightImageView.snp.makeConstraints { (make) in
