@@ -91,20 +91,20 @@ class YXChallengeHeaderTopView: UIView {
         self.addSubview(centerGoldImageView)
         self.addSubview(rightGoldImageView)
 
+        propertyView.snp.makeConstraints { (make) in
+            make.right.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(25))
+            make.size.equalTo(CGSize(width: AdaptSize(44), height: AdaptSize(23)))
+        }
         squirrelImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(4))
-            make.top.equalToSuperview().offset(AdaptSize(59))
+            make.top.equalTo(propertyView.snp.bottom).offset(AdaptSize(11))
             make.size.equalTo(CGSize(width: AdaptSize(323), height: AdaptSize(115)))
         }
         gameTitleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(150))
-            make.top.equalToSuperview().offset(AdaptSize(110))
+            make.top.equalTo(squirrelImageView.snp.top).offset(AdaptSize(48))
             make.size.equalTo(CGSize(width: AdaptSize(121), height: AdaptSize(17)))
-        }
-        propertyView.snp.makeConstraints { (make) in
-            make.right.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(35))
-            make.size.equalTo(CGSize(width: AdaptSize(44), height: AdaptSize(23)))
         }
         countDownView.snp.makeConstraints { (make) in
             make.left.equalTo(gameTitleLabel)

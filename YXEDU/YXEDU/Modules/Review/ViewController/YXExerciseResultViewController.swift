@@ -71,10 +71,11 @@ class YXExerciseResultViewController: YXViewController {
     
     private func showWordListEvent() {
         let wrongWordListView = YXWrongWordsListView()
-        wrongWordListView.bindData(model.words ?? [])
-        YXAlertCustomView.share.show(wrongWordListView)
+        let wordsList = model.words ?? []
+        wrongWordListView.bindData(wordsList)
+        let h = wordsList.count > 3 ? AdaptSize(367) : AdaptSize(170)
+        YXAlertCustomView.share.show(wrongWordListView, h: h)
     }
-    
     
     private func shareEvent() {
         if model.type == .base {
@@ -94,7 +95,6 @@ class YXExerciseResultViewController: YXViewController {
         }
     }
 
-    
     private func shareType() -> YXShareImageType {
         switch model?.type {
         case .base:

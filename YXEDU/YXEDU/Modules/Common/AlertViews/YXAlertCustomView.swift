@@ -61,7 +61,8 @@ class YXAlertCustomView: UIView {
         contentView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().offset(AdaptSize(-40))
-            make.size.equalTo(CGSize(width: AdaptSize(331), height: AdaptSize(367)))
+            make.width.equalTo(AdaptSize(331))
+            make.height.equalTo(AdaptSize(367))
         }
         closeImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -77,9 +78,12 @@ class YXAlertCustomView: UIView {
         self.closeImageView.addGestureRecognizer(tap)
     }
 
-    func show(_ subview: UIView) {
+    func show(_ subview: UIView, h: CGFloat) {
         self.contentView.addSubview(subview)
         kWindow.addSubview(self)
+        self.contentView.snp.updateConstraints { (make) in
+            make.height.equalTo(h)
+        }
         subview.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }

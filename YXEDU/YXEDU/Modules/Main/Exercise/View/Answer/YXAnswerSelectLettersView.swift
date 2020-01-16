@@ -137,7 +137,16 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
 //            self.selectedBtnArray.forEach { (button) in
 //                button.status = .right
 //            }
-            self.answerDelegate?.answerCompletion(self.exerciseModel, true)
+            // 如果是Q-B-1，则需要播放语音
+            if self.exerciseModel.type == .fillWordAccordingToChinese, let urlStr = self.exerciseModel.word?.voice, let url = URL(string: urlStr) {
+                YXAVPlayerManager.share.playAudio(url) { [weak self] in
+                    guard let self = self else {return}
+                    YXAVPlayerManager.share.finishedBlock = nil
+                    self.answerDelegate?.answerCompletion(self.exerciseModel, true)
+                }
+            } else {
+                self.answerDelegate?.answerCompletion(self.exerciseModel, true)
+            }
         } else {
             // 答题错误
             self.selectedBtnArray.forEach { (letterBtn) in

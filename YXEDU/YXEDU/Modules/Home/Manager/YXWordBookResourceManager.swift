@@ -56,7 +56,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             // 本地不存在，或者本地Hash值与后台不一致，则更新
             if (wordBook == nil || wordBook?.bookHash != .some(bookHash)) {
                 updateAmount += 1
-                DispatchQueue.global().async {
+                DispatchQueue.global().async { [weak self] in
+                    guard let self = self else { return }
                     self.downloadSingleWordBook(with: bookId, newHash: bookHash)
                 }
             }
@@ -76,13 +77,15 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     /// 下载单本词书
     private func downloadSingleWordBook(with bookId: Int, newHash: String) {
         let request = YXWordBookRequest.getBookWord(bookId: bookId)
-        YYNetworkService.default.request(YYStructResponse<YXWordBookModel>.self, request: request, success: { (response) in
-            guard var bookModel = response.data else {
+        YYNetworkService.default.request(YYStructResponse<YXWordBookModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, var bookModel = response.data else {
                 return
             }
             bookModel.bookHash = newHash
-            self.saveBook(with: bookModel)
-            self.saveWords(with: bookModel)
+            if bookModel.bookId != 1 {
+                self.saveBook(with: bookModel)
+                self.saveWords(with: bookModel)
+            }
         }) { (error) in
             YXUtils.showHUD(kWindow, title: "\(error.message)")
         }

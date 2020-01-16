@@ -176,6 +176,9 @@ class YXGameHeaderView: UIView {
 
     func startTimer() {
         self.stopTimer()
+        guard let currentVC = YRRouter.sharedInstance()?.currentNavigationController()?.visibleViewController, currentVC.classForCoder == YXGameViewController.classForCoder() else {
+            return
+        }
         timer = Timer(fire: Date(), interval: 0.001, repeats: true, block: { [weakself = self] (timer) in
             guard let config = weakself.configModel else {
                 return

@@ -42,12 +42,6 @@ class YXWrongWordsListView: UIView, UITableViewDataSource {
     }
 
     func bindData(_ wordsArray: [YXBaseWordModel]) {
-//        for index in (0..<30) {
-//            var wordModel = YXWordModel()
-//            wordModel.word    = "incredible——incredible-\(index)"
-//            wordModel.meaning = "难以置信的-\(index)"
-//            self.wordsArray.append(wordModel)
-//        }
         self.wordsArray = wordsArray
         self.tableView.reloadData()
     }

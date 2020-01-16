@@ -121,7 +121,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
                 exerciseModel.option?.firstItems?[index].isDisable = indexPath.row != index
             }
             collectionView.reloadSections(IndexSet(integer: 0))
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weakSelf = self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) { [weakSelf = self] in
                 for index in 0..<itemModelList.count {
                     weakSelf.exerciseModel.option?.firstItems?[index].isDisable = false
                 }

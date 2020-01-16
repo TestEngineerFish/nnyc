@@ -13,13 +13,16 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     final let kYXChallengeRankCell   = "YXChallengeRankCell"
 
     var challengeModel: YXChallengeModel?
+    var backgroundImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "challengeBackground")
+        return imageView
+    }()
     var tableView = UITableView(frame: CGRect.zero, style: .grouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
-        let tableViewSize = CGSize(width: screenWidth, height: screenHeight - tabBar_Height - kSafeBottomMargin + kStatusBarHeight)
-        self.view.backgroundColor = UIColor.gradientColor(with: tableViewSize, colors: [UIColor.hex(0xFEDC4A), UIColor.hex(0xFDAD2F)], direction: .vertical)
         self.setSubviews()
     }
     
@@ -30,7 +33,15 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     }
 
     private func setSubviews() {
+        self.view.addSubview(backgroundImageView)
         self.view.addSubview(tableView)
+        self.backgroundImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        self.tableView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(-kStatusBarHeight + AdaptSize(15))
+            make.left.right.bottom.equalToSuperview()
+        }
         self.tableView.delegate        = self
         self.tableView.dataSource      = self
         self.tableView.separatorStyle  = .none
@@ -38,10 +49,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         self.tableView.showsHorizontalScrollIndicator = false
         self.tableView.register(YXChallengeRankCell.classForCoder(), forCellReuseIdentifier: kYXChallengeRankCell)
         self.tableView.backgroundColor = UIColor.clear
-        self.tableView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(-kStatusBarHeight)
-            make.left.right.bottom.equalToSuperview()
-        }
     }
 
     // MARK: ==== Request ====
@@ -88,16 +95,17 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func requestPreviousResult() {
         let request = YXChallengeRequest.rankedList
         YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
-            guard let challengeModel = response.data, let userModel = challengeModel.userModel, userModel.ranking > 0 else {
+            guard let challengeModel = response.data, let userModel = challengeModel.userModel, userModel.ranking > 0, let previousRankVersion = self.challengeModel?.userModel?.previousRankVersion else {
                 return
             }
+
             let previousResultView = YXPreviousResultView()
             previousResultView.bindData(userModel)
             kWindow.addSubview(previousResultView)
             previousResultView.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
             }
-            self.requestReportShowPreviousResult(userModel.previousRankVersion)
+            self.requestReportShowPreviousResult(previousRankVersion)
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
         }
@@ -105,6 +113,18 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func clickPlayButton(){
+//        let wrongWordListView = YXWrongWordsListView()
+//        var wordsArray = [YXWordModel]()
+//        for index in (0..<4) {
+//            var wordModel = YXWordModel()
+//            wordModel.word    = "incredible——incredible-\(index)"
+//            wordModel.meaning = "难以置信的-\(index)"
+//            wordsArray.append(wordModel)
+//        }
+//        wrongWordListView.bindData(wordsArray)
+//        let h = wordsArray.count > 3 ? AdaptSize(367) : AdaptSize(170)
+//        YXAlertCustomView.share.show(wrongWordListView, h: h)
+//        return
 //        let vc = YXLearningResultViewController()
 //        vc.bookId = 1
 //        vc.unitId = 1
