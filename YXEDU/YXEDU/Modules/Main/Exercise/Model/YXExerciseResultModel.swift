@@ -118,7 +118,8 @@ struct YXOptionItemModel: Mappable {
     var optionId: Int    = -1
     var content: String?
     var isDisable: Bool = false
-    
+    var isWrong: Bool = false
+
     init() {}
             
     init?(map: Map) {

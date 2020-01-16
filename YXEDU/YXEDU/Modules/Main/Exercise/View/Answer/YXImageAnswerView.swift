@@ -90,9 +90,16 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         if let itemModel = exerciseModel.option?.firstItems?[indexPath.row], let url = itemModel.content {
             iv.showImage(with: url, placeholder: UIImage.imageWithColor(UIColor.orange7))
             shadowView.alpha = itemModel.isDisable ? 0.7 : 0.0
+            
+            if itemModel.isWrong {
+                iv.layer.borderColor   = UIColor.red1.cgColor
+
+            } else {
+                iv.layer.borderColor   = UIColor.clear.cgColor
+            }
         }
+        
         iv.layer.borderWidth   = 1.5
-        iv.layer.borderColor   = UIColor.clear.cgColor
         iv.layer.masksToBounds = true
         iv.layer.cornerRadius  = AdaptSize(4)
         cell.contentView.addSubview(iv)
@@ -114,22 +121,24 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
             self.answerCompletion(right: true)
         } else {
             self.answerCompletion(right: false)
+            exerciseModel.option?.firstItems?[indexPath.row].isWrong = true
         }
+        
         // 设置选中效果
         if let itemModelList = exerciseModel.option?.firstItems {
             for index in 0..<itemModelList.count {
                 exerciseModel.option?.firstItems?[index].isDisable = indexPath.row != index
             }
+            
             collectionView.reloadSections(IndexSet(integer: 0))
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) { [weakSelf = self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weakSelf = self] in
                 for index in 0..<itemModelList.count {
                     weakSelf.exerciseModel.option?.firstItems?[index].isDisable = false
+                    weakSelf.exerciseModel.option?.firstItems?[index].isWrong = false
                 }
                 collectionView.reloadSections(IndexSet(integer: 0))
             }
         }
-
-
     }
 }
 
