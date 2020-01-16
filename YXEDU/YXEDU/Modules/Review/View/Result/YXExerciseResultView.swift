@@ -185,6 +185,7 @@ class YXExerciseResultView: YXView {
             if model.type == .base {
                 imageView.image = UIImage(named: "learnResult\(model.score)")
             } else if model.type == .wrong {
+                starView.isHidden = true
                 imageView.image = UIImage(named: "review_wrong_finish_result")
             } else if model.type == .planListenReview {
                 imageView.image = UIImage(named: "review_listen_finish_result")
@@ -201,7 +202,7 @@ class YXExerciseResultView: YXView {
     private func setTitleValue() {
         if model.state {
             if model.type == .base {
-                titleLabel.text = "恭喜完成\(model.title)学习"
+                titleLabel.text = "恭喜完成\(model.title ?? "")学习"
             } else if model.type == .aiReview {
                 titleLabel.text = "恭喜完成智能复习"
             } else if model.type == .planListenReview {
