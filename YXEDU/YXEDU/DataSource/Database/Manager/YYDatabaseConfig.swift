@@ -18,14 +18,23 @@ struct YYSQLManager {
                                                CreateNormalTableSQLs.CreateBookMaterialTable.rawValue]
     
     // 创建词书数据表
-    static let CreateWordTables: [String] = [CreateWordTableSQLs.bookTable.rawValue,
-                                             CreateWordTableSQLs.wordTable.rawValue,
-                                             CreateWordTableSQLs.searchHistoryTable.rawValue]
+    static let CreateWordTables: [String] = {
+        var sqlArray = [CreateWordTableSQLs.bookTable.rawValue,
+                        CreateWordTableSQLs.wordTable.rawValue,
+                        CreateWordTableSQLs.searchHistoryTable.rawValue]
+        if YYCache.object(forKey: "updateDatabase") as? Bool ?? true {
+            sqlArray.insert(DeleteTableSQLs.bookTable.rawValue, at: 0)
+            sqlArray.insert(DeleteTableSQLs.wordTable.rawValue, at: 0)
+            sqlArray.insert(DeleteTableSQLs.searchHistoryTable.rawValue, at: 0)
+        }
+        YYCache.set(false, forKey: "updateDatabase")
+        return sqlArray
+    }()
     
 }
 
 extension YYSQLManager {
-    
+
     // MARK: Create Table
     
     enum  CreateNormalTableSQLs: String {
@@ -77,7 +86,12 @@ extension YYSQLManager {
         )
         """
     }
-    
+
+    enum DeleteTableSQLs: String {
+        case bookTable = "DROP TABLE IF EXISTS book;"
+        case wordTable = "DROP TABLE IF EXISTS word;"
+        case searchHistoryTable = "DROP TABLE IF EXISTS search_history_table;"
+    }
     
     enum  CreateWordTableSQLs: String {
         case bookTable =
@@ -95,7 +109,8 @@ extension YYSQLManager {
         case wordTable =
         """
         CREATE TABLE IF NOT EXISTS word (
-        wordId integer PRIMARY KEY NOT NULL,
+        id integer primary key,
+        wordId integer NOT NULL,
         word char(64),
         partOfSpeechAndMeanings text,
         imageUrl varchar(512),
@@ -123,7 +138,8 @@ extension YYSQLManager {
         case searchHistoryTable =
         """
         CREATE TABLE IF NOT EXISTS search_history_table (
-        wordId integer PRIMARY KEY NOT NULL,
+        id integer primary key,
+        wordId integer NOT NULL,
         word char(64),
         partOfSpeechAndMeanings text,
         englishPhoneticSymbol char(128),

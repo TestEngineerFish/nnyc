@@ -64,3 +64,4 @@
 #import "BiggerClickAreaButton.h"
 #import "YXShareImageGenerator.h"
 #import "YXShareHelper.h"
+#import "YRDevice.h"
