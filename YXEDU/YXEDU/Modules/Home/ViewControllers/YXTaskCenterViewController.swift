@@ -343,6 +343,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                         
                         if let currentIntegral = Int(self.integralLabel.text ?? "0") {
                             self.integralLabel.countFromCurrent(to: Float(currentIntegral + (task?.integral ?? 0)), duration: 1)
+                            YXToastView.share.showCoinView(task?.integral ?? 0)
                         }
 
                     }) { error in

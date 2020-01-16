@@ -61,14 +61,14 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 }
             }
         }
-        /// 需要更新
+
         if updateAmount > 0 && showToast {
             DispatchQueue.main.async {
                 YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
             }
             self.closure?(false)
-        } else if updateAmount == 0 {
-            // 如果没有需要更新的，则执行闭包函数
+            
+        } else {
             self.closure?(true)
         }
     }

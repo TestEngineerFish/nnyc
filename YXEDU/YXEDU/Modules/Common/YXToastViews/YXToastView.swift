@@ -91,7 +91,7 @@ class YXToastView: UIView {
         self.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             self?.hideView()
         }
     }

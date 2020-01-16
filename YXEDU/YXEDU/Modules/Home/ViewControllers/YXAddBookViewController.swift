@@ -156,7 +156,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
                 YXWordBookResourceManager.shared.contrastBookData(by: bookId, { (isSuccess) in
                     guard isSuccess else { return }
                     self.navigationController?.popToRootViewController(animated: true)
-                }, showToast: true)
+                }, showToast: false)
             }) { error in
                 print("❌❌❌\(error)")
             }

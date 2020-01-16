@@ -171,7 +171,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
                 self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
-                YXWordBookResourceManager.shared.contrastBookData()
+                
+                YXWordBookResourceManager.shared.contrastBookData(showToast: false)
             } catch {
                 print(error)
             }

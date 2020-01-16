@@ -105,7 +105,7 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
         self.customNavigationBar?.titleLabel.font      = UIFont.regularFont(ofSize: AdaptSize(17))
         self.customNavigationBar?.leftButtonTitleColor = UIColor.white
         self.customNavigationBar?.backgroundColor      = UIColor.clear
-        self.view.backgroundColor                      = UIColor.hex(0xF0F2F5)
+//        self.view.backgroundColor                      = UIColor.hex(0xF0F2F5)
 
         self.view.addSubview(backgroundImageView)
         self.view.addSubview(coinWrapView)

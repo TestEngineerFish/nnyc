@@ -12,13 +12,14 @@ enum YXTaskCardType: Int {
     case everydayTodayLearnPlan = 6
     case everydayCompleteChallenge = 7
     case everydayCompleteShareToWechat = 8
-    case smartReview = 9
-    case createPlan = 10
-    case UnitStudy = 11
-    case completeChallenge = 12
-    case punchInWechat = 13
-    case punchInQQ = 14
-    case wrongWords = 15
+    case smartReview = 10
+    case createPlan = 11
+    case UnitStudy = 12
+    case collectWord = 13
+    case completeChallenge = 14
+    case punchInWechat = 15
+    case punchInQQ = 16
+    case wrongWords = 17
 }
 
 enum YXTaskCardStatus: Int {
@@ -84,6 +85,10 @@ class YXTaskCenterCardCell: UICollectionViewCell {
 
         case .wrongWords:
             iconImageView.image = #imageLiteral(resourceName: "wrongWords")
+            break
+            
+        case .collectWord:
+            iconImageView.image = #imageLiteral(resourceName: "collectWords")
             break
         }
         

@@ -100,7 +100,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     if isSuccess {
                         self.navigationController?.popViewController(animated: true)
                     }
-                }, showToast: true)
+                }, showToast: false)
             }) { error in
                 print("❌❌❌\(error)")
             }
