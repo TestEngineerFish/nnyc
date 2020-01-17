@@ -222,7 +222,7 @@ struct YYNetworkService {
                 x.request = response.request
                 success(x, (response.response?.statusCode) ?? 0)
             case .failure(let error):
-                DDLogWarn(String(format: "❌Fail %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, ""));
+                DDLogInfo(String(format: "❌Fail %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, ""));
                 fail(error as NSError)
             }
         }
