@@ -123,7 +123,7 @@ class YXExerciseDataManager: NSObject {
         
         if !progressManager.isSkipNewWord() {
             for exercise in self.newExerciseArray {
-                if exercise.isFinish == false {
+                if !exercise.isFinish {
                     var e = exercise                
                     let wid = e.word?.wordId ?? 0
                     let bid = e.word?.bookId ?? 0

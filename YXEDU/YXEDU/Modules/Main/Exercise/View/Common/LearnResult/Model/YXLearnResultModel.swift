@@ -17,10 +17,7 @@ struct YXLearnResultModel: Mappable {
     
     /// 所学单词数
     var allWordCount: Int       = 0
-    
-    /// 巩固的单词数
-//    var knowWordNum: Int        = 0
-//    var remainWordNum: Int    = 0
+    /// 天数
     var studyDay: Int           = 0
     
     var isShowCoin              = false
@@ -39,9 +36,9 @@ struct YXLearnResultModel: Mappable {
         status           <- map["status"]
         unitName         <- map["unit_name"]
         allWordCount     <- map["all_words_num"]
-        learnWordsNum <- map["learn_words_num"]
-//        knowWordNum      <- map["know_words_num"]
-        isShowCoin <- map["is_show_coin"]
+        learnWordsNum    <- map["learn_words_num"]
+        isShowCoin       <- map["is_show_coin"]
+        score            <- map["score"]
         unitList         <- map["list"]
         studyDay         <- map["study_day"]
     }

@@ -30,7 +30,7 @@ class YXReviewViewController: YXTableViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
         
-//        YXTest.default.test()
+        YXTest.default.test()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

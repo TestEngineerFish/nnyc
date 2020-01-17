@@ -141,6 +141,7 @@ class YXShareViewController: YXViewController {
     var gameModel: YXGameResultModel?
     var shareType: YXShareImageType = .challengeResult
     var backAction: (()->Void)?
+    var finishAction: (()->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -284,10 +285,12 @@ class YXShareViewController: YXViewController {
             return
         }
         let request = YXShareRequest.punch(type: type.rawValue)
-        YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             guard let model = response.data else {
                 return
             }
+            self.finishAction?()
             if model.state && model.coin > 0 {
                 YXToastView.share.showCoinView(model.coin)
                 self.goldImageView.isHidden = true

@@ -99,23 +99,23 @@ struct YXExerciseResultDisplayModel {
         return displayModel
     }
     
-    static func displayModel(unitId: Int, newStudyWordCount: Int, reviewWordCount: Int, model: YXLearnResultModel) -> YXExerciseResultDisplayModel {
-        let currentUnit = model.unitList?.filter({ (model) -> Bool in
-            return model.unitID == unitId
-        }).first
+    static func displayModel(newStudyWordCount: Int, reviewWordCount: Int, model: YXLearnResultModel) -> YXExerciseResultDisplayModel {
         
         var displayModel = YXExerciseResultDisplayModel()
         displayModel.type = .base
-        displayModel.title = currentUnit?.unitName
+        displayModel.title = model.unitName
         
-        displayModel.allWordNum = model.allWordCount
-        displayModel.newStudyWordNum = newStudyWordCount
-        displayModel.reviewWordNum = reviewWordCount
+        displayModel.allWordNum = model.allWordCount // 今日所学单词数
+        displayModel.studyDay = model.studyDay  // 坚持多少天
+        
+        
+        displayModel.newStudyWordNum = newStudyWordCount //新学
+        displayModel.reviewWordNum = reviewWordCount //巩固
 
-        displayModel.score = currentUnit?.stars ?? 0
-        displayModel.studyDay = model.studyDay
+        displayModel.score = model.score
+        
         displayModel.isShowCoin = model.isShowCoin
-        displayModel.state = true
+        displayModel.state = model.status
         displayModel.unitList = model.unitList
         
         return displayModel

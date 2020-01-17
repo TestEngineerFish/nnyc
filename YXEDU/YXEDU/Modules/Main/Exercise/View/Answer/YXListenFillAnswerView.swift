@@ -44,7 +44,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         textField.textColor = UIColor.clear
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
-        textField.keyboardType = .asciiCapable
+//        textField.keyboardType = .asciiCapable
         textField.tintColor = UIColor.clear
         textField.addTarget(self, action: #selector(textChanged), for: .editingChanged)
         textField.becomeFirstResponder()
@@ -97,7 +97,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
 
     
     @objc func textChanged() {
-        guard let text = textField.text?.trimed else {
+        guard let text = textField.text else {
             return
         }
         

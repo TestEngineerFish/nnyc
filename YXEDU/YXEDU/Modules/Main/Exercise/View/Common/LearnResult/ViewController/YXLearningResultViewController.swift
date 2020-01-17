@@ -16,6 +16,7 @@ class YXLearningResultViewController: YXViewController {
     var taskMapView: YXTaskMapView?
     var leftImageView = UIImageView()
     var rightImageView = UIImageView()
+    var contentScrollView = UIScrollView()
     
     var currentModel: YXLearnMapUnitModel? // 当前单元
     var requestCount = 0
@@ -47,10 +48,12 @@ class YXLearningResultViewController: YXViewController {
     
     
     private func createSubviews() {
+        self.view.addSubview(self.contentScrollView)
+        
         // 结果视图
-        let newModel = YXExerciseResultDisplayModel.displayModel(unitId: unitId ?? 0, newStudyWordCount: newLearnAmount, reviewWordCount: reviewLearnAmount, model: model!)
+        let newModel = YXExerciseResultDisplayModel.displayModel(newStudyWordCount: newLearnAmount, reviewWordCount: reviewLearnAmount, model: model!)
         headerView = YXExerciseResultView(model: newModel)
-        self.view.addSubview(headerView!)
+        self.contentScrollView.addSubview(headerView!)
         
         // 返回按钮
         self.view.addSubview(backButton)
@@ -58,8 +61,8 @@ class YXLearningResultViewController: YXViewController {
         // 设置任务地图
         self.createTaskMap()
         
-        self.view.addSubview(leftImageView)
-        self.view.addSubview(rightImageView)
+        self.contentScrollView.addSubview(leftImageView)
+        self.contentScrollView.addSubview(rightImageView)
     }
     
 
@@ -69,16 +72,21 @@ class YXLearningResultViewController: YXViewController {
             return
         }
         let w = screenWidth - AS(40)
-        let h = screenHeight - AS(68 + kSafeBottomMargin) - headerView!.viewHeight() - AS(10 + kSafeBottomMargin + 21)
+        let h = AS(245)
         // 任务地图视图
         let taskMapViewSize = CGSize(width: w, height: h)
         let taskMapFrame    = CGRect(origin: .zero, size: taskMapViewSize)
         taskMapView     = YXTaskMapView(modelArray, frame: taskMapFrame, currentModel: currentModel)
-        self.view.addSubview(taskMapView!)
+        self.contentScrollView.addSubview(taskMapView!)
     }
     
     
     private func bindProperty() {
+        self.contentScrollView.isScrollEnabled = true
+        self.contentScrollView.showsVerticalScrollIndicator   = false
+        self.contentScrollView.showsHorizontalScrollIndicator = false
+        
+        
         backButton.setImage(UIImage(named: "back_gray"), for: .normal)
         backButton.addTarget(self, action: #selector(backClick), for: .touchUpInside)
         
@@ -101,6 +109,13 @@ class YXLearningResultViewController: YXViewController {
     }
     
     private func setLayout() {
+        let headerHeight = headerView?.viewHeight() ?? 0
+        let contentHeight = AS(68 + kSafeBottomMargin) + headerHeight + AS(31) + AS(245)
+        
+        self.contentScrollView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
+        self.contentScrollView.contentSize = CGSize(width: screenWidth, height: contentHeight)
+        
+        
         backButton.snp.makeConstraints { (make) in
             make.left.equalTo(AS(14))
             make.top.equalTo(AS(32 + kSafeBottomMargin))
@@ -109,17 +124,17 @@ class YXLearningResultViewController: YXViewController {
         
         headerView?.snp.makeConstraints { (make) in
             make.top.equalTo(AS(68 + kSafeBottomMargin))
-            make.left.right.equalToSuperview()
-            make.height.equalTo(headerView?.viewHeight() ?? 0)
+            make.width.centerX.equalToSuperview()
+            make.height.equalTo(headerHeight)
         }
-        
-        taskMapView?.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.size.equalTo(taskMapView?.size ?? CGSize.zero)
-            make.bottom.equalToSuperview().offset(AS(-kSafeBottomMargin - 21))
-        }
-        
+                
         if headerView != nil {
+            taskMapView?.snp.makeConstraints { (make) in
+                make.top.equalTo(headerView!.snp.bottom).offset(AS(10))
+                make.centerX.equalToSuperview()
+                make.size.equalTo(taskMapView?.size ?? CGSize.zero)
+            }
+            
             leftImageView.snp.makeConstraints { (make) in
                 make.top.equalTo(headerView!.snp.bottom).offset(AS(-15))
                 make.left.equalTo(AS(33))
@@ -129,7 +144,7 @@ class YXLearningResultViewController: YXViewController {
             
             rightImageView.snp.makeConstraints { (make) in
                 make.top.height.width.equalTo(leftImageView)
-                make.right.equalTo(AS(-33))
+                make.right.equalTo(headerView!).offset(AS(-33))
             }
         }
     }

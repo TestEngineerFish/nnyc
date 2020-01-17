@@ -12,7 +12,9 @@ class YXExerciseResultViewController: YXViewController {
 
     var model: YXExerciseResultDisplayModel!
     var resultView: YXExerciseResultView!
-
+    var shareVC: YXShareViewController?
+    var shareFinished = false
+    
     deinit {
         resultView.removeFromSuperview()
     }
@@ -78,21 +80,30 @@ class YXExerciseResultViewController: YXViewController {
     }
     
     private func shareEvent() {
-        if model.type == .base {
-            let vc = YXShareViewController()
-            vc.shareType   = .learnResult
-            vc.wordsAmount = model.allWordNum
-            vc.daysAmount  = model.studyDay
-            vc.hideCoin = !model.isShowCoin
-            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
-        } else {
-            let shareVC = YXShareViewController()
-            shareVC.shareType = shareType()
-            shareVC.wordsAmount = model?.reviewWordNum ?? 0
-            shareVC.daysAmount = model?.studyDay ?? 0
-            shareVC.hideCoin = !model.isShowCoin
-            YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+        if shareVC == nil {
+            shareVC = YXShareViewController()
+            shareVC?.finishAction = { [weak self] in
+                self?.shareFinished = true
+            }
         }
+        
+        if shareFinished {
+            shareVC?.hideCoin = true
+        } else {
+            shareVC?.hideCoin = !model.isShowCoin
+        }
+        
+        if model.type == .base {
+            shareVC?.shareType   = .learnResult
+            shareVC?.wordsAmount = model.allWordNum
+            shareVC?.daysAmount  = model.studyDay
+        } else {
+            shareVC?.shareType = shareType()
+            shareVC?.wordsAmount = model?.reviewWordNum ?? 0
+            shareVC?.daysAmount = model?.studyDay ?? 0
+        }
+        
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC!, animated: true)
     }
 
     private func shareType() -> YXShareImageType {

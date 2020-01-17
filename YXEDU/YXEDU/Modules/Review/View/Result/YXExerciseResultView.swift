@@ -281,6 +281,8 @@ class YXExerciseResultView: YXView {
                 operateButton.setTitle("继续听写", for: .normal)
             } else if model.type == .planReview {
                 operateButton.setTitle("继续复习", for: .normal)
+            } else {
+                operateButton.setTitle("打卡分享", for: .normal)
             }
         }
 
