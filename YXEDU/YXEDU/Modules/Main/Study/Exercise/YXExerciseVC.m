@@ -110,7 +110,6 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [IQKeyboardManager sharedManager].enable = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -122,7 +121,6 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [IQKeyboardManager sharedManager].enable = YES;
     [_disperseCloudView removeFromSuperview];
 }
 
@@ -711,7 +709,6 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 }
 
 - (void)reportError:(UIButton *)btn {
-    [IQKeyboardManager sharedManager].enable = NO;
     NSString *questionID = self.questionGenerator.curGeneratedQuestion.wordQuestionModel.question.questionId;
     [YXReportErrorView showToView:self.navigationController.view withQuestionId:questionID];
     [self traceEvent:kTraceQuestionReportError descributtion:questionID];

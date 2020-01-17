@@ -620,9 +620,7 @@
 		EE5EF20823273BAE00655654 /* NSTimer+YR.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1DD23273BAE00655654 /* NSTimer+YR.m */; };
 		EE5EF20923273BAE00655654 /* YRDateFormater.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1DE23273BAE00655654 /* YRDateFormater.m */; };
 		EE5EF20A23273BAE00655654 /* YRDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1DF23273BAE00655654 /* YRDevice.m */; };
-		EE5EF20B23273BAE00655654 /* YRHUDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1E423273BAE00655654 /* YRHUDUtils.m */; };
 		EE5EF20C23273BAE00655654 /* UIView+YR.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1E623273BAE00655654 /* UIView+YR.m */; };
-		EE5EF20D23273BAE00655654 /* YRProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F123273BAE00655654 /* YRProgressView.m */; };
 		EE5EF20E23273BAE00655654 /* NSString+extension.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F223273BAE00655654 /* NSString+extension.m */; };
 		EE5EF20F23273BAE00655654 /* NSObject+YR.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F323273BAE00655654 /* NSObject+YR.m */; };
 		EE5EF21023273BAE00655654 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */; };
@@ -1307,8 +1305,6 @@
 		EE5EF1E123273BAE00655654 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
 		EE5EF1E223273BAE00655654 /* NSObject+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YR.h"; sourceTree = "<group>"; };
 		EE5EF1E323273BAE00655654 /* NSString+extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+extension.h"; sourceTree = "<group>"; };
-		EE5EF1E423273BAE00655654 /* YRHUDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRHUDUtils.m; sourceTree = "<group>"; };
-		EE5EF1E523273BAE00655654 /* YRProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRProgressView.h; sourceTree = "<group>"; };
 		EE5EF1E623273BAE00655654 /* UIView+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YR.m"; sourceTree = "<group>"; };
 		EE5EF1E723273BAE00655654 /* YRLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRLocationManager.h; sourceTree = "<group>"; };
 		EE5EF1E823273BAE00655654 /* NSData+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+YR.h"; sourceTree = "<group>"; };
@@ -1319,8 +1315,6 @@
 		EE5EF1ED23273BAE00655654 /* YRHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRHelper.h; sourceTree = "<group>"; };
 		EE5EF1EE23273BAE00655654 /* NSArray+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+YR.h"; sourceTree = "<group>"; };
 		EE5EF1EF23273BAE00655654 /* UIView+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YR.h"; sourceTree = "<group>"; };
-		EE5EF1F023273BAE00655654 /* YRHUDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRHUDUtils.h; sourceTree = "<group>"; };
-		EE5EF1F123273BAE00655654 /* YRProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRProgressView.m; sourceTree = "<group>"; };
 		EE5EF1F223273BAE00655654 /* NSString+extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+extension.m"; sourceTree = "<group>"; };
 		EE5EF1F323273BAE00655654 /* NSObject+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YR.m"; sourceTree = "<group>"; };
 		EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
@@ -3789,8 +3783,6 @@
 				EE5EF1E123273BAE00655654 /* UIAlertView+Blocks.h */,
 				EE5EF1E223273BAE00655654 /* NSObject+YR.h */,
 				EE5EF1E323273BAE00655654 /* NSString+extension.h */,
-				EE5EF1E423273BAE00655654 /* YRHUDUtils.m */,
-				EE5EF1E523273BAE00655654 /* YRProgressView.h */,
 				EE5EF1E623273BAE00655654 /* UIView+YR.m */,
 				EE5EF1E723273BAE00655654 /* YRLocationManager.h */,
 				EE5EF1E823273BAE00655654 /* NSData+YR.h */,
@@ -3801,8 +3793,6 @@
 				EE5EF1ED23273BAE00655654 /* YRHelper.h */,
 				EE5EF1EE23273BAE00655654 /* NSArray+YR.h */,
 				EE5EF1EF23273BAE00655654 /* UIView+YR.h */,
-				EE5EF1F023273BAE00655654 /* YRHUDUtils.h */,
-				EE5EF1F123273BAE00655654 /* YRProgressView.m */,
 				EE5EF1F223273BAE00655654 /* NSString+extension.m */,
 				EE5EF1F323273BAE00655654 /* NSObject+YR.m */,
 				EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */,
@@ -5815,7 +5805,6 @@
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/HWWeakTimer/HWWeakTimer.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
 				"${BUILT_PRODUCTS_DIR}/KTVCocoaHTTPServer/KTVCocoaHTTPServer.framework",
 				"${BUILT_PRODUCTS_DIR}/KTVHTTPCache/KTVHTTPCache.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -5837,7 +5826,6 @@
 				"${BUILT_PRODUCTS_DIR}/Toast/Toast.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/VTMagic/VTMagic.framework",
 				"${BUILT_PRODUCTS_DIR}/WMPageController/WMPageController.framework",
 				"${BUILT_PRODUCTS_DIR}/YYKit/YYKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
@@ -5856,7 +5844,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HWWeakTimer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KTVCocoaHTTPServer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KTVHTTPCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -5878,7 +5865,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICollectionViewLeftAlignedLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VTMagic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WMPageController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
@@ -6032,7 +6018,6 @@
 				EE5E00EF23274FEC00655654 /* YXPersonChangeNameVC.m in Sources */,
 				EE5E005F23274FEB00655654 /* YXExerciseSubmitErrorView.m in Sources */,
 				EE5E010723274FEC00655654 /* YXBindPhoneVC.m in Sources */,
-				EE5EF20D23273BAE00655654 /* YRProgressView.m in Sources */,
 				EE5EF20F23273BAE00655654 /* NSObject+YR.m in Sources */,
 				EE5EFCD823274E5500655654 /* YXShareLodingView.m in Sources */,
 				2218AE3B23D0A0F800EF2E42 /* YXLogRequest.swift in Sources */,
@@ -6525,7 +6510,6 @@
 				EE54F7E02362AA3100EC605A /* YXImageQuestionView.swift in Sources */,
 				EE5E003823274FEB00655654 /* YXTopActionView.m in Sources */,
 				EE5E000E23274FEB00655654 /* YXCareerNoteWordInfoModel.m in Sources */,
-				EE5EF20B23273BAE00655654 /* YRHUDUtils.m in Sources */,
 				224352CB23A240AF00F278E6 /* YXChallengeRankTopView.swift in Sources */,
 				EEACEB6823A7AA520036B3A2 /* YXReviewDataManager.swift in Sources */,
 				224352CF23A240F900F278E6 /* YXChallengeHeaderView.swift in Sources */,
@@ -6722,10 +6706,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
-				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -6764,10 +6745,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
-				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";

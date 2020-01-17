@@ -17,7 +17,6 @@ target 'YXEDU' do
      pod 'AFNetworking'
      pod 'SSKeychain'
      pod 'YYKit'
-     pod 'IQKeyboardManager' , '~> 6.2.0'
      pod 'BMKLocationKit'
      pod 'HWWeakTimer'
      pod 'UICollectionViewLeftAlignedLayout'
@@ -25,7 +24,6 @@ target 'YXEDU' do
      pod 'ZipArchive'
      pod 'MJRefresh'
      pod 'WMPageController'
-     pod 'VTMagic'
      pod 'TZImagePickerController'
      pod 'FMDB'
      pod 'MagicalRecord'
@@ -43,9 +41,7 @@ target 'YXEDU' do
      pod 'Alamofire', '~> 4.7.3'
      pod 'ObjectMapper', '~> 3.3.0'
      pod 'AlamofireObjectMapper', '~> 5.0'
-     
-     pod 'CocoaLumberjack/Swift'
-     
+          
      pod 'UMCCommon'
      pod 'UMCAnalytics'
      pod 'UMCSecurityPlugins'
