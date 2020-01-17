@@ -56,7 +56,7 @@ struct YYNetworkService {
             fail?(networkError)
             return nil
         }
-        
+
         // 方式1: 设置到body中
         if request.isHttpBody {
             var urlRequest = URLRequest(url: request.url)
@@ -212,7 +212,8 @@ struct YYNetworkService {
         let header = request.handleHeader(parameters: params)
         let encoding: ParameterEncoding = (request.method == .get) ? URLEncoding.default : URLEncoding.httpBody
         let method = HTTPMethod(rawValue: request.method.rawValue) ?? .get
-        
+        DDLogDebug(String(format: "%@ = request url:%@ params:%@", method.rawValue, request.url.absoluteString, ""))
+
         let task = sessionManager.request(request.url, method: method, parameters: params, encoding: encoding, headers: header)
         task.responseObject { (response: DataResponse <T>) in
             switch response.result {
@@ -221,6 +222,7 @@ struct YYNetworkService {
                 x.request = response.request
                 success(x, (response.response?.statusCode) ?? 0)
             case .failure(let error):
+                DDLogWarn(String(format: "❌Fail %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, ""));
                 fail(error as NSError)
             }
         }

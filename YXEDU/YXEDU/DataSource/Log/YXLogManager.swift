@@ -12,6 +12,8 @@ import ZipArchive
 
 class YXLogManager: NSObject, DDLogFormatter {
 
+    static let share = YXLogManager()
+
     // MARK: ==== Request ====
 
     // 上传
@@ -20,7 +22,8 @@ class YXLogManager: NSObject, DDLogFormatter {
             return
         }
         let request = YXLogRequest.report(file: fileData)
-        YYNetworkService.default.request(YYStructResponse<YXLogModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, success: { (response) in
+            YXUtils.showHUD(kWindow, title: "上报成功")
             self.deleteZip()
         }) { (error) in
             YXUtils.showHUD(kWindow, title: "日志上报失败")
@@ -33,24 +36,22 @@ class YXLogManager: NSObject, DDLogFormatter {
         self.addDeviceInfo()
     }
 
-
     /// 添加用户信息
     private func addUserInfo() {
-        let uuid = YXUserModel.default.uuid
-        let username = YXUserModel.default.username
-
+        DDLogDebug("当前UUID：" + (YXUserModel.default.uuid ?? ""))
+        DDLogDebug("当前用户名：" + (YXUserModel.default.username ?? ""))
+        DDLogDebug("当前用户手机号：" + (YXConfigure.shared()?.mobile ?? ""))
     }
 
     /// 添加设备信息
     private func addDeviceInfo() {
-        let OSVersion        = YRDevice.osVersion()
-        let appBuild         = YRDevice.appBuild()
-        let deviceName       = UIDevice().machineName()
-        let systemVersion    = UIDevice().sysVersion()
-        let appVersion       = UIDevice().appVersion()
-        let networkType      = UIDevice().networkType()
-        let screenInch       = UIDevice().screenInch()
-        let screenRecolution = UIDevice().screenResolution()
+        DDLogDebug("当前App版本：" + UIDevice().appVersion())
+        DDLogDebug("当前App Build版本：" + YRDevice.appBuild())
+        DDLogDebug("当前设备名称：" + UIDevice().machineName())
+        DDLogDebug("当前系统版本：" + UIDevice().sysVersion())
+        DDLogDebug("当前网络环境：" + UIDevice().networkType())
+        DDLogDebug("当前屏幕英寸：" + UIDevice().screenInch())
+        DDLogDebug("当前屏幕分辨率：" + UIDevice().screenResolution())
     }
 
     // MARK: ==== Tool ====

@@ -50,8 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fileLogger.rollingFrequency = 60 * 60 * 24
         fileLogger.logFileManager.maximumNumberOfLogFiles = 7
         DDLog.add(fileLogger)
-        // 添加用户基本信息
-
+        // 添加基本信息
+        YXLogManager.share.addInfo()
         // ---- 日志 ----
         #if !DEBUG  // 正式环境才开启统计，不然开发环境打印的日志太多
         Growing.start(withAccountId: kGrowingIOID)

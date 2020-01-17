@@ -100,7 +100,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     override init(exerciseModel: YXWordExerciseModel) {
         super.init(exerciseModel: exerciseModel)
         // 如果没有例句,则跳过第一阶段
-        if !(exerciseModel.word?.examples?.first?.english?.isNotEmpty ?? true) {
+        if (exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) || exerciseModel.type == .newLearnPrimarySchool_Group {
             self.status = .playedExampleInFristStage
             self.newLearnDelegate?.playWordAndExampleFinished()
         }
@@ -216,6 +216,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.playExample()
             print("3")
         case .playedExampleInFristStage:
+            self.showPlayAnimation()
             self.newLearnDelegate?.playWordAndExampleFinished()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.status.forward()

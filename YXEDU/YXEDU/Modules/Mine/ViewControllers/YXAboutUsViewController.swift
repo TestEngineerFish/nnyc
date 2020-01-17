@@ -10,7 +10,9 @@ import UIKit
 
 class YXAboutUsViewController: UIViewController {
     @IBOutlet weak var versionLabel: UILabel!
-    
+
+    @IBOutlet weak var logoImageView: UIImageView!
+
     @IBAction func back(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)
     }
@@ -21,10 +23,15 @@ class YXAboutUsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         versionLabel.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+        let touchAction = UITapGestureRecognizer(target: self, action: #selector(reportLog))
+        self.logoImageView.addGestureRecognizer(touchAction)
     }
-    
+
+    @objc private func reportLog(_ tapGes: UITapGestureRecognizer) {
+//        tapGes.numberOfTouchesRequired
+//        YXLogManager.share.report()
+    }
 
     /*
     // MARK: - Navigation

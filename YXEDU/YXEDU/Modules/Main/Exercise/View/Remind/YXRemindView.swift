@@ -43,7 +43,8 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     /// 等待播放的语音列表（某一步提示，可能会播放多个语音，需要使用队列顺序播放，例如：单词语音+例句语音）
     private var audioList: [String] = []
-    private var playIndex = 0
+    private var playIndex       = 0
+    private var remindItemCount = 0 // 一步提示的数量
 
     weak var delegate: YXRemindViewProtocol?
     
@@ -156,7 +157,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     /// 处理每一步的提示
     /// - Parameter remindStep: 类型集合
     private func processRedmine(remindStep: [YXRemindType]) {
-        
+        self.remindItemCount = remindStep.count
         for type in remindStep {
             switch type {
             case .word:
@@ -186,7 +187,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindWord() {
         guard let wordModel = exerciseModel.word, let word = wordModel.word else {
-            self.show()
+            self.remindNextStep()
             return
         }
         titleLabel.text = word
@@ -195,7 +196,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindExample() {
         guard let wordModel = exerciseModel.word, let englishExample = wordModel.examples?.first?.englishExampleAttributedString else {
-            self.show()
+            self.remindNextStep()
             return
         }
         titleLabel.attributedText = englishExample
@@ -204,7 +205,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
 
     private func remindExampleWithDigWord() {
         guard let wordModel = exerciseModel.word, let example = wordModel.examples?.first?.english else {
-            self.show()
+            self.remindNextStep()
             return
         }
         titleLabel.text = example.formartTag(isHollow: true).1
@@ -213,7 +214,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindImage() {
         guard let wordModel = exerciseModel.word, let imageUrl = wordModel.imageUrl, !imageUrl.isEmpty else {
-            self.show()
+            self.remindNextStep()
             return
         }
         imageView.showImage(with: imageUrl, placeholder: UIImage.imageWithColor(UIColor.orange7))
@@ -222,7 +223,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindSoundmark() {
         guard let wordModel = exerciseModel.word, let soundmark = wordModel.soundmark else {
-            self.show()
+            self.remindNextStep()
             return
         }
         titleLabel.text = soundmark
@@ -231,7 +232,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindWordAudio() {
         guard let wordModel = exerciseModel.word, let voiceUrl = wordModel.voice else {
-            self.show()
+            self.remindNextStep()
             return
         }
         audioList.append(voiceUrl)
@@ -243,7 +244,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindExampleAudio() {
         guard let wordModel = exerciseModel.word, let voiceUrl = wordModel.examples?.first?.vocie else {
-            self.show()
+            self.remindNextStep()
             return
         }
         audioList.append(voiceUrl)
@@ -255,7 +256,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindWordChinese() {
         guard let wordModel = exerciseModel.word, let meaning = wordModel.meaning else {
-            self.show()
+            self.remindNextStep()
             return
         }
         titleLabel.text = meaning
@@ -264,7 +265,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     private func remindExampleChinese() {
         guard let wordModel = exerciseModel.word, let chineseExample = wordModel.examples?.first?.chinese else {
-            self.show()
+            self.remindNextStep()
             return
         }
         titleLabel.text = chineseExample
@@ -283,6 +284,13 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
             NotificationCenter.default.post(name: YXNotification.kCloseWordDetailPage, object: nil)
         }
         detailView.showWithAnimation()
+    }
+
+    private func remindNextStep() {
+        self.remindItemCount -= 1
+        if self.remindItemCount == 0 {
+            self.show()
+        }
     }
     
     //MARK: - 辅助方法

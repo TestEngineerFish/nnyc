@@ -232,6 +232,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     
     @objc func clickReviewButton() {
+        DDLogDebug("====开始自定义复习====")
         YXWordBookResourceManager.shared.contrastBookData(by: nil, { [weak self] (isSuccess) in
             guard let self = self else { return }
             if isSuccess {
@@ -242,6 +243,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     
     @objc func clickListenButton() {
+        DDLogDebug("====开始自定义听写复习====")
         YXWordBookResourceManager.shared.contrastBookData(by: nil, { [weak self] (isSuccess) in
             guard let self = self else { return }
             if isSuccess {
