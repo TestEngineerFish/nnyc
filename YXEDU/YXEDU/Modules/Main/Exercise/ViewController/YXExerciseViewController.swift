@@ -119,6 +119,7 @@
     private func initManager() {
         dataManager = YXExerciseDataManager()
         
+        // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
         if dataType == .base {
             dataManager.bookId = bookId
             dataManager.unitId = unitId
@@ -127,6 +128,7 @@
             dataManager.progressManager.unitId = unitId
         }
         
+        dataManager.dataType = dataType
         dataManager.progressManager.planId = planId
         dataManager.progressManager.dataType = dataType
         

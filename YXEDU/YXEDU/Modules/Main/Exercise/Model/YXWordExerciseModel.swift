@@ -8,41 +8,6 @@
 
 import ObjectMapper
 
-/// 问题数据模型
-//struct YXExerciseQuestionModel2: YXBaseWordModel {
-//
-//
-//    var wordId: Int? = -1
-//    var word: String?
-//    var partOfSpeechAndMeanings: [YXWordPartOfSpeechAndMeaningModel]?
-//    var imageUrl: String?
-//
-//    // 音标
-//    var americanPhoneticSymbol: String?
-//    var englishPhoneticSymbol: String?
-//
-//    // 发音
-//    var americanPronunciation: String?
-//    var englishPronunciation: String?
-//
-//
-//    // 例句
-//    var examples: [YXWordExampleModel]?
-//
-//    // Matrix
-//    var column: Int = 0
-//    var row: Int = 0
-//
-//    init() {}
-//    init?(map: Map) {
-//        mapping(map: map)
-//    }
-//
-//}
-
-
-
-
 /// 练习数据模型
 struct YXWordExerciseModel: Mappable {
     

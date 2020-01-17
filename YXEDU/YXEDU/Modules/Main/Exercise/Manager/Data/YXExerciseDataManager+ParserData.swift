@@ -34,7 +34,6 @@ extension YXExerciseDataManager {
         optionManager.initData(newArray: newExerciseArray, reviewArray: self.reviewWords())
                         
         // 处理进度状态
-
         progressManager.initProgressStatus(newWordIds: result?.newWordIds, reviewWordIds: result?.reviewWordIds)
         
         // 保存数据
@@ -86,11 +85,11 @@ extension YXExerciseDataManager {
                                                                 
                 if exercise.type == .connectionWordAndImage || exercise.type == .connectionWordAndChinese {
                     for option in exercise.option?.firstItems ?? [] {
-                        exercise.word = dao.selectWord(wordId: option.optionId)
+                        exercise.word = selectWord(wordId: option.optionId)
                         self.addWordStep(exerciseModel: exercise, isBackup: false)
                     }
                 } else {
-                    if let e = dao.selectWord(wordId: subStep.question?.wordId ?? 0) {
+                    if let e = selectWord(wordId: subStep.question?.wordId ?? 0) {
                         exercise.word = e
                         self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)
                     } else {
@@ -146,20 +145,7 @@ extension YXExerciseDataManager {
 //        question.row = word.row
         return question
     }
-    
-    
-//    func createExerciseModel(step: YXExerciseStepModel) -> YXWordExerciseModel {
-//        var exercise = YXWordExerciseModel()
-//        exercise.type        = YXExerciseType(rawValue: step.type ?? "") ?? .none
-//        exercise.question    = step.question
-//        exercise.option      = step.option
-//        exercise.answers     = step.answers
-//        exercise.step        = step.step
-//        exercise.isCareScore = step.isCareScore
-//        exercise.isNewWord   = step.isNewWord
-//
-//        return exercise
-//    }
+
     
     func reviewWords() -> [YXWordExerciseModel] {
         var array: [YXWordExerciseModel] = []
@@ -169,5 +155,14 @@ extension YXExerciseDataManager {
             }
         }
         return array
+    }
+    
+    
+    func selectWord(wordId: Int) -> YXWordModel? {
+        if dataType == .base {
+            return dao.selectWord(bookId: bookId ?? 0, wordId: wordId)
+        } else {
+            return dao.selectWord(wordId: wordId)
+        }
     }
 }
