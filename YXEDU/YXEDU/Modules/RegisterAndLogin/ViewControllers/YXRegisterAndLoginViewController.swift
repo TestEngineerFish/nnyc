@@ -447,7 +447,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             iconBackgroundImageView.snp.makeConstraints { (make) in
                 make.top.left.right.equalToSuperview()
                 make.height.lessThanOrEqualTo(224).priorityRequired()
-                make.bottom.lessThanOrEqualTo(containerView.snp.top).priorityRequired()
+                make.bottom.lessThanOrEqualTo(containerView.snp.top).offset(-10).priorityRequired()
             }
             
             iconBackgroundImageView.addSubview(iconImageView)
