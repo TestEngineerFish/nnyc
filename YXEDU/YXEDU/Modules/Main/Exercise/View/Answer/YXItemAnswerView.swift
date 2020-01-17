@@ -78,9 +78,19 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let idf = "UICollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: idf, for: indexPath)
+        if cell.contentView.subviews.count > 0 {
+            cell.contentView.removeAllSubviews()
+        }
+        
         cell.backgroundColor = UIColor.white
         cell.layer.borderWidth = 0.5
         cell.layer.borderColor = UIColor.black4.cgColor
+        
+        if let itemModel = exerciseModel.option?.firstItems?[indexPath.row], itemModel.isWrong {
+            cell.backgroundColor = UIColor.red2
+            cell.layer.borderWidth = 1.5
+            cell.layer.borderColor = UIColor.red1.cgColor
+        }
         
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = itemSize().height / 2
@@ -107,27 +117,33 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
                 label.textColor = UIColor.black2
             }
         }
+        
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderColor = UIColor.orange1.cgColor
-        cell?.backgroundColor = UIColor.orange1
-        if let label = cell?.contentView.subviews.first as? UILabel {
-            label.textColor = UIColor.white
-        }
+        cell?.layer.borderColor = UIColor.clear.cgColor
+//        cell?.backgroundColor = UIColor.orange1
+//        if let label = cell?.contentView.subviews.first as? UILabel {
+//            label.textColor = UIColor.white
+//        }
         collectionViewCell = cell
         
         if exerciseModel.answers?.first == exerciseModel.option?.firstItems?[indexPath.row].optionId {
             self.answerCompletion(right: true)
+            
         } else {
             self.answerCompletion(right: false)
+            exerciseModel.option?.firstItems?[indexPath.row].isWrong = true
+        }
+        
+        // 设置选中效果
+        if let itemModelList = exerciseModel.option?.firstItems {
+            collectionView.reloadSections(IndexSet(integer: 0))
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                cell?.backgroundColor = UIColor.white
-                cell?.layer.borderColor = UIColor.black4.cgColor
-                if let label = cell?.contentView.subviews.first as? UILabel {
-                    label.textColor = UIColor.black2
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weakSelf = self] in
+                for index in 0..<itemModelList.count {
+                    weakSelf.exerciseModel.option?.firstItems?[index].isWrong = false
                 }
+                collectionView.reloadSections(IndexSet(integer: 0))
             }
-            
         }
     }
 
