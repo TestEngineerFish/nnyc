@@ -233,6 +233,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                     cell.coinImageView.isHidden = true
                 }
                 
+                cell.leftLittlecoinImageView.isHidden = true
+                cell.rightLittlecoinImageView.isHidden = true
                 cell.giftImageView.isHidden = true
                 break
                 
@@ -250,15 +252,21 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
 
                 if dailyData.didPunchIn == 1 {
                     cell.coinImageView.image = #imageLiteral(resourceName: "coinGot")
+                    
+                    cell.leftLittlecoinImageView.isHidden = true
+                    cell.rightLittlecoinImageView.isHidden = true
                     cell.giftImageView.isHidden = true
 
                 } else {
                     if indexPath.row == 6 {
-                        cell.coinImageView.image = #imageLiteral(resourceName: "coins")
+                        cell.leftLittlecoinImageView.isHidden = false
+                        cell.rightLittlecoinImageView.isHidden = false
                         cell.giftImageView.isHidden = false
 
                     } else {
                         cell.coinImageView.image = #imageLiteral(resourceName: "coin")
+                        cell.leftLittlecoinImageView.isHidden = true
+                        cell.rightLittlecoinImageView.isHidden = true
                         cell.giftImageView.isHidden = true
                     }
                 }
@@ -272,9 +280,11 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 cell.weekLabel.textColor = UIColor.hex(0xCDB291)
                 cell.noCoinView.isHidden = true
                 cell.coinImageView.isHidden = false
-                
+                cell.coinImageView.image = #imageLiteral(resourceName: "coin")
+
                 if indexPath.row == 6 {
-                    cell.coinImageView.image = #imageLiteral(resourceName: "coins")
+                    cell.leftLittlecoinImageView.isHidden = false
+                    cell.rightLittlecoinImageView.isHidden = false
                     
                     if cell.integralLabel.text == "--" {
                         cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
@@ -286,9 +296,10 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                     cell.giftImageView.isHidden = false
 
                 } else {
-                    cell.coinImageView.image = #imageLiteral(resourceName: "coin")
                     cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
                     
+                    cell.leftLittlecoinImageView.isHidden = true
+                    cell.rightLittlecoinImageView.isHidden = true
                     cell.giftImageView.isHidden = true
                 }
                 

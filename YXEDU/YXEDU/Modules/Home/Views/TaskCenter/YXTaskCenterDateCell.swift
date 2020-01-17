@@ -15,6 +15,8 @@ class YXTaskCenterDateCell: UICollectionViewCell {
     @IBOutlet weak var containerView: YXDesignableView!
     @IBOutlet weak var noCoinView: YXDesignableView!
     @IBOutlet weak var coinImageView: UIImageView!
+    @IBOutlet weak var leftLittlecoinImageView: UIImageView!
+    @IBOutlet weak var rightLittlecoinImageView: UIImageView!
     @IBOutlet weak var integralLabel: YXDesignableLabel!
     
     override func awakeFromNib() {

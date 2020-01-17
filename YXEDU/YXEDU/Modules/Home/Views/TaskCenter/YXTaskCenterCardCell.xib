@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -61,8 +61,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0E-8y-U8I">
-                                <rect key="frame" x="12" y="26" width="14" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H0E-8y-U8I">
+                                <rect key="frame" x="12" y="26" width="293" height="18"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -109,6 +109,7 @@
                             <constraint firstItem="UNx-om-Yaf" firstAttribute="leading" secondItem="BfJ-b7-eC5" secondAttribute="leading" constant="12" id="fah-X7-mtx"/>
                             <constraint firstItem="vs9-VK-fAO" firstAttribute="leading" secondItem="BfJ-b7-eC5" secondAttribute="leading" constant="12" id="hcS-kM-s95"/>
                             <constraint firstItem="UNx-om-Yaf" firstAttribute="top" secondItem="H0E-8y-U8I" secondAttribute="bottom" constant="14" id="n4M-qj-TZM"/>
+                            <constraint firstAttribute="trailing" secondItem="H0E-8y-U8I" secondAttribute="trailing" constant="10" id="nfa-1h-UTz"/>
                             <constraint firstItem="H0E-8y-U8I" firstAttribute="leading" secondItem="BfJ-b7-eC5" secondAttribute="leading" constant="12" id="yIx-2b-PdL"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
