@@ -54,7 +54,7 @@
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 #else
-static const DDLogLevel DDLogLevel = DDLogLevelWarning;
+static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 #endif
 
 #endif /* PrefixHeader_pch */
