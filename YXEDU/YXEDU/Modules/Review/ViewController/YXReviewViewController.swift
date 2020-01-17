@@ -30,7 +30,7 @@ class YXReviewViewController: YXTableViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
         
-        YXTest.default.test()
+//        YXTest.default.test()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,8 +42,7 @@ class YXReviewViewController: YXTableViewController {
         super.viewWillLayoutSubviews()
         
         self.tableView.snp.makeConstraints { (make) in
-//            make.top.equalTo(AS(41 + kSafeBottomMargin))
-            make.top.left.right.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
     
