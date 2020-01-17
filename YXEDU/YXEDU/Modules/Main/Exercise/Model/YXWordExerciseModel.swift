@@ -10,8 +10,10 @@ import ObjectMapper
 
 /// 练习数据模型
 struct YXWordExerciseModel: Mappable {
-    
+    // 题型
     var type: YXExerciseType = .none
+    // 数据类型
+    var dataType: YXExerciseDataType = .base
         
     /// 对应的单词数据
     var word: YXWordModel?

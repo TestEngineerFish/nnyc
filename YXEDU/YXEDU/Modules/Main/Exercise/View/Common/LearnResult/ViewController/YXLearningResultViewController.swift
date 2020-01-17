@@ -26,6 +26,8 @@ class YXLearningResultViewController: YXViewController {
     var unitId: Int? // 单元ID
     var model: YXLearnResultModel?
     
+    var shareVC: YXShareViewController?
+    var shareFinished = false
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -204,11 +206,22 @@ class YXLearningResultViewController: YXViewController {
             YXUtils.showHUD(kWindow, title: "数据请求失败，请稍后再试～")
             return
         }
-        let vc = YXShareViewController()
-        vc.shareType   = .learnResult
-        vc.wordsAmount = model.allWordCount
-        vc.daysAmount  = model.studyDay
-        vc.hideCoin    = !model.isShowCoin
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        if shareVC == nil {
+            shareVC = YXShareViewController()
+            shareVC?.finishAction = { [weak self] in
+                self?.shareFinished = true
+            }
+        }
+        
+        if shareFinished {
+            shareVC?.hideCoin = true
+        } else {
+            shareVC?.hideCoin = !model.isShowCoin
+        }
+        
+        shareVC?.shareType   = .learnResult
+        shareVC?.wordsAmount = model.allWordCount
+        shareVC?.daysAmount  = model.studyDay
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC!, animated: true)
     }
 }

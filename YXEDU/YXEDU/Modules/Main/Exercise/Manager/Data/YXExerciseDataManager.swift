@@ -139,7 +139,7 @@ class YXExerciseDataManager: NSObject {
         // 生成题型
         var e = buildExercise()
         let wid = e?.word?.wordId ?? 0
-        e?.word = dao.selectWord(wordId: wid)
+        e?.word = selectWord(wordId: wid)
         
         // 打印
         printCurrentTurn()

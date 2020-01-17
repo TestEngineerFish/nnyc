@@ -195,7 +195,8 @@
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
-        if let model = data.2 {
+        if var model = data.2 {
+            model.dataType = dataType
 //            model.type = .lookExampleChooseImage
             
             // 新学隐藏提示

@@ -185,6 +185,15 @@ class YXConnectionView: UIView {
             }
         }
     }
+    
+    func selectWord(wordId: Int) -> YXWordModel? {
+        if exerciseModel?.dataType == .base {
+            let bookId = exerciseModel?.word?.bookId ?? 0
+            return YXWordBookDaoImpl().selectWord(bookId: bookId, wordId: wordId)
+        } else {
+            return YXWordBookDaoImpl().selectWord(wordId: wordId)
+        }
+    }
 }
 
 
@@ -255,7 +264,7 @@ extension YXConnectionView {
             make.height.equalTo(22)
         }
         
-        let word = YXWordBookDaoImpl().selectWord(wordId: leftItemArray[index].itemModel?.optionId ?? 0)
+        let word = selectWord(wordId: leftItemArray[index].itemModel?.optionId ?? 0)
         self.audioPlayerView.isHidden = false
         self.audioPlayerView.urlStr = word?.voice
         self.audioPlayerView.play()

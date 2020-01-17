@@ -91,7 +91,7 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
     }
     
     override func remindAction(wordId: Int, isRemind: Bool) {
-        let word = YXWordBookDaoImpl().selectWord(wordId: wordId)
+        let word = selectWord(wordId: wordId)
         remindView?.exerciseModel.word = word
         
         if let index = remindMap[wordId] {
@@ -100,14 +100,20 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
                 let count = self.remindView?.remindSteps.count ?? 0
                 remindMap[wordId] = index + 1 >= count ? count - 1 : index + 1
             }
-        } else {
-            
+        } else {            
             remindMap[wordId] = -1
             remindView?.currentRemindIndex = -1
-                                                                                        
-            
         }
         
         
+    }
+    
+    func selectWord(wordId: Int) -> YXWordModel? {
+        if exerciseModel.dataType == .base {
+            let bookId = exerciseModel.word?.bookId ?? 0
+            return YXWordBookDaoImpl().selectWord(bookId: bookId, wordId: wordId)
+        } else {
+            return YXWordBookDaoImpl().selectWord(wordId: wordId)
+        }
     }
 }

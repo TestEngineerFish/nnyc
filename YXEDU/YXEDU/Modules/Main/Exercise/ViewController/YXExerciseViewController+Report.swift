@@ -73,7 +73,7 @@ extension YXExerciseViewController {
         vc.newLearnAmount = newCount
         vc.reviewLearnAmount = reviewCount
         vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: false)
 //        YRRouter.popViewController(false)
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }

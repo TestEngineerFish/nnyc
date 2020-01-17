@@ -73,7 +73,7 @@ class YXExerciseOptionManager: NSObject {
             if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
                 continue
             }
-            let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
+            let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
             items.append(itemModel)
             whiteList.append(wordModel.word)
             tmpOtherNewWordArray.remove(at: randomInt)
@@ -97,7 +97,7 @@ class YXExerciseOptionManager: NSObject {
                     continue
                 }
                 if !whiteList.contains(wordModel.word) {
-                    let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
+                    let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
                     items.append(itemModel)
                 }
                 whiteList.append(wordModel.word)
@@ -120,7 +120,7 @@ class YXExerciseOptionManager: NSObject {
                         continue
                     }
                     if !whiteList.contains(wordModel.word) {
-                        let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
+                        let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
                         items.append(itemModel)
                     }
                     whiteList.append(wordModel.word)
@@ -144,7 +144,7 @@ class YXExerciseOptionManager: NSObject {
                         continue
                     }
                     if !whiteList.contains(wordModel.word) {
-                        let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type)
+                        let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
                         items.append(itemModel)
                     }
                     whiteList.append(wordModel.word)
@@ -159,7 +159,7 @@ class YXExerciseOptionManager: NSObject {
         
         // 添加正取的选项
         let at = random(max: items.count + 1)
-        items.insert(itemModel(word: exerciseModel.word!, type: exerciseModel.type), at: at)
+        items.insert(itemModel(word: exerciseModel.word!, type: exerciseModel.type, dataType: exerciseModel.dataType), at: at)
         
         var option = YXExerciseOptionModel()
         option.firstItems = items
@@ -188,7 +188,7 @@ class YXExerciseOptionManager: NSObject {
             var item = YXOptionItemModel()
             item.optionId = -1
             
-            items.append(itemModel(word: exerciseModel.word!, type: exerciseModel.type))
+            items.append(itemModel(word: exerciseModel.word!, type: exerciseModel.type, dataType: exerciseModel.dataType))
             items.append(item)
         } else {// 错
             // 其他的新学单词集合，排除当前的单词
@@ -215,7 +215,7 @@ class YXExerciseOptionManager: NSObject {
 
             items.append(item)
             if tmpWord != nil {
-                items.append(itemModel(word: tmpWord!, type: exerciseModel.type))
+                items.append(itemModel(word: tmpWord!, type: exerciseModel.type, dataType: exerciseModel.dataType))
             }
 //            print("错误1:\(tmpWord?.wordId), \(tmpWord?.word), \(tmpWord?.meaning), \(tmpWord?.imageUrl)")
 //            print("错误2:\(exerciseModel.word?.wordId), \(exerciseModel.word?.word), \(exerciseModel.word?.meaning), \(exerciseModel.word?.imageUrl)")
@@ -343,13 +343,13 @@ class YXExerciseOptionManager: NSObject {
     /// - Parameters:
     ///   - word:
     ///   - type:
-    func itemModel(word: YXWordModel, type: YXExerciseType) -> YXOptionItemModel {
+    func itemModel(word: YXWordModel, type: YXExerciseType, dataType: YXExerciseDataType) -> YXOptionItemModel {
         var item = YXOptionItemModel()
         item.optionId = word.wordId ?? -1
         
         var newWord = word
         // 为什么要查询一次，因为出题后，数据缓存了，后面更新了词书，没有使用最新的，需要时时查询，后续要优化
-        if let w = YXWordBookDaoImpl().selectWord(wordId: item.optionId) {
+        if let w = selectWord(bookId: word.bookId ?? 0, wordId: item.optionId, dataType: dataType) {
             newWord = w
         }
         
@@ -384,5 +384,11 @@ class YXExerciseOptionManager: NSObject {
     }
     
     
-    
+    func selectWord(bookId: Int, wordId: Int, dataType: YXExerciseDataType) -> YXWordModel? {
+        if dataType == .base {
+            return YXWordBookDaoImpl().selectWord(bookId: bookId, wordId: wordId)
+        } else {
+            return YXWordBookDaoImpl().selectWord(wordId: wordId)
+        }
+    }
 }

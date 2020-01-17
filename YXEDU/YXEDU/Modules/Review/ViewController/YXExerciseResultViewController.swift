@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+/// 复习结果页（除基础学习外）
 class YXExerciseResultViewController: YXViewController {
 
     var model: YXExerciseResultDisplayModel!
@@ -93,15 +95,10 @@ class YXExerciseResultViewController: YXViewController {
             shareVC?.hideCoin = !model.isShowCoin
         }
         
-        if model.type == .base {
-            shareVC?.shareType   = .learnResult
-            shareVC?.wordsAmount = model.allWordNum
-            shareVC?.daysAmount  = model.studyDay
-        } else {
-            shareVC?.shareType = shareType()
-            shareVC?.wordsAmount = model?.reviewWordNum ?? 0
-            shareVC?.daysAmount = model?.studyDay ?? 0
-        }
+        shareVC?.shareType = shareType()
+        shareVC?.wordsAmount = model?.reviewWordNum ?? 0
+        shareVC?.daysAmount = model?.studyDay ?? 0
+    
         
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC!, animated: true)
     }
