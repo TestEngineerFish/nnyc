@@ -142,7 +142,8 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             if number > 0 {
                 if let model = self.gameResultMode {
                     self.resultView.showSuccessView(model)
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) { [weak self] in
+                        guard let self = self else { return }
                         self.resultView.closeView()
 
                         let shareVC = YXShareViewController()

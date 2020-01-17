@@ -46,16 +46,16 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
 
     /// 显示错误动画
     private func showWrongAnimation() {
-        let resultView = AnimationView(name: "wrong")
-        kWindow.addSubview(resultView)
-        resultView.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(180), height: AdaptSize(180)))
-        }
+//        let resultView = AnimationView(name: "wrong")
+//        kWindow.addSubview(resultView)
+//        resultView.snp.makeConstraints { (make) in
+//            make.center.equalToSuperview()
+//            make.size.equalTo(CGSize(width: AdaptSize(180), height: AdaptSize(180)))
+//        }
         self.owenrView?.isUserInteractionEnabled = false
-        resultView.play()
+//        resultView.play()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
-            resultView.removeFromSuperview()
+//            resultView.removeFromSuperview()
             self.owenrView?.isUserInteractionEnabled = true
             self.animationDidStop?(false)
         }

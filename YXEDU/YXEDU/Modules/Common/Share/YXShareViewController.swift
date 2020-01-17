@@ -170,8 +170,6 @@ class YXShareViewController: YXViewController {
             self.shareImageView.image = self.createChallengeReviewShareImage()
         }
     }
-
-
     
     private func createSubviews() {
         self.view.addSubview(headerView)
@@ -281,6 +279,10 @@ class YXShareViewController: YXViewController {
     
     // MARK: ==== Request ====
     private func punch(_ type: YXShareType) {
+        // 挑战分享不算打卡
+        if self.shareType == .challengeResult {
+            return
+        }
         let request = YXShareRequest.punch(type: type.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { (response) in
             guard let model = response.data else {
