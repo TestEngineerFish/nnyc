@@ -57,12 +57,12 @@ class YXExerciseOptionManager: NSObject {
         // 提高查找速度,拿空间换时间
         var whiteList = [String?]()
 
-        guard let wordModel = exerciseModel.word, let currentWordId = wordModel.wordId else {
+        guard let wordModel = exerciseModel.word else {
             return nil
         }
         // 从新学单词获取数据
         whiteList.append(wordModel.word)
-        let otherNewWordArray = self.otherNewWordArray(wordId: currentWordId)
+        let otherNewWordArray = self.otherNewWordArray(wordModel: wordModel)
         var tmpOtherNewWordArray = otherNewWordArray
         for _ in otherNewWordArray {
             let randomInt = Int.random(in: 0..<tmpOtherNewWordArray.count)
@@ -85,8 +85,9 @@ class YXExerciseOptionManager: NSObject {
         // 从学习流程获取数据
         if items.count < itemCount - 1 {
             // 防止无限随机同一个对象
-            var tmpReviewWordArray = reviewWordArray
-            for _ in 0..<reviewWordArray.count {
+            let otherReviewWordArray = self.otherReviewWordArray(wordModel: wordModel)
+            var tmpReviewWordArray = otherReviewWordArray
+            for _ in 0..<otherReviewWordArray.count {
                 let randomInt = Int.random(in: 0..<tmpReviewWordArray.count)
                 let _wordExerciseModel = tmpReviewWordArray[randomInt]
                 guard let wordModel = _wordExerciseModel.word else {
@@ -191,11 +192,11 @@ class YXExerciseOptionManager: NSObject {
             items.append(item)
         } else {// 错
             // 其他的新学单词集合，排除当前的单词
-            var wordArray = self.otherNewWordArray(wordId: exerciseModel.word?.wordId ?? 0)
+            var wordArray = self.otherNewWordArray(wordModel: exerciseModel.word)
             
             var tmpWord: YXWordModel?
             if wordArray.count == 0, let wordModel = exerciseModel.word {
-                wordArray = self.otherReviewWordArray(wordId: wordModel.wordId ?? 0)
+                wordArray = self.otherReviewWordArray(wordModel: wordModel)
                 if wordArray.isEmpty {
                     if let otherWordModel = self.otherWordExampleModel(wordModel: wordModel){
                         tmpWord = otherWordModel
@@ -267,20 +268,24 @@ class YXExerciseOptionManager: NSObject {
         return exercise
     }
     
-    
     /// 其他新学单词
     /// - Parameter index: 需要排除的
-    func otherNewWordArray(wordId: Int) ->  [YXWordExerciseModel] {
-        let array = self.newWordArray.filter { (wordModel) -> Bool in
-            return wordModel.word?.wordId != wordId
+    func otherNewWordArray(wordModel: YXWordModel?) ->  [YXWordExerciseModel] {
+        guard let wordModel = wordModel else {
+            return []
+        }
+        let array = self.newWordArray.filter { (wordExerciseModel) -> Bool in
+            return wordExerciseModel.word?.word != wordModel.word
         }
         return array
     }
     
-    
-    func otherReviewWordArray(wordId: Int) ->  [YXWordExerciseModel] {
-        let array = self.reviewWordArray.filter { (wordModel) -> Bool in
-            return wordModel.word?.wordId != wordId
+    func otherReviewWordArray(wordModel: YXWordModel?) ->  [YXWordExerciseModel] {
+        guard let wordModel = wordModel else {
+            return []
+        }
+        let array = self.reviewWordArray.filter { (wordExerciseModel) -> Bool in
+            return wordExerciseModel.word?.word != wordModel.word
         }
         return array
     }

@@ -77,7 +77,7 @@
     
     // 设置两种方式的heeader头参数
     NSDictionary *feilds = [self _setAllHeader:headers params:params url:url];
-    
+    DDLogDebug(@"GET = request url:%@ params:%@", url, params);
     NSURLSessionDataTask *task = [self.sessionManager GET:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // 删除已完成的task
         [self _removeTask:task];
@@ -85,9 +85,9 @@
         [self _successResponse:responseObject url:url params:params requestType:YRHttpRequestTypeGet task:task completion:completion];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        DDLogWarn(@"❌Fail GET = request url:%@ parames:%@, error:%@", url, params, error);
         // 删除已完成的task
         [self _removeTask:task];
-        
         YRHttpResponse *response = [self _failureResponse:task error:error requestType:YRHttpRequestTypeGet ];
         completion ? completion(response) : nil;
     }];
@@ -125,23 +125,20 @@
     
     // 设置两种方式的heeader头参数
     NSDictionary *feilds = [self _setAllHeader:headers params:params url:url];
-    NSLog(@"params--%@",params);
+    DDLogDebug(@"POST = request url:%@ params:%@", url, params);
     NSURLSessionDataTask *task = [self.sessionManager POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // 删除已完成的task
         [self _removeTask:task];
-        
-        NSLog(@"POST = request url:%@",task.originalRequest.URL.absoluteString);
         [self _successResponse:responseObject url:url params:params requestType:YRHttpRequestTypePost task:task completion:completion];
-        
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        DDLogWarn(@"❌Fail POST = request url:%@ parames:%@, error:%@", url, params, error);
         // 删除已完成的task
         [self _removeTask:task];
-        
         YRHttpResponse *response = [self _failureResponse:task error:error requestType:YRHttpRequestTypePost ];
         completion ? completion(response) : nil;
-        
     }];
     
     YRHttpTask *yrTask = [[YRHttpTask alloc] initWithTask:task withUrl:url withParams:params withHeader:feilds];

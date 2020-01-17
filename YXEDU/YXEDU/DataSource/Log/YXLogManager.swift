@@ -12,6 +12,8 @@ import ZipArchive
 
 class YXLogManager: NSObject, DDLogFormatter {
 
+    // MARK: ==== Request ====
+
     // 上传
     func report() {
         guard let fileData = self.zipLogFile() else {
@@ -24,6 +26,34 @@ class YXLogManager: NSObject, DDLogFormatter {
             YXUtils.showHUD(kWindow, title: "日志上报失败")
         }
     }
+
+    // MARK: ==== Event ====
+    func addInfo() {
+        self.addUserInfo()
+        self.addDeviceInfo()
+    }
+
+
+    /// 添加用户信息
+    private func addUserInfo() {
+        let uuid = YXUserModel.default.uuid
+        let username = YXUserModel.default.username
+
+    }
+
+    /// 添加设备信息
+    private func addDeviceInfo() {
+        let OSVersion        = YRDevice.osVersion()
+        let appBuild         = YRDevice.appBuild()
+        let deviceName       = UIDevice().machineName()
+        let systemVersion    = UIDevice().sysVersion()
+        let appVersion       = UIDevice().appVersion()
+        let networkType      = UIDevice().networkType()
+        let screenInch       = UIDevice().screenInch()
+        let screenRecolution = UIDevice().screenResolution()
+    }
+
+    // MARK: ==== Tool ====
 
     ///  压缩日志文件
     private func zipLogFile() -> Data? {

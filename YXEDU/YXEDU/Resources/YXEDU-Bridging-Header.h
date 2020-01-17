@@ -65,5 +65,6 @@
 #import "YXShareImageGenerator.h"
 #import "YXShareHelper.h"
 #import "YRDevice.h"
+#import "UIDevice+YX.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
