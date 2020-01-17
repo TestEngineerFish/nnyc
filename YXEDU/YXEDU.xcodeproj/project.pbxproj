@@ -43,6 +43,7 @@
 		2218AE3623D07CC600EF2E42 /* YXLogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2218AE3523D07CC600EF2E42 /* YXLogManager.swift */; };
 		2218AE3B23D0A0F800EF2E42 /* YXLogRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2218AE3A23D0A0F800EF2E42 /* YXLogRequest.swift */; };
 		2218AE3D23D0A22A00EF2E42 /* YXLogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2218AE3C23D0A22A00EF2E42 /* YXLogModel.swift */; };
+		2218AE3F23D15FC500EF2E42 /* libusc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2218AE3E23D15FC500EF2E42 /* libusc.a */; };
 		2227629C23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2227629B23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift */; };
 		22298BF8237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */; };
 		22298BFA237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BF9237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift */; };
@@ -120,7 +121,6 @@
 		22D50B3D23BB4FCF00AB2421 /* YXNewLearnGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D50B3C23BB4FCF00AB2421 /* YXNewLearnGuideView.swift */; };
 		22D6FA0023BDCAC900B05BC8 /* YXMakeReviewGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6F9FF23BDCAC900B05BC8 /* YXMakeReviewGuideView.swift */; };
 		22DC471F2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC471E2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift */; };
-		22DC4726238BC140002F7120 /* libusc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DC4725238BC140002F7120 /* libusc.a */; };
 		22DEA77023B9914300E30FB7 /* YXShareCordeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEA76F23B9914300E30FB7 /* YXShareCordeView.swift */; };
 		22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */; };
 		22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */; };
@@ -815,6 +815,7 @@
 		2218AE3523D07CC600EF2E42 /* YXLogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLogManager.swift; sourceTree = "<group>"; };
 		2218AE3A23D0A0F800EF2E42 /* YXLogRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLogRequest.swift; sourceTree = "<group>"; };
 		2218AE3C23D0A22A00EF2E42 /* YXLogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLogModel.swift; sourceTree = "<group>"; };
+		2218AE3E23D15FC500EF2E42 /* libusc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libusc.a; sourceTree = "<group>"; };
 		2227629B23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSquirrelCoinViewController.swift; sourceTree = "<group>"; };
 		22298BF7237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnJuniorHighSchoolQuestionView.swift; sourceTree = "<group>"; };
 		22298BF9237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnJuniorHighSchoolAnswerView.swift; sourceTree = "<group>"; };
@@ -894,7 +895,6 @@
 		22D6F9FF23BDCAC900B05BC8 /* YXMakeReviewGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMakeReviewGuideView.swift; sourceTree = "<group>"; };
 		22DC471E2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChineseFillConnectionLetterQuestionView.swift; sourceTree = "<group>"; };
 		22DC4724238BC140002F7120 /* USCRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCRecognizer.h; sourceTree = "<group>"; };
-		22DC4725238BC140002F7120 /* libusc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libusc.a; sourceTree = "<group>"; };
 		22DEA76F23B9914300E30FB7 /* YXShareCordeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareCordeView.swift; sourceTree = "<group>"; };
 		22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionMeaningView.swift; sourceTree = "<group>"; };
 		22ED549C2366D80400011B82 /* YXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXModel.h; sourceTree = "<group>"; };
@@ -1957,8 +1957,8 @@
 				D665A0B02091A40200FBC9D2 /* CoreGraphics.framework in Frameworks */,
 				D62C1E2520897EBC002BB11A /* SystemConfiguration.framework in Frameworks */,
 				D672C2572064D24D00696828 /* CoreTelephony.framework in Frameworks */,
+				2218AE3F23D15FC500EF2E42 /* libusc.a in Frameworks */,
 				D665A0AE2091A3EA00FBC9D2 /* CoreFoundation.framework in Frameworks */,
-				22DC4726238BC140002F7120 /* libusc.a in Frameworks */,
 				D665A0AC2091A3DB00FBC9D2 /* CFNetwork.framework in Frameworks */,
 				D62C1E2720897EC7002BB11A /* CoreLocation.framework in Frameworks */,
 				D672C2552064D21800696828 /* libsqlite3.tbd in Frameworks */,
@@ -2230,7 +2230,7 @@
 		2265905E23743282006C9925 /* Unisound */ = {
 			isa = PBXGroup;
 			children = (
-				22DC4725238BC140002F7120 /* libusc.a */,
+				2218AE3E23D15FC500EF2E42 /* libusc.a */,
 				22DC4724238BC140002F7120 /* USCRecognizer.h */,
 			);
 			path = Unisound;
