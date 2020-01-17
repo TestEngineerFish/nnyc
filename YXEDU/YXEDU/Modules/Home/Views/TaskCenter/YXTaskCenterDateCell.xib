@@ -56,6 +56,20 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin" translatesAutoresizingMaskIntoConstraints="NO" id="WHf-99-5bX">
+                                <rect key="frame" x="9" y="10" width="14" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="YD1-oL-F21"/>
+                                    <constraint firstAttribute="width" constant="14" id="e8v-4e-IIl"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin" translatesAutoresizingMaskIntoConstraints="NO" id="oM4-v8-d21">
+                                <rect key="frame" x="23" y="10" width="14" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="14" id="2p5-d4-qcK"/>
+                                    <constraint firstAttribute="height" constant="14" id="VOf-Ss-4Iu"/>
+                                </constraints>
+                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dMj-fh-yk6">
                                 <rect key="frame" x="5" y="6" width="36" height="18"/>
                                 <constraints>
@@ -69,11 +83,15 @@
                             <constraint firstItem="dMj-fh-yk6" firstAttribute="top" secondItem="53m-6b-h3O" secondAttribute="top" constant="6" id="8eu-ES-uEa"/>
                             <constraint firstAttribute="trailing" secondItem="Ja0-Ud-WoA" secondAttribute="trailing" constant="4" id="Fzh-13-LxX"/>
                             <constraint firstItem="Wdi-v8-h5N" firstAttribute="top" secondItem="dMj-fh-yk6" secondAttribute="bottom" constant="6" id="OsY-Un-6Fv"/>
+                            <constraint firstItem="dMj-fh-yk6" firstAttribute="centerX" secondItem="WHf-99-5bX" secondAttribute="trailing" id="UlH-tg-PdB"/>
                             <constraint firstItem="Ja0-Ud-WoA" firstAttribute="top" secondItem="53m-6b-h3O" secondAttribute="top" constant="8" id="Wo9-7e-ihB"/>
+                            <constraint firstItem="WHf-99-5bX" firstAttribute="top" secondItem="53m-6b-h3O" secondAttribute="top" constant="10" id="XWb-L9-ycP"/>
+                            <constraint firstItem="oM4-v8-d21" firstAttribute="leading" secondItem="dMj-fh-yk6" secondAttribute="centerX" id="YG1-fx-Bo3"/>
                             <constraint firstItem="Wdi-v8-h5N" firstAttribute="centerX" secondItem="53m-6b-h3O" secondAttribute="centerX" id="mGS-3J-Vck"/>
                             <constraint firstItem="Ja0-Ud-WoA" firstAttribute="leading" secondItem="53m-6b-h3O" secondAttribute="leading" constant="4" id="tcp-Qk-ZcH"/>
                             <constraint firstItem="dMj-fh-yk6" firstAttribute="centerX" secondItem="53m-6b-h3O" secondAttribute="centerX" id="w1K-0L-ia5"/>
                             <constraint firstAttribute="height" constant="54" id="wGK-eR-9OT"/>
+                            <constraint firstItem="oM4-v8-d21" firstAttribute="top" secondItem="53m-6b-h3O" secondAttribute="top" constant="10" id="wai-SC-DYf"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -108,13 +126,16 @@
                 <outlet property="containerView" destination="53m-6b-h3O" id="Kvg-EQ-a9d"/>
                 <outlet property="giftImageView" destination="Vqi-R1-IVd" id="pYV-u7-ruG"/>
                 <outlet property="integralLabel" destination="Wdi-v8-h5N" id="SDe-7i-Jyq"/>
+                <outlet property="leftLittlecoinImageView" destination="WHf-99-5bX" id="JaT-30-h83"/>
                 <outlet property="noCoinView" destination="Ja0-Ud-WoA" id="eFz-5t-hhn"/>
+                <outlet property="rightLittlecoinImageView" destination="oM4-v8-d21" id="Lw1-Wl-Y13"/>
                 <outlet property="weekLabel" destination="Eyx-JI-Df8" id="NaA-uy-mN2"/>
             </connections>
             <point key="canvasLocation" x="140.57971014492756" y="142.96875"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="coin" width="20" height="21"/>
         <image name="gift" width="17" height="17"/>
     </resources>
 </document>
