@@ -88,7 +88,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         
         if let itemModel = exerciseModel.option?.firstItems?[indexPath.row], itemModel.isWrong {
             cell.backgroundColor = UIColor.red2
-            cell.layer.borderWidth = 1.5
+            cell.layer.borderWidth = 2
             cell.layer.borderColor = UIColor.red1.cgColor
         }
         

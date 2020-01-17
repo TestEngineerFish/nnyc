@@ -99,7 +99,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
             }
         }
         
-        iv.layer.borderWidth   = 1.5
+        iv.layer.borderWidth   = 2
         iv.layer.masksToBounds = true
         iv.layer.cornerRadius  = AdaptSize(4)
         cell.contentView.addSubview(iv)

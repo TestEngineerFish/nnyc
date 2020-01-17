@@ -77,11 +77,13 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
             
         } else {
             self.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .normal)
-            self.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .selected)
-            self.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .highlighted)
+            self.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.red2), for: .selected)
+            self.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.red2), for: .highlighted)
             self.rightButton.setImage(#imageLiteral(resourceName: "exercise_answer_right_wrong"), for: .normal)
             self.rightButton.setImage(#imageLiteral(resourceName: "exercise_answer_right_wrong"), for: .selected)
             self.rightButton.setImage(#imageLiteral(resourceName: "exercise_answer_right_wrong"), for: .highlighted)
+            self.rightButton.layer.borderWidth = 2
+            self.rightButton.layer.borderColor = UIColor.red1.cgColor
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {[weak self] in
                 self?.rightButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .normal)
@@ -90,6 +92,8 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
                 self?.rightButton.setImage(UIImage(named: "exercise_answer_right"), for: .normal)
                 self?.rightButton.setImage(UIImage(named: "exercise_answer_right_sel"), for: .selected)
                 self?.rightButton.setImage(UIImage(named: "exercise_answer_right_sel"), for: .highlighted)
+                self?.rightButton.layer.borderWidth = 0.5
+                self?.rightButton.layer.borderColor = UIColor.black6.cgColor
                 
                 self?.rightButton.isSelected = false
             }
@@ -109,11 +113,13 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
             
         } else {
             self.wrongButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .normal)
-            self.wrongButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .selected)
-            self.wrongButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .highlighted)
+            self.wrongButton.setBackgroundImage(UIImage.imageWithColor(UIColor.red2), for: .selected)
+            self.wrongButton.setBackgroundImage(UIImage.imageWithColor(UIColor.red2), for: .highlighted)
             self.wrongButton.setImage(#imageLiteral(resourceName: "exercise_answer_wrong_right"), for: .normal)
             self.wrongButton.setImage(#imageLiteral(resourceName: "exercise_answer_wrong_right"), for: .selected)
             self.wrongButton.setImage(#imageLiteral(resourceName: "exercise_answer_wrong_right"), for: .highlighted)
+            self.wrongButton.layer.borderWidth = 2
+            self.wrongButton.layer.borderColor = UIColor.red1.cgColor
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {[weak self] in
                 self?.wrongButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .normal)
@@ -122,6 +128,8 @@ class YXRightOrWrongAnswerView: YXBaseAnswerView {
                 self?.wrongButton.setImage(UIImage(named: "exercise_answer_wrong"), for: .normal)
                 self?.wrongButton.setImage(UIImage(named: "exercise_answer_wrong_sel"), for: .selected)
                 self?.wrongButton.setImage(UIImage(named: "exercise_answer_wrong_sel"), for: .highlighted)
+                self?.wrongButton.layer.borderWidth = 0.5
+                self?.wrongButton.layer.borderColor = UIColor.black6.cgColor
                 
                 self?.wrongButton.isSelected = false
             }
