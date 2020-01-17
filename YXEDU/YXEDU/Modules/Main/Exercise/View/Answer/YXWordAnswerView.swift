@@ -92,6 +92,7 @@ class YXWordAnswerView: YXBaseAnswerView {
 
     /// 显示结果页
     private func showResultView(errorList list: [Int]) {
+        self.isUserInteractionEnabled = false
         if list.isEmpty {
             // 答题正确
             self.selectedBtnArray.forEach { (button) in
@@ -115,6 +116,7 @@ class YXWordAnswerView: YXBaseAnswerView {
                 }
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
                     self.clickBtn(letterBtn)
+                    self.isUserInteractionEnabled = true
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)

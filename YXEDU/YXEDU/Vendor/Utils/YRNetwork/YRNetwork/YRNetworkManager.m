@@ -81,11 +81,11 @@
     NSURLSessionDataTask *task = [self.sessionManager GET:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // 删除已完成的task
         [self _removeTask:task];
-                
+        DDLogDebug(@"【Success】 request url: %@, respnseObject: %@", url, responseObject);
         [self _successResponse:responseObject url:url params:params requestType:YRHttpRequestTypeGet task:task completion:completion];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        DDLogWarn(@"❌Fail GET = request url:%@ parames:%@, error:%@", url, params, error);
+        DDLogWarn(@"【Fail】 GET = request url:%@ parames:%@, error:%@", url, params, error);
         // 删除已完成的task
         [self _removeTask:task];
         YRHttpResponse *response = [self _failureResponse:task error:error requestType:YRHttpRequestTypeGet ];
@@ -131,10 +131,11 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // 删除已完成的task
         [self _removeTask:task];
+        DDLogDebug(@"【Success】 request url: %@, respnseObject: %@", url, responseObject);
         [self _successResponse:responseObject url:url params:params requestType:YRHttpRequestTypePost task:task completion:completion];
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        DDLogWarn(@"❌Fail POST = request url:%@ parames:%@, error:%@", url, params, error);
+        DDLogWarn(@"【Fail】 POST = request url:%@ parames:%@, error:%@", url, params, error);
         // 删除已完成的task
         [self _removeTask:task];
         YRHttpResponse *response = [self _failureResponse:task error:error requestType:YRHttpRequestTypePost ];

@@ -25,12 +25,14 @@ class YXAboutUsViewController: UIViewController {
         super.viewDidLoad()
         versionLabel.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
         let touchAction = UITapGestureRecognizer(target: self, action: #selector(reportLog))
+        touchAction.numberOfTapsRequired = 5
+        touchAction.numberOfTouchesRequired = 1
+        self.logoImageView.isUserInteractionEnabled = true
         self.logoImageView.addGestureRecognizer(touchAction)
     }
 
     @objc private func reportLog(_ tapGes: UITapGestureRecognizer) {
-//        tapGes.numberOfTouchesRequired
-//        YXLogManager.share.report()
+        YXLogManager.share.report()
     }
 
     /*

@@ -40,6 +40,8 @@ class YXWordDetailView: UIView {
     }
     
     @IBAction func feedbackWord(_ sender: UIButton) {
+        DDLogDebug("单词详情View中点击反馈按钮")
+        YXLogManager.share.report()
         YXReportErrorView.show(to: kWindow, withQuestionId: "\(word.wordId ?? 0)")
     }
     

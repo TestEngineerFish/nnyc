@@ -132,6 +132,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     }
 
     private func showResult(errorList list: [Int]) {
+        self.isUserInteractionEnabled = false
         if list.isEmpty {
             // 答题正确
 //            self.selectedBtnArray.forEach { (button) in
@@ -159,6 +160,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
                     if letterBtn.status != .normal && letterBtn.status != .disable {
                         self.clickButton(letterBtn)
                     }
+                    self.isUserInteractionEnabled = true
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)
