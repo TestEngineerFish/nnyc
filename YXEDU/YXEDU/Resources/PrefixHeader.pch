@@ -49,5 +49,5 @@
 #import "YXAPI.h"
 #import "YXEDU-Swift.h"
 #import "UIFont+IconFont.h"
-
+#import <CocoaLumberjack/CocoaLumberjack.h>
 #endif /* PrefixHeader_pch */

@@ -12,7 +12,7 @@ target 'YXEDU' do
      pod 'MBProgressHUD'
      pod 'SSKeychain'
      pod 'CocoaLumberjack'
-#     pod 'CocoaLumberjack/Swift'
+     pod 'CocoaLumberjack/Swift'
      pod 'Bugly'
      pod 'AFNetworking'
      pod 'SSKeychain'

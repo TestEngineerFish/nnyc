@@ -163,5 +163,11 @@ struct YXAPI {
         
 
     }
+
+    // MARK: - 其他
+    struct Other {
+        /// 日志数据上报
+        static let report = "/api/v1/device/report"
+    }
 }
 
