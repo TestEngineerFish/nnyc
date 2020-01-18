@@ -47,8 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // ---- 日志 ----
         DDLog.add(DDOSLogger.sharedInstance) // 发送到苹果控制台
         let fileLogger = DDFileLogger()
-        fileLogger.rollingFrequency = 60 * 60 * 24
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 7
+        fileLogger.rollingFrequency   = 60 * 60 * 24
+        fileLogger.maximumFileSize    = 1024 * 1024 * 1
+        fileLogger.doNotReuseLogFiles = true
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 10
         DDLog.add(fileLogger)
         // 添加基本信息
         YXLogManager.share.addInfo()
@@ -62,13 +64,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if YXUserModel.default.didLogin {
             if let lastStoredDate = YYCache.object(forKey: "LastStoreTokenDate") as? Date {
                 if Calendar.current.isDateInToday(lastStoredDate) == false {
-                    YXUserModel.default.updateToken()
-                    YYCache.set(Date(), forKey: "LastStoreTokenDate")
+                    YXUserModel.default.updateToken {
+                        YYCache.set(Date(), forKey: "LastStoreTokenDate")
+                    }
                 }
 
             } else {
-                YXUserModel.default.updateToken()
-                YYCache.set(Date(), forKey: "LastStoreTokenDate")
+                YXUserModel.default.updateToken {
+                    YYCache.set(Date(), forKey: "LastStoreTokenDate")
+                }
             }
             
         } else {

@@ -33,11 +33,11 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             label.textColor = .white
             switch index {
             case 1:
-                label.text = "已学词"
+                label.text = "本书已学"
                 break
                 
             case 2:
-                label.text = "未学词"
+                label.text = "本书未学"
                 break
                 
             case 3:

@@ -56,10 +56,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             // 本地不存在，或者本地Hash值与后台不一致，则更新
             if (wordBook == nil || wordBook?.bookHash != .some(bookHash)) {
                 updateAmount += 1
-                DispatchQueue.global().async { [weak self] in
-                    guard let self = self else { return }
-                    self.downloadSingleWordBook(with: bookId, newHash: bookHash)
-                }
+                self.downloadSingleWordBook(with: bookId, newHash: bookHash)
             }
         }
 
@@ -82,8 +79,11 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 return
             }
             bookModel.bookHash = newHash
-            self.saveBook(with: bookModel)
-            self.saveWords(with: bookModel)
+            DispatchQueue.global().async { [weak self] in
+                guard let self = self else { return }
+                self.saveBook(with: bookModel)
+                self.saveWords(with: bookModel)
+            }
         }) { (error) in
             YXUtils.showHUD(kWindow, title: "\(error.message)")
         }

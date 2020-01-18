@@ -201,7 +201,7 @@
         if var model = data.2 {
             model.dataType = dataType
 //            model.type = .lookExampleChooseImage
-            
+            DDLogInfo(String(format: "题目内容：%@", model.toJSONString() ?? ""))
             // 新学隐藏提示
             let tipsHidden = (model.type == .newLearnPrimarySchool_Group || model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
             self.bottomView.tipsButton.isHidden  = tipsHidden
@@ -283,6 +283,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     ///答完题回调处理， 正常题型处理（不包括连线题）
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
+        DDLogInfo("回答" + (right ? "正确" : "错误"))
         // 答题后，数据处理
         self.dataManager.normalAnswerAction(exerciseModel: exerciseModel, right: right)
         
@@ -413,6 +414,7 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
 
 extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     func clickHomeBtnEvent() {
+        DDLogInfo("学习中点击【回首页】按钮")
         self.delegate?.showAlertEvnet()
         
         let alertView = YXAlertView()
@@ -420,12 +422,14 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
         alertView.backgroundView.isUserInteractionEnabled = false
         alertView.doneClosure = {[weak self] _ in
             YYCache.remove(forKey: .learningState)
+            DDLogInfo("返回首页")
             self?.dataManager.progressManager.setStopStudyTime()
             
             self?.delegate?.backHomeEvent()
             YRRouter.popViewController(true)
         }
         alertView.cancleClosure = {
+            DDLogInfo("继续学习")
             self.delegate?.hideAlertEvent()
         }
         
@@ -448,6 +452,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
  
 extension YXExerciseViewController: YXExerciseBottomViewProtocol {
     func clickTipsBtnEvent() {
+        DDLogInfo("点击提示按钮")
         guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
 
         switch exerciseModel.type {
@@ -474,6 +479,7 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
         self.exerciseViewArray.first?.remindView?.show()
     }
     func clickNextViewEvent() {
+        DDLogInfo("新学，查看单词详情")
         // 显示单词详情
         guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView else {
             return
@@ -482,6 +488,7 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
         // 记录积分 +0
     }
     func clickNextButtonEvent() {
+        DDLogInfo("新学，点击【下一步】按钮")
         guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView, let answerView = exerciseView.answerView as? YXNewLearnAnswerView else {
             return
         }
