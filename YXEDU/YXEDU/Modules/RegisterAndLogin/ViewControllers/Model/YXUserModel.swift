@@ -99,7 +99,8 @@ class YXUserModel: NSObject {
         UIApplication.shared.keyWindow?.rootViewController = tabBarController
     }
     
-    func updateToken(closure: () -> Void) {
+    @objc
+    func updateToken(closure: (() -> Void)? = nil) {
         let request = YXHomeRequest.updateToken
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
             if let date = response.data, let token = date.token, token.isEmpty = false {
@@ -107,7 +108,7 @@ class YXUserModel: NSObject {
                 YXConfigure.shared().token = YXUserModel.default.token
                 YXConfigure.shared().saveCurrentToken()
 
-                closure()
+                closure?()
                 
             } else {
                 logout()

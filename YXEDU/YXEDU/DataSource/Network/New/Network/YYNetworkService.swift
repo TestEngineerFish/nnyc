@@ -250,6 +250,8 @@ struct YYNetworkService {
             if responseStatusCode == 10002 {
                 // 当登录状态失效时，通知上层
 //                YXMediator.shared()?.tokenExpired()
+                YXUserModel.default.updateToken()
+                
             } else if responseStatusCode == 6666 {
                 // 停服
                 let serviceStop = YXNotification.kServiceStop
