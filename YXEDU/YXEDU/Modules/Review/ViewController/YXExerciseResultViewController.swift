@@ -14,7 +14,6 @@ class YXExerciseResultViewController: YXViewController {
 
     var model: YXExerciseResultDisplayModel!
     var resultView: YXExerciseResultView!
-    var shareVC: YXShareViewController?
     var shareFinished = false
     
     deinit {
@@ -82,25 +81,23 @@ class YXExerciseResultViewController: YXViewController {
     }
     
     private func shareEvent() {
-        if shareVC == nil {
-            shareVC = YXShareViewController()
-            shareVC?.finishAction = { [weak self] in
-                self?.shareFinished = true
-            }
+        let shareVC = YXShareViewController()
+        shareVC.finishAction = { [weak self] in
+            self?.shareFinished = true
         }
         
         if shareFinished {
-            shareVC?.hideCoin = true
+            shareVC.hideCoin = true
         } else {
-            shareVC?.hideCoin = !model.isShowCoin
+            shareVC.hideCoin = !model.isShowCoin
         }
         
-        shareVC?.shareType = shareType()
-        shareVC?.wordsAmount = model?.reviewWordNum ?? 0
-        shareVC?.daysAmount = model?.studyDay ?? 0
+        shareVC.shareType = shareType()
+        shareVC.wordsAmount = model?.reviewWordNum ?? 0
+        shareVC.daysAmount = model?.studyDay ?? 0
     
         
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC!, animated: true)
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
     }
 
     private func shareType() -> YXShareImageType {

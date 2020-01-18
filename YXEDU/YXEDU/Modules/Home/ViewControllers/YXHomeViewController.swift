@@ -31,7 +31,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXUtils.showHUD(kWindow, title: "数据请求中，请稍后再试～")
             return
         }
-        DDLogDebug("====开始主流程的学习====")
+        DDLogInfo("====开始主流程的学习====")
         sender.isEnabled = false
         YXWordBookResourceManager.shared.contrastBookData(by: homeModel.bookId, { [weak self] (isSuccess) in
             sender.isEnabled = true
@@ -68,7 +68,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
                 } else {
                     YYCache.set(Date(), forKey: "LastStoredDate")
-                    DDLogDebug(String(format: "开始学习书(%ld),第(%ld)单元", self.homeModel?.bookId ?? 0, self.homeModel?.unitId ?? 0))
+                    DDLogInfo(String(format: "开始学习书(%ld),第(%ld)单元", self.homeModel?.bookId ?? 0, self.homeModel?.unitId ?? 0))
                     let vc = YXExerciseViewController()
                     vc.bookId = self.homeModel?.bookId
                     vc.unitId = self.homeModel?.unitId

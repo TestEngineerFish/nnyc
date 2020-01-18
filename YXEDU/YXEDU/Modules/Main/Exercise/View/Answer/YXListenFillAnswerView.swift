@@ -26,7 +26,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         super.createSubviews()
         
         self.addSubview(textField)
-        textField.addSubview(lineView)
+        self.addSubview(lineView)
         self.addSubview(audioBackgroundView)
         self.addSubview(audioPlayerView)
         self.layer.setDefaultShadow()
@@ -44,12 +44,12 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         textField.textColor = UIColor.clear
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
-//        textField.keyboardType = .asciiCapable
+        textField.keyboardType = .asciiCapable
         textField.tintColor = UIColor.clear
         textField.addTarget(self, action: #selector(textChanged), for: .editingChanged)
         textField.becomeFirstResponder()
         
-        lineView.count = exerciseModel.word?.word?.count ?? 0
+        lineView.allText = exerciseModel.word?.word ?? ""
         lineView.openKeyboard = { [weak self] in
             self?.textField.becomeFirstResponder()
         }
@@ -70,16 +70,16 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             make.center.equalTo(audioBackgroundView)
             make.width.height.equalTo(AdaptSize(37))
         })
-        let textFieldWidth = CGFloat(exerciseModel.word?.word?.count ?? 0) * AdaptSize(17 + 5) - AdaptSize(5)
+        
         textField.snp.makeConstraints { (make) in
-            make.width.equalTo(textFieldWidth)
+            make.width.equalTo(lineView.viewWidth)
             make.height.equalTo(AdaptSize(43))
             make.centerX.equalToSuperview()
             make.bottom.equalTo(AS(-39))
         }
 
         lineView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(textField)
         }
     }
     
@@ -97,11 +97,11 @@ class YXListenFillAnswerView: YXBaseAnswerView {
 
     
     @objc func textChanged() {
-        guard let text = textField.text else {
+        guard let text = textField.text?.trimed else {
             return
         }
         
-        let wordLength = exerciseModel.word?.word?.count ?? 0
+        let wordLength = YXListenFillAnswerHelp.letterLength(text: exerciseModel.word?.word)
         
         if text.count <= wordLength {
             lineView.text = text
@@ -119,8 +119,8 @@ class YXListenFillAnswerView: YXBaseAnswerView {
     
     
     func processAnswer(text: String) {
-        
-        if exerciseModel.word?.word?.uppercased() == text.uppercased() {
+        let rightWord = YXListenFillAnswerHelp.letterText(text: exerciseModel.word?.word)
+        if rightWord?.uppercased() == text.uppercased() {
             textField.resignFirstResponder()
             answerCompletion(right: true)
         } else {
@@ -143,6 +143,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             textField.becomeFirstResponder()
         }
     }
+
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         textField.resignFirstResponder()
@@ -153,54 +154,129 @@ class YXListenFillAnswerView: YXBaseAnswerView {
 
 class YXListenFillAnswerLineView: YXView {
     var openKeyboard: (() -> ())?
-    var count: Int = 0 {
-        didSet { createLineView() }
+    
+    var allText: String = "" {
+        didSet { createLineView(); createFrontView() }
     }
     var text: String = "" {
         didSet { bindData() }
     }
+    var viewWidth: CGFloat = 0
+    private var lineWidth: CGFloat {
+        let maxWidth = AS(332) / CGFloat(allText.count)
+        let defaultWidth = AS(23)
+        return (maxWidth < defaultWidth ? maxWidth : defaultWidth)
+    }
+    private var sysbolWidth: CGFloat = AS(12)
     
-    private var labels: [UILabel] = []
-    private var lineWidth: CGFloat = AdaptSize(17)
-    private var interval: CGFloat = AdaptSize(5)
+    private let interval: CGFloat = AS(2.5)
+    private var letterLabels: [UILabel] = []
+    private var symbolLabels: [UILabel] = []
+    private var frontView = UIView()
     
     override func bindData() {
-        for label in labels {
+        for label in letterLabels {
             label.text = ""
         }
         for (i, v) in text.enumerated() {
-            labels[i].text = String(v)
+            letterLabels[i].text = String(v)
         }
     }
     
     
     func createLineView() {
+        var lastView: UIView?
+        for (_, v) in self.allText.enumerated() {
+            let lineX = lastView == nil ? 0 : lastView!.origin.x + lastView!.size.width
         
-        for i in 0..<self.count {
-            
-            let lineX = (lineWidth + interval) * CGFloat(i)
-            
-            let label = UILabel()
-            label.textColor = UIColor.black1
-            label.font = UIFont.mediumFont(ofSize: AS(26))
-            label.textAlignment = .center
-            label.frame = CGRect(x: lineX, y: 0, width: lineWidth + interval, height: AS(37))
-            self.addSubview(label)
-            
-            labels.append(label)
-            
-            let lineView = UIView()
-            lineView.backgroundColor = UIColor.black4
-            lineView.frame = CGRect(x: lineX + interval / 2, y: AS(41), width: lineWidth, height: AS(1))
-            
-            self.addSubview(lineView)
+            let letter = String(v)
+            if YXListenFillAnswerHelp.isLetter(text: letter) {
+                let letterLabel = createLetterLabel()
+                letterLabel.frame = CGRect(x: lineX, y: 0, width: lineWidth, height: AS(42))
+                self.addSubview(letterLabel)
+                letterLabels.append(letterLabel)
+                
+                lastView = letterLabel
+            } else {
+                let symbolLabel = createSymbolLabel(text: letter)
+                symbolLabel.frame = CGRect(x: lineX, y: 0, width: sysbolWidth, height: AS(42))
+                self.addSubview(symbolLabel)
+                symbolLabels.append(symbolLabel)
+                
+                lastView = symbolLabel
+            }
+
         }
         
+        viewWidth = lastView!.origin.x + lastView!.size.width
+    }
+
+    
+    private func createLetterLabel() -> UILabel {
+        let letterLabel = UILabel()
+        letterLabel.textColor = UIColor.black1
+        letterLabel.font = UIFont.mediumFont(ofSize: AS(26))
+        letterLabel.textAlignment = .center
+        
+        let lineView = UIView()
+        lineView.backgroundColor = UIColor.black4
+        letterLabel.addSubview(lineView)
+        lineView.snp.makeConstraints { (make) in
+            make.left.equalTo(interval)
+            make.right.equalTo(-interval)
+            make.height.equalTo(AS(1))
+            make.bottom.equalToSuperview()
+        }
+        
+        return letterLabel
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    private func createSymbolLabel(text: String) -> UILabel {
+        let letterLabel = UILabel()
+        letterLabel.text = text
+        letterLabel.textColor = UIColor.black1
+        letterLabel.font = UIFont.mediumFont(ofSize: AS(17))
+        letterLabel.textAlignment = .center
+        return letterLabel
+    }
+    
+    private func createFrontView() {
+        let tap = UITapGestureRecognizer()
+        tap.addTarget(self, action: #selector(openKeyboardEvent))
+        frontView.isUserInteractionEnabled = true
+        frontView.addGestureRecognizer(tap)
+        
+        self.addSubview(frontView)
+        frontView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    @objc private func openKeyboardEvent() {
         openKeyboard?()
     }
+}
+
+
+
+struct YXListenFillAnswerHelp {
+    static let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    static func isLetter(text: String) -> Bool {
+        return letters.contains(text)
+    }
     
+    static func letterLength(text: String?) -> Int {
+        return letterText(text: text)?.count ?? 0
+    }
     
+    static func letterText(text: String?) -> String? {
+        guard let t = text else { return nil }
+        var letters = ""
+        for (_, v) in t.enumerated() {
+            if isLetter(text: String(v)) {
+                letters.append(String(v))
+            }
+        }
+        return letters
+    }
 }

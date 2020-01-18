@@ -146,14 +146,17 @@
     
     /// 开始学习
     private func startStudy() {
+        DDLogInfo("====开始学习====")
         // 存在学完未上报的关卡
         if !dataManager.progressManager.isReport() {
+            DDLogInfo("本地存在学完未上报的关卡，先加载，再上报")
             // 先加载本地数据
             dataManager.fetchLocalExerciseModels()
             
             // 再上报关卡
             self.report()
         } else if !dataManager.progressManager.isCompletion() {// 存在未学完的关卡
+            DDLogInfo("本地存在未学完的关卡，先加载")
             // 先加载本地数据
             dataManager.fetchLocalExerciseModels()
             
@@ -189,7 +192,7 @@
     
     /// 切换题目
     private func switchExerciseView() {
-        
+        DDLogInfo("==== 切题 ====")
         let data = dataManager.fetchOneExerciseModel()
         
         headerView.learningProgress = "\(data.0)"
@@ -263,7 +266,7 @@
     
     /// 显示loading动画
     private func showLoadAnimation() {
-        DDLogDebug("显示学习前加载动画")
+        DDLogInfo("显示学习前加载动画")
         self.loadingView = YXExerciseLoadingView(frame: kWindow.bounds)
         kWindow.addSubview(self.loadingView!)
         self.loadingView?.showAnimation()

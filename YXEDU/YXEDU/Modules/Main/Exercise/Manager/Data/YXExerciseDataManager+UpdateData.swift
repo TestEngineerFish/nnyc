@@ -190,7 +190,7 @@ extension YXExerciseDataManager {
                 }
             }
         }
-        
+        DDLogInfo("更新：新学单词数\(map.count)")
         needNewStudyCount = map.count
     }
     
@@ -214,6 +214,7 @@ extension YXExerciseDataManager {
                 }
             }
         }
+        DDLogInfo("更新：复习单词数\(map.count)")
         print("----------------- 听写数量：", map.count)
         needReviewCount = map.count
         

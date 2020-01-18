@@ -40,6 +40,7 @@ extension YXExerciseViewController {
     //MARK: submit report
     /// 上报数据
     func submitResult() {
+        DDLogInfo("====上报数据====")
         dataManager.reportExercise(type: dataType) { [weak self] (result, errorMsg) in
             guard let self = self else {return}
             if result {

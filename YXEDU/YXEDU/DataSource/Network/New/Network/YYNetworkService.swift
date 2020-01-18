@@ -91,9 +91,7 @@ struct YYNetworkService {
             let path = YYFileManager.share.createPath(documentPath: localSavePath)
             return (URL(fileURLWithPath: path), [.removePreviousFile, .createIntermediateDirectories])
             }.downloadProgress { (progress) in
-                DispatchQueue.main.async {
-                    DDLogInfo("progress.completedUnitCount is \(progress.completedUnitCount)")
-                }
+                DDLogInfo("progress.completedUnitCount is \(progress.completedUnitCount)")
             }.response { (defaultDownloadResponse) in
                 
         }
@@ -212,17 +210,20 @@ struct YYNetworkService {
         let header = request.handleHeader(parameters: params)
         let encoding: ParameterEncoding = (request.method == .get) ? URLEncoding.default : URLEncoding.httpBody
         let method = HTTPMethod(rawValue: request.method.rawValue) ?? .get
-        DDLogDebug(String(format: "%@ = request url:%@ params:%@", method.rawValue, request.url.absoluteString, ""))
+        DDLogInfo(String(format: "%@ = request url:%@ params:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? ""))
 
         let task = sessionManager.request(request.url, method: method, parameters: params, encoding: encoding, headers: header)
         task.responseObject { (response: DataResponse <T>) in
             switch response.result {
             case .success(var x):
+                if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8) {
+                    DDLogInfo(String(format: "【Success】 request url: %@, respnseObject: %@", request.url.absoluteString, dataStr))
+                }
                 x.response = response.response
-                x.request = response.request
+                x.request  = response.request
                 success(x, (response.response?.statusCode) ?? 0)
             case .failure(let error):
-                DDLogInfo(String(format: "❌Fail %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, ""));
+                DDLogInfo(String(format: "❌Fail %@ = request url:%@ parames:%@, error:%@", method.rawValue, params?.toJson() ?? "", request.url.absoluteString, ""));
                 fail(error as NSError)
             }
         }
@@ -241,7 +242,7 @@ struct YYNetworkService {
     private func handleStatusCodeLogicResponseObject <T> (_ response: T, statusCode: Int, request: YYBaseRequest, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
         let baseResponse = response as YYBaseResopnse
         let responseStatusCode: Int = baseResponse.statusCode
-        
+
         if responseStatusCode == 0 {
             success?(response)
             

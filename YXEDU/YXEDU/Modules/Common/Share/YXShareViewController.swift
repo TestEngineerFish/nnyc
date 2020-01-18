@@ -145,7 +145,9 @@ class YXShareViewController: YXViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.customNavigationBar?.leftButtonAction = backAction
+        if backAction != nil {
+            self.customNavigationBar?.leftButtonAction = backAction
+        }
         self.bindProperty()
         self.createSubviews()
     }

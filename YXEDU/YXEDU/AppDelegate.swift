@@ -108,6 +108,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 仅刚启动时调用一次
         YXAlertQueueManager.default.start()
     }
+
+    /// 通用链接跳转
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        return true
+    }
     
     
     func initConfig() {
