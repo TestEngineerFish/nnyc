@@ -11,6 +11,7 @@ import ObjectMapper
 
 class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
+    @discardableResult
     func insertBook(book: YXWordBookModel) -> Bool {
         let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
         let params: [Any?] = [book.bookId,
@@ -43,14 +44,16 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         result.close()
         return book
     }
-    
+
+    @discardableResult
     func deleteBook(bookId: Int) -> Bool {
         let sql = YYSQLManager.WordBookSQL.deleteBook.rawValue
         let params: [Any] = [bookId]
         
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
-    
+
+    @discardableResult
     func insertWord(word: YXWordModel) -> Bool {
         let sql = YYSQLManager.WordBookSQL.insertWord.rawValue
         let partOfSpeechAndMeaningsDataString: String! = word.partOfSpeechAndMeanings?.toJSONString() ?? "[]"
@@ -190,7 +193,8 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         result.close()
         return wordModelArray
     }
-    
+
+    @discardableResult
     func deleteWord(bookId: Int) -> Bool {
         let sql = YYSQLManager.WordBookSQL.deleteWord.rawValue
         let params: [Any] = [bookId]

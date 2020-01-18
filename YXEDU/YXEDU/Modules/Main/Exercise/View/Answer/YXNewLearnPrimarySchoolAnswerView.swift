@@ -197,24 +197,25 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 根据状态来播放
     func playByStatus() {
+        DDLogInfo("新学：当前状态：\(self.status)")
         switch self.status {
         case .normal:
             self.showPlayAnimation()
             self.status.forward()
             self.playWord()
-            print("0")
+            DDLogInfo("新学：初始状态")
         case .playingWordInFristStage:
             self.playWord()
-            print("1")
+            DDLogInfo("新学：第一阶段 - 播放单词中")
         case .playedWordInFristStage:
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.status.forward()
                 self.playExample()
             }
-            print("2")
+            DDLogInfo("新学：第一阶段 - 播放单词结束")
         case .playingExampleInFristStage:
             self.playExample()
-            print("3")
+            DDLogInfo("新学：第一阶段 - 播放例句中")
         case .playedExampleInFristStage:
             self.showPlayAnimation()
             self.newLearnDelegate?.playWordAndExampleFinished()
@@ -222,24 +223,25 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 self.status.forward()
                 self.playWord()
             }
-            print("4")
+            DDLogInfo("新学：第一阶段 - 播放例句结束")
         case .playingFirstWordInSecondStage:
             self.playWord()
-            print("5")
+            DDLogInfo("新学：第二阶段 - 第一遍播放单词中")
         case .playedFirstWordInSecondStage:
             DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
                 guard let self = self else { return }
                 self.status.forward()
                 self.playWord()
             }
-            print("6")
+            DDLogInfo("新学：第二阶段 - 第一遍播放单词结束")
         case .playingSecondWordInSecondStage:
             self.playWord()
-            print("7")
+            DDLogInfo("新学：第二阶段 - 第二遍播放单词中")
         case .playedSecondWordInSecondStage:
             self.status.forward()
             self.isReport = true
             self.autoPlayFinished()
+            DDLogInfo("新学：第二阶段 - 第二遍播放单词结束")
         default:
             if !self.isReport {
                 self.autoPlayFinished()
@@ -249,6 +251,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     private func autoPlayFinished() {
+        DDLogInfo("新学：自动播放结束")
         self.hidePlayAnimation()
         self.newLearnDelegate?.playWordAndWordFinished()
         self.recordAudioButton.isEnabled     = true
