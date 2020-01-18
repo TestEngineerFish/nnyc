@@ -83,6 +83,7 @@
     
     deinit {
         print("练习 VC 释放")
+        YYCache.remove(forKey: .learningState)
         YXAVPlayerManager.share.finishedBlock = nil
         YXAVPlayerManager.share.pauseAudio()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -422,7 +423,6 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
         alertView.descriptionLabel.text = "是否放弃本次学习并退出?"
         alertView.backgroundView.isUserInteractionEnabled = false
         alertView.doneClosure = {[weak self] _ in
-            YYCache.remove(forKey: .learningState)
             DDLogInfo("返回首页")
             self?.dataManager.progressManager.setStopStudyTime()
             

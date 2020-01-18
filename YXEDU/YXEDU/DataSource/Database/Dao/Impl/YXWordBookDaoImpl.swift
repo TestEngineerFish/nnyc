@@ -13,7 +13,7 @@ import FMDB
 class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
     @discardableResult
-    func insertBook(book: YXWordBookModel) -> Bool {
+    func insertBook(book: YXWordBookModel, async: Bool = false) -> Bool {
         let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
         let params: [Any?] = [book.bookId,
                              book.bookName,
@@ -21,8 +21,14 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                              book.bookHash,
                              book.gradeId,
                              book.gradeType]
-        
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        if async {
+            self.wordRunnerQueue.inDatabase { (db) in
+                db.executeUpdate(sql, withArgumentsIn: params)
+            }
+            return true
+        } else {
+            return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        }
     }
     
     func selectBook(bookId: Int) -> YXWordBookModel? {
@@ -47,15 +53,21 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
 
     @discardableResult
-    func deleteBook(bookId: Int) -> Bool {
+    func deleteBook(bookId: Int, async: Bool = false) -> Bool {
         let sql = YYSQLManager.WordBookSQL.deleteBook.rawValue
         let params: [Any] = [bookId]
-        
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        if async {
+            self.wordRunnerQueue.inDatabase { (db) in
+                db.executeUpdate(sql, withArgumentsIn: params)
+            }
+            return true
+        } else {
+            return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        }
     }
 
     @discardableResult
-    func insertWord(word: YXWordModel) -> Bool {
+    func insertWord(word: YXWordModel, async: Bool = false) -> Bool {
         let sql = YYSQLManager.WordBookSQL.insertWord.rawValue
         let partOfSpeechAndMeaningsDataString: String! = word.partOfSpeechAndMeanings?.toJSONString() ?? "[]"
         let deformationsDataString: String! = word.deformations?.toJSONString() ?? "[]"
@@ -89,8 +101,15 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                               word.unitId ,
                               word.unitName,
                               word.isExtensionUnit]
-        
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        if async {
+            self.wordRunnerQueue.inDatabase { (db) in
+                db.executeUpdate(sql, withArgumentsIn: params)
+            }
+            return true
+        } else {
+            return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        }
+
     }
     
     func selectWordByUnitId(unitId: Int) -> [YXWordModel] {
@@ -128,11 +147,17 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
 
     @discardableResult
-    func deleteWord(bookId: Int) -> Bool {
+    func deleteWord(bookId: Int, async: Bool = false) -> Bool {
         let sql = YYSQLManager.WordBookSQL.deleteWord.rawValue
         let params: [Any] = [bookId]
-        
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        if async {
+            self.wordRunnerQueue.inDatabase { (db) in
+                db.executeUpdate(sql, withArgumentsIn: params)
+            }
+            return true
+        } else {
+            return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        }
     }
     
     func selectWord(wordId: Int) -> YXWordModel? {

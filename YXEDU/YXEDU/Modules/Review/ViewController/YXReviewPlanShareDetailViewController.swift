@@ -137,11 +137,24 @@ class YXReviewPlanShareDetailViewController: YXViewController {
         guard let wordModelList = detailModel?.words else {
             return
         }
-        YXWordBookResourceManager.shared.downloadBookCount = wordModelList.count
-        YXWordBookResourceManager.shared.finishBlock       = finishBlock
+        var _wordModelList = [YXWordModel]()
+        var bookIdList     = [Int]()
         for wordModel in wordModelList {
-            guard let bookId = wordModel.bookId else { return }
-            YXWordBookResourceManager.shared.checkLocalBooKStatus(with: bookId, newHash: wordModel.bookHash)
+            guard let bookId = wordModel.bookId else { continue }
+            if !bookIdList.contains(bookId) {
+                _wordModelList.append(wordModel)
+                bookIdList.append(bookId)
+            }
+        }
+        YXWordBookResourceManager.shared.downloadBookCount = _wordModelList.count
+        YXWordBookResourceManager.shared.finishBlock       = finishBlock
+        if _wordModelList.isEmpty {
+            finishBlock?()
+        } else {
+            for wordModel in _wordModelList {
+                guard let bookId = wordModel.bookId else { return }
+                YXWordBookResourceManager.shared.checkLocalBooKStatus(with: bookId, newHash: wordModel.bookHash)
+            }
         }
     }
 
