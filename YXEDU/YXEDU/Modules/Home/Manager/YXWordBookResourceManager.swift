@@ -17,7 +17,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     
     private var isDownloading = false
     private var closure: ((_ isSuccess: Bool) -> Void)?
-    
+    var finishBlock: (()->Void)?
 
     // MARK: - 下载词书
     func contrastBookData(by bookId: Int? = nil, _ closure: ((_ isSuccess: Bool) -> Void)? = nil, showToast: Bool = false) {
@@ -70,13 +70,18 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             self.closure?(true)
         }
     }
-
+    // 仅针对分享口令
+    var downloadBookCount = 0
     /// 下载单本词书
-    private func downloadSingleWordBook(with bookId: Int, newHash: String) {
+    func downloadSingleWordBook(with bookId: Int, newHash: String) {
         let request = YXWordBookRequest.getBookWord(bookId: bookId)
         YYNetworkService.default.request(YYStructResponse<YXWordBookModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, var bookModel = response.data else {
                 return
+            }
+            self.downloadBookCount -= 1
+            if self.downloadBookCount == 0 && self.finishBlock != nil {
+                self.finishBlock?()
             }
             bookModel.bookHash = newHash
             DispatchQueue.global().async { [weak self] in
@@ -111,7 +116,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             }
             for var wordModel in wordsList {
                 wordModel.gradeId   = bookModel.gradeId
-                wordModel.gardeType = bookModel.gradeType
+                wordModel.gardeType = bookModel.gradeType ?? 1
                 wordModel.bookId    = bookModel.bookId
                 wordModel.unitId    = unitModel.unitId
                 wordModel.unitName  = unitModel.unitName

@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fileLogger.rollingFrequency   = 60 * 60 * 24
         fileLogger.maximumFileSize    = 1024 * 1024 * 1
         fileLogger.doNotReuseLogFiles = true
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 10
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 5
         DDLog.add(fileLogger)
         // 添加基本信息
         YXLogManager.share.addInfo()
@@ -85,6 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             window?.makeKeyAndVisible()
         }
+        /// 清除Badge
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

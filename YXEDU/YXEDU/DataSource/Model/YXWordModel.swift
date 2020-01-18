@@ -13,6 +13,7 @@ struct YXWordModel: YXBaseWordModel {
     var gradeId: Int? = -1
     var gardeType: Int? = 1
     var bookId: Int? = -1
+    var bookHash: String = ""
     var unitId: Int? = -1
     var unitName: String?
     var isExtensionUnit: Bool = false
@@ -70,6 +71,7 @@ struct YXWordModel: YXBaseWordModel {
     init?(map: Map) {
         self.mapping(map: map)
         isComplexWord <- map["is_synthesis"]
+        bookHash      <- map["book_hash"]
     }
     
 }

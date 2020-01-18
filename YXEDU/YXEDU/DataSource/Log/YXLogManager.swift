@@ -17,16 +17,20 @@ class YXLogManager: NSObject, DDLogFormatter {
     // MARK: ==== Request ====
 
     // 上传
-    func report() {
+    func report(_ showToast: Bool = false) {
         guard let fileData = self.zipLogFile() else {
             return
         }
         let request = YXLogRequest.report(file: fileData)
         YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, success: { (response) in
-            YXUtils.showHUD(kWindow, title: "上报成功")
+            if showToast {
+                YXUtils.showHUD(kWindow, title: "上报成功")
+            }
             self.deleteZip()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: "日志上报失败")
+            if showToast {
+                YXUtils.showHUD(kWindow, title: "日志上报失败")
+            }
         }
     }
 

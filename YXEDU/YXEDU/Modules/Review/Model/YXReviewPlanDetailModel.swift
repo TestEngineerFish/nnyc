@@ -15,7 +15,7 @@ class YXReviewPlanDetailModel: YXReviewPlanModel {
 
     override func mapping(map: Map) {
         super.mapping(map: map)
-        words <- map["list"]
+        words    <- map["list"]
         fromUser <- map["share_plan_name"]
     }
 }

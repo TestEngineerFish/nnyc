@@ -248,6 +248,7 @@
     /// 加载一个练习
     /// - Parameter exerciseView: 新的练习view
     private func loadExerciseView(exerciseView: YXBaseExerciseView) {
+        DDLogInfo("==== 加载练习题 ====")
         // 是否第一次进来
         var isFirst = true
         if let ceview = exerciseViewArray.first {

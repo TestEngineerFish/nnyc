@@ -19,6 +19,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     var headerView = YXReviewPlanShareDetailHeaderView()
     var wordListView = YXWordListView()
     var bottomView = YXReviewPlanShareDetailBottomView()
+    var detailModel: YXReviewPlanDetailModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,9 @@ class YXReviewPlanShareDetailViewController: YXViewController {
         }
         
         bottomView.saveReviewPlanEvent = { [weak self] in
-            self?.saveReviewPlanEvent()
+            self?.downLoadBookData({ [weak self] in
+                self?.saveReviewPlanEvent()
+            })
         }
     }
     
@@ -84,6 +87,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
                 UIView.toast(msg)
             } else {
                 detailModel?.fromUser = self.fromUser
+                self.detailModel = detailModel
                 self.reviewPlanModel = detailModel
                 self.headerView.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []
@@ -122,6 +126,19 @@ class YXReviewPlanShareDetailViewController: YXViewController {
             
         }
         alertView.show()
+    }
+
+    /// 下载词书
+    private func downLoadBookData(_ finishBlock: (()->Void)?) {
+        guard let wordModelList = detailModel?.words else {
+            return
+        }
+        YXWordBookResourceManager.shared.downloadBookCount = wordModelList.count
+        YXWordBookResourceManager.shared.finishBlock       = finishBlock
+        for wordModel in wordModelList {
+            guard let bookId = wordModel.bookId else { return }
+            YXWordBookResourceManager.shared.downloadSingleWordBook(with: bookId, newHash: wordModel.bookHash)
+        }
     }
 
 }
