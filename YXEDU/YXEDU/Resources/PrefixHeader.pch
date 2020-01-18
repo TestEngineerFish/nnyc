@@ -31,6 +31,7 @@
 #import "NSString+YX.h"
 
 #import "UIView+SnapShot.h"
+#import "IQKeyboardManager.h"
 #import "YXNoHightButton.h"
 #import "UIFont+IconFont.h"
 #import "YXTipsBaseView.h"

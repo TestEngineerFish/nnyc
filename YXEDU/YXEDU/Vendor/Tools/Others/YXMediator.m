@@ -12,6 +12,7 @@
 #import "QQApiManager.h"
 #import "BaiduLocManager.h"
 #import "AVAudioPlayerManger.h"
+#import "IQKeyboardManager.h"
 #import "YXGuideView.h"
 #import "BSCommon.h"
 #import "YXConfigure.h"
@@ -59,6 +60,8 @@
     
     [[AVAudioPlayerManger shared] configuration];
     
+    [IQKeyboardManager sharedManager].enable = YES;
+    [IQKeyboardManager sharedManager].toolbarDoneBarButtonItemText = @"收起";
     [YXConfigure shared].needSpreadAnimation = YES;
     //    [YXUtils removeScreenShout];
     [self checkVersion];

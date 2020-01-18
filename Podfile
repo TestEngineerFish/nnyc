@@ -17,6 +17,7 @@ target 'YXEDU' do
      pod 'AFNetworking'
      pod 'SSKeychain'
      pod 'YYKit'
+     pod 'IQKeyboardManager' , '~> 6.2.0'
      pod 'BMKLocationKit'
      pod 'HWWeakTimer'
      pod 'UICollectionViewLeftAlignedLayout'

@@ -43,7 +43,7 @@
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KbT-WN-PFS">
                         <rect key="frame" x="336" y="96" width="164" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="34" id="szm-UB-Cjr"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="64" id="szm-UB-Cjr"/>
                         </constraints>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
                         <state key="normal" image="go"/>
@@ -69,8 +69,8 @@
                     <constraint firstAttribute="bottom" secondItem="ovL-QG-taA" secondAttribute="bottom" id="HhL-rL-Ni1"/>
                     <constraint firstItem="XYT-kM-Mem" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.2" id="Ido-5y-vsv"/>
                     <constraint firstItem="B8z-m1-4c5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="KY9-rk-jIQ"/>
-                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="B8z-m1-4c5" secondAttribute="trailing" id="Rq0-My-kcy"/>
-                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="Bfi-re-0ha" secondAttribute="trailing" id="Y0O-z4-8Lq"/>
+                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="B8z-m1-4c5" secondAttribute="trailing" priority="750" id="Rq0-My-kcy"/>
+                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="Bfi-re-0ha" secondAttribute="trailing" priority="750" id="Y0O-z4-8Lq"/>
                     <constraint firstItem="Bfi-re-0ha" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="cSb-d8-Qp4"/>
                     <constraint firstItem="Bfi-re-0ha" firstAttribute="leading" secondItem="XYT-kM-Mem" secondAttribute="trailing" constant="20" id="iPJ-6N-RJb"/>
                     <constraint firstItem="B8z-m1-4c5" firstAttribute="leading" secondItem="XYT-kM-Mem" secondAttribute="trailing" constant="20" id="jKJ-Xy-ZT4"/>

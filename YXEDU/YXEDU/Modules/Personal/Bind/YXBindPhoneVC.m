@@ -21,6 +21,7 @@
 #import "YXSendSMSModel.h"
 #import "YXComAlertView.h"
 #import "NSString+YX.h"
+#import "IQKeyboardManager.h"
 #import "YXComHttpService.h"
 #import "Growing.h"
 

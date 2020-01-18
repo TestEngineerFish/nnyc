@@ -39,6 +39,7 @@ PODS:
   - GrowingCoreKit (2.8.9):
     - Growing (= 2.8.9)
   - HWWeakTimer (1.0)
+  - IQKeyboardManager (6.2.1)
   - JCore (2.1.8)
   - JPush (3.2.8):
     - JCore (< 3.0.0, >= 2.0.0)
@@ -99,6 +100,7 @@ DEPENDENCIES:
   - FSCalendar
   - GrowingAutoTrackKit
   - HWWeakTimer
+  - IQKeyboardManager (~> 6.2.0)
   - JPush
   - Kingfisher (~> 5.9.0)
   - KTVHTTPCache
@@ -147,6 +149,7 @@ SPEC REPOS:
     - GrowingAutoTrackKit
     - GrowingCoreKit
     - HWWeakTimer
+    - IQKeyboardManager
     - JCore
     - JPush
     - Kingfisher
@@ -196,6 +199,7 @@ SPEC CHECKSUMS:
   GrowingAutoTrackKit: 5ad4ae4f8a63db7545c353ba9514db7d6126ac25
   GrowingCoreKit: ad95f500cb6d648d8bade3aa595e5eba241cca00
   HWWeakTimer: 79488095ef2dd8937f94b676d12bd5fa954486e6
+  IQKeyboardManager: 964638372b4a61892cc74fdfa6fd26de8c9464a2
   JCore: a7f1dead960d77a97717c73ea8b0aa5b33706491
   JPush: 8ce888d6dedfa417e90c8b6bc87405a16ce2e699
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
@@ -228,6 +232,6 @@ SPEC CHECKSUMS:
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 88ff6d3ba58fee6b408ff5d9679553b6445fd959
+PODFILE CHECKSUM: 581ab0704e626ab4bb3aa73174d6b046dc87239f
 
 COCOAPODS: 1.8.4
