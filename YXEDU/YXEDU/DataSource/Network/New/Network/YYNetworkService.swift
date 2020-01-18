@@ -218,8 +218,11 @@ struct YYNetworkService {
         task.responseObject { (response: DataResponse <T>) in
             switch response.result {
             case .success(var x):
+//                if let dictStr = response.data?.description {
+//                    DDLogDebug(String(format: "【Success】 request url: %@, respnseObject: %@", request.url.absoluteString, dictStr))
+//                }
                 x.response = response.response
-                x.request = response.request
+                x.request  = response.request
                 success(x, (response.response?.statusCode) ?? 0)
             case .failure(let error):
                 DDLogInfo(String(format: "❌Fail %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, ""));
@@ -241,7 +244,7 @@ struct YYNetworkService {
     private func handleStatusCodeLogicResponseObject <T> (_ response: T, statusCode: Int, request: YYBaseRequest, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
         let baseResponse = response as YYBaseResopnse
         let responseStatusCode: Int = baseResponse.statusCode
-        
+
         if responseStatusCode == 0 {
             success?(response)
             
