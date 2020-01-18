@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,10 +41,11 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KbT-WN-PFS">
-                        <rect key="frame" x="346" y="96" width="134" height="22"/>
+                        <rect key="frame" x="336" y="96" width="164" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="34" id="szm-UB-Cjr"/>
                         </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
                         <state key="normal" image="go"/>
                         <connections>
                             <action selector="showWordDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0ul-zX-iDg"/>
@@ -68,8 +69,8 @@
                     <constraint firstAttribute="bottom" secondItem="ovL-QG-taA" secondAttribute="bottom" id="HhL-rL-Ni1"/>
                     <constraint firstItem="XYT-kM-Mem" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.2" id="Ido-5y-vsv"/>
                     <constraint firstItem="B8z-m1-4c5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="KY9-rk-jIQ"/>
-                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="B8z-m1-4c5" secondAttribute="trailing" constant="10" id="Rq0-My-kcy"/>
-                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="Bfi-re-0ha" secondAttribute="trailing" constant="10" id="Y0O-z4-8Lq"/>
+                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="B8z-m1-4c5" secondAttribute="trailing" id="Rq0-My-kcy"/>
+                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="Bfi-re-0ha" secondAttribute="trailing" id="Y0O-z4-8Lq"/>
                     <constraint firstItem="Bfi-re-0ha" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="cSb-d8-Qp4"/>
                     <constraint firstItem="Bfi-re-0ha" firstAttribute="leading" secondItem="XYT-kM-Mem" secondAttribute="trailing" constant="20" id="iPJ-6N-RJb"/>
                     <constraint firstItem="B8z-m1-4c5" firstAttribute="leading" secondItem="XYT-kM-Mem" secondAttribute="trailing" constant="20" id="jKJ-Xy-ZT4"/>
@@ -79,7 +80,7 @@
                     <constraint firstItem="DDl-cc-kAH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nt8-wU-7CI"/>
                     <constraint firstItem="ovL-QG-taA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="sdz-M3-YqG"/>
                     <constraint firstItem="KbT-WN-PFS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vEO-f6-NT1"/>
-                    <constraint firstAttribute="trailing" secondItem="KbT-WN-PFS" secondAttribute="trailing" constant="20" id="veD-jJ-pFO"/>
+                    <constraint firstAttribute="trailing" secondItem="KbT-WN-PFS" secondAttribute="trailing" id="veD-jJ-pFO"/>
                     <constraint firstItem="XYT-kM-Mem" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="x3i-HQ-Vpw"/>
                 </constraints>
             </tableViewCellContentView>
