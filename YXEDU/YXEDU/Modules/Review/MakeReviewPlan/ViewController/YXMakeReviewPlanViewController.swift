@@ -19,8 +19,8 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     var segmentControllerView: BPSegmentControllerView = {
         let h = screenHeight - kNavHeight - AdaptSize(60) - kSafeBottomMargin
         var config = BPSegmentConfig()
-        config.headerHeight       = AdaptSize(78)
-        config.headerItemSize     = CGSize(width: AdaptSize(60), height: AdaptSize(78))
+        config.headerHeight       = AdaptSize(93)
+        config.headerItemSize     = CGSize(width: AdaptSize(60), height: AdaptSize(93))
         config.headerItemSpacing  = AdaptSize(10)
         config.contentItemSize    = CGSize(width: screenWidth, height: h - config.headerHeight)
         config.contentItemSpacing = CGFloat.zero

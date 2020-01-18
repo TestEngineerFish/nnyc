@@ -22,6 +22,7 @@ class YXReviewBookItem: UIView {
         label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(10))
         label.textColor = UIColor.black2
         label.lineBreakMode = .byTruncatingMiddle
+        label.numberOfLines = 2
         return label
     }()
 
@@ -71,7 +72,7 @@ class YXReviewBookItem: UIView {
         self.titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.bookImageView.snp.bottom).offset(AdaptSize(4))
             make.left.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(15))
+            make.height.equalTo(AdaptSize(30))
         }
         self.arrowImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
