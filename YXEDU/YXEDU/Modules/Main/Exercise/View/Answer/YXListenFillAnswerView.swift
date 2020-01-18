@@ -70,7 +70,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             make.center.equalTo(audioBackgroundView)
             make.width.height.equalTo(AdaptSize(37))
         })
-        let textFieldWidth = CGFloat(exerciseModel.word?.word?.count ?? 0) * AdaptSize(20 + 5) - AdaptSize(5)
+        let textFieldWidth = CGFloat(exerciseModel.word?.word?.count ?? 0) * AdaptSize(17 + 5) - AdaptSize(5)
         textField.snp.makeConstraints { (make) in
             make.width.equalTo(textFieldWidth)
             make.height.equalTo(AdaptSize(43))
@@ -143,6 +143,10 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             textField.becomeFirstResponder()
         }
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        textField.resignFirstResponder()
+    }
 }
 
 
@@ -157,7 +161,7 @@ class YXListenFillAnswerLineView: YXView {
     }
     
     private var labels: [UILabel] = []
-    private var lineWidth: CGFloat = AdaptSize(20)
+    private var lineWidth: CGFloat = AdaptSize(17)
     private var interval: CGFloat = AdaptSize(5)
     
     override func bindData() {

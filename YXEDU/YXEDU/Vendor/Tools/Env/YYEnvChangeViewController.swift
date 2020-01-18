@@ -246,7 +246,8 @@ extension YYEnvChangeViewController {
             logoutModel.jp_registration_id = jgId
             
             YXPersonalViewModel().logout(logoutModel, finish: { (obj, result) in
-                YXMediator.shared()?.loginOut()
+//                YXMediator.shared()?.loginOut()
+                YXUserModel.default.logout()
                 UserDefaults.standard.set("", forKey: kDailyCheckInNotify)
                 UserDefaults.standard.synchronize()
                 
