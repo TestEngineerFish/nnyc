@@ -38,20 +38,20 @@ class YXLogManager: NSObject, DDLogFormatter {
 
     /// 添加用户信息
     private func addUserInfo() {
-        DDLogDebug("当前UUID：" + (YXUserModel.default.uuid ?? ""))
-        DDLogDebug("当前用户名：" + (YXUserModel.default.username ?? ""))
-        DDLogDebug("当前用户手机号：" + (YXConfigure.shared()?.mobile ?? ""))
+        DDLogInfo("当前UUID：" + (YXUserModel.default.uuid ?? ""))
+        DDLogInfo("当前用户名：" + (YXUserModel.default.username ?? ""))
+        DDLogInfo("当前用户手机号：" + (YXConfigure.shared()?.mobile ?? ""))
     }
 
     /// 添加设备信息
     private func addDeviceInfo() {
-        DDLogDebug("当前App版本：" + UIDevice().appVersion())
-        DDLogDebug("当前App Build版本：" + YRDevice.appBuild())
-        DDLogDebug("当前设备名称：" + UIDevice().machineName())
-        DDLogDebug("当前系统版本：" + UIDevice().sysVersion())
-        DDLogDebug("当前网络环境：" + UIDevice().networkType())
-        DDLogDebug("当前屏幕英寸：" + UIDevice().screenInch())
-        DDLogDebug("当前屏幕分辨率：" + UIDevice().screenResolution())
+        DDLogInfo("当前App版本：" + UIDevice().appVersion())
+        DDLogInfo("当前App Build版本：" + YRDevice.appBuild())
+        DDLogInfo("当前设备名称：" + UIDevice().machineName())
+        DDLogInfo("当前系统版本：" + UIDevice().sysVersion())
+        DDLogInfo("当前网络环境：" + UIDevice().networkType())
+        DDLogInfo("当前屏幕英寸：" + UIDevice().screenInch())
+        DDLogInfo("当前屏幕分辨率：" + UIDevice().screenResolution())
     }
 
     // MARK: ==== Tool ====
@@ -69,9 +69,9 @@ class YXLogManager: NSObject, DDLogFormatter {
             logPathArray.forEach { (path) in
                 ziper.addFile(toZip: logDirectoryPath + "/" + path, newname: path)
             }
-            DDLogDebug("创建Zip成功")
+            DDLogInfo("创建Zip成功")
         } else {
-            DDLogDebug("创建Zip失败")
+            DDLogInfo("创建Zip失败")
         }
         ziper.closeZipFile2()
         guard let fileData = try? Data(contentsOf: URL(fileURLWithPath: logZipPath)) else {
@@ -86,9 +86,9 @@ class YXLogManager: NSObject, DDLogFormatter {
         let logDirectoryPath = fileLogger.logFileManager.logsDirectory
         let logZipPath       = logDirectoryPath + "/feadbackLog.zip"
         if ((try? FileManager.default.removeItem(atPath: logZipPath)) != nil) {
-            DDLogDebug("删除Zip包成功")
+            DDLogInfo("删除Zip包成功")
         } else {
-            DDLogDebug("删除Zip包失败")
+            DDLogInfo("删除Zip包失败")
         }
     }
 

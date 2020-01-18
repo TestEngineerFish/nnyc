@@ -27,6 +27,8 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         
         self.addSubview(textField)
         textField.addSubview(lineView)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showKeyboard))
+        textField.addGestureRecognizer(tap)
         self.addSubview(audioBackgroundView)
         self.addSubview(audioPlayerView)
         self.layer.setDefaultShadow()
@@ -143,6 +145,10 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             textField.becomeFirstResponder()
         }
     }
+
+    @objc private func showKeyboard() {
+        self.textField.becomeFirstResponder()
+    }
 }
 
 
@@ -197,6 +203,5 @@ class YXListenFillAnswerLineView: YXView {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         openKeyboard?()
     }
-    
     
 }

@@ -212,8 +212,6 @@ extension YYCustomNavigationBar {
     
     @objc fileprivate func backViewController() {
 
-
-        
         leftButton.removeTarget(self, action: #selector(backViewController), for: .touchUpInside)
         rightButton.removeTarget(self, action: #selector(rightButtonDidClick), for: .touchUpInside)
         rightSecondButton.removeTarget(self, action: #selector(rightSecondButtonDidClick), for: .touchUpInside)

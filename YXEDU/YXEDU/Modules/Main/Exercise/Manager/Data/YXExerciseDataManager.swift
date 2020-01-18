@@ -86,13 +86,14 @@ class YXExerciseDataManager: NSObject {
     
     /// 加载本地未学完的关卡数据
     func fetchLocalExerciseModels() {
-        
+        DDLogInfo("加载本地数据")
         if progressManager.dataType != .base {
             let bau = progressManager.fetchBookIdAndUnitId()
             self.bookId = bau.0
             self.unitId = bau.1
             progressManager.bookId = self.bookId
             progressManager.unitId = self.unitId
+            DDLogInfo("加载的本地数据是基础学习，则赋值正确的BookID：\(self.bookId ?? 0)和单元ID\(self.unitId ?? 0)")
         }
         
         let data = progressManager.loadLocalExerciseModels()
@@ -208,7 +209,9 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportExercise(type: YXExerciseDataType, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let result = self.reportJson()
+        DDLogInfo("上报内容：" + result)
         let duration = progressManager.fetchStudyDuration()
+        DDLogInfo("学习时长：\(duration)")
         let request = YXExerciseRequest.report(type: type.rawValue, time: duration, result: result)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
             completion?(response.dataArray != nil, nil)
@@ -306,29 +309,23 @@ class YXExerciseDataManager: NSObject {
     }
     
     func printCurrentTurn() {
-        print("第\(currentTurnIndex)轮数量：", currentTurnArray.count)
+        DDLogInfo(String(format: "第\(currentTurnIndex)轮数量：%ld", currentTurnArray.count))
         for e in self.currentTurnArray {
-            print( "id =", e.word?.wordId ?? 0, ", word =", e.word?.word ?? 0)
-            print("step = ", e.step, " type = ", e.type.rawValue, "turn_finish", e.isCurrentTurnFinish)
-
-            
-            print("--------------------")
+            DDLogInfo(String(format: "id = %ld, word = %@", e.word?.wordId ?? 0, e.word?.word ?? ""))
+            DDLogInfo(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
         }
     }
     func printStatus() {
         
-        print("$$$$$$$$$$#############$$$$$$$$$$$$")
+        DDLogInfo("$$$$$$$$$$#############$$$$$$$$$$$$")
         for word in self.reviewWordArray {
-            print("\n========================\n")
+            DDLogInfo("\n========================\n")
             for (index, step) in word.exerciseSteps.enumerated() {
                 let e = step.first
-                
-                print("\t\tid ", word.wordId, ", step", e?.step ?? 0, ", index", index + 1)
-//                print("\n")
-                print( "id =", e?.word?.wordId ?? 0, ", word =", e?.word?.word ?? 0)
-                print("right =", e?.isRight ?? "nil", ", continue =", e?.isContinue ?? "nil", ", finish =", e?.isFinish ?? "nil")
-                
-                print("--------------------")
+                DDLogInfo(String(format: "\t\tid = %ld, step = %ld, index = %ld", word.wordId, e?.step ?? 0, index + 1))
+                DDLogInfo(String(format: "id = %ld, word = %@", e?.word?.wordId ?? 0, e?.word?.word ?? 0))
+                DDLogInfo(String(format: "right = %ld, continue = %ld, finish = %ld", e?.isRight ?? -1, e?.isContinue ?? -1, e?.isFinish ?? -1))
+                DDLogInfo("--------------------")
             }
             
         }

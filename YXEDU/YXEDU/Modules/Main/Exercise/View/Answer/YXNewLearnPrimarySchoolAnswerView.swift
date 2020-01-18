@@ -207,7 +207,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.playWord()
             print("1")
         case .playedWordInFristStage:
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.status.forward()
                 self.playExample()
             }
@@ -218,7 +218,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         case .playedExampleInFristStage:
             self.showPlayAnimation()
             self.newLearnDelegate?.playWordAndExampleFinished()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.status.forward()
                 self.playWord()
             }
@@ -227,7 +227,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.playWord()
             print("5")
         case .playedFirstWordInSecondStage:
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
                 guard let self = self else { return }
                 self.status.forward()
                 self.playWord()
