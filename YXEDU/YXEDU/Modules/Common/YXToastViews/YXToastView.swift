@@ -17,6 +17,7 @@ class YXToastView: UIView {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         return view
     }()
+    // ---- Coin ----
     var coinImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "alertCoin")
@@ -32,23 +33,17 @@ class YXToastView: UIView {
         label.textAlignment = .center
         return label
     }()
+    // ---- Loading ----
+    let activityView = UIActivityIndicatorView()
+    var activityLabel: UILabel = {
+        let label = UILabel()
+        label.textColor     = UIColor.white
+        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.textAlignment = .center
+        return label
+    }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.bindProperty()
-        self.createSubviews()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func bindProperty() {
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(hideView))
-//        self.backgroundView.addGestureRecognizer(tap)
-    }
-
-    private func createSubviews() {
+    private func createCoinViews() {
         self.addSubview(backgroundView)
         self.addSubview(coinImageView)
         self.addSubview(textBackgroundView)
@@ -74,6 +69,28 @@ class YXToastView: UIView {
         }
     }
 
+    private func createLoadView() {
+        self.addSubview(backgroundView)
+        self.addSubview(activityView)
+        self.addSubview(activityLabel)
+
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        activityView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(AdaptSize(-20))
+            make.size.equalTo(CGSize(width: AdaptSize(65), height: AdaptSize(65)))
+        }
+        activityLabel.sizeToFit()
+        activityLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(activityView.snp.bottom)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(activityLabel.size)
+        }
+        self.activityView.startAnimating()
+    }
+
     private func bindData(_ coinAmount: Int) {
         let text = "获得 \(coinAmount) 个松果币"
         let mAttr = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(15))])
@@ -86,6 +103,7 @@ class YXToastView: UIView {
     }
 
     func showCoinView(_ coinAmount: Int) {
+        self.createCoinViews()
         self.bindData(coinAmount)
         kWindow.addSubview(self)
         self.snp.makeConstraints { (make) in
@@ -93,6 +111,15 @@ class YXToastView: UIView {
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             self?.hideView()
+        }
+    }
+
+    func showLoadView(_ text: String) {
+        self.activityLabel.text = text
+        self.createLoadView()
+        kWindow.addSubview(self)
+        self.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
     }
 
