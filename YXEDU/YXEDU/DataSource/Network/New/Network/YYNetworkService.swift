@@ -163,28 +163,7 @@ struct YYNetworkService {
     }
     
     //MARK: ----------------- Method -----------------
-    
-//    @discardableResult
-//    private func get <T>(_ type: T.Type, request: YYBaseRequest, header:[String:String], success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
-//        let encoding: ParameterEncoding = (.get == request.method ? URLEncoding.default : JSONEncoding.default)
-//        let request = sessionManager.request(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: removeNilValue(request.parameters), encoding: encoding, headers: header).responseObject { (response: DataResponse <T>) in
-//
-//            switch response.result {
-//            case .success(var x):
-//                x.response = response.response
-//                x.request = response.request
-//                success(x, (response.response?.statusCode) ?? 0)
-//            case .failure(let error):
-//                fail(error as NSError)
-//            }
-//        }
-//
-//        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: request)
-//        return taskRequest
-//    }
-//
-//
-//    @discardableResult
+    @discardableResult
     private func postBody <T> (_ type: T.Type, request: URLRequest, success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void?, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
 
         let request = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
@@ -249,9 +228,7 @@ struct YYNetworkService {
         } else {
             if responseStatusCode == 10002 {
                 // 当登录状态失效时，通知上层
-//                YXMediator.shared()?.tokenExpired()
-                YXUserModel.default.updateToken()
-                
+                YXMediator.shared()?.tokenExpired()
             } else if responseStatusCode == 6666 {
                 // 停服
                 let serviceStop = YXNotification.kServiceStop
@@ -286,4 +263,24 @@ struct YYNetworkService {
         return params.count > 0 ? params : nil
     }
     
+    
+    public func retryRequest() {
+        
+        //                YXUserModel.default.updateToken { (result) in
+        //                    if result {
+        //                        self.retryRequest()
+        //                    }
+        //                }
+        //                YXTokenExpired.default.addRequest(request: request, response: response, callback: success, fail: fail)
+        
+        
+        
+//        let callback = YXTokenExpired.default.callbacks.first as? ((YYBaseResopnse) -> Void)
+//        let fail = YXTokenExpired.default.fails.first as? ((_ responseError: NSError) -> Void)
+//
+//        if let req = YXTokenExpired.default.requests.first,
+//            let type = YXTokenExpired.default.types.first as? YYBaseResopnse {
+//            self.request(type, request: req, success: callback, fail: fail)
+//        }
+    }
 }

@@ -100,7 +100,7 @@ class YXUserModel: NSObject {
     }
     
     @objc
-    func updateToken(closure: (() -> Void)? = nil) {
+    func updateToken(closure: ((_ result: Bool) -> Void)? = nil) {
         let request = YXHomeRequest.updateToken
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
             if let date = response.data, let token = date.token, token.isEmpty == false {
@@ -108,15 +108,17 @@ class YXUserModel: NSObject {
                 YXConfigure.shared().token = YXUserModel.default.token
                 YXConfigure.shared().saveCurrentToken()
 
-                closure?()
+                closure?(true)
                 
             } else {
                 self.logout()
+                closure?(false)
             }
             
         }) { error in
             print("❌❌❌\(error)")
             self.logout()
+            closure?(false)
         }
     }
     

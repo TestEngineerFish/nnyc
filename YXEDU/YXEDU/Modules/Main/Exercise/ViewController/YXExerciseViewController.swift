@@ -79,6 +79,7 @@
         self.bindProperty()
         self.initManager()
         self.startStudy()
+        self.updateToken()
     }
     
     deinit {
@@ -277,6 +278,12 @@
     private func hideLoadAnimation(_ completeBlock: (()->Void)?) {
         self.loadingView?.stopAnimation(completeBlock)
         self.loadingView = nil
+    }
+    
+    private func updateToken() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            YXUserModel.default.updateToken()
+        }
     }
 }
  
