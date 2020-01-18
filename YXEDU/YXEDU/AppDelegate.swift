@@ -61,21 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initViewAndData() {
-        if YXUserModel.default.didLogin {
-            if let lastStoredDate = YYCache.object(forKey: "LastStoreTokenDate") as? Date {
-                if Calendar.current.isDateInToday(lastStoredDate) == false {
-                    YXUserModel.default.updateToken {
-                        YYCache.set(Date(), forKey: "LastStoreTokenDate")
-                    }
-                }
-
-            } else {
-                YXUserModel.default.updateToken {
-                    YYCache.set(Date(), forKey: "LastStoreTokenDate")
-                }
-            }
-            
-        } else {
+        if YXUserModel.default.didLogin == false {
             window = UIWindow(frame: UIScreen.main.bounds)
             window?.rootViewController = nil
 
@@ -85,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             window?.makeKeyAndVisible()
         }
+        
         /// 清除Badge
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
