@@ -62,13 +62,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if YXUserModel.default.didLogin {
             if let lastStoredDate = YYCache.object(forKey: "LastStoreTokenDate") as? Date {
                 if Calendar.current.isDateInToday(lastStoredDate) == false {
-                    YXUserModel.default.updateToken()
-                    YYCache.set(Date(), forKey: "LastStoreTokenDate")
+                    YXUserModel.default.updateToken {
+                        YYCache.set(Date(), forKey: "LastStoreTokenDate")
+                    }
                 }
 
             } else {
-                YXUserModel.default.updateToken()
-                YYCache.set(Date(), forKey: "LastStoreTokenDate")
+                YXUserModel.default.updateToken {
+                    YYCache.set(Date(), forKey: "LastStoreTokenDate")
+                }
             }
             
         } else {

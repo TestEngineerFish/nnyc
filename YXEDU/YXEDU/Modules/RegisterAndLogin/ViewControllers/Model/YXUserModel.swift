@@ -99,17 +99,23 @@ class YXUserModel: NSObject {
         UIApplication.shared.keyWindow?.rootViewController = tabBarController
     }
     
-    func updateToken() {
+    func updateToken(closure: () -> Void) {
         let request = YXHomeRequest.updateToken
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            guard let date = response.data else { return }
-            
-            YXUserModel.default.token = date.token
-            YXConfigure.shared().token = YXUserModel.default.token
-            YXConfigure.shared().saveCurrentToken()
+            if let date = response.data, let token = date.token, token.isEmpty = false {
+                YXUserModel.default.token = token
+                YXConfigure.shared().token = YXUserModel.default.token
+                YXConfigure.shared().saveCurrentToken()
 
+                closure()
+                
+            } else {
+                logout()
+            }
+            
         }) { error in
             print("❌❌❌\(error)")
+            logout()
         }
     }
     
@@ -117,7 +123,8 @@ class YXUserModel: NSObject {
     func logout() {
         self.didLogin = false
         YYCache.set(nil, forKey: "LastStoredDate")
-        
+        YYCache.set(nil, forKey: "LastStoreTokenDate")
+
         YXMediator().loginOut()
         
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)

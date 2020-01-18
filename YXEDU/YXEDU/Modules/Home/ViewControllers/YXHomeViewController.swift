@@ -233,7 +233,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             switch indexPath.row {
             case 0:
-                cell.titleLabel.text = "已学单词"
+                cell.titleLabel.text = "本书已学"
                 cell.dataLabel.text = learnedWordsCount
                 break
                 
