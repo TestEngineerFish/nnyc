@@ -79,7 +79,7 @@
         self.bindProperty()
         self.initManager()
         self.startStudy()
-        self.updateToken()
+//        self.updateToken()
     }
     
     deinit {
@@ -281,9 +281,14 @@
     }
     
     private func updateToken() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            YXUserModel.default.updateToken()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            print("更新token")
+            self?.updateTokenAction()
         }
+    }
+    
+    private func updateTokenAction() {
+        YXUserModel.default.updateToken()
     }
 }
  
