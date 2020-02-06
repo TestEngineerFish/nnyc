@@ -117,35 +117,12 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     // MARK: ==== Event ====
     @objc private func clickPlayButton(){
-//        let wrongWordListView = YXWrongWordsListView()
-//        var wordsArray = [YXWordModel]()
-//        for index in (0..<4) {
-//            var wordModel = YXWordModel()
-//            wordModel.word    = "incredible——incredible-\(index)"
-//            wordModel.meaning = "难以置信的-\(index)"
-//            wordsArray.append(wordModel)
-//        }
-//        wrongWordListView.bindData(wordsArray)
-//        let h = wordsArray.count > 3 ? AdaptSize(367) : AdaptSize(170)
-//        YXAlertCustomView.share.show(wrongWordListView, h: h)
-//        return
-//        let vc = YXLearningResultViewController()
-//        vc.bookId = 1
-//        vc.unitId = 1
-//        vc.newLearnAmount = 1
-//        vc.reviewLearnAmount = 1
-
-//        RegisterSliderView.show(.puzzle) { (success) in
-//            print(success)
-//        }
-//        return
-        let vc = YXShareViewController()
-        vc.gameModel = YXGameResultModel()
-        vc.shareType = .learnResult
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
-        return
-//            YXShareCordeView.share.showView("分享给你这次要复习的单词计划：【测试1111】，复制口令后打开念念有词App，就能马上开始学习 分享口令：￥FSUL91YHQiYrW￥")
+//        let vc = YXReviewPlanReportViewController()
+//        let vc = YXShareViewController()
+//        vc.gameModel = YXGameResultModel()
+//        vc.shareType = .learnResult
+//        vc.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(vc, animated: true)
 //        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
             return

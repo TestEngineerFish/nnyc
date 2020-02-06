@@ -78,8 +78,11 @@ class YXShareDefaultView: UIView {
     
     typealias FinishedBlock = ((YXShareChannel) -> Void)
     var shareType: YXShareType = .image
-    var shareImag: UIImage?
-    var shareUrl: URL?
+    var shareImage: UIImage?
+    var shareUrlStr: String?
+    var shareThumbImage  = UIImage()
+    var shareTitle       = ""
+    var shareDescription = ""
     var finishedBlock: FinishedBlock?
     
     override init(frame: CGRect) {
@@ -155,45 +158,45 @@ class YXShareDefaultView: UIView {
     @objc private func shareToQQ() {
         switch self.shareType {
         case .image:
-            guard let image = self.shareImag else {
+            guard let image = self.shareImage else {
                 return
             }
             self.shareImage(to: .qq, with: image, finishedBlock: self.finishedBlock)
         case .url:
-            guard let url = self.shareUrl else {
+            guard let urlStr = self.shareUrlStr else {
                 return
             }
-            self.shareUrl(to: .qq, with: url, finishedBlock: self.finishedBlock)
+            self.shareUrl(to: .qq, with: urlStr, previewImage: self.shareThumbImage, title: shareTitle, description: shareDescription, finishedBlock: self.finishedBlock)
         }
     }
     
     @objc private func shareToWechat() {
         switch self.shareType {
         case .image:
-            guard let image = self.shareImag else {
+            guard let image = self.shareImage else {
                 return
             }
             self.shareImage(to: .wechat, with: image, finishedBlock: self.finishedBlock)
         case .url:
-            guard let url = self.shareUrl else {
+            guard let urlStr = self.shareUrlStr else {
                 return
             }
-            self.shareUrl(to: .wechat, with: url, finishedBlock: self.finishedBlock)
+            self.shareUrl(to: .wechat, with: urlStr, previewImage: self.shareThumbImage, title: shareTitle, description: shareDescription, finishedBlock: self.finishedBlock)
         }
     }
     
     @objc private func shareToTimeLine() {
         switch self.shareType {
         case .image:
-            guard let image = self.shareImag else {
+            guard let image = self.shareImage else {
                 return
             }
             self.shareImage(to: .timeLine, with: image, finishedBlock: self.finishedBlock)
         case .url:
-            guard let url = self.shareUrl else {
+            guard let urlStr = self.shareUrlStr else {
                 return
             }
-            self.shareUrl(to: .timeLine, with: url, finishedBlock: self.finishedBlock)
+            self.shareUrl(to: .timeLine, with: urlStr, previewImage: self.shareThumbImage, title: shareTitle, description: shareDescription, finishedBlock: self.finishedBlock)
         }
     }
     
@@ -218,8 +221,25 @@ class YXShareDefaultView: UIView {
             }
         }
     }
-    private func shareUrl(to channel: YXShareChannel, with url: URL, finishedBlock:FinishedBlock?) {
-        
+    
+    private func shareUrl(to channel: YXShareChannel, with urlStr: String, previewImage: UIImage, title: String, description: String, finishedBlock:FinishedBlock?) {
+        switch channel {
+        case .qq:
+            QQApiManager.shared()?.shareUrl(urlStr, previewImage: previewImage, title: title, describution: description, shareBusiness: "shareBusiness")
+            QQApiManager.shared()?.finishBlock = { (obj1: Any, obj2: Any, result: Bool) in
+                finishedBlock?(.qq)
+            }
+        case .wechat:
+            WXApiManager.shared()?.shareUrl(urlStr, toPaltform: .wxSession, previewImage: previewImage, title: title, description: description, shareBusiness: "shareBusiness")
+            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+                finishedBlock?(.wechat)
+            }
+        case .timeLine:
+            WXApiManager.shared()?.shareUrl(urlStr, toPaltform: .wxTimeLine, previewImage: previewImage, title: title, description: description, shareBusiness: "shareBusiness")
+            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+                finishedBlock?(.timeLine)
+            }
+        }
     }
     
 }

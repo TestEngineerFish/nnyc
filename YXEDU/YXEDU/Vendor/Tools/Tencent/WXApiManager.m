@@ -206,6 +206,30 @@
     [WXApi sendReq:sentMsg];
 }
 
+- (void)shareUrl:(NSString *)url
+      toPaltform:(YXSharePalform)platform
+    previewImage:(UIImage *)image
+           title:(NSString *)title
+     description:(NSString *)desc
+   shareBusiness:(NSString *)shareBusiness {
+    self.shareBusiness = shareBusiness;
+    WXWebpageObject *webpageObj = [WXWebpageObject object];
+    webpageObj.webpageUrl = url;
+    
+    WXMediaMessage *message = [WXMediaMessage message];
+    message.title = title;
+    message.description = desc;
+    [message setThumbImage:image];
+    message.mediaObject = webpageObj;
+    
+    SendMessageToWXReq *sentMsg = [[SendMessageToWXReq alloc] init];
+    sentMsg.message = message;
+    sentMsg.bText = NO;
+    sentMsg.scene = (platform == YXShareWXSession) ? WXSceneSession : WXSceneTimeline;
+    self.scene = sentMsg.scene;
+    [WXApi sendReq:sentMsg];
+}
+
 - (void)shareText:(NSString *)text toPaltform:(YXSharePalform)platform {
     SendMessageToWXReq * req = [[SendMessageToWXReq alloc] init];
     req.text = text;

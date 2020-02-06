@@ -39,6 +39,13 @@ typedef void (^wxFinishBlock) (id obj, BOOL result);
       describution:(NSString *)desc
       shareBusiness:(NSString *)shareBusiness;
 
+- (void)shareUrl:(NSString *)url
+      toPaltform:(YXSharePalform)platform
+    previewImage:(UIImage *)image
+           title:(NSString *)title
+     description:(NSString *)desc
+   shareBusiness:(NSString *)shareBusiness;
+
 - (void)shareText:(NSString *)text
        toPaltform:(YXSharePalform)platform;
 @end

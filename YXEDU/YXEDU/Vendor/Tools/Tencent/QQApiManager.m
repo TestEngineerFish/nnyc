@@ -187,7 +187,22 @@
                                                       description:desc];
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:imageObj];
     QQApiSendResultCode retCode = [QQApiInterface sendReq:req];
-    NSLog(@"%ld",(long)retCode);
+    DDLogInfo(@"QQ分享Image返回Code%ld", (long)retCode);
+}
+
+- (void)shareUrl:(NSString *)urlStr
+    previewImage:(UIImage *)image
+           title:(NSString *)title
+    describution:(NSString *)desc
+   shareBusiness:(NSString *)shareBusiness
+{
+    self.shareBusiness = shareBusiness;
+    NSData *thumData = UIImageJPEGRepresentation(image, 0.8);
+    NSURL *url = [[NSURL alloc] initWithString:urlStr];
+    QQApiURLObject *urlObj = [QQApiURLObject objectWithURL:url title:title description:desc previewImageData:thumData targetContentType:QQApiURLTargetTypeNews];
+    SendMessageToQQReq *req     = [SendMessageToQQReq reqWithContent:urlObj];
+    QQApiSendResultCode retCode = [QQApiInterface sendReq:req];
+    DDLogInfo(@"QQ分享URL返回Code%ld", (long)retCode);
 }
 
 - (void)shareText:(NSString *)text {

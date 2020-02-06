@@ -36,5 +36,11 @@ typedef void (^qqFinishBlock) (id obj1, id obj2, BOOL result);
       describution:(NSString *)desc
      shareBusiness:(NSString *)shareBusiness;
 
+- (void)shareUrl:(NSString *)urlStr
+    previewImage:(UIImage *)image
+           title:(NSString *)title
+    describution:(NSString *)desc
+   shareBusiness:(NSString *)shareBusiness;
+
 - (void)shareText:(NSString *)text;
 @end

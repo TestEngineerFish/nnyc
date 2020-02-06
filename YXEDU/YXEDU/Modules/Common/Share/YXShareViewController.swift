@@ -110,8 +110,8 @@ class YXShareViewController: YXViewController {
             self.shareImageView.image = self.createChallengeReviewShareImage()
         }
         // 设置分享数据
-        self.shareChannelView.shareType = .image
-        self.shareChannelView.shareImag = self.shareImageView.image
+        self.shareChannelView.shareType  = .image
+        self.shareChannelView.shareImage = self.shareImageView.image
         self.shareChannelView.coinImageView.isHidden = hideCoin
         self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
             guard let self = self else { return }
