@@ -122,7 +122,7 @@
 		22D50B3D23BB4FCF00AB2421 /* YXNewLearnGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D50B3C23BB4FCF00AB2421 /* YXNewLearnGuideView.swift */; };
 		22D6FA0023BDCAC900B05BC8 /* YXMakeReviewGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6F9FF23BDCAC900B05BC8 /* YXMakeReviewGuideView.swift */; };
 		22DC471F2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC471E2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift */; };
-		22DEA77023B9914300E30FB7 /* YXShareCordeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEA76F23B9914300E30FB7 /* YXShareCordeView.swift */; };
+		22DEA77023B9914300E30FB7 /* YXShareCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEA76F23B9914300E30FB7 /* YXShareCodeView.swift */; };
 		22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */; };
 		22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */; };
 		22ED54A92367076B00011B82 /* YXAnswerConnectionLettersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A82367076B00011B82 /* YXAnswerConnectionLettersView.swift */; };
@@ -253,6 +253,8 @@
 		77F69A7E23617CEE00E55185 /* YXHomeSubItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A7C23617CEE00E55185 /* YXHomeSubItemCell.swift */; };
 		77F69A7F23617CEE00E55185 /* YXHomeSubItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77F69A7D23617CEE00E55185 /* YXHomeSubItemCell.xib */; };
 		BADF1A8A393F92D5A79919AA /* Pods_YXEDU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020CAD61CC280AA1CB6C7253 /* Pods_YXEDU.framework */; };
+		CFFB700823EBB56F0088DAAA /* YXReviewPlanReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */; };
+		CFFB700A23EBDEB50088DAAA /* YXShareDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */; };
 		D62C1E2520897EBC002BB11A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2420897EBB002BB11A /* SystemConfiguration.framework */; };
 		D62C1E2720897EC7002BB11A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2620897EC7002BB11A /* CoreLocation.framework */; };
 		D62C1E2920897EDF002BB11A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2820897EDF002BB11A /* AdSupport.framework */; };
@@ -896,7 +898,7 @@
 		22D6F9FF23BDCAC900B05BC8 /* YXMakeReviewGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMakeReviewGuideView.swift; sourceTree = "<group>"; };
 		22DC471E2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChineseFillConnectionLetterQuestionView.swift; sourceTree = "<group>"; };
 		22DC4724238BC140002F7120 /* USCRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCRecognizer.h; sourceTree = "<group>"; };
-		22DEA76F23B9914300E30FB7 /* YXShareCordeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareCordeView.swift; sourceTree = "<group>"; };
+		22DEA76F23B9914300E30FB7 /* YXShareCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareCodeView.swift; sourceTree = "<group>"; };
 		22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionMeaningView.swift; sourceTree = "<group>"; };
 		22ED549C2366D80400011B82 /* YXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXModel.h; sourceTree = "<group>"; };
 		22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YXModel.m"; sourceTree = "<group>"; };
@@ -1033,6 +1035,8 @@
 		77F69A7923617CCB00E55185 /* YXHomeStudyDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHomeStudyDataCell.xib; sourceTree = "<group>"; };
 		77F69A7C23617CEE00E55185 /* YXHomeSubItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeSubItemCell.swift; sourceTree = "<group>"; };
 		77F69A7D23617CEE00E55185 /* YXHomeSubItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHomeSubItemCell.xib; sourceTree = "<group>"; };
+		CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanReportViewController.swift; sourceTree = "<group>"; };
+		CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareDefaultView.swift; sourceTree = "<group>"; };
 		D62C1E2420897EBB002BB11A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D62C1E2620897EC7002BB11A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D62C1E2820897EDF002BB11A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -2392,7 +2396,8 @@
 				22D50B3923BB211A00AB2421 /* Model */,
 				22D50B3823BB210F00AB2421 /* Data */,
 				2297D98423AE37EA00DAF3B0 /* YXShareViewController.swift */,
-				22DEA76F23B9914300E30FB7 /* YXShareCordeView.swift */,
+				22DEA76F23B9914300E30FB7 /* YXShareCodeView.swift */,
+				CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -5411,6 +5416,7 @@
 				EEACEB6D23A8BCD90036B3A2 /* YXReviewPlanDetailViewController.swift */,
 				EE6C7D1723B0A073009DCC0C /* YXReviewPlanShareDetailViewController.swift */,
 				EE9434DD23CC8FF2005319EC /* YXExerciseResultViewController.swift */,
+				CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -5979,7 +5985,7 @@
 				EEACEB5623A4F0F30036B3A2 /* YYScrollRefreshAnimator.swift in Sources */,
 				EE5E0178232754FA00655654 /* JPushManager.m in Sources */,
 				EE5E00B123274FEB00655654 /* YXMissonTableViewCell.m in Sources */,
-				22DEA77023B9914300E30FB7 /* YXShareCordeView.swift in Sources */,
+				22DEA77023B9914300E30FB7 /* YXShareCodeView.swift in Sources */,
 				EE5E00FD23274FEC00655654 /* YXLogoutModel.m in Sources */,
 				EE1E4AA223694D01007D248F /* YXFillWordAccordingToListenExerciseView.swift in Sources */,
 				EE5EFCD623274E5500655654 /* YXUserModel_Old.m in Sources */,
@@ -6308,6 +6314,7 @@
 				EEA50FE923BF48BE00518BE8 /* BiggerClickAreaButton.m in Sources */,
 				EE5E0222232756C000655654 /* TYTextStorage.m in Sources */,
 				EE88DF5723AF7BCA004DFF10 /* YXBecomeActiveManager.swift in Sources */,
+				CFFB700A23EBDEB50088DAAA /* YXShareDefaultView.swift in Sources */,
 				77626BF7239E24FD00B9407A /* YXWordListView.swift in Sources */,
 				7759A89223793E2800C63199 /* YXWordDetailCommonView.swift in Sources */,
 				2290EACF23701210000BCA47 /* YXNewLearnJuniorHighSchoolExerciseView.swift in Sources */,
@@ -6538,6 +6545,7 @@
 				EE5E023F232756C000655654 /* XAnimation.m in Sources */,
 				EE5EFCE923274E5500655654 /* YXTipsBaseView.m in Sources */,
 				EEFBABA523729BA1001A6302 /* YXConnectionView.swift in Sources */,
+				CFFB700823EBB56F0088DAAA /* YXReviewPlanReportViewController.swift in Sources */,
 				EE5EF256232740B800655654 /* NSMutableArray+Safe.m in Sources */,
 				EE5EF257232740B800655654 /* UIDevice+YX.m in Sources */,
 				EE5E006823274FEB00655654 /* YXGroupQuestionModel.m in Sources */,
@@ -6724,7 +6732,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -6763,7 +6774,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";

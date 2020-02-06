@@ -158,7 +158,7 @@ class YXReviewPlanDetailViewController: YXViewController {
         
         YXSettingDataManager().fetchShareCommand(planId: planId) { (model, msg) in
             if let commandModel = model, let content = commandModel.content {
-                YXShareCordeView.share.showView(content)
+                YXShareCodeView.share.showView(content)
             } else {
                 UIView.toast(msg)
             }

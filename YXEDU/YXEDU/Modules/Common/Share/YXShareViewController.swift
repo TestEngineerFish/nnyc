@@ -21,12 +21,6 @@ enum YXShareImageType {
     case challengeResult
 }
 
-enum YXShareType: Int {
-    case QQ       = 1
-    case wechat   = 2
-    case timeLine = 3
-}
-
 class YXShareViewController: YXViewController {
 
     var headerView: UIView = {
@@ -80,59 +74,9 @@ class YXShareViewController: YXViewController {
         return view
     }()
     
-    var qqImageView: UIImageView = {
-        let imageView   = UIImageView()
-        imageView.image = UIImage(named: "gameShareQQ")
-        imageView.isUserInteractionEnabled = true
-        return imageView
-    }()
-    
-    var qqLabel: UILabel = {
-        let label = UILabel()
-        label.text          = "QQ"
-        label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
-        label.textAlignment = .center
-        return label
-    }()
-    
-    var wechatImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "gameShareWechat")
-        imageView.isUserInteractionEnabled = true
-        return imageView
-    }()
-    
-    var goldImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image    = UIImage(named: "challengeGoldIcon")
-        imageView.isHidden = true
-        return imageView
-    }()
-    
-    var wechatLabel: UILabel = {
-        let label = UILabel()
-        label.text          = "微信"
-        label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
-        label.textAlignment = .center
-        return label
-    }()
-    
-    var timeLineImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "gameShareTimeLine")
-        imageView.isUserInteractionEnabled = true
-        return imageView
-    }()
-    
-    var timeLineLabel: UILabel = {
-        let label = UILabel()
-        label.text          = "朋友圈"
-        label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
-        label.textAlignment = .center
-        return label
+    var shareChannelView: YXShareDefaultView = {
+        let shareView = YXShareDefaultView(frame: CGRect.zero)
+        return shareView
     }()
 
     var wordsAmount = 0
@@ -153,13 +97,6 @@ class YXShareViewController: YXViewController {
     }
     
     private func bindProperty() {
-        let tapQQ       = UITapGestureRecognizer(target: self, action: #selector(shareToQQ))
-        let tapWechat   = UITapGestureRecognizer(target: self, action: #selector(shareToWechat))
-        let tapTimeLine = UITapGestureRecognizer(target: self, action: #selector(shareToTimeLine))
-        self.qqImageView.addGestureRecognizer(tapQQ)
-        self.wechatImageView.addGestureRecognizer(tapWechat)
-        self.timeLineImageView.addGestureRecognizer(tapTimeLine)
-        self.goldImageView.isHidden = hideCoin
         switch self.shareType {
         case .learnResult:
             self.shareImageView.image = self.createLearnResultShareImage()
@@ -171,6 +108,14 @@ class YXShareViewController: YXViewController {
             self.shareImageView.image = self.createListenReviewShareImage()
         case .challengeResult:
             self.shareImageView.image = self.createChallengeReviewShareImage()
+        }
+        // 设置分享数据
+        self.shareChannelView.shareType = .image
+        self.shareChannelView.shareImag = self.shareImageView.image
+        self.shareChannelView.coinImageView.isHidden = hideCoin
+        self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
+            guard let self = self else { return }
+            self.punch(channel)
         }
     }
     
@@ -185,13 +130,7 @@ class YXShareViewController: YXViewController {
         shareTypeBorderView.addSubview(leftLineView)
         shareTypeBorderView.addSubview(rightLineView)
         shareTypeBorderView.addSubview(descriptionLabel)
-        shareTypeBorderView.addSubview(qqImageView)
-        shareTypeBorderView.addSubview(qqLabel)
-        shareTypeBorderView.addSubview(wechatImageView)
-        shareTypeBorderView.addSubview(wechatLabel)
-        shareTypeBorderView.addSubview(timeLineImageView)
-        shareTypeBorderView.addSubview(timeLineLabel)
-        shareTypeBorderView.addSubview(goldImageView)
+        shareTypeBorderView.addSubview(shareChannelView)
 
         let headerViewH = (screenHeight - kNavHeight - kSafeBottomMargin) * 0.68
         headerView.snp.makeConstraints { (make) in
@@ -237,56 +176,23 @@ class YXShareViewController: YXViewController {
             make.centerY.equalTo(descriptionLabel)
             make.size.equalTo(CGSize(width: AdaptSize(83), height: AdaptSize(1)))
         }
-        qqImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(70))
+        shareChannelView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview()
             make.top.equalTo(descriptionLabel.snp.bottom).offset(AdaptSize(19))
-            make.size.equalTo(CGSize(width: AdaptSize(38), height: AdaptSize(38)))
+            make.width.equalToSuperview()
+            make.height.equalTo(AdaptSize(65))
         }
-        qqLabel.sizeToFit()
-        qqLabel.snp.makeConstraints { (make) in
-            make.centerX.equalTo(qqImageView)
-            make.top.equalTo(qqImageView.snp.bottom).offset(AdaptSize(7))
-            make.size.equalTo(qqLabel.size)
-        }
-        wechatImageView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(38), height: AdaptSize(38)))
-            make.top.equalTo(qqImageView)
-        }
-        wechatLabel.sizeToFit()
-        wechatLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(qqLabel)
-            make.centerX.equalTo(wechatImageView)
-            make.size.equalTo(wechatLabel.size)
-        }
-        timeLineImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(qqImageView)
-            make.right.equalToSuperview().offset(AdaptSize(-70))
-            make.size.equalTo(CGSize(width: AdaptSize(38), height: AdaptSize(38)))
-        }
-        goldImageView.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(25), height: AdaptSize(25)))
-            make.right.equalTo(timeLineImageView).offset(AdaptSize(15))
-            make.top.equalTo(timeLineImageView).offset(AdaptSize(-6))
-        }
-        timeLineLabel.sizeToFit()
-        timeLineLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(qqLabel)
-            make.centerX.equalTo(timeLineImageView)
-            make.size.equalTo(timeLineLabel.size)
-        }
-        
         shareImageBorderView.layer.setDefaultShadow()
         shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))
     }
     
     // MARK: ==== Request ====
-    private func punch(_ type: YXShareType) {
+    private func punch(_ channel: YXShareChannel) {
         // 挑战分享不算打卡
         if self.shareType == .challengeResult {
             return
         }
-        let request = YXShareRequest.punch(type: type.rawValue)
+        let request = YXShareRequest.punch(type: channel.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
             guard let model = response.data else {
@@ -295,42 +201,10 @@ class YXShareViewController: YXViewController {
             self.finishAction?()
             if model.state && model.coin > 0 {
                 YXToastView.share.showCoinView(model.coin)
-                self.goldImageView.isHidden = true
+                self.shareChannelView.coinImageView.isHidden = true
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")
-        }
-    }
-    
-    // MARK: ==== Share Event ====
-    @objc private func shareToQQ() {
-        QQApiManager.shared()?.share(self.shareImageView.image, toPaltform: .QQ, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
-        QQApiManager.shared()?.finishBlock = { [weak self] (obj1: Any, obj2: Any, result: Bool) in
-            guard let self = self else {
-                return
-            }
-            self.punch(.QQ)
-        }
-        
-    }
-    
-    @objc private func shareToWechat() {
-        WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxSession, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
-        WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
-            guard let self = self else {
-                return
-            }
-            self.punch(.wechat)
-        }
-    }
-    
-    @objc private func shareToTimeLine() {
-        WXApiManager.shared()?.share(self.shareImageView.image, toPaltform: .wxTimeLine, title: "分享标题", describution: "分享描述", shareBusiness: "shareBusiness")
-        WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
-            guard let self = self else {
-                return
-            }
-            self.punch(.timeLine)
         }
     }
     

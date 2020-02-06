@@ -8,9 +8,9 @@
 
 import UIKit
 
-class YXShareCordeView: UIView {
+class YXShareCodeView: UIView {
 
-    static let share = YXShareCordeView()
+    static let share = YXShareCodeView()
 
     var backgroundView: UIView = {
         let view = UIView()
