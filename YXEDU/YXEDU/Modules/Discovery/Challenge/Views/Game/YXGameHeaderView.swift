@@ -171,7 +171,17 @@ class YXGameHeaderView: UIView {
     }
 
     func getTimeAndQuestionNumber() -> (Int, Int) {
-        return (self.lastQuestionTime, self.currentQuestionNumber)
+        var time     = 0
+        var question = 0
+        if let model = self.configModel {
+            time     = self.lastQuestionTime > model.totalTime ? model.totalTime : self.lastQuestionTime
+            question = self.lastQuestionTime > model.totalTime ? model.totalTime : self.lastQuestionTime
+        } else {
+            time     = self.lastQuestionTime
+            question = self.lastQuestionTime
+        }
+        DDLogInfo("挑战总用时：\(time)，答对数“\(question)")
+        return (time, question)
     }
 
     func startTimer() {
