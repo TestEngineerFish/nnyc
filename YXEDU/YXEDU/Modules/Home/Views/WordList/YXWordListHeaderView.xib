@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXWordListHeaderView" customModule="YXEDU" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="nAj-45-raf"/>
+                <outlet property="deleteButton" destination="Yz1-0i-SaW" id="0Zp-zb-1V5"/>
                 <outlet property="editButton" destination="j1T-lC-Zhm" id="dAa-Zy-shV"/>
+                <outlet property="expandButton" destination="vzN-Xq-sFl" id="W6n-Nu-LWP"/>
                 <outlet property="titleLabel" destination="D4J-bF-b8Z" id="OYq-eD-sAf"/>
             </connections>
         </placeholder>
@@ -38,12 +40,34 @@
                         <action selector="edit:" destination="-1" eventType="touchUpInside" id="r9F-5L-caS"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yz1-0i-SaW">
+                    <rect key="frame" x="284" y="434.5" width="86" height="27"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <state key="normal" title="从错词本中清除">
+                        <color key="titleColor" red="0.9137254901960784" green="0.40392156862745099" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="deleteAll:" destination="-1" eventType="touchUpInside" id="ayi-Ey-T3X"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vzN-Xq-sFl">
+                    <rect key="frame" x="370" y="437" width="44" height="22"/>
+                    <state key="normal" image="collapsedState"/>
+                    <connections>
+                        <action selector="expand:" destination="-1" eventType="touchUpInside" id="Kqg-J3-Sik"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="j1T-lC-Zhm" secondAttribute="trailing" constant="20" id="637-Zl-3RC"/>
+                <constraint firstItem="Yz1-0i-SaW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6NF-XM-S4P"/>
                 <constraint firstItem="D4J-bF-b8Z" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="PvN-7S-dKv"/>
                 <constraint firstItem="j1T-lC-Zhm" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="TkK-XZ-L3l"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Yz1-0i-SaW" secondAttribute="trailing" constant="44" id="UbW-PB-jDS"/>
+                <constraint firstItem="vzN-Xq-sFl" firstAttribute="leading" secondItem="Yz1-0i-SaW" secondAttribute="trailing" id="brq-NJ-tH3"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="vzN-Xq-sFl" secondAttribute="trailing" id="dbP-8a-FYL"/>
+                <constraint firstItem="vzN-Xq-sFl" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mWP-x1-ioj"/>
                 <constraint firstItem="D4J-bF-b8Z" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="pWO-wC-YW5"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -51,6 +75,7 @@
         </view>
     </objects>
     <resources>
+        <image name="collapsedState" width="18" height="18"/>
         <image name="wordListArrow" width="8" height="15"/>
     </resources>
 </document>
