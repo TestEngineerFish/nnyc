@@ -53,7 +53,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     }
 
     private func createSubviews() {
-        self.searchView.isHidden = true
+        self.searchView.layer.opacity = 0
         self.customNavigationBar?.title = "选择单词"
         self.customNavigationBar?.rightButton.setImage(UIImage(named: "review_search"), for: .normal)
         self.customNavigationBar?.rightButtonAction = {
@@ -193,8 +193,10 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         if let unitModelList = _model.modelDict["\(bookModel.id)"] {
             self.searchView.bookName      = bookModel.name
             self.searchView.unitListModel = unitModelList
-            self.searchView.isHidden      = false
             self.searchView.updateInfo()
+            UIView.animate(withDuration: 0.25) {
+                self.searchView.layer.opacity = 1.0
+            }
         } else {
             YXUtils.showHUD(self.view, title: "当前书未加载完成，请稍后再试～")
         }

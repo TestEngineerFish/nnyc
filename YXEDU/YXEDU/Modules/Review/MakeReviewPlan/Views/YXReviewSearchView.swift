@@ -42,7 +42,7 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
     }()
 
     final let kYXReviewUnitListCell       = "YXReviewUnitListCell"
-    final let kYXReviewUnitListHeaderView = "YXReviewUnitListHeaderView"
+    final let kYXReviewSearchResultUnitListHederView = "YXReviewSearchResultUnitListHederView"
     let tableView = UITableView()
     var pan: UIPanGestureRecognizer?
     var lastPassByIndexPath: IndexPath?
@@ -67,7 +67,7 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
     }
     
     func updateInfo() {
-        let desc     = String(format: "在 %@ 中搜索", bookName)
+        let desc     = String(format: "在 %@ 中搜索:", bookName)
         let mAttrStr = NSMutableAttributedString(string: desc)
         mAttrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black1, range: NSRange(location: 2, length: bookName.count))
         self.tipsDesciptionLabel.attributedText = mAttrStr
@@ -83,7 +83,7 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         self.tableView.dataSource = self
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
         self.tableView.register(YXReviewWordViewCell.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
-        self.tableView.register(YXReviewUnitListHeaderView.classForCoder(), forHeaderFooterViewReuseIdentifier: kYXReviewUnitListHeaderView)
+        self.tableView.register(YXReviewSearchResultUnitListHederView.classForCoder(), forHeaderFooterViewReuseIdentifier: kYXReviewSearchResultUnitListHederView)
         self.pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
         self.pan!.delegate = self
         self.tableView.addGestureRecognizer(pan!)
@@ -150,7 +150,9 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
     
     @objc private func cancelSearch() {
         self.endEditing(true)
-        self.isHidden = true
+        UIView.animate(withDuration: 0.25) {
+            self.layer.opacity = 0
+        }
     }
     
     private func search(_ keyValue: String) {
@@ -201,10 +203,12 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: kYXReviewUnitListHeaderView) as? YXReviewUnitListHeaderView else {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: kYXReviewSearchResultUnitListHederView) as? YXReviewSearchResultUnitListHederView else {
             return nil
         }
-        headerView.tag      = section
+        let unitName   = self.resultUnitListModel[section].name
+        headerView.tag = section
+        headerView.unitNameLabel.text = unitName
         return headerView
     }
     
