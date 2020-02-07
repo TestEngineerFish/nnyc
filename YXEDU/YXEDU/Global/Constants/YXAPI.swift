@@ -151,6 +151,8 @@ struct YXAPI {
     // MARK: - 分享
     struct Share {
         static let punch = "/api/v1/user/punch/clock"
+        
+        static let changeBackgroundImage = "api/v1/learn/changebackground"
     }
     
     //MARK: - 设置模块

@@ -59,11 +59,15 @@
         [self.view addSubview:button];
         
     }else {
+        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
         [self.navigationController setNavigationBarHidden:NO animated:animated];
 
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
         self.navigationItem.leftBarButtonItems = @[button];
         
+        [self.navigationController.navigationBar setBarTintColor:[UIColor hex:0xFBA217 alpha:1]];
+        [self.navigationController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     }
     
 //    if (self.currentColor) {
@@ -94,6 +98,11 @@
 //        [self.navBackgroundView setHidden:YES];
 //        self.navBackgroundView = nil;
 //    }
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+    
+    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor blackColor]}];
+    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
 }
 
 - (void)back {

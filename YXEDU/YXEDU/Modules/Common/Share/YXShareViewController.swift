@@ -8,17 +8,17 @@
 
 import UIKit
 
-enum YXShareImageType {
+enum YXShareImageType: Int {
     /// 学习结果分享
-    case learnResult
+    case learnResult = 1
     /// 智能复习分享
-    case aiReviewReuslt
+    case aiReviewReuslt = 3
     /// 复习计划分享
-    case planReviewResult
+    case planReviewResult = 2
     /// 听写复习分享
-    case listenReviewResult
+    case listenReviewResult = 4
     /// 挑战结果分享
-    case challengeResult
+    case challengeResult = 5
 }
 
 class YXShareViewController: YXViewController {
@@ -106,18 +106,8 @@ class YXShareViewController: YXViewController {
     }
     
     private func bindProperty() {
-        switch self.shareType {
-        case .learnResult:
-            self.shareImageView.image = self.createLearnResultShareImage()
-        case .aiReviewReuslt:
-            self.shareImageView.image = self.createAIReviewShareImage()
-        case .planReviewResult:
-            self.shareImageView.image = self.createPlanReviewShareImage()
-        case .listenReviewResult:
-            self.shareImageView.image = self.createListenReviewShareImage()
-        case .challengeResult:
-            self.shareImageView.image = self.createChallengeReviewShareImage()
-        }
+        changeBackgroundImage()
+        
         // 设置分享数据
         self.shareChannelView.shareType  = .image
         self.shareChannelView.shareImage = self.shareImageView.image
@@ -227,7 +217,14 @@ class YXShareViewController: YXViewController {
     // MARK: ==== Tools ====
     @objc
     private func changeBackgroundImage() {
-        
+        let request = YXShareRequest.changeBackgroundImage(type: shareType.rawValue)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            guard let result = response.data, let imageUrl = result.imageUrl else { return }
+            self.shareImageView.sd_setImage(with: URL(string: imageUrl))
+            
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error.message)")
+        }
     }
     
     /// 创建学习结果打卡页面
