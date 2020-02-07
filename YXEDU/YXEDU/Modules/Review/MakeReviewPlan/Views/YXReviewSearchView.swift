@@ -47,7 +47,8 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
     var pan: UIPanGestureRecognizer?
     var lastPassByIndexPath: IndexPath?
     var previousLocation: CGPoint?
-    weak var delegate: YXReviewUnitListViewProtocol?
+    weak var unitListDelegate: YXReviewUnitListViewProtocol?
+    weak var selectedDelegate: YXReviewSelectedWordsListViewProtocol?
     
     var bookName = ""
     var unitListModel: [YXReviewUnitModel]       = []
@@ -70,7 +71,7 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         let mAttrStr = NSMutableAttributedString(string: desc)
         mAttrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black1, range: NSRange(location: 2, length: bookName.count))
         self.tipsDesciptionLabel.attributedText = mAttrStr
-        self.searchBar.resignFirstResponder()
+        self.searchBar.becomeFirstResponder()
         self.searchBar.text      = ""
         self.resultUnitListModel = []
         self.tableView.reloadData()
@@ -138,9 +139,11 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         wordModel.isSelected = !wordModel.isSelected
         cell.model           = wordModel
         if wordModel.isSelected {
-            self.delegate?.selectedWord(wordModel)
+            self.unitListDelegate?.selectedWord(wordModel)
+            self.selectedDelegate?.selected(wordModel)
         } else {
-            self.delegate?.unselectWord(wordModel)
+            self.unitListDelegate?.unselectWord(wordModel)
+            self.selectedDelegate?.unselect(wordModel)
         }
         headerCell.layoutSubviews()
     }

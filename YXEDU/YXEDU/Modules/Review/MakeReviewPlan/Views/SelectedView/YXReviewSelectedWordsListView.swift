@@ -9,6 +9,7 @@
 import UIKit
 
 protocol YXReviewSelectedWordsListViewProtocol: NSObjectProtocol {
+    func selected(_ word: YXReviewWordModel)
     func unselect(_ word: YXReviewWordModel)
 }
 

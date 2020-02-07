@@ -86,7 +86,8 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     }
 
     private func bindData() {
-        self.searchView.delegate = self.selectedWordsListView
+        self.searchView.unitListDelegate = self.selectedWordsListView
+        self.searchView.selectedDelegate = self
         self.segmentControllerView.delegate           = self
         self.selectedWordsListView.delegateArrow      = self
         self.selectedWordsListView.delegateBottomView = self.bottomView
@@ -323,6 +324,24 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                     unitModel.list.forEach { (wordModel) in
                         if wordModel.id == word.id {
                             wordModel.isSelected = false
+                        }
+                    }
+                }
+            }
+        }
+        self.reviewDelegate?.updateSelectStatus(word)
+    }
+    
+    func selected(_ word: YXReviewWordModel) {
+        guard let model = self.model else {
+            return
+        }
+        if let unitModelList = model.modelDict["\(word.bookId)"] {
+            unitModelList.forEach { (unitModel) in
+                if unitModel.id == word.unitId {
+                    unitModel.list.forEach { (wordModel) in
+                        if wordModel.id == word.id {
+                            wordModel.isSelected = true
                         }
                     }
                 }
