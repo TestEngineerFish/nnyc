@@ -63,6 +63,7 @@ class YXReviewUnitModel: Mappable {
     }
     var isOpenUp         = false
 
+    init() {}
     required init?(map: Map) {}
 
     func mapping(map: Map) {

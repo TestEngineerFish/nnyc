@@ -255,6 +255,7 @@
 		BADF1A8A393F92D5A79919AA /* Pods_YXEDU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020CAD61CC280AA1CB6C7253 /* Pods_YXEDU.framework */; };
 		CFFB700823EBB56F0088DAAA /* YXReviewPlanReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */; };
 		CFFB700A23EBDEB50088DAAA /* YXShareDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */; };
+		CFFB700C23ED00A70088DAAA /* YXReviewSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700B23ED00A70088DAAA /* YXReviewSearchView.swift */; };
 		D62C1E2520897EBC002BB11A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2420897EBB002BB11A /* SystemConfiguration.framework */; };
 		D62C1E2720897EC7002BB11A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2620897EC7002BB11A /* CoreLocation.framework */; };
 		D62C1E2920897EDF002BB11A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62C1E2820897EDF002BB11A /* AdSupport.framework */; };
@@ -1037,6 +1038,7 @@
 		77F69A7D23617CEE00E55185 /* YXHomeSubItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHomeSubItemCell.xib; sourceTree = "<group>"; };
 		CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanReportViewController.swift; sourceTree = "<group>"; };
 		CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareDefaultView.swift; sourceTree = "<group>"; };
+		CFFB700B23ED00A70088DAAA /* YXReviewSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewSearchView.swift; sourceTree = "<group>"; };
 		D62C1E2420897EBB002BB11A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D62C1E2620897EC7002BB11A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D62C1E2820897EDF002BB11A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -2369,6 +2371,7 @@
 				2252EFE3239BC1D900A98BFB /* YXReviewUnitListHeaderView.swift */,
 				2296F776239BBC3600C50660 /* YXReviewUnitListView.swift */,
 				22D6F9FF23BDCAC900B05BC8 /* YXMakeReviewGuideView.swift */,
+				CFFB700B23ED00A70088DAAA /* YXReviewSearchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6504,6 +6507,7 @@
 				EE5E0250232756C100655654 /* OrdinateView.m in Sources */,
 				EE5E016C232754FA00655654 /* YXLog.m in Sources */,
 				EE5EF255232740B800655654 /* UIView+Layout.m in Sources */,
+				CFFB700C23ED00A70088DAAA /* YXReviewSearchView.swift in Sources */,
 				224352D123A2593600F278E6 /* YXChallengeRankCell.swift in Sources */,
 				773B4C6123B5A3D600E8E395 /* YXBadgeDetailView.swift in Sources */,
 				EE5E023C232756C000655654 /* Colours.m in Sources */,

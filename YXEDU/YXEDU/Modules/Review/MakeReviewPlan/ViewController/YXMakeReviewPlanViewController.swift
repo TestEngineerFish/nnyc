@@ -34,6 +34,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         view.isHidden        = true
         return view
     }()
+    let searchView            = YXReviewSearchView()
     var selectedWordsListView = YXReviewSelectedWordsListView()
     var bottomView            = YXReviewBottomView()
     weak var delegate: YXMakeReviewPlanProtocol?
@@ -41,6 +42,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     // ---- 数据对象
     var model: YXReviewBookModel?
+    var selectedIndex = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,10 +53,16 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     }
 
     private func createSubviews() {
+        self.searchView.isHidden = true
         self.customNavigationBar?.title = "选择单词"
+        self.customNavigationBar?.rightButton.setImage(UIImage(named: "review_search"), for: .normal)
+        self.customNavigationBar?.rightButtonAction = {
+            self.showSearchView()
+        }
         self.view.addSubview(segmentControllerView)
         self.view.addSubview(bottomView)
         self.view.addSubview(backgroundView)
+        self.view.addSubview(searchView)
         self.view.addSubview(selectedWordsListView)
         self.view.backgroundColor = UIColor.white
         backgroundView.snp.makeConstraints { (make) in
@@ -65,6 +73,10 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             make.left.right.equalToSuperview()
             make.height.equalTo(AdaptSize(60) + kSafeBottomMargin)
         }
+        searchView.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(kStatusBarHeight)
+        }
         selectedWordsListView.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-10))
             make.width.equalTo(AdaptSize(155))
@@ -74,6 +86,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     }
 
     private func bindData() {
+        self.searchView.delegate = self.selectedWordsListView
         self.segmentControllerView.delegate           = self
         self.selectedWordsListView.delegateArrow      = self
         self.selectedWordsListView.delegateBottomView = self.bottomView
@@ -168,6 +181,22 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     @objc private func hideBackgroundView() {
         self.closeDownList()
         self.selectedWordsListView.closeDownList()
+    }
+    
+    private func showSearchView() {
+        guard let _model = self.model else {
+            return
+        }
+        
+        let bookModel = _model.list[self.selectedIndex]
+        if let unitModelList = _model.modelDict["\(bookModel.id)"] {
+            self.searchView.bookName      = bookModel.name
+            self.searchView.unitListModel = unitModelList
+            self.searchView.isHidden      = false
+            self.searchView.updateInfo()
+        } else {
+            YXUtils.showHUD(self.view, title: "当前书未加载完成，请稍后再试～")
+        }
     }
 
     // MARK: ==== Tools ====
@@ -268,6 +297,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         guard let model = self.model else {
             return
         }
+        self.selectedIndex = indexPath.row
         model.list[preIndexPath.row].isSelected = false
         model.list[indexPath.row].isSelected    = true
         self.segmentControllerView.headerScrollView.reloadData()
