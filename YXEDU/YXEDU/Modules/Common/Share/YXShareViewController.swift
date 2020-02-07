@@ -78,6 +78,15 @@ class YXShareViewController: YXViewController {
         let shareView = YXShareDefaultView(frame: CGRect.zero)
         return shareView
     }()
+    
+    var changeBackgroundImageButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("换背景", for: .normal)
+        button.setTitleColor(UIColor.gray1, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(changeBackgroundImage), for: .touchUpInside)
+        return button
+    }()
 
     var wordsAmount = 0
     var daysAmount  = 0
@@ -184,6 +193,13 @@ class YXShareViewController: YXViewController {
         }
         shareImageBorderView.layer.setDefaultShadow()
         shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))
+        
+        self.customNavigationBar?.addSubview(changeBackgroundImageButton)
+        changeBackgroundImageButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalTo(-15)
+            make.size.equalTo(CGSize(width: 44, height: 20))
+        }
     }
     
     // MARK: ==== Request ====
@@ -209,6 +225,10 @@ class YXShareViewController: YXViewController {
     }
     
     // MARK: ==== Tools ====
+    @objc
+    private func changeBackgroundImage() {
+        
+    }
     
     /// 创建学习结果打卡页面
     private func createLearnResultShareImage() -> UIImage? {

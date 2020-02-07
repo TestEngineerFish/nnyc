@@ -383,6 +383,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         configure.clAppPrivacyTextFont = UIFont.systemFont(ofSize: 10, weight: .regular)
         configure.clAppPrivacyColor = [UIColor(red: 0.53, green: 0.53, blue: 0.53, alpha: 1), UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)]
         configure.clAppPrivacyPunctuationMarks = true
+        configure.clShanYanSloganTextColor = .clear
         configure.clAppPrivacyFirst = ["《用户协议》", URL(string: "\(YXEvnOC.baseUrl())/agreement.html")!]
         
         let layoutConfigure = CLOrientationLayOut()
