@@ -79,7 +79,9 @@ class YXShareViewController: YXViewController {
         return shareView
     }()
     
-    var changeBackgroundImageButton: UIButton = {
+    private var backgroundImageUrls: [String]?
+    private var currentBackgroundImageUrl: String?
+    private var changeBackgroundImageButton: UIButton = {
         let button = UIButton()
         button.setTitle("换背景", for: .normal)
         button.setTitleColor(UIColor.gray1, for: .normal)
@@ -198,17 +200,17 @@ class YXShareViewController: YXViewController {
         if self.shareType == .challengeResult {
             return
         }
+        
         let request = YXShareRequest.punch(type: channel.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self else { return }
-            guard let model = response.data else {
-                return
-            }
+            guard let self = self, let model = response.data else { return }
             self.finishAction?()
-            if model.state && model.coin > 0 {
-                YXToastView.share.showCoinView(model.coin)
-                self.shareChannelView.coinImageView.isHidden = true
-            }
+            
+//            if model.state && model.coin > 0 {
+//                YXToastView.share.showCoinView(model.coin)
+//                self.shareChannelView.coinImageView.isHidden = true
+//            }
+            
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")
         }
@@ -217,13 +219,26 @@ class YXShareViewController: YXViewController {
     // MARK: ==== Tools ====
     @objc
     private func changeBackgroundImage() {
-        let request = YXShareRequest.changeBackgroundImage(type: shareType.rawValue)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            guard let result = response.data, let imageUrl = result.imageUrl else { return }
-            self.shareImageView.sd_setImage(with: URL(string: imageUrl))
-            
-        }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+        if let urls = backgroundImageUrls, urls.count > 0 {
+            if let currentUrl = currentBackgroundImageUrl, let index = urls.firstIndex(of: currentUrl), index < urls.count - 1 {
+                shareImageView.sd_setImage(with: URL(string: urls[index + 1]))
+                currentBackgroundImageUrl = urls[index + 1]
+                
+            } else {
+                shareImageView.sd_setImage(with: URL(string: urls[0]))
+                currentBackgroundImageUrl = urls[0]
+            }
+
+        } else {
+            let request = YXShareRequest.changeBackgroundImage(type: shareType.rawValue)
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] response in
+                guard let result = response.data, let imageUrls = result.imageUrls else { return }
+                self?.backgroundImageUrls = imageUrls
+                self?.changeBackgroundImage()
+                
+            }) { (error) in
+                YXUtils.showHUD(self.view, title: "\(error.message)")
+            }
         }
     }
     

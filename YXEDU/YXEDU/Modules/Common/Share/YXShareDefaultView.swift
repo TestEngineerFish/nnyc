@@ -207,18 +207,23 @@ class YXShareDefaultView: UIView {
         case .qq:
             QQApiManager.shared()?.share(image, toPaltform: .QQ, title: "", describution: "", shareBusiness: "")
             QQApiManager.shared()?.finishBlock = { (obj1: Any, obj2: Any, result: Bool) in
-                finishedBlock?(.qq)
+
             }
+            finishedBlock?(.qq)
+
         case .wechat:
             WXApiManager.shared()?.share(image, toPaltform: .wxSession, title: "", describution: "", shareBusiness: "")
             WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
-                finishedBlock?(.wechat)
+
             }
+            finishedBlock?(.wechat)
+
         case .timeLine:
             WXApiManager.shared()?.share(image, toPaltform: .wxTimeLine, title: "", describution: "", shareBusiness: "")
             WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
-                finishedBlock?(.timeLine)
+
             }
+            finishedBlock?(.timeLine)
         }
     }
     
@@ -227,19 +232,23 @@ class YXShareDefaultView: UIView {
         case .qq:
             QQApiManager.shared()?.shareUrl(urlStr, previewImage: previewImage, title: title, describution: description, shareBusiness: "shareBusiness")
             QQApiManager.shared()?.finishBlock = { (obj1: Any, obj2: Any, result: Bool) in
-                finishedBlock?(.qq)
+
             }
+            finishedBlock?(.qq)
+
         case .wechat:
             WXApiManager.shared()?.shareUrl(urlStr, toPaltform: .wxSession, previewImage: previewImage, title: title, description: description, shareBusiness: "shareBusiness")
             WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
-                finishedBlock?(.wechat)
+
             }
+            finishedBlock?(.wechat)
+
         case .timeLine:
             WXApiManager.shared()?.shareUrl(urlStr, toPaltform: .wxTimeLine, previewImage: previewImage, title: title, description: description, shareBusiness: "shareBusiness")
             WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
-                finishedBlock?(.timeLine)
+
             }
+            finishedBlock?(.timeLine)
         }
     }
-    
 }
