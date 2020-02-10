@@ -48,7 +48,7 @@ class YXReviewPlanReportViewController: YXViewController, WKNavigationDelegate {
         self.shareChannelView.shareUrlStr      = self.urlStr
         self.shareChannelView.shareTitle       = userName + "的学习报告"
         self.shareChannelView.shareDescription = "我已经学完了《" + self.reviewPlanName + "》"
-        self.shareChannelView.shareThumbImage  = UIImage(named: "gameShareLogo")!
+        self.shareChannelView.shareThumbImage  = UIImage(named: "shareUrlImage")!
     }
     
     private func createSubviews() {
