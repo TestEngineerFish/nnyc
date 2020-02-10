@@ -40,6 +40,28 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         label.textColor = UIColor.black3
         return label
     }()
+    
+    let emptyView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        view.isHidden        = true
+        return view
+    }()
+    
+    let emptyImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "search_empty_data")
+        return imageView
+    }()
+    
+    let emptyDescLabel: UILabel = {
+        let label = UILabel()
+        label.text          = "暂无单词数据"
+        label.textColor     = UIColor.black3
+        label.font          = UIFont.regularFont(ofSize: AdaptSize(12))
+        label.textAlignment = .center
+        return label
+    }()
 
     final let kYXReviewUnitListCell       = "YXReviewUnitListCell"
     final let kYXReviewSearchResultUnitListHederView = "YXReviewSearchResultUnitListHederView"
@@ -96,7 +118,10 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         self.addSubview(self.cancelButton)
         self.addSubview(self.tipsBookImageView)
         self.addSubview(self.tipsDesciptionLabel)
+        self.addSubview(self.emptyView)
         self.addSubview(self.tableView)
+        self.emptyView.addSubview(self.emptyImageView)
+        self.emptyView.addSubview(self.emptyDescLabel)
         self.searchBar.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
             make.top.equalToSuperview().offset(AdaptSize(6))
@@ -123,6 +148,19 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         self.tableView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(self.tipsBookImageView.snp.bottom).offset(AdaptSize(12))
+        }
+        self.emptyView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(self.tableView)
+            make.size.equalTo(CGSize(width: AdaptSize(277), height: AdaptSize(227)))
+        }
+        self.emptyImageView.snp.makeConstraints { (make) in
+            make.top.left.right.equalToSuperview()
+            make.height.equalTo(AdaptSize(205))
+        }
+        self.emptyDescLabel.snp.makeConstraints { (make) in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(AdaptSize(17))
         }
     }
     
@@ -177,11 +215,23 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if self.resultUnitListModel.isEmpty {
+            self.tableView.isHidden = true
+            self.emptyView.isHidden = false
+        } else {
+            self.tableView.isHidden = false
+            self.emptyView.isHidden = true
+        }
+    }
+    
     // MARK: ==== UITextFieldDelegate ====
     func textFieldDidChangeSelection(_ textField: UITextField) {
         let keyValue = textField.text ?? ""
         self.search(keyValue)
         self.tableView.reloadData()
+        self.layoutSubviews()
     }
  
     // MARK: ==== UITableViewDataSource ====
