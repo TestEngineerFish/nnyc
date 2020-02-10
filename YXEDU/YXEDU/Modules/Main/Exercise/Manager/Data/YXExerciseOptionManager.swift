@@ -29,26 +29,22 @@ class YXExerciseOptionManager: NSObject {
     }
     
     func processReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
-        
-        switch exercise.type {
-        case .lookWordChooseImage, .lookExampleChooseImage, .listenChooseImage:
-            return reviewWordOption(exercise: exercise)
-        case .lookWordChooseChinese,
-        .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord,
-        .listenChooseWord, .listenChooseChinese:
-            return reviewWordOption(exercise: exercise, isFilterNilImage: false)
-        case .validationImageAndWord, .validationWordAndChinese:
-
+        // 左右连线题
+        let vaildationArray: [YXExerciseType] = [.validationImageAndWord, .validationWordAndChinese]
+        // 选择题
+        let chooseArray: [YXExerciseType] = [.lookWordChooseImage, .lookExampleChooseImage, .listenChooseImage, .lookWordChooseChinese, .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord, .listenChooseWord, .listenChooseChinese]
+        if vaildationArray.contains(exercise.type) {
             return validReviewWordOption(exercise: exercise)
-        default:
-
+        } else if chooseArray.contains(exercise.type) {
+            return reviewWordOption(exercise: exercise)
+        } else {
             print("其他题型不用生成选项")
             return exercise
         }
     }
 
     /// 默认过滤没有图片的单词
-    func reviewWordOption(exercise: YXWordExerciseModel, isFilterNilImage: Bool = true)  -> YXWordExerciseModel? {
+    func reviewWordOption(exercise: YXWordExerciseModel)  -> YXWordExerciseModel? {
         // 选项个数
         let itemCount = exercise.question?.itemCount ?? 4
         
@@ -67,21 +63,22 @@ class YXExerciseOptionManager: NSObject {
         for _ in otherNewWordArray {
             let randomInt = Int.random(in: 0..<tmpOtherNewWordArray.count)
             let _wordExerciseModel = tmpOtherNewWordArray[randomInt]
-            guard let wordModel = _wordExerciseModel.word else {
+            guard let otherWordModel = _wordExerciseModel.word else {
                 continue
             }
-            if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
-                continue
+            if !whiteList.contains(otherWordModel.word) {
+                guard let itemModel = self.filterRepeatWord(exerciseModel: exercise, otherWordModel: otherWordModel) else {
+                    continue
+                }
+                items.append(itemModel)
+                whiteList.append(otherWordModel.word)
             }
-            let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
-            items.append(itemModel)
-            whiteList.append(wordModel.word)
             tmpOtherNewWordArray.remove(at: randomInt)
             if items.count > itemCount - 2 {
                 break
             }
         }
-        
+
         // 从学习流程获取数据
         if items.count < itemCount - 1 {
             // 防止无限随机同一个对象
@@ -90,17 +87,16 @@ class YXExerciseOptionManager: NSObject {
             for _ in 0..<otherReviewWordArray.count {
                 let randomInt = Int.random(in: 0..<tmpReviewWordArray.count)
                 let _wordExerciseModel = tmpReviewWordArray[randomInt]
-                guard let wordModel = _wordExerciseModel.word else {
+                guard let otherWordModel = _wordExerciseModel.word else {
                     continue
                 }
-                if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
-                    continue
-                }
-                if !whiteList.contains(wordModel.word) {
-                    let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
+                if !whiteList.contains(otherWordModel.word) {
+                    guard let itemModel = self.filterRepeatWord(exerciseModel: exercise, otherWordModel: otherWordModel) else {
+                        continue
+                    }
                     items.append(itemModel)
+                    whiteList.append(otherWordModel.word)
                 }
-                whiteList.append(wordModel.word)
                 // 移除已经随机过的对象
                 tmpReviewWordArray.remove(at: randomInt)
                 if items.count > itemCount - 2 {
@@ -115,15 +111,14 @@ class YXExerciseOptionManager: NSObject {
                 var tmpWordModelArray = wordModelArray
                 for _ in 0..<wordModelArray.count {
                     let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
-                    let wordModel = tmpWordModelArray[randomInt]
-                    if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
-                        continue
-                    }
-                    if !whiteList.contains(wordModel.word) {
-                        let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
+                    let otherWordModel = tmpWordModelArray[randomInt]
+                    if !whiteList.contains(otherWordModel.word) {
+                        guard let itemModel = self.filterRepeatWord(exerciseModel: exercise, otherWordModel: otherWordModel) else {
+                            continue
+                        }
                         items.append(itemModel)
+                        whiteList.append(otherWordModel.word)
                     }
-                    whiteList.append(wordModel.word)
                     // 移除已经随机过的对象
                     tmpWordModelArray.remove(at: randomInt)
                     if items.count > itemCount - 2 {
@@ -139,15 +134,14 @@ class YXExerciseOptionManager: NSObject {
                 var tmpWordModelArray = wordModelArray
                 for _ in 0..<wordModelArray.count {
                     let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
-                    let wordModel = tmpWordModelArray[randomInt]
-                    if isFilterNilImage && (wordModel.imageUrl?.isEmpty ?? true) {
-                        continue
-                    }
-                    if !whiteList.contains(wordModel.word) {
-                        let itemModel = self.itemModel(word: wordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
+                    let otherWordModel = tmpWordModelArray[randomInt]
+                    if !whiteList.contains(otherWordModel.word) {
+                        guard let itemModel = self.filterRepeatWord(exerciseModel: exercise, otherWordModel: otherWordModel) else {
+                            continue
+                        }
                         items.append(itemModel)
+                        whiteList.append(otherWordModel.word)
                     }
-                    whiteList.append(wordModel.word)
                     // 移除已经随机过的对象
                     tmpWordModelArray.remove(at: randomInt)
                     if items.count > itemCount - 2 {
@@ -169,6 +163,43 @@ class YXExerciseOptionManager: NSObject {
         
         //        reviewWordArray[index] = exerciseModel
         return exerciseModel
+    }
+    
+    // TODO: ==== Tools ====
+    private func filterRepeatWord(exerciseModel: YXWordExerciseModel, otherWordModel: YXWordModel) -> YXOptionItemModel? {
+        guard let rightWordModel = exerciseModel.word else {
+            return nil
+        }
+        switch exerciseModel.type {
+        case .lookWordChooseImage, .lookExampleChooseImage, .listenChooseImage:
+            guard let rightImageUrl = rightWordModel.imageUrl, let otherImageUrl = otherWordModel.imageUrl else {
+                return nil
+            }
+            if otherImageUrl == rightImageUrl || otherImageUrl.isEmpty {
+                return nil
+            }
+        case .lookWordChooseChinese,
+        .lookExampleChooseChinese, .listenChooseChinese:
+            guard let rightMeaning = rightWordModel.meaning, let otherMeaning = otherWordModel.meaning else {
+                return nil
+            }
+            if otherMeaning == rightMeaning || otherMeaning.isEmpty {
+                return nil
+            }
+        case .lookChineseChooseWord, .lookImageChooseWord,
+        .listenChooseWord:
+            guard let rightWord = rightWordModel.word, let otherWord = otherWordModel.word else {
+                return nil
+            }
+            if rightWord == otherWord || otherWord.isEmpty {
+                return nil
+            }
+        default:
+            print("其他题型不用生成选项")
+            return nil
+        }
+        let itemModel = self.itemModel(word: otherWordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
+        return itemModel
     }
     
     
