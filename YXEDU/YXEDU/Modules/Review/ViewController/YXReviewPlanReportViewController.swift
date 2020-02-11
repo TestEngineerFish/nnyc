@@ -28,9 +28,13 @@ class YXReviewPlanReportViewController: YXViewController, WKNavigationDelegate {
         return shareView
     }()
     
-    var urlStr: String = "http://www.baidu.com"
+    var planId: Int = 0
     var reviewPlanName = "我的复习计划"
     var userName       = YXUserModel.default.username ?? ""
+    
+    private var urlStr: String {
+        return YYEVC.apiUrl + "/share/study/review_report.html?review_plan_id=\(planId)"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

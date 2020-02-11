@@ -109,7 +109,14 @@ class YXReviewPlanDetailHeaderView: YXView {
     var reviewStarView = YXReviewPlanStarContainerView(type: .plan)
     var reviewProgressView = YXReviewPlanProgressView()
     
+    var reportButton = UIButton()
+    
+    private var isShowReportButton: Bool {
+        return reviewPlanModel?.listenState == .finish || reviewPlanModel?.reviewState == .finish
+    }
+    
     deinit {
+        reportButton.removeTarget(self, action: #selector(clickEditButton), for: .touchUpInside)
         editButton.removeTarget(self, action: #selector(clickEditButton), for: .touchUpInside)
     }
     
@@ -133,6 +140,7 @@ class YXReviewPlanDetailHeaderView: YXView {
         bgView.addSubview(listenStarView)
         bgView.addSubview(reviewStarView)
         bgView.addSubview(reviewProgressView)
+        bgView.addSubview(reportButton)
     }
     
     override func bindProperty() {
@@ -150,6 +158,12 @@ class YXReviewPlanDetailHeaderView: YXView {
 
         editButton.setImage(UIImage(named: "review_plan_detail_edit"), for: .normal)
         editButton.addTarget(self, action: #selector(clickEditButton), for: .touchUpInside)
+        
+        reportButton.setTitle("查看学习报告", for: .normal)
+        reportButton.titleLabel?.font = UIFont.regularFont(ofSize: 12)
+        reportButton.setTitleColor(UIColor.orange1, for: .normal)
+        reportButton.addTarget(self, action: #selector(clickReportButton), for: .touchUpInside)
+        
     }
     
     
@@ -214,16 +228,8 @@ class YXReviewPlanDetailHeaderView: YXView {
         }
         
         reviewProgressView.isHidden = true
-        if reviewPlanModel?.reviewState != .finish {
-            reviewProgressView.isHidden = false
-            reviewProgressView.snp.remakeConstraints { (make) in
-                make.top.equalTo(AS(18))
-                make.right.equalTo(AS(-18))
-                make.size.equalTo(AS(40))
-            }
-        }
-        
         reviewStarView.isHidden = true
+        var tmpView: UIView = reviewStarView
         if reviewPlanModel?.reviewState == .finish {
             reviewStarView.isHidden = false
             reviewStarView.snp.remakeConstraints { (make) in
@@ -232,7 +238,35 @@ class YXReviewPlanDetailHeaderView: YXView {
                 make.width.equalTo(AS(85))
                 make.height.equalTo(AS(31))
             }
+            
+            if isShowReportButton {
+                reportButton.snp.makeConstraints { (make) in
+                    make.top.equalTo(tmpView.snp.bottom).offset(AS(1))
+                    make.right.equalTo(AS(-23))
+                    make.width.equalTo(AS(73))
+                    make.height.equalTo(AS(17))
+                }
+            }
+        } else {
+            tmpView = reviewProgressView
+            reviewProgressView.isHidden = false
+            reviewProgressView.snp.remakeConstraints { (make) in
+                make.top.equalTo(AS(14))
+                make.right.equalTo(AS(-18))
+                make.size.equalTo(AS(40))
+            }
+            
+            if isShowReportButton {
+                reportButton.snp.makeConstraints { (make) in
+                    make.top.equalTo(tmpView.snp.bottom).offset(AS(1))
+                    make.right.equalTo(AS(-21))
+                    make.width.equalTo(AS(73))
+                    make.height.equalTo(AS(17))
+                }
+            }
         }
+        
+        
         
 //        self.layoutIfNeeded()
     }
@@ -294,4 +328,10 @@ class YXReviewPlanDetailHeaderView: YXView {
         
     }
     
+    @objc func clickReportButton() {
+        let vc = YXReviewPlanReportViewController()
+        vc.planId = reviewPlanModel?.planId ?? 0
+        vc.reviewPlanName = reviewPlanModel?.planName ?? ""
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+    }
 }

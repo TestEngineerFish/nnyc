@@ -8,13 +8,14 @@
 
 import UIKit
 
+/// 学习结果页
 class YXExerciseResultView: YXView {
 
+    var reportEvent: (() -> ())?
     var processEvent: (() -> ())?
     var showWordListEvent: (() -> ())?
     
-    
-    
+
     var model: YXExerciseResultDisplayModel!
     
     var contentView = UIView()
@@ -28,9 +29,11 @@ class YXExerciseResultView: YXView {
 
     var tipsView = YXReviewResultTipsListView()
     
+    var reportButton = YXButton()
     var operateButton = YXButton()
     
     deinit {
+        reportButton.removeTarget(self, action: #selector(clickReportButton), for: .touchUpInside)
         operateButton.removeTarget(self, action: #selector(clickOperateButton), for: .touchUpInside)
     }
     
@@ -54,6 +57,7 @@ class YXExerciseResultView: YXView {
         contentView.addSubview(starView)
         contentView.addSubview(progressView)
         contentView.addSubview(tipsView)
+        contentView.addSubview(reportButton)
         contentView.addSubview(operateButton)
     }
     
@@ -75,7 +79,17 @@ class YXExerciseResultView: YXView {
             self?.showWordListEvent?()
         }
         
-        let bgColor = UIColor.gradientColor(with: CGSize(width: AS(273), height: AS(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
+        let bgColor = UIColor.gradientColor(with: CGSize(width: AS(isHiddenReportButton ? 273 : 134), height: AS(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
+        
+        
+        reportButton.backgroundColor = bgColor
+        reportButton.layer.masksToBounds = true
+        reportButton.layer.cornerRadius = AS(21)
+                
+        reportButton.setTitleColor(UIColor.white, for: .normal)
+        reportButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(17))
+        reportButton.addTarget(self, action: #selector(clickReportButton), for: .touchUpInside)
+                
         operateButton.backgroundColor = bgColor
         operateButton.layer.masksToBounds = true
         operateButton.layer.cornerRadius = AS(21)
@@ -141,13 +155,30 @@ class YXExerciseResultView: YXView {
             make.left.right.equalToSuperview()
             make.height.equalTo(tipsHeight)
         }
-                
-        operateButton.snp.remakeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.width.equalTo(AS(273))
-            make.height.equalTo(AS(42))
-            make.bottom.equalTo(-AS(25))
+          
+        if isHiddenReportButton {
+            operateButton.snp.remakeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AS(273))
+                make.height.equalTo(AS(42))
+                make.bottom.equalTo(-AS(25))
+            }
+        } else {
+            reportButton.snp.remakeConstraints { (make) in
+                make.left.equalTo(AS(28))
+                make.width.equalTo(AS(134))
+                make.height.equalTo(AS(42))
+                make.bottom.equalTo(-AS(25))
+            }
+            
+            operateButton.snp.remakeConstraints { (make) in
+                make.right.equalTo(AS(-28))
+                make.width.equalTo(AS(134))
+                make.height.equalTo(AS(42))
+                make.bottom.equalTo(-AS(25))
+            }
         }
+        
         
         self.layoutIfNeeded()
     }
@@ -165,6 +196,9 @@ class YXExerciseResultView: YXView {
         
     }
     
+    @objc func clickReportButton() {
+        self.reportEvent?()
+    }
     @objc func clickOperateButton() {
         self.processEvent?()
     }
@@ -276,6 +310,9 @@ class YXExerciseResultView: YXView {
             } else {
                 operateButton.setTitle("打卡分享", for: .normal)
             }
+            if !isHiddenReportButton {
+                reportButton.setTitle("分享学习报告", for: .normal)
+            }
         } else {
             if model.type == .planListenReview {
                 operateButton.setTitle("继续听写", for: .normal)
@@ -362,7 +399,11 @@ class YXExerciseResultView: YXView {
                 has = true
             }
         }
-        return !has // (model.state == false) ||  (model.type == .wrong)
+        return !has
+    }
+    
+    private var isHiddenReportButton: Bool {
+        return !(model.state && (model.type == .planReview || model.type == .planListenReview))
     }
     
     

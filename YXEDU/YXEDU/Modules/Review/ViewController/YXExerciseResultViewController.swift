@@ -43,6 +43,9 @@ class YXExerciseResultViewController: YXViewController {
         resultView.showWordListEvent = { [weak self] in
             self?.showWordListEvent()
         }
+        resultView.reportEvent = { [weak self] in
+            self?.reportPageEvent()
+        }
         
         self.view.addSubview(resultView)
         resultView.snp.makeConstraints { (make) in
@@ -78,6 +81,13 @@ class YXExerciseResultViewController: YXViewController {
         wrongWordListView.bindData(wordsList)
         let h = wordsList.count > 3 ? AdaptSize(367) : AdaptSize(170)
         YXAlertCustomView.share.show(wrongWordListView, h: h)
+    }
+    
+    private func reportPageEvent() {
+        let vc = YXReviewPlanReportViewController()
+        vc.planId = model.id
+        vc.reviewPlanName = model.title ?? ""
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     private func shareEvent() {

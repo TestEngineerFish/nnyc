@@ -25,8 +25,8 @@ class YXTest: NSObject {
 //                let array = [1, 2, 3]
 //                print(array[5])
             }
-//            self.processReviewResult()
-            self.processBaseExerciseResult()
+            self.processReviewResult()
+//            self.processBaseExerciseResult()
         }
     }
     
