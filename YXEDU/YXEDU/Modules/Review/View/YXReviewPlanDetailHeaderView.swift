@@ -233,7 +233,7 @@ class YXReviewPlanDetailHeaderView: YXView {
         if reviewPlanModel?.reviewState == .finish {
             reviewStarView.isHidden = false
             reviewStarView.snp.remakeConstraints { (make) in
-                make.top.equalTo(AS(26))
+                make.top.equalTo(AS(16))
                 make.right.equalTo(AS(-17))
                 make.width.equalTo(AS(85))
                 make.height.equalTo(AS(31))
@@ -241,7 +241,7 @@ class YXReviewPlanDetailHeaderView: YXView {
             
             if isShowReportButton {
                 reportButton.snp.makeConstraints { (make) in
-                    make.top.equalTo(tmpView.snp.bottom).offset(AS(1))
+                    make.top.equalTo(tmpView.snp.bottom).offset(AS(2))
                     make.right.equalTo(AS(-23))
                     make.width.equalTo(AS(73))
                     make.height.equalTo(AS(17))
@@ -251,15 +251,15 @@ class YXReviewPlanDetailHeaderView: YXView {
             tmpView = reviewProgressView
             reviewProgressView.isHidden = false
             reviewProgressView.snp.remakeConstraints { (make) in
-                make.top.equalTo(AS(14))
-                make.right.equalTo(AS(-18))
+                make.top.equalTo(AS(isShowReportButton ? 10 : 14))
+                make.right.equalTo(AS(isShowReportButton ? -33 : -18))
                 make.size.equalTo(AS(40))
             }
             
             if isShowReportButton {
                 reportButton.snp.makeConstraints { (make) in
-                    make.top.equalTo(tmpView.snp.bottom).offset(AS(1))
-                    make.right.equalTo(AS(-21))
+                    make.top.equalTo(tmpView.snp.bottom).offset(AS(3))
+                    make.right.equalTo(AS(-17))
                     make.width.equalTo(AS(73))
                     make.height.equalTo(AS(17))
                 }
