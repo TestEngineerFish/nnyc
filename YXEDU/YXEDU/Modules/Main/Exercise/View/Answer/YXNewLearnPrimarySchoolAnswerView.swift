@@ -191,8 +191,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     private func endRecordAction() {
         YXRecordAudioView.share.hide()
-        self.enginer?.stop()
-        print("End")
+        if self.status == .recording {
+            self.enginer?.stop()
+        }
     }
 
     /// 根据状态来播放
@@ -366,7 +367,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.isViewPause = true
         YXAVPlayerManager.share.pauseAudio()
         YXAVPlayerManager.share.finishedBlock = nil
-        self.enginer?.cancel()
+        if self.status == .recording {
+            self.enginer?.cancel()
+        }
     }
 
     // 页面播放
