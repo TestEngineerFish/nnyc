@@ -82,25 +82,12 @@ extension YXExerciseViewController {
     
     /// 处理复习结果页
     func processReviewResult() {
-        YXReviewDataManager().fetchReviewResult(type: dataType, planId: planId) { [weak self] (resultModel, error) in
-            guard let self = self else {return}
-            
-            if var model = resultModel {
-                             
-                model.planId = self.planId ?? 0
-                self.navigationController?.popViewController(animated: false)
-                
-                let m = YXExerciseResultDisplayModel.displayModel(model: model)
-                let vc = YXExerciseResultViewController(model: m)
-                
-                vc.hidesBottomBarWhenPushed = true
-                YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)                
-            } else {
-                UIView.toast("上报关卡失败")
-                self.navigationController?.popViewController(animated: true)
-            }
-            
-        }
+        let vc = YXExerciseResultViewController()
+        vc.dataType = dataType
+        vc.planId = planId ?? 0
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.popViewController(animated: false)
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
 }

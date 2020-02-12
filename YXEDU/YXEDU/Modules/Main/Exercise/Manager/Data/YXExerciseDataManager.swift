@@ -35,8 +35,12 @@ class YXExerciseDataManager: NSObject {
     
     public var dataStatus: YXExerciseDataStatus = .finish
     
+    /// 当前局，一次学习分成了多局
+    var currentPatchIndex = 1
     /// 当前第几轮, 从第一轮开始
     var currentTurnIndex = 0
+    /// 每局的新学和复习的大小限制
+    var patchSize = 5
     /// 新学 和 复习的单词数量
     var needNewStudyCount = 0, needReviewCount = 0
     
@@ -125,8 +129,8 @@ class YXExerciseDataManager: NSObject {
 //        printReportResult()
         
         if !progressManager.isSkipNewWord() {
-            for exercise in self.newExerciseArray {
-                if !exercise.isFinish {
+            for (index, exercise) in self.newExerciseArray.enumerated() {
+                if !exercise.isFinish && index < currentPatchIndex * patchSize {
                     var e = exercise                
                     let wid = e.word?.wordId ?? 0
                     let bid = e.word?.bookId ?? 0

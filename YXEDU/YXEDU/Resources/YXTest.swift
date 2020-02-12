@@ -25,7 +25,8 @@ class YXTest: NSObject {
 //                let array = [1, 2, 3]
 //                print(array[5])
             }
-            self.processReviewResult()
+            self.newResultVC()
+//            self.processReviewResult()
 //            self.processBaseExerciseResult()
         }
     }
@@ -49,7 +50,7 @@ class YXTest: NSObject {
             guard let self = self else {return}
 
             if let model = resultModel {
-                self.newResultVC(model: model)
+//                self.newResultVC(model: model)
             } else {
                 UIView.toast("结果页，Test数据失败")
             }
@@ -59,10 +60,11 @@ class YXTest: NSObject {
 
     
     
-    func newResultVC(model: YXReviewResultModel) {
-        let m = YXExerciseResultDisplayModel.displayModel(model: model)
-        let vc = YXExerciseResultViewController(model: m)
-        
+    func newResultVC() {
+//        let m = YXExerciseResultDisplayModel.displayModel(model: model)
+        let vc = YXExerciseResultViewController()
+        vc.dataType = .aiReview
+        vc.planId = 13
         vc.hidesBottomBarWhenPushed = true
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }

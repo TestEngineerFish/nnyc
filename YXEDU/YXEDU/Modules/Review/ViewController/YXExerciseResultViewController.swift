@@ -11,55 +11,70 @@ import UIKit
 
 /// 复习结果页（除基础学习外）
 class YXExerciseResultViewController: YXViewController {
-
-    var model: YXExerciseResultDisplayModel!
-    var resultView: YXExerciseResultView!
+    
+    var dataType: YXExerciseDataType = .planReview
+    var planId: Int = 0
+    
+    var model: YXExerciseResultDisplayModel?
+    var resultView: YXExerciseResultView?
     var shareFinished = false
+    var loadingView = YXExerciseResultLoadingView()
     
     deinit {
-        resultView.removeFromSuperview()
-    }
-    
-    
-    init(model: YXExerciseResultDisplayModel) {
-        super.init(nibName: nil, bundle: nil)
-        self.model = model
-        resultView = YXExerciseResultView(model: model)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        resultView?.removeFromSuperview()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.createSubviews()
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.fetchData()
+        }
+        
+    }
+    
+    override func addNotification() {
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewDetailPage, object: nil)
-                
-        resultView.processEvent = { [weak self] in
-            self?.processEvent()
-        }
-        resultView.showWordListEvent = { [weak self] in
-            self?.showWordListEvent()
-        }
-        resultView.reportEvent = { [weak self] in
-            self?.reportPageEvent()
-        }
-        
-        self.view.addSubview(resultView)
-        resultView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(68 + kSafeBottomMargin))
-            make.left.right.equalToSuperview()
-            make.height.equalTo(resultView.viewHeight())
+    }
+    
+    private func createSubviews() {
+        self.view.addSubview(loadingView)
+        loadingView.snp.makeConstraints { (make) in
+            make.top.equalTo(AS(kSafeBottomMargin + 123))
+            make.centerX.width.equalToSuperview()
+            make.height.equalTo(AS(117))
         }
     }
     
+    private func initResultView() {
+        self.loadingView.removeFromSuperview()
+        
+        self.resultView = YXExerciseResultView(model: model!)
+        
+        resultView?.processEvent = { [weak self] in
+            self?.processEvent()
+        }
+        resultView?.showWordListEvent = { [weak self] in
+            self?.showWordListEvent()
+        }
+        resultView?.reportEvent = { [weak self] in
+            self?.reportPageEvent()
+        }
+        
+        self.view.addSubview(resultView!)
+        resultView?.snp.makeConstraints { (make) in
+            make.top.equalTo(AS(68 + kSafeBottomMargin))
+            make.left.right.equalToSuperview()
+            make.height.equalTo(resultView?.viewHeight() ?? 0)
+        }
+    }
     
     private func processEvent() {
-        if model.type == .wrong {
+        if model?.type == .wrong {
             YRRouter.popViewController(true)
-        } else if model.type == .base || model.state {
+        } else if model?.type == .base || (model?.state ?? false) {
             self.shareEvent()
         } else {
             self.reviewEvent()
@@ -71,13 +86,13 @@ class YXExerciseResultViewController: YXViewController {
         
         let vc = YXExerciseViewController()
         vc.dataType = model?.type ?? .aiReview
-        vc.planId = model.id
+        vc.planId = model?.id ?? 0
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     private func showWordListEvent() {
         let wrongWordListView = YXWrongWordsListView()
-        let wordsList = model.words ?? []
+        let wordsList = model?.words ?? []
         wrongWordListView.bindData(wordsList)
         let h = wordsList.count > 3 ? AdaptSize(367) : AdaptSize(170)
         YXAlertCustomView.share.show(wrongWordListView, h: h)
@@ -85,8 +100,8 @@ class YXExerciseResultViewController: YXViewController {
     
     private func reportPageEvent() {
         let vc = YXReviewPlanReportViewController()
-        vc.planId = model.id
-        vc.reviewPlanName = model.title ?? ""
+        vc.planId = model?.id ?? 0
+        vc.reviewPlanName = model?.title ?? ""
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
@@ -99,7 +114,7 @@ class YXExerciseResultViewController: YXViewController {
         if shareFinished {
             shareVC.hideCoin = true
         } else {
-            shareVC.hideCoin = !model.isShowCoin
+            shareVC.hideCoin = !(model?.isShowCoin ?? false)
         }
         
         shareVC.shareType = shareType()
@@ -125,5 +140,25 @@ class YXExerciseResultViewController: YXViewController {
         default:
             return .aiReviewReuslt
         }
+    }
+    
+    
+    func fetchData() {
+        YXReviewDataManager().fetchReviewResult(type: dataType, planId: planId) { [weak self] (resultModel, error) in
+            guard let self = self else {return}
+            
+            if var model = resultModel {                             
+                model.planId = self.planId
+                
+                let m = YXExerciseResultDisplayModel.displayModel(model: model)
+                self.model = m
+                self.initResultView()
+            } else {
+                UIView.toast("请求数据失败")
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+        }
+        
     }
 }
