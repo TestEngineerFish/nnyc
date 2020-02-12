@@ -85,6 +85,7 @@ struct YXWordExerciseModel: Mappable {
 struct YXWordStepsModel: Mappable {
     
     var wordId: Int = 0
+    var isUnlocked = false    // 是否解锁
     var exerciseSteps: [[YXWordExerciseModel]] = []
     var backupExerciseStep: [String : YXWordExerciseModel] = [:]
     
@@ -98,6 +99,7 @@ struct YXWordStepsModel: Mappable {
     }
     mutating func mapping(map: Map) {
         wordId                  <- map["word_id"]
+        isUnlocked                  <- map["is_unlocked"]
         exerciseSteps           <- map["exercise_step_list"]
         backupExerciseStep      <- map["backup_exercise_step_map"] //(, YXWordBackupTransform())
     }

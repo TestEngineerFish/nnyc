@@ -11,16 +11,18 @@ import UIKit
 extension YXExerciseViewController {
     
     func report() {
-        if dataManager.dataStatus == .empty {
-            processEmptyData()
-        } else {
-            // 没有数据，就是完成了练习
-            dataManager.progressManager.completionExercise()
-            
-            dataManager.progressManager.setStopStudyTime()
-            // 学完，上报
-            submitResult()
-        }
+        print("结束了")
+        
+//        if dataManager.dataStatus == .empty {
+//            processEmptyData()
+//        } else {
+//            // 没有数据，就是完成了练习
+//            dataManager.progressManager.completionExercise()
+//
+//            dataManager.progressManager.setStopStudyTime()
+//            // 学完，上报
+//            submitResult()
+//        }
     }
     
         

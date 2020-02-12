@@ -36,7 +36,7 @@ class YXExerciseDataManager: NSObject {
     public var dataStatus: YXExerciseDataStatus = .finish
     
     /// 当前局，一次学习分成了多局
-    var currentPatchIndex = 1
+    var currentPatchIndex = 0
     /// 当前第几轮, 从第一轮开始
     var currentTurnIndex = 0
     /// 每局的新学和复习的大小限制
@@ -124,6 +124,7 @@ class YXExerciseDataManager: NSObject {
         // 更新待学习数
         updateNeedNewStudyCount()
         updateNeedReviewCount()
+        updateCurrentPatchIndex()
         
         // 打印
 //        printReportResult()

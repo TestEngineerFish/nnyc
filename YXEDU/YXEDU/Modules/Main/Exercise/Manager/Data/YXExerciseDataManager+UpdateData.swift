@@ -225,5 +225,63 @@ extension YXExerciseDataManager {
         
     }
     
+    
+    func updateCurrentPatchIndex() {
+        // 初始值为第一局
+        currentPatchIndex = 1
+        
+        var newIndex = -1//, newPatchIndex = 1
+        if !progressManager.isSkipNewWord() {
+            for (index, exercise) in self.newExerciseArray.enumerated() {
+                if exercise.isFinish {//} && index < currentPatchIndex * patchSize {
+                    newIndex = index
+                }
+            }
+        }
+        if newIndex > -1 {
+            if (newIndex + 1) % patchSize == 0 {
+                currentPatchIndex = lround(Double(newIndex + 1) / Double(patchSize))
+            } else {
+                currentPatchIndex = lround(Double(newIndex + 1) / Double(patchSize) + 0.5)
+            }
+            print("aa+++++++++++++ currentPatchIndex = ", currentPatchIndex)
+        }
+        
+        var reviewIndex = -1
+        
+        var oneWordFinishCount = 0
+        var wordStepCount = 0
+        for (i, word) in reviewWordArray.enumerated() {
+            
+//            if i >= currentPatchIndex * patchSize {
+//                continue
+//            }
+            
+            for step in word.exerciseSteps {
+                if let exericse = fetchExerciseOfStep(exerciseArray: step) {
+                    wordStepCount += 1
+                    if exericse.isFinish && exericse.isContinue == nil {// 做过
+                        oneWordFinishCount += 1
+                    }
+                }
+            }
+            
+            // 一个单词全部完成
+            if wordStepCount == oneWordFinishCount {
+                reviewIndex = i
+            }
+        }
+        
+        if reviewIndex > -1 {
+            if (reviewIndex + 1) % patchSize == 0 {
+                currentPatchIndex = lround(Double(reviewIndex + 1) / Double(patchSize))
+                currentPatchIndex += 1
+            } else {
+                currentPatchIndex = lround(Double(reviewIndex + 1) / Double(patchSize) + 0.5)
+            }
+            print("bb+++++++++++++ currentPatchIndex = ", currentPatchIndex)
+        }
+        
+    }
         
 }

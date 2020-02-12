@@ -78,9 +78,7 @@ extension YXExerciseDataManager {
                     }
                 }
             }
-
-            currentPatchIndex += 1
-            
+                        
             // 排序
             self.sortCurrentTurn()
         }
