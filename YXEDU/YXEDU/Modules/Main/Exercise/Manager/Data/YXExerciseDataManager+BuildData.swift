@@ -40,7 +40,7 @@ extension YXExerciseDataManager {
             var jumpStep = 0
             for (i, word) in reviewWordArray.enumerated() {
                 
-                if i >= currentPatchIndex * patchSize {
+                if i >= currentBatchIndex * batchSize {
                     continue
                 }
                                 

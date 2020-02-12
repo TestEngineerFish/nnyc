@@ -228,7 +228,7 @@ extension YXExerciseDataManager {
     
     func updateCurrentPatchIndex() {
         // 初始值为第一局
-        currentPatchIndex = 1
+        currentBatchIndex = 1
         
         var newIndex = -1//, newPatchIndex = 1
         if !progressManager.isSkipNewWord() {
@@ -239,12 +239,12 @@ extension YXExerciseDataManager {
             }
         }
         if newIndex > -1 {
-            if (newIndex + 1) % patchSize == 0 {
-                currentPatchIndex = lround(Double(newIndex + 1) / Double(patchSize))
+            if (newIndex + 1) % batchSize == 0 {
+                currentBatchIndex = lround(Double(newIndex + 1) / Double(batchSize))
             } else {
-                currentPatchIndex = lround(Double(newIndex + 1) / Double(patchSize) + 0.5)
+                currentBatchIndex = lround(Double(newIndex + 1) / Double(batchSize) + 0.5)
             }
-            print("aa+++++++++++++ currentPatchIndex = ", currentPatchIndex)
+            print("aa+++++++++++++ currentPatchIndex = ", currentBatchIndex)
         }
         
         var reviewIndex = -1
@@ -273,13 +273,13 @@ extension YXExerciseDataManager {
         }
         
         if reviewIndex > -1 {
-            if (reviewIndex + 1) % patchSize == 0 {
-                currentPatchIndex = lround(Double(reviewIndex + 1) / Double(patchSize))
-                currentPatchIndex += 1
+            if (reviewIndex + 1) % batchSize == 0 {
+                currentBatchIndex = lround(Double(reviewIndex + 1) / Double(batchSize))
+                currentBatchIndex += 1
             } else {
-                currentPatchIndex = lround(Double(reviewIndex + 1) / Double(patchSize) + 0.5)
+                currentBatchIndex = lround(Double(reviewIndex + 1) / Double(batchSize) + 0.5)
             }
-            print("bb+++++++++++++ currentPatchIndex = ", currentPatchIndex)
+            print("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
         }
         
     }
