@@ -174,11 +174,11 @@ class YXGameHeaderView: UIView {
         var time     = 0
         var question = 0
         if let model = self.configModel {
-            time     = self.lastQuestionTime > model.totalTime ? model.totalTime : self.lastQuestionTime
-            question = self.lastQuestionTime > model.totalTime ? model.totalTime : self.lastQuestionTime
+            time     = self.lastQuestionTime > model.totalTime * 1000 ? model.totalTime * 1000 : self.lastQuestionTime
+            question = self.currentQuestionNumber > model.totalQuestionNumber ? model.totalQuestionNumber : self.currentQuestionNumber
         } else {
             time     = self.lastQuestionTime
-            question = self.lastQuestionTime
+            question = self.currentQuestionNumber
         }
         DDLogInfo("挑战总用时：\(time)，答对数“\(question)")
         return (time, question)
