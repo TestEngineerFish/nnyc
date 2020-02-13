@@ -7,7 +7,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:nnyc-api.xstudyedu.com</string>
-		<string>applinks:nnyc-admin-test.xstudyedu.com</string>
+		<string>applinks:nnyc-api-test.xstudyedu.com</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>

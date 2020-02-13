@@ -36,5 +36,7 @@
 
 - (BOOL)handleOpenURL:(NSURL *)url;
 
+-(BOOL)handleOpenUnivrsalLinkURL:(NSURL *)url;
+
 - (void)registerDeviceToken:(NSData *)deviceToken;
 @end

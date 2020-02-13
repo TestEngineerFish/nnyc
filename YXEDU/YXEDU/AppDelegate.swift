@@ -104,6 +104,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     /// 通用链接跳转
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            guard let url = userActivity.webpageURL else {
+                return true
+            }
+            YXMediator.shared()?.handleOpenUnivrsalLinkURL(url)
+        }
         return true
     }
     

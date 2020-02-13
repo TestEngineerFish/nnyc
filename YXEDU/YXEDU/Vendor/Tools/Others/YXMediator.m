@@ -147,6 +147,11 @@
     return YES;
 }
 
+-(BOOL)handleOpenUnivrsalLinkURL:(NSURL *)url {
+//    [QQApiInterface handleOpenURL:url delegate:(id<QQApiInterfaceDelegate>)[QQApiManager class]];
+    return [TencentOAuth HandleUniversalLink:url];
+}
+
 - (void)checkVersion {
     YXVersionModel *versionModel = [[YXVersionModel alloc]init];
     versionModel.pf = @"ios";
