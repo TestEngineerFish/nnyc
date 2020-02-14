@@ -96,14 +96,8 @@
     self.tableView.rowHeight = 44;
     self.tableView.backgroundColor = UIColor.whiteColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     [self.tableView registerClass:[YXPersonalInformationCell class] forCellReuseIdentifier:@"PersonalInformationCell"];
-    
     [self.view addSubview:self.tableView];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
     NSString *name = self.userModel.nick;
     
@@ -151,8 +145,11 @@
 
     [self setUpDataSource];
     [self.tableView reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{

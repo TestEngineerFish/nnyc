@@ -116,7 +116,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.bindInfo[2] = "2"
                 }
                 
-                if self.bindInfo[1] == "1", self.bindInfo[2] == "2" {
+                if self.bindInfo[1] == "1" || self.bindInfo[2] == "2" {
                     bindLabel?.text = ""
                     
                 } else {
