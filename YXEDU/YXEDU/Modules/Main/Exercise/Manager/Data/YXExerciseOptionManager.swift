@@ -223,11 +223,11 @@ class YXExerciseOptionManager: NSObject {
             items.append(item)
         } else {// 错
             // 其他的新学单词集合，排除当前的单词
-            var wordArray = self.otherNewWordArray(wordModel: exerciseModel.word)
+            var wordArray = self.otherNewWordArray(wordModel: exerciseModel.word, isCompareImage: true)
             
             var tmpWord: YXWordModel?
             if wordArray.count == 0, let wordModel = exerciseModel.word {
-                wordArray = self.otherReviewWordArray(wordModel: wordModel)
+                wordArray = self.otherReviewWordArray(wordModel: wordModel, isCompareImage: true)
                 if wordArray.isEmpty {
                     if let otherWordModel = self.otherWordExampleModel(wordModel: wordModel){
                         tmpWord = otherWordModel
@@ -301,21 +301,29 @@ class YXExerciseOptionManager: NSObject {
     
     /// 其他新学单词
     /// - Parameter index: 需要排除的
-    func otherNewWordArray(wordModel: YXWordModel?) ->  [YXWordExerciseModel] {
+    func otherNewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXWordExerciseModel] {
         guard let wordModel = wordModel else {
             return []
         }
         let array = self.newWordArray.filter { (wordExerciseModel) -> Bool in
+            if isCompareImage {
+                return wordExerciseModel.word?.word != wordModel.word
+                    && wordExerciseModel.word?.imageUrl != wordModel.imageUrl
+            }
             return wordExerciseModel.word?.word != wordModel.word
         }
         return array
     }
     
-    func otherReviewWordArray(wordModel: YXWordModel?) ->  [YXWordExerciseModel] {
+    func otherReviewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXWordExerciseModel] {
         guard let wordModel = wordModel else {
             return []
         }
         let array = self.reviewWordArray.filter { (wordExerciseModel) -> Bool in
+            if isCompareImage {
+                return wordExerciseModel.word?.word != wordModel.word
+                    && wordExerciseModel.word?.imageUrl != wordModel.imageUrl
+            }
             return wordExerciseModel.word?.word != wordModel.word
         }
         return array
