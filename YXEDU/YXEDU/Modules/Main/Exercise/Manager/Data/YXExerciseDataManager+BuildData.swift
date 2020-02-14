@@ -167,6 +167,8 @@ extension YXExerciseDataManager {
     
     /// 查找题型
     func findType() -> YXWordExerciseModel? {
+        // 连线题中，是否有单词拼写相同的，如果有都用备选题
+        var sameWordIds: [Int] = []
         
         /// 连线题型
         if let ct = findConnectionType() {
@@ -180,15 +182,18 @@ extension YXExerciseDataManager {
                 }
             }
             
-            if connectionArray.count > 1 {
-                return YXExerciseOptionManager().connectionExercise(exerciseArray: connectionArray)
-            } else {// 连线题，只有一个，就出备选题
-                let e = connectionArray.first
-                if let backupE = backupExercise(wordId: e?.word?.wordId ?? 0, step: e?.step ?? 0) {
-                    return optionManager.processReviewWordOption(exercise: backupE)
-                } else {
-                    print("备选题为空， 出错")
-                    return nil
+            sameWordIds = sameWordIdArray(connectionArray: connectionArray)
+            if sameWordIds.count == 0 {
+                if connectionArray.count > 1 {
+                    return YXExerciseOptionManager().connectionExercise(exerciseArray: connectionArray)
+                } else {// 连线题，只有一个，就出备选题
+                    let e = connectionArray.first
+                    if let backupE = backupExercise(wordId: e?.word?.wordId ?? 0, step: e?.step ?? 0) {
+                        return optionManager.processReviewWordOption(exercise: backupE)
+                    } else {
+                        print("备选题为空， 出错")
+                        return nil
+                    }
                 }
             }
         }
@@ -196,6 +201,14 @@ extension YXExerciseDataManager {
         /// 正常题型
         for e in currentTurnArray {
             if !e.isCurrentTurnFinish {
+                if sameWordIds.contains(e.word?.wordId ?? 0) && (e.type == .connectionWordAndChinese || e.type == .connectionWordAndImage) {
+                    if let backupE = backupExercise(wordId: e.word?.wordId ?? 0, step: e.step) {
+                        return optionManager.processReviewWordOption(exercise: backupE)
+                    } else {
+                        print("备选题为空， 出错")
+                        return nil
+                    }
+                }
                 return optionManager.processReviewWordOption(exercise: e)
             }
         }
@@ -276,6 +289,23 @@ extension YXExerciseDataManager {
     /// - Parameter wordId: id
     func fetchWordScore(wordId: Int) -> Int {
        return 7
+    }
+    
+    
+    func sameWordIdArray(connectionArray: [YXWordExerciseModel]) -> [Int] {
+        var ids: [Int] = []
+        for exercise in connectionArray {
+            for e in connectionArray {
+                if exercise.word?.wordId == e.word?.wordId {
+                    continue
+                }
+                if exercise.word?.word == e.word?.word {
+                    ids.append(exercise.word?.wordId ?? 0)
+                }
+            }
+        }
+        
+        return ids
     }
     
 }
