@@ -72,7 +72,7 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
             self.contentView.alpha = self.shouldClose ? 0 : 1
         }, completion: { completed in
             var text = self.textField.text
-            if text?.trimed.isEmpty ?? false {
+            if text == "" {
                 text = self.textField.placeholder
             }
             self.doneClosure?(text)

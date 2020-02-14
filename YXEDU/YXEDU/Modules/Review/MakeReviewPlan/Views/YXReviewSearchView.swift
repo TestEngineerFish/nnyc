@@ -165,8 +165,8 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
     }
     
     // MARK: ==== Event ====
-    
     private func selectCell(with indexPath: IndexPath) {
+        self.searchBar.resignFirstResponder()
         guard let cell = tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell, let headerCell = tableView.headerView(forSection: indexPath.section) else {
             return
         }
@@ -303,6 +303,10 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.searchBar.resignFirstResponder()
+    }
+    
     // MARK: ==== UIGestureRecognizerDelegate ====
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -320,6 +324,7 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
     
     @objc private func pan(_ pan: UIPanGestureRecognizer) {
         if pan.state == .began {
+            self.searchBar.resignFirstResponder()
             self.lastPassByIndexPath = nil
             self.previousLocation    = pan.location(in: pan.view)
         } else if pan.state == .changed {
@@ -344,7 +349,6 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
                 return
             }
             if self.lastPassByIndexPath != indexPath {
-                print(indexPath)
                 self.updateWordSelectStatus(indexPath)
                 self.lastPassByIndexPath = indexPath
             }

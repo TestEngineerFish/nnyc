@@ -136,8 +136,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         }
     }
 
-    private func requestMakeReviewPlan(_ name: String?) {
-        let name = name ?? ""
+    private func requestMakeReviewPlan(_ name: String) {
         let idsList = self.selectedWordsListView.wordsModelList.map { (wordModel) -> Int in
             return wordModel.id
         }
@@ -172,9 +171,15 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             alertView.shouldOnlyShowOneButton = false
             alertView.titleLabel.text = "请设置复习计划名称"
             alertView.doneClosure = { (text: String?) in
-                self.requestMakeReviewPlan(text)
+                guard let _text = text, !_text.isEmpty else {
+                    let alertView = YXAlertView(type: .normal)
+                    alertView.descriptionLabel.text   = "复习计划名称不能为空"
+                    alertView.shouldOnlyShowOneButton = true
+                    alertView.show()
+                    return
+                }
+                self.requestMakeReviewPlan(_text)
             }
-            
             alertView.show()
         }
     }
@@ -191,6 +196,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         
         let bookModel = _model.list[self.selectedIndex]
         if let unitModelList = _model.modelDict["\(bookModel.id)"] {
+            self.searchView.tag                      = bookModel.id
             self.searchView.bookName      = bookModel.name
             self.searchView.unitListModel = unitModelList
             self.searchView.updateInfo()
@@ -330,6 +336,9 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                     }
                 }
             }
+        }
+        if self.searchView.layer.opacity > 0 {
+            self.searchView.tableView.reloadData()
         }
         self.reviewDelegate?.updateSelectStatus(word)
     }
