@@ -35,11 +35,11 @@ class YXExerciseDataManager: NSObject {
     
     public var dataStatus: YXExerciseDataStatus = .finish
     
-    /// 当前局，一次学习分成了多批
+    /// 当前批，一次学习分成了多批
     var currentBatchIndex = 0
     /// 当前第几轮, 从第一轮开始
     var currentTurnIndex = 0
-    /// 每局的新学和复习的大小限制
+    /// 每批的新学和复习的大小限制
     var batchSize = 5
     /// 新学 和 复习的单词数量
     var needNewStudyCount = 0, needReviewCount = 0
@@ -125,15 +125,15 @@ class YXExerciseDataManager: NSObject {
         updateNeedNewStudyCount()
         updateNeedReviewCount()
         
-        // 更新局数
+        // 更新批次
         updateCurrentPatchIndex()
         
         // 打印
 //        printReportResult()
         
         if !progressManager.isSkipNewWord() {
-            for (index, exercise) in self.newExerciseArray.enumerated() {
-                if !exercise.isFinish && index < currentBatchIndex * batchSize {
+            for exercise in self.newExerciseArray {
+                if !exercise.isFinish {
                     var e = exercise                
                     let wid = e.word?.wordId ?? 0
                     let bid = e.word?.bookId ?? 0

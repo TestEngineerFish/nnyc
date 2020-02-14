@@ -40,7 +40,8 @@ extension YXExerciseDataManager {
             var jumpStep = 0
             for (i, word) in reviewWordArray.enumerated() {
                 
-                if i >= currentBatchIndex * batchSize {
+                // 只有基础学习时才分多批
+                if dataType == .base && i >= currentBatchIndex * batchSize {
                     continue
                 }
                                 

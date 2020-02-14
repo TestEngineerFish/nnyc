@@ -227,13 +227,19 @@ extension YXExerciseDataManager {
     
     
     func updateCurrentPatchIndex() {
-        // 初始值为第一局
+        // 只有基础学习时才分多批
+        if dataType != .base {
+            return
+        }
+                
+        // 初始值为第一批
         currentBatchIndex = 1
         
+        /*
         var newIndex = -1//, newPatchIndex = 1
         if !progressManager.isSkipNewWord() {
             for (index, exercise) in self.newExerciseArray.enumerated() {
-                if exercise.isFinish {//} && index < currentPatchIndex * patchSize {
+                if exercise.isFinish {
                     newIndex = index
                 }
             }
@@ -245,7 +251,7 @@ extension YXExerciseDataManager {
                 currentBatchIndex = lround(Double(newIndex + 1) / Double(batchSize) + 0.5)
             }
             print("aa+++++++++++++ currentPatchIndex = ", currentBatchIndex)
-        }
+        }*/
         
         var reviewIndex = -1
         
