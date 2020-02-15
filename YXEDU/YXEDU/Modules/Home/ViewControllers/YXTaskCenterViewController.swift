@@ -156,7 +156,13 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             }
         }
         
-        let exIntegral = punchCount * (self.taskCenterData.exIntegral ?? 0)
+        var exIntegral = self.taskCenterData.exIntegral ?? 0
+        if dailyDatas[6].dailyStatus == .today, dailyDatas[6].didPunchIn == 1 {
+            exIntegral = (punchCount - 1) * exIntegral
+
+        } else {
+            exIntegral = punchCount * exIntegral
+        }
         dailyDatas[6].integral = 10 + exIntegral
         self.dailyDatas = dailyDatas
         
