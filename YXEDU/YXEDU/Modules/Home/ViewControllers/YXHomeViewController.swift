@@ -27,6 +27,16 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var subItemCollectionView: UICollectionView!
 
     @IBAction func startExercise(_ sender: UIButton) {
+//        let shareVC = YXShareViewController()
+//        shareVC.shareType = .listenReviewResult
+//        shareVC.wordsAmount = 0
+//        shareVC.daysAmount = 0
+//        
+//        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+//        return
+        
+        
+        
         guard let homeModel = self.homeModel else {
             YXUtils.showHUD(kWindow, title: "数据请求中，请稍后再试～")
             return

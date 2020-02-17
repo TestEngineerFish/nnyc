@@ -119,24 +119,28 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         }
         
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderColor = UIColor.clear.cgColor
-//        cell?.backgroundColor = UIColor.orange1
-//        if let label = cell?.contentView.subviews.first as? UILabel {
-//            label.textColor = UIColor.white
-//        }
         collectionViewCell = cell
         
         if exerciseModel.answers?.first == exerciseModel.option?.firstItems?[indexPath.row].optionId {
+            cell?.layer.borderColor = UIColor.clear.cgColor
+            cell?.backgroundColor = UIColor.orange1
+            if let label = cell?.contentView.subviews.first as? UILabel {
+                label.textColor = UIColor.white
+            }
             self.answerCompletion(right: true)
             
         } else {
+            cell?.backgroundColor = UIColor.red2
+            cell?.layer.borderWidth = 2
+            cell?.layer.borderColor = UIColor.red1.cgColor
+            
             self.answerCompletion(right: false)
             exerciseModel.option?.firstItems?[indexPath.row].isWrong = true
         }
         
         // 设置选中效果
         if let itemModelList = exerciseModel.option?.firstItems {
-            collectionView.reloadSections(IndexSet(integer: 0))
+//            collectionView.reloadSections(IndexSet(integer: 0))
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weakSelf = self] in
                 for index in 0..<itemModelList.count {

@@ -363,7 +363,7 @@ class YXShareViewController: YXViewController {
         let aboveLabel: UILabel = {
             let label = UILabel()
             label.text          = "我在念念有词完成了"
-            label.textColor     = UIColor.hex(0x126172)
+            label.textColor     = .white
             label.font          = UIFont.mediumFont(ofSize: 20)
             label.textAlignment = .center
             return label
@@ -371,7 +371,7 @@ class YXShareViewController: YXViewController {
         let amountLabel: UILabel = {
             let label = UILabel()
             label.text          = "\(wordsAmount)"
-            label.textColor     = UIColor.hex(0x126172)
+            label.textColor     = .white
             label.font          = UIFont.DINAlternateBold(ofSize: 40)
             label.textAlignment = .center
             label.sizeToFit()
@@ -380,7 +380,7 @@ class YXShareViewController: YXViewController {
         let belowLabel: UILabel = {
             let label = UILabel()
             label.text          = "个单词的听写练习"
-            label.textColor     = UIColor.hex(0x126172)
+            label.textColor     = .white
             label.font          = UIFont.regularFont(ofSize: 20)
             label.textAlignment = .center
             return label
@@ -430,7 +430,7 @@ class YXShareViewController: YXViewController {
         let aboveLabel: UILabel = {
             let label = UILabel()
             label.text          = "智能复习帮我自动巩固单词"
-            label.textColor     = UIColor.hex(0x863A05)
+            label.textColor     = .white
             label.font          = UIFont.mediumFont(ofSize: 20)
             label.textAlignment = .center
             return label
@@ -438,7 +438,7 @@ class YXShareViewController: YXViewController {
         let amountLabel: UILabel = {
             let label = UILabel()
             label.text          = "\(wordsAmount)"
-            label.textColor     = UIColor.hex(0x863A05)
+            label.textColor     = .white
             label.font          = UIFont.DINAlternateBold(ofSize: 40)
             label.textAlignment = .center
             label.sizeToFit()
@@ -447,7 +447,7 @@ class YXShareViewController: YXViewController {
         let belowLabel: UILabel = {
             let label = UILabel()
             label.text          = "个"
-            label.textColor     = UIColor.hex(0x863A05)
+            label.textColor     = .white
             label.font          = UIFont.regularFont(ofSize: 20)
             label.textAlignment = .center
             return label
@@ -497,7 +497,7 @@ class YXShareViewController: YXViewController {
         let aboveLabel: UILabel = {
             let label = UILabel()
             label.text          = "我在念念有词完成了"
-            label.textColor     = UIColor.hex(0x44107A)
+            label.textColor     = .white
             label.font          = UIFont.mediumFont(ofSize: 20)
             label.textAlignment = .center
             return label
@@ -505,7 +505,7 @@ class YXShareViewController: YXViewController {
         let amountLabel: UILabel = {
             let label = UILabel()
             label.text          = "\(wordsAmount)"
-            label.textColor     = UIColor.hex(0x44107A)
+            label.textColor     = .white
             label.font          = UIFont.DINAlternateBold(ofSize: 40)
             label.textAlignment = .center
             label.sizeToFit()
@@ -514,7 +514,7 @@ class YXShareViewController: YXViewController {
         let belowLabel: UILabel = {
             let label = UILabel()
             label.text          = "个单词的自动复习"
-            label.textColor     = UIColor.hex(0x44107A)
+            label.textColor     = .white
             label.font          = UIFont.regularFont(ofSize: 20)
             label.textAlignment = .center
             return label
