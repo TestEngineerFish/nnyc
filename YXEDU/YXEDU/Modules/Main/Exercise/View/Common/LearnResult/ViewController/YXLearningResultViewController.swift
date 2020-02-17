@@ -28,7 +28,8 @@ class YXLearningResultViewController: YXViewController {
     
     var shareVC: YXShareViewController?
     var shareFinished = false
-    
+    var loadingView = YXExerciseResultLoadingView()
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
@@ -38,7 +39,17 @@ class YXLearningResultViewController: YXViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         self.customNavigationBar?.isHidden = true
-        self.bindData()
+        
+        self.view.addSubview(loadingView)
+        loadingView.snp.makeConstraints { (make) in
+            make.top.equalTo(AS(kSafeBottomMargin + 123))
+            make.centerX.width.equalToSuperview()
+            make.height.equalTo(AS(120))
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.bindData()
+        }
     }
     
     
@@ -171,6 +182,8 @@ class YXLearningResultViewController: YXViewController {
                     self.bindData()
                 }
             } else {
+                self.loadingView.removeFromSuperview()
+
                 self.model = response.data
                 self.currentModel = self.model?.unitList?.filter({ (model) -> Bool in
                     return model.unitID == unitId

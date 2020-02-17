@@ -256,6 +256,14 @@
                     changeNameViewController.returnNameStringBlock = ^(NSString *nameString) {
                         self.userModel.nick = nameString;
                         
+                        YXPersonalInformationModel *model = [[YXPersonalInformationModel alloc] init];
+                        model.title = @"昵称";
+                        model.rightDetail = nameString;
+                        model.isShowAccessory = YES;
+                        model.isShowBottomLine = YES;
+                        
+                        self.tableDataSource[indexPath.section][indexPath.row] = model;
+                      
                         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                     };
                     

@@ -45,7 +45,7 @@ class YXExerciseResultLoadingView: YXView, CAAnimationDelegate {
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(resultView.snp.bottom).offset(AS(19))
             make.centerX.equalToSuperview()
-            make.width.equalTo(AS(92))
+            make.width.equalTo(AS(100))
             make.height.equalTo(AS(18))
         }
         
