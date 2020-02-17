@@ -108,15 +108,15 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel
                 self.bindInfo = [loginModel.user.mobile, "", ""]
 
-                if loginModel.user.userBind.contains(",1") {
+                if loginModel.user.userBind.contains(",1") || loginModel.user.userBind.contains("1") {
                     self.bindInfo[1] = "1"
                 }
                 
-                if loginModel.user.userBind.contains(",2") {
+                if loginModel.user.userBind.contains(",2") || loginModel.user.userBind.contains("2") {
                     self.bindInfo[2] = "2"
                 }
                 
-                if self.bindInfo[1] == "1" || self.bindInfo[2] == "2" {
+                if self.bindInfo[1] == "1", self.bindInfo[2] == "2" {
                     bindLabel?.text = ""
                     
                 } else {
