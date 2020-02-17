@@ -15,10 +15,13 @@ extension YXExcerciseProgressManager {
         YYCache.set(start, forKey: key(.startStudyTime))
     }
     
-    func setStopStudyTime() {
+    func setOneExerciseFinishStudyTime() {
         if let start = YYCache.object(forKey: key(.startStudyTime)) as? Int {
             let duration = Int(Date().timeIntervalSince1970) - start
             self.updateStudyDuration(duration: duration)
+            
+            // 重新设置开始时间
+            setStartStudyTime()
         }
     }
         
@@ -26,7 +29,7 @@ extension YXExcerciseProgressManager {
         return (YYCache.object(forKey: key(.studyDuration)) as? Int) ?? 0
     }
         
-    func updateStudyDuration(duration: Int) {
+    private func updateStudyDuration(duration: Int) {
         if var d = YYCache.object(forKey: key(.studyDuration)) as? Int {
             d += duration
             YYCache.set(d, forKey: key(.studyDuration))

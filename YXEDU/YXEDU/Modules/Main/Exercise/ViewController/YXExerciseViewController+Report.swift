@@ -17,7 +17,7 @@ extension YXExerciseViewController {
             // 没有数据，就是完成了练习
             dataManager.progressManager.completionExercise()
 
-            dataManager.progressManager.setStopStudyTime()
+            dataManager.progressManager.setOneExerciseFinishStudyTime()
             // 学完，上报
             submitResult()
         }

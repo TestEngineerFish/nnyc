@@ -264,7 +264,7 @@
         exerciseView.animateAdmission(isFirst, nil)
         
         YYCache.set(true, forKey: .learningState)
-        
+        self.dataManager.progressManager.setOneExerciseFinishStudyTime()
     }
     
     /// 显示loading动画
@@ -436,7 +436,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
         alertView.backgroundView.isUserInteractionEnabled = false
         alertView.doneClosure = {[weak self] _ in
             DDLogInfo("返回首页")
-            self?.dataManager.progressManager.setStopStudyTime()
+            self?.dataManager.progressManager.setOneExerciseFinishStudyTime()
             
             self?.delegate?.backHomeEvent()
             YRRouter.popViewController(true)
