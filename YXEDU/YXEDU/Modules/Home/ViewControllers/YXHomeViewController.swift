@@ -27,13 +27,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var subItemCollectionView: UICollectionView!
 
     @IBAction func startExercise(_ sender: UIButton) {
-//        let shareVC = YXShareViewController()
-//        shareVC.shareType = .listenReviewResult
-//        shareVC.wordsAmount = 0
-//        shareVC.daysAmount = 0
-//
-//        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
-//        return
+        let shareVC = YXShareViewController()
+        shareVC.shareType = .listenReviewResult
+        shareVC.wordsAmount = 0
+        shareVC.daysAmount = 0
+
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+        return
         
         
         

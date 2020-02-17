@@ -358,6 +358,9 @@ class YXShareViewController: YXViewController {
     
     /// 创建听写复习打卡分享页面
     private func createListenReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
+        let lableContainer = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 514))
+        lableContainer.backgroundColor = .clear
+
         let logoImage    = UIImage(named: "gameShareLogo_blue")
         let shareBgImage = backgroundImage
         let aboveLabel: UILabel = {
@@ -368,6 +371,13 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
+        aboveLabel.frame = CGRect(x: 56, y: 147, width: 181, height: 28)
+        aboveLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        aboveLabel.layer.shadowRadius = 2.0
+        aboveLabel.layer.shadowOpacity = 1.0
+        aboveLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lableContainer.layer.addSublayer(aboveLabel.layer)
+        
         let amountLabel: UILabel = {
             let label = UILabel()
             label.text          = "\(wordsAmount)"
@@ -377,6 +387,13 @@ class YXShareViewController: YXViewController {
             label.sizeToFit()
             return label
         }()
+        amountLabel.frame = CGRect(x: 116, y: 179, width: amountLabel.width, height: 47)
+        amountLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        amountLabel.layer.shadowRadius = 2.0
+        amountLabel.layer.shadowOpacity = 1.0
+        amountLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lableContainer.layer.addSublayer(amountLabel.layer)
+        
         let belowLabel: UILabel = {
             let label = UILabel()
             label.text          = "个单词的听写练习"
@@ -385,6 +402,13 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
+        belowLabel.frame = CGRect(x: 116 + amountLabel.width, y: 193, width: 161, height: 28)
+        belowLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        belowLabel.layer.shadowRadius = 2.0
+        belowLabel.layer.shadowOpacity = 1.0
+        belowLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lableContainer.layer.addSublayer(belowLabel.layer)
+        
         let contentImage = UIImage(named: "reviewShareContent")
         let bottomLabel: UILabel = {
             let label = UILabel()
@@ -410,9 +434,7 @@ class YXShareViewController: YXViewController {
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
         logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
-        aboveLabel.drawText(in: CGRect(x: 56, y: 147, width: 181, height: 28))
-        amountLabel.drawText(in: CGRect(x: 116, y: 179, width: amountLabel.width, height: 47))
-        belowLabel.drawText(in: CGRect(x: 116 + amountLabel.width, y: 193, width: 161, height: 28))
+        lableContainer.layer.render(in: UIGraphicsGetCurrentContext()!)
         contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
         qrcordImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
@@ -425,6 +447,9 @@ class YXShareViewController: YXViewController {
     
     /// 创建智能复习打卡分享页面
     private func createAIReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
+        let lableContainer = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 514))
+        lableContainer.backgroundColor = .clear
+        
         let logoImage    = UIImage(named: "gameShareLogo_orange")
         let shareBgImage = backgroundImage
         let aboveLabel: UILabel = {
@@ -435,6 +460,13 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
+        aboveLabel.frame = CGRect(x: 72, y: 152, width: 241, height: 28)
+        aboveLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        aboveLabel.layer.shadowRadius = 2.0
+        aboveLabel.layer.shadowOpacity = 1.0
+        aboveLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lableContainer.layer.addSublayer(aboveLabel.layer)
+        
         let amountLabel: UILabel = {
             let label = UILabel()
             label.text          = "\(wordsAmount)"
@@ -444,6 +476,13 @@ class YXShareViewController: YXViewController {
             label.sizeToFit()
             return label
         }()
+        amountLabel.frame = CGRect(x: 161, y: 184, width: amountLabel.width, height: 47)
+        amountLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        amountLabel.layer.shadowRadius = 2.0
+        amountLabel.layer.shadowOpacity = 1.0
+        amountLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lableContainer.layer.addSublayer(amountLabel.layer)
+        
         let belowLabel: UILabel = {
             let label = UILabel()
             label.text          = "个"
@@ -452,6 +491,13 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
+        belowLabel.frame = CGRect(x: 161 + amountLabel.width, y: 198, width: 21, height: 28)
+        belowLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        belowLabel.layer.shadowRadius = 2.0
+        belowLabel.layer.shadowOpacity = 1.0
+        belowLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lableContainer.layer.addSublayer(belowLabel.layer)
+        
         let contentImage = UIImage(named: "reviewShareContent")
         let bottomLabel: UILabel = {
             let label = UILabel()
@@ -477,9 +523,7 @@ class YXShareViewController: YXViewController {
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
         logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
-        aboveLabel.drawText(in: CGRect(x: 72, y: 152, width: 241, height: 28))
-        amountLabel.drawText(in: CGRect(x: 161, y: 184, width: amountLabel.width, height: 47))
-        belowLabel.drawText(in: CGRect(x: 161 + amountLabel.width, y: 198, width: 21, height: 28))
+        lableContainer.layer.render(in: UIGraphicsGetCurrentContext()!)
         contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
         qrcordImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
@@ -492,6 +536,9 @@ class YXShareViewController: YXViewController {
     
     /// 创建复习计划打卡分享页面
     private func createPlanReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
+        let lableContainer = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 514))
+        lableContainer.backgroundColor = .clear
+        
         let logoImage    = UIImage(named: "gameShareLogo_purple")
         let shareBgImage = backgroundImage
         let aboveLabel: UILabel = {
@@ -502,6 +549,13 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
+        aboveLabel.frame = CGRect(x: 46, y: 147, width: 181, height: 28)
+        aboveLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        aboveLabel.layer.shadowRadius = 2.0
+        aboveLabel.layer.shadowOpacity = 1.0
+        aboveLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lableContainer.layer.addSublayer(aboveLabel.layer)
+        
         let amountLabel: UILabel = {
             let label = UILabel()
             label.text          = "\(wordsAmount)"
@@ -511,6 +565,13 @@ class YXShareViewController: YXViewController {
             label.sizeToFit()
             return label
         }()
+        amountLabel.frame = CGRect(x: 126, y: 179, width: amountLabel.width, height: 47)
+        amountLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        amountLabel.layer.shadowRadius = 2.0
+        amountLabel.layer.shadowOpacity = 1.0
+        amountLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lableContainer.layer.addSublayer(amountLabel.layer)
+        
         let belowLabel: UILabel = {
             let label = UILabel()
             label.text          = "个单词的自动复习"
@@ -519,6 +580,13 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
+        belowLabel.frame = CGRect(x: 126 + amountLabel.width, y: 193, width: 161, height: 28)
+        belowLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        belowLabel.layer.shadowRadius = 2.0
+        belowLabel.layer.shadowOpacity = 1.0
+        belowLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lableContainer.layer.addSublayer(belowLabel.layer)
+        
         let contentImage = UIImage(named: "reviewShareContent")
         let bottomLabel: UILabel = {
             let label = UILabel()
@@ -544,9 +612,7 @@ class YXShareViewController: YXViewController {
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
         logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
-        aboveLabel.drawText(in: CGRect(x: 46, y: 147, width: 181, height: 28))
-        amountLabel.drawText(in: CGRect(x: 126, y: 179, width: amountLabel.width, height: 47))
-        belowLabel.drawText(in: CGRect(x: 126 + amountLabel.width, y: 193, width: 161, height: 28))
+        lableContainer.layer.render(in: UIGraphicsGetCurrentContext()!)
         contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
         qrcordImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
