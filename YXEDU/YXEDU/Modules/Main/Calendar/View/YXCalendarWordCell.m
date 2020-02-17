@@ -48,7 +48,7 @@
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self);
             make.left.equalTo(self).with.offset(AdaptSize(40));
-            make.width.mas_equalTo((SCREEN_WIDTH - 30.f)/3);
+            make.width.mas_equalTo((SCREEN_WIDTH - 56.f)*0.5);
         }];
         _titleLabel = titleLabel;
     }
@@ -65,7 +65,7 @@
         [valueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self);
             make.right.equalTo(self).with.offset(AdaptSize(-16));
-            make.left.equalTo(self.titleLabel.mas_right);
+            make.left.equalTo(self.titleLabel.mas_right).with.offset(AdaptSize(10));
         }];
         _valueLabel = valueLabel;
     }

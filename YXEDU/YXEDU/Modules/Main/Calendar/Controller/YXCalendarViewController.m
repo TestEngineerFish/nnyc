@@ -604,7 +604,7 @@ static CGFloat const kPickViewHeight = 272.f;
 - (void)showStudyWordsList: (UITapGestureRecognizer *)sender {
     self.dayData.showStudiedList      = !self.dayData.showStudiedList;
     NSUInteger amountCell             = self.dayData.studiedCellList.count;
-    CGFloat amountCellHeight         = amountCell * AdaptSize(kCellHeight);
+    CGFloat amountCellHeight          = amountCell * AdaptSize(kCellHeight);
     CGFloat finalTalbeViewHeight      = self.tableView.contentSize.height;
     CGFloat finalTableContainerHeight = self.tableContainerView.height;
     CGSize size                       = self.contentScroll.contentSize;
