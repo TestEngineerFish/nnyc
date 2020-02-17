@@ -31,7 +31,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 //        shareVC.shareType = .listenReviewResult
 //        shareVC.wordsAmount = 0
 //        shareVC.daysAmount = 0
-//        
+//
 //        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
 //        return
         
