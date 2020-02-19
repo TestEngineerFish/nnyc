@@ -193,7 +193,7 @@ class YXExerciseOptionManager: NSObject {
         
         _exerciseModel.option = option
         _exerciseModel.answers = [_exerciseModel.word?.wordId ?? 0]
-        return exerciseModel
+        return _exerciseModel
     }
     
     // TODO: ==== Tools ====
