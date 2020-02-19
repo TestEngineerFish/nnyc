@@ -234,9 +234,11 @@ class YXShareViewController: YXViewController {
             self.finishAction?()
             if model.state {
                 self.shareChannelView.coinImageView.isHidden = true
-                if model.coin > 0 {
-                    YXToastView.share.showCoinView(model.coin)
-                }
+//                if model.coin > 0 {
+//                    YXToastView.share.showCoinView(model.coin)
+//                }
+            } else {
+                DDLogInfo("打卡分享失败")
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")

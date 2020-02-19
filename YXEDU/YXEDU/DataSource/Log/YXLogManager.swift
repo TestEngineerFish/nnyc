@@ -12,12 +12,12 @@ import ZipArchive
 
 class YXLogManager: NSObject, DDLogFormatter {
 
-    static let share = YXLogManager()
+    @objc static let share = YXLogManager()
 
     // MARK: ==== Request ====
 
     // 上传
-    func report(_ showToast: Bool = false) {
+    @objc func report(_ showToast: Bool = false) {
         guard let fileData = self.zipLogFile() else {
             return
         }
