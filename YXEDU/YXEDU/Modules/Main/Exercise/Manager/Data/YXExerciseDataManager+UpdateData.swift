@@ -297,7 +297,7 @@ extension YXExerciseDataManager {
             return
         }
         print("bb+++++++++++++当前 currentPatchIndex = ", currentBatchIndex)
-        var batch1 = 1
+        var batch1 = 0
         for (index, wordId) in exerciseWordIdArray.enumerated() {
             if isFinishWord(wordId: wordId) == false {
                 batch1 = lround(Double(index + 1) / Double(batchSize) + 0.4)
@@ -307,7 +307,7 @@ extension YXExerciseDataManager {
         print("bb+++++++++++++训练 currentPatchIndex = ", batch1)
 
         
-        var batch2 = 1
+        var batch2 = 0
         for (index, wordId) in reviewWordIdArray.enumerated() {
             if isFinishWord(wordId: wordId) == false {
                 batch2 = lround(Double(index + 1) / Double(batchSize) + 0.4)
@@ -316,7 +316,17 @@ extension YXExerciseDataManager {
         }
         print("bb+++++++++++++复习 currentPatchIndex = ", batch2)
         
-        let minBatch = min(batch1, batch2)
+        var minBatch = 1  
+        if batch1 == 0 {
+            minBatch = batch2
+        }
+        if batch2 == 0 {
+            minBatch = batch1
+        }
+        if batch1 != 0 && batch2 != 0 {
+            minBatch = min(batch1, batch2)
+        }
+                
         if minBatch > currentBatchIndex {
             isChangeBatch = true
             currentBatchIndex = minBatch
