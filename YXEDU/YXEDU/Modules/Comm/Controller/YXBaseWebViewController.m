@@ -65,7 +65,7 @@
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
         self.navigationItem.leftBarButtonItems = @[button];
         
-        [self.navigationController.navigationBar setBarTintColor:[UIColor hex:0xFBA217 alpha:1]];
+        [self.navigationController.navigationBar setBarTintColor:[UIColor hex:0xffa83e alpha:1]];
         [self.navigationController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
         [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     }
