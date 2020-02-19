@@ -32,7 +32,8 @@ class YXExcerciseProgressManager: NSObject {
         case report = "Exercise_Report_Status"
         case completion = "Exercise_Completion_Status"
         
-        case newWordIds = "New_Word_Id_List"
+        case newWordIds = "New_Word_Id_List" // 新学跟读流程的
+        case newWordExerciseIds = "New_Word_Exercise_Id_List" // 新学训练流程的
         case reviewWordIds = "Review_Word_Id_List"
     
         case score = "Exercise_Score"
@@ -187,6 +188,10 @@ class YXExcerciseProgressManager: NSObject {
         return (new, review)
     }
     
+    func loadNewWordExerciseIds() -> [Int] {
+        return YYCache.object(forKey: key(.newWordExerciseIds)) as? [Int] ?? []
+    }
+    
     
     //MARK: - Set
     
@@ -250,6 +255,10 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.set(reviewWordIds, forKey: key(.reviewWordIds))
     }
     
+    // 训练单词id集合
+    func initNewWordExerciseIds(exerciseIds: [Int]) {
+        YYCache.set(exerciseIds, forKey: key(.newWordExerciseIds))
+    }
     
     private func updateBookId() {
         YYCache.set(bookId, forKey: key(.bookId))

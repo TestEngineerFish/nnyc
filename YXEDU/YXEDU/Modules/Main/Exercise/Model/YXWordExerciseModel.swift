@@ -8,6 +8,14 @@
 
 import ObjectMapper
 
+
+///// 单词学习类型
+//enum YXWordStudyType: Int {
+//    case newStudy = 0       // 新学，跟读流程
+//    case exercise = 1      // 训练，练习（也是新学单词，非跟读流程）
+//    case review = 2         // 复习
+//}
+
 /// 练习数据模型
 struct YXWordExerciseModel: Mappable {
     // 题型
@@ -34,7 +42,11 @@ struct YXWordExerciseModel: Mappable {
     var isCareScore: Bool = false
     
     var isBackup: Bool = false
+    
+    // 是否为新学单词
     var isNewWord: Bool = false
+    // 是否为跟读流程
+    var isListenAndRepeat = false
     
     /// 第几步
     var step: Int = 0
@@ -68,6 +80,7 @@ struct YXWordExerciseModel: Mappable {
         isCareScore <- map["is_care_score"]
         isBackup    <- map["is_backup"]
         isNewWord <- map["is_new_word"]
+        isListenAndRepeat <- map["is_listen_and_repeat"]
         
         step <- map["step"]
         isRight <- map["is_right"]
@@ -85,7 +98,7 @@ struct YXWordExerciseModel: Mappable {
 struct YXWordStepsModel: Mappable {
     
     var wordId: Int = 0
-    var isUnlocked = false    // 是否解锁
+//    var isUnlocked = false    // 是否解锁
     var exerciseSteps: [[YXWordExerciseModel]] = []
     var backupExerciseStep: [String : YXWordExerciseModel] = [:]
     
@@ -99,7 +112,7 @@ struct YXWordStepsModel: Mappable {
     }
     mutating func mapping(map: Map) {
         wordId                  <- map["word_id"]
-        isUnlocked                  <- map["is_unlocked"]
+//        isUnlocked                  <- map["is_unlocked"]
         exerciseSteps           <- map["exercise_step_list"]
         backupExerciseStep      <- map["backup_exercise_step_map"] //(, YXWordBackupTransform())
     }

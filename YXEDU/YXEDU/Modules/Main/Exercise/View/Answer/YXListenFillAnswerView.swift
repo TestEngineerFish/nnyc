@@ -120,7 +120,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
     
     func processAnswer(text: String) {
         let rightWord = YXListenFillAnswerHelp.letterText(text: exerciseModel.word?.word)
-        if rightWord?.uppercased() == text.uppercased() {
+        if rightWord == text {
             textField.resignFirstResponder()
             answerCompletion(right: true)
         } else {

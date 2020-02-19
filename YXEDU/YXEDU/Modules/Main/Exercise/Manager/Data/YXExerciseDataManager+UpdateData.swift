@@ -12,11 +12,11 @@ extension YXExerciseDataManager {
     /// 更新正常题型练习的完成状态 （不包括连线题）
     /// - Parameter exerciseModel: 哪个练习
     func updateNormalExerciseFinishStatus(exerciseModel: YXWordExerciseModel, right: Bool) {
-        if exerciseModel.isNewWord && (exerciseModel.type == .newLearnPrimarySchool || exerciseModel.type == .newLearnPrimarySchool_Group || exerciseModel.type == .newLearnJuniorHighSchool) {
+        if exerciseModel.isListenAndRepeat && (exerciseModel.type == .newLearnPrimarySchool || exerciseModel.type == .newLearnPrimarySchool_Group || exerciseModel.type == .newLearnJuniorHighSchool) {
             
-            for (i, e) in newExerciseArray.enumerated() {
+            for (i, e) in newWordArray.enumerated() {
                 if e.word?.wordId == exerciseModel.word?.wordId {
-                    newExerciseArray[i].isFinish = true
+                    newWordArray[i].isFinish = true
                     break
                 }
             }
@@ -226,7 +226,7 @@ extension YXExerciseDataManager {
     }
     
     
-    func updateCurrentPatchIndex() {
+    func updateCurrentPatchIndex2() {
         // 只有基础学习时才分多批
         if dataType != .base {
             return
@@ -290,4 +290,72 @@ extension YXExerciseDataManager {
         
     }
         
+    
+    func updateCurrentPatchIndex() {
+        // 只有基础学习时才分多批
+        if dataType != .base {
+            return
+        }
+        
+        var batch1 = 1
+        for (index, wordId) in exerciseWordIdArray.enumerated() {
+            if isFinishWord(wordId: wordId) == false {
+                batch1 = lround(Double(index + 1) / Double(batchSize) + 0.4)
+                break
+            }
+        }
+        print("bb+++++++++++++训练 currentPatchIndex = ", batch1)
+
+        
+        var batch2 = 1
+        for (index, wordId) in reviewWordIdArray.enumerated() {
+            if isFinishWord(wordId: wordId) == false {
+                batch2 = lround(Double(index + 1) / Double(batchSize) + 0.4)
+                break
+            }
+        }
+        print("bb+++++++++++++复习 currentPatchIndex = ", batch2)
+        
+        let minBatch = min(batch1, batch2)
+        if minBatch > currentBatchIndex {
+            isChangeBatch = true
+            currentBatchIndex = minBatch
+
+            // 一批学完后，重置轮的下标
+            if isKeep == false {
+                currentTurnIndex = 0
+            }
+        }
+                
+        if currentBatchIndex == 0 {
+            currentBatchIndex = 1
+        }
+        
+        print("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
+        
+    }
+    
+    func isFinishWord(wordId: Int) -> Bool {
+        
+        for word in reviewWordArray {
+            if word.wordId == wordId {
+                var stepCount = 0 // 有几个step
+                var finishCount = 0 // 完成的step数
+                
+                for step in word.exerciseSteps {
+                    if let exericse = fetchExerciseOfStep(exerciseArray: step) {
+                        stepCount += 1
+                        if exericse.isFinish && exericse.isContinue == nil {// 做过
+                            finishCount += 1
+                        }
+                        
+                    }
+                }
+                
+                return stepCount == finishCount
+            }
+        }
+        return false
+    }
+
 }

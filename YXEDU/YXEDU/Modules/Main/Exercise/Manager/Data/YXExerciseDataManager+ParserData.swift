@@ -31,13 +31,13 @@ extension YXExerciseDataManager {
         self.processReviewWord(result: result)
         
         // 处理练习答案选项
-        optionManager.initData(newArray: newExerciseArray, reviewArray: self.reviewWords())
+        optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
                         
         // 处理进度状态
         progressManager.initProgressStatus(newWordIds: result?.newWordIds, reviewWordIds: result?.reviewWordIds)
         
         // 保存数据
-        progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
+        progressManager.updateProgress(newWordArray: newWordArray, reviewWordArray: reviewWordArray)
     }
     
     
@@ -52,6 +52,7 @@ extension YXExerciseDataManager {
                 exercise.question = createQuestionModel(word: word)
                 exercise.word = word
                 exercise.isNewWord = true
+                exercise.isListenAndRepeat = true
                 
                 if (word.gradeId ?? 0) <= 6 {// 小学
                     exercise.type = .newLearnPrimarySchool
@@ -62,7 +63,7 @@ extension YXExerciseDataManager {
                     exercise.type = .newLearnJuniorHighSchool
                 }
                 
-                newExerciseArray.append(exercise)
+                newWordArray.append(exercise)
             }
         }
     }
@@ -99,7 +100,18 @@ extension YXExerciseDataManager {
             }
 
         }
+        
+        
+        let ids = result?.newWordIds ?? []
+        for e in reviewWordArray {
+            if ids.contains(e.wordId) {
+                exerciseWordIdArray.append(e.wordId)
+            } else {
+                reviewWordIdArray.append(e.wordId)
+            }
+        }
     
+        progressManager.initNewWordExerciseIds(exerciseIds: exerciseWordIdArray)
     }
     
     func addWordStep(exerciseModel: YXWordExerciseModel, isBackup: Bool) {

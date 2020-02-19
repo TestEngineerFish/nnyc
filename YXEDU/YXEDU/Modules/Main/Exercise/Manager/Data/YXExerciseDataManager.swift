@@ -41,13 +41,18 @@ class YXExerciseDataManager: NSObject {
     var currentTurnIndex = 0
     /// 每批的新学和复习的大小限制
     var batchSize = 5
+    var isChangeBatch = true
     /// 新学 和 复习的单词数量
     var needNewStudyCount = 0, needReviewCount = 0
     
     /// 新学跟读集合
-    var newExerciseArray: [YXWordExerciseModel] = []
-    /// 复习单词集合
+    var newWordArray: [YXWordExerciseModel] = []
+    /// 训练和复习单词集合
     var reviewWordArray: [YXWordStepsModel] = []
+    
+    // 训练单词的Id集合，复习单词的Id集合
+    var exerciseWordIdArray: [Int] = [], reviewWordIdArray: [Int] = []
+    
     /// 当前轮
     var currentTurnArray: [YXWordExerciseModel] = []
     /// 上一轮
@@ -61,6 +66,7 @@ class YXExerciseDataManager: NSObject {
     /// 选项生成器
     var optionManager: YXExerciseOptionManager!
     
+    var isKeep = false
     
     override init() {
         super.init()
@@ -91,6 +97,8 @@ class YXExerciseDataManager: NSObject {
     /// 加载本地未学完的关卡数据
     func fetchLocalExerciseModels() {
         DDLogInfo("加载本地数据")
+        isKeep = true
+        
         if progressManager.dataType != .base {
             let bau = progressManager.fetchBookIdAndUnitId()
             self.bookId = bau.0
@@ -101,11 +109,19 @@ class YXExerciseDataManager: NSObject {
         }
         
         let data = progressManager.loadLocalExerciseModels()
-        newExerciseArray = data.0
+        newWordArray = data.0
         reviewWordArray = data.1
         
+        exerciseWordIdArray = progressManager.loadNewWordExerciseIds()
+        for e in reviewWordArray {
+            if exerciseWordIdArray.contains(e.wordId) == false {
+                reviewWordIdArray.append(e.wordId)
+            }
+        }
         
-        if (newExerciseArray.count == 0 && reviewWordArray.count == 0) {
+        
+        
+        if (newWordArray.count == 0 && reviewWordArray.count == 0) {
             dataStatus = .empty
         }
         
@@ -115,7 +131,7 @@ class YXExerciseDataManager: NSObject {
                 
         currentTurnIndex = progressManager.currentTurnIndex()
         
-        optionManager.initData(newArray: newExerciseArray, reviewArray: self.reviewWords())
+        optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
     }
 
     
@@ -132,7 +148,7 @@ class YXExerciseDataManager: NSObject {
 //        printReportResult()
         
         if !progressManager.isSkipNewWord() {
-            for exercise in self.newExerciseArray {
+            for exercise in self.newWordArray {
                 if !exercise.isFinish {
                     var e = exercise                
                     let wid = e.word?.wordId ?? 0
@@ -179,7 +195,7 @@ class YXExerciseDataManager: NSObject {
         updateStepRightOrWrongStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right)
         
         // 更新进度状态
-        progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
+        progressManager.updateProgress(newWordArray: newWordArray, reviewWordArray: reviewWordArray)
 
         // 打印
 //        printStatus()
@@ -206,7 +222,7 @@ class YXExerciseDataManager: NSObject {
         updateStepRightOrWrongStatus(wordId: wordId, step: step, right: right)
         
         // 更新进度状态
-        progressManager.updateProgress(newWordArray: newExerciseArray, reviewWordArray: reviewWordArray)
+        progressManager.updateProgress(newWordArray: newWordArray, reviewWordArray: reviewWordArray)
     }
         
 
