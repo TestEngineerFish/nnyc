@@ -37,7 +37,9 @@ extension YXExerciseDataManager {
             self.previousTurnArray = self.currentTurnArray
             self.currentTurnArray.removeAll()
             
-            filterNewExcercise()
+            if dataType == .base {
+                filterNewExcercise()
+            }
             filterReviewExcercise()
             
             // 排序

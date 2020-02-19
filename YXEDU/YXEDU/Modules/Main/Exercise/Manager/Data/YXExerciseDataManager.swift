@@ -57,15 +57,13 @@ class YXExerciseDataManager: NSObject {
     var currentTurnArray: [YXWordExerciseModel] = []
     /// 上一轮
     var previousTurnArray: [YXWordExerciseModel] = []
-
-//    var startTime: Long = 0
-//    var endTime: Long = 0
     
     /// 本地数据库访问
     var dao: YXWordBookDao!
     /// 选项生成器
     var optionManager: YXExerciseOptionManager!
     
+    // 一批学完后，重置下标
     var isResetTurnIndex = true
     
     override init() {
