@@ -66,7 +66,7 @@ class YXExerciseDataManager: NSObject {
     /// 选项生成器
     var optionManager: YXExerciseOptionManager!
     
-    var isKeep = false
+    var isResetTurnIndex = true
     
     override init() {
         super.init()
@@ -97,7 +97,7 @@ class YXExerciseDataManager: NSObject {
     /// 加载本地未学完的关卡数据
     func fetchLocalExerciseModels() {
         DDLogInfo("加载本地数据")
-        isKeep = true
+        isResetTurnIndex = false
         
         if progressManager.dataType != .base {
             let bau = progressManager.fetchBookIdAndUnitId()

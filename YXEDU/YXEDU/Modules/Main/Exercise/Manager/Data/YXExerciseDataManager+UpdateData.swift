@@ -296,7 +296,7 @@ extension YXExerciseDataManager {
         if dataType != .base {
             return
         }
-        
+        print("bb+++++++++++++当前 currentPatchIndex = ", currentBatchIndex)
         var batch1 = 1
         for (index, wordId) in exerciseWordIdArray.enumerated() {
             if isFinishWord(wordId: wordId) == false {
@@ -322,14 +322,17 @@ extension YXExerciseDataManager {
             currentBatchIndex = minBatch
 
             // 一批学完后，重置轮的下标
-            if isKeep == false {
+            if isResetTurnIndex {
                 currentTurnIndex = 0
+                print("bb+++++++++++++重置 轮 下标")
             }
         }
                 
         if currentBatchIndex == 0 {
             currentBatchIndex = 1
         }
+        
+        isResetTurnIndex = true
         
         print("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
         
