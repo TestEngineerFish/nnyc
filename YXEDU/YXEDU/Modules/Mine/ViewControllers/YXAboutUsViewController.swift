@@ -9,6 +9,7 @@
 import UIKit
 
 class YXAboutUsViewController: UIViewController {
+    @IBOutlet weak var copyrightLabel: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
 
     @IBOutlet weak var logoImageView: UIImageView!
@@ -29,6 +30,9 @@ class YXAboutUsViewController: UIViewController {
         touchAction.numberOfTouchesRequired = 1
         self.logoImageView.isUserInteractionEnabled = true
         self.logoImageView.addGestureRecognizer(touchAction)
+        
+        let year = Calendar.current.component(.year, from: Date())
+        copyrightLabel.text = "Copyright @2018-\(year) 念念有词"
     }
 
     @objc private func reportLog(_ tapGes: UITapGestureRecognizer) {

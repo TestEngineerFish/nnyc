@@ -168,6 +168,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="copyrightLabel" destination="WmH-WJ-oag" id="nkp-V9-Dks"/>
                         <outlet property="logoImageView" destination="J21-wq-Dzo" id="nOA-Vo-S1i"/>
                         <outlet property="versionLabel" destination="qei-kz-KWI" id="E94-4h-WJV"/>
                         <segue destination="qtl-Ce-pZ3" kind="show" identifier="UserAgreement" id="i5p-fi-cOn"/>
