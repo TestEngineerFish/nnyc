@@ -286,6 +286,11 @@ extension YYSQLManager {
         WHERE wordId = ?
         """
         
+        case selectBookIdList =
+        """
+        SELECT * FROM book
+        """
+        
         case selectWordByBookIdAndWordId =
         """
         SELECT * FROM word

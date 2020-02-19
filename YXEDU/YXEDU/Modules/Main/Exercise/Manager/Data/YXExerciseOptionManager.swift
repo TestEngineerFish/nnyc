@@ -29,33 +29,28 @@ class YXExerciseOptionManager: NSObject {
     }
     
     func processReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
-        // 左右连线题
+        // 判断题
         let vaildationArray: [YXExerciseType] = [.validationImageAndWord, .validationWordAndChinese]
         // 选择题
         let chooseArray: [YXExerciseType] = [.lookWordChooseImage, .lookExampleChooseImage, .listenChooseImage, .lookWordChooseChinese, .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord, .listenChooseWord, .listenChooseChinese]
         if vaildationArray.contains(exercise.type) {
             return validReviewWordOption(exercise: exercise)
         } else if chooseArray.contains(exercise.type) {
-            return reviewWordOption(exercise: exercise)
+            return reviewWordOption(exerciseModel: exercise)
         } else {
             print("其他题型不用生成选项")
             return exercise
         }
     }
-
-    /// 默认过滤没有图片的单词
-    func reviewWordOption(exercise: YXWordExerciseModel)  -> YXWordExerciseModel? {
-        // 选项个数
-        let itemCount = exercise.question?.itemCount ?? 4
-        
-        var exerciseModel = exercise
-        var items         = [YXOptionItemModel]()
+    
+    /// 获取其他选项
+    private func filterOtherWord(exerciseModel: YXWordExerciseModel, itemCount: Int) -> [YXOptionItemModel] {
+        var items = [YXOptionItemModel]()
+        guard let wordModel = exerciseModel.word else {
+            return items
+        }
         // 提高查找速度,拿空间换时间
         var whiteList = [String?]()
-
-        guard let wordModel = exerciseModel.word else {
-            return nil
-        }
         // 从新学单词获取数据
         whiteList.append(wordModel.word)
         let otherNewWordArray = self.otherNewWordArray(wordModel: wordModel)
@@ -67,20 +62,20 @@ class YXExerciseOptionManager: NSObject {
                 continue
             }
             if !whiteList.contains(otherWordModel.word) {
-                guard let itemModel = self.filterRepeatWord(exerciseModel: exercise, otherWordModel: otherWordModel) else {
+                guard let itemModel = self.filterRepeatWord(exerciseModel: exerciseModel, otherWordModel: otherWordModel) else {
                     continue
                 }
                 items.append(itemModel)
                 whiteList.append(otherWordModel.word)
             }
             tmpOtherNewWordArray.remove(at: randomInt)
-            if items.count > itemCount - 2 {
+            if items.count >= itemCount {
                 break
             }
         }
 
         // 从学习流程获取数据
-        if items.count < itemCount - 1 {
+        if items.count < itemCount {
             // 防止无限随机同一个对象
             let otherReviewWordArray = self.otherReviewWordArray(wordModel: wordModel)
             var tmpReviewWordArray = otherReviewWordArray
@@ -91,7 +86,7 @@ class YXExerciseOptionManager: NSObject {
                     continue
                 }
                 if !whiteList.contains(otherWordModel.word) {
-                    guard let itemModel = self.filterRepeatWord(exerciseModel: exercise, otherWordModel: otherWordModel) else {
+                    guard let itemModel = self.filterRepeatWord(exerciseModel: exerciseModel, otherWordModel: otherWordModel) else {
                         continue
                     }
                     items.append(itemModel)
@@ -99,13 +94,13 @@ class YXExerciseOptionManager: NSObject {
                 }
                 // 移除已经随机过的对象
                 tmpReviewWordArray.remove(at: randomInt)
-                if items.count > itemCount - 2 {
+                if items.count >= itemCount {
                     break
                 }
             }
         }
         // 从单元词书获取数据
-        if items.count < itemCount - 1 {
+        if items.count < itemCount {
             if let unitId = exerciseModel.word?.unitId {
                 let wordModelArray = YXWordBookDaoImpl().selectWordByUnitId(unitId: unitId)
                 var tmpWordModelArray = wordModelArray
@@ -113,7 +108,7 @@ class YXExerciseOptionManager: NSObject {
                     let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
                     let otherWordModel = tmpWordModelArray[randomInt]
                     if !whiteList.contains(otherWordModel.word) {
-                        guard let itemModel = self.filterRepeatWord(exerciseModel: exercise, otherWordModel: otherWordModel) else {
+                        guard let itemModel = self.filterRepeatWord(exerciseModel: exerciseModel, otherWordModel: otherWordModel) else {
                             continue
                         }
                         items.append(itemModel)
@@ -121,14 +116,14 @@ class YXExerciseOptionManager: NSObject {
                     }
                     // 移除已经随机过的对象
                     tmpWordModelArray.remove(at: randomInt)
-                    if items.count > itemCount - 2 {
+                    if items.count >= itemCount {
                         break
                     }
                 }
             }
         }
         // 从书中获取数据
-        if items.count < itemCount - 1 {
+        if items.count < itemCount {
             if let bookId = exerciseModel.word?.bookId {
                 let wordModelArray = YXWordBookDaoImpl().selectWordByBookId(bookId)
                 var tmpWordModelArray = wordModelArray
@@ -136,7 +131,7 @@ class YXExerciseOptionManager: NSObject {
                     let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
                     let otherWordModel = tmpWordModelArray[randomInt]
                     if !whiteList.contains(otherWordModel.word) {
-                        guard let itemModel = self.filterRepeatWord(exerciseModel: exercise, otherWordModel: otherWordModel) else {
+                        guard let itemModel = self.filterRepeatWord(exerciseModel: exerciseModel, otherWordModel: otherWordModel) else {
                             continue
                         }
                         items.append(itemModel)
@@ -144,34 +139,71 @@ class YXExerciseOptionManager: NSObject {
                     }
                     // 移除已经随机过的对象
                     tmpWordModelArray.remove(at: randomInt)
-                    if items.count > itemCount - 2 {
+                    if items.count >= itemCount {
                         break
                     }
                 }
             }
         }
+        // 从其他书中获取
+        if items.count < itemCount {
+            if let bookId = exerciseModel.word?.bookId {
+                let bookIdList = YXWordBookDaoImpl().selectBookIdList()
+                for otherBookId in bookIdList {
+                    if otherBookId == bookId {
+                       continue
+                    }
+                    let wordModelArray = YXWordBookDaoImpl().selectWordByBookId(otherBookId)
+                    var tmpWordModelArray = wordModelArray
+                    for _ in 0..<wordModelArray.count {
+                        let randomInt = Int.random(in: 0..<tmpWordModelArray.count)
+                        let otherWordModel = tmpWordModelArray[randomInt]
+                        if !whiteList.contains(otherWordModel.word) {
+                            guard let itemModel = self.filterRepeatWord(exerciseModel: exerciseModel, otherWordModel: otherWordModel) else {
+                                continue
+                            }
+                            items.append(itemModel)
+                            whiteList.append(otherWordModel.word)
+                        }
+                        // 移除已经随机过的对象
+                        tmpWordModelArray.remove(at: randomInt)
+                        if items.count >= itemCount {
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        return items
+    }
+
+    private func reviewWordOption(exerciseModel: YXWordExerciseModel)  -> YXWordExerciseModel? {
+        // 选项个数
+        let itemCount = exerciseModel.question?.itemCount ?? 4
+        
+        var _exerciseModel = exerciseModel
+        var items          = self.filterOtherWord(exerciseModel: _exerciseModel, itemCount: itemCount - 1)
         
         // 添加正取的选项
         let at = random(max: items.count + 1)
-        items.insert(itemModel(word: exerciseModel.word!, type: exerciseModel.type, dataType: exerciseModel.dataType), at: at)
+        items.insert(itemModel(word: _exerciseModel.word!, type: _exerciseModel.type, dataType: _exerciseModel.dataType), at: at)
         
         var option = YXExerciseOptionModel()
         option.firstItems = items
         
-        exerciseModel.option = option
-        exerciseModel.answers = [exerciseModel.word?.wordId ?? 0]
-        
-        //        reviewWordArray[index] = exerciseModel
+        _exerciseModel.option = option
+        _exerciseModel.answers = [_exerciseModel.word?.wordId ?? 0]
         return exerciseModel
     }
     
     // TODO: ==== Tools ====
+    /// 根据题型过滤数据
     private func filterRepeatWord(exerciseModel: YXWordExerciseModel, otherWordModel: YXWordModel) -> YXOptionItemModel? {
         guard let rightWordModel = exerciseModel.word else {
             return nil
         }
         switch exerciseModel.type {
-        case .lookWordChooseImage, .lookExampleChooseImage, .listenChooseImage:
+        case .lookWordChooseImage, .lookExampleChooseImage, .listenChooseImage, .validationImageAndWord:
             guard let rightImageUrl = rightWordModel.imageUrl, let otherImageUrl = otherWordModel.imageUrl else {
                 return nil
             }
@@ -179,7 +211,7 @@ class YXExerciseOptionManager: NSObject {
                 return nil
             }
         case .lookWordChooseChinese,
-        .lookExampleChooseChinese, .listenChooseChinese:
+             .lookExampleChooseChinese, .listenChooseChinese, .validationWordAndChinese:
             guard let rightMeaning = rightWordModel.meaning, let otherMeaning = otherWordModel.meaning else {
                 return nil
             }
@@ -207,8 +239,6 @@ class YXExerciseOptionManager: NSObject {
         let wordId = exercise.word?.wordId ?? 0
         var exerciseModel = exercise
         
-//        print("正确:", exercise.word?.wordId, exercise.word?.word, exercise.word?.meaning, exercise.word?.imageUrl)
-        
         var items: [YXOptionItemModel] = []
         
         let max = self.reviewWordArray.count
@@ -222,44 +252,21 @@ class YXExerciseOptionManager: NSObject {
             items.append(itemModel(word: exerciseModel.word!, type: exerciseModel.type, dataType: exerciseModel.dataType))
             items.append(item)
         } else {// 错
-            // 其他的新学单词集合，排除当前的单词
-            var wordArray = self.otherNewWordArray(wordModel: exerciseModel.word, isCompareImage: true)
-            
-            var tmpWord: YXWordModel?
-            if wordArray.count == 0, let wordModel = exerciseModel.word {
-                wordArray = self.otherReviewWordArray(wordModel: wordModel, isCompareImage: true)
-                if wordArray.isEmpty {
-                    if let otherWordModel = self.otherWordExampleModel(wordModel: wordModel){
-                        tmpWord = otherWordModel
-                    }
-                } else {
-                    let wordExerciseModel = wordArray.randomElement()
-                    tmpWord = wordExerciseModel?.word
-                }
-            } else {
-                let wordExerciseModel = wordArray.randomElement()
-                tmpWord = wordExerciseModel?.word
-            }
+            let rightItemArray = self.filterOtherWord(exerciseModel: exerciseModel, itemCount: 1)
             
             var item = YXOptionItemModel()
             item.optionId = -1
 
             items.append(item)
-            if tmpWord != nil {
-                items.append(itemModel(word: tmpWord!, type: exerciseModel.type, dataType: exerciseModel.dataType))
+            if let rightItem = rightItemArray.first {
+                items.append(rightItem)
+                exerciseModel.answers = [rightItem.optionId]
             }
-//            print("错误1:\(tmpWord?.wordId), \(tmpWord?.word), \(tmpWord?.meaning), \(tmpWord?.imageUrl)")
-//            print("错误2:\(exerciseModel.word?.wordId), \(exerciseModel.word?.word), \(exerciseModel.word?.meaning), \(exerciseModel.word?.imageUrl)")
-            
-            exerciseModel.answers = [tmpWord?.wordId ?? 0]
         }
 
         var option = YXExerciseOptionModel()
-        option.firstItems = items
-        
+        option.firstItems    = items
         exerciseModel.option = option
-        
-        
         return exerciseModel
     }
     

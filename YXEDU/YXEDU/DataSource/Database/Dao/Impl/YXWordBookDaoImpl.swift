@@ -23,11 +23,11 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                              book.gradeType]
         if async {
             self.wordRunnerQueue.inDatabase { (db) in
-                db.executeUpdate(sql, withArgumentsIn: params)
+                db.executeUpdate(sql, withArgumentsIn: params as [Any])
             }
             return true
         } else {
-            return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+            return self.wordRunner.executeUpdate(sql, withArgumentsIn: params as [Any])
         }
     }
     
@@ -103,11 +103,11 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                               word.isExtensionUnit]
         if async {
             self.wordRunnerQueue.inDatabase { (db) in
-                db.executeUpdate(sql, withArgumentsIn: params)
+                db.executeUpdate(sql, withArgumentsIn: params as [Any])
             }
             return true
         } else {
-            return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+            return self.wordRunner.executeUpdate(sql, withArgumentsIn: params as [Any])
         }
 
     }
@@ -158,6 +158,19 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         } else {
             return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
         }
+    }
+    
+    func selectBookIdList() -> [Int] {
+        var bookIdList = [Int]()
+        let sql = YYSQLManager.WordBookSQL.selectBookIdList.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+            return bookIdList
+        }
+        while result.next() {
+            let bookId = Int(result.int(forColumn: "bookId"))
+            bookIdList.append(bookId)
+        }
+        return bookIdList
     }
     
     func selectWord(wordId: Int) -> YXWordModel? {
