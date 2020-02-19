@@ -232,7 +232,7 @@ class YXShareViewController: YXViewController {
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else { return }
             self.finishAction?()
-            if model.state {
+            if model.state && channel == .timeLine {
                 self.shareChannelView.coinImageView.isHidden = true
 //                if model.coin > 0 {
 //                    YXToastView.share.showCoinView(model.coin)
