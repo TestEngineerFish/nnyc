@@ -234,10 +234,13 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
             
             if isSuccess, let response = response?.responseObject {
-                YXUserModel.default.token = (response as! [String: Any])["token"] as? String
-                YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
-                YXUserModel.default.username = (response as! [String: Any])["nick"] as? String
-                YXUserModel.default.userAvatarPath = (response as! [String: Any])["avatar"] as? String
+                let d1 = response as! [String: Any]
+                YXUserModel.default.token = d1["token"] as? String
+                YXUserModel.default.uuid = d1["uuid"] as? String
+                
+                let d2 = d1["user_info"] as! [String: Any]
+                YXUserModel.default.username = d2["nick"] as? String
+                YXUserModel.default.userAvatarPath = d2["avatar"] as? String
                 
                 YXConfigure.shared().token = YXUserModel.default.token
                 YXConfigure.shared().uuid = YXUserModel.default.uuid
@@ -349,10 +352,13 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
 
                     YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/login/\(phoneNumber[0])", parameters: [:]) { (response, isSuccess) in
                         if isSuccess, let response = response?.responseObject {
-                            YXUserModel.default.token = (response as! [String: Any])["token"] as? String
-                            YXUserModel.default.uuid = (response as! [String: Any])["uuid"] as? String
-                            YXUserModel.default.username = (response as! [String: Any])["nick"] as? String
-                            YXUserModel.default.userAvatarPath = (response as! [String: Any])["avatar"] as? String
+                            let d1 = response as! [String: Any]
+                            YXUserModel.default.token = d1["token"] as? String
+                            YXUserModel.default.uuid = d1["uuid"] as? String
+                            
+                            let d2 = d1["user_info"] as! [String: Any]
+                            YXUserModel.default.username = d2["nick"] as? String
+                            YXUserModel.default.userAvatarPath = d2["avatar"] as? String
 
                             YXConfigure.shared().token = YXUserModel.default.token
                             YXConfigure.shared().uuid = YXUserModel.default.uuid
