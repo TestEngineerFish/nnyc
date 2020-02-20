@@ -42,6 +42,7 @@ extension YXExerciseDataManager {
             }
             filterReviewExcercise()
             
+            removeErrorStep()
             // 排序
             self.sortCurrentTurn()
         }
@@ -77,7 +78,7 @@ extension YXExerciseDataManager {
                             break
                         }
                     } else {// 没做
-                        if exericse.isNewWord {// 如果是新学，1到4步都要做
+                        if exericse.isNewWord {// 如果是新学，1到4步都要做    && currentTurnIndex >= exericse.step
                             currentTurnArray.append(exericse)
                             break
                         } else if currentTurnIndex >= exericse.step {// 复习，到指定轮次和 step 相同是才开始训练
@@ -166,6 +167,30 @@ extension YXExerciseDataManager {
         }
 
         return -1
+    }
+    
+    
+    func removeErrorStep() {
+        // 是否有当前轮的
+        var hasCurrentTurnStep = false
+        for e in currentTurnArray {
+            if e.step == currentTurnIndex  {
+                hasCurrentTurnStep = true
+                break
+            }
+        }
+        
+        var array: [YXWordExerciseModel] = []
+        if hasCurrentTurnStep {
+            for e in currentTurnArray {
+                if e.step <= currentTurnIndex {
+                    array.append(e)
+                }
+            }
+        }
+        
+        currentTurnArray = array
+        
     }
     
     func sortCurrentTurn() {
