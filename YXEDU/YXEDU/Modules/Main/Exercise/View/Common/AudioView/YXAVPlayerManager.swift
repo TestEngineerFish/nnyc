@@ -103,6 +103,7 @@ class YXAVPlayerManager: NSObject {
         if self.sourceIndex >= self.sourceList.count {
             self.finishedBlock?()
             self.finishedBlock = nil
+            self.player.replaceCurrentItem(with: nil)
         } else {
             guard let url = URL(string: self.sourceList[sourceIndex]) else {
                 return
