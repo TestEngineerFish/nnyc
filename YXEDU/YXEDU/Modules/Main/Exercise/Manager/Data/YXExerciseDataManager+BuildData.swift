@@ -187,9 +187,11 @@ extension YXExerciseDataManager {
                     array.append(e)
                 }
             }
+            
+            if array.count > 0 {
+                currentTurnArray = array
+            }
         }
-        
-        currentTurnArray = array
         
     }
     
