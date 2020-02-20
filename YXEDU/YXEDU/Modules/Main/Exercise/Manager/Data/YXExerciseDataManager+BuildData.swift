@@ -298,7 +298,7 @@ extension YXExerciseDataManager {
         /// 正常题型
         for e in currentTurnArray {
             if !e.isCurrentTurnFinish {
-                if sameWordIds.contains(e.word?.wordId ?? 0) && (e.type == .connectionWordAndChinese || e.type == .connectionWordAndImage) {
+                if sameWordIds.count > 0 && (e.type == .connectionWordAndChinese || e.type == .connectionWordAndImage) {
                     if let backupE = backupExercise(wordId: e.word?.wordId ?? 0, step: e.step) {
                         return optionManager.processReviewWordOption(exercise: backupE)
                     } else {
