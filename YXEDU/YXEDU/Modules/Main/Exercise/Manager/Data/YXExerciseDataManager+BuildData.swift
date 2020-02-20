@@ -170,6 +170,7 @@ extension YXExerciseDataManager {
     }
     
     
+    /// 取数据的时候，会出现 step >  turnIndex的情况，因此需要把错加进来的删除掉
     func removeErrorStep() {
         // 是否有当前轮的
         var hasCurrentTurnStep = false
