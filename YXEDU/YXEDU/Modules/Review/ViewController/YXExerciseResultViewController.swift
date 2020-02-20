@@ -120,9 +120,7 @@ class YXExerciseResultViewController: YXViewController {
         shareVC.shareType = shareType()
         shareVC.wordsAmount = model?.reviewWordNum ?? 0
         shareVC.daysAmount = model?.studyDay ?? 0
-    
-        
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC, animated: true)
+        self.navigationController?.pushViewController(shareVC, animated: true)
     }
 
     private func shareType() -> YXShareImageType {

@@ -171,6 +171,9 @@ class YXExerciseOptionManager: NSObject {
                             break
                         }
                     }
+                    if items.count >= itemCount {
+                        break
+                    }
                 }
             }
         }
