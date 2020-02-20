@@ -87,6 +87,7 @@ extension YXExerciseDataManager {
                 if exercise.type == .connectionWordAndImage || exercise.type == .connectionWordAndChinese {
                     for option in exercise.option?.firstItems ?? [] {
                         exercise.word = selectWord(wordId: option.optionId)
+                        exercise.isNewWord = isNewWordStatus(wordId: option.optionId, exerciseArray: step)
                         self.addWordStep(exerciseModel: exercise, isBackup: false)
                     }
                 } else {
@@ -169,6 +170,14 @@ extension YXExerciseDataManager {
         return array
     }
     
+    func isNewWordStatus(wordId: Int, exerciseArray: [YXWordExerciseModel]) -> Bool {
+        for exercise in exerciseArray {
+            if wordId == exercise.question?.wordId {
+                return exercise.isNewWord
+            }
+        }
+        return false
+    }
     
     func selectWord(wordId: Int) -> YXWordModel? {
         if dataType == .base {
