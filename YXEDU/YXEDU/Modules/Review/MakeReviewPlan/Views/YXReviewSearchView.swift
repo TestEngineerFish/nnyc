@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     
     let searchBar: UITextField = {
         let textField = UITextField()
@@ -99,8 +99,18 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         self.tableView.reloadData()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if self.resultUnitListModel.isEmpty {
+            self.tableView.isHidden = true
+            self.emptyView.isHidden = false
+        } else {
+            self.tableView.isHidden = false
+            self.emptyView.isHidden = true
+        }
+    }
+    
     private func bindProperty() {
-        self.searchBar.delegate   = self
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
@@ -111,6 +121,7 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         self.tableView.addGestureRecognizer(pan!)
         self.tableView.panGestureRecognizer.require(toFail: pan!)
         self.cancelButton.addTarget(self, action: #selector(cancelSearch), for: .touchUpInside)
+        self.searchBar.addTarget(self, action: #selector(textFieldChange(_:)), for: .editingChanged)
     }
     
     private func createSubviews() {
@@ -193,6 +204,13 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
         }
     }
     
+    @objc private func textFieldChange(_ textField: UITextField) {
+        let keyValue = textField.text ?? ""
+        self.search(keyValue)
+        self.tableView.reloadData()
+        self.layoutSubviews()
+    }
+    
     private func search(_ keyValue: String) {
         self.resultUnitListModel = []
         if keyValue != "" {
@@ -213,25 +231,6 @@ class YXReviewSearchView: UIView, UITextFieldDelegate, UITableViewDelegate, UITa
                 }
             }
         }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if self.resultUnitListModel.isEmpty {
-            self.tableView.isHidden = true
-            self.emptyView.isHidden = false
-        } else {
-            self.tableView.isHidden = false
-            self.emptyView.isHidden = true
-        }
-    }
-    
-    // MARK: ==== UITextFieldDelegate ====
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        let keyValue = textField.text ?? ""
-        self.search(keyValue)
-        self.tableView.reloadData()
-        self.layoutSubviews()
     }
  
     // MARK: ==== UITableViewDataSource ====
