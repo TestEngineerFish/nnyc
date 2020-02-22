@@ -104,9 +104,13 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.status = .playedExampleInFristStage
             self.newLearnDelegate?.playWordAndExampleFinished()
         }
+        // 云之声设置
         self.enginer = USCRecognizer.sharedManager()
         self.enginer?.setIdentifier(YXConfigure.shared()?.uuid)
         self.enginer?.delegate = self
+        self.enginer?.vadControl = true
+        self.enginer?.setVadFrontTimeout(2000, backTimeout: 700)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
         // 延迟播放.(因为在切题的时候会有动画)
