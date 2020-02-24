@@ -19,7 +19,6 @@
 
 #import "YXBadgeIncompleteView.h"
 #import "YXBadgeCompletedView.h"
-#import "YXBadgeView.h"
 
 @interface YXPersonalMyBadgesVC () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
 

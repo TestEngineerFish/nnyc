@@ -25,6 +25,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     
+    var feedbackBadgeView = YXBadgeView(1)
+    
     @IBAction func tapCoin(_ sender: UITapGestureRecognizer) {
         self.performSegue(withIdentifier: "Coin", sender: self)
     }
@@ -210,7 +212,14 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         case 3:
             return tableView.dequeueReusableCell(withIdentifier: "CellFour")!
         case 4:
-            return tableView.dequeueReusableCell(withIdentifier: "CellFive")!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive")!
+            cell.addSubview(feedbackBadgeView)
+            feedbackBadgeView.snp.makeConstraints { (make) in
+                make.centerY.equalToSuperview()
+                make.right.equalToSuperview().offset(-15)
+                make.size.equalTo(feedbackBadgeView.size)
+            }
+            return cell
         default:
             return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
         }

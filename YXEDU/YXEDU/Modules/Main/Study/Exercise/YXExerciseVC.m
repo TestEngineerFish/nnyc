@@ -36,7 +36,6 @@
 #import "YXReportErrorView.h"
 #import "YXQuestionGenerator.h"
 #import "AFHTTPSessionManager.h"
-#import "YXStudyResultVC.h"
 #import "YXSpokenView.h"
 #import "YXPersonalFeedBackVC.h"
 #import "YXSpellGuideView.h"
@@ -458,13 +457,6 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 
 /** 展示流程结果页 */
 - (void)showStudyResultWithType:(YXExerciseType)studyResultType {
-    YXStudyResultVC *studyVC = [[YXStudyResultVC alloc] initWithStudyResultType:studyResultType];
-    studyVC.wordListId = self.learningBookId;
-    NSMutableArray *vcs = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
-    [vcs removeLastObject];
-    [vcs addObject:studyVC];
-    [self.navigationController setViewControllers:vcs animated:YES];
-    [self traceStudyTime];
 }
 
 - (void)checkWordFavState:(YXWordDetailModel *)wordDetailModel {

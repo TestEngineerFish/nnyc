@@ -46,6 +46,8 @@
 @property (nonatomic, strong) UIButton *submitButton;
 @property (nonatomic, strong) UIImageView *fullScreenImageView;
 @property (nonatomic, strong) YXFeedBackViewModel *feedViewModel;
+@property (nonatomic, strong) UIBarButtonItem *rightItem;
+@property (nonatomic, strong) UIView *dotView;
 @end
 
 @implementation YXPersonalFeedBackVC
@@ -57,6 +59,35 @@
 //        self.feedViewModel = [[YXFeedBackViewModel alloc]init];
     }
     return self;
+}
+
+- (UIBarButtonItem *)rightItem {
+    if (!_rightItem) {
+        CGRect frame     = CGRectMake(0, 0, AdaptSize(22), AdaptSize(22));
+        UIButton *button = [[UIButton alloc] initWithFrame:frame];
+        [button setImage:[UIImage imageNamed:@"feedbackIcon"] forState:UIControlStateNormal];
+        UIView *customView = [[UIView alloc] initWithFrame:frame];
+        [button addTarget:self action:@selector(feedbackAction) forControlEvents:UIControlEventTouchUpInside];
+        [customView addSubview:button];
+        [customView addSubview:self.dotView];
+        _rightItem = [[UIBarButtonItem alloc] initWithCustomView:customView];
+    }
+    return _rightItem;
+}
+
+- (void)feedbackAction {
+    YXFeedbackListViewController *vc = [[YXFeedbackListViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (UIView *)dotView {
+    if (!_dotView) {
+        _dotView = [[UIView alloc] initWithFrame:CGRectMake(AdaptSize(18), 0, AdaptSize(5), AdaptSize(5))];
+        _dotView.layer.cornerRadius  = AdaptSize(2.5);
+        _dotView.layer.masksToBounds = YES;
+        _dotView.backgroundColor     = UIColorOfHex(0xFF532B);
+    }
+    return _dotView;
 }
 
 - (IBAction)back:(id)sender {
@@ -73,6 +104,7 @@
 
     self.view.backgroundColor = UIColorOfHex(0xF6F8FA);
     self.title = @"意见反馈";
+    self.navigationItem.rightBarButtonItem = self.rightItem;
     
     if (@available(iOS 11.0, *)) {
         [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
@@ -95,30 +127,30 @@
     self.feedBackTextView.backgroundColor = [UIColor whiteColor ];
 //    self.feedBackTextView.delegate = self;
     self.feedBackTextView.font = [UIFont systemFontOfSize:16];
-    [self.feedBackTextView setPlaceholder:@"请输入您的宝贵意见，我们将认真对待每一条反馈。" placeholdColor:[UIColor lightGrayColor]];
+    [self.feedBackTextView setPlaceholder:@"请输入您的宝贵意见，我们将认真对待每一条反馈。(必填)" placeholdColor:[UIColor lightGrayColor]];
 
     self.textNumberLabel = [[UILabel alloc]init];
     self.textNumberLabel.textAlignment = NSTextAlignmentRight;
-    [self.textNumberLabel setTextColor:UIColorOfHex(0x8095AB)];
+    [self.textNumberLabel setTextColor:UIColorOfHex(0xC0C0C0)];
     [self.textNumberLabel setText:@"0 / 140"];
     [self.textNumberLabel setFont:[UIFont systemFontOfSize:16]];
     
     self.lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 180, self.containerView.frame.size.width, 0.5)];
-    self.lineView.backgroundColor = UIColorOfHex(0xE1EBF0);
+    self.lineView.backgroundColor = UIColor.clearColor;
     
     self.imageNumberLabel = [[UILabel alloc]init];
     self.imageNumberLabel.textAlignment = NSTextAlignmentLeft;
-    [self.imageNumberLabel setTextColor:UIColorOfHex(0x8095AB)];
+    [self.imageNumberLabel setTextColor:UIColorOfHex(0x666666)];
     [self.imageNumberLabel setText:@"上传图片（ 0 / 3 ）"];
     [self.imageNumberLabel setFont:[UIFont systemFontOfSize:14]];
 
     self.submitButton = [YXCustomButton commonBlueWithCornerRadius:22];
-    [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.submitButton.backgroundColor = UIColorOfHex(0xFFF4E9);
+    [self.submitButton setTitleColor:UIColorOfHex(0xEAD2BA) forState:UIControlStateDisabled];
+    [self.submitButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     [self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
     [self.submitButton addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
     self.submitButton.enabled = NO;
-
-//    [self disableSubmitBtn];
 
     self.selectImageView = [[YXFeedBackSelectImageView alloc]init];
     [self.selectImageView setDelegate:self];
@@ -205,6 +237,10 @@
     }
     if ([self.feedBackTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length == 0) {
         [YXUtils showHUD:self.navigationController.view title:@"请填写反馈内容!"];
+        return;
+    }
+    if (imageArr.count == 0) {
+        [YXUtils showHUD:self.navigationController.view title:@"请上传您遇到问题时的屏幕截图!"];
         return;
     }
     __weak YXPersonalFeedBackVC *weakSelf = self;

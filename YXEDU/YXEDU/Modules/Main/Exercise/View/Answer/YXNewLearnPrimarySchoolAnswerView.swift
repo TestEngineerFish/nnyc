@@ -61,6 +61,12 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         label.textAlignment = .center
         return label
     }()
+    
+    var recordAnimationView: AnimationView = {
+        let animationView = AnimationView(name: "readAnimation")
+        animationView.isHidden = true
+        return animationView
+    }()
 
     var recordAudioButton: YXButton = {
         let button = YXButton()
@@ -72,7 +78,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     var recordAudioLabel: UILabel = {
         let label = UILabel()
-        label.text          = "按住跟读"
+        label.text          = "跟读"
         label.textColor     = UIColor.black2
         label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
         label.textAlignment = .center
@@ -107,7 +113,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         // 云之声设置
         self.enginer = USCRecognizer.sharedManager()
         self.enginer?.setIdentifier(YXConfigure.shared()?.uuid)
-        self.enginer?.delegate = self
+        self.enginer?.delegate   = self
         self.enginer?.vadControl = true
         self.enginer?.setVadFrontTimeout(2000, backTimeout: 700)
         
@@ -136,6 +142,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.addSubview(playAudioLabel)
         self.addSubview(recordAudioButton)
         self.addSubview(recordAudioLabel)
+        self.addSubview(recordAnimationView)
         self.playAudioButton.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.left.equalToSuperview().offset(AdaptSize(80))
@@ -151,16 +158,18 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             make.right.equalToSuperview().offset(AdaptSize(-80))
             make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
         }
-        self.recordAudioLabel.sizeToFit()
         self.recordAudioLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(recordAudioButton)
             make.top.equalTo(recordAudioButton.snp.bottom).offset(AdaptSize(8))
-            make.size.equalTo(recordAudioLabel.size)
+            make.width.equalTo(AdaptSize(52))
+            make.height.equalTo(AdaptSize(18))
+        }
+        self.recordAnimationView.snp.makeConstraints { (make) in
+            make.left.top.right.bottom.equalTo(self.recordAudioButton)
         }
 
         self.playAudioButton.addTarget(self, action: #selector(playButtonAction(_:)), for: .touchUpInside)
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(startRecordAction(_:)))
-        self.recordAudioButton.addGestureRecognizer(longPress)
+        self.recordAudioButton.addTarget(self, action: #selector(startRecordAction(_:)), for: .touchUpInside)
     }
 
     // MARK: ==== Event ====
@@ -172,29 +181,24 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
     }
 
-    /// 长按跟读按钮
-    @objc private func startRecordAction(_ ges: UILongPressGestureRecognizer) {
-        if ges.state == .began {
-            YXAuthorizationManager.authorizeMicrophoneWith { [weak self] (isAuth) in
-                guard let self = self else { return }
-                if isAuth {
-                    guard let word = self.exerciseModel.word?.word else {
-                        return
-                    }
-                    self.enginer?.oralText = word
-                    self.enginer?.start()
-                } else {
-                    self.endRecordAction()
+    /// 点击跟读按钮
+    @objc private func startRecordAction(_ button: UIButton) {
+        YXAuthorizationManager.authorizeMicrophoneWith { [weak self] (isAuth) in
+            guard let self = self else { return }
+            if isAuth {
+                guard let word = self.exerciseModel.word?.word else {
+                    return
                 }
+                self.enginer?.oralText = word
+                self.enginer?.start()
+            } else {
+                self.endRecordAction()
             }
-            YXAVPlayerManager.share.pauseAudio()
-        } else if ges.state == .ended {
-            self.endRecordAction()
         }
+        YXAVPlayerManager.share.pauseAudio()
     }
 
     private func endRecordAction() {
-        YXRecordAudioView.share.hide()
         if self.status == .recording {
             self.enginer?.stop()
         }
@@ -381,6 +385,24 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.isViewPause = false
         self.playByStatus()
     }
+    
+    // 显示录音动画
+    private func showRecordAnimation() {
+        self.recordAudioButton.isHidden    = true
+        self.recordAnimationView.isHidden  = false
+        self.playAudioButton.layer.opacity = 0.3
+        self.playAudioLabel.layer.opacity  = 0.3
+        self.recordAnimationView.play()
+    }
+    
+    // 隐藏录音动画
+    private func hideRecordAnimation() {
+        self.recordAudioButton.isHidden    = false
+        self.recordAnimationView.isHidden  = true
+        self.playAudioButton.layer.opacity = 1.0
+        self.playAudioLabel.layer.opacity  = 1.0
+        self.recordAnimationView.stop()
+    }
 
     // MARK: ==== Notification ====
 
@@ -407,13 +429,17 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onBeginOral() {
         // 显示录音动画
-        self.resetOpusTempData()
-        YXRecordAudioView.share.show()
         self.status = .recording
+        self.showRecordAnimation()
+        self.resetOpusTempData()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) { [weak self] in
+            self?.endRecordAction()
+        }
     }
 
     func onStopOral() {
         self.setCatchRecordOpus(opus: self.tempOpusData)
+        self.hideRecordAnimation()
         self.recordAudioLabel.text = "打分中……"
         self.status = .reporting
     }
@@ -444,7 +470,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.exerciseModel.listenScore = self.lastLevel
             self.showResultAnimation()
             self.status = .showResult
-            self.recordAudioLabel.text = "按住跟读"
+            self.recordAudioLabel.text = "跟读"
         }
     }
 
@@ -458,7 +484,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.enginer?.retry(withFilePath: self.retryPath)
             self.retryCount += 1
         } else {
-            self.recordAudioLabel.text = "按住跟读"
+            self.recordAudioLabel.text = "跟读"
             YXUtils.showHUD(kWindow, title: "网络连接失败,请稍后再试")
         }
     }
@@ -470,7 +496,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onUpdateVolume(_ volume: Int32) {
         //        print("onUpdateVolume: \(volume)")
-        YXRecordAudioView.share.updateVolume(volume)
+//        YXRecordAudioView.share.updateVolume(volume)
         //        print(volume)
         return
     }
