@@ -76,6 +76,10 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         navigationController?.pushViewController(YXPolicyVC(), animated: true)
     }
     
+    @IBAction func showPolicy(_ sender: UIButton) {
+        navigationController?.pushViewController(YXPolicyVC(), animated: true)
+    }
+    
     
     
     // MARK: -
@@ -391,7 +395,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         configure.clAppPrivacyPunctuationMarks = true
         configure.clShanYanSloganTextColor = .clear
         configure.clAppPrivacyFirst = ["《用户协议》", URL(string: "\(YXEvnOC.baseUrl())/agreement.html")!]
-        
+        configure.clAppPrivacySecond = ["《隐私政策》", URL(string: "\(YXEvnOC.baseUrl())/agreement.html")!]
+
         let layoutConfigure = CLOrientationLayOut()
         layoutConfigure.clLayoutPhoneCenterX = NSNumber(0)
         layoutConfigure.clLayoutPhoneCenterY = NSNumber(-84)
@@ -413,6 +418,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             let iconImageView = UIImageView()
             iconImageView.contentMode = .scaleAspectFill
             iconImageView.image = #imageLiteral(resourceName: "Logo")
+            iconImageView.isHidden = true
             
             let containerView = UIView()
             
