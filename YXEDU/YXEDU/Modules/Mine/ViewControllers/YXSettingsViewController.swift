@@ -39,22 +39,33 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
 //        case 0:
 //            return tableView.dequeueReusableCell(withIdentifier: "CellOne")!
+            
         case 0:
             return tableView.dequeueReusableCell(withIdentifier: "CellTwo")!
-        default:
+            
+        case 1:
             return tableView.dequeueReusableCell(withIdentifier: "CellThree")!
+            
+        case 2:
+            return tableView.dequeueReusableCell(withIdentifier: "CellFour")!
+            
+        case 3:
+            return tableView.dequeueReusableCell(withIdentifier: "CellFive")!
+            
+        default:
+            return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: false)
+        tableView.deselectRow(at: indexPath, animated: false)
     
         switch indexPath.row {
 //        case 0:
@@ -62,7 +73,7 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
 //            break
             
         case 0:
-            self.performSegue(withIdentifier: "AboutUs", sender: self)
+            performSegue(withIdentifier: "AboutUs", sender: self)
             break
             
         case 1:
@@ -73,6 +84,18 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
                     }
                 }
             }
+            break
+            
+        case 2:
+            performSegue(withIdentifier: "UserAgreement", sender: nil)
+            break
+            
+        case 3:
+            performSegue(withIdentifier: "PrivacyPolicy", sender: nil)
+            break
+            
+        case 4:
+            
             break
             
         default:
