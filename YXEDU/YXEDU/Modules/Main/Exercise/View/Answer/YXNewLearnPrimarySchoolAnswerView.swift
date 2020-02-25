@@ -85,6 +85,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         label.layer.opacity = 0.3
         return label
     }()
+    
+    lazy var learnResultView = YXNewLearnResultView()
 
     var timer: Timer?
     var dotNumber = 0
@@ -113,9 +115,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         // 云之声设置
         self.enginer = USCRecognizer.sharedManager()
         self.enginer?.setIdentifier(YXConfigure.shared()?.uuid)
-        self.enginer?.delegate   = self
-        self.enginer?.vadControl = true
-        self.enginer?.setVadFrontTimeout(2000, backTimeout: 700)
+        self.enginer?.delegate        = self
+        self.enginer?.vadControl      = true
+        self.enginer?.setVadFrontTimeout(5000, backTimeout: 700)
         
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -300,6 +302,24 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             }
         }
     }
+    
+    /// 页面暂停
+    func pauseView() {
+        self.isViewPause = true
+        YXAVPlayerManager.share.pauseAudio()
+        YXAVPlayerManager.share.finishedBlock = nil
+        if self.status == .recording {
+            self.enginer?.cancel()
+        }
+    }
+
+    // 页面播放
+    func startView() {
+        self.isViewPause = false
+        self.playByStatus()
+    }
+    
+    // MARK: ---- 动画 ----
 
     /// 显示播放单词动画
     private func showPlayAnimation() {
@@ -353,38 +373,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playAudioLabel.textColor = UIColor.black2
         self.playAudioButton.layer.removeAllAnimations()
     }
-
-    /// 显示结果动画
-    private func showResultAnimation() {
-        YXNewLearnResultView.share.show(self.lastLevel)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            YXNewLearnResultView.share.hide()
-            if self.lastLevel > 1 {
-                self.newLearnDelegate?.showNewLearnWordDetail()
-            }
-        }
-    }
-
-    /// 隐藏结果动画
-    private func hideResultAnimation() {
-        self.status = .alreadLearn
-    }
-
-    /// 页面暂停
-    func pauseView() {
-        self.isViewPause = true
-        YXAVPlayerManager.share.pauseAudio()
-        YXAVPlayerManager.share.finishedBlock = nil
-        if self.status == .recording {
-            self.enginer?.cancel()
-        }
-    }
-
-    // 页面播放
-    func startView() {
-        self.isViewPause = false
-        self.playByStatus()
-    }
     
     // 显示录音动画
     private func showRecordAnimation() {
@@ -402,6 +390,45 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playAudioButton.layer.opacity = 1.0
         self.playAudioLabel.layer.opacity  = 1.0
         self.recordAnimationView.stop()
+    }
+    
+    // 显示上报动画
+    private func showReportAnimation() {
+        self.status = .reporting
+        self.learnResultView.showReportView()
+    }
+    
+    // 隐藏上报动画
+    private func hideReportAnimation() {
+        self.learnResultView.hideView()
+    }
+    
+    /// 显示结果动画
+    private func showResultAnimation() {
+        self.status = .showResult
+        self.learnResultView.showResultView(self.lastLevel)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            guard let self = self else { return }
+            self.hideResultAnimation()
+        }
+    }
+
+    /// 隐藏结果动画
+    private func hideResultAnimation() {
+        self.learnResultView.hideView()
+        // 如果得分大于1，则直接显示单词详情页
+        if self.lastLevel > 1 {
+            self.newLearnDelegate?.showNewLearnWordDetail()
+        }
+    }
+    
+    /// 显示网络错误视图
+    private func showNetworkErrorAnimation() {
+        self.endRecordAction()
+        self.learnResultView.showNetworkErrorView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            self?.learnResultView.hideView()
+        }
     }
 
     // MARK: ==== Notification ====
@@ -423,7 +450,10 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     // MARK: ==== 云知声SDK: USCRecognizerDelegate ====
     func oralEngineDidInit(_ error: Error!) {
-        //        print("初始化结束,错误内容: " + String(describing: error))
+        if error != nil {
+            DDLogInfo("初始化结束,错误内容: " + String(describing: error))
+            self.showNetworkErrorAnimation()
+        }
         return
     }
 
@@ -440,8 +470,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     func onStopOral() {
         self.setCatchRecordOpus(opus: self.tempOpusData)
         self.hideRecordAnimation()
-        self.recordAudioLabel.text = "打分中……"
-        self.status = .reporting
+        self.showReportAnimation()
     }
 
     func onResult(_ result: String!, isLast: Bool) {
@@ -468,9 +497,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             }()
             // 显示结果动画
             self.exerciseModel.listenScore = self.lastLevel
+            self.hideReportAnimation()
             self.showResultAnimation()
-            self.status = .showResult
-            self.recordAudioLabel.text = "跟读"
         }
     }
 
@@ -480,17 +508,14 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
         // 判断重试次数
         if self.retryCount < 3 {
-            self.recordAudioLabel.text = "网络错误,录音重传中……"
             self.enginer?.retry(withFilePath: self.retryPath)
             self.retryCount += 1
         } else {
-            self.recordAudioLabel.text = "跟读"
-            YXUtils.showHUD(kWindow, title: "网络连接失败,请稍后再试")
+            self.showNetworkErrorAnimation()
         }
     }
 
     func onVADTimeout() {
-        //        print("VAD超时啦")
         return
     }
 
@@ -514,7 +539,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func audioFileDidRecord(_ url: String!) {
-        //        print("audio file url" + url)
+//        print("audio file url=======" + url)
         return
     }
 
@@ -524,7 +549,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
-        //        print("lifecycle: \(lifecycle)")
+//        if error != nil {
+//            self.showNetworkErrorAnimation()
+//        }
         return
     }
 
