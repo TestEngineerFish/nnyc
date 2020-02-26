@@ -258,6 +258,7 @@
 		CF0BD8D22402715B00FE9AA6 /* YXFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D12402715B00FE9AA6 /* YXFeedbackListViewController.swift */; };
 		CF0BD8D42402720700FE9AA6 /* YXFeedbackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D32402720700FE9AA6 /* YXFeedbackCell.swift */; };
 		CF0BD8D6240288BC00FE9AA6 /* YXFeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D5240288BC00FE9AA6 /* YXFeedbackModel.swift */; };
+		CF53B4902406717C00625892 /* UITabBarItem+BadgeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */; };
 		CFF4914C23F56D7F00038113 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFF4914B23F56D7F00038113 /* TencentOpenAPI.framework */; };
 		CFFB700823EBB56F0088DAAA /* YXReviewPlanReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */; };
 		CFFB700A23EBDEB50088DAAA /* YXShareDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */; };
@@ -1047,6 +1048,8 @@
 		CF0BD8D12402715B00FE9AA6 /* YXFeedbackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackListViewController.swift; sourceTree = "<group>"; };
 		CF0BD8D32402720700FE9AA6 /* YXFeedbackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackCell.swift; sourceTree = "<group>"; };
 		CF0BD8D5240288BC00FE9AA6 /* YXFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackModel.swift; sourceTree = "<group>"; };
+		CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+BadgeValue.m"; sourceTree = "<group>"; };
+		CF53B48F2406717C00625892 /* UITabBarItem+BadgeValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+BadgeValue.h"; sourceTree = "<group>"; };
 		CFF4914B23F56D7F00038113 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanReportViewController.swift; sourceTree = "<group>"; };
 		CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareDefaultView.swift; sourceTree = "<group>"; };
@@ -3687,6 +3690,8 @@
 		EE5EF13A23265E3300655654 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				CF53B48F2406717C00625892 /* UITabBarItem+BadgeValue.h */,
+				CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */,
 				EE5EF249232740B700655654 /* NSString */,
 				EE5EF243232740B700655654 /* UIDevice */,
 				EE5EF237232740B600655654 /* UITextView */,
@@ -6074,6 +6079,7 @@
 				EE5E007723274FEB00655654 /* YXCheckButtonsView.m in Sources */,
 				EE5E00EF23274FEC00655654 /* YXPersonChangeNameVC.m in Sources */,
 				EE5E005F23274FEB00655654 /* YXExerciseSubmitErrorView.m in Sources */,
+				CF53B4902406717C00625892 /* UITabBarItem+BadgeValue.m in Sources */,
 				EE5E010723274FEC00655654 /* YXBindPhoneVC.m in Sources */,
 				EE5EF20F23273BAE00655654 /* NSObject+YR.m in Sources */,
 				EE5EFCD823274E5500655654 /* YXShareLodingView.m in Sources */,
