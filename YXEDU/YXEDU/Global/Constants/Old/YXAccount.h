@@ -30,3 +30,18 @@ static NSString *const kBuglyAppId = @"8d2147f017";
 
 
 static NSString *const kGrowingIOID = @"ab8175453123d5b2";
+
+
+/// JPush
+#if DEBUG
+// 测试
+static NSString *const kJPushAppKey = @"1839fa8b64ddd41f7859f81d";
+static NSString *const kJPushChannel = @"Dev";
+static NSInteger kJPushProduction = 0;
+#else
+// 正式
+static NSString *const kJPushAppKey = @"1839fa8b64ddd41f7859f81d";
+static NSString *const kJPushChannel = @"AppStore";
+static NSInteger kJPushProduction = 1;
+#endif
+

@@ -11,6 +11,7 @@ import UserNotifications
 import Bugly
 import GrowingCoreKit
 import GrowingAutoTrackKit
+//import AdSupport
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,23 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
-
-        getNotificationPermissions()
+        
+        
+        
+        setRemoteNotification(application, launchOptions)
         initThirdPartyServices()
         initViewAndData()
         
         initConfig()
         return true
-    }
-    
-    func getNotificationPermissions() {
-        UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-            authored, error in
-            
-            guard authored else { return }
-//            application.registerForRemoteNotifications()
-        }
     }
     
     func initThirdPartyServices() {
@@ -124,4 +117,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
+
 

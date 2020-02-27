@@ -68,3 +68,5 @@
 #import "UIDevice+YX.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
+#import "JPUSHService.h"
+
