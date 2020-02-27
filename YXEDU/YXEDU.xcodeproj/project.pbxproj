@@ -344,6 +344,7 @@
 		EE54F7E12362AA3100EC605A /* YXWordQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE54F7C82362AA3100EC605A /* YXWordQuestionView.swift */; };
 		EE54F7E22362AA3100EC605A /* YXChineseQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE54F7C92362AA3100EC605A /* YXChineseQuestionView.swift */; };
 		EE54F7E42362AA3100EC605A /* YXExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE54F7CC2362AA3100EC605A /* YXExerciseViewController.swift */; };
+		EE585FB22408125700942DFC /* AppDelegate+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE585FB12408125600942DFC /* AppDelegate+Notification.swift */; };
 		EE5E000323274FEB00655654 /* YXCustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFD6923274FE800655654 /* YXCustomScrollView.m */; };
 		EE5E000423274FEB00655654 /* YXDLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFD6A23274FE800655654 /* YXDLModel.m */; };
 		EE5E000523274FEB00655654 /* LGYSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFD6E23274FE800655654 /* LGYSegmentView.m */; };
@@ -1148,6 +1149,7 @@
 		EE54F7C82362AA3100EC605A /* YXWordQuestionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXWordQuestionView.swift; sourceTree = "<group>"; };
 		EE54F7C92362AA3100EC605A /* YXChineseQuestionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXChineseQuestionView.swift; sourceTree = "<group>"; };
 		EE54F7CC2362AA3100EC605A /* YXExerciseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExerciseViewController.swift; sourceTree = "<group>"; };
+		EE585FB12408125600942DFC /* AppDelegate+Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notification.swift"; sourceTree = "<group>"; };
 		EE5E000123274FEA00655654 /* YXPersonalMaterialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonalMaterialCell.m; sourceTree = "<group>"; };
 		EE5E000223274FEA00655654 /* YXPersonalMaterialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalMaterialCell.h; sourceTree = "<group>"; };
 		EE5E01102327528500655654 /* right.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = right.mp3; sourceTree = "<group>"; };
@@ -3277,6 +3279,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		EE585FB02408125600942DFC /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				EE585FB12408125600942DFC /* AppDelegate+Notification.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
 		EE5E000023274FEA00655654 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -3306,6 +3316,7 @@
 		EE5E012A232754FA00655654 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				EE585FB02408125600942DFC /* AppDelegate */,
 				CF0BD8CB2401098900FE9AA6 /* Badge */,
 				EE88DF4A23AF4EAE004DFF10 /* AlertManager */,
 				2269DD852398F9BC001F116A /* LoginSliderView */,
@@ -6066,6 +6077,7 @@
 				EE5E0255232756C100655654 /* XNotificationBridge.m in Sources */,
 				EE5E0163232754FA00655654 /* YXGuideView.m in Sources */,
 				7702ABFF23880E6600EC0C69 /* YXAboutUsViewController.swift in Sources */,
+				EE585FB22408125700942DFC /* AppDelegate+Notification.swift in Sources */,
 				EE5E007F23274FEB00655654 /* YXNinePalaceKeyBoardView.m in Sources */,
 				2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */,
 				EE7721002379333100CD632E /* YXKVOImageView.swift in Sources */,
