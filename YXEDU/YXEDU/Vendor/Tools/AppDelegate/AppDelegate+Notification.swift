@@ -8,8 +8,12 @@
 
 import UIKit
 
-extension AppDelegate: JPUSHRegisterDelegate {
-
+extension AppDelegate {
+    
+    /// 设置推送
+    /// - Parameters:
+    ///   - application:
+    ///   - launchOptions:
     func setRemoteNotification(_ application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         /// 初始化 APNs 代码
         let entity = JPUSHRegisterEntity()
@@ -31,7 +35,22 @@ extension AppDelegate: JPUSHRegisterDelegate {
     }
     
     
-    
+    /// 处理推送
+    /// - Parameter userInfo: 数据
+    func processNotification(userInfo: [AnyHashable: Any]?) {
+        if UIApplication.shared.applicationState == .active {
+            return
+        }
+        if let action = userInfo?["action"] as? String {
+            YRRouter.openURL(action, query: nil, animated: true)
+        }
+    }
+}
+
+
+extension AppDelegate: JPUSHRegisterDelegate {
+
+    /// 当app在前台时，静默推送
     @available(iOS 10.0, *)
     func jpushNotificationCenter(_ center: UNUserNotificationCenter!, willPresent notification: UNNotification!, withCompletionHandler completionHandler: ((Int) -> Void)!) {
         
@@ -64,15 +83,6 @@ extension AppDelegate: JPUSHRegisterDelegate {
         
     }
     
-    
-    /// iOS 10方法，收到推送通知
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        JPUSHService.handleRemoteNotification(userInfo)
-        completionHandler(.newData)
-        
-        processNotification(userInfo: userInfo)
-    }
-    
 
     /// 获取Token进行注册
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -95,13 +105,3 @@ extension AppDelegate: JPUSHRegisterDelegate {
 
 
 
-extension AppDelegate {
-    func processNotification(userInfo: [AnyHashable: Any]?) {
-        if UIApplication.shared.applicationState == .active {
-            return
-        }
-        if let action = userInfo?["action"] as? String {
-            YRRouter.openURL(action, query: nil, animated: true)
-        }
-    }
-}

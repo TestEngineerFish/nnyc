@@ -23,8 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         
-        
-        
         setRemoteNotification(application, launchOptions)
         initThirdPartyServices()
         initViewAndData()
