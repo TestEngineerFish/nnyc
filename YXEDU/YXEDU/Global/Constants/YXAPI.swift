@@ -170,6 +170,14 @@ struct YXAPI {
     struct Other {
         /// 日志数据上报
         static let report = "/api/v1/device/report"
+        /// 用户反馈回复已读接口
+        static let feedbackReport = "/api/v1/feedback/reply/report"
+    }
+    
+    // MARK: - Badge
+    struct Badge {
+        /// 用户反馈回复接口
+        static let feedbackReply = "/api/v1/feedback/reply"
     }
 }
 

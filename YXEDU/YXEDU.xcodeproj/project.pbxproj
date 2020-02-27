@@ -257,8 +257,9 @@
 		CF0BD8CD240134A400FE9AA6 /* YXBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8CC240134A400FE9AA6 /* YXBadgeView.swift */; };
 		CF0BD8D22402715B00FE9AA6 /* YXFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D12402715B00FE9AA6 /* YXFeedbackListViewController.swift */; };
 		CF0BD8D42402720700FE9AA6 /* YXFeedbackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D32402720700FE9AA6 /* YXFeedbackCell.swift */; };
-		CF0BD8D6240288BC00FE9AA6 /* YXFeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D5240288BC00FE9AA6 /* YXFeedbackModel.swift */; };
+		CF0BD8D6240288BC00FE9AA6 /* YXFeedbackReplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D5240288BC00FE9AA6 /* YXFeedbackReplyModel.swift */; };
 		CF53B4902406717C00625892 /* UITabBarItem+BadgeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */; };
+		CF53B49524067CA200625892 /* YXFeedbackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF53B49424067CA200625892 /* YXFeedbackData.swift */; };
 		CFF4914C23F56D7F00038113 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFF4914B23F56D7F00038113 /* TencentOpenAPI.framework */; };
 		CFFB700823EBB56F0088DAAA /* YXReviewPlanReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */; };
 		CFFB700A23EBDEB50088DAAA /* YXShareDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */; };
@@ -1047,9 +1048,10 @@
 		CF0BD8CC240134A400FE9AA6 /* YXBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeView.swift; sourceTree = "<group>"; };
 		CF0BD8D12402715B00FE9AA6 /* YXFeedbackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackListViewController.swift; sourceTree = "<group>"; };
 		CF0BD8D32402720700FE9AA6 /* YXFeedbackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackCell.swift; sourceTree = "<group>"; };
-		CF0BD8D5240288BC00FE9AA6 /* YXFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackModel.swift; sourceTree = "<group>"; };
+		CF0BD8D5240288BC00FE9AA6 /* YXFeedbackReplyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackReplyModel.swift; sourceTree = "<group>"; };
 		CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+BadgeValue.m"; sourceTree = "<group>"; };
 		CF53B48F2406717C00625892 /* UITabBarItem+BadgeValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+BadgeValue.h"; sourceTree = "<group>"; };
+		CF53B49424067CA200625892 /* YXFeedbackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YXFeedbackData.swift; path = YXEDU/Modules/Mine/ViewControllers/FeedBack/Data/YXFeedbackData.swift; sourceTree = SOURCE_ROOT; };
 		CFF4914B23F56D7F00038113 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanReportViewController.swift; sourceTree = "<group>"; };
 		CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareDefaultView.swift; sourceTree = "<group>"; };
@@ -2875,6 +2877,14 @@
 				CF0BD8D12402715B00FE9AA6 /* YXFeedbackListViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		CF53B49324067C8400625892 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				CF53B49424067CA200625892 /* YXFeedbackData.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		D62D6AA4204FEF7A005E3273 = {
@@ -5180,6 +5190,7 @@
 		EE5EFFC223274FEA00655654 /* Feedback */ = {
 			isa = PBXGroup;
 			children = (
+				CF53B49324067C8400625892 /* Data */,
 				CF0BD8CE2402710900FE9AA6 /* Controller */,
 				EE5EFFC423274FEA00655654 /* ViewModel */,
 				EE5EFFC823274FEA00655654 /* Model */,
@@ -5202,7 +5213,7 @@
 			children = (
 				EE5EFFC923274FEA00655654 /* YXFeedSendModel.m */,
 				EE5EFFCA23274FEA00655654 /* YXFeedSendModel.h */,
-				CF0BD8D5240288BC00FE9AA6 /* YXFeedbackModel.swift */,
+				CF0BD8D5240288BC00FE9AA6 /* YXFeedbackReplyModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6062,8 +6073,9 @@
 				EE5E001223274FEB00655654 /* YXCareerCommentButton.m in Sources */,
 				224352D523A369A600F278E6 /* YXChallengeRequest.swift in Sources */,
 				EE5EF20923273BAE00655654 /* YRDateFormater.m in Sources */,
+				CF53B49524067CA200625892 /* YXFeedbackData.swift in Sources */,
 				EE5E010923274FEC00655654 /* YXSendSMSModel.m in Sources */,
-				CF0BD8D6240288BC00FE9AA6 /* YXFeedbackModel.swift in Sources */,
+				CF0BD8D6240288BC00FE9AA6 /* YXFeedbackReplyModel.swift in Sources */,
 				223D2685239B4A70008DED9E /* BPItemHeaderView.swift in Sources */,
 				224352DD23A4B92400F278E6 /* YXGameQuestionView.swift in Sources */,
 				EEACEB3823A22B1E0036B3A2 /* YYNetworkService+Monitor.swift in Sources */,

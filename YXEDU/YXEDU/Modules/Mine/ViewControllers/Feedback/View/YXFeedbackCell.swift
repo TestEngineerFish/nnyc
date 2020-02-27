@@ -65,9 +65,9 @@ class YXFeedbackCell: UITableViewCell {
         }
     }
     
-    func setData(_ model: YXFeedbackModel) {
-        self.titleLabel.text   = "2月12号 用户反馈"
-        self.dotView.isHidden  = !model.isNew
+    func setData(_ model: YXFeedbackReplyModel) {
+        self.titleLabel.text   = (model.dateStr ?? "") + " 用户反馈"
+        self.dotView.isHidden  = !model.isRead
         self.contentLabel.text = model.content
         let titleW = self.titleLabel.text?.textWidth(font: self.titleLabel.font, height: AdaptSize(21)) ?? 0
         self.titleLabel.snp.updateConstraints { (make) in

@@ -1,5 +1,5 @@
 //
-//  YXFeedbackModel.swift
+//  YXFeedbackReplyModel.swift
 //  YXEDU
 //
 //  Created by 沙庭宇 on 2020/2/23.
@@ -8,11 +8,11 @@
 
 import ObjectMapper
 
-struct YXFeedbackModel: Mappable {
+struct YXFeedbackReplyModel: Mappable {
     
     var id: Int?
-    var time: Double?
-    var isNew: Bool = false
+    var dateStr: String?
+    var isRead: Bool = false
     var content: String?
     
     init() {}
@@ -20,10 +20,10 @@ struct YXFeedbackModel: Mappable {
     init?(map: Map) {}
     
     mutating func mapping(map: Map) {
-        id      <- map[""]
-        time    <- map[""]
-        isNew   <- map[""]
-        content <- map[""]
+        id      <- map["feed_id"]
+        dateStr <- map["reply_date"]
+        isRead  <- map["reply_state"]
+        content <- map["reply_content"]
     }
     
     
