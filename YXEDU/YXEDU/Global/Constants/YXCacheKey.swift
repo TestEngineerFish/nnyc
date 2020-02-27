@@ -10,11 +10,12 @@ import Foundation
 
 
 enum YXLocalKey: String {
-    case updateVersionTips = "kUpdateVersionTips" // 版本更新提示
-    case oldUserVersionTips = "kOldUserVersionTips" // 版本更新提示
-    case alreadShowNewLearnGuideView = "kAlreadShowNewLearnGuideView" // 显示学习引导图
+    case updateVersionTips             = "kUpdateVersionTips" // 版本更新提示
+    case oldUserVersionTips            = "kOldUserVersionTips" // 版本更新提示
+    case alreadShowNewLearnGuideView   = "kAlreadShowNewLearnGuideView" // 显示学习引导图
     case alreadShowMakeReviewGuideView = "kAlreadShowMakeReviewGuideView" // 显示制作复习计划引导图
-    case learningState = "kLearningState"      // 学习中状态
+    case learningState                 = "kLearningState"      // 学习中状态
+    case newFeedbackReply              = "newFeedbackReply"    // 反馈回复消息
     
 }
 

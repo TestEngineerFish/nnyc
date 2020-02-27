@@ -27,6 +27,7 @@
 #import <CL_ShanYanSDK/CL_ShanYanSDK.h>
 
 #import "YXPolicyVC.h"
+#import "YXAgreementVC.h"
 #import "YXBindViewModel.h"
 #import "YXLoginSendModel.h"
 #import "YXComAlertView.h"
@@ -66,6 +67,7 @@
 #import "YXShareHelper.h"
 #import "YRDevice.h"
 #import "UIDevice+YX.h"
+#import "UITabBarItem+BadgeValue.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "JPUSHService.h"

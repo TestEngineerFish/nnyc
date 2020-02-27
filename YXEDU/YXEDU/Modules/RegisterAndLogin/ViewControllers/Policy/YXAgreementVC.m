@@ -1,20 +1,20 @@
 //
-//  YXPolicyVC.m
+//  YXAgreementVC.m
 //  YXEDU
 //
 //  Created by shiji on 2018/3/31.
 //  Copyright © 2018年 shiji. All rights reserved.
 //
 
-#import "YXPolicyVC.h"
+#import "YXAgreementVC.h"
 #import "BSCommon.h"
 #import "YXAPI.h"
 
-@interface YXPolicyVC ()<UIWebViewDelegate>
+@interface YXAgreementVC ()<UIWebViewDelegate>
 @property (nonatomic, strong) UIWebView *yxwebView;
 @end
 
-@implementation YXPolicyVC
+@implementation YXAgreementVC
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -27,7 +27,7 @@
     self.yxwebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kNavHeight)];
     self.yxwebView.delegate = self;
     [self.view addSubview:self.yxwebView];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:STRCAT(STRCAT(SCHEME,YX_IP),@"/privacy.html")]];//
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:STRCAT(STRCAT(SCHEME,YX_IP),@"/agreement.html")]];//
     [self.yxwebView loadRequest:request];
 }
 

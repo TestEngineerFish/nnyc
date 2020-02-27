@@ -1,5 +1,5 @@
 //
-//  YXSelectGradeCell.swift
+//  YXAddBookGuideItem.swift
 //  YXEDU
 //
 //  Created by Jake To on 10/25/19.
@@ -8,10 +8,9 @@
 
 import UIKit
 
-class YXSelectGradeCell: UICollectionViewCell {
+class YXAddBookGuideItem: UICollectionViewCell {
 
-    @IBOutlet weak var editButton: UIButton!
-    @IBOutlet weak var gradeLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var colorView: YXDesignableView!
     
     override func awakeFromNib() {

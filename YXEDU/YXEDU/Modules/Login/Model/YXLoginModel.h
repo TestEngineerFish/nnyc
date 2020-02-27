@@ -15,5 +15,6 @@
 @property (nonatomic, strong) YXBookModel *learning;
 @property (nonatomic, strong) NSArray <YXBookModel *>*booklist;
 @property (nonatomic, strong) YXDLModel *dl;
+@property (nonatomic) NSNumber *notify;
 
 @end

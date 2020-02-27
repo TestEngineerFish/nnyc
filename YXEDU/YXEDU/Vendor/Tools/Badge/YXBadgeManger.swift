@@ -8,23 +8,33 @@
 
 import Foundation
 
-class YXBadgeManger: NSObject {
+@objc class YXBadgeManger: NSObject {
     
-    static let share = YXBadgeManger()
+    @objc static let share = YXBadgeManger()
     
     var mineBadge: Int     = 0
     var feedbackBadge: Int = 0
-    let kHasNewFeedbackMsg = "hasNewFeedbackMsg"
-    
-    func updateMineBadge(_ num: Int) {
-        YYCache.set(num, forKey: kHasNewFeedbackMsg)
-    }
-    
-    func getFeedbackBadgeNum() -> Int {
-        guard let badgeNum = YYCache.object(forKey: kHasNewFeedbackMsg) as? Int else {
+
+    // MARK: ---- 获取Badge ----
+    @objc func getFeedbackReplyBadgeNum() -> Int {
+        guard let badgeNum = YYCache.object(forKey: YXLocalKey.newFeedbackReply) as? Int else {
             return 0
         }
         return badgeNum
+    }
+    
+    // MARK: ---- 更新Badge ----
+    func updateFeedbackReplyBadge() {
+        // 清除本地通知的badge
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        YXComHttpService.shared()?.requestUserInfo({ (objc, result) in
+            guard let userModel = objc as? YXLoginModel else {
+                return
+            }
+            let badgeNum = userModel.notify.intValue
+            YYCache.set(badgeNum, forKey: YXLocalKey.newFeedbackReply)
+            UIApplication.shared.applicationIconBadgeNumber = badgeNum
+        })
     }
     
 }

@@ -225,7 +225,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    NSInteger badgeNum = [YXBadgeManger.share getFeedbackReplyBadgeNum];
+    [self.dotView setHidden:(badgeNum <= 0)];
     self.textColorType = TextColorWhite;
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }

@@ -113,7 +113,7 @@ class YXShareViewController: YXViewController {
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] response in
             guard let self = self, let result = response.data, let imageUrls = result.imageUrls, imageUrls.count > 0 else { return }
             self.backgroundImageUrls = imageUrls
-            self.currentBackgroundImageUrl = self.backgroundImageUrls?[0]
+            self.currentBackgroundImageUrl = self.backgroundImageUrls?.randomElement()
             
             self.getBackgroundImage(from:  self.currentBackgroundImageUrl) { backgroundImage in
                 

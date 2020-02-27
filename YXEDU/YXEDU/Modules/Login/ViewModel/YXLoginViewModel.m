@@ -94,8 +94,9 @@
     [[YXComHttpService shared]requestUserInfo:^(id obj, BOOL result) {
         if (result) {
             YXLoginModel *model = obj;
-            [YXConfigure shared].mobile = model.user.mobile;
-            [YXConfigure shared].uuid = model.user.uuid;
+            [YXConfigure shared].mobile     = model.user.mobile;
+            [YXConfigure shared].uuid       = model.user.uuid;
+            [YXConfigure shared].loginModel = model;
         }
         block(obj, result);
     }];

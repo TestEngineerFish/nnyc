@@ -12,13 +12,13 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
     
     var tableView = UITableView()
     
-    var feedbackList = [YXFeedbackModel]()
+    var feedbackList = [YXFeedbackReplyModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubviews()
         self.bindProperty()
-        self.requestData()
+        self.requestFeedbackReply()
     }
     
     private func bindProperty() {
@@ -40,20 +40,41 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
     }
     
     // MARK: ---- request ----
-    private func requestData() {
-        self.feedbackList = []
-        for index in 0..<10 {
-            var model = YXFeedbackModel()
-            if index%2 > 0 {
-                model.content = "Swift 代码被编译和优化，以充分利用现代硬件。语法和标准库是基于指导原则设计的，编写代码的明显方式也应该是最好的。安全性和速度的结合使得 Swift 成为从 “Hello，world！” 到整个操作系统的绝佳选择。"
-                model.isNew   = true
-            } else {
-                model.content = "Swift 通过采用现代编程模式来避免大量常见编程错误"
-                model.isNew   = false
+    /// 获得反馈回复内容
+    private func requestFeedbackReply() {
+        let request = YXFeedbackRequest.feedbackReply
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXFeedbackReplyModel>.self, request: request, success: {  [weak self] (response) in
+            guard let self = self, let modelList = response.dataArray else {
+                return
             }
-            self.feedbackList.append(model)
+            self.feedbackList = modelList
+            self.tableView.reloadData()
+            self.reportReply()
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error.message)")
         }
-        self.tableView.reloadData()
+    }
+    
+    /// 反馈回复已读上报
+    private func reportReply() {
+        let idList = self.feedbackList.compactMap { (model) -> Int? in
+            if model.isRead {
+                return nil
+            }
+            return model.id
+        }
+        let request = YXFeedbackRequest.reporyReply(ids: idList)
+        YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
+            guard let model = response.data else {
+                return
+            }
+            if model.state == 1 {
+                UIApplication.shared.applicationIconBadgeNumber = 0
+                YXBadgeManger.share.updateFeedbackReplyBadge()
+            }
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: "\(error.message)")
+        }
     }
     
     // MARK: ---- UITableViewDelegate ----

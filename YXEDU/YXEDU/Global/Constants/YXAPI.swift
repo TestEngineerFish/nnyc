@@ -70,6 +70,8 @@ struct YXAPI {
         static let searchWord       = "/api/v1/search"
         /// 获得词书中所有单词
         static let getBookWords     = "/api/v1/book/getbookwords"
+        // 所以词书
+        static let bookList = "/api/v1/book/getbooklist"
     }
 
     // MARK: - 复习模块
@@ -170,6 +172,14 @@ struct YXAPI {
     struct Other {
         /// 日志数据上报
         static let report = "/api/v1/device/report"
+        /// 用户反馈回复已读接口
+        static let feedbackReport = "/api/v1/feedback/reply/report"
+    }
+    
+    // MARK: - Badge
+    struct Badge {
+        /// 用户反馈回复接口
+        static let feedbackReply = "/api/v1/feedback/reply"
     }
 }
 

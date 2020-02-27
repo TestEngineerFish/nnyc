@@ -137,14 +137,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         let request = YXRegisterAndLoginRequest.userInfomation
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
             guard let userInfomation = response.data else { return }
-            
+
             if userInfomation.didSelectBook == 0 {
-                self.performSegue(withIdentifier: "AddBookFromHomeWithoutAnimation", sender: self)
+                self.performSegue(withIdentifier: "AddBookGuide", sender: self)
                 
             } else {
                 self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
             }
-            
+
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
 

@@ -64,9 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             window?.makeKeyAndVisible()
         }
-        
-        /// 清除Badge
-        UIApplication.shared.applicationIconBadgeNumber = 0
+        YXBadgeManger.share.updateFeedbackReplyBadge()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

@@ -415,9 +415,8 @@
                         <segue destination="tQ4-Ah-3Gu" kind="show" identifier="Calendar" id="fSi-bJ-cQk"/>
                         <segue destination="N4y-4U-KXc" kind="show" identifier="StudyReport" id="f6j-pj-jMh"/>
                         <segue destination="xWi-kI-jZm" kind="show" identifier="PickUpWords" id="Ah7-hX-NCL"/>
-                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBookFromHome" id="CTN-wc-He9"/>
-                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBookFromHomeWithoutAnimation" animates="NO" id="ciU-tN-L5E"/>
                         <segue destination="I2c-Ah-MPk" kind="show" identifier="WordList" id="29y-bx-HQj"/>
+                        <segue destination="JnP-zA-VAP" kind="show" identifier="AddBookGuide" animates="NO" id="u2y-xU-85A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5w-Bb-6XP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -909,6 +908,92 @@
             </objects>
             <point key="canvasLocation" x="345" y="1643"/>
         </scene>
+        <!--Add Book Guide View Controller-->
+        <scene sceneID="3W5-uv-06V">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="JnP-zA-VAP" customClass="YXAddBookGuideViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Qax-Wr-LXN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ifT-Ac-j5g" customClass="YXAddBookGuideView" customModule="YXEDU" customModuleProvider="target">
+                                <rect key="frame" x="44" y="0.0" width="326" height="126"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="126" id="36g-ny-NXi"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4X-c4-5JV" customClass="YXAddBookGuideView" customModule="YXEDU" customModuleProvider="target">
+                                <rect key="frame" x="44" y="126" width="326" height="126"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="126" id="O1E-OE-LVk"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AD1-Om-aNX" customClass="YXAddBookGuideView" customModule="YXEDU" customModuleProvider="target">
+                                <rect key="frame" x="44" y="252" width="326" height="126"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="126" id="lyC-dY-SZQ"/>
+                                </constraints>
+                            </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RIv-j6-QEV" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
+                                <rect key="frame" x="44" y="690" width="326" height="40"/>
+                                <color key="backgroundColor" red="1" green="0.95686274510000002" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="pUI-mV-3he"/>
+                                </constraints>
+                                <state key="normal" title="开始背单词">
+                                    <color key="titleColor" red="0.91764705879999997" green="0.82352941180000006" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableGradientBackground" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="start:" destination="JnP-zA-VAP" eventType="touchUpInside" id="aKf-V7-OKR"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="RIv-j6-QEV" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="44" id="2E7-yM-mDa"/>
+                            <constraint firstItem="B4X-c4-5JV" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="44" id="898-kP-OFQ"/>
+                            <constraint firstItem="AD1-Om-aNX" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="44" id="Aan-hN-awx"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="AD1-Om-aNX" secondAttribute="trailing" constant="44" id="Aky-de-iiz"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="RIv-j6-QEV" secondAttribute="trailing" constant="44" id="Jxg-RK-BYB"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="ifT-Ac-j5g" secondAttribute="trailing" constant="44" id="Oaa-Qb-rdV"/>
+                            <constraint firstItem="B4X-c4-5JV" firstAttribute="top" secondItem="ifT-Ac-j5g" secondAttribute="bottom" id="Sbv-ty-5DS"/>
+                            <constraint firstItem="AD1-Om-aNX" firstAttribute="top" secondItem="B4X-c4-5JV" secondAttribute="bottom" id="Yp5-F5-dhK"/>
+                            <constraint firstItem="ifT-Ac-j5g" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="44" id="k0i-s6-VfR"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="B4X-c4-5JV" secondAttribute="trailing" constant="44" id="kwJ-d8-NDZ"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="bottom" secondItem="RIv-j6-QEV" secondAttribute="bottom" constant="44" id="mII-sv-mzc"/>
+                            <constraint firstItem="ifT-Ac-j5g" firstAttribute="top" secondItem="ZPr-wg-bdc" secondAttribute="top" id="pKc-Dj-a8g"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ZPr-wg-bdc"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="0Ta-6s-5G6">
+                        <barButtonItem key="leftBarButtonItem" id="GR0-Cs-S3b"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="selectBookNameView" destination="AD1-Om-aNX" id="ujh-0m-YQh"/>
+                        <outlet property="selectBookNameViewHeight" destination="lyC-dY-SZQ" id="Y4j-YQ-x6l"/>
+                        <outlet property="selectBookNameViewTopOffSet" destination="Yp5-F5-dhK" id="SRq-ec-O7c"/>
+                        <outlet property="selectGradeView" destination="ifT-Ac-j5g" id="E8F-HO-PWi"/>
+                        <outlet property="selectGradeViewHeight" destination="36g-ny-NXi" id="rBY-cN-gma"/>
+                        <outlet property="selectGradeViewTopOffSet" destination="pKc-Dj-a8g" id="HU5-wf-WlB"/>
+                        <outlet property="selectVersionView" destination="B4X-c4-5JV" id="21k-DQ-XhF"/>
+                        <outlet property="selectVersionViewHeight" destination="O1E-OE-LVk" id="DAp-fM-cII"/>
+                        <outlet property="selectVersionViewTopOffSet" destination="Sbv-ty-5DS" id="YQC-KP-czT"/>
+                        <outlet property="startButton" destination="RIv-j6-QEV" id="jgD-6K-18S"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fo2-7s-Ny1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2133" y="-597"/>
+        </scene>
         <!-- -->
         <scene sceneID="5eR-9g-Fah">
             <objects>
@@ -1194,7 +1279,4 @@
         <image name="taskCenterBackground" width="375" height="375"/>
         <image name="unitIndicator" width="18" height="18"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="ciU-tN-L5E"/>
-    </inferredMetricsTieBreakers>
 </document>
