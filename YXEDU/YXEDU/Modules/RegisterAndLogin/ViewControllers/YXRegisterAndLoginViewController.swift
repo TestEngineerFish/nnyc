@@ -22,6 +22,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     private var slidingVerificationCode: String?
     
     
+    
     // MARK: - Interface Builder
     @IBOutlet weak var clearPhoneNumberTextFieldButton: UIButton!
     @IBOutlet weak var phoneNumberTextField: UITextField!
@@ -73,7 +74,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     @IBAction func showAgreement(_ sender: UIButton) {
-        navigationController?.pushViewController(YXPolicyVC(), animated: true)
+        navigationController?.pushViewController(YXAgreementVC(), animated: true)
     }
     
     @IBAction func showPolicy(_ sender: UIButton) {
@@ -395,7 +396,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         configure.clAppPrivacyPunctuationMarks = true
         configure.clShanYanSloganTextColor = .clear
         configure.clAppPrivacyFirst = ["《用户协议》", URL(string: "\(YXEvnOC.baseUrl())/agreement.html")!]
-        configure.clAppPrivacySecond = ["《隐私政策》", URL(string: "\(YXEvnOC.baseUrl())/agreement.html")!]
+        configure.clAppPrivacySecond = ["《隐私政策》", URL(string: "\(YXEvnOC.baseUrl())/privacy.html")!]
 
         let layoutConfigure = CLOrientationLayOut()
         layoutConfigure.clLayoutPhoneCenterX = NSNumber(0)

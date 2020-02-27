@@ -27,6 +27,7 @@
 #import <CL_ShanYanSDK/CL_ShanYanSDK.h>
 
 #import "YXPolicyVC.h"
+#import "YXAgreementVC.h"
 #import "YXBindViewModel.h"
 #import "YXLoginSendModel.h"
 #import "YXComAlertView.h"

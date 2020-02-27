@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="YXSelectGradeCell" customModule="YXEDU" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="YXAddBookGuideItem" customModule="YXEDU" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="231" height="151"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -21,31 +21,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="231" height="151"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mG-tH-KVK">
-                                <rect key="frame" x="107.5" y="65" width="16" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="108.5" y="64.5" width="14" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="m9T-6c-3o8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebs-lF-WfC">
-                                <rect key="frame" x="98" y="67.5" width="35" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <inset key="titleEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="28" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="修改" image="go">
-                                    <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="4mG-tH-KVK" firstAttribute="centerY" secondItem="8AA-So-MKF" secondAttribute="centerY" id="Lll-CK-0j2"/>
-                            <constraint firstItem="Ebs-lF-WfC" firstAttribute="centerY" secondItem="8AA-So-MKF" secondAttribute="centerY" id="Tfd-5h-Mxc"/>
-                            <constraint firstItem="Ebs-lF-WfC" firstAttribute="centerX" secondItem="8AA-So-MKF" secondAttribute="centerX" id="eDf-zd-qDe"/>
                             <constraint firstItem="4mG-tH-KVK" firstAttribute="centerX" secondItem="8AA-So-MKF" secondAttribute="centerX" id="kue-h9-so9"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="14"/>
+                                <real key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
@@ -61,13 +59,9 @@
             <size key="customSize" width="231" height="151"/>
             <connections>
                 <outlet property="colorView" destination="8AA-So-MKF" id="0Rb-Pk-YA4"/>
-                <outlet property="editButton" destination="Ebs-lF-WfC" id="LPQ-mg-YMR"/>
-                <outlet property="gradeLabel" destination="4mG-tH-KVK" id="Mab-Yp-pRx"/>
+                <outlet property="titleLabel" destination="4mG-tH-KVK" id="udq-Xe-Sep"/>
             </connections>
             <point key="canvasLocation" x="31" y="136"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="go" width="8" height="15"/>
-    </resources>
 </document>

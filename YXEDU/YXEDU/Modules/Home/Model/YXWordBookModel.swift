@@ -14,6 +14,7 @@ import ObjectMapper
 struct YXGradeWordBookListModel: Mappable {
     var isSelect = false
 
+    var gradeId: Int?
     var gradeName: String?
     var wordBooks: [YXWordBookModel]?
     
@@ -24,6 +25,7 @@ struct YXGradeWordBookListModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
+        gradeId <- map["grade_id"]
         gradeName <- map["grade_name"]
         wordBooks <- map["book_list"]
     }
@@ -46,7 +48,9 @@ struct YXWordBookModel: Mappable {
     var didFinished: Int?
     var bookHash: String?
     var units: [YXWordBookUnitModel]?
-    
+    var bookVersionId: Int?
+    var bookVersion: String?
+
     init() {}
 
     init?(map: Map) {
@@ -64,6 +68,8 @@ struct YXWordBookModel: Mappable {
         didFinished            <- map["is_learn_finish"]
         bookHash               <- map["hash"]
         units                  <- map["unit_list"]
+        bookVersionId <- map["book_ver_id"]
+        bookVersion <- map["book_ver_name"]
     }
 }
 

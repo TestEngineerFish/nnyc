@@ -13,10 +13,11 @@ public enum YXWordBookRequest: YYBaseRequest {
     case downloadWordBook(bookId: Int?)
     case addWordBook(userId: String, bookId: Int, unitId: Int)
     case getBookWord(bookId: Int)
-
+    case bookList
+    
     var method: YYHTTPMethod {
         switch self {
-        case .wordDetail, .downloadWordBook, .addWordBook, .getBookWord:
+        case .wordDetail, .downloadWordBook, .addWordBook, .getBookWord, .bookList:
             return .get
         }
     }
@@ -31,6 +32,8 @@ public enum YXWordBookRequest: YYBaseRequest {
             return YXAPI.Word.addUserBook
         case .getBookWord:
             return YXAPI.Word.getBookWords
+        case .bookList:
+            return YXAPI.Word.bookList
         }
     }
     
@@ -48,6 +51,8 @@ public enum YXWordBookRequest: YYBaseRequest {
             return ["user_id": userId, "book_id": bookId, "unit_id": unitId]
         case .getBookWord(let bookId):
             return ["book_id" : bookId]
+        default:
+            return nil
         }
     }
 }

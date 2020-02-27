@@ -70,6 +70,8 @@ struct YXAPI {
         static let searchWord       = "/api/v1/search"
         /// 获得词书中所有单词
         static let getBookWords     = "/api/v1/book/getbookwords"
+        // 所以词书
+        static let bookList = "/api/v1/book/getbooklist"
     }
 
     // MARK: - 复习模块
