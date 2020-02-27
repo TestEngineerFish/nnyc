@@ -44,6 +44,16 @@ extension AppDelegate {
         if let action = userInfo?["action"] as? String {
             YRRouter.openURL(action, query: nil, animated: true)
         }
+        
+        resetIconBadge()
+    }
+    
+    
+    /// 清楚 App icon 上的红点
+    func resetIconBadge() {
+        
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        JPUSHService.setBadge(0)
     }
 }
 
@@ -87,6 +97,11 @@ extension AppDelegate: JPUSHRegisterDelegate {
     /// 获取Token进行注册
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         JPUSHService.registerDeviceToken(deviceToken)
+        
+        if YXUserModel.default.didLogin == false {
+            // 没登陆
+            return
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             JPUSHService.setAlias(YXUserModel.default.uuid ?? "", completion: { (code, alias, seq) in
