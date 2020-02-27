@@ -85,7 +85,7 @@
 
 #pragma -mark *************************** open URL ****************************
 
-+ (void)openURL:(NSString *) url query:(NSDictionary *) query animated:(BOOL) animated {
++ (void)openURL:(NSString *) url query:(NSDictionary * _Nullable) query animated:(BOOL) animated {
     [self openURL:url query:query isPresent:NO animated:animated completion:nil];
 }
 

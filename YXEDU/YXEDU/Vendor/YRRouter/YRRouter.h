@@ -87,7 +87,7 @@
  * @param   query       页面所需参数
  * @param   animated    是否需要动画打开
  */
-+ (void)openURL:(NSString *) url query:(NSDictionary *) query animated:(BOOL) animated;
++ (void)openURL:(NSString *) url query:(NSDictionary * _Nullable) query animated:(BOOL) animated;
 
 
 /*

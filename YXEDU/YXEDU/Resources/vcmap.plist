@@ -20,5 +20,7 @@
 	<string>YWReportViewController</string>
 	<key>global/web</key>
 	<string>YWWebViewController</string>
+	<key>feedback/message</key>
+	<string>YXFeedbackListViewController</string>
 </dict>
 </plist>

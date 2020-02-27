@@ -12,7 +12,7 @@
 
 //static NSString * const kPyyx_scheme = @"pyyx";
 //#define kPYYXAppScheme [NSString stringWithFormat:@"%@://com.pyyx/", kPyyx_scheme]
-static NSString * const kPYYXAppScheme = @"pyyx://pyyx.com/";
+static NSString * const kPYYXAppScheme = @"nnyc://com.nnyc/";
 
 
 /** URL 和 ViewController对应关系，key为url，value为ViewController */

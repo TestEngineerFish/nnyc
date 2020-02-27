@@ -23,7 +23,9 @@ extension AppDelegate: JPUSHRegisterDelegate {
         
         /// app冷启动，从通知栏点击进去
         if let remoteNotification = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable : Any] {
-            processNotification(userInfo: remoteNotification)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                self?.processNotification(userInfo: remoteNotification)
+            }
         }
         
     }
@@ -95,13 +97,11 @@ extension AppDelegate: JPUSHRegisterDelegate {
 
 extension AppDelegate {
     func processNotification(userInfo: [AnyHashable: Any]?) {
-                
         if UIApplication.shared.applicationState == .active {
             return
         }
-        
-        var action = userInfo?["action"]
-        action = "nnyc://com.nnyc/feedback/message" 
-        YRRouter.openURL(action, query: [], animated: true)
+        if let action = userInfo?["action"] as? String {
+            YRRouter.openURL(action, query: nil, animated: true)
+        }
     }
 }
