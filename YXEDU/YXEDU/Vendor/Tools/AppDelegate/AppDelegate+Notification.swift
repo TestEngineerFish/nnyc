@@ -41,13 +41,10 @@ extension AppDelegate {
         if UIApplication.shared.applicationState == .active {
             return
         }
-        
         YXBadgeManger.share.updateFeedbackReplyBadge()
-        
         if let action = userInfo?["action"] as? String {
             YRRouter.openURL(action, query: nil, animated: true)
         }
-        
         resetIconBadge()
     }
     
