@@ -66,7 +66,8 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
         dataSource = data
         isSelecting = true
         selectedIndex = nil
-        
+        editButton.alpha = 0
+
         enterSelectMode()
     }
     
@@ -143,8 +144,16 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
             self.dataSource.insert(date, at: 0)
             self.collectionView.moveItem(at: IndexPath(row: index, section: 0), to: IndexPath(row: 0, section: 0))
             
+            var cellWidth: CGFloat = 0
             let textWidth = self.dataSource[0].textWidth(font: UIFont.systemFont(ofSize: 15), height: 22)
-            self.editButton.frame = CGRect(x: textWidth + 44, y: 40, width: 36, height: 30)
+            if textWidth > (screenWidth - 108) / 3 {
+                cellWidth = textWidth + 20
+
+            } else {
+                cellWidth = (screenWidth - 108) / 3
+            }
+            
+            self.editButton.frame = CGRect(x: cellWidth + 20, y: 40, width: 36, height: 30)
             self.editButton.alpha = 0
             UIView.animate(withDuration: self.hideTimeInterval) {
                 self.editButton.alpha = 1
