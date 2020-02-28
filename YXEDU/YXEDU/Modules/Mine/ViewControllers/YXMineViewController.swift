@@ -24,6 +24,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var ownedMedalLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
+    let badgeView = YXBadgeView()
     
     @IBAction func tapCoin(_ sender: UITapGestureRecognizer) {
         self.performSegue(withIdentifier: "Coin", sender: self)
@@ -84,7 +85,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    private func loadData() {
+    func loadData() {
         YXComHttpService.shared().requestUserInfo({ (response, isSuccess) in
             if isSuccess, let response = response {
                 let loginModel = response as! YXLoginModel
@@ -210,15 +211,13 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive")!
             let badgeNum = YXBadgeManger.share.getFeedbackReplyBadgeNum()
-            if badgeNum > 0 {
-                let badgeView = YXBadgeView()
-                 cell.addSubview(badgeView)
-                 badgeView.snp.makeConstraints { (make) in
-                     make.centerY.equalToSuperview()
-                     make.right.equalToSuperview().offset(-AdaptSize(30))
-                     make.size.equalTo(badgeView.size)
-                 }
+            cell.addSubview(badgeView)
+            badgeView.snp.makeConstraints { (make) in
+                make.centerY.equalToSuperview()
+                make.right.equalToSuperview().offset(-AdaptSize(30))
+                make.size.equalTo(badgeView.size)
             }
+            badgeView.isHidden = badgeNum <= 0
             return cell
         default:
             return tableView.dequeueReusableCell(withIdentifier: "CellSix")!

@@ -37,6 +37,9 @@ import Foundation
             if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController {
                 tabBarController.children.last?.tabBarItem.badgeColor = UIColor.clear
                 tabBarController.children.last?.tabBarItem.badgeValue = badgeNum > 0 ? "" : nil
+                if let vc = YRRouter.sharedInstance()?.currentViewController() as? YXMineViewController {
+                    vc.loadData()
+                }
             }
         })
     }
