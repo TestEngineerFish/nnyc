@@ -62,7 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             window?.makeKeyAndVisible()
         }
-        YXBadgeManger.share.updateFeedbackReplyBadge()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -83,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("==== applicationWillEnterForeground ====")
         // 回到前台，检查口令
         YXAlertCheckManager.default.checkCommand(isStartup: false, nil)
+        YXBadgeManger.share.updateFeedbackReplyBadge()
     }
     
     /** 每次启动时，都执行，但这个方法太过灵敏，App显示通知栏、双击home等情况，App没有完全退到后台时，也会调用，因此只是App每次启动时调用一次 */

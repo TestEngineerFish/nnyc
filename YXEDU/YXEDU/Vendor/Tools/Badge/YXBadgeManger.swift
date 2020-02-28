@@ -34,6 +34,10 @@ import Foundation
             let badgeNum = userModel.notify.intValue
             YYCache.set(badgeNum, forKey: YXLocalKey.newFeedbackReply)
             UIApplication.shared.applicationIconBadgeNumber = badgeNum
+            if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController {
+                tabBarController.children.last?.tabBarItem.badgeColor = UIColor.clear
+                tabBarController.children.last?.tabBarItem.badgeValue = badgeNum > 0 ? "" : nil
+            }
         })
     }
     
