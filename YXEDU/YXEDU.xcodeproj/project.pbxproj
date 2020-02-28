@@ -266,6 +266,7 @@
 		CF0BD8D22402715B00FE9AA6 /* YXFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D12402715B00FE9AA6 /* YXFeedbackListViewController.swift */; };
 		CF0BD8D42402720700FE9AA6 /* YXFeedbackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D32402720700FE9AA6 /* YXFeedbackCell.swift */; };
 		CF0BD8D6240288BC00FE9AA6 /* YXFeedbackReplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D5240288BC00FE9AA6 /* YXFeedbackReplyModel.swift */; };
+		CF1CA66F240915490003A8E8 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CA66E240915490003A8E8 /* Array+Extension.swift */; };
 		CF53B4902406717C00625892 /* UITabBarItem+BadgeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */; };
 		CF53B49524067CA200625892 /* YXFeedbackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF53B49424067CA200625892 /* YXFeedbackData.swift */; };
 		CFF4914C23F56D7F00038113 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFF4914B23F56D7F00038113 /* TencentOpenAPI.framework */; };
@@ -1067,6 +1068,7 @@
 		CF0BD8D12402715B00FE9AA6 /* YXFeedbackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackListViewController.swift; sourceTree = "<group>"; };
 		CF0BD8D32402720700FE9AA6 /* YXFeedbackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackCell.swift; sourceTree = "<group>"; };
 		CF0BD8D5240288BC00FE9AA6 /* YXFeedbackReplyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackReplyModel.swift; sourceTree = "<group>"; };
+		CF1CA66E240915490003A8E8 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+BadgeValue.m"; sourceTree = "<group>"; };
 		CF53B48F2406717C00625892 /* UITabBarItem+BadgeValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+BadgeValue.h"; sourceTree = "<group>"; };
 		CF53B49424067CA200625892 /* YXFeedbackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YXFeedbackData.swift; path = YXEDU/Modules/Mine/ViewControllers/FeedBack/Data/YXFeedbackData.swift; sourceTree = SOURCE_ROOT; };
@@ -3729,6 +3731,7 @@
 				2205A94A23630CD900C6E674 /* String+Extension.swift */,
 				220E6746236BE1F5001C794A /* Optional+Extension.swift */,
 				2218AE4023D1A2A300EF2E42 /* Dictionary+Extension.swift */,
+				CF1CA66E240915490003A8E8 /* Array+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -6507,6 +6510,7 @@
 				EE5E001C23274FEB00655654 /* YXMyWordBookDetailVC.m in Sources */,
 				EE88DF4C23AF4ED0004DFF10 /* YXAlertCheckManager.swift in Sources */,
 				22164C0423A0DFAA00E9252D /* YXChallengeHeaderTopView.swift in Sources */,
+				CF1CA66F240915490003A8E8 /* Array+Extension.swift in Sources */,
 				EE5E0225232756C000655654 /* TYTextContainer+Extended.m in Sources */,
 				EEACEB8723A9FE530036B3A2 /* YXSearchDataManager.swift in Sources */,
 				EE1E4A9E236948C4007D248F /* YXValidationImageAndWordExerciseView.swift in Sources */,
