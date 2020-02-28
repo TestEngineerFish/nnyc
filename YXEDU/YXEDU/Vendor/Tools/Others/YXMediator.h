@@ -38,5 +38,5 @@
 
 -(BOOL)handleOpenUnivrsalLinkURL:(NSURL *)url;
 
-- (void)registerDeviceToken:(NSData *)deviceToken;
+//- (void)registerDeviceToken:(NSData *)deviceToken;
 @end

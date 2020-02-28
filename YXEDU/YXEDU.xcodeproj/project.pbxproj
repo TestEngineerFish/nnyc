@@ -564,7 +564,6 @@
 		EE5E0175232754FA00655654 /* YXKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0157232754FA00655654 /* YXKeyChain.m */; };
 		EE5E0176232754FA00655654 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E015B232754FA00655654 /* WXApiManager.m */; };
 		EE5E0177232754FA00655654 /* QQApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E015C232754FA00655654 /* QQApiManager.m */; };
-		EE5E0178232754FA00655654 /* JPushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E015E232754FA00655654 /* JPushManager.m */; };
 		EE5E0179232754FA00655654 /* NetWorkRechable.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0161232754FA00655654 /* NetWorkRechable.m */; };
 		EE5E0218232756BF00655654 /* MDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E017C232756BE00655654 /* MDMulticastDelegate.m */; };
 		EE5E021A232756BF00655654 /* TYLinkTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0182232756BE00655654 /* TYLinkTextStorage.m */; };
@@ -1194,8 +1193,6 @@
 		EE5E015A232754FA00655654 /* QQApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQApiManager.h; sourceTree = "<group>"; };
 		EE5E015B232754FA00655654 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		EE5E015C232754FA00655654 /* QQApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQApiManager.m; sourceTree = "<group>"; };
-		EE5E015E232754FA00655654 /* JPushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPushManager.m; sourceTree = "<group>"; };
-		EE5E015F232754FA00655654 /* JPushManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPushManager.h; sourceTree = "<group>"; };
 		EE5E0161232754FA00655654 /* NetWorkRechable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorkRechable.m; sourceTree = "<group>"; };
 		EE5E0162232754FA00655654 /* NetWorkRechable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorkRechable.h; sourceTree = "<group>"; };
 		EE5E017C232756BE00655654 /* MDMulticastDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDMulticastDelegate.m; sourceTree = "<group>"; };
@@ -3443,8 +3440,6 @@
 		EE5E015D232754FA00655654 /* JPush */ = {
 			isa = PBXGroup;
 			children = (
-				EE5E015E232754FA00655654 /* JPushManager.m */,
-				EE5E015F232754FA00655654 /* JPushManager.h */,
 			);
 			path = JPush;
 			sourceTree = "<group>";
@@ -6082,7 +6077,6 @@
 				2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */,
 				EE7721002379333100CD632E /* YXKVOImageView.swift in Sources */,
 				EEACEB5623A4F0F30036B3A2 /* YYScrollRefreshAnimator.swift in Sources */,
-				EE5E0178232754FA00655654 /* JPushManager.m in Sources */,
 				EE5E00B123274FEB00655654 /* YXMissonTableViewCell.m in Sources */,
 				22DEA77023B9914300E30FB7 /* YXShareCodeView.swift in Sources */,
 				EE5E00FD23274FEC00655654 /* YXLogoutModel.m in Sources */,

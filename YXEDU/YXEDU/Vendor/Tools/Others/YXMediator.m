@@ -17,7 +17,7 @@
 #import "BSCommon.h"
 #import "YXConfigure.h"
 #import "YXAPI.h"
-#import "JPushManager.h"
+//#import "JPushManager.h"
 #import "NetWorkRechable.h"
 #import "YXNavigationController.h"
 #import "YXUtils.h"
@@ -72,7 +72,7 @@
     [[BaiduLocManager shared] startLocation:^(CLLocation *obj) {
         [YXConfigure shared].location = obj;
     }];
-    [[JPushManager shared] registerJPush:jpushId];
+//    [[JPushManager shared] registerJPush:jpushId];
 }
 
 
@@ -196,9 +196,9 @@
     [app.window.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 // jpush
-- (void)registerDeviceToken:(NSData *)deviceToken {
-    [[JPushManager shared]registerDeviceToken:deviceToken];
-}
+//- (void)registerDeviceToken:(NSData *)deviceToken {
+//    [[JPushManager shared]registerDeviceToken:deviceToken];
+//}
 
 
 @end

@@ -37,10 +37,13 @@ extension AppDelegate {
     
     /// 处理推送
     /// - Parameter userInfo: 数据
-    func processNotification(userInfo: [AnyHashable: Any]?) {
+    func processNotification(userInfo: [AnyHashable: Any]?) {        
         if UIApplication.shared.applicationState == .active {
             return
         }
+        
+        YXBadgeManger.share.updateFeedbackReplyBadge()
+        
         if let action = userInfo?["action"] as? String {
             YRRouter.openURL(action, query: nil, animated: true)
         }
