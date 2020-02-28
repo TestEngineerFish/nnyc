@@ -52,7 +52,7 @@ extension AppDelegate {
     }
     
     
-    /// 清楚 App icon 上的红点
+    /// 清除 App icon 上的红点
     func resetIconBadge() {
         
         UIApplication.shared.applicationIconBadgeNumber = 0

@@ -40,14 +40,13 @@ class YXAddBookGuideViewController: UIViewController {
     }
     
     private var bookNameHeight: CGFloat {
-        var countOfRow = Int(bookNames.count / 3) + ((bookNames.count % 3) != 0 ? 1 : 0)
-        if countOfRow == 0 {
-            countOfRow = 1
-        }
+//        var countOfRow = Int(bookNames.count / 3) + ((bookNames.count % 3) != 0 ? 1 : 0)
+//        if countOfRow == 0 {
+//            countOfRow = 1
+//        }
         
-        let gradeCollectionViewHeight = (30 * countOfRow) + ((countOfRow - 1) * 10)
-//        return CGFloat(50 + gradeCollectionViewHeight)
-        return CGFloat(50 + 70)
+        let gradeCollectionViewHeight = (30 * bookNames.count) + ((bookNames.count - 1) * 10)
+        return CGFloat(50 + gradeCollectionViewHeight)
     }
     
     @IBOutlet weak var selectGradeView: YXAddBookGuideView!
@@ -87,7 +86,7 @@ class YXAddBookGuideViewController: UIViewController {
                 self.dataSource = grades
 
                 for grade in grades {
-                    if let gradeName = grade.gradeName, self.grades.contains(gradeName) == false {
+                    if let gradeName = grade.gradeName, gradeName.isEmpty == false, self.grades.contains(gradeName) == false {
                         self.grades.append(gradeName)
                     }
                 }
@@ -114,7 +113,7 @@ class YXAddBookGuideViewController: UIViewController {
 
                 if let books = selectGrade.wordBooks {
                     for book in books {
-                        if let version = book.bookVersion, self.versions.contains(version) == false {
+                        if let version = book.bookVersion, version.isEmpty == false, self.versions.contains(version) == false {
                             self.versions.append(version)
                         }
                     }
@@ -162,7 +161,7 @@ class YXAddBookGuideViewController: UIViewController {
 
                 if let books = grade.wordBooks {
                     for book in books {
-                        guard let bookName = book.bookName, book.bookVersion == self.versions[versionIndex] else { continue }
+                        guard let bookName = book.bookName, bookName.isEmpty == false, book.bookVersion == self.versions[versionIndex] else { continue }
                         self.bookNames.append(bookName)
                     }
                 }

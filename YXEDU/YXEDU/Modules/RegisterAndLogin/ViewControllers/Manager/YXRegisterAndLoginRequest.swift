@@ -12,10 +12,11 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
     case sendSms(phoneNumber: String, loginType: String, SlidingVerificationCode: String?)
     case login(phoneNumber: String, code: Int)
     case userInfomation
+    case logout
     
     var method: YYHTTPMethod {
         switch self {
-        case .sendSms, .login:
+        case .sendSms, .login, .logout:
             return .post
             
         case .userInfomation:
@@ -33,6 +34,9 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
             
         case .userInfomation:
             return YXAPI.Profile.userInformation
+            
+        case .logout:
+            return YXAPI.RegisterAndLogin.logout
         }
     }
     

@@ -76,9 +76,9 @@ static BOOL private_UITabBarButton_swizzled = NO;
 - (UIView *)emptyBadgeView{
     UIView *_emptyBadgeView = objc_getAssociatedObject(self, @selector(emptyBadgeView));
     if (!_emptyBadgeView) {
-        _emptyBadgeView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, 8, 8)];
-        _emptyBadgeView.backgroundColor = [UIColor redColor];
-        _emptyBadgeView.layer.cornerRadius = 4;
+        _emptyBadgeView = [[UIView alloc] initWithFrame:CGRectMake(0, AdaptSize(1), AdaptSize(5), AdaptSize(5))];
+        _emptyBadgeView.backgroundColor = UIColorOfHex(0xFF532B);
+        _emptyBadgeView.layer.cornerRadius = AdaptSize(2.5);
     }
     return _emptyBadgeView;
 }

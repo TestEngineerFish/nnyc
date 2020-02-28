@@ -14,6 +14,9 @@ struct YXAPI {
         // 登陸
         static let login = "/v1/user/reg"
         
+        // 退出
+        static let logout = "/api/v1/user/logout"
+        
         // 發送短信
         static let sendSms = "/api/v1/user/sendsms"
     }

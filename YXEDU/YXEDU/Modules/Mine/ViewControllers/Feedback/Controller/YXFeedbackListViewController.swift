@@ -63,7 +63,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
             }
             return model.id
         }
-        let request = YXFeedbackRequest.reporyReply(ids: idList)
+        let request = YXFeedbackRequest.reporyReply(ids: idList.toJson())
         YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
             guard let model = response.data else {
                 return

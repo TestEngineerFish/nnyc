@@ -25,17 +25,24 @@ class YXBadgeView: UIView {
         self.updateBadge(num)
     }
     
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: AdaptSize(5), height: AdaptSize(5)))
+        self.createSubviews(false)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func createSubviews() {
+    private func createSubviews(_ showNum: Bool = true) {
         self.backgroundColor     = UIColor.hex(0xFF532B)
         self.layer.cornerRadius  = AdaptSize(self.height/2)
         self.layer.masksToBounds = true
-        self.addSubview(self.numLabel)
-        self.numLabel.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+        if showNum {
+            self.addSubview(self.numLabel)
+            self.numLabel.snp.makeConstraints { (make) in
+                make.edges.equalToSuperview()
+            }
         }
     }
     

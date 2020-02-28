@@ -10,7 +10,7 @@ import Foundation
 
 public enum YXFeedbackRequest: YYBaseRequest {
     case feedbackReply
-    case reporyReply(ids: [Int])
+    case reporyReply(ids: String)
 }
 
 extension YXFeedbackRequest {
