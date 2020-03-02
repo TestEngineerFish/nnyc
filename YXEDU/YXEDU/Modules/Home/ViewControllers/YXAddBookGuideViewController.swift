@@ -188,7 +188,7 @@ class YXAddBookGuideViewController: UIViewController {
                 
                 if let books = grade.wordBooks {
                     for book in books {
-                        guard let bookName = book.bookName, bookName == self.bookNames[bookIndex] else { continue }
+                        guard let bookName = book.bookShortName, bookName == self.bookNames[bookIndex] else { continue }
                         self.selectBook = book
                         break
                     }
