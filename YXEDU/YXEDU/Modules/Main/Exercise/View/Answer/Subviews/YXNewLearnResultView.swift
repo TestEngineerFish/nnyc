@@ -224,6 +224,7 @@ class YXNewLearnResultView: UIView {
     
     /// 显示结果动画
     func showResultView(_ star: Int) {
+        self.animationView.removeFromSuperview()
         self.createBaseSubviews()
         self.createResultSubviews()
         self.iconImageView.image    = UIImage(named: "learnResult\(star)")
@@ -251,6 +252,7 @@ class YXNewLearnResultView: UIView {
     
     /// 显示网络错误视图
     func showNetworkErrorView() {
+        self.animationView.removeFromSuperview()
         self.createBaseSubviews()
         self.createNetworkErrorSubviews()
         iconImageView.image  = UIImage(named: "noNetwork1")

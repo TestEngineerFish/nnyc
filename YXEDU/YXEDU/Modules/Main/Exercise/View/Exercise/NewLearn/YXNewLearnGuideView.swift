@@ -18,10 +18,11 @@ class YXNewLearnGuideView: UIView {
 
     var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text          = "点这里跟读单词，测测自己的发音吧～"
+        label.text          = "点这里跟读，测测自己的发音吧~\n跟读通过可以得到松果币奖励哦"
         label.textColor     = UIColor.white
         label.font          = UIFont.regularFont(ofSize: AdaptSize(17))
-        label.textAlignment = .center
+        label.textAlignment = .left
+        label.numberOfLines = 2
         return label
     }()
 

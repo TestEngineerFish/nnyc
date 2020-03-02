@@ -378,8 +378,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     private func showRecordAnimation() {
         self.recordAudioButton.isHidden    = true
         self.recordAnimationView.isHidden  = false
-        self.playAudioButton.layer.opacity = 0.3
+//        self.playAudioButton.layer.opacity = 0.3
         self.playAudioLabel.layer.opacity  = 0.3
+        self.playAudioButton.isEnabled     = false
         self.recordAnimationView.play()
     }
     
@@ -387,8 +388,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     private func hideRecordAnimation() {
         self.recordAudioButton.isHidden    = false
         self.recordAnimationView.isHidden  = true
-        self.playAudioButton.layer.opacity = 1.0
+//        self.playAudioButton.layer.opacity = 1.0
         self.playAudioLabel.layer.opacity  = 1.0
+        self.playAudioButton.isEnabled     = true
         self.recordAnimationView.stop()
     }
     
@@ -485,11 +487,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             }
             //            YXUtils.showHUD(self, title: "当前得分: \(score)")
             self.lastLevel = {
-                if score > 90 {
+                if score > 60 {
                     return 3
-                } else if score > 60 {
-                    return 2
                 } else if score > 30 {
+                    return 2
+                } else if score > 20 {
                     return 1
                 } else {
                     return 0
