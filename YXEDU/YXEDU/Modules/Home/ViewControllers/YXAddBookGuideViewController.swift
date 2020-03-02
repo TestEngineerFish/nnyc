@@ -46,11 +46,10 @@ class YXAddBookGuideViewController: UIViewController {
         guard let book = selectBook, let bookId = book.bookId, let units = book.units, units.count > 0, let unitId = units.first?.unitId else { return }
         let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            YXWordBookResourceManager.shared.contrastBookData(by: bookId, { (isSuccess) in
+            YXWordBookResourceManager.shared.contrastBookData(by: bookId) { (isSuccess) in
                 guard isSuccess else { return }
                 self.navigationController?.popToRootViewController(animated: true)
-            }, showToast: false)
-            
+            }
         }) { error in
             print("❌❌❌\(error)")
         }

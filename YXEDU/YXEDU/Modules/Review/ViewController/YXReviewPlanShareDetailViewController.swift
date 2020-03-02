@@ -153,7 +153,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
         } else {
             for wordModel in _wordModelList {
                 guard let bookId = wordModel.bookId else { return }
-                YXWordBookResourceManager.shared.checkLocalBooKStatus(with: bookId, newHash: wordModel.bookHash)
+                YXWordBookResourceManager.shared.checkLocalBookHash(with: bookId, newHash: wordModel.bookHash)
             }
         }
     }

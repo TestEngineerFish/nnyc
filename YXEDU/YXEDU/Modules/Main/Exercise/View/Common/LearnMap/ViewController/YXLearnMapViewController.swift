@@ -152,7 +152,7 @@ class YXLearnMapViewController: UIViewController {
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
             print("学习新单元成功")
-            YXWordBookResourceManager.shared.contrastBookData(by: bookId, { (isSuccess) in
+            YXWordBookResourceManager.shared.contrastBookData(by: bookId) { (isSuccess) in
                 YRRouter.popViewController(false)
                 let vc = YXExerciseViewController()
                 vc.dataType = .base
@@ -160,7 +160,7 @@ class YXLearnMapViewController: UIViewController {
                 vc.unitId   = unitId
                 vc.hidesBottomBarWhenPushed = true
                 YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: false)
-            }, showToast: true)
+            }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error)")
         }

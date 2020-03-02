@@ -233,23 +233,21 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     @objc func clickReviewButton() {
         DDLogInfo("====开始自定义复习====")
-        YXWordBookResourceManager.shared.contrastBookData(by: nil, { [weak self] (isSuccess) in
-            guard let self = self else { return }
-            if isSuccess {
-                self.startReviewPlanEvent?()
-            }
-        }, showToast: true)
+        if YXWordBookResourceManager.shared.isDownloading {
+            YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
+            return
+        }
+        self.startReviewPlanEvent?()
     }
     
     
     @objc func clickListenButton() {
         DDLogInfo("====开始自定义听写复习====")
-        YXWordBookResourceManager.shared.contrastBookData(by: nil, { [weak self] (isSuccess) in
-            guard let self = self else { return }
-            if isSuccess {
-                self.startListenPlanEvent?()
-            }
-        }, showToast: true)
+        if YXWordBookResourceManager.shared.isDownloading {
+            YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
+            return
+        }
+        self.startListenPlanEvent?()
     }
 }
 

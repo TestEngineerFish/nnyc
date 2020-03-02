@@ -15,12 +15,14 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         super.init()
     }
     
-    private var isDownloading = false
+    var isDownloading     = false
+    var downloadBookCount = 0
     private var closure: ((_ isSuccess: Bool) -> Void)?
     var finishBlock: (()->Void)?
 
-    // MARK: - 下载词书
-    func contrastBookData(by bookId: Int? = nil, _ closure: ((_ isSuccess: Bool) -> Void)? = nil, showToast: Bool = false) {
+    /// 检测词书是否需要下载（可指定词书ID，未指定则检测当前用户所有词书）
+    func contrastBookData(by bookId: Int? = nil, _ closure: ((_ isSuccess: Bool) -> Void)? = nil) {
+        // 下载中，并且不指定词书ID，则不做检测处理，防止重复下载
         if isDownloading, bookId == nil {
             return
         }
@@ -32,11 +34,11 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 if let bookId = bookId {
                     for wordBookDownloadModel in wordBookDownloadModels {
                         if wordBookDownloadModel.id == bookId {
-                            self.checkLocalBookStatus(with: [wordBookDownloadModel], showToast: showToast)
+                            self.checkLocalBooksStatus(with: [wordBookDownloadModel])
                         }
                     }
                 } else {
-                    self.checkLocalBookStatus(with: wordBookDownloadModels)
+                    self.checkLocalBooksStatus(with: wordBookDownloadModels)
                 }
             } else {
                 closure?(false)
@@ -46,9 +48,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             closure?(false)
         }
     }
-    // 仅针对分享口令
-    var downloadBookCount = 0
-    func checkLocalBooKStatus(with bookId: Int, newHash: String) {
+    
+    /// 检测本地词书Hash值
+    func checkLocalBookHash(with bookId: Int, newHash: String) {
         let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId)
         // 本地不存在，或者本地Hash值与后台不一致，则更新
         if (wordBook == nil || wordBook?.bookHash != .some(newHash)) {
@@ -62,24 +64,21 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     }
 
     /// 检测本地词书是否需要更新
-    private func checkLocalBookStatus(with wordBookDownloadModelList: [YXWordBookDownloadModel], showToast: Bool = false) {
-        var updateAmount = 0
+    private func checkLocalBooksStatus(with wordBookDownloadModelList: [YXWordBookDownloadModel]) {
+        self.downloadBookCount = 0
         for wordBookDownloadModel in wordBookDownloadModelList {
             guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash else { continue }
             let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId)
             // 本地不存在，或者本地Hash值与后台不一致，则更新
             if (wordBook == nil || wordBook?.bookHash != .some(bookHash)) {
-                updateAmount += 1
+                print("++++++++++++++++\(self.downloadBookCount)++++++++++++++++")
+                self.downloadBookCount += 1
                 self.downloadSingleWordBook(with: bookId, newHash: bookHash)
             }
         }
-
-        if updateAmount > 0 && showToast {
-            DispatchQueue.main.async {
-                YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
-            }
+        // 如果有需要下载的词书
+        if downloadBookCount > 0 {
             self.closure?(false)
-            
         } else {
             self.closure?(true)
         }
@@ -87,14 +86,11 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     /// 下载单本词书
     private func downloadSingleWordBook(with bookId: Int, newHash: String) {
+        self.isDownloading = true
         let request = YXWordBookRequest.getBookWord(bookId: bookId)
         YYNetworkService.default.request(YYStructResponse<YXWordBookModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, var bookModel = response.data else {
                 return
-            }
-            self.downloadBookCount -= 1
-            if self.downloadBookCount == 0 && self.finishBlock != nil {
-                self.finishBlock?()
             }
             bookModel.bookHash = newHash
             DispatchQueue.global().async { [weak self] in
@@ -102,10 +98,18 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 self.saveBook(with: bookModel)
                 self.saveWords(with: bookModel)
             }
+            print("--------------\(self.downloadBookCount)--------------")
+            self.downloadBookCount    -= 1
+            if self.downloadBookCount == 0 {
+                self.isDownloading = false
+                self.finishBlock?()
+            }
         }) { (error) in
             YXUtils.showHUD(kWindow, title: "\(error.message)")
         }
     }
+    
+    // TODO: ---- 本地词书数据库操作 ----
 
     /// 保存、更新词书
     private func saveBook(with bookModel: YXWordBookModel) {
