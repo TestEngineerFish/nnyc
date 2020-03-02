@@ -13,6 +13,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     var editClosure: (() -> Void)?
     var showWordDetialClosure: ((_ wordId: Int, _ isComplexWord: Int) -> Void)?
     var startReviewClosure: (() -> Void)?
+    var showEmptyView = false
     
     var shouldShowEditButton = false {
         didSet {
@@ -57,7 +58,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 topViewHeight.constant = 44
                 topView.isHidden = false
             }
-            
+            self.showEmptyView = wordsCount == 0
             wordCountLabel.text = "\(wordsCount)"
             tableView.reloadData()
         }
@@ -87,13 +88,14 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             
             if wordsCount == 0 {
                 topViewHeight.constant = 0
-                topView.isHidden = true
-                shouldShowBottomView = false
-                
+                topView.isHidden       = true
+                shouldShowBottomView   = false
+                showEmptyView          = true
             } else {
                 topViewHeight.constant = 44
-                topView.isHidden = false
-                shouldShowBottomView = true
+                topView.isHidden       = false
+                shouldShowBottomView   = true
+                showEmptyView          = false
             }
             
             wordCountLabel.text = "\(wordsCount)"
@@ -275,7 +277,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             return words.count
             
         } else {
-            return 1
+            return self.showEmptyView ? 1 : 0
         }
     }
     

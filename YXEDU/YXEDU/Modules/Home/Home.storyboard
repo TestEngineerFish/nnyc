@@ -13,7 +13,7 @@
             <objects>
                 <viewController storyboardIdentifier="YXAddBookViewController" hidesBottomBarWhenPushed="YES" id="KRx-zx-laN" customClass="YXAddBookViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Cmh-Es-I4z">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uVU-qD-ytE">
@@ -116,7 +116,7 @@
             <objects>
                 <viewController id="nnd-vG-UVX" customClass="YXHomeViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VZF-1B-lg5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4M-vc-0er">
@@ -454,7 +454,7 @@
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="qql-3G-E8i" customClass="YXEditWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DU0-3m-EQG">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="msh-PC-kQf">
@@ -635,7 +635,7 @@
             <objects>
                 <viewController storyboardIdentifier="YXTaskCenterViewController" hidesBottomBarWhenPushed="YES" id="LEE-do-1y0" customClass="YXTaskCenterViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fkk-Wd-hK0">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="taskCenterBackground" translatesAutoresizingMaskIntoConstraints="NO" id="PUr-pe-tFW">
@@ -1017,7 +1017,7 @@
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="Ya4-tm-uHn" customClass="YXSelectBookViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lsu-Ax-6NU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uLc-Pb-8Fk">
