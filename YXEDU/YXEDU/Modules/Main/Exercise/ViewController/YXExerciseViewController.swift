@@ -207,7 +207,7 @@
             // 新学隐藏提示
             let tipsHidden = (model.type == .newLearnPrimarySchool_Group || model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
             self.bottomView.tipsButton.isHidden  = tipsHidden
-            if model.type == .newLearnPrimarySchool {
+            if model.type == .newLearnPrimarySchool || model.type == .newLearnPrimarySchool_Group {
                 self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
             } else {
                 self.bottomView.tipsButton.setTitle("提示一下", for: .normal)
@@ -471,7 +471,7 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
         switch exerciseModel.type {
         case .connectionWordAndImage, .connectionWordAndChinese :
             dataManager.connectionAnswerAction(wordId: remindWordId, step: exerciseModel.step, right: false, type: exerciseModel.type)
-        case .newLearnPrimarySchool:
+        case .newLearnPrimarySchool, .newLearnPrimarySchool_Group:
             guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView, let questionView = exerciseView.questionView as? YXNewLearnPrimarySchoolQuestionView else {
                 return
             }

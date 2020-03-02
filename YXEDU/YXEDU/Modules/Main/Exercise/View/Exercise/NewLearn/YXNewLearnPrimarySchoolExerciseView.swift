@@ -31,7 +31,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         self.addSubview(contentView)
         self.contentView.addSubview(leftContentView)
         questionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel)
-        if !(exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) && exerciseModel.type != .newLearnPrimarySchool_Group {
+        if !(exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) && exerciseModel.word?.imageUrl != nil {
             (questionView as! YXNewLearnPrimarySchoolQuestionView).showImageView()
             (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
         }
