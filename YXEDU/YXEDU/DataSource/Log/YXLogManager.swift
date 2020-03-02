@@ -24,12 +24,12 @@ class YXLogManager: NSObject, DDLogFormatter {
         let request = YXLogRequest.report(file: fileData)
         YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, success: { (response) in
             if showToast {
-                YXUtils.showHUD(kWindow, title: "上报成功")
+                YXUtils.showHUD(kWindow, title: "上传完成")
             }
             self.deleteZip()
         }) { (error) in
             if showToast {
-                YXUtils.showHUD(kWindow, title: "日志上报失败")
+                YXUtils.showHUD(kWindow, title: "上传失败，请稍后再试")
             }
         }
     }

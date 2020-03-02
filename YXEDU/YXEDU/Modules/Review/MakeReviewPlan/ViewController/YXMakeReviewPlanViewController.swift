@@ -37,6 +37,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     let searchView            = YXReviewSearchView()
     var selectedWordsListView = YXReviewSelectedWordsListView()
     var bottomView            = YXReviewBottomView()
+    var currentContentView: YXReviewUnitListView?
     weak var delegate: YXMakeReviewPlanProtocol?
     weak var reviewDelegate: YXReviewUnitListUpdateProtocol?
 
@@ -290,11 +291,21 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                     unitModel.isOpenUp = true
                 }
             }
+            unitModelList.forEach { (unitModel) in
+                unitModel.list.forEach { (wordModel) in
+                    if self.selectedWordsListView.wordsModelList.contains(wordModel) {
+                        wordModel.isSelected = true
+                    } else {
+                        wordModel.isSelected = false
+                    }
+                }
+            }
             let unitListView = YXReviewUnitListView(unitModelList, frame: CGRect.zero)
             unitListView.tag      = bookModel.id
             unitListView.delegate = self.selectedWordsListView
             self.reviewDelegate   = unitListView
             self.selectedWordsListView.delegate = self
+            self.currentContentView = unitListView
             return unitListView
         } else {
             self.requestWordsList(bookModel.id, type: bookModel.type)
@@ -323,16 +334,11 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     // MARK: ==== YXReviewSelectedWordsListViewProtocol ====
     func unselect(_ word: YXReviewWordModel) {
-        guard let model = self.model else {
-            return
-        }
-        if let unitModelList = model.modelDict["\(word.bookId)"] {
+        if let unitModelList = currentContentView?.unitModelList {
             unitModelList.forEach { (unitModel) in
-                if unitModel.id == word.unitId {
-                    unitModel.list.forEach { (wordModel) in
-                        if wordModel.id == word.id {
-                            wordModel.isSelected = false
-                        }
+                unitModel.list.forEach { (wordModel) in
+                    if wordModel.id == word.id {
+                        wordModel.isSelected = false
                     }
                 }
             }
