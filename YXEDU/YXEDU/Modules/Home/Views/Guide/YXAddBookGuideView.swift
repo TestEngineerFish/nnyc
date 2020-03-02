@@ -98,6 +98,7 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
                 self.isUserInteractionEnabled = true
             }
             
+            collectionView.collectionViewLayout.prepare()
             collectionView.reloadData()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + moveTimeInterval) {
@@ -235,11 +236,11 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let textWidth = dataSource[indexPath.row].textWidth(font: UIFont.systemFont(ofSize: 15), height: 22)
         
-        if textWidth > (screenWidth - 108) / 3 {
+        if textWidth > (screenWidth - 110) / 3 {
             return CGSize(width: textWidth + 20 , height: 30)
 
         } else {
-            return CGSize(width: (screenWidth - 108) / 3 , height: 30)
+            return CGSize(width: (screenWidth - 110) / 3 , height: 30)
         }
     }
 }

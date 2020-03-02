@@ -18,35 +18,17 @@ class YXAddBookGuideViewController: UIViewController {
     
     private let defaultHeight: CGFloat = 126
     private var gradeHeight: CGFloat {
-        var countOfRow = Int(grades.count / 3) + ((grades.count % 3) != 0 ? 1 : 0)
-        if countOfRow == 0 {
-            countOfRow = 1
-        }
-        
-        let gradeCollectionViewHeight = (30 * countOfRow) + ((countOfRow - 1) * 10)
-        return CGFloat(50 + gradeCollectionViewHeight)
+        return 50 + (self.selectGradeView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
     }
     
     private var versionHeight: CGFloat {
-        var countOfRow = Int(versions.count / 3) + ((versions.count % 3) != 0 ? 1 : 0)
-        if countOfRow == 0 {
-            countOfRow = 1
-        }
-        let gradeCollectionViewHeight = (30 * countOfRow) + ((countOfRow - 1) * 10)
-        
         let descriptionHeight = "教材不断添加中,如果没有看到您的教材,可以 选择通用版学习哦~".textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 88)
         
-        return 30 + descriptionHeight + 26 + CGFloat(gradeCollectionViewHeight)
+        return 30 + descriptionHeight + 26 + (self.selectVersionView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
     }
     
     private var bookNameHeight: CGFloat {
-//        var countOfRow = Int(bookNames.count / 3) + ((bookNames.count % 3) != 0 ? 1 : 0)
-//        if countOfRow == 0 {
-//            countOfRow = 1
-//        }
-        
-        let gradeCollectionViewHeight = (30 * bookNames.count) + ((bookNames.count - 1) * 10)
-        return CGFloat(50 + gradeCollectionViewHeight)
+        return 50 + (self.selectBookNameView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
     }
     
     @IBOutlet weak var selectGradeView: YXAddBookGuideView!
@@ -103,8 +85,9 @@ class YXAddBookGuideViewController: UIViewController {
     private func initSelectViews() {
         // MARK: selectGradeView
         selectGradeView.titleLabel.text = "你现在学到几年级呢"
-        selectGradeViewHeight.constant = gradeHeight        
         selectGradeView.select(grades)
+        selectGradeView.collectionView.collectionViewLayout.prepare()
+        selectGradeViewHeight.constant = gradeHeight
         selectGradeView.selectedClosure = {
             self.versions = []
 
@@ -121,6 +104,7 @@ class YXAddBookGuideViewController: UIViewController {
             }
             
             self.selectVersionView.select(self.versions)
+            self.selectVersionView.collectionView.collectionViewLayout.prepare()
             self.selectVersionView.descriptionLabel.alpha = 1
             self.selectVersionViewTopOffSet.constant = 88
             self.selectVersionViewHeight.constant = self.versionHeight
@@ -161,7 +145,7 @@ class YXAddBookGuideViewController: UIViewController {
 
                 if let books = grade.wordBooks {
                     for book in books {
-                        guard let bookName = book.bookName, bookName.isEmpty == false, book.bookVersion == self.versions[versionIndex] else { continue }
+                        guard let bookName = book.bookShortName, bookName.isEmpty == false, book.bookVersion == self.versions[versionIndex] else { continue }
                         self.bookNames.append(bookName)
                     }
                 }
@@ -169,6 +153,7 @@ class YXAddBookGuideViewController: UIViewController {
             
             self.selectBookNameView.select(self.bookNames)
             self.selectBookNameViewTopOffSet.constant = 88
+            self.selectBookNameView.collectionView.collectionViewLayout.prepare()
             self.selectBookNameViewHeight.constant = self.bookNameHeight
             
             UIView.animate(withDuration: 0.6) {

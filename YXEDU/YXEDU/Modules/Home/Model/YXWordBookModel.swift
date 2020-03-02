@@ -41,6 +41,7 @@ struct YXWordBookModel: Mappable {
     var gradeType: Int?
     var bookId: Int?
     var bookName: String?
+    var bookShortName: String?
     var bookWordSourcePath: String?
     var bookMaterialSourcePath: String?
     var coverImagePath: String?
@@ -70,6 +71,7 @@ struct YXWordBookModel: Mappable {
         units                  <- map["unit_list"]
         bookVersionId <- map["book_ver_id"]
         bookVersion <- map["book_ver_name"]
+        bookShortName <- map["book_common"]
     }
 }
 
