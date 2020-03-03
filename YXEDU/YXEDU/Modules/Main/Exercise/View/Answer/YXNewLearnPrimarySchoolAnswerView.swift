@@ -129,6 +129,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     deinit {
+        self.learnResultView.removeFromSuperview()
         self.endRecordAction()
         self.timer?.invalidate()
         self.timer = nil

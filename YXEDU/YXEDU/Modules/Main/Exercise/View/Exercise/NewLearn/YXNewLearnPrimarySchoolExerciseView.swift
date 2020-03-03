@@ -107,6 +107,10 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
     }
 
     func showDetailView() {
+        // 防止将要弹出学习结果页时切题
+        if let _answerView = self.answerView as? YXNewLearnAnswerView {
+            _answerView.learnResultView.isHidden = true
+        }
         UIView.animate(withDuration: 0.5) {
             self.contentView.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
         }

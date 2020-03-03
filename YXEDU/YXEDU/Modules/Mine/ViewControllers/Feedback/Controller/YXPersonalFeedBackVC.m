@@ -102,7 +102,7 @@
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewEditChanged:) name:UITextViewTextDidChangeNotification object:self.feedBackTextView];
 
-    self.view.backgroundColor = UIColorOfHex(0xF6F8FA);
+    self.view.backgroundColor = UIColor.whiteColor;
     self.title = @"意见反馈";
     self.navigationItem.rightBarButtonItem = self.rightItem;
     
@@ -113,15 +113,15 @@
     }
     
     self.containerView = [[UIView alloc]init];
-    self.containerView.backgroundColor = UIColor.whiteColor;
-    self.containerView.layer.borderWidth = 1;
-    self.containerView.layer.borderColor = UIColor.whiteColor.CGColor;
-    self.containerView.layer.cornerRadius = 8;
+    self.containerView.backgroundColor     = UIColor.whiteColor;
+    self.containerView.layer.borderWidth   = 1;
+    self.containerView.layer.borderColor   = UIColor.whiteColor.CGColor;
+    self.containerView.layer.cornerRadius  = 8;
     self.containerView.layer.masksToBounds = NO;
-    self.containerView.layer.shadowColor = UIColorOfHex(0xD0E0EF).CGColor;
-    self.containerView.layer.shadowRadius = 3;
+    self.containerView.layer.shadowColor   = UIColorOfHex(0xD0E0EF).CGColor;
+    self.containerView.layer.shadowRadius  = 3;
     self.containerView.layer.shadowOpacity = 0.5;
-    self.containerView.layer.shadowOffset = CGSizeMake(0, 2);
+    self.containerView.layer.shadowOffset  = CGSizeMake(0, 2);
     
     self.feedBackTextView = [[UITextView alloc]init];
     self.feedBackTextView.backgroundColor = [UIColor whiteColor ];
@@ -136,7 +136,7 @@
     [self.textNumberLabel setFont:[UIFont systemFontOfSize:16]];
     
     self.lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 180, self.containerView.frame.size.width, 0.5)];
-    self.lineView.backgroundColor = UIColor.clearColor;
+    self.lineView.backgroundColor = UIColorOfHex(0xDCDCDC);
     
     self.imageNumberLabel = [[UILabel alloc]init];
     self.imageNumberLabel.textAlignment = NSTextAlignmentLeft;
