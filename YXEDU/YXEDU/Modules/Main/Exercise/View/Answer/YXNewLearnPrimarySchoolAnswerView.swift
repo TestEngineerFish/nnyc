@@ -193,6 +193,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 }
                 self.enginer?.oralText = word
                 self.enginer?.start()
+                self.disablePlayButton()
             } else {
                 self.endRecordAction()
             }
@@ -374,27 +375,33 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playAudioButton.layer.removeAllAnimations()
     }
     
-    // 显示录音动画
+    /// 禁用播放按钮
+    private func disablePlayButton() {
+        self.playAudioLabel.layer.opacity  = 0.3
+        self.playAudioButton.isEnabled     = false
+    }
+    
+    /// 启用播放按钮
+    private func enablePlayButton() {
+        self.playAudioLabel.layer.opacity  = 1.0
+        self.playAudioButton.isEnabled     = true
+    }
+    
+    /// 显示录音动画
     private func showRecordAnimation() {
         self.recordAudioButton.isHidden    = true
         self.recordAnimationView.isHidden  = false
-//        self.playAudioButton.layer.opacity = 0.3
-        self.playAudioLabel.layer.opacity  = 0.3
-        self.playAudioButton.isEnabled     = false
         self.recordAnimationView.play()
     }
     
-    // 隐藏录音动画
+    /// 隐藏录音动画
     private func hideRecordAnimation() {
         self.recordAudioButton.isHidden    = false
         self.recordAnimationView.isHidden  = true
-//        self.playAudioButton.layer.opacity = 1.0
-        self.playAudioLabel.layer.opacity  = 1.0
-        self.playAudioButton.isEnabled     = true
         self.recordAnimationView.stop()
     }
     
-    // 显示上报动画
+    /// 显示上报动画
     private func showReportAnimation() {
         self.status = .reporting
         self.learnResultView.showReportView()
@@ -463,6 +470,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         // 显示录音动画
         self.status = .recording
         self.showRecordAnimation()
+        YXAVPlayerManager.share.pauseAudio()
         self.resetOpusTempData()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) { [weak self] in
             self?.endRecordAction()
@@ -472,6 +480,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     func onStopOral() {
         self.setCatchRecordOpus(opus: self.tempOpusData)
         self.hideRecordAnimation()
+        self.enablePlayButton()
         self.showReportAnimation()
     }
 
