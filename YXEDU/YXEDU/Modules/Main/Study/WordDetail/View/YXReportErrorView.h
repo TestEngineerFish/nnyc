@@ -10,6 +10,6 @@
 
 @interface YXReportErrorView : UIView
 + (YXReportErrorView *)showToView:(UIView *)view;
-+ (YXReportErrorView *)showToView:(UIView *)view withQuestionId:(NSString *)questionId;
++ (YXReportErrorView *)showToView:(UIView *)view withWordId:(NSNumber *)wordId withWord:(NSString *)word;
 @end
 

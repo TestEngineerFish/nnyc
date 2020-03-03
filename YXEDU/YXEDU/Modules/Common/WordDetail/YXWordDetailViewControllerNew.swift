@@ -13,6 +13,7 @@ class YXWordDetailViewControllerNew: UIViewController {
 
     @objc var wordId: Int = -1
     @objc var isComplexWord: Int = 0
+    var wordModel: YXWordModel?
     private var wordDetailView: YXWordDetailCommonView!
 
     override func handleData(withQuery query: [AnyHashable : Any]!) {
@@ -40,7 +41,7 @@ class YXWordDetailViewControllerNew: UIViewController {
         YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { [weak self] (response) in
             guard let self = self, var word = response.data else { return }
             word.isComplexWord = self.isComplexWord
-            
+            self.wordModel = word
             self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
             self.view.addSubview(self.wordDetailView)
             
@@ -89,6 +90,6 @@ class YXWordDetailViewControllerNew: UIViewController {
     @IBAction func feedbackWord(_ sender: UIBarButtonItem) {
         DDLogInfo("单词详情VC中点击反馈按钮")
         YXLogManager.share.report()
-        YXReportErrorView.show(to: kWindow, withQuestionId: "\(wordId)")
+        YXReportErrorView.show(to: kWindow, withWordId: NSNumber(integerLiteral: wordId), withWord: wordModel?.word ?? "")
     }
 }

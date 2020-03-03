@@ -43,8 +43,10 @@ static const NSInteger MAX_NAME_LENGTH = 50;
 @property (nonatomic, strong) UITextView *feedBackTextView;
 @property (nonatomic, weak) UIButton *submit;
 
-@property (nonatomic, copy)NSString *questionId;
-@property (nonatomic, strong)UIImage *image;
+@property (nonatomic, copy) NSString *questionId;
+@property (nonatomic, strong) NSNumber *wordId;
+@property (nonatomic, copy) NSString *word;
+@property (nonatomic, strong) UIImage *image;
 @end
 @implementation YXReportErrorView
 + (YXReportErrorView *)showToView:(UIView *)view {
@@ -64,12 +66,14 @@ static const NSInteger MAX_NAME_LENGTH = 50;
 ////    [self.verifyCodeField becomeFirstResponder];
 //    errorView.image = [view snapShot];
 //    return errorView;
-    return [self showToView:view withQuestionId:nil];
+//    return [self showToView:view withQuestionId:nil];
+    return [self showToView:view withWordId:nil withWord:@""];
 }
 
-+ (YXReportErrorView *)showToView:(UIView *)view withQuestionId:(NSString *)questionId {
++ (YXReportErrorView *)showToView:(UIView *)view withWordId:(NSNumber *)wordId withWord:(NSString *)word {
     YXReportErrorView *errorView = [[YXReportErrorView alloc] initWithFrame:view.bounds];
-    errorView.questionId = questionId;
+    errorView.wordId = wordId;
+    errorView.word   = word;
     [view addSubview:errorView];
     
     // 弹框动画有必要时添加
@@ -225,9 +229,10 @@ static const NSInteger MAX_NAME_LENGTH = 50;
 }
 
 - (void)submitAction {//当前question_id: 单词发音;好多好多简单就
-    if (self.questionId) {
+    if (self.wordId) {
         NSDictionary *param = @{
-            @"word" : self.questionId,
+            @"word_id" : self.wordId,
+            @"word" : self.word,
             @"content" : self.feedBackTextView.text,
             @"type" : self.errorIds.mj_JSONString
         };

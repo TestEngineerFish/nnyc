@@ -702,7 +702,7 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 
 - (void)reportError:(UIButton *)btn {
     NSString *questionID = self.questionGenerator.curGeneratedQuestion.wordQuestionModel.question.questionId;
-    [YXReportErrorView showToView:self.navigationController.view withQuestionId:questionID];
+//    [YXReportErrorView showToView:self.navigationController.view withQuestionId:questionID];
     [self traceEvent:kTraceQuestionReportError descributtion:questionID];
 }
 
