@@ -9,7 +9,9 @@
 import UIKit
 
 class YXWordListEmptyCell: UITableViewCell {
-
+    
+    @IBOutlet weak var descLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -25,7 +25,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.customNavigationBar?.title = "我的消息"
-        self.tableView.separatorInset   = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        self.tableView.separatorInset   = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
         self.tableView.register(YXFeedbackCell.classForCoder(), forCellReuseIdentifier: "kYXFeedbackCell")
     }
     
@@ -37,6 +37,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
             make.left.right.equalToSuperview()
             make.bottom.equalToSuperview().offset(-kSafeBottomMargin)
         }
+        tableView.register(UINib(nibName: "YXWordListEmptyCell", bundle: nil), forCellReuseIdentifier: "YXWordListEmptyCell")
     }
     
     // MARK: ---- request ----
@@ -82,22 +83,32 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
     
     // MARK: ---- UITableViewDataSource ----
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return feedbackList.count
+        return feedbackList.isEmpty ? 1 : feedbackList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXFeedbackCell") as? YXFeedbackCell else {
-            return UITableViewCell()
+        if self.feedbackList.isEmpty {
+            let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as! YXWordListEmptyCell
+            emptyCell.descLabel.text = "您还没有收到回复消息"
+            return emptyCell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXFeedbackCell") as? YXFeedbackCell else {
+                return UITableViewCell()
+            }
+            let model = self.feedbackList[indexPath.row]
+            cell.setData(model)
+            return cell
         }
-        let model = self.feedbackList[indexPath.row]
-        cell.setData(model)
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let model = self.feedbackList[indexPath.row]
-        let contentH = model.content?.textHeight(font: UIFont.regularFont(ofSize: AdaptSize(14)), width: screenWidth - AdaptSize(30)) ?? 0
-        return contentH + AdaptSize(61)
+        if self.feedbackList.isEmpty {
+            return AdaptSize(356)
+        } else {
+            let model = self.feedbackList[indexPath.row]
+            let contentH = model.content?.textHeight(font: UIFont.regularFont(ofSize: AdaptSize(14)), width: screenWidth - AdaptSize(30)) ?? 0
+            return contentH + AdaptSize(61)
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

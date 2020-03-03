@@ -33,6 +33,12 @@ class YXFeedbackCell: UITableViewCell {
         return view
     }()
     
+    var lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black4
+        return view
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.createSubviews()
@@ -46,6 +52,7 @@ class YXFeedbackCell: UITableViewCell {
         self.addSubview(titleLabel)
         self.addSubview(dotView)
         self.addSubview(contentLabel)
+        self.addSubview(lineView)
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(15))
             make.width.equalTo(0)
@@ -62,6 +69,12 @@ class YXFeedbackCell: UITableViewCell {
             make.right.equalToSuperview().offset(AdaptSize(-15))
             make.top.equalTo(titleLabel.snp.bottom).offset(AdaptSize(10))
             make.bottom.equalToSuperview().offset(AdaptSize(-15))
+        }
+        lineView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(18))
+            make.right.equalToSuperview().offset(AdaptSize(-18))
+            make.bottom.equalToSuperview()
+            make.height.equalTo(AdaptSize(0.5))
         }
     }
     
