@@ -123,9 +123,11 @@ class YXLearnMapViewController: UIViewController {
                 let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
                 YXComAlertView.show(.common, in: kWindow, info: "提示", content: content, firstBlock: { (obj) in
                     self.learnUnit(button.tag)
+                    button.isEnabled = false
                 }, secondBlock: nil)
             } else {
                 self.learnUnit(button.tag)
+                button.isEnabled = false
             }
         }
     }
