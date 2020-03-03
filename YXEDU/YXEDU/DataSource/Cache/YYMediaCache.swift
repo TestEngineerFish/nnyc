@@ -36,6 +36,10 @@ class YYMediaCache: NSObject {
         let item = AVPlayerItem(url: self.proxyUrl(url))
         return item
     }
+    
+    public func deleteCache(_ url: URL) {
+        KTVHTTPCache.cacheDelete(with: url)
+    }
 
     
 }

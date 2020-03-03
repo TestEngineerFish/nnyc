@@ -53,6 +53,7 @@ class YXAVPlayerManager: NSObject {
             self.addObservers()
         } else {
             YXUtils.showHUD(kWindow, title: "无效音频")
+            YYMediaCache.default.deleteCache(url)
             self.playFinished()
         }
     }
@@ -111,6 +112,8 @@ class YXAVPlayerManager: NSObject {
             self.play(url)
         }
     }
+    
+    /// TODO: ---- Tools ----
 
     /// 播放答题正确音效
     func playRightAudio() {
