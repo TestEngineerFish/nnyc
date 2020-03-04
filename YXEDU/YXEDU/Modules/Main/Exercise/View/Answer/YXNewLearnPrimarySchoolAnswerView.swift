@@ -133,7 +133,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     deinit {
-        self.learnResultView.removeFromSuperview()
         self.endRecordAction()
         self.timer?.invalidate()
         self.timer = nil
@@ -417,13 +416,13 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     
     // 隐藏上报动画
     private func hideReportAnimation() {
-        self.learnResultView.hideView()
+        self.learnResultView.hideReportView()
     }
     
     /// 显示结果动画
     private func showResultAnimation() {
         self.status = .showResult
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let self = self else { return }
             self.learnResultView.showResultView(self.lastLevel)
         }

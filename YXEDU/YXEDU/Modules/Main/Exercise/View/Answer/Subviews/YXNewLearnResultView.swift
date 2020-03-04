@@ -13,12 +13,14 @@ class YXNewLearnResultView: UIView {
 
     var backgroundView: UIView = {
         let view = UIView()
+        view.isHidden        = true
         view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         return view
     }()
 
     var contentView: UIView = {
         let view = UIView()
+        view.isHidden           = true
         view.backgroundColor    = UIColor.white
         view.layer.cornerRadius = AdaptSize(6)
         return view
@@ -26,6 +28,7 @@ class YXNewLearnResultView: UIView {
     
     var animationView: AnimationView = {
         let animation = AnimationView(name: "resultLoading")
+        animation.isHidden = true
         return animation
     }()
 
@@ -54,6 +57,7 @@ class YXNewLearnResultView: UIView {
 
     var titleLabel: UILabel = {
         let label = UILabel()
+        label.isHidden      = true
         label.textColor     = UIColor.black1
         label.font          = UIFont.regularFont(ofSize: AdaptSize(17))
         label.textAlignment = .center
@@ -75,7 +79,11 @@ class YXNewLearnResultView: UIView {
         label.isHidden      = true
         return label
     }()
-
+    
+    deinit {
+        self.removeFromSuperview()
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         self.titleLabel.sizeToFit()
@@ -213,19 +221,27 @@ class YXNewLearnResultView: UIView {
     
     /// 显示上报视图
     func showReportView() {
-        titleLabel.text      = "正在打分…"
-        titleLabel.textColor = UIColor.black6
-        titleLabel.sizeToFit()
         self.createBaseSubviews()
+        self.backgroundView.isHidden = false
+        self.contentView.isHidden    = false
+        self.titleLabel.isHidden     = false
+        self.animationView.isHidden  = false
+        titleLabel.text              = "正在打分…"
+        titleLabel.textColor         = UIColor.black6
+        titleLabel.sizeToFit()
         self.createReportSubviews()
         self.animationView.play()
         self.layoutSubviews()
     }
     
+    func hideReportView() {
+        self.contentView.isHidden   = true
+        self.titleLabel.isHidden    = true
+        self.animationView.isHidden = true
+    }
+    
     /// 显示结果动画
     func showResultView(_ star: Int) {
-        self.animationView.removeFromSuperview()
-        self.createBaseSubviews()
         self.createResultSubviews()
         self.iconImageView.image    = UIImage(named: "learnResult\(star)")
         firstStarImageView.image    = UIImage(named: "star_h_disable")
@@ -247,22 +263,25 @@ class YXNewLearnResultView: UIView {
         if star > 2 {
             thirdStarImageView.image = UIImage(named: "star_h_enable")
         }
+        self.contentView.isHidden = false
+        self.titleLabel.isHidden  = false
         self.layoutSubviews()
     }
     
     /// 显示网络错误视图
     func showNetworkErrorView() {
-        self.animationView.removeFromSuperview()
-        self.createBaseSubviews()
         self.createNetworkErrorSubviews()
         iconImageView.image  = UIImage(named: "noNetwork1")
         titleLabel.text      = "网络开小差了,请重试"
         titleLabel.textColor = UIColor.black1
         titleLabel.sizeToFit()
+        self.contentView.isHidden = false
+        self.titleLabel.isHidden  = false
         self.layoutSubviews()
     }
-
+    
     func hideView() {
+        self.contentView.removeAllSubviews()
         self.removeAllSubviews()
         self.removeFromSuperview()
     }
