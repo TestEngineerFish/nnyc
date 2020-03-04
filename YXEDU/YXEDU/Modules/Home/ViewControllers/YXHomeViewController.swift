@@ -17,6 +17,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var collectedWordsCount  = "--"
     private var wrongWordsCount      = "--"
     private var homeModel: YXHomeModel!
+    public var progressManager = YXExcerciseProgressManager()
     
     @IBOutlet weak var startStudyButton: YXDesignableButton!
     @IBOutlet weak var bookNameButton: UIButton!
@@ -167,6 +168,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.studyDataCollectionView.reloadData()
                 
                 YXWordBookResourceManager.shared.contrastBookData()
+                
+                self.initDataManager()
+                
             } catch {
                 print(error)
             }
@@ -189,6 +193,20 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
+    private func initDataManager() {
+        // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
+        progressManager.bookId = self.homeModel?.bookId
+        progressManager.unitId = self.homeModel?.unitId
+        progressManager.dataType = .base
+        
+        if (self.homeModel.newWords ?? 0) == 0 && (self.homeModel.reviewWords ?? 0) == 0 {
+            if progressManager.isCompletion() == false {
+                let data = progressManager.loadLocalWordsProgress()
+                countOfWaitForStudyWords.text = "\(data.0.count + data.1.count)"
+            }
+        }
+        
+    }
     
     
     // MARK: Event
