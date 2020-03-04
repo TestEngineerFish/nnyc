@@ -28,3 +28,5 @@ UIKIT_EXTERN NSString *const kDailyCheckInNotify;//每天是否签到
 
 
 UIKIT_EXTERN NSString *const kReloadRankNotify;
+
+UIKIT_EXTERN NSString *const kUpdateFeedbackReplyBadge;// 更新反馈回复红点

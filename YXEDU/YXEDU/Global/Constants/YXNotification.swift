@@ -19,4 +19,6 @@ struct YXNotification {
     static let kRefreshReviewDetailPage = NSNotification.Name("kRefreshReviewDetailPage")   // 刷新review tab页
     
     static let kCloseWordDetailPage = NSNotification.Name("kCloseWordDetailPage")   // 详情页关闭的时候
+    /// 更新反馈回复红点
+    static let kUpdateFeedbackReplyBadge = NSNotification.Name("kUpdateFeedbackReplyBadge")
 }

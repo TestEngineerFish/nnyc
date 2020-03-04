@@ -11,6 +11,7 @@ import UIKit
 class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tableView = UITableView()
+    var isShowEmpty = false
     
     var feedbackList = [YXFeedbackReplyModel]()
     
@@ -49,6 +50,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
                 return
             }
             self.feedbackList = modelList
+            self.isShowEmpty = self.feedbackList.isEmpty
             self.tableView.reloadData()
             self.reportReply()
         }) { (error) in
@@ -83,7 +85,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
     
     // MARK: ---- UITableViewDataSource ----
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return feedbackList.isEmpty ? 1 : feedbackList.count
+        return feedbackList.isEmpty && self.isShowEmpty ? 1 : feedbackList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -48,6 +48,11 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
 
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBadge), name: YXNotification.kUpdateFeedbackReplyBadge, object: nil)
+    }
+    
+    @objc private func updateBadge() {
+        self.tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {

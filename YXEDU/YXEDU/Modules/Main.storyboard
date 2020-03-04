@@ -10,7 +10,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="8MX-u2-MoF">
             <objects>
-                <tabBarController storyboardIdentifier="YXTabBarViewController" hidesBottomBarWhenPushed="YES" id="RLC-ir-0Hc" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="YXTabBarViewController" hidesBottomBarWhenPushed="YES" id="RLC-ir-0Hc" customClass="YXTabBarController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" backgroundImage="nil" shadowImage="nil" id="c1O-Tr-E2n">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

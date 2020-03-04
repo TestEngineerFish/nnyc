@@ -11,6 +11,7 @@
 #import "TZImagePickerController.h"
 #import "YXFeedBackViewModel.h"
 #import "YXUtils.h"
+#import "YXNotification.h"
 
 @interface UITextView (Placeholder)
 -(void)setPlaceholder:(NSString *)placeholdStr placeholdColor:(UIColor *)placeholdColor;
@@ -101,6 +102,8 @@
     self.feedViewModel = [[YXFeedBackViewModel alloc]init];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewEditChanged:) name:UITextViewTextDidChangeNotification object:self.feedBackTextView];
+
+    [kNotificationCenter addObserver:self selector:@selector(updateDotStatus) name:kUpdateFeedbackReplyBadge object:nil];
 
     self.view.backgroundColor = UIColor.whiteColor;
     self.title = @"意见反馈";
@@ -225,10 +228,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSInteger badgeNum = [YXBadgeManger.share getFeedbackReplyBadgeNum];
-    [self.dotView setHidden:(badgeNum <= 0)];
+    [self updateDotStatus];
     self.textColorType = TextColorWhite;
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)updateDotStatus {
+    NSInteger badgeNum = [YXBadgeManger.share getFeedbackReplyBadgeNum];
+    [self.dotView setHidden:(badgeNum <= 0)];
 }
 
 - (void)submit:(id)sender {
