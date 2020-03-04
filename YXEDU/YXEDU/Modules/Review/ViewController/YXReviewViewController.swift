@@ -163,7 +163,7 @@ extension YXReviewViewController {
     /// 智能复习
     func startReviewEvent() {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.aiReview.rawValue], animated: true)
-        if headerView.reviewModel.canMakeReviewPlans > 1 {
+        if headerView.reviewModel.canMakeReviewPlans > 0 {
             let vc = YXExerciseViewController()
             vc.dataType = .aiReview
             vc.hidesBottomBarWhenPushed = true
