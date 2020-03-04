@@ -257,6 +257,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.isReport = true
             self.autoPlayFinished()
             DDLogInfo("新学：第二阶段 - 第二遍播放单词结束")
+            self.hidePlayAnimation()
         default:
             if !self.isReport {
                 self.autoPlayFinished()
@@ -283,7 +284,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.showPlayAnimation()
         YXAVPlayerManager.share.playAudio(url) { [weak self] in
             guard let self = self else { return }
-            self.hidePlayAnimation()
             if self.status.rawValue < AnswerStatus.showGuideView.rawValue {
                 self.status.forward()
                 self.playByStatus()
@@ -302,7 +302,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.showPlayAnimation()
         YXAVPlayerManager.share.playAudio(url) { [weak self] in
             guard let self = self else { return }
-            self.hidePlayAnimation()
             if self.status.rawValue < AnswerStatus.showGuideView.rawValue {
                 self.status.forward()
                 self.playByStatus()
@@ -424,7 +423,10 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 显示结果动画
     private func showResultAnimation() {
         self.status = .showResult
-        self.learnResultView.showResultView(self.lastLevel)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            guard let self = self else { return }
+            self.learnResultView.showResultView(self.lastLevel)
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             guard let self = self else { return }
             self.hideResultAnimation()

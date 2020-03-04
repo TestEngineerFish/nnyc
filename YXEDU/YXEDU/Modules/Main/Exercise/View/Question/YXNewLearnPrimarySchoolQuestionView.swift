@@ -99,7 +99,8 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
         self.exampleLabel.snp.makeConstraints { (make) in
             make.centerX.width.equalToSuperview()
-            make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(56))
+            make.top.equalToSuperview().offset(AdaptSize(69))
+            make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(6))
             make.height.equalTo(0)
         }
 
@@ -115,9 +116,6 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
             make.size.equalTo(CGSize.zero)
             make.top.equalTo(chineseExampleLabel.snp.bottom).offset(AdaptSize(26))
         })
-        
-        self.exampleLabel.transform        = CGAffineTransform(translationX: 0, y: AdaptSize(-50))
-        self.chineseExampleLabel.transform = CGAffineTransform(translationX: 0, y: AdaptSize(-50))
     }
 
     // MARK: ==== Event ====
@@ -146,12 +144,15 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     }
 
     func showWordView() {
-        UIView.animate(withDuration: 1.0) {
+        UIView.animate(withDuration: 0.8, animations: {
+            self.exampleLabel.transform        = CGAffineTransform(translationX: 0, y: AdaptSize(78))
+            self.chineseExampleLabel.transform = CGAffineTransform(translationX: 0, y: AdaptSize(78))
+            self.imageView?.transform          = CGAffineTransform(translationX: 0, y: AdaptSize(78))
+        })
+        UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut, animations: {
             self.titleLabel?.layer.opacity     = 1.0
             self.subTitleLabel?.layer.opacity  = 1.0
-            self.exampleLabel.transform        = .identity
-            self.chineseExampleLabel.transform = .identity
-        }
+        }, completion: nil)
         self.titleLabel?.sizeToFit()
         self.titleLabel?.snp.updateConstraints({ (make) in
             make.height.equalTo(titleLabel!.height)
