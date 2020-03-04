@@ -178,4 +178,13 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         self.showDetailView()
         self.exerciseDelegate?.showCenterNextButton()
     }
+    
+    /// 禁用底部所有按钮
+    func disableAllButton() {
+        self.exerciseDelegate?.disableAllButton()
+    }
+    /// 启用底部所有按钮
+    func enableAllButton() {
+        self.exerciseDelegate?.enableAllButton()
+    }
 }

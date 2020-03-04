@@ -373,8 +373,22 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         }
     }
     
+    /// 禁用底部所有按钮
+    func disableAllButton() {
+        self.bottomView.tipsButton.isEnabled              = false
+        self.bottomView.tipsButton.layer.opacity          = 0.3
+        self.bottomView.nextView.layer.opacity            = 0.3
+        self.bottomView.nextView.isUserInteractionEnabled = false
+    }
+    
+    /// 启用底部所有按钮
+    func enableAllButton() {
+        self.bottomView.tipsButton.isEnabled              = true
+        self.bottomView.tipsButton.layer.opacity          = 1.0
+        self.bottomView.nextView.layer.opacity            = 1.0
+        self.bottomView.nextView.isUserInteractionEnabled = true
+    }
 }
-
 
 extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int) {

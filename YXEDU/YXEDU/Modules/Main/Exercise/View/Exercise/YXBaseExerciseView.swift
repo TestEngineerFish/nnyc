@@ -20,6 +20,10 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
     func showRightNextView()
     /// 显示下一步按钮
     func showCenterNextButton()
+    /// 禁用底部所有按钮
+    func disableAllButton()
+    /// 启用底部所有按钮
+    func enableAllButton()
 }
 
 

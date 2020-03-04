@@ -45,6 +45,7 @@ class YXLogManager: NSObject, DDLogFormatter {
         DDLogInfo("当前UUID：" + (YXUserModel.default.uuid ?? ""))
         DDLogInfo("当前用户名：" + (YXUserModel.default.username ?? ""))
         DDLogInfo("当前用户手机号：" + (YXConfigure.shared()?.mobile ?? ""))
+        DDLogInfo("当前使用App版本：" + UIDevice().appVersion())
     }
 
     /// 添加设备信息

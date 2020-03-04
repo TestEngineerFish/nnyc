@@ -76,12 +76,12 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         self.addSubview(exampleLabel)
         self.addSubview(chineseExampleLabel)
 
-        self.titleLabel?.isHidden         = true
-        self.subTitleLabel?.isHidden      = true
-        self.exampleLabel.isHidden        = true
-        self.chineseExampleLabel.isHidden = true
-        self.imageView?.isHidden          = true
-        self.imageView?.backgroundColor   = UIColor.clear
+        self.titleLabel?.layer.opacity         = 0.0
+        self.subTitleLabel?.layer.opacity      = 0.0
+        self.exampleLabel.layer.opacity        = 0.0
+        self.chineseExampleLabel.layer.opacity = 0.0
+        self.imageView?.layer.opacity          = 0.0
+        self.imageView?.backgroundColor        = UIColor.clear
 
         self.titleLabel?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
@@ -115,18 +115,21 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
             make.size.equalTo(CGSize.zero)
             make.top.equalTo(chineseExampleLabel.snp.bottom).offset(AdaptSize(26))
         })
+        
+        self.exampleLabel.transform        = CGAffineTransform(translationX: 0, y: AdaptSize(-50))
+        self.chineseExampleLabel.transform = CGAffineTransform(translationX: 0, y: AdaptSize(-50))
     }
 
     // MARK: ==== Event ====
     func showImageView() {
-        self.imageView?.isHidden = false
+        self.imageView?.layer.opacity = 1.0
         self.imageView?.snp.updateConstraints({ (make) in
             make.size.equalTo(CGSize(width: AdaptSize(177), height: AdaptSize(128)))
         })
     }
 
     func showExample() {
-        self.exampleLabel.isHidden = false
+        self.exampleLabel.layer.opacity = 1.0
         self.exampleLabel.sizeToFit()
         let h = self.exampleLabel.text?.textHeight(font: exampleLabel.font, width: screenWidth - AdaptSize(44)) ?? CGFloat.zero
         self.exampleLabel.snp.updateConstraints { (make) in
@@ -135,20 +138,24 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     }
 
     func showChineseExample() {
-        if self.chineseExampleLabel.isHidden {
-            self.chineseExampleLabel.isHidden = false
+        if self.chineseExampleLabel.layer.opacity == 0.0 {
+            self.chineseExampleLabel.layer.opacity = 1.0
         } else {
-            self.chineseExampleLabel.isHidden = true
+            self.chineseExampleLabel.layer.opacity = 0.0
         }
     }
 
     func showWordView() {
-        self.titleLabel?.isHidden = false
+        UIView.animate(withDuration: 1.0) {
+            self.titleLabel?.layer.opacity     = 1.0
+            self.subTitleLabel?.layer.opacity  = 1.0
+            self.exampleLabel.transform        = .identity
+            self.chineseExampleLabel.transform = .identity
+        }
         self.titleLabel?.sizeToFit()
         self.titleLabel?.snp.updateConstraints({ (make) in
             make.height.equalTo(titleLabel!.height)
         })
-        self.subTitleLabel?.isHidden = false
         self.subTitleLabel?.sizeToFit()
         self.subTitleLabel?.snp.updateConstraints({ (make) in
             make.height.equalTo(subTitleLabel!.height)

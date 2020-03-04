@@ -132,7 +132,7 @@ class YXAddBookGuideViewController: UIViewController {
         
         // MARK: selectVersionView
         selectVersionView.alpha = 0
-        selectVersionView.titleLabel.text = "你现在在学那个版本的教材呢"
+        selectVersionView.titleLabel.text = "你现在在学哪个版本的教材呢"
         selectVersionView.descriptionLabel.isHidden = false
         selectVersionView.descriptionLabel.text = "教材不断添加中,如果没有看到您的教材,可以 选择通用版学习哦~"
         selectVersionView.select(versions)
