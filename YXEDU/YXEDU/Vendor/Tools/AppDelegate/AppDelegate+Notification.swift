@@ -96,6 +96,8 @@ extension AppDelegate: JPUSHRegisterDelegate {
 
     /// 获取Token进行注册
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let token = String(data: deviceToken, encoding: .utf8) ?? ""
+        DDLogInfo("获取deviceToken成功 ===========\(token)")
         JPUSHService.registerDeviceToken(deviceToken)
         
         if YXUserModel.default.didLogin == false {
@@ -105,13 +107,13 @@ extension AppDelegate: JPUSHRegisterDelegate {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             JPUSHService.setAlias(YXUserModel.default.uuid ?? "", completion: { (code, alias, seq) in
-                DDLogInfo("alias =========== \(code),\(alias ?? ""),\(seq)")
+                DDLogInfo("设置别名alias ====已经登陆过======= \(code),\(alias ?? ""),\(seq)")
             }, seq: Int(Date().timeIntervalSince1970))
         }
     }
     /// 获取token 失败
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) { //可选
-        DDLogInfo("获取device token失败 error: \(error)")
+        DDLogInfo("获取deviceToken失败 error: \(error)")
     }
 
 
