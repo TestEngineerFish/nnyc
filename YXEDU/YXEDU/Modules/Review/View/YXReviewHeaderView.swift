@@ -75,7 +75,7 @@ class YXReviewHeaderView: YXView {
         bgView.addSubview(contentView)
         contentView.addSubview(reviewButton)
 
-        if reviewModel.canMakeReviewPlans == 1 {
+        if reviewModel.learnNum > 0 {
             contentView.addSubview(titleLabel)
             contentView.addSubview(countLabel)
             
@@ -167,7 +167,7 @@ class YXReviewHeaderView: YXView {
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
         reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
         
-        if reviewModel.canMakeReviewPlans == 0 {
+        if reviewModel.learnNum == 0 {
             reviewButton.alpha = 0.3
             reviewButton.isEnabled = false
             reviewButton.setTitle("学习后开启智能复习", for: .normal)
@@ -227,7 +227,7 @@ class YXReviewHeaderView: YXView {
         }
         
         reviewButton.snp.makeConstraints { (make) in
-            if reviewModel.canMakeReviewPlans == 1 {
+            if reviewModel.learnNum > 0 {
                 make.bottom.equalToSuperview().offset(-44)
                 
             } else {
@@ -239,7 +239,7 @@ class YXReviewHeaderView: YXView {
             make.height.equalTo(AS(42))
         }
         
-        if reviewModel.canMakeReviewPlans == 1 {
+        if reviewModel.learnNum > 0 {
             titleLabel.snp.makeConstraints { (make) in
                 make.top.equalTo(AS(23))
                 make.centerX.equalToSuperview()

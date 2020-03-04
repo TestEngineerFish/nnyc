@@ -163,11 +163,15 @@ extension YXReviewViewController {
     /// 智能复习
     func startReviewEvent() {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.aiReview.rawValue], animated: true)
-        
-        let vc = YXExerciseViewController()
-        vc.dataType = .aiReview
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+        if headerView.reviewModel.canMakeReviewPlans > 1 {
+            let vc = YXExerciseViewController()
+            vc.dataType = .aiReview
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let nrView = YXNotReviewWordView()
+            nrView.show()
+        }
     }
     
     /// 开始复习 —— 复习计划
