@@ -535,6 +535,13 @@ static CGFloat const kPickViewHeight = 272.f;
         }else {
             self.dayData = nil;
         }
+        [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(AdaptSize(kHeaderHeight) * 3.f);
+        }];
+        [self.tableContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(AdaptSize(183));
+        }];
+        self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMinY(self.tableContainerView.frame) + AdaptSize(183));
         [self.tableView reloadData];
     }];
 }
