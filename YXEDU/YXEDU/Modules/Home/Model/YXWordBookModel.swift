@@ -69,9 +69,9 @@ struct YXWordBookModel: Mappable {
         didFinished            <- map["is_learn_finish"]
         bookHash               <- map["hash"]
         units                  <- map["unit_list"]
-        bookVersionId <- map["book_ver_id"]
-        bookVersion <- map["book_ver_name"]
-        bookShortName <- map["book_comment"]
+        bookVersionId          <- map["book_ver_id"]
+        bookVersion            <- map["book_ver_name"]
+        bookShortName          <- map["book_comment"]
     }
 }
 

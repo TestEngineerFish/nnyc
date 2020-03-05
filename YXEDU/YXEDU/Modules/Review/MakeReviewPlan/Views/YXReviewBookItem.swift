@@ -48,7 +48,7 @@ class YXReviewBookItem: UIView {
         }
         let versionName          = bookModel.versionName.isEmpty ? "" : bookModel.versionName + "\n"
         self.infolabel.text      = String(format: "%@%d词", versionName, bookModel.wordsNumber)
-        self.titleLabel.text     = bookModel.name
+        self.titleLabel.text     = bookModel.shortName.isEmpty ? bookModel.name : bookModel.shortName
     }
 
     private func setSubviews() {

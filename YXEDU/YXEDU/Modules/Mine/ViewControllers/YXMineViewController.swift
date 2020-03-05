@@ -108,6 +108,9 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 YXUserModel.default.username = loginModel.user.nick
                 self.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), placeholderImage: #imageLiteral(resourceName: "challengeAvatar"), completed: nil)
                 self.nameLabel.text = YXUserModel.default.username
+                if let garde = loginModel.user.grade, !garde.isEmpty {
+                    self.nameLabel.text = (YXUserModel.default.username ?? "") + "   " + garde + "年级"
+                }
                 self.calendarLabel.text = "\(loginModel.user.punchDays ?? 0)"
                 
                 // 账户信息

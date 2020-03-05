@@ -26,6 +26,7 @@ class YXReviewWordBookItemModel: Mappable {
     var id: Int          = 0
     var type: Int        = 0 //1-错词本 2-收藏夹 3-年级词书 4-复习计划
     var name             = ""
+    var shortName        = ""
     var wordsNumber: Int = 0
     var versionName      = ""
     var isLearning       = false
@@ -38,6 +39,7 @@ class YXReviewWordBookItemModel: Mappable {
         type        <- map["review_book_type"]
         name        <- map["review_book_name"]
         wordsNumber <- map["review_book_num"]
+        shortName   <- map["book_comment"]
         versionName <- map["review_book_ver_name"]
         isLearning  <- map["is_learning"]
     }

@@ -12,6 +12,11 @@ import AlamofireObjectMapper
 import ObjectMapper
 import CocoaLumberjack
 
+enum YXMiMeType: String {
+    case image = "image/jpeg"
+    case file  = "application/octet-stream"
+}
+
 struct YYNetworkService {
     public static let `default` = YYNetworkService()
     public let networkManager = NetworkReachabilityManager()
@@ -95,13 +100,12 @@ struct YYNetworkService {
             }.response { (defaultDownloadResponse) in
                 
         }
-        
     }
     
     /**
      *  文件内容上传 Request
      */
-    public func upload <T> (_ type: T.Type, request: YYBaseRequest, mimeType: String = "image/jpeg", fileName: String = "photo", success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
+    public func upload <T> (_ type: T.Type, request: YYBaseRequest, mimeType: String = YXMiMeType.image.rawValue, fileName: String = "photo", success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
         
         guard let parameters = request.parameters else {
             return

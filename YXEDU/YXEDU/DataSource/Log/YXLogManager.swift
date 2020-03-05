@@ -22,7 +22,7 @@ class YXLogManager: NSObject, DDLogFormatter {
             return
         }
         let request = YXLogRequest.report(file: fileData)
-        YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, mimeType: YXMiMeType.file.rawValue, fileName: "log", success: { (response) in
             if showToast {
                 YXUtils.showHUD(kWindow, title: "上传完成")
             }

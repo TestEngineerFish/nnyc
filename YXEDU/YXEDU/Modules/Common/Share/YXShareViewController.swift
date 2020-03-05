@@ -115,7 +115,7 @@ class YXShareViewController: YXViewController {
             self.backgroundImageUrls = imageUrls
             self.currentBackgroundImageUrl = self.backgroundImageUrls?.randomElement()
             
-            self.getBackgroundImage(from:  self.currentBackgroundImageUrl) { backgroundImage in
+            self.getBackgroundImage(from: self.currentBackgroundImageUrl) { backgroundImage in
                 
                 DispatchQueue.main.async() {
                     switch self.shareType {
@@ -128,7 +128,7 @@ class YXShareViewController: YXViewController {
                     case .listenReviewResult:
                         self.shareImageView.image = self.createListenReviewShareImage(backgroundImage)
                     case .challengeResult:
-                        self.shareImageView.image = self.createChallengeReviewShareImage(backgroundImage)
+                        self.shareImageView.image = self.createChallengeReviewShareImage(UIImage(named: "challengeShareBgImage"))
                     }
                     self.shareChannelView.shareImage = self.shareImageView.image
                 }
@@ -212,7 +212,9 @@ class YXShareViewController: YXViewController {
         }
         shareImageBorderView.layer.setDefaultShadow()
         shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))
-        
+        if shareType == .challengeResult {
+            changeBackgroundImageButton.isHidden = true
+        }
         self.customNavigationBar?.addSubview(changeBackgroundImageButton)
         changeBackgroundImageButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
