@@ -25,6 +25,7 @@ class YXAudioPlayerView: UIView {
     
     private let audioButton: UIButton
     var urlStr: String?
+    var urlStrList = [String]()
     var hasPermissions = true
 
     init() {
@@ -52,7 +53,7 @@ class YXAudioPlayerView: UIView {
     /// 播放当前音频
     func play() {
         guard let _urlStr = self.urlStr, let url = URL(string: _urlStr) else {
-            print("无效的音频地址: \(String(describing: self.urlStr))")
+            DDLogInfo("无效的音频地址: \(String(describing: self.urlStr))")
             return
         }
         if !YXAVPlayerManager.share.isPlaying {
@@ -61,6 +62,16 @@ class YXAudioPlayerView: UIView {
         self.delegate?.playAudioStart()
         YXAVPlayerManager.share.playAudio(url) {
             self.delegate?.playAudioFinished()
+            self.audioButton.layer.removeFlickerAnimation()
+        }
+    }
+    
+    /// 播放一组音频
+    func playList() {
+        if !YXAVPlayerManager.share.isPlaying {
+            self.audioButton.layer.addFlickerAnimation()
+        }
+        YXAVPlayerManager.share.playListAudio(self.urlStrList) {
             self.audioButton.layer.removeFlickerAnimation()
         }
     }

@@ -51,7 +51,7 @@ class YXUserModel: NSObject {
     
     var didUseAmericanPronunciation = false {
         didSet {
-            YYCache.set(didLogin, forKey: "DidUseAmericanPronunciation")
+            YYCache.set(didUseAmericanPronunciation, forKey: "DidUseAmericanPronunciation")
         }
     }
     

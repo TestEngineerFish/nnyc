@@ -11,6 +11,7 @@ import UIKit
 
 /// 例句题目
 class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
+    
     private var audioList: [String] = []
     
     override func createSubviews() {
@@ -52,21 +53,18 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
     
     /// 播放语音
     override func playAudio() {
-        if let url = audioList.first, url.isNotEmpty {
-            audioList.removeFirst()
-            self.audioPlayerView?.urlStr = url
-            self.audioPlayerView?.play()
+        if !audioList.isEmpty {
+            self.audioPlayerView?.urlStrList = self.audioList
+            self.audioPlayerView?.playList()
         }
     }
     
 
-    func playAudioFinished() {
-        self.playAudio()
-    }
+    func playAudioFinished() {}
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.audioList.append(self.exerciseModel.word?.voice ?? "")
-        self.playAudio()
+        self.audioPlayerView?.urlStr = self.exerciseModel.word?.voice
+        self.audioPlayerView?.play()
     }
 }
