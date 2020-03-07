@@ -101,10 +101,11 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    class func isCompletion(bookId: Int, unitId: Int) -> Bool {
+    class func isCompletion(bookId: Int, unitId: Int, dataType: YXExerciseDataType) -> Bool {
         let manager = YXExcerciseProgressManager()
         manager.bookId = bookId
         manager.unitId = unitId
+        manager.dataType = dataType
         return manager.isCompletion()
     }
     

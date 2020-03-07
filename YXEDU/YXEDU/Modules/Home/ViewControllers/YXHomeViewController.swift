@@ -180,7 +180,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func adjustStartStudyButtonState() {
         if let lastStoredDate = YYCache.object(forKey: "LastStoredDate") as? Date {
             if Calendar.current.isDateInToday(lastStoredDate) {
-                if YXExcerciseProgressManager.isCompletion(bookId: homeModel?.bookId ?? 0, unitId: homeModel?.unitId ?? 0) {
+                if YXExcerciseProgressManager.isCompletion(bookId: homeModel?.bookId ?? 0, unitId: homeModel?.unitId ?? 0, dataType: .base) {
                     startStudyButton.setTitle("再学一组", for: .normal)
                     
                 } else {
