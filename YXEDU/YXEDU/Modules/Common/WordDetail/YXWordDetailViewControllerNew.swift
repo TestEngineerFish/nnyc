@@ -88,8 +88,12 @@ class YXWordDetailViewControllerNew: UIViewController {
     }
     
     @IBAction func feedbackWord(_ sender: UIBarButtonItem) {
-        DDLogInfo("单词详情VC中点击反馈按钮")
-        YXLogManager.share.report()
-        YXReportErrorView.show(to: kWindow, withWordId: NSNumber(integerLiteral: wordId), withWord: wordModel?.word ?? "")
+        guard let wordModel = self.wordModel else {
+            return
+        }
+        YXNewLearnView(wordModel: wordModel).show()
+//        DDLogInfo("单词详情VC中点击反馈按钮")
+//        YXLogManager.share.report()
+//        YXReportErrorView.show(to: kWindow, withWordId: NSNumber(integerLiteral: wordId), withWord: wordModel?.word ?? "")
     }
 }

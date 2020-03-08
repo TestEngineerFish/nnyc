@@ -37,23 +37,7 @@ class YXNewLearnResultView: UIView {
         return imageView
     }()
 
-    var firstStarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "star_h_disable")
-        return imageView
-    }()
-
-    var secondStarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "star_h_disable")
-        return imageView
-    }()
-
-    var thirdStarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "star_h_disable")
-        return imageView
-    }()
+    var starView = YXStarView()
 
     var titleLabel: UILabel = {
         let label = UILabel()
@@ -144,9 +128,7 @@ class YXNewLearnResultView: UIView {
     private func createResultSubviews() {
         self.addSubview(contentView)
         contentView.addSubview(iconImageView)
-        contentView.addSubview(firstStarImageView)
-        contentView.addSubview(secondStarImageView)
-        contentView.addSubview(thirdStarImageView)
+        contentView.addSubview(starView)
         contentView.addSubview(goldImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(bonusLabel)
@@ -161,20 +143,11 @@ class YXNewLearnResultView: UIView {
             make.top.equalToSuperview().offset(AdaptSize(38))
             make.size.equalTo(CGSize(width: AdaptSize(233), height: AdaptSize(109)))
         }
-        firstStarImageView.snp.remakeConstraints { (make) in
-            make.centerY.equalTo(secondStarImageView).offset(AdaptSize(2))
-            make.right.equalTo(secondStarImageView.snp.left).offset(AdaptSize(6))
-            make.size.equalTo(CGSize(width: AdaptSize(31.5), height: AdaptSize(31.5)))
-        }
-        secondStarImageView.snp.remakeConstraints { (make) in
+        starView.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(iconImageView).offset(AdaptSize(8))
-            make.size.equalTo(CGSize(width: AdaptSize(45), height: AdaptSize(45)))
-        }
-        thirdStarImageView.snp.remakeConstraints { (make) in
-            make.left.equalTo(secondStarImageView.snp.right).offset(AdaptSize(-6))
-            make.centerY.equalTo(secondStarImageView).offset(AdaptSize(2))
-            make.size.equalTo(CGSize(width: AdaptSize(31.5), height: AdaptSize(31.5)))
+            make.bottom.equalTo(iconImageView)
+            make.height.equalTo(AdaptSize(45))
+            make.width.equalTo(AdaptSize(118))
         }
         titleLabel.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -243,25 +216,17 @@ class YXNewLearnResultView: UIView {
     /// 显示结果动画
     func showResultView(_ star: Int) {
         self.createResultSubviews()
+        self.starView.showResultView(starNum: star)
         self.iconImageView.image    = UIImage(named: "learnResult\(star)")
-        firstStarImageView.image    = UIImage(named: "star_h_disable")
-        secondStarImageView.image   = UIImage(named: "star_h_disable")
-        thirdStarImageView.image    = UIImage(named: "star_h_disable")
         bonusLabel.text             = "+\(star)"
-        titleLabel.text             = "Try again"
-        bonusLabel.isHidden         = true
-        goldImageView.isHidden      = true
-        if star > 0 {
-            firstStarImageView.image = UIImage(named: "star_h_enable")
-        }
         if star > 1 {
             goldImageView.isHidden = false
             bonusLabel.isHidden    = false
             titleLabel.text        = "太棒啦"
-            secondStarImageView.image = UIImage(named: "star_h_enable")
-        }
-        if star > 2 {
-            thirdStarImageView.image = UIImage(named: "star_h_enable")
+        } else {
+            goldImageView.isHidden = true
+            bonusLabel.isHidden    = true
+            titleLabel.text        = "Try again"
         }
         self.contentView.isHidden = false
         self.titleLabel.isHidden  = false

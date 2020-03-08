@@ -35,8 +35,7 @@ class YXNewLearnPrimarySchoolWordGroupExerciseView: YXBaseExerciseView, YXNewLea
             (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
         }
         self.leftContentView.addSubview(questionView!)
-
-        answerView = YXNewLearnAnswerView(exerciseModel: self.exerciseModel)
+        answerView = YXNewLearnAnswerView(wordModel: nil, exerciseModel: self.exerciseModel)
         (answerView as! YXNewLearnAnswerView).newLearnDelegate = self
         answerView?.answerDelegate  = self
         self.leftContentView.addSubview(answerView!)
@@ -64,8 +63,8 @@ class YXNewLearnPrimarySchoolWordGroupExerciseView: YXBaseExerciseView, YXNewLea
         })
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(AdaptSize(145))
+            make.bottom.equalToSuperview().offset(AdaptSize(-65))
+            make.height.equalTo(AdaptSize(111))
             make.width.equalToSuperview()
         })
         detailView?.snp.makeConstraints({ (make) in

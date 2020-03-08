@@ -66,6 +66,12 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         return label
     }()
     
+    var starView: YXStarView = {
+        let view = YXStarView()
+        view.isHidden = true
+        return view
+    }()
+    
     var recordAnimationView: AnimationView = {
         let animationView = AnimationView(name: "readAnimation")
         animationView.isHidden = true
@@ -75,8 +81,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var recordAudioButton: YXButton = {
         let button = YXButton()
         button.setImage(UIImage(named: "recordAudio"), for: .normal)
-        button.isEnabled     = false
-        button.layer.opacity = 0.3
         return button
     }()
 
@@ -86,7 +90,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         label.textColor     = UIColor.black2
         label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
         label.textAlignment = .center
-        label.layer.opacity = 0.3
         return label
     }()
     
@@ -108,13 +111,14 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }()
 
     weak var newLearnDelegate: YXNewLearnProtocol?
-
-    override init(exerciseModel: YXWordExerciseModel) {
-        super.init(exerciseModel: exerciseModel)
-        // 如果没有例句,则跳过第一阶段
-        if (exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) || exerciseModel.word?.imageUrl == nil {
-            self.status = .playedExampleInFristStage
-            self.newLearnDelegate?.playWordAndExampleFinished()
+    
+    init(wordModel: YXWordModel?, exerciseModel: YXWordExerciseModel?) {
+        if let exerciseModel = exerciseModel {
+            super.init(exerciseModel: exerciseModel)
+        } else {
+            var exerciseModel = YXWordExerciseModel()
+            exerciseModel.word = wordModel
+            super.init(exerciseModel: exerciseModel)
         }
         // 云之声设置
         self.enginer = USCRecognizer.sharedManager()
@@ -122,13 +126,29 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.enginer?.delegate        = self
         self.enginer?.vadControl      = true
         self.enginer?.setVadFrontTimeout(5000, backTimeout: 700)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        // 延迟播放.(因为在切题的时候会有动画)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.2) { [weak self] in
-            guard let self = self else { return }
-            self.playByStatus()
+        // 新学跟读流程
+        if exerciseModel == nil {
+            self.status = .alreadLearn
+            self.starView.isHidden = false
+            self.starView.showLastNewLearnResultView(starNum: 2)
+        } else {
+            // 设置初始状态
+            self.starView.isHidden              = true
+            self.recordAudioButton.isEnabled    = false
+            self.recordAudioLabel.layer.opacity = 0.3
+            // 如果没有例句,则跳过第一阶段
+            if (self.exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) || self.exerciseModel.word?.imageUrl == nil {
+                self.status = .playedExampleInFristStage
+                self.newLearnDelegate?.playWordAndExampleFinished()
+            }
+            // 延迟播放.(因为在切题的时候会有动画)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.2) { [weak self] in
+                guard let self = self else { return }
+                self.playByStatus()
+            }
         }
     }
 
@@ -146,11 +166,12 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         super.createSubviews()
         self.addSubview(playAudioButton)
         self.addSubview(playAudioLabel)
+        self.addSubview(starView)
         self.addSubview(recordAudioButton)
         self.addSubview(recordAudioLabel)
         self.addSubview(recordAnimationView)
         self.playAudioButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
+            make.top.equalTo(recordAudioButton)
             make.left.equalToSuperview().offset(AdaptSize(80))
             make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
         }
@@ -159,8 +180,14 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             make.top.equalTo(playAudioButton.snp.bottom).offset(AdaptSize(8))
             make.size.equalTo(CGSize(width: AdaptSize(100), height: AdaptSize(18)))
         }
-        self.recordAudioButton.snp.makeConstraints { (make) in
+        self.starView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
+            make.centerX.equalTo(recordAudioButton)
+            make.width.equalTo(AdaptSize(74))
+            make.height.equalTo(AdaptSize(35))
+        }
+        self.recordAudioButton.snp.makeConstraints { (make) in
+            make.top.equalTo(starView.snp.bottom).offset(AdaptSize(-5))
             make.right.equalToSuperview().offset(AdaptSize(-80))
             make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
         }
@@ -286,6 +313,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             if self.status.rawValue < AnswerStatus.showGuideView.rawValue {
                 self.status.forward()
                 self.playByStatus()
+            } else {
+                self.hidePlayAnimation()
             }
         }
     }
@@ -304,6 +333,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             if self.status.rawValue < AnswerStatus.showGuideView.rawValue {
                 self.status.forward()
                 self.playByStatus()
+            } else {
+                self.hidePlayAnimation()
             }
         }
     }
@@ -374,9 +405,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     private func hidePlayAnimation() {
         dotNumber = 0
         timer?.invalidate()
-        self.playAudioLabel.text = "播放"
+        self.playAudioLabel.text          = "播放"
         self.playAudioLabel.textAlignment = .center
-        self.playAudioLabel.textColor = UIColor.black2
+        self.playAudioLabel.textColor     = UIColor.black2
         self.playAudioButton.layer.removeAllAnimations()
     }
     
