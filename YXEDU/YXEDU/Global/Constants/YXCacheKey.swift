@@ -14,8 +14,10 @@ enum YXLocalKey: String {
     case oldUserVersionTips            = "kOldUserVersionTips" // 版本更新提示
     case alreadShowNewLearnGuideView   = "kAlreadShowNewLearnGuideView" // 显示学习引导图
     case alreadShowMakeReviewGuideView = "kAlreadShowMakeReviewGuideView" // 显示制作复习计划引导图
-    case learningState                 = "kLearningState"      // 学习中状态
-    case newFeedbackReply              = "newFeedbackReply"    // 反馈回复消息
+    case learningState                 = "kLearningState"       // 学习中状态
+    case newFeedbackReply              = "newFeedbackReply"     // 反馈回复消息
+    case firstShowHome                 = "kFirstShowHome"       // 首次进入首页
+    case taskCenterCanReceive          = "kTaskCenterCanReceive" // 任务中心未领任务
     
 }
 

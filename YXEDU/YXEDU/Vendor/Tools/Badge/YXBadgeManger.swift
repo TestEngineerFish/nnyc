@@ -16,6 +16,7 @@ import Foundation
     var feedbackBadge: Int = 0
 
     // MARK: ---- 获取Badge ----
+    /// 获取反馈回复未读数
     @objc func getFeedbackReplyBadgeNum() -> Int {
         guard let badgeNum = YYCache.object(forKey: YXLocalKey.newFeedbackReply) as? Int else {
             return 0
@@ -23,7 +24,16 @@ import Foundation
         return badgeNum
     }
     
+    /// 获取任务中心未领任务数
+    @objc func getTaskCenterBadgeNum() -> Int {
+        guard let badgeNum = YYCache.object(forKey: YXLocalKey.taskCenterCanReceive) as? Int else {
+            return 0
+        }
+        return badgeNum
+    }
+    
     // MARK: ---- 更新Badge ----
+    /// 更新反馈回复小红点
     func updateFeedbackReplyBadge() {
         // 清除本地通知的badge
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -36,6 +46,13 @@ import Foundation
             UIApplication.shared.applicationIconBadgeNumber = badgeNum
             NotificationCenter.default.post(name: YXNotification.kUpdateFeedbackReplyBadge, object: nil)
         })
+    }
+    
+    /// 更新任务中心小红点
+    func updateTaskCenterBadge() {
+        let badgeNum = 1
+        YYCache.set(badgeNum, forKey: YXLocalKey.taskCenterCanReceive)
+        NotificationCenter.default.post(name: YXNotification.kUpdateTaskCenterBadge, object: nil)
     }
     
 }

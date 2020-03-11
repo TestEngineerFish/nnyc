@@ -272,6 +272,11 @@
 		CF53B49524067CA200625892 /* YXFeedbackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF53B49424067CA200625892 /* YXFeedbackData.swift */; };
 		CFB11BE724137E2600B29B62 /* YXNewLearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB11BE624137E2600B29B62 /* YXNewLearnView.swift */; };
 		CFB11BEA2414953E00B29B62 /* YXStarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB11BE92414953E00B29B62 /* YXStarView.swift */; };
+		CFB11BEC241623F500B29B62 /* homeFirst.json in Resources */ = {isa = PBXBuildFile; fileRef = CFB11BEB241623F400B29B62 /* homeFirst.json */; };
+		CFB11BEE2416381C00B29B62 /* homeNormal.json in Resources */ = {isa = PBXBuildFile; fileRef = CFB11BED2416381B00B29B62 /* homeNormal.json */; };
+		CFB11BF2241785ED00B29B62 /* star1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CFB11BEF241785EC00B29B62 /* star1.mp3 */; };
+		CFB11BF3241785ED00B29B62 /* star2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CFB11BF0241785EC00B29B62 /* star2.mp3 */; };
+		CFB11BF4241785ED00B29B62 /* star3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CFB11BF1241785ED00B29B62 /* star3.mp3 */; };
 		CFF4914C23F56D7F00038113 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFF4914B23F56D7F00038113 /* TencentOpenAPI.framework */; };
 		CFFB700823EBB56F0088DAAA /* YXReviewPlanReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */; };
 		CFFB700A23EBDEB50088DAAA /* YXShareDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */; };
@@ -1077,6 +1082,11 @@
 		CF53B49424067CA200625892 /* YXFeedbackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YXFeedbackData.swift; path = YXEDU/Modules/Mine/ViewControllers/FeedBack/Data/YXFeedbackData.swift; sourceTree = SOURCE_ROOT; };
 		CFB11BE624137E2600B29B62 /* YXNewLearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnView.swift; sourceTree = "<group>"; };
 		CFB11BE92414953E00B29B62 /* YXStarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXStarView.swift; sourceTree = "<group>"; };
+		CFB11BEB241623F400B29B62 /* homeFirst.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = homeFirst.json; sourceTree = "<group>"; };
+		CFB11BED2416381B00B29B62 /* homeNormal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = homeNormal.json; sourceTree = "<group>"; };
+		CFB11BEF241785EC00B29B62 /* star1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = star1.mp3; sourceTree = "<group>"; };
+		CFB11BF0241785EC00B29B62 /* star2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = star2.mp3; sourceTree = "<group>"; };
+		CFB11BF1241785ED00B29B62 /* star3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = star3.mp3; sourceTree = "<group>"; };
 		CFF4914B23F56D7F00038113 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		CFFB700723EBB56F0088DAAA /* YXReviewPlanReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanReportViewController.swift; sourceTree = "<group>"; };
 		CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareDefaultView.swift; sourceTree = "<group>"; };
@@ -2377,6 +2387,8 @@
 		2290EAD223714AB9000BCA47 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				CFB11BEB241623F400B29B62 /* homeFirst.json */,
+				CFB11BED2416381B00B29B62 /* homeNormal.json */,
 				775FB33223F6984600B5B8AA /* resultLoading.json */,
 				227F478323CD968800D6C603 /* right.json */,
 				227F478123CD967900D6C603 /* wrong.json */,
@@ -3316,6 +3328,9 @@
 			children = (
 				EE5E01102327528500655654 /* right.mp3 */,
 				EE5E01112327528500655654 /* wrong.mp3 */,
+				CFB11BEF241785EC00B29B62 /* star1.mp3 */,
+				CFB11BF0241785EC00B29B62 /* star2.mp3 */,
+				CFB11BF1241785ED00B29B62 /* star3.mp3 */,
 			);
 			path = MP3;
 			sourceTree = "<group>";
@@ -5788,6 +5803,7 @@
 				77097539239A30080071A779 /* YXWordDetailClassicCell.xib in Resources */,
 				77B7C6F923A77BA200149ACE /* YXTaskCenterCardCell.xib in Resources */,
 				EE5E01132327528600655654 /* wrong.mp3 in Resources */,
+				CFB11BF4241785ED00B29B62 /* star3.mp3 in Resources */,
 				228F9D4623A099C300F15F19 /* Discovery.storyboard in Resources */,
 				7748D162239FB75400182611 /* YXWordDeformationsCell.xib in Resources */,
 				EE5EFC5823274D0F00655654 /* nnyc_dev.plist in Resources */,
@@ -5830,6 +5846,7 @@
 				77CCB9B823794CCB004EB781 /* YXWordDetailHeaderView.xib in Resources */,
 				200338DA21B93A25009165DF /* shareBadgeBG@2x.png in Resources */,
 				7709751F239925E00071A779 /* YXWordDetailFeaturedSectionFooterView.xib in Resources */,
+				CFB11BF3241785ED00B29B62 /* star2.mp3 in Resources */,
 				202C7A21218FED8E00EFD072 /* FresherGuide in Resources */,
 				202709B821DE3A3000E88457 /* oneDrawgameGuide1@3x.png in Resources */,
 				77626C0D239E439E00B9407A /* YXWordListOrderView.xib in Resources */,
@@ -5837,6 +5854,7 @@
 				777FAA0F23C4812500FCC976 /* YXOldUserUpdateView.xib in Resources */,
 				77F69A622361495300E55185 /* Main.storyboard in Resources */,
 				7786D620236C66B100741DCE /* YXSeleceUnitView.xib in Resources */,
+				CFB11BEE2416381C00B29B62 /* homeNormal.json in Resources */,
 				77626BF9239E250800B9407A /* YXWordListView.xib in Resources */,
 				7786B6D12361C3820027D0E3 /* YXGroupWordBookCell.xib in Resources */,
 				773452CC236A7F1A00801FDD /* YXAccountInfoView.xib in Resources */,
@@ -5849,6 +5867,8 @@
 				77D2778223B37D0B00AA4BF2 /* YXBadgeCell.xib in Resources */,
 				771512E22367131500F6D400 /* Home.storyboard in Resources */,
 				770975292399289F0071A779 /* YXWordDetailFixedMatchCell.xib in Resources */,
+				CFB11BF2241785ED00B29B62 /* star1.mp3 in Resources */,
+				CFB11BEC241623F500B29B62 /* homeFirst.json in Resources */,
 				EE5E0166232754FA00655654 /* KSGuaidProperty.plist in Resources */,
 				77CBFD6F2372EBF000A670D7 /* YXAlertView.xib in Resources */,
 				202709BB21DE3A3000E88457 /* oneDrawgameGuide1@2x.png in Resources */,

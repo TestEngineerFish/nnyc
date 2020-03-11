@@ -13,7 +13,7 @@ class YXNewLearnView: UIView {
     
     var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "close"), for: .normal)
+        button.setImage(UIImage(named: "close_black"), for: .normal)
         return button
     }()
     
@@ -56,7 +56,7 @@ class YXNewLearnView: UIView {
         
         closeButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(15))
-            make.top.equalToSuperview().offset(AdaptSize(25))
+            make.top.equalToSuperview().offset(AdaptSize(35))
             make.size.equalTo(CGSize(width: AdaptSize(32), height: AdaptSize(32)))
         }
         titleLabel.snp.makeConstraints { (make) in
@@ -80,6 +80,7 @@ class YXNewLearnView: UIView {
     }
     
     private func bindProperty() {
+        
         self.backgroundColor    = UIColor.white.withAlphaComponent(0.95)
         self.titleLabel.text    = wordModel.word
         self.subtitleLabel.text = (wordModel.partOfSpeech ?? "") + " " + (wordModel.meaning ?? "")
@@ -88,6 +89,7 @@ class YXNewLearnView: UIView {
     
     // MARK: ---- Event ----
     @objc private func closeAction() {
+        self.answerView.pauseView()
         self.removeFromSuperview()
     }
     

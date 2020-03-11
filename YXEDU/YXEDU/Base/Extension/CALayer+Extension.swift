@@ -370,11 +370,11 @@ extension CALayer {
 
     func scalingAnimation(_ duration: Double, delegate: CAAnimationDelegate? = nil) {
         // 内容缩放渐变
-        let scaleAnimater            = CAKeyframeAnimation(keyPath: "transform.scale")
-        scaleAnimater.values         = [1.0, 0.2]
+        let scaleAnimater       = CAKeyframeAnimation(keyPath: "transform.scale")
+        scaleAnimater.values    = [1.0, 0.2]
 
-        let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
-        opacityAnimation.values      = [1.0, 0.2]
+        let opacityAnimation    = CAKeyframeAnimation(keyPath: "opacity")
+        opacityAnimation.values = [1.0, 0.2]
 
         let animationGroup = CAAnimationGroup()
         animationGroup.animations     = [scaleAnimater, opacityAnimation]

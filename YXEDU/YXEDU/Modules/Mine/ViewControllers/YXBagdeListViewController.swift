@@ -8,12 +8,10 @@
 
 import UIKit
 
-class YXBagdeListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class YXBagdeListViewController: YXViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     var badgeLists: [YXBadgeListModel] = []
-    private let colors = [UIColor.hex(0xFDB329), UIColor.hex(0x7FE763), UIColor.hex(0x56CEFB), UIColor.hex(0xB198F9)]
     
-    @IBOutlet weak var tableView: UITableView!
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)
@@ -21,8 +19,6 @@ class YXBagdeListViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.register(UINib(nibName: "YXBadgeListCell", bundle: nil), forCellReuseIdentifier: "YXBadgeListCell")
     }
     
     
@@ -36,7 +32,6 @@ class YXBagdeListViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "YXBadgeListCell", for: indexPath) as! YXBadgeListCell
         let badgeList = badgeLists[indexPath.row]
          
-        cell.titleView.backgroundColor = colors[indexPath.row]
         cell.titleLabel.text = badgeList.title
         
         cell.collectionView.tag = indexPath.row

@@ -10,81 +10,161 @@ import UIKit
 
 class YXStarView: UIView {
     
-    var leftStarImageView: UIImageView = {
+    var leftStarDisableImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "star_h_disable")
         return imageView
     }()
-    var centerStarImageView: UIImageView = {
+    var leftStarEnableImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image    = UIImage(named: "star_h_enable")
+        imageView.isHidden = true
         return imageView
     }()
-    var rightStarImageView: UIImageView = {
+    var centerStarDisableImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "star_h_disable")
+        return imageView
+    }()
+    var centerStarEnableImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image    = UIImage(named: "star_h_enable")
+        imageView.isHidden = true
+        return imageView
+    }()
+    var rightStarDisableImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "star_h_disable")
+        return imageView
+    }()
+    var rightStarEnableImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image    = UIImage(named: "star_h_enable")
+        imageView.isHidden = true
         return imageView
     }()
     
+    var starNumber = 0
+    
     /// 显示上一次新学结果视图
     func showLastNewLearnResultView(starNum: Int) {
-        self.setStarStatus(starNum: starNum)
-        self.addSubview(leftStarImageView)
-        self.addSubview(centerStarImageView)
-        self.addSubview(rightStarImageView)
-        centerStarImageView.snp.makeConstraints { (make) in
+        self.starNumber = starNum
+        self.setStarStatus()
+        self.addSubview(leftStarDisableImageView)
+        self.addSubview(centerStarDisableImageView)
+        self.addSubview(rightStarDisableImageView)
+        self.leftStarDisableImageView.addSubview(leftStarEnableImageView)
+        self.centerStarDisableImageView.addSubview(centerStarEnableImageView)
+        self.rightStarDisableImageView.addSubview(rightStarEnableImageView)
+
+        centerStarDisableImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(30), height: AdaptSize(30)))
         }
-        leftStarImageView.snp.makeConstraints { (make) in
-            make.right.equalTo(centerStarImageView.snp.left).offset(AdaptSize(2))
-            make.top.equalTo(centerStarImageView).offset(AdaptSize(15))
+        leftStarDisableImageView.snp.makeConstraints { (make) in
+            make.right.equalTo(centerStarDisableImageView.snp.left).offset(AdaptSize(2))
+            make.top.equalTo(centerStarDisableImageView).offset(AdaptSize(15))
             make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
         }
-        rightStarImageView.snp.makeConstraints { (make) in
-            make.left.equalTo(centerStarImageView.snp.right).offset(AdaptSize(-2))
-            make.top.equalTo(leftStarImageView)
+        rightStarDisableImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(centerStarDisableImageView.snp.right).offset(AdaptSize(-2))
+            make.top.equalTo(leftStarDisableImageView)
             make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
+        }
+        centerStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        leftStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        rightStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
     }
     
     /// 显示结果页
     func showResultView(starNum: Int) {
-        self.setStarStatus(starNum: starNum)
-        self.addSubview(leftStarImageView)
-        self.addSubview(centerStarImageView)
-        self.addSubview(rightStarImageView)
-        centerStarImageView.snp.makeConstraints { (make) in
+        self.starNumber = starNum
+        self.resetStatus()
+        self.addSubview(leftStarDisableImageView)
+        self.addSubview(centerStarDisableImageView)
+        self.addSubview(rightStarDisableImageView)
+        self.leftStarDisableImageView.addSubview(leftStarEnableImageView)
+        self.centerStarDisableImageView.addSubview(centerStarEnableImageView)
+        self.rightStarDisableImageView.addSubview(rightStarEnableImageView)
+
+        centerStarDisableImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(45), height: AdaptSize(45)))
+            make.size.equalTo(CGSize(width: AdaptSize(30), height: AdaptSize(30)))
         }
-        leftStarImageView.snp.makeConstraints { (make) in
-            make.right.equalTo(centerStarImageView.snp.left).offset(AdaptSize(-5))
-            make.centerY.equalTo(centerStarImageView)
-            make.size.equalTo(CGSize(width: AdaptSize(31.5), height: AdaptSize(31.5)))
+        leftStarDisableImageView.snp.makeConstraints { (make) in
+            make.right.equalTo(centerStarDisableImageView.snp.left).offset(AdaptSize(2))
+            make.top.equalTo(centerStarDisableImageView).offset(AdaptSize(15))
+            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
         }
-        rightStarImageView.snp.makeConstraints { (make) in
-            make.left.equalTo(centerStarImageView.snp.right).offset(AdaptSize(5))
-            make.centerY.equalTo(centerStarImageView)
-            make.size.equalTo(CGSize(width: AdaptSize(31.5), height: AdaptSize(31.5)))
+        rightStarDisableImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(centerStarDisableImageView.snp.right).offset(AdaptSize(-2))
+            make.top.equalTo(leftStarDisableImageView)
+            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
         }
+        centerStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        leftStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        rightStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        self.showAnimation()
     }
     
     // MARK: ---- Tools ----
-    private func setStarStatus(starNum: Int) {
-        if starNum > 0 {
-            leftStarImageView.image = UIImage(named: "star_h_enable")
-        } else {
-            leftStarImageView.image = UIImage(named: "star_h_disable")
+    private func setStarStatus() {
+        if self.starNumber > 0 {
+            leftStarEnableImageView.isHidden = false
         }
-        if starNum > 1 {
-            centerStarImageView.image = UIImage(named: "star_h_enable")
-        } else {
-            centerStarImageView.image = UIImage(named: "star_h_disable")
+        if self.starNumber > 1 {
+            centerStarEnableImageView.isHidden = false
         }
-        if starNum > 2 {
-            rightStarImageView.image = UIImage(named: "star_h_enable")
-        } else {
-            rightStarImageView.image = UIImage(named: "star_h_disable")
+        if self.starNumber > 2 {
+            rightStarEnableImageView.isHidden = false
+        }
+    }
+    
+    private func resetStatus() {
+        self.leftStarEnableImageView.isHidden   = true
+        self.centerStarEnableImageView.isHidden = true
+        self.rightStarEnableImageView.isHidden  = true
+    }
+    
+    private func showAnimation() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+        animation.values         = [0, 1.1, 1.0]
+        animation.duration       = 0.75
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        if self.starNumber > 0 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.leftStarEnableImageView.isHidden = false
+                self.leftStarEnableImageView.layer.add(animation, forKey: nil)
+                YXAVPlayerManager.share.playStar1()
+            }
+        }
+        if self.starNumber > 1 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.centerStarEnableImageView.isHidden = false
+                self.centerStarEnableImageView.layer.add(animation, forKey: nil)
+                YXAVPlayerManager.share.playStar2()
+            }
+        }
+        if self.starNumber > 2 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                self.rightStarEnableImageView.isHidden = false
+                self.rightStarEnableImageView.layer.add(animation, forKey: nil)
+                YXAVPlayerManager.share.playStar3()
+            }
         }
     }
 }

@@ -228,9 +228,10 @@ class YXNewLearnResultView: UIView {
             bonusLabel.isHidden    = true
             titleLabel.text        = "Try again"
         }
-        self.contentView.isHidden = false
         self.titleLabel.isHidden  = false
         self.layoutSubviews()
+        self.contentView.isHidden = false
+        self.showAnimation()
     }
     
     /// 显示网络错误视图
@@ -246,8 +247,44 @@ class YXNewLearnResultView: UIView {
     }
     
     func hideView() {
-        self.contentView.removeAllSubviews()
-        self.removeAllSubviews()
-        self.removeFromSuperview()
+        self.hideAnimation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            self.contentView.removeAllSubviews()
+            self.removeAllSubviews()
+            self.removeFromSuperview()
+        }
+    }
+    
+    // MARK: ---- Animation ----
+    private func showAnimation() {
+        let scaleAnimater       = CAKeyframeAnimation(keyPath: "transform.scale")
+        scaleAnimater.values    = [0.6, 1.0]
+
+        let opacityAnimation    = CAKeyframeAnimation(keyPath: "opacity")
+        opacityAnimation.values = [0.6, 1.0]
+
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations     = [scaleAnimater, opacityAnimation]
+        animationGroup.autoreverses   = false
+        animationGroup.repeatCount    = 1
+        animationGroup.duration       = 0.5
+        animationGroup.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        self.contentView.layer.add(animationGroup, forKey: nil)
+    }
+    
+    private func hideAnimation() {
+        let scaleAnimater       = CAKeyframeAnimation(keyPath: "transform.scale")
+        scaleAnimater.values    = [1.0, 0.0]
+
+        let opacityAnimation    = CAKeyframeAnimation(keyPath: "opacity")
+        opacityAnimation.values = [1.0, 0.0]
+
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations     = [scaleAnimater, opacityAnimation]
+        animationGroup.autoreverses   = false
+        animationGroup.repeatCount    = 1
+        animationGroup.duration       = 0.5
+        animationGroup.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        self.contentView.layer.add(animationGroup, forKey: nil)
     }
 }

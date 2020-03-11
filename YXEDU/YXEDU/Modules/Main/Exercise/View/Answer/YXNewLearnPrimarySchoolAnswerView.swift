@@ -131,7 +131,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
         // 新学跟读流程
         if exerciseModel == nil {
-            self.status = .alreadLearn
+            self.status            = .alreadLearn
             self.starView.isHidden = false
             self.starView.showLastNewLearnResultView(starNum: 2)
         } else {
@@ -457,7 +457,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             guard let self = self else { return }
             self.learnResultView.showResultView(self.lastLevel)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
             guard let self = self else { return }
             self.hideResultAnimation()
         }
@@ -528,15 +528,14 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     func onResult(_ result: String!, isLast: Bool) {
         //        print("============录音结果: " + result)
         if isLast {
-            self.lastLevel = 0
             // 录音结束,清除临时录音缓存
             self.resetOpusTempData()
             let resultDict = result.convertToDictionary()
             guard let score = resultDict["score"] as? Double else {
                 return
             }
-            //            YXUtils.showHUD(self, title: "当前得分: \(score)")
-            self.lastLevel = {
+            // YXUtils.showHUD(self, title: "当前得分: \(score)")
+            let currentLevel: Int = {
                 if score > 60 {
                     return 3
                 } else if score > 30 {
@@ -548,6 +547,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 }
             }()
             // 显示结果动画
+            self.lastLevel = currentLevel > lastLevel ? currentLevel : lastLevel
             self.exerciseModel.listenScore = self.lastLevel
             self.hideReportAnimation()
             self.showResultAnimation()

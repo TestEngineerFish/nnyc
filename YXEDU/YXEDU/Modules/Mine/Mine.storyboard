@@ -582,7 +582,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0p-vt-y9f">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="527"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="564"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZxI-93-Dkk" customClass="YXDesignableImageView" customModule="YXEDU" customModuleProvider="target">
                                                 <rect key="frame" x="162.5" y="36" width="50" height="50"/>
@@ -732,27 +732,27 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lAT-aI-CFm">
-                                                <rect key="frame" x="20" y="241" width="323" height="36"/>
+                                                <rect key="frame" x="20" y="241" width="323" height="73"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="36" id="Ova-FD-Rhi"/>
+                                                    <constraint firstAttribute="height" constant="73" id="Ova-FD-Rhi"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="U1i-NZ-rr4">
-                                                    <size key="itemSize" width="36" height="36"/>
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="17" id="U1i-NZ-rr4">
+                                                    <size key="itemSize" width="94.299999999999997" height="73"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
                                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="BadgeCell" id="VZK-gl-h3i">
-                                                        <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="94.299999999999997" height="73"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="thg-3R-p2L">
-                                                            <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="94.299999999999997" height="73"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vXc-uI-KGw">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="94.5" height="73"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -764,7 +764,7 @@
                                                             </constraints>
                                                         </collectionViewCellContentView>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <size key="customSize" width="36" height="36"/>
+                                                        <size key="customSize" width="94.299999999999997" height="73"/>
                                                     </collectionViewCell>
                                                 </cells>
                                                 <connections>
@@ -773,7 +773,7 @@
                                                 </connections>
                                             </collectionView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fl-TC-wcP">
-                                                <rect key="frame" x="343" y="251" width="32" height="16"/>
+                                                <rect key="frame" x="343" y="269.5" width="32" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="IQ1-0r-g7d"/>
                                                     <constraint firstAttribute="width" constant="32" id="ngg-f6-57W"/>
@@ -784,14 +784,14 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXr-TQ-XFQ">
-                                                <rect key="frame" x="0.0" y="295" width="375" height="6"/>
+                                                <rect key="frame" x="0.0" y="332" width="375" height="6"/>
                                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="6" id="eFC-rR-wIB"/>
                                                 </constraints>
                                             </view>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2Il-AC-eOh">
-                                                <rect key="frame" x="0.0" y="301" width="375" height="226"/>
+                                                <rect key="frame" x="0.0" y="338" width="375" height="226"/>
                                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="226" id="Ibv-bg-CUU"/>
@@ -1174,6 +1174,8 @@
                     <connections>
                         <outlet property="avatarImageView" destination="ZxI-93-Dkk" id="kwZ-qI-Ehg"/>
                         <outlet property="calendarLabel" destination="jLf-FL-uxB" id="j0A-1X-p8w"/>
+                        <outlet property="collectionLeftConsraint" destination="w9E-HF-G3M" id="i6Z-lC-gYH"/>
+                        <outlet property="collectionRightConsraint" destination="w9E-HF-G3M" id="7FE-gT-7Xp"/>
                         <outlet property="collectionView" destination="lAT-aI-CFm" id="U3Z-ON-FZO"/>
                         <outlet property="myIntegralLabel" destination="e2v-RP-URZ" id="X74-Ey-T5O"/>
                         <outlet property="nameLabel" destination="KkR-kk-VBI" id="I6i-Sz-DQu"/>
@@ -1232,23 +1234,7 @@
                     <view key="view" contentMode="scaleToFill" id="OmR-0w-JXN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="210" estimatedRowHeight="210" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1rT-JU-v47">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="Kmr-3i-3ce" id="Q1K-q6-T0X"/>
-                                    <outlet property="delegate" destination="Kmr-3i-3ce" id="Nr2-Lc-yyY"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="u9Z-5F-ZSr" firstAttribute="trailing" secondItem="1rT-JU-v47" secondAttribute="trailing" id="71M-06-PPe"/>
-                            <constraint firstAttribute="bottom" secondItem="1rT-JU-v47" secondAttribute="bottom" id="bQj-Re-Cxl"/>
-                            <constraint firstItem="1rT-JU-v47" firstAttribute="leading" secondItem="u9Z-5F-ZSr" secondAttribute="leading" id="tAw-D0-Y0c"/>
-                            <constraint firstItem="1rT-JU-v47" firstAttribute="top" secondItem="u9Z-5F-ZSr" secondAttribute="top" id="vdU-ft-wHz"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="u9Z-5F-ZSr"/>
                     </view>
                     <navigationItem key="navigationItem" title="我的徽章" id="3EA-bq-hUt">
@@ -1258,9 +1244,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="tableView" destination="1rT-JU-v47" id="fFg-xg-F4J"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iqy-Se-aen" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -359,6 +359,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                             self.taskTableView.reloadData()
 
                         } else {
+                            YXBadgeManger.share.updateTaskCenterBadge()
                             self.taskLists[collectionView.tag].list?.remove(at: indexPath.row)
                             self.taskTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
                         }

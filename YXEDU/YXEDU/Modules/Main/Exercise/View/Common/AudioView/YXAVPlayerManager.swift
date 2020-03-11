@@ -52,6 +52,7 @@ class YXAVPlayerManager: NSObject {
             self.isPlaying = true
             self.addObservers()
         } else {
+            DDLogInfo("无效音频,地址：" + url.absoluteString)
             YXUtils.showHUD(kWindow, title: "无效音频")
             YYMediaCache.default.deleteCache(url)
             self.playFinished()
@@ -127,6 +128,33 @@ class YXAVPlayerManager: NSObject {
     /// 播放答题错误音效
     func playWrongAudio() {
         guard let path = Bundle.main.path(forResource: "wrong", ofType: "mp3") else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        YXAVPlayerManager.share.playAudio(url)
+    }
+    
+    /// 播放一颗星音效
+    func playStar1() {
+        guard let path = Bundle.main.path(forResource: "star1", ofType: "mp3") else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        YXAVPlayerManager.share.playAudio(url)
+    }
+    
+    /// 播放两颗星音效
+    func playStar2() {
+        guard let path = Bundle.main.path(forResource: "star2", ofType: "mp3") else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        YXAVPlayerManager.share.playAudio(url)
+    }
+    
+    /// 播放三颗星音效
+    func playStar3() {
+        guard let path = Bundle.main.path(forResource: "star3", ofType: "mp3") else {
             return
         }
         let url = URL(fileURLWithPath: path)

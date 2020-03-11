@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 @objc
 class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -19,14 +20,19 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var homeModel: YXHomeModel!
     public var progressManager = YXExcerciseProgressManager()
     
+    @IBOutlet weak var homeEntryView: YXDesignableView!
+    @IBOutlet weak var bookNameLabel: UILabel!
+    @IBOutlet weak var startStudyView: YXDesignableView!
     @IBOutlet weak var startStudyButton: YXDesignableButton!
-    @IBOutlet weak var bookNameButton: UIButton!
+    @IBOutlet weak var changeBookButton: UIButton!
     @IBOutlet weak var unitNameButton: UIButton!
     @IBOutlet weak var countOfWaitForStudyWords: YXDesignableLabel!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var studyDataCollectionView: UICollectionView!
     @IBOutlet weak var subItemCollectionView: UICollectionView!
-
+    var entryAnimationView: AnimationView!
+    @IBOutlet weak var entryViewHeightConstraint: NSLayoutConstraint!
+    
     @IBAction func startExercise(_ sender: UIButton) {
         if YXWordBookResourceManager.shared.isDownloading {
             YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
@@ -73,7 +79,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
-    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,7 +91,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
         
-        checkUserState()
+        self.checkUserState()
+        self.adjustEntryViewContraints()
+        self.setEntryAnimation()
+        self.registerNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,6 +130,42 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    // MARK: ---- Notification ----
+    /// 注册通知
+    private func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTaskCenterStatus), name: YXNotification.kUpdateTaskCenterBadge, object: nil)
+    }
+    
+    // MARK: ---- Request ----
+    private func loadData() {
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
+            guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
+            
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
+                self.homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
+                
+                self.adjustStartStudyButtonState()
+                self.bookNameLabel.text = self.homeModel.bookName
+                self.unitNameButton.setTitle(self.homeModel.unitName, for: .normal)
+                self.countOfWaitForStudyWords.text = "\((self.homeModel.newWords ?? 0) + (self.homeModel.reviewWords ?? 0))"
+                self.progressBar.setProgress(Float(self.homeModel.unitProgress ?? 0), animated: true)
+                
+                self.learnedWordsCount = "\(self.homeModel.learnedWords ?? 0)"
+                self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
+                self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
+                self.studyDataCollectionView.reloadData()
+                
+                YXWordBookResourceManager.shared.contrastBookData()
+                
+                self.initDataManager()
+                
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     private func checkUserState() {
         let request = YXRegisterAndLoginRequest.userInfomation
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
@@ -142,34 +186,34 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
-    private func loadData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
-            
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                self.homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
-                
-                self.adjustStartStudyButtonState()
-
-                self.bookNameButton.setTitle(self.homeModel.bookName, for: .normal)
-                self.unitNameButton.setTitle(self.homeModel.unitName, for: .normal)
-                self.countOfWaitForStudyWords.text = "\((self.homeModel.newWords ?? 0) + (self.homeModel.reviewWords ?? 0))"
-                self.progressBar.setProgress(Float(self.homeModel.unitProgress ?? 0), animated: true)
-                
-                self.learnedWordsCount = "\(self.homeModel.learnedWords ?? 0)"
-                self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
-                self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
-                self.studyDataCollectionView.reloadData()
-                
-                YXWordBookResourceManager.shared.contrastBookData()
-                
-                self.initDataManager()
-                
-            } catch {
-                print(error)
+    // MARK: ---- Tools ----
+    
+    private func setEntryAnimation() {
+        let isFirstShowHome = YYCache.object(forKey: YXLocalKey.firstShowHome) as? Bool ?? true
+        if isFirstShowHome {
+            entryAnimationView = AnimationView(name: "homeFirst")
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
+                let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+                animation.values         = [1.0, 0.8, 1.0, 0.8, 1.0]
+                animation.duration       = 3.5
+                animation.timingFunction = CAMediaTimingFunction(name: .easeIn)
+                self?.startStudyButton.layer.add(animation, forKey: nil)
+                self?.startStudyView.layer.add(animation, forKey: nil)
             }
+        } else {
+            entryAnimationView = AnimationView(name: "homeNormal")
         }
+        YYCache.set(false, forKey: YXLocalKey.firstShowHome)
+        self.homeEntryView.insertSubview(entryAnimationView, at: 1)
+        entryAnimationView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        entryAnimationView.play()
+    }
+    
+    private func adjustEntryViewContraints() {
+        let entryViewH = (screenWidth - 40) / 332 * 381
+        self.entryViewHeightConstraint.constant = entryViewH
     }
     
     private func adjustStartStudyButtonState() {
@@ -200,21 +244,18 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 countOfWaitForStudyWords.text = "\(data.0.count + data.1.count)"
             }
         }
-        
     }
     
+    // MARK: ---- Event ----
+    @objc private func updateTaskCenterStatus() {
+        self.subItemCollectionView.reloadData()
+    }
     
-    // MARK: Event
     @IBAction func showLearnMap(_ sender: UIButton) {
         self.hidesBottomBarWhenPushed = true
         let vc = YXLearnMapViewController()
         vc.bookId = self.homeModel?.bookId
         vc.unitId = self.homeModel?.unitId
-//        let vc = YXLearningResultViewController()
-//        vc.newLearnAmount = 5
-//        vc.reviewLearnAmount = 9
-//        vc.bookId = self.homeModel?.bookId
-//        vc.unitId = self.homeModel?.unitId
         self.navigationController?.pushViewController(vc, animated: true)
         self.hidesBottomBarWhenPushed = false
     }
@@ -224,7 +265,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.pushViewController(missionVC, animated: true)
     }
     
-    // MARK: -
+    // MARK: ---- UICollection Delegate & DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 1 {
             return 3
@@ -261,36 +302,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemCell", for: indexPath) as! YXHomeSubItemCell
-            
-            switch indexPath.row {
-            case 0:
-                cell.colorView.backgroundColor = UIColor(red: 255/255, green: 239/255, blue: 240/255, alpha: 1)
-                cell.iconView.image = #imageLiteral(resourceName: "homeTask")
-                cell.titleLabel.text = "任务中心"
-                break
-                
-            case 1:
-                cell.colorView.backgroundColor = UIColor(red: 232/255, green: 246/255, blue: 234/255, alpha: 1)
-                cell.iconView.image = #imageLiteral(resourceName: "homeCalendar")
-                cell.titleLabel.text = "打卡日历"
-                break
-                
-            case 2:
-                cell.colorView.backgroundColor = UIColor(red: 240/255, green: 246/255, blue: 255/255, alpha: 1)
-                cell.iconView.image = #imageLiteral(resourceName: "homeReport")
-                cell.titleLabel.text = "学习报告"
-                break
-                
-            case 3:
-                cell.colorView.backgroundColor = UIColor(red: 255/255, green: 244/255, blue: 225/255, alpha: 1)
-                cell.iconView.image = #imageLiteral(resourceName: "homeSelectWords")
-                cell.titleLabel.text = "单词挑战"
-                break
-                
-            default:
-                break
-            }
-            
+            cell.setData(indexPath)
             return cell
         }
     }

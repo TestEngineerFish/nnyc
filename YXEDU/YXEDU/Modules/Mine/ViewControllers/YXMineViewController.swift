@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
+class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     private var temporaryUserModel: YXUserModel_Old?
     
@@ -25,6 +25,9 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     let badgeView = YXBadgeView()
+    @IBOutlet weak var collectionLeftConsraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionRightConsraint: NSLayoutConstraint!
+    
     
     @IBAction func tapCoin(_ sender: UITapGestureRecognizer) {
         self.performSegue(withIdentifier: "Coin", sender: self)
@@ -44,9 +47,14 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        customNavigationBar?.isHidden = true
+        self.bindProperty()
+    }
+    
+    private func bindProperty() {
+        self.collectionLeftConsraint.constant  = AdaptSize(19)
+        self.collectionRightConsraint.constant = AdaptSize(39)
+        customNavigationBar?.isHidden          = true
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
-
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateBadge), name: YXNotification.kUpdateFeedbackReplyBadge, object: nil)
     }
@@ -136,7 +144,6 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as? UILabel
                 if YXUserModel.default.didUseAmericanPronunciation {
                     speechLabel?.text = "美式"
-                    
                 } else {
                     speechLabel?.text = "英式"
                 }
@@ -335,8 +342,6 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    
-    
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return badges.count
@@ -362,7 +367,13 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.performSegue(withIdentifier: "BadgeList", sender: self)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return AdaptSize(17)
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: AdaptSize(94.3), height: AdaptSize(73))
+    }
     
     // MARK: - 第三方登录
     @objc

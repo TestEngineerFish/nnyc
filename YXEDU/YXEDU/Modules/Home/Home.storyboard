@@ -13,7 +13,7 @@
             <objects>
                 <viewController storyboardIdentifier="YXAddBookViewController" hidesBottomBarWhenPushed="YES" id="KRx-zx-laN" customClass="YXAddBookViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Cmh-Es-I4z">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uVU-qD-ytE">
@@ -116,7 +116,7 @@
             <objects>
                 <viewController id="nnd-vG-UVX" customClass="YXHomeViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VZF-1B-lg5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4M-vc-0er">
@@ -142,13 +142,13 @@
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeBackground" translatesAutoresizingMaskIntoConstraints="NO" id="7ey-RK-d8S">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="392"/>
                                                     </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2F3-bO-dki">
-                                                        <rect key="frame" x="10" y="10" width="30" height="18"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2F3-bO-dki">
+                                                        <rect key="frame" x="316" y="10" width="37" height="18"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="18" id="Cvr-VQ-pYt"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <state key="normal" title="--">
+                                                        <state key="normal" title="换本书">
                                                             <color key="titleColor" red="1" green="0.92941176470588238" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
                                                         <connections>
@@ -280,11 +280,11 @@
                                                             <constraint firstAttribute="height" constant="8" id="sqe-wB-0Xl"/>
                                                         </constraints>
                                                     </progressView>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeWordBook" translatesAutoresizingMaskIntoConstraints="NO" id="wrk-54-5fD">
-                                                        <rect key="frame" x="42" y="10" width="18" height="18"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right_white" translatesAutoresizingMaskIntoConstraints="NO" id="wrk-54-5fD">
+                                                        <rect key="frame" x="357" y="11.5" width="8" height="15"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="18" id="5tf-so-aum"/>
-                                                            <constraint firstAttribute="width" constant="18" id="wyC-2C-SVz"/>
+                                                            <constraint firstAttribute="height" constant="15" id="5tf-so-aum"/>
+                                                            <constraint firstAttribute="width" constant="8" id="wyC-2C-SVz"/>
                                                         </constraints>
                                                     </imageView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unitIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="GK7-CR-ePQ">
@@ -294,6 +294,12 @@
                                                             <constraint firstAttribute="width" constant="18" id="gND-iO-Hti"/>
                                                         </constraints>
                                                     </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mF-tx-aP4">
+                                                        <rect key="frame" x="15" y="11.5" width="12" height="15"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
@@ -301,18 +307,18 @@
                                                     <constraint firstItem="AZn-be-OuY" firstAttribute="height" secondItem="spb-lT-D93" secondAttribute="height" id="1y3-U9-Alf"/>
                                                     <constraint firstItem="rVY-bt-TOH" firstAttribute="top" secondItem="gMI-oo-EEp" secondAttribute="bottom" constant="4" id="76M-GO-0lg"/>
                                                     <constraint firstItem="ife-Vw-839" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="top" constant="64" id="AZc-7x-ISv"/>
+                                                    <constraint firstItem="wrk-54-5fD" firstAttribute="centerY" secondItem="2F3-bO-dki" secondAttribute="centerY" id="Bxz-aT-1RH"/>
                                                     <constraint firstItem="AZn-be-OuY" firstAttribute="top" secondItem="spb-lT-D93" secondAttribute="top" id="DFx-NV-tYd"/>
                                                     <constraint firstAttribute="trailing" secondItem="jIQ-cl-KIq" secondAttribute="trailing" constant="40" id="F3J-p1-7V5"/>
-                                                    <constraint firstItem="wrk-54-5fD" firstAttribute="leading" secondItem="2F3-bO-dki" secondAttribute="trailing" constant="2" id="F7J-Mq-uDw"/>
+                                                    <constraint firstItem="wrk-54-5fD" firstAttribute="leading" secondItem="2F3-bO-dki" secondAttribute="trailing" constant="4" id="F7J-Mq-uDw"/>
                                                     <constraint firstItem="evR-by-lhD" firstAttribute="top" secondItem="rVY-bt-TOH" secondAttribute="bottom" constant="20" id="H9F-FM-8uG"/>
                                                     <constraint firstItem="7ey-RK-d8S" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" id="Hee-U9-EE6"/>
                                                     <constraint firstItem="rVY-bt-TOH" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="KHW-WD-UNj"/>
                                                     <constraint firstAttribute="trailing" secondItem="7ey-RK-d8S" secondAttribute="trailing" id="Q13-LY-KRs"/>
                                                     <constraint firstItem="jIQ-cl-KIq" firstAttribute="top" secondItem="rVY-bt-TOH" secondAttribute="bottom" constant="20" id="Q5u-rC-z2g"/>
-                                                    <constraint firstItem="2F3-bO-dki" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="10" id="Rfo-GC-4Mz"/>
+                                                    <constraint firstItem="9mF-tx-aP4" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="15" id="UHi-bv-G4H"/>
                                                     <constraint firstItem="2F3-bO-dki" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="top" constant="10" id="a6O-5q-m6u"/>
                                                     <constraint firstItem="spb-lT-D93" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="10" id="bgO-ZN-FMu"/>
-                                                    <constraint firstItem="wrk-54-5fD" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="top" constant="10" id="bpL-F2-Dx7"/>
                                                     <constraint firstItem="GK7-CR-ePQ" firstAttribute="centerY" secondItem="gMI-oo-EEp" secondAttribute="centerY" id="dm4-md-Brs"/>
                                                     <constraint firstAttribute="trailing" secondItem="spb-lT-D93" secondAttribute="trailing" constant="10" id="dxt-mZ-0qr"/>
                                                     <constraint firstItem="AZn-be-OuY" firstAttribute="width" secondItem="spb-lT-D93" secondAttribute="width" id="e2m-n1-HpY"/>
@@ -326,11 +332,13 @@
                                                     <constraint firstItem="spb-lT-D93" firstAttribute="top" secondItem="evR-by-lhD" secondAttribute="bottom" constant="28" id="nsp-zo-Epa"/>
                                                     <constraint firstItem="GK7-CR-ePQ" firstAttribute="leading" secondItem="gMI-oo-EEp" secondAttribute="trailing" id="pTd-Hy-ah3"/>
                                                     <constraint firstItem="Fae-CO-v6Q" firstAttribute="centerX" secondItem="Udq-Hf-n6w" secondAttribute="centerX" id="rvF-se-Lxw"/>
+                                                    <constraint firstItem="9mF-tx-aP4" firstAttribute="centerY" secondItem="2F3-bO-dki" secondAttribute="centerY" id="s9D-6W-aKh"/>
                                                     <constraint firstAttribute="bottom" secondItem="7ey-RK-d8S" secondAttribute="bottom" id="sqy-eQ-Fd2"/>
                                                     <constraint firstItem="gMI-oo-EEp" firstAttribute="top" secondItem="Fae-CO-v6Q" secondAttribute="bottom" constant="24" id="wXw-ez-4zU"/>
                                                     <constraint firstItem="evR-by-lhD" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="yD6-zq-xa4"/>
                                                     <constraint firstAttribute="bottom" secondItem="spb-lT-D93" secondAttribute="bottom" constant="18" id="yjC-IZ-29k"/>
                                                     <constraint firstItem="jIQ-cl-KIq" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="yum-n9-tLd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="wrk-54-5fD" secondAttribute="trailing" constant="9" id="z69-jm-ttg"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -404,10 +412,14 @@
                         <barButtonItem key="backBarButtonItem" id="EAK-EO-eoG"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="bookNameButton" destination="2F3-bO-dki" id="fNy-kV-ZJ4"/>
+                        <outlet property="bookNameLabel" destination="9mF-tx-aP4" id="qWe-qb-6F8"/>
+                        <outlet property="changeBookButton" destination="2F3-bO-dki" id="Yh8-tx-u31"/>
                         <outlet property="countOfWaitForStudyWords" destination="Fae-CO-v6Q" id="vpX-uM-xXg"/>
+                        <outlet property="entryViewHeightConstraint" destination="i3F-Hz-9UF" id="4aL-g7-789"/>
+                        <outlet property="homeEntryView" destination="Udq-Hf-n6w" id="CJM-N5-wze"/>
                         <outlet property="progressBar" destination="rVY-bt-TOH" id="VAW-I3-wze"/>
                         <outlet property="startStudyButton" destination="evR-by-lhD" id="HiA-LU-4rW"/>
+                        <outlet property="startStudyView" destination="jIQ-cl-KIq" id="BBl-rS-lxo"/>
                         <outlet property="studyDataCollectionView" destination="AZn-be-OuY" id="bW1-sB-B0C"/>
                         <outlet property="subItemCollectionView" destination="q7v-mq-Dhk" id="dcr-FN-BY1"/>
                         <outlet property="unitNameButton" destination="gMI-oo-EEp" id="38q-y3-OV9"/>
@@ -455,7 +467,7 @@
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="qql-3G-E8i" customClass="YXEditWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DU0-3m-EQG">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="msh-PC-kQf">
@@ -582,34 +594,8 @@
         <scene sceneID="y8k-uf-WSX">
             <objects>
                 <viewController storyboardIdentifier="YXWordDetailViewControllerNew" id="DDF-Ya-OXu" customClass="YXWordDetailViewControllerNew" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="pb8-4I-APZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="6JH-R7-nj6"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="5ge-kh-REl">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="qvq-P7-upE">
-                            <connections>
-                                <action selector="back:" destination="DDF-Ya-OXu" id="w5x-La-cdL"/>
-                            </connections>
-                        </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem image="feedbackWord" id="vkV-wj-aXh">
-                                <connections>
-                                    <action selector="feedbackWord:" destination="DDF-Ya-OXu" id="JWt-Li-0RD"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="collectWord" style="plain" id="siM-eu-dO6">
-                                <connections>
-                                    <action selector="collectWord:" destination="DDF-Ya-OXu" id="ibd-wq-PYQ"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="collectionButton" destination="siM-eu-dO6" id="I9P-Br-z4H"/>
-                    </connections>
+                    <navigationItem key="navigationItem" id="5ge-kh-REl"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNV-CJ-22v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -636,7 +622,7 @@
             <objects>
                 <viewController storyboardIdentifier="YXTaskCenterViewController" hidesBottomBarWhenPushed="YES" id="LEE-do-1y0" customClass="YXTaskCenterViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fkk-Wd-hK0">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="taskCenterBackground" translatesAutoresizingMaskIntoConstraints="NO" id="PUr-pe-tFW">
@@ -1018,7 +1004,7 @@
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="Ya4-tm-uHn" customClass="YXSelectBookViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lsu-Ax-6NU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uLc-Pb-8Fk">
@@ -1263,11 +1249,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow_right_white" width="8" height="15"/>
         <image name="back" width="22" height="22"/>
-        <image name="changeWordBook" width="18" height="19"/>
         <image name="coin" width="20" height="21"/>
-        <image name="collectWord" width="22" height="22"/>
-        <image name="feedbackWord" width="22" height="22"/>
         <image name="homeBackground" width="332" height="382"/>
         <image name="homeLogo" width="86" height="22"/>
         <image name="homeProgressBar" width="259" height="8"/>
