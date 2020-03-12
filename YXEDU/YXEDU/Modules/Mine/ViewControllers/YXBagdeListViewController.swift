@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXBagdeListViewController: YXViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     var badgeLists: [YXBadgeListModel] = []
     

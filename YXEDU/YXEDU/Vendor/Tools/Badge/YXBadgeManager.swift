@@ -52,7 +52,10 @@ import Foundation
     func updateTaskCenterBadge() {
         let request = YXHomeRequest.task
         YYNetworkService.default.request(YYStructResponse<YXTaskCenterBadgeModel>.self, request: request, success: { (response) in
-            let badgeNum = 1
+            guard let model = response.data else {
+                return
+            }
+            let badgeNum = model.num
             YYCache.set(badgeNum, forKey: YXLocalKey.taskCenterCanReceive)
             NotificationCenter.default.post(name: YXNotification.kUpdateTaskCenterBadge, object: nil)
         }) { (error) in

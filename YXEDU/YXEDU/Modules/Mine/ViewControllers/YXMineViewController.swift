@@ -208,6 +208,11 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    // MARK: ---- Event ----
+    private func showBadgeList() {
+        
+    }
+    
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 6
