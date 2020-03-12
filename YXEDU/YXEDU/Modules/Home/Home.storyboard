@@ -417,6 +417,7 @@
                         <segue destination="xWi-kI-jZm" kind="show" identifier="PickUpWords" id="Ah7-hX-NCL"/>
                         <segue destination="I2c-Ah-MPk" kind="show" identifier="WordList" id="29y-bx-HQj"/>
                         <segue destination="JnP-zA-VAP" kind="show" identifier="AddBookGuide" animates="NO" id="u2y-xU-85A"/>
+                        <segue destination="KRx-zx-laN" kind="show" identifier="AddBookFromHome" id="ISO-bD-fBo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5w-Bb-6XP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1279,4 +1280,7 @@
         <image name="taskCenterBackground" width="375" height="375"/>
         <image name="unitIndicator" width="18" height="18"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="ISO-bD-fBo"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -116,11 +116,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             destinationViewController.selectedIndex = 2
             destinationViewController.careerModel = careerModel
             
-        } else if segue.identifier == "AddBookFromHomeWithoutAnimation" {
-            let destinationViewController = segue.destination as! YXAddBookViewController
-            destinationViewController.navigationItem.leftBarButtonItems = []
-            destinationViewController.navigationItem.hidesBackButton = true
-            
         } else if segue.identifier == "WordList" {
             let destinationViewController = segue.destination as! YXWordListViewController
             destinationViewController.wordListType = wordListType
