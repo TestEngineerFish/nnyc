@@ -17,10 +17,9 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
 
         remindView = YXRemindView(exerciseModel: exerciseModel)
         self.scrollView.addSubview(remindView!)
-
+        
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
         self.scrollView.addSubview(answerView!)
-
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
         super.createSubview()
@@ -33,5 +32,13 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
     
     override func bindData() {
         self.remindView?.remindSteps = [[.exampleWithDigWord, .image, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
+    }
+    
+    override func showAlertEvnet() {
+        (self.answerView as! YXAnswerSelectLettersView).textField.resignFirstResponder()
+    }
+    
+    override func hideAlertEvent() {
+        (self.answerView as! YXAnswerSelectLettersView).textField.becomeFirstResponder()
     }
 }

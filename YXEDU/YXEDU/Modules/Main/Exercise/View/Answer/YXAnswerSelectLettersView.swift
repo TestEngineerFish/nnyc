@@ -9,14 +9,15 @@
 import UIKit
 
 /// 选择字母答题页面
-class YXAnswerSelectLettersView: YXBaseAnswerView {
+class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
 
-    let itemSize     = CGFloat(60)
-    let margin       = CGFloat(10)
-    let horItemNum   = 4
-    var verItemNum   = 3
-    var buttonArray2 = [[YXLetterButton]]()
+    let itemSize         = CGFloat(60)
+    let margin           = CGFloat(10)
+    let horItemNum       = 4
+    var verItemNum       = 3
+    var buttonArray2     = [[YXLetterButton]]()
     var selectedBtnArray = [YXLetterButton]()
+    var textField        = UITextField()
 
     override func createSubviews() {
         super.createSubviews()
@@ -25,6 +26,19 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
         }
         self.createButtonArray(itemList)
         self.createUI()
+    }
+    
+    override func bindProperty() {
+        if true {
+            self.addSubview(textField)
+            self.textField.delegate = self
+            self.textField.becomeFirstResponder()
+            self.isHidden = true
+            NotificationCenter.default.addObserver(self, selector: #selector(showWordDetailView), name: YXNotification.kShowWordDetailPage, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(hideWordDetailView), name: YXNotification.kCloseWordDetailPage, object: nil)
+        } else {
+            self.isHidden = false
+        }
     }
 
     private func createUI() {
@@ -105,6 +119,15 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
     }
 
     // TODO: Event
+    
+    /// 显示单词详情提示
+    @objc private func showWordDetailView() {
+        self.textField.resignFirstResponder()
+    }
+    
+    @objc private func hideWordDetailView() {
+        self.textField.becomeFirstResponder()
+    }
 
     @objc func clickButton(_ button: YXLetterButton) {
         if button.status == .selected || button.status == .error {
@@ -146,24 +169,45 @@ class YXAnswerSelectLettersView: YXBaseAnswerView {
 //                    self.answerDelegate?.answerCompletion(self.exerciseModel, true)
 //                }
 //            } else {
-                self.answerDelegate?.answerCompletion(self.exerciseModel, true)
+            self.textField.resignFirstResponder()
+            self.answerDelegate?.answerCompletion(self.exerciseModel, true)
 //            }
         } else {
-            // 答题错误
-            self.selectedBtnArray.forEach { (letterBtn) in
-                if list.contains(letterBtn.tag) {
-                    letterBtn.status = .error
-                }
-                // 取消选中状态
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
-                    // 反之用户在这之间已取消选中
-                    if letterBtn.status != .normal && letterBtn.status != .disable {
-                        self.clickButton(letterBtn)
+            if true {
+                self.isUserInteractionEnabled = true
+            } else {
+                // 答题错误
+                self.selectedBtnArray.forEach { (letterBtn) in
+                    if list.contains(letterBtn.tag) {
+                        letterBtn.status = .error
                     }
-                    self.isUserInteractionEnabled = true
+                    // 取消选中状态
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+                        // 反之用户在这之间已取消选中
+                        if letterBtn.status != .normal && letterBtn.status != .disable {
+                            self.clickButton(letterBtn)
+                        }
+                        self.isUserInteractionEnabled = true
+                    }
                 }
             }
             self.answerDelegate?.answerCompletion(self.exerciseModel, false)
         }
+    }
+    
+    // MARK: ---- UITextFieldDelegate ----
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let button    = YXLetterButton()
+        button.text   = string
+        button.status = .normal
+        if range.length > 0 {
+            self.delegate?.unselectAnswerButton(button)
+        } else {
+            let success = delegate?.selectedAnswerButton(button) ?? false
+            if success, let result = self.delegate?.checkResult(), result.0 {
+                self.showResult(errorList: result.1)
+            }
+        }
+        return true
     }
 }

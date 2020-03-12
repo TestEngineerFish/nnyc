@@ -275,7 +275,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     public func remindDetail(completion: (() -> Void)? = nil) {
         guard let word = exerciseModel.word else { return }
-        
+        NotificationCenter.default.post(name: YXNotification.kShowWordDetailPage, object: nil)
         let detailView = YXWordDetailTipView(word: word)
         detailView.dismissClosure = {
             completion?()

@@ -154,7 +154,7 @@ class YXSpellSubview: UIView {
     /// 检验结果
     /// - returns: Bool: 是否需要更新结果, [Int]: 错误结果
     func checkResult() -> (Bool, [Int]) {
-        var showResult = false
+        var showResult   = false
         var errorTagList = [Int]()
         // 检测是否有未填充的空格
         let emptyBlankList = self.wordViewList.filter { (wordView) -> Bool in
