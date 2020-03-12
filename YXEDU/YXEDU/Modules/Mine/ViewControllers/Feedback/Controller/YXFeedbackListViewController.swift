@@ -73,7 +73,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
             }
             if model.state == 1 {
                 UIApplication.shared.applicationIconBadgeNumber = 0
-                YXBadgeManger.share.updateFeedbackReplyBadge()
+                YXBadgeManager.share.updateFeedbackReplyBadge()
             }
         }) { (error) in
             YXUtils.showHUD(self.view, title: "\(error.message)")

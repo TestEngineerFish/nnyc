@@ -27,7 +27,7 @@ class YXHomeSubItemCell: UICollectionViewCell {
     }
     
     func setData(_ indexPath: IndexPath) {
-        let hideDotView = YXBadgeManger.share.getTaskCenterBadgeNum() <= 0
+        let hideDotView = YXBadgeManager.share.getTaskCenterBadgeNum() <= 0
         switch indexPath.row {
         case 0:
             self.colorView.backgroundColor = UIColor.hex(0xFFEFF0)

@@ -225,7 +225,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return tableView.dequeueReusableCell(withIdentifier: "CellFour")!
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive")!
-            let badgeNum = YXBadgeManger.share.getFeedbackReplyBadgeNum()
+            let badgeNum = YXBadgeManager.share.getFeedbackReplyBadgeNum()
             cell.addSubview(badgeView)
             badgeView.snp.makeConstraints { (make) in
                 make.centerY.equalToSuperview()

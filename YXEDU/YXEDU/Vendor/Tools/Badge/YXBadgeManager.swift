@@ -8,9 +8,9 @@
 
 import Foundation
 
-@objc class YXBadgeManger: NSObject {
+@objc class YXBadgeManager: NSObject {
     
-    @objc static let share = YXBadgeManger()
+    @objc static let share = YXBadgeManager()
     
     var mineBadge: Int     = 0
     var feedbackBadge: Int = 0
@@ -50,9 +50,15 @@ import Foundation
     
     /// 更新任务中心小红点
     func updateTaskCenterBadge() {
-        let badgeNum = 1
-        YYCache.set(badgeNum, forKey: YXLocalKey.taskCenterCanReceive)
-        NotificationCenter.default.post(name: YXNotification.kUpdateTaskCenterBadge, object: nil)
+        let request = YXHomeRequest.task
+        YYNetworkService.default.request(YYStructResponse<YXTaskCenterBadgeModel>.self, request: request, success: { (response) in
+            let badgeNum = 1
+            YYCache.set(badgeNum, forKey: YXLocalKey.taskCenterCanReceive)
+            NotificationCenter.default.post(name: YXNotification.kUpdateTaskCenterBadge, object: nil)
+        }) { (error) in
+            DDLogInfo("更新首页任务中心红点失败，error msg：\(error.message)")
+        }
+        
     }
     
 }

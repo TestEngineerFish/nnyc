@@ -45,6 +45,18 @@ struct YXTaskCenterDailyDataModel: Mappable {
     }
 }
 
+struct YXTaskCenterBadgeModel: Mappable {
+    var num: Int = 0
+    
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        num <- map["num"]
+    }
+}
+
 enum YXTaskCenterDailyStatus {
     case yesterday
     case today

@@ -261,7 +261,7 @@
 		77F69A7E23617CEE00E55185 /* YXHomeSubItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F69A7C23617CEE00E55185 /* YXHomeSubItemCell.swift */; };
 		77F69A7F23617CEE00E55185 /* YXHomeSubItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77F69A7D23617CEE00E55185 /* YXHomeSubItemCell.xib */; };
 		BADF1A8A393F92D5A79919AA /* Pods_YXEDU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020CAD61CC280AA1CB6C7253 /* Pods_YXEDU.framework */; };
-		CF0BD8CA2401096800FE9AA6 /* YXBadgeManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8C92401096800FE9AA6 /* YXBadgeManger.swift */; };
+		CF0BD8CA2401096800FE9AA6 /* YXBadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8C92401096800FE9AA6 /* YXBadgeManager.swift */; };
 		CF0BD8CD240134A400FE9AA6 /* YXBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8CC240134A400FE9AA6 /* YXBadgeView.swift */; };
 		CF0BD8D22402715B00FE9AA6 /* YXFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D12402715B00FE9AA6 /* YXFeedbackListViewController.swift */; };
 		CF0BD8D42402720700FE9AA6 /* YXFeedbackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D32402720700FE9AA6 /* YXFeedbackCell.swift */; };
@@ -1070,7 +1070,7 @@
 		77F69A7923617CCB00E55185 /* YXHomeStudyDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHomeStudyDataCell.xib; sourceTree = "<group>"; };
 		77F69A7C23617CEE00E55185 /* YXHomeSubItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeSubItemCell.swift; sourceTree = "<group>"; };
 		77F69A7D23617CEE00E55185 /* YXHomeSubItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHomeSubItemCell.xib; sourceTree = "<group>"; };
-		CF0BD8C92401096800FE9AA6 /* YXBadgeManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeManger.swift; sourceTree = "<group>"; };
+		CF0BD8C92401096800FE9AA6 /* YXBadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeManager.swift; sourceTree = "<group>"; };
 		CF0BD8CC240134A400FE9AA6 /* YXBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeView.swift; sourceTree = "<group>"; };
 		CF0BD8D12402715B00FE9AA6 /* YXFeedbackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackListViewController.swift; sourceTree = "<group>"; };
 		CF0BD8D32402720700FE9AA6 /* YXFeedbackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackCell.swift; sourceTree = "<group>"; };
@@ -2918,7 +2918,7 @@
 		CF0BD8CB2401098900FE9AA6 /* Badge */ = {
 			isa = PBXGroup;
 			children = (
-				CF0BD8C92401096800FE9AA6 /* YXBadgeManger.swift */,
+				CF0BD8C92401096800FE9AA6 /* YXBadgeManager.swift */,
 				CF0BD8CC240134A400FE9AA6 /* YXBadgeView.swift */,
 			);
 			path = Badge;
@@ -6288,7 +6288,7 @@
 				EE5E024F232756C100655654 /* XBarChartView.m in Sources */,
 				EE5E00B023274FEB00655654 /* YXMissionCollectionViewCell.m in Sources */,
 				EE77211C2384117D00CD632E /* YXDataSourceManager.swift in Sources */,
-				CF0BD8CA2401096800FE9AA6 /* YXBadgeManger.swift in Sources */,
+				CF0BD8CA2401096800FE9AA6 /* YXBadgeManager.swift in Sources */,
 				EE5E010123274FEC00655654 /* YXPersonalBadgeModel.m in Sources */,
 				EE5E00E323274FEC00655654 /* YXSynchroIndicatorView.m in Sources */,
 				EE5E001623274FEB00655654 /* YXCareerSortView.m in Sources */,
