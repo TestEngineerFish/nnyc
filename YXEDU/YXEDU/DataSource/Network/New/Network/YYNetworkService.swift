@@ -55,10 +55,13 @@ struct YYNetworkService {
             if !isAuth {
                 fail?(authError)
                 YXAuthorizationManager.authorizeNetwork()
+                DDLogInfo(String(format: "【网络权限被关闭】 error: %@", authError.message))
                 return nil
             }
             
             fail?(networkError)
+            DDLogInfo(String(format: "【没有网络】 error: %@", networkError.message))
+            
             return nil
         }
 
@@ -206,7 +209,8 @@ struct YYNetworkService {
                 x.request  = response.request
                 success(x, (response.response?.statusCode) ?? 0)
             case .failure(let error):
-                DDLogInfo(String(format: "❌Fail %@ = request url:%@ parames:%@, error:%@", method.rawValue, params?.toJson() ?? "", request.url.absoluteString, ""));
+                let msg = (error as NSError).message
+                DDLogInfo(String(format: "❌Fail %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? "", msg))
                 fail(error as NSError)
             }
         }
