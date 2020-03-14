@@ -209,8 +209,9 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     // MARK: ---- Event ----
-    private func showBadgeList() {
-        
+    private func pushBadgeListVC() {
+        let vc = YXBagdeListViewController()
+        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     // MARK: - TableView

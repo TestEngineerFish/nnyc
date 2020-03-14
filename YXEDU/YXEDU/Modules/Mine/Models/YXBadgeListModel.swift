@@ -18,8 +18,8 @@ struct YXBadgeListModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        title <- map["title"]
-        type <- map["type"]
+        title  <- map["title"]
+        type   <- map["type"]
         badges <- map["options"]
     }
 }

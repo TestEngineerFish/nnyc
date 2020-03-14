@@ -10,13 +10,19 @@ import UIKit
 
 class YXBadgeCell: UICollectionViewCell {
 
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    var imageView = YXKVOImageView()
+    
+    var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor     = UIColor.black4
+        label.font          = UIFont.regularFont (ofSize: AdaptSize(12))
+        label.textAlignment = .center
+        return label
+    }()
+    
+    func setData(_ model: YXBadgeModel) {
+        self.imageView.showImage(with: model.imageOfCompletedStatus ?? "")
+        self.descriptionLabel.text = model.description ?? ""
     }
 
 }
