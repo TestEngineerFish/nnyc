@@ -63,12 +63,14 @@ class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UIC
     }()
     
     // TODO: ---- Data ----
-    var badgeLists: [YXBadgeListModel] = []
+    var badgeModelList: [YXBadgeModel] = []
+    var getBadgeNumber = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubviews()
         self.bindProperty()
+        self.collectionView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -115,19 +117,26 @@ class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UIC
         collectionViewBackgroundView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.top.equalTo(AdaptSize(23))
+            make.top.equalTo(badgeImageView.snp.bottom).offset(AdaptSize(23))
             make.width.equalTo(AdaptSize(357))
         }
         collectionView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(18))
+            make.bottom.equalToSuperview()
             make.width.equalTo(AdaptSize(323))
         }
     }
     
     private func bindProperty() {
-        self.collectionView.delegate   = self
-        self.collectionView.dataSource = self
+        self.collectionView.delegate        = self
+        self.collectionView.dataSource      = self
+        self.collectionView.backgroundColor = UIColor.clear
+        self.badgeNumberLabel.text          = String(format: "%@/%@", self.getBadgeNumber, self.badgeModelList.count)
+        self.collectionViewBackgroundView.layer.setDefaultShadow()
+        self.collectionViewBackgroundView.layer.cornerRadius = AdaptSize(8)
+        self.collectionView.register(YXBadgeCell.classForCoder(), forCellWithReuseIdentifier: "kYXBadgeCell")
+        self.backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
     }
     
     // MARK: ---- Event ----
@@ -135,57 +144,20 @@ class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UIC
         YRRouter.sharedInstance()?.currentNavigationController()?.popViewController(animated: true)
     }
     
-    
-//    // MARK: - UITableView
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return badgeLists.count
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "YXBadgeListCell", for: indexPath) as! YXBadgeListCell
-//        let badgeList = badgeLists[indexPath.row]
-//         
-//        cell.titleLabel.text = badgeList.title
-//        
-//        cell.collectionView.tag = indexPath.row
-//        cell.collectionView.delegate = self
-//        cell.collectionView.dataSource = self
-//        cell.collectionView.register(UINib(nibName: "YXBadgeCell", bundle: nil), forCellWithReuseIdentifier: "YXBadgeCell")
-//        cell.collectionView.reloadData()
-//        
-//        return cell
-//    }
-    
-    
-    
     // MARK: - UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return badgeLists[collectionView.tag].badges?.count ?? 0
+        return self.badgeModelList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXBadgeCell", for: indexPath) as! YXBadgeCell
-        let badge = badgeLists[collectionView.tag].badges?[indexPath.row]
-        
-        cell.titleLabel.text = badge?.name
-        
-        if let finishDateTimeInterval = badge?.finishDateTimeInterval, finishDateTimeInterval != 0, let imageOfCompletedStatus = badge?.imageOfCompletedStatus {
-            cell.imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .long
-            let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: finishDateTimeInterval))
-            cell.descriptionLabel.text = "\(dateString)"
-
-        } else if let imageOfIncompletedStatus = badge?.imageOfIncompletedStatus {
-            cell.imageView.sd_setImage(with: URL(string: imageOfIncompletedStatus), completed: nil)
-            cell.descriptionLabel.text = "未获得"
-        }
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kYXBadgeCell", for: indexPath) as! YXBadgeCell
+        let badgeModel = self.badgeModelList[indexPath.row]
+        cell.setData(badgeModel)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let badge = badgeLists[collectionView.tag].badges?[indexPath.row] else { return }
+        let badge = self.badgeModelList[indexPath.row]
         
         var badgeDetailView: YXBadgeDetailView!
         if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0 {
@@ -196,9 +168,5 @@ class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UIC
         }
         
         badgeDetailView.show()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 92, height: 154)
     }
 }

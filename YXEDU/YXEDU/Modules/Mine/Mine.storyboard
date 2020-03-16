@@ -779,6 +779,9 @@
                                                     <constraint firstAttribute="width" constant="32" id="ngg-f6-57W"/>
                                                 </constraints>
                                                 <state key="normal" image="go"/>
+                                                <connections>
+                                                    <action selector="tapBadge:" destination="Dnk-I2-j8M" eventType="touchUpInside" id="Xn5-P4-Jq6"/>
+                                                </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXr-TQ-XFQ">
                                                 <rect key="frame" x="0.0" y="332" width="375" height="6"/>

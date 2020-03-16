@@ -32,6 +32,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
         if true {
             self.addSubview(textField)
             self.textField.delegate = self
+            self.textField.keyboardType = .asciiCapable
             self.textField.becomeFirstResponder()
             self.isHidden = true
             NotificationCenter.default.addObserver(self, selector: #selector(showWordDetailView), name: YXNotification.kShowWordDetailPage, object: nil)

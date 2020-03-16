@@ -50,7 +50,7 @@
 + (NSUInteger)weekOfYear:(NSDate *)date;
 
 /**
- * 获取格式化为YYYY-MM-dd格式的日期字符串
+ * 获取格式化为YYYY.MM.dd格式的日期字符串
  */
 - (NSString *)formatYMD;
 + (NSString *)formatYMD:(NSDate *)date;

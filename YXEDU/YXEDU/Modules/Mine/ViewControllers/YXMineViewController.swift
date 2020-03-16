@@ -41,6 +41,10 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.performSegue(withIdentifier: "Edit", sender: self)
     }
     
+    @IBAction func tapBadge(_ sender: UIButton) {
+        self.pushBadgeListVC()
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -87,10 +91,6 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if segue.identifier == "Edit" {
             let destinationViewController = segue.destination as! YXPersonalInformationVC
             destinationViewController.userModel = temporaryUserModel!
-            
-        } else if segue.identifier == "BadgeList" {
-            let destinationViewController = segue.destination as! YXBagdeListViewController
-            destinationViewController.badgeLists = badgeLists
             
         } else if segue.identifier == "Coin" {
             let squirrelCoinViewController = segue.destination as! YXSquirrelCoinViewController
@@ -211,6 +211,19 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: ---- Event ----
     private func pushBadgeListVC() {
         let vc = YXBagdeListViewController()
+        vc.hidesBottomBarWhenPushed = true
+        var badgeModelList = [YXBadgeModel]()
+        var getBadgeNumber = 0
+        badgeLists.forEach { (badgeListModel) in
+            (badgeListModel.badges ?? []).forEach { (model) in
+                badgeModelList.append(model)
+                if model.finishDateTimeInterval != .some(0) {
+                    getBadgeNumber += 1
+                }
+            }
+        }
+        vc.badgeModelList = badgeModelList
+        vc.getBadgeNumber = getBadgeNumber
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
@@ -370,7 +383,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "BadgeList", sender: self)
+        self.pushBadgeListVC()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

@@ -12,17 +12,50 @@ class YXBadgeCell: UICollectionViewCell {
 
     var imageView = YXKVOImageView()
     
-    var descriptionLabel: UILabel = {
+    var dateLabel: UILabel = {
         let label = UILabel()
-        label.textColor     = UIColor.black4
         label.font          = UIFont.regularFont (ofSize: AdaptSize(12))
         label.textAlignment = .center
         return label
     }()
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.clear
+        self.createSubviews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func createSubviews() {
+        self.addSubview(imageView)
+        self.addSubview(dateLabel)
+        imageView.snp.makeConstraints { (make) in
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(AdaptSize(73.1))
+        }
+        dateLabel.snp.makeConstraints { (make) in
+            make.height.equalTo(AdaptSize(17))
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+    
     func setData(_ model: YXBadgeModel) {
-        self.imageView.showImage(with: model.imageOfCompletedStatus ?? "")
-        self.descriptionLabel.text = model.description ?? ""
+        let getTimeDouble = model.finishDateTimeInterval ?? 0.0
+        if getTimeDouble != 0 {
+            let getTimeDate          = NSDate(timeIntervalSince1970: getTimeDouble)
+            self.dateLabel.textColor = UIColor.black6
+            self.dateLabel.text      = getTimeDate.formatYMD() + "获得"
+            self.imageView.showImage(with: model.imageOfCompletedStatus ?? "")
+            
+        } else {
+            self.dateLabel.text      = "未获得"
+            self.dateLabel.textColor = UIColor.black4
+            self.imageView.showImage(with: model.imageOfIncompletedStatus ?? "")
+        }
     }
 
 }
