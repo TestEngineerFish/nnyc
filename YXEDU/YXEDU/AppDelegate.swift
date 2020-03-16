@@ -46,9 +46,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 添加基本信息
         YXLogManager.share.addInfo()
         // ---- 日志 ----
-        #if !DEBUG  // 正式环境才开启统计，不然开发环境打印的日志太多
+//        #if !DEBUG  // 正式环境才开启统计，不然开发环境打印的日志太多
         Growing.start(withAccountId: kGrowingIOID)
-        #endif
+//        #endif
     }
     
     func initViewAndData() {

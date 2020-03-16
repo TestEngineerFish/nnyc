@@ -40,8 +40,9 @@ class YXExcerciseProgressManager: NSObject {
         case errorCount = "Error_Count"
         case newWordReadScore = "New_Word_Read_Score"   // 新学跟读得分
         
-        case startStudyTime = "Start_Study_Time"
+        case startStudyTime = "Start_Study_Time"    // 开始时间
         case studyDuration = "Study_Duration"
+        case studyCount = "Study_Count"     // 学习次数
         case skipNewWord = "Skip_New_Word"
     }
     
@@ -300,6 +301,7 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.remove(forKey: key(.reviewWordIds))
         
         YYCache.remove(forKey: key(.startStudyTime))
+        YYCache.remove(forKey: key(.studyCount))
         YYCache.remove(forKey: key(.studyDuration))
         
         YYCache.remove(forKey: key(.skipNewWord))

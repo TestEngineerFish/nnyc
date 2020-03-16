@@ -171,6 +171,7 @@
             self.fetchExerciseData()
         }
         
+        dataManager.progressManager.updateStudyCount()
     }
     
     

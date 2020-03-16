@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GrowingCoreKit
+import GrowingAutoTrackKit
 
 extension YXExerciseViewController {
     
@@ -44,6 +46,9 @@ extension YXExerciseViewController {
         dataManager.reportExercise(type: dataType) { [weak self] (result, errorMsg) in
             guard let self = self else {return}
             if result {
+                // 统计打点
+                self.biReport()
+                
                 let progress = self.dataManager.progressManager.loadLocalWordsProgress()
                 // 上报结束, 清空数据
                 self.dataManager.progressManager.completionReport()
@@ -89,5 +94,19 @@ extension YXExerciseViewController {
         self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
+    
+    
+    
+    /// 数据打点
+    func biReport() {
+        let studyResult: [String : Any] = [
+            "study_grade" : 0,      //学习书本年级
+            "study_cost_time" : dataManager.progressManager.fetchStudyDuration(),   //学习时间
+            "study_count" : dataManager.progressManager.fetchStudyCount(),
+            "study_type" : dataType.rawValue
+        ]
+        Growing.track("study_result", withVariable: studyResult)
+    }
+    
     
 }

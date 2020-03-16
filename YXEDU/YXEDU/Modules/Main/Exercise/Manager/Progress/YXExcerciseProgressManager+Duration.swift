@@ -28,7 +28,20 @@ extension YXExcerciseProgressManager {
     func fetchStudyDuration() -> Int {
         return (YYCache.object(forKey: key(.studyDuration)) as? Int) ?? 0
     }
-        
+    
+    func fetchStudyCount() -> Int {
+        return (YYCache.object(forKey: key(.studyCount)) as? Int) ?? 0
+    }
+    
+    func updateStudyCount() {
+        if var count = YYCache.object(forKey: key(.studyCount)) as? Int{
+            count = count + 1
+            YYCache.set(count, forKey: key(.studyCount))
+        } else {
+            YYCache.set(1, forKey: key(.studyCount))
+        }
+    }
+    
     private func updateStudyDuration(duration: Int) {
         if var d = YYCache.object(forKey: key(.studyDuration)) as? Int {
             d += duration
