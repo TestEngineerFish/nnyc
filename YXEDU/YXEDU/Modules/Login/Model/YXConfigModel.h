@@ -60,8 +60,6 @@ typedef NS_ENUM(NSInteger, YXSharePalform) {
 
 //用户的词汇工具包状态， 1是为未体验，2表示在在有效时间内，3表示已经过期
 @property (nonatomic, assign)NSInteger wordToolkitState;
-// A/B Test,Q-B-1、Q-B-2显示软键盘，不显示可选项
-//@property (nonatomic, assign) BOOL showKeyboard;
 
 - (NSString *)shareLinkOf:(YXSharePalform)paltform;
 @end

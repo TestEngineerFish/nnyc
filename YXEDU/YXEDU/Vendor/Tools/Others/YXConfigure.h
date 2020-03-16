@@ -21,6 +21,8 @@
 @property (nonatomic, strong) YXConfigModel *confModel;
 @property (nonatomic, copy)NSString *currLearningBookId;
 @property (nonatomic, assign)BOOL isUsStyle;
+// A/B Test,Q-B-1、Q-B-2显示软键盘，不显示可选项
+@property (nonatomic, assign) BOOL showKeyboard;
 
 - (void)loginOut;
 - (YXBadgeModelOld *)badgeModelWith:(NSString *)badgeId;

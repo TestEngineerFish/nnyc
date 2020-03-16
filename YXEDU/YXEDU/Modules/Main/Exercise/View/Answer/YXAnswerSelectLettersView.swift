@@ -29,12 +29,13 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
     }
     
     override func bindProperty() {
-        if true {
+        if YXConfigure.shared()?.showKeyboard ?? false {
             self.addSubview(textField)
-            self.textField.delegate = self
-            self.textField.keyboardType = .asciiCapable
+            self.isHidden                         = true
+            self.textField.delegate               = self
+            self.textField.keyboardType           = .asciiCapable
+            self.textField.autocapitalizationType = .none
             self.textField.becomeFirstResponder()
-            self.isHidden = true
             NotificationCenter.default.addObserver(self, selector: #selector(showWordDetailView), name: YXNotification.kShowWordDetailPage, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(hideWordDetailView), name: YXNotification.kCloseWordDetailPage, object: nil)
         } else {

@@ -132,7 +132,7 @@ class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UIC
         self.collectionView.delegate        = self
         self.collectionView.dataSource      = self
         self.collectionView.backgroundColor = UIColor.clear
-        self.badgeNumberLabel.text          = String(format: "%@/%@", self.getBadgeNumber, self.badgeModelList.count)
+        self.badgeNumberLabel.text          = String(format: "%ld/%ld", self.getBadgeNumber, self.badgeModelList.count)
         self.collectionViewBackgroundView.layer.setDefaultShadow()
         self.collectionViewBackgroundView.layer.cornerRadius = AdaptSize(8)
         self.collectionView.register(YXBadgeCell.classForCoder(), forCellWithReuseIdentifier: "kYXBadgeCell")

@@ -61,19 +61,19 @@ class YXBadgeDetailView: YXTopWindowView {
             if let time = badge.finishDateTimeInterval {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .long
-                let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: time))
-                descriptionLabel.text = "\(dateString) 获得"
+                let dateString = NSDate(timeIntervalSince1970: time).formatYMD() ?? ""
+                descriptionLabel.text = "已获得 " + dateString
             }
             
             completedDescriptionLabel.text = badge.description
 
-            backgroundImageView.image = #imageLiteral(resourceName: "badgeCompletedBackground")
-            completedImageView.isHidden = false
-            completedDescriptionLabel.isHidden = false
-            progressBar.isHidden = true
+            backgroundImageView.image           = #imageLiteral(resourceName: "badgeCompletedBackground")
+            completedImageView.isHidden         = false
+            completedDescriptionLabel.isHidden  = false
+            progressBar.isHidden                = true
             incompleteDescriptionLabel.isHidden = true
-            currentProgressLabel.isHidden = true
-            totalProgressLabel.isHidden = true
+            currentProgressLabel.isHidden       = true
+            totalProgressLabel.isHidden         = true
 
         } else {
             if let imageOfIncompletedStatus = badge?.imageOfIncompletedStatus {
@@ -88,14 +88,14 @@ class YXBadgeDetailView: YXTopWindowView {
                 totalProgressLabel.text = "/\(totalProgress)"
             }
             
-            backgroundImageView.image = #imageLiteral(resourceName: "badgeIncompleteBackground")
-            completedImageView.isHidden = true
-            completedDescriptionLabel.isHidden = true
-            progressBar.isHidden = false
-            progressBar.progressImage = progressBar.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
+            backgroundImageView.image           = #imageLiteral(resourceName: "badgeIncompleteBackground")
+            completedImageView.isHidden         = true
+            completedDescriptionLabel.isHidden  = true
+            progressBar.isHidden                = false
+            progressBar.progressImage           = progressBar.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
             incompleteDescriptionLabel.isHidden = false
-            currentProgressLabel.isHidden = false
-            totalProgressLabel.isHidden = false
+            currentProgressLabel.isHidden       = false
+            totalProgressLabel.isHidden         = false
         }
     }
 
@@ -121,13 +121,13 @@ class YXBadgeDetailView: YXTopWindowView {
     override func show() {
         kWindow.addSubview(self)
         containerView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        containerView.alpha = 0
-        backgroundView.alpha = 0
+        containerView.alpha     = 0
+        backgroundView.alpha    = 0
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
             self.containerView.transform = .identity
-            self.containerView.alpha = 1
-            self.backgroundView.alpha = 0.7
+            self.containerView.alpha     = 1
+            self.backgroundView.alpha    = 0.7
             
         }, completion: nil)
     }

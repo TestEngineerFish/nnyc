@@ -73,12 +73,23 @@ class YXSpellSubview: UIView {
             letter2.removeFirst()
             letter2.removeLast()
             if !letter2.isEmpty {
-                let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
-                wordView.textField.text = ""
-                wordView.rightText      = letter2
-                wordView.type           = .blank
-                self.addSubview(wordView)
-                self.wordViewList.append(wordView)
+                if (YXConfigure.shared()?.showKeyboard ?? false) && (self.exerciseModel.type == .fillWordAccordingToListen || self.exerciseModel.type == .fillWordAccordingToChinese) {
+                    letter2.forEach { (char) in
+                        let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
+                        wordView.textField.text = ""
+                        wordView.rightText      = "\(char)"
+                        wordView.type           = .blank
+                        self.addSubview(wordView)
+                        self.wordViewList.append(wordView)
+                    }
+                } else {
+                    let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
+                    wordView.textField.text = ""
+                    wordView.rightText      = letter2
+                    wordView.type           = .blank
+                    self.addSubview(wordView)
+                    self.wordViewList.append(wordView)
+                }
             }
             offset = range.location + range.length
             if index >= array.count - 1 {
