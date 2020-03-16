@@ -59,6 +59,8 @@ struct YXAPI {
         static let learnResult = "/api/v1/learn/getcurrentunitstatus"
         /// 上报接口
         static let report = "/api/v1/learn/report"
+        /// 单词跟读分上报
+        static let reportListenScore = "/api/v1/learn/updatelistenscore"
     }
     
     

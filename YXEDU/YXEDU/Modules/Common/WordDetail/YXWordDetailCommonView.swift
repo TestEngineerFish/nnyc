@@ -268,52 +268,18 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailExampleCell", for: indexPath) as! YXWordDetailExampleCell
             let examples = section.values.first as? [YXWordExampleModel]
             let example = examples?[indexPath.row]
-            
-//            if word?.isComplexWord == 1 {
-//                cell.labelDistance.constant = 144
-//                cell.playAuoidButtonDistance.constant = 114
-//                cell.exampleImageView.isHidden = false
-                cell.exampleImageView.sd_setImage(with: URL(string: example?.imageUrl ?? ""))
-//
-//            } else {
-//                cell.labelDistance.constant = 60
-//                cell.playAuoidButtonDistance.constant = 20
-//                cell.exampleImageView.isHidden = true
-//            }
-            
+            cell.exampleImageView.sd_setImage(with: URL(string: example?.imageUrl ?? ""))
             let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
-            if let firstAddressSymbolIndex = combineExample.firstIndex(of: "@"), let lastAddressSymbolIndex = combineExample.lastIndex(of: "@") {
-                let startHighLightIndex = combineExample.index(firstAddressSymbolIndex, offsetBy: 1)
-                let endHighLightIndex = combineExample.index(lastAddressSymbolIndex, offsetBy: 1)
-                let highLightString = String(combineExample[startHighLightIndex..<lastAddressSymbolIndex])
-                let string = String(combineExample[combineExample.startIndex..<firstAddressSymbolIndex]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
-                
-                let highLightRange = string.range(of: highLightString)!
-                let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
-                
-                let attrString = NSMutableAttributedString(string: string)
-                attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
-                
-                cell.label.attributedText = attrString
-                
-            } else if let firstRightBracket = combineExample.firstIndex(of: ">"), let lastLeftBracket = combineExample.lastIndex(of: "<"), let firstLeftBracket = combineExample.firstIndex(of: "<"), let lastRightBracket = combineExample.lastIndex(of: ">") {
-                let startHighLightIndex = combineExample.index(firstRightBracket, offsetBy: 1)
-                let endHighLightIndex = combineExample.index(lastRightBracket, offsetBy: 1)
-                let highLightString = String(combineExample[startHighLightIndex..<lastLeftBracket])
-                let string = String(combineExample[combineExample.startIndex..<firstLeftBracket]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
-                
-                let highLightRange = string.range(of: highLightString)!
-                let highLightLocation = string.distance(from: string.startIndex, to: highLightRange.lowerBound)
-                
-                let attrString = NSMutableAttributedString(string: string)
-                attrString.addAttributes([.foregroundColor: UIColor.hex(0xFBA217)], range: NSRange(location: highLightLocation, length: highLightString.count))
-                
-                cell.label.attributedText = attrString
-                
-            } else {
-                cell.label.text = combineExample
-            }
-            
+            cell.label.attributedText = {
+
+                let result = combineExample.formartTag()
+
+                let mAttr = NSMutableAttributedString(string: result.1, attributes: [NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(16)), NSAttributedString.Key.foregroundColor : UIColor.black1])
+                result.0.forEach { (range) in
+                    mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
+                }
+                return mAttr
+            }()
             cell.pronunciation = example?.vocie
             
             return cell

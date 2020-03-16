@@ -18,13 +18,12 @@ class YXExerciseResultView: YXView {
 
     var model: YXExerciseResultDisplayModel!
     
-    var contentView = UIView()
-    
-    var imageView = UIImageView()
-    var titleLabel = UILabel()
+    var contentView   = UIView()
+    var imageView     = UIImageView()
+    var titleLabel    = UILabel()
     var subTitleLabel = UILabel()
+    var starView      = YXStarView()
     
-    var starView = YXReviewResultStarView()
     var progressView = YXReviewProgressView(type: .iKnow, cornerRadius: AS(4))
 
     var tipsView = YXReviewResultTipsListView()
@@ -217,9 +216,9 @@ class YXExerciseResultView: YXView {
                 starView.isHidden = true
                 imageView.image = UIImage(named: "review_result_wrong")
             } else {
-                starView.count = (model.score == 0 ? 1 : model.score)
-                
-                if starView.count <= 1 {
+                let score = model.score == 0 ? 1 : model.score
+                self.starView.showLearnResultView(starNum: score)
+                if score <= 1 {
                     imageView.image = UIImage(named: "review_result_1star")
                 } else {
                     if model.type == .base {
@@ -231,7 +230,6 @@ class YXExerciseResultView: YXView {
                     }
                 }
             }
-            
         } else { // 未完成
             starView.isHidden = true
             imageView.image = UIImage(named: "review_result_progress")

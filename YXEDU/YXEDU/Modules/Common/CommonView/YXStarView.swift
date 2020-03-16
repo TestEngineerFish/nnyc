@@ -46,7 +46,7 @@ class YXStarView: UIView {
     
     var starNumber = 0
     
-    /// 显示上一次新学结果视图
+    /// 上次学习结果
     func showLastNewLearnResultView(starNum: Int) {
         self.starNumber = starNum
         self.setStarStatus()
@@ -83,7 +83,7 @@ class YXStarView: UIView {
         }
     }
     
-    /// 显示结果页
+    /// 新学结果页
     func showResultView(starNum: Int) {
         self.starNumber = starNum
         self.resetStatus()
@@ -108,6 +108,44 @@ class YXStarView: UIView {
             make.left.equalTo(centerStarDisableImageView.snp.right).offset(AdaptSize(-2))
             make.top.equalTo(leftStarDisableImageView)
             make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
+        }
+        centerStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        leftStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        rightStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        self.showAnimation()
+    }
+    
+    /// 显示流程学习结果
+    func showLearnResultView(starNum: Int) {
+        self.starNumber = starNum
+        self.resetStatus()
+        self.addSubview(leftStarDisableImageView)
+        self.addSubview(centerStarDisableImageView)
+        self.addSubview(rightStarDisableImageView)
+        self.leftStarDisableImageView.addSubview(leftStarEnableImageView)
+        self.centerStarDisableImageView.addSubview(centerStarEnableImageView)
+        self.rightStarDisableImageView.addSubview(rightStarEnableImageView)
+
+        centerStarDisableImageView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(45), height: AdaptSize(45)))
+        }
+        leftStarDisableImageView.snp.makeConstraints { (make) in
+            make.right.equalTo(centerStarDisableImageView.snp.left).offset(AdaptSize(2))
+            make.centerY.equalTo(centerStarDisableImageView)
+            make.size.equalTo(CGSize(width: AdaptSize(31), height: AdaptSize(31)))
+        }
+        rightStarDisableImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(centerStarDisableImageView.snp.right).offset(AdaptSize(-2))
+            make.centerY.equalTo(centerStarDisableImageView)
+            make.size.equalTo(CGSize(width: AdaptSize(31), height: AdaptSize(31)))
         }
         centerStarEnableImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()

@@ -49,6 +49,17 @@ class YXWordDetailViewControllerNew: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    private func updateBarStatus() {
+        guard let wordModel = self.wordModel else {
+            return
+        }
+        if wordModel.listenScore >= 0 {
+            self.relearnWord.image = UIImage(named: "didRecordedIcon")
+        } else {
+            self.relearnWord.image = UIImage(named: "recordedIcon")
+        }
+    }
+    
     // MARK: ---- Request ----
     /// 查询单词收藏状态
     private func requestWordCollectStatus() {
@@ -69,9 +80,10 @@ class YXWordDetailViewControllerNew: UIViewController {
         let wordDetailRequest = YXWordBookRequest.wordDetail(wordId: wordId, isComplexWord: isComplexWord)
         YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { [weak self] (response) in
             guard let self = self, var word = response.data else { return }
-            word.isComplexWord = self.isComplexWord
-            self.wordModel = word
+            word.isComplexWord  = self.isComplexWord
+            self.wordModel      = word
             self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
+            self.updateBarStatus()
             self.view.addSubview(self.wordDetailView)
         }) { error in
             DDLogInfo("查询单词:\(self.wordId)详情失败， error:\(error)")

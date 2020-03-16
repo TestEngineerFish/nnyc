@@ -133,7 +133,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         if exerciseModel == nil {
             self.status            = .alreadLearn
             self.starView.isHidden = false
-            self.starView.showLastNewLearnResultView(starNum: 2)
+            self.starView.showLastNewLearnResultView(starNum: wordModel?.listenScore ?? 0)
         } else {
             // 设置初始状态
             self.starView.isHidden              = true
@@ -491,11 +491,19 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 从后台进入前台,
     @objc private func didBecomeActiveNotification() {
-        // 该做啥呢?问问产品吧
         if self.status == .showResult || self.status == .reporting {
             return
         }
         self.playByStatus()
+    }
+    
+    // MARK: ---- Request ----
+    private func requestReportListenScore(_ score: Int) {
+        guard let wordId = self.exerciseModel.word?.wordId else {
+            return
+        }
+        let request = YXExerciseRequest.reportListenScore(wordId: wordId, score: score)
+        YYNetworkService.default.request(YYStructResponse<YXListenScoreModel>.self, request: request, success: nil, fail: nil)
     }
 
     // MARK: ==== 云知声SDK: USCRecognizerDelegate ====
@@ -549,6 +557,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             // 显示结果动画
             self.lastLevel = currentLevel > lastLevel ? currentLevel : lastLevel
             self.exerciseModel.listenScore = self.lastLevel
+            self.requestReportListenScore(currentLevel)
             self.hideReportAnimation()
             self.showResultAnimation()
         }

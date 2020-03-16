@@ -21,7 +21,8 @@ struct YXWordModel: YXBaseWordModel {
     var word: String?
     var partOfSpeechAndMeanings: [YXWordPartOfSpeechAndMeaningModel]?
     var imageUrl: String?
-    
+    // 跟读学习成绩
+    var listenScore: Int = -1
     // 音标
     var americanPhoneticSymbol: String?
     var englishPhoneticSymbol: String?
@@ -72,6 +73,7 @@ struct YXWordModel: YXBaseWordModel {
         self.mapping(map: map)
         isComplexWord <- map["is_synthesis"]
         bookHash      <- map["book_hash"]
+        listenScore   <- map["listen_score"]
     }
     
 }

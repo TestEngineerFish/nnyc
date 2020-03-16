@@ -59,6 +59,8 @@ class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UIC
         layout.minimumLineSpacing      = AdaptSize(20)
         layout.minimumInteritemSpacing = AdaptSize(20)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsVerticalScrollIndicator   = false
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
