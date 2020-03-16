@@ -170,11 +170,11 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             let name = self.getPlanName()
             let alertView = YXAlertView(type: .inputable, placeholder: name)
             alertView.shouldOnlyShowOneButton = false
-            alertView.titleLabel.text = "请设置复习计划名称"
+            alertView.titleLabel.text = "请设置\(YXReviewDataManager.reviewPlanName)名称"
             alertView.doneClosure = { (text: String?) in
                 guard let _text = text, !_text.isEmpty else {
                     let alertView = YXAlertView(type: .normal)
-                    alertView.descriptionLabel.text   = "复习计划名称不能为空"
+                    alertView.descriptionLabel.text   = "\(YXReviewDataManager.reviewPlanName)名称不能为空"
                     alertView.shouldOnlyShowOneButton = true
                     alertView.show()
                     return
@@ -218,7 +218,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         }
         if bookIdList.count > 1 {
             // 如果只选择了多本书中的单词
-            bookName = "我的复习计划"
+            bookName = "我的\(YXReviewDataManager.reviewPlanName)"
         } else {
             // 如果只选择了一本书中的单词
             guard let list = self.model?.list, let bookId = bookIdList.first else {
@@ -227,13 +227,13 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             list.forEach { (bookModel) in
                 if bookModel.id == bookId {
                     if bookModel.type == 1 {
-                        bookName = "错词本复习计划"
+                        bookName = "错词本\(YXReviewDataManager.reviewPlanName)"
                     } else if bookModel.type == 2 {
-                        bookName = "收藏单词复习计划"
+                        bookName = "收藏单词\(YXReviewDataManager.reviewPlanName)"
                     } else if bookModel.type == 3 {
-                        bookName = bookModel.name + "复习计划"
+                        bookName = bookModel.name + "\(YXReviewDataManager.reviewPlanName)"
                     } else {
-                        bookName = "我的复习计划"
+                        bookName = "我的\(YXReviewDataManager.reviewPlanName)"
                     }
                 }
             }

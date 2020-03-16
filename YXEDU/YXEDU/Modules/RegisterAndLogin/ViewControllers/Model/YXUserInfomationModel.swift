@@ -9,11 +9,17 @@
 import ObjectMapper
 
 struct YXUserInfomationModel: Mappable {
+    enum ReviewNameType: Int {
+        case wordList = 0   // 词单
+        case reviewPlan = 1 // 复习计划
+    }
     var didBindPhone: Int?
     var didSelectBook: Int?
     var oldUserUpdateMessage: String?
     var coinExplainUrl: String?  //松果币H5文件
     var gameExplainUrl: String? //游戏挑战H5文件
+    var reviewNameType: ReviewNameType = .reviewPlan //
+    
     init?(map: Map) {
         self.mapping(map: map)
     }
@@ -24,5 +30,6 @@ struct YXUserInfomationModel: Mappable {
         didSelectBook        <- map["is_selected_book"]
         coinExplainUrl       <- map["coin_explain_url"]
         gameExplainUrl       <- map["game_explain_url"]
+        reviewNameType       <- (map["plan_execute_ab"], EnumTransform<ReviewNameType>())
     }
 }

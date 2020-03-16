@@ -41,11 +41,9 @@ class YXReviewPlanShareDetailHeaderView: YXView {
         bgView.layer.setDefaultShadow(cornerRadius: AS(4))
         
         reviewPlanLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
-        reviewPlanLabel.text = "我的复习计划1"
         reviewPlanLabel.textColor = UIColor.black1
         
         fromLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-        fromLabel.text = "来自张老师分享的复习计划"
         fromLabel.textColor = UIColor.black3
     }
     
@@ -79,7 +77,7 @@ class YXReviewPlanShareDetailHeaderView: YXView {
     
     override func bindData() {
         reviewPlanLabel.text = reviewPlanModel?.planName
-        fromLabel.text = "来自\(reviewPlanModel?.fromUser ?? "")分享的复习计划"
+        fromLabel.text = "来自\(reviewPlanModel?.fromUser ?? "")分享的\(YXReviewDataManager.reviewPlanName)"
     }
     
 }

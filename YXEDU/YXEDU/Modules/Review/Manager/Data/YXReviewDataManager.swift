@@ -10,6 +10,11 @@ import UIKit
 
 struct YXReviewDataManager {
     
+    static var reviewPlanName: String {
+        return YXUserModel.default.reviewNameType == .reviewPlan ? "复习计划" : "词单"
+    }
+    
+    
     func fetchReviewPlanData(completion: ((_ model: YXReviewPageModel?, _ errorMsg: String?) -> Void)?) {
         let request = YXReviewRequest.reviewPlan
         YYNetworkService.default.request(YYStructResponse<YXReviewPageModel>.self, request: request, success: { (response) in

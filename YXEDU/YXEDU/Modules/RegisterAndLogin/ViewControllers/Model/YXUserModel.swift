@@ -41,6 +41,10 @@ class YXUserModel: NSObject {
         if let coinExplainUrl = YYCache.object(forKey: "CoinExplainUrl") as? String {
             self.coinExplainUrl = coinExplainUrl
         }
+        
+        if let reviewNameType = YYCache.object(forKey: "YXReviewNameType") as? Int {
+            self.reviewNameType = YXUserInfomationModel.ReviewNameType(rawValue: reviewNameType) ?? .reviewPlan
+        }
     }
     
     var didLogin = false {
@@ -88,6 +92,12 @@ class YXUserModel: NSObject {
     var gameExplainUrl: String? {
         didSet {
             YYCache.set(gameExplainUrl, forKey: "GameExplainUrl")
+        }
+    }
+    
+    var reviewNameType: YXUserInfomationModel.ReviewNameType = .reviewPlan {
+        didSet {
+            YYCache.set(reviewNameType.rawValue, forKey: "YXReviewNameType")
         }
     }
     

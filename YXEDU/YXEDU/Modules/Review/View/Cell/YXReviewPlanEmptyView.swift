@@ -38,7 +38,7 @@ class YXReviewPlanEmptyView: YXView {
 
         plusIconImageView.image = UIImage(named: "newReviewPlanIcon")
         
-        reviewLabel.text = "快来创建一个复习计划吧"
+        reviewLabel.text = "快来创建一个\(YXReviewDataManager.reviewPlanName)吧"
         reviewLabel.font = UIFont.regularFont(ofSize: AS(14))
         reviewLabel.textColor = UIColor.black3
         reviewLabel.textAlignment = .center

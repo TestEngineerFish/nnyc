@@ -36,7 +36,7 @@ class YXReviewPlanShareDetailBottomView: YXView {
         saveButton.layer.masksToBounds = true
         saveButton.layer.cornerRadius = 21
         saveButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
-        saveButton.setTitle("保存到我的复习计划", for: .normal)
+        saveButton.setTitle("保存到我的\(YXReviewDataManager.reviewPlanName)", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
         saveButton.addTarget(self, action: #selector(clickSaveButton), for: .touchUpInside)

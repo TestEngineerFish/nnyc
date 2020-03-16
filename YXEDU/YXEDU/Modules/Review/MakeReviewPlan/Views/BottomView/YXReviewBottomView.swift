@@ -17,7 +17,7 @@ class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
 
     var makeButton: YXButton = {
         let button = YXButton()
-        button.setTitle("创建复习计划", for: .normal)
+        button.setTitle("创建\(YXReviewDataManager.reviewPlanName)", for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(17))
         button.setTitleColor(UIColor.white, for: .normal)
         return button
@@ -27,7 +27,7 @@ class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
         let label = UILabel()
         label.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
         label.textColor = UIColor.black3
-        label.text      = "单个复习计划控制在150个单词内，效果最佳哦"
+        label.text      = "单个\(YXReviewDataManager.reviewPlanName)控制在150个单词内，效果最佳哦"
         label.layer.masksToBounds = true
         label.textAlignment       = .center
         label.isHidden            = true

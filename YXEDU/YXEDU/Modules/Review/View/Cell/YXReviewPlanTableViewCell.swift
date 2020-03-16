@@ -64,14 +64,12 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         bgView.layer.setDefaultShadow(cornerRadius: AS(8), shadowRadius: AS(3))
         
         titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
-        titleLabel.text = "我的复习计划1"
         titleLabel.textColor = UIColor.black1
         
         countLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
         countLabel.textColor = UIColor.black3
         
         subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-        subTitleLabel.text = "听写进度：80%"
         subTitleLabel.textColor = UIColor.black3
         
         
