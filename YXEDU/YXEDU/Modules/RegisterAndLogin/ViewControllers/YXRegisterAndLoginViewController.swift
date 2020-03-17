@@ -262,12 +262,12 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         let request = YXRegisterAndLoginRequest.userInfomation
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
             guard let userInfomation = response.data else { return }
+            YXConfigure.shared()?.showKeyboard = (userInfomation.fillType == .keyboard)
             
             guard userInfomation.didBindPhone == 1 else {
                 self.performSegue(withIdentifier: "Bind", sender: self)
                 return
             }
-            
             YYCache.set(self.phoneNumberTextField.text, forKey: "PhoneNumber")
             YXConfigure.shared().saveCurrentToken()
             YXUserModel.default.didLogin = true

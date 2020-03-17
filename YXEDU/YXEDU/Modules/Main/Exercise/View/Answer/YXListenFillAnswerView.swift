@@ -10,7 +10,7 @@ import UIKit
 
 class YXListenFillAnswerView: YXBaseAnswerView {
         
-    var textField = UITextField()
+    var textField = YXCharacterTextField()
     var lineView = YXListenFillAnswerLineView()
     var audioPlayerView = YXAudioPlayerView()
     

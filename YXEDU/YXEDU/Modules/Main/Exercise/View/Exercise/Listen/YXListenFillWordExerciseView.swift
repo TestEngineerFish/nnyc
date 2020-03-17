@@ -11,9 +11,6 @@ import UIKit
 class YXListenFillWordExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        self.addGestureRecognizer(tap)
-
         questionView = YXListenFillQuestionView(exerciseModel: self.exerciseModel)
         self.addSubview(questionView!)
 
@@ -24,10 +21,11 @@ class YXListenFillWordExerciseView: YXBaseExerciseView {
         answerView?.answerDelegate = self
         questionView?.addSubview(answerView!)
         super.createSubview()
-    }
-
-    @objc private func hideKeyboard() {
-        self.endEditing(true)
+        (answerView as! YXListenFillAnswerView).textField.showRemindButton { [weak self] (button) in
+            self?.remindView?.show()
+        }
+        
+        IQKeyboardManager.shared().shouldResignOnTouchOutside = true
     }
 
     override func layoutSubviews() {

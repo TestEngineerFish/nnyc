@@ -14,15 +14,19 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
     override func createSubview() {
         questionView = YXListenAndLackWordQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
+        let tapAction = UITapGestureRecognizer(target: self, action: #selector(showKeyboard))
+        questionView?.addGestureRecognizer(tapAction)
 
         remindView = YXRemindView(exerciseModel: exerciseModel)
         self.scrollView.addSubview(remindView!)
 
         answerView = YXAnswerSelectLettersView(exerciseModel: exerciseModel)
         self.scrollView.addSubview(answerView!)
-        
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
+        (answerView as! YXAnswerSelectLettersView).textField.showRemindButton { [weak self] (button) in
+            self?.remindView?.show()
+        }
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.6) {
             self.questionView?.audioPlayerView?.play()
@@ -37,5 +41,18 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
 
     override func bindData() {
         self.remindView?.remindSteps = [[.exampleWithDigWord, .image, .exampleAudio], [.soundmark, .wordAudio], [.detail]]
+    }
+    
+    override func showAlertEvnet() {
+        (self.answerView as! YXAnswerSelectLettersView).textField.resignFirstResponder()
+    }
+    
+    override func hideAlertEvent() {
+        self.showKeyboard()
+    }
+    
+    // MAKR: --- Event ----
+    @objc private func showKeyboard() {
+        (self.answerView as! YXAnswerSelectLettersView).textField.becomeFirstResponder()
     }
 }

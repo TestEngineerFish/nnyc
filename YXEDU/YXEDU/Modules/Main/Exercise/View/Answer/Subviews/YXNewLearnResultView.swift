@@ -214,19 +214,22 @@ class YXNewLearnResultView: UIView {
     }
     
     /// 显示结果动画
-    func showResultView(_ star: Int) {
+    func showResultView(_ star: Int, coin: Int) {
         self.createResultSubviews()
         self.starView.showResultView(starNum: star)
         self.iconImageView.image    = UIImage(named: "learnResult\(star)")
-        bonusLabel.text             = "+\(star)"
+        bonusLabel.text             = "+\(coin)"
         if star > 1 {
+            titleLabel.text        = "太棒啦"
+        } else {
+            titleLabel.text        = "Try again"
+        }
+        if coin > 0 {
             goldImageView.isHidden = false
             bonusLabel.isHidden    = false
-            titleLabel.text        = "太棒啦"
         } else {
             goldImageView.isHidden = true
             bonusLabel.isHidden    = true
-            titleLabel.text        = "Try again"
         }
         self.titleLabel.isHidden  = false
         self.layoutSubviews()

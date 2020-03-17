@@ -99,7 +99,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var dotNumber = 0
     var enginer: USCRecognizer?
     var status: AnswerStatus = .normal
-    var lastLevel    = 0 // 最近一次跟读评分
+    var lastLevel    = 0     // 最近一次跟读评分
+    var getCoin      = 0     // 获得积分
     var isReport     = false // 是否播完并通知
     var isViewPause  = false // 弹框，页面暂停播放
     // TODO: ---- 缓存重传机制
@@ -455,7 +456,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.status = .showResult
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let self = self else { return }
-            self.learnResultView.showResultView(self.lastLevel)
+            self.learnResultView.showResultView(self.lastLevel, coin: self.getCoin)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
             guard let self = self else { return }
@@ -503,7 +504,17 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             return
         }
         let request = YXExerciseRequest.reportListenScore(wordId: wordId, score: score)
-        YYNetworkService.default.request(YYStructResponse<YXListenScoreModel>.self, request: request, success: nil, fail: nil)
+        YYNetworkService.default.request(YYStructResponse<YXListenScoreModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let coin = response.data?.coin else {
+                return
+            }
+            self.getCoin = coin
+            self.hideReportAnimation()
+            self.showResultAnimation()
+        }) { (error) in
+            self.showNetworkErrorAnimation()
+            DDLogInfo("上报跟读结果失败")
+        }
     }
 
     // MARK: ==== 云知声SDK: USCRecognizerDelegate ====
@@ -558,8 +569,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.lastLevel = currentLevel > lastLevel ? currentLevel : lastLevel
             self.exerciseModel.listenScore = self.lastLevel
             self.requestReportListenScore(currentLevel)
-            self.hideReportAnimation()
-            self.showResultAnimation()
         }
     }
 

@@ -14,6 +14,8 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
     override func createSubview() {
         questionView = YXChineseFillQuestionView(exerciseModel: exerciseModel)
         self.addSubview(questionView!)
+        let tapAction = UITapGestureRecognizer(target: self, action: #selector(showKeyBoard))
+        questionView?.addGestureRecognizer(tapAction)
 
         remindView = YXRemindView(exerciseModel: exerciseModel)
         self.scrollView.addSubview(remindView!)
@@ -22,6 +24,9 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
         self.scrollView.addSubview(answerView!)
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
+        (answerView as! YXAnswerSelectLettersView).textField.showRemindButton { [weak self] (button) in
+            self?.remindView?.show()
+        }
         super.createSubview()
     }
     
@@ -39,6 +44,11 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
     }
     
     override func hideAlertEvent() {
+        self.showKeyBoard()
+    }
+    
+    // MAKR: --- Event ----
+    @objc private func showKeyBoard() {
         (self.answerView as! YXAnswerSelectLettersView).textField.becomeFirstResponder()
     }
 }

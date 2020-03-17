@@ -63,10 +63,12 @@ struct YXExerciseReportModel: Mappable {
 struct YXListenScoreModel: Mappable {
     
     var listenScore: Int = 0
+    var coin: Int        = 0
     
     init?(map: Map) {}
     
     mutating func mapping(map: Map) {
         listenScore <- map["listen_score"]
+        coin        <- map["coin"]
     }
 }

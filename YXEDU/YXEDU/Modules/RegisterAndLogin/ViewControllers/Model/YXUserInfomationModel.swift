@@ -13,12 +13,17 @@ struct YXUserInfomationModel: Mappable {
         case wordList = 0   // 词单
         case reviewPlan = 1 // 复习计划
     }
+    enum ExerciseFillType: Int {
+        case keyboard = 0 // 选择填空
+        case choose   = 1 // 软键盘输入
+    }
     var didBindPhone: Int?
     var didSelectBook: Int?
     var oldUserUpdateMessage: String?
     var coinExplainUrl: String?  //松果币H5文件
     var gameExplainUrl: String? //游戏挑战H5文件
     var reviewNameType: ReviewNameType = .reviewPlan //
+    var fillType: ExerciseFillType = .choose
     
     init?(map: Map) {
         self.mapping(map: map)
@@ -31,5 +36,6 @@ struct YXUserInfomationModel: Mappable {
         coinExplainUrl       <- map["coin_explain_url"]
         gameExplainUrl       <- map["game_explain_url"]
         reviewNameType       <- (map["plan_execute_ab"], EnumTransform<ReviewNameType>())
+        fillType             <- (map["spell_execute_ab"], EnumTransform<ExerciseFillType>())
     }
 }

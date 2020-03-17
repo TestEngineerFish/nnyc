@@ -178,7 +178,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             } else {
                 self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
             }
-
+            YXConfigure.shared()?.showKeyboard = (userInfomation.fillType == .keyboard)
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
 

@@ -17,7 +17,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
     var verItemNum       = 3
     var buttonArray2     = [[YXLetterButton]]()
     var selectedBtnArray = [YXLetterButton]()
-    var textField        = UITextField()
+    var textField        = YXCharacterTextField()
+    var defaultTag       = 1000
 
     override func createSubviews() {
         super.createSubviews()
@@ -35,7 +36,9 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
             self.textField.delegate               = self
             self.textField.keyboardType           = .asciiCapable
             self.textField.autocapitalizationType = .none
+            self.textField.returnKeyType          = .done
             self.textField.becomeFirstResponder()
+
             NotificationCenter.default.addObserver(self, selector: #selector(showWordDetailView), name: YXNotification.kShowWordDetailPage, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(hideWordDetailView), name: YXNotification.kCloseWordDetailPage, object: nil)
         } else {
@@ -120,8 +123,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
         return button
     }
 
-    // TODO: Event
-    
+
+    // MARK: ---- Notification ----
     /// 显示单词详情提示
     @objc private func showWordDetailView() {
         self.textField.resignFirstResponder()
@@ -131,6 +134,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
         self.textField.becomeFirstResponder()
     }
 
+    // TODO: Event
+    
     @objc func clickButton(_ button: YXLetterButton) {
         if button.status == .selected || button.status == .error {
             let tmpButtonArray = self.selectedBtnArray.filter { (selButton) -> Bool in
@@ -175,7 +180,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
 //            }
         } else {
-            if true {
+            if YXConfigure.shared()?.showKeyboard ?? false {
                 self.isUserInteractionEnabled = true
             } else {
                 // 答题错误
@@ -202,6 +207,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
         let button    = YXLetterButton()
         button.text   = string
         button.status = .normal
+        button.tag    = self.defaultTag + 1
+        self.defaultTag += 1
         if range.length > 0 {
             self.delegate?.unselectAnswerButton(button)
         } else {
