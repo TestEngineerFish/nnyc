@@ -32,12 +32,13 @@ class YXWordDetailViewControllerNew: UIViewController {
     private var wordDetailView: YXWordDetailCommonView!
 
     override func handleData(withQuery query: [AnyHashable : Any]!) {
-        self.wordId = query["word_id"] as? Int ?? -1
+        self.wordId        = query["word_id"] as? Int ?? -1
         self.isComplexWord = query["is_complex_word"] as? Int ?? 0
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.bindProperty()
         self.requestWordDetail()
         self.requestWordCollectStatus()
     }
@@ -49,15 +50,29 @@ class YXWordDetailViewControllerNew: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    // MARK: ---- Event ----
+    private func bindProperty() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateRecordScore(_:)), name: YXNotification.kRecordScore, object: nil)
+    }
+    
     private func updateBarStatus() {
         guard let wordModel = self.wordModel else {
             return
         }
         if wordModel.listenScore > YXStarLevelEnum.three.rawValue {
-            self.relearnWord.image = UIImage(named: "didRecordedIcon")
+            self.relearnWord.image = UIImage(named: "didRecordedIcon")?.withRenderingMode(.alwaysOriginal)
         } else {
-            self.relearnWord.image = UIImage(named: "recordedIcon")
+            self.relearnWord.image = UIImage(named: "recordedIcon")?.withRenderingMode(.alwaysOriginal)
         }
+    }
+    
+    // MARK: --- Notifcation ----
+    @objc private func updateRecordScore(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String:Int], let newScore: Int = userInfo["score"] else {
+            return
+        }
+        self.wordModel?.listenScore = newScore
+        self.updateBarStatus()
     }
     
     // MARK: ---- Request ----

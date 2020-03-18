@@ -16,6 +16,7 @@ class YXNewLearnJuniorHighSchoolQuestionView: YXBaseQuestionView {
             return
         }
         let wordDetailView = YXWordDetailCommonView(frame: CGRect.zero, word: wordModel)
+        wordDetailView.recordButton.isHidden = false
         self.addSubview(wordDetailView)
         wordDetailView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()

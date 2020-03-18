@@ -141,7 +141,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         if exerciseModel == nil {
             self.status            = .alreadLearn
             self.starView.isHidden = false
-            self.starView.showLastNewLearnResultView(starNum: wordModel?.listenScore ?? 0)
+            self.starView.showLastNewLearnResultView(score: wordModel?.listenScore ?? 0)
         } else {
             // 设置初始状态
             self.starView.isHidden              = true
@@ -202,7 +202,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.recordAudioLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(recordAudioButton)
             make.top.equalTo(recordAudioButton.snp.bottom).offset(AdaptSize(8))
-            make.width.equalTo(AdaptSize(52))
+            make.width.equalTo(AdaptSize(70))
             make.height.equalTo(AdaptSize(18))
         }
         self.recordAnimationView.snp.makeConstraints { (make) in
@@ -435,6 +435,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     private func showRecordAnimation() {
         self.recordAudioButton.isHidden    = true
         self.recordAnimationView.isHidden  = false
+        self.recordAudioLabel.text         = "请跟读"
+        self.recordAudioLabel.textColor    = UIColor.orange1
+        self.starView.isHidden             = true
         self.newLearnDelegate?.disableAllButton()
         self.recordAnimationView.play()
     }
@@ -443,6 +446,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     private func hideRecordAnimation() {
         self.recordAudioButton.isHidden    = false
         self.recordAnimationView.isHidden  = true
+        self.recordAudioLabel.text         = "再次跟读"
+        self.recordAudioLabel.textColor    = UIColor.black2
         self.newLearnDelegate?.enableAllButton()
         self.recordAnimationView.stop()
     }
@@ -506,6 +511,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
     
     // MARK: ---- Request ----
+    /// 上报当次跟读得分
     private func requestReportListenScore(_ score: Int) {
         guard let wordId = self.exerciseModel.word?.wordId else {
             return
@@ -518,6 +524,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.getCoin = coin
             self.hideReportAnimation()
             self.showResultAnimation()
+            NotificationCenter.default.post(name: YXNotification.kRecordScore, object: nil, userInfo: ["score":score])
         }) { (error) in
             self.showNetworkErrorAnimation()
             DDLogInfo("上报跟读结果失败")

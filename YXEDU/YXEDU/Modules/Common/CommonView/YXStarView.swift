@@ -47,8 +47,20 @@ class YXStarView: UIView {
     var starNumber = 0
     
     /// 上次学习结果
-    func showLastNewLearnResultView(starNum: Int) {
-        self.starNumber = starNum
+    func showLastNewLearnResultView(score: Int) {
+        self.starNumber = {
+            if score > YXStarLevelEnum.three.rawValue {
+                return 3
+            } else if score > YXStarLevelEnum.two.rawValue {
+                return 2
+            } else if score > YXStarLevelEnum.one.rawValue {
+                return 1
+            } else if score > YXStarLevelEnum.zero.rawValue {
+                return 0
+            } else {
+                return -1
+            }
+        }()
         self.setStarStatus()
         self.addSubview(leftStarDisableImageView)
         self.addSubview(centerStarDisableImageView)
@@ -162,13 +174,22 @@ class YXStarView: UIView {
     // MARK: ---- Tools ----
     private func setStarStatus() {
         if self.starNumber > 0 {
-            leftStarEnableImageView.isHidden = false
+            leftStarEnableImageView.isHidden   = false
         }
         if self.starNumber > 1 {
             centerStarEnableImageView.isHidden = false
         }
         if self.starNumber > 2 {
-            rightStarEnableImageView.isHidden = false
+            rightStarEnableImageView.isHidden  = false
+        }
+        if self.starNumber < 0 {
+            leftStarDisableImageView.isHidden   = true
+            centerStarDisableImageView.isHidden = true
+            rightStarDisableImageView.isHidden  = true
+        } else {
+            leftStarDisableImageView.isHidden   = false
+            centerStarDisableImageView.isHidden = false
+            rightStarDisableImageView.isHidden  = false
         }
     }
     

@@ -294,12 +294,16 @@
                                                             <constraint firstAttribute="width" constant="18" id="gND-iO-Hti"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mF-tx-aP4">
-                                                        <rect key="frame" x="15" y="11.5" width="12" height="15"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H00-kH-Uf0">
+                                                        <rect key="frame" x="15" y="5.5" width="30" height="27"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                        <state key="normal" title="--">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <segue destination="Ya4-tm-uHn" kind="show" id="XkR-kc-3HY"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
@@ -316,7 +320,6 @@
                                                     <constraint firstItem="rVY-bt-TOH" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="KHW-WD-UNj"/>
                                                     <constraint firstAttribute="trailing" secondItem="7ey-RK-d8S" secondAttribute="trailing" id="Q13-LY-KRs"/>
                                                     <constraint firstItem="jIQ-cl-KIq" firstAttribute="top" secondItem="rVY-bt-TOH" secondAttribute="bottom" constant="20" id="Q5u-rC-z2g"/>
-                                                    <constraint firstItem="9mF-tx-aP4" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="15" id="UHi-bv-G4H"/>
                                                     <constraint firstItem="2F3-bO-dki" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="top" constant="10" id="a6O-5q-m6u"/>
                                                     <constraint firstItem="spb-lT-D93" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="10" id="bgO-ZN-FMu"/>
                                                     <constraint firstItem="GK7-CR-ePQ" firstAttribute="centerY" secondItem="gMI-oo-EEp" secondAttribute="centerY" id="dm4-md-Brs"/>
@@ -326,19 +329,20 @@
                                                     <constraint firstItem="7ey-RK-d8S" firstAttribute="top" secondItem="Udq-Hf-n6w" secondAttribute="top" id="gSb-0h-ukB"/>
                                                     <constraint firstItem="gMI-oo-EEp" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="gc7-Td-1AQ"/>
                                                     <constraint firstAttribute="height" constant="392" id="i3F-Hz-9UF"/>
+                                                    <constraint firstItem="H00-kH-Uf0" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="15" id="ik7-P1-OHx"/>
                                                     <constraint firstAttribute="trailing" secondItem="evR-by-lhD" secondAttribute="trailing" constant="40" id="jtp-Tf-bbP"/>
                                                     <constraint firstItem="ife-Vw-839" firstAttribute="centerX" secondItem="Udq-Hf-n6w" secondAttribute="centerX" id="mhi-fb-7se"/>
                                                     <constraint firstAttribute="trailing" secondItem="rVY-bt-TOH" secondAttribute="trailing" constant="40" id="nmb-Fm-PMA"/>
                                                     <constraint firstItem="spb-lT-D93" firstAttribute="top" secondItem="evR-by-lhD" secondAttribute="bottom" constant="28" id="nsp-zo-Epa"/>
                                                     <constraint firstItem="GK7-CR-ePQ" firstAttribute="leading" secondItem="gMI-oo-EEp" secondAttribute="trailing" id="pTd-Hy-ah3"/>
                                                     <constraint firstItem="Fae-CO-v6Q" firstAttribute="centerX" secondItem="Udq-Hf-n6w" secondAttribute="centerX" id="rvF-se-Lxw"/>
-                                                    <constraint firstItem="9mF-tx-aP4" firstAttribute="centerY" secondItem="2F3-bO-dki" secondAttribute="centerY" id="s9D-6W-aKh"/>
                                                     <constraint firstAttribute="bottom" secondItem="7ey-RK-d8S" secondAttribute="bottom" id="sqy-eQ-Fd2"/>
                                                     <constraint firstItem="gMI-oo-EEp" firstAttribute="top" secondItem="Fae-CO-v6Q" secondAttribute="bottom" constant="24" id="wXw-ez-4zU"/>
                                                     <constraint firstItem="evR-by-lhD" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="yD6-zq-xa4"/>
                                                     <constraint firstAttribute="bottom" secondItem="spb-lT-D93" secondAttribute="bottom" constant="18" id="yjC-IZ-29k"/>
                                                     <constraint firstItem="jIQ-cl-KIq" firstAttribute="leading" secondItem="Udq-Hf-n6w" secondAttribute="leading" constant="40" id="yum-n9-tLd"/>
                                                     <constraint firstAttribute="trailing" secondItem="wrk-54-5fD" secondAttribute="trailing" constant="9" id="z69-jm-ttg"/>
+                                                    <constraint firstItem="H00-kH-Uf0" firstAttribute="centerY" secondItem="2F3-bO-dki" secondAttribute="centerY" id="zIz-sg-duj"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -412,7 +416,7 @@
                         <barButtonItem key="backBarButtonItem" id="EAK-EO-eoG"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="bookNameLabel" destination="9mF-tx-aP4" id="qWe-qb-6F8"/>
+                        <outlet property="bookNameButton" destination="H00-kH-Uf0" id="fVd-E1-CnE"/>
                         <outlet property="changeBookButton" destination="2F3-bO-dki" id="Yh8-tx-u31"/>
                         <outlet property="countOfWaitForStudyWords" destination="Fae-CO-v6Q" id="vpX-uM-xXg"/>
                         <outlet property="entryViewHeightConstraint" destination="i3F-Hz-9UF" id="4aL-g7-789"/>
@@ -1265,6 +1269,7 @@
         <image name="unitIndicator" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="jpj-5D-5QG"/>
         <segue reference="ISO-bD-fBo"/>
     </inferredMetricsTieBreakers>
 </document>

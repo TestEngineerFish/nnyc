@@ -27,4 +27,6 @@ struct YXNotification {
     static let kUpdateFeedbackReplyBadge = NSNotification.Name("kUpdateFeedbackReplyBadge")
     /// 更新任务中心小红点
     static let kUpdateTaskCenterBadge    = NSNotification.Name("kUpdateTaskCenterBadge")
+    /// 跟读得分
+    static let kRecordScore              = NSNotification.Name("kRecordScore")
 }

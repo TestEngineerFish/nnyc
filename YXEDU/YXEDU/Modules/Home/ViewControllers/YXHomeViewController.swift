@@ -21,7 +21,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     public var progressManager = YXExcerciseProgressManager()
     
     @IBOutlet weak var homeEntryView: YXDesignableView!
-    @IBOutlet weak var bookNameLabel: UILabel!
+    @IBOutlet weak var bookNameButton: UIButton!
     @IBOutlet weak var startStudyView: YXDesignableView!
     @IBOutlet weak var startStudyButton: YXDesignableButton!
     @IBOutlet weak var changeBookButton: UIButton!
@@ -147,7 +147,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
                 
                 self.adjustStartStudyButtonState()
-                self.bookNameLabel.text = self.homeModel.bookName
+                self.bookNameButton.setTitle(self.homeModel.bookName, for: .normal)
                 self.unitNameButton.setTitle(self.homeModel.unitName, for: .normal)
                 self.countOfWaitForStudyWords.text = "\((self.homeModel.newWords ?? 0) + (self.homeModel.reviewWords ?? 0))"
                 self.progressBar.setProgress(Float(self.homeModel.unitProgress ?? 0), animated: true)

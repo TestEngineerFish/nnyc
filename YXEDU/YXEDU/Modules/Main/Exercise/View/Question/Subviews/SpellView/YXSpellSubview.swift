@@ -53,7 +53,7 @@ class YXSpellSubview: UIView {
     }
 
     private func createUI() {
-        guard let array = resultArrary, let question = self.exerciseModel.question, let word = question.word  else {
+        guard let array = resultArrary, let question = self.exerciseModel.question, let word = question.word else {
             return
         }
         var offset = 0

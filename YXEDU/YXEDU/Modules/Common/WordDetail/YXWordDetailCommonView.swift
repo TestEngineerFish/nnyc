@@ -59,7 +59,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     
     @IBAction func recordAction(_ sender: UIButton) {
         guard let wordModel = self.word else { return }
-         YXNewLearnView(wordModel: wordModel).show()
+        YXNewLearnView(wordModel: wordModel).show()
     }
     
     
@@ -68,6 +68,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         self.word = word
         
         initializationFromNib()
+        self.bindProperty()
     }
     
     required init?(coder: NSCoder) {
@@ -168,6 +169,16 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             sections.append([SectionType.antonym.rawValue: antonyms])
             sectionExpandStatus.append(true)
         }
+        self.updateRecordStatus()
+    }
+    
+    // MARK: ---- Event ----
+    
+    private func bindProperty() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateRecordScore(_:)), name: YXNotification.kRecordScore, object: nil)
+    }
+    
+    private func updateRecordStatus() {
         if word.listenScore > YXStarLevelEnum.three.rawValue {
             self.recordButton.setImage(UIImage(named: "didRecordedIcon"), for: .normal)
         } else {
@@ -175,9 +186,17 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    // MARK: --- Notifcation ----
+    @objc private func updateRecordScore(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String:Int], let newScore: Int = userInfo["score"] else {
+            return
+        }
+        word.listenScore = newScore
+        self.updateRecordStatus()
+    }
     
     
-    // MARK: -
+    // MARK: ---- UITableViewDelegate && UITableViewDataSource ----
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
