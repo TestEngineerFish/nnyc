@@ -19,12 +19,12 @@ class YXTest: NSObject {
     
     func testA() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let random = Int.random(in: 0..<10)
-            if random % 2 == 0 {
+//            let random = Int.random(in: 0..<10)
+//            if random % 2 == 0 {
                 // 人造崩溃
 //                let array = [1, 2, 3]
 //                print(array[5])
-            }
+//            }
             self.newResultVC()
 //            self.processReviewResult()
 //            self.processBaseExerciseResult()

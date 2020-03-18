@@ -564,11 +564,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             YXUtils.showHUD(self, title: "当前得分: \(score)")
             #endif
             let currentLevel: Int = {
-                if score > YXStarLevelEnum.three.rawValue {
+                if Int(score) > YXStarLevelEnum.three.rawValue {
                     return 3
-                } else if score > YXStarLevelEnum.two.rawValue {
+                } else if Int(score) > YXStarLevelEnum.two.rawValue {
                     return 2
-                } else if score > YXStarLevelEnum.one.rawValue {
+                } else if Int(score) > YXStarLevelEnum.one.rawValue {
                     return 1
                 } else {
                     return 0
