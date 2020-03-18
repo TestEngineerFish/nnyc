@@ -73,7 +73,10 @@ class YXSpellSubview: UIView {
             letter2.removeFirst()
             letter2.removeLast()
             if !letter2.isEmpty {
-                if (YXConfigure.shared()?.showKeyboard ?? false) && (self.exerciseModel.type == .fillWordAccordingToListen || self.exerciseModel.type == .fillWordAccordingToChinese) {
+                // A、B Test
+                // 同时当前单词的能力值为10
+                // 且题目类型是Q-B-1 或者 Q-B-2
+                if (YXConfigure.shared()?.showKeyboard ?? false) && (self.exerciseModel.type == .fillWordAccordingToListen || self.exerciseModel.type == .fillWordAccordingToChinese) && self.exerciseModel.question?.extend?.power == .some(10) {
                     letter2.forEach { (char) in
                         let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
                         wordView.textField.text = ""

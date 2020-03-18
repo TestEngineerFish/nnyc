@@ -53,7 +53,7 @@ class YXWordDetailViewControllerNew: UIViewController {
         guard let wordModel = self.wordModel else {
             return
         }
-        if wordModel.listenScore >= 0 {
+        if wordModel.listenScore > YXStarLevelEnum.three.rawValue {
             self.relearnWord.image = UIImage(named: "didRecordedIcon")
         } else {
             self.relearnWord.image = UIImage(named: "recordedIcon")

@@ -39,6 +39,7 @@ struct YXExerciseQuestionModel: Mappable {
     var itemCount: Int = 4
     var column: Int = 0
     var row: Int = 0
+    var extend: YXExerciseQuestionExtendModel?
 
     init() {}
     
@@ -52,8 +53,25 @@ struct YXExerciseQuestionModel: Mappable {
         itemCount <- map["select_item_num"]
         column    <- map["column"]
         row       <- map["row"]
+        extend    <- map["ext"]
     }
+}
 
+struct YXExerciseQuestionExtendModel: Mappable {
+    
+    var isNewWord: Bool = false
+    var isOldOrEmptyImage: Bool = false
+    var power: Int = 0 // 能力值
+    
+    init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        isNewWord              <- map["is_new_word"]
+        isOldOrEmptyImage      <- map["is_old_img_or_no_img"]
+        power                  <- map["last_score"]
+    }
 }
 
 /// 练习选项数据模型

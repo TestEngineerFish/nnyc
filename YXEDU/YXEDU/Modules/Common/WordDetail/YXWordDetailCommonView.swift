@@ -27,6 +27,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var phoneticSymbolLabel: UILabel!
+    @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var partOfSpeechAndSenseLabel: UILabel!
     @IBOutlet weak var playAuoidButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -55,6 +56,12 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             }
         }
     }
+    
+    @IBAction func recordAction(_ sender: UIButton) {
+        guard let wordModel = self.word else { return }
+         YXNewLearnView(wordModel: wordModel).show()
+    }
+    
     
     init(frame: CGRect, word: YXWordModel) {
         super.init(frame: frame)
@@ -160,6 +167,11 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         if let antonyms = word.antonyms, antonyms.count > 0 {
             sections.append([SectionType.antonym.rawValue: antonyms])
             sectionExpandStatus.append(true)
+        }
+        if word.listenScore > YXStarLevelEnum.three.rawValue {
+            self.recordButton.setImage(UIImage(named: "didRecordedIcon"), for: .normal)
+        } else {
+            self.recordButton.setImage(UIImage(named: "recordedIcon"), for: .normal)
         }
     }
     

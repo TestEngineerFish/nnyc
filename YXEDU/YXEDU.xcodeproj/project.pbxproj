@@ -265,6 +265,7 @@
 		CF0BD8D6240288BC00FE9AA6 /* YXFeedbackReplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BD8D5240288BC00FE9AA6 /* YXFeedbackReplyModel.swift */; };
 		CF18D1B5240FDF9200C10237 /* YXTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18D1B4240FDF9200C10237 /* YXTabBarController.swift */; };
 		CF1CA66F240915490003A8E8 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CA66E240915490003A8E8 /* Array+Extension.swift */; };
+		CF394B042421FD8800663778 /* YXFileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF394B032421FD8800663778 /* YXFileLogger.swift */; };
 		CF53B4902406717C00625892 /* UITabBarItem+BadgeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */; };
 		CF53B49524067CA200625892 /* YXFeedbackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF53B49424067CA200625892 /* YXFeedbackData.swift */; };
 		CFB11BE724137E2600B29B62 /* YXNewLearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB11BE624137E2600B29B62 /* YXNewLearnView.swift */; };
@@ -1071,6 +1072,7 @@
 		CF0BD8D5240288BC00FE9AA6 /* YXFeedbackReplyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackReplyModel.swift; sourceTree = "<group>"; };
 		CF18D1B4240FDF9200C10237 /* YXTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTabBarController.swift; sourceTree = "<group>"; };
 		CF1CA66E240915490003A8E8 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
+		CF394B032421FD8800663778 /* YXFileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFileLogger.swift; sourceTree = "<group>"; };
 		CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+BadgeValue.m"; sourceTree = "<group>"; };
 		CF53B48F2406717C00625892 /* UITabBarItem+BadgeValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+BadgeValue.h"; sourceTree = "<group>"; };
 		CF53B49424067CA200625892 /* YXFeedbackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YXFeedbackData.swift; path = YXEDU/Modules/Mine/ViewControllers/FeedBack/Data/YXFeedbackData.swift; sourceTree = SOURCE_ROOT; };
@@ -2095,6 +2097,7 @@
 				2218AE3523D07CC600EF2E42 /* YXLogManager.swift */,
 				2218AE3A23D0A0F800EF2E42 /* YXLogRequest.swift */,
 				2218AE3C23D0A22A00EF2E42 /* YXLogModel.swift */,
+				CF394B032421FD8800663778 /* YXFileLogger.swift */,
 			);
 			path = Log;
 			sourceTree = "<group>";
@@ -6328,6 +6331,7 @@
 				2218AE3D23D0A22A00EF2E42 /* YXLogModel.swift in Sources */,
 				EE5E00F323274FEC00655654 /* YXPersonalAboutVC.m in Sources */,
 				77626BFC239E280A00B9407A /* YXWordListCell.swift in Sources */,
+				CF394B042421FD8800663778 /* YXFileLogger.swift in Sources */,
 				EE5E0168232754FA00655654 /* BaiduLocManager.m in Sources */,
 				EE5E006C23274FEB00655654 /* YXCHTranENChoiceView.m in Sources */,
 				EE5E004D23274FEB00655654 /* YXWordDetailTextCell.m in Sources */,
@@ -6864,7 +6868,7 @@
 				CODE_SIGN_ENTITLEMENTS = YXEDU/Resources/YXEDU.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEVELOPMENT_TEAM = ZUFNXAQBQM;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6886,7 +6890,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/Unisound",
 				);
-				MARKETING_VERSION = 2.5.6;
+				MARKETING_VERSION = 2.5.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6908,7 +6912,7 @@
 				CODE_SIGN_ENTITLEMENTS = YXEDU/Resources/YXEDU.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEVELOPMENT_TEAM = ZUFNXAQBQM;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6930,7 +6934,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/Unisound",
 				);
-				MARKETING_VERSION = 2.5.6;
+				MARKETING_VERSION = 2.5.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

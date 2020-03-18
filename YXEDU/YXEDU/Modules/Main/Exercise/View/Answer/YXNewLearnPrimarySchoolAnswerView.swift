@@ -22,6 +22,13 @@ protocol YXNewLearnProtocol: NSObjectProtocol {
     func enableAllButton()
 }
 
+enum YXStarLevelEnum: Int {
+    case zero  = 0
+    case one   = 20
+    case two   = 30
+    case three = 60
+}
+
 /// 答题区状态
 enum AnswerStatus: Int {
     case normal                         = -1  //初始状态
@@ -553,13 +560,15 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             guard let score = resultDict["score"] as? Double else {
                 return
             }
-            // YXUtils.showHUD(self, title: "当前得分: \(score)")
+            #if DEBUG
+            YXUtils.showHUD(self, title: "当前得分: \(score)")
+            #endif
             let currentLevel: Int = {
-                if score > 60 {
+                if score > YXStarLevelEnum.three.rawValue {
                     return 3
-                } else if score > 30 {
+                } else if score > YXStarLevelEnum.two.rawValue {
                     return 2
-                } else if score > 20 {
+                } else if score > YXStarLevelEnum.one.rawValue {
                     return 1
                 } else {
                     return 0
@@ -567,8 +576,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             }()
             // 显示结果动画
             self.lastLevel = currentLevel > lastLevel ? currentLevel : lastLevel
-            self.exerciseModel.listenScore = self.lastLevel
-            self.requestReportListenScore(currentLevel)
+            self.requestReportListenScore(Int(score))
         }
     }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,6 +16,7 @@
                 <outlet property="partOfSpeechAndSenseLabel" destination="cO4-0T-jiD" id="v7Z-zE-c0t"/>
                 <outlet property="phoneticSymbolLabel" destination="9G4-gA-ave" id="jNZ-B4-lqv"/>
                 <outlet property="playAuoidButton" destination="nkP-Fs-mzR" id="SrY-tL-ILC"/>
+                <outlet property="recordButton" destination="itY-rC-dhM" id="Ebu-3x-LBC"/>
                 <outlet property="tableView" destination="5KF-Sy-Uh7" id="JUg-j7-AoI"/>
                 <outlet property="wordLabel" destination="11v-Vb-OEW" id="LDr-Ee-9mM"/>
             </connections>
@@ -81,10 +82,23 @@
                         <action selector="playAudio:" destination="-1" eventType="touchUpInside" id="7xl-Ei-GIF"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="itY-rC-dhM">
+                    <rect key="frame" x="377" y="3.5" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="7B5-fO-OeJ"/>
+                        <constraint firstAttribute="width" constant="22" id="dLH-q0-BGz"/>
+                    </constraints>
+                    <state key="normal" image="recordedIcon"/>
+                    <connections>
+                        <action selector="recordAction:" destination="-1" eventType="touchUpInside" id="Cbl-M1-zUP"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="cO4-0T-jiD" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="28" id="9RV-Vc-YlP"/>
+                <constraint firstAttribute="trailing" secondItem="itY-rC-dhM" secondAttribute="trailing" constant="15" id="EVU-S9-NOH"/>
+                <constraint firstItem="itY-rC-dhM" firstAttribute="centerY" secondItem="11v-Vb-OEW" secondAttribute="centerY" id="Ed8-Rm-exR"/>
                 <constraint firstItem="9G4-gA-ave" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="28" id="LdR-L8-bQj"/>
                 <constraint firstItem="11v-Vb-OEW" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="28" id="M2T-ZS-0u5"/>
                 <constraint firstItem="nkP-Fs-mzR" firstAttribute="leading" secondItem="11v-Vb-OEW" secondAttribute="trailing" constant="8" id="NVU-6s-WKl"/>
@@ -109,5 +123,6 @@
     </objects>
     <resources>
         <image name="playAudioIcon" width="37" height="37"/>
+        <image name="recordedIcon" width="22" height="22"/>
     </resources>
 </document>
