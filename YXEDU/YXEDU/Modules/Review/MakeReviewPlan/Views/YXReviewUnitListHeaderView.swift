@@ -21,14 +21,16 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
 
     var unitNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.black2
-        label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.textColor     = UIColor.black2
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.textAlignment = .left
         return label
     }()
     var statisticsLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.black2
-        label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.textColor     = UIColor.black2
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.textAlignment = .left
         return label
     }()
     var checkAllButton: YXButton = {
@@ -62,13 +64,14 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     }
 
     func bindData(_ model: YXReviewUnitModel) {
-        self.model = model
+        self.model              = model
         self.unitNameLabel.text = model.name
-        let unitWidth = model.name.textWidth(font: self.unitNameLabel.font, height: self.height)
-        self.unitNameLabel.snp.updateConstraints { (make) in
-            make.width.equalTo(unitWidth)
-        }
-        self.setNeedsLayout()
+//        var unitWidth = model.name.textWidth(font: self.unitNameLabel.font, height: self.height)
+//        unitWidth = unitWidth > ( self.unitNameLabel.frame.minY)
+//        self.unitNameLabel.snp.updateConstraints { (make) in
+//            make.width.equalTo(unitWidth)
+//        }
+//        self.setNeedsLayout()
     }
 
     override func layoutSubviews() {
@@ -83,7 +86,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
             }
         }
         let numberColor = selectedNum > 0 ? UIColor.orange1 : UIColor.black6
-        let statisticsText = String(format: "（%d/%d词）", selectedNum, model.list.count)
+        let statisticsText = String(format: "(%d/%d词)", selectedNum, model.list.count)
         let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
         attrStr.addAttributes([NSAttributedString.Key.foregroundColor : numberColor], range: NSRange(location: 1, length: "\(selectedNum)".count))
         self.statisticsLabel.attributedText = attrStr
@@ -110,7 +113,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         self.unitNameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(AdaptSize(22))
             make.centerY.height.equalToSuperview()
-            make.width.equalTo(CGFloat.zero)
+            make.right.equalTo(self.statisticsLabel.snp.left)
         }
 
         self.arrowButton.snp.makeConstraints { (make) in
@@ -126,9 +129,9 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         }
 
         self.statisticsLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.unitNameLabel.snp.right)
             make.centerY.height.equalToSuperview()
-            make.right.greaterThanOrEqualTo(self.checkAllButton.snp.left).offset(AdaptSize(-5))
+            make.right.lessThanOrEqualTo(self.checkAllButton.snp.left).offset(AdaptSize(-5))
+            make.width.greaterThanOrEqualTo(AdaptSize(55)).priorityHigh()
         }
 
         self.checkAllButton.addTarget(self, action: #selector(clickCheckAllBtn(_:)), for: .touchUpInside)
