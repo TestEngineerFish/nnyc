@@ -101,6 +101,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         }
         
         checkThirdPartyApp()
+        YYCache.set(true, forKey: YXLocalKey.firstShowHome)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -300,13 +301,13 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     private func checkThirdPartyApp() {        
-        let canOpenQQ = YXCheckApp.canOpen(type: .qq)
+        let canOpenQQ     = YXCheckApp.canOpen(type: .qq)
         let canOpenWechat = YXCheckApp.canOpen(type: .wechatSession)
         
         if !canOpenQQ && !canOpenWechat {
-            fastLoginLeftLineView.isHidden = true
+            fastLoginLeftLineView.isHidden  = true
             fastLoginRightLineView.isHidden = true
-            fastLoginLabel.isHidden = true
+            fastLoginLabel.isHidden         = true
         }
         
         qqButton.isHidden = !canOpenQQ

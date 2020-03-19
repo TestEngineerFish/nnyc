@@ -16,12 +16,9 @@ enum YXFolderNameType: String {
 
 class YXFileLogger: DDFileLogger {
     
-//    init(name: YXFolderNameType) {
-//        NSString *logsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Library/Caches/%ld",(long)flag]];
-//        CSFileManagerDefault *defaultLogFileManager = [[CSFileManagerDefault alloc] initWithLogsDirectory:logsDirectory fileName:@"cslogger"];
-//        return [self initWithLogFileManager:defaultLogFileManager];
-//        let logsDirectory = DDFileLogger().logFileManager.logsDirectory + "/" + name.rawValue
-//        let defaultLogFileManager = DDLogFileManagerDefault(logsDirectory: logsDirectory)
-//        super.init(logFileManager: defaultLogFileManager)
-//    }
+    init(name: YXFolderNameType) {
+        let logsDirectory = DDFileLogger().logFileManager.logsDirectory + "/" + name.rawValue
+        let defaultLogFileManager = DDLogFileManagerDefault(logsDirectory: logsDirectory)
+        super.init(logFileManager: defaultLogFileManager, completionQueue: nil)
+    }
 }

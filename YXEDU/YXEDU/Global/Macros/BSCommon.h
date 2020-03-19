@@ -56,6 +56,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #define kNotificationCenter [NSNotificationCenter defaultCenter]
 
+/**  Logger */
+//#ifndef SHDDLogMacro_h
+//#define SHDDLogMacro_h
+//
+//
+//#if __has_include(<CocoaLumberjack/CocoaLumberjack.h>)
+//#import <CocoaLumberjack/CocoaLumberjack.h>
+//#else
+//#import "DDLog.h"
+//#endif
+//
+//#define CSLOG_TEST_FLAG2   (1001)
+//#define CSLOG_TEST_LEVEL2   (SHLOG_TEST_FLAG2)
+//#define CSLOG_TEST_DDLOG2(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, ddLogLevel, CSLOG_TEST_FLAG2,CSLOG_TEST_LEVEL2, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+//#endif 
 static inline CGFloat AS(CGFloat size) {
     return (kDesignHorizontalScale * size);
 }

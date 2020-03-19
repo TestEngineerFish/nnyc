@@ -36,7 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
         Bugly.start(withAppId: kBuglyAppId)
         // ---- 日志 ----
-        DDLog.add(DDOSLogger.sharedInstance) // 发送到苹果控制台
+        
+//        DDLog.add(YXLoggerAssembler.createFileLogger(type: .action))
+//        DDLog.add(YXLoggerAssembler.createFileLogger(type: .request))
+//        DDLog.add(DDOSLogger.sharedInstance) // 发送到苹果控制台
         let fileLogger = DDFileLogger()
         fileLogger.rollingFrequency   = 60 * 60 * 24
         fileLogger.maximumFileSize    = 1024 * 1024 * 1
