@@ -70,11 +70,11 @@ class YXNewLearnGuideView: UIView {
         self.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        let maskLayer  = CAShapeLayer()
-        let bezierPath = UIBezierPath(rect: self.bounds)
+        let maskLayer   = CAShapeLayer()
+        let bezierPath  = UIBezierPath(rect: self.bounds)
         let rountBezier = UIBezierPath(roundedRect: hollowFrame, cornerRadius: hollowFrame.height/2).reversing()
         bezierPath.append(rountBezier)
-        maskLayer.path = bezierPath.cgPath
+        maskLayer.path  = bezierPath.cgPath
         self.layer.mask = maskLayer
         self.createSubviews(hollowFrame)
     }
