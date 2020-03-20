@@ -288,7 +288,7 @@ class YXExerciseDataManager: NSObject {
                 report.bookId = self.bookId
                 report.unitId = self.unitId
                 report.score  = progressManager.fetchScore(wordId: word.wordId)
-                report.listenScore  = progressManager.fetchNewWordReadScore(wordId: word.wordId)
+//                report.listenScore  = progressManager.fetchNewWordReadScore(wordId: word.wordId)
                 report.errorCount = progressManager.fetchErrorCount(wordId: word.wordId)
                 report.result = YXExerciseReportModel.ResultModel()
                 
