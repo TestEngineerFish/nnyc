@@ -66,11 +66,14 @@
 
 @implementation YXLog
 
++ (void)output:(NSString *)msg {
+    YXLogInfo(@"%@", msg);
+}
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        
 #if TARGET_IPHONE_SIMULATOR
         // Sends log statements to Xcode console - if available
         setenv("XcodeColors", "YES", 1);

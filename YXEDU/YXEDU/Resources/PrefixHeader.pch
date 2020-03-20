@@ -49,13 +49,4 @@
 #import "YXAPI.h"
 #import "YXEDU-Swift.h"
 #import "UIFont+IconFont.h"
-
-#define LOG_LEVEL_DEF ddLogLevel
-#import <CocoaLumberjack/CocoaLumberjack.h>
-#ifdef DEBUG
-static const DDLogLevel ddLogLevel = DDLogLevelInfo;
-#else
-static const DDLogLevel ddLogLevel = DDLogLevelInfo;
-#endif
-
 #endif /* PrefixHeader_pch */

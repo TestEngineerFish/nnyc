@@ -449,14 +449,20 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
         let alertView = YXAlertView()
         alertView.descriptionLabel.text = "是否放弃本次学习并退出?"
         alertView.backgroundView.isUserInteractionEnabled = false
-        alertView.doneClosure = {[weak self] _ in
+        alertView.doneClosure = { [weak self] (text: String?) in
+            guard let self = self, self == UIView().currentViewController else {
+                return
+            }
             DDLogInfo("返回首页")
-            self?.dataManager.progressManager.setOneExerciseFinishStudyTime()
+            self.dataManager.progressManager.setOneExerciseFinishStudyTime()
             
-            self?.delegate?.backHomeEvent()
+            self.delegate?.backHomeEvent()
             YRRouter.popViewController(true)
         }
-        alertView.cancleClosure = {
+        alertView.cancleClosure = { [weak self] in
+            guard let self = self, self == UIView().currentViewController else {
+                return
+            }
             DDLogInfo("继续学习")
             self.delegate?.hideAlertEvent()
         }

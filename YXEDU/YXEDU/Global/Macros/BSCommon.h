@@ -57,20 +57,37 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define kNotificationCenter [NSNotificationCenter defaultCenter]
 
 /**  Logger */
-//#ifndef SHDDLogMacro_h
-//#define SHDDLogMacro_h
-//
-//
-//#if __has_include(<CocoaLumberjack/CocoaLumberjack.h>)
-//#import <CocoaLumberjack/CocoaLumberjack.h>
-//#else
-//#import "DDLog.h"
-//#endif
-//
-//#define CSLOG_TEST_FLAG2   (1001)
-//#define CSLOG_TEST_LEVEL2   (SHLOG_TEST_FLAG2)
+#import <CocoaLumberjack/CocoaLumberjack.h>
+
+/**
+flag 系统默认枚举值的位移范围是 0 到 4，不要和宿主 app 的自定义枚举重复
+context 系统默认是0，不要和宿主 app 的自定义 context 重复
+*/
+#define LOG_FLAG_MAIL (1 << 15)
+#define LOG_CONTEXT_MAIL 15
+
+// 使用 HLULog 代替 DDLog，防止项目中误用 DDLog
+#undef DDLogError
+#undef DDLogWarn
+#undef DDLogInfo
+#undef DDLogDebug
+#undef DDLogVerbose
+
 //#define CSLOG_TEST_DDLOG2(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, ddLogLevel, CSLOG_TEST_FLAG2,CSLOG_TEST_LEVEL2, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-//#endif 
+// 自定义 4 个 Log 宏
+//#define YXLogError(frmt, ...)   LOG_MAYBE(YES, ddLogLevel, DDLogFlagError,   LOG_CONTEXT_MAIL, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+//#define YXLogWarn(frmt, ...)    LOG_MAYBE(YES, ddLogLevel, DDLogFlagWarning, LOG_CONTEXT_MAIL, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define YXLogInfo(frmt, ...)    LOG_MAYBE(YES, ddLogLevel, DDLogFlagInfo, LOG_CONTEXT_MAIL, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+//#define YXLogDebug(frmt, ...)   LOG_MAYBE(YES, ddLogLevel, DDLogFlagDebug,   LOG_CONTEXT_MAIL, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+//#define YXLogVerbose(frmt, ...) LOG_MAYBE(YES, ddLogLevel, DDLogFlagVerbose, LOG_CONTEXT_MAIL, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+
+// 可能会报类型错误，所以用(DDLogLevel)强转一下
+#ifdef DEBUG
+static const DDLogLevel ddLogLevel = (DDLogLevel)(DDLogLevelVerbose | LOG_FLAG_MAIL);
+#else
+static const DDLogLevel ddLogLevel = (DDLogLevel)(DDLogLevelInfo | LOG_FLAG_MAIL);
+#endif
+
 static inline CGFloat AS(CGFloat size) {
     return (kDesignHorizontalScale * size);
 }

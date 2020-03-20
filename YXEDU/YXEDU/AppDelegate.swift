@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        DDLog.add(DDOSLogger.sharedInstance) // 发送到苹果控制台
         let fileLogger = DDFileLogger()
         fileLogger.rollingFrequency   = 60 * 60 * 24
-        fileLogger.maximumFileSize    = 1024 * 1024 * 1
+        fileLogger.maximumFileSize    = 1024 * 1024 * 1 //1M
         fileLogger.doNotReuseLogFiles = true
         fileLogger.logFileManager.maximumNumberOfLogFiles = 5
         DDLog.add(fileLogger)
@@ -88,6 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if YXUserModel.default.didLogin {
             YXBadgeManager.share.updateFeedbackReplyBadge()
         }
+        YXLog.output("=======我将要进入前台啦！！！=======")
     }
     
     /** 每次启动时，都执行，但这个方法太过灵敏，App显示通知栏、双击home等情况，App没有完全退到后台时，也会调用，因此只是App每次启动时调用一次 */

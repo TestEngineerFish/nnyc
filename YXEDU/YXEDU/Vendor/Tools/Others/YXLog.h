@@ -12,4 +12,7 @@
 + (instancetype)shared;
 
 -(NSString *)latestLog;
+
++(void)output:(NSString *)msg;
+
 @end

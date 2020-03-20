@@ -16,6 +16,13 @@ class YXLoggerAssembler {
         customLogger.maximumFileSize    = 1024 * 1024 * 1
         customLogger.doNotReuseLogFiles = true
         customLogger.logFileManager.maximumNumberOfLogFiles = 5
+        let logFormatter = YXContextWhitelistFilterLogFormatter()
+        if type == .action {
+            logFormatter?.add(toWhitelist: 100)
+        } else {
+            logFormatter?.add(toWhitelist: 15)
+        }
+        customLogger.logFormatter = logFormatter
         return customLogger
     }
 }
