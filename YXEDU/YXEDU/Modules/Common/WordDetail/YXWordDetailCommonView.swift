@@ -11,18 +11,18 @@ import UIKit
 class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource {
     private enum SectionType: String {
         case deformation = "单词变形"
-        case examples = "例句"
-        case featured = "念念精选"
-        case synonym = "同义词"
-        case antonym = "反义词"
+        case examples    = "例句"
+        case featured    = "念念精选"
+        case synonym     = "同义词"
+        case antonym     = "反义词"
     }
     
     private var word: YXWordModel!
-    private var sections: [[String: Any]] = []
-    private var sectionExpandStatus: [Bool] = []
+    private var sections: [[String: Any]]      = []
+    private var sectionExpandStatus: [Bool]    = []
     private var mostDeformationLength: CGFloat = 44
+    private var featuredViewheight: CGFloat    = 0
     private var featuredView: YXWordDetailFeaturedView!
-    private var featuredViewheight: CGFloat = 0
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var wordLabel: UILabel!
@@ -61,7 +61,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         guard let wordModel = self.word else { return }
         YXNewLearnView(wordModel: wordModel).show()
     }
-    
     
     init(frame: CGRect, word: YXWordModel) {
         super.init(frame: frame)

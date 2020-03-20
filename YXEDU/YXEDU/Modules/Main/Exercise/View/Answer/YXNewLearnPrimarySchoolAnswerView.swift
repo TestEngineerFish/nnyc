@@ -27,6 +27,18 @@ enum YXStarLevelEnum: Int {
     case one   = 20
     case two   = 30
     case three = 60
+    
+    static func getStarNum(_ score: Int) -> Int {
+        if score > self.three.rawValue {
+            return 3
+        } else if score > self.two.rawValue {
+            return 2
+        } else if score > self.one.rawValue {
+            return 1
+        } else {
+            return 0
+        }
+    }
 }
 
 /// 答题区状态
@@ -91,12 +103,18 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         return button
     }()
 
-    var recordAudioLabel: UILabel = {
+    lazy var recordAudioLabel: UILabel = {
         let label = UILabel()
-        label.text          = "跟读"
         label.textColor     = UIColor.black2
         label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
         label.textAlignment = .center
+        label.text          = {
+            if (self.exerciseModel.word?.listenScore ?? -1) != -1 {
+                return "再次跟读"
+            } else {
+                return "跟读"
+            }
+        }()
         return label
     }()
     
@@ -105,11 +123,12 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var timer: Timer?
     var dotNumber = 0
     var enginer: USCRecognizer?
-    var status: AnswerStatus = .normal
-    var lastLevel    = 0     // 最近一次跟读评分
-    var getCoin      = 0     // 获得积分
+    var status       = AnswerStatus.normal
     var isReport     = false // 是否播完并通知
     var isViewPause  = false // 弹框，页面暂停播放
+    var coin         = 0 // 跟读获得金币数
+    var maxScore     = 0 // 最高得分
+    var lastScore    = 0 // 最新得分
     // TODO: ---- 缓存重传机制
     var tempOpusData = Data() // 缓存当前录音
     var retryCount   = 0
@@ -139,10 +158,12 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
         // 新学跟读流程
         if exerciseModel == nil {
+            // 从单词详情进入
             self.status            = .alreadLearn
             self.starView.isHidden = false
             self.starView.showLastNewLearnResultView(score: wordModel?.listenScore ?? 0)
         } else {
+            // 小学新学页面
             // 设置初始状态
             self.starView.isHidden              = true
             self.recordAudioButton.isEnabled    = false
@@ -468,7 +489,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.status = .showResult
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let self = self else { return }
-            self.learnResultView.showResultView(self.lastLevel, coin: self.getCoin)
+            self.learnResultView.showResultView(self.lastScore, coin: self.coin)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
             guard let self = self else { return }
@@ -479,8 +500,10 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 隐藏结果动画
     private func hideResultAnimation() {
         self.learnResultView.hideView()
+        self.starView.isHidden = false
+        self.starView.showLastNewLearnResultView(score: self.maxScore)
         // 如果得分大于1，则直接显示单词详情页
-        if self.lastLevel > 1 {
+        if self.lastScore > YXStarLevelEnum.one.rawValue {
             self.newLearnDelegate?.showNewLearnWordDetail()
         }
     }
@@ -512,19 +535,20 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     
     // MARK: ---- Request ----
     /// 上报当次跟读得分
-    private func requestReportListenScore(_ score: Int) {
+    private func requestReportListenScore() {
         guard let wordId = self.exerciseModel.word?.wordId else {
             return
         }
-        let request = YXExerciseRequest.reportListenScore(wordId: wordId, score: score)
+        let request = YXExerciseRequest.reportListenScore(wordId: wordId, score: self.lastScore)
         YYNetworkService.default.request(YYStructResponse<YXListenScoreModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let coin = response.data?.coin else {
+            guard let self = self, let model = response.data else {
                 return
             }
-            self.getCoin = coin
+            self.coin     = model.coin
+            self.maxScore = model.listenScore // 返回最高分，跟新本地得分
             self.hideReportAnimation()
             self.showResultAnimation()
-            NotificationCenter.default.post(name: YXNotification.kRecordScore, object: nil, userInfo: ["score":score])
+            NotificationCenter.default.post(name: YXNotification.kRecordScore, object: nil, userInfo: ["score":self.maxScore])
         }) { (error) in
             self.showNetworkErrorAnimation()
             DDLogInfo("上报跟读结果失败")
@@ -559,7 +583,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onResult(_ result: String!, isLast: Bool) {
-        //        print("============录音结果: " + result)
+        DDLogInfo("============录音结果: " + result)
         if isLast {
             // 录音结束,清除临时录音缓存
             self.resetOpusTempData()
@@ -570,20 +594,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             #if DEBUG
             YXUtils.showHUD(self, title: "当前得分: \(score)")
             #endif
-            let currentLevel: Int = {
-                if Int(score) > YXStarLevelEnum.three.rawValue {
-                    return 3
-                } else if Int(score) > YXStarLevelEnum.two.rawValue {
-                    return 2
-                } else if Int(score) > YXStarLevelEnum.one.rawValue {
-                    return 1
-                } else {
-                    return 0
-                }
-            }()
-            // 显示结果动画
-            self.lastLevel = currentLevel > lastLevel ? currentLevel : lastLevel
-            self.requestReportListenScore(Int(score))
+            self.lastScore = Int(score)
+            self.requestReportListenScore()
         }
     }
 

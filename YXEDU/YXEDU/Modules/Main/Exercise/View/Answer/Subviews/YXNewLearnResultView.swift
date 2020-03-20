@@ -214,12 +214,13 @@ class YXNewLearnResultView: UIView {
     }
     
     /// 显示结果动画
-    func showResultView(_ star: Int, coin: Int) {
+    func showResultView(_ score: Int, coin: Int) {
+        let starNum: Int = YXStarLevelEnum.getStarNum(score)
         self.createResultSubviews()
-        self.starView.showResultView(starNum: star)
-        self.iconImageView.image    = UIImage(named: "learnResult\(star)")
+        self.starView.showResultView(starNum: starNum)
+        self.iconImageView.image    = UIImage(named: "learnResult\(starNum)")
         bonusLabel.text             = "+\(coin)"
-        if star > 1 {
+        if starNum > 1 {
             titleLabel.text        = "太棒啦"
         } else {
             titleLabel.text        = "Try again"
