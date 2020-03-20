@@ -181,6 +181,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXConfigure.shared()?.showKeyboard = (userInfomation.fillType == .keyboard)
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
+            YXUserModel.default.reviewNameType = userInfomation.reviewNameType
 
         }) { error in
             print("❌❌❌\(error)")
