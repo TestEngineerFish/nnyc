@@ -95,41 +95,42 @@ class YXTaskCenterCardCell: UICollectionViewCell {
         switch cardStatus {
         case .incomplete:
             if didRepeat {
-                statusLabel.isHidden = true
-                todoButton.isHidden = false
+                statusLabel.isHidden   = true
+                todoButton.isHidden    = false
                 todoButton.borderColor = UIColor.hex(0xDCDCDC)
                 todoButton.borderWidth = 0.5
+                todoButton.setImage(UIImage(named: "go"), for: .normal)
                 todoButton.setTitleColor(UIColor.black, for: .normal)
                 todoButton.setTitle("去完成", for: .normal)
 
             } else {
                 statusLabel.isHidden = false
-                statusLabel.text = "待完成"
-                todoButton.isHidden = true
+                statusLabel.text     = "待完成"
+                todoButton.isHidden  = true
             }
             break
             
         case .completed:
             statusLabel.isHidden = true
-            todoButton.isHidden = false
-            todoButton.borderColor = UIColor.hex(0xDCDCDC)
-            todoButton.borderWidth = 0.5
-            todoButton.setTitleColor(UIColor.orange1, for: .normal)
+            todoButton.isHidden  = false
+            todoButton.setImage(UIImage(named: "arrow_right_white"), for: .normal)
+            todoButton.backgroundColor = UIColor.orange1
+            todoButton.setTitleColor(UIColor.white, for: .normal)
             todoButton.setTitle("可领取", for: .normal)
             break
             
         case .getReward:
             statusLabel.isHidden = false
-            statusLabel.text = "已领取"
-            todoButton.isHidden = true
+            statusLabel.text     = "已领取"
+            todoButton.isHidden  = true
             break
         }
         
-        todoButton.contentEdgeInsets.left = 16
+        todoButton.contentEdgeInsets.left  = 16
         todoButton.contentEdgeInsets.right = 16
-        todoButton.titleEdgeInsets.left = -todoButton.imageView!.bounds.width - 10
-        todoButton.imageEdgeInsets.left = todoButton.titleLabel!.bounds.width + 4
-        todoButton.imageEdgeInsets.right = -4
+        todoButton.titleEdgeInsets.left    = -todoButton.imageView!.bounds.width - 10
+        todoButton.imageEdgeInsets.left    = todoButton.titleLabel!.bounds.width + 4
+        todoButton.imageEdgeInsets.right   = -4
     }
     
     @IBAction func todo(_ sender: Any) {
