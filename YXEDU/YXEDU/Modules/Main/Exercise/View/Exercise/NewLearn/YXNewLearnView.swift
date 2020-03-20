@@ -40,6 +40,7 @@ class YXNewLearnView: UIView {
         self.wordModel = wordModel
         answerView = YXNewLearnAnswerView(wordModel: wordModel, exerciseModel: nil)
         super.init(frame: CGRect.zero)
+        self.layer.opacity = 0.0
         self.createSubviews()
         self.bindProperty()
     }
@@ -80,23 +81,39 @@ class YXNewLearnView: UIView {
     }
     
     private func bindProperty() {
-        
         self.backgroundColor    = UIColor.white.withAlphaComponent(0.95)
         self.titleLabel.text    = wordModel.word
         self.subtitleLabel.text = (wordModel.partOfSpeech ?? "") + " " + (wordModel.meaning ?? "")
         self.closeButton.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
+        NotificationCenter.default.addObserver(self, selector: #selector(closedView(_:)), name: YXNotification.kRecordScore, object: nil)
     }
     
     // MARK: ---- Event ----
     @objc private func closeAction() {
         self.answerView.pauseView()
-        self.removeFromSuperview()
+        UIView.animate(withDuration: 0.25, animations: {
+            self.layer.opacity = 0.0
+        }) { (finished) in
+            self.removeFromSuperview()
+        }
+    }
+    
+    @objc private func closedView(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String:Int], let lastScore: Int = userInfo["lastScore"] else {
+            return
+        }
+        if lastScore > YXStarLevelEnum.three.rawValue {
+            self.closeAction()
+        }
     }
     
     func show() {
         kWindow.addSubview(self)
         self.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
+        }
+        UIView.animate(withDuration: 0.25) {
+            self.layer.opacity = 1.0
         }
     }
     

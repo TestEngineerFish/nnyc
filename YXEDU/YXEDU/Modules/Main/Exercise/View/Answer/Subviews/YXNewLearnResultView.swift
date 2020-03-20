@@ -217,7 +217,7 @@ class YXNewLearnResultView: UIView {
     func showResultView(_ score: Int, coin: Int) {
         let starNum: Int = YXStarLevelEnum.getStarNum(score)
         self.createResultSubviews()
-        self.starView.showResultView(starNum: starNum)
+        self.starView.showNewLearnResultView(starNum: starNum)
         self.iconImageView.image    = UIImage(named: "learnResult\(starNum)")
         bonusLabel.text             = "+\(coin)"
         if starNum > 1 {

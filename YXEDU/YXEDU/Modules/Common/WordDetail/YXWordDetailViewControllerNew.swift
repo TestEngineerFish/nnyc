@@ -68,7 +68,7 @@ class YXWordDetailViewControllerNew: UIViewController {
     
     // MARK: --- Notifcation ----
     @objc private func updateRecordScore(_ notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String:Int], let newScore: Int = userInfo["score"] else {
+        guard let userInfo = notification.userInfo as? [String:Int], let newScore: Int = userInfo["maxScore"] else {
             return
         }
         self.wordModel?.listenScore = newScore

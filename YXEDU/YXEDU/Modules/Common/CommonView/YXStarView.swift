@@ -8,41 +8,20 @@
 
 import UIKit
 
+enum YXStarType: Int {
+    case lastLearnResult = 0 //上次学习结果
+    case newLearnResult  = 1 // 新学结果
+    case learnResult     = 2 // 学习流程结果
+}
+
 class YXStarView: UIView {
     
-    var leftStarDisableImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "star_h_disable")
-        return imageView
-    }()
-    var leftStarEnableImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image    = UIImage(named: "star_h_enable")
-        imageView.isHidden = true
-        return imageView
-    }()
-    var centerStarDisableImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "star_h_disable")
-        return imageView
-    }()
-    var centerStarEnableImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image    = UIImage(named: "star_h_enable")
-        imageView.isHidden = true
-        return imageView
-    }()
-    var rightStarDisableImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "star_h_disable")
-        return imageView
-    }()
-    var rightStarEnableImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image    = UIImage(named: "star_h_enable")
-        imageView.isHidden = true
-        return imageView
-    }()
+    var leftStarDisableImageView   = UIImageView()
+    var leftStarEnableImageView    = UIImageView()
+    var centerStarDisableImageView = UIImageView()
+    var centerStarEnableImageView  = UIImageView()
+    var rightStarDisableImageView  = UIImageView()
+    var rightStarEnableImageView   = UIImageView()
     
     var starNumber = 0
     
@@ -61,6 +40,7 @@ class YXStarView: UIView {
                 return -1
             }
         }()
+        self.setImage(.lastLearnResult)
         self.setStarStatus()
         self.addSubview(leftStarDisableImageView)
         self.addSubview(centerStarDisableImageView)
@@ -96,8 +76,9 @@ class YXStarView: UIView {
     }
     
     /// 新学结果页
-    func showResultView(starNum: Int) {
+    func showNewLearnResultView(starNum: Int) {
         self.starNumber = starNum
+        self.setImage(.newLearnResult)
         self.resetStatus()
         self.addSubview(leftStarDisableImageView)
         self.addSubview(centerStarDisableImageView)
@@ -137,6 +118,7 @@ class YXStarView: UIView {
     func showLearnResultView(starNum: Int) {
         self.starNumber = starNum
         self.resetStatus()
+        self.setImage(.learnResult)
         self.addSubview(leftStarDisableImageView)
         self.addSubview(centerStarDisableImageView)
         self.addSubview(rightStarDisableImageView)
@@ -173,24 +155,37 @@ class YXStarView: UIView {
     
     // MARK: ---- Tools ----
     private func setStarStatus() {
-        if self.starNumber > 0 {
-            leftStarEnableImageView.isHidden   = false
-        }
-        if self.starNumber > 1 {
-            centerStarEnableImageView.isHidden = false
-        }
-        if self.starNumber > 2 {
-            rightStarEnableImageView.isHidden  = false
-        }
-        if self.starNumber < 0 {
-            leftStarDisableImageView.isHidden   = true
-            centerStarDisableImageView.isHidden = true
-            rightStarDisableImageView.isHidden  = true
-        } else {
-            leftStarDisableImageView.isHidden   = false
-            centerStarDisableImageView.isHidden = false
-            rightStarDisableImageView.isHidden  = false
-        }
+        leftStarDisableImageView.isHidden   = self.starNumber < 0
+        centerStarDisableImageView.isHidden = self.starNumber < 0
+        rightStarDisableImageView.isHidden  = self.starNumber < 0
+        leftStarEnableImageView.isHidden    = self.starNumber < 1
+        centerStarEnableImageView.isHidden  = self.starNumber < 2
+        rightStarEnableImageView.isHidden   = self.starNumber < 3
+    }
+    
+    private func setImage(_ type: YXStarType) {
+        let enabelImage: UIImage? = {
+            switch type {
+            case .lastLearnResult:
+                return UIImage(named: "star_new_enable")
+            case .learnResult, .newLearnResult:
+                return UIImage(named: "star_h_enable")
+            }
+        }()
+        let disableImage: UIImage? = {
+            switch type {
+            case .lastLearnResult:
+                return UIImage(named: "star_new_disable")
+            case .learnResult, .newLearnResult:
+                return UIImage(named: "star_h_disable")
+            }
+        }()
+        self.leftStarEnableImageView.image    = enabelImage
+        self.leftStarDisableImageView.image   = disableImage
+        self.centerStarEnableImageView.image  = enabelImage
+        self.centerStarDisableImageView.image = disableImage
+        self.rightStarEnableImageView.image   = enabelImage
+        self.rightStarDisableImageView.image  = disableImage
     }
     
     private func resetStatus() {

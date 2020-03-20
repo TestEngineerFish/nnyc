@@ -153,21 +153,22 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.enginer?.delegate        = self
         self.enginer?.vadControl      = true
         self.enginer?.setVadFrontTimeout(5000, backTimeout: 700)
+        
+        self.recordAudioButton.isEnabled    = false
+        self.recordAudioLabel.layer.opacity = 0.3
 
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
         // 新学跟读流程
         if exerciseModel == nil {
             // 从单词详情进入
-            self.status            = .alreadLearn
-            self.starView.isHidden = false
+            self.status            = .playedFirstWordInSecondStage
+            self.playByStatus()
             self.starView.showLastNewLearnResultView(score: wordModel?.listenScore ?? 0)
         } else {
             // 小学新学页面
             // 设置初始状态
             self.starView.isHidden              = true
-            self.recordAudioButton.isEnabled    = false
-            self.recordAudioLabel.layer.opacity = 0.3
             // 如果没有例句,则跳过第一阶段
             if (self.exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) || self.exerciseModel.word?.imageUrl == nil {
                 self.status = .playedExampleInFristStage
@@ -438,6 +439,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playAudioLabel.textAlignment = .center
         self.playAudioLabel.textColor     = UIColor.black2
         self.playAudioButton.layer.removeAllAnimations()
+        if (self.exerciseModel.word?.listenScore ?? -1) != -1 {
+            self.starView.isHidden = false
+        }
     }
     
     /// 禁用播放按钮
@@ -502,6 +506,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.learnResultView.hideView()
         self.starView.isHidden = false
         self.starView.showLastNewLearnResultView(score: self.maxScore)
+        NotificationCenter.default.post(name: YXNotification.kRecordScore, object: nil, userInfo: ["maxScore":self.maxScore, "lastScore":self.lastScore])
         // 如果得分大于1，则直接显示单词详情页
         if self.lastScore > YXStarLevelEnum.one.rawValue {
             self.newLearnDelegate?.showNewLearnWordDetail()
@@ -548,7 +553,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.maxScore = model.listenScore // 返回最高分，跟新本地得分
             self.hideReportAnimation()
             self.showResultAnimation()
-            NotificationCenter.default.post(name: YXNotification.kRecordScore, object: nil, userInfo: ["score":self.maxScore])
         }) { (error) in
             self.showNetworkErrorAnimation()
             DDLogInfo("上报跟读结果失败")
