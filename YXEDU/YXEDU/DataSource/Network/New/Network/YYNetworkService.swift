@@ -99,7 +99,7 @@ struct YYNetworkService {
             let path = YYFileManager.share.createPath(documentPath: localSavePath)
             return (URL(fileURLWithPath: path), [.removePreviousFile, .createIntermediateDirectories])
             }.downloadProgress { (progress) in
-                DDLogInfo("progress.completedUnitCount is \(progress.completedUnitCount)")
+                YXRequestLog("progress.completedUnitCount is \(progress.completedUnitCount)")
             }.response { (defaultDownloadResponse) in
                 
         }

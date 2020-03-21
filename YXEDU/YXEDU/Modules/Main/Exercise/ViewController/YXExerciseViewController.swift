@@ -148,17 +148,17 @@
     
     /// 开始学习
     private func startStudy() {
-        DDLogInfo("====开始学习====")
+        YXLog("====开始学习====")
         // 存在学完未上报的关卡
         if !dataManager.progressManager.isReport() {
-            DDLogInfo("本地存在学完未上报的关卡，先加载，再上报")
+            YXLog("本地存在学完未上报的关卡，先加载，再上报")
             // 先加载本地数据
             dataManager.fetchLocalExerciseModels()
             
             // 再上报关卡
             self.report()
         } else if !dataManager.progressManager.isCompletion() {// 存在未学完的关卡
-            DDLogInfo("本地存在未学完的关卡，先加载")
+            YXLog("本地存在未学完的关卡，先加载")
             // 先加载本地数据
             dataManager.fetchLocalExerciseModels()
             
@@ -195,7 +195,7 @@
     
     /// 切换题目
     private func switchExerciseView() {
-        DDLogInfo("==== 切题 ====")
+        YXLog("==== 切题 ====")
         let data = dataManager.fetchOneExerciseModel()
         
         headerView.learningProgress = "\(data.0)"
@@ -251,7 +251,7 @@
     /// 加载一个练习
     /// - Parameter exerciseView: 新的练习view
     private func loadExerciseView(exerciseView: YXBaseExerciseView) {
-        DDLogInfo("==== 加载练习题 ====")
+        YXLog("==== 加载练习题 ====")
         // 是否第一次进来
         var isFirst = true
         if let ceview = exerciseViewArray.first {
@@ -270,7 +270,7 @@
     
     /// 显示loading动画
     private func showLoadAnimation() {
-        DDLogInfo("显示学习前加载动画")
+        YXLog("显示学习前加载动画")
         self.loadingView = YXExerciseLoadingView(frame: kWindow.bounds)
         kWindow.addSubview(self.loadingView!)
         self.loadingView?.showAnimation()
@@ -298,7 +298,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     ///答完题回调处理， 正常题型处理（不包括连线题）
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
-        DDLogInfo("回答" + (right ? "正确" : "错误"))
+        YXLog("回答" + (right ? "正确" : "错误"))
         // 答题后，数据处理
         self.dataManager.normalAnswerAction(exerciseModel: exerciseModel, right: right)
         
@@ -443,7 +443,7 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
 
 extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     func clickHomeBtnEvent() {
-        DDLogInfo("学习中点击【回首页】按钮")
+        YXLog("学习中点击【回首页】按钮")
         self.delegate?.showAlertEvnet()
         
         let alertView = YXAlertView()
@@ -453,7 +453,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             guard let self = self, self == UIView().currentViewController else {
                 return
             }
-            DDLogInfo("返回首页")
+            YXLog("返回首页")
             self.dataManager.progressManager.setOneExerciseFinishStudyTime()
             
             self.delegate?.backHomeEvent()
@@ -463,7 +463,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             guard let self = self, self == UIView().currentViewController else {
                 return
             }
-            DDLogInfo("继续学习")
+            YXLog("继续学习")
             self.delegate?.hideAlertEvent()
         }
         
@@ -486,7 +486,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
  
 extension YXExerciseViewController: YXExerciseBottomViewProtocol {
     func clickTipsBtnEvent() {
-        DDLogInfo("点击提示按钮")
+        YXLog("点击提示按钮")
         guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
 
         switch exerciseModel.type {
@@ -513,7 +513,7 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
         self.exerciseViewArray.first?.remindView?.show()
     }
     func clickNextViewEvent() {
-        DDLogInfo("新学，查看单词详情")
+        YXLog("新学，查看单词详情")
         // 显示单词详情
         guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView else {
             return
@@ -522,7 +522,7 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
         // 记录积分 +0
     }
     func clickNextButtonEvent() {
-        DDLogInfo("新学，点击【下一步】按钮")
+        YXLog("新学，点击【下一步】按钮")
         guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView, let answerView = exerciseView.answerView as? YXNewLearnAnswerView else {
             return
         }

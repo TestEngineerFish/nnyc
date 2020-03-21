@@ -8,7 +8,7 @@
 
 #import "YXCrashReport.h"
 #import <Bugly/Bugly.h>
-#import "YXLog.h"
+#import "YXOCLog.h"
 
 #ifdef DEBUG
 //do sth.

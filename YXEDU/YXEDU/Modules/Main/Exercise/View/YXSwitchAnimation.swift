@@ -18,11 +18,11 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
     
     public func show(isRight: Bool) {
         if isRight {
-            DDLogInfo("显示答对动画")
+            YXLog("显示答对动画")
             showRightAnimation()
             YXAVPlayerManager.share.playRightAudio()
         } else {
-            DDLogInfo("显示答错动画")
+            YXLog("显示答错动画")
             showWrongAnimation()
             YXAVPlayerManager.share.playWrongAudio()
         }

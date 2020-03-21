@@ -77,15 +77,15 @@
     
     // 设置两种方式的heeader头参数
     NSDictionary *feilds = [self _setAllHeader:headers params:params url:url];
-    DDLogInfo(@"GET = request url:%@ params:%@", url, params);
+    YXRequestLog(@"GET = request url:%@ params:%@", url, params);
     NSURLSessionDataTask *task = [self.sessionManager GET:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // 删除已完成的task
         [self _removeTask:task];
-        DDLogInfo(@"【Success】 request url: %@, respnseObject: %@", url, responseObject);
+        YXRequestLog(@"【Success】 request url: %@, respnseObject: %@", url, responseObject);
         [self _successResponse:responseObject url:url params:params requestType:YRHttpRequestTypeGet task:task completion:completion];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        DDLogInfo(@"【Fail】 GET = request url:%@ parames:%@, error:%@", url, params, error);
+        YXRequestLog(@"【Fail】 GET = request url:%@ parames:%@, error:%@", url, params, error);
         // 删除已完成的task
         [self _removeTask:task];
         YRHttpResponse *response = [self _failureResponse:task error:error requestType:YRHttpRequestTypeGet ];
@@ -125,17 +125,17 @@
     
     // 设置两种方式的heeader头参数
     NSDictionary *feilds = [self _setAllHeader:headers params:params url:url];
-    DDLogInfo(@"POST = request url:%@ params:%@", url, params);
+    YXRequestLog(@"POST = request url:%@ params:%@", url, params);
     NSURLSessionDataTask *task = [self.sessionManager POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // 删除已完成的task
         [self _removeTask:task];
-        DDLogInfo(@"【Success】 request url: %@, respnseObject: %@", url, responseObject);
+        YXRequestLog(@"【Success】 request url: %@, respnseObject: %@", url, responseObject);
         [self _successResponse:responseObject url:url params:params requestType:YRHttpRequestTypePost task:task completion:completion];
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        DDLogInfo(@"【Fail】 POST = request url:%@ parames:%@, error:%@", url, params, error);
+        YXRequestLog(@"【Fail】 POST = request url:%@ parames:%@, error:%@", url, params, error);
         // 删除已完成的task
         [self _removeTask:task];
         YRHttpResponse *response = [self _failureResponse:task error:error requestType:YRHttpRequestTypePost ];

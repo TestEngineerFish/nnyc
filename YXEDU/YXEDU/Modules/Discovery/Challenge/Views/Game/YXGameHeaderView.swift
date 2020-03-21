@@ -180,7 +180,7 @@ class YXGameHeaderView: UIView {
             time     = self.lastQuestionTime
             question = self.currentQuestionNumber
         }
-        DDLogInfo("挑战总用时：\(time)，答对数“\(question)")
+        YXLog("挑战总用时：\(time)，答对数“\(question)")
         return (time, question)
     }
 

@@ -42,21 +42,21 @@ class YXLogManager: NSObject, DDLogFormatter {
 
     /// 添加用户信息
     private func addUserInfo() {
-        DDLogInfo("当前UUID：" + (YXUserModel.default.uuid ?? ""))
-        DDLogInfo("当前用户名：" + (YXUserModel.default.username ?? ""))
-        DDLogInfo("当前用户手机号：" + (YXConfigure.shared()?.mobile ?? ""))
-        DDLogInfo("当前使用App版本：" + UIDevice().appVersion())
+        YXLog("当前UUID：" + (YXUserModel.default.uuid ?? ""))
+        YXLog("当前用户名：" + (YXUserModel.default.username ?? ""))
+        YXLog("当前用户手机号：" + (YXConfigure.shared()?.mobile ?? ""))
+        YXLog("当前使用App版本：" + UIDevice().appVersion())
     }
 
     /// 添加设备信息
     private func addDeviceInfo() {
-        DDLogInfo("当前App版本：" + UIDevice().appVersion())
-        DDLogInfo("当前App Build版本：" + YRDevice.appBuild())
-        DDLogInfo("当前设备名称：" + UIDevice().machineName())
-        DDLogInfo("当前系统版本：" + UIDevice().sysVersion())
-        DDLogInfo("当前网络环境：" + UIDevice().networkType())
-        DDLogInfo("当前屏幕英寸：" + UIDevice().screenInch())
-        DDLogInfo("当前屏幕分辨率：" + UIDevice().screenResolution())
+        YXLog("当前App版本：" + UIDevice().appVersion())
+        YXLog("当前App Build版本：" + YRDevice.appBuild())
+        YXLog("当前设备名称：" + UIDevice().machineName())
+        YXLog("当前系统版本：" + UIDevice().sysVersion())
+        YXLog("当前网络环境：" + UIDevice().networkType())
+        YXLog("当前屏幕英寸：" + UIDevice().screenInch())
+        YXLog("当前屏幕分辨率：" + UIDevice().screenResolution())
     }
 
     // MARK: ==== Tool ====
@@ -69,14 +69,15 @@ class YXLogManager: NSObject, DDLogFormatter {
         let logPathArray     = fileLogger.logFileManager.sortedLogFileNames
         let logDirectoryPath = fileLogger.logFileManager.logsDirectory
         let logZipPath       = logDirectoryPath + "/feadbackLog.zip"
-
+        print("++++++++++++++++")
+        print(logDirectoryPath)
         if ziper.createZipFile2(logZipPath) {
             logPathArray.forEach { (path) in
                 ziper.addFile(toZip: logDirectoryPath + "/" + path, newname: path)
             }
-            DDLogInfo("创建Zip成功")
+            YXLog("创建Zip成功")
         } else {
-            DDLogInfo("创建Zip失败")
+            YXLog("创建Zip失败")
         }
         ziper.closeZipFile2()
         guard let fileData = try? Data(contentsOf: URL(fileURLWithPath: logZipPath)) else {
@@ -91,9 +92,9 @@ class YXLogManager: NSObject, DDLogFormatter {
         let logDirectoryPath = fileLogger.logFileManager.logsDirectory
         let logZipPath       = logDirectoryPath + "/feadbackLog.zip"
         if ((try? FileManager.default.removeItem(atPath: logZipPath)) != nil) {
-            DDLogInfo("删除Zip包成功")
+            YXLog("删除Zip包成功")
         } else {
-            DDLogInfo("删除Zip包失败")
+            YXLog("删除Zip包失败")
         }
     }
 

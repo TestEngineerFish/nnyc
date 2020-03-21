@@ -270,49 +270,49 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 根据状态来播放
     func playByStatus() {
-        DDLogInfo("新学：当前状态：\(self.status)")
+        YXLog("新学：当前状态：\(self.status)")
         switch self.status {
         case .normal:
             self.status.forward()
             self.playWord()
-            DDLogInfo("新学：初始状态")
+            YXLog("新学：初始状态")
         case .playingWordInFristStage:
             self.playWord()
-            DDLogInfo("新学：第一阶段 - 播放单词中")
+            YXLog("新学：第一阶段 - 播放单词中")
         case .playedWordInFristStage:
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.status.forward()
                 self.playExample()
             }
-            DDLogInfo("新学：第一阶段 - 播放单词结束")
+            YXLog("新学：第一阶段 - 播放单词结束")
         case .playingExampleInFristStage:
             self.playExample()
-            DDLogInfo("新学：第一阶段 - 播放例句中")
+            YXLog("新学：第一阶段 - 播放例句中")
         case .playedExampleInFristStage:
             self.newLearnDelegate?.playWordAndExampleFinished()
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.status.forward()
                 self.playWord()
             }
-            DDLogInfo("新学：第一阶段 - 播放例句结束")
+            YXLog("新学：第一阶段 - 播放例句结束")
         case .playingFirstWordInSecondStage:
             self.playWord()
-            DDLogInfo("新学：第二阶段 - 第一遍播放单词中")
+            YXLog("新学：第二阶段 - 第一遍播放单词中")
         case .playedFirstWordInSecondStage:
             DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
                 guard let self = self else { return }
                 self.status.forward()
                 self.playWord()
             }
-            DDLogInfo("新学：第二阶段 - 第一遍播放单词结束")
+            YXLog("新学：第二阶段 - 第一遍播放单词结束")
         case .playingSecondWordInSecondStage:
             self.playWord()
-            DDLogInfo("新学：第二阶段 - 第二遍播放单词中")
+            YXLog("新学：第二阶段 - 第二遍播放单词中")
         case .playedSecondWordInSecondStage:
             self.status.forward()
             self.isReport = true
             self.autoPlayFinished()
-            DDLogInfo("新学：第二阶段 - 第二遍播放单词结束")
+            YXLog("新学：第二阶段 - 第二遍播放单词结束")
             self.hidePlayAnimation()
         default:
             if !self.isReport {
@@ -323,7 +323,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     private func autoPlayFinished() {
-        DDLogInfo("新学：自动播放结束")
+        YXLog("新学：自动播放结束")
         self.newLearnDelegate?.playWordAndWordFinished()
         self.recordAudioButton.isEnabled     = true
         self.recordAudioLabel.layer.opacity  = 1.0
@@ -495,7 +495,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             guard let self = self else { return }
             self.learnResultView.showResultView(self.lastScore, coin: self.coin)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
             guard let self = self else { return }
             self.hideResultAnimation()
         }
@@ -555,14 +555,14 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.showResultAnimation()
         }) { (error) in
             self.showNetworkErrorAnimation()
-            DDLogInfo("上报跟读结果失败")
+            YXLog("上报跟读结果失败")
         }
     }
 
     // MARK: ==== 云知声SDK: USCRecognizerDelegate ====
     func oralEngineDidInit(_ error: Error!) {
         if error != nil {
-            DDLogInfo("初始化结束,错误内容: " + String(describing: error))
+            YXLog("初始化结束,错误内容: " + String(describing: error))
             self.showNetworkErrorAnimation()
         }
         return
@@ -587,7 +587,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onResult(_ result: String!, isLast: Bool) {
-        DDLogInfo("============录音结果: " + result)
+        YXLog("============录音结果: " + result)
         if isLast {
             // 录音结束,清除临时录音缓存
             self.resetOpusTempData()

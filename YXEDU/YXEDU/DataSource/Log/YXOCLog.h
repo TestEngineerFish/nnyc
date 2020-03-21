@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YXLog : NSObject
+@interface YXOCLog : NSObject
 + (instancetype)shared;
 
 -(NSString *)latestLog;
 
-+(void)output:(NSString *)msg;
+- (void)launch;
++(void)requestLog:(NSString *)msg level:(DDLogLevel)level;
++(void)eventLog:(NSString *)msg;
 
 @end

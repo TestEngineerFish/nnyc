@@ -38,7 +38,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
             return
         }
-        DDLogInfo("====开始主流程的学习====")
+        YXLog("====开始主流程的学习====")
         if self.countOfWaitForStudyWords.text == "0" {
             guard let homeData = self.homeModel else { return }
             

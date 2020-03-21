@@ -53,7 +53,7 @@ class YXAudioPlayerView: UIView {
     /// 播放当前音频
     func play() {
         guard let _urlStr = self.urlStr, let url = URL(string: _urlStr) else {
-            DDLogInfo("无效的音频地址: \(String(describing: self.urlStr))")
+            YXLog("无效的音频地址: \(String(describing: self.urlStr))")
             return
         }
         if !YXAVPlayerManager.share.isPlaying {

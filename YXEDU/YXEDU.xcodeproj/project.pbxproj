@@ -270,6 +270,7 @@
 		CF394B082422738600663778 /* YXContextWhitelistFilterLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF394B072422738600663778 /* YXContextWhitelistFilterLogFormatter.swift */; };
 		CF53B4902406717C00625892 /* UITabBarItem+BadgeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */; };
 		CF53B49524067CA200625892 /* YXFeedbackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF53B49424067CA200625892 /* YXFeedbackData.swift */; };
+		CF8F08C6242665B00067A004 /* YXLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8F08C5242665B00067A004 /* YXLogFormatter.m */; };
 		CFB11BE724137E2600B29B62 /* YXNewLearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB11BE624137E2600B29B62 /* YXNewLearnView.swift */; };
 		CFB11BEA2414953E00B29B62 /* YXStarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB11BE92414953E00B29B62 /* YXStarView.swift */; };
 		CFB11BEC241623F500B29B62 /* homeFirst.json in Resources */ = {isa = PBXBuildFile; fileRef = CFB11BEB241623F400B29B62 /* homeFirst.json */; };
@@ -561,7 +562,7 @@
 		EE5E0169232754FA00655654 /* YXRouteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0139232754FA00655654 /* YXRouteManager.m */; };
 		EE5E016A232754FA00655654 /* YXShareImageGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E013C232754FA00655654 /* YXShareImageGenerator.m */; };
 		EE5E016B232754FA00655654 /* YXShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E013D232754FA00655654 /* YXShareHelper.m */; };
-		EE5E016C232754FA00655654 /* YXLog.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0141232754FA00655654 /* YXLog.m */; };
+		EE5E016C232754FA00655654 /* YXOCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0141232754FA00655654 /* YXOCLog.m */; };
 		EE5E016D232754FA00655654 /* YXConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0143232754FA00655654 /* YXConfigure.m */; };
 		EE5E016E232754FA00655654 /* YXUserSaveTool.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0148232754FA00655654 /* YXUserSaveTool.m */; };
 		EE5E016F232754FA00655654 /* YXMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E014A232754FA00655654 /* YXMediator.m */; };
@@ -1080,6 +1081,8 @@
 		CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+BadgeValue.m"; sourceTree = "<group>"; };
 		CF53B48F2406717C00625892 /* UITabBarItem+BadgeValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+BadgeValue.h"; sourceTree = "<group>"; };
 		CF53B49424067CA200625892 /* YXFeedbackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YXFeedbackData.swift; path = YXEDU/Modules/Mine/ViewControllers/FeedBack/Data/YXFeedbackData.swift; sourceTree = SOURCE_ROOT; };
+		CF8F08C4242665B00067A004 /* YXLogFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXLogFormatter.h; sourceTree = "<group>"; };
+		CF8F08C5242665B00067A004 /* YXLogFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXLogFormatter.m; sourceTree = "<group>"; };
 		CFB11BE624137E2600B29B62 /* YXNewLearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnView.swift; sourceTree = "<group>"; };
 		CFB11BE92414953E00B29B62 /* YXStarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXStarView.swift; sourceTree = "<group>"; };
 		CFB11BEB241623F400B29B62 /* homeFirst.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = homeFirst.json; sourceTree = "<group>"; };
@@ -1187,13 +1190,13 @@
 		EE5E013D232754FA00655654 /* YXShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXShareHelper.m; sourceTree = "<group>"; };
 		EE5E013E232754FA00655654 /* YXShareImageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXShareImageGenerator.h; sourceTree = "<group>"; };
 		EE5E013F232754FA00655654 /* YXShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXShareHelper.h; sourceTree = "<group>"; };
-		EE5E0141232754FA00655654 /* YXLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXLog.m; sourceTree = "<group>"; };
+		EE5E0141232754FA00655654 /* YXOCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXOCLog.m; sourceTree = "<group>"; };
 		EE5E0142232754FA00655654 /* YXUserSaveTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXUserSaveTool.h; sourceTree = "<group>"; };
 		EE5E0143232754FA00655654 /* YXConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXConfigure.m; sourceTree = "<group>"; };
 		EE5E0144232754FA00655654 /* YXCrashReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCrashReport.h; sourceTree = "<group>"; };
 		EE5E0145232754FA00655654 /* YXUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXUtils.h; sourceTree = "<group>"; };
 		EE5E0146232754FA00655654 /* YXMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXMediator.h; sourceTree = "<group>"; };
-		EE5E0147232754FA00655654 /* YXLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXLog.h; sourceTree = "<group>"; };
+		EE5E0147232754FA00655654 /* YXOCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXOCLog.h; sourceTree = "<group>"; };
 		EE5E0148232754FA00655654 /* YXUserSaveTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXUserSaveTool.m; sourceTree = "<group>"; };
 		EE5E0149232754FA00655654 /* YXConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXConfigure.h; sourceTree = "<group>"; };
 		EE5E014A232754FA00655654 /* YXMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXMediator.m; sourceTree = "<group>"; };
@@ -2098,12 +2101,16 @@
 		2218AE3423D07CB400EF2E42 /* Log */ = {
 			isa = PBXGroup;
 			children = (
+				EE5E0147232754FA00655654 /* YXOCLog.h */,
+				EE5E0141232754FA00655654 /* YXOCLog.m */,
 				2218AE3523D07CC600EF2E42 /* YXLogManager.swift */,
 				2218AE3A23D0A0F800EF2E42 /* YXLogRequest.swift */,
 				2218AE3C23D0A22A00EF2E42 /* YXLogModel.swift */,
 				CF394B032421FD8800663778 /* YXFileLogger.swift */,
 				CF394B052422724F00663778 /* YXLoggerAssembler.swift */,
 				CF394B072422738600663778 /* YXContextWhitelistFilterLogFormatter.swift */,
+				CF8F08C4242665B00067A004 /* YXLogFormatter.h */,
+				CF8F08C5242665B00067A004 /* YXLogFormatter.m */,
 			);
 			path = Log;
 			sourceTree = "<group>";
@@ -3418,8 +3425,6 @@
 				EE5E0143232754FA00655654 /* YXConfigure.m */,
 				EE5E0144232754FA00655654 /* YXCrashReport.h */,
 				EE5E014C232754FA00655654 /* YXCrashReport.m */,
-				EE5E0147232754FA00655654 /* YXLog.h */,
-				EE5E0141232754FA00655654 /* YXLog.m */,
 				EE5E0146232754FA00655654 /* YXMediator.h */,
 				EE5E014A232754FA00655654 /* YXMediator.m */,
 				EE5E0142232754FA00655654 /* YXUserSaveTool.h */,
@@ -6059,6 +6064,7 @@
 				EE5EF1FC23273BAE00655654 /* YRHttpTask.m in Sources */,
 				EEACEB9123AA12500036B3A2 /* YXSearchHeaderView.swift in Sources */,
 				EE5E0177232754FA00655654 /* QQApiManager.m in Sources */,
+				CF8F08C6242665B00067A004 /* YXLogFormatter.m in Sources */,
 				227F477923CC466200D6C603 /* YXWrongWordCell.swift in Sources */,
 				2202D27123A8AB6700882E5D /* YXGameResultView.swift in Sources */,
 				227F478023CC638F00D6C603 /* YXPreviousResultView.swift in Sources */,
@@ -6650,7 +6656,7 @@
 				22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */,
 				224A2FC8238233E100AD99B0 /* YXLearningResultViewController.swift in Sources */,
 				EE5E0250232756C100655654 /* OrdinateView.m in Sources */,
-				EE5E016C232754FA00655654 /* YXLog.m in Sources */,
+				EE5E016C232754FA00655654 /* YXOCLog.m in Sources */,
 				EE5EF255232740B800655654 /* UIView+Layout.m in Sources */,
 				CFFB700C23ED00A70088DAAA /* YXReviewSearchView.swift in Sources */,
 				224352D123A2593600F278E6 /* YXChallengeRankCell.swift in Sources */,

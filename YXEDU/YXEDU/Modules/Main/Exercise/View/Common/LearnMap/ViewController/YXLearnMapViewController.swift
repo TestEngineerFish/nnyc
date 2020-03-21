@@ -124,12 +124,12 @@ class YXLearnMapViewController: UIViewController {
                 YXComAlertView.show(.common, in: kWindow, info: "提示", content: content, firstBlock: { (obj) in
                     self.learnUnit(button.tag)
                     button.isEnabled = false
-                    DDLogInfo("切换到" + currentUnitName + "单元学习")
+                    YXLog("切换到" + currentUnitName + "单元学习")
                 }, secondBlock: nil)
             } else {
                 self.learnUnit(button.tag)
                 button.isEnabled = false
-                DDLogInfo("切换到" + (selectedModel.unitName ?? "") + "单元学习")
+                YXLog("切换到" + (selectedModel.unitName ?? "") + "单元学习")
             }
         }
     }

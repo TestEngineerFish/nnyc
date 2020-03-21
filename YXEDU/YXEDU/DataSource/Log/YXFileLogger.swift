@@ -9,16 +9,23 @@
 import Foundation
 import CocoaLumberjack
 
-enum YXFolderNameType: String {
-    case request = "15"
-    case action  = "100"
+enum YXFolderNameType: Int {
+    case request = 1
+    case action  = 2
 }
 
 class YXFileLogger: DDFileLogger {
     
-    init(name: YXFolderNameType) {
-        let logsDirectory  = DDFileLogger().logFileManager.logsDirectory + "/" + name.rawValue
+    init(type: YXFolderNameType) {
+        let logsDirectory  = DDFileLogger().logFileManager.logsDirectory + "/\(type.rawValue)"
         let logFileManager = DDLogFileManagerDefault(logsDirectory: logsDirectory)
         super.init(logFileManager: logFileManager, completionQueue: nil)
+        let logFormatter = YXContextWhitelistFilterLogFormatter()
+        if type == .action {
+            logFormatter?.add(toWhitelist: type.rawValue)
+        } else {
+            logFormatter?.add(toWhitelist: type.rawValue)
+        }
+        self.logFormatter = logFormatter
     }
 }

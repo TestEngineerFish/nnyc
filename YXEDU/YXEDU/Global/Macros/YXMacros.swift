@@ -177,3 +177,13 @@ public let newTabBar_Height: CGFloat = iPhoneXLater ? 85.0 : 51.0
 public let bottom_Home_Safe_Area_Height: CGFloat = {
     return iPhoneXLater ? 34.0 : 0.0
 }()
+
+/// 记录普通操作日志
+public func YXLog(_ message: String) {
+    YXOCLog.eventLog(message)
+}
+ 
+/// 记录网络请求日志
+public func YXRequestLog(_ message: String, level: DDLogLevel = .info) {
+    YXOCLog.request(message, level: level)
+}
