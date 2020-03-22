@@ -39,10 +39,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             return
         }
         YXLog("====开始主流程的学习====")
-        
+        YXLog(String(format: "当前学习词书名：%@, 词书ID：%ld,当前学习单元：%@，单元ID：%ld", self.homeModel.bookName ?? "--", self.homeModel?.bookId ?? -1, self.homeModel.unitName ?? "--", self.homeModel?.unitId ?? -1)
+
         if self.countOfWaitForStudyWords.text == "0" {
             guard let homeData = self.homeModel else { return }
-            YXLog("当前学习词书：", homeData.bookName ?? "--", "当前学习单元：", homeData.unitName ?? "--")
             let alertView = YXAlertView(type: .normal)
             if homeData.isLastUnit == 1 {
                 YXLog("当前词书\(homeData.bookName ?? "")已背完啦")

@@ -28,6 +28,7 @@ class YXLogManager: NSObject {
             }
             self.deleteZip()
             self.deleteFile()
+            self.addInfo()
         }) { (error) in
             if showToast {
                 YXUtils.showHUD(kWindow, title: "上传失败，请稍后再试")
