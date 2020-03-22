@@ -13,8 +13,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     private var temporaryUserModel: YXUserModel_Old?
     
     private var badgeLists: [YXBadgeListModel] = []
-    private var badges: [YXBadgeModel] = []
-    private var bindInfo: [String] = ["", "", ""]
+    private var badges: [YXBadgeModel]         = []
+    private var bindInfo: [String]             = ["", "", ""]
     
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -41,10 +41,6 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.performSegue(withIdentifier: "Edit", sender: self)
     }
     
-    @IBAction func tapBadge(_ sender: UIButton) {
-        self.pushBadgeListVC()
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -55,8 +51,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func bindProperty() {
-        self.collectionLeftConsraint.constant  = AdaptSize(19)
-        self.collectionRightConsraint.constant = AdaptSize(39)
+        self.collectionLeftConsraint.constant  = AdaptSize(22)
+
         customNavigationBar?.isHidden          = true
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
@@ -363,7 +359,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return badges.count
+        return badges.count > 3 ? 3 : badges.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -401,8 +397,8 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let personalBindModel = YXPersonalBindModel()
         personalBindModel.bind_pf = userInfo["platfrom"] as? String
-        personalBindModel.code = userInfo["token"] as? String
-        personalBindModel.openid = (userInfo["openID"] as? String == nil) ? "" : userInfo["openID"] as? String
+        personalBindModel.code    = userInfo["token"] as? String
+        personalBindModel.openid  = (userInfo["openID"] as? String == nil) ? "" : userInfo["openID"] as? String
         
         YXPersonalViewModel().bindSO(personalBindModel) { (response, isSuccess) in
             guard isSuccess, let _ = response else { return }

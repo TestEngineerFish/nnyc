@@ -10,8 +10,8 @@ import Foundation
 import CocoaLumberjack
 import ZipArchive
 
-class YXLogManager: NSObject, DDLogFormatter {
-    
+class YXLogManager: NSObject {
+
     @objc static let share = YXLogManager()
 
     // MARK: ==== Request ====
