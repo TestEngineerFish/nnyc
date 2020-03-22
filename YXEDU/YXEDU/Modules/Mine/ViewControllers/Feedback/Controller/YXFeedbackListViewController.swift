@@ -45,7 +45,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
     /// 获得反馈回复内容
     private func requestFeedbackReply() {
         let request = YXFeedbackRequest.feedbackReply
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXFeedbackReplyModel>.self, request: request, success: {  [weak self] (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXFeedbackReplyModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let modelList = response.dataArray else {
                 return
             }
@@ -54,7 +54,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
             self.tableView.reloadData()
             self.reportReply()
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
     }
     
@@ -76,7 +76,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
                 YXBadgeManager.share.updateFeedbackReplyBadge()
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
     }
     

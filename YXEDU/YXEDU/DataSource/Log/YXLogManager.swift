@@ -11,7 +11,7 @@ import CocoaLumberjack
 import ZipArchive
 
 class YXLogManager: NSObject, DDLogFormatter {
-
+    
     @objc static let share = YXLogManager()
 
     // MARK: ==== Request ====
@@ -26,7 +26,13 @@ class YXLogManager: NSObject, DDLogFormatter {
             if showToast {
                 YXUtils.showHUD(kWindow, title: "上传完成")
             }
-        }, fail: nil)
+            self.deleteZip()
+            self.deleteFile()
+        }) { (error) in
+            if showToast {
+                YXUtils.showHUD(kWindow, title: "上传失败，请稍后再试")
+            }
+        }
     }
 
     // MARK: ==== Event ====
@@ -58,53 +64,116 @@ class YXLogManager: NSObject, DDLogFormatter {
 
     ///  压缩日志文件
     private func zipLogFile() -> Data? {
-        let fileLogger = DDFileLogger()
-        let ziper      = ZipArchive()
+        let fileLogger    = DDFileLogger()
+        let requestLogger = YXOCLog.shared()?.loggerFoRequest
+        let eventLogger   = YXOCLog.shared()?.loggerForEvent
+        
+        let logZiper      = ZipArchive()
+        let requestZiper  = ZipArchive()
+        let eventZiper    = ZipArchive()
 
-        let logPathArray     = fileLogger.logFileManager.sortedLogFileNames
         let logDirectoryPath = fileLogger.logFileManager.logsDirectory
-        let logZipPath       = logDirectoryPath + "/feadbackLog.zip"
+        let logZipPath       = logDirectoryPath + "/Log.zip"
+        
+        let requestLogList   = requestLogger?.logFileManager.sortedLogFileNames
+        let requestDirectory = requestLogger?.logFileManager.logsDirectory ?? ""
+        let requestZipPath   = requestDirectory + "/Request.zip"
+        let eventLogList     = eventLogger?.logFileManager.sortedLogFileNames
+        let eventDirectory   = eventLogger?.logFileManager.logsDirectory ?? ""
+        let eventZipPath     = eventDirectory + "/Event.zip"
+        
         YXLog("++++++++++++++++")
         YXLog(logDirectoryPath)
-        if ziper.createZipFile2(logZipPath) {
-            logPathArray.forEach { (path) in
-                ziper.addFile(toZip: logDirectoryPath + "/" + path, newname: path)
-            }
-            YXLog("创建Zip成功")
+        if requestZiper.createZipFile2(requestZipPath) {
+            requestLogList?.forEach({ (name) in
+                requestZiper.addFile(toZip: requestDirectory + "/" + name, newname: name)
+            })
+            YXLog("创建Request Zip成功")
         } else {
-            YXLog("创建Zip失败")
+            YXLog("创建Request Zip失败")
         }
-        ziper.closeZipFile2()
-        guard let fileData = try? Data(contentsOf: URL(fileURLWithPath: logZipPath)) else {
+        requestZiper.closeZipFile2()
+        
+        if eventZiper.createZipFile2(eventZipPath) {
+            eventLogList?.forEach({ (name) in
+                eventZiper.addFile(toZip: eventDirectory + "/" + name, newname: name)
+            })
+            YXLog("创建Event Zip成功")
+        } else {
+            YXLog("创建Evnet Zip失败")
+        }
+        eventZiper.closeZipFile2()
+        
+        guard let requestZipData = try? Data(contentsOf: URL(fileURLWithPath: requestZipPath)), let eventZipData = try? Data(contentsOf: URL(fileURLWithPath: eventZipPath)) else {
             return nil
         }
-        return fileData
+        if logZiper.createZipFile2(logZipPath) {
+            logZiper.addData(toZip: requestZipData, fileAttributes: [:], newname: "Request.zip")
+            logZiper.addData(toZip: eventZipData, fileAttributes: [:], newname: "Event.zip")
+            YXLog("创建Log Zip成功")
+        } else {
+            YXLog("创建Log Zip失败")
+        }
+        logZiper.closeZipFile2()
+        guard let logZipData = try? Data(contentsOf: URL(fileURLWithPath: logZipPath))else {
+            return nil
+        }
+        return logZipData
     }
 
     /// 删除Zip包
     private func deleteZip() {
-        let fileLogger       = DDFileLogger()
-        let logDirectoryPath = fileLogger.logFileManager.logsDirectory
-        let logZipPath       = logDirectoryPath + "/feadbackLog.zip"
-        if ((try? FileManager.default.removeItem(atPath: logZipPath)) != nil) {
-            YXLog("删除Zip包成功")
+        let fileLogger    = DDFileLogger()
+        let requestLogger = YXOCLog.shared()?.loggerFoRequest
+        let eventLogger   = YXOCLog.shared()?.loggerForEvent
+        
+        let logDirectory     = fileLogger.logFileManager.logsDirectory
+        let requestDirectory = requestLogger?.logFileManager.logsDirectory ?? ""
+        let eventDirectory   = eventLogger?.logFileManager.logsDirectory ?? ""
+        
+        let requestZipPath   = requestDirectory + "/Request.zip"
+        let eventZipPath     = eventDirectory + "/Event.zip"
+        let logZipPath       = logDirectory + "/Log.zip"
+        if ((try? FileManager.default.removeItem(atPath: requestZipPath)) != nil) {
+            YXLog("删除Request Zip包成功")
         } else {
-            YXLog("删除Zip包失败")
+            YXLog("删除Reqeust Zip包失败")
+        }
+        
+        if ((try? FileManager.default.removeItem(atPath: eventZipPath)) != nil) {
+            YXLog("删除Event Zip包成功")
+        } else {
+            YXLog("删除Evnet Zip包失败")
+        }
+        
+        if ((try? FileManager.default.removeItem(atPath: logZipPath)) != nil) {
+            YXLog("删除Log Zip包成功")
+        } else {
+            YXLog("删除Log Zip包失败")
         }
     }
     
     /// 删除日志文件
     private func deleteFile() {
         let requestLogger = YXOCLog.shared()?.loggerFoRequest
-        let eventLogger   = YXOCLog.shared()?.loggerFoRequest
+        let eventLogger   = YXOCLog.shared()?.loggerForEvent
         
         let requestLogFileList = requestLogger?.logFileManager.sortedLogFilePaths ?? []
         let eventLogFileList   = eventLogger?.logFileManager.sortedLogFilePaths ?? []
         
-    }
-
-    // MARK: ==== DDLogFormatter ====
-    func format(message logMessage: DDLogMessage) -> String? {
-        return String(format: "文件名：%@， 函数名：%@，进程ID：%@，消息内容：%@", logMessage.fileName, logMessage.function ?? "", logMessage.threadID, logMessage.message)
+        requestLogFileList.forEach { (path) in
+            if ((try? FileManager.default.removeItem(atPath: path)) != nil) {
+                YXLog("删除Request日志成功")
+            } else {
+                YXLog("删除Request日志失败")
+            }
+        }
+        eventLogFileList.forEach { (path) in
+            if ((try? FileManager.default.removeItem(atPath: path)) != nil) {
+                YXLog("删除Even日志成功")
+            } else {
+                YXLog("删除Event日志失败")
+            }
+        }
     }
 }

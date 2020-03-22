@@ -23,12 +23,16 @@ class YXWordDetailView: UIView {
             let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(word.wordId ?? 0),\"is\":\(word.isComplexWord ?? 0)}]")
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
-            }, fail: nil)
+            }) { error in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
         } else {
             let request = YXWordListRequest.collectWord(wordId: word.wordId ?? 0, isComplexWord: word.isComplexWord ?? 0)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
-            }, fail: nil)
+            }) { error in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
         }
     }
     
@@ -70,6 +74,8 @@ class YXWordDetailView: UIView {
             } else {
                 self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
             }
-        }, fail: nil)
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
 }

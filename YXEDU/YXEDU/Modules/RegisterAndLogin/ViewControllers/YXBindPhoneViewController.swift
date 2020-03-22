@@ -166,7 +166,9 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
                     }
                 }
             }
-        }, fail: nil)
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

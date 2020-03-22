@@ -106,7 +106,7 @@ class YXBadgeDetailView: YXTopWindowView {
                 guard let model = response.data else { return }
                 print("徽章显示，上报状态: ", model.state == 1)
             }) { error in
-                print("❌❌❌\(error)")
+                YXUtils.showHUD(kWindow, title: error.message)
             }
         }
         

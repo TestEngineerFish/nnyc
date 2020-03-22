@@ -157,7 +157,9 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
                     guard let self = self, isSuccess else { return }
                     self.navigationController?.popToRootViewController(animated: true)
                 }
-            }, fail: nil)
+            }) { error in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
         }
         
         seleceUnitView.show()

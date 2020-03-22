@@ -43,7 +43,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
             self.customNavigationBar?.title = self.challengeModel?.title
             self.tableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
     }
 

@@ -88,6 +88,7 @@ class YXExerciseDataManager: NSObject {
             self.processExerciseData(result: response.data)
             completion(true, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion(false, error.message)
         }
     }
@@ -237,6 +238,7 @@ class YXExerciseDataManager: NSObject {
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
             completion?(response.dataArray != nil, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(false, error.message)
         }
     }

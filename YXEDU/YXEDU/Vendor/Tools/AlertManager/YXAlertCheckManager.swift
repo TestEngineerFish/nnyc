@@ -107,6 +107,7 @@ class YXAlertCheckManager {
                 completion?()
             }
         }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?()
         }
         
@@ -135,6 +136,7 @@ class YXAlertCheckManager {
             }
             completion?()
         }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?()
         }
     }

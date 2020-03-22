@@ -113,7 +113,9 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             }
             self.model = _model
             self.segmentControllerView.reloadData()
-        }, fail: nil)
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
 
     private func requestWordsList(_ bookId: Int, type: Int) {
@@ -130,7 +132,9 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                     self.segmentControllerView.contentScrollView.reloadItems(at: [IndexPath(row: row, section: 0)])
                 }
             }
-        }, fail: nil)
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
 
     private func requestMakeReviewPlan(_ name: String) {
@@ -152,7 +156,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                 alertView.shouldOnlyShowOneButton = true
                 alertView.show()
             } else {
-                YXUtils.showHUD(self.view, title: "\(error)")
+                YXUtils.showHUD(self.view, title: error.message)
             }
         }
     }

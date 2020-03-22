@@ -225,7 +225,9 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                     }
                 }
             }
-        }, fail: nil)
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
     
     /// 手机号登陆
@@ -276,7 +278,9 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             }, seq: Int(Date().timeIntervalSince1970))
                 
             YXAlertQueueManager.default.restart()
-        }, fail: nil)
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

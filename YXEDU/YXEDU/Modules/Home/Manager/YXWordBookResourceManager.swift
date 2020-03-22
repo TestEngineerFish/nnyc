@@ -44,7 +44,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 closure?(false)
             }
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
             closure?(false)
         }
     }
@@ -105,7 +105,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 self.finishBlock?()
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: "\(error.message)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     

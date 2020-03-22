@@ -68,7 +68,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
                 self.requestPreviousResult()
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
     }
 
@@ -81,17 +81,15 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
                 self.showGoldLackAlert()
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
     }
 
     /// 上报已查看上期排名
     private func requestReportShowPreviousResult(_ version: Int) {
         let request = YXChallengeRequest.showPrevious(version: version)
-        YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
-            print("获得上期排行积分")
-        }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+        YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: nil) { (error) in
+            YXUtils.showHUD(self.view, title: error.message)
         }
     }
 
@@ -111,7 +109,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             }
             self.requestReportShowPreviousResult(previousRankVersion)
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
     }
 

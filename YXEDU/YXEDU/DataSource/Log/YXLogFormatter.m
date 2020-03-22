@@ -23,12 +23,12 @@
     }
     
     NSDate *date         = logMessage->_timestamp;
-    NSTimeZone *zone     = [NSTimeZone systemTimeZone];
-    NSTimeInterval time  = [zone secondsFromGMTForDate:date];
-    NSDate *nowDate      = [date dateByAddingTimeInterval:time];
-    NSString *yndHmsTime = [nowDate stringWithFormat:NSDate.ymdHmsFormat];
+//    NSTimeZone *zone     = [NSTimeZone systemTimeZone];
+//    NSTimeInterval time  = [zone secondsFromGMTForDate:date];
+//    NSDate *nowDate      = [date dateByAddingTimeInterval:time];
+    NSString *newDate = [date stringWithFormat:NSDate.ymdHmsFormat];
     
-    NSString *message = [NSString stringWithFormat:@"%@ | %@", yndHmsTime, logMessage->_message];
+    NSString *message = [NSString stringWithFormat:@"%@ | %@", newDate, logMessage->_message];
     DDLogMessage *newLogMessage = [[DDLogMessage alloc] initWithMessage:message level:logMessage.level flag:logMessage.flag context:logMessage.context file:logMessage.file function:logMessage.function line:logMessage.line tag:logMessage.tag options:logMessage.options timestamp:logMessage.timestamp];
     return [super formatLogMessage:newLogMessage];
 }

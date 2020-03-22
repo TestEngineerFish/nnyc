@@ -204,7 +204,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.collectionView.reloadData()
             
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     

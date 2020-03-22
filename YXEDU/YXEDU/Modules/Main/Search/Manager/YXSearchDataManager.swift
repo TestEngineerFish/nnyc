@@ -16,6 +16,7 @@ struct YXSearchDataManager {
         YYNetworkService.default.request(YYStructResponse<YXSearchWordListModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, error.message)
         }
     }

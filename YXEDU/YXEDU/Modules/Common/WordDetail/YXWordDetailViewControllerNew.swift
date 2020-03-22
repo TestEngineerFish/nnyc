@@ -107,6 +107,7 @@ class YXWordDetailViewControllerNew: UIViewController {
             }
         }) { error in
             YXLog("查询单词:\(self.wordId)收藏状态失败， error:\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
@@ -122,6 +123,7 @@ class YXWordDetailViewControllerNew: UIViewController {
             self.view.addSubview(self.wordDetailView)
         }) { error in
             YXLog("查询单词:\(self.wordId)详情失败， error:\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
@@ -147,6 +149,7 @@ class YXWordDetailViewControllerNew: UIViewController {
                 UIView.toast("已收藏")
             }) { error in
                 YXLog("收藏单词:\(self.wordId)失败， error:\(error)")
+                YXUtils.showHUD(kWindow, title: error.message)
             }
         }
     }

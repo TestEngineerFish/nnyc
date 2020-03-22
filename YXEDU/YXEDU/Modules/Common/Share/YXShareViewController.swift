@@ -135,7 +135,7 @@ class YXShareViewController: YXViewController {
             }
             
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
         
         // 设置分享数据
@@ -243,7 +243,7 @@ class YXShareViewController: YXViewController {
                 YXLog("打卡分享失败")
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
     }
     

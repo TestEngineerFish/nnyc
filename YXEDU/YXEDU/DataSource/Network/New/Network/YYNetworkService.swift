@@ -86,7 +86,6 @@ struct YYNetworkService {
         return self.httpRequest(type, request: request, success: { (response, statusCode) in
             self.handleStatusCodeLogicResponseObject(response, statusCode: statusCode, request: request, success: success, fail: fail)
         }) { (error) -> Void? in
-            YXUtils.showHUD(kWindow, title: error.message)
             fail?(error as NSError)
             return nil
         }

@@ -102,7 +102,9 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
-            }, fail: nil)
+            }) { error in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
             break
         }
      }

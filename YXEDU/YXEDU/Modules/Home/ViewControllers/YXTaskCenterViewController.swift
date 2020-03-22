@@ -38,9 +38,8 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             self.reloadDailyData()
             
             YXToastView.share.showCoinView(self.dailyDatas[(self.taskCenterData.today ?? 1) - 1].integral ?? 0)
-            
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
@@ -58,20 +57,17 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: punchDataRequest, success: { (response) in
             self.taskCenterData = response.data
             self.reloadDailyData()
-
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
         
         let taskListRequest = YXTaskCenterRequest.taskList
         YYNetworkService.default.request(YYStructDataArrayResponse<YXTaskListModel>.self, request: taskListRequest, success: { (response) in
             self.taskLists = response.dataArray ?? []
             self.taskTableViewHeight.constant = CGFloat(self.taskLists.count * 172)
-
             self.taskTableView.reloadData()
-
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
@@ -370,7 +366,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                         }
 
                     }) { error in
-                        print("❌❌❌\(error)")
+                        YXUtils.showHUD(kWindow, title: error.message)
                     }
                     break
                     

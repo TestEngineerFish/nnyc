@@ -51,7 +51,9 @@ class YXAddBookGuideViewController: UIViewController {
                 guard let self = self, isSuccess else { return }
                 self.navigationController?.popToRootViewController(animated: true)
             }
-        }, fail: nil)
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
     
     override func viewDidLoad() {

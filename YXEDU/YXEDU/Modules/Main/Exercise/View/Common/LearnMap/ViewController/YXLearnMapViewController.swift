@@ -144,7 +144,7 @@ class YXLearnMapViewController: UIViewController {
             self.mapModelList = response.dataArray
             self.createMapView()
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 
@@ -166,7 +166,7 @@ class YXLearnMapViewController: UIViewController {
                 YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: false)
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 

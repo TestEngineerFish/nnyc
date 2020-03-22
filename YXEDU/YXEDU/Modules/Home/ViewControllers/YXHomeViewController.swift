@@ -181,7 +181,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
             YXUserModel.default.reviewNameType = userInfomation.reviewNameType
-        }, fail: nil)
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
     
     // MARK: ---- Tools ----
@@ -347,7 +349,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                     } else if let report = response.data, let description = report.description {
                         self.view.toast(description)
                     }
-                }, fail: nil)
+                }) { error in
+                    YXUtils.showHUD(kWindow, title: error.message)
+                }
                 break
             case 3:
                 tabBarController?.selectedIndex = 2
