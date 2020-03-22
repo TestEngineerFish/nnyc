@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @interface YXOCLog : NSObject
+
+@property (nonatomic, strong) DDFileLogger *loggerFoRequest;
+@property (nonatomic, strong) DDFileLogger *loggerForEvent;
+
 + (instancetype)shared;
-
--(NSString *)latestLog;
-
+// 启动日志
 - (void)launch;
-+(void)requestLog:(NSString *)msg level:(DDLogLevel)level;
-+(void)eventLog:(NSString *)msg;
+// 提供给Swift函数调用
+- (void)requestLog:(NSString *)msg;
+- (void)eventLog:(NSString *)msg;
 
 @end

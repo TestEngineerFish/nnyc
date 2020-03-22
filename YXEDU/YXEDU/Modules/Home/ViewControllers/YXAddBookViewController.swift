@@ -53,14 +53,13 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 guard let jsonString = String(data: jsonData, encoding: .utf8), let grades = [YXGradeWordBookListModel](JSONString: jsonString) else { return }
-                self.grades = grades
+                self.grades       = grades
                 self.filterGrades = self.grades
                 
                 self.createGradeSelectView()
                 self.tableView.reloadData()
-                
             } catch {
-                print(error)
+                YXLog("获取书列表，error:", error.localizedDescription)
             }
         }
     }
@@ -152,14 +151,13 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             guard let unitId = unitId else { return }
 
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                YXWordBookResourceManager.shared.contrastBookData(by: bookId) { (isSuccess) in
-                    guard isSuccess else { return }
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self else { return }
+                YXWordBookResourceManager.shared.contrastBookData(by: bookId) { [weak self] (isSuccess) in
+                    guard let self = self, isSuccess else { return }
                     self.navigationController?.popToRootViewController(animated: true)
                 }
-            }) { error in
-                print("❌❌❌\(error)")
-            }
+            }, fail: nil)
         }
         
         seleceUnitView.show()

@@ -19,7 +19,7 @@ class YYMediaCache: NSObject {
         do {
             try  KTVHTTPCache.proxyStart()
         } catch let error {
-            print(error)
+            YXLog("YYMediaCache 初始化 Erro：", error)
         }
         
     }

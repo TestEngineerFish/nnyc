@@ -313,7 +313,6 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
             return true
         }
         let point = gestureRecognizer.location(in: self.tableView)
-        print(point)
         if point.x <= AdaptSize(56) {
             return true
         } else {

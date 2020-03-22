@@ -12,17 +12,13 @@
 #import "DDLegacyMacros.h"
 #import "YXLogFormatter.h"
 
-@interface YXOCLog ()
-@property (nonatomic, strong)  DDFileLogger *fileLogger;
-@end
-
 @implementation YXOCLog
 
-+(void)requestLog:(NSString *)msg level:(DDLogLevel)level {
+- (void)requestLog:(NSString *)msg {
     YXRequestLog(@"%@", msg);
 }
 
-+ (void)eventLog:(NSString *)msg {
+- (void)eventLog:(NSString *)msg {
     YXEventLog(@"%@", msg);
 }
 
@@ -48,43 +44,28 @@
 }
 
 - (void)launch {
-    [DDLog addLogger:[DDOSLogger sharedInstance]];
-    
     NSString *logsDirectory = [[DDFileLogger alloc] init].logFileManager.logsDirectory;
-
+    // 网络请求
     DDLogFileManagerDefault *fileManagerForRequest = [[DDLogFileManagerDefault alloc] initWithLogsDirectory:[logsDirectory stringByAppendingPathComponent:@"Request"]];
-    DDFileLogger *loggerFoRequest = [[DDFileLogger alloc] initWithLogFileManager:fileManagerForRequest];
+    self.loggerFoRequest = [[DDFileLogger alloc] initWithLogFileManager:fileManagerForRequest];
     YXLogFormatter *formatterForRequest = [[YXLogFormatter alloc] init];
     [formatterForRequest addToWhitelist:LOG_CONTEXT_REQUEST];
-    [loggerFoRequest setLogFormatter:formatterForRequest];
-    loggerFoRequest.maximumFileSize = 1024 * 1024 * 1;
-    loggerFoRequest.logFileManager.maximumNumberOfLogFiles = 7;
-    [DDLog addLogger:loggerFoRequest withLevel:DDLogLevelVerbose | LOG_FLAG_REQUEST];
-    
+    [self.loggerFoRequest setLogFormatter:formatterForRequest];
+    self.loggerFoRequest.maximumFileSize = 1024 * 1024 * 1;
+    self.loggerFoRequest.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:self.loggerFoRequest withLevel:DDLogLevelVerbose | LOG_FLAG_REQUEST];
+    // 普通日志
     DDLogFileManagerDefault *fileManagerForEvent = [[DDLogFileManagerDefault alloc] initWithLogsDirectory:[logsDirectory stringByAppendingPathComponent:@"Event"]];
-    DDFileLogger *loggerForEvent = [[DDFileLogger alloc] initWithLogFileManager:fileManagerForEvent];
+    self.loggerForEvent = [[DDFileLogger alloc] initWithLogFileManager:fileManagerForEvent];
     YXLogFormatter *formatterForEvent = [[YXLogFormatter alloc] init];
     [formatterForEvent addToWhitelist:LOG_CONTEXT_EVENT];
-    [loggerForEvent setLogFormatter:formatterForEvent];
-    loggerFoRequest.maximumFileSize = 1024 * 1024 * 1;
-     loggerFoRequest.logFileManager.maximumNumberOfLogFiles = 7;
-    [DDLog addLogger:loggerForEvent withLevel:DDLogLevelVerbose | LOG_FLAG_EVENT];
+    [self.loggerForEvent setLogFormatter:formatterForEvent];
+    self.loggerForEvent.maximumFileSize = 1024 * 1024 * 1;
+    self.loggerForEvent.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:self.loggerForEvent withLevel:DDLogLevelVerbose | LOG_FLAG_EVENT];
+    // 控制台输出
+    [DDLog addLogger:[DDOSLogger sharedInstance] withLevel:DDLogLevelInfo | LOG_FLAG_EVENT];
 }
-
-- (NSString *)log {
-    return [NSString stringWithContentsOfFile:_fileLogger.currentLogFileInfo.filePath encoding:NSUTF8StringEncoding error:0];
-}
-
--(NSString *)latestLog {
-    NSString* log=[self log];
-    NSInteger maxUploadLogLength=10*1024;
-    if (log.length>maxUploadLogLength) {
-        return [log substringFromIndex:log.length-maxUploadLogLength];
-    }else{
-        return log;
-    }
-}
-
 
 
 @end

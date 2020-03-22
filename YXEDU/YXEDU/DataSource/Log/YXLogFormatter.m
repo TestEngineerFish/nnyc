@@ -11,7 +11,7 @@
 @implementation YXLogFormatter
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    [super formatLogMessage:logMessage];
+    
     NSString *logLevel;
     switch (logMessage->_flag) {
         case DDLogFlagError    : logLevel = @"❌Error";     break;
@@ -28,7 +28,7 @@
     NSDate *nowDate      = [date dateByAddingTimeInterval:time];
     NSString *yndHmsTime = [nowDate stringWithFormat:NSDate.ymdHmsFormat];
     
-    NSString *message = [NSString stringWithFormat:@"%@ | %@ | %@", yndHmsTime, logLevel, logMessage->_message];
+    NSString *message = [NSString stringWithFormat:@"%@ | %@", yndHmsTime, logMessage->_message];
     DDLogMessage *newLogMessage = [[DDLogMessage alloc] initWithMessage:message level:logMessage.level flag:logMessage.flag context:logMessage.context file:logMessage.file function:logMessage.function line:logMessage.line tag:logMessage.tag options:logMessage.options timestamp:logMessage.timestamp];
     return [super formatLogMessage:newLogMessage];
 }

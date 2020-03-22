@@ -204,7 +204,7 @@
         if var model = data.2 {
             model.dataType = dataType
 //            model.type = .lookExampleChooseImage
-//            DDLogInfo(String(format: "题目内容：%@", model.toJSONString() ?? ""))
+            YXRequestLog("题目内容：%@", model.toJSONString() ?? "--")
             // 新学隐藏提示
             let tipsHidden = (model.type == .newLearnPrimarySchool_Group || model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
             self.bottomView.tipsButton.isHidden  = tipsHidden

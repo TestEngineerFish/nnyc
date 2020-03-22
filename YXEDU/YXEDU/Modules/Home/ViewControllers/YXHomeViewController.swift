@@ -70,7 +70,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             
         } else {
             YYCache.set(Date(), forKey: "LastStoredDate")
-            DDLogInfo(String(format: "开始学习书(%ld),第(%ld)单元", self.homeModel?.bookId ?? 0, self.homeModel?.unitId ?? 0))
+            YXLog(String(format: "开始学习书(%ld),第(%ld)单元", self.homeModel?.bookId ?? 0, self.homeModel?.unitId ?? 0))
             let vc = YXExerciseViewController()
             vc.bookId = self.homeModel?.bookId
             vc.unitId = self.homeModel?.unitId
@@ -152,25 +152,24 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.countOfWaitForStudyWords.text = "\((self.homeModel.newWords ?? 0) + (self.homeModel.reviewWords ?? 0))"
                 self.progressBar.setProgress(Float(self.homeModel.unitProgress ?? 0), animated: true)
                 
-                self.learnedWordsCount = "\(self.homeModel.learnedWords ?? 0)"
+                self.learnedWordsCount   = "\(self.homeModel.learnedWords ?? 0)"
                 self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
-                self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
+                self.wrongWordsCount     = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
                 
                 YXWordBookResourceManager.shared.contrastBookData()
                 
                 self.initDataManager()
-                
             } catch {
-                print(error)
+                YXLog("获取主页基础数据失败：", error.localizedDescription)
             }
         }
     }
     
     private func checkUserState() {
         let request = YXRegisterAndLoginRequest.userInfomation
-        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
-            guard let userInfomation = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let userInfomation = response.data else { return }
 
             if userInfomation.didSelectBook == 0 {
                 self.performSegue(withIdentifier: "AddBookGuide", sender: self)
@@ -182,10 +181,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
             YXUserModel.default.reviewNameType = userInfomation.reviewNameType
-
-        }) { error in
-            print("❌❌❌\(error)")
-        }
+        }, fail: nil)
     }
     
     // MARK: ---- Tools ----
@@ -342,22 +338,17 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 
             case 2:
                 let request = YXHomeRequest.report
-                YYNetworkService.default.request(YYStructResponse<YXReportModel>.self, request: request, success: { (response) in
+                YYNetworkService.default.request(YYStructResponse<YXReportModel>.self, request: request, success: { [weak self] (response) in
+                    guard let self = self else { return }
                     if let report = response.data, let url = report.reportUrl, url.isEmpty == false {
                         let baseWebViewController = YXBaseWebViewController(link: url, title: "我的学习报告")
                         baseWebViewController?.hidesBottomBarWhenPushed = true
                         self.navigationController?.pushViewController(baseWebViewController!, animated: true)
-                        
                     } else if let report = response.data, let description = report.description {
                         self.view.toast(description)
                     }
-                    
-                }) { error in
-                    print("❌❌❌\(error)")
-                }
-                
+                }, fail: nil)
                 break
-                
             case 3:
                 tabBarController?.selectedIndex = 2
                 break

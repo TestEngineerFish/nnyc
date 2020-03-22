@@ -330,10 +330,10 @@ class YXExerciseDataManager: NSObject {
     }
     
     func printCurrentTurn() {
-        DDLogInfo(String(format: "第\(currentTurnIndex)轮数量：%ld", currentTurnArray.count))
+        YXLog(String(format: "第\(currentTurnIndex)轮数量：%ld", currentTurnArray.count))
         for e in self.currentTurnArray {
-            DDLogInfo(String(format: "id = %ld, word = %@", e.word?.wordId ?? 0, e.word?.word ?? ""))
-            DDLogInfo(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
+            YXLog(String(format: "id = %ld, word = %@", e.word?.wordId ?? 0, e.word?.word ?? ""))
+            YXLog(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
         }
     }
     func printStatus() {
@@ -343,9 +343,9 @@ class YXExerciseDataManager: NSObject {
             YXLog("\n========================\n")
             for (index, step) in word.exerciseSteps.enumerated() {
                 let e = step.first
-                DDLogInfo(String(format: "\t\tid = %ld, step = %ld, index = %ld", word.wordId, e?.step ?? 0, index + 1))
-                DDLogInfo(String(format: "id = %ld, word = %@", e?.word?.wordId ?? 0, e?.word?.word ?? 0))
-                DDLogInfo(String(format: "right = %ld, continue = %ld, finish = %ld", e?.isRight ?? -1, e?.isContinue ?? -1, e?.isFinish ?? -1))
+                YXLog(String(format: "\t\tid = %ld, step = %ld, index = %ld", word.wordId, e?.step ?? 0, index + 1))
+                YXLog(String(format: "id = %ld, word = %@", e?.word?.wordId ?? 0, e?.word?.word ?? 0))
+                YXLog(String(format: "right = %ld, continue = %ld, finish = %ld", e?.isRight ?? -1, e?.isContinue ?? -1, e?.isFinish ?? -1))
                 YXLog("--------------------")
             }
             

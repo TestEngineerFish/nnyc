@@ -26,12 +26,7 @@ class YXLogManager: NSObject, DDLogFormatter {
             if showToast {
                 YXUtils.showHUD(kWindow, title: "上传完成")
             }
-            self.deleteZip()
-        }) { (error) in
-            if showToast {
-                YXUtils.showHUD(kWindow, title: "上传失败，请稍后再试")
-            }
-        }
+        }, fail: nil)
     }
 
     // MARK: ==== Event ====
@@ -69,8 +64,8 @@ class YXLogManager: NSObject, DDLogFormatter {
         let logPathArray     = fileLogger.logFileManager.sortedLogFileNames
         let logDirectoryPath = fileLogger.logFileManager.logsDirectory
         let logZipPath       = logDirectoryPath + "/feadbackLog.zip"
-        print("++++++++++++++++")
-        print(logDirectoryPath)
+        YXLog("++++++++++++++++")
+        YXLog(logDirectoryPath)
         if ziper.createZipFile2(logZipPath) {
             logPathArray.forEach { (path) in
                 ziper.addFile(toZip: logDirectoryPath + "/" + path, newname: path)
@@ -96,6 +91,16 @@ class YXLogManager: NSObject, DDLogFormatter {
         } else {
             YXLog("删除Zip包失败")
         }
+    }
+    
+    /// 删除日志文件
+    private func deleteFile() {
+        let requestLogger = YXOCLog.shared()?.loggerFoRequest
+        let eventLogger   = YXOCLog.shared()?.loggerFoRequest
+        
+        let requestLogFileList = requestLogger?.logFileManager.sortedLogFilePaths ?? []
+        let eventLogFileList   = eventLogger?.logFileManager.sortedLogFilePaths ?? []
+        
     }
 
     // MARK: ==== DDLogFormatter ====

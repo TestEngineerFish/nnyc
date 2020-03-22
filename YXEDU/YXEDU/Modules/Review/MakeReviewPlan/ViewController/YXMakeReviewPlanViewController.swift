@@ -101,8 +101,8 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     private func requestBooksList() {
         let request = YXReviewRequest.reviewBookList
-        YYNetworkService.default.request(YYStructResponse<YXReviewBookModel>.self, request: request, success: { (response) in
-            guard let _model = response.data else {
+        YYNetworkService.default.request(YYStructResponse<YXReviewBookModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let _model = response.data else {
                 return
             }
             for (index, bookModel) in _model.list.enumerated() {
@@ -113,15 +113,13 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             }
             self.model = _model
             self.segmentControllerView.reloadData()
-        }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
-        }
+        }, fail: nil)
     }
 
     private func requestWordsList(_ bookId: Int, type: Int) {
         let request = YXReviewRequest.reviewWordList(bookId: bookId, bookType: type)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
-            guard let unitModelList = response.dataArray else {
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let unitModelList = response.dataArray else {
                 return
             }
             self.model?.modelDict.updateValue(unitModelList, forKey: "\(bookId)")
@@ -132,9 +130,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                     self.segmentControllerView.contentScrollView.reloadItems(at: [IndexPath(row: row, section: 0)])
                 }
             }
-        }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
-        }
+        }, fail: nil)
     }
 
     private func requestMakeReviewPlan(_ name: String) {

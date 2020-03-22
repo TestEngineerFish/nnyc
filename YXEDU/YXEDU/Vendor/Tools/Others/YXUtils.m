@@ -152,12 +152,12 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     // Configure for text only and offset down
     hud.mode = MBProgressHUDModeText;
-    hud.detailsLabel.text = text;
-    hud.detailsLabel.font = [UIFont systemFontOfSize:14.0f];
-    hud.detailsLabel.textColor = [UIColor whiteColor];
-    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    hud.detailsLabel.text         = text;
+    hud.detailsLabel.font         = [UIFont systemFontOfSize:14.0f];
+    hud.detailsLabel.textColor    = [UIColor whiteColor];
+    hud.bezelView.style           = MBProgressHUDBackgroundStyleSolidColor;
     hud.bezelView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-    hud.margin = 10.f;
+    hud.margin                    = 10.f;
     hud.removeFromSuperViewOnHide = YES;
     [hud hideAnimated:YES afterDelay:1];
 }

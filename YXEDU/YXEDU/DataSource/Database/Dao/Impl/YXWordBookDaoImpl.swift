@@ -174,11 +174,9 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
     
     func selectWord(wordId: Int) -> YXWordModel? {
-//        print("--------------  bookId", bookId, "------------- wordId", wordId )
         
         let sql = YYSQLManager.WordBookSQL.selectWord.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [wordId]) else {
-//            DDLogError("selectRecordByImageID failed")
             return nil
         }
         
@@ -190,11 +188,10 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
     
     func selectWord(bookId: Int, wordId: Int) -> YXWordModel? {
-        print("--------------  bookId", bookId, "------------- wordId", wordId )
+        YXLog("查找--------------  bookId", bookId, "------------- wordId", wordId )
         
         let sql = YYSQLManager.WordBookSQL.selectWordByBookIdAndWordId.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [bookId, wordId]) else {
-//            DDLogError("selectRecordByImageID failed")
             return nil
         }
         
@@ -210,38 +207,37 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         var word = YXWordModel()
         
         let partOfSpeechAndMeaningsDataString: String! = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]")
-        let deformationsDataString: String! = (result.string(forColumn: "deformations") ?? "[]")
-        let examplessDatStringa: String! = (result.string(forColumn: "examples") ?? "[]")
-        let fixedMatchsDataString: String! = (result.string(forColumn: "fixedMatchs") ?? "[]")
-        let commonPhrasesDataString: String! = (result.string(forColumn: "commonPhrases") ?? "[]")
-        let wordAnalysisDataString: String! = (result.string(forColumn: "wordAnalysis") ?? "[]")
+        let deformationsDataString: String!    = (result.string(forColumn: "deformations") ?? "[]")
+        let examplessDatStringa: String!       = (result.string(forColumn: "examples") ?? "[]")
+        let fixedMatchsDataString: String!     = (result.string(forColumn: "fixedMatchs") ?? "[]")
+        let commonPhrasesDataString: String!   = (result.string(forColumn: "commonPhrases") ?? "[]")
+        let wordAnalysisDataString: String!    = (result.string(forColumn: "wordAnalysis") ?? "[]")
         let detailedSyntaxsDataString: String! = (result.string(forColumn: "detailedSyntaxs") ?? "[]")
         let synonymsData: Data! = (result.string(forColumn: "synonyms") ?? "[]").data(using: .utf8)!
         let antonymsData: Data! = (result.string(forColumn: "antonyms") ?? "[]").data(using: .utf8)!
         
-        word.wordId = Int(result.int(forColumn: "wordId"))
-        word.word = result.string(forColumn: "word")
-//        word.word = "from.&*@#-$to ..."
+        word.wordId                  = Int(result.int(forColumn: "wordId"))
+        word.word                    = result.string(forColumn: "word")
         word.partOfSpeechAndMeanings = [YXWordPartOfSpeechAndMeaningModel](JSONString: partOfSpeechAndMeaningsDataString)
-        word.imageUrl = result.string(forColumn: "imageUrl")
-        word.americanPhoneticSymbol = result.string(forColumn: "americanPhoneticSymbol")
-        word.englishPhoneticSymbol = result.string(forColumn: "englishPhoneticSymbol")
-        word.americanPronunciation = result.string(forColumn: "americanPronunciation")
-        word.englishPronunciation = result.string(forColumn: "englishPronunciation")
-        word.deformations = [YXWordDeformationModel](JSONString: deformationsDataString)
-        word.examples = [YXWordExampleModel](JSONString: examplessDatStringa)
-        word.fixedMatchs = [YXWordFixedMatchModel](JSONString: fixedMatchsDataString)
-        word.commonPhrases = [YXWordCommonPhrasesModel](JSONString: commonPhrasesDataString)
-        word.wordAnalysis = [YXWordAnalysisModel](JSONString: wordAnalysisDataString)
-        word.detailedSyntaxs = [YXWordDetailedSyntaxModel](JSONString: detailedSyntaxsDataString)
-        word.synonyms = try? (JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers) as! [String])
-        word.antonyms = try? (JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers) as! [String])
-        word.gradeId = Int(result.int(forColumn: "gradeId"))
-        word.gardeType = Int(result.int(forColumn: "gardeType"))
-        word.bookId = Int(result.int(forColumn: "bookId"))
-        word.unitId = Int(result.int(forColumn: "unitId"))
-        word.unitName = result.string(forColumn: "unitName")
-        word.isExtensionUnit = result.bool(forColumn: "isExtensionUnit")
+        word.imageUrl                = result.string(forColumn: "imageUrl")
+        word.americanPhoneticSymbol  = result.string(forColumn: "americanPhoneticSymbol")
+        word.englishPhoneticSymbol   = result.string(forColumn: "englishPhoneticSymbol")
+        word.americanPronunciation   = result.string(forColumn: "americanPronunciation")
+        word.englishPronunciation    = result.string(forColumn: "englishPronunciation")
+        word.deformations            = [YXWordDeformationModel](JSONString: deformationsDataString)
+        word.examples                = [YXWordExampleModel](JSONString: examplessDatStringa)
+        word.fixedMatchs             = [YXWordFixedMatchModel](JSONString: fixedMatchsDataString)
+        word.commonPhrases           = [YXWordCommonPhrasesModel](JSONString: commonPhrasesDataString)
+        word.wordAnalysis            = [YXWordAnalysisModel](JSONString: wordAnalysisDataString)
+        word.detailedSyntaxs         = [YXWordDetailedSyntaxModel](JSONString: detailedSyntaxsDataString)
+        word.synonyms                = try? (JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers) as! [String])
+        word.antonyms                = try? (JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers) as! [String])
+        word.gradeId                 = Int(result.int(forColumn: "gradeId"))
+        word.gardeType               = Int(result.int(forColumn: "gardeType"))
+        word.bookId                  = Int(result.int(forColumn: "bookId"))
+        word.unitId                  = Int(result.int(forColumn: "unitId"))
+        word.unitName                = result.string(forColumn: "unitName")
+        word.isExtensionUnit         = result.bool(forColumn: "isExtensionUnit")
         
         return word
     }

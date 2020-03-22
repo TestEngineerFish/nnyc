@@ -190,7 +190,7 @@ import UIKit
     
     // MARK: ++++++++++++++++++++++++++++ life cycle
     deinit {
-        print("自定义导航头释放")
+        YXLog("自定义导航头释放")
     }
 
     

@@ -179,11 +179,27 @@ public let bottom_Home_Safe_Area_Height: CGFloat = {
 }()
 
 /// 记录普通操作日志
-public func YXLog(_ message: String) {
-    YXOCLog.eventLog(message)
+public func YXLog(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+    var message = ""
+    items.forEach { (item) in
+        if let itemStr = item as? String {
+            message += " " + itemStr
+        } else {
+            message += " \(item)"
+        }
+    }
+    YXOCLog.shared()?.eventLog(message)
 }
  
 /// 记录网络请求日志
-public func YXRequestLog(_ message: String, level: DDLogLevel = .info) {
-    YXOCLog.request(message, level: level)
+public func YXRequestLog(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+    var message = ""
+    items.forEach { (item) in
+        if let itemStr = item as? String {
+            message += " " + itemStr
+        } else {
+            message += " \(item)"
+        }
+    }
+    YXOCLog.shared().request(message)
 }

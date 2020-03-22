@@ -75,7 +75,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = (DDLogLevel)(DDLogLevelInfo | LOG_FLAG_TIMERS);
 #else
-static const DDLogLevel ddLogLevel = (DDLogLevel)(DDLogLevelInfo | LOG_FLAG_MAIL);
+static const DDLogLevel ddLogLevel = (DDLogLevel)(DDLogLevelInfo | LOG_FLAG_TIMERS);
 #endif
 
 static inline CGFloat AS(CGFloat size) {

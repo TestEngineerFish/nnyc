@@ -126,7 +126,7 @@ public extension String {
             let count = regular.numberOfMatches(in: self, options: NSRegularExpression.MatchingOptions.reportProgress, range: NSRange(location: 0, length: self.count))
             result = count > 0
         } catch {
-            print("Regular expression error!!")
+            YXLog("Regular expression error!!")
         }
         return result
     }
@@ -141,7 +141,7 @@ public extension String {
             let count = regular.numberOfMatches(in: self, options: NSRegularExpression.MatchingOptions.reportProgress, range: NSRange(location: 0, length: self.count))
             result = count > 0
         } catch {
-            print("Regular expression error!!")
+            YXLog("Regular expression error!!")
         }
         return result
     }
@@ -190,11 +190,9 @@ public extension String {
             for checkingRes in res
             {
                 rangeList.append(checkingRes.range)
-                print("range\(checkingRes.range)")
             }
         } catch {
-
-            print(error)
+            YXLog("匹配纯文本失败, error: \(error)")
         }
         return rangeList
     }
@@ -445,7 +443,7 @@ extension String {
                 dict = dictTmp
                 return dict
             } catch {
-                print(error.localizedDescription)
+                YXLog("转换Json到Dictionary失败，error:", error.localizedDescription, "self:",self)
             }
         }
         return dict
@@ -455,7 +453,7 @@ extension String {
         do {
             return try NSAttributedString(data: Data(utf8), options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html, NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
         } catch {
-            print("error:", error)
+            YXLog("html2AttributedString error:", error.localizedDescription, "self:", self)
             return nil
         }
     }

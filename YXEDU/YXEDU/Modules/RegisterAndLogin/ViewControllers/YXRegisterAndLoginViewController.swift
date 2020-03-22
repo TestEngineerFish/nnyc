@@ -204,8 +204,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     private func sendSMS() {
         let request = YXRegisterAndLoginRequest.sendSms(phoneNumber: phoneNumberTextField.text ?? "", loginType: "login", SlidingVerificationCode: slidingVerificationCode)
-        YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { (response) in
-            guard let slidingVerificationCodeModel = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let slidingVerificationCodeModel = response.data else { return }
             
             if slidingVerificationCodeModel.isSuccessSendSms == 1 {
                 self.slidingVerificationCode = nil
@@ -220,49 +220,45 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                     if isSuccess {
                         self.slidingVerificationCode = slidingVerificationCodeModel.slidingVerificationCode
                         self.sendSMS()
-                        
                     } else {
-                        
+                        YXLog("滑动解锁失败")
                     }
                 }
             }
-            
-        }) { error in
-            print("❌❌❌\(error)")
-        }
+        }, fail: nil)
     }
-    
     
     /// 手机号登陆
     /// - Parameter loginModel:
     private func login(_ loginModel: YXLoginSendModel) {
-    let parameters = loginModel.yrModelToDictionary() as! [AnyHashable : Any]
-    YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
+        let parameters = loginModel.yrModelToDictionary() as! [AnyHashable : Any]
+        YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
             
             if isSuccess, let response = response?.responseObject {
                 let d1 = response as! [String: Any]
                 YXUserModel.default.token = d1["token"] as? String
-                YXUserModel.default.uuid = d1["uuid"] as? String
+                YXUserModel.default.uuid  = d1["uuid"] as? String
                 
                 let d2 = d1["user_info"] as! [String: Any]
-                YXUserModel.default.username = d2["nick"] as? String
+                YXUserModel.default.username       = d2["nick"] as? String
                 YXUserModel.default.userAvatarPath = d2["avatar"] as? String
                 
                 YXConfigure.shared().token = YXUserModel.default.token
-                YXConfigure.shared().uuid = YXUserModel.default.uuid
-
+                YXConfigure.shared().uuid  = YXUserModel.default.uuid
+                
                 self.checkUserInfomation()
                 
             } else if let error = response?.error {
-                print(error.desc)
+                YXLog("手机号登录失败：", error.desc)
             }
         }
     }
     
+    
     private func checkUserInfomation() {
         let request = YXRegisterAndLoginRequest.userInfomation
-        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
-            guard let userInfomation = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let userInfomation = response.data else { return }
             YXConfigure.shared()?.showKeyboard = (userInfomation.fillType == .keyboard)
             
             guard userInfomation.didBindPhone == 1 else {
@@ -275,15 +271,12 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.login()
             
             // 登陆后设置别名给极光
-            JPUSHService.setAlias(YXUserModel.default.uuid, completion: { (code, alias, seq) in                
-                YXLog("设置别名alias ====登陆成功======= \(code),\(alias ?? ""),\(seq)")
+            JPUSHService.setAlias(YXUserModel.default.uuid, completion: { (code, alias, seq) in
+                YXLog("设置别名alias ====登录成功======= \(code),\(alias ?? ""),\(seq)")
             }, seq: Int(Date().timeIntervalSince1970))
                 
             YXAlertQueueManager.default.restart()
-            
-        }) { error in
-            print("❌❌❌\(error)")
-        }
+        }, fail: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -349,7 +342,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         
         CLShanYanSDKManager.quickAuthLogin(with: configure, openLoginAuthListener: { (resultOfShowAuthPage) in
             if let error = resultOfShowAuthPage.error {
-                print(error.localizedDescription)
+                YXLog("闪验授权失败：", error.localizedDescription)
             }
             
         }) { (resultOfLogin) in
@@ -365,21 +358,21 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                         if isSuccess, let response = response?.responseObject {
                             let d1 = response as! [String: Any]
                             YXUserModel.default.token = d1["token"] as? String
-                            YXUserModel.default.uuid = d1["uuid"] as? String
+                            YXUserModel.default.uuid  = d1["uuid"] as? String
                             
                             let d2 = d1["user_info"] as! [String: Any]
-                            YXUserModel.default.username = d2["nick"] as? String
+                            YXUserModel.default.username       = d2["nick"] as? String
                             YXUserModel.default.userAvatarPath = d2["avatar"] as? String
 
                             YXConfigure.shared().token = YXUserModel.default.token
-                            YXConfigure.shared().uuid = YXUserModel.default.uuid
+                            YXConfigure.shared().uuid  = YXUserModel.default.uuid
 
                             YXConfigure.shared().saveCurrentToken()
                             YXUserModel.default.didLogin = true
                             YXUserModel.default.login()
 
                         } else if let error = response?.error {
-                            print(error.desc)
+                            YXUtils.showHUD(kWindow, title: error.desc)
                         }
                     }
                 }

@@ -35,13 +35,13 @@ extension YYNetworkService {
             
             switch status {
             case .unknown, .notReachable:
-                print("没有网络")
+                YXLog("没有网络")
 //                UIView.toast("网络不给力")
             case .reachable(let type):
                 if type == .wwan {
-                    print("手机网络")
+                    YXLog("手机网络")
                 } else if type == .ethernetOrWiFi {
-                    print("wifi网络")
+                    YXLog("wifi网络")
                 }
             }
         }

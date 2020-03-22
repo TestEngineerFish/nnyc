@@ -57,7 +57,6 @@
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];
-        
     }else {
         [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
         [self.navigationController setNavigationBarHidden:NO animated:animated];
@@ -69,37 +68,11 @@
         [self.navigationController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
         [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     }
-    
-//    if (self.currentColor) {
-//        [self setTitleAndBackViewColor:self.currentColor];
-//    }
-//    if (self.colorList) {
-//        if (self.navBackgroundView.isHidden) {
-//            [self.navBackgroundView setHidden:NO];
-//        }
-//        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-//        gradientLayer.colors = self.colorList;
-//        gradientLayer.locations = @[@0.3, @0.5, @1.0];
-//        gradientLayer.startPoint = CGPointMake(0, 0);
-//        gradientLayer.endPoint = CGPointMake(1.0, 0);
-//        gradientLayer.frame = self.navBackgroundView.bounds;
-//        [self.navBackgroundView.layer addSublayer:gradientLayer];
-//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    // 如果标题颜色被更改,则在退出时恢复之前颜色
-//    if (self.orignColor) {
-//        [self setTitleAndBackViewColor:self.orignColor];
-//    }
-//    if (self.navBackgroundView) {
-//        [self.navBackgroundView removeFromSuperview];
-//        [self.navBackgroundView setHidden:YES];
-//        self.navBackgroundView = nil;
-//    }
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-    
     [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor blackColor]}];
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
@@ -131,8 +104,6 @@
             gradientLayer.locations = @[@0.3, @0.5, @1.0];
             gradientLayer.startPoint = CGPointMake(0, 0);
             gradientLayer.endPoint = CGPointMake(1.0, 0);
-//            gradientLayer.frame = self.navBackgroundView.bounds;
-//            [self.navBackgroundView.layer addSublayer:gradientLayer];
         }
         if (parameters[@"txt_color"]) {
             //保存原本颜色
@@ -159,19 +130,6 @@
         [btn setImage:[UIImage new] forState:UIControlStateNormal];
     }
 }
-
-//- (UIView *)navBackgroundView{
-//    if (!_navBackgroundView) {
-//        UIView *subView = [[UIView alloc] init];
-//        subView.frame = CGRectMake(0, -kStatusBarHeight, SCREEN_WIDTH, kNavHeight);
-//        //添加view遮盖着nav
-//        UINavigationBar *bar = self.navigationController.navigationBar;
-//        [bar addSubview:subView];
-//        [bar insertSubview:subView atIndex:2];
-//        _navBackgroundView = subView;
-//    }
-//    return _navBackgroundView;
-//}
 
 - (NSMutableArray *)colorList {
     if (!_colorList) {
@@ -233,8 +191,3 @@
     }
 }
 @end
-
-
-/**
- Error Domain=NSURLErrorDomain Code=-1009 "The Internet connection appears to be offline." UserInfo={_kCFStreamErrorCodeKey=50, NSUnderlyingError=0x12dbc91c0 {Error Domain=kCFErrorDomainCFNetwork Code=-1009 "(null)" UserInfo={_kCFStreamErrorCodeKey=50, _kCFStreamErrorDomainKey=1}}, NSLocalizedDescription=The Internet connection appears to be offline., _WKRecoveryAttempterErrorKey=<WKReloadFrameErrorRecoveryAttempter: 0x12ec26a50>, NSErrorFailingURLStringKey=http://app.xstudyedu.com/share/dare/gameintro.html, NSErrorFailingURLKey=http://app.xstudyedu.com/share/dare/gameintro.html, _kCFStreamErrorDomainKey=1}
- */

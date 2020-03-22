@@ -95,16 +95,14 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             }
             
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                YXWordBookResourceManager.shared.contrastBookData(by: bookId) { (isSuccess) in
-                    if isSuccess {
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self else { return }
+                YXWordBookResourceManager.shared.contrastBookData(by: bookId) { [weak self] (isSuccess) in
+                    if let self = self, isSuccess {
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
-            }) { error in
-                print("❌❌❌\(error)")
-            }
-            
+            }, fail: nil)
             break
         }
      }
@@ -135,7 +133,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 guard let jsonString = String(data: jsonData, encoding: .utf8), let result = YXUserWordBookListModel(JSONString: jsonString), let wordBookStateModels = result.currentLearnWordBookStatus, var learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 else { return }
-                learnedWordBooks[0].isSelected = true
+                learnedWordBooks[0].isSelected     = true
                 learnedWordBooks[0].isCurrentStudy = true
                 self.wordBookModels = learnedWordBooks
                 
@@ -143,13 +141,12 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 self.fetchWordBookDetail(learnedWordBooks[0])
                 
                 var newWordBook = YXWordBookModel()
-                newWordBook.bookName = "添加词书"
+                newWordBook.bookName      = "添加词书"
                 newWordBook.isNewWordBook = true
                 self.wordBookModels.append(newWordBook)
                 self.bookCollectionView.reloadData()
-                
             } catch {
-                print(error)
+                YXLog("获取词书列表失败 :", error.localizedDescription)
             }
         }
     }
@@ -170,12 +167,11 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
         
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbookstatus", parameters: ["user_id": YXConfigure.shared().uuid, "book_id": "\(wordBook.bookId ?? 0)"]) { [weak self] (response, isSuccess) in
             guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
-            
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 guard let jsonString = String(data: jsonData, encoding: .utf8), let result = YXWordBookStatusModel(JSONString: jsonString) else { return }
                 self.wordBookStateModels = result
-    
+                
                 self.unitLabel.text = self.wordBookStateModels.learningUnit
                 
                 let countOfDaysForStudyString = "\(self.wordBookStateModels.learnedDays ?? 0)天"
@@ -191,9 +187,8 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 attributedText2.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index2))
                 attributedText2.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index2))
                 self.countOfWordsForStudyLabel.attributedText = attributedText2
-                
             } catch {
-                print(error)
+                YXLog("获取词书状态失败，error：",error.localizedDescription)
             }
         }
     }

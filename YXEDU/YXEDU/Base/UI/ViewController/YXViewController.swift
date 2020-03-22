@@ -16,7 +16,7 @@ class YXViewController: UIViewController {
     }
     
     deinit {
-        print("资源释放", self.classForCoder)
+        YXLog(self.classForCoder, "资源释放")
 
         if isMonitorNetwork {
             NotificationCenter.default.removeObserver(self, name: YXNotification.kNetwork, object: nil)
@@ -25,7 +25,7 @@ class YXViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        print("=============== 内存告警 ================")
+        YXLog("=============== 内存告警 ================")
     }
 
     
