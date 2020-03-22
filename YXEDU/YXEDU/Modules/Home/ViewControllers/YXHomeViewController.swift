@@ -30,7 +30,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var studyDataCollectionView: UICollectionView!
     @IBOutlet weak var subItemCollectionView: UICollectionView!
-    var entryAnimationView: AnimationView!
+    var squirrelAnimationView: AnimationView?
     @IBOutlet weak var entryViewHeightConstraint: NSLayoutConstraint!
     
     @IBAction func startExercise(_ sender: UIButton) {
@@ -93,7 +93,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         self.checkUserState()
         self.adjustEntryViewContraints()
-        self.setEntryAnimation()
+        self.setSquirrelAnimation()
         self.registerNotification()
     }
     
@@ -135,6 +135,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     /// 注册通知
     private func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateTaskCenterStatus), name: YXNotification.kUpdateTaskCenterBadge, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(playSquirrelAnimation), name: YXNotification.kSquirrelAnimation, object: nil)
     }
     
     // MARK: ---- Request ----
@@ -188,10 +189,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: ---- Tools ----
     
-    private func setEntryAnimation() {
+    private func setSquirrelAnimation() {
+        if self.squirrelAnimationView?.superview != nil {
+            self.squirrelAnimationView?.removeFromSuperview()
+        }
         let isFirstShowHome = YYCache.object(forKey: YXLocalKey.firstShowHome) as? Bool ?? true
         if isFirstShowHome {
-            entryAnimationView = AnimationView(name: "homeFirst")
+            squirrelAnimationView = AnimationView(name: "homeFirst")
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
                 let animation = CAKeyframeAnimation(keyPath: "transform.scale")
                 animation.values         = [1.0, 0.8, 1.0, 0.8, 1.0]
@@ -201,14 +205,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self?.startStudyView.layer.add(animation, forKey: nil)
             }
         } else {
-            entryAnimationView = AnimationView(name: "homeNormal")
+            squirrelAnimationView = AnimationView(name: "homeNormal")
         }
         YYCache.set(false, forKey: YXLocalKey.firstShowHome)
-        self.homeEntryView.insertSubview(entryAnimationView, at: 1)
-        entryAnimationView.snp.makeConstraints { (make) in
+        self.homeEntryView.insertSubview(squirrelAnimationView!, at: 1)
+        squirrelAnimationView!.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        entryAnimationView.play()
+        squirrelAnimationView?.play()
     }
     
     private func adjustEntryViewContraints() {
@@ -249,6 +253,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: ---- Event ----
     @objc private func updateTaskCenterStatus() {
         self.subItemCollectionView.reloadData()
+    }
+    
+    @objc private func playSquirrelAnimation() {
+        YYCache.set(true, forKey: YXLocalKey.firstShowHome)
+        self.setSquirrelAnimation()
     }
     
     @IBAction func showLearnMap(_ sender: UIButton) {

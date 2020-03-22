@@ -86,7 +86,7 @@ struct YXExerciseOptionModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        firstItems <- map["first"]
+        firstItems  <- map["first"]
         secondItems <- map["second"]
     }
 }
