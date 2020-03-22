@@ -38,7 +38,7 @@ class YXExerciseOptionManager: NSObject {
         } else if chooseArray.contains(exercise.type) {
             return reviewWordOption(exerciseModel: exercise)
         } else {
-            print("其他题型不用生成选项")
+            YXLog("其他题型不用生成选项")
             return exercise
         }
     }
@@ -230,7 +230,7 @@ class YXExerciseOptionManager: NSObject {
                 return nil
             }
         default:
-            print("其他题型不用生成选项")
+            YXLog("其他题型不用生成选项")
             return nil
         }
         let itemModel = self.itemModel(word: otherWordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)

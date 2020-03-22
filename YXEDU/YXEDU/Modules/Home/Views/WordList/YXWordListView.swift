@@ -194,10 +194,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
     }
     
-    deinit {
-        print("❌")
-    }
-    
     // MARK: - table view
     func numberOfSections(in tableView: UITableView) -> Int {
         if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, isWrongWordList {

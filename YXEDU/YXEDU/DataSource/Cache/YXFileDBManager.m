@@ -48,7 +48,7 @@
     if ([zip UnzipOpenFile:zipfilePath]) {
         BOOL result = [zip UnzipFileTo:[zipfilePath stringByDeletingPathExtension] overWrite:YES];
         if (!result) {
-            NSLog(@"解压失败!");
+            YXEventLog(@"解压失败!");
         } else {
 //            [YXUtils removeFile:zipfilePath];
         }
@@ -70,7 +70,7 @@
     if (![KDefaultFilemanager fileExistsAtPath:fileDicPath]) {
         BOOL isSuccess = [KDefaultFilemanager createDirectoryAtPath:fileDicPath withIntermediateDirectories:YES attributes:nil error:nil];
         if (!isSuccess) {
-            NSLog(@"创建书本资源文件夹失败");
+            YXEventLog(@"创建书本资源文件夹失败");
             return NO;
         }
     }
@@ -87,7 +87,7 @@
         [zip UnzipCloseFile];
         
         if (!result) {
-            NSLog(@"解压失败!");
+            YXEventLog(@"解压失败!");
         } else {
         }
         return result;
@@ -106,7 +106,7 @@
 //        if ([zip UnzipOpenFile:filepath]) {
 //            BOOL result = [zip UnzipFileTo:[filepath stringByDeletingPathExtension] overWrite:YES];
 //            if (!result) {
-//                NSLog(@"解压失败!");
+//                YXEventLog(@"解压失败!");
 //            } else {
 //            }
 //            // 成功失败都移除zip
@@ -132,7 +132,7 @@
     if (![KDefaultFilemanager fileExistsAtPath:fileDicPath]) {
         BOOL isSuccess = [KDefaultFilemanager createDirectoryAtPath:fileDicPath withIntermediateDirectories:YES attributes:nil error:nil];
         if (!isSuccess) {
-            NSLog(@"创建单词资源文件夹失败");
+            YXEventLog(@"创建单词资源文件夹失败");
             return NO;
         }
     }
@@ -143,11 +143,10 @@
 
 - (BOOL)creatResourceDicionary {
     if ([YXUtils createResourceDir:nil]) {
-        NSLog(@"创建资源文件成功");
+        YXEventLog(@"创建资源文件成功");
         return YES;
     }else {
-        
-        NSLog(@"创建资源文件失败");
+        YXEventLog(@"创建资源文件失败");
         return NO;
     }
 }

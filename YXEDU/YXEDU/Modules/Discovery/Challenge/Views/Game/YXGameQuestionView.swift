@@ -194,10 +194,6 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
     func startTimer() {
         self.stopTimer()
         timer = Timer(fire: Date(), interval: 1.0, repeats: true, block: { [weakSelf = self] (timer) in
-//            guard let self = self else {
-//                return
-//            }
-//            print("question \(self.consumeTime)")
             weakSelf.consumeTime += 1
             if weakSelf.consumeTime >= self.timeout {
                 weakSelf.skipButton.isHidden = false

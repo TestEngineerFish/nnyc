@@ -776,7 +776,7 @@
 //        self.currentRecordState = YXVoiceRecordState_ReleaseToCancel; // 取消状态
 //    }
 
-//    NSLog(@"%f----%@",touchPoint.y,NSStringFromCGRect(self.recordSpeaker.frame));
+//    YXEventLog(@"%f----%@",touchPoint.y,NSStringFromCGRect(self.recordSpeaker.frame));
 
 
 //            YXSpokenResultModel *resultModel = [YXSpokenResultModel mj_objectWithKeyValues:response.responseObject];

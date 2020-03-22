@@ -134,6 +134,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     }
 
     private func requestReport(_ version: Int, total time: Int, question number: Int) {
+        YXLog("游戏：上报 版本:\(version), 总时长:\(time)，答对问题数:\(number)")
         let request = YXChallengeRequest.report(version: version, totalTime: time, number: number)
         YYNetworkService.default.request(YYStructResponse<YXGameResultModel>.self, request: request, success: { (response) in
             self.gameResultMode                 = response.data
@@ -181,11 +182,12 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
 
     @objc private func backAction() {
         let alertView = YXAlertView()
-        alertView.titleLabel.text = "提示"
+        alertView.titleLabel.text       = "提示"
         alertView.descriptionLabel.text = "挑战尚未完成，是否退出并放弃本次挑战？"
         alertView.leftButton.setTitle("确定退出", for: .normal)
         alertView.rightOrCenterButton.setTitle("继续挑战", for: .normal)
         alertView.cancleClosure = {
+            YXLog("游戏：返回首页")
             self.navigationController?.popViewController(animated: true)
         }
         alertView.show()
@@ -213,7 +215,6 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     }
 
     private func updateTimer(offSet time: Int) {
-        print(time)
         self.headerView.consumeTime   += time * 1000
         self.questionView.consumeTime += time * 1000
         self.headerView.startTimer()
@@ -222,16 +223,18 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
 
     // MARK: ==== YXGameViewControllerProtocol ====
     func switchQuestion() {
+        YXLog("游戏：切图")
         self.headerView.addQuestionNumber()
-
         self.showNextQuestion(true)
     }
 
     func skipQuestion() {
+        YXLog("游戏：跳过")
         self.showNextQuestion(false)
     }
 
     func startGame() {
+        YXLog("游戏：开始")
         self.headerView.startTimer()
         self.questionView.restartTimer()
     }
@@ -240,6 +243,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
         guard let version = self.gameLineId else {
             return
         }
+        YXLog("游戏：展示结果")
         let result = self.headerView.getTimeAndQuestionNumber()
         self.headerView.timer?.invalidate()
         self.questionView.timer?.invalidate()

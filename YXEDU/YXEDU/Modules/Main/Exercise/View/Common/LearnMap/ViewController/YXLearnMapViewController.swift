@@ -155,7 +155,7 @@ class YXLearnMapViewController: UIViewController {
         }
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
-            print("学习新单元成功")
+            YXLog("学习新单元成功")
             YXWordBookResourceManager.shared.contrastBookData(by: bookId) { (isSuccess) in
                 YRRouter.popViewController(false)
                 let vc = YXExerciseViewController()

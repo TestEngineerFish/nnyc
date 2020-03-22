@@ -71,7 +71,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     weak var exerciseDelegate: YXExerciseViewDelegate?
     
     deinit {
-        print("练习view 释放")
+        YXLog("练习view 释放")
     }
 
     init(exerciseModel: YXWordExerciseModel) {

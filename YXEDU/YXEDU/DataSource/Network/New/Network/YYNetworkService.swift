@@ -209,7 +209,7 @@ struct YYNetworkService {
                 success(x, (response.response?.statusCode) ?? 0)
             case .failure(let error):
                 let msg = (error as NSError).message
-                YXRequestLog(String(format: "【❌Fail】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? "", msg))
+                YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? "", msg))
                 fail(error as NSError)
             }
         }

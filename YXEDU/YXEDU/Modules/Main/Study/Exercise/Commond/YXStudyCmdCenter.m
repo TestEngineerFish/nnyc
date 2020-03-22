@@ -323,8 +323,8 @@
         self.wordIdx = 0;
         self.groupIdx = 0;
     }
-    NSLog(@"groupIdx:%ld", (long)self.groupIdx);
-    NSLog(@"wordIdx:%ld", (long)self.wordIdx);
+    YXEventLog(@"groupIdx:%ld", (long)self.groupIdx);
+    YXEventLog(@"wordIdx:%ld", (long)self.wordIdx);
 }
 
 // 开始学习
@@ -411,8 +411,8 @@
     if (_groupIdx > 0) {
         wordTotal += ((NSString *)self.unitModel.group[_groupIdx-1]).intValue + 1;
     }
-    NSLog(@"-------%ld", (long)self.questionTotalIdx);
-    NSLog(@"-------%ld", (long)(self.questionTotalIdx - wordTotal));
+    YXEventLog(@"-------%ld", (long)self.questionTotalIdx);
+    YXEventLog(@"-------%ld", (long)(self.questionTotalIdx - wordTotal));
     return self.questionTotalIdx - wordTotal;
 }
 

@@ -135,7 +135,7 @@ extension YXSearchViewController {
         
         guard let model = dataSource[indexPath.row] as? YXSearchWordModel else { return }
         let result = dao.insertWord(word: model)
-        print(result)
+        YXLog(result)
         
         let home = UIStoryboard(name: "Home", bundle: nil)
         let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew

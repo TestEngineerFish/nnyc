@@ -215,7 +215,7 @@ extension YXExerciseDataManager {
             }
         }
         YXLog("更新：复习单词数\(map.count)")
-        print("----------------- 听写数量：", map.count)
+        YXLog("----------------- 听写数量：", map.count)
         needReviewCount = map.count
         
         if needReviewCount == 0 {
@@ -250,7 +250,6 @@ extension YXExerciseDataManager {
             } else {
                 currentBatchIndex = lround(Double(newIndex + 1) / Double(batchSize) + 0.5)
             }
-            print("aa+++++++++++++ currentPatchIndex = ", currentBatchIndex)
         }*/
         
         var reviewIndex = -1
@@ -285,7 +284,7 @@ extension YXExerciseDataManager {
             } else {
                 currentBatchIndex = lround(Double(reviewIndex + 1) / Double(batchSize) + 0.5)
             }
-            print("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
+            YXLog("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
         }
         
     }
@@ -296,7 +295,7 @@ extension YXExerciseDataManager {
         if dataType != .base {
             return
         }
-        print("bb+++++++++++++当前 currentPatchIndex = ", currentBatchIndex)
+        YXLog("bb+++++++++++++当前 currentPatchIndex = ", currentBatchIndex)
         var batch1 = 0
         for (index, wordId) in exerciseWordIdArray.enumerated() {
             if isFinishWord(wordId: wordId) == false {
@@ -304,7 +303,7 @@ extension YXExerciseDataManager {
                 break
             }
         }
-        print("bb+++++++++++++训练 currentPatchIndex = ", batch1)
+        YXLog("bb+++++++++++++训练 currentPatchIndex = ", batch1)
 
         
         var batch2 = 0
@@ -314,7 +313,7 @@ extension YXExerciseDataManager {
                 break
             }
         }
-        print("bb+++++++++++++复习 currentPatchIndex = ", batch2)
+        YXLog("bb+++++++++++++复习 currentPatchIndex = ", batch2)
         
         var minBatch = 1  
         if batch1 == 0 {
@@ -334,7 +333,7 @@ extension YXExerciseDataManager {
             // 一批学完后，重置轮的下标
             if isResetTurnIndex {
                 currentTurnIndex = 0
-                print("bb+++++++++++++重置 轮 下标")
+                YXLog("bb+++++++++++++重置 轮 下标")
             }
         }
                 
@@ -344,7 +343,7 @@ extension YXExerciseDataManager {
         
         isResetTurnIndex = true
         
-        print("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
+        YXLog("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
         
     }
     

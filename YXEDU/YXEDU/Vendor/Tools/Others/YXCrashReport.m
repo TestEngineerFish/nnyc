@@ -91,7 +91,7 @@ static NSString * applicationDocumentsDirectory() {
 }
 
 - (NSString * BLY_NULLABLE)attachmentForException:(NSException * BLY_NULLABLE)exception {
-    NSLog(@"%@", [YXUncaughtExceptionHandler getException]);
+    YXEventLog(@"%@", [YXUncaughtExceptionHandler getException]);
     return [YXUncaughtExceptionHandler getException];
 }
 

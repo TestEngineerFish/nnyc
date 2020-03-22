@@ -526,7 +526,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 进入后台, 停止播放音频和语音监听
     @objc private func didEnterBackgroundNotification() {
-        //        print("进入后台, 停止播放音频和语音监听")
+        YXLog("进入后台, 停止播放音频和语音监听")
         self.pauseView()
     }
 
@@ -621,31 +621,25 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onUpdateVolume(_ volume: Int32) {
-        //        print("onUpdateVolume: \(volume)")
 //        YXRecordAudioView.share.updateVolume(volume)
-        //        print(volume)
         return
     }
 
     func onRecordingBuffer(_ recordingData: Data!) {
-        //        print("录音数据: " + String(describing: recordingData))
         return
     }
 
     func onRecordingOpusBuffer(_ opusData: Data!) {
-        //        print("音频编码数据: " + String(describing: opusData))
         // 存当前音频数据
         tempOpusData.append(opusData)
         return
     }
 
     func audioFileDidRecord(_ url: String!) {
-//        print("audio file url=======" + url)
         return
     }
 
     func onAsyncResult(_ url: String!) {
-        //        print("result url: " + url)
         return
     }
 

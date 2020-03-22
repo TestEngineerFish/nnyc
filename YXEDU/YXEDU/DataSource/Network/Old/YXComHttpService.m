@@ -122,12 +122,12 @@
         NSError *error;
         NSArray *wordInfos = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
         if (!error) {
-            NSLog(@"解析成功");
+            YXEventLog(@"解析成功");
             dispatch_async_to_mainThread(^{
                 [YXWordModelManager saveWordsDetails:wordInfos andVersionTime:versionTime]; 
             });
         }else {
-            NSLog(@"解析失败");
+            YXEventLog(@"解析失败");
         }
     });
 }

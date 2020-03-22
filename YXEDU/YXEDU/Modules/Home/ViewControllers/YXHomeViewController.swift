@@ -39,13 +39,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             return
         }
         YXLog("====开始主流程的学习====")
+        
         if self.countOfWaitForStudyWords.text == "0" {
             guard let homeData = self.homeModel else { return }
-            
+            YXLog("当前学习词书：", homeData.bookName ?? "--", "当前学习单元：", homeData.unitName ?? "--")
             let alertView = YXAlertView(type: .normal)
             if homeData.isLastUnit == 1 {
+                YXLog("当前词书\(homeData.bookName ?? "")已背完啦")
                 alertView.descriptionLabel.text = "你太厉害了，已经背完这本书拉，你可以……"
-                alertView.closeButton.isHidden = false
+                alertView.closeButton.isHidden  = false
                 alertView.leftButton.setTitle("换单元", for: .normal)
                 alertView.rightOrCenterButton.setTitle("换本书学", for: .normal)
                 
@@ -54,10 +56,12 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 }
                 
                 alertView.doneClosure = { _ in
+                    YXLog("更换词书")
                     self.performSegue(withIdentifier: "AddBookFromHome", sender: self)
                 }
                 
             } else {
+                YXLog("当前单元\(homeData.unitName ?? "")暂时没有需要新学或复习的单词")
                 alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
                 alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
                 alertView.doneClosure = { _ in
@@ -95,6 +99,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.adjustEntryViewContraints()
         self.setSquirrelAnimation()
         self.registerNotification()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -267,6 +275,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         vc.unitId = self.homeModel?.unitId
         self.navigationController?.pushViewController(vc, animated: true)
         self.hidesBottomBarWhenPushed = false
+        YXLog("进入单元地图")
     }
 
     @objc func enterTaskVC() {

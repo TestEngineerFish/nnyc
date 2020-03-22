@@ -94,8 +94,8 @@
 #pragma -delegate-
 
 -(void)onReq:(BaseReq*)req{
-    NSLog(@"----");
-    NSLog(@"%@",req);
+    YXEventLog(@"----");
+    YXEventLog(@"%@",req);
 }
 
 

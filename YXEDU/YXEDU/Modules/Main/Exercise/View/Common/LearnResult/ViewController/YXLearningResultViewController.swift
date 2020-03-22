@@ -202,7 +202,7 @@ class YXLearningResultViewController: YXViewController {
         }
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
-            print("学习新单元成功")
+            YXLog("学习新单元成功")
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }

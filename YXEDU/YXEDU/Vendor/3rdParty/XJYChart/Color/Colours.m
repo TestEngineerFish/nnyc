@@ -664,7 +664,7 @@ static CGFloat (^RAD)(CGFloat) = ^CGFloat (CGFloat degree){
     
     // Check if it's a color
     if (![color isKindOfClass:[self class]]) {
-        // NSLog(@"Not a %@ object.", NSStringFromClass([self class]));
+        // YXEventLog(@"Not a %@ object.", NSStringFromClass([self class]));
         return MAXFLOAT;
     }
     

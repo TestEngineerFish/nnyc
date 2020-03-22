@@ -87,7 +87,7 @@
 }
 
 -(void) goOnBtnAction{
-    NSLog(@"goOnBtnAction");
+    YXEventLog(@"goOnBtnAction");
     [self removeFromSuperview];
     if ([self.delegate respondsToSelector:@selector(reviewAccomplishViewBtn)]) {
         [self.delegate reviewAccomplishViewBtn];

@@ -144,7 +144,7 @@ class YXExerciseDataManager: NSObject {
         updateCurrentPatchIndex()
         
         // 打印
-//        printReportResult()
+        printReportResult()
         
         if !progressManager.isSkipNewWord() {
             for exercise in self.newWordArray {
@@ -313,8 +313,7 @@ class YXExerciseDataManager: NSObject {
                     map[word.wordId]?.result?.three = e.isRight
                 case 4:
                     map[word.wordId]?.result?.four = e.isRight
-                default:
-                    print()
+                default: break
                 }
             }
             
@@ -328,7 +327,7 @@ class YXExerciseDataManager: NSObject {
     
     func printReportResult() {
         let json = self.reportJson()
-        print(json)
+        YXLog("上报内容：", json)
     }
     
     func printCurrentTurn() {

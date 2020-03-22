@@ -33,7 +33,7 @@
                 NSError *error = nil;
                 [[NSFileManager defaultManager] moveItemAtPath:path toPath:downloadPath error:&error];
                 if (error) {
-                    NSLog(@"%@", error);
+                    YXEventLog(@"%@", error);
                 }
             }
         }

@@ -332,7 +332,7 @@ extension YXConnectionView {
         
         if itemArray.count == count {
 //            self.connectionCompletion?()
-            print("全部连接完毕")
+            YXLog("全部连接完毕")
             return true
         }
         return false
@@ -368,10 +368,10 @@ extension YXConnectionView {
     /// - Parameter point: 位置
     private func gestureBegan(point: CGPoint) {
         if !self.bounds.contains(point) {
-            print("跑到画板外面去啦————开始")
+            YXLog("跑到画板外面去啦————开始")
             return
         }
-        print(point)
+        YXLog(point)
         self.selecteGestureStartItemView(point: point)
     }
     
@@ -379,7 +379,7 @@ extension YXConnectionView {
     /// - Parameter point: 位置
     private func gestureMoved(point: CGPoint) {
 //        if !self.bounds.contains(point) {
-//            print("跑到画板外面去啦————移动中")
+//            YXLog("跑到画板外面去啦————移动中")
 //            return
 //        }
 
@@ -397,7 +397,7 @@ extension YXConnectionView {
     /// - Parameter point: 位置
     private func gestureEnd(point: CGPoint) {
 //        if !self.bounds.contains(point) {
-//            print("跑到画板外面去啦————结束")
+//            YXLog("跑到画板外面去啦————结束")
 //            return
 //        }
         // 结束时，其实

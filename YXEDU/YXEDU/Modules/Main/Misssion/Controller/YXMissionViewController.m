@@ -440,13 +440,13 @@
 
 // MARK: custom protocol
 - (void)missonTableViewCellTransferTo:(YXMissionCollectionViewCell *)missionCollectionCell {
-    NSLog(@"--------missonTableViewCellTransferTo--------");
+    YXEventLog(@"--------missonTableViewCellTransferTo--------");
     NSString *action =  missionCollectionCell.model.action;
     [[YXRouteManager shared] openUrl:action];
 }
 
 - (void)missonTableViewCellGetNewTask:(YXMissionCollectionViewCell *)missionCollectionCell taskModel:(YXTaskModel *)model {
-    NSLog(@"--------missonTableViewCellGetNewTask--------");
+    YXEventLog(@"--------missonTableViewCellGetNewTask--------");
     NSInteger oldTaskId = model.taskId;
     [YXDataProcessCenter POST:DOMAIN_GETNEWTASK parameters:@{@"taskId":@(oldTaskId)} finshedBlock:^(YRHttpResponse *response, BOOL result) {
         if (result) {
@@ -459,7 +459,7 @@
                 NSInteger index = [_taskListAry indexOfObject:model];
                 [_taskListAry replaceObjectAtIndex:index withObject:newTaskModel];
                 [self filterTaskList];
-                NSLog(@"有后续任务");
+                YXEventLog(@"有后续任务");
             } else { //无后续任务
                 //变成已完成状态
                 YXTaskModel *newTaskModel = model;
@@ -467,10 +467,10 @@
                 NSInteger index = [_taskListAry indexOfObject:model];
                 [_taskListAry replaceObjectAtIndex:index withObject:newTaskModel];
                 [self filterTaskList];
-                NSLog(@"变成已完成状态,无后续任务");
+                YXEventLog(@"变成已完成状态,无后续任务");
             }
         } else {
-            NSLog(@"请求失败");
+            YXEventLog(@"请求失败");
             if (response.error.code != kBADREQUEST_TYPE && response.error.desc.length) {
                 [YXUtils showHUD:self.view title:response.error.desc];
                 [self reloadConfig];

@@ -180,7 +180,7 @@ static NSString *const kYXUnVipNormalCellID = @"YXUnVipNormalCellID";
             [self.noteBGView setHidden:NO];
         }
         else {
-            NSLog(@"已经加载引导");
+            YXEventLog(@"已经加载引导");
         }
 
     }
@@ -244,7 +244,7 @@ static NSString *const kYXUnVipNormalCellID = @"YXUnVipNormalCellID";
 }
 
 -(void)guideViewClicked{
-    NSLog(@"guideViewClicked");
+    YXEventLog(@"guideViewClicked");
     [self.guideView  removeFromSuperview];
     [self.noteBGView setHidden:NO];
     [YXUserSaveTool setObject:@"isToolkitView" forKey:@"isToolkitView"];
@@ -723,7 +723,7 @@ static NSString *const kYXUnVipNormalCellID = @"YXUnVipNormalCellID";
     return 0;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    NSLog(@"%f",scrollView.contentOffset.y);
+//    YXEventLog(@"%f",scrollView.contentOffset.y);
 //    if (scrollView.contentOffset.y < 0) {
 //        scrollView.contentOffset = CGPointZero;
 //    }
@@ -1237,7 +1237,7 @@ static NSString *const kYXUnVipNormalCellID = @"YXUnVipNormalCellID";
         }];
     }else {
         //        [self.speakerBtn stopAnimating];
-        //        NSLog(@"音频文件不存在");
+        //        YXEventLog(@"音频文件不存在");
         [self playRemoteVoice:playFinishBlock];
     }
     [self traceEvent:kTracePlayWordSound descributtion:self.wordDetailModel.wordid];
@@ -1270,7 +1270,7 @@ static NSString *const kYXUnVipNormalCellID = @"YXUnVipNormalCellID";
 //        [weakSelf playSentenceSound];
         [weakSelf playWordSoundFinishedWith:playFinishBlock];
     }];
-    NSLog(@"本地不存在音频文件，播放链接");
+    YXEventLog(@"本地不存在音频文件，播放链接");
 }
 
 
@@ -1295,7 +1295,7 @@ static NSString *const kYXUnVipNormalCellID = @"YXUnVipNormalCellID";
         weakSelf.playSoundArea.userInteractionEnabled = YES;
         [weakSelf playSentenceSound];
     }];
-    NSLog(@"本地不存在音频文件，播放链接");
+    YXEventLog(@"本地不存在音频文件，播放链接");
 }
 
 - (void)playWordSoundFinishedWith:(void(^)(void))playFinishBlock {
@@ -1423,7 +1423,7 @@ static NSString *const kYXUnVipNormalCellID = @"YXUnVipNormalCellID";
  //        }];
  //    }else {
  ////        [self.speakerBtn stopAnimating];
- ////        NSLog(@"音频文件不存在");
+ ////        YXEventLog(@"音频文件不存在");
  //        [self playRemoteVoice];
  //    }
  //    [self traceEvent:kTracePlayWordSound descributtion:self.wordDetailModel.wordid];

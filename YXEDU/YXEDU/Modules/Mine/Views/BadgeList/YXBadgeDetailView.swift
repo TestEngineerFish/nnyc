@@ -102,9 +102,9 @@ class YXBadgeDetailView: YXTopWindowView {
     @IBAction func close(_ sender: Any) {
         if isReport {
             let request = YXMineRequest.badgeDisplayReport(badgeId: badge.badgeId ?? 0)
-            YYNetworkService.default.request(YYStructResponse<YXBadgeReportModel>.self, request: request, success: { (response) in
-                guard let model = response.data else { return }
-                print("徽章显示，上报状态: ", model.state == 1)
+            YYNetworkService.default.request(YYStructResponse<YXBadgeReportModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self, let model = response.data else { return }
+                YXLog("徽章显示\(self.badge.badgeId ?? 0)，上报状态: ", model.state == 1)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
             }

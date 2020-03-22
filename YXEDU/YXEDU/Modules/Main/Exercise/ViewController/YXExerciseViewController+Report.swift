@@ -60,7 +60,7 @@ extension YXExerciseViewController {
                     self.processReviewResult()
                 }
                 
-                print("学完")
+                YXLog("学完")
             } else {
                 UIView.toast("上报关卡失败")
                 self.navigationController?.popViewController(animated: true)

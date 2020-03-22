@@ -83,7 +83,7 @@
     }
     
     deinit {
-        print("练习 VC 释放")
+        YXLog("练习 VC 释放")
         YYCache.remove(forKey: .learningState)
         YXAVPlayerManager.share.finishedBlock = nil
         YXAVPlayerManager.share.pauseAudio()
@@ -283,7 +283,7 @@
     
     private func updateToken() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            print("更新token")
+            YXLog("更新token")
             self?.updateTokenAction()
         }
     }

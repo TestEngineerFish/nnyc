@@ -23,7 +23,7 @@ class YXTest: NSObject {
 //            if random % 2 == 0 {
                 // 人造崩溃
 //                let array = [1, 2, 3]
-//                print(array[5])
+//                YXLog(array[5])
 //            }
             self.newResultVC()
 //            self.processReviewResult()

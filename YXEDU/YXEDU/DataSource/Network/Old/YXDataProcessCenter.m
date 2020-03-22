@@ -28,13 +28,13 @@
                     model = [modelClass mj_objectWithKeyValues:data];
 //                    NSDictionary *dic = data[@"baseConfig"];
 //                    YXBaseConfig *cmolde = [YXBaseConfig mj_objectWithKeyValues:dic];
-//                    NSLog(@"%@",cmolde);
+//                    YXEventLog(@"%@",cmolde);
                     
                 } else if ([data isKindOfClass:[NSArray class]]) {
                     model = [modelClass mj_objectArrayWithKeyValuesArray:data];
                 }else{}
             } @catch (NSException *exception) {
-                NSLog(@"err = %@", exception);
+                YXEventLog(@"err = %@", exception);
             } @finally {
             }
             if (model) {
@@ -77,7 +77,7 @@
                     model = [modelClass mj_objectArrayWithKeyValuesArray:data];
                 }else{}
             } @catch (NSException *exception) {
-                NSLog(@"err = %@", exception);
+                YXEventLog(@"err = %@", exception);
             } @finally {
             }
             if (model) {
@@ -147,7 +147,7 @@
     [[YXNetworkService shared]upload:url parameters:params appendFormFiles:fileArr headers:nil uploadProgress:^(NSProgress *uploadProgress) {
         
     } completion:^(YRHttpResponse *response) {
-        NSLog(@"%@", response.error.originalError);
+        YXEventLog(@"%@", response.error.originalError);
         BOOL isError = response.error ? NO : YES;
         if (finishBlock) {
             finishBlock(response, isError);
