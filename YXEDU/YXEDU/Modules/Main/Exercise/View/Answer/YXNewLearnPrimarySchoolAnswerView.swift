@@ -189,6 +189,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.endRecordAction()
         self.timer?.invalidate()
         self.timer = nil
+        NotificationCenter.default.removeObserver(self)
     }
 
     required init?(coder: NSCoder) {

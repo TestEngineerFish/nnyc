@@ -33,6 +33,15 @@ class YXAVPlayerManager: NSObject {
     var finishedBlock:FinishedBlock?
 
     static let share = YXAVPlayerManager()
+    
+    override init() {
+        super.init()
+        self.addObservers()
+    }
+    
+    deinit {
+        self.removeObservers()
+    }
 
     /// 播放音频(移除掉)
     func playAudio(_ url: URL, finish block: FinishedBlock? = nil) {
@@ -50,7 +59,6 @@ class YXAVPlayerManager: NSObject {
             self.player.replaceCurrentItem(with: playerItem)
             self.player.play()
             self.isPlaying = true
-            self.addObservers()
         } else {
             YXLog("无效音频,地址：" + url.absoluteString)
             YXUtils.showHUD(kWindow, title: "无效音频")
@@ -91,10 +99,6 @@ class YXAVPlayerManager: NSObject {
     /// 移除监听
     private func removeObservers() {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-    }
-
-    deinit {
-        self.removeObservers()
     }
 
     // MARK: Event
