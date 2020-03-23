@@ -256,6 +256,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 countOfWaitForStudyWords.text = "\(data.0.count + data.1.count)"
             }
         }
+        
+        // 保持当前选中的词书
+        YYCache.set(self.homeModel.bookId, forKey: .currentChooseBookId)
     }
     
     // MARK: ---- Event ----
