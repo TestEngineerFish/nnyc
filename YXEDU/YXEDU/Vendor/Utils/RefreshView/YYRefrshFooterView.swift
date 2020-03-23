@@ -53,7 +53,7 @@ public class YYRefrshFooterView: MJRefreshAutoFooter {
             case .idle:
                 self.refreshFrashContentView.stopAnimation()
             case .pulling:
-                DDLogInfo("pulling")
+                YXLog("pulling")
             case .refreshing:
                 self.refreshFrashContentView.beginAnimation()
             default:

@@ -124,12 +124,12 @@ class YXLearnMapViewController: UIViewController {
                 YXComAlertView.show(.common, in: kWindow, info: "提示", content: content, firstBlock: { (obj) in
                     self.learnUnit(button.tag)
                     button.isEnabled = false
-                    DDLogInfo("切换到" + currentUnitName + "单元学习")
+                    YXLog("切换到" + currentUnitName + "单元学习")
                 }, secondBlock: nil)
             } else {
                 self.learnUnit(button.tag)
                 button.isEnabled = false
-                DDLogInfo("切换到" + (selectedModel.unitName ?? "") + "单元学习")
+                YXLog("切换到" + (selectedModel.unitName ?? "") + "单元学习")
             }
         }
     }
@@ -144,7 +144,7 @@ class YXLearnMapViewController: UIViewController {
             self.mapModelList = response.dataArray
             self.createMapView()
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 
@@ -155,7 +155,7 @@ class YXLearnMapViewController: UIViewController {
         }
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
-            print("学习新单元成功")
+            YXLog("学习新单元成功")
             YXWordBookResourceManager.shared.contrastBookData(by: bookId) { (isSuccess) in
                 YRRouter.popViewController(false)
                 let vc = YXExerciseViewController()
@@ -166,7 +166,7 @@ class YXLearnMapViewController: UIViewController {
                 YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: false)
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 

@@ -65,9 +65,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
             let request = YXWordListRequest.cancleCollectWord(wordIds: cancleCollectWordInfoString)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 self.navigationController?.popViewController(animated: true)
-
             }) { error in
-                print("❌❌❌\(error)")
+                YXUtils.showHUD(kWindow, title: error.message)
             }
             
         } else {
@@ -85,9 +84,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
             let request = YXWordListRequest.deleteWrongWord(wordIds: string)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 self.navigationController?.popViewController(animated: true)
-
             }) { error in
-                print("❌❌❌\(error)")
+                YXUtils.showHUD(kWindow, title: error.message)
             }
         }
     }

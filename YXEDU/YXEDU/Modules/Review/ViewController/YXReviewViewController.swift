@@ -168,6 +168,7 @@ extension YXReviewViewController {
             vc.dataType = .aiReview
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
+            YXLog("==== 开始智能复习 ====")
         } else {
             let nrView = YXNotReviewWordView()
             nrView.show()
@@ -179,10 +180,11 @@ extension YXReviewViewController {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.normalReview.rawValue], animated: true)
         
         let vc = YXExerciseViewController()
-        vc.dataType = .planReview
-        vc.planId = planId
+        vc.dataType                 = .planReview
+        vc.planId                   = planId
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
+        YXLog("==== 开始复习计划复习 ====")
     }
     
     /// 开始听力 —— 复习计划
@@ -191,16 +193,16 @@ extension YXReviewViewController {
 //        YRRouter.openURL(url, query: nil, animated: true)
         
         let vc = YXExerciseViewController()
-        vc.dataType = .planListenReview
-        vc.planId = planId
+        vc.dataType                 = .planListenReview
+        vc.planId                   = planId
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
+        YXLog("==== 开始听力复习 ====")
     }
-    
     
     func createReviewEvent() {
         let vc = YXMakeReviewPlanViewController()
-        vc.delegate = self
+        vc.delegate                 = self
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }

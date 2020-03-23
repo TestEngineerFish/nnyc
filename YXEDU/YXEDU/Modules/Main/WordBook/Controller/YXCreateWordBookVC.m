@@ -532,7 +532,7 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
 }
 
 #pragma mark - <YXSelectMyWordCellDelegate>
--(void)selectMyWordCellManageBtnClicked:(YXSelectMyWordCell *)selectMyWordCell { //NSLog(@"选择单词");
+-(void)selectMyWordCellManageBtnClicked:(YXSelectMyWordCell *)selectMyWordCell {
     NSIndexPath *indexPath = [self.wordListTableView indexPathForCell:selectMyWordCell];
     [self handleWordIndexPath:indexPath];
 }
@@ -717,7 +717,7 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
 
 - (void)textFieldChanged:(UITextField *)tf {
     if (tf.markedTextRange == nil) { //搜索条件
-//        NSLog(@"--------%@",tf.textInputMode.primaryLanguage);
+//        YXEventLog(@"--------%@",tf.textInputMode.primaryLanguage);
         [self searchWordsWith:tf];
     }
 }
@@ -878,125 +878,3 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
 }
 
 @end
-
-
-
-
-//- (void)commitTranslation:(CGPoint)translation  {
-//    NSLog(@"trans --- %@",NSStringFromCGPoint(translation));
-//    return;
-//    CGFloat absX = fabs(translation.x);
-//    CGFloat absY = fabs(translation.y);
-//    // 设置滑动有效距离
-//    //    if (MAX(absX, absY) < 10)
-//    //        return;
-//    if (absX > absY ) {
-//        if (translation.x<0) { //向左滑动
-//        }else{ //向右滑动
-//        }
-//    } else if (absY > absX) {
-//        if (translation.y > 0) {
-//            NSLog(@"增加---------------------");
-//            //            NSLog(@"向上滑动 ---------------------");
-//        }else{
-//            NSLog(@"删除-------");
-//            //            NSLog(@"向下滑动---------------------");
-//        }
-//    }
-//}
-
-
-//        [self commitTranslation:[pan velocityInView:self.wordListTableView]];
-//        [self commitTranslation:[pan translationInView:pan.view]];
-
-
-
-//        YXSelectPanGestureSlipDirection slipDirection = YXSelectPanGestureSlipNone;
-//if (delta > 0) {//NSLog(@"增加---------------------");
-//    [self addSelction:indexPath];
-//    //            slipDirection = YXSelectPanGestureSlipDown;
-//}else if(delta >0) { // NSLog(@"删除-------");
-//    [self deleteSelection:indexPath];
-    //            slipDirection = YXSelectPanGestureSlipUp;
-//}
-//        if (self.slipDirection != slipDirection) {
-//
-//        }else {
-//
-//        }
-//        self.slipDirection = slipDirection;
-
-
-
-/**
-- (void)handleWordIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath) {
-        NSInteger selectedWordsCount = self.selectedWords.count;
-        //        if ([self.selectedWords containsObject:indexPath]) {
-        //            [self.selectedWords removeObject:indexPath];
-        //        }else {
-        //            [self.selectedWords addObject:indexPath];
-        //        }
-        
-        YXBookUnitContentModel *unitModel = [self.currentShowBook.content objectAtIndex:indexPath.section];
-        YXSelectWordCellModel *wordModel = [unitModel.words objectAtIndex:indexPath.row];
-        
-        if ([self.selectedWords containsObject:wordModel]) {
-            [self.selectedWords removeObject:wordModel];
-        }else {
-            [self.selectedWords addObject:wordModel];
-        }
-        
-        NSInteger delta = self.selectedWords.count - selectedWordsCount;
-        [self.currentShowBook updateBookSelectedWordCountAtUnit:indexPath.section withDeltaNum:delta];
-        
-        YXSelectMyWordHeaderView *curSectionHeader = (YXSelectMyWordHeaderView *)[self.wordListTableView headerViewForSection:indexPath.section];
-        [curSectionHeader updateInfo];
-        
-        [self.wordListTableView beginUpdates]; // 刷新重影
-        [self.wordListTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        [self.wordListTableView endUpdates];
-        
-        self.miniView.selectedWords = self.selectedWords;
-        [self updateMiniWordCell];
-        //刷新引起重影
-        //        [self.wordListTableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
-    }
-}
-*/
-
-
-/*
-- (void)filterShowBookData {
-    YXBookCategoryModel *bookCategory = [self.bookCategorys objectAtIndex:self.currentSeletBookInfo.bookCategoryType];
-    self.currentShowBook = [bookCategory.content objectAtIndex:self.currentSeletBookInfo.categoryBookIndex];
-    if (!self.currentShowBook.hasQuaryWordInfo) {
-        for (YXBookUnitContentModel *unitModel in self.currentShowBook.content) {
-            //            NSArray *wordIds = [unitModel valueForKeyPath:@"words.wordId"];
-            for (YXSelectWordCellModel *selectWordCellModel in unitModel.words) {
-                if (!selectWordCellModel.wordDetail) {
-                    [YXWordModelManager quardWithWordId:selectWordCellModel.wordId
-                                          completeBlock:^(id obj, BOOL result) {
-                                              if (result) {
-                                                  selectWordCellModel.wordDetail = obj;
-                                              }
-                                          }];
-                }
-                
-            }
-            //            [YXWordModelManager quardWithWordIds:wordIds completeBlock:^(id obj, BOOL result) {
-            //                if (result) {
-            //                    NSArray *wordDetails = (NSArray *)obj;
-            //                    for (YXMyWordCellBaseModel *model in unitModel.words) {
-            //                        NSInteger i = [unitModel.words indexOfObject:model];
-            //                        model.wordDetail = [wordDetails objectAtIndex:i];
-            //                    }
-            //                }
-            //            }];
-        }
-        self.currentShowBook.hasQuaryWordInfo = YES;
-    }
-    
-    [self.wordListTableView reloadData];
-}
-*/

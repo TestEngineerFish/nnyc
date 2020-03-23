@@ -43,7 +43,7 @@
         @try {
             ret = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge_transfer NSData *)keyData];
         } @catch (NSException *e) {
-            NSLog(@"Unarchive of %@ failed: %@", service, e);
+            YXEventLog(@"Unarchive of %@ failed: %@", service, e);
         } @finally {
         }
     }

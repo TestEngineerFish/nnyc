@@ -15,18 +15,17 @@ struct YXReviewDataManager {
         YYNetworkService.default.request(YYStructResponse<YXReviewPageModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, error.message)
         }
     }
-    
-    
-    
     
     func updateReviewPlanName(planId: Int, planName: String, completion: ((_ result: Bool?, _ errorMsg: String?) -> Void)?) {
         let request = YXReviewRequest.updateReviewPlan(planId: planId, planName: planName)
         YYNetworkService.default.request(YYStructResponse<YXReviewPageModel>.self, request: request, success: { (response) in
             completion?(true, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, error.message)
         }
     }
@@ -36,6 +35,7 @@ struct YXReviewDataManager {
         YYNetworkService.default.request(YYStructResponse<YXReviewPageModel>.self, request: request, success: { (response) in
             completion?(true, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, error.message)
         }
     }
@@ -46,6 +46,7 @@ struct YXReviewDataManager {
         YYNetworkService.default.request(YYStructResponse<YXReviewPlanDetailModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, error.message)
         }
     }
@@ -61,6 +62,7 @@ struct YXReviewDataManager {
         YYNetworkService.default.request(YYStructResponse<YXReviewResultModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, error.message)
         }
     }

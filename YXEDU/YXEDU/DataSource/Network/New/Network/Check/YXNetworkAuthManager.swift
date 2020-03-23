@@ -31,6 +31,6 @@ class YXNetworkAuthManager: NSObject {
     @objc func networkChange(_ notification: Notification) {
         
         self.state = ZYNetworkAccessibity.currentState()
-        print(state?.rawValue ?? -1, "网络权限变化")
+        YXLog(state?.rawValue ?? -1, "网络权限变化")
     }
 }

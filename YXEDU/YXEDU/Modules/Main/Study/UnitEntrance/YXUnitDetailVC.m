@@ -257,7 +257,7 @@
                 break;
             case NetWorkStatusReachableViaWWAN:{
                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"检测到您当前为非wifi环境，是否继续下载素材包" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) { NSLog(@"action = %@", action); }];
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) { YXEventLog(@"action = %@", action); }];
                 UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"继续下载" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     self.downLoadView = [YXUnitDownLoadView showDownLoadView:self.view rootVC:self];
                     [self.unitViewModel startDownload:URLString savePath:name zipFile:zipName sourceModel:self.unitModel progress:^(NSProgress *progress) {
@@ -295,7 +295,7 @@
                                                progress:^(NSProgress *progress) {
                                                    float percent = 1.0 * progress.completedUnitCount / progress.totalUnitCount;
                                                    [self.downLoadView updateProgress:percent];
-                                                   NSLog(@"%f", percent);
+                                                   YXEventLog(@"%f", percent);
                                                }
                                                complete:^(id obj, BOOL result) {
                     if (result) {

@@ -187,12 +187,6 @@ static const NSInteger MAX_NAME_LENGTH = 50;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-//    NSLog(@"------%@",text);
-//    if (!textView.text.length && text) {
-//        return NO;
-//    }else {
-//
-//    }
     return YES;
 }
 - (void)textViewDidChange:(UITextView *)textView {

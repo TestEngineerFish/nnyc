@@ -16,6 +16,7 @@ struct YXSettingDataManager {
         YYNetworkService.default.request(YYStructResponse<YXVersionModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, error.message)
         }
     }
@@ -35,6 +36,7 @@ struct YXSettingDataManager {
         YYNetworkService.default.request(YYStructResponse<YXReviewPlanShareCommandModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, error.message)
         }
     }
@@ -45,6 +47,7 @@ struct YXSettingDataManager {
         YYNetworkService.default.request(YYStructResponse<YXBadgeReportModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, error.message)
         }
     }

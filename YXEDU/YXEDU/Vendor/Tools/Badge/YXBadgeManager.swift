@@ -59,7 +59,8 @@ import Foundation
             YYCache.set(badgeNum, forKey: YXLocalKey.taskCenterCanReceive)
             NotificationCenter.default.post(name: YXNotification.kUpdateTaskCenterBadge, object: nil)
         }) { (error) in
-            DDLogInfo("更新首页任务中心红点失败，error msg：\(error.message)")
+            YXUtils.showHUD(kWindow, title: error.message)
+            YXLog("更新首页任务中心红点失败，error msg：\(error.message)")
         }
         
     }

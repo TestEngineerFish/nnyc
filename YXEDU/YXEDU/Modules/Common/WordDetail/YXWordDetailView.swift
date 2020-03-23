@@ -21,26 +21,23 @@ class YXWordDetailView: UIView {
     @IBAction func collectWord(_ sender: UIButton) {
         if self.collectionButton.currentImage == #imageLiteral(resourceName: "unCollectWord") {
             let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(word.wordId ?? 0),\"is\":\(word.isComplexWord ?? 0)}]")
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                self.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
-                
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
             }) { error in
-                print("❌❌❌\(error)")
+                YXUtils.showHUD(kWindow, title: error.message)
             }
-            
         } else {
             let request = YXWordListRequest.collectWord(wordId: word.wordId ?? 0, isComplexWord: word.isComplexWord ?? 0)
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                self.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
-                
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
             }) { error in
-                print("❌❌❌\(error)")
+                YXUtils.showHUD(kWindow, title: error.message)
             }
         }
     }
     
     @IBAction func feedbackWord(_ sender: UIButton) {
-        DDLogInfo("单词详情View中点击反馈按钮")
+        YXLog("单词详情View中点击反馈按钮")
         YXLogManager.share.report()
         YXReportErrorView.show(to: kWindow, withWordId: NSNumber(integerLiteral: word.wordId ?? 0), withWord: word.word ?? "")
     }
@@ -71,16 +68,14 @@ class YXWordDetailView: UIView {
         self.addSubview(wordDetailView)
         
         let request = YXWordListRequest.didCollectWord(wordId: word.wordId ?? 0)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             if response.data?.didCollectWord == 1 {
-                self.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
-
+                self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
             } else {
-                self.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
+                self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
             }
-            
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 }

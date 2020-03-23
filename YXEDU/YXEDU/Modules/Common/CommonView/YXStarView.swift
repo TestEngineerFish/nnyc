@@ -78,8 +78,8 @@ class YXStarView: UIView {
     /// 新学结果页
     func showNewLearnResultView(starNum: Int) {
         self.starNumber = starNum
-        self.setImage(.newLearnResult)
         self.resetStatus()
+        self.setImage(.learnResult)
         self.addSubview(leftStarDisableImageView)
         self.addSubview(centerStarDisableImageView)
         self.addSubview(rightStarDisableImageView)
@@ -90,17 +90,17 @@ class YXStarView: UIView {
         centerStarDisableImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(30), height: AdaptSize(30)))
+            make.size.equalTo(CGSize(width: AdaptSize(45), height: AdaptSize(45)))
         }
         leftStarDisableImageView.snp.makeConstraints { (make) in
             make.right.equalTo(centerStarDisableImageView.snp.left).offset(AdaptSize(2))
-            make.top.equalTo(centerStarDisableImageView).offset(AdaptSize(15))
-            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
+            make.centerY.equalTo(centerStarDisableImageView)
+            make.size.equalTo(CGSize(width: AdaptSize(31), height: AdaptSize(31)))
         }
         rightStarDisableImageView.snp.makeConstraints { (make) in
             make.left.equalTo(centerStarDisableImageView.snp.right).offset(AdaptSize(-2))
-            make.top.equalTo(leftStarDisableImageView)
-            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
+            make.centerY.equalTo(centerStarDisableImageView)
+            make.size.equalTo(CGSize(width: AdaptSize(31), height: AdaptSize(31)))
         }
         centerStarEnableImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
@@ -197,7 +197,7 @@ class YXStarView: UIView {
     private func showAnimation() {
         let animation = CAKeyframeAnimation(keyPath: "transform.scale")
         animation.values         = [0, 1.1, 1.0]
-        animation.duration       = 0.75
+        animation.duration       = 0.5
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         if self.starNumber > 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -207,14 +207,14 @@ class YXStarView: UIView {
             }
         }
         if self.starNumber > 1 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.centerStarEnableImageView.isHidden = false
                 self.centerStarEnableImageView.layer.add(animation, forKey: nil)
                 YXAVPlayerManager.share.playStar2()
             }
         }
         if self.starNumber > 2 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 self.rightStarEnableImageView.isHidden = false
                 self.rightStarEnableImageView.layer.add(animation, forKey: nil)
                 YXAVPlayerManager.share.playStar3()

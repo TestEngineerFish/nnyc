@@ -20,13 +20,13 @@ class YXBecomeActiveManager: NSObject {
     public func check(_ completion: (() -> Void)? ) {
         // 学习中，不要识别口令
         if let _ = YYCache.object(forKey: .learningState) {
-            print("学习中")
+            YXLog("学习中----不检测口令")
             completion?()
             return
         }
         // 没登录，不要识别口令
         if YXUserModel.default.didLogin == false {
-            print("未登陆")
+            YXLog("未登录----不检测口令")
             completion?()
             return
         }

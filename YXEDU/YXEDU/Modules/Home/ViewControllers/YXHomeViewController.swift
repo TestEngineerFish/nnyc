@@ -30,7 +30,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var studyDataCollectionView: UICollectionView!
     @IBOutlet weak var subItemCollectionView: UICollectionView!
-    var entryAnimationView: AnimationView!
+    var squirrelAnimationView: AnimationView?
     @IBOutlet weak var entryViewHeightConstraint: NSLayoutConstraint!
     
     @IBAction func startExercise(_ sender: UIButton) {
@@ -38,14 +38,16 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
             return
         }
-        DDLogInfo("====开始主流程的学习====")
+        YXLog("====开始主流程的学习====")
+        YXLog(String(format: "当前学习词书名：%@, 词书ID：%ld,当前学习单元：%@，单元ID：%ld", self.homeModel.bookName ?? "--", self.homeModel?.bookId ?? -1, self.homeModel.unitName ?? "--", self.homeModel?.unitId ?? -1)
+
         if self.countOfWaitForStudyWords.text == "0" {
             guard let homeData = self.homeModel else { return }
-            
             let alertView = YXAlertView(type: .normal)
             if homeData.isLastUnit == 1 {
+                YXLog("当前词书\(homeData.bookName ?? "")已背完啦")
                 alertView.descriptionLabel.text = "你太厉害了，已经背完这本书拉，你可以……"
-                alertView.closeButton.isHidden = false
+                alertView.closeButton.isHidden  = false
                 alertView.leftButton.setTitle("换单元", for: .normal)
                 alertView.rightOrCenterButton.setTitle("换本书学", for: .normal)
                 
@@ -54,10 +56,12 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 }
                 
                 alertView.doneClosure = { _ in
+                    YXLog("更换词书")
                     self.performSegue(withIdentifier: "AddBookFromHome", sender: self)
                 }
                 
             } else {
+                YXLog("当前单元\(homeData.unitName ?? "")暂时没有需要新学或复习的单词")
                 alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
                 alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
                 alertView.doneClosure = { _ in
@@ -70,7 +74,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             
         } else {
             YYCache.set(Date(), forKey: "LastStoredDate")
-            DDLogInfo(String(format: "开始学习书(%ld),第(%ld)单元", self.homeModel?.bookId ?? 0, self.homeModel?.unitId ?? 0))
+            YXLog(String(format: "开始学习书(%ld),第(%ld)单元", self.homeModel?.bookId ?? 0, self.homeModel?.unitId ?? 0))
             let vc = YXExerciseViewController()
             vc.bookId = self.homeModel?.bookId
             vc.unitId = self.homeModel?.unitId
@@ -93,8 +97,12 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         self.checkUserState()
         self.adjustEntryViewContraints()
-        self.setEntryAnimation()
+        self.setSquirrelAnimation()
         self.registerNotification()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,6 +143,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     /// 注册通知
     private func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateTaskCenterStatus), name: YXNotification.kUpdateTaskCenterBadge, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(playSquirrelAnimation), name: YXNotification.kSquirrelAnimation, object: nil)
     }
     
     // MARK: ---- Request ----
@@ -152,25 +161,24 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.countOfWaitForStudyWords.text = "\((self.homeModel.newWords ?? 0) + (self.homeModel.reviewWords ?? 0))"
                 self.progressBar.setProgress(Float(self.homeModel.unitProgress ?? 0), animated: true)
                 
-                self.learnedWordsCount = "\(self.homeModel.learnedWords ?? 0)"
+                self.learnedWordsCount   = "\(self.homeModel.learnedWords ?? 0)"
                 self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
-                self.wrongWordsCount = "\(self.homeModel.wrongWords ?? 0)"
+                self.wrongWordsCount     = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
                 
                 YXWordBookResourceManager.shared.contrastBookData()
                 
                 self.initDataManager()
-                
             } catch {
-                print(error)
+                YXLog("获取主页基础数据失败：", error.localizedDescription)
             }
         }
     }
     
     private func checkUserState() {
         let request = YXRegisterAndLoginRequest.userInfomation
-        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
-            guard let userInfomation = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let userInfomation = response.data else { return }
 
             if userInfomation.didSelectBook == 0 {
                 self.performSegue(withIdentifier: "AddBookGuide", sender: self)
@@ -182,18 +190,20 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
             YXUserModel.default.reviewNameType = userInfomation.reviewNameType
-
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
     // MARK: ---- Tools ----
     
-    private func setEntryAnimation() {
+    private func setSquirrelAnimation() {
+        if self.squirrelAnimationView?.superview != nil {
+            self.squirrelAnimationView?.removeFromSuperview()
+        }
         let isFirstShowHome = YYCache.object(forKey: YXLocalKey.firstShowHome) as? Bool ?? true
         if isFirstShowHome {
-            entryAnimationView = AnimationView(name: "homeFirst")
+            squirrelAnimationView = AnimationView(name: "homeFirst")
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
                 let animation = CAKeyframeAnimation(keyPath: "transform.scale")
                 animation.values         = [1.0, 0.8, 1.0, 0.8, 1.0]
@@ -203,14 +213,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self?.startStudyView.layer.add(animation, forKey: nil)
             }
         } else {
-            entryAnimationView = AnimationView(name: "homeNormal")
+            squirrelAnimationView = AnimationView(name: "homeNormal")
         }
         YYCache.set(false, forKey: YXLocalKey.firstShowHome)
-        self.homeEntryView.insertSubview(entryAnimationView, at: 1)
-        entryAnimationView.snp.makeConstraints { (make) in
+        self.homeEntryView.insertSubview(squirrelAnimationView!, at: 1)
+        squirrelAnimationView!.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        entryAnimationView.play()
+        squirrelAnimationView?.play()
     }
     
     private func adjustEntryViewContraints() {
@@ -253,6 +263,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.subItemCollectionView.reloadData()
     }
     
+    @objc private func playSquirrelAnimation() {
+        YYCache.set(true, forKey: YXLocalKey.firstShowHome)
+        self.setSquirrelAnimation()
+    }
+    
     @IBAction func showLearnMap(_ sender: UIButton) {
         self.hidesBottomBarWhenPushed = true
         let vc = YXLearnMapViewController()
@@ -260,6 +275,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         vc.unitId = self.homeModel?.unitId
         self.navigationController?.pushViewController(vc, animated: true)
         self.hidesBottomBarWhenPushed = false
+        YXLog("进入单元地图")
     }
 
     @objc func enterTaskVC() {
@@ -342,22 +358,19 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 
             case 2:
                 let request = YXHomeRequest.report
-                YYNetworkService.default.request(YYStructResponse<YXReportModel>.self, request: request, success: { (response) in
+                YYNetworkService.default.request(YYStructResponse<YXReportModel>.self, request: request, success: { [weak self] (response) in
+                    guard let self = self else { return }
                     if let report = response.data, let url = report.reportUrl, url.isEmpty == false {
                         let baseWebViewController = YXBaseWebViewController(link: url, title: "我的学习报告")
                         baseWebViewController?.hidesBottomBarWhenPushed = true
                         self.navigationController?.pushViewController(baseWebViewController!, animated: true)
-                        
                     } else if let report = response.data, let description = report.description {
                         self.view.toast(description)
                     }
-                    
                 }) { error in
-                    print("❌❌❌\(error)")
+                    YXUtils.showHUD(kWindow, title: error.message)
                 }
-                
                 break
-                
             case 3:
                 tabBarController?.selectedIndex = 2
                 break

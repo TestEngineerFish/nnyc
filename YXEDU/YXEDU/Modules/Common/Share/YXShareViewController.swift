@@ -135,7 +135,7 @@ class YXShareViewController: YXViewController {
             }
             
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
         
         // 设置分享数据
@@ -240,10 +240,10 @@ class YXShareViewController: YXViewController {
 //                    YXToastView.share.showCoinView(model.coin)
 //                }
             } else {
-                DDLogInfo("打卡分享失败")
+                YXLog("打卡分享失败")
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: "\(error.message)")
+            YXUtils.showHUD(self.view, title: error.message)
         }
     }
     

@@ -162,7 +162,7 @@
             YXVersionResModel *resModel = obj;
             if (resModel.update.flag.intValue == 1) {
                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"报告小主！发现新版本，快点我更新！" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) { NSLog(@"action = %@", action); }];
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) { YXEventLog(@"action = %@", action); }];
                 UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:resModel.update.url]];
                 }];

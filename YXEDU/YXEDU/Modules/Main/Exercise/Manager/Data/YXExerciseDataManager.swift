@@ -88,13 +88,14 @@ class YXExerciseDataManager: NSObject {
             self.processExerciseData(result: response.data)
             completion(true, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion(false, error.message)
         }
     }
     
     /// 加载本地未学完的关卡数据
     func fetchLocalExerciseModels() {
-        DDLogInfo("加载本地数据")
+        YXLog("加载本地数据")
         isResetTurnIndex = false
         
         if progressManager.dataType != .base {
@@ -103,7 +104,7 @@ class YXExerciseDataManager: NSObject {
             self.unitId = bau.1
             progressManager.bookId = self.bookId
             progressManager.unitId = self.unitId
-            DDLogInfo("加载的本地数据是基础学习，则赋值正确的BookID：\(self.bookId ?? 0)和单元ID\(self.unitId ?? 0)")
+            YXLog("加载的本地数据是基础学习，则赋值正确的BookID：\(self.bookId ?? 0)和单元ID\(self.unitId ?? 0)")
         }
         
         let data = progressManager.loadLocalExerciseModels()
@@ -143,7 +144,7 @@ class YXExerciseDataManager: NSObject {
         updateCurrentPatchIndex()
         
         // 打印
-//        printReportResult()
+        printReportResult()
         
         if !progressManager.isSkipNewWord() {
             for exercise in self.newWordArray {
@@ -230,13 +231,14 @@ class YXExerciseDataManager: NSObject {
     /// - Parameter completion: 上报后成功或失败的回调处理
     func reportExercise(type: YXExerciseDataType, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let result = self.reportJson()
-        DDLogInfo("上报内容：" + result)
+        YXLog("上报内容：" + result)
         let duration = progressManager.fetchStudyDuration()
-        DDLogInfo("学习时长：\(duration)")
+        YXLog("学习时长：\(duration)")
         let request = YXExerciseRequest.report(type: type.rawValue, time: duration, result: result)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
             completion?(response.dataArray != nil, nil)
         }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?(false, error.message)
         }
     }
@@ -311,8 +313,7 @@ class YXExerciseDataManager: NSObject {
                     map[word.wordId]?.result?.three = e.isRight
                 case 4:
                     map[word.wordId]?.result?.four = e.isRight
-                default:
-                    print()
+                default: break
                 }
             }
             
@@ -326,27 +327,27 @@ class YXExerciseDataManager: NSObject {
     
     func printReportResult() {
         let json = self.reportJson()
-        print(json)
+        YXLog("上报内容：", json)
     }
     
     func printCurrentTurn() {
-        DDLogInfo(String(format: "第\(currentTurnIndex)轮数量：%ld", currentTurnArray.count))
+        YXLog(String(format: "第\(currentTurnIndex)轮数量：%ld", currentTurnArray.count))
         for e in self.currentTurnArray {
-            DDLogInfo(String(format: "id = %ld, word = %@", e.word?.wordId ?? 0, e.word?.word ?? ""))
-            DDLogInfo(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
+            YXLog(String(format: "id = %ld, word = %@", e.word?.wordId ?? 0, e.word?.word ?? ""))
+            YXLog(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
         }
     }
     func printStatus() {
         
-        DDLogInfo("$$$$$$$$$$#############$$$$$$$$$$$$")
+        YXLog("$$$$$$$$$$#############$$$$$$$$$$$$")
         for word in self.reviewWordArray {
-            DDLogInfo("\n========================\n")
+            YXLog("\n========================\n")
             for (index, step) in word.exerciseSteps.enumerated() {
                 let e = step.first
-                DDLogInfo(String(format: "\t\tid = %ld, step = %ld, index = %ld", word.wordId, e?.step ?? 0, index + 1))
-                DDLogInfo(String(format: "id = %ld, word = %@", e?.word?.wordId ?? 0, e?.word?.word ?? 0))
-                DDLogInfo(String(format: "right = %ld, continue = %ld, finish = %ld", e?.isRight ?? -1, e?.isContinue ?? -1, e?.isFinish ?? -1))
-                DDLogInfo("--------------------")
+                YXLog(String(format: "\t\tid = %ld, step = %ld, index = %ld", word.wordId, e?.step ?? 0, index + 1))
+                YXLog(String(format: "id = %ld, word = %@", e?.word?.wordId ?? 0, e?.word?.word ?? 0))
+                YXLog(String(format: "right = %ld, continue = %ld, finish = %ld", e?.isRight ?? -1, e?.isContinue ?? -1, e?.isFinish ?? -1))
+                YXLog("--------------------")
             }
             
         }

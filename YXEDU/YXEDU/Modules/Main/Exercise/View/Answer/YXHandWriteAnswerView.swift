@@ -89,11 +89,11 @@ class YXHandWriteAnswerView: UIView {
 
                 for observation in observations {
                     guard let bestCandidate = observation.topCandidates(1).first else {
-                        print("No candidate")
+                        YXLog("No candidate")
                         continue
                     }
 
-                    print("Found this candidate: \(bestCandidate.string)")
+                    YXLog("Found this candidate: \(bestCandidate.string)")
                 }
             }
             request.recognitionLevel = .accurate

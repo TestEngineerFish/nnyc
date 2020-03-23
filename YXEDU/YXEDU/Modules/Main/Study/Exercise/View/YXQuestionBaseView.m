@@ -231,7 +231,7 @@
 }
 
 - (void)showWordDetailImmediately {
-    NSLog(@"进入单词详情");
+    YXEventLog(@"进入单词详情");
     self.watchWordDetailStartDate = [NSDate date];
     if ([self.delegate respondsToSelector:@selector(questionBaseViewNeedAppearWordDetail:)]) {
         [self.delegate questionBaseViewNeedAppearWordDetail:self];
@@ -281,7 +281,7 @@
     [self.remotePlayer startPlay:[NSURL URLWithString:remoteSource] finish:^(BOOL isSuccess) {
         [weakSelf wordSoundPlayFinished];// 结束播放
     }];
-    NSLog(@"本地不存在音频文件，播放链接");
+    YXEventLog(@"本地不存在音频文件，播放链接");
 }
 
 
@@ -298,7 +298,7 @@
 }
 
 - (void)answerWrongSound {  //    [self answerWrongSoundfinish:nil];
-//    NSLog(@">>>开始播放单词->%@的错误提示音",self.wordQuestionModel.wordDetail.word);
+//    YXEventLog(@">>>开始播放单词->%@的错误提示音",self.wordQuestionModel.wordDetail.word);
     [self answerWrongSoundfinish:nil];
 }
 

@@ -74,7 +74,7 @@ static NSString *const kYXMyWordBaseHeaderViewID = @"YXMyWordBaseHeaderViewID";
 }
 
 - (void)changeWordListName {
-    NSLog(@"改名字------------------");
+    YXEventLog(@"改名字------------------");
 }
 
 - (void)showChangeNameViewWithDefaultName:(NSString *)defName {

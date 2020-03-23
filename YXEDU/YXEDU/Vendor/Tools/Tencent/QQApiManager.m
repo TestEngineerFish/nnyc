@@ -119,34 +119,34 @@
     if (_tencentOAuth.accessToken && 0 != [_tencentOAuth.accessToken length]) {
 //        self.finishBlock(_tencentOAuth.accessToken,_tencentOAuth.openId, YES);
         // 记录登录用户的OpenID、Token以及过期时间
-        NSLog(@"%@",_tencentOAuth.accessToken);
+        YXEventLog(@"%@",_tencentOAuth.accessToken);
 
         [[NSNotificationCenter defaultCenter]postNotificationName:@"CompletedBind" object:nil userInfo:@{@"platfrom":@"qq", @"token":_tencentOAuth.accessToken, @"openID":_tencentOAuth.openId}];
         
     } else {
-        NSLog(@"登录不成功 没有获取accesstoken");
+        YXEventLog(@"登录不成功 没有获取accesstoken");
     }
 }
 
 //非网络错误导致登录失败
 -(void)tencentDidNotLogin:(BOOL)cancelled {
     if (cancelled) {
-        NSLog(@"用户取消登录");
+        YXEventLog(@"用户取消登录");
     } else {
-        NSLog(@"登录失败");
+        YXEventLog(@"登录失败");
     }
 }
 
 //网络错误导致登录失败
 -(void)tencentDidNotNetWork {
-    NSLog(@"无网络连接，请设置网络");
+    YXEventLog(@"无网络连接，请设置网络");
     
 }
 
 
 // 处理来至QQ的请求
 - (void)onReq:(QQBaseReq *)req {
-    NSLog(@" ----req %@",req);
+    YXEventLog(@" ----req %@",req);
 }
 
 
@@ -166,7 +166,7 @@
             }
         }
     }
-    NSLog(@" ----resp %@",resp);
+    YXEventLog(@" ----resp %@",resp);
 }
 
 #pragma mark - share
@@ -187,7 +187,7 @@
                                                       description:desc];
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:imageObj];
     QQApiSendResultCode retCode = [QQApiInterface sendReq:req];
-    DDLogInfo(@"QQ分享Image返回Code%ld", (long)retCode);
+    YXEventLog(@"QQ分享Image返回Code%ld", (long)retCode);
 }
 
 - (void)shareUrl:(NSString *)urlStr
@@ -202,7 +202,7 @@
     QQApiURLObject *urlObj = [QQApiURLObject objectWithURL:url title:title description:desc previewImageData:thumData targetContentType:QQApiURLTargetTypeNews];
     SendMessageToQQReq *req     = [SendMessageToQQReq reqWithContent:urlObj];
     QQApiSendResultCode retCode = [QQApiInterface sendReq:req];
-    DDLogInfo(@"QQ分享URL返回Code%ld", (long)retCode);
+    YXEventLog(@"QQ分享URL返回Code%ld", (long)retCode);
 }
 
 - (void)shareText:(NSString *)text {
@@ -210,6 +210,6 @@
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:txtObj];
     //将内容分享到qq
     QQApiSendResultCode sent = [QQApiInterface sendReq:req];
-    NSLog(@"%ld",(long)sent);
+    YXEventLog(@"%ld",(long)sent);
 }
 @end

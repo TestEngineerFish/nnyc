@@ -74,12 +74,12 @@
 - (void)answerWrongSoundFinished {
     [super answerWrongSoundFinished];
     [self.checkButtonView resetAllButtons];
-    NSLog(@"-------reset--------");
+    YXEventLog(@"-------reset--------");
 }
 #pragma mark - <YXCheckButtonsViewDelegate>
 - (void)CheckButtonView:(YXCheckButtonsView *)checkButtonView checkButton:(YXCheckButton *)checkButton {
     [self.checkButtonView disableAllButtons];
-    NSLog(@"-------disable--------");
+    YXEventLog(@"-------disable--------");
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.1 animations:^{
         checkButton.transform = CGAffineTransformScale(checkButton.transform, 0.9, 0.9);

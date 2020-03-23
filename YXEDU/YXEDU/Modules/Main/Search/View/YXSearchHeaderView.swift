@@ -89,7 +89,7 @@ class YXSearchHeaderView: YXView {
             return
         }
         self.searchEvent?(text)
-        print(text)
+        YXLog(text)
     }
     
 }

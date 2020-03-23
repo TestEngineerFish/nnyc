@@ -194,10 +194,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
     }
     
-    deinit {
-        print("❌")
-    }
-    
     // MARK: - table view
     func numberOfSections(in tableView: UITableView) -> Int {
         if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, isWrongWordList {
@@ -402,9 +398,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             self.wrongWordSectionData?.remove(at: 0)
             self.tableView.reloadData()
             UIView().toast("已清除")
-            
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 }

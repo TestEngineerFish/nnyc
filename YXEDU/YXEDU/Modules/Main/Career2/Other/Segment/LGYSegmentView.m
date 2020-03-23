@@ -342,7 +342,7 @@
 - (void)updateTitleAtIndex:(NSInteger)selIndex {
 
     if (selIndex >= self.titlesView.subviews.count) {
-        NSLog(@"超出点击标题");
+        YXEventLog(@"超出点击标题");
         return;
     }
     _currentSelIndex = selIndex;

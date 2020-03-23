@@ -121,7 +121,7 @@
 - (void) switchTaped {
     self.bottomView.hidden = !self.isReminderSwitch.isOn;
     if (self.isReminderSwitch.isOn) {
-        DDLogInfo(@"开启每日提醒");
+        YXEventLog(@"开启每日提醒");
         self.timeLabel = [[UILabel alloc] init];
         self.timeLabel.text = @"提醒时间";
         self.timeLabel.textColor = UIColorOfHex(0x485461);
@@ -156,7 +156,7 @@
             make.top.equalTo(self.timeLabel.mas_bottom).offset(20);
         }];
     } else {
-        DDLogInfo(@"关闭每日提醒");
+        YXEventLog(@"关闭每日提醒");
         [self.timeLabel removeFromSuperview];
         [self.datePicker removeFromSuperview];
     }

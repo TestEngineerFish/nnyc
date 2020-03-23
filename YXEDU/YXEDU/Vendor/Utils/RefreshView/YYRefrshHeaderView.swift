@@ -56,7 +56,7 @@ public class YYRefrshHeaderView: MJRefreshHeader {
             case .idle:
                 self.refreshFrashContentView.stopAnimation()
             case .pulling:
-                DDLogInfo("pulling")
+                YXLog("pulling")
             case .refreshing:
                 self.refreshFrashContentView.beginAnimation()
             default:

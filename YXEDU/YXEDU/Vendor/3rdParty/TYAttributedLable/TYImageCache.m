@@ -74,7 +74,7 @@ static TYImageCache *_instance;
         NSError *error;
         
         if ( ![[NSFileManager defaultManager] createDirectoryAtPath:self.localDirectory withIntermediateDirectories:YES attributes:nil error:&error] ) {
-            NSLog(@"[%@] ERROR: attempting to write create MyFolder directory", [self class]);
+            YXEventLog(@"[%@] ERROR: attempting to write create MyFolder directory", [self class]);
             NSAssert( FALSE, @"Failed to create directory maybe out of disk space?");
         }
     }
@@ -133,7 +133,7 @@ static TYImageCache *_instance;
         return YES;
     } else {
         // 未知图片类型
-        NSLog(@"文件后缀名未知! CTImageCache ");
+        YXEventLog(@"文件后缀名未知! CTImageCache ");
         return NO;
     }
 }
@@ -288,7 +288,7 @@ static TYImageCache *_instance;
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     if(newImage == nil)
-        NSLog(@"could not scale image");
+        YXEventLog(@"could not scale image");
     return newImage ;
 }
 

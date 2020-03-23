@@ -220,6 +220,7 @@ class YXNewLearnResultView: UIView {
         self.starView.showNewLearnResultView(starNum: starNum)
         self.iconImageView.image    = UIImage(named: "learnResult\(starNum)")
         bonusLabel.text             = "+\(coin)"
+        titleLabel.textColor        = .black1
         if starNum > 1 {
             titleLabel.text        = "太棒啦"
         } else {

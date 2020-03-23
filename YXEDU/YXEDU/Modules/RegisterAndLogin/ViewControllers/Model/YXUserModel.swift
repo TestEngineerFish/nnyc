@@ -121,12 +121,13 @@ class YXUserModel: NSObject {
                 closure?(true)
                 
             } else {
+                YXLog("更新Token失败，退出登录，token为空，data:", response)
                 self.logout()
                 closure?(false)
             }
             
         }) { error in
-            print("❌❌❌\(error)")
+            YXLog("更新Token失败，退出登录，error：", error.message)
             self.logout()
             closure?(false)
         }

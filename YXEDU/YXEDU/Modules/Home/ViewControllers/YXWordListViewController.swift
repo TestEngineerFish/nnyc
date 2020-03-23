@@ -198,15 +198,14 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 self.wordListViews[indexPath.row]?.shouldShowBottomView = false
                 
                 let request = YXWordListRequest.wordList(type: indexPath.row + 1)
-                YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
-                    guard let learnedWords = response.dataArray else { return }
+                YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { [weak self] (response) in
+                    guard let self = self, let learnedWords = response.dataArray else { return }
                     self.wordListViews[indexPath.row]?.words = learnedWords
-                    
-                }) { error in
+                }) { [weak self] (error) in
+                    guard let self = self else { return }
+                    YXUtils.showHUD(kWindow, title: error.message)
                     self.wordListViews[indexPath.row]?.words = []
-                    print("❌❌❌\(error)")
                 }
-                
             case 2:
                 self.wordListViews[indexPath.row] = wordListView
                 self.wordListViews[indexPath.row]?.isWrongWordList = false
@@ -219,8 +218,8 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     self.wordListViews[indexPath.row]?.words = learnedWords
                     
                 }) { error in
+                    YXUtils.showHUD(kWindow, title: error.message)
                     self.wordListViews[indexPath.row]?.words = []
-                    print("❌❌❌\(error)")
                 }
                 
             case 3:
@@ -263,8 +262,8 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     self.wordListViews[indexPath.row]?.wrongWordSectionData = wrongWordSectionData
                     
                 }) { error in
+                    YXUtils.showHUD(kWindow, title: error.message)
                     self.wordListViews[indexPath.row]?.wrongWordSectionData = nil
-                    print("❌❌❌\(error)")
                 }
                 
             default:
@@ -310,8 +309,8 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     self.wordListViews[indexPath.row]?.orderType = orderType
                     
                 }) { error in
+                    YXUtils.showHUD(kWindow, title: error.message)
                     self.wordListViews[indexPath.row]?.words = []
-                    print("❌❌❌\(error)")
                 }
             }
             break
@@ -388,8 +387,8 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     self.wordListViews[indexPath.row]?.orderType = orderType
 
                 }) { error in
+                    YXUtils.showHUD(kWindow, title: error.message)
                     self.wordListViews[indexPath.row]?.wrongWordSectionData = nil
-                    print("❌❌❌\(error)")
                 }
             }
             break

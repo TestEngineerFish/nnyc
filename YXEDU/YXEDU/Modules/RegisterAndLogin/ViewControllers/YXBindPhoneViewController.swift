@@ -145,8 +145,8 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
     
     private func sendSMS() {
         let request = YXRegisterAndLoginRequest.sendSms(phoneNumber: phoneNumberTextField.text ?? "", loginType: "editMobile", SlidingVerificationCode: slidingVerificationCode)
-        YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { (response) in
-            guard let slidingVerificationCodeModel = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let slidingVerificationCodeModel = response.data else { return }
             
             if slidingVerificationCodeModel.isSuccessSendSms == 1 {
                 self.slidingVerificationCode = nil
@@ -161,15 +161,13 @@ class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
                     if isSuccess {
                         self.slidingVerificationCode = slidingVerificationCodeModel.slidingVerificationCode
                         self.sendSMS()
-                        
                     } else {
-                        
+                        YXLog("滑动解锁失败")
                     }
                 }
             }
-            
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 

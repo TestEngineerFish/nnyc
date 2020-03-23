@@ -115,7 +115,6 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
                 return
             }
             if self.lastPassByIndexPath != indexPath {
-                print(indexPath)
                 self.updateWordSelectStatus(indexPath)
                 self.lastPassByIndexPath = indexPath
             }

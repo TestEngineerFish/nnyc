@@ -202,8 +202,6 @@ public extension UIImage {
         let standardImage: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        print("####改变后图片的宽度为%f,图片的高度为%f\n", standardImage?.size.width, standardImage?.size.height)
-
         return standardImage
     }
 

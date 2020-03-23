@@ -9,7 +9,7 @@
 import UIKit
 import Lottie
 
-class YXNewLearnView: UIView {
+class YXNewLearnView: UIView, YXNewLearnProtocol {
     
     var closeButton: UIButton = {
         let button = UIButton()
@@ -33,6 +33,8 @@ class YXNewLearnView: UIView {
         return label
     }()
     
+    var guideView = YXNewLearnGuideView()
+    
     var answerView: YXNewLearnAnswerView!
     var wordModel: YXWordModel!
     
@@ -43,6 +45,11 @@ class YXNewLearnView: UIView {
         self.layer.opacity = 0.0
         self.createSubviews()
         self.bindProperty()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        self.hideGuideView()
     }
     
     required init?(coder: NSCoder) {
@@ -84,6 +91,7 @@ class YXNewLearnView: UIView {
         self.backgroundColor    = UIColor.white.withAlphaComponent(0.95)
         self.titleLabel.text    = wordModel.word
         self.subtitleLabel.text = (wordModel.partOfSpeech ?? "") + " " + (wordModel.meaning ?? "")
+        self.answerView.newLearnDelegate = self
         self.closeButton.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
         NotificationCenter.default.addObserver(self, selector: #selector(closedView(_:)), name: YXNotification.kRecordScore, object: nil)
     }
@@ -116,5 +124,40 @@ class YXNewLearnView: UIView {
             self.layer.opacity = 1.0
         }
     }
+    
+    private func showGuideView() {
+        let roundSize  = CGSize(width: AdaptSize(115), height: AdaptSize(115))
+        let audioView  = self.answerView.recordAudioButton
+        let audioFrame = audioView.convert(audioView.frame, to: kWindow)
+        self.guideView.show(CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.midY - AdaptSize(roundSize.height/2), width: roundSize.width, height: roundSize.height))
+        YYCache.set(true, forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideGuideView))
+        self.guideView.addGestureRecognizer(tap)
+    }
+    
+    @objc private func hideGuideView() {
+        self.guideView.removeFromSuperview()
+        self.answerView.status.forward()
+     }
+    
+    // MARK: ---- YXNewLearnProtocol ----
+    /// 单词和单词播放结束
+    func playWordAndWordFinished() {
+        self.answerView.status = .showGuideView
+        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
+            self.showGuideView()
+        } else {
+            self.answerView.status.forward()
+        }
+    }
+    
+    /// 单词和例句播放结束
+    func playWordAndExampleFinished() {}
+    /// 显示单词详情
+    func showNewLearnWordDetail() {}
+    /// 禁用底部所有按钮
+    func disableAllButton() {}
+    /// 启用底部所有按钮
+    func enableAllButton() {}
     
 }

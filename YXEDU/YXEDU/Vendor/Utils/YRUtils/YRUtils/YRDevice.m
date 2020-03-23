@@ -72,7 +72,6 @@ NSString * const SSKeychainOpenUDIDKey = @"udid";
 + (NSString *)OSVersion
 {
     NSString *OSVersion = [NSString stringWithFormat:@"iOS %f",[[[UIDevice currentDevice] systemVersion] floatValue]];
-    NSLog(@"%@",OSVersion);
     return OSVersion;
 }
 

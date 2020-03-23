@@ -98,7 +98,7 @@ static CGFloat const kPickViewHeight = 272.f;
         NSString *title = [NSString stringWithFormat:@"%zu年%zu月",currentTitleDate.year, currentTitleDate.month];
         [self.naview.titleLabel setText:title];
     }
-    NSLog(@"更新了currentTitleDate,当前的日期是: %@", self.naview.titleLabel.text);
+    YXEventLog(@"更新了currentTitleDate,当前的日期是: %@", self.naview.titleLabel.text);
     _currentTitleDate = currentTitleDate;
     [self getMonthlyData:currentTitleDate];
 }
@@ -818,7 +818,7 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 - (void)calendarCurrentPageDidChange:(FSCalendar *)calendar {
-    NSLog(@"我滑动选择了新的月份: %zu", calendar.currentPage.month);
+    YXEventLog(@"我滑动选择了新的月份: %zu", calendar.currentPage.month);
     self.currentTitleDate = calendar.currentPage;
 }
 

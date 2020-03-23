@@ -14,15 +14,35 @@ class YXWordDetailViewControllerNew: UIViewController {
         return item
     }()
     lazy var collectionButton: UIBarButtonItem = {
-        let item = UIBarButtonItem(image: UIImage(named: "collectWord")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(collectWord(_:)))
+        let button = UIButton(type: UIButton.ButtonType.custom)
+        button.size = CGSize(width: AdaptSize(20), height: AdaptSize(20))
+        button.setImage(UIImage(named: "collectWord")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(collectWord(_:)), for: .touchUpInside)
+//        button.widthAnchor.constraint(equalToConstant: AdaptSize(20)).isActive  = true
+//        button.heightAnchor.constraint(equalToConstant: AdaptSize(20)).isActive = true
+        
+        let item = UIBarButtonItem(customView: button)
         return item
     }()
     lazy var feedbackItem: UIBarButtonItem = {
-        let item = UIBarButtonItem(image: UIImage(named: "feedbackWord")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(feedbackWord(_:)))
+        let button = UIButton(type: UIButton.ButtonType.custom)
+        button.size = CGSize(width: AdaptSize(20), height: AdaptSize(20))
+        button.setImage(UIImage(named: "feedbackWord")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(feedbackWord(_:)), for: .touchUpInside)
+//        button.widthAnchor.constraint(equalToConstant: AdaptSize(20)).isActive  = true
+//        button.heightAnchor.constraint(equalToConstant: AdaptSize(20)).isActive = true
+        
+        let item = UIBarButtonItem(customView: button)
         return item
     }()
     lazy var relearnWord: UIBarButtonItem = {
-        let item = UIBarButtonItem(image: UIImage(named: "recordedIcon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(relearnWord(_:)))
+        let button = UIButton(type: UIButton.ButtonType.custom)
+        button.size = CGSize(width: AdaptSize(20), height: AdaptSize(20))
+        button.setImage(UIImage(named: "recordedIcon")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(relearnWord(_:)), for: .touchUpInside)
+//        button.widthAnchor.constraint(equalToConstant: AdaptSize(20)).isActive  = true
+//        button.heightAnchor.constraint(equalToConstant: AdaptSize(20)).isActive = true
+        let item = UIBarButtonItem(customView: button)
         return item
     }()
     
@@ -81,12 +101,13 @@ class YXWordDetailViewControllerNew: UIViewController {
         let didCollectWordRequest = YXWordListRequest.didCollectWord(wordId: wordId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: didCollectWordRequest, success: { (response) in
             if response.data?.didCollectWord == 1 {
-                self.collectionButton.image = #imageLiteral(resourceName: "unCollectWord")
+                (self.collectionButton.customView as? UIButton)?.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
             } else {
-                self.collectionButton.image = #imageLiteral(resourceName: "collectWord")
+                (self.collectionButton.customView as? UIButton)?.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
             }
         }) { error in
-            DDLogInfo("查询单词:\(self.wordId)收藏状态失败， error:\(error)")
+            YXLog("查询单词:\(self.wordId)收藏状态失败， error:\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
@@ -101,7 +122,8 @@ class YXWordDetailViewControllerNew: UIViewController {
             self.updateBarStatus()
             self.view.addSubview(self.wordDetailView)
         }) { error in
-            DDLogInfo("查询单词:\(self.wordId)详情失败， error:\(error)")
+            YXLog("查询单词:\(self.wordId)详情失败， error:\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
@@ -112,27 +134,28 @@ class YXWordDetailViewControllerNew: UIViewController {
     }
     
     @objc private func collectWord(_ sender: UIBarButtonItem) {
-        if self.collectionButton.image == #imageLiteral(resourceName: "unCollectWord") {
+        if (self.collectionButton.customView as? UIButton)?.currentImage == #imageLiteral(resourceName: "unCollectWord") {
             let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(wordId),\"is\":\(isComplexWord)}]")
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                self.collectionButton.image = #imageLiteral(resourceName: "collectWord")
+                (self.collectionButton.customView as? UIButton)?.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
                 UIView.toast("取消收藏")
             }) { error in
-                DDLogInfo("取消收藏单词:\(self.wordId)失败， error:\(error)")
+                YXLog("取消收藏单词:\(self.wordId)失败， error:\(error)")
             }
         } else {
             let request = YXWordListRequest.collectWord(wordId: wordId, isComplexWord: isComplexWord)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                self.collectionButton.image = #imageLiteral(resourceName: "unCollectWord")
+                (self.collectionButton.customView as? UIButton)?.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
                 UIView.toast("已收藏")
             }) { error in
-                DDLogInfo("收藏单词:\(self.wordId)失败， error:\(error)")
+                YXLog("收藏单词:\(self.wordId)失败， error:\(error)")
+                YXUtils.showHUD(kWindow, title: error.message)
             }
         }
     }
     
     @objc private func feedbackWord(_ sender: UIBarButtonItem) {
-        DDLogInfo("单词详情VC中点击反馈按钮")
+        YXLog("单词详情VC中点击反馈按钮")
         YXLogManager.share.report()
         YXReportErrorView.show(to: kWindow, withWordId: NSNumber(integerLiteral: wordId), withWord: wordModel?.word ?? "")
     }

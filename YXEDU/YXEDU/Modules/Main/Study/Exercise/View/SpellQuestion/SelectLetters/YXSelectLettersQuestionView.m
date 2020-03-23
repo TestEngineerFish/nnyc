@@ -110,7 +110,7 @@
                           indexInAnswerArr:(NSInteger)indexInAnswerArr
 {
     NSString *letters = (clickedButton.status == Normal) ? @"" : clickedButton.letters;
-//    NSLog(@"------%zd",indexInAnswerArr);
+//    YXEventLog(@"------%zd",indexInAnswerArr);
     [self.spellView insertLetters:letters atIndex:indexInAnswerArr];
     self.confirmButton.enabled = isFinished;
 }

@@ -42,7 +42,7 @@
 
 - (void)setUnitGroupTotal:(NSInteger)unitGroupTotal {
     _unitGroupTotal = unitGroupTotal;
-    NSLog(@"unitGroupTotal:%ld", (long)unitGroupTotal);
+    YXEventLog(@"unitGroupTotal:%ld", (long)unitGroupTotal);
     for (int i=0; i<unitGroupTotal + 1; i++) {
         UIView *v = [UIView new];
         v.layer.borderColor = UIColorOfHex(0xBBBBBB).CGColor;
@@ -56,7 +56,7 @@
 
 - (void)setUnitGroupIdx:(NSInteger)unitGroupIdx {
     _unitGroupIdx = unitGroupIdx;
-//    NSLog(@"unitGroupNum:%ld", (long)unitGroupIdx);
+//    YXEventLog(@"unitGroupNum:%ld", (long)unitGroupIdx);
 }
 
 - (void)setUnitGroupQuestionCount:(NSInteger)unitGroupQuestionCount {

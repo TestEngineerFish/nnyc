@@ -22,8 +22,6 @@ class YYRefreshFrashContentView: UIView {
         set {
             if _complet != newValue {
                 _complet = newValue
-//                print("newValue is \(newValue)")
-                //self.loadingView.transform = CGAffineTransform(rotationAngle: newValue)
             }
         }
         

@@ -97,7 +97,7 @@ class YXAlertCheckManager {
                 let alertView = YXOldUserUpdateView()
                 alertView.closure = {
                     YXSettingDataManager().reportOldUserTips { (model, msg) in
-                        print("老用户更新提示，上报：", model?.state ?? 0)
+                        YXLog("老用户更新提示，上报：", model?.state ?? 0)
                     }
                 }
                 
@@ -107,7 +107,7 @@ class YXAlertCheckManager {
                 completion?()
             }
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?()
         }
         
@@ -136,7 +136,7 @@ class YXAlertCheckManager {
             }
             completion?()
         }) { error in
-            print("❌❌❌\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
             completion?()
         }
     }
@@ -153,7 +153,7 @@ class YXAlertCheckManager {
     
     @objc private func processServiceStop(notification: Notification) {
         
-//        print("停服打印：", notification.object)
+        YXLog("停服打印：", notification.object ?? "--")
         
         let alertView = YXAlertView()
         

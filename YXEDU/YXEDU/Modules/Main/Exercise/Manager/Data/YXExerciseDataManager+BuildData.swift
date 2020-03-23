@@ -316,7 +316,7 @@ extension YXExerciseDataManager {
                     if let backupE = backupExercise(wordId: e?.word?.wordId ?? 0, step: e?.step ?? 0) {
                         return optionManager.processReviewWordOption(exercise: backupE)
                     } else {
-                        print("备选题为空， 出错")
+                        YXLog("备选题为空， 出错")
                         return nil
                     }
                 }
@@ -330,7 +330,7 @@ extension YXExerciseDataManager {
                     if let backupE = backupExercise(wordId: e.word?.wordId ?? 0, step: e.step) {
                         return optionManager.processReviewWordOption(exercise: backupE)
                     } else {
-                        print("备选题为空， 出错")
+                        YXLog("备选题为空， 出错")
                         return nil
                     }
                 }

@@ -18,7 +18,7 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonString;
     if (!jsonData) {
-        NSLog(@"%@",error);
+        YXEventLog(@"%@",error);
     }else{
         jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
     }
@@ -148,7 +148,7 @@
                                                           error:&err];
     if(err)
     {
-        NSLog(@"json解析失败：%@",err);
+        YXEventLog(@"json解析失败：%@",err);
         return nil;
     }
     return dic;

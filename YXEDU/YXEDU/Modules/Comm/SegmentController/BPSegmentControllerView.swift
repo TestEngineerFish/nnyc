@@ -200,7 +200,6 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 //                }
 //                // 设置标识符
 //                _contentView.tag = indexPath.row
-//                print(indexPath)
 //            }
             return _contentView
         }

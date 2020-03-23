@@ -95,7 +95,7 @@ extension YXExerciseDataManager {
                         exercise.word = e
                         self.addWordStep(exerciseModel: exercise, isBackup: subStep.isBackup)
                     } else {
-                        print("单词不存在 id：",subStep.question?.wordId ?? 0)
+                        YXLog("单词不存在 id：",subStep.question?.wordId ?? 0)
                     }
                 }
             }

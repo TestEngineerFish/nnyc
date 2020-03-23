@@ -419,7 +419,7 @@ class YXReviewHeaderView: YXView {
     
     @objc private func clickReviewButton() {
         guard reviewButton.isEnabled else { return }
-        DDLogInfo("====开始智能复习====")
+        YXLog("====开始智能复习====")
         if YXWordBookResourceManager.shared.isDownloading {
             YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
             return
