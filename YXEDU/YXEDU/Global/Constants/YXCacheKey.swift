@@ -19,6 +19,8 @@ enum YXLocalKey: String {
     case firstShowHome                 = "kFirstShowHome"       // 首次进入首页
     case taskCenterCanReceive          = "kTaskCenterCanReceive" // 任务中心未领任务
     
+    case makePlanNameIndex             = "YX_Plan_Name_Index"
+    
 }
 
 

@@ -102,7 +102,7 @@ class YXReviewPlanDetailBottomView: YXView {
         listenButton.layer.cornerRadius = AS(21)
         listenButton.layer.borderColor = UIColor.black6.cgColor
         listenButton.layer.borderWidth = 0.5
-        listenButton.setTitle("听写练习", for: .normal)
+//        listenButton.setTitle("听写练习", for: .normal)
         listenButton.setTitleColor(UIColor.black1, for: .normal)
         listenButton.setTitleColor(UIColor.black3, for: .highlighted)
         listenButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
@@ -113,7 +113,7 @@ class YXReviewPlanDetailBottomView: YXView {
         reviewButton.layer.cornerRadius = AS(21)
         reviewButton.layer.borderColor = UIColor.black6.cgColor
         reviewButton.layer.borderWidth = 0.5
-        reviewButton.setTitle("继续复习", for: .normal)
+//        reviewButton.setTitle(YXReviewDataManager.continueStudy, for: .normal)
         reviewButton.setTitleColor(UIColor.black1, for: .normal)
         reviewButton.setTitleColor(UIColor.black3, for: .highlighted)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
