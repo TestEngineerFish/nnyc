@@ -156,7 +156,7 @@
     
     if ([way isEqualToString:@"moments"]){
         [YXDataProcessCenter POST:DOMAIN_USERSHARECREDIT parameters:contentDic finshedBlock:^(YRHttpResponse *response, BOOL result) {
-            YXEventLog(@"%@",response.responseObject);
+            YXLog(@"%@",response.responseObject);
         }];
     }
     

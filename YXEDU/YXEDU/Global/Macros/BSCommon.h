@@ -66,7 +66,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define LOG_CONTEXT_EVENT 2
 
 #define YXRequestLog(frmt, ...)  LOG_MAYBE(YES, ddLogLevel, LOG_FLAG_REQUEST,  LOG_CONTEXT_REQUEST, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define YXEventLog(frmt, ...) LOG_MAYBE(YES, ddLogLevel, LOG_FLAG_EVENT, LOG_CONTEXT_EVENT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define YXLog(frmt, ...) LOG_MAYBE(YES, ddLogLevel, LOG_FLAG_EVENT, LOG_CONTEXT_EVENT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
 // Now we decide which flags we want to enable in our application
 

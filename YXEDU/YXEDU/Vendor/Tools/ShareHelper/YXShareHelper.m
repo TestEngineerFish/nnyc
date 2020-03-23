@@ -104,7 +104,7 @@
 //                                                          description:desc];
 //        SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:imageObj];
 //        QQApiSendResultCode retCode = [QQApiInterface sendReq:req];
-//        YXEventLog(@"%d",retCode);
+//        YXLog(@"%d",retCode);
 
 
 //        WXImageObject *imageObj = [WXImageObject object];

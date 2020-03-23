@@ -36,7 +36,7 @@
 }
 
 - (void)dealloc {
-    YXEventLog(@"WBQRCodeVC - dealloc");
+    YXLog(@"WBQRCodeVC - dealloc");
     [self removeScanningView];
 }
 
@@ -83,7 +83,7 @@
         } secondBlock:nil];
         [alertView.firstBtn setTitle:@"去开启" forState:UIControlStateNormal];
         [alertView.secondBtn setTitle:@"算了" forState:UIControlStateNormal];
-        YXEventLog(@"没权限啊");
+        YXLog(@"没权限啊");
     }
 }
 
@@ -146,7 +146,7 @@
     
     [obtain setBlockWithQRCodeObtainAlbumResult:^(SGQRCodeObtain *obtain, NSString *result) {
         if (result == nil) {
-            YXEventLog(@"暂未识别出二维码");
+            YXLog(@"暂未识别出二维码");
             [YXUtils showHUD:kWindow title:@"暂未识别出二维码"];
         } else {
             

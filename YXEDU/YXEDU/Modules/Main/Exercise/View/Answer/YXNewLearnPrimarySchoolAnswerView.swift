@@ -179,7 +179,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             }
         } else {
             // 从单词详情进入
-            self.status            = .playedFirstWordInSecondStage
+            self.status            = .playingSecondWordInSecondStage
             self.playByStatus()
             self.starView.showLastNewLearnResultView(score: wordModel?.listenScore ?? 0)
         }
@@ -379,7 +379,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         YXAVPlayerManager.share.pauseAudio()
         YXAVPlayerManager.share.finishedBlock = nil
         if self.status == .recording {
-            self.enginer?.cancel()
+            self.enginer?.stop()
         }
     }
 

@@ -14,7 +14,7 @@
         self.answeredInfo = [[YXAnsweredInfo alloc] init];
         self.wordQuestionModel = wordQuestionModel;
         self.questionViewClass = [self questionClass:self.wordQuestionModel.question.type];
-//        YXEventLog(@"题型：%ld",self.wordQuestionModel.question.type);
+//        YXLog(@"题型：%ld",self.wordQuestionModel.question.type);
         self.answeredInfo.bookId = wordQuestionModel.bookId;
         self.answeredInfo.wordId = wordQuestionModel.wordId;
         self.answeredInfo.questionId = wordQuestionModel.question.questionId;

@@ -336,7 +336,7 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 
 - (void)receivedGroupQuestion:(YXGroupQuestionModel *)groupQuestionModel {
     if (groupQuestionModel.questions.isFinish) { // 答题结束
-        YXEventLog(@"---------今天答题结束---------");
+        YXLog(@"---------今天答题结束---------");
         //先显示完成页,再显示结果页
         NSInteger totalQuestions = self.planRemain;
         YXStudyAccomplishView *studyAccoumplishView = [YXStudyAccomplishView studyAccomplishShowToView:[UIApplication sharedApplication].keyWindow totalQuestionsCount:totalQuestions];
@@ -494,7 +494,7 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
             [weakSelf checkWordFavState:gqInfo.wordQuestionModel.wordDetail];
             [weakSelf showQuestionView:gqInfo];
         }else { // 答题结束
-            YXEventLog(@"----该组答题结束---------");
+            YXLog(@"----该组答题结束---------");
             weakSelf.studyProgressView.progress = 1;
             [self.curShowQuestionView endEditing:YES];
             if (groupExeType != YXExerciseReview && groupExeType != YXExercisePickError) { // 普通题目  groupExeType == YXExerciseNormal
@@ -521,7 +521,7 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 
 #pragma mark -YXReviewAccomplishViewDelegate
 - (void)reviewAccomplishViewBtn{
-    YXEventLog(@"reviewAccomplishViewBtn");
+    YXLog(@"reviewAccomplishViewBtn");
     if (self.planRemain) {
         __weak typeof(self) weakSelf = self;
         [weakSelf handleGroupQuestionsDataWithExerciseType:YXExerciseNormal];
@@ -972,7 +972,7 @@ static NSString *const kSpellGuidedKey = @"SpellGuidedKey";
 
 #pragma mark - YXSpellGuideViewDelegate
 - (void)spellGuideView:(YXSpellGuideView *)spellGuider guideStep:(NSInteger)step{
-    YXEventLog(@"spellGuideView %ld",step);
+    YXLog(@"spellGuideView %ld",step);
     if (step == 3) {
         self.spellView.hidden = NO;
     }

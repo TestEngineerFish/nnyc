@@ -105,7 +105,7 @@
     
     UIViewController *topViewController = [[YRRouter sharedInstance] currentViewController];
     
-    YXEventLog(@"Router openURL : %@", url);
+    YXLog(@"Router openURL : %@", url);
     
     NSDictionary *params = viewController.params;
     //NSDictionary *params = [viewController performSelector:@selector(params)];
@@ -237,7 +237,7 @@
  * 通过递归拿到当前控制器
  */
 - (UIViewController*)currentViewControllerFrom:(UIViewController*)viewController {
-    YXEventLog(@"%@", viewController.class);
+    YXLog(@"%@", viewController.class);
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         // 如果传入的控制器是导航控制器,则返回最后一个
         UINavigationController* navigationController = (UINavigationController *)viewController;

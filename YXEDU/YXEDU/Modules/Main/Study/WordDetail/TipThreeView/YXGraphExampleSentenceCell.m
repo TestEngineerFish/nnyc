@@ -87,7 +87,7 @@
 //    [attrString addAttribute:NSForegroundColorAttributeName value:UIColorOfHex(0x1CB0F6) range:[resultStr rangeOfString:hightLightStr]];
     
     NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[strEng dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-//    YXEventLog(@"%@", [YXStudyCmdCenter shared].curUnitInfo.eng);
+//    YXLog(@"%@", [YXStudyCmdCenter shared].curUnitInfo.eng);
     // 设置段落样式
     [attrStr addAttribute:NSParagraphStyleAttributeName value:muParagraph range:NSMakeRange(0, attrStr.string.length)];
     [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18] range:NSMakeRange(0, attrStr.string.length)];

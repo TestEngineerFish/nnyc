@@ -79,7 +79,7 @@
     NSError *error = nil;
     [[NSFileManager defaultManager]removeItemAtPath:path error:&error];
     if (error) {
-        YXEventLog(@"%@", error.description);
+        YXLog(@"%@", error.description);
     }
 }
 

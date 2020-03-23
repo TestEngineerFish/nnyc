@@ -160,7 +160,7 @@
         
         NSString *tempStr = [NSString stringWithFormat:@"%@",string];
         NSString *result = [self subStringComponentsSeparatedByStrContent:tempStr strPoint:@"￥" firstFlag:1 secondFlag:2];
-        YXEventLog(@"result %@",result);
+        YXLog(@"result %@",result);
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", popUpRule];
         
         if ([predicate evaluateWithObject:result]) {
@@ -184,7 +184,7 @@
              if (result) {
                  
                  NSDictionary *details = [response.responseObject objectForKey:@"wordListSimplifiedDetails"];
-                 YXEventLog(@"details %@",details);
+                 YXLog(@"details %@",details);
                  
                  YXMyWordListDetailModel *detailModel = [YXMyWordListDetailModel mj_objectWithKeyValues:details];
                  
@@ -250,14 +250,14 @@
             if (firstFlag == count)
             {
                 // 遍历字符串，第一次遍历到和传入的字符一样的字符
-                YXEventLog(@"第%d个字是:%@", i, temp);
+                YXLog(@"第%d个字是:%@", i, temp);
                 // 将第一次遍历到的相同字符的位置，赋值给起始截取的位置
                 startRange = NSMakeRange(i, 1);
             }
             else if (secondFlag == count)
             {
                 // 遍历字符串，第二次遍历到和传入的字符一样的字符
-                YXEventLog(@"第%d个字是:%@", i, temp);
+                YXLog(@"第%d个字是:%@", i, temp);
                 // 将第二次遍历到的相同字符的位置，赋值给结束截取的位置
                 endRange = NSMakeRange(i, i);
             }
@@ -272,7 +272,7 @@
     // 根据得到的截取范围，截取想要的字符串，赋值给结果字符串
     NSString *result = [strContent substringWithRange:rangeMessage];
     // 打印一下截取到的字符串，看看是否是想要的结果
-    YXEventLog(@"截取到的 strResult = %@", result);
+    YXLog(@"截取到的 strResult = %@", result);
     // 最后将结果返回出去
     return result;
 }

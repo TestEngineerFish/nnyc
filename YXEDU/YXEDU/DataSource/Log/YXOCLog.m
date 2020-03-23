@@ -19,7 +19,7 @@
 }
 
 - (void)eventLog:(NSString *)msg {
-    YXEventLog(@"%@", msg);
+    YXLog(@"%@", msg);
 }
 
 - (instancetype)init

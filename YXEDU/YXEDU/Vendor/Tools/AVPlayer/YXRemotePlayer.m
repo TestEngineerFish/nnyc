@@ -31,7 +31,7 @@
 }
 
 - (void)startPlay:(NSURL *)url finish:(void (^)(BOOL))playFinishBlock {
-//    YXEventLog(@"sound url -> %@\n>>>Extension -> %@",url,[url pathExtension]);
+//    YXLog(@"sound url -> %@\n>>>Extension -> %@",url,[url pathExtension]);
     // 开始新的播放链接之前停止旧的
     AVPlayerItem * songItem = [[AVPlayerItem alloc] initWithURL:url];
     self.player = [[AVPlayer alloc] initWithPlayerItem:songItem];
@@ -67,7 +67,7 @@
         }
     }
     
-//    AVPlayerItemStatusUnknown:     YXEventLog(@"未知资源");
+//    AVPlayerItemStatusUnknown:     YXLog(@"未知资源");
 }
 
 - (void)playEnd:(NSNotification *)notify {

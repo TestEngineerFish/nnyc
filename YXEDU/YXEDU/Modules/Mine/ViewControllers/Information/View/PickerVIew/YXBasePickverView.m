@@ -749,9 +749,9 @@
     [YXDataProcessCenter POST:DOMAIN_SETUP parameters:paramter finshedBlock:^(YRHttpResponse *response, BOOL result) {
         if (result) {
             [weakSelf saveInfoSuccess];
-            YXEventLog(@"++++++Key: %@, Value: %@++++++", key, value);
+            YXLog(@"++++++Key: %@, Value: %@++++++", key, value);
         } else {
-            YXEventLog(@"------Key: %@, Value: %@------", key, value);
+            YXLog(@"------Key: %@, Value: %@------", key, value);
         }
     }];
 }

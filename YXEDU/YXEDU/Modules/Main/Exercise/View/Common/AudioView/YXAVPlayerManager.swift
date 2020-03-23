@@ -83,9 +83,9 @@ class YXAVPlayerManager: NSObject {
     // MARK: Observer
     /// 添加监听
     private func addObservers() {
-        let playerItem = self.player.currentItem
+//        let playerItem = self.player.currentItem
         // 添加播放完成后通知事件
-        NotificationCenter.default.addObserver(self, selector: #selector(playFinished), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(playFinished), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
 
     /// 移除监听

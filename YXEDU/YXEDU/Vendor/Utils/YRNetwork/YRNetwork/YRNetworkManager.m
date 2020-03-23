@@ -275,7 +275,7 @@
             // 删除已经下载的数据
             NSFileManager *fileManager = [NSFileManager defaultManager];
             [fileManager removeItemAtURL:filePath error:nil];
-//            YXEventLog(@"下载数据完成，删除操作 %@", res ? @"成功" : @"失败");
+//            YXLog(@"下载数据完成，删除操作 %@", res ? @"成功" : @"失败");
         } else {
             YRHttpResponse *response = [self _failureResponse:nil error:error requestType:YRHttpRequestTypeDownload ];
             completion ? completion(response) : nil;
@@ -344,7 +344,7 @@
                 NSFileManager *fileManager = [NSFileManager defaultManager];
                 [fileManager removeItemAtURL:filePath error:nil];
                 [fileManager removeItemAtPath:[tmpFileDir stringByAppendingPathComponent:@"file.db"] error:nil];
-//                YXEventLog(@"下载数据完成，删除操作 %@", res ? @"成功" : @"失败");
+//                YXLog(@"下载数据完成，删除操作 %@", res ? @"成功" : @"失败");
             } else {
                 YRHttpResponse *response = [self _failureResponse:nil error:error requestType:YRHttpRequestTypeDownload ];
                 completion ? completion(response) : nil;
@@ -525,7 +525,7 @@
  */
 - (YRHttpResponse *)_failureResponse:(NSURLSessionDataTask *)task error:(NSError *)error requestType:(YRHttpRequestType) requestType{
     
-    YXEventLog(@"*ERROR* request url:%@ error: %@", task.originalRequest.URL.absoluteString, error);
+    YXLog(@"*ERROR* request url:%@ error: %@", task.originalRequest.URL.absoluteString, error);
     YRError *yrerror = [YRError errorWithCode:(int)error.code desc:error.description];
     yrerror.desc = @"网络不给力";
     yrerror.originalError = error;

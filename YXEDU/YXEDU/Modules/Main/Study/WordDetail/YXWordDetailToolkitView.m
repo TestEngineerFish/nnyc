@@ -455,7 +455,7 @@
 }
 
 -(void)updateUIs{
-    YXEventLog(@"updateUIs");
+    YXLog(@"updateUIs");
 
     self.comments = [_toolkitModelodel.comment copy];
     

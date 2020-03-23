@@ -94,8 +94,8 @@
 #pragma -delegate-
 
 -(void)onReq:(BaseReq*)req{
-    YXEventLog(@"----");
-    YXEventLog(@"%@",req);
+    YXLog(@"----");
+    YXLog(@"%@",req);
 }
 
 

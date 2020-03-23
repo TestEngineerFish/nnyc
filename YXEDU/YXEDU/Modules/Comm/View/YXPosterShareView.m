@@ -256,7 +256,7 @@
     [YXDataProcessCenter GET:DOMAIN_CONFIGSHARE parameters:@{} finshedBlock:^(YRHttpResponse *response, BOOL result) {
         if (result) {
             if (response.responseObject) {
-                YXEventLog(@"%@",response.responseObject);
+                YXLog(@"%@",response.responseObject);
                 NSDictionary *userShareConfigDict = [response.responseObject objectForKey:@"userShareConfig"];
                 NSInteger momentsShareCredits =  [[userShareConfigDict objectForKey:@"momentsShareCredits"]longValue];
                 //已经分享成功
@@ -363,7 +363,7 @@
     //分享朋友圈
     if ([way isEqualToString:@"moments"]){
         [YXDataProcessCenter POST:DOMAIN_USERSHARECREDIT parameters:contentDic finshedBlock:^(YRHttpResponse *response, BOOL result) {
-            YXEventLog(@"%@",response.responseObject);
+            YXLog(@"%@",response.responseObject);
         }];
     }
 }

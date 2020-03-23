@@ -717,7 +717,7 @@ static NSString *const kYXSearchresultBookID = @"YXSearchresultBookID";
 
 - (void)textFieldChanged:(UITextField *)tf {
     if (tf.markedTextRange == nil) { //搜索条件
-//        YXEventLog(@"--------%@",tf.textInputMode.primaryLanguage);
+//        YXLog(@"--------%@",tf.textInputMode.primaryLanguage);
         [self searchWordsWith:tf];
     }
 }

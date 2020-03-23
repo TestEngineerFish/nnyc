@@ -109,9 +109,9 @@ static YXRecoderHelper *sharedHelper = nil;
 
 - (void)playRecord {
     [self.recoder stop];
-//    YXEventLog(@"%@",self.recordFilePath);
+//    YXLog(@"%@",self.recordFilePath);
 //    BOOL isExist=[[NSFileManager defaultManager] fileExistsAtPath:self.recordFilePath];
-//    if (isExist) { //YXEventLog(@"存在");
+//    if (isExist) { //YXLog(@"存在");
 //    }
     [self stopPlaying];
     NSError *error;
@@ -130,7 +130,7 @@ static YXRecoderHelper *sharedHelper = nil;
 
 -(void)deleteOldRecordFile {
     BOOL isExist=[[NSFileManager defaultManager] fileExistsAtPath:self.recordFilePath];
-    if (isExist) { //YXEventLog(@"存在");
+    if (isExist) { //YXLog(@"存在");
         [[NSFileManager defaultManager] removeItemAtPath:self.recordFilePath error:nil];
     }
 }
@@ -170,7 +170,7 @@ static YXRecoderHelper *sharedHelper = nil;
 //    NSURL *url = self.recordFileUrl;
 //    NSURLRequest *request = [NSURLRequest requestWithURL:url];
 //    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        YXEventLog(@"%@",response.MIMEType);
+//        YXLog(@"%@",response.MIMEType);
 //    }];
     NSData *data = [NSData dataWithContentsOfFile:self.recordFilePath];
     return data;

@@ -86,7 +86,7 @@
     NSError *err = nil;
     [[NSFileManager defaultManager] removeItemAtPath:path error:&err];
     if (err) {
-        YXEventLog(@"删除文件失败！");
+        YXLog(@"删除文件失败！");
         return NO;
     }
     return YES;
@@ -211,10 +211,10 @@
     // Does not work on the simulator.
     NSString *ssid = nil;
     NSArray *ifs = (id)CFBridgingRelease(CNCopySupportedInterfaces());
-    YXEventLog(@"ifs:%@",ifs);
+    YXLog(@"ifs:%@",ifs);
     for (NSString *ifnam in ifs) {
         NSDictionary *info = (id)CFBridgingRelease(CNCopyCurrentNetworkInfo((CFStringRef)ifnam));
-        YXEventLog(@"dici：%@",[info  allKeys]);
+        YXLog(@"dici：%@",[info  allKeys]);
         if (info[@"SSID"]) {
             ssid = info[@"SSID"];
         }
@@ -297,7 +297,7 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *pictureName= [NSString stringWithFormat:@"ScreenShout.png"];
     NSString *savedImagePath =[documentsDirectory stringByAppendingPathComponent:pictureName];
-    YXEventLog(@"截屏路径打印: %@", savedImagePath);
+    YXLog(@"截屏路径打印: %@", savedImagePath);
     //这里我将路径设置为一个全局String，这里做的不好，我自己是为了用而已，希望大家别这么写
     [imageViewData writeToFile:savedImagePath atomically:YES];//保存照片到沙盒目录
     CGImageRelease(imageRefRect);
@@ -320,7 +320,7 @@
     NSError *error = nil;
     [[NSFileManager defaultManager]removeItemAtPath:[self screenShoutPath] error:&error];
     if (error) {
-        YXEventLog(@"%@", error.description);
+        YXLog(@"%@", error.description);
         return NO;
     }
     return YES;

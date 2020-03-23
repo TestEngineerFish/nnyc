@@ -109,7 +109,7 @@
             newStr = [word.eng stringByReplacingCharactersInRange:match.range withString:@"_______"];
         }
     }else {
-        YXEventLog(@"%@",error);
+        YXLog(@"%@",error);
     }
     
 //    NSRange startRange = [word.eng rangeOfString:@"<font"];

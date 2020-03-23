@@ -41,7 +41,7 @@ typedef void(^PlayFinishBlock)(BOOL);
     self.player.volume = 1.0;
     if (error) {
         [self executeFinishBlock];
-        YXEventLog(@"本地播放器创建失败-》%@", error.description);
+        YXLog(@"本地播放器创建失败-》%@", error.description);
     }
     self.player.delegate = self;
     [self.player prepareToPlay];
@@ -224,7 +224,7 @@ typedef void(^PlayFinishBlock)(BOOL);
 
 // 播放句子
 - (void)startPlaySentence:(NSURL *)url finish:(void (^)(BOOL))playFinishBlock {
-    //     YXEventLog(@"Manager sound url -> %@\n>>>Extension -> %@",url,[url pathExtension]);
+    //     YXLog(@"Manager sound url -> %@\n>>>Extension -> %@",url,[url pathExtension]);
     [self stop];
     if ([url.absoluteString hasPrefix:@"http://"] || [url.absoluteString hasPrefix:@"https://"]) {
         self.playerType = PlayerRemote;
@@ -240,7 +240,7 @@ typedef void(^PlayFinishBlock)(BOOL);
 }
 
 - (void)startPlay:(NSURL *)url finish:(void (^)(BOOL))playFinishBlock {
-//     YXEventLog(@"Manager sound url -> %@\n>>>Extension -> %@",url,[url pathExtension]);
+//     YXLog(@"Manager sound url -> %@\n>>>Extension -> %@",url,[url pathExtension]);
     [self stop];
     if ([url.absoluteString hasPrefix:@"http://"] || [url.absoluteString hasPrefix:@"https://"]) {
         self.playerType = PlayerRemote;

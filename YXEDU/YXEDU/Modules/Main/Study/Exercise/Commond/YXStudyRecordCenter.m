@@ -47,7 +47,7 @@
 
 - (void)startRecord {
     self.startTime = [YXUtils getCurTime];
-    YXEventLog(@"startTime------::%@", self.startTime);
+    YXLog(@"startTime------::%@", self.startTime);
 }
 
 // create new recordid

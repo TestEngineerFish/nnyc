@@ -186,7 +186,7 @@
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     if ([[[self.bubbles objectAtIndex:2] animationForKey:@"group"] isEqual:anim]) {
-        YXEventLog(@"---------动画完成");
+        YXLog(@"---------动画完成");
         if (self.completionBlock) {
             self.completionBlock();
         }

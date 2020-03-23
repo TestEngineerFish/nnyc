@@ -15,8 +15,8 @@
         if (result) { // 所有插入成功
             [self saveVersionTime:versionTime];
         }else {
-            YXEventLog(@"----插入失败");
-            YXEventLog(@"%@",obj);
+            YXLog(@"----插入失败");
+            YXLog(@"%@",obj);
         }
     }];
 }
@@ -81,16 +81,16 @@
     //   dispatch_semaphore_t sema = dispatch_semaphore_create(5);
     for (YXWordDetailModel *model in words) {
         // NSInteger index = [words indexOfObject:model];
-//        YXEventLog(@"发送第%zd请求",index);
+//        YXLog(@"发送第%zd请求",index);
         // NSString *path = [NSString stringWithFormat:@"http://www.tttnnnnnnn.com%@",model.curMaterialSubPath];
         [YXDataProcessCenter DOWNLOAD:model.materialPath
                            parameters:@{}
                              progress:^(NSProgress * _Nonnull downloadProgress) {}
                            completion:^(YRHttpResponse *response, BOOL result)
         {
-            // YXEventLog(@"接受成功%zd恢复",index);
+            // YXLog(@"接受成功%zd恢复",index);
             if (result) { // 下载资源成功
-                // YXEventLog(@"------%@",[NSThread currentThread]);
+                // YXLog(@"------%@",[NSThread currentThread]);
                 NSString *subPath = [bookId stringByAppendingPathComponent:model.curMaterialSubPath];
                 BOOL isSuccess = [[YXFileDBManager shared] saveWordMaterial:response.responseObject andSupPath:subPath];
                 if (isSuccess) {
@@ -107,7 +107,7 @@
     dispatch_group_notify(dispatchGroup, dispatch_get_main_queue(), ^(){
         // 因为有些单词资源不存在或是下载不了，会影响答题流程，所以为了用户可以正常答题，直接向上层返回YES
         block(nil,YES); //errorCount ? NO : YES,
-        YXEventLog(@"-------下载完成,有%zd个单词没有下载成功",errorCount);
+        YXLog(@"-------下载完成,有%zd个单词没有下载成功",errorCount);
     });
     
 }

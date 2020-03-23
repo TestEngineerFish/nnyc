@@ -335,7 +335,7 @@ NSString *const kTYTextLongPressRunAttributedName = @"TYTextLongpressRunAttribut
 
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 //{
-//    YXEventLog(@"判断手势点击的位置是否在响应区域");
+//    YXLog(@"判断手势点击的位置是否在响应区域");
 //    CGPoint point = [touch locationInView:self];
 //
 //    return [_textContainer enumerateRunRectContainPoint:point viewHeight:CGRectGetHeight(self.frame) successBlock:nil];
@@ -348,7 +348,7 @@ NSString *const kTYTextLongPressRunAttributedName = @"TYTextLongpressRunAttribut
     __typeof (self) __weak weakSelf = self;
     [_textContainer enumerateSentenceRectContainPoint:point viewHeight:CGRectGetHeight(self.frame) successBlock:^(YXSentenceTextStorage<YXSentenceStorageProtocol> *textStorage) {
         if (self->_delegateFlags.textStorageClickedAtPoint) {
-            YXEventLog(@"点击的是: %@", textStorage.text);
+            YXLog(@"点击的是: %@", textStorage.text);
             [weakSelf.delegate attributedLabel:weakSelf textStorageClicked:textStorage atPoint:point];
         }
     }];
@@ -364,7 +364,7 @@ NSString *const kTYTextLongPressRunAttributedName = @"TYTextLongpressRunAttribut
 
     [_textContainer enumerateWordRectContainPoint:point viewHeight:CGRectGetHeight(self.frame) successBlock:^(YXWordTextStorage<YXWordStorageProtocol> *textStorage){
         if (self->_delegateFlags.textStorageLongPressedOnStateAtPoint) {
-            YXEventLog(@"长按的是:%@", textStorage.text);
+            YXLog(@"长按的是:%@", textStorage.text);
                 [weakSelf.delegate attributedLabel:weakSelf textStorageLongPressed:textStorage onState:sender.state atPoint:kPoint];
         }
     }];
@@ -375,7 +375,7 @@ NSString *const kTYTextLongPressRunAttributedName = @"TYTextLongpressRunAttribut
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    YXEventLog(@"处理点击事件");
+    YXLog(@"处理点击事件");
     __block BOOL found = NO;
     if ([_textContainer existLinkRectDictionary]) {
         UITouch *touch = [touches anyObject];
@@ -396,7 +396,7 @@ NSString *const kTYTextLongPressRunAttributedName = @"TYTextLongpressRunAttribut
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    YXEventLog(@"处理点击后移动事件");
+    YXLog(@"处理点击后移动事件");
     [super touchesMoved:touches withEvent:event];
     if (![_textContainer existLinkRectDictionary]) {
         return;
@@ -430,7 +430,7 @@ NSString *const kTYTextLongPressRunAttributedName = @"TYTextLongpressRunAttribut
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    YXEventLog(@"处理点击后取消事件");
+    YXLog(@"处理点击后取消事件");
     [super touchesCancelled:touches withEvent:event];
     if ([_textContainer existLinkRectDictionary] && _clickLinkRange.length > 0) {
         [self resetHighLightLink];
@@ -439,7 +439,7 @@ NSString *const kTYTextLongPressRunAttributedName = @"TYTextLongpressRunAttribut
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    YXEventLog(@"处理点击结束后事件");
+    YXLog(@"处理点击结束后事件");
     [super touchesEnded:touches withEvent:event];
     if ([_textContainer existLinkRectDictionary] && _clickLinkRange.length > 0) {
         [self resetHighLightLink];

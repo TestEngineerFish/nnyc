@@ -150,7 +150,7 @@ static NSString *const kSpellLeagelCharacters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
 #pragma mark - <UITextFieldDelegate>
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (string.length) {
-//        YXEventLog(@"---------->%@",string);
+//        YXLog(@"---------->%@",string);
         if([kSpellLeagelCharacters containsString:string]) { //去除非法字符
             textField.text = [string substringToIndex:1];
             if ([self.delegate respondsToSelector:@selector(wordCharacterViewHandoverToNextResponder:)]) {

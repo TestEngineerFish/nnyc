@@ -151,7 +151,7 @@
     __weak typeof(self) weakSelf = self;
     [YXDataProcessCenter POST:DOMAIN_SETUP parameters:paramter finshedBlock:^(YRHttpResponse *response, BOOL result) {
         if (result) {
-            YXEventLog(@"_+_+_++_++_++_+_+_+");
+            YXLog(@"_+_+_++_++_++_+_+_+");
             weakSelf.returnNameStringBlock(name);
             [self.navigationController popViewControllerAnimated:YES];
         }
