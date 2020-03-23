@@ -38,11 +38,20 @@ extension YXReviewDataManager {
     }
     
     static func makePlanName(defailt: String) -> String {
-        return YXUserModel.default.reviewNameType == .reviewPlan ? defailt : "我的词单"
+        return YXUserModel.default.reviewNameType == .reviewPlan ? defailt : "我的词单\(planNameIndex)"
     }
     
     
-    
+    static var planNameIndex: Int {
+        if var index = YYCache.object(forKey: .makePlanNameIndex) as? Int {
+            index += 1
+            YYCache.set(index, forKey: .makePlanNameIndex)
+            return index
+        } else {
+            YYCache.set(1, forKey: .makePlanNameIndex)
+            return 1
+        }
+    }
     
     
 }
