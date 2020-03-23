@@ -187,7 +187,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     
     // MARK: --- Notifcation ----
     @objc private func updateRecordScore(_ notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String:Int], let newScore: Int = userInfo["masScore"] else {
+        guard let userInfo = notification.userInfo as? [String:Int], let newScore: Int = userInfo["maxScore"] else {
             return
         }
         word.listenScore = newScore
