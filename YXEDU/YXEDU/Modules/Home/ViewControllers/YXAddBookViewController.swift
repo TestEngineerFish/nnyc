@@ -153,10 +153,9 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 guard let self = self else { return }
-                YXWordBookResourceManager.shared.contrastBookData(by: bookId) { [weak self] (isSuccess) in
-                    guard let self = self, isSuccess else { return }
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
+                self.navigationController?.popToRootViewController(animated: true)
+                YXWordBookResourceManager.shared.contrastBookData(by: bookId)
+                
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
             }
