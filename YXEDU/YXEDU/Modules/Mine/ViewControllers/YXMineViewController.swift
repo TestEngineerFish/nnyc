@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     private var temporaryUserModel: YXUserModel_Old?
     
@@ -22,6 +22,7 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var calendarLabel: UILabel!
     @IBOutlet weak var totalMedalLabel: UILabel!
     @IBOutlet weak var ownedMedalLabel: UILabel!
+    @IBOutlet weak var badgeNumberView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     let badgeView = YXBadgeView()
@@ -52,8 +53,9 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     private func bindProperty() {
         self.collectionLeftConsraint.constant  = AdaptSize(22)
-
-        customNavigationBar?.isHidden          = true
+        self.customNavigationBar?.isHidden          = true
+        let tapAction = UITapGestureRecognizer(target: self, action: #selector(pushBadgeListVC))
+          self.badgeNumberView.addGestureRecognizer(tapAction)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateBadge), name: YXNotification.kUpdateFeedbackReplyBadge, object: nil)
@@ -200,22 +202,24 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     // MARK: ---- Event ----
-    private func pushBadgeListVC() {
+    @objc private func pushBadgeListVC() {
         let vc = YXBagdeListViewController()
         vc.hidesBottomBarWhenPushed = true
-        var badgeModelList = [YXBadgeModel]()
-        var getBadgeNumber = 0
+        var acquireBadgeList    = [YXBadgeModel]()
+        var notAcquireBadgeList = [YXBadgeModel]()
         badgeLists.forEach { (badgeListModel) in
             (badgeListModel.badges ?? []).forEach { (model) in
-                badgeModelList.append(model)
                 if model.finishDateTimeInterval != .some(0) {
-                    getBadgeNumber += 1
+                    acquireBadgeList.append(model)
+                } else {
+                    notAcquireBadgeList.append(model)
                 }
             }
         }
-        vc.badgeModelList = badgeModelList
-        vc.getBadgeNumber = getBadgeNumber
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        vc.badgeModelList = acquireBadgeList + notAcquireBadgeList
+        vc.getBadgeNumber = acquireBadgeList.count
+        self.navigationController?.pushViewController(vc, animated: true)
+//        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     // MARK: - TableView

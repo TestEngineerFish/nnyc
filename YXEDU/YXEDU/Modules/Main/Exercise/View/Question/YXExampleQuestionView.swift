@@ -47,9 +47,11 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
             self?.playAudio()
         }
-        
     }
-
+    
+    deinit {
+        self.audioList.removeAll()
+    }
     
     /// 播放语音
     override func playAudio() {
@@ -59,9 +61,7 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
         }
     }
     
-
     func playAudioFinished() {}
-    
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.audioPlayerView?.urlStr = self.exerciseModel.word?.voice

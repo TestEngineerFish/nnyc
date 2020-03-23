@@ -37,7 +37,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             self.taskCenterData = response.data
             self.reloadDailyData()
             
-            YXToastView.share.showCoinView(self.dailyDatas[(self.taskCenterData.today ?? 1) - 1].integral ?? 0)
+            YXToastView().showCoinView(self.dailyDatas[(self.taskCenterData.today ?? 1) - 1].integral ?? 0)
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }
@@ -362,7 +362,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                         
                         if let currentIntegral = Int(self.integralLabel.text ?? "0") {
                             self.integralLabel.countFromCurrent(to: Float(currentIntegral + (task?.integral ?? 0)), duration: 1)
-                            YXToastView.share.showCoinView(task?.integral ?? 0)
+                            YXToastView().showCoinView(task?.integral ?? 0)
                         }
 
                     }) { error in

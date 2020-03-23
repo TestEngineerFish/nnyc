@@ -99,11 +99,29 @@ extension YXExerciseViewController {
     
     /// 数据打点
     func biReport() {
+        
+        var typeName = "主流程"
+        switch dataType {
+            case .wrong:
+                typeName = "抽查复习"
+            case .planListenReview:
+                typeName = "词单听写"
+            case .planReview:
+                typeName = "词单复习"
+            case .aiReview:
+                typeName = "智能复习"
+            default:
+                typeName = "主流程"
+        }
+        
+        let bid = (YYCache.object(forKey: .currentChooseBookId) as? Int) ?? 0
+        let grade = YXWordBookDaoImpl().selectBook(bookId: bid)?.gradeId ?? 0
+        
         let studyResult: [String : Any] = [
-            "study_grade" : 0,      //学习书本年级
+            "study_grade" : grade,      //学习书本年级
             "study_cost_time" : dataManager.progressManager.fetchStudyDuration(),   //学习时间
             "study_count" : dataManager.progressManager.fetchStudyCount(),
-            "study_type" : dataType.rawValue
+            "study_type" : typeName
         ]
         Growing.track("study_result", withVariable: studyResult)
     }
