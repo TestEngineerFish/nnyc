@@ -8,42 +8,40 @@
 
 import UIKit
 
-class YXWordDetailViewControllerNew: UIViewController {
+class YXWordDetailViewControllerNew: YXViewController {
     lazy var backButton: UIBarButtonItem = {
         let item = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back(_:)))
         return item
     }()
-    lazy var collectionButton: UIBarButtonItem = {
+    
+    var collectionButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.custom)
-        button.size = CGSize(width: AdaptSize(20), height: AdaptSize(20))
+        button.size = CGSize(width: AdaptSize(30), height: AdaptSize(30))
+        button.imageEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         button.setImage(UIImage(named: "collectWord")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(collectWord(_:)), for: .touchUpInside)
-//        button.widthAnchor.constraint(equalToConstant: AdaptSize(20)).isActive  = true
-//        button.heightAnchor.constraint(equalToConstant: AdaptSize(20)).isActive = true
-        
-        let item = UIBarButtonItem(customView: button)
-        return item
+       return button
     }()
-    lazy var feedbackItem: UIBarButtonItem = {
+    
+    var feedbackButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.custom)
-        button.size = CGSize(width: AdaptSize(20), height: AdaptSize(20))
+        button.size = CGSize(width: AdaptSize(30), height: AdaptSize(25))
+        button.imageEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         button.setImage(UIImage(named: "feedbackWord")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(feedbackWord(_:)), for: .touchUpInside)
-//        button.widthAnchor.constraint(equalToConstant: AdaptSize(20)).isActive  = true
-//        button.heightAnchor.constraint(equalToConstant: AdaptSize(20)).isActive = true
-        
-        let item = UIBarButtonItem(customView: button)
-        return item
+        return button
     }()
-    lazy var relearnWord: UIBarButtonItem = {
+
+    var relearnButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.custom)
-        button.size = CGSize(width: AdaptSize(20), height: AdaptSize(20))
+        button.size = CGSize(width: AdaptSize(30), height: AdaptSize(30))
+        button.imageEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 14)
         button.setImage(UIImage(named: "recordedIcon")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(relearnWord(_:)), for: .touchUpInside)
-//        button.widthAnchor.constraint(equalToConstant: AdaptSize(20)).isActive  = true
-//        button.heightAnchor.constraint(equalToConstant: AdaptSize(20)).isActive = true
-        let item = UIBarButtonItem(customView: button)
-        return item
+        return button
+    }()
+    
+    var rightBarView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
     }()
     
     @objc var wordId        = -1
@@ -58,20 +56,45 @@ class YXWordDetailViewControllerNew: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.createSubviews()
         self.bindProperty()
         self.requestWordDetail()
         self.requestWordCollectStatus()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationItem.setLeftBarButton(backButton, animated: true)
-        self.navigationItem.setRightBarButtonItems([relearnWord, feedbackItem, collectionButton], animated: true)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    private func createSubviews() {
+        self.customNavigationBar?.addSubview(rightBarView)
+        rightBarView.addSubview(self.collectionButton)
+        rightBarView.addSubview(self.feedbackButton)
+        rightBarView.addSubview(self.relearnButton)
+        rightBarView.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.width.equalTo(AdaptSize(104))
+            make.height.equalTo(AdaptSize(30))
+            make.right.equalToSuperview().offset(AdaptSize(-2))
+        }
+        collectionButton.snp.makeConstraints { (make) in
+            make.left.centerY.equalToSuperview()
+            make.width.height.equalTo(AdaptSize(30))
+        }
+        feedbackButton.snp.makeConstraints { (make) in
+            make.left.equalTo(collectionButton.snp.right).offset(AdaptSize(2))
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(AdaptSize(30))
+        }
+        relearnButton.snp.makeConstraints { (make) in
+            make.right.centerY.equalToSuperview()
+            make.height.equalTo(AdaptSize(30))
+            make.width.equalTo(AdaptSize(40))
+        }
     }
     
     // MARK: ---- Event ----
     private func bindProperty() {
+        self.title = "单词列表"
+        self.collectionButton.addTarget(self, action: #selector(collectWord(_:)), for: .touchUpInside)
+        self.feedbackButton.addTarget(self, action: #selector(feedbackWord(_:)), for: .touchUpInside)
+        self.relearnButton.addTarget(self, action: #selector(relearnWord(_:)), for: .touchUpInside)
         NotificationCenter.default.addObserver(self, selector: #selector(updateRecordScore(_:)), name: YXNotification.kRecordScore, object: nil)
     }
     
@@ -80,9 +103,9 @@ class YXWordDetailViewControllerNew: UIViewController {
             return
         }
         if wordModel.listenScore > YXStarLevelEnum.three.rawValue {
-            self.relearnWord.image = UIImage(named: "didRecordedIcon")?.withRenderingMode(.alwaysOriginal)
+            self.relearnButton.setImage(UIImage(named: "didRecordedIcon"), for: .normal)
         } else {
-            self.relearnWord.image = UIImage(named: "recordedIcon")?.withRenderingMode(.alwaysOriginal)
+            self.relearnButton.setImage(UIImage(named: "recordedIcon"), for: .normal)
         }
     }
     
@@ -101,9 +124,9 @@ class YXWordDetailViewControllerNew: UIViewController {
         let didCollectWordRequest = YXWordListRequest.didCollectWord(wordId: wordId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: didCollectWordRequest, success: { (response) in
             if response.data?.didCollectWord == 1 {
-                (self.collectionButton.customView as? UIButton)?.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
+                self.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
             } else {
-                (self.collectionButton.customView as? UIButton)?.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
+                self.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
             }
         }) { error in
             YXLog("查询单词:\(self.wordId)收藏状态失败， error:\(error)")
@@ -118,7 +141,7 @@ class YXWordDetailViewControllerNew: UIViewController {
             guard let self = self, var word = response.data else { return }
             word.isComplexWord  = self.isComplexWord
             self.wordModel      = word
-            self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight), word: word)
+            self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: kNavHeight, width: screenWidth, height: screenHeight - kNavHeight), word: word)
             self.updateBarStatus()
             self.view.addSubview(self.wordDetailView)
         }) { error in
@@ -134,10 +157,10 @@ class YXWordDetailViewControllerNew: UIViewController {
     }
     
     @objc private func collectWord(_ sender: UIBarButtonItem) {
-        if (self.collectionButton.customView as? UIButton)?.currentImage == #imageLiteral(resourceName: "unCollectWord") {
+        if self.collectionButton.currentImage == #imageLiteral(resourceName: "unCollectWord") {
             let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(wordId),\"is\":\(isComplexWord)}]")
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                (self.collectionButton.customView as? UIButton)?.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
+                self.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
                 UIView.toast("取消收藏")
             }) { error in
                 YXLog("取消收藏单词:\(self.wordId)失败， error:\(error)")
@@ -145,7 +168,7 @@ class YXWordDetailViewControllerNew: UIViewController {
         } else {
             let request = YXWordListRequest.collectWord(wordId: wordId, isComplexWord: isComplexWord)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                (self.collectionButton.customView as? UIButton)?.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
+                self.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
                 UIView.toast("已收藏")
             }) { error in
                 YXLog("收藏单词:\(self.wordId)失败， error:\(error)")

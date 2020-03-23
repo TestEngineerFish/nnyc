@@ -511,7 +511,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.starView.showLastNewLearnResultView(score: self.maxScore)
         NotificationCenter.default.post(name: YXNotification.kRecordScore, object: nil, userInfo: ["maxScore":self.maxScore, "lastScore":self.lastScore])
         // 如果得分大于1，则直接显示单词详情页
-        if self.lastScore > YXStarLevelEnum.one.rawValue {
+        if self.lastScore > YXStarLevelEnum.two.rawValue {
             self.newLearnDelegate?.showNewLearnWordDetail()
         }
     }

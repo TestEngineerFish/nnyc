@@ -107,17 +107,18 @@ class YXReviewPlanShareDetailViewController: YXViewController {
             guard let name = text else {
                 return
             }
-            YXToastView.share.showLoadView("数据保存中，请稍等片刻...")
+            let toastView = YXToastView()
+            toastView.showLoadView("数据保存中，请稍等片刻...")
             self.downLoadBookData({ [weak self] in
                 guard let self = self else { return }
                 let request = YXReviewRequest.makeReviewPlan(name: name, code: pid, idsList: nil)
                 YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
-                    YXToastView.share.hideView()
+                    toastView.hideView()
                     NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
                     UIView.toast("保存成功")
                     YRRouter.popViewController(true)
                 }) { (error) in
-                    YXToastView.share.hideView()
+                    toastView.hideView()
                     if error.code == 101 {
                         let alertView = YXAlertView(type: .normal)
                         alertView.descriptionLabel.text   = error.message
