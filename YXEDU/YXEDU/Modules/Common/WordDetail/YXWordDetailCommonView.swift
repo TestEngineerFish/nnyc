@@ -65,14 +65,15 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     init(frame: CGRect, word: YXWordModel) {
         super.init(frame: frame)
         self.word = word
-        
         initializationFromNib()
+        requestWordDetail()
         self.bindProperty()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         initializationFromNib()
+        
     }
     
     deinit {
@@ -170,6 +171,25 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         }
         self.updateRecordStatus()
     }
+    
+    // ---- Request ----
+    /// 不应该调用的。。。，这里仅仅是为了获取这个单词的跟读最好得分，之后有时间将之前的跟读得分写入数据库即可
+    /// 查询单词详情
+    private func requestWordDetail() {
+        guard let wordId = word.wordId else {
+            return
+        }
+        let wordDetailRequest = YXWordBookRequest.wordDetail(wordId: wordId, isComplexWord: 0)
+        YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { [weak self] (response) in
+            guard let self = self, let wordModel = response.data else { return }
+            self.word.listenScore      = wordModel.listenScore
+            self.updateRecordStatus()
+        }) { error in
+            YXLog("查询单词:\(wordId)详情失败， error:\(error)")
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+    
     
     // MARK: ---- Event ----
     
