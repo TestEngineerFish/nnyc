@@ -24,7 +24,7 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: nil) { (error) in
                 YXUtils.showHUD(kWindow, title: error.message)
             }
-            YXUserModel.default.logout()
+            YXUserModel.default.loyegout()
         }
         
         alertView.show()
@@ -38,6 +38,7 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
 

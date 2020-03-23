@@ -74,11 +74,6 @@ class YXMineViewController: UIViewController, UITableViewDelegate, UITableViewDa
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }

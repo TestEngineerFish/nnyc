@@ -393,7 +393,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 string = combineExample
             }
             
-            var height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 80) + 130
+            var height = string.textHeight(font: UIFont.pfSCSemiboldFont(withSize: AdaptSize(16)), width: screenWidth - 80) + 130
 //            if word?.isComplexWord == 1 {
 //                height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 164) + 4 + 10
 //                height = height > 70 ? height : 70
