@@ -53,7 +53,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     }
     
     func bindProperty() {
-        self.customNavigationBar?.title = YXReviewDataManager.reviewPlanName
+        self.customNavigationBar?.title = YXReviewDataManager.reviewPlanTitle
         
         
         wordListView.isWrongWordList = false

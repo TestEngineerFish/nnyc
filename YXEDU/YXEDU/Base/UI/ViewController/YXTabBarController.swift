@@ -12,9 +12,6 @@ class YXTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.tabBar.items?[1].title = YXReviewDataManager.reviewName
-        }
         NotificationCenter.default.addObserver(self, selector: #selector(updateTabBadge), name: YXNotification.kUpdateFeedbackReplyBadge, object: nil)
     }
     

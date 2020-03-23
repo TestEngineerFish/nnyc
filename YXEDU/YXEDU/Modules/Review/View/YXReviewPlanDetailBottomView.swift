@@ -148,11 +148,11 @@ class YXReviewPlanDetailBottomView: YXView {
         
         
         if reviewPlanModel?.reviewState == .normal {
-            reviewButton.setTitle("开始复习", for: .normal)
+            reviewButton.setTitle(YXReviewDataManager.startStudy, for: .normal)
         } else if reviewPlanModel?.reviewState == .learning {
-            reviewButton.setTitle("继续复习", for: .normal)
+            reviewButton.setTitle(YXReviewDataManager.continueStudy, for: .normal)
         } else if reviewPlanModel?.reviewState == .finish {
-            reviewButton.setTitle("巩固复习", for: .normal)
+            reviewButton.setTitle(YXReviewDataManager.continueStudy2, for: .normal)
         }
     }
     

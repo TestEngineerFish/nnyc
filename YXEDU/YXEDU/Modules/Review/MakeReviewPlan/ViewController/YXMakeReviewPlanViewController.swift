@@ -167,7 +167,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             YXUtils.showHUD(self.view, title: "请至少选择4个单词")
         } else {
             // 显示弹框
-            let name = self.getPlanName()
+            let name = YXReviewDataManager.makePlanName(defailt: self.getPlanName())
             let alertView = YXAlertView(type: .inputable, placeholder: name)
             alertView.shouldOnlyShowOneButton = false
             alertView.titleLabel.text = "请设置\(YXReviewDataManager.reviewPlanName)名称"
