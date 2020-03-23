@@ -125,9 +125,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
     // MARK: ==== YXExerciseViewControllerProtocol ====
     override func backHomeEvent() {
         super.backHomeEvent()
-        // 暂停播放
-        YXAVPlayerManager.share.pauseAudio()
-        USCRecognizer.sharedManager()?.cancel()
+        (answerView as! YXNewLearnAnswerView).pauseView()
     }
 
     override func showAlertEvnet() {

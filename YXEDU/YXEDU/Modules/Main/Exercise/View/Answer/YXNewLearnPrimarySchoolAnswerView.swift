@@ -124,6 +124,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var dotNumber = 0
     var enginer: USCRecognizer?
     var status       = AnswerStatus.normal
+    var isNewLearn   = true
     var isReport     = false // 是否播完并通知
     var isViewPause  = false // 弹框，页面暂停播放
     var coin         = 0 // 跟读获得金币数
@@ -142,10 +143,12 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     init(wordModel: YXWordModel?, exerciseModel: YXWordExerciseModel?) {
         if let exerciseModel = exerciseModel {
             super.init(exerciseModel: exerciseModel)
+            self.isNewLearn = true
         } else {
             var exerciseModel = YXWordExerciseModel()
             exerciseModel.word = wordModel
             super.init(exerciseModel: exerciseModel)
+            self.isNewLearn = false
         }
         // 云之声设置
         self.enginer = USCRecognizer.sharedManager()
@@ -160,12 +163,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
         // 新学跟读流程
-        if exerciseModel == nil {
-            // 从单词详情进入
-            self.status            = .playedFirstWordInSecondStage
-            self.playByStatus()
-            self.starView.showLastNewLearnResultView(score: wordModel?.listenScore ?? 0)
-        } else {
+        if self.isNewLearn {
             // 小学新学页面
             // 设置初始状态
             self.starView.isHidden              = true
@@ -179,6 +177,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 guard let self = self else { return }
                 self.playByStatus()
             }
+        } else {
+            // 从单词详情进入
+            self.status            = .playedFirstWordInSecondStage
+            self.playByStatus()
+            self.starView.showLastNewLearnResultView(score: wordModel?.listenScore ?? 0)
         }
     }
 
@@ -504,7 +507,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     /// 隐藏结果动画
     private func hideResultAnimation() {
         self.learnResultView.hideView()
-        self.starView.isHidden = false
+        self.starView.isHidden = self.isNewLearn
         self.starView.showLastNewLearnResultView(score: self.maxScore)
         NotificationCenter.default.post(name: YXNotification.kRecordScore, object: nil, userInfo: ["maxScore":self.maxScore, "lastScore":self.lastScore])
         // 如果得分大于1，则直接显示单词详情页
