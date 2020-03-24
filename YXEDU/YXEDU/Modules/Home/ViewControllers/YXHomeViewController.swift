@@ -8,6 +8,8 @@
 
 import UIKit
 import Lottie
+import GrowingCoreKit
+import GrowingAutoTrackKit
 
 @objc
 class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -190,6 +192,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
             YXUserModel.default.reviewNameType = userInfomation.reviewNameType
+            
+            Growing.setPeopleVariableWithKey("quanping", andStringValue: userInfomation.fillType == .keyboard ? "1" : "0")
+            Growing.setPeopleVariableWithKey("cidan", andStringValue: userInfomation.reviewNameType == .reviewPlan ? "0" : "1")
+
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }
