@@ -26,6 +26,7 @@ struct YXBadgeModel: Mappable {
     
     mutating func mapping(map: Map) {
         ID                       <- map["badge_id"]
+        badgeId                  <- map["user_badge_id"]
         name                     <- map["name"]
         description              <- map["desc"]
         state                    <- map["state"]
