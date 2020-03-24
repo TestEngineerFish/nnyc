@@ -50,7 +50,7 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
     }
     
     deinit {
-        self.audioList.removeAll()
+        YXAVPlayerManager.share.pauseAudio()
     }
     
     /// 播放语音

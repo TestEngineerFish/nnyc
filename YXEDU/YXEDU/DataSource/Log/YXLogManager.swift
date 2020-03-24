@@ -18,6 +18,7 @@ class YXLogManager: NSObject {
 
     // 上传
     @objc func report(_ showToast: Bool = false) {
+        self.addInfo()
         guard let fileData = self.zipLogFile() else {
             return
         }
@@ -28,7 +29,6 @@ class YXLogManager: NSObject {
             }
             self.deleteZip()
             self.deleteFile()
-            self.addInfo()
         }) { (error) in
             if showToast {
                 YXUtils.showHUD(kWindow, title: "上传失败，请稍后再试")
@@ -37,7 +37,7 @@ class YXLogManager: NSObject {
     }
 
     // MARK: ==== Event ====
-    func addInfo() {
+    private func addInfo() {
         self.addUserInfo()
         self.addDeviceInfo()
     }

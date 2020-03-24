@@ -11,10 +11,9 @@ import UIKit
 class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     private var temporaryUserModel: YXUserModel_Old?
-    
-    private var badgeLists: [YXBadgeListModel] = []
-    private var badges: [YXBadgeModel]         = []
-    private var bindInfo: [String]             = ["", "", ""]
+    private var earnedBadgeCount = 0
+    private var badgeModelList   = [YXBadgeModel]()
+    private var bindInfo         = ["", "", ""]
     
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -72,7 +71,12 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         navigationController?.navigationBar.tintColor = UIColor.black
         
-        loadData()
+        // 个人信息
+        self.loadData()
+        // 徽章
+        self.loadBadgeData()
+        // 积分
+        self.loadIntegralData()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
     }
     
@@ -98,17 +102,11 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
                 YXConfigure.shared().loginModel = loginModel
                 self.temporaryUserModel = loginModel.user
                 
-                // 积分
-                self.loadIntegralData()
-                
-                // 徽章
-                self.loadBadgeData()
-                
                 // 个人信息
                 YXUserModel.default.userAvatarPath = loginModel.user.avatar
-                YXUserModel.default.username = loginModel.user.nick
+                YXUserModel.default.username       = loginModel.user.nick
                 self.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), placeholderImage: #imageLiteral(resourceName: "challengeAvatar"), completed: nil)
-                self.nameLabel.text = YXUserModel.default.username
+                self.nameLabel.text     = YXUserModel.default.username
                 if let garde = loginModel.user.grade, !garde.isEmpty {
                     self.nameLabel.text = (YXUserModel.default.username ?? "") + "   " + garde + "年级"
                 }
@@ -165,32 +163,22 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func loadBadgeData() {
-        self.badges = []
-        
+        self.badgeModelList   = []
+        self.earnedBadgeCount = 0
         let request = YXMineRequest.badgeList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXBadgeListModel>.self, request: request, success: { (response) in
-            guard let badgesList = response.dataArray else { return }
-            self.badgeLists = badgesList
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXBadgeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let modelList = response.dataArray else { return }
+            self.badgeModelList = modelList
             
-            var earnedBadgeCount = 0
-            for a in 0..<badgesList.count {
-                guard let badges = (badgesList[a]).badges else { continue }
-                
-                for b in 0..<badges.count {
-                    let badge = badges[b]
-                    
-                    if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0 {
-                        earnedBadgeCount = earnedBadgeCount + 1
-                    }
-                        
-                    self.badges.append(badge)
+            modelList.forEach { (model) in
+                if let finishDateTimeInterval = model.finishDateTimeInterval, finishDateTimeInterval != 0 {
+                    self.earnedBadgeCount += 1
                 }
             }
-
-            self.ownedMedalLabel.text = "\(earnedBadgeCount)"
-            self.totalMedalLabel.text = "/\(self.badges.count)"
+            self.ownedMedalLabel.text = "\(self.earnedBadgeCount)"
+            self.totalMedalLabel.text = "/\(self.badgeModelList.count)"
             
-            self.badges.sort { (one, two) -> Bool in
+            self.badgeModelList.sort { (one, two) -> Bool in
                 return (one.finishDateTimeInterval ?? 0) > (two.finishDateTimeInterval ?? 0)
             }
             
@@ -207,19 +195,16 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         vc.hidesBottomBarWhenPushed = true
         var acquireBadgeList    = [YXBadgeModel]()
         var notAcquireBadgeList = [YXBadgeModel]()
-        badgeLists.forEach { (badgeListModel) in
-            (badgeListModel.badges ?? []).forEach { (model) in
-                if model.finishDateTimeInterval != .some(0) {
-                    acquireBadgeList.append(model)
-                } else {
-                    notAcquireBadgeList.append(model)
-                }
+        badgeModelList.forEach { (model) in
+            if model.finishDateTimeInterval != .some(0) {
+                acquireBadgeList.append(model)
+            } else {
+                notAcquireBadgeList.append(model)
             }
         }
-        vc.badgeModelList = acquireBadgeList + notAcquireBadgeList
-        vc.getBadgeNumber = acquireBadgeList.count
+        vc.badgeModelList   = self.badgeModelList
+        vc.earnedBadgeCount = self.earnedBadgeCount
         self.navigationController?.pushViewController(vc, animated: true)
-//        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     // MARK: - TableView
@@ -358,12 +343,12 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return badges.count > 3 ? 3 : badges.count
+        return badgeModelList.count > 3 ? 3 : badgeModelList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BadgeCell", for: indexPath)
-        let badge = badges[indexPath.row]
+        let badge = badgeModelList[indexPath.row]
         
         let imageView = cell.viewWithTag(1) as! UIImageView
         

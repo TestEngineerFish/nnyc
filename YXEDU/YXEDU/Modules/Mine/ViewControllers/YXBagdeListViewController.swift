@@ -66,7 +66,7 @@ class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UIC
     
     // TODO: ---- Data ----
     var badgeModelList: [YXBadgeModel] = []
-    var getBadgeNumber = 0
+    var earnedBadgeCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,7 +134,7 @@ class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UIC
         self.collectionView.delegate        = self
         self.collectionView.dataSource      = self
         self.collectionView.backgroundColor = UIColor.clear
-        self.badgeNumberLabel.text          = String(format: "%ld/%ld", self.getBadgeNumber, self.badgeModelList.count)
+        self.badgeNumberLabel.text          = String(format: "%ld/%ld", self.earnedBadgeCount, self.badgeModelList.count)
         self.collectionViewBackgroundView.layer.setDefaultShadow()
         self.collectionViewBackgroundView.layer.cornerRadius = AdaptSize(8)
         self.collectionView.register(YXBadgeCell.classForCoder(), forCellWithReuseIdentifier: "kYXBadgeCell")
