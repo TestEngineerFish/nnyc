@@ -118,7 +118,7 @@ extension YXExerciseViewController {
         let grade = YXWordBookDaoImpl().selectBook(bookId: bid)?.gradeId ?? 0
         
         let studyResult: [String : Any] = [
-            "study_grade" : grade,      //学习书本年级
+            "study_grade" : "\(grade)",      //学习书本年级
             "study_cost_time" : dataManager.progressManager.fetchStudyDuration(),   //学习时间
             "study_count" : dataManager.progressManager.fetchStudyCount(),
             "study_type" : typeName

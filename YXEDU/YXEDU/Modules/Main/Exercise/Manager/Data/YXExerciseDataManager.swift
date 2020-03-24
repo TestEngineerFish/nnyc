@@ -144,7 +144,7 @@ class YXExerciseDataManager: NSObject {
         updateCurrentPatchIndex()
         
         // 打印
-        printReportResult()
+//        printReportResult()
         
         if !progressManager.isSkipNewWord() {
             for exercise in self.newWordArray {

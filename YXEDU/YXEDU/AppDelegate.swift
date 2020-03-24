@@ -38,9 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YXOCLog.shared()?.launch()
         // 添加基本信息
         YXLogManager.share.addInfo()
-//        #if !DEBUG  // 正式环境才开启统计，不然开发环境打印的日志太多
+//        #if !DEBUG  // 正式环境才开启统计
         Growing.start(withAccountId: kGrowingIOID)
 //        #endif
+        Growing.setEnableLog(false)
     }
     
     func initViewAndData() {
