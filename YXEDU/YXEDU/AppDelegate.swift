@@ -36,8 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
         Bugly.start(withAppId: kBuglyAppId)
         YXOCLog.shared()?.launch()
-        // 添加基本信息
-        YXLogManager.share.addInfo()
+        
 //        #if !DEBUG  // 正式环境才开启统计
         Growing.start(withAccountId: kGrowingIOID)
 //        #endif
