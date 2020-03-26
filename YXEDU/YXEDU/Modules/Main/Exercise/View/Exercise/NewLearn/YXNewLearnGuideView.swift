@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// 新学引导图
 class YXNewLearnGuideView: UIView {
 
     var squirrelImageView: UIImageView = {

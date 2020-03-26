@@ -9,6 +9,7 @@
 import UIKit
 import Lottie
 
+/// 跟读页面
 class YXNewLearnView: UIView, YXNewLearnProtocol {
     
     var closeButton: UIButton = {

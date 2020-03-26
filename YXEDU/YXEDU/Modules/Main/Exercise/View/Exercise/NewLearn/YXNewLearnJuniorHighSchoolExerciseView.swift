@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+/// 初中新学
 class YXNewLearnJuniorHighSchoolExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
