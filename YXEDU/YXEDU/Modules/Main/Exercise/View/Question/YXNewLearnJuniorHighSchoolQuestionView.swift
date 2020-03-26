@@ -21,6 +21,7 @@ class YXNewLearnJuniorHighSchoolQuestionView: YXBaseQuestionView {
         wordDetailView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        wordDetailView.autoPlay()
         self.layer.removeShadow()
     }
 }

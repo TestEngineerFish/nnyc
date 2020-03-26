@@ -16,6 +16,8 @@ class YXWordDetailExampleCell: UITableViewCell {
     @IBOutlet weak var exampleImageView: UIImageView!
     @IBOutlet weak var playAuoidButtonDistance: NSLayoutConstraint!
     @IBOutlet weak var labelDistance: NSLayoutConstraint!
+    
+    var clickPlayBlock: (()->Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,14 +31,19 @@ class YXWordDetailExampleCell: UITableViewCell {
     }
     
     @IBAction func playAudio(_ sender: UIButton) {
+        self.clickPlayBlock?()
+        self.playExample()
+    }
+    
+    /// 播放例句
+    func playExample() {
+        YXAVPlayerManager.share.finishedBlock = nil
         if YXAVPlayerManager.share.isPlaying {
             YXAVPlayerManager.share.pauseAudio()
             playAuoidButton.layer.removeFlickerAnimation()
-            
         } else {
             guard let pronunciation = pronunciation, let pronunciationUrl = URL(string: pronunciation) else { return }
             playAuoidButton.layer.addFlickerAnimation()
-            
             YXAVPlayerManager.share.playAudio(pronunciationUrl) {
                 self.playAuoidButton.layer.removeFlickerAnimation()
             }

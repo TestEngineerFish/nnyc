@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource {
+class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource, YXAVPlayerProtocol {
     private enum SectionType: String {
         case deformation = "单词变形"
         case examples    = "例句"
@@ -23,6 +23,8 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     private var mostDeformationLength: CGFloat = 44
     private var featuredViewheight: CGFloat    = 0
     private var featuredView: YXWordDetailFeaturedView!
+    var exampleCell: YXWordDetailExampleCell?
+    var isAutoPlay = false
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var wordLabel: UILabel!
@@ -35,25 +37,13 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func playAudio(_ sender: UIButton) {
+        YXAVPlayerManager.share.finishedBlock = nil
+        self.isAutoPlay = true
         if YXAVPlayerManager.share.isPlaying {
             YXAVPlayerManager.share.pauseAudio()
             playAuoidButton.layer.removeFlickerAnimation()
-            
         } else {
-            guard let americanPronunciationUrl = word.americanPronunciation, let englishPronunciationUrl = word.englishPronunciation else { return }
-            playAuoidButton.layer.addFlickerAnimation()
-            
-            var pronunciationUrl: URL!
-            if YXUserModel.default.didUseAmericanPronunciation {
-                pronunciationUrl = URL(string: americanPronunciationUrl)
-                 
-            } else {
-                pronunciationUrl = URL(string: englishPronunciationUrl)
-            }
-            
-            YXAVPlayerManager.share.playAudio(pronunciationUrl) {
-                self.playAuoidButton.layer.removeFlickerAnimation()
-            }
+            self.playWord()
         }
     }
     
@@ -73,7 +63,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         initializationFromNib()
-        
     }
     
     deinit {
@@ -205,6 +194,29 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    /// 播放单词
+    private func playWord() {
+        guard let _voice = word.voice, let pronunciationUrl = URL(string: _voice) else { return }
+        playAuoidButton.layer.addFlickerAnimation()
+        YXAVPlayerManager.share.delegate = self
+        YXAVPlayerManager.share.playAudio(pronunciationUrl) {
+            self.playAuoidButton.layer.removeFlickerAnimation()
+        }
+    }
+    
+    private func playExample() {
+        self.isAutoPlay = true
+        guard let cell = self.exampleCell else {
+            return  
+        }
+        cell.playExample()
+    }
+    
+    /// 自动播放
+    func autoPlay() {
+        self.playWord()
+    }
+    
     // MARK: --- Notifcation ----
     @objc private func updateRecordScore(_ notification: Notification) {
         guard let userInfo = notification.userInfo as? [String:Int], let newScore: Int = userInfo["maxScore"] else {
@@ -228,19 +240,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             
         } else {
             let view = YXWordDetailHeaderView(headerTitle: scetionType ?? "")
-            
-//            if scetionType == SectionType.deformation.rawValue {
-//                view.shouldShowExpand = true
-//                view.isExpand = sectionExpandStatus[section]
-//                view.expandClosure = {
-//                    self.sectionExpandStatus[section] = !self.sectionExpandStatus[section]
-//                    self.tableView.reloadData()
-//                }
-//
-//            } else {
-                view.shouldShowExpand = false
-//            }
-            
+            view.shouldShowExpand = false
             return view
         }
     }
@@ -257,14 +257,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        let scetionType = sections[section].keys.first
-//
-//        if (section + 1) < sections.count, scetionType == SectionType.examples.rawValue, sections[section + 1].keys.first == SectionType.featured.rawValue {
-//            return 0
-//
-//        } else {
-            return 0.01
-//        }
+        return 0.01
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -305,33 +298,33 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         switch section.keys.first {
         case SectionType.deformation.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDeformationsCell", for: indexPath) as! YXWordDeformationsCell
-            let deformations = section.values.first as? [YXWordDeformationModel]
-            let deformation = deformations?[indexPath.row]
-            
-            cell.titleLabel.text = deformation?.deformation
-            cell.contentLabel.text = deformation?.word
+            let deformations              = section.values.first as? [YXWordDeformationModel]
+            let deformation               = deformations?[indexPath.row]
+            cell.titleLabel.text          = deformation?.deformation
+            cell.contentLabel.text        = deformation?.word
             cell.contentDistance.constant = mostDeformationLength
-            
             return cell
             
         case SectionType.examples.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailExampleCell", for: indexPath) as! YXWordDetailExampleCell
             let examples = section.values.first as? [YXWordExampleModel]
-            let example = examples?[indexPath.row]
+            let example  = examples?[indexPath.row]
             cell.exampleImageView.sd_setImage(with: URL(string: example?.imageUrl ?? ""))
             let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
             cell.label.attributedText = {
-
                 let result = combineExample.formartTag()
-
-                let mAttr = NSMutableAttributedString(string: result.1, attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1])
+                let mAttr  = NSMutableAttributedString(string: result.1, attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1])
                 result.0.forEach { (range) in
                     mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
                 }
                 return mAttr
             }()
             cell.pronunciation = example?.vocie
-            
+            cell.clickPlayBlock = { [weakself = self] in
+                weakself.isAutoPlay = true
+                weakself.playAuoidButton.layer.removeFlickerAnimation()
+            }
+            self.exampleCell   = cell
             return cell
             
         case SectionType.featured.rawValue:
@@ -340,7 +333,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             featuredView.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
             }
-            
             return cell
             
         case SectionType.synonym.rawValue:
@@ -358,7 +350,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             }
             
             cell.label.text = text
-            
             return cell
             
         case SectionType.antonym.rawValue:
@@ -458,6 +449,12 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             
         default:
             return 0
+        }
+    }
+    
+    func playFinished() {
+        if !isAutoPlay {
+            self.playExample()
         }
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HHy-oc-jhr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HHy-oc-jhr">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1158,8 +1158,6 @@
                                     <constraint firstItem="x0p-vt-y9f" firstAttribute="width" secondItem="sep-yw-UpI" secondAttribute="width" id="Hpk-eY-W97"/>
                                     <constraint firstItem="x0p-vt-y9f" firstAttribute="top" secondItem="sep-yw-UpI" secondAttribute="top" id="Vrd-ka-D7t"/>
                                 </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="AZI-Dm-dgQ"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="zDP-a3-aoO"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1291,6 +1289,9 @@
             <point key="canvasLocation" x="207" y="3168"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="bec-xo-IUQ"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="MineBigLogo" width="93" height="122"/>
         <image name="back" width="22" height="22"/>
@@ -1306,7 +1307,4 @@
         <image name="tabMine" width="27" height="27"/>
         <image name="tabMineSelected" width="27" height="27"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="bec-xo-IUQ"/>
-    </inferredMetricsTieBreakers>
 </document>

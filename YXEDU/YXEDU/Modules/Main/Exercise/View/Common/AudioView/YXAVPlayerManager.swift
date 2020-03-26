@@ -8,6 +8,10 @@
 
 import AVFoundation
 
+protocol YXAVPlayerProtocol: NSObjectProtocol {
+    func playFinished()
+}
+
 class YXAVPlayerManager: NSObject {
 
     typealias FinishedBlock = ()->Void
@@ -31,6 +35,7 @@ class YXAVPlayerManager: NSObject {
     var sourceList: [String] = []
     var sourceIndex: Int     = 0
     var finishedBlock:FinishedBlock?
+    weak var delegate: YXAVPlayerProtocol?
 
     static let share = YXAVPlayerManager()
     
@@ -110,6 +115,7 @@ class YXAVPlayerManager: NSObject {
             self.finishedBlock?()
             self.finishedBlock = nil
             self.player.replaceCurrentItem(with: nil)
+            self.delegate?.playFinished()
         } else {
             guard let url = URL(string: self.sourceList[sourceIndex]) else {
                 return
