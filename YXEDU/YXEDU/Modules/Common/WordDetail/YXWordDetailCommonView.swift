@@ -184,6 +184,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     
     private func bindProperty() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateRecordScore(_:)), name: YXNotification.kRecordScore, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
     private func updateRecordStatus() {
@@ -226,6 +227,11 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         self.updateRecordStatus()
     }
     
+    @objc private func didEnterBackgroundNotification() {
+        YXAVPlayerManager.share.pauseAudio()
+        self.playAuoidButton.layer.removeFlickerAnimation()
+        self.exampleCell?.playAuoidButton.layer.removeFlickerAnimation()
+    }
     
     // MARK: ---- UITableViewDelegate && UITableViewDataSource ----
     func numberOfSections(in tableView: UITableView) -> Int {
