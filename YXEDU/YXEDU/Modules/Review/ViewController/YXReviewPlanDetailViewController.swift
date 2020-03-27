@@ -13,7 +13,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     var planId: Int = -1
     
-    var headerView = YXReviewPlanDetailHeaderView()
+    var headerView = YXReviewPlanHeaderView()
     var wordListView = YXWordListView()
     var bottomView = YXReviewPlanDetailBottomView()
     
@@ -79,16 +79,18 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
+        guard let model = model else { return }
         headerView.snp.remakeConstraints { (make) in
-            make.top.equalTo(AS(4 + kNavHeight))
+            make.top.equalTo(AS(kNavHeight))
             make.left.right.equalTo(0)
             
-            if let from = model?.fromUser, from.isNotEmpty {
-                make.height.equalTo(AS(108))
-            } else {
-                make.height.equalTo(AS(90))
-            }
+//            if let from = model?.fromUser, from.isNotEmpty {
+//                make.height.equalTo(AS(108))
+//
+//            } else {
+//                make.height.equalTo(AS(90))
+//            }
             
         }
         
@@ -111,11 +113,24 @@ class YXReviewPlanDetailViewController: YXViewController {
             guard let self = self else { return }
             if let msg = error {
                 UIView.toast(msg)
+                
             } else {
                 self.model = detailModel
-                self.headerView.reviewPlanModel = detailModel
                 self.bottomView.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []
+                
+                self.headerView.detailModel = detailModel
+                self.headerView.statusClosure = {
+                    
+                }
+                
+                self.headerView.reportClosure = {
+                    
+                }
+                
+                self.headerView.shareClosure = {
+                    self.share()
+                }
                 
                 self.viewDidLayoutSubviews()
             }
@@ -154,17 +169,14 @@ class YXReviewPlanDetailViewController: YXViewController {
         shareButton.addTarget(self, action: #selector(clickShareButton), for: .touchUpInside)
     }
     
-    @objc func clickShareButton() {
-        
+    func share() {
         YXSettingDataManager().fetchShareCommand(planId: planId) { (model, msg) in
             if let commandModel = model, let content = commandModel.content {
                 YXShareCodeView.share.showView(content)
+                
             } else {
                 UIView.toast(msg)
             }
         }
-//        http://nnyc-api-test.xstudyedu.com/api/v1/learn/getsharereviewplan
-        
-//
     }
 }

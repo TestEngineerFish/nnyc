@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,57 +17,24 @@
                 <rect key="frame" x="0.0" y="0.0" width="231" height="151"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8AA-So-MKF" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="231" height="151"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mG-tH-KVK">
-                                <rect key="frame" x="107.5" y="65" width="16" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebs-lF-WfC">
-                                <rect key="frame" x="98" y="67.5" width="35" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <inset key="titleEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="28" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="修改" image="go">
-                                    <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="4mG-tH-KVK" firstAttribute="centerY" secondItem="8AA-So-MKF" secondAttribute="centerY" id="Lll-CK-0j2"/>
-                            <constraint firstItem="Ebs-lF-WfC" firstAttribute="centerY" secondItem="8AA-So-MKF" secondAttribute="centerY" id="Tfd-5h-Mxc"/>
-                            <constraint firstItem="Ebs-lF-WfC" firstAttribute="centerX" secondItem="8AA-So-MKF" secondAttribute="centerX" id="eDf-zd-qDe"/>
-                            <constraint firstItem="4mG-tH-KVK" firstAttribute="centerX" secondItem="8AA-So-MKF" secondAttribute="centerX" id="kue-h9-so9"/>
-                        </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="14"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mG-tH-KVK">
+                        <rect key="frame" x="107.5" y="65" width="16" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="8AA-So-MKF" secondAttribute="trailing" id="096-mQ-T98"/>
-                <constraint firstItem="8AA-So-MKF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="7dH-9h-IBc"/>
-                <constraint firstAttribute="bottom" secondItem="8AA-So-MKF" secondAttribute="bottom" id="PgP-kV-JMz"/>
-                <constraint firstItem="8AA-So-MKF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ZlS-K8-sWK"/>
+                <constraint firstItem="4mG-tH-KVK" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Qah-8O-Sar"/>
+                <constraint firstItem="4mG-tH-KVK" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="kgW-R6-cg5"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="231" height="151"/>
             <connections>
-                <outlet property="colorView" destination="8AA-So-MKF" id="0Rb-Pk-YA4"/>
-                <outlet property="editButton" destination="Ebs-lF-WfC" id="LPQ-mg-YMR"/>
                 <outlet property="gradeLabel" destination="4mG-tH-KVK" id="Mab-Yp-pRx"/>
             </connections>
             <point key="canvasLocation" x="31" y="136"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="go" width="8" height="15"/>
-    </resources>
 </document>

@@ -18,6 +18,28 @@ struct YXGradeWordBookListModel: Mappable {
     var gradeName: String?
     var wordBooks: [YXWordBookModel]?
     
+    lazy var versions: [YXWordVersionModel] = {
+        guard let wordBooks = wordBooks, wordBooks.count > 0 else { return [] }
+        
+        var versions: [YXWordVersionModel] = []
+        versions.append(YXWordVersionModel(bookVersionId:0, bookVersion: "所有版本"))
+        
+        for wordBook in wordBooks {
+            if versions.contains(where: { $0.bookVersion == wordBook.bookVersion }) {
+                continue
+                
+            } else {
+                versions.append(YXWordVersionModel(bookVersionId: wordBook.bookVersionId, bookVersion: wordBook.bookVersion))
+            }
+        }
+        
+        if versions.count > 0 {
+            versions[0].isSelect = true
+        }
+        
+        return versions
+    }()
+    
     init() {}
 
     init?(map: Map) {
@@ -29,6 +51,12 @@ struct YXGradeWordBookListModel: Mappable {
         gradeName <- map["grade_name"]
         wordBooks <- map["book_list"]
     }
+}
+
+struct YXWordVersionModel {
+    var isSelect = false
+    var bookVersionId: Int?
+    var bookVersion: String?
 }
 
 struct YXWordBookModel: Mappable {

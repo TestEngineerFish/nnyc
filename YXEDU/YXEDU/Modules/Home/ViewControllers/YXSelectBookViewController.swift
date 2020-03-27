@@ -36,7 +36,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 
                 var nextSelectWordBook: YXWordBookModel!
                 if index == self.wordBookModels.count - 1 - 1 {
-                    nextSelectWordBook = self.wordBookModels[index - 1 ]
+                    nextSelectWordBook = self.wordBookModels[index - 1]
                     
                 } else {
                     nextSelectWordBook = self.wordBookModels[index + 1]
@@ -102,6 +102,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
+                
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
             }

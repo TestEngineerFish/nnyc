@@ -11,7 +11,8 @@ import UIKit
 class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {    
     private var grades: [YXGradeWordBookListModel] = []
     private var filterGrades: [YXGradeWordBookListModel] = []
-    private var selectGradeView: YXSelectGradeView!
+    private var filterVersion = "所有版本"
+    private var selectGradeView: YXSelectGradeView?
     
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -22,13 +23,11 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @IBAction func showOrHideSelectGradeView(_ sender: Any) {
-        if selectGradeView.isHidden == true {
-            selectGradeView.isHidden = false
-            seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "hideSelectGrade")
+        if selectGradeView?.isHidden == true {
+            selectGradeView?.isHidden = false
             
         } else {
-            selectGradeView.isHidden = true
-            seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "showSelectGrade")
+            selectGradeView?.isHidden = true
         }
     }
     
@@ -36,8 +35,6 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: "YXGroupWordBookCell", bundle: nil), forCellReuseIdentifier: "YXGroupWordBookCell")
-        
-        createGradeSelectView()
         loadData()
     }
     
@@ -58,6 +55,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 self.createGradeSelectView()
                 self.tableView.reloadData()
+                
             } catch {
                 YXLog("获取书列表，error:", error.localizedDescription)
             }
@@ -65,22 +63,21 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func createGradeSelectView() {
-        selectGradeView = YXSelectGradeView(frame: CGRect(x: 0, y: 44, width: screenWidth, height: screenHeight), selectClosure: { (gradeName) in
+        selectGradeView = YXSelectGradeView(frame: CGRect(x: 0, y: 44, width: screenWidth, height: screenHeight), grades: grades, selectClosure: { gradeName, versionName in
+            self.filterVersion = versionName
+            
             self.filterButton.setTitle(gradeName, for: .normal)
             self.filterGrade(by: gradeName)
             
-            self.selectGradeView.isHidden = true
-            self.seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "showSelectGrade")
+//            self.selectGradeView?.isHidden = true
         })
-        selectGradeView.grades.append(contentsOf: grades)
-        selectGradeView.isHidden = true
-        self.view.addSubview(selectGradeView)
         
-        seleteGradeViewStateImageView.image = #imageLiteral(resourceName: "showSelectGrade")
+        selectGradeView?.isHidden = true
+        self.view.addSubview(selectGradeView!)
     }
     
     private func filterGrade(by gradeName: String) {
-        if gradeName == "全部" {
+        if gradeName == "所有年级" {
             self.filterGrades = self.grades
             
         } else {
@@ -118,12 +115,30 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let count = filterGrades[indexPath.row].wordBooks?.count {
-            let countOfRow = Int(count / 3) + ((count % 3 != 0) ? 1 : 0)
-            return CGFloat(228 + ((countOfRow - 1) * 182))
+        if filterVersion == "所有版本" {
+            if let count = filterGrades[indexPath.row].wordBooks?.count {
+                let countOfRow = Int(count / 3) + ((count % 3 != 0) ? 1 : 0)
+                return CGFloat(228 + ((countOfRow - 1) * 182))
+                
+            } else {
+                return 0
+            }
             
         } else {
-            return 0
+            var count = 0
+            
+            for wordBook in filterGrades[indexPath.row].wordBooks ?? [] {
+                guard wordBook.bookVersion == filterVersion else { continue }
+                count = count + 1
+            }
+            
+            if count == 0 {
+                return 0
+                
+            } else {
+                let countOfRow = Int(count / 3) + ((count % 3 != 0) ? 1 : 0)
+                return CGFloat(228 + ((countOfRow - 1) * 182))
+            }
         }
     }
     
@@ -131,22 +146,64 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: - UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filterGrades[collectionView.tag].wordBooks?.count ?? 0
+        if filterVersion == "所有版本" {
+            return filterGrades[collectionView.tag].wordBooks?.count ?? 0
+
+        } else {
+            var count = 0
+            
+            for wordBook in filterGrades[collectionView.tag].wordBooks ?? [] {
+                guard wordBook.bookVersion == filterVersion else { continue }
+                count = count + 1
+            }
+            
+            return count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXSingleGroupWordBookCell", for: indexPath) as! YXSingleGroupWordBookCell
-        let wordBookModel = filterGrades[collectionView.tag].wordBooks?[indexPath.row]
         
-        cell.coverImageView.sd_setImage(with: URL(string: wordBookModel?.coverImagePath ?? ""), completed: nil)
-        cell.nameLabel.text = wordBookModel?.bookName
+        if filterVersion == "所有版本" {
+            let wordBookModel = filterGrades[collectionView.tag].wordBooks?[indexPath.row]
+            cell.coverImageView.sd_setImage(with: URL(string: wordBookModel?.coverImagePath ?? ""), completed: nil)
+            cell.nameLabel.text = wordBookModel?.bookName
+            
+        } else {
+            var wordBookModels: [YXWordBookModel] = []
+            
+            for wordBook in filterGrades[collectionView.tag].wordBooks ?? [] {
+                guard wordBook.bookVersion == filterVersion else { continue }
+                wordBookModels.append(wordBook)
+            }
+            
+            let wordBookModel = wordBookModels[indexPath.row]
+            cell.coverImageView.sd_setImage(with: URL(string: wordBookModel.coverImagePath ?? ""), completed: nil)
+            cell.nameLabel.text = wordBookModel.bookName
+        }
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let wordBook = filterGrades[collectionView.tag].wordBooks?[indexPath.row], let bookId = wordBook.bookId, let units = wordBook.units else { return }
+        var wordBook: YXWordBookModel!
         
+        if filterVersion == "所有版本" {
+            guard let wordBookMocel = filterGrades[collectionView.tag].wordBooks?[indexPath.row] else { return }
+            wordBook = wordBookMocel
+            
+        } else {
+            var wordBookModels: [YXWordBookModel] = []
+            
+            for wordBook in filterGrades[collectionView.tag].wordBooks ?? [] {
+                guard wordBook.bookVersion == filterVersion else { continue }
+                wordBookModels.append(wordBook)
+            }
+            
+            wordBook = wordBookModels[indexPath.row]
+        }
+        
+        guard let bookId = wordBook.bookId, let units = wordBook.units else { return }
         let seleceUnitView = YXSeleceUnitView(units: units) { (unitId) in
             guard let unitId = unitId else { return }
 

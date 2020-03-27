@@ -10,9 +10,7 @@ import UIKit
 
 class YXSelectGradeCell: UICollectionViewCell {
 
-    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var gradeLabel: UILabel!
-    @IBOutlet weak var colorView: YXDesignableView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
