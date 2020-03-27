@@ -10,15 +10,15 @@ import UIKit
 
 enum YXShareImageType: Int {
     /// 学习结果分享
-    case learnResult = 1
-    /// 智能复习分享
-    case aiReviewReuslt = 3
+    case learnResult        = 1
     /// 复习计划分享
-    case planReviewResult = 2
+    case planReviewResult   = 2
+    /// 智能复习分享
+    case aiReviewReuslt     = 3
     /// 听写复习分享
     case listenReviewResult = 4
     /// 挑战结果分享
-    case challengeResult = 5
+    case challengeResult    = 5
 }
 
 class YXShareViewController: YXViewController {
@@ -377,10 +377,10 @@ class YXShareViewController: YXViewController {
             return label
         }()
         aboveLabel.frame = CGRect(x: 56, y: 147, width: 181, height: 28)
-        aboveLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        aboveLabel.layer.shadowRadius = 2.0
+        aboveLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
+        aboveLabel.layer.shadowRadius  = 2.0
         aboveLabel.layer.shadowOpacity = 1.0
-        aboveLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        aboveLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(aboveLabel.layer)
         
         let amountLabel: UILabel = {
@@ -393,10 +393,10 @@ class YXShareViewController: YXViewController {
             return label
         }()
         amountLabel.frame = CGRect(x: 116, y: 179, width: amountLabel.width, height: 47)
-        amountLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        amountLabel.layer.shadowRadius = 2.0
+        amountLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
+        amountLabel.layer.shadowRadius  = 2.0
         amountLabel.layer.shadowOpacity = 1.0
-        amountLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        amountLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(amountLabel.layer)
         
         let belowLabel: UILabel = {
@@ -408,10 +408,10 @@ class YXShareViewController: YXViewController {
             return label
         }()
         belowLabel.frame = CGRect(x: 116 + amountLabel.width, y: 193, width: 161, height: 28)
-        belowLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        belowLabel.layer.shadowRadius = 2.0
+        belowLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
+        belowLabel.layer.shadowRadius  = 2.0
         belowLabel.layer.shadowOpacity = 1.0
-        belowLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        belowLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(belowLabel.layer)
         
         let contentImage = UIImage(named: "reviewShareContent")
@@ -465,11 +465,11 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
-        aboveLabel.frame = CGRect(x: 72, y: 152, width: 241, height: 28)
-        aboveLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        aboveLabel.layer.shadowRadius = 2.0
+        aboveLabel.frame = CGRect(x: 72, y: 148, width: 241, height: 28)
+        aboveLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
+        aboveLabel.layer.shadowRadius  = 2.0
         aboveLabel.layer.shadowOpacity = 1.0
-        aboveLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        aboveLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(aboveLabel.layer)
         
         let amountLabel: UILabel = {
@@ -481,11 +481,11 @@ class YXShareViewController: YXViewController {
             label.sizeToFit()
             return label
         }()
-        amountLabel.frame = CGRect(x: 161, y: 184, width: amountLabel.width, height: 47)
-        amountLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        amountLabel.layer.shadowRadius = 2.0
+        amountLabel.frame = CGRect(x: 161, y: 181, width: amountLabel.width, height: 47)
+        amountLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
+        amountLabel.layer.shadowRadius  = 2.0
         amountLabel.layer.shadowOpacity = 1.0
-        amountLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        amountLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(amountLabel.layer)
         
         let belowLabel: UILabel = {
@@ -496,11 +496,11 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
-        belowLabel.frame = CGRect(x: 161 + amountLabel.width, y: 198, width: 21, height: 28)
-        belowLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        belowLabel.layer.shadowRadius = 2.0
+        belowLabel.frame = CGRect(x: 161 + amountLabel.width, y: 196, width: 21, height: 28)
+        belowLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
+        belowLabel.layer.shadowRadius  = 2.0
         belowLabel.layer.shadowOpacity = 1.0
-        belowLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        belowLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(belowLabel.layer)
         
         let contentImage = UIImage(named: "reviewShareContent")
@@ -554,7 +554,7 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
-        aboveLabel.frame = CGRect(x: 46, y: 147, width: 181, height: 28)
+        aboveLabel.frame = CGRect(x: 60, y: 147, width: 181, height: 28)
         aboveLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
         aboveLabel.layer.shadowRadius = 2.0
         aboveLabel.layer.shadowOpacity = 1.0
@@ -571,10 +571,10 @@ class YXShareViewController: YXViewController {
             return label
         }()
         amountLabel.frame = CGRect(x: 126, y: 179, width: amountLabel.width, height: 47)
-        amountLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        amountLabel.layer.shadowRadius = 2.0
+        amountLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
+        amountLabel.layer.shadowRadius  = 2.0
         amountLabel.layer.shadowOpacity = 1.0
-        amountLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        amountLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(amountLabel.layer)
         
         let belowLabel: UILabel = {
@@ -586,10 +586,10 @@ class YXShareViewController: YXViewController {
             return label
         }()
         belowLabel.frame = CGRect(x: 126 + amountLabel.width, y: 193, width: 161, height: 28)
-        belowLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        belowLabel.layer.shadowRadius = 2.0
+        belowLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
+        belowLabel.layer.shadowRadius  = 2.0
         belowLabel.layer.shadowOpacity = 1.0
-        belowLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        belowLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(belowLabel.layer)
         
         let contentImage = UIImage(named: "reviewShareContent")

@@ -17,11 +17,13 @@ class YXExerciseResultViewController: YXViewController {
     
     var model: YXExerciseResultDisplayModel?
     var resultView: YXExerciseResultView?
+    var unitMapView: YXUnitMapView?
     var shareFinished = false
-    var loadingView = YXExerciseResultLoadingView()
+    var loadingView   = YXExerciseResultLoadingView()
     
     deinit {
         resultView?.removeFromSuperview()
+        unitMapView?.removeFromSuperview()
     }
     
     override func viewDidLoad() {
@@ -140,6 +142,7 @@ class YXExerciseResultViewController: YXViewController {
         }
     }
     
+    // MAKE: ---- Request ----
     
     func fetchData() {
         YXReviewDataManager().fetchReviewResult(type: dataType, planId: planId) { [weak self] (resultModel, error) in
@@ -147,16 +150,43 @@ class YXExerciseResultViewController: YXViewController {
             
             if var model = resultModel {                             
                 model.planId = self.planId
-                
+
                 let m = YXExerciseResultDisplayModel.displayModel(model: model)
                 self.model = m
                 self.initResultView()
+                self.initUnitMap()
             } else {
                 UIView.toast("请求数据失败")
                 self.navigationController?.popViewController(animated: true)
             }
             
         }
-        
+    }
+    
+    // MAKE: ---- Event ----
+    private func initUnitMap() {
+        guard let resultView = self.resultView else {return}
+        let mapSize = CGSize(width: AdaptSize(333), height: AdaptSize(192))
+        let unitMapView = YXUnitMapView(totalUnit: 13, currentUnit: 9, frame: CGRect(origin: .zero, size: mapSize))
+        self.view.addSubview(unitMapView)
+        unitMapView.snp.makeConstraints { (make) in
+            make.size.equalTo(mapSize)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(resultView.snp.bottom).offset(AdaptSize(10))
+        }
+        let leftBarImageView  = UIImageView(image: UIImage(named: "linkBar"))
+        let rightBarImageView = UIImageView(image: UIImage(named: "linkBar"))
+        self.view.addSubview(leftBarImageView)
+        self.view.addSubview(rightBarImageView)
+        leftBarImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(resultView.snp.bottom).offset(AdaptSize(-15))
+            make.left.equalTo(unitMapView).offset(AdaptSize(13))
+            make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(41)))
+        }
+        rightBarImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(leftBarImageView)
+            make.right.equalTo(unitMapView).offset(AdaptSize(-13))
+            make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(41)))
+        }
     }
 }

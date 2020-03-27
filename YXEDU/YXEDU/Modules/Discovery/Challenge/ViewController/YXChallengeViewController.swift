@@ -118,9 +118,18 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        let vc = YXReviewPlanReportViewController()
 //        let vc = YXShareViewController()
 //        vc.gameModel = YXGameResultModel()
-//        vc.shareType = .learnResult
+//        vc.shareType = .aiReviewReuslt
 //        vc.hidesBottomBarWhenPushed = true
 //        self.navigationController?.pushViewController(vc, animated: true)
+        
+//        let vc = YXExerciseResultViewController()
+//        vc.dataType = .aiReview
+//        vc.planId = 13
+//        var model = YXExerciseResultDisplayModel()
+//        model.state = true
+//        vc.model = model
+//        vc.hidesBottomBarWhenPushed = true
+//        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
 //        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
             return
