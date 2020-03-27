@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXReviewPlanStudyStatusViewController: YXViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class YXReviewPlanStudyStatusViewController: YXViewController { //, UICollectionViewDelegate, UICollectionViewDataSource {
 
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -27,11 +27,11 @@ class YXReviewPlanStudyStatusViewController: YXViewController, UICollectionViewD
         self.view.addSubview(collectionView)
     }
         
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
-    }
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        <#code#>
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        <#code#>
+//    }
 }

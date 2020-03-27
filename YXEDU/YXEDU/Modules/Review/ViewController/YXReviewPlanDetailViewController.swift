@@ -166,7 +166,7 @@ class YXReviewPlanDetailViewController: YXViewController {
             make.size.equalTo(CGSize(width: 20, height: 22))
         }
         
-        shareButton.addTarget(self, action: #selector(clickShareButton), for: .touchUpInside)
+//        shareButton.addTarget(self, action: #selector(clickShareButton), for: .touchUpInside)
     }
     
     func share() {
