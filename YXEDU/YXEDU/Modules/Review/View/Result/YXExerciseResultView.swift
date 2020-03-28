@@ -23,12 +23,9 @@ class YXExerciseResultView: YXView {
     var titleLabel    = UILabel()
     var subTitleLabel = UILabel()
     var starView      = YXStarView()
-    
-    var progressView = YXReviewProgressView(type: .iKnow, cornerRadius: AS(4))
-
-    var tipsView = YXReviewResultTipsListView()
-    
-    var reportButton = YXButton()
+    var progressView  = YXReviewProgressView(type: .iKnow, cornerRadius: AS(4))
+    var tipsView      = YXReviewResultTipsListView()
+    var reportButton  = YXButton()
     var operateButton = YXButton()
     
     deinit {
@@ -66,12 +63,12 @@ class YXExerciseResultView: YXView {
         
         titleLabel.font = UIFont.regularFont(ofSize: AS(17))
         titleLabel.textAlignment = .center
-        titleLabel.textColor = UIColor.black1
+        titleLabel.textColor     = UIColor.black1
         titleLabel.numberOfLines = 0
                 
         subTitleLabel.font = UIFont.regularFont(ofSize: AS(14))
         subTitleLabel.textAlignment = .center
-        subTitleLabel.textColor = UIColor.black3
+        subTitleLabel.textColor     = UIColor.black3
         subTitleLabel.numberOfLines = 0
         
         tipsView.showWordListEvent = { [weak self] in

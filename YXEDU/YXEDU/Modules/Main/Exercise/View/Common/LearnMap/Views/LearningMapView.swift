@@ -70,7 +70,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
                 let unitView = self.unitViewArray[index]
                 self.currentUnitView = unitView
                 // 创建用户头像
-                self.avatarPinView = YXAvatarPinView()
+                self.avatarPinView = YXAvatarPinView(frame: CGRect.zero)
                 self.movePinView(to: unitView, animation: false)
                 self.addSubview(avatarPinView!)
             }

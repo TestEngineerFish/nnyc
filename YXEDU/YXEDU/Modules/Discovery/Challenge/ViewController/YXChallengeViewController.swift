@@ -122,12 +122,11 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        vc.hidesBottomBarWhenPushed = true
 //        self.navigationController?.pushViewController(vc, animated: true)
         
-//        let vc = YXExerciseResultViewController()
-//        vc.dataType = .aiReview
-//        vc.planId = 13
-//        var model = YXExerciseResultDisplayModel()
-//        model.state = true
-//        vc.model = model
+//        let vc = YXLearningResultViewController()
+//        vc.bookId = 41
+//        vc.unitId = 436
+//        vc.newLearnAmount    = 19
+//        vc.reviewLearnAmount = 10
 //        vc.hidesBottomBarWhenPushed = true
 //        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
 //        return

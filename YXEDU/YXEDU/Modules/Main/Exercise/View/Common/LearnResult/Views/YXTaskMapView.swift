@@ -144,7 +144,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
     /// 添加图钉头像
     private func addAvatarPinView(_ view: UIView) {
         // 创建用户头像
-        self.avatarPinView = YXAvatarPinView()
+        self.avatarPinView = YXAvatarPinView(frame: .zero)
         self.movePinView(to: view, animation: false)
         self.addSubview(avatarPinView!)
     }

@@ -320,7 +320,7 @@ extension CALayer {
     /// - parameter duration: 动画持续时间
     func addJellyAnimation(duration: Double = 0.25){
         let animater            = CAKeyframeAnimation(keyPath: "transform.scale")
-        animater.values         = [0.5, 1.1, 1.0]// 先保持大小比例,再放大,最后恢复默认大小
+        animater.values         = [0.5, 1.2, 1.0]// 先保持大小比例,再放大,最后恢复默认大小
         animater.duration       = duration
         animater.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         self.add(animater, forKey: "jellyAnimation")

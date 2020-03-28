@@ -10,22 +10,28 @@ import UIKit
 
 class YXUnitMapView: UIView {
     
-    var unitModelList  = [String]()
+    var unitModelList  = [YXLearnMapUnitModel]()
     var unitPointList  = [CGPoint]()
     var offsetUnit     = 0 /// 偏移的单元数量
     var showUnitNumber = 0 /// 需要显示的单元数量
-    var currentIndex   = 0 /// 当前单元下标
-    var totalUnit: Int /// 总单元数
-    var currentUnit: Int /// 当前单元数
+    var currentUnitIndex: Int /// 当前单元下标
     
     var avatarPinView: YXAvatarPinView?
 
-    init(totalUnit: Int, currentUnit: Int, frame: CGRect) {
-        self.totalUnit   = totalUnit
-        self.currentUnit = currentUnit
+    init(unitModelList: [YXLearnMapUnitModel], currentUnitIndex: Int, moveNext: Bool, frame: CGRect) {
+        self.unitModelList    = unitModelList
+        self.currentUnitIndex = currentUnitIndex
         super.init(frame: frame)
         self.createSubviews()
         self.bindProperty()
+        if moveNext {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                guard let self = self else { return }
+                if (self.currentUnitIndex - self.offsetUnit) < self.showUnitNumber {
+                    self.moveToNextUnit()
+                }
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -45,9 +51,10 @@ class YXUnitMapView: UIView {
         if self.offsetUnit > 0 {
             self.setStartShadow()
         }
-        if self.totalUnit - self.offsetUnit - self.showUnitNumber > 0 {
+        if self.unitModelList.count - self.offsetUnit - self.showUnitNumber > 0 {
             self.setEndShadow()
         }
+        self.setPinView()
     }
     
     /// 设置单元位置
@@ -93,8 +100,8 @@ class YXUnitMapView: UIView {
     /// 添加单元站点
     private func addUnitView() {
         self.offsetUnit = {
-            if self.currentUnit >= 6 {
-                return ((self.currentUnit / 3) - 1) * 3
+            if self.currentUnitIndex >= 6 {
+                return ((self.currentUnitIndex / 3) - 1) * 3
             } else {
                 return 0
             }
@@ -102,13 +109,13 @@ class YXUnitMapView: UIView {
         
         self.showUnitNumber = {
             if offsetUnit > 0 {
-                if ((self.currentUnit / 3) + 1) * 3 > self.totalUnit {
-                    return self.totalUnit % 3 + 3
+                if ((self.currentUnitIndex / 3) + 1) * 3 > self.unitModelList.count {
+                    return self.unitModelList.count % 3 + 3
                 } else {
                     return 6
                 }
             } else {
-                return self.totalUnit > 6 ? 6 : self.totalUnit
+                return self.unitModelList.count > 6 ? 6 : self.unitModelList.count
             }
         }()
         
@@ -128,16 +135,19 @@ class YXUnitMapView: UIView {
         let unitView = UIView()
         let unit     = self.offsetUnit + index
         let label = UILabel()
-        if unit == self.currentUnit  {
-            self.setPinView(center)
-            self.currentIndex = index
+        if unit == self.currentUnitIndex  {
             label.textColor   = UIColor.orange1
             label.font        = UIFont.semiboldFont(ofSize: AdaptSize(15))
         } else {
             label.textColor   = UIColor.hex(0xDBC4AD)
             label.font        = UIFont.mediumFont(ofSize: AdaptSize(13))
         }
-        label.text  = "Unit\(unit)"
+        label.text  = {
+            if unit <= self.unitModelList.count {
+                return self.unitModelList[unit - 1].unitName ?? ""
+            }
+            return ""
+        }()
         label.sizeToFit()
         label.frame = CGRect(x: 0, y: AdaptSize(25), width: label.width, height: label.height)
         
@@ -162,8 +172,10 @@ class YXUnitMapView: UIView {
     }
     
      /// 添加头像图钉
-    private func setPinView(_ point: CGPoint) {
-        self.avatarPinView = YXAvatarPinView(frame: CGRect(x: point.x - AdaptSize(18), y: point.y - AdaptSize(10), width: AdaptSize(36), height: AdaptSize(42)))
+    private func setPinView() {
+        let pinPoint = self.unitPointList[self.currentUnitIndex - self.offsetUnit]
+        let pinFrame = CGRect(x: pinPoint.x - AdaptSize(18), y: pinPoint.y - AdaptSize(10), width: AdaptSize(36), height: AdaptSize(42))
+        self.avatarPinView = YXAvatarPinView(isSmallMap: true, frame: pinFrame)
         self.addSubview(avatarPinView!)
     }
     
@@ -191,8 +203,32 @@ class YXUnitMapView: UIView {
     
     /// 移动到下个单元
     private func moveToNextUnit() {
-        let nextUnitPoint = self.unitPointList[self.currentIndex]
-        
+        let currentIndex = self.currentUnitIndex - self.offsetUnit
+        guard let _pinView = self.avatarPinView else { return }
+        let currentUnitPoint = self.unitPointList[currentIndex]
+        let nextUnitPoint    = self.unitPointList[currentIndex + 1]
+        let path = UIBezierPath()
+        var duration: Double = 0
+        // 往上移动
+        if nextUnitPoint.y < currentUnitPoint.y {
+            path.move(to: CGPoint(x: currentUnitPoint.x, y: currentUnitPoint.y + AdaptSize(21) - AdaptSize(10)))
+            path.addLine(to: CGPoint(x: currentUnitPoint.x, y: currentUnitPoint.y + AdaptSize(23)))
+            path.addCurve(to: CGPoint(x: unitPointList[4].x, y: unitPointList[4].y + AdaptSize(23)), controlPoint1: CGPoint(x: unitPointList[3].x - AdaptSize(61), y: unitPointList[3].y + AdaptSize(23)), controlPoint2: CGPoint(x: unitPointList[4].x - AdaptSize(61), y: unitPointList[4].y + AdaptSize(23) - AdaptSize(10)))
+            path.addLine(to: CGPoint(x: unitPointList[4].x, y: unitPointList[4].y + AdaptSize(21) - AdaptSize(10)))
+            duration = 1.5
+        } else {
+            path.move(to: CGPoint(x: currentUnitPoint.x, y: currentUnitPoint.y + AdaptSize(21) - AdaptSize(10)))
+            path.addLine(to: CGPoint(x: currentUnitPoint.x, y: currentUnitPoint.y + AdaptSize(23)))
+            path.addLine(to: CGPoint(x: nextUnitPoint.x, y: nextUnitPoint.y + AdaptSize(23)))
+            path.addLine(to: CGPoint(x: nextUnitPoint.x, y: nextUnitPoint.y + AdaptSize(21) - AdaptSize(10)))
+            duration = 0.75
+        }
+        let animation = CAKeyframeAnimation(keyPath: "position")
+        animation.path     = path.cgPath
+        animation.duration = duration
+        animation.fillMode = .forwards
+        animation.isRemovedOnCompletion = false
+        _pinView.layer.add(animation, forKey: nil)
     }
 }
 

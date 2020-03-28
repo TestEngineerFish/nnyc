@@ -11,14 +11,14 @@ import UIKit
 
 class YXLearningResultViewController: YXViewController {
     
-    var backButton        = BiggerClickAreaButton()
+    var backButton = BiggerClickAreaButton()
     var headerView: YXExerciseResultView?
     var taskMapView: YXTaskMapView?
     var leftImageView = UIImageView()
     var rightImageView = UIImageView()
     var contentScrollView = UIScrollView()
-    
-    var currentModel: YXLearnMapUnitModel? // 当前单元
+
+    var currentUnitIndex = 0
     var requestCount = 0
     var newLearnAmount: Int = 0 // 新学单词数
     var reviewLearnAmount: Int = 0 // 复习单词数量
@@ -29,6 +29,7 @@ class YXLearningResultViewController: YXViewController {
     var shareVC: YXShareViewController?
     var shareFinished = false
     var loadingView = YXExerciseResultLoadingView()
+    var unitMapView: YXUnitMapView?
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -51,15 +52,13 @@ class YXLearningResultViewController: YXViewController {
             self.bindData()
         }
     }
-    
-    
+
     private func loadSubViews() {
         createSubviews()
         bindProperty()
         setLayout()
     }
-    
-    
+
     private func createSubviews() {
         self.view.addSubview(self.contentScrollView)
         
@@ -72,33 +71,45 @@ class YXLearningResultViewController: YXViewController {
         self.view.addSubview(backButton)
  
         // 设置任务地图
-        self.createTaskMap()
+        self.initUnitMap()
         
         self.contentScrollView.addSubview(leftImageView)
         self.contentScrollView.addSubview(rightImageView)
     }
-    
 
-    /// 设置任务地图
-    private func createTaskMap() {
-        guard let modelArray = self.model?.unitList else {
-            return
+    private func initUnitMap() {
+        guard let model = self.model, let resultView = self.headerView else {return}
+        let mapSize = CGSize(width: AdaptSize(333), height: AdaptSize(192))
+        self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: self.currentUnitIndex, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
+        self.contentScrollView.addSubview(unitMapView!)
+        unitMapView!.snp.makeConstraints { (make) in
+            make.size.equalTo(mapSize)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(resultView.snp.bottom).offset(AdaptSize(10))
         }
-        let w = screenWidth - AS(40)
-        let h = AS(245)
-        // 任务地图视图
-        let taskMapViewSize = CGSize(width: w, height: h)
-        let taskMapFrame    = CGRect(origin: .zero, size: taskMapViewSize)
-        taskMapView     = YXTaskMapView(modelArray, frame: taskMapFrame, currentModel: currentModel)
-        self.contentScrollView.addSubview(taskMapView!)
+        let leftBarImageView  = UIImageView(image: UIImage(named: "linkBar"))
+        let rightBarImageView = UIImageView(image: UIImage(named: "linkBar"))
+        self.contentScrollView.addSubview(leftBarImageView)
+        self.contentScrollView.addSubview(rightBarImageView)
+        leftBarImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(resultView.snp.bottom).offset(AdaptSize(-15))
+            make.left.equalTo(unitMapView!).offset(AdaptSize(13))
+            make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(41)))
+        }
+        rightBarImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(leftBarImageView)
+            make.right.equalTo(unitMapView!).offset(AdaptSize(-13))
+            make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(41)))
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.contentScrollView.contentSize = CGSize(width:self.view.width, height:self.unitMapView!.frame.maxY + AdaptSize(15) + kSafeBottomMargin)
+        }
     }
     
-    
     private func bindProperty() {
-        self.contentScrollView.isScrollEnabled = true
+        self.contentScrollView.isScrollEnabled                = true
         self.contentScrollView.showsVerticalScrollIndicator   = false
         self.contentScrollView.showsHorizontalScrollIndicator = false
-        
         
         backButton.setImage(UIImage(named: "back_gray"), for: .normal)
         backButton.addTarget(self, action: #selector(backClick), for: .touchUpInside)
@@ -127,8 +138,7 @@ class YXLearningResultViewController: YXViewController {
         
         self.contentScrollView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
         self.contentScrollView.contentSize = CGSize(width: screenWidth, height: contentHeight)
-        
-        
+
         backButton.snp.makeConstraints { (make) in
             make.left.equalTo(AS(14))
             make.top.equalTo(AS(32 + kSafeBottomMargin))
@@ -183,11 +193,15 @@ class YXLearningResultViewController: YXViewController {
                 }
             } else {
                 self.loadingView.removeFromSuperview()
-
                 self.model = response.data
-                self.currentModel = self.model?.unitList?.filter({ (model) -> Bool in
-                    return model.unitID == unitId
-                }).first
+                if let _unitModelList = self.model?.unitList {
+                    for (index, unitModel) in _unitModelList.enumerated() {
+                        if unitModel.unitID == unitId {
+                            self.currentUnitIndex = index + 1
+                        }
+                    }
+                }
+
                 self.loadSubViews()
             }
         }) { (error) in

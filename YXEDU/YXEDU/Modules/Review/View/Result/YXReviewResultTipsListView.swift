@@ -38,10 +38,10 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
     
     override func bindProperty() {
         self.tableView.backgroundColor = UIColor.clear
-        self.tableView.separatorColor = UIColor.black4.withAlphaComponent(0.5)
-        self.tableView.separatorInset = UIEdgeInsets(top: 0, left: AS(31), bottom: 0, right: AS(34))
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        self.tableView.separatorColor  = UIColor.black4.withAlphaComponent(0.5)
+        self.tableView.separatorInset  = UIEdgeInsets(top: 0, left: AS(31), bottom: 0, right: AS(34))
+        self.tableView.delegate        = self
+        self.tableView.dataSource      = self
         self.tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "UITableViewCell")
     }
     
@@ -78,35 +78,32 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
         titleLabel.text = value.0
         countLabel.text = "\(value.1)"
         
-        cell.contentView.removeAllSubviews()
-        cell.contentView.addSubview(titleLabel)
-        cell.contentView.addSubview(countLabel)
-        
+        cell.removeAllSubviews()
+        cell.addSubview(titleLabel)
+        cell.addSubview(countLabel)
+        titleLabel.sizeToFit()
         titleLabel.snp.remakeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalTo(AS(31))
-            make.height.equalTo(AS(20))
+            make.size.equalTo(titleLabel.size)
         }
         
         countLabel.snp.remakeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalTo(titleLabel.snp.right).offset(AS(10))
             make.width.equalTo(AS(80))
-            make.right.equalTo(AS(value.2 ? -44 : -34))
+            make.right.equalToSuperview().offset(AS(value.2 ? -44 : -34))
         }
         
         if value.2 {
             let imageView = createArrowImageView()
-            cell.contentView.addSubview(imageView)
+            cell.addSubview(imageView)
             imageView.snp.remakeConstraints { (make) in
                 make.centerY.equalToSuperview()
-                make.right.equalTo(AS(-33))
+                make.right.equalToSuperview().offset(AS(-33))
                 make.width.equalTo(AS(8))
                 make.height.equalTo(AS(15))
             }
-            
         }
-        
         return cell
     }
     

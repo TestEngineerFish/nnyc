@@ -12,10 +12,15 @@ class YXAvatarPinView: UIView {
 
     var imageView = UIImageView()
 
-    override init(frame: CGRect) {
+    init(isSmallMap: Bool = false, frame: CGRect) {
         super.init(frame: frame)
         self.createAvatarView()
-        self.addAnimation()
+        self.setAnchorPoint()
+        if isSmallMap {
+            self.addZoomAnimation()
+        } else {
+            self.addShakeAnimation()
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -49,9 +54,21 @@ class YXAvatarPinView: UIView {
         }
     }
 
-    private func addAnimation() {
+    // MARK: ---- Animation ----
 
-        // ==== 动画 ====
+    private func setAnchorPoint() {
+        // 1.1、修改锚点
+        self.layer.anchorPoint           = CGPoint(x: 0.5, y: 1)
+        self.imageView.layer.anchorPoint = CGPoint(x: 0.5, y: 1)
+    }
+
+    private func addZoomAnimation() {
+        // 2、放大动画
+        self.layer.addJellyAnimation(duration: 0.75)
+    }
+
+    private func addShakeAnimation() {
+
         // 1、摇摆动画
         let shakeAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
         shakeAnimation.fromValue      = CGFloat.pi/8
@@ -60,21 +77,18 @@ class YXAvatarPinView: UIView {
         shakeAnimation.repeatCount    = 2.25
         shakeAnimation.autoreverses   = true
         shakeAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        // 1.1、修改锚点
-        self.layer.anchorPoint = CGPoint(x: 0.5, y: 1)
         self.layer.add(shakeAnimation, forKey: "shakeAnimation")
 
         // 2、放大动画
         let zoomAnimation = CABasicAnimation(keyPath: "transform")
-        zoomAnimation.fromValue = CATransform3DMakeScale(0, 0, 0)
-        zoomAnimation.toValue   = CATransform3DMakeScale(1, 1, 1)
+        zoomAnimation.fromValue   = CATransform3DMakeScale(0, 0, 0)
+        zoomAnimation.toValue     = CATransform3DMakeScale(1, 1, 1)
         zoomAnimation.duration    = 1
         zoomAnimation.repeatCount = 1
         zoomAnimation.fillMode    = .forwards
         zoomAnimation.isRemovedOnCompletion = true
         zoomAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        // 2.1、修改锚点
-        self.imageView.layer.anchorPoint = CGPoint(x: 0.5, y: 1)
+
         self.imageView.layer.add(zoomAnimation, forKey: nil)
     }
 

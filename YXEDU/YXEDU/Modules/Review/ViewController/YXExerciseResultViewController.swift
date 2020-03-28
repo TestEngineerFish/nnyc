@@ -29,11 +29,9 @@ class YXExerciseResultViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubviews()
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.fetchData()
         }
-        
     }
     
     override func addNotification() {
@@ -43,6 +41,9 @@ class YXExerciseResultViewController: YXViewController {
     
     private func createSubviews() {
         self.view.addSubview(loadingView)
+        if let navBar = customNavigationBar {
+            self.view.bringSubviewToFront(navBar)
+        }
         loadingView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(kSafeBottomMargin + 123))
             make.centerX.width.equalToSuperview()
@@ -52,7 +53,7 @@ class YXExerciseResultViewController: YXViewController {
     
     private func initResultView() {
         self.loadingView.removeFromSuperview()
-        
+
         self.resultView = YXExerciseResultView(model: model!)
         
         resultView?.processEvent = { [weak self] in
@@ -64,10 +65,10 @@ class YXExerciseResultViewController: YXViewController {
         resultView?.reportEvent = { [weak self] in
             self?.reportPageEvent()
         }
-        
+
         self.view.addSubview(resultView!)
         resultView?.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(68 + kSafeBottomMargin))
+            make.top.equalTo(kNavHeight)
             make.left.right.equalToSuperview()
             make.height.equalTo(resultView?.viewHeight() ?? 0)
         }
@@ -154,39 +155,11 @@ class YXExerciseResultViewController: YXViewController {
                 let m = YXExerciseResultDisplayModel.displayModel(model: model)
                 self.model = m
                 self.initResultView()
-                self.initUnitMap()
             } else {
                 UIView.toast("请求数据失败")
                 self.navigationController?.popViewController(animated: true)
             }
             
-        }
-    }
-    
-    // MAKE: ---- Event ----
-    private func initUnitMap() {
-        guard let resultView = self.resultView else {return}
-        let mapSize = CGSize(width: AdaptSize(333), height: AdaptSize(192))
-        let unitMapView = YXUnitMapView(totalUnit: 13, currentUnit: 9, frame: CGRect(origin: .zero, size: mapSize))
-        self.view.addSubview(unitMapView)
-        unitMapView.snp.makeConstraints { (make) in
-            make.size.equalTo(mapSize)
-            make.centerX.equalToSuperview()
-            make.top.equalTo(resultView.snp.bottom).offset(AdaptSize(10))
-        }
-        let leftBarImageView  = UIImageView(image: UIImage(named: "linkBar"))
-        let rightBarImageView = UIImageView(image: UIImage(named: "linkBar"))
-        self.view.addSubview(leftBarImageView)
-        self.view.addSubview(rightBarImageView)
-        leftBarImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(resultView.snp.bottom).offset(AdaptSize(-15))
-            make.left.equalTo(unitMapView).offset(AdaptSize(13))
-            make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(41)))
-        }
-        rightBarImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(leftBarImageView)
-            make.right.equalTo(unitMapView).offset(AdaptSize(-13))
-            make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(41)))
         }
     }
 }
