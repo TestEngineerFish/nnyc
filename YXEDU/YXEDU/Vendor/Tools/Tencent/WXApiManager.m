@@ -140,8 +140,6 @@
             platform = kPlatformWXTimeLine;
         }
         NSString *des = [NSString stringWithFormat:@"%@-%@",platform,self.shareBusiness];
-        [MobClick event:kTracePunchCardResult attributes:@{kTraceDescKey : des}];
-        [MobClick event:kTracePunchCardResult attributes:@{kTraceDescKey : kPlatformWX}];
         SendMessageToWXResp *messageResps = (SendMessageToWXResp *)resp;
 
         if (messageResps.errCode == 0){

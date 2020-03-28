@@ -13,20 +13,12 @@ static NSString *const kTraceTypeKey = @"TraceType";
     if (!desc) {
         desc = @"";
     }
-    [MobClick event:eventId attributes:@{
-                                         kTracePageKey : [self controllerName],
-                                         kTraceDescKey : desc
-                                         }];
 }
 
 + (void)traceEvent:(NSString *)eventId descributtion:(NSString *)desc {
     if (!desc) {
         desc = @"";
     }
-    [MobClick event:eventId attributes:@{
-                                         kTracePageKey : NSStringFromClass([self class]),
-                                         kTraceDescKey : desc
-                                         }];
 }
 
 - (void)traceEvent:(NSString *)eventId traceType:(YXTraceType)traceType descributtion:(NSString *)desc
@@ -38,12 +30,6 @@ static NSString *const kTraceTypeKey = @"TraceType";
     if (!traceType) {
         traceType = kTraceOther;
     }
-    
-    [MobClick event:eventId attributes:@{
-                                         kTracePageKey : NSStringFromClass([self class]),
-                                         kTraceTypeKey : traceType,
-                                         kTraceDescKey : desc
-                                         }];
 }
 
 - (NSString *)controllerName {

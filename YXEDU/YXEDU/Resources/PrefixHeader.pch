@@ -37,7 +37,6 @@
 #import "YXTipsBaseView.h"
 #import "NetWorkRechable.h"
 #import "YXNoHightButton.h"
-#import <UMAnalytics/MobClick.h>
 #import "UIViewController+YXTrace.h"
 #import "YXSpringAnimateButton.h"
 #import "YXIconfont.h"

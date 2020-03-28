@@ -362,12 +362,6 @@
     }
     NSString *questionID = self.wordQuestionModel.question.questionId;
     NSString *quesViewName = NSStringFromClass([self class]);
-    [MobClick event:eventId attributes:@{
-                                         kTraceQuestionViewNameKey   : quesViewName,
-                                         kTraceExerciseKey           : [self exerciseTypeStr],
-                                         kTraceDescKey               : desc,
-                                         kTraceQuestionIDKey         : questionID
-                                         }];
 }
 
 - (void)tracePlayWordSound {

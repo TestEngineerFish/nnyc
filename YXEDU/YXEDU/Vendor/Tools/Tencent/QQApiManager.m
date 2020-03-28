@@ -155,7 +155,6 @@
     if ([resp isKindOfClass:[SendMessageToQQResp class]]) {
         if (resp.type == ESENDMESSAGETOQQRESPTYPE) {
             NSString *des = [NSString stringWithFormat:@"%@-%@",kPlatformQQ,self.shareBusiness];
-            [MobClick event:kTracePunchCardResult attributes:@{kTraceDescKey : des}];
             
             if ([resp.result isEqualToString:@"0"] && self.finishBlock != nil){
                 self.finishBlock(resp.result, resp.errorDescription, YES);

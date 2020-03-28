@@ -72,7 +72,6 @@
         block(response,result);
     }];
     NSString *desc = [NSString stringWithFormat:@"%@-%d",wordId,fav];
-    [MobClick event:kTraceWordFavourite attributes:@{kTraceDescKey : desc}];
 }
 
 + (void)downLoadWordMaterials:(NSArray *)words andBookId:(NSString *)bookId completeBlock:(YXFinishBlock)block {

@@ -36,16 +36,6 @@
 #endif
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [MobClick beginLogPageView:[self controllerName]];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [MobClick endLogPageView:[self controllerName]];
-}
-
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     if (self.noNetworkView) {
