@@ -45,7 +45,7 @@ class YXReviewPlanHeaderView: UIView {
                 statusViewHeight.constant = 36
                 statusLabel.text = "\(totalCount)位用户保存了该词单，\(detailModel.status?.finishCount ?? 0)人完成了学习"
                 
-                if detailModel.status?.isShowNewIcon == 1{
+                if detailModel.status?.shouldShowNewIcon == 1{
                     newIconButton.isHidden = false
                     
                 } else {

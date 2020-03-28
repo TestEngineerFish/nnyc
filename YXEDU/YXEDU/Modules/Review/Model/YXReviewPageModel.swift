@@ -52,6 +52,7 @@ class YXReviewPlanModel: Mappable {
     var reviewState: ReviewPlanState = .normal
     var listenState: ReviewPlanState = .normal
     var status: YXReviewPlanStatusModel?
+    var shouldShowRedDot: Int?
 
     required init?(map: Map) {
     }
@@ -65,13 +66,14 @@ class YXReviewPlanModel: Mappable {
         status <- map["share_list"]
         reviewState <- (map["review_state"] , YXReviewPlanStateTransform())
         listenState <- (map["listen_state"] , YXReviewPlanStateTransform())
+        shouldShowRedDot <- map["is_show_red_dot"]
     }
 }
 
 class YXReviewPlanStatusModel: Mappable {
     var finishCount: Int?
     var totalCount: Int?
-    var isShowNewIcon: Int?
+    var shouldShowNewIcon: Int?
     
     required init?(map: Map) {
     }
@@ -79,7 +81,7 @@ class YXReviewPlanStatusModel: Mappable {
     func mapping(map: Map) {
         finishCount <- map["finish_num"]
         totalCount <- map["obtain_num"]
-        isShowNewIcon <- map["is_show_red_dot"]
+        shouldShowNewIcon <- map["is_show_red_dot"]
     }
 }
 

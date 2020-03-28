@@ -17,7 +17,12 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     }
     
     var bgView = UIView()
-    
+    let redDotView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        view.layer.cornerRadius = 3
+        return view
+    }()
     var titleLabel = UILabel()
     var countLabel = UILabel()
     var subTitleLabel = UILabel()
@@ -46,6 +51,8 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     override func createSubviews() {
         self.addSubview(bgView)
+        
+        bgView.addSubview(redDotView)
         
         bgView.addSubview(titleLabel)
         bgView.addSubview(countLabel)
@@ -105,6 +112,10 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             make.bottom.equalTo(AS(-8.5))
         }
         
+        redDotView.snp.remakeConstraints { (make) in
+            make.top.right.equalToSuperview().inset(10)
+            make.height.width.equalTo(6)
+        }
         
         let countWidth = countLabel.text?.textWidth(font: countLabel.font, height: AS(17)) ?? 0
         countLabel.snp.remakeConstraints { (make) in
@@ -197,9 +208,10 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     
     override func bindData() {
+        redDotView.isHidden = reviewPlanModel?.shouldShowRedDot == 1
+        
         titleLabel.text = reviewPlanModel?.planName
         countLabel.text = "单词: " + (reviewPlanModel?.wordCount.string ?? "")
-        
         
         if reviewPlanModel?.listenState == .learning {
             subTitleLabel.text = "听写进度：\(reviewPlanModel?.listen ?? 0)%"
@@ -207,7 +219,6 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             subTitleLabel.text = "听写成绩："
             listenStarView.count = reviewPlanModel?.listen ?? 0
         }
-        
         
         if reviewPlanModel?.reviewState == .normal {
             reviewButton.setTitle(YXReviewDataManager.startStudy, for: .normal)
