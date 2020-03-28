@@ -52,6 +52,20 @@
                                 <color key="progressTintColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="trackTintColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGq-F3-KKf">
+                                <rect key="frame" x="159.5" y="192" width="23" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="q3x-qD-4CL">
+                                <rect key="frame" x="87.5" y="197" width="64" height="6"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="6" id="pkZ-EO-Sog"/>
+                                </constraints>
+                                <color key="progressTintColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="听写成绩" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKH-kn-psU">
                                 <rect key="frame" x="24" y="192" width="53.5" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -138,21 +152,26 @@
                             <constraint firstItem="oqC-gu-0Hf" firstAttribute="leading" secondItem="gvC-dl-avH" secondAttribute="trailing" constant="8" id="7He-eI-l9W"/>
                             <constraint firstItem="021-5x-kSA" firstAttribute="leading" secondItem="KKH-kn-psU" secondAttribute="trailing" constant="10" id="8yF-gL-Sku"/>
                             <constraint firstItem="kUt-lq-rAr" firstAttribute="top" secondItem="KKH-kn-psU" secondAttribute="bottom" constant="10" id="Dkf-Jg-tbp"/>
+                            <constraint firstItem="OcE-2o-B3b" firstAttribute="trailing" secondItem="q3x-qD-4CL" secondAttribute="trailing" id="IbW-Jg-Wt5"/>
                             <constraint firstItem="AfF-8P-piP" firstAttribute="centerY" secondItem="kUt-lq-rAr" secondAttribute="centerY" id="Jcf-em-0Km"/>
+                            <constraint firstItem="IGq-F3-KKf" firstAttribute="centerY" secondItem="q3x-qD-4CL" secondAttribute="centerY" id="Krt-Wf-nuX"/>
                             <constraint firstItem="KWK-3J-q3R" firstAttribute="top" secondItem="tXf-xn-7hb" secondAttribute="top" constant="20" id="OP6-Hd-eEg"/>
                             <constraint firstItem="gvC-dl-avH" firstAttribute="trailing" secondItem="XAQ-DP-ooE" secondAttribute="trailing" id="OTE-dn-qPj"/>
                             <constraint firstItem="oqC-gu-0Hf" firstAttribute="centerY" secondItem="XAQ-DP-ooE" secondAttribute="centerY" id="SM9-Xi-Nlv"/>
                             <constraint firstAttribute="trailing" secondItem="mxT-Ik-2TC" secondAttribute="trailing" constant="20" id="UmC-q2-9Wh"/>
                             <constraint firstAttribute="bottom" secondItem="KKH-kn-psU" secondAttribute="bottom" constant="48" id="WTH-eB-Qye"/>
+                            <constraint firstItem="IGq-F3-KKf" firstAttribute="leading" secondItem="OcE-2o-B3b" secondAttribute="trailing" constant="8" id="WzO-we-AzR"/>
                             <constraint firstItem="KWK-3J-q3R" firstAttribute="centerX" secondItem="tXf-xn-7hb" secondAttribute="centerX" id="ZIm-Kk-52S"/>
                             <constraint firstItem="OcE-2o-B3b" firstAttribute="leading" secondItem="KKH-kn-psU" secondAttribute="trailing" constant="10" id="ZJK-5r-1wm"/>
                             <constraint firstItem="mxT-Ik-2TC" firstAttribute="top" secondItem="KWK-3J-q3R" secondAttribute="bottom" constant="10" id="aHc-Au-DYu"/>
                             <constraint firstItem="AfF-8P-piP" firstAttribute="leading" secondItem="kUt-lq-rAr" secondAttribute="trailing" constant="10" id="b6q-Jb-Ccs"/>
                             <constraint firstItem="mxT-Ik-2TC" firstAttribute="leading" secondItem="tXf-xn-7hb" secondAttribute="leading" constant="20" id="eTr-th-nZJ"/>
                             <constraint firstItem="XAQ-DP-ooE" firstAttribute="centerY" secondItem="kUt-lq-rAr" secondAttribute="centerY" id="gIs-av-W6W"/>
+                            <constraint firstItem="q3x-qD-4CL" firstAttribute="leading" secondItem="OcE-2o-B3b" secondAttribute="leading" id="hHl-Sg-Hpf"/>
                             <constraint firstItem="021-5x-kSA" firstAttribute="centerY" secondItem="KKH-kn-psU" secondAttribute="centerY" id="koK-1b-2aS"/>
                             <constraint firstItem="OcE-2o-B3b" firstAttribute="centerY" secondItem="KKH-kn-psU" secondAttribute="centerY" id="rmb-jS-h6i"/>
                             <constraint firstItem="KKH-kn-psU" firstAttribute="leading" secondItem="tXf-xn-7hb" secondAttribute="leading" constant="24" id="tpg-68-L1Y"/>
+                            <constraint firstItem="q3x-qD-4CL" firstAttribute="centerY" secondItem="KKH-kn-psU" secondAttribute="centerY" id="vFO-24-1tg"/>
                             <constraint firstItem="kUt-lq-rAr" firstAttribute="leading" secondItem="tXf-xn-7hb" secondAttribute="leading" constant="24" id="x33-zj-sp1"/>
                             <constraint firstItem="gvC-dl-avH" firstAttribute="leading" secondItem="kUt-lq-rAr" secondAttribute="trailing" constant="10" id="yto-mu-M63"/>
                         </constraints>
@@ -175,7 +194,21 @@
             <size key="customSize" width="202" height="256"/>
             <connections>
                 <outlet property="avatarImageView" destination="KWK-3J-q3R" id="6iu-aR-1P6"/>
+                <outlet property="listenProgressLabel" destination="IGq-F3-KKf" id="NXr-JA-RFN"/>
+                <outlet property="listenProgressView" destination="q3x-qD-4CL" id="J6o-Ug-785"/>
+                <outlet property="listenStarsView" destination="OcE-2o-B3b" id="cgV-UW-0Cx"/>
+                <outlet property="listenStart1" destination="UV9-hU-qez" id="XUk-EW-xrJ"/>
+                <outlet property="listenStart2" destination="uEZ-Yp-Lis" id="5s8-Ad-Lx9"/>
+                <outlet property="listenStart3" destination="9i5-LM-LuF" id="rsR-ov-Oxi"/>
                 <outlet property="nameLabel" destination="mxT-Ik-2TC" id="tgy-us-xOV"/>
+                <outlet property="noListenLabel" destination="021-5x-kSA" id="f0R-n4-99p"/>
+                <outlet property="noReviewLabel" destination="AfF-8P-piP" id="Px1-9E-tPO"/>
+                <outlet property="reviewProgressLabel" destination="oqC-gu-0Hf" id="3je-SA-b0K"/>
+                <outlet property="reviewProgressView" destination="XAQ-DP-ooE" id="BJI-Cg-at4"/>
+                <outlet property="reviewStarsView" destination="gvC-dl-avH" id="23n-fX-Wee"/>
+                <outlet property="reviewStart1" destination="bkx-Yf-ACq" id="2nY-01-T8d"/>
+                <outlet property="reviewStart2" destination="3QQ-EY-ncS" id="L82-WQ-wmD"/>
+                <outlet property="reviewStart3" destination="y00-Lr-wTs" id="XWR-5Z-FYn"/>
             </connections>
             <point key="canvasLocation" x="247.82608695652175" y="222.32142857142856"/>
         </collectionViewCell>

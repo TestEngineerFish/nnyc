@@ -45,11 +45,13 @@ class YXReviewPlanModel: Mappable {
     
     var planId: Int = -1
     var planName: String = ""
+    var shareName: String = ""
     var listen: Int = 0
     var review: Int = 0
     var wordCount: Int = 0
     var reviewState: ReviewPlanState = .normal
     var listenState: ReviewPlanState = .normal
+    var status: YXReviewPlanStatusModel?
 
     required init?(map: Map) {
     }
@@ -60,12 +62,26 @@ class YXReviewPlanModel: Mappable {
         listen <- map["listen"]
         review <- map["review"]
         wordCount <- map["words_num"]
+        status <- map["share_list"]
         reviewState <- (map["review_state"] , YXReviewPlanStateTransform())
         listenState <- (map["listen_state"] , YXReviewPlanStateTransform())
     }
 }
 
-
+class YXReviewPlanStatusModel: Mappable {
+    var finishCount: Int?
+    var totalCount: Int?
+    var isShowNewIcon: Int?
+    
+    required init?(map: Map) {
+    }
+    
+    func mapping(map: Map) {
+        finishCount <- map["finish_num"]
+        totalCount <- map["obtain_num"]
+        isShowNewIcon <- map["is_show_red_dot"]
+    }
+}
 
 struct YXReviewPlanStateTransform: TransformType {
         
@@ -84,5 +100,4 @@ struct YXReviewPlanStateTransform: TransformType {
     func transformToJSON(_ value: ReviewPlanState?) -> Int? {
         return value?.rawValue
     }
-
 }

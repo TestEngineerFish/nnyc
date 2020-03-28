@@ -102,6 +102,9 @@ struct YXAPI {
         static let shareCommand = "/api/v1/learn/setsharereviewplan"
         /// 复习结果页
         static let reviewResult = "/api/v1/learn/result"
+        
+        // 词单学习情况列表
+        static let reviewPlanStatusList = "api/v1/learn/getsharestudylist"
     }
 
     // MARK: - 单词列表模块

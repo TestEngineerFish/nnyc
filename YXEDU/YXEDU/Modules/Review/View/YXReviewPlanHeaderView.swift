@@ -21,6 +21,8 @@ class YXReviewPlanHeaderView: UIView {
     @IBOutlet weak var listenStart1: UIImageView!
     @IBOutlet weak var listenStart2: UIImageView!
     @IBOutlet weak var listenStart3: UIImageView!
+    @IBOutlet weak var listenProgressView: UIProgressView!
+    @IBOutlet weak var listenProgressLabel: UILabel!
 
     @IBOutlet weak var noReviewLabel: UILabel!
     @IBOutlet weak var reviewStarsView: UIStackView!
@@ -39,7 +41,67 @@ class YXReviewPlanHeaderView: UIView {
     
     var detailModel: YXReviewPlanDetailModel! {
         didSet {
-            
+            if let totalCount = detailModel.status?.totalCount, totalCount > 0 {
+                statusViewHeight.constant = 36
+                statusLabel.text = "\(totalCount)位用户保存了该词单，\(detailModel.status?.finishCount ?? 0)人完成了学习"
+                
+                if detailModel.status?.isShowNewIcon == 1{
+                    newIconButton.isHidden = false
+                    
+                } else {
+                    newIconButton.isHidden = true
+                }
+                
+            } else {
+                statusViewHeight.constant = 0
+                
+                switch detailModel.listenState {
+                case .normal:
+                    noListenLabel.isHidden = false
+                    listenStarsView.isHidden = true
+                    listenProgressView.isHidden = true
+                    listenProgressLabel.isHidden = true
+                    break
+                    
+                case .learning:
+                    noListenLabel.isHidden = true
+                    listenStarsView.isHidden = true
+                    listenProgressView.isHidden = false
+                    listenProgressLabel.isHidden = false
+                    break
+                    
+                case .finish:
+                    noListenLabel.isHidden = true
+                    listenStarsView.isHidden = false
+                    listenProgressView.isHidden = true
+                    listenProgressLabel.isHidden = true
+                    break
+                }
+                
+                switch detailModel.reviewState {
+                case .normal:
+                    noReviewLabel.isHidden = false
+                    reviewStarsView.isHidden = true
+                    reviewProgressView.isHidden = true
+                    reviewProgressLabel.isHidden = true
+                    break
+                    
+                case .learning:
+                    noReviewLabel.isHidden = true
+                    reviewStarsView.isHidden = true
+                    reviewProgressView.isHidden = false
+                    reviewProgressLabel.isHidden = false
+                    break
+                    
+                case .finish:
+                    noReviewLabel.isHidden = true
+                    reviewStarsView.isHidden = false
+                    reviewProgressView.isHidden = true
+                    reviewProgressLabel.isHidden = true
+                    break
+                }
+                
+            }
         }
     }
 

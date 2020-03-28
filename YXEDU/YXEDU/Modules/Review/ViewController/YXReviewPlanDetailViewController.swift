@@ -19,7 +19,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     
     var model: YXReviewPlanDetailModel?
-    var shareButton = UIButton()
+    var moreButton = UIButton()
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: YXNotification.kRefreshReviewDetailPage, object: nil)
@@ -41,12 +41,19 @@ class YXReviewPlanDetailViewController: YXViewController {
 //        super.viewWillDisappear(animated)
 //        navigationController?.setNavigationBarHidden(false, animated: animated)
 //    }
+    
     override func addNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(fetchDetailData), name: YXNotification.kRefreshReviewDetailPage, object: nil)
     }
     
     func createSubView() {
-        self.addShareButton()
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 146))
+        view.backgroundColor = UIColor.orange1
+        self.view.addSubview(view)
+        self.view.sendSubviewToBack(view)
+        
+        self.addMoreButton()
+
         self.view.addSubview(self.headerView)
         self.view.addSubview(self.wordListView)
         self.view.addSubview(self.bottomView)
@@ -85,12 +92,12 @@ class YXReviewPlanDetailViewController: YXViewController {
             make.top.equalTo(AS(kNavHeight))
             make.left.right.equalTo(0)
             
-//            if let from = model?.fromUser, from.isNotEmpty {
-//                make.height.equalTo(AS(108))
-//
-//            } else {
-//                make.height.equalTo(AS(90))
-//            }
+            if (model.status?.totalCount ?? 0) > 0 {
+                make.height.equalTo(AS(164))
+
+            } else {
+                make.height.equalTo(AS(126))
+            }
             
         }
         
@@ -156,17 +163,23 @@ class YXReviewPlanDetailViewController: YXViewController {
     }
     
     
-    private func addShareButton() {
-        shareButton.setImage(UIImage(named: "review_share_icon"), for: .normal)
+    private func addMoreButton() {
+        moreButton.setImage(UIImage(named: "more"), for: .normal)
         
-        self.customNavigationBar?.addSubview(shareButton)
-        shareButton.snp.makeConstraints { (make) in
+        self.customNavigationBar?.addSubview(moreButton)
+        moreButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.right.equalTo(-15)
             make.size.equalTo(CGSize(width: 20, height: 22))
         }
         
-//        shareButton.addTarget(self, action: #selector(clickShareButton), for: .touchUpInside)
+        moreButton.addTarget(self, action: #selector(showMoreOption), for: .touchUpInside)
+    }
+    
+    @objc
+    private func showMoreOption() {
+        let view = YXEditReviewPlanView()
+        self.view.addSubview(view)
     }
     
     func share() {

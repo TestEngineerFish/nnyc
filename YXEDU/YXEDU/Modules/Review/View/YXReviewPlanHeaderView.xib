@@ -12,6 +12,8 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="pIY-8B-CUP"/>
                 <outlet property="descriptionLabel" destination="RgM-lP-DJV" id="Zb6-Pr-qxm"/>
+                <outlet property="listenProgressLabel" destination="e18-lH-aEQ" id="cC6-2p-CD3"/>
+                <outlet property="listenProgressView" destination="7ex-ie-4r9" id="5Vs-Cn-Nuy"/>
                 <outlet property="listenStarsView" destination="QEx-Vu-LeM" id="V2b-0J-45i"/>
                 <outlet property="listenStart1" destination="PqW-KG-O2f" id="3bt-DC-jnb"/>
                 <outlet property="listenStart2" destination="LA1-fq-SNj" id="HRh-CI-1ug"/>
@@ -30,7 +32,6 @@
                 <outlet property="statusLabel" destination="85b-CM-irb" id="xGj-FF-0SJ"/>
                 <outlet property="statusView" destination="QW3-M5-vZ4" id="Udu-em-Kcc"/>
                 <outlet property="statusViewHeight" destination="NtA-Wt-tS6" id="clh-d0-qfh"/>
-                <outlet property="tapNewIcon" destination="UiG-Hm-wac" id="cAA-kl-ytt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -211,15 +212,31 @@
                             <color key="textColor" red="0.98431372549019602" green="0.63529411764705879" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7ex-ie-4r9">
+                            <rect key="frame" x="87.5" y="29" width="64" height="6"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="6" id="laA-Da-enp"/>
+                            </constraints>
+                            <color key="progressTintColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="trackTintColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        </progressView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e18-lH-aEQ">
+                            <rect key="frame" x="159.5" y="24" width="23" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstItem="U5u-FR-dfp" firstAttribute="leading" secondItem="yq0-et-2hk" secondAttribute="trailing" constant="10" id="07q-7X-Zda"/>
                         <constraint firstAttribute="height" constant="128" id="0qk-sG-Mu9"/>
+                        <constraint firstItem="QEx-Vu-LeM" firstAttribute="trailing" secondItem="7ex-ie-4r9" secondAttribute="trailing" id="0wi-Cq-hUd"/>
                         <constraint firstItem="YAH-nO-AfZ" firstAttribute="centerY" secondItem="U5u-FR-dfp" secondAttribute="centerY" id="1SG-En-m70"/>
                         <constraint firstItem="RgM-lP-DJV" firstAttribute="leading" secondItem="MqZ-ck-hz5" secondAttribute="leading" constant="24" id="1j7-4L-Rfp"/>
                         <constraint firstItem="ld9-AZ-cFv" firstAttribute="top" secondItem="MqZ-ck-hz5" secondAttribute="top" constant="24" id="6Cn-Js-Ggm"/>
                         <constraint firstItem="U5u-FR-dfp" firstAttribute="centerY" secondItem="yq0-et-2hk" secondAttribute="centerY" id="7IX-w6-AMO"/>
+                        <constraint firstItem="e18-lH-aEQ" firstAttribute="leading" secondItem="QEx-Vu-LeM" secondAttribute="trailing" constant="8" id="8ID-5k-TON"/>
                         <constraint firstItem="V5e-ED-BuW" firstAttribute="centerY" secondItem="ld9-AZ-cFv" secondAttribute="centerY" id="8eC-6k-78S"/>
                         <constraint firstItem="ld9-AZ-cFv" firstAttribute="leading" secondItem="MqZ-ck-hz5" secondAttribute="leading" constant="24" id="8rm-7n-yd1"/>
                         <constraint firstItem="yq0-et-2hk" firstAttribute="leading" secondItem="MqZ-ck-hz5" secondAttribute="leading" constant="24" id="Am6-k2-mBT"/>
@@ -238,11 +255,14 @@
                         <constraint firstAttribute="trailing" secondItem="HFl-ic-aot" secondAttribute="trailing" constant="20" id="hW8-WK-t7s"/>
                         <constraint firstItem="5gA-cf-iHy" firstAttribute="centerY" secondItem="RgM-lP-DJV" secondAttribute="centerY" id="hle-x3-erN"/>
                         <constraint firstItem="QEx-Vu-LeM" firstAttribute="leading" secondItem="ld9-AZ-cFv" secondAttribute="trailing" constant="10" id="kNv-v7-Qxs"/>
+                        <constraint firstItem="7ex-ie-4r9" firstAttribute="leading" secondItem="ld9-AZ-cFv" secondAttribute="trailing" constant="10" id="kSq-gs-RXV"/>
                         <constraint firstItem="HFl-ic-aot" firstAttribute="centerY" secondItem="MqZ-ck-hz5" secondAttribute="centerY" constant="-18" id="l0O-dT-a21"/>
                         <constraint firstItem="YpW-tg-VML" firstAttribute="leading" secondItem="MqZ-ck-hz5" secondAttribute="leading" constant="20" id="oN2-k8-RjI"/>
                         <constraint firstAttribute="trailing" secondItem="YpW-tg-VML" secondAttribute="trailing" constant="20" id="oQd-HO-5a6"/>
+                        <constraint firstItem="e18-lH-aEQ" firstAttribute="centerY" secondItem="7ex-ie-4r9" secondAttribute="centerY" id="od2-yw-08N"/>
                         <constraint firstItem="IBE-ks-N5I" firstAttribute="leading" secondItem="yq0-et-2hk" secondAttribute="trailing" constant="10" id="vfL-aL-WP0"/>
                         <constraint firstItem="8VX-Ev-D5B" firstAttribute="centerY" secondItem="yq0-et-2hk" secondAttribute="centerY" id="xgu-XD-Clj"/>
+                        <constraint firstItem="7ex-ie-4r9" firstAttribute="centerY" secondItem="ld9-AZ-cFv" secondAttribute="centerY" id="zqS-Q6-SzI"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
