@@ -42,10 +42,13 @@ target 'YXEDU' do
      pod 'Alamofire', '~> 4.7.3'
      pod 'ObjectMapper', '~> 3.3.0'
      pod 'AlamofireObjectMapper', '~> 5.0'
-          
+     
+     # 友盟
      pod 'UMCCommon'
-     pod 'UMCAnalytics'
+     pod 'UMCPush'
      pod 'UMCSecurityPlugins'
+     
+     
      pod 'SDCycleScrollView','~> 1.75'
      pod 'GrowingAutoTrackKit'
      pod 'Reachability', '~> 3.2'
