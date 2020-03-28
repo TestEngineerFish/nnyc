@@ -121,7 +121,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        vc.shareType = .aiReviewReuslt
 //        vc.hidesBottomBarWhenPushed = true
 //        self.navigationController?.pushViewController(vc, animated: true)
-        
+
 //        let vc = YXLearningResultViewController()
 //        vc.bookId = 41
 //        vc.unitId = 436

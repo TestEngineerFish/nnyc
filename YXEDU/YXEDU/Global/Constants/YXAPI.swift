@@ -105,6 +105,9 @@ struct YXAPI {
         
         // 词单学习情况列表
         static let reviewPlanStatusList = "api/v1/learn/getsharestudylist"
+
+        // 获得词单学习情况列表
+        static let studentStudyList = "/api/v1/learn/getsharestudylist"
     }
 
     // MARK: - 单词列表模块

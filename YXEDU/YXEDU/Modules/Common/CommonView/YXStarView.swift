@@ -152,6 +152,44 @@ class YXStarView: UIView {
         }
         self.showAnimation()
     }
+
+    /// 显示其他同学词单学习情况
+    func showStudentResultView(starNum: Int) {
+        self.starNumber = starNum
+        self.setImage(.lastLearnResult)
+        self.setStarStatus()
+        self.addSubview(leftStarDisableImageView)
+        self.addSubview(centerStarDisableImageView)
+        self.addSubview(rightStarDisableImageView)
+        self.leftStarDisableImageView.addSubview(leftStarEnableImageView)
+        self.centerStarDisableImageView.addSubview(centerStarEnableImageView)
+        self.rightStarDisableImageView.addSubview(rightStarEnableImageView)
+
+        centerStarDisableImageView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptSize(21), height: AdaptSize(21)))
+        }
+        leftStarDisableImageView.snp.makeConstraints { (make) in
+            make.right.equalTo(centerStarDisableImageView.snp.left)
+            make.top.equalTo(centerStarDisableImageView)
+            make.size.equalTo(CGSize(width: AdaptSize(21), height: AdaptSize(21)))
+        }
+        rightStarDisableImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(centerStarDisableImageView.snp.right)
+            make.top.equalTo(leftStarDisableImageView)
+            make.size.equalTo(CGSize(width: AdaptSize(21), height: AdaptSize(21)))
+        }
+        centerStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        leftStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        rightStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
     
     // MARK: ---- Tools ----
     private func setStarStatus() {
