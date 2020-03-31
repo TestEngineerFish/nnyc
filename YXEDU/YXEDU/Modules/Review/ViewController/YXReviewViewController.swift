@@ -20,8 +20,7 @@ class YXReviewViewController: YXTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
-        self.isMonitorNetwork = true
-//        self.fetchData()
+        self.isMonitorNetwork              = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,7 +95,6 @@ class YXReviewViewController: YXTableViewController {
                                 
                 if self.dataSource.count == 0 {
                     self.tableView.tableFooterView = self.footerView
-                
                 } else {
                     self.tableView.tableFooterView = nil
                 }

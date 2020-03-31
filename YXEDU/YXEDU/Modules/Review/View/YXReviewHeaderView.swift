@@ -13,46 +13,46 @@ class YXReviewHeaderView: YXView {
     var startReviewEvent: (() -> Void)?
     var createReviewPlanEvent: (() -> Void)?
     
-    var bgView = UIView()
+    var bgView          = UIView()
     var circlrImageView = UIImageView()
-    var contentView = UIView()
+    var contentView     = UIView()
     
     var titleLabel = UILabel()
     var countLabel = UILabel()
     
     /// 熟悉
-    var familiarPointLabel = pointLabel()
-    var familiarLabel = UILabel()
-    var familiarProgressView = YXReviewProgressView(type: .familiar)
+    var familiarPointLabel    = pointLabel()
+    var familiarLabel         = UILabel()
+    var familiarProgressView  = YXReviewProgressView(type: .familiar)
     var familiarProgressLabel = UILabel()
     
     /// 认识
-    var iKnowPointLabel = pointLabel()
-    var iKnowLabel = UILabel()
-    var iKnowProgressView = YXReviewProgressView(type: .iKnow)
+    var iKnowPointLabel    = pointLabel()
+    var iKnowLabel         = UILabel()
+    var iKnowProgressView  = YXReviewProgressView(type: .iKnow)
     var iKnowProgressLabel = UILabel()
     
     /// 模糊
-    var fuzzyPointLabel = pointLabel()
-    var fuzzyLabel = UILabel()
-    var fuzzyProgressView = YXReviewProgressView(type: .fuzzy)
+    var fuzzyPointLabel    = pointLabel()
+    var fuzzyLabel         = UILabel()
+    var fuzzyProgressView  = YXReviewProgressView(type: .fuzzy)
     var fuzzyProgressLabel = UILabel()
     
     /// 忘记
-    var forgetPointLabel = pointLabel()
-    var forgetLabel = UILabel()
-    var forgetProgressView = YXReviewProgressView(type: .forget)
+    var forgetPointLabel    = pointLabel()
+    var forgetLabel         = UILabel()
+    var forgetProgressView  = YXReviewProgressView(type: .forget)
     var forgetProgressLabel = UILabel()
     
     /// 智能复习
-    var reviewButton = YXDesignableButton()
+    var reviewButton  = YXDesignableButton()
     var subTitleLabel = UILabel()
     
-    var reviewPlanLabel = UILabel()
+    var reviewPlanLabel        = UILabel()
     var createReviewPlanButton = UIButton()
     
     var cannotReviewImageView = UIImageView()
-    var cannotReviewLabel = UILabel()
+    var cannotReviewLabel     = UILabel()
     
     init(frame: CGRect, reviewModel: YXReviewPageModel) {
         super.init(frame: frame)
@@ -111,75 +111,75 @@ class YXReviewHeaderView: YXView {
     override func bindProperty() {
         circlrImageView.image = UIImage(named: "review_circle_icon")
         
-        bgView.backgroundColor = UIColor.orange1
+        bgView.backgroundColor     = UIColor.orange1
         bgView.layer.masksToBounds = true
-        bgView.layer.cornerRadius = AS(20)
+        bgView.layer.cornerRadius  = AS(20)
         
-        contentView.backgroundColor = UIColor.white
+        contentView.backgroundColor     = UIColor.white
         contentView.layer.masksToBounds = true
-        contentView.layer.cornerRadius = AS(15)
+        contentView.layer.cornerRadius  = AS(15)
         
-        titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(14))
-        titleLabel.text = "背过的单词"
-        titleLabel.textColor = UIColor.black2
+        titleLabel.font          = UIFont.pfSCRegularFont(withSize: AS(14))
+        titleLabel.text          = "背过的单词"
+        titleLabel.textColor     = UIColor.black2
         titleLabel.textAlignment = .center
         
-        countLabel.font = UIFont(name: "DIN Alternate", size: 36)
-        countLabel.text = "200"
-        countLabel.textColor = UIColor.black1
+        countLabel.font          = UIFont(name: "DIN Alternate", size: AdaptSize(36))
+        countLabel.text          = "--"
+        countLabel.textColor     = UIColor.black1
         countLabel.textAlignment = .center
                 
-        familiarLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-        familiarLabel.textColor = UIColor.black1
-        familiarLabel.text = "熟悉的单词"
-        familiarProgressLabel.font = UIFont.pfSCRegularFont(withSize: AS(10))
-        familiarProgressLabel.textColor = UIColor.orange5
-        familiarProgressLabel.text = "50%"
+        familiarLabel.font                 = UIFont.pfSCRegularFont(withSize: AS(12))
+        familiarLabel.textColor            = UIColor.black1
+        familiarLabel.text                 = "熟悉的单词"
+        familiarProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AS(10))
+        familiarProgressLabel.textColor    = UIColor.orange5
+        familiarProgressLabel.text         = "--"
         familiarPointLabel.backgroundColor = UIColor.orange5
                                 
-        iKnowLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-        iKnowLabel.textColor = UIColor.black1
-        iKnowLabel.text = "认识的单词"
-        iKnowProgressLabel.font = UIFont.pfSCRegularFont(withSize: AS(10))
-        iKnowProgressLabel.textColor = UIColor.orange1
-        iKnowProgressLabel.text = "60%"
+        iKnowLabel.font                 = UIFont.pfSCRegularFont(withSize: AS(12))
+        iKnowLabel.textColor            = UIColor.black1
+        iKnowLabel.text                 = "认识的单词"
+        iKnowProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AS(10))
+        iKnowProgressLabel.textColor    = UIColor.orange1
+        iKnowProgressLabel.text         = "--"
         iKnowPointLabel.backgroundColor = UIColor.orange1
         
-        fuzzyLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-        fuzzyLabel.textColor = UIColor.black1
-        fuzzyLabel.text = "模糊的单词"
-        fuzzyProgressLabel.font = UIFont.pfSCRegularFont(withSize: AS(10))
-        fuzzyProgressLabel.textColor = UIColor.green2
-        fuzzyProgressLabel.text = "80%"
+        fuzzyLabel.font                 = UIFont.pfSCRegularFont(withSize: AS(12))
+        fuzzyLabel.textColor            = UIColor.black1
+        fuzzyLabel.text                 = "模糊的单词"
+        fuzzyProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AS(10))
+        fuzzyProgressLabel.textColor    = UIColor.green2
+        fuzzyProgressLabel.text         = "--"
         fuzzyPointLabel.backgroundColor = UIColor.green2
         
-        forgetLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
-        forgetLabel.textColor = UIColor.black1
-        forgetLabel.text = "忘记的单词"
-        forgetProgressLabel.font = UIFont.pfSCRegularFont(withSize: AS(10))
-        forgetProgressLabel.textColor = UIColor.blue1
-        forgetProgressLabel.text = "10%"
+        forgetLabel.font                 = UIFont.pfSCRegularFont(withSize: AS(12))
+        forgetLabel.textColor            = UIColor.black1
+        forgetLabel.text                 = "忘记的单词"
+        forgetProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AS(10))
+        forgetProgressLabel.textColor    = UIColor.blue1
+        forgetProgressLabel.text         = "--"
         forgetPointLabel.backgroundColor = UIColor.blue1
         
-        reviewButton.cornerRadius = 20
+        reviewButton.cornerRadius             = AS(21)
         reviewButton.enableGradientBackground = true
         reviewButton.setTitle("智能复习", for: .normal)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
         reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
         
         if reviewModel.learnNum == 0 {
-            reviewButton.alpha = 0.3
+            reviewButton.alpha     = 0.3
             reviewButton.isEnabled = false
             reviewButton.setTitle("学习后开启智能复习", for: .normal)
         }
                 
         subTitleLabel.textColor = UIColor.black6
-        subTitleLabel.text = "智能计划复习内容巩固薄弱单词"
-        subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
+        subTitleLabel.text      = "智能计划复习内容巩固薄弱单词"
+        subTitleLabel.font      = UIFont.pfSCRegularFont(withSize: AS(12))
         
-        reviewPlanLabel.font = UIFont.mediumFont(ofSize: AS(15))
+        reviewPlanLabel.font      = UIFont.mediumFont(ofSize: AS(15))
         reviewPlanLabel.textColor = UIColor.black1
-        reviewPlanLabel.text = YXReviewDataManager.reviewPlanName
+        reviewPlanLabel.text      = YXReviewDataManager.reviewPlanName
         
         createReviewPlanButton.layer.masksToBounds = true
         createReviewPlanButton.layer.cornerRadius = AS(12.5)
@@ -191,12 +191,12 @@ class YXReviewHeaderView: YXView {
         createReviewPlanButton.layer.borderColor = UIColor.black4.cgColor
         createReviewPlanButton.addTarget(self, action: #selector(clickCreateReviewPlanButton), for: .touchUpInside)
         
-        cannotReviewImageView.image = UIImage(named: "cannotReview")
+        cannotReviewImageView.image       = UIImage(named: "cannotReview")
         cannotReviewImageView.contentMode = .scaleAspectFit
         
-        cannotReviewLabel.text = "直击薄弱 稳固提分"
+        cannotReviewLabel.text      = "直击薄弱 稳固提分"
         cannotReviewLabel.textColor = UIColor.black3
-        cannotReviewLabel.font = UIFont.pfSCRegularFont(withSize: AS(14))
+        cannotReviewLabel.font      = UIFont.pfSCRegularFont(withSize: AS(14))
     }
     
     
@@ -205,14 +205,12 @@ class YXReviewHeaderView: YXView {
         
         bgView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(41 + kSafeBottomMargin))
-//            make.top.equalToSuperview()
             make.left.equalTo(AS(22))
             make.right.equalTo(AS(-22))
             make.height.equalTo(AS(339))
         }
         
         circlrImageView.snp.makeConstraints { (make) in
-//            make.top.equalTo(AS(8))
             make.top.equalTo(AS(49 + kSafeBottomMargin))
             make.left.equalTo(AS(11))
             make.width.equalTo(AS(42))
@@ -378,24 +376,21 @@ class YXReviewHeaderView: YXView {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.familiarProgressView.progress = self.progressValue(num: self.reviewModel?.familiarNum)
-            self.iKnowProgressView.progress = self.progressValue(num: self.reviewModel?.knowNum)
-            self.fuzzyProgressView.progress = self.progressValue(num: self.reviewModel?.fuzzyNum)
-            self.forgetProgressView.progress = self.progressValue(num: self.reviewModel?.forgetNum)
+            self.iKnowProgressView.progress    = self.progressValue(num: self.reviewModel?.knowNum)
+            self.fuzzyProgressView.progress    = self.progressValue(num: self.reviewModel?.fuzzyNum)
+            self.forgetProgressView.progress   = self.progressValue(num: self.reviewModel?.forgetNum)
         }
         
-        countLabel.text = "\(reviewModel?.learnNum ?? 0)"
+        countLabel.text    = "\(reviewModel?.learnNum ?? 0)"
         familiarLabel.text = "熟悉的单词  \(reviewModel?.familiarNum ?? 0)个"
-        iKnowLabel.text = "认识的单词  \(reviewModel?.knowNum ?? 0)个"
-        fuzzyLabel.text = "模糊的单词  \(reviewModel?.fuzzyNum ?? 0)个"
-        forgetLabel.text = "忘记的单词  \(reviewModel?.forgetNum ?? 0)个"
+        iKnowLabel.text    = "认识的单词  \(reviewModel?.knowNum ?? 0)个"
+        fuzzyLabel.text    = "模糊的单词  \(reviewModel?.fuzzyNum ?? 0)个"
+        forgetLabel.text   = "忘记的单词  \(reviewModel?.forgetNum ?? 0)个"
         
         familiarProgressLabel.text = progressStringValue(num: reviewModel?.familiarNum)
-        iKnowProgressLabel.text = progressStringValue(num: reviewModel?.knowNum)
-        fuzzyProgressLabel.text = progressStringValue(num: reviewModel?.fuzzyNum)
-        forgetProgressLabel.text  = progressStringValue(num: reviewModel?.forgetNum)
-        
-//        createReviewPlanButton.isHidden = (reviewModel?.reviewPlans?.count ?? 0 == 0)
-        
+        iKnowProgressLabel.text    = progressStringValue(num: reviewModel?.knowNum)
+        fuzzyProgressLabel.text    = progressStringValue(num: reviewModel?.fuzzyNum)
+        forgetProgressLabel.text   = progressStringValue(num: reviewModel?.forgetNum)
     }
     
     private func progressStringValue(num: Int?) -> String {
@@ -413,7 +408,6 @@ class YXReviewHeaderView: YXView {
         let label = UILabel()
         label.layer.masksToBounds = true
         label.layer.cornerRadius = AS(5 / 2.0)
-        
         return label
     }
     
@@ -469,14 +463,13 @@ class YXReviewProgressView: YXView {
     }
     
     override func bindProperty() {
-        self.backgroundColor = UIColor.gray2
+        self.backgroundColor     = UIColor.gray2
         self.layer.masksToBounds = true
-        self.layer.cornerRadius = cornerRadius
+        self.layer.cornerRadius  = cornerRadius
         
         self.progressView.layer.masksToBounds = true
-        self.progressView.layer.cornerRadius = cornerRadius
-        
-        self.progressView.backgroundColor = self.color()
+        self.progressView.layer.cornerRadius  = cornerRadius
+        self.progressView.backgroundColor     = self.color()
     }
     
     override func layoutSubviews() {

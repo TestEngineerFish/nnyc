@@ -13,10 +13,10 @@ class YXDesignableButton: UIButton {
         
     lazy var gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
-        layer.frame = self.bounds
-        layer.colors = [gradientColor1.cgColor, gradientColor2.cgColor]
+        layer.frame      = self.bounds
+        layer.colors     = [gradientColor1.cgColor, gradientColor2.cgColor]
         layer.startPoint = CGPoint(x: gradientColorStartPoint, y: 0)
-        layer.endPoint = CGPoint(x: 1 - gradientColorStartPoint, y: 1)
+        layer.endPoint   = CGPoint(x: 1 - gradientColorStartPoint, y: 1)
         return layer
     }()
     

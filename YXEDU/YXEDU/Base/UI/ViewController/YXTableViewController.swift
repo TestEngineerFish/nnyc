@@ -54,10 +54,10 @@ class YXTableViewController: YXViewController, YYScrollRefreshAnimator {
     
 
     deinit {        
-        tableView.delegate = nil
+        tableView.delegate   = nil
         tableView.dataSource = nil
         
-        tableView.emptyDataSetSource = nil
+        tableView.emptyDataSetSource   = nil
         tableView.emptyDataSetDelegate = nil
     }
     
@@ -68,17 +68,17 @@ class YXTableViewController: YXViewController, YYScrollRefreshAnimator {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
+        tableView.delegate   = self
         tableView.dataSource = self
         
-        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetSource   = self
         tableView.emptyDataSetDelegate = self
         
         // 隐藏了Navigation Bar, 需要消除顶部空白
         if #available(iOS 11.0, *) {
             self.tableView.contentInsetAdjustmentBehavior = .never
         }else{
-            self.automaticallyAdjustsScrollViewInsets = false
+            self.automaticallyAdjustsScrollViewInsets     = false
         }
         self.edgesForExtendedLayout = []    // 好像设置了没什么效果
         
