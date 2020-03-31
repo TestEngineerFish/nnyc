@@ -132,7 +132,10 @@ class YXReviewPlanDetailViewController: YXViewController {
                 }
                 
                 self.headerView.reportClosure = {
-                    
+                    let vc = YXReviewPlanReportViewController()
+                    vc.planId = detailModel?.planId ?? 0
+                    vc.reviewPlanName = detailModel?.planName ?? ""
+                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
                 }
                 
                 self.headerView.shareClosure = {
@@ -178,8 +181,9 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     @objc
     private func showMoreOption() {
-        let view = YXEditReviewPlanView()
-        self.view.addSubview(view)
+        let editView = YXReviewPlanEditView(point: CGPoint(x: 0, y: 0))
+        editView.reviewPlanModel = self.model
+        editView.show()
     }
     
     func share() {

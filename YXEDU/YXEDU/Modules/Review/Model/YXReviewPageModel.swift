@@ -52,6 +52,7 @@ class YXReviewPlanModel: Mappable {
     var reviewState: ReviewPlanState = .normal
     var listenState: ReviewPlanState = .normal
     var status: YXReviewPlanStatusModel?
+    var createTime: Double?
     var shouldShowRedDot: Int?
 
     required init?(map: Map) {
@@ -67,6 +68,7 @@ class YXReviewPlanModel: Mappable {
         reviewState <- (map["review_state"] , YXReviewPlanStateTransform())
         listenState <- (map["listen_state"] , YXReviewPlanStateTransform())
         shouldShowRedDot <- map["is_show_red_dot"]
+        createTime <- map["created_at"]
     }
 }
 

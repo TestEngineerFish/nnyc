@@ -41,6 +41,18 @@ class YXReviewPlanHeaderView: UIView {
     
     var detailModel: YXReviewPlanDetailModel! {
         didSet {
+            if let text = detailModel.fromUser, text.isEmpty == false {
+                descriptionLabel.text = text
+                
+            } else if let time = detailModel.createTime {
+                let date = Date(timeIntervalSince1970: time)
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy.MM.dd"
+                
+                descriptionLabel.text = "\(dateFormatter.string(from: date))由我创建"
+            }
+            
             if let totalCount = detailModel.status?.totalCount, totalCount > 0 {
                 statusViewHeight.constant = 36
                 statusLabel.text = "\(totalCount)位用户保存了该词单，\(detailModel.status?.finishCount ?? 0)人完成了学习"
@@ -68,6 +80,9 @@ class YXReviewPlanHeaderView: UIView {
                     listenStarsView.isHidden = true
                     listenProgressView.isHidden = false
                     listenProgressLabel.isHidden = false
+                    
+                    listenProgressView.progress = Float(detailModel.listen / 100)
+                    listenProgressLabel.text = "\(detailModel.listen)%"
                     break
                     
                 case .finish:
@@ -75,6 +90,19 @@ class YXReviewPlanHeaderView: UIView {
                     listenStarsView.isHidden = false
                     listenProgressView.isHidden = true
                     listenProgressLabel.isHidden = true
+                    
+                    if detailModel.listen == 1 {
+                        listenStart1.image = #imageLiteral(resourceName: "review_cell_star")
+                    } else if detailModel.listen == 2 {
+                        listenStart1.image = #imageLiteral(resourceName: "review_cell_star")
+                        listenStart2.image = #imageLiteral(resourceName: "review_cell_star")
+
+                    } else if detailModel.listen == 3 {
+                        listenStart1.image = #imageLiteral(resourceName: "review_cell_star")
+                        listenStart2.image = #imageLiteral(resourceName: "review_cell_star")
+                        listenStart3.image = #imageLiteral(resourceName: "review_cell_star")
+                    }
+                    
                     break
                 }
                 
@@ -91,6 +119,9 @@ class YXReviewPlanHeaderView: UIView {
                     reviewStarsView.isHidden = true
                     reviewProgressView.isHidden = false
                     reviewProgressLabel.isHidden = false
+                    
+                    reviewProgressView.progress = Float(detailModel.listen / 100)
+                    reviewProgressLabel.text = "\(detailModel.listen)%"
                     break
                     
                 case .finish:
@@ -98,9 +129,25 @@ class YXReviewPlanHeaderView: UIView {
                     reviewStarsView.isHidden = false
                     reviewProgressView.isHidden = true
                     reviewProgressLabel.isHidden = true
+                    
+                    if detailModel.review == 1 {
+                        reviewStart1.image = #imageLiteral(resourceName: "review_cell_star")
+                    } else if detailModel.listen == 2 {
+                        reviewStart1.image = #imageLiteral(resourceName: "review_cell_star")
+                        reviewStart2.image = #imageLiteral(resourceName: "review_cell_star")
+
+                    } else if detailModel.listen == 3 {
+                        reviewStart1.image = #imageLiteral(resourceName: "review_cell_star")
+                        reviewStart2.image = #imageLiteral(resourceName: "review_cell_star")
+                        reviewStart3.image = #imageLiteral(resourceName: "review_cell_star")
+                    }
+                    
+                    reportButton.setTitle("学习报告", for: .normal)
+                    reportButton.setTitleColor(.black, for: .normal)
+                    reportButton.isEnabled = true
+                    
                     break
                 }
-                
             }
         }
     }
@@ -119,6 +166,9 @@ class YXReviewPlanHeaderView: UIView {
         Bundle.main.loadNibNamed("YXReviewPlanHeaderView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
+        
+        listenProgressView.progressImage = listenProgressView.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
+        reviewProgressView.progressImage = reviewProgressView.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
     }
 
     @IBAction func tapNewIcon(_ sender: UIButton) {

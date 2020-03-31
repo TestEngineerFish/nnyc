@@ -63,8 +63,8 @@ class YXReviewPlanEditView: YXTopWindowView {
         super.layoutSubviews()
         
         mainView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(kNavHeight + 50))
-            make.left.equalTo(AS(109))
+            make.top.equalTo(AS(kNavHeight))
+            make.right.equalTo(AS(-20))
             make.width.equalTo(AS(117))
             make.height.equalTo(AS(85))
         }
