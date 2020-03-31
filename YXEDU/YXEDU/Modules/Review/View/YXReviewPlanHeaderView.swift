@@ -16,6 +16,7 @@ class YXReviewPlanHeaderView: UIView {
     @IBOutlet weak var newIconArrowButton: UIButton!
     @IBOutlet weak var statusViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var listenLabel: UILabel!
     @IBOutlet weak var noListenLabel: UILabel!
     @IBOutlet weak var listenStarsView: UIStackView!
     @IBOutlet weak var listenStart1: UIImageView!
@@ -24,6 +25,7 @@ class YXReviewPlanHeaderView: UIView {
     @IBOutlet weak var listenProgressView: UIProgressView!
     @IBOutlet weak var listenProgressLabel: UILabel!
 
+    @IBOutlet weak var reviewLabel: UILabel!
     @IBOutlet weak var noReviewLabel: UILabel!
     @IBOutlet weak var reviewStarsView: UIStackView!
     @IBOutlet weak var reviewStart1: UIImageView!
@@ -57,7 +59,7 @@ class YXReviewPlanHeaderView: UIView {
                 statusViewHeight.constant = 36
                 statusLabel.text = "\(totalCount)位用户保存了该词单，\(detailModel.status?.finishCount ?? 0)人完成了学习"
                 
-                if detailModel.status?.shouldShowNewIcon == 1{
+                if detailModel.status?.shouldShowNewIcon == 1 {
                     newIconButton.isHidden = false
                     
                 } else {
@@ -86,6 +88,7 @@ class YXReviewPlanHeaderView: UIView {
                     break
                     
                 case .finish:
+                    listenLabel.text = "听写成绩"
                     noListenLabel.isHidden = true
                     listenStarsView.isHidden = false
                     listenProgressView.isHidden = true
@@ -125,6 +128,7 @@ class YXReviewPlanHeaderView: UIView {
                     break
                     
                 case .finish:
+                    reviewLabel.text = "复习成绩"
                     noReviewLabel.isHidden = true
                     reviewStarsView.isHidden = false
                     reviewProgressView.isHidden = true
@@ -132,11 +136,11 @@ class YXReviewPlanHeaderView: UIView {
                     
                     if detailModel.review == 1 {
                         reviewStart1.image = #imageLiteral(resourceName: "review_cell_star")
-                    } else if detailModel.listen == 2 {
+                    } else if detailModel.review == 2 {
                         reviewStart1.image = #imageLiteral(resourceName: "review_cell_star")
                         reviewStart2.image = #imageLiteral(resourceName: "review_cell_star")
 
-                    } else if detailModel.listen == 3 {
+                    } else if detailModel.review == 3 {
                         reviewStart1.image = #imageLiteral(resourceName: "review_cell_star")
                         reviewStart2.image = #imageLiteral(resourceName: "review_cell_star")
                         reviewStart3.image = #imageLiteral(resourceName: "review_cell_star")

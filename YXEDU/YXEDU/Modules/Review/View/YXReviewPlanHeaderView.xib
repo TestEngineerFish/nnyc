@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="pIY-8B-CUP"/>
                 <outlet property="descriptionLabel" destination="RgM-lP-DJV" id="Zb6-Pr-qxm"/>
+                <outlet property="listenLabel" destination="ld9-AZ-cFv" id="3Co-6h-72f"/>
                 <outlet property="listenProgressLabel" destination="e18-lH-aEQ" id="cC6-2p-CD3"/>
                 <outlet property="listenProgressView" destination="7ex-ie-4r9" id="5Vs-Cn-Nuy"/>
                 <outlet property="listenStarsView" destination="QEx-Vu-LeM" id="V2b-0J-45i"/>
@@ -23,6 +24,7 @@
                 <outlet property="noListenLabel" destination="V5e-ED-BuW" id="wD5-9W-wil"/>
                 <outlet property="noReviewLabel" destination="8VX-Ev-D5B" id="nhT-k3-EQJ"/>
                 <outlet property="reportButton" destination="MaE-Um-ILZ" id="ufJ-DK-ypD"/>
+                <outlet property="reviewLabel" destination="yq0-et-2hk" id="g9b-Zy-xof"/>
                 <outlet property="reviewProgressLabel" destination="YAH-nO-AfZ" id="64S-X1-Csm"/>
                 <outlet property="reviewProgressView" destination="U5u-FR-dfp" id="mR8-DV-5Nu"/>
                 <outlet property="reviewStarsView" destination="IBE-ks-N5I" id="uO0-1O-ENc"/>
@@ -85,7 +87,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MqZ-ck-hz5" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                     <rect key="frame" x="20" y="38" width="280" height="128"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="听写成绩" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ld9-AZ-cFv">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="听写进度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ld9-AZ-cFv">
                             <rect key="frame" x="24" y="24" width="53.5" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <nil key="textColor"/>

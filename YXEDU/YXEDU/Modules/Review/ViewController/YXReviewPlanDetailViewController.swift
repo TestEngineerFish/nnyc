@@ -128,7 +128,7 @@ class YXReviewPlanDetailViewController: YXViewController {
                 
                 self.headerView.detailModel = detailModel
                 self.headerView.statusClosure = {
-                    
+                    self.navigationController?.pushViewController(YXReviePlanStudentsListViewController(), animated: true)
                 }
                 
                 self.headerView.reportClosure = {
