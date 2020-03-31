@@ -10,8 +10,9 @@ import UIKit
 
 class YXReviewViewController: YXTableViewController {
         
-    var headerView: YXReviewHeaderView!
-    var footerView = YXReviewPlanEmptyView()
+    private var headerView: YXReviewHeaderView!
+    private var footerView = YXReviewPlanEmptyView()
+    private var reviewPageModel: YXReviewPageModel?
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: YXNotification.kRefreshReviewTabPage, object: nil)
@@ -28,7 +29,10 @@ class YXReviewViewController: YXTableViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.setNavigationBarHidden(true, animated: animated)
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
-        
+        if self.reviewPageModel == nil, let jsonStr = YXFileManager.share.getJsonFromFile(type: .review) {
+            self.reviewPageModel = YXReviewPageModel(JSONString: jsonStr)
+            self.setData()
+        }
         self.fetchData()
 //        YXTest.default.test()
     }
@@ -89,19 +93,9 @@ class YXReviewViewController: YXTableViewController {
         YXReviewDataManager().fetchReviewPlanData { [weak self] (pageModel, errorMsg) in
             guard let self = self else { return }
             if let reviewModel = pageModel {
-                self.dataSource = reviewModel.reviewPlans ?? []
-                self.headerView = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: AS(441 + kSafeBottomMargin)), reviewModel: reviewModel)
-                self.headerView.reviewModel = reviewModel
-                                
-                if self.dataSource.count == 0 {
-                    self.tableView.tableFooterView = self.footerView
-                } else {
-                    self.tableView.tableFooterView = nil
-                }
-                
-                self.configTableView()
-                self.tableView.reloadData()
-                
+                YXFileManager.share.saveJsonToFile(with: pageModel?.toJSONString() ?? "", type: .review)
+                self.reviewPageModel = reviewModel
+                self.setData()
             } else if let msg = errorMsg {
                 UIView.toast(msg)
             }
@@ -112,6 +106,22 @@ class YXReviewViewController: YXTableViewController {
     
     @objc private func fetchDataWhenResultPageClosed() {
         self.fetchData()
+    }
+
+    private func setData() {
+        guard let reviewPageModel = self.reviewPageModel else {
+            return
+        }
+        self.dataSource = reviewPageModel.reviewPlans ?? []
+        self.headerView = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: AS(441 + kSafeBottomMargin)), reviewModel: reviewPageModel)
+        self.headerView.reviewModel = reviewPageModel
+        if self.dataSource.count == 0 {
+            self.tableView.tableFooterView = self.footerView
+        } else {
+            self.tableView.tableFooterView = nil
+        }
+        self.configTableView()
+        self.tableView.reloadData()
     }
     
 }
