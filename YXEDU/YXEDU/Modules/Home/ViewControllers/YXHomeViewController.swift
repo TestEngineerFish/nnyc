@@ -381,7 +381,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 }
                 break
             case 3:
-                tabBarController?.selectedIndex = 2
+
                 break
                 
             default:

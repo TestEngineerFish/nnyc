@@ -79,3 +79,6 @@
 #import <UMPush/UMessage.h>
 #import <UMCommon/UMConfigure.h>
 
+#import "YRWebViewJSBridge.h"
+#import "YRWebViewJSAction.h"
+
