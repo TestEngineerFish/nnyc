@@ -13,4 +13,6 @@
 + (id)yrModelWithJSON:(id)json;
 - (NSString *)yrModelToJSONString;
 - (id)yrModelToDictionary;
+// 转换Device Token
++ (NSString *)deviceTokenToStringWith: (NSData *)deviceToken;
 @end

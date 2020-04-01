@@ -271,12 +271,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXConfigure.shared().saveCurrentToken()
             YXUserModel.default.didLogin = true
             YXUserModel.default.login()
-            
-            // 登陆后设置别名给极光
-            JPUSHService.setAlias(YXUserModel.default.uuid, completion: { (code, alias, seq) in
-                YXLog("设置别名alias ====登录成功======= \(code),\(alias ?? ""),\(seq)")
-            }, seq: Int(Date().timeIntervalSince1970))
-                
             YXAlertQueueManager.default.restart()
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)

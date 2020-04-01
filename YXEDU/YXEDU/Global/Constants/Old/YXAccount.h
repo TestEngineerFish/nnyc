@@ -44,6 +44,13 @@ static NSInteger kJPushProduction = 1;
 #endif
 
 // 友盟
-static NSString *const kUmengAppKey = @"5e7c11b7570df3f98d000120";
-static NSString *const kUmengSecret = @"ste3j7ruuerdaewmutcxrcj4kqybolgq";
+static NSString *const kUmengAppKey    = @"5e7c11b7570df3f98d000120";
+static NSString *const kUmengSecret    = @"ste3j7ruuerdaewmutcxrcj4kqybolgq";
+static NSString *const kUmengAliasType = @"nnyc_alias_type";
+#if DEBUG
+static NSString *const kUmengChannel = @"Dev";
+#else
+// 正式
+static NSString *const kUmengChannel = @"AppStore";
+#endif
 

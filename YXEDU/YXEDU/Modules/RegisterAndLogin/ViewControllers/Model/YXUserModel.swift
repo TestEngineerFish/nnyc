@@ -107,6 +107,18 @@ class YXUserModel: NSObject {
         let storyboard = UIStoryboard(name:"Main", bundle: nil)
         let tabBarController = storyboard.instantiateViewController(withIdentifier: "YXTabBarViewController") as? UITabBarController
         UIApplication.shared.keyWindow?.rootViewController = tabBarController
+        // 登录后设置别名给友盟
+        let alias = YXUserModel.default.uuid ?? ""
+        UMessage.setAlias(alias, type: kUmengAliasType) { (response, error) in
+            if let _error = error {
+                YXLog("设置别名\(alias)失败, error: ", _error)
+            } else {
+                YXLog("设置别名\(alias)成功")
+            }
+        }
+        //            JPUSHService.setAlias(YXUserModel.default.uuid, completion: { (code, alias, seq) in
+        //                YXLog("设置别名alias ====登录成功======= \(code),\(alias ?? ""),\(seq)")
+        //            }, seq: Int(Date().timeIntervalSince1970))
     }
     
     @objc
@@ -138,7 +150,6 @@ class YXUserModel: NSObject {
         self.didLogin = false
         YYCache.set(nil, forKey: "LastStoredDate")
         YYCache.set(nil, forKey: "LastStoreTokenDate")
-
         YXMediator().loginOut()
         
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)
