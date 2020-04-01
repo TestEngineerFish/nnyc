@@ -41,7 +41,6 @@
     if (self) {
         self.loginModel = [[YXLoginModel alloc]init];
         self.conf3Model = [[YXConfigure3Model alloc]init];
-        self.bookUnitModel = [[YXStudyBookUnitModel alloc]init];
         _token = [[NSString alloc]init];
     }
     return self;

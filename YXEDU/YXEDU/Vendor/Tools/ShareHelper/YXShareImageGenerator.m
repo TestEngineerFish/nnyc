@@ -8,7 +8,6 @@
 
 #import "YXShareImageGenerator.h"
 #import "BSUtils.h"
-#import "YXShareLodingView.h"
 #import "YXHttpService.h"
 
 //绘制分享图片

@@ -9,12 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "YXBookModel.h"
 #import "YXUserModel_Old.h"
-#import "YXDLModel.h"
+
 @interface YXLoginModel : NSObject<NSCoding>
 @property (nonatomic, strong) YXUserModel_Old *user;
 @property (nonatomic, strong) YXBookModel *learning;
 @property (nonatomic, strong) NSArray <YXBookModel *>*booklist;
-@property (nonatomic, strong) YXDLModel *dl;
 @property (nonatomic) NSNumber *notify;
 
 @end

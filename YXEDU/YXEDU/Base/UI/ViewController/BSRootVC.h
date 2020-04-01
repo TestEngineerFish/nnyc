@@ -66,5 +66,4 @@ typedef NS_ENUM(NSInteger, BackType) {
 
 - (void)showLoadingView;
 - (void)hideLoadingView;
-- (void)checkPasteboard;
 @end    

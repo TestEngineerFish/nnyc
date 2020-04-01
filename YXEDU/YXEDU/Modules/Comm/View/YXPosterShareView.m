@@ -12,7 +12,6 @@
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/QQApiInterfaceObject.h>
 #import "YXShareHelper.h"
-#import "YXShareLodingView.h"
 #import "YXHttpService.h"
 
 @implementation YXPosterShareButton

@@ -37,5 +37,4 @@
 - (void)checkVersion:(YXVersionModel *)model
             complete:(finishBlock)block;
 
-- (void)requestConfig:(YXFinishBlock)block;
 @end

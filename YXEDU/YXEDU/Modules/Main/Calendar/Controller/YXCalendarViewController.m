@@ -12,7 +12,6 @@
 #import "YXCalendarWordCell.h"
 #import "YXCalendarStudyMonthData.h"
 #import "YXCalendarStudydayData.h"
-#import "YXWordDetailModel.h"
 #import "NSDate+Extension.h"
 #import "YXBasePickverView.h"
 #import "YXCalendarFresherGuideView.h"
@@ -20,9 +19,7 @@
 #import "YXCalendarMonthDataView.h"
 #import "YXNoNetworkView.h"
 #import "Reachability.h"
-#import "YXCareerNoteWordInfoModel.h"
-#import "YXCareerWordInfo.h"
-#import "YXWordDetailViewControllerOld.h"
+#import "YXComNaviView.h"
 
 static NSString *const kYXCalendarCellID       = @"YXCalendarCellID";
 static NSString *const kYXCalendarHeaderViewID = @"YXCalendarHeaderViewID";

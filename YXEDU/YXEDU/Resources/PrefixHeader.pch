@@ -20,13 +20,10 @@
 #import "MJExtension.h"
 #import "UIView+Layout.h"
 #import "YXDataProcessCenter.h"
-#import "YXNavigationController.h"
 
 #import "PersonCenterURLs.h"
 #import "YXComAlertView.h"
-#import "YXComNaviView.h"
 #import "MJRefresh.h"
-#import "YXComNaviView.h"
 #import "YXUtils.h"
 #import "NSString+YX.h"
 

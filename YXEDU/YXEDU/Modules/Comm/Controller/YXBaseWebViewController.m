@@ -10,7 +10,6 @@
 #import <WebKit/WebKit.h>
 #import "NSString+YX.h"
 #import "UIFont+IconFont.h"
-#import "YXRouteManager.h"
 
 @interface YXBaseWebViewController ()<WKNavigationDelegate>
 @property (nonatomic, weak) WKWebView *webView;
@@ -112,7 +111,7 @@
             NSString *hexStr = parameters[@"txt_color"];
 
             self.currentColor = UIColorOfHex([hexStr conversionToHex]);
-            [self setTitleAndBackViewColor:self.currentColor];
+//            [self setTitleAndBackViewColor:self.currentColor];
         }
         if (request) {
             [self.webView loadRequest:request];
@@ -120,16 +119,16 @@
     }
 }
 
-- (void)setTitleAndBackViewColor:(UIColor *)color {
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:color};
-    if ([self.navigationController isKindOfClass:[YXNavigationController class]]) {
-        UIButton *btn = ((YXNavigationController *)self.navigationController).backBtn;
-        btn.titleLabel.font = [UIFont iconFontWithSize:21.f];
-        [btn setTitleColor:color forState:UIControlStateNormal];
-        [btn setTitle:kIconFont_back forState:UIControlStateNormal];
-        [btn setImage:[UIImage new] forState:UIControlStateNormal];
-    }
-}
+//- (void)setTitleAndBackViewColor:(UIColor *)color {
+//    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:color};
+//    if ([self.navigationController isKindOfClass:[YXNavigationController class]]) {
+//        UIButton *btn = ((YXNavigationController *)self.navigationController).backBtn;
+//        btn.titleLabel.font = [UIFont iconFontWithSize:21.f];
+//        [btn setTitleColor:color forState:UIControlStateNormal];
+//        [btn setTitle:kIconFont_back forState:UIControlStateNormal];
+//        [btn setImage:[UIImage new] forState:UIControlStateNormal];
+//    }
+//}
 
 - (NSMutableArray *)colorList {
     if (!_colorList) {
@@ -167,8 +166,8 @@
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSString *urlStr = [[navigationAction.request URL] absoluteString];
-    [[YXRouteManager shared] openInsideUrl:urlStr];
+//    NSString *urlStr = [[navigationAction.request URL] absoluteString];
+//    [[YXRouteManager shared] openInsideUrl:urlStr];
     if (decisionHandler) {
         decisionHandler(WKNavigationActionPolicyAllow);
     }

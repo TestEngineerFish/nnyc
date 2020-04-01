@@ -118,27 +118,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let careerModel = YXCareerModel(item: "learn", bookId: 0, sort: 1)
-        
-        if segue.identifier == "LearnedWords" {
-            let destinationViewController = segue.destination as! YXCareerViewController
-            destinationViewController.selectedIndex = 0
-            destinationViewController.careerModel = careerModel
-            
-        } else if segue.identifier == "FavoritesWords" {
-            let destinationViewController = segue.destination as! YXCareerViewController
-            destinationViewController.selectedIndex = 1
-            destinationViewController.careerModel = careerModel
-            
-        } else if segue.identifier == "WrongWords" {
-            let destinationViewController = segue.destination as! YXCareerViewController
-            destinationViewController.selectedIndex = 2
-            destinationViewController.careerModel = careerModel
-            
-        } else if segue.identifier == "WordList" {
-            let destinationViewController = segue.destination as! YXWordListViewController
-            destinationViewController.wordListType = wordListType
-        }
+        let destinationViewController = segue.destination as! YXWordListViewController
+        destinationViewController.wordListType = wordListType
+
     }
     
     // MARK: ---- Notification ----
@@ -285,11 +267,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.pushViewController(vc, animated: true)
         self.hidesBottomBarWhenPushed = false
         YXLog("进入单元地图")
-    }
-
-    @objc func enterTaskVC() {
-        let missionVC = YXMissionViewController()
-        self.navigationController?.pushViewController(missionVC, animated: true)
     }
     
     // MARK: ---- UICollection Delegate & DataSource

@@ -7,7 +7,6 @@
 //
 
 #import "YXCalendarStudyDayData.h"
-#import "YXWordModelManager.h"
 
 @implementation YXCalendarCellModel
 

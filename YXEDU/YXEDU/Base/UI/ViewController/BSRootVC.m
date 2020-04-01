@@ -1,18 +1,14 @@
 
 #import "BSRootVC.h"
 #import "YXLoadingView.h"
-#import "YXWordDetailViewControllerOld.h"
 #import "BSUtils.h"
 #import "YXUserSaveTool.h"
 #import "YXStudyProgressView.h"
 #import "YXPosterShareView.h"
-#import "YXMyWordListDetailModel.h"
-#import "YXWordDetailShareView.h"
-#import "YXMyWordBookDetailVC.h"
 #import "UIViewController+YXTrace.h"
 #import "YRRouter.h"
 
-@interface BSRootVC ()<YXWordDetailShareViewDelegate>
+@interface BSRootVC ()
 @property(nonatomic, weak) YXTipsBaseView *noNetworkView;
 @property(nonatomic, weak) YXTipsBaseView *noDataView;
 @property(nonatomic, weak) YXLoadingView *loadingAnimaterView;
@@ -129,85 +125,6 @@
 }
 
 
-
-
-
--(void)checkPasteboard
-{
-    //获取复制内容
-    NSString *string = [UIPasteboard generalPasteboard].string;
-    
-    //获取正则规则
-    NSString *popUpRule = [YXConfigure shared].confModel.baseConfig.popUpRule;
-    if (![BSUtils isBlankString:popUpRule]) {
-        [YXUserSaveTool setObject:popUpRule forKey:@"popUpRule"];
-    }
-    else {
-        popUpRule = [YXUserSaveTool valueForKey:@"popUpRule"];
-    }
-    
-    if ((![BSUtils isBlankString:string]) && (![BSUtils isBlankString:popUpRule])){
-        
-        NSString *tempStr = [NSString stringWithFormat:@"%@",string];
-        NSString *result = [self subStringComponentsSeparatedByStrContent:tempStr strPoint:@"￥" firstFlag:1 secondFlag:2];
-        YXLog(@"result %@",result);
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", popUpRule];
-        
-        if ([predicate evaluateWithObject:result]) {
-            [self showWordListView:result];
-        }
-    }
-    
-}
-
-
-//查询复制码 对应的词单
-
--(void)showWordListView:(NSString *)code{
-    
-    if (code.length) {
-        NSDictionary *param = @{@"shareCode" : code};
-        [YXDataProcessCenter GET:DOMAIN_SHARECODEWORDLIST
-                      parameters:param
-                    finshedBlock:^(YRHttpResponse *response, BOOL result)
-         {
-             if (result) {
-                 
-                 NSDictionary *details = [response.responseObject objectForKey:@"wordListSimplifiedDetails"];
-                 YXLog(@"details %@",details);
-                 
-                 YXMyWordListDetailModel *detailModel = [YXMyWordListDetailModel mj_objectWithKeyValues:details];
-                 
-                 //移除 YXWordDetailShareView
-                 for (UIView *view in [[UIApplication sharedApplication].keyWindow subviews]) {
-                     if ([view isKindOfClass:[YXWordDetailShareView class]]) {
-                         [view removeFromSuperview];
-                     }
-                 }
-                 
-                 
-                 [YXWordDetailShareView showShareInView:[UIApplication sharedApplication].keyWindow delegate:self detailModel:detailModel];
-                 
-             }else {
-                 
-                 YXMyWordListDetailModel *detailModel =  [YXMyWordListDetailModel alloc];
-                 detailModel.code = response.error.code;
-                 
-                 //移除 YXWordDetailShareView
-                 for (UIView *view in [[UIApplication sharedApplication].keyWindow subviews]) {
-                     if ([view isKindOfClass:[YXWordDetailShareView class]]) {
-                         [view removeFromSuperview];
-                     }
-                 }
-                 
-                 [YXWordDetailShareView showShareInView:[UIApplication sharedApplication].keyWindow delegate:self detailModel:detailModel];
-                 //                 [YXUtils showHUD:nil title:response.error.desc];
-             }
-         }];
-    }
-}
-
-
 #pragma mark - 封装一个截取字符串中同一个字符之间的字符串
 /**
  参数说明：
@@ -265,35 +182,6 @@
     YXLog(@"截取到的 strResult = %@", result);
     // 最后将结果返回出去
     return result;
-}
-
-
-#pragma mark - YXWordDetailShareViewDelegate
-- (void)YXWordDetailShareViewSureDetailModel:(YXMyWordListDetailModel *)detailModel{
-    YXMyWordBookDetailVC *detailVC = [[YXMyWordBookDetailVC alloc] initWithMyWordBookModel:detailModel];
-    detailVC.isOwnWordList = detailModel.isSelf;
-    
-    for (UIView *view in [[UIApplication sharedApplication].keyWindow subviews]) {
-        
-        if ([view isKindOfClass:[YXStudyProgressView class]] || [view isKindOfClass:[YXComAlertView class]] || [view isKindOfClass:[YXPosterShareView class]] || [view isKindOfClass:[YXTipsBaseView class]] )
-            [view removeFromSuperview];
-    }
-    
-    for (UIView *view in [[UIApplication sharedApplication].keyWindow subviews]) {
-        
-        if ([view isKindOfClass:[YXStudyProgressView class]] || [view isKindOfClass:[YXComAlertView class]] || [view isKindOfClass:[YXPosterShareView class]] || [view isKindOfClass:[YXTipsBaseView class]] )
-            [view removeFromSuperview];
-    }
-    
-    [self.navigationController pushViewController:detailVC animated:YES];
-}
-
-- (void)YXWordDetailShareViewSureDetailReload{
-    //获取复制内容
-    NSString *string = [UIPasteboard generalPasteboard].string;
-    if (![BSUtils isBlankString:string]){
-        [self showWordListView:string];
-    }
 }
 
 #pragma mark - 摇一摇，切换环境

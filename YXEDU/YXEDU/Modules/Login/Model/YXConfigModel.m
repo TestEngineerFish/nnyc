@@ -7,7 +7,6 @@
 //
 
 #import "YXConfigModel.h"
-#import "YXRouteManager.h"
 #import "BSUtils.h"
 
 @implementation YXSpokenCheckInterval

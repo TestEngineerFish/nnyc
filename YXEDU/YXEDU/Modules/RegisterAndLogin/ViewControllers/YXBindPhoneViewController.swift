@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXBindPhoneViewController: BSRootVC, UITextFieldDelegate {
+class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
 
     var platform: String!
     

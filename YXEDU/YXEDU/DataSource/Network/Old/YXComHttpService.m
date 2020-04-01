@@ -13,7 +13,6 @@
 #import "YXConfigure.h"
 #import "YXAPI.h"
 #import "YXInterfaceCacheService.h"
-#import "YXWordModelManager.h"
 
 @interface YXComHttpService ()
 
@@ -79,57 +78,6 @@
             block(obj, result);
         }
     }];
-}
-
-- (void)requestConfig:(YXFinishBlock)block {
-    [YXDataProcessCenter GET:DOMAIN_GETCONFIG modelClass:[YXConfigModel class] parameters:@{} finshedBlock:^(YRHttpResponse *response, BOOL result) {
-        if (result) {
-            YXConfigModel *confModel = response.responseObject;
-            [confModel.badgeList sortUsingComparator:^NSComparisonResult(YXBadgeListModelOld *obj1, YXBadgeListModelOld *obj2) {
-                if ([obj1.type integerValue] > [obj2.type integerValue]) {
-                    return NSOrderedDescending;
-                } else {
-                    return NSOrderedAscending;
-                }
-            }];
-            [YXConfigure shared].confModel = confModel;
-            NSString *localTime = [YXWordModelManager versionTime];
-            if(!confModel.baseConfig.versionTime){
-                confModel.baseConfig.versionTime = [[confModel.baseConfig.wordBookDict componentsSeparatedByString:@"="] lastObject];
-            }
-            if (![localTime isEqualToString:confModel.baseConfig.versionTime]) { // 更新单词资源
-                [self getWordsInfo:confModel.baseConfig.wordBookDict andVersionTime:confModel.baseConfig.versionTime];
-            }
-        }
-        if (block) {
-            block(response, result);
-        }
-    }];
-}
-
-- (void)getWordsInfo:(NSString *)reqUrl andVersionTime:(NSString *)versionTime{
-    [YXDataProcessCenter DOWNLOAD:reqUrl parameters:@{} progress:^(NSProgress * _Nonnull downloadProgress) {
-        
-    } completion:^(YRHttpResponse *response, BOOL result) {
-        if (result) {
-            [self analysisWordsInfo:response.responseObject andVersionTime:versionTime];
-        }
-    }];
-}
-
-- (void)analysisWordsInfo:(id)data andVersionTime:(NSString *)versionTime{
-    dispatch_async_to_globalThread(^{
-        NSError *error;
-        NSArray *wordInfos = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-        if (!error) {
-            YXLog(@"解析成功");
-            dispatch_async_to_mainThread(^{
-                [YXWordModelManager saveWordsDetails:wordInfos andVersionTime:versionTime]; 
-            });
-        }else {
-            YXLog(@"解析失败");
-        }
-    });
 }
 
 - (void)setLearning:(NSString *)bookid finish:(finishBlock)block {

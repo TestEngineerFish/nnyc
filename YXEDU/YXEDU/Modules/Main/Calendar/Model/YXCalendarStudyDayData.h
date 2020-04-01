@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YXWordDetailModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

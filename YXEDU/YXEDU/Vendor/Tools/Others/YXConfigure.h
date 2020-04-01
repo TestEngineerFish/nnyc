@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "YXLoginModel.h"
 #import "YXConfigure3Model.h"
-#import "YXStudyBookUnitModel.h"
 #import <CoreLocation/CoreLocation.h>
 #import "YXConfigModel.h"
 
@@ -29,7 +28,6 @@
 
 
 @property (nonatomic, strong) YXConfigure3Model *conf3Model;
-@property (nonatomic, strong) YXStudyBookUnitModel *bookUnitModel;
 @property (nonatomic, strong) YXBookModel *learningModel; // 无网络状态下设置单前学习的书
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, strong) NSString *token;
