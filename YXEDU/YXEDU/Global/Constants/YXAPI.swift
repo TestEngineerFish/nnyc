@@ -25,6 +25,8 @@ struct YXAPI {
     struct Home {
         static let report = "/api/v1/user/learnreport"
         static let task   = "/api/v1/user/task/available"
+        
+        static let setReminder = "api/v1/user/setting"
     }
     
     //MARK: - 用户模块

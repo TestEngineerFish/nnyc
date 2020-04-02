@@ -12,11 +12,15 @@ public enum YXHomeRequest: YYBaseRequest {
     case report
     case updateToken
     case task
+    case setReminder(dataString: String)
 
     var method: YYHTTPMethod {
         switch self {
         case .report, .updateToken, .task:
             return .get
+            
+        case .setReminder:
+            return .post
         }
     }
 
@@ -28,6 +32,18 @@ public enum YXHomeRequest: YYBaseRequest {
             return YXAPI.User.updateToken
         case .task:
             return YXAPI.Home.task
+        case .setReminder:
+            return YXAPI.Home.setReminder
+        }
+    }
+    
+    var parameters: [String : Any?]? {
+        switch self {
+        case .setReminder(let dataString):
+            return ["data": dataString]
+            
+        default:
+            return nil
         }
     }
 }

@@ -36,6 +36,8 @@ class YXSetReminderView: YXTopWindowView {
         alertView.shouldOnlyShowOneButton = true
         
         alertView.show()
+        
+        self.didSetReminder(didOpen: 0)
         self.removeFromSuperview()
     }
     
@@ -54,6 +56,16 @@ class YXSetReminderView: YXTopWindowView {
         
         UserDefaults.standard.set(timePicker.date, forKey: "Reminder")
         
+        self.didSetReminder(didOpen: 1)
         self.removeFromSuperview()
+    }
+    
+    private func didSetReminder(didOpen: Int) {
+        let request = YXHomeRequest.setReminder(dataString: "{\"open_learn_remind\": \(didOpen)}")
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { response in
+
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
 }
