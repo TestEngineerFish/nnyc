@@ -14,7 +14,6 @@
 #import "YXCalendarStudydayData.h"
 #import "NSDate+Extension.h"
 #import "YXBasePickverView.h"
-#import "YXCalendarFresherGuideView.h"
 #import "YXCalendarMonthSummaryView.h"
 #import "YXCalendarMonthDataView.h"
 #import "Reachability.h"
@@ -28,17 +27,12 @@ static CGFloat const kHeaderHeight   = 44.f;
 static CGFloat const kCellHeight     = 25.f;
 static CGFloat const kPickViewHeight = 272.f;
 
-@interface YXCalendarViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance, YXBasePickverViewDelegate, YXCalendarFresherGuideViewDelegate, YXCalendarUpdateData>
+@interface YXCalendarViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance, YXBasePickverViewDelegate, YXCalendarUpdateData>
 @property (nonatomic, copy) NSDate *currentSelectedDate;//选中的具体日期
 @property (nonatomic, copy) NSDate *currentTitleDate;//标题显示的月份
 
 //navigation view
 @property (nonatomic, strong) YXComNaviView *naview;
-@property (nonatomic, strong) UIView *rightView;
-@property (nonatomic, strong) UIButton *calendarBtn;
-@property (nonatomic, strong) UIButton *chartBtn;
-//fresher guide view
-@property (nonatomic, weak) YXCalendarFresherGuideView *fresherGuideView;
 //calendar and chart view
 @property (nonatomic, strong) UIScrollView *contentScroll;
 @property (nonatomic, strong) YXCalendarMonthDataView *monthDataView;
@@ -117,7 +111,6 @@ static CGFloat const kPickViewHeight = 272.f;
         _naview = [YXComNaviView comNaviViewWithLeftButtonType:YXNaviviewLeftButtonWhite];
         _naview.backgroundColor = [UIColor gradientColorWith:CGSizeMake(kSCREEN_WIDTH, kNavHeight) colors:@[UIColorOfHex(0xFFC671), UIColorOfHex(0xFFA83E)] direction:GradientDirectionTypeLeftTop];
         [_naview.leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-        [_naview setRightButtonView:self.rightView];
         _naview.titleLabel.textColor = UIColor.whiteColor;
         _naview.arrowIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_down_white"]];
         __weak typeof(self) weakSelf = self;
@@ -139,49 +132,6 @@ static CGFloat const kPickViewHeight = 272.f;
         _contentScroll = contentScroll;
     }
     return _contentScroll;
-}
-
-- (UIView *)rightView {
-    if (!_rightView) {
-        _rightView = [[UIView alloc] init];
-        _rightView.frame = CGRectMake(SCREEN_WIDTH - 95, kStatusBarHeight + 1, 80, 30);
-        _rightView.backgroundColor = UIColor.clearColor;
-        _rightView.layer.cornerRadius = _rightView.height/2.f;
-        _rightView.layer.borderWidth = 1.0f;
-        _rightView.layer.borderColor = UIColor.whiteColor.CGColor;
-        [_rightView setClipsToBounds:YES];
-        
-        [_rightView addSubview:self.calendarBtn];
-        [_rightView addSubview:self.chartBtn];
-        [_rightView setHidden:YES];
-    }
-    return _rightView;
-}
-
-- (UIButton *)calendarBtn {
-    if (!_calendarBtn) {
-        _calendarBtn = [[UIButton alloc] init];
-        _calendarBtn.frame = CGRectMake(0, 0, _rightView.width/2.f, _rightView.height);
-        [_calendarBtn setImage:[UIImage imageNamed:@"calendar_icon_selected"] forState:UIControlStateSelected];
-        [_calendarBtn setImage:[UIImage imageNamed:@"calendar_icon_unselect"] forState:UIControlStateNormal];
-        _calendarBtn.backgroundColor = UIColor.whiteColor;
-        [_calendarBtn setSelected:YES];
-        [_calendarBtn addTarget:self action:@selector(showCalendarView:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _calendarBtn;
-}
-
-- (UIButton *)chartBtn {
-    if (!_chartBtn) {
-        _chartBtn = [[UIButton alloc] init];
-        _chartBtn.frame = CGRectMake(self.calendarBtn.width, 0, _rightView.width/2.f, _rightView.height);
-        [_chartBtn setImage:[UIImage imageNamed:@"chart_icon_selected"] forState:UIControlStateSelected];
-        [_chartBtn setImage:[UIImage imageNamed:@"chart_icon_unselect"] forState:UIControlStateNormal];
-        _chartBtn.backgroundColor = UIColor.clearColor;
-        [_chartBtn setSelected: NO];
-        [_chartBtn addTarget:self action:@selector(showChartView:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _chartBtn;
 }
 
 - (YXCalendarMonthDataView *)monthDataView {
@@ -360,9 +310,6 @@ static CGFloat const kPickViewHeight = 272.f;
     [self _initUI];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePickerView:) name:kRemoveDatePickView object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkChanged) name:kReachabilityChangedNotification object:nil];
-//    if (![YXCalendarFresherGuideView isFresherGuideShowed]) {
-//        _fresherGuideView = [YXCalendarFresherGuideView showGuideViewToView:self.tabBarController.view delegate:self];
-//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -543,37 +490,6 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 # pragma mark - Event
-
-- (void)showCalendarView:(UIButton *)btn {
-    if (!btn.isSelected) {
-        [btn setSelected:YES];
-        btn.backgroundColor = UIColor.whiteColor;
-        [self.chartBtn setSelected:NO];
-        self.chartBtn.backgroundColor = UIColor.clearColor;
-        [UIView animateWithDuration:0.5 animations:^{
-            self.monthDataView.screenShowView.transform = CGAffineTransformTranslate(self.monthDataView.screenShowView.transform, self.monthDataView.calendarView.width, 0);
-        }];
-    }
-}
-
-- (void)showChartView:(UIButton *)btn {
-    if (!btn.isSelected) {
-        //设置选中的cell与日历同步,如果不是本月则不显示选中状态
-        if (self.currentTitleDate.year == self.currentSelectedDate.year && self.currentTitleDate.month == self.currentSelectedDate.month) {
-
-            [self.monthDataView.chartView setDataArray:[self setupChartData] selected:[NSNumber numberWithUnsignedInteger:self.currentSelectedDate.day - 1]];
-        } else {
-            [self.monthDataView.chartView setDataArray:[self setupChartData] selected:nil];
-        }
-        [btn setSelected:YES];
-        btn.backgroundColor = UIColor.whiteColor;
-        [self.calendarBtn setSelected:NO];
-        self.calendarBtn.backgroundColor = UIColor.clearColor;
-        [UIView animateWithDuration:0.5 animations:^{
-            self.monthDataView.screenShowView.transform = CGAffineTransformTranslate(self.monthDataView.screenShowView.transform, -self.monthDataView.calendarView.width, 0);
-        }];
-    }
-}
 
 - (void)showReviewWordsList: (UITapGestureRecognizer *)sender {
     self.dayData.showReviewList       = !self.dayData.showReviewList;
@@ -886,21 +802,6 @@ static CGFloat const kPickViewHeight = 272.f;
     self.currentSelectedDate = date;
     self.currentTitleDate = date;
     [[NSNotificationCenter defaultCenter] postNotificationName:kRemoveDatePickView object:nil];
-}
-
-#pragma mark - <YXCalendarFresherGuideViewDelegate>
-- (CGRect)fresherGuideViewBlankArea:(YXCalendarFresherGuideView *)frensherView stepIndex:(NSInteger)step {
-    if (step == 1) {
-        CGRect rect = [self.rightView convertRect:self.rightView.bounds toView:self.view];
-        return rect;
-    }
-    return CGRectZero;
-}
-
-- (void)stepPrecondition:(NSInteger)step {
-    //    if (step == 2) {
-    //        [self showChartView:self.chartBtn];
-    //    }
 }
 
 #pragma mark - <YXCalendarUpdateData>

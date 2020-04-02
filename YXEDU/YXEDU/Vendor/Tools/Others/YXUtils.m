@@ -477,15 +477,6 @@
     return [formatter stringFromDate:date];
 }
 
-+ (NSArray *)nnycRefreshImages {
-    NSMutableArray *images = [NSMutableArray array];
-    for (NSInteger i = 1; i < 13; i++) {
-        NSString *name = [NSString stringWithFormat:@"nnyc_refresh%zd",i];
-        [images addObject:[UIImage imageNamed:name]];
-    }
-    return images;
-}
-
 + (NSString *)fresherGuideKey {
     NSString *key = [NSString stringWithFormat:@"k%@-fresherGuideKey",[[UIDevice currentDevice] appVersion]];
     return key;

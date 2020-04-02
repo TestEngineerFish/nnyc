@@ -114,7 +114,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         navigationController?.setNavigationBarHidden(true, animated: animated)
         loadData()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
-        YXBadgeManager.share.updateTaskCenterBadge()
+        YXRedDotManager.share.updateTaskCenterBadge()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

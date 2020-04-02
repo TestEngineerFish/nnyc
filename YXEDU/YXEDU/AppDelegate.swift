@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 回到前台，检查口令
         YXAlertCheckManager.default.checkCommand(isStartup: false, nil)
         if YXUserModel.default.didLogin {
-            YXBadgeManager.share.updateFeedbackReplyBadge()
+            YXRedDotManager.share.updateFeedbackReplyBadge()
         }
     }
     

@@ -16,7 +16,7 @@ class YXTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     @objc private func updateTabBadge() {
-        let badgeNum = YXBadgeManager.share.getFeedbackReplyBadgeNum()
+        let badgeNum = YXRedDotManager.share.getFeedbackReplyBadgeNum()
         self.children.last?.tabBarItem.badgeColor = UIColor.clear
         self.children.last?.tabBarItem.badgeValue = badgeNum > 0 ? "" : nil
     }

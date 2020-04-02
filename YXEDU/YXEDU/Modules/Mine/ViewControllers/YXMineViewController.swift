@@ -24,7 +24,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var badgeNumberView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
-    let badgeView = YXBadgeView()
+    let badgeView = YXRedDotView()
     @IBOutlet weak var collectionLeftConsraint: NSLayoutConstraint!
     @IBOutlet weak var collectionRightConsraint: NSLayoutConstraint!
     
@@ -224,7 +224,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             return tableView.dequeueReusableCell(withIdentifier: "CellFour")!
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive")!
-            let badgeNum = YXBadgeManager.share.getFeedbackReplyBadgeNum()
+            let badgeNum = YXRedDotManager.share.getFeedbackReplyBadgeNum()
             cell.addSubview(badgeView)
             badgeView.snp.makeConstraints { (make) in
                 make.centerY.equalToSuperview()

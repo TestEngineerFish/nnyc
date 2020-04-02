@@ -44,7 +44,7 @@ extension AppDelegate {
         if UIApplication.shared.applicationState == .active {
             return
         }
-        YXBadgeManager.share.updateFeedbackReplyBadge()
+        YXRedDotManager.share.updateFeedbackReplyBadge()
         if let action = userInfo?["open_scheme"] as? String {
             YRRouter.openURL(action, query: nil, animated: true)
         }

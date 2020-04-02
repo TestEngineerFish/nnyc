@@ -77,7 +77,5 @@
 
 + (NSString *)formatDateStr:(NSString *)yyMMdd;
 
-+ (NSArray *)nnycRefreshImages;
-
 + (NSString *)fresherGuideKey;
 @end

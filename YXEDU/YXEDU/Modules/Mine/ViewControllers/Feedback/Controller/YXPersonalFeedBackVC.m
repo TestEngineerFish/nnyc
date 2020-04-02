@@ -234,7 +234,7 @@
 }
 
 - (void)updateDotStatus {
-    NSInteger badgeNum = [YXBadgeManager.share getFeedbackReplyBadgeNum];
+    NSInteger badgeNum = [YXRedDotManager.share getFeedbackReplyBadgeNum];
     [self.dotView setHidden:(badgeNum <= 0)];
 }
 

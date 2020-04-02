@@ -14,7 +14,7 @@ class YXHomeSubItemCell: UICollectionViewCell {
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    var dotView = YXBadgeView()
+    var dotView = YXRedDotView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +27,7 @@ class YXHomeSubItemCell: UICollectionViewCell {
     }
     
     func setData(_ indexPath: IndexPath) {
-        let hideDotView = YXBadgeManager.share.getTaskCenterBadgeNum() <= 0
+        let hideDotView = YXRedDotManager.share.getTaskCenterBadgeNum() <= 0
         switch indexPath.row {
         case 0:
             self.colorView.backgroundColor = UIColor.hex(0xFFEFF0)
