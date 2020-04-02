@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, YXSharePalform) {
+    YXShareWXSession,
+    YXShareWXTimeLine,
+    YXShareQQ
+};
+
 typedef NS_ENUM(NSInteger, ChatType) {
     ChatSession, // 好友
     ChatTimeline, // 朋友圈

@@ -8,24 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "YXLoginModel.h"
-#import "YXConfigure3Model.h"
 #import <CoreLocation/CoreLocation.h>
-#import "YXConfigModel.h"
 
 #define userId [YXConfigure shared].uuid
 
 @interface YXConfigure : NSObject
 @property (nonatomic, strong) YXLoginModel *loginModel;
-
-@property (nonatomic, strong) YXConfigModel *confModel;
 @property (nonatomic, copy)NSString *currLearningBookId;
-@property (nonatomic, assign)BOOL isUsStyle;
 // A/B Test,Q-B-1、Q-B-2显示软键盘，不显示可选项
 @property (nonatomic, assign) BOOL showKeyboard;
 
 - (void)loginOut;
-
-@property (nonatomic, strong) YXConfigure3Model *conf3Model;
 @property (nonatomic, strong) YXBookModel *learningModel; // 无网络状态下设置单前学习的书
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, strong) NSString *token;

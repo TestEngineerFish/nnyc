@@ -40,9 +40,6 @@
 + (void)showHUD:(UIView *)view
           title:(NSString *)text;
 
-+ (void)playRight;
-+ (void)playWrong;
-
 + (NSString *)currentWifiSSID;
 
 + (void)showProgress:(UIView *)view info:(NSString *)info;

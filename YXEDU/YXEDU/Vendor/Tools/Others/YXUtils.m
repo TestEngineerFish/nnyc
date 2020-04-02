@@ -8,7 +8,6 @@
 
 #import "YXUtils.h"
 #import "NSString+YX.h"
-#import "AVAudioPlayerManger.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "YRLoadingView.h"
@@ -194,17 +193,6 @@
 
 + (void)hidenProgress:(UIView *)_view {
     [MBProgressHUD hideHUDForView:_view animated:YES];
-}
-
-
-+ (void)playRight {
-    NSURL *path = [[NSBundle mainBundle]URLForResource:@"right" withExtension:@"mp3"];
-    [[AVAudioPlayerManger shared] startPlay:path];
-}
-#pragma mark -sound
-+ (void)playWrong {
-    NSURL *path = [[NSBundle mainBundle]URLForResource:@"wrong" withExtension:@"mp3"];
-    [[AVAudioPlayerManger shared] startPlay:path];
 }
 
 + (NSString *)currentWifiSSID {

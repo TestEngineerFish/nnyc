@@ -11,9 +11,7 @@
 #import "WXApiManager.h"
 #import "QQApiManager.h"
 #import "BaiduLocManager.h"
-#import "AVAudioPlayerManger.h"
 #import "IQKeyboardManager.h"
-#import "YXGuideView.h"
 #import "BSCommon.h"
 #import "YXConfigure.h"
 #import "YXAPI.h"
@@ -48,31 +46,6 @@
     });
     return shared;
 }
-
-- (void)configure {
-    
-    [[WXApiManager shared] registerWX:wechatId];
-//    [[QQApiManager shared] registerQQ:qqId];
-    [NetWorkRechable shared];
-    
-    [[AVAudioPlayerManger shared] configuration];
-    
-    [IQKeyboardManager sharedManager].enable = YES;
-    [IQKeyboardManager sharedManager].toolbarDoneBarButtonItemText = @"收起";
-    [YXConfigure shared].needSpreadAnimation = YES;
-    //    [YXUtils removeScreenShout];
-    [self checkVersion];
-    [[SJCall shareInstance]carrierInfo:^(SJCarrierInfo *carrier) {
-        
-    }];
-    [[BaiduLocManager shared] registerBaiduKey:baiduId];
-    [[BaiduLocManager shared] startLocation:^(CLLocation *obj) {
-        [YXConfigure shared].location = obj;
-    }];
-//    [[JPushManager shared] registerJPush:jpushId];
-}
-
-
 
 - (void)clearData {
     [[YXModelArchiverManager shared] clearAllMemory];

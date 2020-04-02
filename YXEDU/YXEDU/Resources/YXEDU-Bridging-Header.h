@@ -52,8 +52,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "BiggerClickAreaButton.h"
-#import "YXShareImageGenerator.h"
-#import "YXShareHelper.h"
 #import "YRDevice.h"
 #import "UIDevice+YX.h"
 #import "UITabBarItem+BadgeValue.h"

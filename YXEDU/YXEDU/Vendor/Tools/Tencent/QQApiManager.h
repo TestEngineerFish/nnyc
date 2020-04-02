@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <TencentOpenAPI/TencentOAuth.h>
+#import "WXApiManager.h"
+
 typedef NS_ENUM(NSInteger, QQShareType) {
     QQShareFriend,
     QQShareQZone,

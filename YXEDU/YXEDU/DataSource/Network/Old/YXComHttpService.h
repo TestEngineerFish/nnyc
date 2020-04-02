@@ -10,7 +10,6 @@
 #import "YXAPI.h"
 #import "YXVersionModel.h"
 #import "YXBookModel.h"
-#import "YXConfigModel.h"
 @interface YXComHttpService : NSObject
 + (instancetype)shared;
 

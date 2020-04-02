@@ -40,14 +40,9 @@
     self = [super init];
     if (self) {
         self.loginModel = [[YXLoginModel alloc]init];
-        self.conf3Model = [[YXConfigure3Model alloc]init];
         _token = [[NSString alloc]init];
     }
     return self;
-}
-
-- (BOOL)isUsStyle {
-    return self.confModel.baseConfig.speech;
 }
 
 - (NSString *)mobile {

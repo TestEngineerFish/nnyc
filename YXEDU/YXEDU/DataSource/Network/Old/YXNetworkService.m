@@ -141,7 +141,6 @@
         if ([data isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = data;
             NSArray *task = [dic objectForKey:@"task"];
-            [YXConfigure shared].confModel.completedTaskAry = task;
         }
         YRHttpResponse *httpResponse = [[YRHttpResponse alloc] initWithResponseObject:responseObject[@"data"]
                                                                            statusCode:0
@@ -170,11 +169,8 @@
             error.code == USER_PF_VERIFY_ERR_CODE) { // 验证码错误
             [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:error.desc];
         } else if (error.code == SYS_TOKEN_CODE) { // TOKEN失效，弹出登录页面
-//            [[YXMediator shared] afterLogout];
-//            [[YXMediator shared] tokenExpired];
             [[YXUserModel default] updateTokenWithClosure:nil];
         } else if (error.code == SYS_TOKEN_FAILURE_CODE) { // 被踢出
-//            [[YXMediator shared] clearData];
             [[YXMediator shared] userKickedOut];
         } else  if (error.code == 6666) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"kServiceStopNotification" object:nil];
