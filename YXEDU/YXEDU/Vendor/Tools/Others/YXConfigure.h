@@ -24,8 +24,6 @@
 @property (nonatomic, assign) BOOL showKeyboard;
 
 - (void)loginOut;
-- (YXBadgeModelOld *)badgeModelWith:(NSString *)badgeId;
-
 
 @property (nonatomic, strong) YXConfigure3Model *conf3Model;
 @property (nonatomic, strong) YXBookModel *learningModel; // 无网络状态下设置单前学习的书

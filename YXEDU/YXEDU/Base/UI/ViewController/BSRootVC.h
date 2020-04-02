@@ -63,7 +63,4 @@ typedef NS_ENUM(NSInteger, BackType) {
 - (void)showNoDataView:(NSString *)tips;
 - (void)showNoDataView:(NSString *)tips image:(UIImage *)image;
 - (void)hideNoDataView;
-
-- (void)showLoadingView;
-- (void)hideLoadingView;
 @end    

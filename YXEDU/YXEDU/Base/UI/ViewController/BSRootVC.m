@@ -1,6 +1,5 @@
 
 #import "BSRootVC.h"
-#import "YXLoadingView.h"
 #import "BSUtils.h"
 #import "YXUserSaveTool.h"
 #import "YXStudyProgressView.h"
@@ -11,7 +10,6 @@
 @interface BSRootVC ()
 @property(nonatomic, weak) YXTipsBaseView *noNetworkView;
 @property(nonatomic, weak) YXTipsBaseView *noDataView;
-@property(nonatomic, weak) YXLoadingView *loadingAnimaterView;
 @end
 
 @implementation BSRootVC
@@ -93,21 +91,6 @@
 - (BOOL)isNetworkAvaiable {
     NetWorkStatus status = [[NetWorkRechable shared] netWorkStatus];
     return (status == NetWorkStatusReachableViaWWAN || status == NetWorkStatusReachableViaWiFi);
-}
-
-
-- (void)showLoadingView {
-    if (!_loadingAnimaterView) {
-        YXLoadingView *loadingAnimaterView = [[YXLoadingView alloc] initWithFrame:self.view.bounds];
-        [self.view addSubview:loadingAnimaterView];
-        _loadingAnimaterView = loadingAnimaterView;
-    }
-}
-
-- (void)hideLoadingView {
-    if (self.loadingAnimaterView) {
-        [self.loadingAnimaterView removeFromSuperview];
-    }
 }
 
 - (void)back {

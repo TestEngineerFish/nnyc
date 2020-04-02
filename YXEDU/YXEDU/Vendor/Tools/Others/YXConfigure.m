@@ -179,7 +179,4 @@
     [kNotificationCenter postNotificationName:kLogoutNotify object:nil];
 }
 
-- (YXBadgeModelOld *)badgeModelWith:(NSString *)badgeId {
-    return [self.confModel.badgesDic objectForKey:badgeId];
-}
 @end

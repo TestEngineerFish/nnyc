@@ -208,21 +208,8 @@
     return @{
              @"bookList" : [YXConfigGradeModel class],
              @"wordFrame" : [YXWordFormModel class],
-             @"badgeList" : [YXBadgeListModelOld class],
              @"taskList" : [YXTaskModel class]
              };
-}
-
-- (NSMutableDictionary *)badgesDic {
-    if (!_badgesDic) {
-        _badgesDic = [NSMutableDictionary dictionary];
-        for (YXBadgeListModelOld *groupBadges in _badgeList) {
-            for (YXBadgeModelOld *badgeModel in groupBadges.options) {
-                [_badgesDic setObject:badgeModel forKey:badgeModel.badgeId];
-            }
-        }
-    }
-    return _badgesDic;
 }
 
 - (NSArray *)allBookIds {

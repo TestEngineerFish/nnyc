@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YXBadgeListModelOld.h"
 #import "YXConfigBookModel.h"
 
 typedef NS_ENUM(NSInteger, YXSharePalform) {
@@ -104,27 +103,21 @@ typedef NS_ENUM(NSInteger, YXSharePalform) {
 @property (nonatomic, strong) NSString *gainImg;
 @property (nonatomic, strong) NSString *notGainImg;
 @property (nonatomic, strong) NSString *color;
-
- @property (nonatomic, copy) NSString *timeStr;
+@property (nonatomic, copy) NSString *timeStr;
 
 @end
 
 @interface YXConfigModel : NSObject
 @property (nonatomic, strong)YXBaseConfig *baseConfig;
 @property (nonatomic, strong)NSArray *bookList;
-
 @property (nonatomic, readonly, copy)NSString *cdn;
 @property (nonatomic, strong)NSMutableArray *wordFrame;
-@property (nonatomic, strong)NSMutableArray *badgeList;
-@property (nonatomic, strong)NSMutableDictionary *badgesDic;
 @property (nonatomic, strong)NSMutableArray *taskList;
-
 @property (nonatomic, strong)NSArray *allBookIds;
 @property (nonatomic, strong)NSArray *allBookNames;
 @property (nonatomic, copy) NSArray *completedTaskAry;
 @property (nonatomic, copy) NSArray *completedTaskModelAry;
-
- @property (nonatomic, copy) NSString *taskStatusString;
+@property (nonatomic, copy) NSString *taskStatusString;
 
 - (NSString *)getBookNameWithId:(NSString *)bookId;
 @end
