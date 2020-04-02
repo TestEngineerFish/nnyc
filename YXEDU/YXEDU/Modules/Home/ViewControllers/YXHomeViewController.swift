@@ -118,9 +118,12 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationViewController = segue.destination as! YXWordListViewController
-        destinationViewController.wordListType = wordListType
-
+        guard let identifier = segue.identifier else { return }
+        let identifierList = ["LearnedWords", "FavoritesWords", "WrongWords", "WordList"]
+        if identifierList.contains(identifier) {
+            let destinationViewController = segue.destination as! YXWordListViewController
+            destinationViewController.wordListType = wordListType
+        }
     }
     
     // MARK: ---- Notification ----

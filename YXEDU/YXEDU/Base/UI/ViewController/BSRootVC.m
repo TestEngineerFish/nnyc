@@ -2,8 +2,6 @@
 #import "BSRootVC.h"
 #import "BSUtils.h"
 #import "YXUserSaveTool.h"
-#import "YXStudyProgressView.h"
-#import "YXPosterShareView.h"
 #import "UIViewController+YXTrace.h"
 #import "YRRouter.h"
 

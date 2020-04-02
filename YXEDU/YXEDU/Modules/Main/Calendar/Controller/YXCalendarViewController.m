@@ -17,7 +17,6 @@
 #import "YXCalendarFresherGuideView.h"
 #import "YXCalendarMonthSummaryView.h"
 #import "YXCalendarMonthDataView.h"
-#import "YXNoNetworkView.h"
 #import "Reachability.h"
 #import "YXComNaviView.h"
 

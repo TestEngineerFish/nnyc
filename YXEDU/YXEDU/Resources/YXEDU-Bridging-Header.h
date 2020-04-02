@@ -27,7 +27,6 @@
 #import "YXAgreementVC.h"
 #import "YXBindViewModel.h"
 #import "YXLoginSendModel.h"
-#import "YXComAlertView.h"
 #import "QQApiManager.h"
 #import "WXApiManager.h"
 #import "YXDataProcessCenter.h"

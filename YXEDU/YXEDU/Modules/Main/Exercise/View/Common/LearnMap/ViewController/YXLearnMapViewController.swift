@@ -117,15 +117,19 @@ class YXLearnMapViewController: UIViewController {
             alertView.shouldOnlyShowOneButton = true
             alertView.show()
         } else {
-            if let currentModel =  self.learningPath?.currentUnitView?.model, currentModel.status == .uniteIng {
+            if let currentModel = self.learningPath?.currentUnitView?.model, currentModel.status != .uniteIng {
                 let currentUnitName = currentModel.unitName ?? ""
                 let toUnitName      = selectedModel.unitName ?? ""
-                let content = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
-                YXComAlertView.show(.common, in: kWindow, info: "提示", content: content, firstBlock: { (obj) in
+                let content         = String(format: "当前正在学习 %@,是否切换到 %@?", currentUnitName, toUnitName)
+                let alertView       = YXAlertView()
+                alertView.titleLabel.text       = "提示"
+                alertView.descriptionLabel.text = content
+                alertView.doneClosure           = { _ in
                     self.learnUnit(button.tag)
                     button.isEnabled = false
                     YXLog("切换到" + currentUnitName + "单元学习")
-                }, secondBlock: nil)
+                }
+                alertView.show()
             } else {
                 self.learnUnit(button.tag)
                 button.isEnabled = false
