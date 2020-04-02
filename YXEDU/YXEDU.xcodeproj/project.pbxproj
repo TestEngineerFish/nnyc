@@ -208,13 +208,11 @@
 		779DC500242C833200673ED5 /* YXSetReminderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779DC4FF242C833200673ED5 /* YXSetReminderView.xib */; };
 		779ED53B24349AB300E452E3 /* YRWebViewJSBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 779ED52B24349AB300E452E3 /* YRWebViewJSBridge.m */; };
 		779ED53C24349AB300E452E3 /* YRWebViewRecordAudioAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53024349AB300E452E3 /* YRWebViewRecordAudioAction.swift */; };
-		779ED53D24349AB300E452E3 /* YRWebViewShareAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53124349AB300E452E3 /* YRWebViewShareAction.m */; };
-		779ED53E24349AB300E452E3 /* YRWebViewCheckInstalledAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53224349AB300E452E3 /* YRWebViewCheckInstalledAction.m */; };
 		779ED53F24349AB300E452E3 /* YRWebViewSessionExpiredAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53324349AB300E452E3 /* YRWebViewSessionExpiredAction.swift */; };
 		779ED54024349AB300E452E3 /* YRWebViewJSAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53524349AB300E452E3 /* YRWebViewJSAction.m */; };
 		779ED54124349AB300E452E3 /* JSBridgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53824349AB300E452E3 /* JSBridgeModel.swift */; };
 		779ED54224349AB300E452E3 /* JSActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53924349AB300E452E3 /* JSActionType.swift */; };
-		779ED54324349AB300E452E3 /* RecordAudioActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53A24349AB300E452E3 /* RecordAudioActionModel.swift */; };
+		779ED54324349AB300E452E3 /* ShareActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53A24349AB300E452E3 /* ShareActionModel.swift */; };
 		77AA41C524065A6700473A71 /* YXGuideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AA41C424065A6700473A71 /* YXGuideModel.swift */; };
 		77AA41C72406A8F900473A71 /* YXAddBookGuideView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77AA41C62406A8F900473A71 /* YXAddBookGuideView.xib */; };
 		77AA41C92407E96B00473A71 /* YXCollectionViewLeftFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AA41C82407E96B00473A71 /* YXCollectionViewLeftFlowLayout.swift */; };
@@ -769,17 +767,13 @@
 		779DC4FF242C833200673ED5 /* YXSetReminderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXSetReminderView.xib; sourceTree = "<group>"; };
 		779ED52B24349AB300E452E3 /* YRWebViewJSBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRWebViewJSBridge.m; sourceTree = "<group>"; };
 		779ED52C24349AB300E452E3 /* YRWebViewJSBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRWebViewJSBridge.h; sourceTree = "<group>"; };
-		779ED52F24349AB300E452E3 /* YRWebViewCheckInstalledAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRWebViewCheckInstalledAction.h; sourceTree = "<group>"; };
 		779ED53024349AB300E452E3 /* YRWebViewRecordAudioAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YRWebViewRecordAudioAction.swift; sourceTree = "<group>"; };
-		779ED53124349AB300E452E3 /* YRWebViewShareAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRWebViewShareAction.m; sourceTree = "<group>"; };
-		779ED53224349AB300E452E3 /* YRWebViewCheckInstalledAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRWebViewCheckInstalledAction.m; sourceTree = "<group>"; };
 		779ED53324349AB300E452E3 /* YRWebViewSessionExpiredAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YRWebViewSessionExpiredAction.swift; sourceTree = "<group>"; };
-		779ED53424349AB300E452E3 /* YRWebViewShareAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRWebViewShareAction.h; sourceTree = "<group>"; };
 		779ED53524349AB300E452E3 /* YRWebViewJSAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRWebViewJSAction.m; sourceTree = "<group>"; };
 		779ED53624349AB300E452E3 /* YRWebViewJSAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRWebViewJSAction.h; sourceTree = "<group>"; };
 		779ED53824349AB300E452E3 /* JSBridgeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSBridgeModel.swift; sourceTree = "<group>"; };
 		779ED53924349AB300E452E3 /* JSActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSActionType.swift; sourceTree = "<group>"; };
-		779ED53A24349AB300E452E3 /* RecordAudioActionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordAudioActionModel.swift; sourceTree = "<group>"; };
+		779ED53A24349AB300E452E3 /* ShareActionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareActionModel.swift; sourceTree = "<group>"; };
 		77AA41C424065A6700473A71 /* YXGuideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGuideModel.swift; sourceTree = "<group>"; };
 		77AA41C62406A8F900473A71 /* YXAddBookGuideView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAddBookGuideView.xib; sourceTree = "<group>"; };
 		77AA41C82407E96B00473A71 /* YXCollectionViewLeftFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCollectionViewLeftFlowLayout.swift; sourceTree = "<group>"; };
@@ -2030,12 +2024,8 @@
 		779ED52E24349AB300E452E3 /* Impl */ = {
 			isa = PBXGroup;
 			children = (
-				779ED52F24349AB300E452E3 /* YRWebViewCheckInstalledAction.h */,
 				779ED53024349AB300E452E3 /* YRWebViewRecordAudioAction.swift */,
-				779ED53124349AB300E452E3 /* YRWebViewShareAction.m */,
-				779ED53224349AB300E452E3 /* YRWebViewCheckInstalledAction.m */,
 				779ED53324349AB300E452E3 /* YRWebViewSessionExpiredAction.swift */,
-				779ED53424349AB300E452E3 /* YRWebViewShareAction.h */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -2045,7 +2035,7 @@
 			children = (
 				779ED53824349AB300E452E3 /* JSBridgeModel.swift */,
 				779ED53924349AB300E452E3 /* JSActionType.swift */,
-				779ED53A24349AB300E452E3 /* RecordAudioActionModel.swift */,
+				779ED53A24349AB300E452E3 /* ShareActionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4015,7 +4005,6 @@
 				EE4E6B202398F04A002B845A /* YXExerciseOptionManager.swift in Sources */,
 				EE08F3742372E3C200FA3FDF /* YYNetworkService.swift in Sources */,
 				77EE8C3B23A2319900E076FB /* YXWrongWordListModel.swift in Sources */,
-				779ED53D24349AB300E452E3 /* YRWebViewShareAction.m in Sources */,
 				EE54F7D72362AA3100EC605A /* YXImageAnswerView.swift in Sources */,
 				2248C9F123B1B08F009342A5 /* YXChallengeMyRankCell.swift in Sources */,
 				22A5AFB8236C53E900FBFABD /* YXExerciseAnimation.swift in Sources */,
@@ -4206,7 +4195,7 @@
 				EEACEB21239F9DBA0036B3A2 /* YXViewController.swift in Sources */,
 				EEACEB8E23AA0F3D0036B3A2 /* YXSearchTableViewCell.swift in Sources */,
 				77B7C6FF23A86B1F00149ACE /* YXTaskCenterDataModel.swift in Sources */,
-				779ED54324349AB300E452E3 /* RecordAudioActionModel.swift in Sources */,
+				779ED54324349AB300E452E3 /* ShareActionModel.swift in Sources */,
 				227F477E23CC540D00D6C603 /* YXToastView.swift in Sources */,
 				EE54F7D42362AA3100EC605A /* YXRightOrWrongAnswerView.swift in Sources */,
 				22164C0223A0DA9A00E9252D /* YXChallengeViewController.swift in Sources */,
@@ -4238,7 +4227,6 @@
 				EE6C7D2723B0F477009DCC0C /* YXNotReviewWordView.swift in Sources */,
 				227F477723CC459400D6C603 /* YXWrongWordsListView.swift in Sources */,
 				EEACEB5323A4F0E40036B3A2 /* YXTableViewController.swift in Sources */,
-				779ED53E24349AB300E452E3 /* YRWebViewCheckInstalledAction.m in Sources */,
 				224352DF23A4B93600F278E6 /* YXGameAnswerView.swift in Sources */,
 				EEACEB5D23A4F1060036B3A2 /* YYRefrshFooterView.swift in Sources */,
 				EED3D41B2331D04B00121218 /* YRLocatorProvider.m in Sources */,

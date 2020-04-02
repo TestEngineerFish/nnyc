@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YRWebViewSessionExpiredAction: YRWebViewJSAction {
+class YRWebViewCloseAction: YRWebViewJSAction {
     override func action() {
         super.action()
     }

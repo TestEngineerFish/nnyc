@@ -361,7 +361,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 }
                 break
             case 3:
-
+                self.performSegue(withIdentifier: "YXWordTestViewController", sender: self)
                 break
                 
             default:

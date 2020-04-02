@@ -8,24 +8,14 @@
 
 import UIKit
 
-class YRWebViewRecordAudioAction: YRWebViewJSAction {
-    var actionModel: RecordAudioActionModel?
+class YRWebViewShareAction: YRWebViewJSAction {
+    var actionModel: ShareActionModel?
     
     override func action() {
         super.action()
         
         if let json = self.params as? [String: Any] {
-            actionModel = RecordAudioActionModel(JSON: json)
-        }
-    }
-}
-
-
-
-extension Data {
-    mutating func append(_ string: String, using encoding: String.Encoding = .utf8) {
-        if let data = string.data(using: encoding) {
-            append(data)
+            actionModel = ShareActionModel(JSON: json)
         }
     }
 }

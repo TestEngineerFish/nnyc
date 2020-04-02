@@ -11,8 +11,7 @@ import UIKit
 class YXWordTestViewController: UIViewController {
     
     // 注入到JS的对象
-    let appJS = "ssaiAppJS"
-    let uaTag = " SSAI_iOS"
+    let appJS = "nnycAppJS"
     var webView: WKWebView?
     let jsBridge = YRWebViewJSBridge()
     
@@ -20,12 +19,9 @@ class YXWordTestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        self.createSubviews()
-        self.setUserAgent {[weak self] in
-            self?.createSubviews()
-            self?.loadWebView()
-        }
-        self.setNotification()
+        
+        self.createSubviews()
+        self.loadWebView()
     }
     
     
@@ -51,40 +47,11 @@ class YXWordTestViewController: UIViewController {
         jsBridge.webView = webView
     }
     
-    private func setUserAgent(_ completion: @escaping () -> Void) {
-        webView = WKWebView(frame: .zero)
-        
-        webView?.evaluateJavaScript("navigator.userAgent") { [weak self] (result, error) in
-            guard let self = self else { return }
-            
-            if let r = result as? String {
-                if !r.hasSuffix(self.uaTag) {
-                    let ua = r.appending(self.uaTag)
-                    UserDefaults.standard.register(defaults: ["UserAgent" : ua])
-                }
-            } else {
-                UserDefaults.standard.register(defaults: ["UserAgent" : self.uaTag])
-            }
-            
-            completion()
-        }
-    }
-    
     private func loadWebView(refresh: Bool = false) {
         if let url = URL(string: "") {
             let request = URLRequest(url: url)
             webView?.load(request)
         }
-    }
-    
-    private func setNotification(add: Bool = true) {
-        if add {
-            NotificationCenter.default.addObserver(self, selector: #selector(reconnectWebSocket), name: UIApplication.willEnterForegroundNotification, object: nil)
-            
-        } else {
-            NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
-        }
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -95,22 +62,14 @@ class YXWordTestViewController: UIViewController {
             }
         }
     }
-    
-    
-    @objc private func reconnectWebSocket() {
-        let reconnectWebSocket = "window.reconnectWebSocket && window.reconnectWebSocket()"
-        webView?.evaluateJavaScript(reconnectWebSocket) { (result, error) in
-            print(result, error)
-        }
-    }
 }
 
 
 
 extension YXWordTestViewController: YRWebViewJSBridgeDelegate {
     func relationActionHandleClass() -> [String : YRWebViewJSActionDelegate.Type]? {
-        return [WebViewActionType.microphone.rawValue : YRWebViewRecordAudioAction.self,
-                WebViewActionType.sessionExpired.rawValue : YRWebViewSessionExpiredAction.self]
+        return [WebViewActionType.share.rawValue : YRWebViewShareAction.self,
+                WebViewActionType.close.rawValue : YRWebViewCloseAction.self]
     }
 }
 

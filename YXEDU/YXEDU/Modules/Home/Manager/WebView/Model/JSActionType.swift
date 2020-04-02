@@ -9,6 +9,6 @@
 import UIKit
 
 enum WebViewActionType: String {
-    case microphone = "microphone"
-    case sessionExpired = "sessionExpired"
+    case share = "share"
+    case close = "close"
 }

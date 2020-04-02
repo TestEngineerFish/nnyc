@@ -429,7 +429,7 @@
                         <segue destination="LEE-do-1y0" kind="show" identifier="TaskCenter" id="7f4-4r-z67"/>
                         <segue destination="tQ4-Ah-3Gu" kind="show" identifier="Calendar" id="fSi-bJ-cQk"/>
                         <segue destination="N4y-4U-KXc" kind="show" identifier="StudyReport" id="f6j-pj-jMh"/>
-                        <segue destination="xWi-kI-jZm" kind="show" identifier="PickUpWords" id="Ah7-hX-NCL"/>
+                        <segue destination="xWi-kI-jZm" kind="show" identifier="YXWordTestViewController" id="Ah7-hX-NCL"/>
                         <segue destination="I2c-Ah-MPk" kind="show" identifier="WordList" id="29y-bx-HQj"/>
                         <segue destination="JnP-zA-VAP" kind="show" identifier="AddBookGuide" animates="NO" id="u2y-xU-85A"/>
                         <segue destination="KRx-zx-laN" kind="show" identifier="AddBookFromHome" id="ISO-bD-fBo"/>
@@ -604,10 +604,10 @@
             </objects>
             <point key="canvasLocation" x="345" y="905"/>
         </scene>
-        <!--My Word Book ListVC-->
+        <!--Word Test View Controller-->
         <scene sceneID="mtK-Au-Hw8">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="xWi-kI-jZm" customClass="YXMyWordBookListVC" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="xWi-kI-jZm" customClass="YXWordTestViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WRG-hW-siD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
