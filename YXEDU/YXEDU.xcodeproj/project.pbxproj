@@ -416,45 +416,6 @@
 		EE5E0224232756C000655654 /* YXSentenceTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0191232756BE00655654 /* YXSentenceTextStorage.m */; };
 		EE5E0225232756C000655654 /* TYTextContainer+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0197232756BE00655654 /* TYTextContainer+Extended.m */; };
 		EE5E0226232756C000655654 /* TYTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E019A232756BE00655654 /* TYTextContainer.m */; };
-		EE5E0230232756C000655654 /* XBaseChartConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01B4232756BE00655654 /* XBaseChartConfiguration.m */; };
-		EE5E0231232756C000655654 /* XAreaLineChartConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01B6232756BE00655654 /* XAreaLineChartConfiguration.m */; };
-		EE5E0232232756C000655654 /* XNormalLineChartConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01BB232756BE00655654 /* XNormalLineChartConfiguration.m */; };
-		EE5E0233232756C000655654 /* XStackAreaLineChartConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01BC232756BE00655654 /* XStackAreaLineChartConfiguration.m */; };
-		EE5E0234232756C000655654 /* XLineChartConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01BD232756BE00655654 /* XLineChartConfiguration.m */; };
-		EE5E0235232756C000655654 /* XBarChartConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01C0232756BF00655654 /* XBarChartConfiguration.m */; };
-		EE5E0236232756C000655654 /* XPointDetect.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01C4232756BF00655654 /* XPointDetect.m */; };
-		EE5E0237232756C000655654 /* XAuxiliaryCalculationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01C6232756BF00655654 /* XAuxiliaryCalculationHelper.m */; };
-		EE5E0238232756C000655654 /* XRandomNumerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01C7232756BF00655654 /* XRandomNumerHelper.m */; };
-		EE5E0239232756C000655654 /* CALayer+XLayerSelectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01CC232756BF00655654 /* CALayer+XLayerSelectHelper.m */; };
-		EE5E023A232756C000655654 /* CAShapeLayer+XLayerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01CF232756BF00655654 /* CAShapeLayer+XLayerHelper.m */; };
-		EE5E023B232756C000655654 /* UIGestureRecognizer+XGesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01D0232756BF00655654 /* UIGestureRecognizer+XGesHelper.m */; };
-		EE5E023C232756C000655654 /* Colours.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01D2232756BF00655654 /* Colours.m */; };
-		EE5E023D232756C000655654 /* XColor.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01D4232756BF00655654 /* XColor.m */; };
-		EE5E023E232756C000655654 /* XAnimationPath.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01D8232756BF00655654 /* XAnimationPath.m */; };
-		EE5E023F232756C000655654 /* XAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01DB232756BF00655654 /* XAnimation.m */; };
-		EE5E0240232756C000655654 /* XAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01DD232756BF00655654 /* XAnimator.m */; };
-		EE5E0241232756C000655654 /* XCycleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01DF232756BF00655654 /* XCycleView.m */; };
-		EE5E0242232756C000655654 /* XAlignLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01E1232756BF00655654 /* XAlignLabel.m */; };
-		EE5E0243232756C000655654 /* XPositiveNegativeBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01E2232756BF00655654 /* XPositiveNegativeBarChartView.m */; };
-		EE5E0244232756C000655654 /* XAreaLineContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01E3232756BF00655654 /* XAreaLineContainerView.m */; };
-		EE5E0245232756C000655654 /* XAnimationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01E4232756BF00655654 /* XAnimationLabel.m */; };
-		EE5E0246232756C000655654 /* XPositiveNegativeBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01E5232756BF00655654 /* XPositiveNegativeBarChart.m */; };
-		EE5E0247232756C100655654 /* XAbscissaView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01E7232756BF00655654 /* XAbscissaView.m */; };
-		EE5E0248232756C100655654 /* XLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01EB232756BF00655654 /* XLineChartView.m */; };
-		EE5E0249232756C100655654 /* XPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01ED232756BF00655654 /* XPieChart.m */; };
-		EE5E024A232756C100655654 /* XStackAreaLineContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01F3232756BF00655654 /* XStackAreaLineContainerView.m */; };
-		EE5E024B232756C100655654 /* XPositiveNegativeBarContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01F6232756BF00655654 /* XPositiveNegativeBarContainerView.m */; };
-		EE5E024C232756C100655654 /* XBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01F7232756BF00655654 /* XBarChart.m */; };
-		EE5E024D232756C100655654 /* XBarContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01F9232756BF00655654 /* XBarContainerView.m */; };
-		EE5E024E232756C100655654 /* XLineContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01FB232756BF00655654 /* XLineContainerView.m */; };
-		EE5E024F232756C100655654 /* XBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01FD232756BF00655654 /* XBarChartView.m */; };
-		EE5E0250232756C100655654 /* OrdinateView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01FE232756BF00655654 /* OrdinateView.m */; };
-		EE5E0251232756C100655654 /* XLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E01FF232756BF00655654 /* XLineChart.m */; };
-		EE5E0252232756C100655654 /* XBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0203232756BF00655654 /* XBarItem.m */; };
-		EE5E0253232756C100655654 /* XPieItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0204232756BF00655654 /* XPieItem.m */; };
-		EE5E0254232756C100655654 /* XLineChartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0205232756BF00655654 /* XLineChartItem.m */; };
-		EE5E0255232756C100655654 /* XNotificationBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E020B232756BF00655654 /* XNotificationBridge.m */; };
-		EE5E0256232756C100655654 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E020F232756BF00655654 /* CAKeyframeAnimation+AHEasing.m */; };
 		EE5E02612327793800655654 /* BSRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E025E2327793700655654 /* BSRootVC.m */; };
 		EE5E027123277CD600655654 /* YXIconfont.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E027023277CD600655654 /* YXIconfont.m */; };
 		EE5E027423277CE400655654 /* YXNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E027323277CE400655654 /* YXNotification.m */; };
@@ -1039,87 +1000,6 @@
 		EE5E0198232756BE00655654 /* TYImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYImageCache.h; sourceTree = "<group>"; };
 		EE5E0199232756BE00655654 /* NSMutableAttributedString+TY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+TY.h"; sourceTree = "<group>"; };
 		EE5E019A232756BE00655654 /* TYTextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYTextContainer.m; sourceTree = "<group>"; };
-		EE5E01B4232756BE00655654 /* XBaseChartConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBaseChartConfiguration.m; sourceTree = "<group>"; };
-		EE5E01B6232756BE00655654 /* XAreaLineChartConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAreaLineChartConfiguration.m; sourceTree = "<group>"; };
-		EE5E01B7232756BE00655654 /* XStackAreaLineChartConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XStackAreaLineChartConfiguration.h; sourceTree = "<group>"; };
-		EE5E01B8232756BE00655654 /* XNormalLineChartConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNormalLineChartConfiguration.h; sourceTree = "<group>"; };
-		EE5E01B9232756BE00655654 /* XLineChartConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLineChartConfiguration.h; sourceTree = "<group>"; };
-		EE5E01BA232756BE00655654 /* XAreaLineChartConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAreaLineChartConfiguration.h; sourceTree = "<group>"; };
-		EE5E01BB232756BE00655654 /* XNormalLineChartConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNormalLineChartConfiguration.m; sourceTree = "<group>"; };
-		EE5E01BC232756BE00655654 /* XStackAreaLineChartConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XStackAreaLineChartConfiguration.m; sourceTree = "<group>"; };
-		EE5E01BD232756BE00655654 /* XLineChartConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLineChartConfiguration.m; sourceTree = "<group>"; };
-		EE5E01BF232756BF00655654 /* XBarChartConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBarChartConfiguration.h; sourceTree = "<group>"; };
-		EE5E01C0232756BF00655654 /* XBarChartConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBarChartConfiguration.m; sourceTree = "<group>"; };
-		EE5E01C1232756BF00655654 /* XBaseChartConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBaseChartConfiguration.h; sourceTree = "<group>"; };
-		EE5E01C3232756BF00655654 /* XPointDetect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPointDetect.h; sourceTree = "<group>"; };
-		EE5E01C4232756BF00655654 /* XPointDetect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPointDetect.m; sourceTree = "<group>"; };
-		EE5E01C6232756BF00655654 /* XAuxiliaryCalculationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAuxiliaryCalculationHelper.m; sourceTree = "<group>"; };
-		EE5E01C7232756BF00655654 /* XRandomNumerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRandomNumerHelper.m; sourceTree = "<group>"; };
-		EE5E01C8232756BF00655654 /* XAuxiliaryCalculationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAuxiliaryCalculationHelper.h; sourceTree = "<group>"; };
-		EE5E01C9232756BF00655654 /* XRandomNumerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRandomNumerHelper.h; sourceTree = "<group>"; };
-		EE5E01CB232756BF00655654 /* CAShapeLayer+XLayerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAShapeLayer+XLayerHelper.h"; sourceTree = "<group>"; };
-		EE5E01CC232756BF00655654 /* CALayer+XLayerSelectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+XLayerSelectHelper.m"; sourceTree = "<group>"; };
-		EE5E01CD232756BF00655654 /* UIGestureRecognizer+XGesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+XGesHelper.h"; sourceTree = "<group>"; };
-		EE5E01CE232756BF00655654 /* CALayer+XLayerSelectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+XLayerSelectHelper.h"; sourceTree = "<group>"; };
-		EE5E01CF232756BF00655654 /* CAShapeLayer+XLayerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAShapeLayer+XLayerHelper.m"; sourceTree = "<group>"; };
-		EE5E01D0232756BF00655654 /* UIGestureRecognizer+XGesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+XGesHelper.m"; sourceTree = "<group>"; };
-		EE5E01D2232756BF00655654 /* Colours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colours.m; sourceTree = "<group>"; };
-		EE5E01D3232756BF00655654 /* XColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XColor.h; sourceTree = "<group>"; };
-		EE5E01D4232756BF00655654 /* XColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XColor.m; sourceTree = "<group>"; };
-		EE5E01D5232756BF00655654 /* Colours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colours.h; sourceTree = "<group>"; };
-		EE5E01D6232756BF00655654 /* XJYChartDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJYChartDelegate.h; sourceTree = "<group>"; };
-		EE5E01D8232756BF00655654 /* XAnimationPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAnimationPath.m; sourceTree = "<group>"; };
-		EE5E01D9232756BF00655654 /* XAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAnimation.h; sourceTree = "<group>"; };
-		EE5E01DA232756BF00655654 /* XAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAnimator.h; sourceTree = "<group>"; };
-		EE5E01DB232756BF00655654 /* XAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAnimation.m; sourceTree = "<group>"; };
-		EE5E01DC232756BF00655654 /* XAnimationPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAnimationPath.h; sourceTree = "<group>"; };
-		EE5E01DD232756BF00655654 /* XAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAnimator.m; sourceTree = "<group>"; };
-		EE5E01DF232756BF00655654 /* XCycleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCycleView.m; sourceTree = "<group>"; };
-		EE5E01E0232756BF00655654 /* XStackAreaLineContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XStackAreaLineContainerView.h; sourceTree = "<group>"; };
-		EE5E01E1232756BF00655654 /* XAlignLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAlignLabel.m; sourceTree = "<group>"; };
-		EE5E01E2232756BF00655654 /* XPositiveNegativeBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPositiveNegativeBarChartView.m; sourceTree = "<group>"; };
-		EE5E01E3232756BF00655654 /* XAreaLineContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAreaLineContainerView.m; sourceTree = "<group>"; };
-		EE5E01E4232756BF00655654 /* XAnimationLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAnimationLabel.m; sourceTree = "<group>"; };
-		EE5E01E5232756BF00655654 /* XPositiveNegativeBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPositiveNegativeBarChart.m; sourceTree = "<group>"; };
-		EE5E01E6232756BF00655654 /* XBarContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBarContainerView.h; sourceTree = "<group>"; };
-		EE5E01E7232756BF00655654 /* XAbscissaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAbscissaView.m; sourceTree = "<group>"; };
-		EE5E01E8232756BF00655654 /* XBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBarChart.h; sourceTree = "<group>"; };
-		EE5E01E9232756BF00655654 /* XPositiveNegativeBarContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPositiveNegativeBarContainerView.h; sourceTree = "<group>"; };
-		EE5E01EA232756BF00655654 /* XBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBarChartView.h; sourceTree = "<group>"; };
-		EE5E01EB232756BF00655654 /* XLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLineChartView.m; sourceTree = "<group>"; };
-		EE5E01EC232756BF00655654 /* XLineContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLineContainerView.h; sourceTree = "<group>"; };
-		EE5E01ED232756BF00655654 /* XPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPieChart.m; sourceTree = "<group>"; };
-		EE5E01EE232756BF00655654 /* XLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLineChart.h; sourceTree = "<group>"; };
-		EE5E01EF232756BF00655654 /* OrdinateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdinateView.h; sourceTree = "<group>"; };
-		EE5E01F0232756BF00655654 /* XAnimationLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAnimationLabel.h; sourceTree = "<group>"; };
-		EE5E01F1232756BF00655654 /* XAreaLineContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAreaLineContainerView.h; sourceTree = "<group>"; };
-		EE5E01F2232756BF00655654 /* XPositiveNegativeBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPositiveNegativeBarChartView.h; sourceTree = "<group>"; };
-		EE5E01F3232756BF00655654 /* XStackAreaLineContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XStackAreaLineContainerView.m; sourceTree = "<group>"; };
-		EE5E01F4232756BF00655654 /* XAlignLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAlignLabel.h; sourceTree = "<group>"; };
-		EE5E01F5232756BF00655654 /* XCycleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCycleView.h; sourceTree = "<group>"; };
-		EE5E01F6232756BF00655654 /* XPositiveNegativeBarContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPositiveNegativeBarContainerView.m; sourceTree = "<group>"; };
-		EE5E01F7232756BF00655654 /* XBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBarChart.m; sourceTree = "<group>"; };
-		EE5E01F8232756BF00655654 /* XAbscissaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAbscissaView.h; sourceTree = "<group>"; };
-		EE5E01F9232756BF00655654 /* XBarContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBarContainerView.m; sourceTree = "<group>"; };
-		EE5E01FA232756BF00655654 /* XPositiveNegativeBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPositiveNegativeBarChart.h; sourceTree = "<group>"; };
-		EE5E01FB232756BF00655654 /* XLineContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLineContainerView.m; sourceTree = "<group>"; };
-		EE5E01FC232756BF00655654 /* XLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLineChartView.h; sourceTree = "<group>"; };
-		EE5E01FD232756BF00655654 /* XBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBarChartView.m; sourceTree = "<group>"; };
-		EE5E01FE232756BF00655654 /* OrdinateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrdinateView.m; sourceTree = "<group>"; };
-		EE5E01FF232756BF00655654 /* XLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLineChart.m; sourceTree = "<group>"; };
-		EE5E0200232756BF00655654 /* XPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPieChart.h; sourceTree = "<group>"; };
-		EE5E0201232756BF00655654 /* XJYChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJYChart.h; sourceTree = "<group>"; };
-		EE5E0203232756BF00655654 /* XBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBarItem.m; sourceTree = "<group>"; };
-		EE5E0204232756BF00655654 /* XPieItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPieItem.m; sourceTree = "<group>"; };
-		EE5E0205232756BF00655654 /* XLineChartItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLineChartItem.m; sourceTree = "<group>"; };
-		EE5E0206232756BF00655654 /* XPieItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPieItem.h; sourceTree = "<group>"; };
-		EE5E0207232756BF00655654 /* XBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBarItem.h; sourceTree = "<group>"; };
-		EE5E0208232756BF00655654 /* XLineChartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLineChartItem.h; sourceTree = "<group>"; };
-		EE5E020A232756BF00655654 /* XEnumHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEnumHeader.h; sourceTree = "<group>"; };
-		EE5E020B232756BF00655654 /* XNotificationBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNotificationBridge.m; sourceTree = "<group>"; };
-		EE5E020C232756BF00655654 /* XNotificationBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNotificationBridge.h; sourceTree = "<group>"; };
-		EE5E020E232756BF00655654 /* CAKeyframeAnimation+AHEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAKeyframeAnimation+AHEasing.h"; sourceTree = "<group>"; };
-		EE5E020F232756BF00655654 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
 		EE5E025B2327793600655654 /* BSRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSRootVC.h; sourceTree = "<group>"; };
 		EE5E025E2327793700655654 /* BSRootVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSRootVC.m; sourceTree = "<group>"; };
 		EE5E026C23277CC200655654 /* YXAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXAPI.h; sourceTree = "<group>"; };
@@ -2848,7 +2728,6 @@
 				EE5E017B232756BE00655654 /* MDMulticastDelegate */,
 				EE5E017E232756BE00655654 /* TencentAPI */,
 				EE5E0180232756BE00655654 /* TYAttributedLable */,
-				EE5E01B2232756BE00655654 /* XJYChart */,
 			);
 			path = 3rdParty;
 			sourceTree = "<group>";
@@ -2901,190 +2780,6 @@
 				EE5E019A232756BE00655654 /* TYTextContainer.m */,
 			);
 			path = TYAttributedLable;
-			sourceTree = "<group>";
-		};
-		EE5E01B2232756BE00655654 /* XJYChart */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E020D232756BF00655654 /* AHEasing */,
-				EE5E01D7232756BF00655654 /* Animator */,
-				EE5E01C2232756BF00655654 /* CALayerTouch */,
-				EE5E01C5232756BF00655654 /* Calculate */,
-				EE5E01CA232756BF00655654 /* Category */,
-				EE5E01DE232756BF00655654 /* ChartView */,
-				EE5E01D1232756BF00655654 /* Color */,
-				EE5E01B3232756BE00655654 /* Configuration */,
-				EE5E0202232756BF00655654 /* DataModel */,
-				EE5E0209232756BF00655654 /* Helper */,
-				EE5E0201232756BF00655654 /* XJYChart.h */,
-				EE5E01D6232756BF00655654 /* XJYChartDelegate.h */,
-			);
-			path = XJYChart;
-			sourceTree = "<group>";
-		};
-		EE5E01B3232756BE00655654 /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E01B4232756BE00655654 /* XBaseChartConfiguration.m */,
-				EE5E01B5232756BE00655654 /* LineChartConfiguration */,
-				EE5E01BE232756BE00655654 /* BarChartConfiguration */,
-				EE5E01C1232756BF00655654 /* XBaseChartConfiguration.h */,
-			);
-			path = Configuration;
-			sourceTree = "<group>";
-		};
-		EE5E01B5232756BE00655654 /* LineChartConfiguration */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E01B6232756BE00655654 /* XAreaLineChartConfiguration.m */,
-				EE5E01B7232756BE00655654 /* XStackAreaLineChartConfiguration.h */,
-				EE5E01B8232756BE00655654 /* XNormalLineChartConfiguration.h */,
-				EE5E01B9232756BE00655654 /* XLineChartConfiguration.h */,
-				EE5E01BA232756BE00655654 /* XAreaLineChartConfiguration.h */,
-				EE5E01BB232756BE00655654 /* XNormalLineChartConfiguration.m */,
-				EE5E01BC232756BE00655654 /* XStackAreaLineChartConfiguration.m */,
-				EE5E01BD232756BE00655654 /* XLineChartConfiguration.m */,
-			);
-			path = LineChartConfiguration;
-			sourceTree = "<group>";
-		};
-		EE5E01BE232756BE00655654 /* BarChartConfiguration */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E01BF232756BF00655654 /* XBarChartConfiguration.h */,
-				EE5E01C0232756BF00655654 /* XBarChartConfiguration.m */,
-			);
-			path = BarChartConfiguration;
-			sourceTree = "<group>";
-		};
-		EE5E01C2232756BF00655654 /* CALayerTouch */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E01C3232756BF00655654 /* XPointDetect.h */,
-				EE5E01C4232756BF00655654 /* XPointDetect.m */,
-			);
-			path = CALayerTouch;
-			sourceTree = "<group>";
-		};
-		EE5E01C5232756BF00655654 /* Calculate */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E01C6232756BF00655654 /* XAuxiliaryCalculationHelper.m */,
-				EE5E01C7232756BF00655654 /* XRandomNumerHelper.m */,
-				EE5E01C8232756BF00655654 /* XAuxiliaryCalculationHelper.h */,
-				EE5E01C9232756BF00655654 /* XRandomNumerHelper.h */,
-			);
-			path = Calculate;
-			sourceTree = "<group>";
-		};
-		EE5E01CA232756BF00655654 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E01CB232756BF00655654 /* CAShapeLayer+XLayerHelper.h */,
-				EE5E01CC232756BF00655654 /* CALayer+XLayerSelectHelper.m */,
-				EE5E01CD232756BF00655654 /* UIGestureRecognizer+XGesHelper.h */,
-				EE5E01CE232756BF00655654 /* CALayer+XLayerSelectHelper.h */,
-				EE5E01CF232756BF00655654 /* CAShapeLayer+XLayerHelper.m */,
-				EE5E01D0232756BF00655654 /* UIGestureRecognizer+XGesHelper.m */,
-			);
-			path = Category;
-			sourceTree = "<group>";
-		};
-		EE5E01D1232756BF00655654 /* Color */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E01D2232756BF00655654 /* Colours.m */,
-				EE5E01D3232756BF00655654 /* XColor.h */,
-				EE5E01D4232756BF00655654 /* XColor.m */,
-				EE5E01D5232756BF00655654 /* Colours.h */,
-			);
-			path = Color;
-			sourceTree = "<group>";
-		};
-		EE5E01D7232756BF00655654 /* Animator */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E01D8232756BF00655654 /* XAnimationPath.m */,
-				EE5E01D9232756BF00655654 /* XAnimation.h */,
-				EE5E01DA232756BF00655654 /* XAnimator.h */,
-				EE5E01DB232756BF00655654 /* XAnimation.m */,
-				EE5E01DC232756BF00655654 /* XAnimationPath.h */,
-				EE5E01DD232756BF00655654 /* XAnimator.m */,
-			);
-			path = Animator;
-			sourceTree = "<group>";
-		};
-		EE5E01DE232756BF00655654 /* ChartView */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E01DF232756BF00655654 /* XCycleView.m */,
-				EE5E01E0232756BF00655654 /* XStackAreaLineContainerView.h */,
-				EE5E01E1232756BF00655654 /* XAlignLabel.m */,
-				EE5E01E2232756BF00655654 /* XPositiveNegativeBarChartView.m */,
-				EE5E01E3232756BF00655654 /* XAreaLineContainerView.m */,
-				EE5E01E4232756BF00655654 /* XAnimationLabel.m */,
-				EE5E01E5232756BF00655654 /* XPositiveNegativeBarChart.m */,
-				EE5E01E6232756BF00655654 /* XBarContainerView.h */,
-				EE5E01E7232756BF00655654 /* XAbscissaView.m */,
-				EE5E01E8232756BF00655654 /* XBarChart.h */,
-				EE5E01E9232756BF00655654 /* XPositiveNegativeBarContainerView.h */,
-				EE5E01EA232756BF00655654 /* XBarChartView.h */,
-				EE5E01EB232756BF00655654 /* XLineChartView.m */,
-				EE5E01EC232756BF00655654 /* XLineContainerView.h */,
-				EE5E01ED232756BF00655654 /* XPieChart.m */,
-				EE5E01EE232756BF00655654 /* XLineChart.h */,
-				EE5E01EF232756BF00655654 /* OrdinateView.h */,
-				EE5E01F0232756BF00655654 /* XAnimationLabel.h */,
-				EE5E01F1232756BF00655654 /* XAreaLineContainerView.h */,
-				EE5E01F2232756BF00655654 /* XPositiveNegativeBarChartView.h */,
-				EE5E01F3232756BF00655654 /* XStackAreaLineContainerView.m */,
-				EE5E01F4232756BF00655654 /* XAlignLabel.h */,
-				EE5E01F5232756BF00655654 /* XCycleView.h */,
-				EE5E01F6232756BF00655654 /* XPositiveNegativeBarContainerView.m */,
-				EE5E01F7232756BF00655654 /* XBarChart.m */,
-				EE5E01F8232756BF00655654 /* XAbscissaView.h */,
-				EE5E01F9232756BF00655654 /* XBarContainerView.m */,
-				EE5E01FA232756BF00655654 /* XPositiveNegativeBarChart.h */,
-				EE5E01FB232756BF00655654 /* XLineContainerView.m */,
-				EE5E01FC232756BF00655654 /* XLineChartView.h */,
-				EE5E01FD232756BF00655654 /* XBarChartView.m */,
-				EE5E01FE232756BF00655654 /* OrdinateView.m */,
-				EE5E01FF232756BF00655654 /* XLineChart.m */,
-				EE5E0200232756BF00655654 /* XPieChart.h */,
-			);
-			path = ChartView;
-			sourceTree = "<group>";
-		};
-		EE5E0202232756BF00655654 /* DataModel */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E0203232756BF00655654 /* XBarItem.m */,
-				EE5E0204232756BF00655654 /* XPieItem.m */,
-				EE5E0205232756BF00655654 /* XLineChartItem.m */,
-				EE5E0206232756BF00655654 /* XPieItem.h */,
-				EE5E0207232756BF00655654 /* XBarItem.h */,
-				EE5E0208232756BF00655654 /* XLineChartItem.h */,
-			);
-			path = DataModel;
-			sourceTree = "<group>";
-		};
-		EE5E0209232756BF00655654 /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E020A232756BF00655654 /* XEnumHeader.h */,
-				EE5E020B232756BF00655654 /* XNotificationBridge.m */,
-				EE5E020C232756BF00655654 /* XNotificationBridge.h */,
-			);
-			path = Helper;
-			sourceTree = "<group>";
-		};
-		EE5E020D232756BF00655654 /* AHEasing */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E020E232756BF00655654 /* CAKeyframeAnimation+AHEasing.h */,
-				EE5E020F232756BF00655654 /* CAKeyframeAnimation+AHEasing.m */,
-			);
-			path = AHEasing;
 			sourceTree = "<group>";
 		};
 		EE5EF13323265C4000655654 /* Base */ = {
@@ -4302,13 +3997,10 @@
 			files = (
 				2290EAC8236FCCFE000BCA47 /* YXNewLearnPrimarySchoolAnswerView.swift in Sources */,
 				7722B5D42404BDED005295F0 /* YXAddBookGuideView.swift in Sources */,
-				EE5E0235232756C000655654 /* XBarChartConfiguration.m in Sources */,
 				22D50B3B23BB212D00AB2421 /* YXShareModel.swift in Sources */,
 				EEACEB9323AA27930036B3A2 /* YXTableViewCell.swift in Sources */,
 				EE6C7D1A23B0A785009DCC0C /* YXTopWindowView.swift in Sources */,
 				777FAA0E23C4812500FCC976 /* YXOldUserUpdateView.swift in Sources */,
-				EE5E0233232756C000655654 /* XStackAreaLineChartConfiguration.m in Sources */,
-				EE5E0243232756C000655654 /* XPositiveNegativeBarChartView.m in Sources */,
 				EE5EF21223273BAE00655654 /* YRLoadingView.m in Sources */,
 				224A2FC2238233CC00AD99B0 /* LearningMapView.swift in Sources */,
 				EE5EF2B52327423F00655654 /* YXFileDBManager.m in Sources */,
@@ -4321,10 +4013,8 @@
 				2202D27123A8AB6700882E5D /* YXGameResultView.swift in Sources */,
 				227F478023CC638F00D6C603 /* YXPreviousResultView.swift in Sources */,
 				EEACEB2423A1DEC20036B3A2 /* YXNotification.swift in Sources */,
-				EE5E023B232756C000655654 /* UIGestureRecognizer+XGesHelper.m in Sources */,
 				77B7C6F423A77B7A00149ACE /* YXTaskCenterDateCell.swift in Sources */,
 				EE3DAB9923750E1600B2FF40 /* YXAPI.swift in Sources */,
-				EE5E0234232756C000655654 /* XLineChartConfiguration.m in Sources */,
 				EE1E4A9823694779007D248F /* YXListenChooseChineseExerciseView.swift in Sources */,
 				2227629C23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift in Sources */,
 				EE08F3782372E3C200FA3FDF /* YYNetworkError.swift in Sources */,
@@ -4355,7 +4045,6 @@
 				22D50B3723BB203000AB2421 /* YXShareRequest.swift in Sources */,
 				EE5EF20C23273BAE00655654 /* UIView+YR.m in Sources */,
 				EE5E0226232756C000655654 /* TYTextContainer.m in Sources */,
-				EE5E0255232756C100655654 /* XNotificationBridge.m in Sources */,
 				7702ABFF23880E6600EC0C69 /* YXAboutUsViewController.swift in Sources */,
 				EE585FB22408125700942DFC /* AppDelegate+Notification.swift in Sources */,
 				2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */,
@@ -4386,7 +4075,6 @@
 				77626C04239E37E600B9407A /* YXWordListEditCell.swift in Sources */,
 				776F7480238BC7690027D166 /* YXBadgeListModel.swift in Sources */,
 				EE5E02612327793800655654 /* BSRootVC.m in Sources */,
-				EE5E0238232756C000655654 /* XRandomNumerHelper.m in Sources */,
 				224352D523A369A600F278E6 /* YXChallengeRequest.swift in Sources */,
 				EE5EF20923273BAE00655654 /* YRDateFormater.m in Sources */,
 				CF53B49524067CA200625892 /* YXFeedbackData.swift in Sources */,
@@ -4405,7 +4093,6 @@
 				CF53B4902406717C00625892 /* UITabBarItem+BadgeValue.m in Sources */,
 				EE5EF20F23273BAE00655654 /* NSObject+YR.m in Sources */,
 				2218AE3B23D0A0F800EF2E42 /* YXLogRequest.swift in Sources */,
-				EE5E0245232756C000655654 /* XAnimationLabel.m in Sources */,
 				77AA41C92407E96B00473A71 /* YXCollectionViewLeftFlowLayout.swift in Sources */,
 				22D50B3D23BB4FCF00AB2421 /* YXNewLearnGuideView.swift in Sources */,
 				EE1FDF0623C70EDB00B6C6DF /* YXCheckApp.swift in Sources */,
@@ -4435,9 +4122,7 @@
 				77CBFD712373B48000A670D7 /* YXWordBookResourceManager.swift in Sources */,
 				7786B6D42361C4E40027D0E3 /* YXSingleGroupWordBookCell.swift in Sources */,
 				77D2777723B35BD600AA4BF2 /* YXUserInfomationModel.swift in Sources */,
-				EE5E0236232756C000655654 /* XPointDetect.m in Sources */,
 				EE5EF252232740B800655654 /* NSArray+Safe.m in Sources */,
-				EE5E023D232756C000655654 /* XColor.m in Sources */,
 				223D2683239B4A70008DED9E /* BPSegmentView.swift in Sources */,
 				EEACEB9A23AB81170036B3A2 /* YXSearchHistoryDaoImpl.swift in Sources */,
 				EE5EF25C232740B800655654 /* UIViewController+YXTrace.m in Sources */,
@@ -4445,9 +4130,7 @@
 				EE4584ED23B4BB2500E45367 /* YXExerciseViewController+Report.swift in Sources */,
 				EE5EF25A232740B800655654 /* UIView+Frame.m in Sources */,
 				221E77A324357A49000377DB /* YXBindResultModel.m in Sources */,
-				EE5E0246232756C000655654 /* XPositiveNegativeBarChart.m in Sources */,
 				EEACEB6023A4F1BA0036B3A2 /* YXReviewPageModel.swift in Sources */,
-				EE5E0244232756C000655654 /* XAreaLineContainerView.m in Sources */,
 				CFFB700E23ED98F30088DAAA /* YXReviewSearchResultUnitListHederView.swift in Sources */,
 				779ED53B24349AB300E452E3 /* YRWebViewJSBridge.m in Sources */,
 				EE71896C23F2E1C300CE13AC /* YXExerciseResultLoadingView.swift in Sources */,
@@ -4465,10 +4148,8 @@
 				77B7C6F823A77BA200149ACE /* YXTaskCenterCardCell.swift in Sources */,
 				EE9434E023CC908A005319EC /* YXExerciseResultView.swift in Sources */,
 				EE5E021C232756BF00655654 /* YXKeyPointTextStorage.m in Sources */,
-				EE5E0240232756C000655654 /* XAnimator.m in Sources */,
 				770182B32366D80D00070BFF /* AppDelegate.swift in Sources */,
 				EED3D4222331D61C00121218 /* UserDefault+Extension.swift in Sources */,
-				EE5E023A232756C000655654 /* CAShapeLayer+XLayerHelper.m in Sources */,
 				77626BF2239E1FE800B9407A /* YXEditWordListViewController.swift in Sources */,
 				778FAE52236FBFF700DE0133 /* YXHandWriteAnswerView.swift in Sources */,
 				220E6747236BE1F5001C794A /* Optional+Extension.swift in Sources */,
@@ -4483,9 +4164,7 @@
 				CFB11BEA2414953E00B29B62 /* YXStarView.swift in Sources */,
 				EE1E4A8C23694371007D248F /* YXLookExampleChooseChineseExerciseView.swift in Sources */,
 				77252A7423628940007D86A0 /* YXSelectGradeCell.swift in Sources */,
-				EE5E0251232756C100655654 /* XLineChart.m in Sources */,
 				EEACEB7E23A9FE320036B3A2 /* YXBaseWordModel.swift in Sources */,
-				EE5E024F232756C100655654 /* XBarChartView.m in Sources */,
 				EE77211C2384117D00CD632E /* YXDataSourceManager.swift in Sources */,
 				CF0BD8CA2401096800FE9AA6 /* YXBadgeManager.swift in Sources */,
 				EED3D41C2331D04B00121218 /* NSString+Router.m in Sources */,
@@ -4541,7 +4220,6 @@
 				EE54F7DF2362AA3100EC605A /* YXWordAndChineseQuestionView.swift in Sources */,
 				EE1E4AA423694D17007D248F /* YXFillWordAccordingToImageExerciseView.swift in Sources */,
 				EEACEB9C23AB81230036B3A2 /* YXSearchHistoryDao.swift in Sources */,
-				EE5E0241232756C000655654 /* XCycleView.m in Sources */,
 				227F477523CC41F900D6C603 /* YXAlertCustomView.swift in Sources */,
 				EE77210E237C2B6E00CD632E /* YXView.swift in Sources */,
 				EEFBABA423729BA1001A6302 /* YXConnectionItemView.swift in Sources */,
@@ -4565,7 +4243,6 @@
 				EEACEB8A23A9FE530036B3A2 /* YXSearchViewController.swift in Sources */,
 				77F69A74236152BE00E55185 /* YXDesignableButton.swift in Sources */,
 				2205A93E23628FDE00C6E674 /* YXFindRoutesUtil.swift in Sources */,
-				EE5E023E232756C000655654 /* XAnimationPath.m in Sources */,
 				77CCB9BB237A4B5B004EB781 /* YXWordDetailViewControllerNew.swift in Sources */,
 				EE95031723C37B5400B7AA11 /* YXExcerciseProgressManager+Duration.swift in Sources */,
 				22750820239F747700A53B9B /* YXReviewBottomView.swift in Sources */,
@@ -4575,10 +4252,8 @@
 				224352E323A4D26100F278E6 /* YXGameModel.swift in Sources */,
 				EE5E00F223274FEC00655654 /* YXPersonalInformationCell.m in Sources */,
 				EE5EF253232740B800655654 /* UITextView+Placeholder.m in Sources */,
-				EE5E024B232756C100655654 /* XPositiveNegativeBarContainerView.m in Sources */,
 				7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */,
 				2202D27D23AB7ED200882E5D /* YXRecordAudioView.swift in Sources */,
-				EE5E0249232756C100655654 /* XPieChart.m in Sources */,
 				EE5EF25E232740B800655654 /* NSDate+Extension.m in Sources */,
 				77F69A7223614D9600E55185 /* YXDesignableView.swift in Sources */,
 				EEACEB8923A9FE530036B3A2 /* YXSearchWordModel.swift in Sources */,
@@ -4592,7 +4267,6 @@
 				77D2777923B37B6A00AA4BF2 /* YXBagdeListViewController.swift in Sources */,
 				778FD371242DD7E30043C830 /* YXReviewPlanHeaderView.swift in Sources */,
 				EE5E00FA23274FEC00655654 /* YXPersonalFeedBackVC.m in Sources */,
-				EE5E024E232756C100655654 /* XLineContainerView.m in Sources */,
 				EE5E008E23274FEB00655654 /* YXCalendarMonthDataView.m in Sources */,
 				EE6C7D1E23B0BC56009DCC0C /* YXReviewPlanDetailHeaderView.swift in Sources */,
 				EE88DF5523AF5CD1004DFF10 /* YXSettingDataManager.swift in Sources */,
@@ -4636,7 +4310,6 @@
 				77B7C6EE23A7254200149ACE /* YXTaskCenterViewController.swift in Sources */,
 				EE7721222388D58200CD632E /* YXSwitchAnimation.swift in Sources */,
 				EE5EFC5123274BBB00655654 /* YXLoginModel.m in Sources */,
-				EE5E0230232756C000655654 /* XBaseChartConfiguration.m in Sources */,
 				EE4C7CDB236817550092751D /* YXLookWordChooseImageExerciseView.swift in Sources */,
 				EE5EF20223273BAE00655654 /* YRHttpDownloadTask.m in Sources */,
 				2290EAC6236FCB72000BCA47 /* YXNewLearnPrimarySchoolQuestionView.swift in Sources */,
@@ -4649,7 +4322,6 @@
 				EE54F7E42362AA3100EC605A /* YXExerciseViewController.swift in Sources */,
 				770975242399267B0071A779 /* YXWordDetailFeaturedSectionHeaderView.swift in Sources */,
 				EE5EF2B32327423F00655654 /* YXDataProcessCenter.m in Sources */,
-				EE5E0231232756C000655654 /* XAreaLineChartConfiguration.m in Sources */,
 				EEACEB3A23A22B1E0036B3A2 /* ZYNetworkAccessibity.m in Sources */,
 				779ED53F24349AB300E452E3 /* YRWebViewSessionExpiredAction.swift in Sources */,
 				221E779A24349570000377DB /* YXReportErrorView.m in Sources */,
@@ -4657,7 +4329,6 @@
 				EE6C7D2723B0F477009DCC0C /* YXNotReviewWordView.swift in Sources */,
 				227F477723CC459400D6C603 /* YXWrongWordsListView.swift in Sources */,
 				EEACEB5323A4F0E40036B3A2 /* YXTableViewController.swift in Sources */,
-				EE5E0232232756C000655654 /* XNormalLineChartConfiguration.m in Sources */,
 				779ED53E24349AB300E452E3 /* YRWebViewCheckInstalledAction.m in Sources */,
 				224352DF23A4B93600F278E6 /* YXGameAnswerView.swift in Sources */,
 				EEACEB5D23A4F1060036B3A2 /* YYRefrshFooterView.swift in Sources */,
@@ -4665,7 +4336,6 @@
 				2205A92E23619F7500C6E674 /* YXAnswerSelectLettersView.swift in Sources */,
 				EE5EF258232740B800655654 /* UIFont+IconFont.m in Sources */,
 				EE772110237D3EF700CD632E /* YXWordAndImage_FillQuestionView.swift in Sources */,
-				EE5E0252232756C100655654 /* XBarItem.m in Sources */,
 				EE88DF4C23AF4ED0004DFF10 /* YXAlertCheckManager.swift in Sources */,
 				22164C0423A0DFAA00E9252D /* YXChallengeHeaderTopView.swift in Sources */,
 				CF1CA66F240915490003A8E8 /* Array+Extension.swift in Sources */,
@@ -4676,15 +4346,10 @@
 				EE5E016E232754FA00655654 /* YXUserSaveTool.m in Sources */,
 				EE5E00FC23274FEC00655654 /* YXFeedBackSelectImageView.m in Sources */,
 				EE08F3792372E3C200FA3FDF /* Mappable+Transform.swift in Sources */,
-				EE5E024D232756C100655654 /* XBarContainerView.m in Sources */,
 				EE1E4AA023694B13007D248F /* YXFillWordAccordingToChineseExerciseView.swift in Sources */,
-				EE5E0237232756C000655654 /* XAuxiliaryCalculationHelper.m in Sources */,
 				2246134724332A1200A848FF /* YXFileManager.swift in Sources */,
-				EE5E024C232756C100655654 /* XBarChart.m in Sources */,
-				EE5E0242232756C000655654 /* XAlignLabel.m in Sources */,
 				7759A897237943C700C63199 /* YXWordDetailExampleCell.swift in Sources */,
 				22A15A7F242F489F00AECA0A /* YXStudentModel.swift in Sources */,
-				EE5E0248232756C100655654 /* XLineChartView.m in Sources */,
 				EEACEB8823A9FE530036B3A2 /* YXSearchRequest.swift in Sources */,
 				EE5EF21023273BAE00655654 /* UIAlertView+Blocks.m in Sources */,
 				77626C0B239E439200B9407A /* YXWordListOrderView.swift in Sources */,
@@ -4701,7 +4366,6 @@
 				77D2150C2367D7BA00E5FBF1 /* YXUserModel.swift in Sources */,
 				EE1E4A9C236948AB007D248F /* YXValidationWordAndChineseExerciseView.swift in Sources */,
 				EE88DF4923ACDE7D004DFF10 /* YXListenFillAnswerView.swift in Sources */,
-				EE5E0256232756C100655654 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				CF18D1B5240FDF9200C10237 /* YXTabBarController.swift in Sources */,
 				22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */,
 				EE5E0174232754FA00655654 /* SJCall.mm in Sources */,
@@ -4730,7 +4394,6 @@
 				77B0A59B23ACB4750093A181 /* YXSettingsViewController.swift in Sources */,
 				77626BF0239DFE1100B9407A /* YXWordListViewController.swift in Sources */,
 				77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */,
-				EE5E0253232756C100655654 /* XPieItem.m in Sources */,
 				224352E523A5089E00F278E6 /* YXGameQuestionSubview.swift in Sources */,
 				EED3D4252331DE2D00121218 /* YXEvnOC.m in Sources */,
 				EE4E6B222398F04A002B845A /* YXExerciseRequest.swift in Sources */,
@@ -4743,25 +4406,21 @@
 				779ED54124349AB300E452E3 /* JSBridgeModel.swift in Sources */,
 				EE54F7D12362AA3100EC605A /* YXExerciseType.swift in Sources */,
 				EE5EFC5023274BBB00655654 /* YXLoginSendModel.m in Sources */,
-				EE5E0239232756C000655654 /* CALayer+XLayerSelectHelper.m in Sources */,
 				EE6FB0B62367129700E96015 /* UIVIew+Extension.swift in Sources */,
 				2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */,
 				22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */,
 				224A2FC8238233E100AD99B0 /* YXLearningResultViewController.swift in Sources */,
-				EE5E0250232756C100655654 /* OrdinateView.m in Sources */,
 				EE5E016C232754FA00655654 /* YXOCLog.m in Sources */,
 				EE5EF255232740B800655654 /* UIView+Layout.m in Sources */,
 				CFFB700C23ED00A70088DAAA /* YXReviewSearchView.swift in Sources */,
 				224352D123A2593600F278E6 /* YXChallengeRankCell.swift in Sources */,
 				221E778E2434806E000377DB /* YXNOSignalVC.m in Sources */,
 				773B4C6123B5A3D600E8E395 /* YXBadgeDetailView.swift in Sources */,
-				EE5E023C232756C000655654 /* Colours.m in Sources */,
 				2202D27523A9166F00882E5D /* YXGameLaunchView.swift in Sources */,
 				EE5E008A23274FEB00655654 /* YXCalendarStudyDayData.m in Sources */,
 				EE5E00ED23274FEC00655654 /* YXPersonalViewModel.m in Sources */,
 				22A15A7B242F3FCE00AECA0A /* YXReviePlanStudentsListViewController.swift in Sources */,
 				77706E402372EBCF00149D09 /* YXAlertView.swift in Sources */,
-				EE5E0247232756C100655654 /* XAbscissaView.m in Sources */,
 				EE77210A237C1F8400CD632E /* YYMediaCache.swift in Sources */,
 				EE5E0218232756BF00655654 /* MDMulticastDelegate.m in Sources */,
 				EE54F7DC2362AA3100EC605A /* YXConnectionAnswerView.swift in Sources */,
@@ -4782,7 +4441,6 @@
 				77F69A7A23617CCB00E55185 /* YXHomeStudyDataCell.swift in Sources */,
 				EE5E00FB23274FEC00655654 /* YXFeedSendModel.m in Sources */,
 				EE5EF20323273BAE00655654 /* NSArray+YR.m in Sources */,
-				EE5E023F232756C000655654 /* XAnimation.m in Sources */,
 				EE5EFCE923274E5500655654 /* YXTipsBaseView.m in Sources */,
 				CF0BD8D42402720700FE9AA6 /* YXFeedbackCell.swift in Sources */,
 				EEFBABA523729BA1001A6302 /* YXConnectionView.swift in Sources */,
@@ -4800,7 +4458,6 @@
 				EE5EF251232740B800655654 /* CALayer+YXCustom.m in Sources */,
 				EE5E008C23274FEB00655654 /* YXCalendarWordCell.m in Sources */,
 				EE7720FE2375AA5E00CD632E /* YXExerciseResultModel.swift in Sources */,
-				EE5E024A232756C100655654 /* XStackAreaLineContainerView.m in Sources */,
 				EEACEB6A23A7AA610036B3A2 /* Int+Extension.swift in Sources */,
 				7720182A237CE7ED00535732 /* YXWordDetailView.swift in Sources */,
 				EE88DF5323AF5BEC004DFF10 /* YXSettingRequest.swift in Sources */,
@@ -4812,7 +4469,6 @@
 				77B7C70123A86B4800149ACE /* YXTaskModel.swift in Sources */,
 				77CF120123C643960042F55D /* YXHomeRequest.swift in Sources */,
 				EE1E4AA823694D8B007D248F /* YXFillWordGroupExerciseView.swift in Sources */,
-				EE5E0254232756C100655654 /* XLineChartItem.m in Sources */,
 				EE5E008D23274FEB00655654 /* YXCalendarMonthSummaryView.m in Sources */,
 				777C1E2A236BDF380097A822 /* YXHomeModel.swift in Sources */,
 			);

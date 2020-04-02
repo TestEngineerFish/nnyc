@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-//#import <MDMulticastDelegate/MDMulticastDelegate.h>
 #import "MDMulticastDelegate.h"
 
 @interface YRLocationManager : NSObject

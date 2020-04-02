@@ -7,14 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XJYChart.h"
 #import "YXCalendarViewController.h"
 
 @interface YXCalendarChartView : UIView
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, weak) id<YXCalendarUpdateData> delegate;
-@property (nonatomic, strong) XLineChart *lineChartView;
-@property (nonatomic, strong) XBarChart *barChartView;
 
 - (void)setDataArray:(NSArray<NSDictionary *> *)dataArray selected:(NSNumber *)index;
 @end
