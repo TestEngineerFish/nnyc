@@ -403,19 +403,6 @@
 		EE5E0177232754FA00655654 /* QQApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E015C232754FA00655654 /* QQApiManager.m */; };
 		EE5E0179232754FA00655654 /* NetWorkRechable.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0161232754FA00655654 /* NetWorkRechable.m */; };
 		EE5E0218232756BF00655654 /* MDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E017C232756BE00655654 /* MDMulticastDelegate.m */; };
-		EE5E021A232756BF00655654 /* TYLinkTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0182232756BE00655654 /* TYLinkTextStorage.m */; };
-		EE5E021B232756BF00655654 /* YXWordTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0183232756BE00655654 /* YXWordTextStorage.m */; };
-		EE5E021C232756BF00655654 /* YXKeyPointTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0184232756BE00655654 /* YXKeyPointTextStorage.m */; };
-		EE5E021D232756BF00655654 /* TYDrawStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0185232756BE00655654 /* TYDrawStorage.m */; };
-		EE5E021E232756BF00655654 /* TYViewStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0186232756BE00655654 /* TYViewStorage.m */; };
-		EE5E021F232756BF00655654 /* TYImageStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0187232756BE00655654 /* TYImageStorage.m */; };
-		EE5E0220232756C000655654 /* NSMutableAttributedString+TY.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E018A232756BE00655654 /* NSMutableAttributedString+TY.m */; };
-		EE5E0221232756C000655654 /* TYImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E018B232756BE00655654 /* TYImageCache.m */; };
-		EE5E0222232756C000655654 /* TYTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E018C232756BE00655654 /* TYTextStorage.m */; };
-		EE5E0223232756C000655654 /* TYAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E018D232756BE00655654 /* TYAttributedLabel.m */; };
-		EE5E0224232756C000655654 /* YXSentenceTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0191232756BE00655654 /* YXSentenceTextStorage.m */; };
-		EE5E0225232756C000655654 /* TYTextContainer+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0197232756BE00655654 /* TYTextContainer+Extended.m */; };
-		EE5E0226232756C000655654 /* TYTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E019A232756BE00655654 /* TYTextContainer.m */; };
 		EE5E02612327793800655654 /* BSRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E025E2327793700655654 /* BSRootVC.m */; };
 		EE5E027123277CD600655654 /* YXIconfont.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E027023277CD600655654 /* YXIconfont.m */; };
 		EE5E027423277CE400655654 /* YXNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E027323277CE400655654 /* YXNotification.m */; };
@@ -974,32 +961,6 @@
 		EE5E0162232754FA00655654 /* NetWorkRechable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorkRechable.h; sourceTree = "<group>"; };
 		EE5E017C232756BE00655654 /* MDMulticastDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDMulticastDelegate.m; sourceTree = "<group>"; };
 		EE5E017D232756BE00655654 /* MDMulticastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDMulticastDelegate.h; sourceTree = "<group>"; };
-		EE5E0181232756BE00655654 /* TYAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYAttributedLabel.h; sourceTree = "<group>"; };
-		EE5E0182232756BE00655654 /* TYLinkTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYLinkTextStorage.m; sourceTree = "<group>"; };
-		EE5E0183232756BE00655654 /* YXWordTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXWordTextStorage.m; sourceTree = "<group>"; };
-		EE5E0184232756BE00655654 /* YXKeyPointTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXKeyPointTextStorage.m; sourceTree = "<group>"; };
-		EE5E0185232756BE00655654 /* TYDrawStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYDrawStorage.m; sourceTree = "<group>"; };
-		EE5E0186232756BE00655654 /* TYViewStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYViewStorage.m; sourceTree = "<group>"; };
-		EE5E0187232756BE00655654 /* TYImageStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYImageStorage.m; sourceTree = "<group>"; };
-		EE5E0188232756BE00655654 /* YXSentenceTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXSentenceTextStorage.h; sourceTree = "<group>"; };
-		EE5E0189232756BE00655654 /* TYTextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYTextContainer.h; sourceTree = "<group>"; };
-		EE5E018A232756BE00655654 /* NSMutableAttributedString+TY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+TY.m"; sourceTree = "<group>"; };
-		EE5E018B232756BE00655654 /* TYImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYImageCache.m; sourceTree = "<group>"; };
-		EE5E018C232756BE00655654 /* TYTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYTextStorage.m; sourceTree = "<group>"; };
-		EE5E018D232756BE00655654 /* TYAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYAttributedLabel.m; sourceTree = "<group>"; };
-		EE5E018E232756BE00655654 /* YXWordTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXWordTextStorage.h; sourceTree = "<group>"; };
-		EE5E018F232756BE00655654 /* TYLinkTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYLinkTextStorage.h; sourceTree = "<group>"; };
-		EE5E0190232756BE00655654 /* TYTextStorageProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYTextStorageProtocol.h; sourceTree = "<group>"; };
-		EE5E0191232756BE00655654 /* YXSentenceTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXSentenceTextStorage.m; sourceTree = "<group>"; };
-		EE5E0192232756BE00655654 /* TYViewStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYViewStorage.h; sourceTree = "<group>"; };
-		EE5E0193232756BE00655654 /* TYImageStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYImageStorage.h; sourceTree = "<group>"; };
-		EE5E0194232756BE00655654 /* TYDrawStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYDrawStorage.h; sourceTree = "<group>"; };
-		EE5E0195232756BE00655654 /* YXKeyPointTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXKeyPointTextStorage.h; sourceTree = "<group>"; };
-		EE5E0196232756BE00655654 /* TYTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYTextStorage.h; sourceTree = "<group>"; };
-		EE5E0197232756BE00655654 /* TYTextContainer+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TYTextContainer+Extended.m"; sourceTree = "<group>"; };
-		EE5E0198232756BE00655654 /* TYImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYImageCache.h; sourceTree = "<group>"; };
-		EE5E0199232756BE00655654 /* NSMutableAttributedString+TY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+TY.h"; sourceTree = "<group>"; };
-		EE5E019A232756BE00655654 /* TYTextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYTextContainer.m; sourceTree = "<group>"; };
 		EE5E025B2327793600655654 /* BSRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSRootVC.h; sourceTree = "<group>"; };
 		EE5E025E2327793700655654 /* BSRootVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSRootVC.m; sourceTree = "<group>"; };
 		EE5E026C23277CC200655654 /* YXAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXAPI.h; sourceTree = "<group>"; };
@@ -2727,7 +2688,6 @@
 				22ED54992366D80400011B82 /* YXModel */,
 				EE5E017B232756BE00655654 /* MDMulticastDelegate */,
 				EE5E017E232756BE00655654 /* TencentAPI */,
-				EE5E0180232756BE00655654 /* TYAttributedLable */,
 			);
 			path = 3rdParty;
 			sourceTree = "<group>";
@@ -2747,39 +2707,6 @@
 				CFF4914B23F56D7F00038113 /* TencentOpenAPI.framework */,
 			);
 			path = TencentAPI;
-			sourceTree = "<group>";
-		};
-		EE5E0180232756BE00655654 /* TYAttributedLable */ = {
-			isa = PBXGroup;
-			children = (
-				EE5E0181232756BE00655654 /* TYAttributedLabel.h */,
-				EE5E0182232756BE00655654 /* TYLinkTextStorage.m */,
-				EE5E0183232756BE00655654 /* YXWordTextStorage.m */,
-				EE5E0184232756BE00655654 /* YXKeyPointTextStorage.m */,
-				EE5E0185232756BE00655654 /* TYDrawStorage.m */,
-				EE5E0186232756BE00655654 /* TYViewStorage.m */,
-				EE5E0187232756BE00655654 /* TYImageStorage.m */,
-				EE5E0188232756BE00655654 /* YXSentenceTextStorage.h */,
-				EE5E0189232756BE00655654 /* TYTextContainer.h */,
-				EE5E018A232756BE00655654 /* NSMutableAttributedString+TY.m */,
-				EE5E018B232756BE00655654 /* TYImageCache.m */,
-				EE5E018C232756BE00655654 /* TYTextStorage.m */,
-				EE5E018D232756BE00655654 /* TYAttributedLabel.m */,
-				EE5E018E232756BE00655654 /* YXWordTextStorage.h */,
-				EE5E018F232756BE00655654 /* TYLinkTextStorage.h */,
-				EE5E0190232756BE00655654 /* TYTextStorageProtocol.h */,
-				EE5E0191232756BE00655654 /* YXSentenceTextStorage.m */,
-				EE5E0192232756BE00655654 /* TYViewStorage.h */,
-				EE5E0193232756BE00655654 /* TYImageStorage.h */,
-				EE5E0194232756BE00655654 /* TYDrawStorage.h */,
-				EE5E0195232756BE00655654 /* YXKeyPointTextStorage.h */,
-				EE5E0196232756BE00655654 /* TYTextStorage.h */,
-				EE5E0197232756BE00655654 /* TYTextContainer+Extended.m */,
-				EE5E0198232756BE00655654 /* TYImageCache.h */,
-				EE5E0199232756BE00655654 /* NSMutableAttributedString+TY.h */,
-				EE5E019A232756BE00655654 /* TYTextContainer.m */,
-			);
-			path = TYAttributedLable;
 			sourceTree = "<group>";
 		};
 		EE5EF13323265C4000655654 /* Base */ = {
@@ -4023,7 +3950,6 @@
 				EE5EF25D232740B800655654 /* UIColor+YXCustom.m in Sources */,
 				EE5EF2B02327423F00655654 /* YXHttpService.m in Sources */,
 				779ED54224349AB300E452E3 /* JSActionType.swift in Sources */,
-				EE5E0221232756C000655654 /* TYImageCache.m in Sources */,
 				EE5E008F23274FEB00655654 /* YXCalendarChartView.m in Sources */,
 				EE1E4A94236946AA007D248F /* YXConnectionWordAndImageExerciseView.swift in Sources */,
 				EE5E009123274FEB00655654 /* YXCalendarBookCell.m in Sources */,
@@ -4034,7 +3960,6 @@
 				EE54F7D92362AA3100EC605A /* YXWordAndImageQuestionView.swift in Sources */,
 				EE5EF21423273BAE00655654 /* YRLocationManager.m in Sources */,
 				2296F771239B8FE100C50660 /* YXWordBookItemModel.swift in Sources */,
-				EE5E0220232756C000655654 /* NSMutableAttributedString+TY.m in Sources */,
 				EE1E4A8A23694343007D248F /* YXLookWordChooseChineseExerciseView.swift in Sources */,
 				EE1E4A8E2369438C007D248F /* YXLookChineseChooseWordExerciseView.swift in Sources */,
 				EE5EF2B42327423F00655654 /* YXModelArchiverManager.m in Sources */,
@@ -4044,7 +3969,6 @@
 				77626BFF239E310300B9407A /* YXWordListHeaderView.swift in Sources */,
 				22D50B3723BB203000AB2421 /* YXShareRequest.swift in Sources */,
 				EE5EF20C23273BAE00655654 /* UIView+YR.m in Sources */,
-				EE5E0226232756C000655654 /* TYTextContainer.m in Sources */,
 				7702ABFF23880E6600EC0C69 /* YXAboutUsViewController.swift in Sources */,
 				EE585FB22408125700942DFC /* AppDelegate+Notification.swift in Sources */,
 				2205A9322361A96000C6E674 /* UIColor+Extension.swift in Sources */,
@@ -4061,7 +3985,6 @@
 				EE5EF254232740B800655654 /* UIView+SnapShot.m in Sources */,
 				EE5E0179232754FA00655654 /* NetWorkRechable.m in Sources */,
 				CFB11BE724137E2600B29B62 /* YXNewLearnView.swift in Sources */,
-				EE5E021D232756BF00655654 /* TYDrawStorage.m in Sources */,
 				776278BF24347347001A56C3 /* YXWordTestViewController.swift in Sources */,
 				22298BFC237D52FC00F24786 /* YXButton.swift in Sources */,
 				EE5E027D23277D9400655654 /* YXTrace.m in Sources */,
@@ -4147,7 +4070,6 @@
 				EE54F7D82362AA3100EC605A /* YXExampleQuestionView.swift in Sources */,
 				77B7C6F823A77BA200149ACE /* YXTaskCenterCardCell.swift in Sources */,
 				EE9434E023CC908A005319EC /* YXExerciseResultView.swift in Sources */,
-				EE5E021C232756BF00655654 /* YXKeyPointTextStorage.m in Sources */,
 				770182B32366D80D00070BFF /* AppDelegate.swift in Sources */,
 				EED3D4222331D61C00121218 /* UserDefault+Extension.swift in Sources */,
 				77626BF2239E1FE800B9407A /* YXEditWordListViewController.swift in Sources */,
@@ -4180,7 +4102,6 @@
 				773452CA236A7EFA00801FDD /* YXAccountInfoView.swift in Sources */,
 				EE54F7CE2362AA3100EC605A /* YXExerciseViewFactory.swift in Sources */,
 				22F8212123B34B4800CC3379 /* YXMakeReviewPlanViewController.swift in Sources */,
-				EE5E0223232756C000655654 /* TYAttributedLabel.m in Sources */,
 				EE1E4A832369428F007D248F /* YXLookExampleChooseImageExerciseView.swift in Sources */,
 				EE1E4A9A23694796007D248F /* YXListenChooseImageExerciseView.swift in Sources */,
 				224352E123A4B94300F278E6 /* YXGameHeaderView.swift in Sources */,
@@ -4207,13 +4128,11 @@
 				224A2FC1238233CC00AD99B0 /* YXLearnMapViewController.swift in Sources */,
 				2296F76F239B8F5500C50660 /* YXReviewBookItem.swift in Sources */,
 				EED3D4202331D5D000121218 /* YYCache.swift in Sources */,
-				EE5E021E232756BF00655654 /* TYViewStorage.m in Sources */,
 				EE1001CF2428442100EB4775 /* YXReviewDataManager+AB.swift in Sources */,
 				77B7C6FC23A77BDF00149ACE /* YXTaskCenterCell.swift in Sources */,
 				779ED54024349AB300E452E3 /* YRWebViewJSAction.m in Sources */,
 				779ED53C24349AB300E452E3 /* YRWebViewRecordAudioAction.swift in Sources */,
 				EEACEB6C23A7AA850036B3A2 /* YXReviewPlanEmptyView.swift in Sources */,
-				EE5E021B232756BF00655654 /* YXWordTextStorage.m in Sources */,
 				EE5E008923274FEB00655654 /* YXCalendarViewController.m in Sources */,
 				22CB7B7923ACA9CD002568A4 /* YXNewLearnResultView.swift in Sources */,
 				77F69A7023614D9600E55185 /* YXDesignableImageView.swift in Sources */,
@@ -4246,7 +4165,6 @@
 				77CCB9BB237A4B5B004EB781 /* YXWordDetailViewControllerNew.swift in Sources */,
 				EE95031723C37B5400B7AA11 /* YXExcerciseProgressManager+Duration.swift in Sources */,
 				22750820239F747700A53B9B /* YXReviewBottomView.swift in Sources */,
-				EE5E021F232756BF00655654 /* TYImageStorage.m in Sources */,
 				EEE8E99C23D0594F00729463 /* YXReviewResultStarView.swift in Sources */,
 				2204145C238671FB002A44DA /* YXAuthorizationManager.swift in Sources */,
 				224352E323A4D26100F278E6 /* YXGameModel.swift in Sources */,
@@ -4282,7 +4200,6 @@
 				2205A9342361AD5B00C6E674 /* YXMacros.swift in Sources */,
 				EE5E00F023274FEC00655654 /* YXPersonalInformationModel.m in Sources */,
 				EEA50FE923BF48BE00518BE8 /* BiggerClickAreaButton.m in Sources */,
-				EE5E0222232756C000655654 /* TYTextStorage.m in Sources */,
 				EE88DF5723AF7BCA004DFF10 /* YXBecomeActiveManager.swift in Sources */,
 				CFFB700A23EBDEB50088DAAA /* YXShareDefaultView.swift in Sources */,
 				77626BF7239E24FD00B9407A /* YXWordListView.swift in Sources */,
@@ -4339,7 +4256,6 @@
 				EE88DF4C23AF4ED0004DFF10 /* YXAlertCheckManager.swift in Sources */,
 				22164C0423A0DFAA00E9252D /* YXChallengeHeaderTopView.swift in Sources */,
 				CF1CA66F240915490003A8E8 /* Array+Extension.swift in Sources */,
-				EE5E0225232756C000655654 /* TYTextContainer+Extended.m in Sources */,
 				EEACEB8723A9FE530036B3A2 /* YXSearchDataManager.swift in Sources */,
 				EE1E4A9E236948C4007D248F /* YXValidationImageAndWordExerciseView.swift in Sources */,
 				EEACEB1E239F9DA90036B3A2 /* YXReviewHeaderView.swift in Sources */,
@@ -4362,7 +4278,6 @@
 				EE5EF20E23273BAE00655654 /* NSString+extension.m in Sources */,
 				EE5EF2B62327423F00655654 /* YXInterfaceCacheService.m in Sources */,
 				224A2FCD238234C300AD99B0 /* YXTools.swift in Sources */,
-				EE5E0224232756C000655654 /* YXSentenceTextStorage.m in Sources */,
 				77D2150C2367D7BA00E5FBF1 /* YXUserModel.swift in Sources */,
 				EE1E4A9C236948AB007D248F /* YXValidationWordAndChineseExerciseView.swift in Sources */,
 				EE88DF4923ACDE7D004DFF10 /* YXListenFillAnswerView.swift in Sources */,
@@ -4398,7 +4313,6 @@
 				EED3D4252331DE2D00121218 /* YXEvnOC.m in Sources */,
 				EE4E6B222398F04A002B845A /* YXExerciseRequest.swift in Sources */,
 				77B7C70723AA44E800149ACE /* YXRegisterAndLoginRequest.swift in Sources */,
-				EE5E021A232756BF00655654 /* TYLinkTextStorage.m in Sources */,
 				EEACEB1F239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift in Sources */,
 				EE5E00F123274FEC00655654 /* YXBasePickverView.m in Sources */,
 				222AED88239F3AEE00E2E489 /* YXReviewSelectedWordsListView.swift in Sources */,
