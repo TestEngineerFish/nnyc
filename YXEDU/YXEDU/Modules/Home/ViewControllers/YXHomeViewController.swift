@@ -115,6 +115,12 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         loadData()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
         YXRedDotManager.share.updateTaskCenterBadge()
+        
+        // 如果学完一次主流程，并且没有设置过提醒，则弹出弹窗
+        if YYCache.object(forKey: "DidFinishMainStudyProgress") as? Bool == true, UserDefaults.standard.object(forKey: "Reminder") == nil {
+            let setReminderView = YXSetReminderView()
+            setReminderView.show()
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -361,7 +367,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 }
                 break
             case 3:
-                self.performSegue(withIdentifier: "YXWordTestViewController", sender: self)
+//                self.performSegue(withIdentifier: "YXWordTestViewController", sender: self)
+                tabBarController?.selectedIndex = 2
                 break
                 
             default:

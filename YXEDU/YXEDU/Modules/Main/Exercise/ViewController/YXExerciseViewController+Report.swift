@@ -55,6 +55,10 @@ extension YXExerciseViewController {
                 
                 switch self.dataType {
                 case .base:
+                    
+                    // 记录学完一次主流程，用于首页弹出设置提醒弹框
+                    YYCache.set(true, forKey: "DidFinishMainStudyProgress")
+                    
                     self.processBaseExerciseResult(newCount: progress.0.count, reviewCount: progress.1.count)
                 default:
                     self.processReviewResult()

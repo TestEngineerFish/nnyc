@@ -45,78 +45,78 @@
                                 <constraint firstAttribute="height" constant="120" id="Zat-Qx-v3I"/>
                             </constraints>
                         </datePicker>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntX-lD-Ak6" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
+                            <rect key="frame" x="36" y="376" width="124" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="124" id="0hu-XD-tNf"/>
+                                <constraint firstAttribute="height" constant="40" id="ltd-SB-3K9"/>
+                            </constraints>
+                            <state key="normal" title="以后再说">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="20"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.75294117650000003" green="0.75294117650000003" blue="0.75294117650000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="cancle:" destination="-1" eventType="touchUpInside" id="b1I-0g-APb"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLc-CR-y6a" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
+                            <rect key="frame" x="182" y="376" width="124" height="40"/>
+                            <color key="backgroundColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="124" id="F15-hm-Rhq"/>
+                                <constraint firstAttribute="height" constant="40" id="wRF-Lc-Wlf"/>
+                            </constraints>
+                            <state key="normal" title="设置提醒">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="20"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="done:" destination="-1" eventType="touchUpInside" id="xFV-Ww-Tva"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="aEQ-qg-aeo" secondAttribute="trailing" id="16m-oL-d6A"/>
+                        <constraint firstAttribute="bottom" secondItem="ntX-lD-Ak6" secondAttribute="bottom" constant="90" id="2wg-Rw-h5y"/>
+                        <constraint firstAttribute="trailing" secondItem="hLc-CR-y6a" secondAttribute="trailing" constant="36" id="7Nx-iN-fgy"/>
                         <constraint firstItem="Xns-VX-OEn" firstAttribute="centerX" secondItem="8g7-4k-O9M" secondAttribute="centerX" id="9nA-MY-ZCB"/>
                         <constraint firstItem="QOb-0t-Q6q" firstAttribute="top" secondItem="Xns-VX-OEn" secondAttribute="bottom" constant="20" id="Fsr-Ox-b4T"/>
                         <constraint firstAttribute="width" constant="342" id="J5p-5k-Skx"/>
                         <constraint firstAttribute="bottom" secondItem="aEQ-qg-aeo" secondAttribute="bottom" id="LJ0-DN-HHm"/>
                         <constraint firstItem="aEQ-qg-aeo" firstAttribute="leading" secondItem="8g7-4k-O9M" secondAttribute="leading" id="TwC-bG-5gJ"/>
+                        <constraint firstAttribute="bottom" secondItem="hLc-CR-y6a" secondAttribute="bottom" constant="90" id="f1f-qa-pZf"/>
                         <constraint firstItem="Xns-VX-OEn" firstAttribute="top" secondItem="8g7-4k-O9M" secondAttribute="top" constant="182" id="mEv-AZ-ma2"/>
                         <constraint firstAttribute="height" constant="506" id="uW1-8N-jde"/>
                         <constraint firstItem="QOb-0t-Q6q" firstAttribute="centerX" secondItem="8g7-4k-O9M" secondAttribute="centerX" id="umh-8K-7PS"/>
                         <constraint firstItem="aEQ-qg-aeo" firstAttribute="top" secondItem="8g7-4k-O9M" secondAttribute="top" id="wU1-jq-ete"/>
+                        <constraint firstItem="ntX-lD-Ak6" firstAttribute="leading" secondItem="8g7-4k-O9M" secondAttribute="leading" constant="36" id="wg5-jT-M6F"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntX-lD-Ak6" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="36" y="407" width="124" height="40"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="124" id="0hu-XD-tNf"/>
-                        <constraint firstAttribute="height" constant="40" id="ltd-SB-3K9"/>
-                    </constraints>
-                    <state key="normal" title="以后再说">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="20"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                            <real key="value" value="0.5"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                            <color key="value" red="0.75294117650000003" green="0.75294117650000003" blue="0.75294117650000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="cancle:" destination="-1" eventType="touchUpInside" id="b1I-0g-APb"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLc-CR-y6a" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="160" y="407" width="124" height="40"/>
-                    <color key="backgroundColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="124" id="F15-hm-Rhq"/>
-                        <constraint firstAttribute="height" constant="40" id="wRF-Lc-Wlf"/>
-                    </constraints>
-                    <state key="normal" title="设置提醒">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="20"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="done:" destination="-1" eventType="touchUpInside" id="xFV-Ww-Tva"/>
-                    </connections>
-                </button>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="8g7-4k-O9M" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="5p5-7c-o4r"/>
                 <constraint firstItem="o7b-Ap-9ke" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="BRK-j8-0gf"/>
                 <constraint firstAttribute="bottom" secondItem="o7b-Ap-9ke" secondAttribute="bottom" id="ETd-00-wTw"/>
                 <constraint firstItem="o7b-Ap-9ke" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="QuO-cO-Vg3"/>
-                <constraint firstItem="ntX-lD-Ak6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="36" id="bxI-KU-3KU"/>
                 <constraint firstItem="8g7-4k-O9M" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="f2K-Zw-0gW"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hLc-CR-y6a" secondAttribute="trailing" constant="36" id="jdz-iI-ELA"/>
                 <constraint firstItem="o7b-Ap-9ke" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="reA-zw-UE0"/>
-                <constraint firstItem="8g7-4k-O9M" firstAttribute="bottom" secondItem="hLc-CR-y6a" secondAttribute="bottom" constant="90" id="u1N-dd-DZf"/>
-                <constraint firstItem="8g7-4k-O9M" firstAttribute="bottom" secondItem="ntX-lD-Ak6" secondAttribute="bottom" constant="90" id="zN9-gh-0rd"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="139" y="154"/>

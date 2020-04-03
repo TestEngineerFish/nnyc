@@ -45,9 +45,9 @@ class YXHomeSubItemCell: UICollectionViewCell {
             self.titleLabel.text           = "学习报告"
             self.dotView.isHidden          = true
         case 3:
-            self.colorView.backgroundColor = UIColor.hex(0xFDF1FF)
-            self.iconView.image            = #imageLiteral(resourceName: "homeSelectWords")
-            self.titleLabel.text           = "单词测评"
+            self.colorView.backgroundColor = UIColor.hex(0xFFF4E1)
+            self.iconView.image            = #imageLiteral(resourceName: "homeChallenge")
+            self.titleLabel.text           = "单词挑战"
             self.dotView.isHidden          = true
         default:
             break

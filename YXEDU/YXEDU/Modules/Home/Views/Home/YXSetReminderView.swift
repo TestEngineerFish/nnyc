@@ -24,7 +24,7 @@ class YXSetReminderView: YXTopWindowView {
     }
     
     private func initializationFromNib() {
-        Bundle.main.loadNibNamed("YXAlertView", owner: self, options: nil)
+        Bundle.main.loadNibNamed("YXSetReminderView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
     }
