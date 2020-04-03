@@ -47,12 +47,4 @@
 - (void)remove:(NSString *)key {
     [[YXModelArchiverManager shared]removeObject:key];
 }
-
-- (void)updateLearning:(id)learning {
-    [YXConfigure shared].loginModel.learning = learning;
-    // 存储
-    YXLoginModel *model = [self read:kGetUserInfo];
-    model.learning = learning;
-    [self write:model key:kGetUserInfo];
-}
 @end

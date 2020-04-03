@@ -275,7 +275,8 @@ class YXExerciseDataManager: NSObject {
             if let _ = map[word.wordId] {
                 continue
             } else {
-                
+
+                /**
                 // 查找不为空的一个对象，有些单词可能第一或者第二步没有，只有后面几步的情况
                 var e: YXWordExerciseModel?
                 for step in word.exerciseSteps {
@@ -284,6 +285,7 @@ class YXExerciseDataManager: NSObject {
                         break
                     }
                 }
+                 */
                 
                 var report = YXExerciseReportModel()
                 report.wordId = word.wordId

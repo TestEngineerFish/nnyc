@@ -44,24 +44,24 @@
 /**
  * 全局统一路由管理器， 此方法可能意义不大了，因为Router大部分都定义成了类方法
  */
-+ (instancetype)sharedInstance;
++ (instancetype _Nonnull )sharedInstance;
 
 /**
  * 返回当前控制器
  */
-- (UIViewController *)currentViewController;
+- (UIViewController *_Nullable)currentViewController;
 
 /**
  * 返回当前的导航控制器
  */
-- (UINavigationController*)currentNavigationController;
+- (UINavigationController*_Nullable)currentNavigationController;
 
 /**
  * 根据URL返回对应的ViewController
  * @param   url     url地址，可以是自定义scheme地址，也可以是http或者https地址
  * @param   query   页面所需要的参数，当前为字典类型
  */
-+ (UIViewController *)viewControllerForURL:(id)url withQuery:(NSDictionary *)query;
++ (UIViewController * _Nullable)viewControllerForURL:(id _Nonnull)url withQuery:(NSDictionary *_Nullable)query;
 
 
 #pragma -mark *************************** push or present ****************************
@@ -87,7 +87,7 @@
  * @param   query       页面所需参数
  * @param   animated    是否需要动画打开
  */
-+ (void)openURL:(NSString *) url query:(NSDictionary * _Nullable) query animated:(BOOL) animated;
++ (void)openURL:(NSString *_Nonnull) url query:(NSDictionary * _Nullable) query animated:(BOOL) animated;
 
 
 /*
@@ -97,7 +97,7 @@
  * @param   modal       页面打开方式，当为NO时是push方式，当为YES是present方式
  * @param   animated    是否需要动画打开， YES为动画
  */
-+ (void)openURL:(NSString *) url query:(NSDictionary *) query isPresent:(BOOL)present animated:(BOOL) animated;
++ (void)openURL:(NSString *_Nonnull) url query:(NSDictionary *_Nullable) query isPresent:(BOOL)present animated:(BOOL) animated;
 
 
 /*
@@ -108,7 +108,7 @@
  * @param   animated    是否需要动画打开， YES为动画
  * @param   completion  打开页面后执行的block，可以为空
  */
-+ (void)openURL:(NSString *) url query:(NSDictionary *) query isPresent:(BOOL)present animated:(BOOL) animated completion:(void(^)(void)) completion;
++ (void)openURL:(NSString *_Nonnull) url query:(NSDictionary *_Nullable) query isPresent:(BOOL)present animated:(BOOL) animated completion:(void(^_Nullable)(void)) completion;
 
 
 #pragma -mark *************************** pop ViewController ****************************
@@ -123,7 +123,7 @@
  * @param   url         VC页面对应的url
  * @param   animated    是否需要动画打开， YES为动画
  */
-+ (void)popViewControllerWithURL:(NSString *) url animated:(BOOL) animated;
++ (void)popViewControllerWithURL:(NSString *_Nonnull) url animated:(BOOL) animated;
 
 
 // ###############################################################
@@ -133,21 +133,21 @@
  * @param   index       数字下标，返回几级
  * @param   animated    是否需要动画打开， YES为动画
  */
-+ (void)popViewControllerWithIndex:(NSNumber *) index animated:(BOOL) animated;
++ (void)popViewControllerWithIndex:(NSNumber *_Nonnull) index animated:(BOOL) animated;
 
 /**
  * 基于当前页面，返回到指定页面
  * @param   aClass      VC对应的Class
  * @param   animated    是否需要动画打开， YES为动画
  */
-+ (void)popViewControllerWithClass:(Class) aClass animated:(BOOL) animated;
++ (void)popViewControllerWithClass:(Class _Nonnull) aClass animated:(BOOL) animated;
 
 /**
  * 基于当前页面，返回到指定页面
  * @param   string      VC对应的String
  * @param   animated    是否需要动画打开， YES为动画
  */
-+ (void)popViewControllerWithString:(NSString *) string animated:(BOOL) animated;
++ (void)popViewControllerWithString:(NSString * _Nonnull) string animated:(BOOL) animated;
 
 /**
  * 基于当前页面，返回到指定页面
@@ -161,7 +161,7 @@
  * 当target是数字下标时，1 为返回一级，2为返回二级，以此类推。
  * 当target是ViewController的类名、Class或者实例对象，直接返回到此ViewController。
  */
-+ (void)popViewController:(id) target animated:(BOOL) animated;
++ (void)popViewController:(id _Nonnull) target animated:(BOOL) animated;
 
 
 @end

@@ -249,6 +249,6 @@ class YXLearningResultViewController: YXViewController {
         shareVC?.shareType   = .learnResult
         shareVC?.wordsAmount = model.allWordCount
         shareVC?.daysAmount  = model.studyDay
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(shareVC!, animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(shareVC!, animated: true)
     }
 }

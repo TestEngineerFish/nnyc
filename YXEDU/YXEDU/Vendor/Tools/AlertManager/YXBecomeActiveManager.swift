@@ -74,7 +74,7 @@ class YXBecomeActiveManager: NSObject {
         vc.hidesBottomBarWhenPushed = true
         vc.planId = planId
         vc.fromUser = fromUser
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
         
 //        YRRouter.openURL("", query: ["plan_id" : planId], animated: true)
     }

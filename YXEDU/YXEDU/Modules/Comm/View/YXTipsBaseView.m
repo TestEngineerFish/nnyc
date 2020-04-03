@@ -37,11 +37,6 @@
         [tapButton addSubview:tipsLabel];
         self.tipsLabel = tipsLabel;
         
-//        [tipsImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerX.equalTo(self);
-//            make.centerY.equalTo(self);
-//        }];
-        
         [tipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(tipsImageView.mas_bottom).offset(20);
             make.centerX.equalTo(tapButton);

@@ -154,7 +154,7 @@
 - (void)onResp:(QQBaseResp *)resp {
     if ([resp isKindOfClass:[SendMessageToQQResp class]]) {
         if (resp.type == ESENDMESSAGETOQQRESPTYPE) {
-            NSString *des = [NSString stringWithFormat:@"%@-%@",kPlatformQQ,self.shareBusiness];
+//            NSString *des = [NSString stringWithFormat:@"%@-%@",kPlatformQQ,self.shareBusiness];
             
             if ([resp.result isEqualToString:@"0"] && self.finishBlock != nil){
                 self.finishBlock(resp.result, resp.errorDescription, YES);
@@ -166,6 +166,10 @@
         }
     }
     YXLog(@" ----resp %@",resp);
+}
+
+- (void)isOnlineResponse:(NSDictionary *)response {
+
 }
 
 #pragma mark - share

@@ -92,15 +92,15 @@ struct YYNetworkService {
     }
     
     public func download <T> (_ type: T.Type, request: YYBaseRequest, localSavePath: String, success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
-        
+
         let params = removeNilValue(request.parameters)
         Alamofire.download(request.url, method: HTTPMethod(rawValue: request.method.rawValue) ?? .get, parameters: params, headers: request.handleHeader(parameters: params, headers: request.header)) { (url, response) -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
-            let path = YYFileManager.share.createPath(documentPath: localSavePath)
-            return (URL(fileURLWithPath: path), [.removePreviousFile, .createIntermediateDirectories])
+            YXFileManager.share.saveFile(to: localSavePath)
+            return (URL(fileURLWithPath: localSavePath), [.removePreviousFile, .createIntermediateDirectories])
             }.downloadProgress { (progress) in
                 YXRequestLog("progress.completedUnitCount is \(progress.completedUnitCount)")
             }.response { (defaultDownloadResponse) in
-                
+
         }
     }
     

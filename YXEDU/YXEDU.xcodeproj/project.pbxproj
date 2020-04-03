@@ -245,7 +245,7 @@
 		77D048FA2361A12000CE95D8 /* YXWordBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D048F92361A12000CE95D8 /* YXWordBookModel.swift */; };
 		77D2150C2367D7BA00E5FBF1 /* YXUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D2150B2367D7BA00E5FBF1 /* YXUserModel.swift */; };
 		77D2777723B35BD600AA4BF2 /* YXUserInfomationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D2777623B35BD600AA4BF2 /* YXUserInfomationModel.swift */; };
-		77D2777923B37B6A00AA4BF2 /* YXBagdeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D2777823B37B6A00AA4BF2 /* YXBagdeListViewController.swift */; };
+		77D2777923B37B6A00AA4BF2 /* YXBadgeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D2777823B37B6A00AA4BF2 /* YXBadgeListViewController.swift */; };
 		77D2778123B37D0B00AA4BF2 /* YXBadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D2777F23B37D0B00AA4BF2 /* YXBadgeCell.swift */; };
 		77EE8C3B23A2319900E076FB /* YXWrongWordListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EE8C3A23A2319900E076FB /* YXWrongWordListModel.swift */; };
 		77F69A622361495300E55185 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F69A612361495300E55185 /* Main.storyboard */; };
@@ -420,7 +420,6 @@
 		EE5EF20923273BAE00655654 /* YRDateFormater.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1DE23273BAE00655654 /* YRDateFormater.m */; };
 		EE5EF20A23273BAE00655654 /* YRDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1DF23273BAE00655654 /* YRDevice.m */; };
 		EE5EF20C23273BAE00655654 /* UIView+YR.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1E623273BAE00655654 /* UIView+YR.m */; };
-		EE5EF20E23273BAE00655654 /* NSString+extension.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F223273BAE00655654 /* NSString+extension.m */; };
 		EE5EF20F23273BAE00655654 /* NSObject+YR.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F323273BAE00655654 /* NSObject+YR.m */; };
 		EE5EF21023273BAE00655654 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */; };
 		EE5EF21123273BAE00655654 /* NSString+YR.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F523273BAE00655654 /* NSString+YR.m */; };
@@ -433,7 +432,6 @@
 		EE5EF253232740B800655654 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF238232740B600655654 /* UITextView+Placeholder.m */; };
 		EE5EF254232740B800655654 /* UIView+SnapShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF23D232740B600655654 /* UIView+SnapShot.m */; };
 		EE5EF255232740B800655654 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF23E232740B600655654 /* UIView+Layout.m */; };
-		EE5EF256232740B800655654 /* NSMutableArray+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF241232740B600655654 /* NSMutableArray+Safe.m */; };
 		EE5EF257232740B800655654 /* UIDevice+YX.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF244232740B700655654 /* UIDevice+YX.m */; };
 		EE5EF258232740B800655654 /* UIFont+IconFont.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF246232740B700655654 /* UIFont+IconFont.m */; };
 		EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF247232740B700655654 /* UIImage+Custom.m */; };
@@ -532,7 +530,6 @@
 		EEACEB9323AA27930036B3A2 /* YXTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB9223AA27930036B3A2 /* YXTableViewCell.swift */; };
 		EEACEB9A23AB81170036B3A2 /* YXSearchHistoryDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB9923AB81160036B3A2 /* YXSearchHistoryDaoImpl.swift */; };
 		EEACEB9C23AB81230036B3A2 /* YXSearchHistoryDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB9B23AB81220036B3A2 /* YXSearchHistoryDao.swift */; };
-		EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB147242372E6F400AC329C /* YYFileManager.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
 		EED3D41B2331D04B00121218 /* YRLocatorProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4142331D04B00121218 /* YRLocatorProvider.m */; };
@@ -806,7 +803,7 @@
 		77D048F92361A12000CE95D8 /* YXWordBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookModel.swift; sourceTree = "<group>"; };
 		77D2150B2367D7BA00E5FBF1 /* YXUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserModel.swift; sourceTree = "<group>"; };
 		77D2777623B35BD600AA4BF2 /* YXUserInfomationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserInfomationModel.swift; sourceTree = "<group>"; };
-		77D2777823B37B6A00AA4BF2 /* YXBagdeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBagdeListViewController.swift; sourceTree = "<group>"; };
+		77D2777823B37B6A00AA4BF2 /* YXBadgeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeListViewController.swift; sourceTree = "<group>"; };
 		77D2777F23B37D0B00AA4BF2 /* YXBadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeCell.swift; sourceTree = "<group>"; };
 		77EE8C3A23A2319900E076FB /* YXWrongWordListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWrongWordListModel.swift; sourceTree = "<group>"; };
 		77F69A612361495300E55185 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -993,7 +990,6 @@
 		EE5EF1E023273BAE00655654 /* NSString+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+YR.h"; sourceTree = "<group>"; };
 		EE5EF1E123273BAE00655654 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
 		EE5EF1E223273BAE00655654 /* NSObject+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YR.h"; sourceTree = "<group>"; };
-		EE5EF1E323273BAE00655654 /* NSString+extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+extension.h"; sourceTree = "<group>"; };
 		EE5EF1E623273BAE00655654 /* UIView+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YR.m"; sourceTree = "<group>"; };
 		EE5EF1E723273BAE00655654 /* YRLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRLocationManager.h; sourceTree = "<group>"; };
 		EE5EF1E823273BAE00655654 /* NSData+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+YR.h"; sourceTree = "<group>"; };
@@ -1004,7 +1000,6 @@
 		EE5EF1ED23273BAE00655654 /* YRHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRHelper.h; sourceTree = "<group>"; };
 		EE5EF1EE23273BAE00655654 /* NSArray+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+YR.h"; sourceTree = "<group>"; };
 		EE5EF1EF23273BAE00655654 /* UIView+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YR.h"; sourceTree = "<group>"; };
-		EE5EF1F223273BAE00655654 /* NSString+extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+extension.m"; sourceTree = "<group>"; };
 		EE5EF1F323273BAE00655654 /* NSObject+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YR.m"; sourceTree = "<group>"; };
 		EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
 		EE5EF1F523273BAE00655654 /* NSString+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+YR.m"; sourceTree = "<group>"; };
@@ -1031,7 +1026,6 @@
 		EE5EF23E232740B600655654 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		EE5EF23F232740B600655654 /* UIView+SnapShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SnapShot.h"; sourceTree = "<group>"; };
 		EE5EF240232740B600655654 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
-		EE5EF241232740B600655654 /* NSMutableArray+Safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Safe.m"; sourceTree = "<group>"; };
 		EE5EF242232740B700655654 /* NSArray+Safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Safe.h"; sourceTree = "<group>"; };
 		EE5EF244232740B700655654 /* UIDevice+YX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+YX.m"; sourceTree = "<group>"; };
 		EE5EF245232740B700655654 /* UIDevice+YX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+YX.h"; sourceTree = "<group>"; };
@@ -1041,7 +1035,6 @@
 		EE5EF24A232740B700655654 /* NSString+YX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+YX.h"; sourceTree = "<group>"; };
 		EE5EF24B232740B700655654 /* NSString+YX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+YX.m"; sourceTree = "<group>"; };
 		EE5EF24C232740B700655654 /* UIViewController+YXTrace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YXTrace.m"; sourceTree = "<group>"; };
-		EE5EF24D232740B700655654 /* NSMutableArray+Safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Safe.h"; sourceTree = "<group>"; };
 		EE5EF24E232740B700655654 /* UIColor+YXCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+YXCustom.m"; sourceTree = "<group>"; };
 		EE5EF24F232740B800655654 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		EE5EF250232740B800655654 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
@@ -1206,7 +1199,6 @@
 		EEACEB9223AA27930036B3A2 /* YXTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTableViewCell.swift; sourceTree = "<group>"; };
 		EEACEB9923AB81160036B3A2 /* YXSearchHistoryDaoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXSearchHistoryDaoImpl.swift; sourceTree = "<group>"; };
 		EEACEB9B23AB81220036B3A2 /* YXSearchHistoryDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXSearchHistoryDao.swift; sourceTree = "<group>"; };
-		EEB147242372E6F400AC329C /* YYFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYFileManager.swift; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
 		EED3D4122331D04B00121218 /* YRRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRRouter.h; sourceTree = "<group>"; };
@@ -1813,7 +1805,7 @@
 				771512E3236713E600F6D400 /* YXMineViewController.swift */,
 				77B0A59A23ACB4750093A181 /* YXSettingsViewController.swift */,
 				7702ABFE23880E6600EC0C69 /* YXAboutUsViewController.swift */,
-				77D2777823B37B6A00AA4BF2 /* YXBagdeListViewController.swift */,
+				77D2777823B37B6A00AA4BF2 /* YXBadgeListViewController.swift */,
 				2227629B23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift */,
 				EE5EFF9D23274FEA00655654 /* Information */,
 				EE5EFFC223274FEA00655654 /* Feedback */,
@@ -2745,8 +2737,6 @@
 				EE5EF235232740B600655654 /* NSArray+Safe.m */,
 				EE5EF250232740B800655654 /* NSDate+Extension.h */,
 				EE5EF24F232740B800655654 /* NSDate+Extension.m */,
-				EE5EF24D232740B700655654 /* NSMutableArray+Safe.h */,
-				EE5EF241232740B600655654 /* NSMutableArray+Safe.m */,
 				EE5EF231232740B500655654 /* UIColor+YXCustom.h */,
 				EE5EF24E232740B700655654 /* UIColor+YXCustom.m */,
 				EE5EF232232740B500655654 /* UIFont+IconFont.h */,
@@ -2876,7 +2866,6 @@
 				EE5EF1E023273BAE00655654 /* NSString+YR.h */,
 				EE5EF1E123273BAE00655654 /* UIAlertView+Blocks.h */,
 				EE5EF1E223273BAE00655654 /* NSObject+YR.h */,
-				EE5EF1E323273BAE00655654 /* NSString+extension.h */,
 				EE5EF1E623273BAE00655654 /* UIView+YR.m */,
 				EE5EF1E723273BAE00655654 /* YRLocationManager.h */,
 				EE5EF1E823273BAE00655654 /* NSData+YR.h */,
@@ -2887,7 +2876,6 @@
 				EE5EF1ED23273BAE00655654 /* YRHelper.h */,
 				EE5EF1EE23273BAE00655654 /* NSArray+YR.h */,
 				EE5EF1EF23273BAE00655654 /* UIView+YR.h */,
-				EE5EF1F223273BAE00655654 /* NSString+extension.m */,
 				EE5EF1F323273BAE00655654 /* NSObject+YR.m */,
 				EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */,
 				EE5EF1F523273BAE00655654 /* NSString+YR.m */,
@@ -2990,7 +2978,6 @@
 				EE5EF2AB2327423F00655654 /* YXInterfaceCacheService.m */,
 				EE5EF2AA2327423F00655654 /* YXModelArchiverManager.h */,
 				EE5EF2A82327423F00655654 /* YXModelArchiverManager.m */,
-				2246134624332A1200A848FF /* YXFileManager.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -3557,7 +3544,7 @@
 		EEB147232372E6F400AC329C /* FileManager */ = {
 			isa = PBXGroup;
 			children = (
-				EEB147242372E6F400AC329C /* YYFileManager.swift */,
+				2246134624332A1200A848FF /* YXFileManager.swift */,
 			);
 			path = FileManager;
 			sourceTree = "<group>";
@@ -4163,7 +4150,7 @@
 				77097538239A30080071A779 /* YXWordDetailClassicCell.swift in Sources */,
 				2205A9302361A7F900C6E674 /* YXLackWordView.swift in Sources */,
 				2296F775239B9DE600C50660 /* YXReviewRequest.swift in Sources */,
-				77D2777923B37B6A00AA4BF2 /* YXBagdeListViewController.swift in Sources */,
+				77D2777923B37B6A00AA4BF2 /* YXBadgeListViewController.swift in Sources */,
 				778FD371242DD7E30043C830 /* YXReviewPlanHeaderView.swift in Sources */,
 				EE5E00FA23274FEC00655654 /* YXPersonalFeedBackVC.m in Sources */,
 				EE5E008E23274FEB00655654 /* YXCalendarMonthDataView.m in Sources */,
@@ -4254,7 +4241,6 @@
 				EE54F7E12362AA3100EC605A /* YXWordQuestionView.swift in Sources */,
 				22D6FA0023BDCAC900B05BC8 /* YXMakeReviewGuideView.swift in Sources */,
 				CF0BD8D22402715B00FE9AA6 /* YXFeedbackListViewController.swift in Sources */,
-				EE5EF20E23273BAE00655654 /* NSString+extension.m in Sources */,
 				EE5EF2B62327423F00655654 /* YXInterfaceCacheService.m in Sources */,
 				224A2FCD238234C300AD99B0 /* YXTools.swift in Sources */,
 				77D2150C2367D7BA00E5FBF1 /* YXUserModel.swift in Sources */,
@@ -4284,7 +4270,6 @@
 				7709753323992FF70071A779 /* YXWordDetailFeaturedView.swift in Sources */,
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
 				224A2FC7238233E100AD99B0 /* YXTaskMapView.swift in Sources */,
-				EEB147252372E6F500AC329C /* YYFileManager.swift in Sources */,
 				77B0A59B23ACB4750093A181 /* YXSettingsViewController.swift in Sources */,
 				77626BF0239DFE1100B9407A /* YXWordListViewController.swift in Sources */,
 				77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */,
@@ -4337,7 +4322,6 @@
 				CF0BD8D42402720700FE9AA6 /* YXFeedbackCell.swift in Sources */,
 				EEFBABA523729BA1001A6302 /* YXConnectionView.swift in Sources */,
 				CFFB700823EBB56F0088DAAA /* YXReviewPlanReportViewController.swift in Sources */,
-				EE5EF256232740B800655654 /* NSMutableArray+Safe.m in Sources */,
 				EE5EF257232740B800655654 /* UIDevice+YX.m in Sources */,
 				771E886A2362ACFB000BFAAD /* YXBindPhoneViewController.swift in Sources */,
 				EE88DF4723ACC7C8004DFF10 /* YXListenFillQuestionView.swift in Sources */,
@@ -4419,7 +4403,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -4470,7 +4454,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

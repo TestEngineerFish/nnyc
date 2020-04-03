@@ -135,7 +135,7 @@ class YXReviewPlanDetailViewController: YXViewController {
                     let vc = YXReviewPlanReportViewController()
                     vc.planId = detailModel?.planId ?? 0
                     vc.reviewPlanName = detailModel?.planName ?? ""
-                    YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+                    YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
                 }
                 
                 self.headerView.shareClosure = {

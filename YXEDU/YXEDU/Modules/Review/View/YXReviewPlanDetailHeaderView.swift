@@ -330,6 +330,6 @@ class YXReviewPlanDetailHeaderView: YXView {
         let vc = YXReviewPlanReportViewController()
         vc.planId = reviewPlanModel?.planId ?? 0
         vc.reviewPlanName = reviewPlanModel?.planName ?? ""
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }

@@ -35,8 +35,6 @@ extension YXSearchRequest {
         switch self {
         case .search(let keyword):
             return ["word" : keyword]
-        default:
-            return nil
         }
     }
 }

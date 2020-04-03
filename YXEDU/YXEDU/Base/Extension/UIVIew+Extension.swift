@@ -321,7 +321,7 @@ extension UIView {
 extension UIView {
     /** 获取当前的 ViewController */
     public var currentViewController: UIViewController? {
-        return YRRouter.sharedInstance()?.currentViewController()
+        return YRRouter.sharedInstance().currentViewController()
     }
 
     /** 把当前 View 显示到顶层窗口上 */

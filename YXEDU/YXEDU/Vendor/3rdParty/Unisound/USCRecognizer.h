@@ -91,11 +91,6 @@ typedef NS_ENUM(NSInteger, LanguageType) {
 /**
  监听生命周期
 
- @param lifecycle 生命周期打印值
- */
-/**
- 监听生命周期
-
  @param lifecycle 生命周期正常时打印生命周期，error为nil
  @param error 生命周期异常时抛出异常
  */

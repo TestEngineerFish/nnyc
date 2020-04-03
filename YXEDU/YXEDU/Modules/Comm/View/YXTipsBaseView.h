@@ -10,10 +10,10 @@
 typedef void(^YXTouchBlock)(void);
 
 @interface YXTipsBaseView : UIView
-@property (nonatomic, weak )UIImageView *tipsImageView;
-@property (nonatomic, weak )UILabel *tipsLabel;
-@property (nonatomic, weak) UIButton *tapButton;
-+ (YXTipsBaseView *)showTipsToView:(UIView *)view  image:(nonnull UIImage *)image tips:(NSString *_Nullable)tips touchBlock:(YXTouchBlock _Nullable )touchBlock;
-+ (YXTipsBaseView *)showTipsToView:(UIView *)view  image:(nonnull UIImage *)image tips:(NSString *_Nullable)tips contentOffsetY:(CGFloat)offsetY touchBlock:(YXTouchBlock _Nullable )touchBlock;
+@property (nonatomic, weak )UIImageView * _Nullable tipsImageView;
+@property (nonatomic, weak )UILabel * _Nullable tipsLabel;
+@property (nonatomic, weak) UIButton * _Nullable tapButton;
++ (YXTipsBaseView * _Nonnull)showTipsToView:(UIView * _Nonnull)view image:(nonnull UIImage *)image tips:(NSString *_Nullable)tips touchBlock:(YXTouchBlock _Nullable )touchBlock;
++ (YXTipsBaseView * _Nonnull)showTipsToView:(UIView * _Nonnull)view  image:(nonnull UIImage *)image tips:(NSString *_Nullable)tips contentOffsetY:(CGFloat)offsetY touchBlock:(YXTouchBlock _Nullable )touchBlock;
 @end
 

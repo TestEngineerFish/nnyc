@@ -69,4 +69,24 @@ struct YXFileManager {
         return jsonPath
     }
 
+    /// 清除指定路径下的文件
+    /// - Parameter path: 指定路径
+    /// - Returns: 删除是否成功
+    @discardableResult
+    func clearFile(path: String) -> Bool {
+        do {
+            try FileManager.default.removeItem(atPath: path)
+            return true
+        } catch {
+            YXLog("删除文件失败，路径：\(path)， 错误：\(error)")
+            return false
+        }
+    }
+
+    func saveFile(to path: String) {
+        if FileManager.default.fileExists(atPath: path) {
+            self.clearFile(path: path)
+        }
+        try? FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+    }
 }

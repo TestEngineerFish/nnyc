@@ -24,9 +24,6 @@ typedef NS_ENUM(NSInteger, FILE_T){
 - (BOOL)MobileNumber;
 + (NSString *)createCUID:(NSString *)prefix;
 
-- (BOOL)isFloatString;
-- (NSString *)stringByTrimmingRightCharactersInSet:(NSCharacterSet *)characterSet;
-
 - (NSNumber *)transitionNumber;
 // 转换成带有阴影的SttributedString
 - (NSAttributedString *)convertAttributeString;

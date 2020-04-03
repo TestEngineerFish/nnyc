@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "YXNetworkService.h"
-typedef void (^YXFinishBlock) (YRHttpResponse *response, BOOL result);
+typedef void (^YXFinishBlock) (YRHttpResponse  * _Nullable response, BOOL result);
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YXDataProcessCenter : NSObject

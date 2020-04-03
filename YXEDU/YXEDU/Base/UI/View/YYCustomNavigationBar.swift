@@ -220,7 +220,7 @@ extension YYCustomNavigationBar {
         if let action = self.leftButtonAction {
             action()
         } else {
-            YRRouter.sharedInstance()?.currentNavigationController()?.popViewController(animated: true)
+            YRRouter.sharedInstance().currentNavigationController()?.popViewController(animated: true)
         }
     }
     
@@ -290,7 +290,7 @@ extension YYCustomNavigationBar {
     
     
     private var currentNavigationController: UINavigationController? {
-        return YRRouter.sharedInstance()?.currentNavigationController()
+        return YRRouter.sharedInstance().currentNavigationController()
 //        return self.currentViewController?.navigationController
     }
 }

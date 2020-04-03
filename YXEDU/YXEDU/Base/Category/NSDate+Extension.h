@@ -9,11 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface NSDate (Extension)
-
-/**
- * 获得本地化时间
- */
-@property (nonatomic, strong) NSDate * localDate;
 /**
  * 获取日、月、年、小时、分钟、秒
  */

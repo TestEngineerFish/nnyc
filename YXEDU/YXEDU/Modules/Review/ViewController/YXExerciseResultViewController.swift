@@ -90,7 +90,7 @@ class YXExerciseResultViewController: YXViewController {
         let vc = YXExerciseViewController()
         vc.dataType = model?.type ?? .aiReview
         vc.planId = model?.id ?? 0
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     private func showWordListEvent() {
@@ -105,7 +105,7 @@ class YXExerciseResultViewController: YXViewController {
         let vc = YXReviewPlanReportViewController()
         vc.planId = model?.id ?? 0
         vc.reviewPlanName = model?.title ?? ""
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     private func shareEvent() {

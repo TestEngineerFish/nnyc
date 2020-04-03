@@ -11,10 +11,6 @@
 
 @interface YXMediator : NSObject
 + (instancetype)shared;
-
-- (void)configure;
-
-
 /** token失效
  * @version 1.4.0 以前
  */

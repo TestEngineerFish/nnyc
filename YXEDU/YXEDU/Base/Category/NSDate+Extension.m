@@ -10,6 +10,8 @@
 
 @implementation NSDate (Extension)
 
+
+
 - (NSUInteger)day {
     return [NSDate day:self];
 }
@@ -612,24 +614,6 @@
                                      options:0];
 }
 
-/**
- * 根据系统获得偏差后的正确时间
- */
-- (NSDate *)localDate {
-    //设置源日期时区
-    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];//或GMT
-    //设置转换后的目标日期时区
-    NSTimeZone* destinationTimeZone = [NSTimeZone localTimeZone];
-    //得到源日期与世界标准时间的偏移量
-    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:self];
-    //目标日期与本地时区的偏移量
-    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:self];
-    //得到时间偏移量的差值
-    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
-    //转为现在时间
-    NSDate* destinationDateNow = [[NSDate alloc] initWithTimeInterval:interval sinceDate:self];
-    return destinationDateNow;
-}
 // 时间戳—>字符串时间
 + (NSString *)cStringFromTimestamp:(NSString *)timestamp {
     NSDate *timeData = [NSDate dateWithTimeIntervalSince1970:[timestamp intValue]];

@@ -361,7 +361,7 @@ class YXExcerciseProgressManager: NSObject {
     
     private func removeLocalFile(_ localKey: LocalKey) {
         let filePath = YYDataSourceManager.dbFilePath(fileName: self.key(localKey))
-        let result = YYFileManager.share.clearFile(path: filePath)
+        let result = YXFileManager.share.clearFile(path: filePath)
         YXLog(localKey, "数据完成，本地数据删除：", result )
     }
     

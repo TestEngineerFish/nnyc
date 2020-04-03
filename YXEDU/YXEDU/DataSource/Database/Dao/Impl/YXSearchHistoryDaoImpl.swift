@@ -14,14 +14,14 @@ class YXSearchHistoryDaoImpl: YYDatabase, YXSearchHistoryDao {
         let sql = YYSQLManager.SearchHistory.insertWord.rawValue
         
         let partOfSpeechAndMeaningsDataString: String! = word.partOfSpeechAndMeanings?.toJSONString() ?? "[]"
-        let params: [Any?] = [word.wordId,
-                              word.word,
+        let params: [Any] = [word.wordId ?? 0,
+                              word.word ?? "",
                               partOfSpeechAndMeaningsDataString,
-                              word.englishPhoneticSymbol,
-                              word.americanPhoneticSymbol,
-                              word.englishPronunciation,
-                              word.americanPronunciation,
-                              word.isComplexWord]
+                              word.englishPhoneticSymbol ?? "",
+                              word.americanPhoneticSymbol ?? "",
+                              word.englishPronunciation ?? "",
+                              word.americanPronunciation ?? "",
+                              word.isComplexWord ?? 0]
         
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }

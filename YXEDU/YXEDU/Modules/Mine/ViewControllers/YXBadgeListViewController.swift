@@ -1,5 +1,5 @@
 //
-//  YXBagdeListViewController.swift
+//  YXBadgeListViewController.swift
 //  YXEDU
 //
 //  Created by Jake To on 12/25/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // TODO: ---- Subviews ----
     var backgroundImageView: UIImageView = {
@@ -143,7 +143,7 @@ class YXBagdeListViewController: YXViewController, UICollectionViewDelegate, UIC
     
     // MARK: ---- Event ----
     @objc private func backAction() {
-        YRRouter.sharedInstance()?.currentNavigationController()?.popViewController(animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.popViewController(animated: true)
     }
     
     // MARK: - UICollectionView

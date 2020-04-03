@@ -254,7 +254,7 @@ public extension UIImage {
         return scaledImage!
     }
 
-    public func imageRotatedByDegrees(degrees: CGFloat, flip: Bool) -> UIImage? {
+    func imageRotatedByDegrees(degrees: CGFloat, flip: Bool) -> UIImage? {
         let _: (CGFloat) -> CGFloat = {
             return $0 * (180.0 / CGFloat(Double.pi))
         }

@@ -222,70 +222,70 @@ extension YXExerciseDataManager {
 //            return
 //        }
         return
-        
-        // 第二次排序，同一个step 上一轮没做错的排到前面
-        var tmpStepArray: [[YXWordExerciseModel]] = []
-                
-        /// 数组的下标
-        let arrayIndex: ((_ step: Int) -> Int) = { (stepIndex) in
-            for (i, step) in tmpStepArray.enumerated() {
-                if step.first?.step == stepIndex {
-                    return i
-                }
-            }
-            return -1
-        }
-        
-        for e in currentTurnArray {
-            let stepIndex = arrayIndex(e.step)
-            if stepIndex == -1 {
-                tmpStepArray.append([e])
-            } else {
-                tmpStepArray[stepIndex].append(e)
-            }
-        }
-        
-        
-        /// 上轮是否做对
-        let isPreviousRight: ((_ wordId: Int) -> Bool) = { [weak self] (wordId) in
-            guard let self = self else { return true }
-            
-            var wrong = false
-            for word in self.reviewWordArray {
-                if word.wordId == wordId {
-                    
-                    for step in word.exerciseSteps {
-                        let e = step.first
-                        if (e?.isFinish == true) {
-                            wrong = e?.isContinue ?? false
-                        }
-                    }
-                    
-                }
-                
-            }
-            return !wrong
-        }
-
-        
-        currentTurnArray.removeAll()
-        
-        for step in tmpStepArray {
-            
-            var rightArray: [YXWordExerciseModel] = []
-            var wrongArray: [YXWordExerciseModel] = []
-            
-            for model in step {
-                if isPreviousRight(model.word?.wordId ?? 0) {
-                    rightArray.append(model)
-                } else {
-                    wrongArray.append(model)
-                }
-            }
-            currentTurnArray.append(contentsOf: rightArray)
-            currentTurnArray.append(contentsOf: wrongArray)
-        }
-        
+//
+//        // 第二次排序，同一个step 上一轮没做错的排到前面
+//        var tmpStepArray: [[YXWordExerciseModel]] = []
+//
+//        /// 数组的下标
+//        let arrayIndex: ((_ step: Int) -> Int) = { (stepIndex) in
+//            for (i, step) in tmpStepArray.enumerated() {
+//                if step.first?.step == stepIndex {
+//                    return i
+//                }
+//            }
+//            return -1
+//        }
+//
+//        for e in currentTurnArray {
+//            let stepIndex = arrayIndex(e.step)
+//            if stepIndex == -1 {
+//                tmpStepArray.append([e])
+//            } else {
+//                tmpStepArray[stepIndex].append(e)
+//            }
+//        }
+//
+//
+//        /// 上轮是否做对
+//        let isPreviousRight: ((_ wordId: Int) -> Bool) = { [weak self] (wordId) in
+//            guard let self = self else { return true }
+//
+//            var wrong = false
+//            for word in self.reviewWordArray {
+//                if word.wordId == wordId {
+//
+//                    for step in word.exerciseSteps {
+//                        let e = step.first
+//                        if (e?.isFinish == true) {
+//                            wrong = e?.isContinue ?? false
+//                        }
+//                    }
+//
+//                }
+//
+//            }
+//            return !wrong
+//        }
+//
+//
+//        currentTurnArray.removeAll()
+//
+//        for step in tmpStepArray {
+//
+//            var rightArray: [YXWordExerciseModel] = []
+//            var wrongArray: [YXWordExerciseModel] = []
+//
+//            for model in step {
+//                if isPreviousRight(model.word?.wordId ?? 0) {
+//                    rightArray.append(model)
+//                } else {
+//                    wrongArray.append(model)
+//                }
+//            }
+//            currentTurnArray.append(contentsOf: rightArray)
+//            currentTurnArray.append(contentsOf: wrongArray)
+//        }
+//
         
     }
     

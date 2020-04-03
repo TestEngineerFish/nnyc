@@ -20,7 +20,6 @@
 - (NSDictionary*)firstAndLastName;
 - (BOOL)isValidEmail;
 - (BOOL)isMobileNumber;
-
 - (BOOL)containsOnlyLetters;
 - (BOOL)containsOnlyNumbers;
 + (BOOL)isPureInt:(NSString*)string;
@@ -33,8 +32,6 @@
 - (NSInteger)lengthOfBytes;
 - (BOOL)isChinese;
 + (BOOL)isEmpty:(NSString *) str;
-
-- (NSString*) stringByURLEncodingStringParameter;
 
 /*
  * 裁剪空字符串

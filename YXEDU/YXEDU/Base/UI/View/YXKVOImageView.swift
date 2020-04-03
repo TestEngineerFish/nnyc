@@ -40,15 +40,19 @@ import Kingfisher
                           placeholder: UIImage? = nil,
                           progress: ImageDownloadProgress? = nil,
                           completion: ImageDownloadCompletion? = nil) -> Void {
-        self.kf.setImage(with: imageURL,
-                         placeholder: placeholder,
-                         options: [.transition(ImageTransition.fade(1))],
-                         progressBlock: { (receivedSize, totalSize) in
-                            let progressValue = ((receivedSize) / (totalSize))
-                            progress?(CGFloat(progressValue))
-        }, completionHandler: { image, error, cacheType, imageURL in
-            completion?((image as? Image), error, (imageURL as? NSURL))
-        })
+        self.kf.setImage(with: imageURL, placeholder: placeholder, options: [.transition(ImageTransition.fade(1))], progressBlock: { (receivedSize, totalSize) in
+            let progressValue = ((receivedSize) / (totalSize))
+            progress?(CGFloat(progressValue))
+        }) { (result: Result<RetrieveImageResult, KingfisherError>) in
+            do {
+                let imageResult = try result.get()
+                let image       = imageResult.image
+                let imageUrl    = imageResult.source.url
+                completion?(image, nil, (imageUrl as NSURL?))
+            } catch {
+                completion?(nil, (error as NSError?), nil)
+            }
+        }
     }
     
     public func showImage(with imageURL: String,

@@ -16,8 +16,4 @@
 - (id)read:(NSString *)key;
 - (void)write:(id)obj key:(NSString *)key;
 - (void)remove:(NSString *)key;
-
-- (id)setLearning:(NSString *)key;
-
-- (void)updateLearning:(id)learning;
 @end

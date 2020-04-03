@@ -88,14 +88,6 @@
     return result;
 }
 
-- (BOOL)isFloatString {
-    NSScanner* scan = [NSScanner scannerWithString:self];
-    float val;
-    BOOL iss = [scan scanFloat:&val];
-    BOOL isss = [scan isAtEnd];
-    return[scan scanFloat:&val] && [scan isAtEnd];
-}
-
 // 终于找到了点击顶部或者截屏必崩点了，谁干的？？？？
 //- (NSString *)stringByTrimmingCharactersInSet:(NSCharacterSet *)characterSet {
 //    NSUInteger length = [self length];

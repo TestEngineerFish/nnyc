@@ -102,7 +102,7 @@ extension YXViewController {
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         #if DEBUG
         if event?.subtype == .motionShake
-            && YRRouter.sharedInstance()?.currentViewController()?.classForCoder != YYEnvChangeViewController.classForCoder() {
+            && YRRouter.sharedInstance().currentViewController()?.classForCoder != YYEnvChangeViewController.classForCoder() {
             self.navigationController?.pushViewController(YYEnvChangeViewController(), animated: true)
             YXLog("用户UUID:", YXUserModel.default.uuid ?? "")
         }

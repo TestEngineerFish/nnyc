@@ -81,7 +81,7 @@ extension YXExerciseViewController {
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.popViewController(animated: false)
 //        YRRouter.popViewController(false)
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     
@@ -92,7 +92,7 @@ extension YXExerciseViewController {
         vc.planId   = planId ?? 0
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.popViewController(animated: false)
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     

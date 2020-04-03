@@ -163,38 +163,40 @@
 }
 
 - (void) done {
-    UIApplication *app = [UIApplication sharedApplication];
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-
-    [app cancelAllLocalNotifications];
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center removeAllPendingNotificationRequests];
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (!error) {
+            YXLog(@"授权本地通知成功");
+        }
+    }];
 
     if (self.isReminderSwitch.isOn) {
+        UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+        NSCalendar *calendar                  = [NSCalendar currentCalendar];
+        NSDateComponents *components          = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute  fromDate:self.datePicker.date];
         
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSDateComponents *components = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute  fromDate:self.datePicker.date];
-        NSDate *date = [calendar dateFromComponents:components];
+        NSDate *date  = [calendar dateFromComponents:components];
+        content.title = @"每日提醒";
+        content.body  = @"今天的背单词计划还未完成哦，戳我一下马上开始学习~";
+        content.sound = [UNNotificationSound defaultSound];
+        content.badge = [NSNumber numberWithInt: (int)([UIApplication sharedApplication].applicationIconBadgeNumber) + 1];
+        UNCalendarNotificationTrigger * _Nonnull trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:YES];
+        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"Reminder" content:content trigger:trigger];
 
-        notification.fireDate = date;
-//        notification.userInfo = @{@"Reminder": @"Reminder"};
-        notification.timeZone = [NSTimeZone defaultTimeZone];
-        notification.repeatInterval = kCFCalendarUnitDay;
-        notification.soundName = UILocalNotificationDefaultSoundName;
-//        notification.alertTitle = @"今天的背单词计划还未完成哦，戳我一下马上开始学习~";
-        notification.alertBody = @"今天的背单词计划还未完成哦，戳我一下马上开始学习~";
-        notification.applicationIconBadgeNumber = 1;
-    
-        [app scheduleLocalNotification:notification];
-        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"HH:mm"];
         NSString *remindDateString = [dateFormatter stringFromDate:date];
+        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+            if (!error) {
+                YXLog(@"添加每日提醒成功，时间:%@", remindDateString);
+            }
+        }];
         
         [[NSUserDefaults standardUserDefaults] setObject:date forKey:@"Reminder"];
-//        self.returnRemindDateStringBlock(remindDateString);
         
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"Reminder"];
-//        self.returnRemindDateStringBlock(@"已关闭");
     }
     
     [self.navigationController popViewControllerAnimated:YES];

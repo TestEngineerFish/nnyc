@@ -41,7 +41,7 @@ static NSMutableArray<YRWebViewJSAction *> *jsActionContainer;
     NSDictionary *params = messageBody[@"params"];
 
     // 实例化JSAction
-    YRWebViewJSAction *jsAction = [self createJSAction:action];
+    YRWebViewJSAction * jsAction = (YRWebViewJSAction*)[self createJSAction:action];
     
     [jsAction setJsBridge:self];
     

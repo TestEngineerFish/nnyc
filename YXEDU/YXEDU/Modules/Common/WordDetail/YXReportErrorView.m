@@ -255,28 +255,6 @@ static const NSInteger MAX_NAME_LENGTH = 50;
             [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:@"提交成功"];
         }
     }];
-
-//    NSMutableArray *imageArr = [NSMutableArray array];
-//    for (UIImage *image in _selectImageView.imageArr) {
-//        [imageArr addObject:image];
-//    }
-//    __weak YXPersonalFeedBackVC *weakSelf = self;
-//    [YXUtils showHUD:self.view];
-//    YXFeedSendModel *sendModel = [[YXFeedSendModel alloc]init];
-//
-//    sendModel.feed = self.feedBackTextView.text;
-//    sendModel.files = imageArr;
-//    sendModel.env = [NSString stringWithFormat:@"%@;%@;%@;%@;%@;%@;%@", [YXUtils machineName], [YXUtils systemVersion],[YXUtils appVersion],[YXUtils carrierName],[YXUtils networkType],[YXUtils screenInch],[YXUtils screenResolution]];
-//
-//    [self.feedViewModel submitFeedBack:sendModel finish:^(id obj, BOOL result) {
-//        [YXUtils hideHUD:weakSelf.view];
-//        if (result) {
-//            [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:@"提交成功"];
-//            [weakSelf.navigationController popViewControllerAnimated:YES];
-//        } else {
-//            [YXUtils showHUD:self.view title:@"网络错误!"];
-//        }
-//    }];
 }
 
 - (void)layoutSubviews {

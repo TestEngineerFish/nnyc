@@ -22,7 +22,6 @@
  *
  *  @param timeInterval 过去的时间
  *
- *  @return
  */
 - (NSString *)timeDistanceWitholdTime:(NSTimeInterval)timeInterval;
 

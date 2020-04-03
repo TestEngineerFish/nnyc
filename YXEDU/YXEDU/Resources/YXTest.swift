@@ -41,15 +41,15 @@ class YXTest: NSObject {
         vc.reviewLearnAmount = 5
                             
         vc.hidesBottomBarWhenPushed = true
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
      /// 处理复习结果页
     func processReviewResult() {
-        YXReviewDataManager().fetchReviewResult(type: .aiReview, planId: 13) { [weak self] (resultModel, error) in
-            guard let self = self else {return}
+        YXReviewDataManager().fetchReviewResult(type: .aiReview, planId: 13) { (resultModel, error) in
+//            guard let self = self else {return}
 
-            if let model = resultModel {
+            if let _ = resultModel {
 //                self.newResultVC(model: model)
             } else {
                 UIView.toast("结果页，Test数据失败")
@@ -66,6 +66,6 @@ class YXTest: NSObject {
         vc.dataType = .aiReview
         vc.planId = 13
         vc.hidesBottomBarWhenPushed = true
-        YRRouter.sharedInstance()?.currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }
