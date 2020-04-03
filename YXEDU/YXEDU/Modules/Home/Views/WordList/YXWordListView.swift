@@ -8,12 +8,17 @@
 
 import UIKit
 
+
 class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     var editClosure: (() -> Void)?
-    var showWordDetialClosure: ((_ wordId: Int, _ isComplexWord: Int) -> Void)?
     var startReviewClosure: (() -> Void)?
     var showEmptyView = false
+    var type: YXWordListType = .learned
+    // ---- 分页 ----
+    var currentPage: Int     = 1
+    var haveMore: Bool       = false
+    var total: Int           = 0
     
     var shouldShowEditButton = false {
         didSet {
@@ -193,6 +198,41 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
     }
+
+    // MARK: ---- Request ----
+    /// 根据类型，获取单词列表
+    func requestWordsList(page: Int) {
+        ///因为后台定义的type和前端定义的顺序不一致
+        let requestType: Int = {
+            switch self.type {
+            case .learned:
+                return 1
+            case .notLearned:
+                return 2
+            case .collected:
+                return 0
+            case .wrongWords:
+                return 3
+            }
+        }()
+        // 错词本不在此请求
+        if requestType > 2 { return }
+        if page <= 1 {
+            self.words.removeAll()
+        }
+        let request = YXWordListRequest.wordList(type: requestType, page: page)
+        YYNetworkService.default.request(YYStructResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let model = response.data else { return }
+            self.currentPage = model.page
+            self.haveMore    = model.haveMore
+            self.total       = model.total
+            self.words       += model.wordModelList
+            self.tableView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
     
     // MARK: - table view
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -278,6 +318,9 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row >= (self.words.count - 1) && self.haveMore {
+            self.requestWordsList(page: self.currentPage + 1)
+        }
         if ((wrongWordSectionData?.count ?? 0) > 0 && isWrongWordList) || words.count > 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as! YXWordListCell
             var word: YXWordModel!

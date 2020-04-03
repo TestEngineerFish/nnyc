@@ -67,13 +67,6 @@ class YXReviewPlanDetailViewController: YXViewController {
         wordListView.shouldShowEditButton = false
         wordListView.shouldShowBottomView = false
         wordListView.orderType = .default
-        wordListView.showWordDetialClosure = { [weak self] (wordId, isComplexWord) in
-            let home = UIStoryboard(name: "Home", bundle: nil)
-            let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
-            wordDetialViewController.wordId = wordId
-            wordDetialViewController.isComplexWord = isComplexWord
-            self?.navigationController?.pushViewController(wordDetialViewController, animated: true)
-        }
         
         bottomView.listenEvent = { [weak self] in
             self?.listenEvent()

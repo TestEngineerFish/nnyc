@@ -40,18 +40,10 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     func bindProperty() {
         self.customNavigationBar?.title = YXReviewDataManager.reviewPlanName
         
-        wordListView.isWrongWordList = false
+        wordListView.isWrongWordList      = false
         wordListView.shouldShowEditButton = false
         wordListView.shouldShowBottomView = false
-        wordListView.orderType = .default
-        wordListView.showWordDetialClosure = { (wordId, isComplexWord) in
-            let home = UIStoryboard(name: "Home", bundle: nil)
-            let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
-            wordDetialViewController.wordId = wordId
-            wordDetialViewController.isComplexWord = isComplexWord
-            self.navigationController?.pushViewController(wordDetialViewController, animated: true)
-        }
-        
+        wordListView.orderType            = .default
         bottomView.saveReviewPlanEvent = { [weak self] in
             self?.saveReviewPlanEvent()
         }

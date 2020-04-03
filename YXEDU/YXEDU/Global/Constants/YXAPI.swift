@@ -115,7 +115,7 @@ struct YXAPI {
     // MARK: - 单词列表模块
     struct WordList {
         // 收藏、已学、未学列表
-        static let wordList = "/api/v1/word/getnotelist"
+        static let wordList = "/api/v2/word/getnotelist"
         
         // 错词
         static let wrongWordList = "/api/v1/word/getwronglist"

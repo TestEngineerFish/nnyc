@@ -15,13 +15,10 @@ protocol YXReviewBottomViewProtocol: NSObjectProtocol {
 
 class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
 
-    var makeButton: YXDesignableButton = {
-        let button = YXDesignableButton()
+    var makeButton: YXButton = {
+        let button = YXButton()
         button.setTitle("创建\(YXReviewDataManager.reviewPlanName)", for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(17))
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.enableGradientBackground = true
-        button.isUserInteractionEnabled = false
         return button
     }()
 
