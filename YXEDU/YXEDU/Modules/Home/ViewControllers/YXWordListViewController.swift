@@ -13,6 +13,9 @@ enum YXWordListType: Int {
     case notLearned = 1
     case collected  = 2
     case wrongWords = 3
+    case reviewPlanDetail      = 4
+    case reviewPlanShareDetail = 5
+
 }
 
 class YXWordListViewController: UIViewController, BPSegmentDataSource {
@@ -230,7 +233,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     }
     
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
-        //...
+        
         if wordListViews[indexPath.row] == nil {
             let wordListView = YXWordListView(frame: .zero)
             wordListView.editClosure = { [weak self] in
@@ -238,28 +241,24 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             }
             switch indexPath.row {
             case 0:
-                wordListView.isWrongWordList      = false
                 wordListView.shouldShowEditButton = false
                 wordListView.shouldShowBottomView = false
                 wordListView.type                 = .learned
                 self.wordListViews[indexPath.row] = wordListView
                 wordListView.requestWordsList(page: 1)
             case 1:
-                wordListView.isWrongWordList      = false
                 wordListView.shouldShowEditButton = false
                 wordListView.shouldShowBottomView = false
                 wordListView.type                 = .notLearned
                 self.wordListViews[indexPath.row] = wordListView
                 wordListView.requestWordsList(page: 1)
             case 2:
-                wordListView.isWrongWordList      = false
                 wordListView.shouldShowEditButton = true
                 wordListView.shouldShowBottomView = false
                 wordListView.type                 = .collected
                 self.wordListViews[indexPath.row] = wordListView
                 wordListView.requestWordsList(page: 1)
             case 3:
-                wordListView.isWrongWordList      = true
                 wordListView.shouldShowEditButton = false
                 wordListView.shouldShowBottomView = true
                 wordListView.type                 = .wrongWords

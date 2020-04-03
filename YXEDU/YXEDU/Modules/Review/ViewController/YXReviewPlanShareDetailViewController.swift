@@ -40,7 +40,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     func bindProperty() {
         self.customNavigationBar?.title = YXReviewDataManager.reviewPlanName
         
-        wordListView.isWrongWordList      = false
+        wordListView.type                 = .reviewPlanShareDetail
         wordListView.shouldShowEditButton = false
         wordListView.shouldShowBottomView = false
         wordListView.orderType            = .default

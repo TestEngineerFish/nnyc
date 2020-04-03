@@ -19,14 +19,20 @@ class YXAuthorizationManager: NSObject {
         case .authorized:
             completion(true)
         case .denied, .restricted:
+            YXLog("无相册权限")
             completion(false)
             if autoAlert { showPhotoAlert() }
         case .notDetermined:
             PHPhotoLibrary.requestAuthorization({ (status) in
                 DispatchQueue.main.async {
-                    let result = status == PHAuthorizationStatus.authorized ? true:false
+                    let result = (status == PHAuthorizationStatus.authorized)
                     completion(result)
-                    if (!result && autoAlert) { showPhotoAlert() }
+                    if (!result && autoAlert) {
+                        showPhotoAlert()
+                        YXLog("用户拒绝了相册权限")
+                    } else {
+                        YXLog("用户授予了相册权限")
+                    }
                 }
             })
         @unknown default:
@@ -41,11 +47,8 @@ class YXAuthorizationManager: NSObject {
         case .authorized:
             completion(true)
             break
-        case .denied:
-            completion(false)
-            if autoAlert { showCameraAlert() }
-            break
-        case .restricted:
+        case .denied, .restricted:
+            YXLog("无相机权限")
             completion(false)
             if autoAlert { showCameraAlert() }
             break
@@ -53,7 +56,12 @@ class YXAuthorizationManager: NSObject {
             AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted: Bool) in
                 DispatchQueue.main.async {
                     completion(granted)
-                    if (!granted && autoAlert) { showCameraAlert() }
+                    if (!granted && autoAlert) {
+                        showCameraAlert()
+                        YXLog("用户拒绝了相机权限")
+                    } else {
+                        YXLog("用户授予了相机权限")
+                    }
                 }
             })
         @unknown default:
@@ -71,6 +79,7 @@ class YXAuthorizationManager: NSObject {
             completion(true)
             break
         case .denied:
+            YXLog("无麦克风权限")
             completion(false)
             if autoAlert { showMicrophoneAlert() }
             break
@@ -78,7 +87,12 @@ class YXAuthorizationManager: NSObject {
             AVAudioSession.sharedInstance().requestRecordPermission { (allow) in
                 DispatchQueue.main.async {
 //                    completion(allow)
-                    if (!allow && autoAlert) { showMicrophoneAlert() }
+                    if (!allow && autoAlert) {
+                        showMicrophoneAlert()
+                        YXLog("用户拒绝了麦克风权限")
+                    } else {
+                        YXLog("用户授予了麦克风权限")
+                    }
                 }
             }
         @unknown default:
@@ -92,9 +106,11 @@ class YXAuthorizationManager: NSObject {
         if CLLocationManager.locationServicesEnabled() {
             let authStatus = CLLocationManager.authorizationStatus()
             if authStatus == .notDetermined || authStatus == .authorizedWhenInUse { // App没有显示过授权，或者已经授权
+                YXLog("用户授予了位置权限")
                 completion(true)
             } else if authStatus == .restricted || authStatus == .denied { // App没有授权，或者授权后用户手动关闭了
                 completion(false)
+                YXLog("用户拒绝了位置权限")
                 if autoAlert { showLocationAlert() }
             }
         } else {

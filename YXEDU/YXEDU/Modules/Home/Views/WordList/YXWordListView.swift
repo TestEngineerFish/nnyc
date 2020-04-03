@@ -18,7 +18,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     // ---- 分页 ----
     var currentPage: Int     = 1
     var haveMore: Bool       = false
-    var total: Int           = 0
     
     var shouldShowEditButton = false {
         didSet {
@@ -58,18 +57,15 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             if wordsCount == 0 {
                 topViewHeight.constant = 0
                 topView.isHidden = true
-
+                showEmptyView    = true
             } else {
                 topViewHeight.constant = 44
                 topView.isHidden = false
+                showEmptyView    = false
             }
-            self.showEmptyView = wordsCount == 0
-            wordCountLabel.text = "\(wordsCount)"
-            tableView.reloadData()
         }
     }
     
-    var isWrongWordList = false
     var isExpandWrongWords = false
     var wrongWordSectionData: [[String: [YXWordModel]]]? {
         didSet {
@@ -211,22 +207,22 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 return 2
             case .collected:
                 return 0
-            case .wrongWords:
-                return 3
+            default:
+                return -1
             }
         }()
         // 错词本不在此请求
-        if requestType > 2 { return }
+        if requestType < 0 { return }
         if page <= 1 {
             self.words.removeAll()
         }
         let request = YXWordListRequest.wordList(type: requestType, page: page)
         YYNetworkService.default.request(YYStructResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else { return }
-            self.currentPage = model.page
-            self.haveMore    = model.haveMore
-            self.total       = model.total
-            self.words       += model.wordModelList
+            self.currentPage         = model.page
+            self.haveMore            = model.haveMore
+            self.words              += model.wordModelList
+            self.wordCountLabel.text = "\(model.total)"
             self.tableView.reloadData()
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -236,16 +232,15 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - table view
     func numberOfSections(in tableView: UITableView) -> Int {
-        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, isWrongWordList {
+        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, self.type == .wrongWords {
             return wrongWordSectionCount
-            
         } else {
             return 1
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, isWrongWordList else { return nil }
+        guard let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, self.type == .wrongWords else { return nil }
         let wrongWordSection = wrongWordSectionData?[section]
         let title = wrongWordSection?.keys.first
         
@@ -282,7 +277,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, isWrongWordList {
+        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, self.type == .wrongWords {
             return 30
 
         } else {
@@ -295,7 +290,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, let wordsCount = wrongWordSectionData?[section].values.first?.count, isWrongWordList {
+        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, let wordsCount = wrongWordSectionData?[section].values.first?.count, self.type == .wrongWords {
             
             if wrongWordSectionData?[section].keys.first?.contains("熟识的单词") ?? false {
                 if isExpandWrongWords {
@@ -321,11 +316,11 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         if indexPath.row >= (self.words.count - 1) && self.haveMore {
             self.requestWordsList(page: self.currentPage + 1)
         }
-        if ((wrongWordSectionData?.count ?? 0) > 0 && isWrongWordList) || words.count > 0 {
+        if ((wrongWordSectionData?.count ?? 0) > 0 && self.type == .wrongWords) || words.count > 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as! YXWordListCell
             var word: YXWordModel!
 
-            if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, isWrongWordList {
+            if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, self.type == .wrongWords {
                 if var wrongWords = wrongWordSectionData?[indexPath.section].values.first, wrongWords.count > 0 {
                     word = wrongWords[indexPath.row]
                     
@@ -356,7 +351,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if ((wrongWordSectionData?.count ?? 0) > 0 && isWrongWordList) || words.count > 0 {
+        if ((wrongWordSectionData?.count ?? 0) > 0 && self.type == .wrongWords) || words.count > 0 {
             return 44
 
         } else {

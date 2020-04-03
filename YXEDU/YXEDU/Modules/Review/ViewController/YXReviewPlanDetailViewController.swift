@@ -62,8 +62,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     func bindProperty() {
         self.customNavigationBar?.title = YXReviewDataManager.reviewPlanTitle
         
-        
-        wordListView.isWrongWordList = false
+        wordListView.type                 = .reviewPlanDetail
         wordListView.shouldShowEditButton = false
         wordListView.shouldShowBottomView = false
         wordListView.orderType = .default

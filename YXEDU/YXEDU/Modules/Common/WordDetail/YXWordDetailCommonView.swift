@@ -38,7 +38,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     
     @IBAction func playAudio(_ sender: UIButton) {
         YXAVPlayerManager.share.finishedBlock = nil
-        self.isAutoPlay = true
+        self.isAutoPlay = false
         if YXAVPlayerManager.share.isPlaying {
             YXAVPlayerManager.share.pauseAudio()
             playAuoidButton.layer.removeFlickerAnimation()
@@ -49,6 +49,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     
     @IBAction func recordAction(_ sender: UIButton) {
         guard let wordModel = self.word else { return }
+        self.isAutoPlay     = false
         YXNewLearnView(wordModel: wordModel).show()
     }
     
@@ -215,6 +216,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     
     /// 自动播放
     func autoPlay() {
+        self.isAutoPlay = true
         self.playWord()
     }
     
@@ -459,8 +461,9 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     }
     
     func playFinished() {
-        if !isAutoPlay {
+        if isAutoPlay {
             self.playExample()
+            self.isAutoPlay = false
         }
     }
 }
