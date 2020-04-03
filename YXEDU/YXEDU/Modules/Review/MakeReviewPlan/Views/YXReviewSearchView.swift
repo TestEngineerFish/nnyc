@@ -21,8 +21,8 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
         return textField
     }()
     
-    let cancelButton: YXButton = {
-        let button = YXButton()
+    let cancelButton: UIButton = {
+        let button = UIButton()
         button.setTitle("取消", for: .normal)
         button.setTitleColor(UIColor.black3, for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(14))

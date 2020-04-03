@@ -25,8 +25,8 @@ class YXExerciseResultView: YXView {
     var starView      = YXStarView()
     var progressView  = YXReviewProgressView(type: .iKnow, cornerRadius: AS(4))
     var tipsView      = YXReviewResultTipsListView()
-    var reportButton  = YXButton()
-    var operateButton = YXButton()
+    var reportButton  = UIButton()
+    var operateButton = UIButton()
     
     deinit {
         reportButton.removeTarget(self, action: #selector(clickReportButton), for: .touchUpInside)

@@ -33,16 +33,16 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         label.textAlignment = .left
         return label
     }()
-    var checkAllButton: YXButton = {
-        let button = YXButton()
+    var checkAllButton: UIButton = {
+        let button = UIButton()
         button.setTitle("全选", for: .normal)
         button.setTitleColor(UIColor.orange1, for: .normal)
         button.contentHorizontalAlignment = .right
         button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
         return button
     }()
-    var arrowButton: YXButton = {
-        let button = YXButton()
+    var arrowButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "unit_arrow"), for: .normal)
         return button
     }()
@@ -141,7 +141,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
 
     // MARK: ==== Event ====
 
-    @objc private func clickCheckAllBtn(_ button: YXButton) {
+    @objc private func clickCheckAllBtn(_ button: UIButton) {
         guard let unitModel = self.model else {
             return
         }

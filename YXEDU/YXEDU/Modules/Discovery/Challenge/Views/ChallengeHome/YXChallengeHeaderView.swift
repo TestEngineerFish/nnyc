@@ -30,8 +30,8 @@ class YXChallengeHeaderView: UIView {
         label.textAlignment = .center
         return label
     }()
-    var previousRankButton: YXButton = {
-        let button = YXButton()
+    var previousRankButton: UIButton = {
+        let button = UIButton()
         button.isHidden = true
         button.setTitle("上期排名", for: .normal)
         button.setTitleColor(UIColor.hex(0xB18550), for: .normal)

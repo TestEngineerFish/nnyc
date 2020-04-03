@@ -101,7 +101,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         }
     }
 
-    @objc func clickRemoveBtn(_ button: YXButton) {
+    @objc func clickRemoveBtn(_ button: UIButton) {
         for (index, wordModel) in self.wordsModelList.enumerated() {
             if wordModel.id == button.tag {
                 self.delegate?.unselect(wordModel)

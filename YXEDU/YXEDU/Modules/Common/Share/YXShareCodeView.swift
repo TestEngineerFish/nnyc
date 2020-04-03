@@ -73,15 +73,15 @@ class YXShareCodeView: UIView {
         return view
     }()
 
-    var shareQQButton: YXButton = {
-        let button = YXButton()
+    var shareQQButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "gameShareQQ"), for: .normal)
         button.isEnabled = true
         return button
     }()
 
-    var shareWechatButton: YXButton = {
-        let button = YXButton()
+    var shareWechatButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "gameShareWechat"), for: .normal)
         button.isEnabled = true
         return button
@@ -105,8 +105,8 @@ class YXShareCodeView: UIView {
         return label
     }()
 
-    var closeButton: YXButton = {
-        let button = YXButton()
+    var closeButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "share_scan_close"), for: .normal)
         return button
     }()

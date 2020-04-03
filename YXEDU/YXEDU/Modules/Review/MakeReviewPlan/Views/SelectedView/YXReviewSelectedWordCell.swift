@@ -10,8 +10,8 @@ import UIKit
 
 class YXReviewSelectedWordCell: UITableViewCell {
 
-    var removeButton: YXButton = {
-        let button = YXButton()
+    var removeButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "word_delete"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: AdaptSize(11), left: AdaptSize(10), bottom: AdaptSize(11), right: AdaptSize(6))
         return button

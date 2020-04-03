@@ -24,15 +24,16 @@ class YXMakeReviewGuideView: UIView {
         return label
     }()
 
-    var confirmButton: YXButton = {
-        let button = YXButton()
+    var confirmButton: UIButton = {
+        let button = UIButton()
         button.setTitle("我知道啦", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(17))
-        button.cornerRadius     = AdaptSize(21)
-        button.borderColor      = UIColor.white
-        button.borderWidth      = AdaptSize(1)
-        button.backgroundColor  = UIColor.clear
+        button.layer.cornerRadius     = AdaptSize(21)
+        button.layer.masksToBounds    = true
+        button.layer.borderColor      = UIColor.white.cgColor
+        button.layer.borderWidth      = AdaptSize(1)
+        button.backgroundColor        = UIColor.clear
         return button
     }()
 

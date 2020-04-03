@@ -37,8 +37,8 @@ class YXReviewWordViewCell: UITableViewCell {
         return label
     }()
 
-    var statusButton: YXButton = {
-        let button = YXButton()
+    var statusButton: UIButton = {
+        let button = UIButton()
         button.setTitle("未学", for: .normal)
         button.setTitleColor(UIColor.hex(0xCDB387), for: .normal)
         button.titleLabel?.font   = UIFont.pfSCRegularFont(withSize: AdaptSize(10))

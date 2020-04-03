@@ -9,15 +9,19 @@
 import UIKit
 
 enum YXWordListType: Int {
-    case learned = 0
+    case learned    = 0
     case notLearned = 1
-    case collected = 2
+    case collected  = 2
     case wrongWords = 3
 }
 
 class YXWordListViewController: UIViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
+    var learnedTableView   = YXWordListView(frame: .zero)
+    var notLearnTableView  = YXWordListView(frame: .zero)
+    var collectedTableView = YXWordListView(frame: .zero)
+    var wrongTableView     = YXWordListView(frame: .zero)
 
     private var wordListControllerView: BPSegmentControllerView!
     private var wordListHeaderViews: [UIView] = {
@@ -34,20 +38,12 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             switch index {
             case 1:
                 label.text = "本书已学"
-                break
-                
             case 2:
                 label.text = "本书未学"
-                break
-                
             case 3:
                 label.text = "收藏夹"
-                break
-                
             case 4:
                 label.text = "错词本"
-                break
-                
             default:
                 break
             }
@@ -154,8 +150,6 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                         words.append(word)
                     }
                 }
-                
-                
             default:
                 break
             }
@@ -163,8 +157,67 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             editWordListViewController.words = words
         }
     }
-    
-    
+
+    // MARK: ---- Request ----
+    /// 根据类型，获取单词列表
+    private func requestWordsList(_ type: YXWordListType) {
+        ///因为后台定义的type和前端定义的顺序不一致
+        let requestType: Int = {
+            switch type {
+            case .learned:
+                return 1
+            case .notLearned:
+                return 2
+            case .collected:
+                return 0
+            case .wrongWords:
+                return 3
+            }
+        }()
+        // 错词本不在此请求
+        if requestType > 2 { return }
+        let request = YXWordListRequest.wordList(type: requestType)
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let wordsList = response.dataArray else { return }
+            self.wordListViews[type.rawValue]?.words += wordsList
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
+    /// 获取错词本单词列表
+    private func requestWrongWordsList() {
+        let request = YXWordListRequest.wrongWordList
+        YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { (response) in
+            guard let wrongWordList = response.data else { return }
+
+            var wrongWordSectionData: [[String: [YXWordModel]]]?
+            if let familiarList = wrongWordList.familiarList, familiarList.count > 0 {
+                if wrongWordSectionData == nil {
+                    wrongWordSectionData = []
+                }
+                wrongWordSectionData?.append(["熟识的单词（\(familiarList.count)）": familiarList])
+            }
+
+            if let recentWrongList = wrongWordList.recentWrongList, recentWrongList.count > 0 {
+                if wrongWordSectionData == nil {
+                    wrongWordSectionData = []
+                }
+                wrongWordSectionData?.append(["最近错词（\(recentWrongList.count)）": recentWrongList])
+            }
+
+            if let reviewList = wrongWordList.reviewList, reviewList.count > 0 {
+                if wrongWordSectionData == nil {
+                    wrongWordSectionData = []
+                }
+                wrongWordSectionData?.append(["待复习错词（\(reviewList.count)）": reviewList])
+            }
+
+            self.wordListViews[YXWordListType.wrongWords.rawValue]?.wrongWordSectionData = wrongWordSectionData
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
     
     // MARK: -
     func pagesNumber() -> Int {
@@ -176,96 +229,43 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     }
     
     func segment(_ segment: BPSegmentView, contentForRowAt indexPath: IndexPath) -> UIView {
+        //...
         if wordListViews[indexPath.row] == nil {
             let wordListView = YXWordListView(frame: .zero)
             wordListView.editClosure = { [weak self] in
                 self?.performSegue(withIdentifier: "EditWordList", sender: self)
             }
-            
-            wordListView.showWordDetialClosure = { [weak self] (wordId, isComplexWord) in
-                let home = UIStoryboard(name: "Home", bundle: nil)
-                let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
-                wordDetialViewController.wordId = wordId
-                wordDetialViewController.isComplexWord = isComplexWord
-                self?.navigationController?.pushViewController(wordDetialViewController, animated: true)
-            }
-            
             switch indexPath.row {
-            case 0, 1:
-                self.wordListViews[indexPath.row] = wordListView
-                self.wordListViews[indexPath.row]?.isWrongWordList = false
+            case 0:
+                self.wordListViews[indexPath.row]                       = wordListView
+                self.wordListViews[indexPath.row]?.isWrongWordList      = false
                 self.wordListViews[indexPath.row]?.shouldShowEditButton = false
                 self.wordListViews[indexPath.row]?.shouldShowBottomView = false
-                
-                let request = YXWordListRequest.wordList(type: indexPath.row + 1)
-                YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { [weak self] (response) in
-                    guard let self = self, let learnedWords = response.dataArray else { return }
-                    self.wordListViews[indexPath.row]?.words = learnedWords
-                }) { [weak self] (error) in
-                    guard let self = self else { return }
-                    YXUtils.showHUD(kWindow, title: error.message)
-                    self.wordListViews[indexPath.row]?.words = []
-                }
+                self.requestWordsList(.learned)
+                self.learnedTableView = wordListView
+            case 1:
+                self.wordListViews[indexPath.row]                       = wordListView
+                self.wordListViews[indexPath.row]?.isWrongWordList      = false
+                self.wordListViews[indexPath.row]?.shouldShowEditButton = false
+                self.wordListViews[indexPath.row]?.shouldShowBottomView = false
+                self.requestWordsList(.notLearned)
             case 2:
-                self.wordListViews[indexPath.row] = wordListView
-                self.wordListViews[indexPath.row]?.isWrongWordList = false
+                self.wordListViews[indexPath.row]                       = wordListView
+                self.wordListViews[indexPath.row]?.isWrongWordList      = false
                 self.wordListViews[indexPath.row]?.shouldShowEditButton = true
                 self.wordListViews[indexPath.row]?.shouldShowBottomView = false
-                
-                let request = YXWordListRequest.wordList(type: 0)
-                YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
-                    guard let learnedWords = response.dataArray else { return }
-                    self.wordListViews[indexPath.row]?.words = learnedWords
-                    
-                }) { error in
-                    YXUtils.showHUD(kWindow, title: error.message)
-                    self.wordListViews[indexPath.row]?.words = []
-                }
-                
+                self.requestWordsList(.collected)
             case 3:
-                self.wordListViews[indexPath.row] = wordListView
-                self.wordListViews[indexPath.row]?.isWrongWordList = true
+                self.wordListViews[indexPath.row]                       = wordListView
+                self.wordListViews[indexPath.row]?.isWrongWordList      = true
                 self.wordListViews[indexPath.row]?.shouldShowEditButton = false
                 self.wordListViews[indexPath.row]?.shouldShowBottomView = true
-                self.wordListViews[indexPath.row]?.startReviewClosure = {
+                self.wordListViews[indexPath.row]?.startReviewClosure   = {
                     let exerciseViewController = YXExerciseViewController()
                     exerciseViewController.dataType = .wrong
                     self.navigationController?.pushViewController(exerciseViewController, animated: true)
                 }
-                
-                let request = YXWordListRequest.wrongWordList
-                YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { (response) in
-                    guard let wrongWordList = response.data else { return }
-                    
-                    var wrongWordSectionData: [[String: [YXWordModel]]]?
-                    if let familiarList = wrongWordList.familiarList, familiarList.count > 0 {
-                        if wrongWordSectionData == nil {
-                            wrongWordSectionData = []
-                        }
-                        wrongWordSectionData?.append(["熟识的单词（\(familiarList.count)）": familiarList])
-                    }
-                    
-                    if let recentWrongList = wrongWordList.recentWrongList, recentWrongList.count > 0 {
-                        if wrongWordSectionData == nil {
-                            wrongWordSectionData = []
-                        }
-                        wrongWordSectionData?.append(["最近错词（\(recentWrongList.count)）": recentWrongList])
-                    }
-                    
-                    if let reviewList = wrongWordList.reviewList, reviewList.count > 0 {
-                        if wrongWordSectionData == nil {
-                            wrongWordSectionData = []
-                        }
-                        wrongWordSectionData?.append(["待复习错词（\(reviewList.count)）": reviewList])
-                    }
-                    
-                    self.wordListViews[indexPath.row]?.wrongWordSectionData = wrongWordSectionData
-                    
-                }) { error in
-                    YXUtils.showHUD(kWindow, title: error.message)
-                    self.wordListViews[indexPath.row]?.wrongWordSectionData = nil
-                }
-                
+                self.requestWrongWordsList()
             default:
                 break
             }

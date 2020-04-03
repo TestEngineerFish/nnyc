@@ -296,7 +296,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                         tableView.reloadRows(at: [indexPath], with: .none)
                     }
                 }
-                
             } else if words.count > 0 {
                 word = words[indexPath.row]
                 
@@ -305,42 +304,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                     tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
-            
-            cell.wordLabel.text = word.word
-
-            if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
-                var text = ""
-
-                for index in 0..<partOfSpeechAndMeanings.count {
-                    guard let partOfSpeech = partOfSpeechAndMeanings[index].partOfSpeech, let meaning = partOfSpeechAndMeanings[index].meaning else { continue }
-                    
-                    if index == 0 {
-                        text = partOfSpeech + meaning
-                        
-                    } else {
-                        text = text + "；" + partOfSpeech + meaning
-                    }
-                }
-                
-                cell.meaningLabel.text = text
-            }
-            
-            cell.americanPronunciation = word.americanPronunciation
-            cell.englishPronunciation = word.englishPronunciation
-            
-            if word.hidePartOfSpeechAndMeanings {
-                cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
-                
-            } else {
-                cell.meaningLabelMask.image = nil
-            }
-            
-            cell.showWordDetailClosure = { [weak self] in
-                self?.showWordDetialClosure?(word.wordId ?? 0, word.isComplexWord ?? 0)
-            }
-                
+            cell.setData(word)
             return cell
-            
         } else {
             let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as! YXWordListEmptyCell
             return emptyCell

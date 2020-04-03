@@ -10,7 +10,7 @@ import Foundation
 
 class YXWordButton: UIButton {
 
-    var status: YXButtonStatus = .normal {
+    var status: YXWordButtonStatus = .normal {
         willSet {
             switch newValue {
             case .normal:

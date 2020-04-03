@@ -44,8 +44,8 @@ class YXChallengeHeaderTopView: UIView {
 
     var startButton   = YXChallengeStartButton()
 
-    var gameRuleButton: YXButton = {
-        let button = YXButton()
+    var gameRuleButton: UIButton = {
+        let button = UIButton()
         button.setTitle("查看游戏规则", for: .normal)
         button.setTitleColor(UIColor.hex(0xD18714), for: .normal)
         button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(12))

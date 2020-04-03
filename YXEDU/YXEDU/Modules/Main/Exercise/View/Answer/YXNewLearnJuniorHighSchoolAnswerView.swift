@@ -9,8 +9,8 @@
 import UIKit
 
 class YXNewLearnJuniorHighSchool: YXBaseAnswerView {
-    let masteredButton = YXButton()
-    let unknownButton  = YXButton()
+    let masteredButton = UIButton()
+    let unknownButton  = UIButton()
     override func createSubviews() {
         super.createSubviews()
         let defaultH = AdaptSize(42)

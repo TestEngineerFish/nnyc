@@ -15,11 +15,13 @@ protocol YXReviewBottomViewProtocol: NSObjectProtocol {
 
 class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
 
-    var makeButton: YXButton = {
-        let button = YXButton()
+    var makeButton: YXDesignableButton = {
+        let button = YXDesignableButton()
         button.setTitle("创建\(YXReviewDataManager.reviewPlanName)", for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(17))
         button.setTitleColor(UIColor.white, for: .normal)
+        button.enableGradientBackground = true
+        button.isUserInteractionEnabled = false
         return button
     }()
 
@@ -56,9 +58,9 @@ class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
             make.centerX.equalToSuperview()
             make.size.equalTo(buttonSize)
         }
-
-        self.makeButton.backgroundColor = UIColor.gradientColor(with: buttonSize, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
-        self.makeButton.layer.cornerRadius = buttonSize.height / 2
+//        self.makeButton.isUserInteractionEnabled = true
+//        self.makeButton.backgroundColor = UIColor.gradientColor(with: buttonSize, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
+//        self.makeButton.layer.cornerRadius = buttonSize.height / 2
         self.remindLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.makeButton.snp.bottom).offset(AdaptSize(8))
             make.left.right.equalToSuperview()

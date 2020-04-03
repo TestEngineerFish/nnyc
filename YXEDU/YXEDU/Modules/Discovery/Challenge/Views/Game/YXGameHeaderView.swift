@@ -10,8 +10,8 @@ import UIKit
 
 class YXGameHeaderView: UIView {
 
-    var backButton: YXButton = {
-        let button = YXButton()
+    var backButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "gameBack"), for: .normal)
         return button
     }()

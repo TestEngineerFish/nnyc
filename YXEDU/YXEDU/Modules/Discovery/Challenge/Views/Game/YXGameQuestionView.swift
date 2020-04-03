@@ -56,8 +56,8 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
         return imageView
     }()
 
-    var skipButton: YXButton = {
-        let button = YXButton()
+    var skipButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "gameButtonSkip"), for: .normal)
         button.isHidden = true
         return button

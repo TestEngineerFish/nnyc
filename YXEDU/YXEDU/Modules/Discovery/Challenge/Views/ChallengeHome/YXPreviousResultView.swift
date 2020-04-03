@@ -91,8 +91,8 @@ class YXPreviousResultView: UIView {
         label.textAlignment = .left
         return label
     }()
-    var gainButton: YXButton = {
-        let button = YXButton()
+    var gainButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "gameResultFailButton"), for: .normal)
         button.setTitleColor(UIColor.hex(0xD9552E), for: .normal)
         button.titleLabel?.font = UIFont.semiboldFont(ofSize: AdaptSize(17))

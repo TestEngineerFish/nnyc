@@ -60,8 +60,8 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
         return indicatorView
     }()
 
-    var taskButton: YXButton = {
-        let button = YXButton()
+    var taskButton: UIButton = {
+        let button = UIButton()
         button.setTitle("去赚松果币", for: .normal)
         let size = CGSize(width: AdaptSize(259), height: AdaptSize(42))
         button.size = size

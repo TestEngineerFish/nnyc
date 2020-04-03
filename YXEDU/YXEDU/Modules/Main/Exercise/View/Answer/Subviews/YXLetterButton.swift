@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum YXButtonStatus {
+enum YXWordButtonStatus {
     case normal
     case selected
     case error
@@ -38,7 +38,7 @@ class YXLetterButton: UIButton {
         return imageView
     }()
 
-    var status: YXButtonStatus = .normal {
+    var status: YXWordButtonStatus = .normal {
         willSet {
             self.transform = .identity
             switch newValue {

@@ -97,8 +97,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         return animationView
     }()
 
-    var recordAudioButton: YXButton = {
-        let button = YXButton()
+    var recordAudioButton: UIButton = {
+        let button = UIButton()
         button.setImage(UIImage(named: "recordAudio"), for: .normal)
         return button
     }()

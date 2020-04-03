@@ -34,7 +34,7 @@ struct YXConnectionLettersConfig {
     var textDisableColor        = UIColor.black6
 
     var showFirstButton  = true
-    var initButtonStatus = YXButtonStatus.disable
+    var initButtonStatus = YXWordButtonStatus.disable
     var showAllRightView = false
     var showAllErrorView = false
     var resultAnimationTime = Double(3.0)
