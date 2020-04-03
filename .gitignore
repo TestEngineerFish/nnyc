@@ -57,7 +57,7 @@ playground.xcworkspace
 Pods/
 Podfile.lock
 .idea/
-*/.DS_Store
+.DS_Store
 #
 # Add this line if you want to avoid checking in source code from the Xcode workspace
 # *.xcworkspace
