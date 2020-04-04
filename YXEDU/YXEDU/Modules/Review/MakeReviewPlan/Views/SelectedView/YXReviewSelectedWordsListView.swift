@@ -199,6 +199,10 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         self.layoutSubviews()
     }
 
+    func isSelectedWordModel(wordModel: YXReviewWordModel) -> Bool {
+        return self.wordsModelList.contains(wordModel)
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         self.titleLabel.text = String(format: "%@%d", "已选择：", self.wordsModelList.count)

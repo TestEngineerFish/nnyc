@@ -71,8 +71,9 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     var previousLocation: CGPoint?
     weak var unitListDelegate: YXReviewUnitListViewProtocol?
     weak var selectedDelegate: YXReviewSelectedWordsListViewProtocol?
-    
-    var bookName = ""
+
+    var bookModel: YXReviewWordBookItemModel?
+    var otherModel: YXReviewOtherWordListModel?
     var unitListModel: [YXReviewUnitModel]       = []
     var resultUnitListModel: [YXReviewUnitModel] = []
     
@@ -89,9 +90,12 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     }
     
     func updateInfo() {
-        let desc     = String(format: "在 %@ 中搜索:", bookName)
+        guard let _bookModel = self.bookModel else {
+            return
+        }
+        let desc     = String(format: "在 %@ 中搜索:", _bookModel.name)
         let mAttrStr = NSMutableAttributedString(string: desc)
-        mAttrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black1, range: NSRange(location: 2, length: bookName.count))
+        mAttrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black1, range: NSRange(location: 2, length: _bookModel.name.count))
         self.tipsDesciptionLabel.attributedText = mAttrStr
         self.searchBar.becomeFirstResponder()
         self.searchBar.text      = ""
@@ -183,7 +187,7 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
         }
         let unitModel = self.resultUnitListModel[indexPath.section]
         let wordModel = unitModel.list[indexPath.row]
-        wordModel.bookId     = self.tag
+        wordModel.bookId     = self.bookModel?.id ?? 0
         wordModel.unitId     = unitModel.id
         wordModel.isSelected = !wordModel.isSelected
         cell.model           = wordModel
@@ -214,16 +218,35 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     private func search(_ keyValue: String) {
         self.resultUnitListModel = []
         if keyValue != "" {
-            for unitModel in self.unitListModel {
-                let resultWordList = unitModel.list.filter { (wordModel) -> Bool in
+            if self.bookModel?.type == .some(.unit) {
+                for unitModel in self.unitListModel {
+                    let resultWordList = unitModel.list.filter { (wordModel) -> Bool in
+                        let lowKeyValue = keyValue.lowercased()
+                        let lowWord     = wordModel.word.lowercased()
+                        return lowWord.hasPrefix(lowKeyValue)
+                    }
+                    if !resultWordList.isEmpty {
+                        let resultUnitModel = YXReviewUnitModel()
+                        resultUnitModel.id          = unitModel.id
+                        resultUnitModel.name        = unitModel.name
+                        resultUnitModel.wordsNumber = resultWordList.count
+                        resultUnitModel.list        = resultWordList
+                        resultUnitModel.isOpenUp    = true
+                        self.resultUnitListModel.append(resultUnitModel)
+                    }
+                }
+            } else {
+                guard let _otherModel = self.otherModel else {
+                    return
+                }
+                let resultWordList = _otherModel.wordModelList.filter { (wordModel) -> Bool in
                     let lowKeyValue = keyValue.lowercased()
                     let lowWord     = wordModel.word.lowercased()
                     return lowWord.hasPrefix(lowKeyValue)
                 }
                 if !resultWordList.isEmpty {
                     let resultUnitModel = YXReviewUnitModel()
-                    resultUnitModel.id          = unitModel.id
-                    resultUnitModel.name        = unitModel.name
+                    resultUnitModel.name        = self.bookModel?.name ?? ""
                     resultUnitModel.wordsNumber = resultWordList.count
                     resultUnitModel.list        = resultWordList
                     resultUnitModel.isOpenUp    = true
@@ -232,7 +255,7 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
             }
         }
     }
- 
+
     // MARK: ==== UITableViewDataSource ====
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.resultUnitListModel.count

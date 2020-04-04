@@ -8,7 +8,10 @@
 
 public enum YXReviewRequest: YYBaseRequest {
     case reviewBookList
-    case reviewWordList(bookId: Int, bookType: Int)
+    case reviewWordList(bookId: Int, unitId: Int)
+    case unitList(bookId: Int)
+    case wordListWithWrong(page: Int)
+    case wordListWithReviewPlan(id: Int, page: Int)
     case makeReviewPlan(name: String, code: Int?, idsList:String?)
     case updateReviewPlan(planId: Int, planName: String)
     case removeReviewPlan(planId: Int)
@@ -22,7 +25,7 @@ public enum YXReviewRequest: YYBaseRequest {
 extension YXReviewRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .reviewBookList, .reviewWordList, .reviewPlan, .reviewPlanDetail, .reviewResult, .reviewPlanStatusList, .studentStudyList:
+        case .reviewBookList, .reviewWordList, .reviewPlan, .reviewPlanDetail, .reviewResult, .reviewPlanStatusList, .studentStudyList, .unitList, .wordListWithWrong, .wordListWithReviewPlan:
             return .get
         case .makeReviewPlan, .updateReviewPlan, .removeReviewPlan:
             return .post
@@ -37,6 +40,8 @@ extension YXReviewRequest {
             return YXAPI.Review.reviewBookList
         case .reviewWordList:
             return YXAPI.Review.reviewWordList
+        case .unitList:
+            return YXAPI.Review.unitList
         case .makeReviewPlan:
             return YXAPI.Review.maekReviewPlan
         case .updateReviewPlan:
@@ -53,6 +58,10 @@ extension YXReviewRequest {
             return YXAPI.Review.reviewPlanStatusList
         case .studentStudyList:
             return YXAPI.Review.studentStudyList
+        case .wordListWithWrong:
+            return YXAPI.Review.wordListWithWrong
+        case .wordListWithReviewPlan:
+            return YXAPI.Review.wordListWithReviewPlan
         }
     }
 }
@@ -60,8 +69,8 @@ extension YXReviewRequest {
 extension YXReviewRequest {
     public var parameters: [String : Any?]? {
         switch self {
-        case .reviewWordList(let bookId, let bookType):
-            return ["review_book_id" : bookId, "review_book_type" : bookType]
+        case .reviewWordList(let bookId, let unitId):
+            return ["book_id" : bookId, "unit_id" : unitId]
         case .makeReviewPlan(let name, let code, let idsList):
             return ["review_plan_name" : name, "review_plan_id" : code, "review_word_ids" : idsList]
         case .reviewPlanDetail(let planId):
@@ -74,6 +83,12 @@ extension YXReviewRequest {
             return ["learn_type" : type, "review_id" : planId]
         case .reviewPlanStatusList(let page):
             return ["page": page]
+        case .wordListWithWrong(let page):
+            return ["page": page]
+        case .wordListWithReviewPlan(let id, let page):
+            return ["review_plan_id": id, "page": page]
+        case .unitList(let bookId):
+            return ["book_id": bookId]
         default:
             return nil
         }

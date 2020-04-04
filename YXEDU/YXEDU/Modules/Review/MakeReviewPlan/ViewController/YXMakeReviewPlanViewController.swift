@@ -99,6 +99,8 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     // MARK: ==== Request ====
 
+
+    /// 请求数列表
     private func requestBooksList() {
         let request = YXReviewRequest.reviewBookList
         YYNetworkService.default.request(YYStructResponse<YXReviewBookModel>.self, request: request, success: { [weak self] (response) in
@@ -107,7 +109,9 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             }
             for (index, bookModel) in _model.list.enumerated() {
                 if bookModel.isLearning {
-                    _model.modelDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
+                    if bookModel.type == .unit {
+                        _model.unitModelListDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
+                    }
                     self.segmentControllerView.lastSelectedIndex = IndexPath(item: index, section: 0)
                 }
             }
@@ -118,25 +122,9 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         }
     }
 
-    private func requestWordsList(_ bookId: Int, type: Int) {
-        let request = YXReviewRequest.reviewWordList(bookId: bookId, bookType: type)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let unitModelList = response.dataArray else {
-                return
-            }
-            self.model?.modelDict.updateValue(unitModelList, forKey: "\(bookId)")
-            self.segmentControllerView.reloadData()
-            // 如果当前请求的页面还停留在主页面,则刷新显示
-            for (row, cell) in self.segmentControllerView.contentScrollView.visibleCells.enumerated() {
-                if cell.tag == bookId {
-                    self.segmentControllerView.contentScrollView.reloadItems(at: [IndexPath(row: row, section: 0)])
-                }
-            }
-        }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
-        }
-    }
 
+    /// 创建复习计划
+    /// - Parameter name: 复习计划名称
     private func requestMakeReviewPlan(_ name: String) {
         let idsList = self.selectedWordsListView.wordsModelList.map { (wordModel) -> Int in
             return wordModel.id
@@ -196,10 +184,23 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         }
         
         let bookModel = _model.list[self.selectedIndex]
-        if let unitModelList = _model.modelDict["\(bookModel.id)"] {
-            self.searchView.tag                      = bookModel.id
-            self.searchView.bookName      = bookModel.name
-            self.searchView.unitListModel = unitModelList
+        self.searchView.bookModel = bookModel
+
+        var result = false
+        if bookModel.type == .unit {
+            // 下载当前词书所有单元
+            if let unitModelList = _model.unitModelListDict["\(bookModel.id)"] {
+                self.searchView.unitListModel = unitModelList
+                result = true
+            }
+        } else {
+            if let _otherModel = _model.otherModelDict["\(bookModel.id)"] {
+                self.searchView.otherModel = _otherModel
+                result = true
+            }
+        }
+
+        if result {
             self.searchView.updateInfo()
             UIView.animate(withDuration: 0.25) {
                 self.searchView.layer.opacity = 1.0
@@ -207,6 +208,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         } else {
             YXUtils.showHUD(self.view, title: "当前书未加载完成，请稍后再试～")
         }
+
     }
 
     // MARK: ==== Tools ====
@@ -226,11 +228,11 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             }
             list.forEach { (bookModel) in
                 if bookModel.id == bookId {
-                    if bookModel.type == 1 {
+                    if bookModel.type == .wrongList {
                         bookName = "错词本\(YXReviewDataManager.reviewPlanName)"
-                    } else if bookModel.type == 2 {
+                    } else if bookModel.type == .collect {
                         bookName = "收藏单词\(YXReviewDataManager.reviewPlanName)"
-                    } else if bookModel.type == 3 {
+                    } else if bookModel.type == .unit {
                         bookName = bookModel.name + "\(YXReviewDataManager.reviewPlanName)"
                     } else {
                         bookName = "我的\(YXReviewDataManager.reviewPlanName)"
@@ -285,32 +287,12 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             return UIView()
         }
         let bookModel = model.list[indexPath.row]
-        if let unitModelList = model.modelDict["\(bookModel.id)"] {
-            if bookModel.type != 3 {
-                unitModelList.forEach { (unitModel) in
-                    unitModel.isOpenUp = true
-                }
-            }
-            unitModelList.forEach { (unitModel) in
-                unitModel.list.forEach { (wordModel) in
-                    if self.selectedWordsListView.wordsModelList.contains(wordModel) {
-                        wordModel.isSelected = true
-                    } else {
-                        wordModel.isSelected = false
-                    }
-                }
-            }
-            let unitListView = YXReviewUnitListView(unitModelList, frame: CGRect.zero)
-            unitListView.tag      = bookModel.id
-            unitListView.delegate = self.selectedWordsListView
-            self.reviewDelegate   = unitListView
-            self.selectedWordsListView.delegate = self
-            self.currentContentView = unitListView
-            return unitListView
-        } else {
-            self.requestWordsList(bookModel.id, type: bookModel.type)
-            return UIView()
-        }
+        let unitListView = YXReviewUnitListView(model, bookModel: bookModel, frame: .zero)
+        unitListView.delegate               = self.selectedWordsListView
+        self.reviewDelegate                 = unitListView
+        self.selectedWordsListView.delegate = self
+        self.currentContentView             = unitListView
+        return unitListView
     }
 
     func segment(didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
@@ -334,12 +316,21 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     // MARK: ==== YXReviewSelectedWordsListViewProtocol ====
     func unselect(_ word: YXReviewWordModel) {
-        if let unitModelList = currentContentView?.unitModelList {
-            unitModelList.forEach { (unitModel) in
+        guard let currentView = self.currentContentView else {
+            return
+        }
+        if currentView.bookModel.type == .some(.unit) {
+            currentView.unitModelList.forEach { (unitModel) in
                 unitModel.list.forEach { (wordModel) in
                     if wordModel.id == word.id {
                         wordModel.isSelected = false
                     }
+                }
+            }
+        } else {
+            currentView.otherUnitModel.wordModelList.forEach { (wordModel) in
+                if wordModel.id == word.id {
+                    wordModel.isSelected = false
                 }
             }
         }
@@ -353,7 +344,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         guard let model = self.model else {
             return
         }
-        if let unitModelList = model.modelDict["\(word.bookId)"] {
+        if let unitModelList = model.unitModelListDict["\(word.bookId)"] {
             unitModelList.forEach { (unitModel) in
                 if unitModel.id == word.unitId {
                     unitModel.list.forEach { (wordModel) in

@@ -12,31 +12,41 @@ import ObjectMapper
 class YXReviewBookModel: Mappable {
     var list: [YXReviewWordBookItemModel] = []
     var currentModel: [YXReviewUnitModel] = []
-    var modelDict: [String:[YXReviewUnitModel]] = [:]
+    /// 仅包含词书的单词列表字典
+    var unitModelListDict: [String:[YXReviewUnitModel]] = [:]
+    /// 包含错词本和复习计划的字典
+    var otherModelDict: [String:YXReviewOtherWordListModel] = [:]
 
     required init?(map: Map) {}
 
     func mapping(map: Map) {
         list         <- map["list"]
-        currentModel <- map["cur_words"]
+        currentModel <- map["cur_book_unit_list"]
     }
 }
 
 class YXReviewWordBookItemModel: Mappable {
     var id: Int          = 0
-    var type: Int        = 0 //1-错词本 2-收藏夹 3-年级词书 4-复习计划
     var name             = ""
     var shortName        = ""
     var wordsNumber: Int = 0
     var versionName      = ""
     var isLearning       = false
     var isSelected       = false
+    var typeInt: Int     = 0 {
+        willSet {
+            if let type = YXReviewBookType(rawValue: newValue) {
+                self.type = type
+            }
+        }
+    } //1-错词本 2-收藏夹 3-年级词书 4-复习计划
+    var type: YXReviewBookType = .unit
 
     required init?(map: Map) {}
 
     func mapping(map: Map) {
         id          <- map["review_book_id"]
-        type        <- map["review_book_type"]
+        typeInt     <- map["review_book_type"]
         name        <- map["review_book_name"]
         wordsNumber <- map["review_book_num"]
         shortName   <- map["book_comment"]
@@ -51,16 +61,16 @@ class YXReviewUnitModel: Mappable {
     var name: String     = ""
     var wordsNumber: Int = 0
     var list: [YXReviewWordModel]          = []
-    var isCheckAll: Bool {
+    var isSelectedAll: Bool {
         get {
-            var checkAll = true
+            var selectedAll = true
             for wordModel in list {
                 if !wordModel.isSelected {
-                    checkAll = false
+                    selectedAll = false
                     break
                 }
             }
-            return checkAll
+            return selectedAll
         }
     }
     var isOpenUp         = false
@@ -72,7 +82,6 @@ class YXReviewUnitModel: Mappable {
         id          <- map["unit_id"]
         name        <- map["unit_name"]
         wordsNumber <- map["words_num"]
-        list        <- map["list"]
     }
 
 }
@@ -119,5 +128,22 @@ class YXReviewWordModel: Mappable, Equatable {
             return false
         }
     }
+}
 
+class YXReviewOtherWordListModel: Mappable {
+    var nextPage: Int  = 1
+    var total: Int     = 0
+    var haveMore: Bool = true
+    var isOpenUp: Bool = true
+    var wordModelList: [YXReviewWordModel] = []
+
+    init() {}
+    required init?(map: Map) {}
+
+    func mapping(map: Map) {
+        self.nextPage      <- map["page"]
+        self.haveMore      <- map["hash_more"]
+        self.total         <- map["total"]
+        self.wordModelList <- map["list"]
+    }
 }

@@ -66,12 +66,6 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     func bindData(_ model: YXReviewUnitModel) {
         self.model              = model
         self.unitNameLabel.text = model.name
-//        var unitWidth = model.name.textWidth(font: self.unitNameLabel.font, height: self.height)
-//        unitWidth = unitWidth > ( self.unitNameLabel.frame.minY)
-//        self.unitNameLabel.snp.updateConstraints { (make) in
-//            make.width.equalTo(unitWidth)
-//        }
-//        self.setNeedsLayout()
     }
 
     override func layoutSubviews() {
@@ -90,7 +84,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
         attrStr.addAttributes([NSAttributedString.Key.foregroundColor : numberColor], range: NSRange(location: 1, length: "\(selectedNum)".count))
         self.statisticsLabel.attributedText = attrStr
-        let checkAllText = model.isCheckAll ? "取消全选" : "全选"
+        let checkAllText = model.isSelectedAll ? "取消全选" : "全选"
         self.checkAllButton.setTitle(checkAllText, for: .normal)
         self.checkAllButton.isHidden = !model.isOpenUp
     }
@@ -145,7 +139,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         guard let unitModel = self.model else {
             return
         }
-        if unitModel.isCheckAll {
+        if unitModel.isSelectedAll {
             self.delegate?.uncheckAll(unitModel, section: self.tag)
             button.setTitle("全选", for: .normal)
         } else {
@@ -158,7 +152,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         guard let view = tap.view as? YXReviewUnitListHeaderView, let unitModel = view.model else {
             return
         }
-        unitModel.isOpenUp = !unitModel.isOpenUp
+//        unitModel.isOpenUp = !unitModel.isOpenUp
         if unitModel.isOpenUp {
             view.arrowButton.transform = CGAffineTransform(rotationAngle: .pi)
         } else {

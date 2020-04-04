@@ -85,9 +85,9 @@ struct YXAPI {
     // MARK: - 复习模块
     struct Review {
         /// 获得复习计划中词书选项列表
-        static let reviewBookList = "/api/v1/learn/getreviewbooklist"
+        static let reviewBookList = "/api/v2/review/getreviewbooklist"
         /// 获得复习计划中词书选项中单词列表
-        static let reviewWordList = "/api/v1/learn/getreviewwordlist"
+        static let reviewWordList = "/api/v1/book/getbookunitwordlist"
         /// 创建复习计划
         static let maekReviewPlan = "/api/v1/learn/createreviewplan"
         /// 修改复习计划名称
@@ -104,12 +104,16 @@ struct YXAPI {
         static let shareCommand = "/api/v1/learn/setsharereviewplan"
         /// 复习结果页
         static let reviewResult = "/api/v1/learn/result"
-        
-        // 词单学习情况列表
+        /// 词单学习情况列表
         static let reviewPlanStatusList = "api/v1/learn/getsharestudylist"
-
-        // 获得词单学习情况列表
+        /// 获得词单学习情况列表
         static let studentStudyList = "/api/v1/learn/getsharestudylist"
+        /// 获得词书单元列表
+        static let unitList = "/api/v1/book/getbookunitlist"
+        /// 错词本分页接口
+        static let wordListWithWrong = "/api/v2/word/getwronglist"
+        /// 获得复习计划单词列表
+        static let wordListWithReviewPlan = "/api/v2/review/getreviewplanwordlist"
     }
 
     // MARK: - 单词列表模块
