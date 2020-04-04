@@ -87,8 +87,8 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     }
 
     private func bindData() {
-        self.searchView.unitListDelegate = self.selectedWordsListView
-        self.searchView.selectedDelegate = self
+        self.searchView.unitListDelegate              = self.selectedWordsListView
+        self.searchView.selectedDelegate              = self
         self.segmentControllerView.delegate           = self
         self.selectedWordsListView.delegateArrow      = self
         self.selectedWordsListView.delegateBottomView = self.bottomView

@@ -139,6 +139,11 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         if self.wordsModelList.count > maxWordsCount {
             self.delegateBottomView?.showRemind()
         }
+        if self.wordsModelList.count < 4 {
+            self.delegateBottomView?.setButtonStatus(.disable)
+        } else {
+            self.delegateBottomView?.setButtonStatus(.normal)
+        }
         self.tableView.insertRows(at: [IndexPath(row: self.wordsModelList.count - 1, section: 0)], with: .right)
         self.setNeedsLayout()
     }
