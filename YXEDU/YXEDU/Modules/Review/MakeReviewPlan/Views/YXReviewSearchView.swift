@@ -73,7 +73,6 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     weak var selectedDelegate: YXReviewSelectedWordsListViewProtocol?
 
     var bookModel: YXReviewWordBookItemModel?
-    var otherModel: YXReviewOtherWordListModel?
     var unitListModel: [YXReviewUnitModel]       = []
     var resultUnitListModel: [YXReviewUnitModel] = []
     
@@ -218,35 +217,16 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     private func search(_ keyValue: String) {
         self.resultUnitListModel = []
         if keyValue != "" {
-            if self.bookModel?.type == .some(.unit) {
-                for unitModel in self.unitListModel {
-                    let resultWordList = unitModel.list.filter { (wordModel) -> Bool in
-                        let lowKeyValue = keyValue.lowercased()
-                        let lowWord     = wordModel.word.lowercased()
-                        return lowWord.hasPrefix(lowKeyValue)
-                    }
-                    if !resultWordList.isEmpty {
-                        let resultUnitModel = YXReviewUnitModel()
-                        resultUnitModel.id          = unitModel.id
-                        resultUnitModel.name        = unitModel.name
-                        resultUnitModel.wordsNumber = resultWordList.count
-                        resultUnitModel.list        = resultWordList
-                        resultUnitModel.isOpenUp    = true
-                        self.resultUnitListModel.append(resultUnitModel)
-                    }
-                }
-            } else {
-                guard let _otherModel = self.otherModel else {
-                    return
-                }
-                let resultWordList = _otherModel.wordModelList.filter { (wordModel) -> Bool in
+            for unitModel in self.unitListModel {
+                let resultWordList = unitModel.list.filter { (wordModel) -> Bool in
                     let lowKeyValue = keyValue.lowercased()
                     let lowWord     = wordModel.word.lowercased()
                     return lowWord.hasPrefix(lowKeyValue)
                 }
                 if !resultWordList.isEmpty {
                     let resultUnitModel = YXReviewUnitModel()
-                    resultUnitModel.name        = self.bookModel?.name ?? ""
+                    resultUnitModel.id          = unitModel.id
+                    resultUnitModel.name        = unitModel.name
                     resultUnitModel.wordsNumber = resultWordList.count
                     resultUnitModel.list        = resultWordList
                     resultUnitModel.isOpenUp    = true

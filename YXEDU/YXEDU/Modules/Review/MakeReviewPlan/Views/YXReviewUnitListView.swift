@@ -23,7 +23,6 @@ enum YXReviewBookType: Int {
     case collect    = 2
     case unit       = 3
     case reviewPlan = 4
-
 }
 
 class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, YXReviewUnitListHeaderProtocol, YXReviewUnitListUpdateProtocol {
@@ -38,36 +37,20 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
 
     var model: YXReviewBookModel
     var unitModelList: [YXReviewUnitModel] = []
-    var otherUnitModel = YXReviewOtherWordListModel()
 
     weak var delegate: YXReviewUnitListViewProtocol?
     final let kYXReviewUnitListCell       = "YXReviewUnitListCell"
     final let kYXReviewUnitListHeaderView = "YXReviewUnitListHeaderView"
     
     init(_ model: YXReviewBookModel, bookModel: YXReviewWordBookItemModel, frame: CGRect) {
-        self.model         = model
-        self.bookModel     = bookModel
+        self.model     = model
+        self.bookModel = bookModel
         super.init(frame: frame)
 
-        if bookModel.type == .unit {
-            if let _unitModelList = model.unitModelListDict["\(bookModel.id)"] {
-                self.unitModelList = _unitModelList
-            } else {
-                self.requestUnitListWithBook()
-            }
+        if let _unitModelList = model.modelDict["\(bookModel.id)"] {
+            self.unitModelList = _unitModelList
         } else {
-            if let _otherUnitModel = model.otherModelDict["\(bookModel.id)"] {
-                self.otherUnitModel = _otherUnitModel
-            } else {
-                switch bookModel.type {
-                case .wrongList:
-                    self.requestWordListWithWrong()
-                case .reviewPlan:
-                    self.requestWordListWithReviewPlan()
-                default:
-                    break
-                }
-            }
+            self.requestWordsList(bookModel.id, type: bookModel.type)
         }
 
         // ---- 数据处理 ----
@@ -113,13 +96,10 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         }
         var unitModelId = 0
         let wordModel: YXReviewWordModel = {
-            if self.bookModel.type == .unit {
-                let unitModel = self.unitModelList[indexPath.section]
-                unitModelId = unitModel.id
-                return unitModel.list[indexPath.row]
-            } else {
-                return self.otherUnitModel.wordModelList[indexPath.row]
-            }
+
+            let unitModel = self.unitModelList[indexPath.section]
+            unitModelId = unitModel.id
+            return unitModel.list[indexPath.row]
         }()
 
         wordModel.bookId     = self.bookModel.id
@@ -135,98 +115,32 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     }
     // MARK: ---- Request ----
 
-    /// 请求词书单元列表
-    /// - Parameter bookId: 词书ID
-    private func requestUnitListWithBook() {
-        let request = YXReviewRequest.unitList(bookId: self.bookModel.id)
+    private func requestWordsList(_ bookId: Int, type: YXReviewBookType) {
+        let request = YXReviewRequest.reviewWordList(bookId: bookId, bookType: type.rawValue)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let unitModelList = response.dataArray else {
                 return
             }
-            self.unitModelList = unitModelList
-            self.model.unitModelListDict.updateValue(unitModelList, forKey: "\(self.bookModel.id)")
-            self.tableView.reloadData()
-        }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
-        }
-    }
-
-    /// 请求复习计划单词列表
-    /// - Parameters:
-    ///   - bookId: 复习计划ID
-    ///   - page: 分页数
-    private func requestWordListWithReviewPlan() {
-        if self.otherUnitModel.nextPage == 1 {
-            self.otherUnitModel.wordModelList.removeAll()
-        }
-        if !self.otherUnitModel.haveMore {
-            return
-        }
-        let request = YXReviewRequest.wordListWithReviewPlan(id: self.bookModel.id, page: self.otherUnitModel.nextPage)
-        YYNetworkService.default.request(YYStructResponse<YXReviewOtherWordListModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let otherModel = response.data else {
-                return
+            if type != .unit {
+                unitModelList.first?.isOpenUp = true
             }
-            self.loading = false
-            self.otherUnitModel.nextPage = otherModel.nextPage + 1
-            self.otherUnitModel.haveMore = otherModel.haveMore
-            self.otherUnitModel.total    = otherModel.total
-            self.otherUnitModel.wordModelList += otherModel.wordModelList
-            self.model.otherModelDict.updateValue(self.otherUnitModel, forKey: "\(self.bookModel.id)")
-            self.tableView.reloadData()
-        }) { (error) in
-            self.loading = false
-            YXUtils.showHUD(kWindow, title: error.message)
-        }
-    }
-
-    /// 请求错词本单词列表
-    /// - Parameter page: 分页数
-    private func requestWordListWithWrong() {
-        if self.otherUnitModel.nextPage == 1 {
-            self.otherUnitModel.wordModelList.removeAll()
-        }
-        if !self.otherUnitModel.haveMore {
-            return
-        }
-        let request = YXReviewRequest.wordListWithWrong(page: self.otherUnitModel.nextPage)
-        YYNetworkService.default.request(YYStructResponse<YXReviewOtherWordListModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let otherModel = response.data else {
-                return
-            }
-            self.loading = false
-            self.otherUnitModel.nextPage = otherModel.nextPage + 1
-            self.otherUnitModel.haveMore = otherModel.haveMore
-            self.otherUnitModel.total    = otherModel.total
-            self.otherUnitModel.wordModelList += otherModel.wordModelList
-            self.model.otherModelDict.updateValue(self.otherUnitModel, forKey: "\(self.bookModel.id)")
-            self.tableView.reloadData()
-        }) { (error) in
-            self.loading = false
-            YXUtils.showHUD(kWindow, title: error.message)
-        }
-    }
-
-    /// 请求词书单词列表
-    /// - Parameters:
-    ///   - unitID: 单元ID
-    private func requestWordsListWithBook(unitID: Int) {
-        let request = YXReviewRequest.reviewWordList(bookId: self.bookModel.id, unitId: unitID)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewWordModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let wordModelList = response.dataArray else {
-                return
-            }
-            self.unitModelList.forEach { (unitModel) in
-                if unitModel.id == unitID {
-                    unitModel.list = wordModelList
+            unitModelList.forEach { (unitModel) in
+                unitModel.list.forEach { (_wordModel) in
+                    if self.delegate?.isSelectedWordModel(wordModel: _wordModel) ?? false {
+                        _wordModel.isSelected = true
+                    } else {
+                        _wordModel.isSelected = false
+                    }
                 }
             }
+            self.unitModelList = unitModelList
+            self.model.modelDict.updateValue(unitModelList, forKey: "\(bookId)")
             self.tableView.reloadData()
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
-    
+
     // MARK: ==== UIGestureRecognizerDelegate ====
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -280,23 +194,15 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     // MARK: ==== UITableViewDataSource ====
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if bookModel.type == .unit {
-            return self.unitModelList.count
-        } else {
-            return 1
-        }
+        return self.unitModelList.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if bookModel.type == .unit {
-            let unitModel = self.unitModelList[section]
-            if unitModel.isOpenUp {
-                return unitModel.list.count
-            } else {
-                return 0
-            }
+        let unitModel = self.unitModelList[section]
+        if unitModel.isOpenUp {
+            return unitModel.list.count
         } else {
-            return self.otherUnitModel.wordModelList.count
+            return 0
         }
     }
     
@@ -304,17 +210,15 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         guard let headerView = view as? YXReviewUnitListHeaderView else {
             return
         }
-        if bookModel.type == .unit {
-            let unitModel = self.unitModelList[section]
-            headerView.bindData(unitModel)
-        } else {
-            let unitModel = YXReviewUnitModel()
-            unitModel.name        = self.bookModel.name
-            unitModel.wordsNumber = self.otherUnitModel.total
-            unitModel.list        = self.otherUnitModel.wordModelList
-            unitModel.isOpenUp    = true
-            headerView.bindData(unitModel)
+        let unitModel = self.unitModelList[section]
+        unitModel.list.forEach { (_wordModel) in
+            if self.delegate?.isSelectedWordModel(wordModel: _wordModel) ?? false {
+                _wordModel.isSelected = true
+            } else {
+                _wordModel.isSelected = false
+            }
         }
+        headerView.bindData(unitModel)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -331,11 +235,13 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             return
         }
         let wordModel: YXReviewWordModel = {
-            if bookModel.type == .unit {
-                return self.unitModelList[indexPath.section].list[indexPath.row]
+            let _wordModel = self.unitModelList[indexPath.section].list[indexPath.row]
+            if self.delegate?.isSelectedWordModel(wordModel: _wordModel) ?? false {
+                _wordModel.isSelected = true
             } else {
-                return otherUnitModel.wordModelList[indexPath.row]
+                _wordModel.isSelected = false
             }
+            return _wordModel
         }()
         cell.bindData(wordModel)
         cell.indexPath = indexPath
@@ -351,24 +257,6 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: kYXReviewUnitListCell) as? YXReviewWordViewCell else {
             return UITableViewCell()
         }
-        let currentWordsCount: Int = {
-            if bookModel.type == .unit {
-                return self.unitModelList[indexPath.section].list.count
-            } else {
-                return otherUnitModel.wordModelList.count
-            }
-        }()
-        if indexPath.row >= currentWordsCount - 1 && !self.loading {
-            self.loading = true
-            switch self.bookModel.type {
-            case .wrongList:
-                self.requestWordListWithWrong()
-            case .reviewPlan:
-                self.requestWordListWithReviewPlan()
-            default:
-                break
-            }
-        }
         return cell
     }
     
@@ -383,11 +271,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let wordModel: YXReviewWordModel = {
-            if self.bookModel.type == .unit {
-                return self.unitModelList[indexPath.section].list[indexPath.row]
-            } else {
-                return self.otherUnitModel.wordModelList[indexPath.row]
-            }
+            return self.unitModelList[indexPath.section].list[indexPath.row]
         }()
         let home = UIStoryboard(name: "Home", bundle: nil)
         let wordDetialViewController           = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
@@ -399,11 +283,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     // MARK: ==== YXReviewUnitListHeaderProtocol ====
     func checkAll(_ unitModel: YXReviewUnitModel, section: Int) {
         let wordList: [YXReviewWordModel] = {
-            if self.bookModel.type == .unit {
-                return self.unitModelList[section].list
-            } else {
-                return self.otherUnitModel.wordModelList
-            }
+            return self.unitModelList[section].list
         }()
         wordList.forEach { (wordModel) in
             if !wordModel.isSelected {
@@ -418,11 +298,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     
     func uncheckAll(_ unitModel: YXReviewUnitModel, section: Int) {
         let wordList: [YXReviewWordModel] = {
-            if self.bookModel.type == .unit {
-                return self.unitModelList[section].list
-            } else {
-                return self.otherUnitModel.wordModelList
-            }
+            return self.unitModelList[section].list
         }()
         wordList.forEach { (wordModel) in
             if wordModel.isSelected {
@@ -435,34 +311,26 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     
     func clickHeaderView(_ section: Int) {
 
-        var isOpenUp = false
-        let wordList: [YXReviewWordModel] = {
-            if self.bookModel.type == .unit {
-                let unitModel = self.unitModelList[section]
-                unitModel.isOpenUp = !unitModel.isOpenUp
-                isOpenUp = unitModel.isOpenUp
-                return unitModel.list
-            } else {
-                self.otherUnitModel.isOpenUp = !self.otherUnitModel.isOpenUp
-                isOpenUp = self.otherUnitModel.isOpenUp
-                return self.otherUnitModel.wordModelList
-            }
-        }()
+        let unitModel = self.unitModelList[section]
+        unitModel.isOpenUp = !unitModel.isOpenUp
         // ---- 是否展示引导图
-        if isOpenUp{
+        if unitModel.isOpenUp{
             if !(YYCache.object(forKey: YXLocalKey.alreadShowMakeReviewGuideView.rawValue) as? Bool ?? false) {
                 self.guideView.show()
             }
         }
-        if wordList.isEmpty && self.bookModel.type == .unit {
-            self.requestWordsListWithBook(unitID: self.unitModelList[section].id)
-        } else {
-            tableView.reloadSections(IndexSet(integer: section), with: .automatic)
-        }
+        tableView.reloadSections(IndexSet(integer: section), with: .automatic)
     }
 
     // MARK: ==== YXReviewUnitListUpdateProtocol ====
     func updateSelectStatus(_ wordModel: YXReviewWordModel) {
+        self.unitModelList.forEach { (unitModel) in
+            unitModel.list.forEach { (_wordModel) in
+                if _wordModel.id == wordModel.id {
+                    _wordModel.isSelected = wordModel.isSelected
+                }
+            }
+        }
         self.tableView.reloadData()
     }
 }

@@ -25,7 +25,7 @@ class YXViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        YXLog("=============== 内存告警 ================")
+        YXLog("=============== \(self.classForCoder) 内存告警 ================")
     }
 
     

@@ -85,9 +85,9 @@ struct YXAPI {
     // MARK: - 复习模块
     struct Review {
         /// 获得复习计划中词书选项列表
-        static let reviewBookList = "/api/v2/review/getreviewbooklist"
+        static let reviewBookList = "/api/v1/learn/getreviewbooklist"
         /// 获得复习计划中词书选项中单词列表
-        static let reviewWordList = "/api/v1/book/getbookunitwordlist"
+        static let reviewWordList = "/api/v1/learn/getreviewwordlist"
         /// 创建复习计划
         static let maekReviewPlan = "/api/v1/learn/createreviewplan"
         /// 修改复习计划名称

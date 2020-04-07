@@ -12,16 +12,13 @@ import ObjectMapper
 class YXReviewBookModel: Mappable {
     var list: [YXReviewWordBookItemModel] = []
     var currentModel: [YXReviewUnitModel] = []
-    /// 仅包含词书的单词列表字典
-    var unitModelListDict: [String:[YXReviewUnitModel]] = [:]
-    /// 包含错词本和复习计划的字典
-    var otherModelDict: [String:YXReviewOtherWordListModel] = [:]
+    var modelDict: [String:[YXReviewUnitModel]] = [:]
 
     required init?(map: Map) {}
 
     func mapping(map: Map) {
         list         <- map["list"]
-        currentModel <- map["cur_book_unit_list"]
+        currentModel <- map["cur_words"]
     }
 }
 
@@ -60,7 +57,7 @@ class YXReviewUnitModel: Mappable {
     var id: Int          = 0
     var name: String     = ""
     var wordsNumber: Int = 0
-    var list: [YXReviewWordModel]          = []
+    var list: [YXReviewWordModel] = []
     var isSelectedAll: Bool {
         get {
             var selectedAll = true
@@ -82,6 +79,7 @@ class YXReviewUnitModel: Mappable {
         id          <- map["unit_id"]
         name        <- map["unit_name"]
         wordsNumber <- map["words_num"]
+        list        <- map["list"]
     }
 
 }
@@ -128,22 +126,5 @@ class YXReviewWordModel: Mappable, Equatable {
             return false
         }
     }
-}
 
-class YXReviewOtherWordListModel: Mappable {
-    var nextPage: Int  = 1
-    var total: Int     = 0
-    var haveMore: Bool = true
-    var isOpenUp: Bool = true
-    var wordModelList: [YXReviewWordModel] = []
-
-    init() {}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        self.nextPage      <- map["page"]
-        self.haveMore      <- map["hash_more"]
-        self.total         <- map["total"]
-        self.wordModelList <- map["list"]
-    }
 }

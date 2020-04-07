@@ -37,7 +37,6 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     let searchView            = YXReviewSearchView()
     var selectedWordsListView = YXReviewSelectedWordsListView()
     var bottomView            = YXReviewBottomView()
-    var currentContentView: YXReviewUnitListView?
     weak var delegate: YXMakeReviewPlanProtocol?
     weak var reviewDelegate: YXReviewUnitListUpdateProtocol?
 
@@ -100,7 +99,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     // MARK: ==== Request ====
 
 
-    /// 请求数列表
+    /// 请求书列表
     private func requestBooksList() {
         let request = YXReviewRequest.reviewBookList
         YYNetworkService.default.request(YYStructResponse<YXReviewBookModel>.self, request: request, success: { [weak self] (response) in
@@ -109,9 +108,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             }
             for (index, bookModel) in _model.list.enumerated() {
                 if bookModel.isLearning {
-                    if bookModel.type == .unit {
-                        _model.unitModelListDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
-                    }
+                    _model.modelDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
                     self.segmentControllerView.lastSelectedIndex = IndexPath(item: index, section: 0)
                 }
             }
@@ -121,7 +118,6 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
-
 
     /// 创建复习计划
     /// - Parameter name: 复习计划名称
@@ -187,17 +183,10 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         self.searchView.bookModel = bookModel
 
         var result = false
-        if bookModel.type == .unit {
-            // 下载当前词书所有单元
-            if let unitModelList = _model.unitModelListDict["\(bookModel.id)"] {
-                self.searchView.unitListModel = unitModelList
-                result = true
-            }
-        } else {
-            if let _otherModel = _model.otherModelDict["\(bookModel.id)"] {
-                self.searchView.otherModel = _otherModel
-                result = true
-            }
+        // 下载当前词书所有单元
+        if let unitModelList = _model.modelDict["\(bookModel.id)"] {
+            self.searchView.unitListModel = unitModelList
+            result = true
         }
 
         if result {
@@ -291,7 +280,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         unitListView.delegate               = self.selectedWordsListView
         self.reviewDelegate                 = unitListView
         self.selectedWordsListView.delegate = self
-        self.currentContentView             = unitListView
+//        self.currentContentView             = unitListView
         return unitListView
     }
 
@@ -316,24 +305,6 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     // MARK: ==== YXReviewSelectedWordsListViewProtocol ====
     func unselect(_ word: YXReviewWordModel) {
-        guard let currentView = self.currentContentView else {
-            return
-        }
-        if currentView.bookModel.type == .some(.unit) {
-            currentView.unitModelList.forEach { (unitModel) in
-                unitModel.list.forEach { (wordModel) in
-                    if wordModel.id == word.id {
-                        wordModel.isSelected = false
-                    }
-                }
-            }
-        } else {
-            currentView.otherUnitModel.wordModelList.forEach { (wordModel) in
-                if wordModel.id == word.id {
-                    wordModel.isSelected = false
-                }
-            }
-        }
         if self.searchView.layer.opacity > 0 {
             self.searchView.tableView.reloadData()
         }
@@ -341,20 +312,20 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     }
     
     func selected(_ word: YXReviewWordModel) {
-        guard let model = self.model else {
-            return
-        }
-        if let unitModelList = model.unitModelListDict["\(word.bookId)"] {
-            unitModelList.forEach { (unitModel) in
-                if unitModel.id == word.unitId {
-                    unitModel.list.forEach { (wordModel) in
-                        if wordModel.id == word.id {
-                            wordModel.isSelected = true
-                        }
-                    }
-                }
-            }
-        }
+//        guard let model = self.model else {
+//            return
+//        }
+//        if let unitModelList = model.modelDict["\(word.bookId)"] {
+//            unitModelList.forEach { (unitModel) in
+//                if unitModel.id == word.unitId {
+//                    unitModel.list.forEach { (wordModel) in
+//                        if wordModel.id == word.id {
+//                            wordModel.isSelected = true
+//                        }
+//                    }
+//                }
+//            }
+//        }
         self.reviewDelegate?.updateSelectStatus(word)
     }
 }
