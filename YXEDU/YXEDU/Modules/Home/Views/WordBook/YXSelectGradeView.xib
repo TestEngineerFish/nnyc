@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXSelectGradeView" customModule="YXEDU" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundView" destination="QNh-K5-kKL" id="5Qv-1c-zpd"/>
                 <outlet property="collectionViewHeight" destination="B0M-MZ-Vpw" id="5lU-H7-bL7"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="Pzs-AK-KJx"/>
                 <outlet property="gradeCollectionView" destination="OVT-rn-aMq" id="WPg-l8-B5d"/>

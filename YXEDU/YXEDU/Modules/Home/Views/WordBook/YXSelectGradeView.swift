@@ -12,14 +12,15 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     
     private var grades: [YXGradeWordBookListModel] = []
     private var selectedGrade: YXGradeWordBookListModel!
-    private var selectClosure: ((_ grade: String, _ version: String) -> Void)!
+    private var selectClosure: ((_ grade: String, _ version: String?) -> Void)!
 
     @IBOutlet var contentView: UIView!
+    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var gradeCollectionView: UICollectionView!
     @IBOutlet weak var versionCollectionView: UICollectionView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
 
-    init(frame: CGRect, grades: [YXGradeWordBookListModel], selectClosure: @escaping (_ grade: String, _ version: String) -> Void) {
+    init(frame: CGRect, grades: [YXGradeWordBookListModel], selectClosure: @escaping (_ grade: String, _ version: String?) -> Void) {
         super.init(frame: frame)
         self.grades = grades
         self.selectClosure = selectClosure
@@ -65,6 +66,12 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
         versionCollectionView.register(UINib(nibName: "YXSelectGradeCell", bundle: nil), forCellWithReuseIdentifier: "YXSelectGradeCell")
         gradeCollectionView.reloadData()
         versionCollectionView.reloadData()
+        
+        backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismiss)))
+    }
+    
+    @objc private func dismiss() {
+        self.isHidden = true
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -126,6 +133,9 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
             gradeCollectionView.reloadData()
             versionCollectionView.reloadData()
             
+            guard let gradeName = selectedGrade.gradeName else { return }
+            selectClosure(gradeName, nil)
+
         } else {
             for index in 0..<selectedGrade.versions.count {
                 selectedGrade.versions[index].isSelect = false

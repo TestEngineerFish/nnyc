@@ -208,7 +208,7 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     
     override func bindData() {
-        redDotView.isHidden = reviewPlanModel?.shouldShowRedDot == 1
+        redDotView.isHidden = reviewPlanModel?.shouldShowRedDot == 0
         
         titleLabel.text = reviewPlanModel?.planName
         countLabel.text = "单词: " + (reviewPlanModel?.wordCount.string ?? "")

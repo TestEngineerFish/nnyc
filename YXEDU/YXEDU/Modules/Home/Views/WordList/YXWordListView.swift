@@ -63,6 +63,9 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 topView.isHidden = false
                 showEmptyView    = false
             }
+            
+            wordCountLabel.text = "\(wordsCount)"
+            tableView.reloadData()
         }
     }
     

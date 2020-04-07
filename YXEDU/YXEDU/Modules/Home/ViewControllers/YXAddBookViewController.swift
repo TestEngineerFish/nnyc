@@ -64,14 +64,17 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func createGradeSelectView() {
         selectGradeView = YXSelectGradeView(frame: CGRect(x: 0, y: 44, width: screenWidth, height: screenHeight), grades: grades, selectClosure: { gradeName, versionName in
-            self.filterButton.setTitle("  " + gradeName + " " + versionName + "  ", for: .normal)
+            self.filterButton.setTitle("  " + gradeName + " " + (versionName ?? "所有版本") + "  ", for: .normal)
             self.filterButton.setTitleColor(.orange1, for: .normal)
             self.filterButton.backgroundColor = UIColor.orange1.withAlphaComponent(0.1)
             self.filterButton.layer.cornerRadius = 14
             
-            self.filterVersion = versionName
+            self.filterVersion = versionName ?? "所有版本"
             self.filterGrade(by: gradeName)
-//            self.selectGradeView?.isHidden = true
+            
+            if versionName != nil {
+                self.selectGradeView?.isHidden = true
+            }
         })
         
         selectGradeView?.isHidden = true

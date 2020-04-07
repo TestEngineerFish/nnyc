@@ -119,7 +119,6 @@ class YXReviewPlanDetailViewController: YXViewController {
                 self.model = detailModel
                 self.bottomView.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []
-                self.wordListView.wordCountLabel.text = "\(detailModel?.words?.count ?? 0)"
                 
                 self.headerView.detailModel = detailModel
                 self.headerView.statusClosure = {
