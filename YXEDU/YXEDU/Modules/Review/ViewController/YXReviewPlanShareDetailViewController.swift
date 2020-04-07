@@ -16,7 +16,6 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     var fromUser: String?
     
     var reviewPlanModel: YXReviewPlanModel?
-    var headerView   = YXReviewPlanShareDetailHeaderView()
     var wordListView = YXWordListView()
     var bottomView   = YXReviewPlanShareDetailBottomView()
     var activityView = UIActivityIndicatorView()
@@ -31,9 +30,11 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     }
     
     func createSubView() {
-        self.view.addSubview(self.headerView)
         self.view.addSubview(self.wordListView)
         self.view.addSubview(self.bottomView)
+        
+        bottomView.backgroundColor = .white
+        bottomView.layer.setDefaultShadow()
     }
     
     
@@ -52,14 +53,8 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        headerView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(4 + kNavHeight))
-            make.left.right.equalTo(0)
-            make.height.equalTo(AS(108))
-        }
-        
         wordListView.snp.makeConstraints { (make) in
-            make.top.equalTo(headerView.snp.bottom).offset(AS(13))
+            make.top.equalTo(kNavHeight)
             make.left.right.equalTo(0)
         }
         
@@ -81,7 +76,6 @@ class YXReviewPlanShareDetailViewController: YXViewController {
                 detailModel?.fromUser = self.fromUser
                 self.detailModel = detailModel
                 self.reviewPlanModel = detailModel
-                self.headerView.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []
             }
         }

@@ -117,7 +117,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         YXRedDotManager.share.updateTaskCenterBadge()
         
         // 如果学完一次主流程，并且没有设置过提醒，则弹出弹窗
-        if YYCache.object(forKey: "DidFinishMainStudyProgress") as? Bool == true, UserDefaults.standard.object(forKey: "Reminder") == nil {
+        if YYCache.object(forKey: "DidFinishMainStudyProgress") as? Bool == true, UserDefaults.standard.object(forKey: "DidShowSetupReminderAlert") == nil {
             let setReminderView = YXSetReminderView()
             setReminderView.show()
         }

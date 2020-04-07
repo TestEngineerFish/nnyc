@@ -31,12 +31,14 @@ class YXSetReminderView: YXTopWindowView {
 
     @IBAction func cancle(_ sender: Any) {
        let alertView = YXAlertView()
-        alertView.titleLabel.text = "提升"
+        alertView.titleLabel.text = "提示"
         alertView.descriptionLabel.text = "您随时可以在 “我的”->“每日提醒设置” 中设置提醒"
         alertView.shouldOnlyShowOneButton = true
-        
+        alertView.rightOrCenterButton.setTitle("好的", for: .normal)
         alertView.show()
         
+        UserDefaults.standard.set(true, forKey: "DidShowSetupReminderAlert")
+
         self.didSetReminder(didOpen: 0)
         self.removeFromSuperview()
     }
@@ -54,6 +56,7 @@ class YXSetReminderView: YXTopWindowView {
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         notificationCenter.add(request)
         
+        UserDefaults.standard.set(true, forKey: "DidShowSetupReminderAlert")
         UserDefaults.standard.set(timePicker.date, forKey: "Reminder")
         
         self.didSetReminder(didOpen: 1)
