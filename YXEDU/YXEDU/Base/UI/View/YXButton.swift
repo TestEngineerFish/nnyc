@@ -26,40 +26,23 @@ enum YXButtonType: Int {
 @IBDesignable
 class YXButton: UIButton {
 
-    var status: YXButtonStatusEnum
+    var status: YXButtonStatusEnum = .normal
     var type: YXButtonType
 
-    // MARK: ---- 自定义属性 ----
-    var cFont: UIFont?
-    var cTextColor: UIColor?
-    var cTextHeightColor: UIColor?
-    var cBackgroundColor: UIColor?
-    var cBorderColor: CGColor?
-    var cBorderWidth: CGFloat?
-    var cCornerRadius: CGFloat?
-
-    // MARK: ---- 常量 ----
-    let sizeKeyPath            = "size"
-    let fontKeyPath            = "titleLabel.font"
-    let textColorKeyPath       = "titleLabel.textColor"
-    let textHeightColorKeyPath = "titleLabel.highlightedTextColor"
-    let backgroundColorKeyPath = "titleLabel.backgroundColor"
-    let borderColorKeyPath     = "borderColor"
-    let borderWidthKeyPath     = "borderWidth"
-    let cornerRadiuskeyPath    = "cornerRadius"
+    let sizeKeyPath = "frame"
 
     // MARK: ---- Init ----
 
-    init(_ type: YXButtonType = .normal, status: YXButtonStatusEnum = .normal, frame: CGRect = .zero) {
-        self.status = status
-        self.type   = type
+    init(_ type: YXButtonType = .normal, frame: CGRect = .zero) {
+        self.type = type
         super.init(frame: frame)
 
+        self.bindProperty()
+        self.addObserver(self, forKeyPath: sizeKeyPath, options: [.new, .old], context: nil)
         self.addTarget(self, action: #selector(touchDown(sender:)), for: .touchDown)
         self.addTarget(self, action: #selector(touchUp(sender:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(touchUp(sender:)), for: .touchUpOutside)
         self.addTarget(self, action: #selector(touchUp(sender:)), for: .touchCancel)
-        self.bindProperty()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -77,9 +60,8 @@ class YXButton: UIButton {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        // 约束设置
         self.setStatus(nil)
-        self.layer.cornerRadius  = self.size.height / 2
-        self.layer.masksToBounds = true
     }
 
     /// 设置按钮状态，根据状态来更新UI
@@ -90,185 +72,74 @@ class YXButton: UIButton {
         switch self.status {
         case .normal:
             self.isEnabled = true
-            switch type {
-            case .normal:
-                if let _color = self.cTextColor {
-                    self.setTitleColor(_color, for: .normal)
-                } else {
-                    self.setTitleColor(UIColor.black1, for: .normal)
-                }
-                if let _color = self.cTextHeightColor {
-                    self.setTitleColor(_color, for: .highlighted)
-                } else {
-                    self.setTitleColor(UIColor.black1, for: .highlighted)
-                }
-                if let _color = self.cBackgroundColor {
-                    self.backgroundColor = _color
-                } else {
-                    self.backgroundColor = UIColor.white
-                }
-            case .theme:
-                if let _color = self.cTextColor {
-                    self.setTitleColor(_color, for: .normal)
-                } else {
-                    self.setTitleColor(UIColor.white, for: .normal)
-                }
-                if let _color = self.cTextHeightColor {
-                    self.setTitleColor(_color, for: .highlighted)
-                } else {
-                    self.setTitleColor(UIColor.white, for: .highlighted)
-                }
-                if let _color = self.cBackgroundColor {
-                    self.backgroundColor = _color
-                } else {
-                    self.backgroundColor = UIColor.gradientColor(with: self.size, colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
-                }
-            case .border:
-                if let _color = self.cTextColor {
-                    self.setTitleColor(_color, for: .normal)
-                } else {
-                    self.setTitleColor(UIColor.orange1, for: .normal)
-                }
-                if let _color = self.cTextHeightColor {
-                    self.setTitleColor(_color, for: .highlighted)
-                } else {
-                    self.setTitleColor(UIColor.orange1, for: .highlighted)
-                }
-                if let _color = self.cBackgroundColor {
-                    self.backgroundColor = _color
-                } else {
-                    self.backgroundColor = UIColor.clear
-                }
+            if type == .theme {
+                self.layer.cornerRadius  = self.size.height / 2
+                self.layer.masksToBounds = true
+                let bgNormalImage = UIImage(named: "button_normal")
+                bgNormalImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
+                self.setBackgroundImage(bgNormalImage, for: .normal)
+            } else if type == .border {
+                self.layer.cornerRadius  = self.size.height / 2
+                self.layer.masksToBounds = true
+                self.layer.borderWidth   = AdaptSize(1)
+                self.layer.borderColor   = UIColor.orange1.cgColor
+                self.backgroundColor     = UIColor.clear
             }
         case .touchDown:
             self.isEnabled = true
-            switch type {
-            case .normal:
-                if let _color = self.cTextColor {
-                    self.setTitleColor(_color, for: .normal)
-                } else {
-                    self.setTitleColor(UIColor.black1, for: .normal)
-                }
-                if let _color = self.cTextHeightColor {
-                    self.setTitleColor(_color, for: .highlighted)
-                } else {
-                    self.setTitleColor(UIColor.black1, for: .highlighted)
-                }
-                if let _color = self.cBackgroundColor {
-                    self.backgroundColor = _color
-                } else {
-                    self.backgroundColor = UIColor.white
-                }
-            case .theme:
-                if let _color = self.cTextColor {
-                    self.setTitleColor(_color, for: .normal)
-                } else {
-                    self.setTitleColor(UIColor.white, for: .normal)
-                }
-                if let _color = self.cTextHeightColor {
-                    self.setTitleColor(_color, for: .highlighted)
-                } else {
-                    self.setTitleColor(UIColor.white, for: .highlighted)
-                }
-                if let _color = self.cBackgroundColor {
-                    self.backgroundColor = _color
-                } else {
-                    self.backgroundColor = UIColor.gradientColor(with: self.size, colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
-                }
-            case .border:
-                if let _color = self.cTextColor {
-                    self.setTitleColor(_color, for: .normal)
-                } else {
-                    self.setTitleColor(UIColor.orange1, for: .normal)
-                }
-                if let _color = self.cTextHeightColor {
-                    self.setTitleColor(_color, for: .highlighted)
-                } else {
-                    self.setTitleColor(UIColor.orange1, for: .highlighted)
-                }
-                if let _color = self.cBackgroundColor {
-                    self.backgroundColor = _color
-                } else {
-                    self.backgroundColor = UIColor.clear
-                }
+            if type == .theme {
+                let bgHeightImage = UIImage(named: "button_height")
+                bgHeightImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
+                self.setBackgroundImage(bgHeightImage, for: .highlighted)
+            } else if type == .border {
+                self.backgroundColor = UIColor.black.withAlphaComponent(0.9)
             }
         case .disable:
             self.isEnabled = false
-            switch type {
-            case .normal:
-                if let _color = self.cTextColor {
-                    self.setTitleColor(_color, for: .normal)
-                } else {
-                    self.setTitleColor(UIColor.black1.withAlphaComponent(0.3), for: .normal)
-                }
-                if let _color = self.cTextHeightColor {
-                    self.setTitleColor(_color, for: .highlighted)
-                } else {
-                    self.setTitleColor(UIColor.black1.withAlphaComponent(0.3), for: .highlighted)
-                }
-                if let _color = self.cBackgroundColor {
-                    self.backgroundColor = _color
-                } else {
-                    self.backgroundColor = UIColor.white
-                }
-            case .theme:
-                if let _color = self.cTextColor {
-                    self.setTitleColor(_color, for: .normal)
-                } else {
-                    self.setTitleColor(UIColor.hex(0xEAD2BA), for: .normal)
-                }
-                if let _color = self.cTextHeightColor {
-                    self.setTitleColor(_color, for: .highlighted)
-                } else {
-                    self.setTitleColor(UIColor.hex(0xEAD2BA), for: .highlighted)
-                }
-                if let _color = self.cBackgroundColor {
-                    self.backgroundColor = _color
-                } else {
-                    self.backgroundColor = UIColor.hex(0xFFF4E9)
-                }
-            case .border:
-                if let _color = self.cTextColor {
-                    self.setTitleColor(_color, for: .normal)
-                } else {
-                    self.setTitleColor(UIColor.orange1, for: .normal)
-                }
-                if let _color = self.cTextHeightColor {
-                    self.setTitleColor(_color, for: .highlighted)
-                } else {
-                    self.setTitleColor(UIColor.orange1, for: .highlighted)
-                }
-                if let _color = self.cBackgroundColor {
-                    self.backgroundColor = _color
-                } else {
-                    self.backgroundColor = UIColor.hex(0x0F0F0F).withAlphaComponent(0.09)
-                }
+            if type == .theme {
+                self.layer.cornerRadius  = self.size.height / 2
+                self.layer.masksToBounds = true
+                let bgDisableImage = UIImage(named: "button_disable")
+                bgDisableImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
+                self.setBackgroundImage(bgDisableImage, for: .disabled)
+                self.setTitleColor(UIColor.hex(0xEAD2BA), for: .disabled)
             }
         }
     }
 
     // MARK: ---- Event ----
     private func bindProperty() {
-        self.addObserver(self, forKeyPath: sizeKeyPath, options: .new, context: nil)
-        self.addObserver(self, forKeyPath: fontKeyPath, options: .new, context: nil)
-        self.addObserver(self, forKeyPath: textColorKeyPath, options: .new, context: nil)
-        self.addObserver(self, forKeyPath: textHeightColorKeyPath, options: .new, context: nil)
-        self.addObserver(self, forKeyPath: backgroundColorKeyPath, options: .new, context: nil)
-        self.addObserver(self.layer, forKeyPath: borderColorKeyPath, options: .new, context: nil)
-        self.addObserver(self.layer, forKeyPath: borderWidthKeyPath, options: .new, context: nil)
-        self.addObserver(self.layer, forKeyPath: cornerRadiuskeyPath, options: .new, context: nil)
+        switch type {
+        case .normal:
+            self.setTitleColor(UIColor.black1, for: .normal)
+            self.setTitleColor(UIColor.black1, for: .highlighted)
+        case .theme:
+            self.setTitleColor(UIColor.white, for: .normal)
+            self.setTitleColor(UIColor.white, for: .highlighted)
+        case .border:
+            self.setTitleColor(UIColor.orange1, for: .normal)
+            self.setTitleColor(UIColor.orange1, for: .highlighted)
+        }
     }
 
     @objc func touchDown(sender: UIButton) {
-        UIView.animate(withDuration: 0.10) {
-            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        }
+        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+        animation.values       = [0.9]
+        animation.duration     = 0.1
+        animation.autoreverses = false
+        animation.fillMode     = .forwards
+        animation.isRemovedOnCompletion = false
+        sender.layer.add(animation, forKey: nil)
     }
 
     @objc func touchUp(sender: UIButton) {
-        UIView.animate(withDuration: 0.05) {
-            sender.transform = CGAffineTransform.identity
-        }
+        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+        animation.values       = [1.1, 0.95, 1.0]
+        animation.duration     = 0.2
+        animation.autoreverses = false
+        animation.fillMode     = .forwards
+        animation.isRemovedOnCompletion = false
+        sender.layer.add(animation, forKey: nil)
     }
 
     //TODO: 自定义Storyboard编辑器
@@ -298,41 +169,9 @@ class YXButton: UIButton {
     // 需要在setStatus中更新值
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard let _keyPath = keyPath else { return }
-        switch _keyPath {
-        case sizeKeyPath:
-            self.layoutIfNeeded()
-//        case fontKeyPath:
-//            if let _button = object as? UIButton, let _font = _button.titleLabel?.font {
-//                self.cFont = _font
-//            }
-//        case textColorKeyPath:
-//            if let _button = object as? UIButton {
-//                self.cTextColor = _button.currentTitleColor
-//            }
-//        case textHeightColorKeyPath:
-//            if let _button = object as? UIButton, let _color = _button.titleLabel?.highlightedTextColor {
-//                self.cTextHeightColor = _color
-//            }
-//        case backgroundColorKeyPath:
-//            if let _button = object as? UIButton, let _color = _button.backgroundColor {
-//                self.cBackgroundColor = _color
-//            }
-//        case borderColorKeyPath:
-//            if let _button = object as? UIButton, let _color = _button.layer.borderColor {
-//                self.cBorderColor = _color
-//            }
-//        case borderWidthKeyPath:
-//            if let _button = object as? UIButton {
-//                self.cBorderWidth = _button.layer.borderWidth
-//            }
-//        case cornerRadiuskeyPath:
-//            if let _button = object as? UIButton {
-//                self.cCornerRadius = _button.layer.cornerRadius
-//            }
-        default:
-            break
+        if _keyPath == sizeKeyPath {
+            self.setStatus(nil)
         }
     }
-
 }
 

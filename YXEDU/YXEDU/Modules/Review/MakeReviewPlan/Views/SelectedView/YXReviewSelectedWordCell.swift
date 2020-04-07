@@ -38,7 +38,7 @@ class YXReviewSelectedWordCell: UITableViewCell {
         self.selectionStyle  = .none
         self.backgroundColor = UIColor.clear
         self.contentView.backgroundColor = UIColor.clear
-        self.setSubviews()
+//        self.setSubviews()
     }
 
     required init?(coder: NSCoder) {
@@ -59,13 +59,16 @@ class YXReviewSelectedWordCell: UITableViewCell {
 
         wordLabel.snp.makeConstraints { (make) in
             make.left.equalTo(removeButton.snp.right)
-            make.right.equalTo(paraphraseLabel.snp.left).offset(AdaptSize(-12))
+            make.right.equalTo(paraphraseLabel.snp.left).offset(AdaptSize(-5))
             make.height.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
-
+        paraphraseLabel.sizeToFit()
         paraphraseLabel.snp.makeConstraints { (make) in
             make.height.equalToSuperview()
+            make.width.equalTo(paraphraseLabel.width)
             make.right.greaterThanOrEqualToSuperview().offset(AdaptSize(-15)).priorityHigh()
+            make.centerY.equalToSuperview()
         }
     }
 
@@ -78,6 +81,7 @@ class YXReviewSelectedWordCell: UITableViewCell {
             }
             return paraphrase
         }()
+        self.setSubviews()
     }
 
 }

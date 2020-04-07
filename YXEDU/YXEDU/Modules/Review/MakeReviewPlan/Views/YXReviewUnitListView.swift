@@ -434,11 +434,18 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func clickHeaderView(_ section: Int) {
-        let isOpenUp: Bool = {
+
+        var isOpenUp = false
+        let wordList: [YXReviewWordModel] = {
             if self.bookModel.type == .unit {
-                return self.unitModelList[section].isOpenUp
+                let unitModel = self.unitModelList[section]
+                unitModel.isOpenUp = !unitModel.isOpenUp
+                isOpenUp = unitModel.isOpenUp
+                return unitModel.list
             } else {
-                return self.otherUnitModel.isOpenUp
+                self.otherUnitModel.isOpenUp = !self.otherUnitModel.isOpenUp
+                isOpenUp = self.otherUnitModel.isOpenUp
+                return self.otherUnitModel.wordModelList
             }
         }()
         // ---- 是否展示引导图
@@ -447,17 +454,6 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
                 self.guideView.show()
             }
         }
-
-        let wordList: [YXReviewWordModel] = {
-            if self.bookModel.type == .unit {
-                let unitModel = self.unitModelList[section]
-                unitModel.isOpenUp = !unitModel.isOpenUp
-                return unitModel.list
-            } else {
-                self.otherUnitModel.isOpenUp = !self.otherUnitModel.isOpenUp
-                return self.otherUnitModel.wordModelList
-            }
-        }()
         if wordList.isEmpty && self.bookModel.type == .unit {
             self.requestWordsListWithBook(unitID: self.unitModelList[section].id)
         } else {

@@ -162,6 +162,11 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         if self.wordsModelList.isEmpty {
             self.delegateArrow?.closeDownList()
         }
+        if self.wordsModelList.count < 4 {
+            self.delegateBottomView?.setButtonStatus(.disable)
+        } else {
+            self.delegateBottomView?.setButtonStatus(.normal)
+        }
         self.setNeedsLayout()
     }
 
