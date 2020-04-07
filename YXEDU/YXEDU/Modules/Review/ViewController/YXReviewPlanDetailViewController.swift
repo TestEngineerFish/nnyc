@@ -61,6 +61,8 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     func bindProperty() {
         self.customNavigationBar?.title = YXReviewDataManager.reviewPlanTitle
+        self.customNavigationBar?.titleColor = .white
+        self.customNavigationBar?.leftButtonTitleColor = .white
         
         wordListView.type                 = .reviewPlanDetail
         wordListView.shouldShowEditButton = false
@@ -81,20 +83,20 @@ class YXReviewPlanDetailViewController: YXViewController {
 
         guard let model = model else { return }
         headerView.snp.remakeConstraints { (make) in
-            make.top.equalTo(AS(kNavHeight))
+            make.top.equalTo(kNavHeight)
             make.left.right.equalTo(0)
             
             if (model.status?.totalCount ?? 0) > 0 {
-                make.height.equalTo(AS(164))
+                make.height.equalTo(164)
 
             } else {
-                make.height.equalTo(AS(126))
+                make.height.equalTo(126)
             }
             
         }
         
         wordListView.snp.remakeConstraints { (make) in
-            make.top.equalTo(headerView.snp.bottom).offset(AS(13))
+            make.top.equalTo(headerView.snp.bottom).offset(10)
             make.left.right.equalTo(0)
         }
         
@@ -117,10 +119,13 @@ class YXReviewPlanDetailViewController: YXViewController {
                 self.model = detailModel
                 self.bottomView.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []
+                self.wordListView.wordCountLabel.text = "\(detailModel?.words?.count ?? 0)"
                 
                 self.headerView.detailModel = detailModel
                 self.headerView.statusClosure = {
-                    self.navigationController?.pushViewController(YXReviePlanStudentsListViewController(), animated: true)
+                    let reviePlanStudentsListViewController = YXReviePlanStudentsListViewController()
+                    reviePlanStudentsListViewController.planId = self.planId
+                    self.navigationController?.pushViewController(reviePlanStudentsListViewController, animated: true)
                 }
                 
                 self.headerView.reportClosure = {

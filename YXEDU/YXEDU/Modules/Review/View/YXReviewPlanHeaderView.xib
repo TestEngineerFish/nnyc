@@ -20,7 +20,7 @@
                 <outlet property="listenStart2" destination="LA1-fq-SNj" id="HRh-CI-1ug"/>
                 <outlet property="listenStart3" destination="kYN-cg-Fda" id="aE0-51-LgR"/>
                 <outlet property="newIconArrowButton" destination="e5t-wS-foc" id="Bms-7c-kxQ"/>
-                <outlet property="newIconButton" destination="e5t-wS-foc" id="Fq7-h2-sVu"/>
+                <outlet property="newIconButton" destination="UiG-Hm-wac" id="3Y0-p7-kq4"/>
                 <outlet property="noListenLabel" destination="V5e-ED-BuW" id="wD5-9W-wil"/>
                 <outlet property="noReviewLabel" destination="8VX-Ev-D5B" id="nhT-k3-EQJ"/>
                 <outlet property="reportButton" destination="MaE-Um-ILZ" id="ufJ-DK-ypD"/>
@@ -45,24 +45,28 @@
                     <rect key="frame" x="20" y="0.0" width="280" height="38"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="·" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9cn-vl-EGL">
-                            <rect key="frame" x="0.0" y="9" width="5" height="20.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <rect key="frame" x="0.0" y="9" width="6.5" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85b-CM-irb">
-                            <rect key="frame" x="13" y="12" width="11.5" height="14.5"/>
+                            <rect key="frame" x="14.5" y="12" width="11.5" height="14.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5t-wS-foc">
-                            <rect key="frame" x="272" y="8" width="8" height="22"/>
+                            <rect key="frame" x="234" y="8" width="46" height="22"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" image="go"/>
+                            <inset key="imageEdgeInsets" minX="36" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="        " image="go"/>
+                            <connections>
+                                <action selector="tapNewIcon:" destination="-1" eventType="touchUpInside" id="zMe-gA-gjc"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UiG-Hm-wac">
-                            <rect key="frame" x="233" y="8" width="33" height="22"/>
+                            <rect key="frame" x="231" y="8" width="33" height="22"/>
                             <state key="normal" image="new">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
@@ -77,7 +81,7 @@
                         <constraint firstAttribute="height" constant="38" id="NtA-Wt-tS6"/>
                         <constraint firstItem="9cn-vl-EGL" firstAttribute="centerY" secondItem="QW3-M5-vZ4" secondAttribute="centerY" id="S18-lV-fBh"/>
                         <constraint firstItem="85b-CM-irb" firstAttribute="centerY" secondItem="QW3-M5-vZ4" secondAttribute="centerY" id="YTR-eg-B9P"/>
-                        <constraint firstItem="e5t-wS-foc" firstAttribute="leading" secondItem="UiG-Hm-wac" secondAttribute="trailing" constant="6" id="bCJ-De-YWJ"/>
+                        <constraint firstItem="e5t-wS-foc" firstAttribute="leading" secondItem="UiG-Hm-wac" secondAttribute="trailing" constant="-30" id="bCJ-De-YWJ"/>
                         <constraint firstItem="9cn-vl-EGL" firstAttribute="leading" secondItem="QW3-M5-vZ4" secondAttribute="leading" id="loZ-QT-hJv"/>
                         <constraint firstAttribute="trailing" secondItem="e5t-wS-foc" secondAttribute="trailing" id="mRe-hi-lFa"/>
                         <constraint firstItem="85b-CM-irb" firstAttribute="leading" secondItem="9cn-vl-EGL" secondAttribute="trailing" constant="8" id="w4a-ua-Xzq"/>
@@ -129,7 +133,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFl-ic-aot">
                             <rect key="frame" x="252" y="35" width="8" height="22"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" red="0.75294117650000003" green="0.75294117650000003" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" image="go"/>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YpW-tg-VML">

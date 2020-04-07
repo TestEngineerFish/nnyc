@@ -8,6 +8,16 @@
 
 import ObjectMapper
 
+struct YXStudentListModel: Mappable  {
+    var list: [YXStudentModel]?
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        list  <- map["list"]
+    }
+}
+
 struct YXStudentModel: Mappable  {
     var userInfo: YXStudentInfoModel?
     var learnInfo: YXStudentLearnModel?

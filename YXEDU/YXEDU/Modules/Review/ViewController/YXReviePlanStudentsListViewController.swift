@@ -10,6 +10,7 @@ import UIKit
 
 class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
+    var planId: Int!
     var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize                = CGSize(width: AdaptSize(168), height: AdaptSize(200))
@@ -54,9 +55,9 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
 
     // MARK: ---- Request ----
     private func requestStudentList() {
-        let request = YXReviewRequest.studentStudyList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXStudentModel>.self, request: request, success: { (response) in
-            guard let modelList = response.dataArray else {
+        let request = YXReviewRequest.studentStudyList(planId: planId)
+        YYNetworkService.default.request(YYStructResponse<YXStudentListModel>.self, request: request, success: { (response) in
+            guard let modelList = response.data?.list else {
                 return
             }
             self.studentModelList = modelList
