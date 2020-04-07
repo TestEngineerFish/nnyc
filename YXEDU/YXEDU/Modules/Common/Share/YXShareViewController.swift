@@ -81,6 +81,7 @@ class YXShareViewController: YXViewController {
     
     private var backgroundImageUrls: [String]?
     private var currentBackgroundImageUrl: String?
+    private var currentBackgroundImageIndex = 0
     private var changeBackgroundImageButton: UIButton = {
         let button = UIButton()
         button.setTitle("换背景", for: .normal)
@@ -112,9 +113,9 @@ class YXShareViewController: YXViewController {
         let request = YXShareRequest.changeBackgroundImage(type: shareType.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] response in
             guard let self = self, let result = response.data, let imageUrls = result.imageUrls, imageUrls.count > 0 else { return }
-            self.backgroundImageUrls = imageUrls
-            self.currentBackgroundImageUrl = self.backgroundImageUrls?.randomElement()
-            
+            self.backgroundImageUrls         = imageUrls
+            self.currentBackgroundImageIndex = Int.random(in: 0..<imageUrls.count)
+            self.currentBackgroundImageUrl   = self.backgroundImageUrls?[self.currentBackgroundImageIndex]
             self.getBackgroundImage(from: self.currentBackgroundImageUrl) { backgroundImage in
                 
                 DispatchQueue.main.async() {
@@ -251,13 +252,8 @@ class YXShareViewController: YXViewController {
     @objc
     private func changeBackgroundImage() {
         guard let urls = backgroundImageUrls, urls.count > 0 else { return }
-        if let currentUrl = currentBackgroundImageUrl, let index = urls.firstIndex(of: currentUrl), index < urls.count - 1 {
-            currentBackgroundImageUrl = urls[index + 1]
-            
-        } else {
-            currentBackgroundImageUrl = urls[0]
-        }
-        
+        self.currentBackgroundImageIndex = (self.currentBackgroundImageIndex + 1) % urls.count
+        currentBackgroundImageUrl = urls[self.currentBackgroundImageIndex]
         getBackgroundImage(from: currentBackgroundImageUrl) { backgroundImage in
             DispatchQueue.main.async() {
                 switch self.shareType {

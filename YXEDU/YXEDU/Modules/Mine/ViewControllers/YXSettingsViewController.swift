@@ -87,6 +87,8 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
                     UIApplication.shared.open(URL(string: "https://apps.apple.com/cn/app/id1379948642")!, options: [:]) { (isSuccess) in
                         
                     }
+                } else {
+                    YXUtils.showHUD(self.view, title: "当前已经是最新版本")
                 }
             }
             break

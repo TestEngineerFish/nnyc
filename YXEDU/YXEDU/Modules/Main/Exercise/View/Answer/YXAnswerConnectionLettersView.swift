@@ -213,6 +213,10 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     
     private func updateEnableButton(current button: YXLetterButton?){
         guard let _button = button else {
+            self.allButtonArray.forEach { (button) in
+                button.status = .normal
+            }
+            YXLog("移除了最后一个已选按钮")
             return
         }
         // 移除上一次的可选按钮列表

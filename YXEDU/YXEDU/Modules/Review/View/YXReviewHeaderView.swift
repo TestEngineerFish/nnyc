@@ -45,7 +45,7 @@ class YXReviewHeaderView: YXView {
     var forgetProgressLabel = UILabel()
     
     /// 智能复习
-    var reviewButton  = YXDesignableButton()
+    var reviewButton  = YXButton(.theme)
     var subTitleLabel = UILabel()
     
     var reviewPlanLabel        = UILabel()
@@ -161,8 +161,6 @@ class YXReviewHeaderView: YXView {
         forgetProgressLabel.text         = "--"
         forgetPointLabel.backgroundColor = UIColor.blue1
         
-        reviewButton.cornerRadius             = AS(21)
-        reviewButton.enableGradientBackground = true
         reviewButton.setTitle("智能复习", for: .normal)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
         reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)

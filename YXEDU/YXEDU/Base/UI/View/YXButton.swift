@@ -86,14 +86,7 @@ class YXButton: UIButton {
                 self.backgroundColor     = UIColor.clear
             }
         case .touchDown:
-            self.isEnabled = true
-            if type == .theme {
-                let bgHeightImage = UIImage(named: "button_height")
-                bgHeightImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
-                self.setBackgroundImage(bgHeightImage, for: .highlighted)
-            } else if type == .border {
-                self.backgroundColor = UIColor.black.withAlphaComponent(0.9)
-            }
+            break
         case .disable:
             self.isEnabled = false
             if type == .theme {
@@ -120,9 +113,20 @@ class YXButton: UIButton {
             self.setTitleColor(UIColor.orange1, for: .normal)
             self.setTitleColor(UIColor.orange1, for: .highlighted)
         }
+        self.backgroundColor = UIColor.clear
     }
 
     @objc func touchDown(sender: UIButton) {
+        self.isEnabled = true
+        if type == .theme {
+            let bgHeightImage = UIImage(named: "button_height")
+            bgHeightImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
+            self.setBackgroundImage(bgHeightImage, for: .highlighted)
+        } else if type == .border {
+            self.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+        }
+        return
+        // 动画效果UI说暂时不要，哎…………伤心💔
         let animation = CAKeyframeAnimation(keyPath: "transform.scale")
         animation.values       = [0.9]
         animation.duration     = 0.1
@@ -133,6 +137,8 @@ class YXButton: UIButton {
     }
 
     @objc func touchUp(sender: UIButton) {
+        return
+        // 动画效果UI说暂时不要，哎…………伤心💔
         let animation = CAKeyframeAnimation(keyPath: "transform.scale")
         animation.values       = [1.1, 0.95, 1.0]
         animation.duration     = 0.2
