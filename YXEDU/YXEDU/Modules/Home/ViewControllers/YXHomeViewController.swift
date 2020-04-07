@@ -81,6 +81,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             vc.bookId = self.homeModel?.bookId
             vc.unitId = self.homeModel?.unitId
             vc.hidesBottomBarWhenPushed = true
+            
+            YYCache.set(Date(), forKey: "StartStudyTime")
+            
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -27,6 +27,18 @@ class YXSetReminderView: YXTopWindowView {
         Bundle.main.loadNibNamed("YXSetReminderView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
+        
+        if let startStudyTime = YYCache.object(forKey: "StartStudyTime") as? Date {
+            let minute = Calendar.current.component(.minute, from: startStudyTime)
+            
+            if minute > 30 {
+                let difference = minute - 30
+                timePicker.date = Date(timeIntervalSince1970: startStudyTime.timeIntervalSince1970 - Double((difference * 60)))
+                
+            } else {
+                timePicker.date = Date(timeIntervalSince1970: startStudyTime.timeIntervalSince1970 - Double((minute * 60)))
+            }
+        }
     }
 
     @IBAction func cancle(_ sender: Any) {
