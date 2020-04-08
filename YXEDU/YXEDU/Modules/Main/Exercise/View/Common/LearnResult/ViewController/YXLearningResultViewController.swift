@@ -81,6 +81,7 @@ class YXLearningResultViewController: YXViewController {
         guard let model = self.model, let resultView = self.headerView else {return}
         let mapSize = CGSize(width: AdaptSize(333), height: AdaptSize(192))
         self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: self.currentUnitIndex, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
+//        self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: 6, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
         self.contentScrollView.addSubview(unitMapView!)
         unitMapView!.snp.makeConstraints { (make) in
             make.size.equalTo(mapSize)

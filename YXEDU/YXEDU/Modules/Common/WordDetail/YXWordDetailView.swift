@@ -52,6 +52,10 @@ class YXWordDetailView: UIView {
         
         initializationFromNib()
     }
+
+    deinit {
+        YXLog("释放\(self.classForCoder)")
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

@@ -125,14 +125,14 @@ class YXReviewPlanDetailBottomView: YXView {
         super.layoutSubviews()
         
         listenButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(11))
             make.left.equalTo(AS(27))
             make.width.equalTo(reviewButton)
             make.height.equalTo(AS(42))
         }
         
         reviewButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(11))
             make.left.equalTo(listenButton.snp.right).offset(AS(15))
             make.right.equalTo(AS(-27))
             make.height.equalTo(AS(42))

@@ -86,7 +86,8 @@ class YXUnitMapView: UIView {
         path.addLine(to: unitPointList[3])
         path.addCurve(to: unitPointList[4], controlPoint1: CGPoint(x: unitPointList[3].x - AdaptSize(61), y: unitPointList[3].y), controlPoint2: CGPoint(x: unitPointList[4].x - AdaptSize(61), y: unitPointList[4].y))
         path.addLine(to: unitPointList[6])
-        path.addQuadCurve(to: unitPointList[7], controlPoint: CGPoint(x: unitPointList[7].x, y: unitPointList[6].y))
+        path.addQuadCurve(to: CGPoint(x: unitPointList[7].x, y: unitPointList[7].y + AdaptSize(15)), controlPoint: CGPoint(x: unitPointList[7].x, y: unitPointList[6].y))
+        path.addLine(to: unitPointList[7])
         
         let mapLayer = CAShapeLayer()
         mapLayer.frame       = self.bounds
@@ -100,7 +101,7 @@ class YXUnitMapView: UIView {
     /// 添加单元站点
     private func addUnitView() {
         self.offsetUnit = {
-            if self.currentUnitIndex >= 6 {
+            if self.currentUnitIndex >= 6 && self.unitModelList.count > 6 {
                 return ((self.currentUnitIndex / 3) - 1) * 3
             } else {
                 return 0

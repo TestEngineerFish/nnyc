@@ -102,8 +102,8 @@ class YXReviewPlanDetailViewController: YXViewController {
         bottomView.snp.remakeConstraints { (make) in
             make.top.equalTo(wordListView.snp.bottom)
             make.left.right.equalToSuperview()
-            make.height.equalTo(AS(60))
-            make.bottom.equalTo(-kSafeBottomMargin)
+            make.height.equalTo(AS(60) + kSafeBottomMargin)
+            make.bottom.equalToSuperview()
         }
         
     }
@@ -148,18 +148,20 @@ class YXReviewPlanDetailViewController: YXViewController {
     func listenEvent() {
         let vc = YXExerciseViewController()
         vc.dataType = .planListenReview
-        vc.planId = planId
+        vc.planId   = planId
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
+        YXLog("====开始听写练习====")
     }
     
     
     func reviewEvent() {
         let vc = YXExerciseViewController()
         vc.dataType = .planReview
-        vc.planId = planId
+        vc.planId   = planId
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
+        YXLog("====开始复习计划复习====")
     }
     
     

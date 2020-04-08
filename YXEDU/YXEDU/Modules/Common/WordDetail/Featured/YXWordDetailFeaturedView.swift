@@ -24,7 +24,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     private var wordAnalysisExpandStatus: [Bool] = []
     private var detailedSyntaxExpandStatus: [Bool] = []
     private var mostCommonPhrasesLength: CGFloat = 44
-
+    
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -32,7 +32,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
         super.init(frame: .zero)
         self.word = word
         self.heightChangeClosure = heightChangeClosure
-
+        
         initializationFromNib()
     }
     
@@ -45,7 +45,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
         Bundle.main.loadNibNamed("YXWordDetailFeaturedView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 200)
-                
+        
         tableView.register(UINib(nibName: "YXWordDetailFixedMatchCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailFixedMatchCell")
         tableView.register(UINib(nibName: "YXWordDetailCommonPhrasesCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailCommonPhrasesCell")
         tableView.register(UINib(nibName: "YXWordDetailFeaturedClassicCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailFeaturedClassicCell")
@@ -101,7 +101,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
         tableView.layoutIfNeeded()
         
         var heightOfTableView: CGFloat = 0
-
+        
         let cells = tableView.visibleCells
         for cell in cells {
             heightOfTableView = heightOfTableView + cell.frame.height
@@ -135,18 +135,19 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
         let sectionType = sections[section].keys.first
         let view = YXWordDetailFeaturedSectionFooterView()
         view.isExpand = sectionExpandStatus[section]
-        view.expandClosure = {
+        view.expandClosure = { [weak self] in
+            guard let self = self else { return }
             self.sectionExpandStatus[section] = !self.sectionExpandStatus[section]
             self.tableView.reloadData()
             self.heightChange()
         }
-
+        
         if sectionType == SectionType.fixedMatch.rawValue, let sectionData = sections[section].values.first as? [YXWordFixedMatchModel], sectionData.count > 1 {
             return view
-
+            
         } else if sectionType == SectionType.commonPhrases.rawValue, let sectionData = sections[section].values.first as? [YXWordCommonPhrasesModel], sectionData.count > 1 {
             return view
-
+            
         } else {
             let blackView = UIView()
             return blackView
@@ -159,10 +160,10 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionExpandState = sectionExpandStatus[section]
-
+        
         let section = sections[section]
         guard let sectionContent = section.values.first as? [Any] else { return 0 }
-
+        
         switch section.keys.first {
         case SectionType.fixedMatch.rawValue:
             if sectionExpandState {
@@ -193,7 +194,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
-
+        
         switch section.keys.first {
         case SectionType.fixedMatch.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFixedMatchCell", for: indexPath) as! YXWordDetailFixedMatchCell
@@ -204,7 +205,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             cell.englishLabel.text = fixedMatch?.english
             cell.chineseLabel.text = fixedMatch?.chinese
             cell.exampleLabel.text = (fixedMatch?.englishExample ?? "") + "\n" + (fixedMatch?.chineseExample ?? "")
-
+            
             return cell
             
         case SectionType.commonPhrases.rawValue:
@@ -240,7 +241,8 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             cell.contentLabel.text = content
             
             cell.isExpand = wordAnalysisExpandStatus[indexPath.row]
-            cell.expandClosure = {
+            cell.expandClosure = { [weak self] in
+                guard let self = self else { return }
                 self.wordAnalysisExpandStatus[indexPath.row] = !self.wordAnalysisExpandStatus[indexPath.row]
                 self.tableView.reloadData()
                 self.heightChange()
@@ -269,7 +271,8 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             cell.contentLabel.text = content
             
             cell.isExpand = detailedSyntaxExpandStatus[indexPath.row]
-            cell.expandClosure = {
+            cell.expandClosure = { [weak self] in
+                guard let self = self else { return }
                 self.detailedSyntaxExpandStatus[indexPath.row] = !self.detailedSyntaxExpandStatus[indexPath.row]
                 self.tableView.reloadData()
                 self.heightChange()

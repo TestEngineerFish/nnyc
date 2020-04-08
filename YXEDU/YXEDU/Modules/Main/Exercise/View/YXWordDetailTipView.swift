@@ -24,6 +24,10 @@ class YXWordDetailTipView: UIView {
         
         initializationFromNib()
     }
+
+    deinit {
+        YXLog("释放\(self.classForCoder)")
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -38,16 +42,15 @@ class YXWordDetailTipView: UIView {
         wordDetailView = YXWordDetailView(frame: CGRect(x: 0, y: 40, width: screenWidth, height: screenHeight - 40), word: word!)
         wordDetailView.layer.cornerRadius = 6
         wordDetailView.layer.masksToBounds = true
-        wordDetailView.dismissClosure = {
+        wordDetailView.dismissClosure = { [weak self] in
+            guard let self = self else { return }
+            self.dismissClosure?()
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                 self.backgroundView.alpha = 0
                 self.wordDetailView.transform = CGAffineTransform(translationX: 0, y: screenHeight - 44)
-                
             }) { (isCompleted) in
                 self.removeFromSuperview()
             }
-            
-            self.dismissClosure?()
         }
         
         let maskPath = UIBezierPath(roundedRect: wordDetailView.bounds, byRoundingCorners: [UIRectCorner.topLeft, UIRectCorner.topRight], cornerRadii: CGSize(width: 6, height: 6))

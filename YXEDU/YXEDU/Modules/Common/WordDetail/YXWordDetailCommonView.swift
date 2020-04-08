@@ -67,6 +67,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     }
     
     deinit {
+        YXLog("释放\(self.classForCoder)")
         YXAVPlayerManager.share.pauseAudio()
         playAuoidButton.layer.removeFlickerAnimation()
     }
@@ -326,11 +327,12 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                     mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
                 }
                 return mAttr
-            }()
+                }()
             cell.pronunciation = example?.vocie
-            cell.clickPlayBlock = { [weakself = self] in
-                weakself.isAutoPlay = true
-                weakself.playAuoidButton.layer.removeFlickerAnimation()
+            cell.clickPlayBlock = {  [weak self] in
+                guard let self = self else { return }
+                self.isAutoPlay = true
+                self.playAuoidButton.layer.removeFlickerAnimation()
             }
             self.exampleCell   = cell
             return cell

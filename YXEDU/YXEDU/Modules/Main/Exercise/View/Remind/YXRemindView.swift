@@ -279,8 +279,6 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         let detailView = YXWordDetailTipView(word: word)
         detailView.dismissClosure = {
             completion?()
-            //            self?.delegate?.dismissRemindView?()
-            
             NotificationCenter.default.post(name: YXNotification.kCloseWordDetailPage, object: nil)
         }
         detailView.showWithAnimation()

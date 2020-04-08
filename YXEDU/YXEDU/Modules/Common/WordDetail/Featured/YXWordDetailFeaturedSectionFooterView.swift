@@ -45,6 +45,10 @@ class YXWordDetailFeaturedSectionFooterView: UIView {
         super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 16))
         initializationFromNib()
     }
+
+    deinit {
+        YXLog("释放\(self.classForCoder)")
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
