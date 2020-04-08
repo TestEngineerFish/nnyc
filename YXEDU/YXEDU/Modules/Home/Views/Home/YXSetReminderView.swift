@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objc
 class YXSetReminderView: YXTopWindowView {
 
     @IBOutlet var contentView: UIView!
@@ -51,7 +52,7 @@ class YXSetReminderView: YXTopWindowView {
         
         UserDefaults.standard.set(true, forKey: "DidShowSetupReminderAlert")
 
-        self.didSetReminder(didOpen: 0)
+        YXSetReminderView.didSetReminder(didOpen: 0)
         self.removeFromSuperview()
     }
     
@@ -71,11 +72,12 @@ class YXSetReminderView: YXTopWindowView {
         UserDefaults.standard.set(true, forKey: "DidShowSetupReminderAlert")
         UserDefaults.standard.set(timePicker.date, forKey: "Reminder")
         
-        self.didSetReminder(didOpen: 1)
+        YXSetReminderView.didSetReminder(didOpen: 1)
         self.removeFromSuperview()
     }
     
-    private func didSetReminder(didOpen: Int) {
+    @objc
+    class func didSetReminder(didOpen: Int) {
         let request = YXHomeRequest.setReminder(dataString: "{\"open_learn_remind\": \(didOpen)}")
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { response in
 

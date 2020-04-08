@@ -193,12 +193,14 @@
             }
         }];
         
+        [YXSetReminderView didSetReminderWithDidOpen: 1];
         [[NSUserDefaults standardUserDefaults] setObject:date forKey:@"Reminder"];
         
     } else {
+        [YXSetReminderView didSetReminderWithDidOpen: 0];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"Reminder"];
     }
-    
+        
     [self.navigationController popViewControllerAnimated:YES];
 }
 

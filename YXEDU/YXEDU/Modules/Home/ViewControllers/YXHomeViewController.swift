@@ -82,7 +82,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             vc.unitId = self.homeModel?.unitId
             vc.hidesBottomBarWhenPushed = true
             
-            YYCache.set(Date(), forKey: "StartStudyTime")
+            if YYCache.object(forKey: "StartStudyTime") == nil {
+                YYCache.set(Date(), forKey: "StartStudyTime")
+            }
             
             self.navigationController?.pushViewController(vc, animated: true)
         }
