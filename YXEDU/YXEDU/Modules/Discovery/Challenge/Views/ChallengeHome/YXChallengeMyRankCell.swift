@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXChallengeMyRankCell: UITableViewCell {
+class YXChallengeMyRankCell: UIView {
     var bgContentView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.hex(0xF5E8D6)
@@ -83,10 +83,9 @@ class YXChallengeMyRankCell: UITableViewCell {
         return label
     }()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clear
-        self.selectionStyle = .none
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .clear
         self.setSubviews()
     }
 
