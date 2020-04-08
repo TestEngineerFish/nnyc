@@ -60,7 +60,6 @@ class YXReviewPlanDetailViewController: YXViewController {
     }
     
     func bindProperty() {
-        self.customNavigationBar?.title = YXReviewDataManager.reviewPlanTitle
         self.customNavigationBar?.titleColor = .white
         self.customNavigationBar?.leftButtonTitleColor = .white
         
@@ -116,6 +115,8 @@ class YXReviewPlanDetailViewController: YXViewController {
                 UIView.toast(msg)
                 
             } else {
+                self.customNavigationBar?.title = detailModel?.planName
+                
                 self.model = detailModel
                 self.bottomView.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []

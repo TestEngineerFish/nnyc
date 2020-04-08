@@ -124,8 +124,8 @@ class YXReviewPlanHeaderView: UIView {
                 reviewProgressView.isHidden = false
                 reviewProgressLabel.isHidden = false
                 
-                reviewProgressView.progress = Float(detailModel.listen / 100)
-                reviewProgressLabel.text = "\(detailModel.listen)%"
+                reviewProgressView.progress = Float(detailModel.review / 100)
+                reviewProgressLabel.text = "\(detailModel.review)%"
                 break
                 
             case .finish:

@@ -10,11 +10,13 @@ import ObjectMapper
 
 struct YXStudentListModel: Mappable  {
     var list: [YXStudentModel]?
-
+    var hasMore = false
+    
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        list  <- map["list"]
+        list <- map["list"]
+        hasMore <- map["has_more"]
     }
 }
 

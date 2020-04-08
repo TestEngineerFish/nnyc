@@ -39,8 +39,6 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     
     
     func bindProperty() {
-        self.customNavigationBar?.title = YXReviewDataManager.reviewPlanName
-        
         wordListView.type                 = .reviewPlanShareDetail
         wordListView.shouldShowEditButton = false
         wordListView.shouldShowBottomView = false
@@ -77,6 +75,8 @@ class YXReviewPlanShareDetailViewController: YXViewController {
                 self.detailModel = detailModel
                 self.reviewPlanModel = detailModel
                 self.wordListView.words = detailModel?.words ?? []
+                
+                self.customNavigationBar?.title = detailModel?.planName
             }
         }
     }

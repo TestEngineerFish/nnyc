@@ -11,6 +11,9 @@ import UIKit
 class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     var planId: Int!
+    private var page = 1
+    private var hasMore = true
+
     var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize                = CGSize(width: AdaptSize(168), height: AdaptSize(200))
@@ -55,13 +58,23 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
 
     // MARK: ---- Request ----
     private func requestStudentList() {
-        let request = YXReviewRequest.studentStudyList(planId: planId)
+        guard hasMore else { return }
+
+        let request = YXReviewRequest.studentStudyList(planId: planId, page: page)
         YYNetworkService.default.request(YYStructResponse<YXStudentListModel>.self, request: request, success: { (response) in
-            guard let modelList = response.data?.list else {
-                return
+            guard let data = response.data, let modelList = data.list else { return }
+            self.hasMore = data.hasMore
+            self.page = self.page + 1
+            
+            if self.page == 2 {
+                self.studentModelList = modelList
+
+            } else {
+                self.studentModelList = self.studentModelList + modelList
             }
-            self.studentModelList = modelList
+            
             self.collectionView.reloadData()
+            
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
@@ -85,4 +98,9 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
         return UIEdgeInsets(top: AdaptSize(10), left: AdaptSize(16), bottom: AdaptSize(0), right: AdaptSize(16))
     }
 
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == page * 10 {
+            requestStudentList()
+        }
+    }
 }
