@@ -82,7 +82,7 @@ class YXReviewPlanDetailViewController: YXViewController {
 
         guard let model = model else { return }
         headerView.snp.remakeConstraints { (make) in
-            make.top.equalTo(kNavHeight)
+            make.top.equalTo(kNavHeight + 6)
             make.left.right.equalTo(0)
             
             if (model.status?.totalCount ?? 0) > 0 {
@@ -95,7 +95,7 @@ class YXReviewPlanDetailViewController: YXViewController {
         }
         
         wordListView.snp.remakeConstraints { (make) in
-            make.top.equalTo(headerView.snp.bottom).offset(10)
+            make.top.equalTo(headerView.snp.bottom).offset(16)
             make.left.right.equalTo(0)
         }
         

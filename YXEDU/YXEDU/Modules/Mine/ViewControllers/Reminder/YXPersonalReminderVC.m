@@ -48,7 +48,7 @@
     self.isReminderSwitch = [[UISwitch alloc] init];
     [self.isReminderSwitch addTarget:self action:@selector(switchTaped) forControlEvents:UIControlEventValueChanged];
     self.isReminderSwitch.tintColor = UIColorOfHex(0xE5E5E5);
-    self.isReminderSwitch.onTintColor = UIColorOfHex(0x60B6F8);
+    self.isReminderSwitch.onTintColor = UIColorOfHex(0xFBA217);
     
     UIView *intervalView = [[UIView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 44)];
     intervalView.backgroundColor = UIColorOfHex(0xF5F5F5);

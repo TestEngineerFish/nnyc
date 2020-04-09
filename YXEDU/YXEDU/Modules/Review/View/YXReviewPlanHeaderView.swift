@@ -96,15 +96,15 @@ class YXReviewPlanHeaderView: UIView {
                 listenProgressLabel.isHidden = true
                 
                 if detailModel.listen == 1 {
-                    listenStart1.image = #imageLiteral(resourceName: "review_cell_star")
+                    listenStart1.image = #imageLiteral(resourceName: "star_new_enable")
                 } else if detailModel.listen == 2 {
-                    listenStart1.image = #imageLiteral(resourceName: "review_cell_star")
-                    listenStart2.image = #imageLiteral(resourceName: "review_cell_star")
+                    listenStart1.image = #imageLiteral(resourceName: "star_new_enable")
+                    listenStart2.image = #imageLiteral(resourceName: "star_new_enable")
                     
                 } else if detailModel.listen == 3 {
-                    listenStart1.image = #imageLiteral(resourceName: "review_cell_star")
-                    listenStart2.image = #imageLiteral(resourceName: "review_cell_star")
-                    listenStart3.image = #imageLiteral(resourceName: "review_cell_star")
+                    listenStart1.image = #imageLiteral(resourceName: "star_new_enable")
+                    listenStart2.image = #imageLiteral(resourceName: "star_new_enable")
+                    listenStart3.image = #imageLiteral(resourceName: "star_new_enable")
                 }
                 
                 break
@@ -129,22 +129,22 @@ class YXReviewPlanHeaderView: UIView {
                 break
                 
             case .finish:
-                reviewLabel.text = "复习成绩"
+                reviewLabel.text = "学习成绩"
                 noReviewLabel.isHidden = true
                 reviewStarsView.isHidden = false
                 reviewProgressView.isHidden = true
                 reviewProgressLabel.isHidden = true
                 
                 if detailModel.review == 1 {
-                    reviewStart1.image = #imageLiteral(resourceName: "review_cell_star")
+                    reviewStart1.image = #imageLiteral(resourceName: "star_new_enable")
                 } else if detailModel.review == 2 {
-                    reviewStart1.image = #imageLiteral(resourceName: "review_cell_star")
-                    reviewStart2.image = #imageLiteral(resourceName: "review_cell_star")
+                    reviewStart1.image = #imageLiteral(resourceName: "star_new_enable")
+                    reviewStart2.image = #imageLiteral(resourceName: "star_new_enable")
                     
                 } else if detailModel.review == 3 {
-                    reviewStart1.image = #imageLiteral(resourceName: "review_cell_star")
-                    reviewStart2.image = #imageLiteral(resourceName: "review_cell_star")
-                    reviewStart3.image = #imageLiteral(resourceName: "review_cell_star")
+                    reviewStart1.image = #imageLiteral(resourceName: "star_new_enable")
+                    reviewStart2.image = #imageLiteral(resourceName: "star_new_enable")
+                    reviewStart3.image = #imageLiteral(resourceName: "star_new_enable")
                 }
                 
                 reportButton.setTitle("学习报告", for: .normal)

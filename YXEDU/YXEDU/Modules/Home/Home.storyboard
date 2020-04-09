@@ -34,15 +34,15 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filter" translatesAutoresizingMaskIntoConstraints="NO" id="7a7-r9-LZL">
-                                        <rect key="frame" x="388" y="15" width="14" height="14"/>
+                                        <rect key="frame" x="386" y="14" width="16" height="16"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="14" id="Efq-xq-tR0"/>
-                                            <constraint firstAttribute="width" constant="14" id="wyr-ZG-L7w"/>
+                                            <constraint firstAttribute="height" constant="16" id="Efq-xq-tR0"/>
+                                            <constraint firstAttribute="width" constant="16" id="wyr-ZG-L7w"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xuM-da-ekt" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                                        <rect key="frame" x="284" y="7.5" width="100" height="29"/>
+                                        <rect key="frame" x="282" y="7.5" width="100" height="29"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="选择年级和版本">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1185,8 +1185,9 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QWh-Bm-blK" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                                <rect key="frame" x="76" y="691" width="262" height="40"/>
+                                <rect key="frame" x="71" y="691" width="272" height="40"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="272" id="KUe-Eg-vgD"/>
                                     <constraint firstAttribute="height" constant="40" id="qwy-cG-335"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1214,12 +1215,11 @@
                         <constraints>
                             <constraint firstItem="uLc-Pb-8Fk" firstAttribute="leading" secondItem="sIF-O0-anD" secondAttribute="leading" id="D8m-y2-Ovz"/>
                             <constraint firstItem="4jw-lv-zbD" firstAttribute="leading" secondItem="sIF-O0-anD" secondAttribute="leading" constant="20" id="LKO-4x-bKJ"/>
-                            <constraint firstItem="QWh-Bm-blK" firstAttribute="leading" secondItem="sIF-O0-anD" secondAttribute="leading" constant="76" id="LMK-3L-H0z"/>
                             <constraint firstItem="sIF-O0-anD" firstAttribute="trailing" secondItem="uLc-Pb-8Fk" secondAttribute="trailing" id="OAO-uc-clW"/>
                             <constraint firstItem="4jw-lv-zbD" firstAttribute="top" secondItem="uLc-Pb-8Fk" secondAttribute="bottom" id="SbN-jE-d0F"/>
                             <constraint firstItem="sIF-O0-anD" firstAttribute="trailing" secondItem="4jw-lv-zbD" secondAttribute="trailing" constant="20" id="WUI-AG-6Mu"/>
                             <constraint firstItem="sIF-O0-anD" firstAttribute="bottom" secondItem="QWh-Bm-blK" secondAttribute="bottom" constant="43" id="Yhr-hJ-oSU"/>
-                            <constraint firstItem="sIF-O0-anD" firstAttribute="trailing" secondItem="QWh-Bm-blK" secondAttribute="trailing" constant="76" id="dO9-H8-YWE"/>
+                            <constraint firstItem="QWh-Bm-blK" firstAttribute="centerX" secondItem="lsu-Ax-6NU" secondAttribute="centerX" id="xAv-uK-muU"/>
                             <constraint firstItem="uLc-Pb-8Fk" firstAttribute="top" secondItem="sIF-O0-anD" secondAttribute="top" id="xda-C5-4P3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sIF-O0-anD"/>
@@ -1251,7 +1251,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="jpj-5D-5QG"/>
-        <segue reference="ISO-bD-fBo"/>
+        <segue reference="kVR-sK-4gc"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow_right_white" width="8" height="15"/>

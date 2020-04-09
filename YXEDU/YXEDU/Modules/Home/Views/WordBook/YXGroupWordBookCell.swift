@@ -12,6 +12,7 @@ class YXGroupWordBookCell: UITableViewCell {
 
     @IBOutlet weak var gradeTitleLabel: UILabel!
     @IBOutlet weak var bookCollectionView: UICollectionView!
+    @IBOutlet weak var divierView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -42,7 +42,7 @@ class YXStudentLearnCell: UICollectionViewCell {
     }()
     var reviewLabel: UILabel = {
         let label = UILabel()
-        label.text          = "复习"
+        label.text          = "学习"
         label.textColor     = UIColor.gray3
         label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
         label.textAlignment = .center

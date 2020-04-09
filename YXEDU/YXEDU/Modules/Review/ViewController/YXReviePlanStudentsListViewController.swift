@@ -33,7 +33,7 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
     }
 
     private func bindProperty() {
-        self.customNavigationBar?.title           = "单词学习情况"
+        self.customNavigationBar?.title = "词单学习情况"
         self.customNavigationBar?.backgroundColor = UIColor.white
         self.collectionView.delegate              = self
         self.collectionView.dataSource            = self

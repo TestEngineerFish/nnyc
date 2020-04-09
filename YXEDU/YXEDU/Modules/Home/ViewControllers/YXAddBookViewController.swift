@@ -116,6 +116,13 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.bookCollectionView.register(UINib(nibName: "YXSingleGroupWordBookCell", bundle: nil), forCellWithReuseIdentifier: "YXSingleGroupWordBookCell")
         cell.bookCollectionView.reloadData()
         
+        if indexPath.row == 0 {
+            cell.divierView.isHidden = true
+            
+        } else {
+            cell.divierView.isHidden = false
+        }
+        
         return cell
     }
     

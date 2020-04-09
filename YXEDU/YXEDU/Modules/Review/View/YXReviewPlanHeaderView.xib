@@ -51,7 +51,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85b-CM-irb">
-                            <rect key="frame" x="14.5" y="12" width="11.5" height="14.5"/>
+                            <rect key="frame" x="12.5" y="12" width="11.5" height="14.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -84,7 +84,7 @@
                         <constraint firstItem="e5t-wS-foc" firstAttribute="leading" secondItem="UiG-Hm-wac" secondAttribute="trailing" constant="-30" id="bCJ-De-YWJ"/>
                         <constraint firstItem="9cn-vl-EGL" firstAttribute="leading" secondItem="QW3-M5-vZ4" secondAttribute="leading" id="loZ-QT-hJv"/>
                         <constraint firstAttribute="trailing" secondItem="e5t-wS-foc" secondAttribute="trailing" id="mRe-hi-lFa"/>
-                        <constraint firstItem="85b-CM-irb" firstAttribute="leading" secondItem="9cn-vl-EGL" secondAttribute="trailing" constant="8" id="w4a-ua-Xzq"/>
+                        <constraint firstItem="85b-CM-irb" firstAttribute="leading" secondItem="9cn-vl-EGL" secondAttribute="trailing" constant="6" id="w4a-ua-Xzq"/>
                         <constraint firstItem="UiG-Hm-wac" firstAttribute="centerY" secondItem="QW3-M5-vZ4" secondAttribute="centerY" id="zia-KH-PLB"/>
                     </constraints>
                 </view>
@@ -103,13 +103,13 @@
                             <color key="textColor" red="0.75294117650000003" green="0.75294117650000003" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尚未复习" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8VX-Ev-D5B">
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尚未学习" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8VX-Ev-D5B">
                             <rect key="frame" x="87.5" y="50" width="53.5" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="0.75294117650000003" green="0.75294117650000003" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="复习进度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yq0-et-2hk">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学习进度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yq0-et-2hk">
                             <rect key="frame" x="24" y="50" width="53.5" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <nil key="textColor"/>
@@ -153,21 +153,21 @@
                         <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="QEx-Vu-LeM">
                             <rect key="frame" x="87.5" y="22" width="64" height="20"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="review_cell_star_gray" translatesAutoresizingMaskIntoConstraints="NO" id="PqW-KG-O2f">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_new_disable" translatesAutoresizingMaskIntoConstraints="NO" id="PqW-KG-O2f">
                                     <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="20" id="ah1-BW-LYm"/>
                                         <constraint firstAttribute="height" constant="20" id="ucr-As-XiG"/>
                                     </constraints>
                                 </imageView>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="review_cell_star_gray" translatesAutoresizingMaskIntoConstraints="NO" id="LA1-fq-SNj">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_new_disable" translatesAutoresizingMaskIntoConstraints="NO" id="LA1-fq-SNj">
                                     <rect key="frame" x="22" y="0.0" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="20" id="M4i-pX-ExN"/>
                                         <constraint firstAttribute="height" constant="20" id="Nvk-Rx-cdM"/>
                                     </constraints>
                                 </imageView>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="review_cell_star_gray" translatesAutoresizingMaskIntoConstraints="NO" id="kYN-cg-Fda">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_new_disable" translatesAutoresizingMaskIntoConstraints="NO" id="kYN-cg-Fda">
                                     <rect key="frame" x="44" y="0.0" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="KH3-Ye-xh5"/>
@@ -180,21 +180,21 @@
                         <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="IBE-ks-N5I">
                             <rect key="frame" x="87.5" y="48" width="64" height="20"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="review_cell_star_gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZD5-vH-JlS">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_new_disable" translatesAutoresizingMaskIntoConstraints="NO" id="ZD5-vH-JlS">
                                     <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="TMP-nW-e1O"/>
                                         <constraint firstAttribute="width" constant="20" id="Um1-kw-eX6"/>
                                     </constraints>
                                 </imageView>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="review_cell_star_gray" translatesAutoresizingMaskIntoConstraints="NO" id="Xgo-3z-G58">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_new_disable" translatesAutoresizingMaskIntoConstraints="NO" id="Xgo-3z-G58">
                                     <rect key="frame" x="22" y="0.0" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="4tu-KR-GZ4"/>
                                         <constraint firstAttribute="width" constant="20" id="HXk-wT-bfj"/>
                                     </constraints>
                                 </imageView>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="review_cell_star_gray" translatesAutoresizingMaskIntoConstraints="NO" id="PKK-qI-3gf">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_new_disable" translatesAutoresizingMaskIntoConstraints="NO" id="PKK-qI-3gf">
                                     <rect key="frame" x="44" y="0.0" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="20" id="UiS-vN-XsH"/>
@@ -294,7 +294,7 @@
     <resources>
         <image name="go" width="8" height="15"/>
         <image name="new" width="33" height="15"/>
-        <image name="review_cell_star_gray" width="30" height="29"/>
         <image name="share" width="20" height="22"/>
+        <image name="star_new_disable" width="21" height="21"/>
     </resources>
 </document>

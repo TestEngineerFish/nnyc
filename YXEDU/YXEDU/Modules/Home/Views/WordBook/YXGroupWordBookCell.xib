@@ -56,6 +56,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="bookCollectionView" destination="qCU-1i-PVL" id="mHh-js-9uI"/>
+                <outlet property="divierView" destination="O6P-Xy-moc" id="bEQ-FG-ljW"/>
                 <outlet property="gradeTitleLabel" destination="KYz-Ud-c3D" id="yXU-fR-nDY"/>
             </connections>
             <point key="canvasLocation" x="140.57971014492756" y="224.33035714285714"/>

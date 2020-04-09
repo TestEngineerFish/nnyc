@@ -198,8 +198,8 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             reviewStarView.snp.remakeConstraints { (make) in
                 make.top.equalTo(AS(26))
                 make.right.equalTo(AS(-17))
-                make.width.equalTo(AS(85))
-                make.height.equalTo(AS(31))
+                make.width.equalTo(AS(68))
+                make.height.equalTo(AS(20))
             }
         }
         
@@ -303,8 +303,8 @@ class YXReviewPlanStarContainerView: YXView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let imageWidth: CGFloat = type == .listen ? 14 : 31
-        let imageHeight: CGFloat = type == .listen ? 12 : 29
+        let imageWidth: CGFloat = type == .listen ? 15 : 20
+        let imageHeight: CGFloat = type == .listen ? 15 : 20
         
         imageView1.snp.makeConstraints { (make) in
             make.centerY.left.equalToSuperview()
@@ -331,11 +331,7 @@ class YXReviewPlanStarContainerView: YXView {
         imageView2.isHidden = true
         imageView3.isHidden = true
         
-        var imageName = "review_cell_star_gray"
-        if type == .listen {
-            imageName = "review_cell_star_listen"
-        }
-                
+        let imageName = "star_new_disable"
         imageView1.image = UIImage(named: imageName)
         imageView2.image = UIImage(named: imageName)
         imageView3.image = UIImage(named: imageName)
@@ -357,13 +353,13 @@ class YXReviewPlanStarContainerView: YXView {
             imageView3.isHidden = false
             
             if count >= 1 {
-                imageView1.image = UIImage(named: "review_cell_star")
+                imageView1.image = UIImage(named: "star_new_enable")
             }
             if count >= 2 {
-                imageView2.image = UIImage(named: "review_cell_star")
+                imageView2.image = UIImage(named: "star_new_enable")
             }
             if count >= 3 {
-                imageView3.image = UIImage(named: "review_cell_star")
+                imageView3.image = UIImage(named: "star_new_enable")
             }
         }
     }
