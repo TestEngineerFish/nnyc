@@ -112,8 +112,9 @@ class YXReviewViewController: YXTableViewController {
         guard let reviewPageModel = self.reviewPageModel else {
             return
         }
-        self.dataSource = reviewPageModel.reviewPlans ?? []
-        self.headerView = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: AS(441 + kSafeBottomMargin)), reviewModel: reviewPageModel)
+        self.dataSource  = reviewPageModel.reviewPlans ?? []
+        let headerHeight = AdaptSize(360) + kStatusBarHeight + AdaptSize(54) - AdaptSize(7.5)
+        self.headerView  = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: headerHeight), reviewModel: reviewPageModel)
         self.headerView.reviewModel = reviewPageModel
         if self.dataSource.count == 0 {
             self.tableView.tableFooterView = self.footerView

@@ -583,7 +583,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mineBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Tpd-ZG-Onf">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="187"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sep-yw-UpI">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
@@ -1176,12 +1176,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Tpd-ZG-Onf" firstAttribute="top" secondItem="NPY-jv-O3s" secondAttribute="top" id="4lB-ub-aUC"/>
+                            <constraint firstItem="Tpd-ZG-Onf" firstAttribute="bottom" secondItem="teA-Xd-wb3" secondAttribute="bottom" id="5e2-sf-R89"/>
                             <constraint firstAttribute="bottom" secondItem="sep-yw-UpI" secondAttribute="bottom" id="RYT-Sl-lsq"/>
                             <constraint firstItem="Tpd-ZG-Onf" firstAttribute="leading" secondItem="chs-8F-nsO" secondAttribute="leading" id="bF9-z4-qzE"/>
                             <constraint firstItem="sep-yw-UpI" firstAttribute="leading" secondItem="chs-8F-nsO" secondAttribute="leading" id="cjK-zg-eb7"/>
                             <constraint firstItem="sep-yw-UpI" firstAttribute="top" secondItem="NPY-jv-O3s" secondAttribute="topMargin" id="fL9-Ns-g3M"/>
                             <constraint firstItem="chs-8F-nsO" firstAttribute="trailing" secondItem="sep-yw-UpI" secondAttribute="trailing" id="nwo-xi-CFG"/>
-                            <constraint firstItem="Tpd-ZG-Onf" firstAttribute="height" secondItem="NPY-jv-O3s" secondAttribute="height" multiplier="0.3" id="t2d-DP-lFO"/>
                             <constraint firstItem="chs-8F-nsO" firstAttribute="trailing" secondItem="Tpd-ZG-Onf" secondAttribute="trailing" id="uCh-ma-H7w"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="chs-8F-nsO"/>
@@ -1193,6 +1193,7 @@
                     <connections>
                         <outlet property="avatarImageView" destination="ZxI-93-Dkk" id="kwZ-qI-Ehg"/>
                         <outlet property="badgeNumberView" destination="B48-5w-Ixj" id="HxZ-3l-7fh"/>
+                        <outlet property="bgViewHeightConsraint" destination="5e2-sf-R89" id="F33-b2-IOZ"/>
                         <outlet property="calendarLabel" destination="jLf-FL-uxB" id="j0A-1X-p8w"/>
                         <outlet property="collectionLeftConsraint" destination="w9E-HF-G3M" id="i6Z-lC-gYH"/>
                         <outlet property="collectionRightConsraint" destination="w9E-HF-G3M" id="7FE-gT-7Xp"/>

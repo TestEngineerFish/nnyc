@@ -15,6 +15,7 @@ class YXReviewHeaderView: YXView {
     
     var bgView          = UIView()
     var circlrImageView = UIImageView()
+    var contentBgView   = UIView()
     var contentView     = UIView()
     
     var titleLabel = UILabel()
@@ -72,7 +73,8 @@ class YXReviewHeaderView: YXView {
         if let reviewPlans = reviewModel.reviewPlans, reviewPlans.count > 0 {
             self.addSubview(createReviewPlanButton)
         }
-        bgView.addSubview(contentView)
+        bgView.addSubview(contentBgView)
+        contentBgView.addSubview(contentView)
         contentView.addSubview(reviewButton)
 
         if reviewModel.learnNum > 0 {
@@ -116,8 +118,16 @@ class YXReviewHeaderView: YXView {
         bgView.layer.cornerRadius  = AS(20)
         
         contentView.backgroundColor     = UIColor.white
-        contentView.layer.masksToBounds = true
         contentView.layer.cornerRadius  = AS(15)
+        contentView.layer.shadowColor   = UIColor.hex(0xE09779).cgColor
+        contentView.layer.shadowOffset  = CGSize.zero
+        contentView.layer.shadowOpacity = 1
+        contentView.layer.shadowRadius  = 10
+        contentView.layer.masksToBounds = false
+
+        contentBgView.backgroundColor     = UIColor.white
+        contentBgView.layer.masksToBounds = true
+        contentBgView.layer.cornerRadius  = AdaptSize(15)
         
         titleLabel.font          = UIFont.pfSCRegularFont(withSize: AS(14))
         titleLabel.text          = "背过的单词"
@@ -201,7 +211,7 @@ class YXReviewHeaderView: YXView {
         super.layoutSubviews()
         
         bgView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(41 + kSafeBottomMargin))
+            make.top.equalTo(AS(21) + kStatusBarHeight)
             make.left.equalTo(AS(22))
             make.right.equalTo(AS(-22))
             make.height.equalTo(AS(339))
@@ -213,12 +223,17 @@ class YXReviewHeaderView: YXView {
             make.width.equalTo(AS(42))
             make.height.equalTo(AS(29))
         }
-        
-        contentView.snp.makeConstraints { (make) in
+
+        contentBgView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(9))
             make.left.equalTo(AS(8))
             make.right.equalTo(AS(-8))
             make.bottom.equalTo(AS(-10))
+        }
+
+        contentView.snp.makeConstraints { (make) in
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalToSuperview().offset(AdaptSize(-6))
         }
         
         reviewButton.snp.makeConstraints { (make) in
@@ -351,7 +366,7 @@ class YXReviewHeaderView: YXView {
         }
         
         reviewPlanLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(bgView.snp.bottom).offset(AS(20))
+            make.top.equalTo(bgView.snp.bottom).offset(AS(17))
             make.left.equalTo(AS(22))
             make.width.equalTo(AS(61))
             make.height.equalTo(AS(21))
@@ -361,7 +376,7 @@ class YXReviewHeaderView: YXView {
             createReviewPlanButton.snp.makeConstraints { (make) in
                 make.centerY.equalTo(reviewPlanLabel)
                 make.right.equalTo(AS(-22))
-                make.width.equalTo(AS(104))
+                make.width.equalTo(AS(90))
                 make.height.equalTo(AS(25))
             }
         }
