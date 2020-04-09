@@ -51,15 +51,17 @@ struct YXStudentLearnModel: Mappable {
 
     var reviewState: ReviewPlanState = .normal
     var listenState: ReviewPlanState = .normal
-    var reviewStar: Int = 0
-    var listenStar: Int = 0
+    var reviewPlanId: Int = 0
+    var reviewStar: Int   = 0
+    var listenStar: Int   = 0
 
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        reviewState <- (map["review_state"], YXReviewPlanStateTransform())
-        listenState <- (map["listen_state"], YXReviewPlanStateTransform())
-        reviewStar  <- map["review"]
-        listenStar  <- map["listen"]
+        reviewState  <- (map["review_state"], YXReviewPlanStateTransform())
+        listenState  <- (map["listen_state"], YXReviewPlanStateTransform())
+        reviewPlanId <- map["review_plan_id"]
+        reviewStar   <- map["review"]
+        listenStar   <- map["listen"]
     }
 }

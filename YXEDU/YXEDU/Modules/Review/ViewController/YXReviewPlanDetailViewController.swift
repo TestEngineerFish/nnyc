@@ -125,6 +125,7 @@ class YXReviewPlanDetailViewController: YXViewController {
                 self.headerView.statusClosure = {
                     let reviePlanStudentsListViewController = YXReviePlanStudentsListViewController()
                     reviePlanStudentsListViewController.planId = self.planId
+                    reviePlanStudentsListViewController.reviewPlanName = detailModel?.planName ?? ""
                     self.navigationController?.pushViewController(reviePlanStudentsListViewController, animated: true)
                 }
                 

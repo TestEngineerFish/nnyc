@@ -23,6 +23,7 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
         return UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
     }()
     var studentModelList = [YXStudentModel]()
+    var reviewPlanName = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,7 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
     }
 
     private func bindProperty() {
-        self.customNavigationBar?.title = "单词学习情况"
+        self.customNavigationBar?.title           = "单词学习情况"
         self.customNavigationBar?.backgroundColor = UIColor.white
         self.collectionView.delegate              = self
         self.collectionView.dataSource            = self
@@ -60,7 +61,7 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
     private func requestStudentList() {
         guard hasMore else { return }
 
-        let request = YXReviewRequest.studentStudyList(planId: planId, page: page)
+        let request = YXReviewRequest.studentStudyList(planId: planId, page: self.page)
         YYNetworkService.default.request(YYStructResponse<YXStudentListModel>.self, request: request, success: { (response) in
             guard let data = response.data, let modelList = data.list else { return }
             self.hasMore = data.hasMore
@@ -96,6 +97,19 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: AdaptSize(10), left: AdaptSize(16), bottom: AdaptSize(0), right: AdaptSize(16))
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = self.studentModelList[indexPath.row]
+        guard let info = model.learnInfo else {
+            return
+        }
+        if info.reviewState == .finish || info.listenState == .finish {
+            let vc = YXReviewPlanReportViewController()
+            vc.planId         = info.reviewPlanId
+            vc.reviewPlanName = self.reviewPlanName
+            YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
