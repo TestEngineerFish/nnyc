@@ -94,11 +94,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 return
             }
             bookModel.bookHash = newHash
-            DispatchQueue.global().async { [weak self] in
-                guard let self = self else { return }
-                self.saveBook(with: bookModel)
-                self.saveWords(with: bookModel)
-            }
+            self.saveBook(with: bookModel)
+            self.saveWords(with: bookModel)
             self.downloadBookCount    -= 1
             if self.downloadBookCount == 0 {
                 self.isDownloading = false
@@ -115,8 +112,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     private func saveBook(with bookModel: YXWordBookModel) {
         guard let bookId = bookModel.bookId else { return }
         /// 删除旧数据
-        YXWordBookDaoImpl().deleteBook(bookId: bookId, async: true)
-        YXWordBookDaoImpl().insertBook(book: bookModel, async: true)
+        YXWordBookDaoImpl().deleteBook(bookId: bookId)
+        YXWordBookDaoImpl().insertBook(book: bookModel)
     }
 
     /// 保存、更新单词
@@ -125,7 +122,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             return
         }
         /// 删除旧数据
-         YXWordBookDaoImpl().deleteWord(bookId: bookId, async: true)
+         YXWordBookDaoImpl().deleteWord(bookId: bookId)
         /// 赋值自定义数据
         for unitModel in unitsList {
             guard let wordsList = unitModel.words else {
@@ -138,7 +135,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 wordModel.unitId    = unitModel.unitId
                 wordModel.unitName  = unitModel.unitName
                 wordModel.isExtensionUnit = unitModel.isExtensionUnit
-                YXWordBookDaoImpl().insertWord(word: wordModel, async: true)
+                YXWordBookDaoImpl().insertWord(word: wordModel)
             }
         }
     }
