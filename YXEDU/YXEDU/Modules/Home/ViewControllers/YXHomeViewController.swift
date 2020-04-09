@@ -189,6 +189,16 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
             YXUserModel.default.reviewNameType = userInfomation.reviewNameType
             
+            if userInfomation.reminder?.didOpen == 1, let time = userInfomation.reminder?.timeStamp {
+                UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "Reminder")
+                UserDefaults.standard.set(true, forKey: "DidShowSetupReminderAlert")
+
+            } else {
+                YYCache.set(nil, forKey: "DidFinishMainStudyProgress")
+                UserDefaults.standard.set(nil, forKey: "Reminder")
+                UserDefaults.standard.set(nil, forKey: "DidShowSetupReminderAlert")
+            }
+            
             Growing.setPeopleVariableWithKey("quanping", andStringValue: userInfomation.fillType == .keyboard ? "1" : "0")
             Growing.setPeopleVariableWithKey("cidan", andStringValue: userInfomation.reviewNameType == .reviewPlan ? "0" : "1")
 

@@ -84,7 +84,7 @@ class YXReviewPlanHeaderView: UIView {
                 listenProgressView.isHidden = false
                 listenProgressLabel.isHidden = false
                 
-                listenProgressView.progress = Float(detailModel.listen / 100)
+                listenProgressView.progress = Float(detailModel.listen) / 100
                 listenProgressLabel.text = "\(detailModel.listen)%"
                 break
                 
@@ -124,7 +124,7 @@ class YXReviewPlanHeaderView: UIView {
                 reviewProgressView.isHidden = false
                 reviewProgressLabel.isHidden = false
                 
-                reviewProgressView.progress = Float(detailModel.review / 100)
+                reviewProgressView.progress = Float(detailModel.review) / 100
                 reviewProgressLabel.text = "\(detailModel.review)%"
                 break
                 

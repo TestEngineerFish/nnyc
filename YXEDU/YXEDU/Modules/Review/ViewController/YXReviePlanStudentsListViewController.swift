@@ -98,8 +98,9 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
         return UIEdgeInsets(top: AdaptSize(10), left: AdaptSize(16), bottom: AdaptSize(0), right: AdaptSize(16))
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == page * 10 {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let index = page == 1 ? 1 : page - 1
+        if indexPath.row == index * 10 {
             requestStudentList()
         }
     }

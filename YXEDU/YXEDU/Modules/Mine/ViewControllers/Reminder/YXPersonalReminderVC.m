@@ -193,11 +193,11 @@
             }
         }];
         
-        [YXSetReminderView didSetReminderWithDidOpen: 1];
-        [[NSUserDefaults standardUserDefaults] setObject:date forKey:@"Reminder"];
+        [YXSetReminderView didSetReminderWithDidOpen:1 time:[NSNumber numberWithDouble:[self.datePicker.date timeIntervalSince1970]]];
+        [[NSUserDefaults standardUserDefaults] setObject:self.datePicker.date forKey:@"Reminder"];
         
     } else {
-        [YXSetReminderView didSetReminderWithDidOpen: 0];
+        [YXSetReminderView didSetReminderWithDidOpen:0 time:0];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"Reminder"];
     }
         

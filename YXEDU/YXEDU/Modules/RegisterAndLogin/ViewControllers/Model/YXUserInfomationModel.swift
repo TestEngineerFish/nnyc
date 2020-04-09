@@ -9,6 +9,20 @@
 import ObjectMapper
 
 struct YXUserInfomationModel: Mappable {
+    struct YXReminderModel: Mappable {
+        var didOpen: Int?
+        var timeStamp: Double?
+        
+        init?(map: Map) {
+            self.mapping(map: map)
+        }
+        
+        mutating func mapping(map: Map) {
+            didOpen <- map["is_open"]
+            timeStamp <- map["time"]
+        }
+    }
+    
     enum ReviewNameType: Int {
         case wordList = 0   // 词单
         case reviewPlan = 1 // 复习计划
@@ -24,7 +38,8 @@ struct YXUserInfomationModel: Mappable {
     var gameExplainUrl: String? //游戏挑战H5文件
     var reviewNameType: ReviewNameType = .reviewPlan //
     var fillType: ExerciseFillType = .choose
-    
+    var reminder: YXReminderModel?
+
     init?(map: Map) {
         self.mapping(map: map)
     }
