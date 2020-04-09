@@ -75,9 +75,10 @@ class YXButton: UIButton {
             if type == .theme {
                 self.layer.cornerRadius  = self.size.height / 2
                 self.layer.masksToBounds = true
-                let bgNormalImage = UIImage(named: "button_normal")
-                bgNormalImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
-                self.setBackgroundImage(bgNormalImage, for: .normal)
+//                let bgNormalImage = UIImage(named: "button_normal")
+//                bgNormalImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
+//                self.setBackgroundImage(bgNormalImage, for: .normal)
+                self.backgroundColor = UIColor.gradientColor(with: self.size, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
             } else if type == .border {
                 self.layer.cornerRadius  = self.size.height / 2
                 self.layer.masksToBounds = true
@@ -92,10 +93,11 @@ class YXButton: UIButton {
             if type == .theme {
                 self.layer.cornerRadius  = self.size.height / 2
                 self.layer.masksToBounds = true
-                let bgDisableImage = UIImage(named: "button_disable")
-                bgDisableImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
-                self.setBackgroundImage(bgDisableImage, for: .disabled)
+//                let bgDisableImage = UIImage(named: "button_disable")
+//                bgDisableImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
+//                self.setBackgroundImage(bgDisableImage, for: .disabled)
                 self.setTitleColor(UIColor.hex(0xEAD2BA), for: .disabled)
+                self.backgroundColor = UIColor.hex(0xFFF4E9)
             }
         }
     }

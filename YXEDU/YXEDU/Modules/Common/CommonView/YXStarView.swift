@@ -34,7 +34,7 @@ class YXStarView: UIView {
                 return 2
             } else if score > YXStarLevelEnum.one.rawValue {
                 return 1
-            } else if score > YXStarLevelEnum.zero.rawValue {
+            } else if score >= YXStarLevelEnum.zero.rawValue {
                 return 0
             } else {
                 return -1
@@ -56,7 +56,7 @@ class YXStarView: UIView {
         }
         leftStarDisableImageView.snp.makeConstraints { (make) in
             make.right.equalTo(centerStarDisableImageView.snp.left).offset(AdaptSize(2))
-            make.top.equalTo(centerStarDisableImageView).offset(AdaptSize(15))
+            make.top.equalTo(centerStarDisableImageView).offset(AdaptSize(13))
             make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
         }
         rightStarDisableImageView.snp.makeConstraints { (make) in

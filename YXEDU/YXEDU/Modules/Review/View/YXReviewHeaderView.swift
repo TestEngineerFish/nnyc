@@ -197,7 +197,6 @@ class YXReviewHeaderView: YXView {
         cannotReviewLabel.font      = UIFont.pfSCRegularFont(withSize: AS(14))
     }
     
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         

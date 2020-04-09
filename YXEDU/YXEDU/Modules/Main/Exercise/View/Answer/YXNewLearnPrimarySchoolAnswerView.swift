@@ -179,7 +179,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             }
         } else {
             // 从单词详情进入
-            self.status            = .playingSecondWordInSecondStage
+            if (self.exerciseModel.word?.listenScore ?? -1) != -1 {
+                self.starView.isHidden      = false
+                self.starView.layer.opacity = 0.3
+            }
+            self.status                 = .playingSecondWordInSecondStage
             self.playByStatus()
             self.starView.showLastNewLearnResultView(score: wordModel?.listenScore ?? 0)
         }
@@ -221,7 +225,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             make.height.equalTo(AdaptSize(35))
         }
         self.recordAudioButton.snp.makeConstraints { (make) in
-            make.top.equalTo(starView.snp.bottom).offset(AdaptSize(-5))
+            make.top.equalTo(starView.snp.bottom)
             make.right.equalToSuperview().offset(AdaptSize(-80))
             make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
         }
@@ -401,6 +405,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         animation.autoreverses = true
         animation.repeatCount  = MAXFLOAT
         self.playAudioButton.layer.add(animation, forKey: "flickerAnimation")
+
         timer?.invalidate()
         timer = Timer(timeInterval: 0.4, repeats: true, block: { (timer) in
             self.playAudioLabel.textAlignment = .left
@@ -444,7 +449,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playAudioLabel.textColor     = UIColor.black2
         self.playAudioButton.layer.removeAllAnimations()
         if (self.exerciseModel.word?.listenScore ?? -1) != -1 {
-            self.starView.isHidden = false
+            self.starView.layer.opacity = 1.0
         }
     }
     
