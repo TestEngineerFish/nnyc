@@ -52,5 +52,6 @@ struct YXUserInfomationModel: Mappable {
         gameExplainUrl       <- map["game_explain_url"]
         reviewNameType       <- (map["plan_execute_ab"], EnumTransform<ReviewNameType>())
         fillType             <- (map["spell_execute_ab"], EnumTransform<ExerciseFillType>())
+        reminder <- map["learn_remind"]
     }
 }
