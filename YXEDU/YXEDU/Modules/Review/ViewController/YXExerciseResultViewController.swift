@@ -90,6 +90,7 @@ class YXExerciseResultViewController: YXViewController {
         let vc = YXExerciseViewController()
         vc.dataType = model?.type ?? .aiReview
         vc.planId = model?.id ?? 0
+        vc.hidesBottomBarWhenPushed = true
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
