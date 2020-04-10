@@ -31,6 +31,7 @@ class YXReviewPlanReportViewController: YXViewController, WKNavigationDelegate {
     var planId: Int = 0
     var reviewPlanName = "我的\(YXReviewDataManager.reviewPlanName)"
     var userName       = YXUserModel.default.username ?? ""
+    var hideShareView  = false
     
     private var urlStr: String {
         return YYEVC.apiUrl + "/share/study/review_report.html?review_plan_id=\(planId)"
@@ -53,6 +54,7 @@ class YXReviewPlanReportViewController: YXViewController, WKNavigationDelegate {
         self.shareChannelView.shareTitle       = userName + "的学习报告"
         self.shareChannelView.shareDescription = "我已经学完了《" + self.reviewPlanName + "》"
         self.shareChannelView.shareThumbImage  = UIImage(named: "shareUrlImage")!
+        self.shareChannelView.isHidden         = self.hideShareView
     }
     
     private func createSubviews() {
@@ -64,7 +66,11 @@ class YXReviewPlanReportViewController: YXViewController, WKNavigationDelegate {
         webView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalToSuperview().offset(-kStatusBarHeight)
-            make.bottom.equalTo(shareChannelView.snp.top).offset(AdaptSize(-24))
+            if self.hideShareView {
+                make.bottom.equalToSuperview()
+            } else {
+                make.bottom.equalTo(shareChannelView.snp.top).offset(AdaptSize(-24))
+            }
         }
         shareChannelView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()

@@ -106,6 +106,7 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
         }
         if info.reviewState == .finish || info.listenState == .finish {
             let vc = YXReviewPlanReportViewController()
+            vc.hideShareView  = true
             vc.planId         = info.reviewPlanId
             vc.reviewPlanName = self.reviewPlanName
             YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
