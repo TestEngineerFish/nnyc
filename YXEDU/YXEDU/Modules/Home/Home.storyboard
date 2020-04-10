@@ -16,8 +16,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OqS-Az-9bn">
+                                <rect key="frame" x="0.0" y="44" width="414" height="0.5"/>
+                                <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="p7y-Oj-iQT"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uVU-qD-ytE">
-                                <rect key="frame" x="0.0" y="44" width="414" height="730"/>
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="729.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="KRx-zx-laN" id="zTA-Cg-yDj"/>
@@ -70,9 +77,12 @@
                             <constraint firstItem="GUA-GI-m9Q" firstAttribute="trailing" secondItem="JzA-mD-HX5" secondAttribute="trailing" id="Dhl-Rn-1CO"/>
                             <constraint firstItem="uVU-qD-ytE" firstAttribute="leading" secondItem="GUA-GI-m9Q" secondAttribute="leading" id="H13-aS-inQ"/>
                             <constraint firstItem="JzA-mD-HX5" firstAttribute="leading" secondItem="Cmh-Es-I4z" secondAttribute="leading" id="HxH-d0-rAS"/>
-                            <constraint firstItem="uVU-qD-ytE" firstAttribute="top" secondItem="GUA-GI-m9Q" secondAttribute="top" constant="44" id="VVO-tc-nJS"/>
+                            <constraint firstAttribute="trailing" secondItem="OqS-Az-9bn" secondAttribute="trailing" id="Men-eK-jjy"/>
+                            <constraint firstItem="uVU-qD-ytE" firstAttribute="top" secondItem="GUA-GI-m9Q" secondAttribute="top" constant="44.5" id="VVO-tc-nJS"/>
                             <constraint firstItem="GUA-GI-m9Q" firstAttribute="trailing" secondItem="uVU-qD-ytE" secondAttribute="trailing" id="Z5C-aj-HDj"/>
+                            <constraint firstItem="OqS-Az-9bn" firstAttribute="leading" secondItem="Cmh-Es-I4z" secondAttribute="leading" id="eVc-tT-fYQ"/>
                             <constraint firstItem="JzA-mD-HX5" firstAttribute="top" secondItem="Cmh-Es-I4z" secondAttribute="top" id="tW8-rW-shT"/>
+                            <constraint firstItem="OqS-Az-9bn" firstAttribute="top" secondItem="JzA-mD-HX5" secondAttribute="bottom" id="zJC-y7-Hyk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GUA-GI-m9Q"/>
                     </view>
@@ -1027,7 +1037,7 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jw-lv-zbD" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                <rect key="frame" x="20" y="124" width="374" height="256"/>
+                                <rect key="frame" x="20" y="118" width="374" height="256"/>
                                 <subviews>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XDG-i9-7E1" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
                                         <rect key="frame" x="12" y="12" width="60" height="16"/>
@@ -1216,7 +1226,7 @@
                             <constraint firstItem="uLc-Pb-8Fk" firstAttribute="leading" secondItem="sIF-O0-anD" secondAttribute="leading" id="D8m-y2-Ovz"/>
                             <constraint firstItem="4jw-lv-zbD" firstAttribute="leading" secondItem="sIF-O0-anD" secondAttribute="leading" constant="20" id="LKO-4x-bKJ"/>
                             <constraint firstItem="sIF-O0-anD" firstAttribute="trailing" secondItem="uLc-Pb-8Fk" secondAttribute="trailing" id="OAO-uc-clW"/>
-                            <constraint firstItem="4jw-lv-zbD" firstAttribute="top" secondItem="uLc-Pb-8Fk" secondAttribute="bottom" id="SbN-jE-d0F"/>
+                            <constraint firstItem="4jw-lv-zbD" firstAttribute="top" secondItem="uLc-Pb-8Fk" secondAttribute="bottom" constant="-6" id="SbN-jE-d0F"/>
                             <constraint firstItem="sIF-O0-anD" firstAttribute="trailing" secondItem="4jw-lv-zbD" secondAttribute="trailing" constant="20" id="WUI-AG-6Mu"/>
                             <constraint firstItem="sIF-O0-anD" firstAttribute="bottom" secondItem="QWh-Bm-blK" secondAttribute="bottom" constant="43" id="Yhr-hJ-oSU"/>
                             <constraint firstItem="QWh-Bm-blK" firstAttribute="centerX" secondItem="lsu-Ax-6NU" secondAttribute="centerX" id="xAv-uK-muU"/>

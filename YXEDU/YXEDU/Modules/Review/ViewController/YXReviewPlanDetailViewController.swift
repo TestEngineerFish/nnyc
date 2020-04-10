@@ -95,7 +95,7 @@ class YXReviewPlanDetailViewController: YXViewController {
         }
         
         wordListView.snp.remakeConstraints { (make) in
-            make.top.equalTo(headerView.snp.bottom).offset(16)
+            make.top.equalTo(headerView.snp.bottom).offset(20)
             make.left.right.equalTo(0)
         }
         
