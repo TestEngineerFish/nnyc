@@ -262,12 +262,12 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 wordListView.shouldShowEditButton = false
                 wordListView.shouldShowBottomView = true
                 wordListView.type                 = .wrongWords
+                self.wordListViews[indexPath.row] = wordListView
                 self.wordListViews[indexPath.row]?.startReviewClosure   = {
                     let exerciseViewController = YXExerciseViewController()
                     exerciseViewController.dataType = .wrong
                     self.navigationController?.pushViewController(exerciseViewController, animated: true)
                 }
-                self.wordListViews[indexPath.row] = wordListView
                 self.requestWrongWordsList()
             default:
                 break
