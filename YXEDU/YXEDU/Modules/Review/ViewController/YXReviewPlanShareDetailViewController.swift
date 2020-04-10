@@ -59,8 +59,8 @@ class YXReviewPlanShareDetailViewController: YXViewController {
         bottomView.snp.makeConstraints { (make) in
             make.top.equalTo(wordListView.snp.bottom)
             make.left.right.equalToSuperview()
-            make.height.equalTo(AS(67))
-            make.bottom.equalTo(-kSafeBottomMargin)
+            make.height.equalTo(AS(60) + kSafeBottomMargin)
+            make.bottom.equalToSuperview()
         }
         
     }

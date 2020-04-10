@@ -34,7 +34,7 @@ class YXReviewPlanShareDetailBottomView: YXView {
     
     override func bindProperty() {
         saveButton.layer.masksToBounds = true
-        saveButton.layer.cornerRadius = 21
+        saveButton.layer.cornerRadius  = AdaptSize(21)
         saveButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
         saveButton.setTitle("保存到我的\(YXReviewDataManager.reviewPlanName)", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
@@ -47,10 +47,10 @@ class YXReviewPlanShareDetailBottomView: YXView {
         super.layoutSubviews()
         
         saveButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.left.equalTo(AS(50))
-            make.right.equalTo(AS(-50))
+            make.top.equalToSuperview().offset(AdaptSize(9))
+            make.width.equalTo(AdaptSize(273))
             make.height.equalTo(AS(42))
+            make.centerX.equalToSuperview()
         }
     }
 
