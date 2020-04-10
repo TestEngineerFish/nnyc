@@ -19,7 +19,7 @@ struct YXWordListModel: Mappable {
 
     mutating func mapping(map: Map) {
         self.page          <- map["page"]
-        self.haveMore      <- map["hash_more"]
+        self.haveMore      <- map["has_more"]
         self.total         <- map["total"]
         self.wordModelList <- map["list"]
     }
