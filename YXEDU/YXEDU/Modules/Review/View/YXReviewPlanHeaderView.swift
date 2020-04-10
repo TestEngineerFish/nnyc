@@ -107,6 +107,10 @@ class YXReviewPlanHeaderView: UIView {
                     listenStart3.image = #imageLiteral(resourceName: "star_new_enable")
                 }
                 
+                reportButton.setTitle("学习报告", for: .normal)
+                reportButton.setTitleColor(.black, for: .normal)
+                reportButton.isEnabled = true
+                
                 break
             }
             
