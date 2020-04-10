@@ -13,7 +13,8 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     private var grades: [YXGradeWordBookListModel] = []
     private var selectedGrade: YXGradeWordBookListModel!
     private var selectClosure: ((_ grade: String, _ version: String?) -> Void)!
-
+    private var storeSeleteIndex: [String: Int] = ["所有年级": 0]
+    
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var gradeCollectionView: UICollectionView!
@@ -126,15 +127,14 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
                 }
             }
             grades[indexPath.row].isSelect = true
-            
             selectedGrade = grades[indexPath.row]
-            selectedGrade.versions[0].isSelect = true
+            
+            if selectedGrade.gradeName == storeSeleteIndex.first?.key {
+                selectedGrade.versions[storeSeleteIndex.first?.value ?? 0].isSelect = true
+            }
             
             gradeCollectionView.reloadData()
             versionCollectionView.reloadData()
-            
-            guard let gradeName = selectedGrade.gradeName else { return }
-            selectClosure(gradeName, nil)
 
         } else {
             for index in 0..<selectedGrade.versions.count {
@@ -145,6 +145,7 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
             versionCollectionView.reloadData()
             
             guard let gradeName = selectedGrade.gradeName, let versionName = selectedGrade.versions[indexPath.row].bookVersion else { return }
+            storeSeleteIndex = [gradeName: indexPath.row]
             selectClosure(gradeName, versionName)
         }
     }
