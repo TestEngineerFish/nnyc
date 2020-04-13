@@ -94,8 +94,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 return
             }
             bookModel.bookHash = newHash
-            self.saveBook(with: bookModel)
             self.saveWords(with: bookModel)
+            self.saveBook(with: bookModel)
             self.downloadBookCount    -= 1
             if self.downloadBookCount == 0 {
                 self.isDownloading = false

@@ -13,7 +13,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
 
     var guideView = YXNewLearnGuideView()
 
-    var detailView: YXNewLearnJuniorHighSchoolQuestionView?
+    var detailView: YXWordDetailCommonView?
     var rightContentView: UIView = {
         let view = UIView()
         return view
@@ -41,10 +41,11 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         (answerView as! YXNewLearnAnswerView).newLearnDelegate = self
         answerView?.answerDelegate  = self
         self.leftContentView.addSubview(answerView!)
-
-        detailView = YXNewLearnJuniorHighSchoolQuestionView(exerciseModel: exerciseModel)
-        self.contentView.addSubview(rightContentView)
-        self.rightContentView.addSubview(detailView!)
+        if let wordModel = exerciseModel.word {
+            detailView = YXWordDetailCommonView(frame: CGRect.zero, word: wordModel)
+            self.contentView.addSubview(rightContentView)
+            self.rightContentView.addSubview(detailView!)
+        }
     }
 
     override func layoutSubviews() {
