@@ -61,7 +61,7 @@
     [formatterForEvent addToWhitelist:LOG_CONTEXT_EVENT];
     [self.loggerForEvent setLogFormatter:formatterForEvent];
     self.loggerForEvent.maximumFileSize = 1024 * 1024 * 1;
-    self.loggerForEvent.logFileManager.maximumNumberOfLogFiles = 2;
+    self.loggerForEvent.logFileManager.maximumNumberOfLogFiles = 5;
     [DDLog addLogger:self.loggerForEvent withLevel:DDLogLevelVerbose | LOG_FLAG_EVENT];
     // 控制台输出
     [DDLog addLogger:[DDOSLogger sharedInstance] withLevel:DDLogLevelInfo | LOG_FLAG_EVENT];
