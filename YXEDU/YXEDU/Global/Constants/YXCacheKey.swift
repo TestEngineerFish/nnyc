@@ -21,6 +21,7 @@ enum YXLocalKey: String {
     
     case makePlanNameIndex             = "YX_Plan_Name_Index"
     case currentChooseBookId           = "currentChooseBookId"
+    case newLearnReportGIO = "NewLearnReportGIO" // 新学完成上报GIO
     
 }
 

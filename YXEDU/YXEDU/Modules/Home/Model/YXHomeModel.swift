@@ -25,23 +25,27 @@ struct YXHomeModel: Codable {
     var learnedWords: Int?
     var isSkipNewLearn: Int?
     var isUploadGIO: Int?
+    var bookGrade: String?
+    var bookVersionName: String?
     
     enum CodingKeys: String, CodingKey {
-        case userId = "user_id"
-        case bookId = "book_id"
-        case bookName = "book_name"
-        case bookSource = "book_url"
-        case bookHash = "hash"
-        case unitId = "unit_id"
-        case unitName = "unit_name"
-        case isLastUnit = "is_last_unit"
-        case unitProgress = "learn_rate"
-        case newWords = "new_num"
-        case reviewWords = "review_num"
-        case collectedWords = "fav_num"
-        case wrongWords = "wrong_num"
-        case learnedWords = "learned_num"
-        case isSkipNewLearn = "is_skip_new_learn"
-        case isUploadGIO    = "is_gio_upload"
+        case userId          = "user_id"
+        case bookId          = "book_id"
+        case bookName        = "book_name"
+        case bookSource      = "book_url"
+        case bookHash        = "hash"
+        case unitId          = "unit_id"
+        case unitName        = "unit_name"
+        case isLastUnit      = "is_last_unit"
+        case unitProgress    = "learn_rate"
+        case newWords        = "new_num"
+        case reviewWords     = "review_num"
+        case collectedWords  = "fav_num"
+        case wrongWords      = "wrong_num"
+        case learnedWords    = "learned_num"
+        case isSkipNewLearn  = "is_skip_new_learn"
+        case isUploadGIO     = "is_gio_upload"
+        case bookGrade       = "book_grade"
+        case bookVersionName = "book_version_name"
     }
 }

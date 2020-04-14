@@ -22,6 +22,7 @@ extension YXExerciseViewController {
             dataManager.progressManager.setOneExerciseFinishStudyTime()
             // 学完，上报
             submitResult()
+            Growing.track("main_finish_study")
         }
     }
     

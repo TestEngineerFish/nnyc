@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GrowingCoreKit
 
 class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {    
     private var grades: [YXGradeWordBookListModel] = []
@@ -218,6 +219,10 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         guard let bookId = wordBook.bookId, let units = wordBook.units else { return }
         let seleceUnitView = YXSeleceUnitView(units: units) { (unitId) in
             guard let unitId = unitId else { return }
+
+            let gradeId = self.filterGrades[collectionView.tag].gradeId
+            Growing.setPeopleVariableWithKey("user_grade", andStringValue: String(describing: gradeId))
+            Growing.setPeopleVariableWithKey("user_book_version", andStringValue: wordBook.bookVersion ?? "")
 
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in

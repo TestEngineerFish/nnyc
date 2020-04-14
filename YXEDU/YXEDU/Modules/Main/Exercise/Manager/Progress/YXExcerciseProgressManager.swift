@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GrowingCoreKit
 import ObjectMapper
 
 /// 练习进度管理器
@@ -252,7 +253,14 @@ class YXExcerciseProgressManager: NSObject {
     
     func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?) {
         YYCache.set(false, forKey: key(.completion))
-        
+        if newWordIds?.isEmpty ?? true {
+            if !(YYCache.object(forKey: .newLearnReportGIO) as? Bool ?? false) {
+                Growing.track("main_finish_new_study")
+                YYCache.set(true, forKey: .newLearnReportGIO)
+            }
+        } else {
+            YYCache.set(false, forKey: .newLearnReportGIO)
+        }
         YYCache.set(newWordIds, forKey: key(.newWordIds))
         YYCache.set(reviewWordIds, forKey: key(.reviewWordIds))
     }

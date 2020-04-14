@@ -5,7 +5,7 @@
 //  Created by Jake To on 10/24/19.
 //  Copyright © 2019 shiji. All rights reserved.
 //
-
+import GrowingCoreKit
 import UIKit
 
 class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -93,7 +93,10 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 self.navigationController?.popViewController(animated: true)
                 return
             }
-            
+
+            Growing.setPeopleVariableWithKey("user_grade", andStringValue: "\(wordBook.gradeId ?? 0)")
+            Growing.setPeopleVariableWithKey("user_book_version", andStringValue: wordBook.bookVersion ?? "")
+
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 guard let self = self else { return }

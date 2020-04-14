@@ -166,15 +166,24 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 YXConfigure.shared()?.isSkipNewLearn = self.homeModel.isSkipNewLearn == .some(1)
                 YXWordBookResourceManager.shared.contrastBookData()
                 self.initDataManager()
-                if self.homeModel.isUploadGIO == .some(1) {
-                    Growing.setPeopleVariableWithKey("new_study_test", andStringValue: "7年级跳过新学")
-                } else {
-                    Growing.setPeopleVariableWithKey("new_study_test", andStringValue: "7年级参照组")
-                }
+                self.uploadGrowing()
             } catch {
                 YXLog("获取主页基础数据失败：", error.localizedDescription)
             }
         }
+    }
+
+    private func uploadGrowing() {
+        guard let model = self.homeModel else {
+            return
+        }
+        if model.isUploadGIO == 1 {
+            Growing.setPeopleVariableWithKey("new_study_test", andStringValue: "7年级跳过新学")
+        } else {
+            Growing.setPeopleVariableWithKey("new_study_test", andStringValue: "7年级参照组")
+        }
+        Growing.setPeopleVariableWithKey("user_grade", andStringValue: model.bookGrade ?? "")
+        Growing.setPeopleVariableWithKey("user_book_version", andStringValue: model.bookVersionName ?? "")
     }
     
     private func checkUserState() {

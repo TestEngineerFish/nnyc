@@ -190,6 +190,7 @@ extension YXExerciseDataManager {
                 }
             }
         }
+        
         YXLog("更新：新学单词数\(map.count)")
         needNewStudyCount = map.count
     }

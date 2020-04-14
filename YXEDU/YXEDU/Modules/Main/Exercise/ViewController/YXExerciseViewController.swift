@@ -49,6 +49,9 @@
     
     /// 哪个单词的提示，仅连线题使用
     private var remindWordId: Int = -1
+
+    // ---- Growing ----
+    private var durationTime = 0.0
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -144,6 +147,7 @@
         // 如果符合条件，则跳过新学
         if YXConfigure.shared()?.isSkipNewLearn ?? false {
             dataManager.skipNewWord()
+            YYCache.set(true, forKey: .newLearnReportGIO)
         }
 
     }
