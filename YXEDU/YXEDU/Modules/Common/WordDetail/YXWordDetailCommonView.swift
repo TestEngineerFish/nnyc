@@ -23,19 +23,20 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     private var mostDeformationLength: CGFloat = 44
     private var featuredViewheight: CGFloat    = 0
     private var featuredView: YXWordDetailFeaturedView!
+    private var recordView = YXRecordView()
     var exampleCell: YXWordDetailExampleCell?
     var isAutoPlay = false
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var phoneticSymbolLabel: UILabel!
-    @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var partOfSpeechAndSenseLabel: UILabel!
     @IBOutlet weak var playAuoidButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var dividingView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var dividingTopConstraint: NSLayoutConstraint!
+
     @IBAction func playAudio(_ sender: UIButton) {
         YXAVPlayerManager.share.finishedBlock = nil
         self.isAutoPlay = false
@@ -45,12 +46,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         } else {
             self.playWord()
         }
-    }
-    
-    @IBAction func recordAction(_ sender: UIButton) {
-        guard let wordModel = self.word else { return }
-        self.isAutoPlay     = false
-        YXNewLearnView(wordModel: wordModel).show()
     }
     
     init(frame: CGRect, word: YXWordModel) {
@@ -118,10 +113,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 partOfSpeechAndSenseLabel.text = text
             }
         }
-        
-//        if let imageUrl = word.imageUrl, word?.isComplexWord != 1 {
-//            imageView.sd_setImage(with: URL(string: imageUrl), completed: nil)
-//        }
                 
         if let deformations = word.deformations, deformations.count > 0 {
             sections.append([SectionType.deformation.rawValue: deformations])
@@ -160,8 +151,19 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             sections.append([SectionType.antonym.rawValue: antonyms])
             sectionExpandStatus.append(true)
         }
-        self.updateRecordStatus()
+        // 设置录音视图
+        self.dividingTopConstraint.constant = AdaptSize(40 + 20)
+        self.addSubview(recordView)
+        recordView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.dividingView.snp.top)
+            make.height.equalTo(AdaptSize(40))
+        }
+        let tapRecordView = UITapGestureRecognizer(target: self, action: #selector(recordAction))
+        recordView.addGestureRecognizer(tapRecordView)
     }
+
+
     
     // ---- Request ----
     /// 不应该调用的。。。，这里仅仅是为了获取这个单词的跟读最好得分，之后有时间将之前的跟读得分写入数据库即可
@@ -174,29 +176,26 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { [weak self] (response) in
             guard let self = self, let wordModel = response.data else { return }
             self.word.listenScore      = wordModel.listenScore
-            self.updateRecordStatus()
+            self.recordView.updateState(listenScore: wordModel.listenScore)
         }) { error in
             YXLog("查询单词:\(wordId)详情失败， error:\(error)")
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
-    
     // MARK: ---- Event ----
+
+    @objc private func recordAction() {
+        guard let wordModel = self.word else { return }
+        self.isAutoPlay     = false
+        YXNewLearnView(wordModel: wordModel).show()
+    }
     
     private func bindProperty() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateRecordScore(_:)), name: YXNotification.kRecordScore, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
-    
-    private func updateRecordStatus() {
-        if word.listenScore > YXStarLevelEnum.three.rawValue {
-            self.recordButton.setImage(UIImage(named: "didRecordedIcon"), for: .normal)
-        } else {
-            self.recordButton.setImage(UIImage(named: "recordedIcon"), for: .normal)
-        }
-    }
-    
+
     /// 播放单词
     private func playWord() {
         guard let _voice = word.voice, let pronunciationUrl = URL(string: _voice) else { return }
@@ -227,7 +226,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             return
         }
         word.listenScore = newScore
-        self.updateRecordStatus()
+        self.recordView.updateState(listenScore: newScore)
     }
     
     @objc private func didEnterBackgroundNotification() {

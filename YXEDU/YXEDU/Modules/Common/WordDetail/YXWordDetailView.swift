@@ -68,7 +68,6 @@ class YXWordDetailView: UIView {
         contentView.frame = self.bounds
         
         wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 40, width: self.frame.width, height: self.frame.height - self.frame.minY - kSafeBottomMargin - 80), word: word!)
-        wordDetailView.recordButton.isHidden = false
         self.addSubview(wordDetailView)
         
         let request = YXWordListRequest.didCollectWord(wordId: word.wordId ?? 0)

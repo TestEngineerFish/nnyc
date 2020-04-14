@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,12 +11,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXWordDetailCommonView" customModule="YXEDU" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="c29-AM-MxI"/>
+                <outlet property="dividingTopConstraint" destination="drt-1u-Yg6" id="Ssf-iS-TCJ"/>
                 <outlet property="dividingView" destination="Y7d-xJ-we1" id="m8f-dS-Rwk"/>
                 <outlet property="imageView" destination="krV-F4-QQf" id="BpD-rG-Z5L"/>
                 <outlet property="partOfSpeechAndSenseLabel" destination="cO4-0T-jiD" id="v7Z-zE-c0t"/>
                 <outlet property="phoneticSymbolLabel" destination="9G4-gA-ave" id="jNZ-B4-lqv"/>
                 <outlet property="playAuoidButton" destination="nkP-Fs-mzR" id="SrY-tL-ILC"/>
-                <outlet property="recordButton" destination="itY-rC-dhM" id="Ebu-3x-LBC"/>
                 <outlet property="tableView" destination="5KF-Sy-Uh7" id="JUg-j7-AoI"/>
                 <outlet property="wordLabel" destination="11v-Vb-OEW" id="LDr-Ee-9mM"/>
             </connections>
@@ -57,14 +57,14 @@
                     </userDefinedRuntimeAttributes>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7d-xJ-we1">
-                    <rect key="frame" x="0.0" y="95" width="414" height="10"/>
+                    <rect key="frame" x="0.0" y="135" width="414" height="10"/>
                     <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="10" id="lFp-XF-fKB"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="5KF-Sy-Uh7">
-                    <rect key="frame" x="0.0" y="105" width="414" height="791"/>
+                    <rect key="frame" x="0.0" y="145" width="414" height="751"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="McD-qi-Dcu"/>
@@ -82,23 +82,10 @@
                         <action selector="playAudio:" destination="-1" eventType="touchUpInside" id="7xl-Ei-GIF"/>
                     </connections>
                 </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="itY-rC-dhM">
-                    <rect key="frame" x="377" y="3.5" width="22" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="7B5-fO-OeJ"/>
-                        <constraint firstAttribute="width" constant="22" id="dLH-q0-BGz"/>
-                    </constraints>
-                    <state key="normal" image="recordedIcon"/>
-                    <connections>
-                        <action selector="recordAction:" destination="-1" eventType="touchUpInside" id="Cbl-M1-zUP"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="cO4-0T-jiD" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="28" id="9RV-Vc-YlP"/>
-                <constraint firstAttribute="trailing" secondItem="itY-rC-dhM" secondAttribute="trailing" constant="15" id="EVU-S9-NOH"/>
-                <constraint firstItem="itY-rC-dhM" firstAttribute="centerY" secondItem="11v-Vb-OEW" secondAttribute="centerY" id="Ed8-Rm-exR"/>
                 <constraint firstItem="9G4-gA-ave" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="28" id="LdR-L8-bQj"/>
                 <constraint firstItem="11v-Vb-OEW" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="28" id="M2T-ZS-0u5"/>
                 <constraint firstItem="nkP-Fs-mzR" firstAttribute="leading" secondItem="11v-Vb-OEW" secondAttribute="trailing" constant="8" id="NVU-6s-WKl"/>
@@ -108,7 +95,7 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="5KF-Sy-Uh7" secondAttribute="trailing" id="Zcz-fw-Vyc"/>
                 <constraint firstItem="11v-Vb-OEW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="cvv-Ls-pQA"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Y7d-xJ-we1" secondAttribute="trailing" id="d67-vZ-ai0"/>
-                <constraint firstItem="Y7d-xJ-we1" firstAttribute="top" secondItem="cO4-0T-jiD" secondAttribute="bottom" constant="18" id="drt-1u-Yg6"/>
+                <constraint firstItem="Y7d-xJ-we1" firstAttribute="top" secondItem="cO4-0T-jiD" secondAttribute="bottom" constant="58" id="drt-1u-Yg6"/>
                 <constraint firstItem="5KF-Sy-Uh7" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gJj-wg-hTc"/>
                 <constraint firstItem="nkP-Fs-mzR" firstAttribute="centerY" secondItem="11v-Vb-OEW" secondAttribute="centerY" id="sMb-wK-Pp4"/>
                 <constraint firstItem="Y7d-xJ-we1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="slY-vo-5Do"/>
@@ -123,6 +110,5 @@
     </objects>
     <resources>
         <image name="playAudioIcon" width="37" height="37"/>
-        <image name="recordedIcon" width="22" height="22"/>
     </resources>
 </document>

@@ -78,6 +78,7 @@
 		224A2FCF2382353F00AD99B0 /* YXLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FCE2382353F00AD99B0 /* YXLabel.swift */; };
 		224A2FD6238283C100AD99B0 /* YXLearnMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FD5238283C100AD99B0 /* YXLearnMapModel.swift */; };
 		224DF54A23840E6B00D2B0BF /* YXLearnResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */; };
+		2252B50824455DD9002AE9F2 /* YXRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252B50724455DD9002AE9F2 /* YXRecordView.swift */; };
 		2252EFE4239BC1D900A98BFB /* YXReviewUnitListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252EFE3239BC1D900A98BFB /* YXReviewUnitListHeaderView.swift */; };
 		2269DD872398F9E3001F116A /* RegisterSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2269DD862398F9E3001F116A /* RegisterSliderView.swift */; };
 		22750820239F747700A53B9B /* YXReviewBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2275081F239F747700A53B9B /* YXReviewBottomView.swift */; };
@@ -626,6 +627,7 @@
 		224A2FCE2382353F00AD99B0 /* YXLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLabel.swift; sourceTree = "<group>"; };
 		224A2FD5238283C100AD99B0 /* YXLearnMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnMapModel.swift; sourceTree = "<group>"; };
 		224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnResultModel.swift; sourceTree = "<group>"; };
+		2252B50724455DD9002AE9F2 /* YXRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRecordView.swift; sourceTree = "<group>"; };
 		2252EFE3239BC1D900A98BFB /* YXReviewUnitListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewUnitListHeaderView.swift; sourceTree = "<group>"; };
 		2269DD862398F9E3001F116A /* RegisterSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterSliderView.swift; sourceTree = "<group>"; };
 		2275081F239F747700A53B9B /* YXReviewBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewBottomView.swift; sourceTree = "<group>"; };
@@ -1785,6 +1787,7 @@
 				7709752B23992B880071A779 /* YXWordDetailCommonPhrasesCell.xib */,
 				7709752E23992D570071A779 /* YXWordDetailFeaturedClassicCell.swift */,
 				7709752F23992D570071A779 /* YXWordDetailFeaturedClassicCell.xib */,
+				2252B50724455DD9002AE9F2 /* YXRecordView.swift */,
 			);
 			path = Featured;
 			sourceTree = "<group>";
@@ -4054,6 +4057,7 @@
 				EEE8E99A23CF38C900729463 /* YXTest.swift in Sources */,
 				EE5EFCD323274E5500655654 /* YXBookModel.m in Sources */,
 				CFB11BEA2414953E00B29B62 /* YXStarView.swift in Sources */,
+				2252B50824455DD9002AE9F2 /* YXRecordView.swift in Sources */,
 				EE1E4A8C23694371007D248F /* YXLookExampleChooseChineseExerciseView.swift in Sources */,
 				77252A7423628940007D86A0 /* YXSelectGradeCell.swift in Sources */,
 				EEACEB7E23A9FE320036B3A2 /* YXBaseWordModel.swift in Sources */,
