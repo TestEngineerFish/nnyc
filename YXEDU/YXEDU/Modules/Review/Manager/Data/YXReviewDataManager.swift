@@ -50,6 +50,18 @@ struct YXReviewDataManager {
             completion?(nil, error.message)
         }
     }
+
+    func resetReviewPlanData(planId: Int, completion: ((Bool)->Void)?) {
+        let request = YXReviewRequest.resetReviewPlan(planId: planId)
+        YYNetworkService.default.request(YYStructResponse<YXResetReviewPlanModel>.self, request: request, success: { (response) in
+            guard let resetReviewPlanModel = response.data, resetReviewPlanModel.isSuccess == 1 else {
+                return
+            }
+            completion?(resetReviewPlanModel.isSuccess == 1)
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
     
     
     /// 上报复习结果

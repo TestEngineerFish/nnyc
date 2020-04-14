@@ -20,3 +20,14 @@ class YXReviewPlanDetailModel: YXReviewPlanModel {
     }
 }
 
+class YXResetReviewPlanModel: Mappable {
+
+    var isSuccess = 0
+
+    required init?(map: Map) {}
+
+    func mapping(map: Map) {
+        self.isSuccess <- map["is_success"]
+    }
+}
+

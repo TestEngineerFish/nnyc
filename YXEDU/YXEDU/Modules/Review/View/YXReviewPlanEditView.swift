@@ -13,7 +13,8 @@ class YXReviewPlanEditView: YXTopWindowView {
     var reviewPlanModel: YXReviewPlanDetailModel?
     
     /// 智能复习
-    var editButton = UIButton()
+    var editButton   = UIButton()
+    var resetButton  = UIButton()
     var removeButton = UIButton()
     var mainPoint: CGPoint = .zero
     
@@ -37,6 +38,7 @@ class YXReviewPlanEditView: YXTopWindowView {
 
     override func createSubviews() {
         mainView.addSubview(editButton)
+        mainView.addSubview(resetButton)
         mainView.addSubview(removeButton)
     }
 
@@ -51,7 +53,12 @@ class YXReviewPlanEditView: YXTopWindowView {
         editButton.setTitleColor(UIColor.black4, for: .highlighted)
         editButton.addTarget(self, action: #selector(clickEditButton), for: .touchUpInside)
         
-        
+        resetButton.setTitle("重置词单", for: .normal)
+        resetButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
+        resetButton.setTitleColor(UIColor.black1, for: .normal)
+        resetButton.setTitleColor(UIColor.black4, for: .highlighted)
+        resetButton.addTarget(self, action: #selector(clickResetButton), for: .touchUpInside)
+
         removeButton.setTitle("删除词单", for: .normal)
         removeButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
         removeButton.setTitleColor(UIColor.red1, for: .normal)
@@ -66,7 +73,7 @@ class YXReviewPlanEditView: YXTopWindowView {
             make.top.equalTo(AS(kNavHeight))
             make.right.equalTo(AS(-20))
             make.width.equalTo(AS(117))
-            make.height.equalTo(AS(85))
+            make.height.equalTo(AS(120))
         }
        
         editButton.snp.makeConstraints { (make) in
@@ -76,11 +83,18 @@ class YXReviewPlanEditView: YXTopWindowView {
             make.height.equalTo(AS(20))
         }
 
+        resetButton.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(AS(57))
+            make.height.equalTo(AS(20))
+            make.top.equalTo(editButton.snp.bottom).offset(AdaptSize(15))
+        }
+
         removeButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.width.equalTo(AS(57))
             make.height.equalTo(AS(20))
-            make.bottom.equalTo(AS(-15))
+            make.top.equalTo(resetButton.snp.bottom).offset(AdaptSize(15))
         }
 
     }
@@ -112,6 +126,30 @@ class YXReviewPlanEditView: YXTopWindowView {
         
         self.removeFromSuperview()
     }
+
+    @objc private func clickResetButton() {
+        let alertView = YXAlertView()
+        alertView.shouldOnlyShowOneButton = false
+        alertView.descriptionLabel.text = "确定要重置这个词单的学习进度么？重置后不可恢复，需要重新学习"
+        alertView.doneClosure = { _ in
+            guard let planId = self.reviewPlanModel?.planId else {
+                return
+            }
+            YXReviewDataManager().resetReviewPlanData(planId: planId) { (result: Bool) in
+                if result {
+                    NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
+                    YXLog("重置词单\(planId)，成功")
+                    self.removeFromSuperview()
+                } else {
+                    YXLog("重置词单\(planId)，失败")
+                    YXUtils.showHUD(kWindow, title: "重置失败，请重试")
+                }
+            }
+        }
+        alertView.leftButton.setTitle("取消", for: .normal)
+        alertView.rightOrCenterButton.setTitle("重置", for: .normal)
+        alertView.show()
+    }
     
     @objc private func clickRemoveButton() {
         let removeView = YXReviewPlanRemoveView()
@@ -125,11 +163,6 @@ class YXReviewPlanEditView: YXTopWindowView {
         self.removeFromSuperview()
     }
 }
-
-
-
-
-
 
 class YXReviewPlanRemoveView: YXTopWindowView {
     
@@ -152,7 +185,7 @@ class YXReviewPlanRemoveView: YXTopWindowView {
     
        
     required init?(coder: NSCoder) {
-           fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func createSubviews() {
@@ -225,10 +258,7 @@ class YXReviewPlanRemoveView: YXTopWindowView {
             make.height.equalTo(AS(40))
             make.bottom.equalTo(AS(-30))
         }
-
     }
-
-
 
     @objc private func clickRemoveButton() {
         YXReviewDataManager().removeReviewPlan(planId: planId) { [weak self] (result, msg) in

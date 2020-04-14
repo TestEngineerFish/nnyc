@@ -114,6 +114,7 @@ struct YXAPI {
         static let wordListWithWrong = "/api/v2/word/getwronglist"
         /// 获得复习计划单词列表
         static let wordListWithReviewPlan = "/api/v2/review/getreviewplanwordlist"
+        static let resetReviewPlan = "/api/v1/learn/reviewplanereset"
     }
 
     // MARK: - 单词列表模块

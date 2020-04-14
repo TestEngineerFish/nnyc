@@ -17,6 +17,7 @@ public enum YXReviewRequest: YYBaseRequest {
     case reviewResult(type: Int, planId: Int?)
     case reviewPlanStatusList(page: Int)
     case studentStudyList(planId: Int, page: Int)
+    case resetReviewPlan(planId: Int)
 }
 
 extension YXReviewRequest {
@@ -24,7 +25,7 @@ extension YXReviewRequest {
         switch self {
         case .reviewBookList, .reviewWordList, .reviewPlan, .reviewPlanDetail, .reviewResult, .reviewPlanStatusList, .studentStudyList:
             return .get
-        case .makeReviewPlan, .updateReviewPlan, .removeReviewPlan:
+        case .makeReviewPlan, .updateReviewPlan, .removeReviewPlan, .resetReviewPlan:
             return .post
         }
     }
@@ -53,6 +54,8 @@ extension YXReviewRequest {
             return YXAPI.Review.reviewPlanStatusList
         case .studentStudyList:
             return YXAPI.Review.studentStudyList
+        case .resetReviewPlan:
+            return YXAPI.Review.resetReviewPlan
         }
     }
 }
@@ -76,6 +79,8 @@ extension YXReviewRequest {
             return ["page": page]
         case .studentStudyList(let planId, let page):
             return ["review_plan_id": planId, "page": page]
+        case .resetReviewPlan(let planId):
+            return ["review_plan_id": planId]
         default:
             return nil
         }
