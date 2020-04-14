@@ -79,20 +79,11 @@ class YXAlertCheckManager {
                 completion?()
             }
         }
-
     }
-    
-    
-    
-    
+
     /// 老用户提示
     func checkOldUser(_ completion: (() -> Void)? ) {
-        let request = YXRegisterAndLoginRequest.userInfomation
-        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
-            guard let userInfomation = response.data else {
-                return
-            }
-            
+        YXUserDataManager.share.updateUserInfomation { (userInfomation) in
             if userInfomation.oldUserUpdateMessage?.isNotEmpty ?? false {
                 let alertView = YXOldUserUpdateView()
                 alertView.closure = {
@@ -100,17 +91,12 @@ class YXAlertCheckManager {
                         YXLog("老用户更新提示，上报：", model?.state ?? 0)
                     }
                 }
-                
                 YXAlertQueueManager.default.addAlert(alertView: alertView)
                 completion?()
             } else {
                 completion?()
             }
-        }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
-            completion?()
         }
-        
     }
     
     /// 检查最新徽章

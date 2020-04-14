@@ -23,6 +23,8 @@ struct YXHomeModel: Codable {
     var collectedWords: Int?
     var wrongWords: Int?
     var learnedWords: Int?
+    var isSkipNewLearn: Int?
+    var isUploadGIO: Int?
     
     enum CodingKeys: String, CodingKey {
         case userId = "user_id"
@@ -39,5 +41,7 @@ struct YXHomeModel: Codable {
         case collectedWords = "fav_num"
         case wrongWords = "wrong_num"
         case learnedWords = "learned_num"
+        case isSkipNewLearn = "is_skip_new_learn"
+        case isUploadGIO    = "is_gio_upload"
     }
 }

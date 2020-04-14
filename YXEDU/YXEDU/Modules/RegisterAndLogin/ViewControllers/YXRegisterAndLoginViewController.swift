@@ -256,24 +256,17 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         }
     }
     
-    
+
+    /// 更新用户信息
     private func checkUserInfomation() {
-        let request = YXRegisterAndLoginRequest.userInfomation
-        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let userInfomation = response.data else { return }
-            YXConfigure.shared()?.showKeyboard = (userInfomation.fillType == .keyboard)
-            
+        YXUserDataManager.share.updateUserInfomation { [weakSelf = self] (userInfomation) in
             guard userInfomation.didBindPhone == 1 else {
-                self.performSegue(withIdentifier: "Bind", sender: self)
+                weakSelf.performSegue(withIdentifier: "Bind", sender: weakSelf)
                 return
             }
-            YYCache.set(self.phoneNumberTextField.text, forKey: "PhoneNumber")
-            YXConfigure.shared().saveCurrentToken()
-            YXUserModel.default.didLogin = true
-            YXUserModel.default.login()
+            YYCache.set(weakSelf.phoneNumberTextField.text, forKey: "PhoneNumber")
             YXAlertQueueManager.default.restart()
-        }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUserModel.default.login()
         }
     }
     

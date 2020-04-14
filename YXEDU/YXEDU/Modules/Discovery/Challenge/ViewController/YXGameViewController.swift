@@ -71,6 +71,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             self.lastTimestamp = time
             self.stopTimer()
         }, fail: nil)
+
     }
 
     @objc private func willEnterForeground() {

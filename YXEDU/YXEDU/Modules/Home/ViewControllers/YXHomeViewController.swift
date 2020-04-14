@@ -163,10 +163,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
                 self.wrongWordsCount     = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
-                
+                YXConfigure.shared()?.isSkipNewLearn = self.homeModel.isSkipNewLearn == .some(1)
                 YXWordBookResourceManager.shared.contrastBookData()
-                
                 self.initDataManager()
+                if self.homeModel.isUploadGIO == .some(1) {
+                    Growing.setPeopleVariableWithKey("new_study_test", andStringValue: "7年级跳过新学")
+                } else {
+                    Growing.setPeopleVariableWithKey("new_study_test", andStringValue: "7年级参照组")
+                }
             } catch {
                 YXLog("获取主页基础数据失败：", error.localizedDescription)
             }
@@ -174,21 +178,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     private func checkUserState() {
-        let request = YXRegisterAndLoginRequest.userInfomation
-        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let userInfomation = response.data else { return }
-
+        YXUserDataManager.share.updateUserInfomation { [weak self] (userInfomation) in
+            guard let self = self else { return }
             if userInfomation.didSelectBook == 0 {
                 self.performSegue(withIdentifier: "AddBookGuide", sender: self)
-                
             } else {
                 self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
             }
-            YXConfigure.shared()?.showKeyboard = (userInfomation.fillType == .keyboard)
-            YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
-            YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
-            YXUserModel.default.reviewNameType = userInfomation.reviewNameType
-            
+
             if userInfomation.reminder?.didOpen == 1, let time = userInfomation.reminder?.timeStamp {
                 UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "Reminder")
                 UserDefaults.standard.set(true, forKey: "DidShowSetupReminderAlert")
@@ -198,12 +195,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 UserDefaults.standard.set(nil, forKey: "Reminder")
                 UserDefaults.standard.set(nil, forKey: "DidShowSetupReminderAlert")
             }
-            
+
             Growing.setPeopleVariableWithKey("quanping", andStringValue: userInfomation.fillType == .keyboard ? "1" : "0")
             Growing.setPeopleVariableWithKey("cidan", andStringValue: userInfomation.reviewNameType == .reviewPlan ? "0" : "1")
-
-        }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     

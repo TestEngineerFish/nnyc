@@ -133,7 +133,6 @@
         dataManager.dataType = dataType
         dataManager.progressManager.planId = planId
         dataManager.progressManager.dataType = dataType
-        
                         
         var array: [YXExerciseDataType] = [.base, .aiReview, .planListenReview, .planReview, .wrong]
         array = []
@@ -142,7 +141,10 @@
             dataManager.progressManager.completionExercise()
             dataManager.progressManager.completionReport()
         }
-        
+        // 如果符合条件，则跳过新学
+        if YXConfigure.shared()?.isSkipNewLearn ?? false {
+            dataManager.skipNewWord()
+        }
 
     }
     
