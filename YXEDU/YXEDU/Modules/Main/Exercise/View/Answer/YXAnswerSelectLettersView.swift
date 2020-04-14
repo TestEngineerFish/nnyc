@@ -9,7 +9,7 @@
 import UIKit
 
 /// 选择字母答题页面
-class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
+class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharacterTextFieldProtocol {
 
     let itemSize         = CGFloat(60)
     let margin           = CGFloat(10)
@@ -34,8 +34,10 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
             self.addSubview(textField)
             self.isHidden                         = true
             self.textField.delegate               = self
+            self.textField.customDelegate         = self
             self.textField.keyboardType           = .asciiCapable
             self.textField.autocapitalizationType = .none
+            self.textField.autocorrectionType     = .no
             self.textField.returnKeyType          = .done
             self.textField.becomeFirstResponder()
 
@@ -204,19 +206,26 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate {
     
     // MARK: ---- UITextFieldDelegate ----
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let button    = YXLetterButton()
-        button.text   = string
-        button.status = .normal
-        button.tag    = self.defaultTag + 1
-        self.defaultTag += 1
-        if range.length > 0 {
-            self.delegate?.unselectAnswerButton(button)
-        } else {
+        if range.length <= 0 {
+            let button    = YXLetterButton()
+            button.text   = string
+            button.status = .normal
+            button.tag    = self.defaultTag + 1
+            self.defaultTag += 1
             let success = delegate?.selectedAnswerButton(button) ?? false
+            self.selectedBtnArray.append(button)
             if success, let result = self.delegate?.checkResult(), result.0 {
                 self.showResult(errorList: result.1)
             }
         }
         return true
+    }
+     // MARK: ---- YXCharacterTextFieldProtocol ----
+    func yxDeleteBackward() {
+        guard let button = self.selectedBtnArray.last else {
+            return
+        }
+        self.delegate?.unselectAnswerButton(button)
+        YXLog("删除")
     }
 }

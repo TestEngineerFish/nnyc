@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol YXCharacterTextFieldProtocol: NSObjectProtocol {
+    func yxDeleteBackward()
+}
+
 class YXCharacterTextField: UITextField, UIGestureRecognizerDelegate {
 
     typealias ClickAction = ((UIButton)->Void)
     var isBlank = false
     var clickLeftButtonAction:ClickAction?
+    weak var customDelegate: YXCharacterTextFieldProtocol?
 
     init(frame: CGRect, isTitle: Bool) {
         super.init(frame: frame)
@@ -38,6 +43,12 @@ class YXCharacterTextField: UITextField, UIGestureRecognizerDelegate {
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return false
+    }
+
+    // 删除事件
+    override func deleteBackward() {
+        super.deleteBackward()
+        self.customDelegate?.yxDeleteBackward()
     }
     
     // MARK: ---- Event ----
