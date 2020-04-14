@@ -18,17 +18,17 @@ class YXAddBookGuideViewController: UIViewController {
     
     private let defaultHeight: CGFloat = 126
     private var gradeHeight: CGFloat {
-        return 50 + (self.selectGradeView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
+        return 70 + (self.selectGradeView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
     }
     
     private var versionHeight: CGFloat {
         let descriptionHeight = "教材不断添加中,如果没有看到您的教材,可以 选择通用版学习哦~".textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 88)
         
-        return 30 + descriptionHeight + 26 + (self.selectVersionView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
+        return 50 + descriptionHeight + 26 + (self.selectVersionView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
     }
     
     private var bookNameHeight: CGFloat {
-        return 50 + (self.selectBookNameView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
+        return 70 + (self.selectBookNameView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
     }
     
     @IBOutlet weak var selectGradeView: YXAddBookGuideView!
@@ -41,8 +41,22 @@ class YXAddBookGuideViewController: UIViewController {
     @IBOutlet weak var selectBookNameViewTopOffSet: NSLayoutConstraint!
     @IBOutlet weak var selectBookNameViewHeight: NSLayoutConstraint!
     @IBOutlet weak var startButton: YXDesignableButton!
-    
+    @IBOutlet weak var homeButton: UIButton!
+
     @IBAction func start(_ sender: Any) {
+        guard let book = selectBook, let bookId = book.bookId, let units = book.units, units.count > 0, let unitId = units.first?.unitId else { return }
+        let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
+            YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
+            self.navigationController?.popToRootViewController(animated: false)
+            NotificationCenter.default.post(name: YXNotification.kSquirrelAnimation, object: nil)
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+    
+    @IBAction func goHome(_ sender: Any) {
         guard let book = selectBook, let bookId = book.bookId, let units = book.units, units.count > 0, let unitId = units.first?.unitId else { return }
         let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
@@ -57,6 +71,11 @@ class YXAddBookGuideViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        selectGradeView.isHidden = true
+        selectVersionView.isHidden = true
+        selectBookNameView.isHidden = true
+
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [Any] else { return }
 
@@ -72,6 +91,11 @@ class YXAddBookGuideViewController: UIViewController {
                 }
                 
                 self.initSelectViews()
+                
+                self.selectGradeView.isHidden = false
+                self.selectVersionView.isHidden = false
+                self.selectBookNameView.isHidden = false
+                
                 self.chengeCenter(withoutAnimation: true)
                 
             } catch {
@@ -239,9 +263,11 @@ class YXAddBookGuideViewController: UIViewController {
         
         if selectBook != nil, selectGradeViewHeight.constant == defaultHeight, selectVersionViewHeight.constant == defaultHeight, selectBookNameViewHeight.constant == defaultHeight {
             startButton.isHidden = false
+            homeButton.isHidden = false
             
         } else {
             startButton.isHidden = true
+            homeButton.isHidden = true
         }
     }
 }

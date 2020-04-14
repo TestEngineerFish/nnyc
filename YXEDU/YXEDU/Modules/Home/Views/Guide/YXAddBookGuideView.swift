@@ -19,12 +19,17 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
     private let moveTimeInterval = 0.4
     private let alphaTimeInterval = 0.6
     
-    @IBOutlet var contentView: UIView!
+    @IBOutlet var contentView: YXDesignableView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionViewTopOffSet: NSLayoutConstraint!
+    private var imageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: screenWidth - 40 - 80, y: -64, width: 80, height: 64))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = #imageLiteral(resourceName: "chooseGuideBook")
+        return imageView
+    }()
     
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
@@ -52,21 +57,15 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
         collectionView.collectionViewLayout = layout
         
         collectionView.reloadData()
-    }
-    
-    @IBAction func edit(_ sender: Any) {
-        enterSelectMode()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.editClosure?()
-        }
+        self.backgroundColor = .clear
+        self.addSubview(imageView)
     }
     
     func select(_ data: [String]) {
         dataSource = data
         isSelecting = true
         selectedIndex = nil
-        editButton.alpha = 0
 
         enterSelectMode()
     }
@@ -74,12 +73,14 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
     private func enterSelectMode() {
         isSelecting = true
         
+        UIView.animate(withDuration: hideTimeInterval) {
+            self.contentView.backgroundColor = .white
+            self.contentView.borderColor = .orange1
+            self.imageView.alpha = 1
+        }
+        
         if let index = selectedIndex {
             isUserInteractionEnabled = false
-            
-            UIView.animate(withDuration: hideTimeInterval) {
-                self.editButton.alpha = 0
-            }
             
             UIView.animate(withDuration: alphaTimeInterval, animations: {
                 if self.descriptionLabel.isHidden == false, let description = self.descriptionLabel.text, description.isEmpty == false {
@@ -145,19 +146,10 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
             self.dataSource.insert(date, at: 0)
             self.collectionView.moveItem(at: IndexPath(row: index, section: 0), to: IndexPath(row: 0, section: 0))
             
-            var cellWidth: CGFloat = 0
-            let textWidth = self.dataSource[0].textWidth(font: UIFont.systemFont(ofSize: 15), height: 22)
-            if textWidth > (screenWidth - 108) / 3 {
-                cellWidth = textWidth + 20
-
-            } else {
-                cellWidth = (screenWidth - 108) / 3
-            }
-            
-            self.editButton.frame = CGRect(x: cellWidth + 20, y: 40, width: 36, height: 30)
-            self.editButton.alpha = 0
             UIView.animate(withDuration: self.hideTimeInterval) {
-                self.editButton.alpha = 1
+                self.contentView.backgroundColor = .clear
+                self.contentView.borderColor = .clear
+                self.imageView.alpha = 0
             }
         }
     }
@@ -229,6 +221,13 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
             
             DispatchQueue.main.asyncAfter(deadline: .now() + hideTimeInterval) {
                 self.selectedClosure?()
+            }
+            
+        } else {
+            enterSelectMode()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.editClosure?()
             }
         }
     }

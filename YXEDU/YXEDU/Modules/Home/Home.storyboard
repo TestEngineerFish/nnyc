@@ -915,33 +915,39 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ifT-Ac-j5g" customClass="YXAddBookGuideView" customModule="YXEDU" customModuleProvider="target">
-                                <rect key="frame" x="44" y="0.0" width="326" height="126"/>
+                                <rect key="frame" x="20" y="0.0" width="374" height="126"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="126" id="36g-ny-NXi"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4X-c4-5JV" customClass="YXAddBookGuideView" customModule="YXEDU" customModuleProvider="target">
-                                <rect key="frame" x="44" y="126" width="326" height="126"/>
+                                <rect key="frame" x="20" y="126" width="374" height="126"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="126" id="O1E-OE-LVk"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AD1-Om-aNX" customClass="YXAddBookGuideView" customModule="YXEDU" customModuleProvider="target">
-                                <rect key="frame" x="44" y="252" width="326" height="126"/>
+                                <rect key="frame" x="20" y="252" width="374" height="126"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="126" id="lyC-dY-SZQ"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guideBackground" translatesAutoresizingMaskIntoConstraints="NO" id="vxr-xY-fRr">
+                                <rect key="frame" x="0.0" y="714" width="414" height="94"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="94" id="Qdc-cp-x9h"/>
+                                </constraints>
+                            </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RIv-j6-QEV" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                                <rect key="frame" x="44" y="690" width="326" height="40"/>
+                                <rect key="frame" x="44" y="646" width="326" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.95686274510000002" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="pUI-mV-3he"/>
                                 </constraints>
-                                <state key="normal" title="开始背单词">
+                                <state key="normal" title="现在就去背单词">
                                     <color key="titleColor" red="0.91764705879999997" green="0.82352941180000006" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -954,21 +960,35 @@
                                     <action selector="start:" destination="JnP-zA-VAP" eventType="touchUpInside" id="aKf-V7-OKR"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcy-aJ-lg2">
+                                <rect key="frame" x="168.5" y="706" width="77" height="30"/>
+                                <state key="normal" title="去首页逛逛">
+                                    <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="goHome:" destination="JnP-zA-VAP" eventType="touchUpInside" id="egE-Ez-IqO"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="1" green="0.96862745098039216" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="RIv-j6-QEV" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="44" id="2E7-yM-mDa"/>
-                            <constraint firstItem="B4X-c4-5JV" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="44" id="898-kP-OFQ"/>
-                            <constraint firstItem="AD1-Om-aNX" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="44" id="Aan-hN-awx"/>
-                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="AD1-Om-aNX" secondAttribute="trailing" constant="44" id="Aky-de-iiz"/>
+                            <constraint firstItem="B4X-c4-5JV" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="20" id="898-kP-OFQ"/>
+                            <constraint firstItem="AD1-Om-aNX" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="20" id="Aan-hN-awx"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="AD1-Om-aNX" secondAttribute="trailing" constant="20" id="Aky-de-iiz"/>
+                            <constraint firstItem="fcy-aJ-lg2" firstAttribute="centerX" secondItem="Qax-Wr-LXN" secondAttribute="centerX" id="HkP-3i-mfu"/>
                             <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="RIv-j6-QEV" secondAttribute="trailing" constant="44" id="Jxg-RK-BYB"/>
-                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="ifT-Ac-j5g" secondAttribute="trailing" constant="44" id="Oaa-Qb-rdV"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="ifT-Ac-j5g" secondAttribute="trailing" constant="20" id="Oaa-Qb-rdV"/>
                             <constraint firstItem="B4X-c4-5JV" firstAttribute="top" secondItem="ifT-Ac-j5g" secondAttribute="bottom" id="Sbv-ty-5DS"/>
                             <constraint firstItem="AD1-Om-aNX" firstAttribute="top" secondItem="B4X-c4-5JV" secondAttribute="bottom" id="Yp5-F5-dhK"/>
-                            <constraint firstItem="ifT-Ac-j5g" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="44" id="k0i-s6-VfR"/>
-                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="B4X-c4-5JV" secondAttribute="trailing" constant="44" id="kwJ-d8-NDZ"/>
-                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="bottom" secondItem="RIv-j6-QEV" secondAttribute="bottom" constant="44" id="mII-sv-mzc"/>
+                            <constraint firstItem="vxr-xY-fRr" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" id="ZGm-cs-ysx"/>
+                            <constraint firstItem="ifT-Ac-j5g" firstAttribute="leading" secondItem="ZPr-wg-bdc" secondAttribute="leading" constant="20" id="k0i-s6-VfR"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="B4X-c4-5JV" secondAttribute="trailing" constant="20" id="kwJ-d8-NDZ"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="trailing" secondItem="vxr-xY-fRr" secondAttribute="trailing" id="lRk-B1-mqE"/>
+                            <constraint firstItem="ZPr-wg-bdc" firstAttribute="bottom" secondItem="RIv-j6-QEV" secondAttribute="bottom" constant="88" id="mII-sv-mzc"/>
                             <constraint firstItem="ifT-Ac-j5g" firstAttribute="top" secondItem="ZPr-wg-bdc" secondAttribute="top" id="pKc-Dj-a8g"/>
+                            <constraint firstItem="fcy-aJ-lg2" firstAttribute="top" secondItem="RIv-j6-QEV" secondAttribute="bottom" constant="20" id="pju-xu-BK4"/>
+                            <constraint firstAttribute="bottom" secondItem="vxr-xY-fRr" secondAttribute="bottom" id="rDS-jz-JvZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZPr-wg-bdc"/>
                     </view>
@@ -976,6 +996,7 @@
                         <barButtonItem key="leftBarButtonItem" id="GR0-Cs-S3b"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="homeButton" destination="fcy-aJ-lg2" id="7Sz-aa-mvt"/>
                         <outlet property="selectBookNameView" destination="AD1-Om-aNX" id="ujh-0m-YQh"/>
                         <outlet property="selectBookNameViewHeight" destination="lyC-dY-SZQ" id="Y4j-YQ-x6l"/>
                         <outlet property="selectBookNameViewTopOffSet" destination="Yp5-F5-dhK" id="SRq-ec-O7c"/>
@@ -1268,6 +1289,7 @@
         <image name="back" width="22" height="22"/>
         <image name="coin" width="20" height="21"/>
         <image name="filter" width="20" height="20"/>
+        <image name="guideBackground" width="375" height="103"/>
         <image name="homeBackground" width="332" height="382"/>
         <image name="homeLogo" width="86" height="22"/>
         <image name="homeProgressBar" width="259" height="8"/>

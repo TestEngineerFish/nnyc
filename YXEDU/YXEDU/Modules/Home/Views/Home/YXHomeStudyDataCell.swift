@@ -17,5 +17,4 @@ class YXHomeStudyDataCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
 }
