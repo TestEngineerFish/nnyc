@@ -154,11 +154,11 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             let name = YXReviewDataManager.makePlanName(defailt: self.getPlanName())
             let alertView = YXAlertView(type: .inputable, placeholder: name)
             alertView.shouldOnlyShowOneButton = false
-            alertView.titleLabel.text = "请设置\(YXReviewDataManager.reviewPlanName)名称"
+            alertView.titleLabel.text = "请设置词单名称"
             alertView.doneClosure = { (text: String?) in
                 guard let _text = text, !_text.isEmpty else {
                     let alertView = YXAlertView(type: .normal)
-                    alertView.descriptionLabel.text   = "\(YXReviewDataManager.reviewPlanName)名称不能为空"
+                    alertView.descriptionLabel.text   = "词单名称不能为空"
                     alertView.shouldOnlyShowOneButton = true
                     alertView.show()
                     return
@@ -209,7 +209,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         }
         if bookIdList.count > 1 {
             // 如果只选择了多本书中的单词
-            bookName = "我的\(YXReviewDataManager.reviewPlanName)"
+            bookName = "我的词单"
         } else {
             // 如果只选择了一本书中的单词
             guard let list = self.model?.list, let bookId = bookIdList.first else {
@@ -218,13 +218,13 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             list.forEach { (bookModel) in
                 if bookModel.id == bookId {
                     if bookModel.type == .wrongList {
-                        bookName = "错词本\(YXReviewDataManager.reviewPlanName)"
+                        bookName = "错词本词单"
                     } else if bookModel.type == .collect {
-                        bookName = "收藏单词\(YXReviewDataManager.reviewPlanName)"
+                        bookName = "收藏单词词单"
                     } else if bookModel.type == .unit {
-                        bookName = bookModel.name + "\(YXReviewDataManager.reviewPlanName)"
+                        bookName = bookModel.name + "词单"
                     } else {
-                        bookName = "我的\(YXReviewDataManager.reviewPlanName)"
+                        bookName = "我的词单"
                     }
                 }
             }

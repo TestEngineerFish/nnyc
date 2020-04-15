@@ -19,6 +19,8 @@
 @property (nonatomic, assign) BOOL isShowKeyboard;
 // 是否开启新学跳过
 @property (nonatomic, assign) BOOL isSkipNewLearn;
+// 上报GIO是否为跳过组
+@property (nonatomic, assign) BOOL isUploadGIO;
 
 - (void)loginOut;
 @property (nonatomic, strong) YXBookModel *learningModel; // 无网络状态下设置单前学习的书
@@ -36,7 +38,7 @@
 
 @property (nonatomic, strong)NSArray *wordsInfos;
 @property (nonatomic, strong)NSArray *wordsIds;
-+ (instancetype)shared;
++ (instancetype _Nonnull)shared;
 - (void)saveToken:(NSString *)token;
 - (void)saveCurrentToken;
 @end

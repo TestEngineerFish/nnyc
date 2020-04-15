@@ -16,7 +16,7 @@ struct YXUserDataManager {
         let request = YXRegisterAndLoginRequest.userInfomation
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
             guard let userInfomation = response.data else { return }
-            YXConfigure.shared()?.isShowKeyboard = (userInfomation.fillType == .keyboard)
+            YXConfigure.shared().isShowKeyboard = (userInfomation.fillType == .keyboard)
             YXConfigure.shared().saveCurrentToken()
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl

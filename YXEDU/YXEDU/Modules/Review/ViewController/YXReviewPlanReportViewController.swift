@@ -29,7 +29,7 @@ class YXReviewPlanReportViewController: YXViewController, WKNavigationDelegate {
     }()
     
     var planId: Int = 0
-    var reviewPlanName = "我的\(YXReviewDataManager.reviewPlanName)"
+    var reviewPlanName = "我的词单"
     var userName       = YXUserModel.default.username ?? ""
     var hideShareView  = false
     

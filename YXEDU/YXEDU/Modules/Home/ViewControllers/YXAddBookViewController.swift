@@ -141,7 +141,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             var count = 0
             
             for wordBook in filterGrades[indexPath.row].wordBooks ?? [] {
-                guard wordBook.bookVersion == filterVersion else { continue }
+                guard wordBook.bookVersionName == filterVersion else { continue }
                 count = count + 1
             }
             
@@ -166,7 +166,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             var count = 0
             
             for wordBook in filterGrades[collectionView.tag].wordBooks ?? [] {
-                guard wordBook.bookVersion == filterVersion else { continue }
+                guard wordBook.bookVersionName == filterVersion else { continue }
                 count = count + 1
             }
             
@@ -186,7 +186,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             var wordBookModels: [YXWordBookModel] = []
             
             for wordBook in filterGrades[collectionView.tag].wordBooks ?? [] {
-                guard wordBook.bookVersion == filterVersion else { continue }
+                guard wordBook.bookVersionName == filterVersion else { continue }
                 wordBookModels.append(wordBook)
             }
             
@@ -209,7 +209,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             var wordBookModels: [YXWordBookModel] = []
             
             for wordBook in filterGrades[collectionView.tag].wordBooks ?? [] {
-                guard wordBook.bookVersion == filterVersion else { continue }
+                guard wordBook.bookVersionName == filterVersion else { continue }
                 wordBookModels.append(wordBook)
             }
             
@@ -221,8 +221,10 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             guard let unitId = unitId else { return }
 
             // ---- Growing ----
-            let gradeId = self.filterGrades[collectionView.tag].gradeId
-            YXGrowingManager.share.uploadChangeBook(grade: "\(String(describing: gradeId))", versionName: wordBook.bookVersion)
+            if let _grade = wordBook.bookGrade {
+                YXGrowingManager.share.uploadChangeBook(grade: "\(_grade)", versionName: wordBook.bookVersionName)
+            }
+            YXGrowingManager.share.uploadSkipNewLearn()
 
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in

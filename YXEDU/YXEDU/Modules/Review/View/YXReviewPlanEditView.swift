@@ -106,7 +106,7 @@ class YXReviewPlanEditView: YXTopWindowView {
         // 显示弹框
         let placeholder = self.reviewPlanModel?.planName ?? ""
         let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
-        alertView.titleLabel.text = "请设置\(YXReviewDataManager.reviewPlanName)名称"
+        alertView.titleLabel.text = "请设置词单名称"
         alertView.shouldOnlyShowOneButton = false
         alertView.doneClosure = {(text: String?) in
 
@@ -202,7 +202,7 @@ class YXReviewPlanRemoveView: YXTopWindowView {
         
         titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
         titleLabel.textColor = UIColor.black1
-        titleLabel.text = "该\(YXReviewDataManager.reviewPlanName)删除后无法恢复\n是否确认删除？"
+        titleLabel.text = "该词单删除后无法恢复\n是否确认删除？"
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
         

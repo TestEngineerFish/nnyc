@@ -59,7 +59,7 @@ extension YXExerciseDataManager {
                     if word.partOfSpeechAndMeanings?.first?.isPhrase ?? false {
                         exercise.type = .newLearnPrimarySchool_Group
                     }
-                } else if (word.gradeId ?? 0) <= 9 { // 初中
+                } else { // 初中及其他
                     exercise.type = .newLearnJuniorHighSchool
                 }
                 

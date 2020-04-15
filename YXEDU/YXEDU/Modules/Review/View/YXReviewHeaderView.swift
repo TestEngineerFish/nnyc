@@ -187,12 +187,12 @@ class YXReviewHeaderView: YXView {
         
         reviewPlanLabel.font      = UIFont.mediumFont(ofSize: AS(15))
         reviewPlanLabel.textColor = UIColor.black1
-        reviewPlanLabel.text      = YXReviewDataManager.reviewPlanName
+        reviewPlanLabel.text      = "词单"
         
         createReviewPlanButton.layer.masksToBounds = true
         createReviewPlanButton.layer.cornerRadius = AS(12.5)
         createReviewPlanButton.setImage(UIImage(named: "review_add_icon"), for: .normal)
-        createReviewPlanButton.setTitle(YXReviewDataManager.makePlanName_Button, for: .normal)
+        createReviewPlanButton.setTitle("新建词单", for: .normal)
         createReviewPlanButton.setTitleColor(UIColor.hex(0x323232), for: .normal)
         createReviewPlanButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(12))
         createReviewPlanButton.layer.borderWidth = 0.5

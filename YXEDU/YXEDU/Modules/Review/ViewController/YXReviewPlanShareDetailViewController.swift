@@ -87,7 +87,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
         // 显示弹框
         let placeholder = self.reviewPlanModel?.planName ?? ""
         let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
-        alertView.titleLabel.text = "请设置\(YXReviewDataManager.reviewPlanName)名称"
+        alertView.titleLabel.text = "请设置词单名称"
         alertView.shouldOnlyShowOneButton = false
         alertView.doneClosure = {(text: String?) in
             guard let name = text else {

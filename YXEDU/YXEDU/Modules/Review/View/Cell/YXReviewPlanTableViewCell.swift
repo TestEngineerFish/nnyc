@@ -221,12 +221,12 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         }
         
         if reviewPlanModel?.reviewState == .normal {
-            reviewButton.setTitle(YXReviewDataManager.startStudy, for: .normal)
+            reviewButton.setTitle("开始学习", for: .normal)
         } else if reviewPlanModel?.reviewState == .learning {
-            reviewButton.setTitle(YXReviewDataManager.continueStudy, for: .normal)
+            reviewButton.setTitle("继续学习", for: .normal)
             reviewProgressView.progress = CGFloat(reviewPlanModel?.review ?? 0) / 100.0
         } else if reviewPlanModel?.reviewState == .finish {
-            reviewButton.setTitle(YXReviewDataManager.continueStudy2, for: .normal)
+            reviewButton.setTitle("继续学习", for: .normal)
             reviewStarView.count = reviewPlanModel?.review ?? 0
         }
         

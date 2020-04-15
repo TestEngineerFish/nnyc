@@ -77,7 +77,7 @@ class YXReviewPlanShareDetailHeaderView: YXView {
     
     override func bindData() {
         reviewPlanLabel.text = reviewPlanModel?.planName
-        fromLabel.text = "来自\(reviewPlanModel?.fromUser ?? "")分享的\(YXReviewDataManager.reviewPlanName)"
+        fromLabel.text = "来自\(reviewPlanModel?.fromUser ?? "")分享的词单"
     }
     
 }

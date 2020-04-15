@@ -152,7 +152,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
         // 云之声设置
         self.enginer = USCRecognizer.sharedManager()
-        self.enginer?.setIdentifier(YXConfigure.shared()?.uuid)
+        self.enginer?.setIdentifier(YXConfigure.shared().uuid)
         self.enginer?.delegate        = self
         self.enginer?.vadControl      = true
         self.enginer?.setVadFrontTimeout(5000, backTimeout: 700)

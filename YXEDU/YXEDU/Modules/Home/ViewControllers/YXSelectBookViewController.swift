@@ -93,8 +93,11 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 self.navigationController?.popViewController(animated: true)
                 return
             }
-
-            YXGrowingManager.share.uploadChangeBook(grade: "\(String(describing: wordBook.bookGrade))", versionName: wordBook.bookVersion)
+            // ---- Growing ----
+            if let _grade = wordBook.bookGrade {
+                YXGrowingManager.share.uploadChangeBook(grade: "\(_grade)", versionName: wordBook.bookVersionName)
+            }
+            YXGrowingManager.share.uploadSkipNewLearn()
             
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in

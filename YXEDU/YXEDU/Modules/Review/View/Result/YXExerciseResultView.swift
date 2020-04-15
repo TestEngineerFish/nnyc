@@ -307,7 +307,7 @@ class YXExerciseResultView: YXView {
             if model.type == .planListenReview {
                 operateButton.setTitle("继续听写", for: .normal)
             } else if model.type == .planReview {
-                operateButton.setTitle(YXReviewDataManager.continueStudy, for: .normal)
+                operateButton.setTitle("继续学习", for: .normal)
             } else {
                 operateButton.setTitle("打卡分享", for: .normal)
             }

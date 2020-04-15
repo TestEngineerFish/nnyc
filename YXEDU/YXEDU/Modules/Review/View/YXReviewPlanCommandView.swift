@@ -166,7 +166,7 @@ class YXReviewPlanCommandView: YXTopWindowView {
         let color1 = UIColor.hex(0xD5C5AB)
         let color2 = UIColor.hex(0xC1AB87)
         
-        let attrString = NSMutableAttributedString(string: "来自 \(model?.nickname ?? "") 分享的\(YXReviewDataManager.reviewPlanName)")
+        let attrString = NSMutableAttributedString(string: "来自 \(model?.nickname ?? "") 分享的词单")
                         
         let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: AS(14)),.foregroundColor: color1]
         attrString.addAttributes(all, range: NSRange(location: 0, length: attrString.length))

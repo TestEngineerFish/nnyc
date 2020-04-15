@@ -36,7 +36,7 @@ class YXReviewPlanShareDetailBottomView: YXView {
         saveButton.layer.masksToBounds = true
         saveButton.layer.cornerRadius  = AdaptSize(21)
         saveButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
-        saveButton.setTitle("保存到我的\(YXReviewDataManager.reviewPlanName)", for: .normal)
+        saveButton.setTitle("保存到我的词单", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: 17)
         saveButton.addTarget(self, action: #selector(clickSaveButton), for: .touchUpInside)
@@ -110,10 +110,9 @@ class YXReviewPlanDetailBottomView: YXView {
 
         
         reviewButton.layer.masksToBounds = true
-        reviewButton.layer.cornerRadius = AS(21)
-        reviewButton.layer.borderColor = UIColor.black6.cgColor
-        reviewButton.layer.borderWidth = 0.5
-//        reviewButton.setTitle(YXReviewDataManager.continueStudy, for: .normal)
+        reviewButton.layer.cornerRadius  = AS(21)
+        reviewButton.layer.borderColor   = UIColor.black6.cgColor
+        reviewButton.layer.borderWidth   = 0.5
         reviewButton.setTitleColor(UIColor.black1, for: .normal)
         reviewButton.setTitleColor(UIColor.black3, for: .highlighted)
         reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
@@ -148,11 +147,11 @@ class YXReviewPlanDetailBottomView: YXView {
         
         
         if reviewPlanModel?.reviewState == .normal {
-            reviewButton.setTitle(YXReviewDataManager.startStudy, for: .normal)
+            reviewButton.setTitle("开始学习", for: .normal)
         } else if reviewPlanModel?.reviewState == .learning {
-            reviewButton.setTitle(YXReviewDataManager.continueStudy, for: .normal)
+            reviewButton.setTitle("继续学习", for: .normal)
         } else if reviewPlanModel?.reviewState == .finish {
-            reviewButton.setTitle(YXReviewDataManager.continueStudy2, for: .normal)
+            reviewButton.setTitle("继续学习", for: .normal)
         }
     }
     

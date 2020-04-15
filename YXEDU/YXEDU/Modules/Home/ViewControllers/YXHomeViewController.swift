@@ -163,7 +163,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
                 self.wrongWordsCount     = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
-                YXConfigure.shared()?.isSkipNewLearn = self.homeModel.isSkipNewLearn == .some(1)
+                YXConfigure.shared().isSkipNewLearn = self.homeModel.isSkipNewLearn == .some(1)
+                YXConfigure.shared().isUploadGIO    = self.homeModel.isUploadGIO == .some(1)
                 YXWordBookResourceManager.shared.contrastBookData()
                 self.initDataManager()
                 self.uploadGrowing()
@@ -177,8 +178,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         guard let model = self.homeModel else {
             return
         }
-        let isSkip = model.isUploadGIO == 1
-        YXGrowingManager.share.uploadSkipNewLearn(isSkip: isSkip)
+        YXGrowingManager.share.uploadSkipNewLearn()
         YXGrowingManager.share.uploadChangeBook(grade: model.bookGrade, versionName: model.bookVersionName)
     }
     

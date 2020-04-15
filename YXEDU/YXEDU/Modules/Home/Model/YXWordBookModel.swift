@@ -25,11 +25,11 @@ struct YXGradeWordBookListModel: Mappable {
         versions.append(YXWordVersionModel(bookVersionId:0, bookVersion: "所有版本"))
         
         for wordBook in wordBooks {
-            if versions.contains(where: { $0.bookVersion == wordBook.bookVersion }) {
+            if versions.contains(where: { $0.bookVersion == wordBook.bookVersionName }) {
                 continue
                 
             } else {
-                versions.append(YXWordVersionModel(bookVersionId: wordBook.bookVersionId, bookVersion: wordBook.bookVersion))
+                versions.append(YXWordVersionModel(bookVersionId: wordBook.bookVersionId, bookVersion: wordBook.bookVersionName))
             }
         }
         
@@ -78,7 +78,7 @@ struct YXWordBookModel: Mappable {
     var bookHash: String?
     var units: [YXWordBookUnitModel]?
     var bookVersionId: Int?
-    var bookVersion: String?
+    var bookVersionName: String?
     var bookGrade: Int?
 
     init() {}
@@ -99,7 +99,7 @@ struct YXWordBookModel: Mappable {
         bookHash               <- map["hash"]
         units                  <- map["unit_list"]
         bookVersionId          <- map["book_ver_id"]
-        bookVersion            <- map["book_ver_name"]
+        bookVersionName        <- map["book_ver_name"]
         bookShortName          <- map["book_comment"]
         bookGrade              <- map["book_grade"]
     }

@@ -30,7 +30,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharac
     }
     
     override func bindProperty() {
-        if (YXConfigure.shared()?.isShowKeyboard ?? false) && self.exerciseModel.question?.extend?.power == .some(10) {
+        if YXConfigure.shared().isShowKeyboard && self.exerciseModel.question?.extend?.power == .some(10) {
             self.addSubview(textField)
             self.isHidden                         = true
             self.textField.delegate               = self
@@ -182,7 +182,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharac
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
 //            }
         } else {
-            if (YXConfigure.shared()?.isShowKeyboard ?? false) && self.exerciseModel.question?.extend?.power == .some(10) {
+            if YXConfigure.shared().isShowKeyboard && self.exerciseModel.question?.extend?.power == .some(10) {
                 self.isUserInteractionEnabled = true
             } else {
                 // 答题错误

@@ -118,7 +118,7 @@ class YXAddBookGuideViewController: UIViewController {
 
                 if let books = selectGrade.wordBooks {
                     for book in books {
-                        if let version = book.bookVersion, version.isEmpty == false, self.versions.contains(version) == false {
+                        if let version = book.bookVersionName, version.isEmpty == false, self.versions.contains(version) == false {
                             self.versions.append(version)
                         }
                     }
@@ -167,7 +167,7 @@ class YXAddBookGuideViewController: UIViewController {
 
                 if let books = grade.wordBooks {
                     for book in books {
-                        guard let bookName = book.bookShortName, bookName.isEmpty == false, book.bookVersion == self.versions[versionIndex] else { continue }
+                        guard let bookName = book.bookShortName, bookName.isEmpty == false, book.bookVersionName == self.versions[versionIndex] else { continue }
                         self.bookNames.append(bookName)
                     }
                 }

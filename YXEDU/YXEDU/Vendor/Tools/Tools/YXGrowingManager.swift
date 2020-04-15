@@ -43,9 +43,8 @@ struct YXGrowingManager {
     // TODO: ---- 用户变量 ----
 
     /// 七年级跳过新学上报
-    /// - Parameter isSkip: 是否跳过
-    func uploadSkipNewLearn(isSkip: Bool) {
-        let value = isSkip ? "7年级跳过新学" : "7年级参照组"
+    func uploadSkipNewLearn() {
+        let value = YXConfigure.shared().isUploadGIO ? "7年级跳过新学" : "7年级参照组"
         Growing.setPeopleVariableWithKey("new_study_test", andStringValue: value)
     }
 
