@@ -88,9 +88,9 @@ class YXExerciseHeaderView: UIView {
         
         #if !DEBUG // 线上屏蔽
             self.switchButton.isHidden = true
-            self.skipButton.isHidden = true
+            self.skipButton.isHidden   = true
         #endif
-        
+
         
         self.learningLabel.text = "待新学"
         self.learningLabel.textColor = UIColor.black3

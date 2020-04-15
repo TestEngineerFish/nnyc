@@ -177,13 +177,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         guard let model = self.homeModel else {
             return
         }
-        if model.isUploadGIO == 1 {
-            Growing.setPeopleVariableWithKey("new_study_test", andStringValue: "7年级跳过新学")
-        } else {
-            Growing.setPeopleVariableWithKey("new_study_test", andStringValue: "7年级参照组")
-        }
-        Growing.setPeopleVariableWithKey("user_grade", andStringValue: model.bookGrade ?? "")
-        Growing.setPeopleVariableWithKey("user_book_version", andStringValue: model.bookVersionName ?? "")
+        let isSkip = model.isUploadGIO == 1
+        YXGrowingManager.share.uploadSkipNewLearn(isSkip: isSkip)
+        YXGrowingManager.share.uploadChangeBook(grade: model.bookGrade, versionName: model.bookVersionName)
     }
     
     private func checkUserState() {

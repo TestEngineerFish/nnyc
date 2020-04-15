@@ -46,6 +46,6 @@ struct YXHomeModel: Codable {
         case isSkipNewLearn  = "is_skip_new_learn"
         case isUploadGIO     = "is_gio_upload"
         case bookGrade       = "book_grade"
-        case bookVersionName = "book_version_name"
+        case bookVersionName = "book_ver_name"
     }
 }

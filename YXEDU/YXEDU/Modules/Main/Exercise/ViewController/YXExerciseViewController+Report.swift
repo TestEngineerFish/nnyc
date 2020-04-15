@@ -22,7 +22,6 @@ extension YXExerciseViewController {
             dataManager.progressManager.setOneExerciseFinishStudyTime()
             // 学完，上报
             submitResult()
-            Growing.track("main_finish_study")
         }
     }
     
@@ -56,7 +55,7 @@ extension YXExerciseViewController {
                 
                 switch self.dataType {
                 case .base:
-                    
+                    YXGrowingManager.share.uploadLearnFinished()
                     // 记录学完一次主流程，用于首页弹出设置提醒弹框
                     YYCache.set(true, forKey: "DidFinishMainStudyProgress")
                     

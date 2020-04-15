@@ -82,7 +82,7 @@
         self.bindProperty()
         self.initManager()
         self.startStudy()
-//        self.updateToken()
+        YXGrowingManager.share.startDate = NSDate()
     }
     
     deinit {
@@ -91,6 +91,7 @@
         YXAVPlayerManager.share.finishedBlock = nil
         YXAVPlayerManager.share.pauseAudio()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func createSubviews() {
@@ -119,6 +120,8 @@
         self.switchAnimation.animationDidStop = { [weak self] (right) in
             self?.animationDidStop(isRight: right)
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     private func initManager() {
@@ -147,9 +150,11 @@
         // 如果符合条件，则跳过新学
         if YXConfigure.shared()?.isSkipNewLearn ?? false {
             dataManager.skipNewWord()
+            // 跳过上报新学到GIO
             YYCache.set(true, forKey: .newLearnReportGIO)
+        } else {
+            YYCache.set(false, forKey: .newLearnReportGIO)
         }
-
     }
     
     /// 开始学习
@@ -209,11 +214,25 @@
         
         if var model = data.2 {
             model.dataType = dataType
-//            model.type = .lookExampleChooseImage
             YXRequestLog("题目内容：%@", model.toJSONString() ?? "--")
-            // 新学隐藏提示
-            let tipsHidden = (model.type == .newLearnPrimarySchool_Group || model.type == .newLearnPrimarySchool || model.type == .newLearnJuniorHighSchool || model.type == .validationImageAndWord || model.type == .validationWordAndChinese)
-            self.bottomView.tipsButton.isHidden  = tipsHidden
+            // ---- 新学隐藏提示
+            let hideTipsTypeArray: [YXExerciseType] = [.newLearnPrimarySchool_Group,
+                                                       .newLearnPrimarySchool,
+                                                       .newLearnJuniorHighSchool,
+                                                       .validationImageAndWord,
+                                                       .validationWordAndChinese]
+            self.bottomView.tipsButton.isHidden  = hideTipsTypeArray.contains(model.type)
+            // ---- Growing
+            let newLearnArray: [YXExerciseType] = [.newLearnPrimarySchool_Group, .newLearnPrimarySchool, .newLearnJuniorHighSchool]
+            if newLearnArray.contains(model.type) {
+                YXGrowingManager.share.newLearnNumber += 1
+            } else {
+                if !(YYCache.object(forKey: .newLearnReportGIO) as? Bool ?? false) {
+                    YXGrowingManager.share.uploadNewLearnFinished()
+                }
+                YXGrowingManager.share.exerciseNumber += 1
+            }
+
             if model.type == .newLearnPrimarySchool || model.type == .newLearnPrimarySchool_Group {
                 self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
             } else {
@@ -296,6 +315,21 @@
     
     private func updateTokenAction() {
         YXUserModel.default.updateToken()
+    }
+
+    // TODO: ---- Notification ----
+    @objc private func didEnterBackground() {
+        self.uploadGrowing()
+    }
+
+    @objc private func willEnterForeground() {
+        YXGrowingManager.share.startDate = NSDate()
+    }
+
+    // TODO: ---- Event ----
+
+    private func uploadGrowing() {
+        YXGrowingManager.share.uploadLearnStop()
     }
 }
  
@@ -460,6 +494,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
                 return
             }
             YXLog("返回首页")
+            self.uploadGrowing()
             self.dataManager.progressManager.setOneExerciseFinishStudyTime()
             
             self.delegate?.backHomeEvent()

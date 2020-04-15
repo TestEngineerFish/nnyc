@@ -220,9 +220,9 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         let seleceUnitView = YXSeleceUnitView(units: units) { (unitId) in
             guard let unitId = unitId else { return }
 
+            // ---- Growing ----
             let gradeId = self.filterGrades[collectionView.tag].gradeId
-            Growing.setPeopleVariableWithKey("user_grade", andStringValue: String(describing: gradeId))
-            Growing.setPeopleVariableWithKey("user_book_version", andStringValue: wordBook.bookVersion ?? "")
+            YXGrowingManager.share.uploadChangeBook(grade: "\(String(describing: gradeId))", versionName: wordBook.bookVersion)
 
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
