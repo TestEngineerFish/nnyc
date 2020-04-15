@@ -54,6 +54,7 @@ class YXAddBookGuideViewController: UIViewController {
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }
+        self.updateGIO()
     }
     
     @IBAction func goHome(_ sender: Any) {
@@ -67,13 +68,21 @@ class YXAddBookGuideViewController: UIViewController {
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }
+        self.updateGIO()
+    }
+
+    private func updateGIO() {
+        guard let book = selectBook, let _grade = book.bookGrade else {
+            return
+        }
+        YXGrowingManager.share.uploadChangeBook(grade: "\(_grade)", versionName: book.bookVersionName)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        selectGradeView.isHidden = true
-        selectVersionView.isHidden = true
+        selectGradeView.isHidden    = true
+        selectVersionView.isHidden  = true
         selectBookNameView.isHidden = true
 
         YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in

@@ -137,6 +137,16 @@ class YXReviewPlanEditView: YXTopWindowView {
             }
             YXReviewDataManager().resetReviewPlanData(planId: planId) { (result: Bool) in
                 if result {
+                    // 清除本地缓存记录
+                    let progressManager = YXExcerciseProgressManager()
+                    progressManager.planId   = planId
+                    progressManager.dataType = .planListenReview
+                    progressManager.completionExercise()
+                    progressManager.completionReport()
+                    progressManager.dataType = .planReview
+                    progressManager.completionExercise()
+                    progressManager.completionReport()
+
                     NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
                     YXLog("重置词单\(planId)，成功")
                     self.removeFromSuperview()

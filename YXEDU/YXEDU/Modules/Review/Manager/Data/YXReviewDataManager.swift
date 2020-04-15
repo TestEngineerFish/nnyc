@@ -60,6 +60,7 @@ struct YXReviewDataManager {
             completion?(resetReviewPlanModel.isSuccess == 1)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
+             completion?(false)
         }
     }
     
