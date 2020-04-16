@@ -36,10 +36,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var entryViewHeightConstraint: NSLayoutConstraint!
     
     @IBAction func startExercise(_ sender: UIButton) {
-//        if YXWordBookResourceManager.shared.isDownloading {
-//            YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
-//            return
-//        }
         YXLog("====开始主流程的学习====")
         YXLog(String(format: "当前学习词书名：%@, 词书ID：%ld,当前学习单元：%@，单元ID：%ld", self.homeModel.bookName ?? "--", self.homeModel?.bookId ?? -1, self.homeModel.unitName ?? "--", self.homeModel?.unitId ?? -1))
 

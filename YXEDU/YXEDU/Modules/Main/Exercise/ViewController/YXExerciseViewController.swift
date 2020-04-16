@@ -72,19 +72,27 @@
 //        self.unitId = self.query["unit_id"] as? Int ?? 0
     }
 
+    // ---- 词书下载等待事件 ----
     var timer: Timer?
+    let interval = 0.5
+    var timeOut  = 15.0
+    var waitTime = 0.0
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showLoadAnimation()
         self.createSubviews()
         self.bindProperty()
         self.initManager()
-        self.timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { (timer) in
+        self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { (timer) in
+            self.waitTime += self.interval
             if YXWordBookResourceManager.writeDBFinished {
                 self.startStudy()
                 timer.invalidate()
                 self.timer = nil
             }
+
         }
         YXGrowingManager.share.startDate = NSDate()
     }

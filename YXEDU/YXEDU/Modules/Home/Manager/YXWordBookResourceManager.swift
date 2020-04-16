@@ -99,8 +99,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             }
             bookModel.bookHash = newHash
             YXWordBookResourceManager.downloadBookCount    -= 1
-            self.saveBook(with: bookModel, async: true)
-            self.saveWords(with: bookModel, async: true)
+            DispatchQueue.global().async {
+                self.saveBook(with: bookModel, async: true)
+                self.saveWords(with: bookModel, async: true)
+            }
             if YXWordBookResourceManager.downloadBookCount == 0 {
                 YXWordBookResourceManager.isDownloading = false
                 self.finishBlock?()

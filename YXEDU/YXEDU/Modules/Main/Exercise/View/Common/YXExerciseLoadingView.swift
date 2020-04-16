@@ -12,6 +12,7 @@ import Lottie
 class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     var progressLayer = CAGradientLayer()
     var dotLayer      = CAGradientLayer()
+    let descLabel     = UILabel()
     var finished      = false
     var completeBlock: (()->Void)?
 
@@ -45,7 +46,6 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     private func createHeaderView() -> UIView {
         let headerView     = UIView()
         let squirrelView   = AnimationView(name: "learnLoading")
-        let descLabel      = UILabel()
         let progressBgView = UIView()
 
         descLabel.textAlignment = .center
@@ -189,9 +189,13 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     // MARK: CAAnimationDelegate
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if self.finished && YXWordBookResourceManager.writeDBFinished {
-            self.removeFromSuperview()
-            self.completeBlock?()
+        if self.finished {
+            if YXWordBookResourceManager.writeDBFinished {
+                self.removeFromSuperview()
+                self.completeBlock?()
+            } else {
+                self.descLabel.text = "词书下载中..."
+            }
         } else {
             self.showAnimation()
         }

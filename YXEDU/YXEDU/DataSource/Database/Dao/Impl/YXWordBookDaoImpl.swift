@@ -70,12 +70,12 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     func insertWord(word: YXWordModel, async: Bool = false) -> Bool {
         let sql = YYSQLManager.WordBookSQL.insertWord.rawValue
         let partOfSpeechAndMeaningsDataString: String! = word.partOfSpeechAndMeanings?.toJSONString() ?? "[]"
-        let deformationsDataString: String! = word.deformations?.toJSONString() ?? "[]"
-        let examplessDataString: String! = word.examples?.toJSONString() ?? "[]"
-        let fixedMatchsDataString: String! = word.fixedMatchs?.toJSONString() ?? "[]"
-        let commonPhrasesDataString: String! = word.commonPhrases?.toJSONString() ?? "[]"
-        let wordAnalysisDataString: String! = word.wordAnalysis?.toJSONString() ?? "[]"
-        let detailedSyntaxsDataString: String! = word.detailedSyntaxs?.toJSONString() ?? "[]"
+        let deformationsDataString: String!            = word.deformations?.toJSONString() ?? "[]"
+        let examplessDataString: String!               = word.examples?.toJSONString() ?? "[]"
+        let fixedMatchsDataString: String!             = word.fixedMatchs?.toJSONString() ?? "[]"
+        let commonPhrasesDataString: String!           = word.commonPhrases?.toJSONString() ?? "[]"
+        let wordAnalysisDataString: String!            = word.wordAnalysis?.toJSONString() ?? "[]"
+        let detailedSyntaxsDataString: String!         = word.detailedSyntaxs?.toJSONString() ?? "[]"
         let synonymsData: Data! = try? JSONSerialization.data(withJSONObject: word.synonyms ?? [])
         let antonymsData: Data! = try? JSONSerialization.data(withJSONObject: word.antonyms ?? [])
 
