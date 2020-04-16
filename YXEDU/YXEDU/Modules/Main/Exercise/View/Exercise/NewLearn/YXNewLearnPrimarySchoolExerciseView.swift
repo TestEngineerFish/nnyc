@@ -93,7 +93,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         let roundSize  = CGSize(width: AdaptSize(115), height: AdaptSize(115))
         let audioView  = (answerView as! YXNewLearnAnswerView).recordAudioButton
         let audioFrame = audioView.convert(audioView.frame, to: kWindow)
-        self.guideView.show(CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.midY - AdaptSize(roundSize.height/2), width: roundSize.width, height: roundSize.height))
+        self.guideView.show(CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.midY - roundSize.height/2 - AdaptSize(10), width: roundSize.width, height: roundSize.height))
         YYCache.set(true, forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue)
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideGuideView))
         self.guideView.addGestureRecognizer(tap)
