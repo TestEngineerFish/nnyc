@@ -508,7 +508,8 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             self.dataManager.progressManager.setOneExerciseFinishStudyTime()
             
             self.delegate?.backHomeEvent()
-            YRRouter.popViewController(true)
+            
+            self.navigationController?.popToRootViewController(animated: true)
         }
         alertView.cancleClosure = { [weak self] in
             guard let self = self, self == UIView().currentViewController else {

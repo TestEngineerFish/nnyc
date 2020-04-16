@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,22 +28,22 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9NP-ix-Br1">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="单词数：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJe-T6-tic">
-                            <rect key="frame" x="20" y="-8" width="54" height="16"/>
+                            <rect key="frame" x="20" y="14" width="54" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVz-RK-iF6">
-                            <rect key="frame" x="74" y="-8" width="13" height="16"/>
+                            <rect key="frame" x="74" y="14" width="13" height="16"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                             <color key="textColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uaw-3w-z0S" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                            <rect key="frame" x="201" y="-12" width="84" height="24"/>
+                            <rect key="frame" x="201" y="10" width="84" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="0sH-wY-RDb"/>
                             </constraints>
@@ -71,23 +71,24 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWB-el-TEL">
-                            <rect key="frame" x="20" y="-0.5" width="335" height="0.5"/>
+                            <rect key="frame" x="20" y="43.5" width="335" height="0.5"/>
                             <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="w7y-fR-OD5"/>
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZI0-jX-cg2" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                            <rect key="frame" x="300" y="-12" width="55" height="24"/>
+                            <rect key="frame" x="300" y="10" width="55" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="pW8-1U-b2w"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="contentEdgeInsets" minX="12" minY="0.0" maxX="8" maxY="0.0"/>
                             <inset key="titleEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="26" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="编辑" image="wordListArrow">
-                                <color key="titleColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="编辑" image="go">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -97,7 +98,7 @@
                                     <real key="value" value="0.5"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                    <color key="value" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
@@ -113,7 +114,7 @@
                         <constraint firstItem="hJe-T6-tic" firstAttribute="centerY" secondItem="9NP-ix-Br1" secondAttribute="centerY" id="NZu-eJ-xw2"/>
                         <constraint firstAttribute="trailing" secondItem="yWB-el-TEL" secondAttribute="trailing" constant="20" id="SXV-nU-afV"/>
                         <constraint firstItem="uVz-RK-iF6" firstAttribute="centerY" secondItem="9NP-ix-Br1" secondAttribute="centerY" id="a96-9D-C7y"/>
-                        <constraint firstAttribute="height" id="ehb-EN-fPt"/>
+                        <constraint firstAttribute="height" constant="44" id="ehb-EN-fPt"/>
                         <constraint firstItem="hJe-T6-tic" firstAttribute="leading" secondItem="9NP-ix-Br1" secondAttribute="leading" constant="20" id="fEp-iR-wnD"/>
                         <constraint firstItem="uVz-RK-iF6" firstAttribute="leading" secondItem="hJe-T6-tic" secondAttribute="trailing" id="nJG-H2-3pG"/>
                         <constraint firstAttribute="trailing" secondItem="ZI0-jX-cg2" secondAttribute="trailing" constant="20" id="rtB-mR-rFO"/>
@@ -122,7 +123,7 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="cIS-uI-M84">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u48-m5-JVG" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
@@ -185,6 +186,6 @@
     </objects>
     <resources>
         <image name="changeWordListOrder" width="10" height="12"/>
-        <image name="wordListArrow" width="8" height="15"/>
+        <image name="go" width="8" height="15"/>
     </resources>
 </document>
