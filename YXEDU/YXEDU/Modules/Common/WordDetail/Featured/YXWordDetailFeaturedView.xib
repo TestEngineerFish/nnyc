@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,24 +19,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9tl-a6-QTj" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="10" y="72" width="394" height="774"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="6"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
-                    </userDefinedRuntimeAttributes>
-                </view>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QvV-Cw-EDc" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="10" y="72" width="394" height="774"/>
+                    <rect key="frame" x="0.0" y="54" width="414" height="798"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="16" estimatedSectionHeaderHeight="16" sectionFooterHeight="28" estimatedSectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JZG-RF-5nI">
-                            <rect key="frame" x="0.0" y="24" width="394" height="89600"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <rect key="frame" x="0.0" y="24" width="414" height="4480"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="JZG-RF-5nI" secondAttribute="trailing" id="3Og-ut-jij"/>
                         <constraint firstItem="JZG-RF-5nI" firstAttribute="top" secondItem="QvV-Cw-EDc" secondAttribute="top" constant="24" id="aDK-15-9Hi"/>
@@ -49,26 +40,22 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="featuredIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0J4-fa-ran">
-                    <rect key="frame" x="344" y="44" width="70" height="80"/>
+                    <rect key="frame" x="354" y="28" width="70" height="80"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="80" id="0CS-cF-M99"/>
                         <constraint firstAttribute="width" constant="70" id="uoO-jb-Jcq"/>
                     </constraints>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="9tl-a6-QTj" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="5Ch-gu-GkO"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="9tl-a6-QTj" secondAttribute="trailing" constant="10" id="B6w-kd-leY"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="9tl-a6-QTj" secondAttribute="bottom" constant="16" id="CpY-u3-2aU"/>
-                <constraint firstItem="0J4-fa-ran" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="KRR-ub-XLy"/>
-                <constraint firstItem="QvV-Cw-EDc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="28" id="N0r-RD-x7h"/>
-                <constraint firstItem="9tl-a6-QTj" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="28" id="SUh-cW-SpE"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="QvV-Cw-EDc" secondAttribute="trailing" constant="10" id="aAZ-Ur-B5c"/>
-                <constraint firstItem="JZG-RF-5nI" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="100" id="gFO-f8-7K2"/>
-                <constraint firstItem="QvV-Cw-EDc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="koZ-rz-lwJ"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="0J4-fa-ran" secondAttribute="trailing" id="uKw-zA-z1Q"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="QvV-Cw-EDc" secondAttribute="bottom" constant="16" id="yFp-WC-xd3"/>
+                <constraint firstItem="0J4-fa-ran" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="-16" id="KRR-ub-XLy"/>
+                <constraint firstItem="QvV-Cw-EDc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="N0r-RD-x7h"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="QvV-Cw-EDc" secondAttribute="trailing" id="aAZ-Ur-B5c"/>
+                <constraint firstItem="JZG-RF-5nI" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="5" id="gFO-f8-7K2"/>
+                <constraint firstItem="QvV-Cw-EDc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="koZ-rz-lwJ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="0J4-fa-ran" secondAttribute="trailing" constant="-10" id="uKw-zA-z1Q"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="QvV-Cw-EDc" secondAttribute="bottom" constant="10" id="yFp-WC-xd3"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="139" y="154"/>

@@ -9,6 +9,8 @@
 import UIKit
 
 class YXWordDetailFeaturedSectionFooterView: UIView {
+    private var totalCount = 0
+    
     var shouldShowExpand = false {
         didSet {
             if shouldShowExpand {
@@ -26,11 +28,11 @@ class YXWordDetailFeaturedSectionFooterView: UIView {
         didSet {
             if isExpand {
                 expandButton.setTitle("收起", for: .normal)
-                expandStateIcon.image = #imageLiteral(resourceName: "collapsedState")
+                expandStateIcon.image = #imageLiteral(resourceName: "collapsed")
                 
             } else {
-                expandButton.setTitle("展开", for: .normal)
-                expandStateIcon.image = #imageLiteral(resourceName: "expandState")
+                expandButton.setTitle("展开剩余\(totalCount - 1)条", for: .normal)
+                expandStateIcon.image = #imageLiteral(resourceName: "expand")
             }
         }
     }
@@ -41,9 +43,11 @@ class YXWordDetailFeaturedSectionFooterView: UIView {
     @IBOutlet weak var expandButton: UIButton!
     @IBOutlet weak var expandStateIcon: UIImageView!
 
-    init() {
+    init(totalCount: Int) {
         super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 16))
         initializationFromNib()
+        
+        self.totalCount = totalCount
     }
 
     deinit {

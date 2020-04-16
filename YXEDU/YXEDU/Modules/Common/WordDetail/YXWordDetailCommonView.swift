@@ -28,15 +28,39 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     var isAutoPlay = false
 
     @IBOutlet var contentView: UIView!
+    @IBOutlet weak var collectionButton: UIButton!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var phoneticSymbolLabel: UILabel!
     @IBOutlet weak var partOfSpeechAndSenseLabel: UILabel!
     @IBOutlet weak var playAuoidButton: UIButton!
-    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var dividingView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dividingTopConstraint: NSLayoutConstraint!
 
+    @IBAction func collectWord(_ sender: UIButton) {
+        if self.collectionButton.currentImage == #imageLiteral(resourceName: "unCollectWord") {
+            let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(word.wordId ?? 0),\"is\":\(word.isComplexWord ?? 0)}]")
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
+            }) { error in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
+        } else {
+            let request = YXWordListRequest.collectWord(wordId: word.wordId ?? 0, isComplexWord: word.isComplexWord ?? 0)
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
+            }) { error in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
+        }
+    }
+    
+    @IBAction func feedbackWord(_ sender: UIButton) {
+        YXLog("单词详情View中点击反馈按钮")
+        YXLogManager.share.report()
+        YXReportErrorView.show(to: kWindow, withWordId: NSNumber(integerLiteral: word.wordId ?? 0), withWord: word.word ?? "")
+    }
+    
     @IBAction func playAudio(_ sender: UIButton) {
         YXAVPlayerManager.share.finishedBlock = nil
         self.isAutoPlay = false
@@ -75,7 +99,8 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         tableView.register(UINib(nibName: "YXWordDetailExampleCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailExampleCell")
         tableView.register(UINib(nibName: "YXWordDeformationsCell", bundle: nil), forCellReuseIdentifier: "YXWordDeformationsCell")
         tableView.register(UINib(nibName: "YXWordDetailClassicCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailClassicCell")
-
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        
         featuredView = YXWordDetailFeaturedView(word: word, heightChangeClosure: { height in
             self.featuredViewheight = height
             
@@ -84,6 +109,17 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 self.tableView.reloadData()
             }
         })
+        
+        let request = YXWordListRequest.didCollectWord(wordId: word.wordId ?? 0)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            if response.data?.didCollectWord == 1 {
+                self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
+            } else {
+                self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
+            }
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
         
         wordLabel.text = word.word
         if let pronunciation = word.soundmark, pronunciation.isEmpty == false {

@@ -36,7 +36,7 @@ class YXWordDetailFeaturedSectionHeaderView: UIView {
         addSubview(contentView)
         contentView.frame = self.frame
         
-        headerImage.image = UIImage(named: headerTitle)
-//        headerLabel.text = headerTitle
+//        headerImage.image = UIImage(named: headerTitle)
+        headerLabel.text = headerTitle
     }
 }

@@ -16,32 +16,7 @@ class YXWordDetailView: UIView {
     private var wordDetailView: YXWordDetailCommonView!
     
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var collectionButton: UIButton!
-    
-    @IBAction func collectWord(_ sender: UIButton) {
-        if self.collectionButton.currentImage == #imageLiteral(resourceName: "unCollectWord") {
-            let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(word.wordId ?? 0),\"is\":\(word.isComplexWord ?? 0)}]")
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-                self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
-            }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
-            }
-        } else {
-            let request = YXWordListRequest.collectWord(wordId: word.wordId ?? 0, isComplexWord: word.isComplexWord ?? 0)
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-                self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
-            }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
-            }
-        }
-    }
-    
-    @IBAction func feedbackWord(_ sender: UIButton) {
-        YXLog("单词详情View中点击反馈按钮")
-        YXLogManager.share.report()
-        YXReportErrorView.show(to: kWindow, withWordId: NSNumber(integerLiteral: word.wordId ?? 0), withWord: word.word ?? "")
-    }
-    
+        
     @IBAction func continueStudy(_ sender: UIButton) {
         self.dismissClosure?()
     }
@@ -69,16 +44,5 @@ class YXWordDetailView: UIView {
         
         wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: 40, width: self.frame.width, height: self.frame.height - self.frame.minY - kSafeBottomMargin - 80), word: word!)
         self.addSubview(wordDetailView)
-        
-        let request = YXWordListRequest.didCollectWord(wordId: word.wordId ?? 0)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-            if response.data?.didCollectWord == 1 {
-                self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
-            } else {
-                self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
-            }
-        }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
-        }
     }
 }

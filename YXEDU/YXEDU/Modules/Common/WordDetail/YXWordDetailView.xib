@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXWordDetailView" customModule="YXEDU" customModuleProvider="target">
             <connections>
-                <outlet property="collectionButton" destination="76N-Vh-urP" id="KFJ-kj-bFq"/>
                 <outlet property="contentView" destination="i5M-Pr-FkT" id="jRR-et-hci"/>
             </connections>
         </placeholder>
@@ -19,28 +18,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qcz-qo-c1K">
-                    <rect key="frame" x="370" y="16" width="22" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="22" id="Rlp-R9-U5X"/>
-                        <constraint firstAttribute="height" constant="22" id="oCw-dH-lqE"/>
-                    </constraints>
-                    <state key="normal" image="feedbackWord"/>
-                    <connections>
-                        <action selector="feedbackWord:" destination="-1" eventType="touchUpInside" id="fyL-VO-pKP"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76N-Vh-urP">
-                    <rect key="frame" x="338" y="16" width="22" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="Gf3-yX-m23"/>
-                        <constraint firstAttribute="width" constant="22" id="NhD-T8-iYP"/>
-                    </constraints>
-                    <state key="normal" image="collectWord"/>
-                    <connections>
-                        <action selector="collectWord:" destination="-1" eventType="touchUpInside" id="hF1-7N-MWD"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FXu-9c-Nsx" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
                     <rect key="frame" x="50" y="802" width="314" height="40"/>
                     <constraints>
@@ -77,20 +54,12 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Qcz-qo-c1K" secondAttribute="trailing" constant="22" id="3H2-qZ-jKr"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FXu-9c-Nsx" secondAttribute="trailing" constant="50" id="4L0-BZ-0GF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FXu-9c-Nsx" secondAttribute="bottom" constant="20" id="JdA-9W-TL4"/>
-                <constraint firstItem="Qcz-qo-c1K" firstAttribute="leading" secondItem="76N-Vh-urP" secondAttribute="trailing" constant="10" id="Odl-PK-fhk"/>
                 <constraint firstItem="FXu-9c-Nsx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="50" id="WyY-eb-rA5"/>
-                <constraint firstItem="Qcz-qo-c1K" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="b7Y-fZ-f98"/>
-                <constraint firstItem="76N-Vh-urP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="fFX-7o-Lhe"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="139" y="154"/>
         </view>
     </objects>
-    <resources>
-        <image name="collectWord" width="22" height="22"/>
-        <image name="feedbackWord" width="22" height="22"/>
-    </resources>
 </document>

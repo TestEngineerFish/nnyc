@@ -107,8 +107,27 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             heightOfTableView = heightOfTableView + cell.frame.height
         }
         
-        heightOfTableView = heightOfTableView + CGFloat((16 + 28) * sections.count)
-        heightOfTableView = heightOfTableView + 78
+        heightOfTableView = heightOfTableView + CGFloat((16 + 58) * sections.count)
+        heightOfTableView = heightOfTableView - 10
+        
+        let shapeLayer: CAShapeLayer = CAShapeLayer()
+        shapeLayer.name = "Dotted Line"
+        shapeLayer.strokeColor = UIColor.hex(0x979797).cgColor
+        shapeLayer.lineWidth = 0.5
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
+        shapeLayer.lineDashPhase = 0
+        shapeLayer.lineDashPattern = [NSNumber(value: 4), NSNumber(value: 4)]
+        
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 28, y: 54))
+        path.addLine(to: CGPoint(x: 28, y: heightOfTableView - 54))
+        shapeLayer.path = path
+        
+        for layer in self.layer.sublayers ?? [] {
+            guard layer.name == "Dotted Line" else { continue }
+            layer.removeFromSuperlayer()
+        }
+        self.layer.insertSublayer(shapeLayer, below: tableView.layer)
         
         self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: heightOfTableView)
         contentView.frame = self.bounds
@@ -133,7 +152,8 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let sectionType = sections[section].keys.first
-        let view = YXWordDetailFeaturedSectionFooterView()
+                
+        let view = YXWordDetailFeaturedSectionFooterView(totalCount: (sections[section].values.first as? [Any])?.count ?? 0)
         view.isExpand = sectionExpandStatus[section]
         view.expandClosure = { [weak self] in
             guard let self = self else { return }
@@ -155,7 +175,23 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 28   
+        let section = sections[section]
+        switch section.keys.first {
+        case SectionType.fixedMatch.rawValue:
+            return 58
+            
+        case SectionType.commonPhrases.rawValue:
+            return 58
+            
+        case SectionType.wordAnalysis.rawValue:
+            return 36
+            
+        case SectionType.detailedSyntax.rawValue:
+            return 0
+            
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -216,7 +252,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             
             cell.englishLabel.text = commonPhrase?.english
             cell.chineseLabel.text = commonPhrase?.chinese
-            cell.distanceOfChineseLabel.constant = mostCommonPhrasesLength
+            cell.distanceOfChineseLabel.constant = mostCommonPhrasesLength + 20
             
             return cell
             
@@ -239,7 +275,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             }
             
             cell.contentLabel.text = content
-            
+            cell.totalCount = analysis?.list?.count ?? 0
             cell.isExpand = wordAnalysisExpandStatus[indexPath.row]
             cell.expandClosure = { [weak self] in
                 guard let self = self else { return }
@@ -269,7 +305,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             }
             
             cell.contentLabel.text = content
-            
+            cell.totalCount = detailedSyntax?.list?.count ?? 0
             cell.isExpand = detailedSyntaxExpandStatus[indexPath.row]
             cell.expandClosure = { [weak self] in
                 guard let self = self else { return }
