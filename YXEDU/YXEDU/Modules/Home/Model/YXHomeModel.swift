@@ -25,7 +25,7 @@ struct YXHomeModel: Codable {
     var learnedWords: Int?
     var isSkipNewLearn: Int?
     var isUploadGIO: Int?
-    var bookGrade: String?
+    var bookGrade: Int?
     var bookVersionName: String?
     
     enum CodingKeys: String, CodingKey {

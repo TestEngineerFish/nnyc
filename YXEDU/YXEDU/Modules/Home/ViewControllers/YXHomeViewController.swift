@@ -160,7 +160,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.wrongWordsCount     = "\(self.homeModel.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
                 YXConfigure.shared().isSkipNewLearn = self.homeModel.isSkipNewLearn == .some(1)
-                YXConfigure.shared().isUploadGIO    = self.homeModel.isUploadGIO == .some(1)
+                YXConfigure.shared().isUploadGIO    = self.homeModel.isUploadGIO    == .some(1)
+                // 优先检测其他Tab主页是否有缓存数据，没有则先加载
+
                 YXWordBookResourceManager.shared.contrastBookData()
                 self.initDataManager()
                 self.uploadGrowing()
@@ -170,12 +172,20 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
+//    private func handleTabData() {
+//        // 复习Tab
+//        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .review) {
+//         // 发通知，通知已创建的VC更新页面
+//        }
+//        YXWordBookResourceManager.shared.contrastBookData()
+//    }
+
     private func uploadGrowing() {
-        guard let model = self.homeModel else {
+        guard let model = self.homeModel, let grade = model.bookGrade else {
             return
         }
         YXGrowingManager.share.uploadSkipNewLearn()
-        YXGrowingManager.share.uploadChangeBook(grade: model.bookGrade, versionName: model.bookVersionName)
+        YXGrowingManager.share.uploadChangeBook(grade: "\(grade)", versionName: model.bookVersionName)
     }
     
     private func checkUserState() {
