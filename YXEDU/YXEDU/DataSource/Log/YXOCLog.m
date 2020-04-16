@@ -15,7 +15,7 @@
 @implementation YXOCLog
 
 - (void)requestLog:(NSString *)msg {
-    YXRequestLog(@"%@", msg);
+    YXRequestLog(@"*\n%@", msg);
 }
 
 - (void)eventLog:(NSString *)msg {

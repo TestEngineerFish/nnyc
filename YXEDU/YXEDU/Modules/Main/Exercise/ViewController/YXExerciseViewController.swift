@@ -220,7 +220,7 @@
         
         if var model = data.2 {
             model.dataType = dataType
-            YXRequestLog("题目内容：%@", model.toJSONString() ?? "--")
+            YXRequestLog("==== 题目内容：%@", model.toJSONString() ?? "--")
             // ---- 新学隐藏提示
             let hideTipsTypeArray: [YXExerciseType] = [.newLearnPrimarySchool_Group,
                                                        .newLearnPrimarySchool,

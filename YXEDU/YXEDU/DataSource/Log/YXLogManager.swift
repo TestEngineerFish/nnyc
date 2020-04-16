@@ -69,9 +69,10 @@ class YXLogManager: NSObject {
         let requestLogger = YXOCLog.shared()?.loggerFoRequest
         let eventLogger   = YXOCLog.shared()?.loggerForEvent
         
-        let logZiper      = ZipArchive()
-        let requestZiper  = ZipArchive()
-        let eventZiper    = ZipArchive()
+        let logZiper         = ZipArchive()
+        let requestZiper     = ZipArchive()
+        let eventZiper       = ZipArchive()
+        let wordSQLiteZiper  = ZipArchive()
 
         let logDirectoryPath = fileLogger.logFileManager.logsDirectory
         let logZipPath       = logDirectoryPath + "/Log.zip"
@@ -82,6 +83,15 @@ class YXLogManager: NSObject {
         let eventLogList     = eventLogger?.logFileManager.sortedLogFileNames
         let eventDirectory   = eventLogger?.logFileManager.logsDirectory ?? ""
         let eventZipPath     = eventDirectory + "/Event.zip"
+
+        let wordSQLitePath: String = {
+            let documentPath = NSHomeDirectory() + "/Documents/"
+            if !FileManager.default.fileExists(atPath: documentPath){
+                try? FileManager.default.createDirectory(atPath: documentPath, withIntermediateDirectories: true, attributes: nil)
+            }
+            return documentPath
+        }()
+        let wordSQLiteZipPath = wordSQLitePath + "WordSQL.zip"
         
         YXLog("++++++++++++++++")
         YXLog(logDirectoryPath)
@@ -104,13 +114,23 @@ class YXLogManager: NSObject {
             YXLog("创建Evnet Zip失败")
         }
         eventZiper.closeZipFile2()
+
+        if wordSQLiteZiper.createZipFile2(wordSQLiteZipPath) {
+            let sqlPath = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.word.rawValue)
+            wordSQLiteZiper.addFile(toZip: sqlPath, newname: YYDataSourceType.word.rawValue)
+            YXLog("创建Word SQLite Zip成功")
+        } else {
+            YXLog("创建Word SQLite Zip失败")
+        }
+        wordSQLiteZiper.closeZipFile2()
         
-        guard let requestZipData = try? Data(contentsOf: URL(fileURLWithPath: requestZipPath)), let eventZipData = try? Data(contentsOf: URL(fileURLWithPath: eventZipPath)) else {
+        guard let requestZipData = try? Data(contentsOf: URL(fileURLWithPath: requestZipPath)), let eventZipData = try? Data(contentsOf: URL(fileURLWithPath: eventZipPath)), let wordSQLiteZipData = try? Data(contentsOf: URL(fileURLWithPath: wordSQLiteZipPath)) else {
             return nil
         }
         if logZiper.createZipFile2(logZipPath) {
             logZiper.addData(toZip: requestZipData, fileAttributes: [:], newname: "Request.zip")
             logZiper.addData(toZip: eventZipData, fileAttributes: [:], newname: "Event.zip")
+            logZiper.addData(toZip: wordSQLiteZipData, fileAttributes: [:], newname: "WordSQL.zip")
             YXLog("创建Log Zip成功")
         } else {
             YXLog("创建Log Zip失败")
@@ -135,6 +155,15 @@ class YXLogManager: NSObject {
         let requestZipPath   = requestDirectory + "/Request.zip"
         let eventZipPath     = eventDirectory + "/Event.zip"
         let logZipPath       = logDirectory + "/Log.zip"
+        let wordSQLitePath: String = {
+            let documentPath = NSHomeDirectory() + "/Documents/"
+            if !FileManager.default.fileExists(atPath: documentPath){
+                try? FileManager.default.createDirectory(atPath: documentPath, withIntermediateDirectories: true, attributes: nil)
+            }
+            return documentPath
+        }()
+        let wordSQLiteZipPath = wordSQLitePath + "WordSQL.zip"
+
         if ((try? FileManager.default.removeItem(atPath: requestZipPath)) != nil) {
             YXLog("删除Request Zip包成功")
         } else {
@@ -145,6 +174,12 @@ class YXLogManager: NSObject {
             YXLog("删除Event Zip包成功")
         } else {
             YXLog("删除Evnet Zip包失败")
+        }
+
+        if ((try? FileManager.default.removeItem(atPath: wordSQLiteZipPath)) != nil) {
+            YXLog("删除Word SQLite Zip包成功")
+        } else {
+            YXLog("删除Word SQLite Zip包失败")
         }
         
         if ((try? FileManager.default.removeItem(atPath: logZipPath)) != nil) {
