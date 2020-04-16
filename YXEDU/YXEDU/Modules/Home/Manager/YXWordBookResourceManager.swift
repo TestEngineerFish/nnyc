@@ -98,7 +98,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 return
             }
             bookModel.bookHash = newHash
-            YXWordBookResourceManager.downloadBookCount    -= 1
+            YXWordBookResourceManager.downloadBookCount -= 1
             DispatchQueue.global().async {
                 self.saveBook(with: bookModel, async: true)
                 self.saveWords(with: bookModel, async: true)
@@ -149,10 +149,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
                 if index == wordsList.count - 1 && lastUnit {
                     YXLog("==== 词书\(bookModel.bookId ?? 0)下载完成 ====")
-                }
-                if index == wordsList.count - 1 && lastUnit && YXWordBookResourceManager.downloadBookCount == 0 {
-                    YXLog("==== 写入DB数据完成✅ ====")
-                    YXWordBookResourceManager.writeDBFinished = true
+                    if YXWordBookResourceManager.downloadBookCount == 0 {
+                        YXLog("==== 写入DB数据完成✅ ====")
+                        YXWordBookResourceManager.writeDBFinished = true
+                    }
                 }
             }
         }

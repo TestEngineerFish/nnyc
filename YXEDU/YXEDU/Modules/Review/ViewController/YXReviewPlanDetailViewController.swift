@@ -13,9 +13,9 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     var planId: Int = -1
     
-    var headerView = YXReviewPlanHeaderView()
+    var headerView   = YXReviewPlanHeaderView()
     var wordListView = YXWordListView()
-    var bottomView = YXReviewPlanDetailBottomView()
+    var bottomView   = YXReviewPlanDetailBottomView()
     
     
     var model: YXReviewPlanDetailModel?
