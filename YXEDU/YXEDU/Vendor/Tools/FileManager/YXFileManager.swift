@@ -31,7 +31,7 @@ struct YXFileManager {
         guard let fileHandle = FileHandle(forWritingAtPath: filePath), let jsonData = json.data(using: .utf8) else {
             return
         }
-        YXLog("存储\(type.rawValue)的JSON文件，JSON：", json)
+        YXRequestLog("存储\(type.rawValue)的JSON文件，JSON：", json)
         fileHandle.write(jsonData)
     }
 

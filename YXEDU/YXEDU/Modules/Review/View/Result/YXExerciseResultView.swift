@@ -121,8 +121,8 @@ class YXExerciseResultView: YXView {
         
         titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(AS(11))
-            make.left.equalTo(AS(20))
-            make.right.equalTo(AS(-20))
+            make.left.equalTo(AS(35))
+            make.right.equalTo(AS(-35))
             make.height.equalTo(titleHeight())
         }
         
