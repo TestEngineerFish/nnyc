@@ -242,20 +242,20 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
     
     @objc func clickReviewButton() {
         YXLog("====开始自定义复习====")
-        if YXWordBookResourceManager.shared.isDownloading {
-            YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
-            return
-        }
+//        if YXWordBookResourceManager.shared.isDownloading {
+//            YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
+//            return
+//        }
         self.startReviewPlanEvent?()
     }
     
     
     @objc func clickListenButton() {
         YXLog("====开始自定义听写复习====")
-        if YXWordBookResourceManager.shared.isDownloading {
-            YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
-            return
-        }
+//        if YXWordBookResourceManager.shared.isDownloading {
+//            YXUtils.showHUD(kWindow, title: "正在下载词书，请稍后再试～")
+//            return
+//        }
         self.startListenPlanEvent?()
     }
 }

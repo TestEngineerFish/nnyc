@@ -49,9 +49,6 @@
     
     /// 哪个单词的提示，仅连线题使用
     private var remindWordId: Int = -1
-
-    // ---- Growing ----
-    private var durationTime = 0.0
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -67,21 +64,28 @@
         super.viewDidDisappear(animated)
         self.hideLoadAnimation(nil)
     }
-    
+
     override func handleData(withQuery query: [AnyHashable : Any]!) {
 //        let value = (self.query["type"] as? Int) ?? 1
 //        self.dataType = YXExerciseDataType(rawValue: value) ?? .normal
 //        self.bookId = self.query["book_id"] as? Int ?? 0
 //        self.unitId = self.query["unit_id"] as? Int ?? 0
     }
-    
+
+    var timer: Timer?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showLoadAnimation()
         self.createSubviews()
         self.bindProperty()
         self.initManager()
-        self.startStudy()
+        self.timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { (timer) in
+            if YXWordBookResourceManager.writeDBFinished {
+                self.startStudy()
+                timer.invalidate()
+                self.timer = nil
+            }
+        }
         YXGrowingManager.share.startDate = NSDate()
     }
     
@@ -92,6 +96,8 @@
         YXAVPlayerManager.share.pauseAudio()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self)
+        self.timer?.invalidate()
+        self.timer = nil
     }
     
     private func createSubviews() {
@@ -172,7 +178,7 @@
             YXLog("本地存在未学完的关卡，先加载")
             // 先加载本地数据
             dataManager.fetchLocalExerciseModels()
-            
+
             // 开始答题
             self.hideLoadAnimation { [weak self] in
                 self?.dataManager.progressManager.setStartStudyTime()
@@ -302,8 +308,12 @@
     }
     
     private func hideLoadAnimation(_ completeBlock: (()->Void)?) {
-        self.loadingView?.stopAnimation(completeBlock)
-        self.loadingView = nil
+        // 先保存闭包
+        if completeBlock != nil {
+            self.loadingView?.completeBlock = completeBlock
+        }
+        self.loadingView?.stopAnimation()
+//        self.loadingView = nil
     }
     
     private func updateToken() {

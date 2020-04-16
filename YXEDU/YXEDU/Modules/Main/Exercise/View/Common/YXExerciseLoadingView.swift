@@ -182,15 +182,14 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
 
     }
 
-    func stopAnimation(_ completeBlock: (()->Void)?) {
+    func stopAnimation() {
         self.finished = true
-        self.completeBlock = completeBlock
     }
 
     // MARK: CAAnimationDelegate
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if self.finished {
+        if self.finished && YXWordBookResourceManager.writeDBFinished {
             self.removeFromSuperview()
             self.completeBlock?()
         } else {

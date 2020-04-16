@@ -34,7 +34,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     override func layoutSubviews() {
         super.layoutSubviews()
         let height = self.chineseExampleLabel.text?.textHeight(font: chineseExampleLabel.font, width: screenWidth - AdaptSize(74)) ?? 0
-        self.chineseExampleLabel.snp.updateConstraints { (make) in
+        self.chineseExampleLabel.snp.makeConstraints { (make) in
             make.height.equalTo(height)
         }
     }
@@ -100,15 +100,13 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
         self.exampleLabel.snp.makeConstraints { (make) in
             make.centerX.width.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(69))
-            make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(6))
             make.height.equalTo(0)
         }
 
         self.chineseExampleLabel.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().offset(AdaptSize(-30))
+            make.width.equalToSuperview()
             make.centerX.equalToSuperview()
             make.top.equalTo(exampleLabel.snp.bottom).offset(AdaptSize(2))
-            make.height.equalTo(0)
         }
 
         self.imageView?.snp.makeConstraints({ (make) in
