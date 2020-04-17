@@ -27,7 +27,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         if YXWordBookResourceManager.isDownloading, bookId == nil {
             return
         }
-        YXLog("当前学习书ID：====", YXConfigure.shared().currLearningBookId)
         self.closure = closure
         let request = YXWordBookRequest.downloadWordBook(bookId: bookId)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordBookDownloadModel>.self, request: request, success: {  [weak self] (response) in
@@ -75,6 +74,11 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             // 本地不存在，或者本地Hash值与后台不一致，则更新
             if (wordBook == nil || wordBook?.bookHash != .some(bookHash)) {
                 YXLog("开始下载词书")
+                if wordBook == nil {
+                    YXLog("本地没有这个本书")
+                } else {
+                    YXLog("新的Hash。需要更新")
+                }
                 YXWordBookResourceManager.downloadBookCount += 1
                 self.downloadSingleWordBook(with: bookId, newHash: bookHash)
             }

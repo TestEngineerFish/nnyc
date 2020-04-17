@@ -14,7 +14,6 @@
 
 @interface YXConfigure : NSObject
 @property (nonatomic, strong) YXLoginModel *loginModel;
-@property (nonatomic, copy)NSString *currLearningBookId;
 // A/B Test,Q-B-1、Q-B-2显示软键盘，不显示可选项
 @property (nonatomic, assign) BOOL isShowKeyboard;
 // 是否开启新学跳过

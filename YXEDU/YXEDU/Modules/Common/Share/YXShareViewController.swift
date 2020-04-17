@@ -23,6 +23,22 @@ enum YXShareImageType: Int {
 
 class YXShareViewController: YXViewController {
 
+    var backButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(kIconFont_back, for: .normal)
+        button.setTitleColor(UIColor.black1, for: .normal)
+        button.titleLabel?.font = UIFont.iconfont(size: AdaptSize(16))
+        return button
+    }()
+
+    var changeBackgroundImageButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("换背景", for: .normal)
+        button.setTitleColor(UIColor.gray1, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: AdaptSize(14))
+        return button
+    }()
+
     var headerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.clear
@@ -82,14 +98,6 @@ class YXShareViewController: YXViewController {
     private var backgroundImageUrls: [String]?
     private var currentBackgroundImageUrl: String?
     private var currentBackgroundImageIndex = 0
-    private var changeBackgroundImageButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("换背景", for: .normal)
-        button.setTitleColor(UIColor.gray1, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14)
-        button.addTarget(self, action: #selector(changeBackgroundImage), for: .touchUpInside)
-        return button
-    }()
 
     var wordsAmount = 0
     var daysAmount  = 0
@@ -101,54 +109,31 @@ class YXShareViewController: YXViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if backAction != nil {
-            self.customNavigationBar?.leftButtonAction = backAction
-        }
-        
+        self.customNavigationBar?.isHidden = true
+        self.getBackgroundImageList()
         self.bindProperty()
         self.createSubviews()
     }
     
     private func bindProperty() {
-        let request = YXShareRequest.changeBackgroundImage(type: shareType.rawValue)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] response in
-            guard let self = self, let result = response.data, let imageUrls = result.imageUrls, imageUrls.count > 0 else { return }
-            self.backgroundImageUrls         = imageUrls
-            self.currentBackgroundImageIndex = Int.random(in: 0..<imageUrls.count)
-            self.currentBackgroundImageUrl   = self.backgroundImageUrls?[self.currentBackgroundImageIndex]
-            self.getBackgroundImage(from: self.currentBackgroundImageUrl) { backgroundImage in
-                
-                DispatchQueue.main.async() {
-                    switch self.shareType {
-                    case .learnResult:
-                        self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
-                    case .aiReviewReuslt:
-                        self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)
-                    case .planReviewResult:
-                        self.shareImageView.image = self.createPlanReviewShareImage(backgroundImage)
-                    case .listenReviewResult:
-                        self.shareImageView.image = self.createListenReviewShareImage(backgroundImage)
-                    case .challengeResult:
-                        self.shareImageView.image = self.createChallengeReviewShareImage(UIImage(named: "challengeShareBgImage"))
-                    }
-                    self.shareChannelView.shareImage = self.shareImageView.image
-                }
-            }
-            
-        }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
-        }
-        
+        self.backButton.addTarget(self, action: #selector(clickBackBtn), for: .touchUpInside)
+        self.changeBackgroundImageButton.addTarget(self, action: #selector(changeBackgroundImage), for: .touchUpInside)
+        self.changeBackgroundImageButton.isHidden    = (shareType == .challengeResult)
         // 设置分享数据
-        self.shareChannelView.shareType  = .image
+        self.shareChannelView.shareType              = .image
         self.shareChannelView.coinImageView.isHidden = hideCoin
         self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
             guard let self = self else { return }
-            self.punch(channel)
+            // 挑战分享不算打卡
+            if self.shareType != .challengeResult {
+                self.punch(channel)
+            }
         }
     }
     
     private func createSubviews() {
+        self.view.addSubview(backButton)
+        self.view.addSubview(changeBackgroundImageButton)
         self.view.addSubview(headerView)
         self.view.addSubview(footerView)
 
@@ -161,6 +146,16 @@ class YXShareViewController: YXViewController {
         shareTypeBorderView.addSubview(descriptionLabel)
         shareTypeBorderView.addSubview(shareChannelView)
 
+        backButton.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(kStatusBarHeight + AdaptSize(13))
+            make.width.height.equalTo(AdaptSize(22))
+            make.left.equalToSuperview().offset(AdaptSize(14))
+        }
+        changeBackgroundImageButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(backButton)
+            make.right.equalToSuperview().offset(AdaptSize(-15))
+            make.size.equalTo(CGSize(width: AdaptSize(44), height: AdaptSize(20)))
+        }
         let headerViewH = (screenHeight - kNavHeight - kSafeBottomMargin) * 0.68
         headerView.snp.makeConstraints { (make) in
             make.height.equalTo(headerViewH)
@@ -213,24 +208,43 @@ class YXShareViewController: YXViewController {
         }
         shareImageBorderView.layer.setDefaultShadow()
         shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))
-        if shareType == .challengeResult {
-            changeBackgroundImageButton.isHidden = true
-        }
-        self.customNavigationBar?.addSubview(changeBackgroundImageButton)
-        changeBackgroundImageButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.right.equalTo(-15)
-            make.size.equalTo(CGSize(width: 44, height: 20))
-        }
     }
     
     // MARK: ==== Request ====
-    private func punch(_ channel: YXShareChannel) {
-        // 挑战分享不算打卡
-        if self.shareType == .challengeResult {
-            return
+
+    private func getBackgroundImageList() {
+        let request = YXShareRequest.changeBackgroundImage(type: shareType.rawValue)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] response in
+            guard let self = self, let result = response.data, let imageUrls = result.imageUrls, imageUrls.count > 0 else { return }
+            self.backgroundImageUrls         = imageUrls
+            self.currentBackgroundImageIndex = Int.random(in: 0..<imageUrls.count)
+            self.currentBackgroundImageUrl   = self.backgroundImageUrls?[self.currentBackgroundImageIndex]
+            self.getBackgroundImage(from: self.currentBackgroundImageUrl) { backgroundImage in
+
+                DispatchQueue.main.async() {
+                    switch self.shareType {
+                    case .learnResult:
+                        self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
+                    case .aiReviewReuslt:
+                        self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)
+                    case .planReviewResult:
+                        self.shareImageView.image = self.createPlanReviewShareImage(backgroundImage)
+                    case .listenReviewResult:
+                        self.shareImageView.image = self.createListenReviewShareImage(backgroundImage)
+                    case .challengeResult:
+                        self.shareImageView.image = self.createChallengeReviewShareImage(UIImage(named: "challengeShareBgImage"))
+                    }
+                    self.shareChannelView.shareImage = self.shareImageView.image
+                }
+            }
+
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: error.message)
         }
-        
+    }
+
+    private func punch(_ channel: YXShareChannel) {
+
         let request = YXShareRequest.punch(type: channel.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else { return }
@@ -246,6 +260,16 @@ class YXShareViewController: YXViewController {
         }) { (error) in
             YXUtils.showHUD(self.view, title: error.message)
         }
+    }
+
+    // MARK: ==== Event ====
+    @objc private func clickBackBtn(_ button: UIButton) {
+        if self.backAction != nil {
+            self.backAction?()
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+        button.isEnabled = false
     }
     
     // MARK: ==== Tools ====

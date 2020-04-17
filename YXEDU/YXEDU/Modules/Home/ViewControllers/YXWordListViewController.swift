@@ -21,10 +21,6 @@ enum YXWordListType: Int {
 class YXWordListViewController: UIViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
-    var learnedTableView   = YXWordListView(frame: .zero)
-    var notLearnTableView  = YXWordListView(frame: .zero)
-    var collectedTableView = YXWordListView(frame: .zero)
-    var wrongTableView     = YXWordListView(frame: .zero)
 
     private var wordListControllerView: BPSegmentControllerView!
     private var wordListHeaderViews: [UIView] = {
@@ -115,6 +111,8 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             
         } else if wordListType == .wrongWords {
             wordListControllerView.selectItem(with: IndexPath(item: 3, section: 0))
+            YXLog("刷新错词本")
+            self.requestWrongWordsList()
         }
     }
     
@@ -162,33 +160,6 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     }
 
     // MARK: ---- Request ----
-    /// 根据类型，获取单词列表
-//    private func requestWordsList(_ type: YXWordListType, page: Int) {
-//        ///因为后台定义的type和前端定义的顺序不一致
-//        let requestType: Int = {
-//            switch type {
-//            case .learned:
-//                return 1
-//            case .notLearned:
-//                return 2
-//            case .collected:
-//                return 0
-//            case .wrongWords:
-//                return 3
-//            }
-//        }()
-//        // 错词本不在此请求
-//        if requestType > 2 { return }
-//        let request = YXWordListRequest.wordList(type: requestType, page: page)
-////        YYNetworkService.default.request(YYStructResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
-//        YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { [weak self] (response) in
-//            guard let self = self, let wordsList = response.dataArray else { return }
-//            self.wordListViews[type.rawValue]?.words += wordsList
-//        }) { (error) in
-//            YXUtils.showHUD(kWindow, title: error.message)
-//        }
-//    }
-
     /// 获取错词本单词列表
     private func requestWrongWordsList() {
         let request = YXWordListRequest.wrongWordList

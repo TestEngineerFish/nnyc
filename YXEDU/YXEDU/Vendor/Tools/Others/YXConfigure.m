@@ -165,12 +165,7 @@
     return _wordsIds;
 }
 
-- (NSString *)currLearningBookId {
-    return _currLearningBookId ? _currLearningBookId : @"";
-}
-
 - (void)loginOut {
-    _currLearningBookId = nil;
     [kNotificationCenter postNotificationName:kLogoutNotify object:nil];
 }
 

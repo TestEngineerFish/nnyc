@@ -23,7 +23,7 @@ extension YXMineRequest {
             return .post
         }
     }
-
+    
     var path: String {
         switch self {
         case .badgeList:
@@ -31,7 +31,7 @@ extension YXMineRequest {
         case .latestBadge:
             return YXAPI.Profile.latestBadge
         case .badgeDisplayReport:
-                return YXAPI.Profile.badgeDisplayReport
+            return YXAPI.Profile.badgeDisplayReport
         }
     }
     
