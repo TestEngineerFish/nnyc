@@ -37,8 +37,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     @IBAction func startExercise(_ sender: UIButton) {
         YXLog("====开始主流程的学习====")
-        YXLog(String(format: "当前学习词书名：%@, 词书ID：%ld,当前学习单元：%@，单元ID：%ld", self.homeModel.bookName ?? "--", self.homeModel?.bookId ?? -1, self.homeModel.unitName ?? "--", self.homeModel?.unitId ?? -1))
-
+//        YXLog(String(format: "当前学习词书名：%@, 词书ID：%ld,当前学习单元：%@，单元ID：%ld", self.homeModel.bookName ?? "--", self.homeModel?.bookId ?? -1, self.homeModel.unitName ?? "--", self.homeModel?.unitId ?? -1))
+        YXLog("当前学习词书名：\(self.homeModel.bookName ?? "--"), 词书ID：\(self.homeModel?.bookId ?? -1),当前学习单元：\(self.homeModel.unitName ?? "--")，单元ID：\(self.homeModel?.unitId ?? -1)")
+        
         if self.countOfWaitForStudyWords.text == "0" {
             guard let homeData = self.homeModel else { return }
             let alertView = YXAlertView(type: .normal)
