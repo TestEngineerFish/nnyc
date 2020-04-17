@@ -430,31 +430,15 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         case SectionType.examples.rawValue:
             let examples = section.values.first as? [YXWordExampleModel]
             let example = examples?[indexPath.row]
-            
-            var string = ""
             let combineExample = (example?.english ?? "") + "\n" + (example?.chinese ?? "")
-            if let firstAddressSymbolIndex = combineExample.firstIndex(of: "@"), let lastAddressSymbolIndex = combineExample.lastIndex(of: "@") {
-                let startHighLightIndex = combineExample.index(firstAddressSymbolIndex, offsetBy: 1)
-                let endHighLightIndex = combineExample.index(lastAddressSymbolIndex, offsetBy: 1)
-                let highLightString = String(combineExample[startHighLightIndex..<lastAddressSymbolIndex])
-                string = String(combineExample[combineExample.startIndex..<firstAddressSymbolIndex]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
-                                
-            } else if let firstRightBracket = combineExample.firstIndex(of: ">"), let lastLeftBracket = combineExample.lastIndex(of: "<"), let firstLeftBracket = combineExample.firstIndex(of: "<"), let lastRightBracket = combineExample.lastIndex(of: ">") {
-                let startHighLightIndex = combineExample.index(firstRightBracket, offsetBy: 1)
-                let endHighLightIndex = combineExample.index(lastRightBracket, offsetBy: 1)
-                let highLightString = String(combineExample[startHighLightIndex..<lastLeftBracket])
-                string = String(combineExample[combineExample.startIndex..<firstLeftBracket]) + highLightString + String(combineExample[endHighLightIndex..<combineExample.endIndex])
-            
-            } else {
-                string = combineExample
+
+            let result = combineExample.formartTag()
+            let mAttr  = NSMutableAttributedString(string: result.1, attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1])
+            result.0.forEach { (range) in
+                mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
             }
-            
-            let height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 80) + 130
-//            if word?.isComplexWord == 1 {
-//                height = string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 164) + 4 + 10
-//                height = height > 70 ? height : 70
-//            }
-                        
+            let height = mAttr.string.textHeight(font: UIFont.systemFont(ofSize: 13), width: screenWidth - 80) + 130
+
             return height
 
         case SectionType.synonym.rawValue:

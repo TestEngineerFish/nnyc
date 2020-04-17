@@ -87,12 +87,17 @@
         self.initManager()
         self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { (timer) in
             self.waitTime += self.interval
-            if YXWordBookResourceManager.writeDBFinished {
+            if self.waitTime >= self.timeOut {
+                self.loadingView?.removeFromSuperview()
+                timer.invalidate()
+                self.timer = nil
+                self.navigationController?.popViewController(animated: true)
+                YXUtils.showHUD(kWindow, title: "当前网速较慢，建议稍后重试")
+            } else if YXWordBookResourceManager.writeDBFinished {
                 self.startStudy()
                 timer.invalidate()
                 self.timer = nil
             }
-
         }
         YXGrowingManager.share.startDate = NSDate()
     }
