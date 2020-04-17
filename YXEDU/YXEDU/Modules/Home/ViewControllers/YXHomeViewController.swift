@@ -37,11 +37,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     @IBAction func startExercise(_ sender: UIButton) {
         YXLog("====开始主流程的学习====")
-//        YXLog(String(format: "当前学习词书名：%@, 词书ID：%ld,当前学习单元：%@，单元ID：%ld", self.homeModel.bookName ?? "--", self.homeModel?.bookId ?? -1, self.homeModel.unitName ?? "--", self.homeModel?.unitId ?? -1))
-        YXLog("当前学习词书名：\(self.homeModel.bookName ?? "--"), 词书ID：\(self.homeModel?.bookId ?? -1),当前学习单元：\(self.homeModel.unitName ?? "--")，单元ID：\(self.homeModel?.unitId ?? -1)")
+        guard let homeData = self.homeModel else {
+            YXLog("首页数据未加载，无法学习")
+            return
+        }
+        YXLog(String(format: "当前学习词书名：%@, 词书ID：%ld,当前学习单元：%@，单元ID：%ld", homeData.bookName ?? "--", homeData.bookId ?? -1, homeData.unitName ?? "--", homeData.unitId ?? -1))
         
         if self.countOfWaitForStudyWords.text == "0" {
-            guard let homeData = self.homeModel else { return }
             let alertView = YXAlertView(type: .normal)
             if homeData.isLastUnit == 1 {
                 YXLog("当前词书\(homeData.bookName ?? "")已背完啦")
@@ -58,7 +60,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                     YXLog("更换词书")
                     self.performSegue(withIdentifier: "AddBookFromHome", sender: self)
                 }
-                
             } else {
                 YXLog("当前单元\(homeData.unitName ?? "")暂时没有需要新学或复习的单词")
                 alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
@@ -73,10 +74,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             
         } else {
             YYCache.set(Date(), forKey: "LastStoredDate")
-            YXLog(String(format: "开始学习书(%ld),第(%ld)单元", self.homeModel?.bookId ?? 0, self.homeModel?.unitId ?? 0))
+            YXLog(String(format: "开始学习书(%ld),第(%ld)单元", homeData.bookId ?? 0, homeData.unitId ?? 0))
             let vc = YXExerciseViewController()
-            vc.bookId = self.homeModel?.bookId
-            vc.unitId = self.homeModel?.unitId
+            vc.bookId = homeData.bookId
+            vc.unitId = homeData.unitId
             vc.hidesBottomBarWhenPushed = true
             
             if YYCache.object(forKey: "StartStudyTime") == nil {
@@ -151,17 +152,17 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
                 
                 self.adjustStartStudyButtonState()
-                self.bookNameButton.setTitle(self.homeModel.bookName, for: .normal)
-                self.unitNameButton.setTitle(self.homeModel.unitName, for: .normal)
-                self.countOfWaitForStudyWords.text = "\((self.homeModel.newWords ?? 0) + (self.homeModel.reviewWords ?? 0))"
-                self.progressBar.setProgress(Float(self.homeModel.unitProgress ?? 0), animated: true)
+                self.bookNameButton.setTitle(self.homeModel?.bookName, for: .normal)
+                self.unitNameButton.setTitle(self.homeModel?.unitName, for: .normal)
+                self.countOfWaitForStudyWords.text = "\((self.homeModel?.newWords ?? 0) + (self.homeModel?.reviewWords ?? 0))"
+                self.progressBar.setProgress(Float(self.homeModel?.unitProgress ?? 0), animated: true)
                 
-                self.learnedWordsCount   = "\(self.homeModel.learnedWords ?? 0)"
-                self.collectedWordsCount = "\(self.homeModel.collectedWords ?? 0)"
-                self.wrongWordsCount     = "\(self.homeModel.wrongWords ?? 0)"
+                self.learnedWordsCount   = "\(self.homeModel?.learnedWords ?? 0)"
+                self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
+                self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
-                YXConfigure.shared().isSkipNewLearn = self.homeModel.isSkipNewLearn == .some(1)
-                YXConfigure.shared().isUploadGIO    = self.homeModel.isUploadGIO    == .some(1)
+                YXConfigure.shared().isSkipNewLearn = self.homeModel?.isSkipNewLearn == .some(1)
+                YXConfigure.shared().isUploadGIO    = self.homeModel?.isUploadGIO    == .some(1)
                 self.handleTabData()
 
                 self.initDataManager()
@@ -284,7 +285,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         progressManager.unitId = self.homeModel?.unitId
         progressManager.dataType = .base
         
-        if (self.homeModel.newWords ?? 0) == 0 && (self.homeModel.reviewWords ?? 0) == 0 {
+        if (self.homeModel?.newWords ?? 0) == 0 && (self.homeModel?.reviewWords ?? 0) == 0 {
             if progressManager.isCompletion() == false {
                 let data = progressManager.loadLocalWordsProgress()
                 countOfWaitForStudyWords.text = "\(data.0.count + data.1.count)"
@@ -292,7 +293,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         
         // 保持当前选中的词书
-        YYCache.set(self.homeModel.bookId, forKey: .currentChooseBookId)
+        YYCache.set(self.homeModel?.bookId, forKey: .currentChooseBookId)
     }
     
     // MARK: ---- Event ----

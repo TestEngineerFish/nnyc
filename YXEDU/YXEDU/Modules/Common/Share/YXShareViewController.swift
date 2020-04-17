@@ -206,7 +206,7 @@ class YXShareViewController: YXViewController {
             make.width.equalToSuperview()
             make.height.equalTo(AdaptSize(65))
         }
-        shareImageBorderView.layer.setDefaultShadow()
+        shareImageBorderView.layer.setDefaultShadow(cornerRadius: AdaptSize(13), shadowRadius: AdaptSize(13))
         shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))
     }
     
