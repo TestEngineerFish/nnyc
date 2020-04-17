@@ -53,18 +53,21 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     
     private func bindProperty() {
         self.collectionLeftConsraint.constant  = AdaptSize(22)
-        self.bgViewHeightConsraint.constant = self.bgViewHeightConsraint.constant - 25
-        self.customNavigationBar?.isHidden          = true
+        self.bgViewHeightConsraint.constant    = self.bgViewHeightConsraint.constant - 25
+        self.customNavigationBar?.isHidden     = true
         let tapAction = UITapGestureRecognizer(target: self, action: #selector(pushBadgeListVC))
           self.badgeNumberView.addGestureRecognizer(tapAction)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+    }
+
+    override func addNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateBadge), name: YXNotification.kUpdateFeedbackReplyBadge, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: YXNotification.kUpdateFeedbackReplyBadge, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshUserInfoData), name: YXNotification.kMineTabUserInfo, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshBadgeData), name: YXNotification.kMineTabBadge, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshIntegralData), name: YXNotification.kMineTabIntegral, object: nil)
     }
-    
-    @objc private func updateBadge() {
-        self.tableView.reloadData()
-    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -74,10 +77,13 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         navigationController?.navigationBar.tintColor = UIColor.black
         
         // 个人信息
+        self.refreshUserInfoData()
         self.loadData()
         // 徽章
+        self.refreshBadgeData()
         self.loadBadgeData()
         // 积分
+        self.refreshIntegralData()
         self.loadIntegralData()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
     }
@@ -96,100 +102,127 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             squirrelCoinViewController.coinAmount = self.myIntegralLabel.text
         }
     }
-    
-    func loadData() {
+
+    // MARK: ---- Request ----
+
+    /// 请求个人信息
+    private func loadData() {
         YXComHttpService.shared().requestUserInfo({ (response, isSuccess) in
             if isSuccess, let response = response {
                 let loginModel = response as! YXLoginModel
-                YXConfigure.shared().loginModel = loginModel
-                self.temporaryUserModel = loginModel.user
-                
-                // 个人信息
-                YXUserModel.default.userAvatarPath = loginModel.user.avatar
-                YXUserModel.default.username       = loginModel.user.nick
-                self.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), placeholderImage: #imageLiteral(resourceName: "challengeAvatar"), completed: nil)
-                self.nameLabel.text     = YXUserModel.default.username
-                if let garde = loginModel.user.grade, !garde.isEmpty {
-                    self.nameLabel.text = (YXUserModel.default.username ?? "") + "   " + garde + "年级"
-                }
-                self.calendarLabel.text = "\(loginModel.user.punchDays ?? 0)"
-                
-                // 账户信息
-                let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel
-                self.bindInfo = [loginModel.user.mobile, "", ""]
-
-                if loginModel.user.userBind.contains(",1") || loginModel.user.userBind.contains("1") {
-                    self.bindInfo[1] = "1"
-                }
-                
-                if loginModel.user.userBind.contains(",2") || loginModel.user.userBind.contains("2") {
-                    self.bindInfo[2] = "2"
-                }
-                
-                if self.bindInfo[1] == "1", self.bindInfo[2] == "2" {
-                    bindLabel?.text = ""
-                    
-                } else {
-                    bindLabel?.text = "去绑定"
-                }
-
-                // 发音
-                let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as? UILabel
-                if YXUserModel.default.didUseAmericanPronunciation {
-                    speechLabel?.text = "美式"
-                } else {
-                    speechLabel?.text = "英式"
-                }
-                
-                // 每日提醒
-                let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
-                if let date = UserDefaults.standard.object(forKey: "Reminder") as? Date {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.timeStyle = .short
-                    remindLabel?.text = dateFormatter.string(from: date)
-                    
-                } else {
-                    remindLabel?.text = "已关闭"
-                }
-                
-                self.tableView.reloadData()
+                self.updateUserInfo(loginModel: loginModel)
+                YXFileManager.share.saveJsonToFile(with: loginModel.yrModelToJSONString(), type: .mine_userInfo)
             }
         })
     }
-    
-    private func loadIntegralData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/user/credits", parameters: [:]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject else { return }
-            self.myIntegralLabel.text = "\((response as! [String: Any])["userCredits"] as? Int ?? 0)"
-        }
-    }
-    
+
+    /// 请求徽章列表
     private func loadBadgeData() {
-        self.badgeModelList   = []
-        self.earnedBadgeCount = 0
         let request = YXMineRequest.badgeList
         YYNetworkService.default.request(YYStructDataArrayResponse<YXBadgeModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let modelList = response.dataArray else { return }
-            self.badgeModelList = modelList
-            
-            modelList.forEach { (model) in
-                if let finishDateTimeInterval = model.finishDateTimeInterval, finishDateTimeInterval != 0 {
-                    self.earnedBadgeCount += 1
-                }
+            self.updateBadgeData(modelList: modelList)
+            if let jsonStr = modelList.toJSONString() {
+                YXFileManager.share.saveJsonToFile(with: jsonStr, type: .mine_badge)
             }
-            self.ownedMedalLabel.text = "\(self.earnedBadgeCount)"
-            self.totalMedalLabel.text = "/\(self.badgeModelList.count)"
-            
-            self.badgeModelList.sort { (one, two) -> Bool in
-                return (one.finishDateTimeInterval ?? 0) > (two.finishDateTimeInterval ?? 0)
-            }
-            
-            self.collectionView.reloadData()
-            
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
+
+    /// 请求积分信息
+    private func loadIntegralData() {
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/user/credits", parameters: [:]) { (response, isSuccess) in
+            guard isSuccess, let response = response?.responseObject, let dict = response as? [String: Any] else { return }
+            self.updateIntegralData(dict: dict)
+            YXFileManager.share.saveJsonToFile(with: dict.toJson(), type: .mine_integral)
+        }
+    }
+
+    // MARK: ---- Update UI ----
+
+    /// 更新个人信息
+    private func updateUserInfo(loginModel: YXLoginModel) {
+        YXConfigure.shared().loginModel    = loginModel
+        self.temporaryUserModel            = loginModel.user
+        YXUserModel.default.userAvatarPath = loginModel.user.avatar
+        YXUserModel.default.username       = loginModel.user.nick
+        self.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), placeholderImage: #imageLiteral(resourceName: "challengeAvatar"), completed: nil)
+        self.nameLabel.text     = YXUserModel.default.username
+        if let garde = loginModel.user.grade, !garde.isEmpty {
+            self.nameLabel.text = (YXUserModel.default.username ?? "") + "   " + garde + "年级"
+        }
+        self.calendarLabel.text = "\(loginModel.user.punchDays ?? 0)"
+
+        // 账户信息
+        let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel
+        self.bindInfo = [loginModel.user.mobile, "", ""]
+
+        if loginModel.user.userBind.contains(",1") || loginModel.user.userBind.contains("1") {
+            self.bindInfo[1] = "1"
+        }
+
+        if loginModel.user.userBind.contains(",2") || loginModel.user.userBind.contains("2") {
+            self.bindInfo[2] = "2"
+        }
+
+        if self.bindInfo[1] == "1", self.bindInfo[2] == "2" {
+            bindLabel?.text = ""
+
+        } else {
+            bindLabel?.text = "去绑定"
+        }
+
+        // 发音
+        let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as? UILabel
+        if YXUserModel.default.didUseAmericanPronunciation {
+            speechLabel?.text = "美式"
+        } else {
+            speechLabel?.text = "英式"
+        }
+
+        // 每日提醒
+        let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
+        if let date = UserDefaults.standard.object(forKey: "Reminder") as? Date {
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeStyle = .short
+            remindLabel?.text = dateFormatter.string(from: date)
+
+        } else {
+            remindLabel?.text = "已关闭"
+        }
+
+        self.tableView.reloadData()
+    }
+
+    /// 更新徽章列表
+    private func updateBadgeData(modelList: [YXBadgeModel]) {
+        if modelList.isEmpty { return }
+        self.earnedBadgeCount = 0
+        self.badgeModelList   = modelList
+        modelList.forEach { (model) in
+            if let finishDateTimeInterval = model.finishDateTimeInterval, finishDateTimeInterval != 0 {
+                self.earnedBadgeCount += 1
+            }
+        }
+        self.ownedMedalLabel.text = "\(self.earnedBadgeCount)"
+        self.totalMedalLabel.text = "/\(self.badgeModelList.count)"
+
+        self.badgeModelList.sort { (one, two) -> Bool in
+            return (one.finishDateTimeInterval ?? 0) > (two.finishDateTimeInterval ?? 0)
+        }
+
+        self.collectionView.reloadData()
+    }
+
+       /// 更新积分信息
+     private func updateIntegralData(dict: [String:Any]) {
+         guard let number = dict["userCredits"] as? Int else {
+             return
+         }
+         self.myIntegralLabel.text = "\(number)"
+     }
+
     
     // MARK: ---- Event ----
     @objc private func pushBadgeListVC() {
@@ -375,8 +408,35 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: AdaptSize(94.3), height: AdaptSize(73))
     }
-    
-    // MARK: - 第三方登录
+
+    // MARK: ---- Notification ----
+
+    /// 刷新个人信息
+    @objc private func refreshUserInfoData() {
+        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .mine_userInfo), let loginModel = YXLoginModel.yrModel(withJSON: jsonStr) as? YXLoginModel {
+            self.updateUserInfo(loginModel: loginModel)
+        }
+    }
+
+    /// 刷新徽章
+    @objc private func refreshBadgeData() {
+        if let jsonListStr = YXFileManager.share.getJsonFromFile(type: .mine_badge), let modelList = Array<YXBadgeModel>(JSONString: jsonListStr) {
+            self.updateBadgeData(modelList: modelList)
+        }
+    }
+
+    /// 刷新积分
+    @objc private func refreshIntegralData() {
+        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .mine_integral) {
+            self.updateIntegralData(dict: jsonStr.convertToDictionary())
+        }
+    }
+
+    @objc private func refreshData() {
+        self.tableView.reloadData()
+    }
+
+    // ---- 第三方登录
     @objc
     private func thirdPartLogin(_ notification: Notification) {
         guard let userInfo = notification.userInfo else { return }

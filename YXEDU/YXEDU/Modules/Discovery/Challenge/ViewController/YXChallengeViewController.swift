@@ -24,12 +24,21 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
         self.setSubviews()
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: YXNotification.kChallengeTab, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.refreshData()
         self.requestChallengeData()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
+    }
+
+    @objc private func refreshData() {
+        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .challenge) {
+            guard let challengeModel = YXChallengeModel(JSONString: jsonStr) else { return }
+            self.updateChallengeData(model: challengeModel)
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -59,16 +68,22 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func requestChallengeData() {
         let request = YXChallengeRequest.challengeModel
         YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
-            guard let _challengeModel = response.data, let userModel = _challengeModel.userModel else {
+            guard let _challengeModel = response.data else {
                 return
             }
-            self.challengeModel = _challengeModel
-            self.tableView.reloadData()
-            if !userModel.isShowed {
-                self.requestPreviousResult()
-            }
+            self.updateChallengeData(model: _challengeModel)
+            YXFileManager.share.saveJsonToFile(with: _challengeModel.toJSONString() ?? "", type: .challenge)
         }) { (error) in
             YXUtils.showHUD(self.view, title: error.message)
+        }
+    }
+
+    /// 更新挑战信息
+    private func updateChallengeData(model: YXChallengeModel) {
+        self.challengeModel = model
+        self.tableView.reloadData()
+        if !(model.userModel?.isShowed ?? true) {
+            self.requestPreviousResult()
         }
     }
 

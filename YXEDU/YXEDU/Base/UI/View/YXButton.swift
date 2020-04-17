@@ -38,7 +38,6 @@ class YXButton: UIButton {
         super.init(frame: frame)
 
         self.bindProperty()
-        self.addObserver(self, forKeyPath: sizeKeyPath, options: [.new, .old], context: nil)
         self.addTarget(self, action: #selector(touchDown(sender:)), for: .touchDown)
         self.addTarget(self, action: #selector(touchUp(sender:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(touchUp(sender:)), for: .touchUpOutside)
@@ -75,9 +74,6 @@ class YXButton: UIButton {
             if type == .theme {
                 self.layer.cornerRadius  = self.size.height / 2
                 self.layer.masksToBounds = true
-//                let bgNormalImage = UIImage(named: "button_normal")
-//                bgNormalImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
-//                self.setBackgroundImage(bgNormalImage, for: .normal)
                 self.backgroundColor = UIColor.gradientColor(with: self.size, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
             } else if type == .border {
                 self.layer.cornerRadius  = self.size.height / 2
@@ -93,9 +89,6 @@ class YXButton: UIButton {
             if type == .theme {
                 self.layer.cornerRadius  = self.size.height / 2
                 self.layer.masksToBounds = true
-//                let bgDisableImage = UIImage(named: "button_disable")
-//                bgDisableImage?.stretchableImage(withLeftCapWidth: Int(self.size.width / 2), topCapHeight: Int(self.size.height / 2))
-//                self.setBackgroundImage(bgDisableImage, for: .disabled)
                 self.setTitleColor(UIColor.hex(0xEAD2BA), for: .disabled)
                 self.backgroundColor = UIColor.hex(0xFFF4E9)
             }
@@ -170,15 +163,6 @@ class YXButton: UIButton {
     var borderColor: UIColor = .black {
         didSet {
             layer.borderColor = borderColor.cgColor
-        }
-    }
-
-    // MARK: ---- KVO ----
-    // 需要在setStatus中更新值
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        guard let _keyPath = keyPath else { return }
-        if _keyPath == sizeKeyPath {
-            self.setStatus(nil)
         }
     }
 }

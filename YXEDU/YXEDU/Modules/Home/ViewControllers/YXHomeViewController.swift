@@ -161,9 +161,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.studyDataCollectionView.reloadData()
                 YXConfigure.shared().isSkipNewLearn = self.homeModel.isSkipNewLearn == .some(1)
                 YXConfigure.shared().isUploadGIO    = self.homeModel.isUploadGIO    == .some(1)
-                // 优先检测其他Tab主页是否有缓存数据，没有则先加载
+                self.handleTabData()
 
-                YXWordBookResourceManager.shared.contrastBookData()
                 self.initDataManager()
                 self.uploadGrowing()
             } catch {
@@ -172,13 +171,30 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
-//    private func handleTabData() {
-//        // 复习Tab
-//        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .review) {
-//         // 发通知，通知已创建的VC更新页面
-//        }
-//        YXWordBookResourceManager.shared.contrastBookData()
-//    }
+    /// 处理基础信息请求
+    private func handleTabData() {
+        // 复习Tab
+        if YXFileManager.share.getJsonFromFile(type: .review) == nil {
+            YXBaseRequestManager.share.requestReviewPlanTabData()
+        }
+        // 挑战Tab
+        if YXFileManager.share.getJsonFromFile(type: .challenge) == nil {
+            YXBaseRequestManager.share.requestChallengeTabData()
+        }
+        // 我的Tab - 个人信息
+        if YXFileManager.share.getJsonFromFile(type: .mine_userInfo) == nil {
+            YXBaseRequestManager.share.requestMineTabUserData()
+        }
+        // 我的Tab - 徽章
+        if YXFileManager.share.getJsonFromFile(type: .mine_badge) == nil {
+            YXBaseRequestManager.share.requestMineTabBadgeData()
+        }
+        // 我的Tab - 积分
+        if YXFileManager.share.getJsonFromFile(type: .mine_integral) == nil {
+            YXBaseRequestManager.share.requestMineTabIntegralData()
+        }
+        YXWordBookResourceManager.shared.contrastBookData()
+    }
 
     private func uploadGrowing() {
         guard let model = self.homeModel, let grade = model.bookGrade else {

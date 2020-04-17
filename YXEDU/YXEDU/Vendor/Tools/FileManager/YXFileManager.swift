@@ -9,8 +9,16 @@
 import Foundation
 
 enum YXFileNameEnum: String {
-    /// 包含复习主页所有数据
-    case review = "review"
+    /// 包含首页Tab所有数据
+    case home      = "home"
+    /// 包含复习Tab所有数据
+    case review    = "review"
+    /// 包含挑战Tab所有数据
+    case challenge = "challenge"
+    /// 包含我的Tab所有数据
+    case mine_userInfo = "mine_userInfo" // 个人信息
+    case mine_badge    = "mine_badge"    // 徽章
+    case mine_integral = "mine_integral" // 积分
 }
 
 struct YXFileManager {
