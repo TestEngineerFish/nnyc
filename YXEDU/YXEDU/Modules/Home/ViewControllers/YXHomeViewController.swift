@@ -150,7 +150,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 self.homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
-                
+                YXLog("==== 当前用户User ID", self.homeModel?.userId ?? 0)
                 self.adjustStartStudyButtonState()
                 self.bookNameButton.setTitle(self.homeModel?.bookName, for: .normal)
                 self.unitNameButton.setTitle(self.homeModel?.unitName, for: .normal)

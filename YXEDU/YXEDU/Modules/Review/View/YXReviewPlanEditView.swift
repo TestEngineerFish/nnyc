@@ -148,6 +148,7 @@ class YXReviewPlanEditView: YXTopWindowView {
                     progressManager.completionReport()
 
                     NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
+                    NotificationCenter.default.post(name: YXNotification.kRefreshReviewDetailPage, object: nil)
                     YXLog("重置词单\(planId)，成功")
                     self.removeFromSuperview()
                 } else {
