@@ -207,8 +207,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     private func checkUserState() {
-        self.performSegue(withIdentifier: "AddBookGuide", sender: self)
-
         YXUserDataManager.share.updateUserInfomation { [weak self] (userInfomation) in
             guard let self = self else { return }
             if userInfomation.didSelectBook == 0 {
