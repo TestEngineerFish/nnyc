@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,10 +29,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="go" translatesAutoresizingMaskIntoConstraints="NO" id="IsB-7Q-h8s">
+                                <rect key="frame" x="122.5" y="67.5" width="16" height="16"/>
+                                <color key="tintColor" red="0.98431372549019602" green="0.63529411764705879" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="Qxe-0H-uan"/>
+                                    <constraint firstAttribute="width" constant="16" id="hS2-8m-5fH"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="IsB-7Q-h8s" firstAttribute="centerY" secondItem="8AA-So-MKF" secondAttribute="centerY" id="Bml-mG-Byt"/>
                             <constraint firstItem="4mG-tH-KVK" firstAttribute="centerY" secondItem="8AA-So-MKF" secondAttribute="centerY" id="Lll-CK-0j2"/>
+                            <constraint firstItem="IsB-7Q-h8s" firstAttribute="leading" secondItem="4mG-tH-KVK" secondAttribute="trailing" id="aAF-Kz-D6g"/>
                             <constraint firstItem="4mG-tH-KVK" firstAttribute="centerX" secondItem="8AA-So-MKF" secondAttribute="centerX" id="kue-h9-so9"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -59,9 +69,13 @@
             <size key="customSize" width="231" height="151"/>
             <connections>
                 <outlet property="colorView" destination="8AA-So-MKF" id="0Rb-Pk-YA4"/>
+                <outlet property="selectIconView" destination="IsB-7Q-h8s" id="c2u-FN-5gd"/>
                 <outlet property="titleLabel" destination="4mG-tH-KVK" id="udq-Xe-Sep"/>
             </connections>
             <point key="canvasLocation" x="31" y="136"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="go" width="8" height="15"/>
+    </resources>
 </document>

@@ -12,6 +12,7 @@ class YXAddBookGuideItem: UICollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var colorView: YXDesignableView!
+    @IBOutlet weak var selectIconView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

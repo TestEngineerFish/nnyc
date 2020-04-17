@@ -168,11 +168,13 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
         if let index = selectedIndex {
             if isSelecting {
                 if indexPath.row == 0 {
+                    cell.selectIconView.isHidden = false
                     cell.titleLabel.textColor = UIColor.orange1
                     cell.colorView.borderColor = UIColor.orange1
                     cell.colorView.alpha = 1
                     
                 } else {
+                    cell.selectIconView.isHidden = true
                     cell.titleLabel.textColor = .black
                     cell.colorView.borderColor = UIColor.hex(0xC0C0C0)
                     cell.colorView.alpha = 0
@@ -184,11 +186,13 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
                 
             } else {
                 if indexPath.row == index {
+                    cell.selectIconView.isHidden = false
                     cell.titleLabel.textColor = UIColor.orange1
                     cell.colorView.borderColor = UIColor.orange1
                     cell.colorView.alpha = 1
                     
                 } else {
+                    cell.selectIconView.isHidden = true
                     cell.titleLabel.textColor = .black
                     cell.colorView.borderColor = UIColor.hex(0xC0C0C0)
                     cell.colorView.alpha = 1
@@ -206,6 +210,7 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
             }
             
         } else {
+            cell.selectIconView.isHidden = true
             cell.titleLabel.textColor = .black
             cell.colorView.borderColor = UIColor.hex(0xC0C0C0)
             cell.colorView.alpha = 1
@@ -235,8 +240,8 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let textWidth = dataSource[indexPath.row].textWidth(font: UIFont.systemFont(ofSize: 15), height: 22)
         
-        if textWidth > (screenWidth - 110) / 3 {
-            return CGSize(width: textWidth + 20 , height: 30)
+        if textWidth > (((screenWidth - 110) / 3) - 44) {
+            return CGSize(width: textWidth + 44 , height: 30)
 
         } else {
             return CGSize(width: (screenWidth - 110) / 3 , height: 30)
