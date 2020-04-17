@@ -19,6 +19,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var learnedWordsCount    = "--"
     private var collectedWordsCount  = "--"
     private var wrongWordsCount      = "--"
+    private var animationPlayFinished = false
     private var homeModel: YXHomeModel!
     public var progressManager = YXExcerciseProgressManager()
     
@@ -124,6 +125,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let setReminderView = YXSetReminderView()
             setReminderView.show()
         }
+        if !self.animationPlayFinished {
+            self.setSquirrelAnimation()
+        }
+
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -255,7 +260,16 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         squirrelAnimationView!.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        squirrelAnimationView?.play()
+        squirrelAnimationView?.play(completion: { (isFinished) in
+            if isFinished {
+                self.animationPlayFinished = true
+                YXLog("动画播放完成")
+            } else {
+                self.animationPlayFinished = false
+                YXLog("动画未播放完")
+            }
+        })
+
     }
     
     private func adjustEntryViewContraints() {
