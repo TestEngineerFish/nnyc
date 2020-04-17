@@ -77,6 +77,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 if wordBook == nil {
                     YXLog("本地没有这个本书")
                 } else {
+                    YXLog("本地Hash", wordBook?.bookHash ?? "")
+                    YXLog("新Hash", bookHash)
                     YXLog("新的Hash。需要更新")
                 }
                 YXWordBookResourceManager.downloadBookCount += 1

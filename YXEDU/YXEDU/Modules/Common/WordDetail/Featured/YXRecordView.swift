@@ -35,6 +35,7 @@ class YXRecordView: UIView {
         button.layer.cornerRadius  = AdaptSize(13.5)
         button.layer.masksToBounds = true
         button.backgroundColor     = UIColor.hex(0xFFF4E9)
+        button.isEnabled           = false
         return button
     }()
     let starView = YXStarView()

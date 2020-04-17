@@ -343,10 +343,13 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
             })
             // 判断是否需要混淆
             for array in mingleArray2 {
-                if array.contains(rightLetter) {
+                if array.contains(rightLetter.lowercased()) {
                     aroundArray?.forEach({ (index) in
                         // 3.3、获得对应混淆数组中随机数字(排除自己)
-                        let letter = self.getArcLetter(array, exclusion: rightLetter)
+                        var letter = self.getArcLetter(array, exclusion: rightLetter)
+                        if self.justCapitalLetter(rightLetter) {
+                            letter = letter.uppercased()
+                        }
                         tmpArray[index] = letter
                     })
                 }
