@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,24 +18,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHB-iz-yV0">
-                        <rect key="frame" x="30" y="0.0" width="13" height="215"/>
+                        <rect key="frame" x="20" y="0.0" width="13" height="215"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.30980392159999998" green="0.30980392159999998" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JnR-Wn-kpc">
-                        <rect key="frame" x="60" y="0.0" width="429" height="215"/>
+                        <rect key="frame" x="50" y="0.0" width="439" height="215"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="JnR-Wn-kpc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="AQX-sS-rnt"/>
+                    <constraint firstItem="JnR-Wn-kpc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="50" id="AQX-sS-rnt"/>
                     <constraint firstAttribute="bottom" secondItem="JnR-Wn-kpc" secondAttribute="bottom" constant="4" id="Ecw-f4-7kR"/>
                     <constraint firstItem="kHB-iz-yV0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="kdw-4l-CBc"/>
                     <constraint firstItem="JnR-Wn-kpc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="o7A-Cg-fhh"/>
-                    <constraint firstItem="kHB-iz-yV0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="pbN-l6-wNX"/>
+                    <constraint firstItem="kHB-iz-yV0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="pbN-l6-wNX"/>
                     <constraint firstAttribute="trailing" secondItem="JnR-Wn-kpc" secondAttribute="trailing" constant="20" id="r35-VF-l4S"/>
                     <constraint firstAttribute="bottom" secondItem="kHB-iz-yV0" secondAttribute="bottom" constant="4" id="tpe-ba-yfk"/>
                 </constraints>

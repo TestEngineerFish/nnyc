@@ -271,7 +271,7 @@ class YXAddBookGuideViewController: UIViewController {
             totalHeight = totalHeight + selectBookNameViewHeight.constant
         }
         
-        selectGradeViewTopOffSet.constant = (screenHeight - totalHeight - 44) / 2
+        selectGradeViewTopOffSet.constant = (screenHeight - totalHeight - 44) / 3
         
         if withoutAnimation {
             self.view.layoutIfNeeded()

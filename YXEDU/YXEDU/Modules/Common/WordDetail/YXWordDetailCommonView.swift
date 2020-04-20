@@ -20,7 +20,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     private var word: YXWordModel!
     private var sections: [[String: Any]]      = []
     private var sectionExpandStatus: [Bool]    = []
-    private var mostDeformationLength: CGFloat = 44
+    private var mostDeformationLength: CGFloat = 30
     private var featuredViewheight: CGFloat    = 0
     private var featuredView: YXWordDetailFeaturedView!
     private var recordView = YXRecordView()
@@ -109,6 +109,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                 self.tableView.reloadData()
             }
         })
+        featuredView.tableViewBottomLineHeight.constant = 0
         
         let request = YXWordListRequest.didCollectWord(wordId: word.wordId ?? 0)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
@@ -179,14 +180,19 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         }
         
         if let synonyms = word.synonyms, synonyms.count > 0 {
+            featuredView.tableViewBottomLineHeight.constant = 10
+
             sections.append([SectionType.synonym.rawValue: synonyms])
             sectionExpandStatus.append(true)
         }
         
         if let antonyms = word.antonyms, antonyms.count > 0 {
+            featuredView.tableViewBottomLineHeight.constant = 10
+
             sections.append([SectionType.antonym.rawValue: antonyms])
             sectionExpandStatus.append(true)
         }
+        
         // 设置录音视图
         self.dividingTopConstraint.constant = AdaptSize(40 + 20)
         self.addSubview(recordView)

@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mha-yg-xUf">
-                        <rect key="frame" x="30" y="0.0" width="293" height="16"/>
+                        <rect key="frame" x="20" y="0.0" width="303" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -35,7 +35,7 @@
                         </connections>
                     </button>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NHK-UC-gVM" customClass="YXDesignableImageView" customModule="YXEDU" customModuleProvider="target">
-                        <rect key="frame" x="30" y="26" width="146" height="106"/>
+                        <rect key="frame" x="20" y="26" width="146" height="106"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="106" id="fIL-yv-3WM"/>
                             <constraint firstAttribute="width" constant="146" id="oqo-Ih-7xF"/>
@@ -49,8 +49,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Mha-yg-xUf" secondAttribute="trailing" constant="60" id="1Ie-zU-6Cl"/>
-                    <constraint firstItem="NHK-UC-gVM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="EWa-r2-YOO"/>
-                    <constraint firstItem="Mha-yg-xUf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="Oia-Df-VDD"/>
+                    <constraint firstItem="NHK-UC-gVM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="EWa-r2-YOO"/>
+                    <constraint firstItem="Mha-yg-xUf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Oia-Df-VDD"/>
                     <constraint firstItem="NHK-UC-gVM" firstAttribute="top" secondItem="Mha-yg-xUf" secondAttribute="bottom" constant="10" id="gXX-ZR-nQe"/>
                     <constraint firstAttribute="trailing" secondItem="bAD-JR-5co" secondAttribute="trailing" constant="20" id="hCI-ID-GVZ"/>
                     <constraint firstItem="Mha-yg-xUf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="muH-Pd-0Xp"/>

@@ -27,6 +27,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewBottomLineHeight: NSLayoutConstraint!
     
     init(word: YXWordModel, heightChangeClosure: ((_ height: CGFloat) -> Void)?) {
         super.init(frame: .zero)
@@ -127,7 +128,10 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             guard layer.name == "Dotted Line" else { continue }
             layer.removeFromSuperlayer()
         }
-        self.layer.insertSublayer(shapeLayer, below: tableView.layer)
+        
+        if sections.count > 1 {
+            self.layer.insertSublayer(shapeLayer, below: tableView.layer)
+        }
         
         self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: heightOfTableView)
         contentView.frame = self.bounds

@@ -19,7 +19,8 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
     private let moveTimeInterval = 0.4
     private let alphaTimeInterval = 0.6
     
-    @IBOutlet var contentView: YXDesignableView!
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var animationView: YXDesignableView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -75,7 +76,7 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
         
         UIView.animate(withDuration: hideTimeInterval) {
             self.contentView.backgroundColor = .white
-            self.contentView.borderColor = .orange1
+            self.animationView.alpha = 1
             self.imageView.alpha = 1
         }
         
@@ -90,7 +91,7 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
                     
                 } else {
                     self.descriptionLabel.alpha = 0
-                    self.collectionViewTopOffSet.constant = 26
+                    self.collectionViewTopOffSet.constant = 20
                 }
                 
                 self.layoutIfNeeded()
@@ -115,7 +116,7 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
                 collectionViewTopOffSet.constant = 6 + descriptionHeight + 26
                 
             } else {
-                collectionViewTopOffSet.constant = 26
+                collectionViewTopOffSet.constant = 20
             }
             
             collectionView.layoutIfNeeded()
@@ -131,7 +132,7 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
 
         UIView.animate(withDuration: alphaTimeInterval, animations: {
             self.descriptionLabel.alpha = 0
-            self.collectionViewTopOffSet.constant = 16
+            self.collectionViewTopOffSet.constant = 20
             self.layoutIfNeeded()
             
         }) { _ in
@@ -146,11 +147,11 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
             self.dataSource.insert(date, at: 0)
             self.collectionView.moveItem(at: IndexPath(row: index, section: 0), to: IndexPath(row: 0, section: 0))
             
-            UIView.animate(withDuration: self.hideTimeInterval) {
+            UIView.animate(withDuration: self.hideTimeInterval, delay: 0, options: .curveEaseOut, animations: {
                 self.contentView.backgroundColor = .clear
-                self.contentView.borderColor = .clear
+                self.animationView.alpha = 0
                 self.imageView.alpha = 0
-            }
+            }, completion: nil)
         }
     }
     
