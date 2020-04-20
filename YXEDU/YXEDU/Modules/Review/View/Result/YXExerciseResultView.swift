@@ -328,7 +328,7 @@ class YXExerciseResultView: YXView {
             ds.append(("掌握的更好的单词", model.knowWordNum, false))
         }
         if model.remainWordNum > 0 {
-            ds.append(("剩余待复习的单词", model.remainWordNum, false))
+            ds.append(("剩余待学习的单词", model.remainWordNum, false))
         }
         if let num = model.words?.count, num > 0 {
             ds.append(("需要加强的单词", num, true))
