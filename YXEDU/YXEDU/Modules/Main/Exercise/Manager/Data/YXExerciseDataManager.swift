@@ -94,6 +94,7 @@ class YXExerciseDataManager: NSObject {
     }
     
     /// 加载本地未学完的关卡数据
+    @discardableResult
     func fetchLocalExerciseModels() -> Bool {
         YXLog("加载本地数据")
         isResetTurnIndex = false

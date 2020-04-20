@@ -15,6 +15,7 @@ extension YXExerciseDataManager {
     /// - Parameter result: 网络数据
     func processExerciseData(result: YXExerciseResultModel?) {
         if (result?.newWordIds?.count ?? 0 == 0 && result?.steps?.count ?? 0 == 0) {
+            YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(dataType)")
             dataStatus = .empty
         }
         

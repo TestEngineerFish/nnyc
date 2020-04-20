@@ -45,11 +45,11 @@ class YXTaskCenterCardCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        shadowView.layer.cornerRadius = 6
-        shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        shadowView.layer.cornerRadius  = 6
+        shadowView.layer.shadowColor   = UIColor.black.cgColor
+        shadowView.layer.shadowOffset  = CGSize(width: 0, height: 2)
         shadowView.layer.shadowOpacity = 0.1
-        shadowView.layer.shadowRadius = 5
+        shadowView.layer.shadowRadius  = 5
         shadowView.layer.masksToBounds = false
     }
 
@@ -94,6 +94,7 @@ class YXTaskCenterCardCell: UICollectionViewCell {
         
         switch cardStatus {
         case .incomplete:
+//            todoButton.backgroundColor = UIColor.white
             if didRepeat {
                 statusLabel.isHidden   = true
                 todoButton.isHidden    = false
@@ -102,7 +103,6 @@ class YXTaskCenterCardCell: UICollectionViewCell {
                 todoButton.setImage(UIImage(named: "go"), for: .normal)
                 todoButton.setTitleColor(UIColor.black, for: .normal)
                 todoButton.setTitle("去完成", for: .normal)
-
             } else {
                 statusLabel.isHidden = false
                 statusLabel.text     = "待完成"
