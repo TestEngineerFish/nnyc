@@ -11,7 +11,7 @@ import UIKit
 class YXAddBookGuideViewController: UIViewController {
     private var dataSource: [YXGradeWordBookListModel] = []
     private var selectBook: YXWordBookModel?
-    
+    private var selectGrade: YXGradeWordBookListModel?
     private var grades: [String] = ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "七年级", "八年级", "九年级"]
     private var versions: [String] = ["人教版", "沪教版", "冀教版", "北师大", "译林版", "粤教版"]
     private var bookNames: [String] = ["人教版七年级上册", "人教版七年级下册"]
@@ -89,10 +89,10 @@ class YXAddBookGuideViewController: UIViewController {
     }
 
     private func updateGIO() {
-        guard let book = selectBook, let _grade = book.bookGrade else {
+        guard let book = selectBook, let selectModel = self.selectGrade else {
             return
         }
-        let bookGrade: String? = book.bookGrade == nil ? nil : "\(book.bookGrade ?? 0)"
+        let bookGrade: String? = selectModel.gradeId == nil ? nil : "\(selectModel.gradeId ?? 0)"
         YXGrowingManager.share.uploadChangeBook(grade: bookGrade, versionName: book.bookVersionName)
     }
     
@@ -141,9 +141,9 @@ class YXAddBookGuideViewController: UIViewController {
             self.versions = []
 
             if let selectedIndex = self.selectGradeView.selectedIndex {
-                let selectGrade = self.dataSource[selectedIndex]
+                self.selectGrade = self.dataSource[selectedIndex]
 
-                if let books = selectGrade.wordBooks {
+                if let books = self.selectGrade?.wordBooks {
                     for book in books {
                         if let version = book.bookVersionName, version.isEmpty == false, self.versions.contains(version) == false {
                             self.versions.append(version)
