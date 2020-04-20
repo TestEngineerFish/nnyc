@@ -49,20 +49,24 @@ class YXAddBookGuideViewController: UIViewController {
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
             YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
-            
-            YYCache.set(Date(), forKey: "LastStoredDate")
-            YXLog("====新注册 - 开始主流程的学习====")
-            YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
-            let vc = YXExerciseViewController()
-            vc.bookId = bookId
-            vc.unitId = unitId
-            vc.hidesBottomBarWhenPushed = true
-            
-            if YYCache.object(forKey: "StartStudyTime") == nil {
-                YYCache.set(Date(), forKey: "StartStudyTime")
+
+            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
+                guard isSuccess else { return }
+                
+                YYCache.set(Date(), forKey: "LastStoredDate")
+                YXLog("====新注册 - 开始主流程的学习====")
+                YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
+                let vc = YXExerciseViewController()
+                vc.bookId = bookId
+                vc.unitId = unitId
+                vc.hidesBottomBarWhenPushed = true
+                
+                if YYCache.object(forKey: "StartStudyTime") == nil {
+                    YYCache.set(Date(), forKey: "StartStudyTime")
+                }
+                
+                self.navigationController?.pushViewController(vc, animated: true)
             }
-            
-            self.navigationController?.pushViewController(vc, animated: true)
             
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
