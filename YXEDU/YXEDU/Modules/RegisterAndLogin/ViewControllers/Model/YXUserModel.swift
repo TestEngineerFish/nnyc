@@ -107,6 +107,9 @@ class YXUserModel: NSObject {
         let storyboard = UIStoryboard(name:"Main", bundle: nil)
         let tabBarController = storyboard.instantiateViewController(withIdentifier: "YXTabBarViewController") as? UITabBarController
         UIApplication.shared.keyWindow?.rootViewController = tabBarController
+        
+        self.didLogin = true
+
         // 登录后设置别名给友盟
         let alias = YXUserModel.default.uuid ?? ""
         UMessage.setAlias(alias, type: kUmengAliasType) { (response, error) in

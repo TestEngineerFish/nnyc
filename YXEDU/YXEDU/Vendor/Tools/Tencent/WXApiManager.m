@@ -130,7 +130,10 @@
 //                }
 //            });
 //        });
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CompletedBind" object:nil userInfo:@{@"platfrom":@"wechat", @"token":code}];
+         
+        if (code != nil) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CompletedBind" object:nil userInfo:@{@"platfrom":@"wechat", @"token":code}];
+        }
 
     }else if([resp isKindOfClass:[SendMessageToWXResp class]]) {
         NSString *platform = @"";

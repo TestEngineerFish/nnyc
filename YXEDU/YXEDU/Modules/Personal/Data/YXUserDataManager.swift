@@ -21,7 +21,6 @@ struct YXUserDataManager {
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
             YXUserModel.default.reviewNameType = userInfomation.reviewNameType
-            YXUserModel.default.didLogin       = true
             finishBlock?(userInfomation)
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
