@@ -221,9 +221,8 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             guard let unitId = unitId else { return }
 
             // ---- Growing ----
-            if let _grade = wordBook.bookGrade {
-                YXGrowingManager.share.uploadChangeBook(grade: "\(_grade)", versionName: wordBook.bookVersionName)
-            }
+            let bookGrade: String? = wordBook.bookGrade == nil ? nil : "\(wordBook.bookGrade ?? 0)"
+            YXGrowingManager.share.uploadChangeBook(grade: bookGrade, versionName: wordBook.bookVersionName)
             YXGrowingManager.share.uploadSkipNewLearn()
 
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)

@@ -92,7 +92,8 @@ class YXAddBookGuideViewController: UIViewController {
         guard let book = selectBook, let _grade = book.bookGrade else {
             return
         }
-        YXGrowingManager.share.uploadChangeBook(grade: "\(_grade)", versionName: book.bookVersionName)
+        let bookGrade: String? = book.bookGrade == nil ? nil : "\(book.bookGrade ?? 0)"
+        YXGrowingManager.share.uploadChangeBook(grade: bookGrade, versionName: book.bookVersionName)
     }
     
     override func viewDidLoad() {
