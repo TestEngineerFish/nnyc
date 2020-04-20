@@ -102,7 +102,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
         
         self.checkUserState()
-        self.adjustEntryViewContraints()
         self.setSquirrelAnimation()
         self.registerNotification()
     }
@@ -128,8 +127,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         if !self.animationPlayFinished {
             self.setSquirrelAnimation()
         }
-
-        self.performSegue(withIdentifier: "AddBookGuide", sender: self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -270,12 +267,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 YXLog("动画未播放完")
             }
         })
-
-    }
-    
-    private func adjustEntryViewContraints() {
-        let entryViewH = (screenWidth - 40) / 332 * 381
-        self.entryViewHeightConstraint.constant = entryViewH
     }
     
     private func adjustStartStudyButtonState() {
