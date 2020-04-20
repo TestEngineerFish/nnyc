@@ -187,11 +187,8 @@
             
             // 再上报关卡
             self.report()
-        } else if !dataManager.progressManager.isCompletion() {// 存在未学完的关卡
+        } else if !dataManager.progressManager.isCompletion() && dataManager.fetchLocalExerciseModels() {// 存在未学完的关卡
             YXLog("本地存在未学完的关卡，先加载")
-            // 先加载本地数据
-            dataManager.fetchLocalExerciseModels()
-
             // 开始答题
             self.hideLoadAnimation { [weak self] in
                 self?.dataManager.progressManager.setStartStudyTime()

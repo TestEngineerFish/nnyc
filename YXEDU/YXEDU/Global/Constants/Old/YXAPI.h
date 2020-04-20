@@ -57,11 +57,6 @@ V = nil;\
 #define YX_DOMAIN_V2 STRCAT(YX_IP, @"/v2")
 
 /*
- * api: user/reg 社交网络平台登录接口, 通过社交网络接口登录APP
- */
-#define DOMAIN_LOGIN STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/reg")) // ⭐️
-
-/*
  * api: user/logout 退出登录
  */
 #define DOMAIN_LOGOUT STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/logout"))
@@ -116,7 +111,7 @@ V = nil;\
 /*
  * 获取用户信息绑定手机号
  */
-#define DOMAIN_BINDMOBILE STRCAT(SCHEME,STRCAT(YX_DOMAIN,@"/user/bindmobile")) // ⭐️
+#define DOMAIN_BINDMOBILE STRCAT(SCHEME,@"/api/v1/user/bindmobile") // ⭐️
 
 /*
  * 设定要学习的图书 book/setlearning

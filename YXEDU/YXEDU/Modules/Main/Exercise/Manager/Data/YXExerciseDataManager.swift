@@ -94,7 +94,7 @@ class YXExerciseDataManager: NSObject {
     }
     
     /// 加载本地未学完的关卡数据
-    func fetchLocalExerciseModels() {
+    func fetchLocalExerciseModels() -> Bool {
         YXLog("加载本地数据")
         isResetTurnIndex = false
         
@@ -108,6 +108,10 @@ class YXExerciseDataManager: NSObject {
         }
         
         let data = progressManager.loadLocalExerciseModels()
+        // 如果无法生成题型，则不从本地获取数据，重新从网络获取
+        if data.0.first?.type == .some(.none) {
+            return false
+        }
         newWordArray = data.0
         reviewWordArray = data.1
         
@@ -117,9 +121,7 @@ class YXExerciseDataManager: NSObject {
                 reviewWordIdArray.append(e.wordId)
             }
         }
-        
-        
-        
+
         if (newWordArray.count == 0 && reviewWordArray.count == 0) {
             dataStatus = .empty
         }
@@ -131,6 +133,7 @@ class YXExerciseDataManager: NSObject {
         currentTurnIndex = progressManager.currentTurnIndex()
         
         optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
+        return true
     }
 
     

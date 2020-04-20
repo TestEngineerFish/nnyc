@@ -234,7 +234,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     /// - Parameter loginModel:
     private func login(_ loginModel: YXLoginSendModel) {
         let parameters = loginModel.yrModelToDictionary() as! [AnyHashable : Any]
-        YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/v1/user/reg", parameters: parameters) { (response, isSuccess) in
+        YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/api/v1/user/login", parameters: parameters) { (response, isSuccess) in
             
             if isSuccess, let response = response?.responseObject {
                 let d1 = response as! [String: Any]
