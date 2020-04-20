@@ -111,7 +111,7 @@ V = nil;\
 /*
  * 获取用户信息绑定手机号
  */
-#define DOMAIN_BINDMOBILE STRCAT(SCHEME,@"/api/v1/user/bindmobile") // ⭐️
+#define DOMAIN_BINDMOBILE STRCAT(YX_IP,@"/api/v1/user/bindmobile") // ⭐️
 
 /*
  * 设定要学习的图书 book/setlearning

@@ -51,6 +51,7 @@ class YXAddBookGuideViewController: UIViewController {
             YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
             
             YYCache.set(Date(), forKey: "LastStoredDate")
+            YXLog("====新注册 - 开始主流程的学习====")
             YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
             let vc = YXExerciseViewController()
             vc.bookId = bookId

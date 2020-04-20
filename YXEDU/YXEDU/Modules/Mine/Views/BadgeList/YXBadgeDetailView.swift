@@ -28,6 +28,7 @@ class YXBadgeDetailView: YXTopWindowView {
     @IBOutlet weak var currentProgressLabel: UILabel!
     @IBOutlet weak var totalProgressLabel: UILabel!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
+    @IBOutlet weak var imageTopConstraint: NSLayoutConstraint!
 
     init(badge: YXBadgeModel, didCompleted: Bool) {
         super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
@@ -52,7 +53,7 @@ class YXBadgeDetailView: YXTopWindowView {
         
         let textHeight = badge.description?.textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 120)
         viewHeight.constant = viewHeight.constant - 20 + (textHeight ?? 0)
-        
+        self.imageTopConstraint.constant = AdaptSize(46)
         if didCompleted {
             if let imageOfCompletedStatus = badge?.imageOfCompletedStatus {
                 badgeImageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)

@@ -27,6 +27,9 @@ extension YXExerciseViewController {
     
         
     func processEmptyData() {
+        dataManager.progressManager.completionExercise()
+        dataManager.progressManager.completionReport()
+
         if dataType == .aiReview {
             let nrView = YXNotReviewWordView()
             nrView.doneEvent = {
