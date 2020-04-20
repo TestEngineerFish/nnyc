@@ -24,6 +24,7 @@ class YXExerciseResultViewController: YXViewController {
     deinit {
         resultView?.removeFromSuperview()
         unitMapView?.removeFromSuperview()
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -37,6 +38,7 @@ class YXExerciseResultViewController: YXViewController {
     override func addNotification() {
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewDetailPage, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(shareResult(notification:)), name: YXNotification.kShareResult, object: nil)
     }
     
     private func createSubviews() {
@@ -111,16 +113,11 @@ class YXExerciseResultViewController: YXViewController {
     
     private func shareEvent() {
         let shareVC = YXShareViewController()
-        shareVC.finishAction = { [weak self] in
-            self?.shareFinished = true
-        }
-        
         if shareFinished {
             shareVC.hideCoin = true
         } else {
             shareVC.hideCoin = !(model?.isShowCoin ?? false)
         }
-        
         shareVC.shareType = shareType()
         shareVC.wordsAmount = model?.reviewWordNum ?? 0
         shareVC.daysAmount = model?.studyDay ?? 0
@@ -162,5 +159,13 @@ class YXExerciseResultViewController: YXViewController {
             }
             
         }
+    }
+
+    // MARK: ---- Notification ----
+    @objc private func shareResult(notification: Notification) {
+        guard let dict = notification.userInfo as? [String:AnyHashable], let isFinised = dict["isFinished"] as? Bool else {
+            return
+        }
+        self.shareFinished = isFinised
     }
 }

@@ -133,8 +133,8 @@ class YXReviewPlanShareDetailViewController: YXViewController {
                 bookIdList.append(bookId)
             }
         }
-        YXWordBookResourceManager.downloadBookCount  = _wordModelList.count
-        YXWordBookResourceManager.shared.finishBlock = finishBlock
+        YXWordBookResourceManager.shared.downloadBookCount = _wordModelList.count
+        YXWordBookResourceManager.shared.finishBlock       = finishBlock
         if _wordModelList.isEmpty {
             finishBlock?()
         } else {

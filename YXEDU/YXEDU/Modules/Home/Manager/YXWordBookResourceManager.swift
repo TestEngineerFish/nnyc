@@ -16,7 +16,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     }
     
     static var isDownloading     = false
-    static var downloadBookCount = 0
+    var downloadBookCount = 0
     static var writeDBFinished   = false
     private var closure: ((_ isSuccess: Bool) -> Void)?
     var finishBlock: (()->Void)?
@@ -33,12 +33,14 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             guard let self = self else { return }
             if let wordBookDownloadModels = response.dataArray {
                 if let bookId = bookId {
+                    self.downloadBookCount = 0
                     for wordBookDownloadModel in wordBookDownloadModels {
                         if wordBookDownloadModel.id == bookId {
                             self.checkLocalBooksStatus(with: [wordBookDownloadModel])
                         }
                     }
                 } else {
+                    self.downloadBookCount = 0
                     self.checkLocalBooksStatus(with: wordBookDownloadModels)
                 }
             } else {
@@ -58,8 +60,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         if (wordBook == nil || wordBook?.bookHash != .some(newHash)) {
             self.downloadSingleWordBook(with: bookId, newHash: newHash)
         } else {
-            YXWordBookResourceManager.downloadBookCount -= 1
-            if YXWordBookResourceManager.downloadBookCount == 0 && self.finishBlock != nil {
+            self.downloadBookCount    -= 1
+            if self.downloadBookCount == 0 && self.finishBlock != nil {
                 self.finishBlock?()
             }
         }
@@ -67,7 +69,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     /// 检测本地词书是否需要更新
     private func checkLocalBooksStatus(with wordBookDownloadModelList: [YXWordBookDownloadModel]) {
-        YXWordBookResourceManager.downloadBookCount = 0
         for wordBookDownloadModel in wordBookDownloadModelList {
             guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash else { continue }
             let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId)
@@ -81,14 +82,16 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                     YXLog("新Hash", bookHash)
                     YXLog("新的Hash。需要更新")
                 }
-                YXWordBookResourceManager.downloadBookCount += 1
+                self.downloadBookCount += 1
                 self.downloadSingleWordBook(with: bookId, newHash: bookHash)
             }
         }
         // 如果有需要下载的词书
-        if YXWordBookResourceManager.downloadBookCount > 0 {
+        if self.downloadBookCount > 0 {
+            YXWordBookResourceManager.writeDBFinished = false
             self.closure?(false)
         } else {
+            YXLog("没有需要更新的词书")
             YXWordBookResourceManager.writeDBFinished = true
             self.closure?(true)
         }
@@ -104,12 +107,12 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 return
             }
             bookModel.bookHash = newHash
-            YXWordBookResourceManager.downloadBookCount -= 1
+            self.downloadBookCount -= 1
             DispatchQueue.global().async {
                 self.saveBook(with: bookModel, async: true)
                 self.saveWords(with: bookModel, async: true)
             }
-            if YXWordBookResourceManager.downloadBookCount == 0 {
+            if self.downloadBookCount == 0 {
                 YXWordBookResourceManager.isDownloading = false
                 self.finishBlock?()
             }
@@ -155,7 +158,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
                 if index == wordsList.count - 1 && lastUnit {
                     YXLog("==== 词书\(bookModel.bookId ?? 0)下载完成 ====")
-                    if YXWordBookResourceManager.downloadBookCount == 0 {
+                    if self.downloadBookCount == 0 {
                         YXLog("==== 写入DB数据完成✅ ====")
                         YXWordBookResourceManager.writeDBFinished = true
                     }

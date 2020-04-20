@@ -105,7 +105,6 @@ class YXShareViewController: YXViewController {
     var gameModel: YXGameResultModel?
     var shareType: YXShareImageType = .challengeResult
     var backAction: (()->Void)?
-    var finishAction: (()->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -248,15 +247,14 @@ class YXShareViewController: YXViewController {
         let request = YXShareRequest.punch(type: channel.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else { return }
-            self.finishAction?()
+            var isFinished = false
             if model.state && channel == .timeLine {
                 self.shareChannelView.coinImageView.isHidden = true
-//                if model.coin > 0 {
-//                    YXToastView.share.showCoinView(model.coin)
-//                }
+                isFinished = true
             } else {
                 YXLog("打卡分享失败")
             }
+            NotificationCenter.default.post(name: YXNotification.kShareResult, object: nil, userInfo: ["isFinished":isFinished])
         }) { (error) in
             YXUtils.showHUD(self.view, title: error.message)
         }

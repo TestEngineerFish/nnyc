@@ -25,8 +25,7 @@ class YXLearningResultViewController: YXViewController {
     var bookId: Int? // 书ID
     var unitId: Int? // 单元ID
     var model: YXLearnResultModel?
-    
-    var shareVC: YXShareViewController?
+
     var shareFinished = false
     var loadingView = YXExerciseResultLoadingView()
     var unitMapView: YXUnitMapView?
@@ -34,6 +33,10 @@ class YXLearningResultViewController: YXViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -57,6 +60,10 @@ class YXLearningResultViewController: YXViewController {
         createSubviews()
         bindProperty()
         setLayout()
+    }
+
+    override func addNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(shareResult(notification:)), name: YXNotification.kShareResult, object: nil)
     }
 
     private func createSubviews() {
@@ -234,22 +241,25 @@ class YXLearningResultViewController: YXViewController {
             YXUtils.showHUD(kWindow, title: "数据请求失败，请稍后再试～")
             return
         }
-        if shareVC == nil {
-            shareVC = YXShareViewController()
-            shareVC?.finishAction = { [weak self] in
-                self?.shareFinished = true
-            }
-        }
+        let shareVC = YXShareViewController()
         
         if shareFinished {
-            shareVC?.hideCoin = true
+            shareVC.hideCoin = true
         } else {
-            shareVC?.hideCoin = !model.isShowCoin
+            shareVC.hideCoin = !model.isShowCoin
         }
         
-        shareVC?.shareType   = .learnResult
-        shareVC?.wordsAmount = model.allWordCount
-        shareVC?.daysAmount  = model.studyDay
-        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(shareVC!, animated: true)
+        shareVC.shareType   = .learnResult
+        shareVC.wordsAmount = model.allWordCount
+        shareVC.daysAmount  = model.studyDay
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(shareVC, animated: true)
+    }
+
+    // MARK: ---- Notification ----
+    @objc private func shareResult(notification: Notification) {
+        guard let dict = notification.userInfo as? [String:AnyHashable], let isFinised = dict["isFinished"] as? Bool else {
+            return
+        }
+        self.shareFinished = isFinised
     }
 }

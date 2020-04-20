@@ -41,6 +41,8 @@ struct YXNotification {
     static let kMineTabBadge             = NSNotification.Name("kMineTabBadge")
     /// 我的 - 积分
     static let kMineTabIntegral          = NSNotification.Name("kMineTabIntegral")
+    /// 分享结果
+    static let kShareResult              = NSNotification.Name("kShareResult")
 
     
 }

@@ -242,7 +242,7 @@ class YXExerciseResultView: YXView {
             } else if model.type == .planListenReview {
                 titleLabel.text = "恭喜完成\(model.title ?? "")的听力"
             } else if model.type == .planReview {
-                titleLabel.text = "恭喜完成\(model.title ?? "")的复习"
+                titleLabel.text = "恭喜完成\(model.title ?? "")的学习"
             } else if model.type == .wrong {
                 titleLabel.text = "恭喜完成抽查复习"
             }

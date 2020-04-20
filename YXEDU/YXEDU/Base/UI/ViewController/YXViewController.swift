@@ -45,7 +45,7 @@ class YXViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-
+        YXLog("进入\(self.classForCoder)页面")
         addCustomNavigationBar()
         addNotification()
     }
