@@ -93,7 +93,7 @@ class YXRecordView: UIView {
             make.centerY.equalToSuperview()
             make.width.equalTo(AdaptSize(48))
             make.height.equalTo(AdaptSize(20))
-            make.right.equalTo(arrowImageView.snp.left).offset(AdaptSize(-4))
+            make.right.equalTo(arrowImageView.snp.left).offset(AdaptSize(-10))
         }
         // bind property
         self.isUserInteractionEnabled = true

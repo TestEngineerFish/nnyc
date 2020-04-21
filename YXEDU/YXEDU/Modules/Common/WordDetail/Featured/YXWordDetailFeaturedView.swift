@@ -144,7 +144,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
         heightOfTableView = heightOfTableView + CGFloat(16 * sections.count)
         drawDottedLine(lineLength: heightOfTableView)
 
-        heightOfTableView = heightOfTableView + 40
+        heightOfTableView = heightOfTableView + 44
         
         self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: heightOfTableView)
         contentView.frame = self.bounds
