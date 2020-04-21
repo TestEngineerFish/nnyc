@@ -112,8 +112,12 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         if let _answerView = self.answerView as? YXNewLearnAnswerView {
             _answerView.learnResultView.isHidden = true
         }
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5, animations: {
             self.contentView.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
+        }) { (finished) in
+            if finished, let _answerView = self.answerView as? YXNewLearnAnswerView {
+                _answerView.status = .normal
+            }
         }
     }
 
