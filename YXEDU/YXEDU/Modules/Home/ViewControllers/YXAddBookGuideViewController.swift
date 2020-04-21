@@ -51,8 +51,17 @@ class YXAddBookGuideViewController: UIViewController {
             YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
 
             YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid]) { (response, isSuccess) in
-                guard isSuccess else { return }
-                
+                guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
+
+                do {
+                    let jsonData  = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
+                    let homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
+                    YXConfigure.shared().isSkipNewLearn = homeModel.isSkipNewLearn == .some(1)
+                    YXConfigure.shared().isUploadGIO    = homeModel.isUploadGIO    == .some(1)
+                } catch {
+                    YXLog("获取主页基础数据失败：", error.localizedDescription)
+                }
+
                 YYCache.set(Date(), forKey: "LastStoredDate")
                 YXLog("====新注册 - 开始主流程的学习====")
                 YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))

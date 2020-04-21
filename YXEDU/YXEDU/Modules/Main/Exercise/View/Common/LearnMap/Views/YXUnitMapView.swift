@@ -29,6 +29,10 @@ class YXUnitMapView: UIView {
                 guard let self = self else { return }
                 if (self.currentUnitIndex - self.offsetUnit) < self.showUnitNumber {
                     self.moveToNextUnit()
+                    if currentUnitIndex < unitModelList.count {
+                        let model = unitModelList[currentUnitIndex]
+                        self.learnUnit(model.unitID, bookId: model.bookID)
+                    }
                 }
             }
         }
@@ -230,6 +234,20 @@ class YXUnitMapView: UIView {
         animation.fillMode = .forwards
         animation.isRemovedOnCompletion = false
         _pinView.layer.add(animation, forKey: nil)
+    }
+
+    // MARK: ---- Request ----
+    /// 学习新单元
+    private func learnUnit(_ unitId: Int?, bookId: Int?) {
+        guard let uuidStr = YXConfigure.shared().uuid, let _unitId = unitId, let _bookId = bookId else {
+            return
+        }
+        let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: _bookId, unitId: _unitId)
+        YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
+            YXLog("学习新单元成功")
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
 }
 
