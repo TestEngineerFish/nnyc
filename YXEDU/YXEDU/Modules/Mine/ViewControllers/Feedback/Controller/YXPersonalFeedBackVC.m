@@ -96,7 +96,6 @@
 }
 
 - (void)viewDidLoad {
-    [YXLogManager.share report:NO];
     self.backType = BackWhite;
     [super viewDidLoad];
     self.feedViewModel = [[YXFeedBackViewModel alloc]init];
