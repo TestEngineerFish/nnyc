@@ -935,7 +935,7 @@
                                     <constraint firstAttribute="height" constant="126" id="lyC-dY-SZQ"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guideBackground" translatesAutoresizingMaskIntoConstraints="NO" id="vxr-xY-fRr">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guideBackground" translatesAutoresizingMaskIntoConstraints="NO" id="vxr-xY-fRr">
                                 <rect key="frame" x="0.0" y="430" width="320" height="94"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="94" id="Qdc-cp-x9h"/>
@@ -1290,7 +1290,7 @@
         <image name="back" width="22" height="22"/>
         <image name="coin" width="20" height="21"/>
         <image name="filter" width="20" height="20"/>
-        <image name="guideBackground" width="375" height="103"/>
+        <image name="guideBackground" width="375" height="107"/>
         <image name="homeBackground" width="332" height="382"/>
         <image name="homeLogo" width="86" height="22"/>
         <image name="homeProgressBar" width="259" height="8"/>

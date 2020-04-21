@@ -128,7 +128,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.setSquirrelAnimation()
         }
         
-//        self.performSegue(withIdentifier: "AddBookGuide", sender: self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

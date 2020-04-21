@@ -167,9 +167,9 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
         if let index = selectedIndex {
             if isSelecting {
                 if indexPath.row == 0 {
-                    cell.selectIconView.isHidden = false
-                    cell.titleLabel.textColor = UIColor.orange1
-                    cell.colorView.borderColor = UIColor.orange1
+                    cell.selectIconView.isHidden = true
+                    cell.titleLabel.textColor = .black
+                    cell.colorView.borderColor = UIColor.hex(0xC0C0C0)
                     cell.colorView.alpha = 1
                     
                 } else {

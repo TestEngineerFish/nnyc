@@ -117,7 +117,7 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
                 } else {
                     heightOfTableView = heightOfTableView + 20
                 }
-                break
+                continue
 
             case SectionType.commonPhrases.rawValue:
                 if ((section.values.first as? [Any])?.count ?? 1) > 1 {
@@ -126,25 +126,25 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
                 } else {
                     heightOfTableView = heightOfTableView + 20
                 }
-                break
+                continue
 
             case SectionType.wordAnalysis.rawValue:
                 heightOfTableView = heightOfTableView + 20
-                break
+                continue
 
             case SectionType.detailedSyntax.rawValue:
                 heightOfTableView = heightOfTableView + 20
-                break
+                continue
 
             default:
-                break
+                continue
             }
         }
         
         heightOfTableView = heightOfTableView + CGFloat(16 * sections.count)
         drawDottedLine(lineLength: heightOfTableView)
 
-        heightOfTableView = heightOfTableView + 20
+        heightOfTableView = heightOfTableView + 40
         
         self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: heightOfTableView)
         contentView.frame = self.bounds

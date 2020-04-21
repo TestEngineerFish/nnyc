@@ -36,7 +36,8 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var dividingView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dividingTopConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var playButtonLeftOffset: NSLayoutConstraint!
+    
     @IBAction func collectWord(_ sender: UIButton) {
         if self.collectionButton.currentImage == #imageLiteral(resourceName: "unCollectWord") {
             let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(word.wordId ?? 0),\"is\":\(word.isComplexWord ?? 0)}]")
@@ -131,6 +132,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
 
         if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
             if partOfSpeechAndMeanings[0].partOfSpeech == "phrase" {
+                playButtonLeftOffset.constant = 0
                 partOfSpeechAndSenseLabel.text = partOfSpeechAndMeanings[0].meaning
                 
             } else {
