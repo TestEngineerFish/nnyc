@@ -158,7 +158,7 @@ class YXAddBookGuideViewController: UIViewController {
             self.selectVersionViewTopOffSet.constant = 88
             self.selectVersionViewHeight.constant = self.versionHeight
             
-            UIView.animate(withDuration: 0.6) {
+            UIView.animate(withDuration: 0.4) {
                 self.selectGradeViewHeight.constant = self.defaultHeight
                 self.selectVersionViewTopOffSet.constant = 0
                 self.selectVersionView.alpha = 1
@@ -169,7 +169,7 @@ class YXAddBookGuideViewController: UIViewController {
         }
         
         selectGradeView.editClosure = {
-            UIView.animate(withDuration: 0.6) {
+            UIView.animate(withDuration: 0.4) {
                 self.selectGradeViewHeight.constant = self.gradeHeight
                 self.selectVersionViewTopOffSet.constant = 88
                 self.selectVersionView.alpha = 0
@@ -205,7 +205,7 @@ class YXAddBookGuideViewController: UIViewController {
             self.selectBookNameView.collectionView.collectionViewLayout.prepare()
             self.selectBookNameViewHeight.constant = self.bookNameHeight
             
-            UIView.animate(withDuration: 0.6) {
+            UIView.animate(withDuration: 0.4) {
                 self.selectVersionViewHeight.constant = self.defaultHeight
                 self.selectBookNameViewTopOffSet.constant = 0
                 self.selectBookNameView.alpha = 1
@@ -216,7 +216,7 @@ class YXAddBookGuideViewController: UIViewController {
         }
         
         selectVersionView.editClosure = {
-            UIView.animate(withDuration: 0.6) {
+            UIView.animate(withDuration: 0.4) {
                 self.selectVersionViewTopOffSet.constant = 0
                 self.selectVersionViewHeight.constant = self.versionHeight
                 self.selectBookNameViewTopOffSet.constant = 88
@@ -244,16 +244,23 @@ class YXAddBookGuideViewController: UIViewController {
                 }
             }
             
-            UIView.animate(withDuration: 0.6) {
+            UIView.animate(withDuration: 0.4) {
                 self.selectBookNameViewHeight.constant = self.defaultHeight
                 self.view.layoutIfNeeded()
             }
             
-            self.chengeCenter()
+            if self.selectBook != nil, self.selectGradeViewHeight.constant == self.defaultHeight, self.selectVersionViewHeight.constant == self.defaultHeight, self.selectBookNameViewHeight.constant == self.defaultHeight {
+                self.startButton.isHidden = false
+                self.homeButton.isHidden = false
+                
+            } else {
+                self.startButton.isHidden = true
+                self.homeButton.isHidden = true
+            }
         }
         
         selectBookNameView.editClosure = {
-            UIView.animate(withDuration: 0.6) {
+            UIView.animate(withDuration: 0.4) {
                 self.selectBookNameViewHeight.constant = self.bookNameHeight
                 self.view.layoutIfNeeded()
             }
@@ -283,18 +290,9 @@ class YXAddBookGuideViewController: UIViewController {
             self.view.layoutIfNeeded()
 
         } else {
-            UIView.animate(withDuration: 0.6) {
+            UIView.animate(withDuration: 0.4) {
                 self.view.layoutIfNeeded()
             }
-        }
-        
-        if selectBook != nil, selectGradeViewHeight.constant == defaultHeight, selectVersionViewHeight.constant == defaultHeight, selectBookNameViewHeight.constant == defaultHeight {
-            startButton.isHidden = false
-            homeButton.isHidden = false
-            
-        } else {
-            startButton.isHidden = true
-            homeButton.isHidden = true
         }
     }
 }

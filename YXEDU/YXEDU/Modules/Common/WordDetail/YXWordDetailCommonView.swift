@@ -364,6 +364,12 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             cell.label.attributedText = {
                 let result = combineExample.formartTag()
                 let mAttr  = NSMutableAttributedString(string: result.1, attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1])
+                
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = 4
+
+                mAttr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, mAttr.length))
+                
                 result.0.forEach { (range) in
                     mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
                 }

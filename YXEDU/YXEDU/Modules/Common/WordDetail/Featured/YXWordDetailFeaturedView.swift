@@ -108,8 +108,53 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             heightOfTableView = heightOfTableView + cell.frame.height
         }
         
-        heightOfTableView = heightOfTableView + CGFloat((16 + 58) * sections.count)
-        heightOfTableView = heightOfTableView - 10
+        for section in sections {
+            switch section.keys.first {
+            case SectionType.fixedMatch.rawValue:
+                if ((section.values.first as? [Any])?.count ?? 1) > 1 {
+                    heightOfTableView = heightOfTableView + 40
+                    
+                } else {
+                    heightOfTableView = heightOfTableView + 20
+                }
+                break
+
+            case SectionType.commonPhrases.rawValue:
+                if ((section.values.first as? [Any])?.count ?? 1) > 1 {
+                    heightOfTableView = heightOfTableView + 40
+
+                } else {
+                    heightOfTableView = heightOfTableView + 20
+                }
+                break
+
+            case SectionType.wordAnalysis.rawValue:
+                heightOfTableView = heightOfTableView + 20
+                break
+
+            case SectionType.detailedSyntax.rawValue:
+                heightOfTableView = heightOfTableView + 20
+                break
+
+            default:
+                break
+            }
+        }
+        
+        heightOfTableView = heightOfTableView + CGFloat(16 * sections.count)
+        drawDottedLine(lineLength: heightOfTableView)
+
+        heightOfTableView = heightOfTableView + 20
+        
+        self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: heightOfTableView)
+        contentView.frame = self.bounds
+        
+        heightChangeClosure?(heightOfTableView)
+    }
+    
+    private func drawDottedLine(lineLength: CGFloat) {
+        let sectionsCount = sections.count
+        guard sectionsCount > 1 else { return }
         
         let shapeLayer: CAShapeLayer = CAShapeLayer()
         shapeLayer.name = "Dotted Line"
@@ -118,25 +163,18 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
         shapeLayer.lineJoin = CAShapeLayerLineJoin.round
         shapeLayer.lineDashPhase = 0
         shapeLayer.lineDashPattern = [NSNumber(value: 4), NSNumber(value: 4)]
-        
-        let path = CGMutablePath()
-        path.move(to: CGPoint(x: 28, y: 54))
-        path.addLine(to: CGPoint(x: 28, y: heightOfTableView - 54))
-        shapeLayer.path = path
-        
-        for layer in self.layer.sublayers ?? [] {
+
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 28, y: 20))
+        path.addLine(to: CGPoint(x: 28, y: lineLength - 20))
+        shapeLayer.path = path.cgPath
+
+        for layer in self.tableView.layer.sublayers ?? [] {
             guard layer.name == "Dotted Line" else { continue }
             layer.removeFromSuperlayer()
         }
         
-        if sections.count > 1 {
-            self.layer.insertSublayer(shapeLayer, below: tableView.layer)
-        }
-        
-        self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: heightOfTableView)
-        contentView.frame = self.bounds
-        
-        heightChangeClosure?(heightOfTableView)
+        self.tableView.layer.insertSublayer(shapeLayer, at: 0)
     }
     
     
@@ -166,6 +204,13 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             self.heightChange()
         }
         
+        if section == sections.count - 1 {
+            view.backgroundColor = .white
+            
+        } else {
+            view.backgroundColor = .clear
+        }
+        
         if sectionType == SectionType.fixedMatch.rawValue, let sectionData = sections[section].values.first as? [YXWordFixedMatchModel], sectionData.count > 1 {
             return view
             
@@ -174,24 +219,33 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             
         } else {
             let blackView = UIView()
+            
+            if section == sections.count - 1 {
+                blackView.backgroundColor = .white
+                
+            } else {
+                blackView.backgroundColor = .clear
+            }
+            
             return blackView
         }
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let section = sections[section]
+        
         switch section.keys.first {
         case SectionType.fixedMatch.rawValue:
-            return 58
+            return ((section.values.first as? [Any])?.count ?? 1) > 1 ? 40 : 20
             
         case SectionType.commonPhrases.rawValue:
-            return 58
+            return ((section.values.first as? [Any])?.count ?? 1) > 1 ? 40 : 20
             
         case SectionType.wordAnalysis.rawValue:
-            return 36
+            return 20
             
         case SectionType.detailedSyntax.rawValue:
-            return 0
+            return 20
             
         default:
             return 0
@@ -239,6 +293,13 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
         case SectionType.fixedMatch.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFixedMatchCell", for: indexPath) as! YXWordDetailFixedMatchCell
             
+            if indexPath.section == sections.count - 1 {
+                cell.backgroundColor = .white
+                
+            } else {
+                cell.backgroundColor = .clear
+            }
+            
             let fixedMatchs = section.values.first as? [YXWordFixedMatchModel]
             let fixedMatch = fixedMatchs?[indexPath.row]
             
@@ -251,6 +312,13 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
         case SectionType.commonPhrases.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailCommonPhrasesCell", for: indexPath) as! YXWordDetailCommonPhrasesCell
             
+            if indexPath.section == sections.count - 1 {
+                cell.backgroundColor = .white
+                
+            } else {
+                cell.backgroundColor = .clear
+            }
+            
             let commonPhrases = section.values.first as? [YXWordCommonPhrasesModel]
             let commonPhrase = commonPhrases?[indexPath.row]
             
@@ -262,6 +330,13 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             
         case SectionType.wordAnalysis.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFeaturedClassicCell", for: indexPath) as! YXWordDetailFeaturedClassicCell
+            
+            if indexPath.section == sections.count - 1 {
+                cell.backgroundColor = .white
+                
+            } else {
+                cell.backgroundColor = .clear
+            }
             
             let wordAnalysis = section.values.first as? [YXWordAnalysisModel]
             let analysis = wordAnalysis?[indexPath.row]
@@ -292,6 +367,13 @@ class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSour
             
         case SectionType.detailedSyntax.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFeaturedClassicCell", for: indexPath) as! YXWordDetailFeaturedClassicCell
+            
+            if indexPath.section == sections.count - 1 {
+                cell.backgroundColor = .white
+                
+            } else {
+                cell.backgroundColor = .clear
+            }
             
             let detailedSyntaxs = section.values.first as? [YXWordDetailedSyntaxModel]
             let detailedSyntax = detailedSyntaxs?[indexPath.row]

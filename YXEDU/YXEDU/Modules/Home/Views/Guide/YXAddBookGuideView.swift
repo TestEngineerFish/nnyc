@@ -15,9 +15,9 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
     var editClosure: (() -> Void)?
     
     private var isSelecting = true
-    private let hideTimeInterval = 0.4
-    private let moveTimeInterval = 0.4
-    private let alphaTimeInterval = 0.6
+    private let hideTimeInterval = 0.2
+    private let moveTimeInterval = 0.2
+    private let alphaTimeInterval = 0.2
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var animationView: YXDesignableView!
@@ -75,7 +75,6 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
         isSelecting = true
         
         UIView.animate(withDuration: hideTimeInterval) {
-            self.contentView.backgroundColor = .white
             self.animationView.alpha = 1
             self.imageView.alpha = 1
         }
@@ -148,7 +147,6 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
             self.collectionView.moveItem(at: IndexPath(row: index, section: 0), to: IndexPath(row: 0, section: 0))
             
             UIView.animate(withDuration: self.hideTimeInterval, delay: 0, options: .curveEaseOut, animations: {
-                self.contentView.backgroundColor = .clear
                 self.animationView.alpha = 0
                 self.imageView.alpha = 0
             }, completion: nil)
@@ -187,10 +185,12 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
                 
             } else {
                 if indexPath.row == index {
-                    cell.selectIconView.isHidden = false
-                    cell.titleLabel.textColor = UIColor.orange1
-                    cell.colorView.borderColor = UIColor.orange1
-                    cell.colorView.alpha = 1
+                    DispatchQueue.main.asyncAfter(deadline: .now() + moveTimeInterval) {
+                        cell.selectIconView.isHidden = false
+                        cell.titleLabel.textColor = UIColor.orange1
+                        cell.colorView.borderColor = UIColor.orange1
+                        cell.colorView.alpha = 1
+                    }
                     
                 } else {
                     cell.selectIconView.isHidden = true
