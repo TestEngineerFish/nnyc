@@ -462,41 +462,30 @@ extension YXConnectionView {
 extension YXConnectionView {
 
     private func drawLineProcess() {
-        
         self.audioPlayerView.isHidden = true
-        
         let selectedItems = self.leftAndRightItems()
-        let start = selectedItems.0.locationPoint
-        let end = selectedItems.1.locationPoint
-        
+        let start         = selectedItems.0.locationPoint
+        let end           = selectedItems.1.locationPoint
+
         // 第一次画黑线
         var shapeLayer = self.drawLine(status: .selected, start: start, end: end)
         
         let right = isConnectionRight()
-    
-//        self.connectionEvent?(selectedItems.0.itemModel?.optionId ?? 0, right)
+
         selectedLeftItemEvent?(.normal, selectedItems.0.itemModel?.optionId ?? 0)
         
         if right {
-            
+            selectedItems.0.itemStatus = .end
+            selectedItems.1.itemStatus = .end
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
                 guard let self = self else { return }
                 shapeLayer.removeFromSuperlayer()
-                
-                selectedItems.0.itemStatus = .right
-                selectedItems.1.itemStatus = .right
-                
+
                 // 第二次画绿线
                 shapeLayer = self.drawLine(status: .right, start: start, end: end)
-                
-//                let CABasicAnimation
                                                                                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     shapeLayer.removeFromSuperlayer()
-                    
-                    selectedItems.0.itemStatus = .end
-                    selectedItems.1.itemStatus = .end
-                    
                     // 第三次画完成线
                     shapeLayer = self.drawLine(status: .end, start: start, end: end)
                     
@@ -506,36 +495,26 @@ extension YXConnectionView {
                     let result = self.processConnectionCompletion()
                     self.connectionEvent?(selectedItems.0.itemModel?.optionId ?? 0, true, result)
                 }
-                
             }
-            
-            
-        } else {
+        } else if (selectedItems.0.itemStatus != .end && selectedItems.1.itemStatus != .end) {
             remindEvent?(selectedItems.0.itemModel?.optionId ?? 0)
-            
+            selectedItems.0.itemStatus = .normal
+            selectedItems.1.itemStatus = .normal
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
                 guard let self = self else { return }
                 shapeLayer.removeFromSuperlayer()
-                
-                selectedItems.0.itemStatus = .wrong
-                selectedItems.1.itemStatus = .wrong
                 
                 // 第二次画红线
                 shapeLayer = self.drawLine(status: .wrong, start: start, end: end)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     shapeLayer.removeFromSuperlayer()
-                    selectedItems.0.itemStatus = .normal
-                    selectedItems.1.itemStatus = .normal
-                    
                     self.connectionStatus = true
                     
                     self.connectionEvent?(selectedItems.0.itemModel?.optionId ?? 0, false, false)
                 }
             }
         }
-        
-        
     }
     private func drawLine(status: YXConnectionItemStatus, start: CGPoint, end: CGPoint) -> CAShapeLayer{
         let path = UIBezierPath()

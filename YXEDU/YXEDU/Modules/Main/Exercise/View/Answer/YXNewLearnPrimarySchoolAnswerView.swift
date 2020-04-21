@@ -596,7 +596,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onResult(_ result: String!, isLast: Bool) {
-        YXLog("============录音结果: " + result)
         if isLast {
             // 录音结束,清除临时录音缓存
             self.resetOpusTempData()
@@ -607,6 +606,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             #if DEBUG
             YXUtils.showHUD(self, title: "当前得分: \(score)")
             #endif
+            YXLog("============录音得分: \(score)")
             self.lastScore = Int(score)
             self.requestReportListenScore()
         }

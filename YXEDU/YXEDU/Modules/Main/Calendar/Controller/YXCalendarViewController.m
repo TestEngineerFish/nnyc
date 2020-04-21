@@ -201,7 +201,7 @@ static CGFloat const kPickViewHeight = 272.f;
         UILabel *label = [[UILabel alloc] init];
         label.text = @"当天没有学习数据哦~";
         label.font = [UIFont systemFontOfSize:AdaptSize(13.f)];
-        label.textColor = UIColorOfHex(0x8095AB);
+        label.textColor = UIColorOfHex(0x888888);
         [defaultResultView addSubview:label];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(defaultResultView);

@@ -52,11 +52,9 @@ struct YXGrowingManager {
     func uploadChangeBook(grade: String?, versionName: String?) {
         if let _grade = grade {
             Growing.setPeopleVariableWithKey("user_grade", andStringValue: _grade)
-            YXLog("Growing--------grade: -----", _grade)
         }
         if let _versionName = versionName {
             Growing.setPeopleVariableWithKey("user_book_version", andStringValue: _versionName)
-            YXLog("Growing--------versionName: -----", _versionName)
         }
     }
 

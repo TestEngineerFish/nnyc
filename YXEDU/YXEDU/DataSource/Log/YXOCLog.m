@@ -7,7 +7,6 @@
 //
 
 #import "YXOCLog.h"
-#import <libkern/OSAtomic.h>
 #import "CocoaLumberjack/CocoaLumberjack.h"
 #import "DDLegacyMacros.h"
 #import "YXLogFormatter.h"
