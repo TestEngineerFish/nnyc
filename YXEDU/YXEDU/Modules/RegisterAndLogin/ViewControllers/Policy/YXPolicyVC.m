@@ -10,8 +10,8 @@
 #import "BSCommon.h"
 #import "YXAPI.h"
 
-@interface YXPolicyVC ()<UIWebViewDelegate>
-@property (nonatomic, strong) UIWebView *yxwebView;
+@interface YXPolicyVC ()<WKNavigationDelegate>
+@property (nonatomic, weak) WKWebView *webView;
 @end
 
 @implementation YXPolicyVC
@@ -19,16 +19,26 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (WKWebView *)webView {
+    if (!_webView) {
+        WKWebView *webView = [[WKWebView alloc] init];
+        webView.navigationDelegate = self;
+        [self.view addSubview:webView];
+        _webView = webView;
+    }
+    return _webView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeTop;
+
+    self.webView.frame = self.view.bounds;
+    self.webView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     
-    self.yxwebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kNavHeight)];
-    self.yxwebView.delegate = self;
-    [self.view addSubview:self.yxwebView];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:STRCAT(STRCAT(SCHEME,YX_IP),@"/privacy.html")]];//
-    [self.yxwebView loadRequest:request];
+    [self.webView loadRequest:request];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -42,12 +52,6 @@
     
 }
 
-- (void)refreshBtnClicked {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:STRCAT(STRCAT(SCHEME,YX_IP),@"/agreement.html")]];
-    [self.yxwebView loadRequest:request];
-    [self reloadNoSignalView];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -56,15 +60,5 @@
 - (void)dealloc {
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
