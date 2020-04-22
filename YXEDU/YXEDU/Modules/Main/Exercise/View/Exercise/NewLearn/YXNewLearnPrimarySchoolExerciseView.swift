@@ -116,7 +116,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             self.contentView.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
         }) { (finished) in
             if finished, let _answerView = self.answerView as? YXNewLearnAnswerView {
-                _answerView.status = .normal
+                _answerView.status = .alreadLearn
             }
         }
     }
