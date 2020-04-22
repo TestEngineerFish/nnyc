@@ -16,6 +16,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     }
     
     static var isDownloading     = false
+    static var wordNumber   = 0
     var downloadBookCount = 0
     static var writeDBFinished   = false
     private var closure: ((_ isSuccess: Bool) -> Void)?
@@ -107,14 +108,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 return
             }
             bookModel.bookHash = newHash
-            self.downloadBookCount -= 1
             DispatchQueue.global().async {
-                self.saveBook(with: bookModel, async: true)
                 self.saveWords(with: bookModel, async: true)
-            }
-            if self.downloadBookCount == 0 {
-                YXWordBookResourceManager.isDownloading = false
-                self.finishBlock?()
             }
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -125,19 +120,15 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     /// 保存、更新词书
     private func saveBook(with bookModel: YXWordBookModel, async: Bool) {
-        guard let bookId = bookModel.bookId else { return }
-        /// 删除旧数据
-        YXWordBookDaoImpl().deleteBook(bookId: bookId, async: async)
         YXWordBookDaoImpl().insertBook(book: bookModel, async: async)
+        YXLog("保存词书\(bookModel.bookName ?? "")完成")
     }
 
     /// 保存、更新单词
     private func saveWords(with bookModel: YXWordBookModel, async: Bool) {
-        guard let unitsList = bookModel.units, let bookId = bookModel.bookId else {
+        guard let unitsList = bookModel.units else {
             return
         }
-        /// 删除旧数据
-        YXWordBookDaoImpl().deleteWord(bookId: bookId, async: async)
         var lastUnit = false
         /// 赋值自定义数据
         for (unitIndex, unitModel) in unitsList.enumerated() {
@@ -155,12 +146,21 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 wordModel.unitName        = unitModel.unitName
                 wordModel.isExtensionUnit = unitModel.isExtensionUnit
                 YXWordBookDaoImpl().insertWord(word: wordModel, async: async)
-
+//                YXWordBookResourceManager.wordNumber += 1
+//                YXLog("当前已写入单词书名：\(bookModel.bookName ?? "")")
+//                YXLog("当前已写入单词数\(YXWordBookResourceManager.wordNumber)")
                 if index == wordsList.count - 1 && lastUnit {
-                    YXLog("==== 词书\(bookModel.bookId ?? 0)下载完成 ====")
+                    YXLog("==== 词书\(bookModel.bookId ?? 0)写入完成 ====")
+                    self.downloadBookCount -= 1
+                    YXLog("当前剩余下载词书数量\(self.downloadBookCount)")
+                    self.saveBook(with: bookModel, async: true)
                     if self.downloadBookCount == 0 {
                         YXLog("==== 写入DB数据完成✅ ====")
                         YXWordBookResourceManager.writeDBFinished = true
+                    }
+                    if self.downloadBookCount == 0 {
+                        YXWordBookResourceManager.isDownloading = false
+                        self.finishBlock?()
                     }
                 }
             }
