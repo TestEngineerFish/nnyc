@@ -519,7 +519,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             
             self.delegate?.backHomeEvent()
             
-            self.navigationController?.popToRootViewController(animated: true)
+            self.navigationController?.popToRootViewController(animated: false)
         }
         alertView.cancleClosure = { [weak self] in
             guard let self = self, self == UIView().currentViewController else {

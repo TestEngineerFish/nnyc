@@ -233,7 +233,7 @@ class YXLearningResultViewController: YXViewController {
     // MARK: Event
     @objc private func backClick() {
 //        NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     @objc private func punchEvent() {
