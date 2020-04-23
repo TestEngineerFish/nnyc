@@ -57,11 +57,16 @@ static CGFloat const kPickViewHeight = 272.f;
 @property (nonatomic, strong) YXCalendarStudyDayData *dayData;
 @property (nonatomic, strong) NSDictionary<NSString *, UIImage *> *studiedDate;//显示已学习状态
 @property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, assign) BOOL showReportButotn;
 
 @end
 
 @implementation YXCalendarViewController
 @synthesize currentTitleDate = _currentTitleDate;
+
+- (BOOL)showReportButotn {
+    return YES;
+}
 
 - (void)setCurrentSelectedDate:(NSDate *)currentDate {
     _currentSelectedDate = currentDate;
@@ -347,7 +352,7 @@ static CGFloat const kPickViewHeight = 272.f;
     [self.contentScroll mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.top.equalTo(self.view).with.offset(kNavHeight);
-        make.bottom.equalTo(self.view).with.offset(-kSafeBottomMargin);
+        make.bottom.equalTo(self.view);
     }];
 
     [self.monthDataView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -478,11 +483,14 @@ static CGFloat const kPickViewHeight = 272.f;
         }else {
             self.dayData = nil;
         }
+        CGFloat tableViewHeight = AdaptSize(kHeaderHeight) * 3.f;
+        tableViewHeight = self.showReportButotn ? tableViewHeight + AdaptSize(50) : tableViewHeight;
         [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(AdaptSize(kHeaderHeight) * 3.f);
+            make.height.mas_equalTo(tableViewHeight);
         }];
+            CGFloat tableContainerHeight = self.showReportButotn ? AdaptSize(183) + AdaptSize(50) : AdaptSize(183);
         [self.tableContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(AdaptSize(183));
+            make.height.mas_equalTo(tableContainerHeight);
         }];
         self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMinY(self.tableContainerView.frame) + AdaptSize(183));
         [self.tableView reloadData];
@@ -614,6 +622,11 @@ static CGFloat const kPickViewHeight = 272.f;
     [self getDailyData:self.currentSelectedDate];
 }
 
+- (void)checkReport {
+    NSString *dateStr = [NSDate stringWithDate:self.currentSelectedDate format:NSDate.ymdFormat];
+    YXLog(@"查看%@的学习报告", dateStr);
+}
+
 #pragma mark - TableView Delegate & DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -645,6 +658,8 @@ static CGFloat const kPickViewHeight = 272.f;
     } else if (section == 1) {
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showStudyWordsList:)];
         [headerView addGestureRecognizer:tap];
+    } else if (section == 2) {
+        [headerView.separatorView setHidden:!self.showReportButotn];
     }
     return headerView;
 }
@@ -652,7 +667,32 @@ static CGFloat const kPickViewHeight = 272.f;
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UIView *foodView = [[UIView alloc] init];
     foodView.backgroundColor = UIColor.clearColor;
-    return section == 2 ? [[UIView alloc] init] : foodView;
+    if (section == 2) {
+        UIButton *button = [[UIButton alloc] init];
+        [foodView addSubview:button];
+        button.backgroundColor = UIColorOfHex(0xFFF4E9);
+        [button setTitle:@"查看完整学习报告" forState:UIControlStateNormal];
+        [button.titleLabel setFont: [UIFont regularFontOfSize:AdaptSize(14)]];
+        [button setTitleColor:UIColorOfHex(0xFBA217) forState:UIControlStateNormal];
+        button.layer.cornerRadius  = AdaptSize(13.5);
+        button.layer.masksToBounds = YES;
+        [button addTarget:self action:@selector(checkReport) forControlEvents:UIControlEventTouchUpInside];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(AdaptSize(148), AdaptSize(27)));
+            make.center.equalTo(foodView);
+        }];
+    }
+
+    return foodView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == 2) {
+        return AdaptSize(50);
+    } else {
+        return 0.0;
+    }
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
