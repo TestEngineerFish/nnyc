@@ -49,6 +49,10 @@
     
     /// 哪个单词的提示，仅连线题使用
     private var remindWordId: Int = -1
+
+    /// 是否在请求接口中，用于Loading页面的状态更新
+    static var requesting: Bool?
+    static var selectWord: Bool?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -62,7 +66,7 @@
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.hideLoadAnimation(nil)
+        self.loadingView?.removeFromSuperview()
     }
 
     override func handleData(withQuery query: [AnyHashable : Any]!) {
@@ -72,32 +76,14 @@
 //        self.unitId = self.query["unit_id"] as? Int ?? 0
     }
 
-    // ---- 词书下载等待事件 ----
-    var timer: Timer?
-    let interval = 0.5
-    var timeOut  = 15.0
-    var waitTime = 0.0
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showLoadAnimation()
         self.createSubviews()
         self.bindProperty()
         self.initManager()
-        self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { (timer) in
-            self.waitTime += self.interval
-            if self.waitTime >= self.timeOut {
-                self.loadingView?.removeFromSuperview()
-                timer.invalidate()
-                self.timer = nil
-                self.navigationController?.popViewController(animated: true)
-                YXUtils.showHUD(kWindow, title: "当前网速较慢，建议稍后重试")
-            } else if YXWordBookResourceManager.writeDBFinished {
-                self.startStudy()
-                timer.invalidate()
-                self.timer = nil
-            }
+        self.loadingView?.downloadCompleteBlock = {
+            self.startStudy()
         }
         YXGrowingManager.share.startDate = NSDate()
     }
@@ -109,8 +95,6 @@
         YXAVPlayerManager.share.pauseAudio()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self)
-        self.timer?.invalidate()
-        self.timer = nil
     }
     
     private func createSubviews() {
@@ -179,18 +163,20 @@
     /// 开始学习
     private func startStudy() {
         YXLog("====开始学习====")
+        YXExerciseViewController.requesting = true
         // 存在学完未上报的关卡
         if !dataManager.progressManager.isReport() {
             YXLog("本地存在学完未上报的关卡，先加载，再上报")
             // 先加载本地数据
             dataManager.fetchLocalExerciseModels()
-            
+            YXExerciseViewController.requesting = false
             // 再上报关卡
             self.report()
         } else if !dataManager.progressManager.isCompletion() && dataManager.fetchLocalExerciseModels() {// 存在未学完的关卡
             YXLog("本地存在未学完的关卡，先加载")
+            YXExerciseViewController.requesting = false
             // 开始答题
-            self.hideLoadAnimation { [weak self] in
+            self.loadingView?.animationCompleteBlock = { [weak self] in
                 self?.dataManager.progressManager.setStartStudyTime()
                 self?.switchExerciseView()
             }
@@ -207,8 +193,9 @@
         dataManager.fetchTodayExerciseResultModels(type: dataType, planId: planId) { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
+                YXExerciseViewController.requesting = false
                 DispatchQueue.main.async {
-                    self.hideLoadAnimation { [weak self] in
+                    self.loadingView?.animationCompleteBlock = { [weak self] in
                         self?.dataManager.progressManager.setStartStudyTime()
                         self?.switchExerciseView()
                     }
@@ -224,7 +211,6 @@
     private func switchExerciseView() {
         YXLog("==== 切题 ====")
         let data = dataManager.fetchOneExerciseModel()
-        
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
@@ -314,16 +300,7 @@
         YXLog("显示学习前加载动画")
         self.loadingView = YXExerciseLoadingView(frame: kWindow.bounds)
         kWindow.addSubview(self.loadingView!)
-        self.loadingView?.showAnimation()
-    }
-    
-    private func hideLoadAnimation(_ completeBlock: (()->Void)?) {
-        // 先保存闭包
-        if completeBlock != nil {
-            self.loadingView?.completeBlock = completeBlock
-        }
-        self.loadingView?.stopAnimation()
-//        self.loadingView = nil
+        self.loadingView?.startAnimation()
     }
     
     private func updateToken() {

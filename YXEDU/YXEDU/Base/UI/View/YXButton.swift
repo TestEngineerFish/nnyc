@@ -122,25 +122,25 @@ class YXButton: UIButton {
         }
         return
         // 动画效果UI说暂时不要，哎…………伤心💔
-        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
-        animation.values       = [0.9]
-        animation.duration     = 0.1
-        animation.autoreverses = false
-        animation.fillMode     = .forwards
-        animation.isRemovedOnCompletion = false
-        sender.layer.add(animation, forKey: nil)
+//        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+//        animation.values       = [0.9]
+//        animation.duration     = 0.1
+//        animation.autoreverses = false
+//        animation.fillMode     = .forwards
+//        animation.isRemovedOnCompletion = false
+//        sender.layer.add(animation, forKey: nil)
     }
 
     @objc func touchUp(sender: UIButton) {
         return
         // 动画效果UI说暂时不要，哎…………伤心💔
-        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
-        animation.values       = [1.1, 0.95, 1.0]
-        animation.duration     = 0.2
-        animation.autoreverses = false
-        animation.fillMode     = .forwards
-        animation.isRemovedOnCompletion = false
-        sender.layer.add(animation, forKey: nil)
+//        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+//        animation.values       = [1.1, 0.95, 1.0]
+//        animation.duration     = 0.2
+//        animation.autoreverses = false
+//        animation.fillMode     = .forwards
+//        animation.isRemovedOnCompletion = false
+//        sender.layer.add(animation, forKey: nil)
     }
 
     //TODO: 自定义Storyboard编辑器

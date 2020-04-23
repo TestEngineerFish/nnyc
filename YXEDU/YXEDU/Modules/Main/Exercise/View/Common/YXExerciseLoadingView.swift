@@ -10,15 +10,86 @@ import UIKit
 import Lottie
 
 class YXExerciseLoadingView: UIView, CAAnimationDelegate {
-    var progressLayer = CAGradientLayer()
-    var dotLayer      = CAGradientLayer()
-    let descLabel     = UILabel()
-    var finished      = false
-    var completeBlock: (()->Void)?
+    var progressLayer  = CAGradientLayer()
+    var dotLayer       = CAGradientLayer()
+    let descLabel      = UILabel()
+    var fromRatio      = 0.0
+    var toRatio        = 0.0
+    var speed          = YXExerciseLoadingSpeedEnum.normal
+    var addStepTime    = 0.0 // 单步进度停留时间
+    var addLoadingTime = 0.0 // 总加载时间
+    var timeInterval   = 0.1
+    var stepTimeOut    = 4.0
+    var loadingTimeOut = 15.0
+    var status         = YXExerciseLoadingEnum.normal
+    var isLoading      = false // 动画运行中
+    var progressWidth  = AdaptSize(181.5)
+    /// 词书下载完成
+    var downloadCompleteBlock: (()->Void)?
+    /// 进度条动画执行完成
+    var animationCompleteBlock: (()->Void)?
+    var timer: Timer?
+
+    enum YXExerciseLoadingSpeedEnum: CGFloat {
+        case normal    = 0.2
+        case highSpeed = 1.0
+    }
+
+    enum YXExerciseLoadingEnum: Int {
+
+        case normal       = 0
+        case downloadBook = 1
+        case requestApi   = 2
+        case selectWord   = 3
+
+        func getDesction() -> String {
+            switch self {
+            case .normal:
+                return "努力加载中…"
+            case .downloadBook:
+                return "正在下载词书…"
+            case .requestApi:
+                return "正在加载学习数据…"
+            case .selectWord:
+                return "正在加载单词数据…"
+            }
+        }
+
+        func getRatio() -> CGFloat {
+            switch self {
+            case .normal:
+                return 1.0
+            case .downloadBook:
+                return 0.4
+            case .requestApi:
+                return 1.0
+            case .selectWord:
+                return 1.0
+            }
+        }
+
+        func getDuration() -> Double {
+            switch self {
+            case .normal:
+                return 5.0
+            case .downloadBook:
+                return 2.0
+            case .requestApi:
+                return 2.5
+            case .selectWord:
+                return 0.5
+            }
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
+    }
+
+    deinit {
+        self.timer?.invalidate()
+        self.timer = nil
     }
 
     required init?(coder: NSCoder) {
@@ -27,7 +98,6 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
 
     private func createSubviews() {
         self.backgroundColor = UIColor.white
-
 
         let headerView = self.createHeaderView()
         let fooderView = self.createFooterView()
@@ -51,7 +121,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         descLabel.textAlignment = .center
         descLabel.textColor     = UIColor.black6
         descLabel.font          = UIFont.pfSCRegularFont(withSize: 12)
-        descLabel.text          = "努力加载中…"
+        descLabel.text          = self.status.getDesction()
 
         progressBgView.layer.cornerRadius  = AdaptSize(15)/2
         progressBgView.layer.masksToBounds = true
@@ -59,7 +129,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
 
         progressLayer.cornerRadius    = AdaptSize(15)/2
         progressLayer.masksToBounds   = true
-        progressLayer.backgroundColor = UIColor.orange1.cgColor
+        progressLayer.backgroundColor = UIColor.clear.cgColor
 
         dotLayer.borderWidth     = 3.0
         dotLayer.borderColor     = UIColor.orange1.cgColor
@@ -85,12 +155,12 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         }
         progressBgView.snp.makeConstraints { (make) in
             make.top.equalTo(descLabel.snp.bottom).offset(AdaptSize(4))
-            make.width.equalTo(AdaptSize(189))
+            make.width.equalTo(progressWidth + AdaptSize(7.5))
             make.height.equalTo(AdaptSize(15))
             make.centerX.equalToSuperview()
         }
-        self.progressLayer.frame = CGRect(x: 0, y: 0, width: AdaptSize(189), height: AdaptSize(15))
-        self.dotLayer.frame = CGRect(x: 0, y: 0, width: AdaptSize(15), height: AdaptSize(15))
+        self.progressLayer.frame = CGRect(x: 0, y: 0, width: progressWidth, height: AdaptSize(15))
+        self.dotLayer.frame      = CGRect(x: 0, y: 0, width: AdaptSize(15), height: AdaptSize(15))
         squirrelView.play()
         return headerView
     }
@@ -127,7 +197,132 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
 
         return fooderView
     }
-    
+
+    // MARK: ==== Event ====
+    func startAnimation() {
+        let _timer = Timer(timeInterval: timeInterval, repeats: true, block: { (timer) in
+            self.addStepTime    += self.timeInterval
+            self.addLoadingTime += self.timeInterval
+            // 更新提示文案
+            if self.addStepTime >= self.stepTimeOut {
+                self.descLabel.text = self.status.getDesction()
+            }
+            if self.addLoadingTime > self.loadingTimeOut {
+                self.stopAnimation()
+                UIView().currentViewController?.navigationController?.popViewController(animated: true)
+                YXUtils.showHUD(kWindow, title: "当前网速较慢，建议稍后重试")
+            }
+            self.updateValue()
+        })
+        RunLoop.current.add(_timer, forMode: .common)
+        self.timer = _timer
+    }
+
+    func stopAnimation() {
+        self.timer?.invalidate()
+        self.timer = nil
+        self.removeFromSuperview()
+    }
+
+    private func updateValue() {
+        if isLoading { return }
+        // 更新状态
+        let originStatus = self.status
+        if YXWordBookResourceManager.writeDBFinished != nil {
+            self.status = .downloadBook
+            if YXWordBookResourceManager.writeDBFinished == .some(true) {
+                self.downloadCompleteBlock?()
+                self.speed  = .highSpeed
+                // 请求之前需要先下载完词书
+                if YXExerciseViewController.requesting != nil {
+                    self.status = .requestApi
+                    if YXExerciseViewController.requesting == .some(true) {
+                        self.speed  = .normal
+                    } else {
+                        self.speed  = .highSpeed
+                    }
+                }
+            } else {
+                self.speed  = .normal
+            }
+        }
+
+        self.fromRatio = self.toRatio
+        self.toRatio   = Double(self.status.getRatio())
+
+        // 执行动画
+        if self.status != originStatus {
+            self.isLoading = true
+            self.showAnimation()
+        }
+    }
+
+    // MARK: Animation
+    private func showAnimation() {
+        YXLog("开始加载动画，当前状态\(self.status)")
+        let dotAnimation = CABasicAnimation(keyPath: "position.x")
+        let dotFrom: CGFloat = {
+            if self.fromRatio > .zero {
+                return progressWidth * CGFloat(self.fromRatio)
+            } else {
+                return .zero
+            }
+        }()
+        let dotTo: CGFloat = {
+            if self.toRatio > .zero {
+                return progressWidth * CGFloat(self.toRatio)
+            } else {
+                return .zero
+            }
+        }()
+        dotAnimation.fromValue      = dotFrom
+        dotAnimation.toValue        = dotTo
+        dotAnimation.repeatCount    = 1
+        dotAnimation.duration       = self.status.getDuration()
+        dotAnimation.autoreverses   = false
+        dotAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
+        dotAnimation.fillMode       = .forwards
+        dotAnimation.isRemovedOnCompletion = false
+        dotLayer.add(dotAnimation, forKey: "dotAnimation")
+
+        let proMaskLayer = CAShapeLayer()
+        let path         = UIBezierPath()
+        path.move(to: CGPoint(x: 0, y: AdaptSize(15)/2))
+        path.addLine(to: CGPoint(x: progressWidth, y: AdaptSize(15)/2))
+        proMaskLayer.path        = path.cgPath
+        proMaskLayer.lineWidth   = AdaptSize(15)
+        proMaskLayer.lineJoin    = .round
+        proMaskLayer.strokeColor = UIColor.blue.cgColor
+        proMaskLayer.fillColor   = nil
+        self.progressLayer.mask = proMaskLayer
+
+        let proAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        proAnimation.fromValue      = self.fromRatio
+        proAnimation.toValue        = self.toRatio
+        proAnimation.repeatCount    = 1
+        proAnimation.duration       = self.status.getDuration()
+        proAnimation.autoreverses   = false
+        proAnimation.fillMode       = .forwards
+        proAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
+        proAnimation.delegate       = self
+        proAnimation.isRemovedOnCompletion = false
+        proMaskLayer.add(proAnimation, forKey: "proAnimation")
+        self.progressLayer.backgroundColor = UIColor.orange1.cgColor
+    }
+
+    // MARK: CAAnimationDelegate
+
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if flag {
+            self.isLoading   = false
+            self.addStepTime = 0
+            if self.toRatio >= 1.0 {
+                self.stopAnimation()
+                self.animationCompleteBlock?()
+            }
+        }
+    }
+
     // TODO: ==== Tools ====
     private func getRandomTips() -> String {
         let tipsArray = ["阅读碰到不认识的单词\n主页点击右上角放大镜图片",
@@ -143,61 +338,5 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                               "要说天才的优势是什么\n那就是他天生会学习"]
         let totalArray = tipsArray + encourageArray
         return totalArray.randomElement() ?? ""
-    }
-
-    // MARK: Animation
-    func showAnimation() {
-        let dotAnimation = CABasicAnimation(keyPath: "position.x")
-        dotAnimation.toValue        = AdaptSize(181)
-        dotAnimation.repeatCount    = 1
-        dotAnimation.duration       = 3
-        dotAnimation.autoreverses   = false
-        dotAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        dotAnimation.fillMode       = .forwards
-        dotAnimation.isRemovedOnCompletion = false
-        dotLayer.add(dotAnimation, forKey: "dotAnimation")
-
-        let proMaskLayer = CAShapeLayer()
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: AdaptSize(15)/2))
-        path.addLine(to: CGPoint(x: AdaptSize(189), y: AdaptSize(15)/2))
-        proMaskLayer.path        = path.cgPath
-        proMaskLayer.lineWidth   = AdaptSize(15)
-        proMaskLayer.lineJoin    = .round
-        proMaskLayer.strokeColor = UIColor.blue.cgColor
-        proMaskLayer.fillColor   = nil
-
-        self.progressLayer.mask = proMaskLayer
-        let proAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        let fromRate     = AdaptSize(7.5/189)
-        proAnimation.fromValue      = fromRate
-        proAnimation.toValue        = 1.0 - fromRate
-        proAnimation.repeatCount    = 1
-        proAnimation.duration       = 3
-        proAnimation.autoreverses   = false
-        proAnimation.fillMode       = .forwards
-        proAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        proAnimation.delegate       = self
-        proMaskLayer.add(proAnimation, forKey: "proAnimation")
-
-    }
-
-    func stopAnimation() {
-        self.finished = true
-    }
-
-    // MARK: CAAnimationDelegate
-
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if self.finished {
-            if YXWordBookResourceManager.writeDBFinished {
-                self.removeFromSuperview()
-                self.completeBlock?()
-            } else {
-                self.descLabel.text = "词书下载中..."
-            }
-        } else {
-            self.showAnimation()
-        }
     }
 }

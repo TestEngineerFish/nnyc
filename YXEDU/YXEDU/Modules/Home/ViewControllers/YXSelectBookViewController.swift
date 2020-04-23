@@ -134,7 +134,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func fetchWordBooks() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbooklist", parameters: ["user_id": YXConfigure.shared().uuid]) { [weak self] (response, isSuccess) in
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbooklist", parameters: ["user_id": YXConfigure.shared().uuid ?? ""]) { [weak self] (response, isSuccess) in
             guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
             do {

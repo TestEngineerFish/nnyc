@@ -15,10 +15,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         super.init()
     }
     
-    static var isDownloading     = false
-    static var wordNumber   = 0
-    var downloadBookCount = 0
-    static var writeDBFinished   = false
+    static var isDownloading   = false
+    static var wordNumber      = 0
+    var downloadBookCount      = 0
+    static var writeDBFinished: Bool?
     private var closure: ((_ isSuccess: Bool) -> Void)?
     var finishBlock: (()->Void)?
 
