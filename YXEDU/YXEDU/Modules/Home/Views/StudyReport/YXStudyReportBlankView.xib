@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXStudyReportBlankView" customModule="YXEDU" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="4lg-4Q-vCS"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="StudyReportEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="Hn6-ac-nF5">
+                    <rect key="frame" x="118" y="44" width="178" height="110"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="178" id="ibZ-a7-gcl"/>
+                        <constraint firstAttribute="height" constant="110" id="oTF-OM-TI9"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xB-IA-2qq">
+                    <rect key="frame" x="96.5" y="160" width="221" height="29"/>
+                    <string key="text">还没有学习报告哦～
+每次学习后的第二天就可以生成报告啦！</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DzI-NU-SOK" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
+                    <rect key="frame" x="133" y="205" width="148" height="32"/>
+                    <color key="backgroundColor" red="1" green="0.95686274509803915" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="148" id="58Z-jl-gAN"/>
+                        <constraint firstAttribute="height" constant="32" id="B8d-eH-qFX"/>
+                    </constraints>
+                    <state key="normal" title="去背单词">
+                        <color key="titleColor" red="0.98431372549999996" green="0.63529411759999999" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="16"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="tapButton:" destination="-1" eventType="touchUpInside" id="Mck-49-vTk"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="Hn6-ac-nF5" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JHt-SB-DYD"/>
+                <constraint firstItem="DzI-NU-SOK" firstAttribute="top" secondItem="0xB-IA-2qq" secondAttribute="bottom" constant="16" id="OkV-rh-faa"/>
+                <constraint firstItem="Hn6-ac-nF5" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="bxb-ka-8Q9"/>
+                <constraint firstItem="DzI-NU-SOK" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="mzQ-PX-vlc"/>
+                <constraint firstItem="0xB-IA-2qq" firstAttribute="top" secondItem="Hn6-ac-nF5" secondAttribute="bottom" constant="6" id="qbG-mS-nBo"/>
+                <constraint firstItem="0xB-IA-2qq" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="tdS-D8-CUq"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="6"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="141" y="154"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="StudyReportEmpty" width="178" height="109"/>
+    </resources>
+</document>

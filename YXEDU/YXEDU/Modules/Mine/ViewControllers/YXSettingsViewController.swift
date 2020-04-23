@@ -45,7 +45,7 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,9 +64,12 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
             
         case 3:
             return tableView.dequeueReusableCell(withIdentifier: "CellFive")!
+          
+        case 4:
+            return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
             
         default:
-            return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellSeven")!
         }
     }
     
@@ -106,8 +109,24 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
             YXLogManager.share.report(true)
             break
             
+        case 5:
+            resetCache()
+            break
+            
         default:
             break
         }
+    }
+    
+    private func resetCache() {
+        let alertView = YXAlertView()
+        alertView.descriptionLabel.text = "清除后将删除当前尚未学完的学习记录，是否确定？"
+        alertView.doneClosure = { _ in
+           
+            
+            
+        }
+        
+        alertView.show()
     }
 }

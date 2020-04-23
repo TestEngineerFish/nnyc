@@ -405,19 +405,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 break
                 
             case 2:
-                let request = YXHomeRequest.report
-                YYNetworkService.default.request(YYStructResponse<YXReportModel>.self, request: request, success: { [weak self] (response) in
-                    guard let self = self else { return }
-                    if let report = response.data, let url = report.reportUrl, url.isEmpty == false {
-                        let baseWebViewController = YXBaseWebViewController(link: url, title: "我的学习报告")
-                        baseWebViewController?.hidesBottomBarWhenPushed = true
-                        self.navigationController?.pushViewController(baseWebViewController!, animated: true)
-                    } else if let report = response.data, let description = report.description {
-                        self.view.toast(description)
-                    }
-                }) { error in
-                    YXUtils.showHUD(kWindow, title: error.message)
-                }
+                self.performSegue(withIdentifier: "YXStudyReportViewController", sender: self)
                 break
             case 3:
 //                self.performSegue(withIdentifier: "YXWordTestViewController", sender: self)

@@ -152,6 +152,12 @@ struct YXAPI {
         // 領取積分
         static let getIntegral = "/api/v1/user/receivetaskreward"
     }
+    
+    // MARK: - 学习日报模块
+    struct StudyReport {
+        // 学习日报
+        static let studyReport = "api/v1/daily/info"
+    }
 
     // MARK: - 挑战模块
     struct Challenge {
