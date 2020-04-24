@@ -107,14 +107,19 @@ struct YXFileManager {
 
     // MARK: ---- Tools ----
 
-    /// 获取JSON文件路径
-    /// - Returns: 文件路径
-    private func getJsonPath() -> String {
+    internal func getDocumentPath() -> String {
         var documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
         if documentPath == nil {
             documentPath = NSHomeDirectory() + "/Documents"
         }
-        let jsonPath = documentPath! + "/JSON_" + (YXConfigure.shared().uuid ?? "") + "/"
+        return documentPath ?? ""
+    }
+
+    /// 获取JSON文件路径
+    /// - Returns: 文件路径
+    private func getJsonPath() -> String {
+        let documentPath = self.getDocumentPath()
+        let jsonPath = documentPath + "/JSON_" + (YXConfigure.shared().uuid ?? "") + "/"
         if !FileManager.default.fileExists(atPath: jsonPath) {
             try? FileManager.default.createDirectory(atPath: jsonPath, withIntermediateDirectories: true, attributes: nil)
         }
@@ -124,11 +129,8 @@ struct YXFileManager {
     /// 获取学习缓存文件路径
     /// - Returns: 文件路径
     func getStudyPath() -> String {
-        var documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-        if documentPath == nil {
-            documentPath = NSHomeDirectory() + "/Documents"
-        }
-        let textPath = documentPath! + "/Study_" + (YXConfigure.shared().uuid ?? "") + "/"
+        let documentPath = self.getDocumentPath()
+        let textPath = documentPath + "/Study_" + (YXConfigure.shared().uuid ?? "") + "/"
         if !FileManager.default.fileExists(atPath: textPath) {
             try? FileManager.default.createDirectory(atPath: textPath, withIntermediateDirectories: true, attributes: nil)
         }
@@ -146,6 +148,29 @@ struct YXFileManager {
         } catch {
             YXLog("删除文件失败，路径：\(path)， 错误：\(error)")
             return false
+        }
+    }
+
+
+    /// 移动老版本的学习缓存文件到新地址
+    internal func moveToNewStudyPath() {
+        let documentPath = self.getDocumentPath()
+        guard let nameList = try? FileManager.default.contentsOfDirectory(atPath: documentPath) else {
+            YXLog("查找老学习缓存文件失败")
+            return
+        }
+        nameList.forEach { (name) in
+            if name.hasSuffix(".txt") {
+                do {
+                    let oldPath = documentPath + "/" + name
+                    let newPath = self.getStudyPath() + name
+                    YXLog("oldPath\(oldPath)")
+                    YXLog("newPath\(newPath)")
+                    try FileManager.default.moveItem(atPath: oldPath, toPath: newPath)
+                } catch {
+                    YXLog("移动老学习缓存文件失败")
+                }
+            }
         }
     }
 
