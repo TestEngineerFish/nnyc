@@ -102,7 +102,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
         
         self.checkUserState()
-        self.adjustEntryViewContraints()
         self.setSquirrelAnimation()
         self.registerNotification()
     }
@@ -270,12 +269,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
         })
 
-    }
-    
-    private func adjustEntryViewContraints() {
-        guard screenWidth != 320 else { return }
-        let entryViewH = (screenWidth - 40) / 332 * 381
-        self.entryViewHeightConstraint.constant = entryViewH
     }
     
     private func adjustStartStudyButtonState() {
