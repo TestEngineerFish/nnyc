@@ -206,5 +206,12 @@ struct YXAPI {
         /// 用户反馈回复接口
         static let feedbackReply = "/api/v1/feedback/reply"
     }
+
+    // MARK: - Calendar
+    struct Calendar {
+
+        /// 获得月报学习时间列表
+        static let getMonthly = "/api/v1/daily/getmonthly"
+    }
 }
 

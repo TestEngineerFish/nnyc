@@ -10,6 +10,8 @@ import Foundation
 
 class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate {
 
+    var validDict = [String:YXCalendarStudyModel]()
+
     var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
@@ -34,7 +36,9 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
 
     var leftButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "go"), for: .normal)
+        button.setImage(UIImage(named: "arrow_left_gray"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: AdaptSize(7.5), left: AdaptSize(9), bottom: AdaptSize(7.5), right: AdaptSize(43))
+        button.titleEdgeInsets = UIEdgeInsets(top: AdaptSize(5), left: AdaptSize(10), bottom: AdaptSize(5), right: AdaptSize(0))
         button.setTitleColor(UIColor.gray3, for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: 14)
         button.titleLabel?.textAlignment = .left
@@ -43,7 +47,9 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
 
     var rightButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "go"), for: .normal)
+        button.setImage(UIImage(named: "arrow_right_gray"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: AdaptSize(7.5), left: AdaptSize(43), bottom: AdaptSize(7.5), right: AdaptSize(9))
+        button.titleEdgeInsets = UIEdgeInsets(top: AdaptSize(5), left: AdaptSize(0), bottom: AdaptSize(5), right: AdaptSize(20))
         button.setTitleColor(UIColor.gray3, for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: 14)
         button.titleLabel?.textAlignment = .right
@@ -61,14 +67,11 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
         calendar.appearance.weekdayFont          = .regularFont(ofSize: AdaptSize(12))
         calendar.appearance.titleDefaultColor    = .black1
         calendar.appearance.titleFont            = .regularFont(ofSize: AdaptSize(15))
-        calendar.appearance.todayColor           = .black1
+        calendar.appearance.todayColor           = .clear
         calendar.appearance.borderSelectionColor = .clear
         calendar.appearance.selectionColor       = .orange1
-//        calendar.calendarWeekdayView.weekdayLabels = {
-//            let arrayLabels = [UILabel]()
-//
-//            return arrayLabels
-//        }()
+        calendar.appearance.todaySelectionColor  = .white
+        calendar.appearance.titleSelectionColor  = .white
         return calendar
     }()
 
@@ -85,6 +88,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
     init(frame: CGRect, selected: Date) {
         self.selectedDate = selected
         super.init(frame: frame)
+        self.requestCalendarData()
         self.createSubviews()
         self.bindProperty()
         self.updateDate()
@@ -142,6 +146,26 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
         let tapAction = UITapGestureRecognizer(target: self, action: #selector(hide))
         self.backgroundView.addGestureRecognizer(tapAction)
         self.downButton.addTarget(self, action: #selector(downAction), for: .touchUpInside)
+        self.calendarView.select(self.selectedDate)
+    }
+
+    // MARK: ==== Request ====
+    internal func requestCalendarData() {
+        let request = YXCalendarRequest.getMonthly(time: Int(self.selectedDate.timeIntervalSince1970))
+        YYNetworkService.default.request(YYStructResponse<YXCalendarModel>.self, request: request, success: { (response) in
+            // 当天日期，特殊处理
+            guard let model = response.data else {
+                return
+            }
+            self.validDict.removeAll()
+            model.studyModel.forEach { (studyModel) in
+                self.validDict.updateValue(studyModel, forKey: "\(studyModel.time ?? 0)")
+            }
+            self.calendarView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+//            self.hide()
+        }
     }
 
     // MARK: ==== Event ====
@@ -183,22 +207,23 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
         self.titleLabel.text = titleStr
         self.leftButton.setTitle(leftStr, for: .normal)
         self.rightButton.setTitle(rightStr, for: .normal)
-        
     }
 
     // MARK: ==== FSCalendar Delegate & Datasource
 
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
-        let number = Int.random(in: 0...9)
-        if number % 2 == 0 {
-//            cell.appearance.titleDefaultColor = UIColor.black1
+        if let _ = self.validDict["\(Int(date.timeIntervalSince1970))"] {
             cell.titleLabel.textColor = UIColor.black1
         } else {
             cell.titleLabel.textColor = UIColor.black4
         }
-        if date == self.selectedDate {
-            cell.titleLabel.textColor = UIColor.white
-            cell.backgroundColor = UIColor.orange1
-        }
+//        if (date as NSDate).isSameDay(self.selectedDate) {
+//            cell.appearance.selectionColor = UIColor.orange1
+//            cell.appearance.titleSelectionColor = UIColor.white
+//        }
+    }
+
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        self.selectedDate = date
     }
 }

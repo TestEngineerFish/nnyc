@@ -64,10 +64,6 @@ static CGFloat const kPickViewHeight = 272.f;
 @implementation YXCalendarViewController
 @synthesize currentTitleDate = _currentTitleDate;
 
-- (BOOL)showReportButotn {
-    return YES;
-}
-
 - (void)setCurrentSelectedDate:(NSDate *)currentDate {
     _currentSelectedDate = currentDate;
     [self getDailyData:currentDate];
@@ -483,6 +479,7 @@ static CGFloat const kPickViewHeight = 272.f;
         }else {
             self.dayData = nil;
         }
+        self.showReportButotn = self.dayData.learning_data.study_times > 0;
         CGFloat tableViewHeight = AdaptSize(kHeaderHeight) * 3.f;
         tableViewHeight = self.showReportButotn ? tableViewHeight + AdaptSize(50) : tableViewHeight;
         [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
