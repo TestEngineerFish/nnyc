@@ -366,9 +366,19 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     class func clearAllKeyCache() {
-        let allKey = UserDefaults.standard.dictionaryRepresentation()
+        let allKeyArray: [String] = Array(UserDefaults.standard.dictionaryRepresentation().keys)
+        let localKeyArray: [LocalKey] = [
+            .bookId, .unitId, .currentTurnIndex, .report, .completion, .newWordIds, .newWordExerciseIds, .reviewWordIds,
+            .score, .errorCount, .newWordReadScore, .startStudyTime, .studyDuration, .studyCount, .skipNewWord]
         
-//        for
+        let uuid = YXConfigure.shared().uuid ?? ""
+        for key in allKeyArray {
+            for localKey in localKeyArray {
+                if key.hasSuffix(localKey.rawValue) && key.contains(uuid) {
+                    YYCache.remove(forKey: key)
+                }
+            }
+        }
     }
     
 }
