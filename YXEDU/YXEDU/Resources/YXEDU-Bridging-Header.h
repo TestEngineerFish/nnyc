@@ -37,6 +37,7 @@
 #import "YXCalendarViewController.h"
 #import "YXBaseWebViewController.h"
 #import "YXReportErrorView.h"
+#import "FSCalendar.h"
 
 #import "ZipArchive.h"
 #import "YXCacheKey.h"

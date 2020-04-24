@@ -50,6 +50,7 @@
 		223D2683239B4A70008DED9E /* BPSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D267F239B4A70008DED9E /* BPSegmentView.swift */; };
 		223D2684239B4A70008DED9E /* BPSegmentControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D2680239B4A70008DED9E /* BPSegmentControllerView.swift */; };
 		223D2685239B4A70008DED9E /* BPItemHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D2681239B4A70008DED9E /* BPItemHeaderView.swift */; };
+		223D5EFC24527D6900482127 /* YXCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D5EFB24527D6900482127 /* YXCalendarView.swift */; };
 		224352C323A1DF5400F278E6 /* YXChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352C223A1DF5400F278E6 /* YXChallengeModel.swift */; };
 		224352C523A1E91B00F278E6 /* YXChallengePropertyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352C423A1E91B00F278E6 /* YXChallengePropertyView.swift */; };
 		224352CB23A240AF00F278E6 /* YXChallengeRankTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352CA23A240AF00F278E6 /* YXChallengeRankTopView.swift */; };
@@ -608,6 +609,7 @@
 		223D267F239B4A70008DED9E /* BPSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSegmentView.swift; sourceTree = "<group>"; };
 		223D2680239B4A70008DED9E /* BPSegmentControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSegmentControllerView.swift; sourceTree = "<group>"; };
 		223D2681239B4A70008DED9E /* BPItemHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPItemHeaderView.swift; sourceTree = "<group>"; };
+		223D5EFB24527D6900482127 /* YXCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCalendarView.swift; sourceTree = "<group>"; };
 		224352C223A1DF5400F278E6 /* YXChallengeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeModel.swift; sourceTree = "<group>"; };
 		224352C423A1E91B00F278E6 /* YXChallengePropertyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengePropertyView.swift; sourceTree = "<group>"; };
 		224352CA23A240AF00F278E6 /* YXChallengeRankTopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXChallengeRankTopView.swift; sourceTree = "<group>"; };
@@ -3187,6 +3189,7 @@
 				EE5EFEC023274FE900655654 /* YXCalendarChartView.m */,
 				EE5EFEC223274FE900655654 /* YXCalendarBookCell.m */,
 				EE5EFEC423274FE900655654 /* YXCalendarHeaderView.m */,
+				223D5EFB24527D6900482127 /* YXCalendarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4337,6 +4340,7 @@
 				77626BF0239DFE1100B9407A /* YXWordListViewController.swift in Sources */,
 				77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */,
 				224352E523A5089E00F278E6 /* YXGameQuestionSubview.swift in Sources */,
+				223D5EFC24527D6900482127 /* YXCalendarView.swift in Sources */,
 				EED3D4252331DE2D00121218 /* YXEvnOC.m in Sources */,
 				EE4E6B222398F04A002B845A /* YXExerciseRequest.swift in Sources */,
 				77B7C70723AA44E800149ACE /* YXRegisterAndLoginRequest.swift in Sources */,

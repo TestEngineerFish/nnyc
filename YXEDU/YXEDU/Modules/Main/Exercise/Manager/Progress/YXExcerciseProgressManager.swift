@@ -153,13 +153,13 @@ class YXExcerciseProgressManager: NSObject {
     
     /// 本地未学完的数据
     func loadLocalExerciseModels() -> ([YXWordExerciseModel], [YXWordStepsModel]) {
-        var filePath = YYDataSourceManager.dbFilePath(fileName: key(.new))
+        var filePath = YXFileManager.share.getStudyPath() + key(.new)
         var new: [YXWordExerciseModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
             new = Array<YXWordExerciseModel>(JSONString: str)
         }
         
-        filePath = YYDataSourceManager.dbFilePath(fileName: key(.review))
+        filePath = YXFileManager.share.getStudyPath() + key(.review)
         var review: [YXWordStepsModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
             review = Array<YXWordStepsModel>(JSONString: str)
@@ -169,13 +169,13 @@ class YXExcerciseProgressManager: NSObject {
     
     
     func loadLocalTurnData() -> ([YXWordExerciseModel], [YXWordExerciseModel]) {
-        var filePath = YYDataSourceManager.dbFilePath(fileName: key(.current))
+        var filePath = YXFileManager.share.getStudyPath() + key(.current)
         var current: [YXWordExerciseModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
             current = Array<YXWordExerciseModel>(JSONString: str)
         }
         
-        filePath = YYDataSourceManager.dbFilePath(fileName: key(.previous))
+        filePath = YXFileManager.share.getStudyPath() + key(.previous)
         var previous: [YXWordExerciseModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
             previous = Array<YXWordExerciseModel>(JSONString: str)
@@ -355,12 +355,12 @@ class YXExcerciseProgressManager: NSObject {
     /// 保持到本地文件
     /// - Parameter exerciseModels: 数据
     private func saveToLocalFile(jsonString: String?, localKey: LocalKey) {
-        let filePath = YYDataSourceManager.dbFilePath(fileName: key(localKey))
+        let filePath = YXFileManager.share.getStudyPath() + key(localKey)
         try? jsonString?.write(toFile: filePath, atomically: true, encoding: .utf8)
     }
     
     private func removeLocalFile(_ localKey: LocalKey) {
-        let filePath = YYDataSourceManager.dbFilePath(fileName: self.key(localKey))
+        let filePath = YXFileManager.share.getStudyPath() + key(localKey)
         let result = YXFileManager.share.clearFile(path: filePath)
         YXLog(localKey, "数据完成，本地数据删除：", result )
     }
