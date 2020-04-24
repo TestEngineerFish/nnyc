@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Growing.start(withAccountId: kGrowingIOID)
 //        #endif
         Growing.setEnableLog(false)
+        YXFileManager.share.moveToNewStudyPath()
     }
     
     func initViewAndData() {
