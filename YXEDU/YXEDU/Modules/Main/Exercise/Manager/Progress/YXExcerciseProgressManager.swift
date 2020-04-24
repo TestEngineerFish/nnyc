@@ -365,4 +365,10 @@ class YXExcerciseProgressManager: NSObject {
         YXLog(localKey, "数据完成，本地数据删除：", result )
     }
     
+    class func clearAllKeyCache() {
+        let allKey = UserDefaults.standard.dictionaryRepresentation()
+        
+//        for
+    }
+    
 }

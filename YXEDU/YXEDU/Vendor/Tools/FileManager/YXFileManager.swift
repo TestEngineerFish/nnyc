@@ -152,7 +152,7 @@ struct YXFileManager {
     /// 清除学习记录缓存
     func clearStudyCache() {
         self.clearFile(path: self.getStudyPath())
-
+        YXExcerciseProgressManager.clearAllKeyCache()
     }
 
     func saveFile(to path: String) {
