@@ -34,7 +34,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var studyDataCollectionView: UICollectionView!
     @IBOutlet weak var subItemCollectionView: UICollectionView!
     var squirrelAnimationView: AnimationView?
-    @IBOutlet weak var entryViewHeightConstraint: NSLayoutConstraint!
     
     @IBAction func startExercise(_ sender: UIButton) {
         YXLog("====开始主流程的学习====")

@@ -119,14 +119,35 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     private func resetCache() {
-        let alertView = YXAlertView()
-        alertView.descriptionLabel.text = "清除后将删除当前尚未学完的学习记录，是否确定？"
-        alertView.doneClosure = { _ in
-           
-            
-            
-        }
+        YXFileManager.share.clearStudyCache()
+        self.view.makeToast("清除成功")
         
-        alertView.show()
+//        let alertView = YXAlertView()
+//        alertView.descriptionLabel.text = "清除后将删除当前尚未学完的学习记录，是否确定？"
+//        alertView.doneClosure = { _ in
+//
+//            YXReviewDataManager().fetchReviewPlanData { [weak self] (pageModel, errorMsg) in
+//                guard let self = self else { return }
+//                if let reviewModel = pageModel, let plans = reviewModel.reviewPlans {
+//                    for plan in plans {
+//                        let progressManager = YXExcerciseProgressManager()
+//                        progressManager.planId = plan.planId
+//                        progressManager.dataType = .planListenReview
+//                        progressManager.completionExercise()
+//                        progressManager.completionReport()
+//                        progressManager.dataType = .planReview
+//                        progressManager.completionExercise()
+//                        progressManager.completionReport()
+//                    }
+//
+//                } else if let msg = errorMsg {
+//                    UIView.toast(msg)
+//                }
+//            }
+//
+//            YXFileManager.share.clearStudyCache()
+//        }
+//
+//        alertView.show()
     }
 }

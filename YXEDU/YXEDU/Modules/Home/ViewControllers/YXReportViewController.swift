@@ -35,7 +35,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
 
         studyContentTableView.register(UINib(nibName: "YXStudyReportContentCell", bundle: nil), forCellReuseIdentifier: "YXStudyReportContentCell")
-        fetchStudyReport()
+        fetchStudyReport(withDate: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +52,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewWillDisappear(animated)
     }
     
-    private func fetchStudyReport(withDate date: TimeInterval = Date().timeIntervalSince1970) {
+    private func fetchStudyReport(withDate date: TimeInterval) {
         let taskListRequest = YXStudyReportRequest.stutyReport(date: date)
         YYNetworkService.default.request(YYStructResponse<YXStudyReportModel>.self, request: taskListRequest, success: { [weak self] response in
             guard let self = self else { return }
@@ -118,11 +118,20 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func showBetterWords(_ sender: Any) {
-        
+        let wrongWordListView = YXWrongWordsListView()
+        wrongWordListView.titleLabel.text = ""
+        let wordsList = studyResult?.betterWords ?? []
+        wrongWordListView.bindData(wordsList)
+        let h = wordsList.count > 3 ? AdaptSize(367) : AdaptSize(170)
+        YXAlertCustomView.share.show(wrongWordListView, h: h)
     }
     
     @IBAction func showImproveWords(_ sender: Any) {
-        
+        let wrongWordListView = YXWrongWordsListView()
+        let wordsList = studyResult?.improveWords ?? []
+        wrongWordListView.bindData(wordsList)
+        let h = wordsList.count > 3 ? AdaptSize(367) : AdaptSize(170)
+        YXAlertCustomView.share.show(wrongWordListView, h: h)
     }
 
     // MARK: -
