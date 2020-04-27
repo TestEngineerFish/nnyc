@@ -146,7 +146,11 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        vc.hidesBottomBarWhenPushed = true
 //        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
 //        YXFileManager.share.clearStudyCache()
-        YXCalendarView(frame: .zero, selected: Date()).show()
+        let v = YXCalendarView(frame: .zero, selected: Date())
+        v.selectedBlock = { date in
+            YXLog(date)
+        }
+        v.show()
         return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
             return

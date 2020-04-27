@@ -40,7 +40,6 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         case normal       = 0
         case downloadBook = 1
         case requestApi   = 2
-        case selectWord   = 3
 
         func getDesction() -> String {
             switch self {
@@ -50,8 +49,6 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 return "正在下载词书…"
             case .requestApi:
                 return "正在加载学习数据…"
-            case .selectWord:
-                return "正在加载单词数据…"
             }
         }
 
@@ -62,8 +59,6 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             case .downloadBook:
                 return 0.4
             case .requestApi:
-                return 1.0
-            case .selectWord:
                 return 1.0
             }
         }
@@ -76,8 +71,6 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 return 2.0
             case .requestApi:
                 return 2.5
-            case .selectWord:
-                return 0.5
             }
         }
     }
