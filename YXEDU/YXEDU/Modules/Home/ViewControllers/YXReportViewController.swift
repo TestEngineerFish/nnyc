@@ -12,6 +12,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
 
     private var studyResult: YXStudyReportResultModel?
     private var studyContent: [YXStudyReportResultContentModel]?
+    private var selectDate: TimeInterval = 0
     
     @IBOutlet weak var heightOfCenterView: NSLayoutConstraint!
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
@@ -35,7 +36,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
 
         studyContentTableView.register(UINib(nibName: "YXStudyReportContentCell", bundle: nil), forCellReuseIdentifier: "YXStudyReportContentCell")
-        fetchStudyReport(withDate: 0)
+        fetchStudyReport(withDate: selectDate)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,7 +115,14 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     @IBAction func changeDate(_ sender: Any) {
+        let currentSelectDate = selectDate == 0 ? Date() : Date(timeIntervalSince1970: selectDate)
+        let calendarView = YXCalendarView(frame: .zero, selected: currentSelectDate)
+        calendarView.selectedBlock = { date in
+            self.selectDate = date.timeIntervalSince1970
+            self.fetchStudyReport(withDate: self.selectDate)
+        }
         
+        calendarView.show()
     }
     
     @IBAction func showBetterWords(_ sender: Any) {
