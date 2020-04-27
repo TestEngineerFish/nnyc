@@ -11,6 +11,9 @@ import Foundation
 class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate {
 
     var validDict = [String:YXCalendarStudyModel]()
+    var selectedBlock: ((Date)->Void)?
+    var selectedDate: Date
+    var selectedDateStr = ""
 
     var backgroundView: UIView = {
         let view = UIView()
@@ -70,7 +73,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
         calendar.appearance.todayColor           = .clear
         calendar.appearance.borderSelectionColor = .clear
         calendar.appearance.selectionColor       = .orange1
-        calendar.appearance.todaySelectionColor  = .white
+        calendar.appearance.todaySelectionColor  = .orange1
         calendar.appearance.titleSelectionColor  = .white
         return calendar
     }()
@@ -81,9 +84,6 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(17))
         return button
     }()
-
-    var selectedBlock: ((Date)->Void)?
-    var selectedDate: Date
 
     init(frame: CGRect, selected: Date) {
         self.selectedDate = selected
@@ -147,19 +147,27 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
         self.backgroundView.addGestureRecognizer(tapAction)
         self.downButton.addTarget(self, action: #selector(downAction), for: .touchUpInside)
         self.calendarView.select(self.selectedDate)
+        self.leftButton.addTarget(self, action: #selector(clickPreviousButton), for: .touchUpInside)
+        self.rightButton.addTarget(self, action: #selector(clickNextButton), for: .touchUpInside)
     }
 
     // MARK: ==== Request ====
     internal func requestCalendarData() {
         let request = YXCalendarRequest.getMonthly(time: Int(self.selectedDate.timeIntervalSince1970))
         YYNetworkService.default.request(YYStructResponse<YXCalendarModel>.self, request: request, success: { (response) in
-            // 当天日期，特殊处理
             guard let model = response.data else {
                 return
             }
             self.validDict.removeAll()
             model.studyModel.forEach { (studyModel) in
-                self.validDict.updateValue(studyModel, forKey: "\(studyModel.time ?? 0)")
+                let date = NSDate(timeIntervalSince1970: Double(studyModel.time ?? 0))
+                self.validDict.updateValue(studyModel, forKey: date.formatYMD())
+            }
+             // 当天日期，特殊处理
+            if let _ = self.validDict[self.selectedDateStr] {
+                self.calendarView.appearance.titleTodayColor = UIColor.black1
+            } else {
+                self.calendarView.appearance.titleTodayColor = UIColor.black4
             }
             self.calendarView.reloadData()
         }) { (error) in
@@ -209,21 +217,33 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
         self.rightButton.setTitle(rightStr, for: .normal)
     }
 
+    @objc internal func clickPreviousButton() {
+        self.selectedDate = NSDate.offsetMonths(-1, from: self.selectedDate)
+        self.calendarView.select(self.selectedDate, scrollToDate: true)
+        self.updateDate()
+    }
+
+    @objc internal func clickNextButton() {
+        self.selectedDate = NSDate.offsetMonths(1, from: self.selectedDate)
+        self.calendarView.select(self.selectedDate, scrollToDate: true)
+        self.updateDate()
+    }
+
     // MARK: ==== FSCalendar Delegate & Datasource
 
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if let _ = self.validDict["\(Int(date.timeIntervalSince1970))"] {
+        guard let _dateStr = (date as NSDate).formatYMD() else { return }
+        if let _ = self.validDict[_dateStr] {
             cell.titleLabel.textColor = UIColor.black1
+        } else if _dateStr == self.selectedDateStr {
+            cell.titleLabel.textColor = UIColor.white
         } else {
             cell.titleLabel.textColor = UIColor.black4
         }
-//        if (date as NSDate).isSameDay(self.selectedDate) {
-//            cell.appearance.selectionColor = UIColor.orange1
-//            cell.appearance.titleSelectionColor = UIColor.white
-//        }
     }
 
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        self.selectedDate = date
+        self.selectedDate    = date
+        self.selectedDateStr = (date as NSDate).formatYMD()
     }
 }
