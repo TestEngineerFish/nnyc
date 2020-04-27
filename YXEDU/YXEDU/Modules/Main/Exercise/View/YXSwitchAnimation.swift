@@ -39,7 +39,7 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
         }
         self.owenrView?.isUserInteractionEnabled = false
         resultView.play()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             resultView.removeFromSuperview()
             self.owenrView?.isUserInteractionEnabled = true
             self.animationDidStop?(true)
@@ -56,7 +56,7 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
 //        }
         self.owenrView?.isUserInteractionEnabled = false
 //        resultView.play()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 //            resultView.removeFromSuperview()
             self.owenrView?.isUserInteractionEnabled = true
             self.animationDidStop?(false)

@@ -153,6 +153,7 @@
         // 如果符合条件，则跳过新学
         if YXConfigure.shared().isSkipNewLearn {
             dataManager.skipNewWord()
+            YXLog("跳过新学流程")
             // 跳过上报新学到GIO
             YYCache.set(true, forKey: .newLearnReportGIO)
         } else {
