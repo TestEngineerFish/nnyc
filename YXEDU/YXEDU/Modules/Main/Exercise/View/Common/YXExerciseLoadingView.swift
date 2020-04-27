@@ -152,7 +152,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             make.height.equalTo(AdaptSize(15))
             make.centerX.equalToSuperview()
         }
-        self.progressLayer.frame = CGRect(x: 0, y: 0, width: progressWidth, height: AdaptSize(15))
+        self.progressLayer.frame = CGRect(x: 0, y: 0, width: progressWidth + AdaptSize(7.5), height: AdaptSize(15))
         self.dotLayer.frame      = CGRect(x: 0, y: 0, width: AdaptSize(15), height: AdaptSize(15))
         squirrelView.play()
         return headerView

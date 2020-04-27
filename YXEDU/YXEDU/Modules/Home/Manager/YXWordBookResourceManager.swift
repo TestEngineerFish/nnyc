@@ -18,6 +18,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     static var isDownloading   = false
     static var wordNumber      = 0
     var downloadBookCount      = 0
+    var totalDownloadCount     = 0
     static var writeDBFinished: Bool?
     private var closure: ((_ isSuccess: Bool) -> Void)?
     var finishBlock: (()->Void)?
@@ -89,6 +90,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         }
         // 如果有需要下载的词书
         if self.downloadBookCount > 0 {
+            self.totalDownloadCount = self.downloadBookCount
             YXWordBookResourceManager.writeDBFinished = false
             self.closure?(false)
         } else {
@@ -152,7 +154,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 if index == wordsList.count - 1 && lastUnit {
                     YXLog("==== 词书\(bookModel.bookId ?? 0)写入完成 ====")
                     self.downloadBookCount -= 1
-                    YXLog("当前剩余下载词书数量\(self.downloadBookCount)")
+                    YXLog("当前剩余下载词书数量：\(self.downloadBookCount)/\(self.totalDownloadCount)")
                     self.saveBook(with: bookModel, async: true)
                     if self.downloadBookCount == 0 {
                         YXLog("==== 写入DB数据完成✅ ====")

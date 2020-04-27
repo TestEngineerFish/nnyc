@@ -51,7 +51,7 @@
     [formatterForRequest addToWhitelist:LOG_CONTEXT_REQUEST];
     [self.loggerFoRequest setLogFormatter:formatterForRequest];
     self.loggerFoRequest.maximumFileSize = 1024 * 1024 * 1;
-    self.loggerFoRequest.logFileManager.maximumNumberOfLogFiles = 7;
+    self.loggerFoRequest.logFileManager.maximumNumberOfLogFiles = 14;
     [DDLog addLogger:self.loggerFoRequest withLevel:DDLogLevelVerbose | LOG_FLAG_REQUEST];
     // 普通日志
     DDLogFileManagerDefault *fileManagerForEvent = [[DDLogFileManagerDefault alloc] initWithLogsDirectory:[logsDirectory stringByAppendingPathComponent:@"Event"]];
@@ -60,7 +60,7 @@
     [formatterForEvent addToWhitelist:LOG_CONTEXT_EVENT];
     [self.loggerForEvent setLogFormatter:formatterForEvent];
     self.loggerForEvent.maximumFileSize = 1024 * 1024 * 1;
-    self.loggerForEvent.logFileManager.maximumNumberOfLogFiles = 5;
+    self.loggerForEvent.logFileManager.maximumNumberOfLogFiles = 7;
     [DDLog addLogger:self.loggerForEvent withLevel:DDLogLevelVerbose | LOG_FLAG_EVENT];
     // 控制台输出
     [DDLog addLogger:[DDOSLogger sharedInstance] withLevel:DDLogLevelInfo | LOG_FLAG_EVENT];
