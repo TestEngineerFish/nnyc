@@ -13,7 +13,11 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
     var validDict = [String:YXCalendarStudyModel]()
     var selectedBlock: ((Date)->Void)?
     var selectedDate: Date
-    var selectedDateStr = ""
+    var selectedDateStr: String {
+        get {
+            (self.selectedDate as NSDate).formatYMD()
+        }
+    }
 
     var backgroundView: UIView = {
         let view = UIView()
@@ -68,13 +72,12 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
         calendar.backgroundColor                 = .white
         calendar.appearance.weekdayTextColor     = .black3
         calendar.appearance.weekdayFont          = .regularFont(ofSize: AdaptSize(12))
-        calendar.appearance.titleDefaultColor    = .black1
+        calendar.appearance.titleDefaultColor    = .black4
+        calendar.appearance.titlePlaceholderColor = .black4
         calendar.appearance.titleFont            = .regularFont(ofSize: AdaptSize(15))
         calendar.appearance.todayColor           = .clear
-        calendar.appearance.borderSelectionColor = .clear
         calendar.appearance.selectionColor       = .orange1
         calendar.appearance.todaySelectionColor  = .orange1
-        calendar.appearance.titleSelectionColor  = .white
         return calendar
     }()
 
@@ -165,14 +168,16 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
             }
              // 当天日期，特殊处理
             if let _ = self.validDict[self.selectedDateStr] {
-                self.calendarView.appearance.titleTodayColor = UIColor.black1
+                self.calendarView.appearance.titleTodayColor = .black1
+            } else if NSDate().formatYMD() == self.selectedDateStr {
+                self.calendarView.appearance.titleTodayColor = .white
             } else {
-                self.calendarView.appearance.titleTodayColor = UIColor.black4
+                self.calendarView.appearance.titleTodayColor = .black4
             }
             self.calendarView.reloadData()
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
-//            self.hide()
+            self.hide()
         }
     }
 
@@ -234,16 +239,20 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate 
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
         guard let _dateStr = (date as NSDate).formatYMD() else { return }
         if let _ = self.validDict[_dateStr] {
-            cell.titleLabel.textColor = UIColor.black1
-        } else if _dateStr == self.selectedDateStr {
-            cell.titleLabel.textColor = UIColor.white
-        } else {
-            cell.titleLabel.textColor = UIColor.black4
+            cell.appearance.titleSelectionColor = .white
+            cell.preferredTitleDefaultColor     = .black1
         }
     }
 
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+        guard let _dateStr = (date as NSDate).formatYMD() else { return false }
+        if let _ = self.validDict[_dateStr] {
+            return true
+        }
+        return false
+    }
+
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        self.selectedDate    = date
-        self.selectedDateStr = (date as NSDate).formatYMD()
+        self.selectedDate = date
     }
 }
