@@ -196,12 +196,11 @@ struct YYNetworkService {
         let encoding: ParameterEncoding = (request.method == .get) ? URLEncoding.default : URLEncoding.httpBody
         let method = HTTPMethod(rawValue: request.method.rawValue) ?? .get
         YXRequestLog(String(format: "%@ = request url:%@ params:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? ""))
-
         let task = sessionManager.request(request.url, method: method, parameters: params, encoding: encoding, headers: header)
         task.responseObject { (response: DataResponse <T>) in
             switch response.result {
             case .success(var x):
-                if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8) {
+                if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8), !request.url.absoluteString.hasSuffix("api/v1/book/getbookwords") {
                     YXRequestLog(String(format: "【Success】 request url: %@, respnseObject: %@", request.url.absoluteString, dataStr))
                 }
                 x.response = response.response

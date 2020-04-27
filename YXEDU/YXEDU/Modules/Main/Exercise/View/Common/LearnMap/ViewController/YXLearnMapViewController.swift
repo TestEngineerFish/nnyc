@@ -167,6 +167,7 @@ class YXLearnMapViewController: UIViewController {
                 vc.bookId   = bookId
                 vc.unitId   = unitId
                 vc.hidesBottomBarWhenPushed = true
+                YXLog("==== 从地图页选择单元学习 ====")
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: false)
             }
         }) { (error) in
