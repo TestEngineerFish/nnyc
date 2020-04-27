@@ -320,7 +320,7 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame));
+    self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + AdaptSize(15));
 }
 
 - (void)_initUI {
@@ -365,11 +365,12 @@ static CGFloat const kPickViewHeight = 272.f;
         make.height.mas_equalTo(AdaptSize(81.f));
     }];
 
+    CGFloat tableContainerHeight = self.showReportButotn ? AdaptSize(183) + AdaptSize(50) : AdaptSize(183);
     [self.tableContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentScroll).with.offset(AdaptSize(25));
         make.right.equalTo(self.contentScroll).with.offset(AdaptSize(-25));
         make.top.equalTo(self.monthSummaryView.mas_bottom).with.offset(AdaptSize(15));
-        make.height.mas_equalTo(AdaptSize(183));
+        make.height.mas_equalTo(tableContainerHeight);
     }];
 
     [self.fruitIcon mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -485,11 +486,11 @@ static CGFloat const kPickViewHeight = 272.f;
         [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(tableViewHeight);
         }];
-            CGFloat tableContainerHeight = self.showReportButotn ? AdaptSize(183) + AdaptSize(50) : AdaptSize(183);
+        CGFloat tableContainerHeight = self.showReportButotn ? AdaptSize(183) + AdaptSize(50) : AdaptSize(183);
         [self.tableContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(tableContainerHeight);
         }];
-        self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMinY(self.tableContainerView.frame) + AdaptSize(183));
+        self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + AdaptSize(15));
         [self.tableView reloadData];
     }];
 }
