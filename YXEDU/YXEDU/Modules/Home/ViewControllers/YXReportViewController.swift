@@ -8,11 +8,12 @@
 
 import UIKit
 
+@objc
 class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     private var studyResult: YXStudyReportResultModel?
     private var studyContent: [YXStudyReportResultContentModel]?
-    private var selectDate: TimeInterval = 0
+    @objc var selectDate: TimeInterval = 0
     
     @IBOutlet weak var heightOfCenterView: NSLayoutConstraint!
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
@@ -111,7 +112,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 
     @IBAction func changeDate(_ sender: Any) {

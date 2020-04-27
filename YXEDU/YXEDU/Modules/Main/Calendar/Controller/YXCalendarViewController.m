@@ -620,8 +620,10 @@ static CGFloat const kPickViewHeight = 272.f;
 }
 
 - (void)checkReport {
-    NSString *dateStr = [NSDate stringWithDate:self.currentSelectedDate format:NSDate.ymdFormat];
-    YXLog(@"查看%@的学习报告", dateStr);
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Home" bundle: nil];
+    YXStudyReportViewController *studyReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"YXStudyReportViewController"];
+    studyReportViewController.selectDate = [self.currentSelectedDate timeIntervalSince1970];
+    [self.navigationController pushViewController:studyReportViewController animated:YES];
 }
 
 #pragma mark - TableView Delegate & DataSource
