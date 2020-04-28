@@ -98,7 +98,7 @@ static CGFloat const kPickViewHeight = 272.f;
     _dayData = dayData;
     if (dayData == nil) {
         [self showNoNetWorkView];
-    } else if (dayData.learning_data.review_words.count > 0 || dayData.learning_data.study_words.count > 0) {
+    } else if (dayData.review_item.count > 0 || dayData.study_item.count > 0) {
         [self showTableView];
         [self.tableView reloadData];
     } else {
@@ -437,7 +437,7 @@ static CGFloat const kPickViewHeight = 272.f;
 - (void)getMonthlyData:(NSDate *)date {
     [YXUtils showLoadingInfo:kHUDTipsWait toView:self.view];
     __weak typeof(self) weakSelf = self;
-    NSDictionary *param = @{@"year" : @(date.year), @"month" : @(date.month)};
+    NSDictionary *param = @{@"time" : @(date.timeIntervalSince1970)};
     [YXDataProcessCenter GET:DOMAIN_CALENDARMONTHLYDATA parameters:param finshedBlock:^(YRHttpResponse *response, BOOL result) {
         [YXUtils hideHUD:self.view];
         if (result) {
@@ -468,10 +468,10 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (void)getDailyData: (NSDate *)date {
     [YXUtils showLoadingInfo:kHUDTipsWait toView:self.view];
-    NSNumber *year = [NSNumber numberWithUnsignedInteger:date.year];
-    NSNumber *month = [NSNumber numberWithUnsignedInteger:date.month];
-    NSNumber *day = [NSNumber numberWithUnsignedInteger:date.day];
-    NSDictionary *param = @{@"year" : year, @"month" : month, @"day" : day};
+//    NSNumber *year = [NSNumber numberWithUnsignedInteger:date.year];
+//    NSNumber *month = [NSNumber numberWithUnsignedInteger:date.month];
+//    NSNumber *day = [NSNumber numberWithUnsignedInteger:date.day];
+    NSDictionary *param = @{@"time" : @(date.timeIntervalSince1970)};
     [YXDataProcessCenter GET:DOMAIN_CALENDARDAILYDATA parameters:param finshedBlock:^(YRHttpResponse *response, BOOL result) {
         [YXUtils hideHUD:self.view];
         if (result) {
@@ -480,7 +480,7 @@ static CGFloat const kPickViewHeight = 272.f;
         }else {
             self.dayData = nil;
         }
-        self.showReportButotn = self.dayData.learning_data.study_times > 0;
+        self.showReportButotn = self.dayData.study_duration > 0;
         CGFloat tableViewHeight = AdaptSize(kHeaderHeight) * 3.f;
         tableViewHeight = self.showReportButotn ? tableViewHeight + AdaptSize(50) : tableViewHeight;
         [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {

@@ -62,7 +62,7 @@
     if (section == 0) {
         [self.icon setImage:[UIImage imageNamed:@"calendar_icon_review"]];
         [self.titleLabel setText:@"完成复习"];
-        NSUInteger amountBook = day.learning_data.review_words.count;
+        NSUInteger amountBook = day.review_item.count;
         NSUInteger amountCell = day.reviewCellList.count;
         [self.amountLabel setText:[NSString stringWithFormat:@"%lu", amountCell - amountBook]];
         NSString *imageName = day.showReviewList ? @"list_open" : @"list_close";
@@ -70,7 +70,7 @@
     } else if (section == 1) {
         [self.icon setImage:[UIImage imageNamed:@"calendar_icon_ab"]];
         [self.titleLabel setText:@"新学单词"];
-        NSUInteger amountBook = day.learning_data.study_words.count;
+        NSUInteger amountBook = day.study_item.count;
         NSUInteger amountCell = day.studiedCellList.count;
         [self.amountLabel setText:[NSString stringWithFormat:@"%lu", amountCell - amountBook]];
         NSString *imageName = day.showStudiedList ? @"list_open" : @"list_close";
@@ -78,7 +78,7 @@
     } else {
         [self.icon setImage:[UIImage imageNamed:@"calendar_icon_time"]];
         [self.titleLabel setText:@"当天学习时长"];
-        [self.amountLabel setText: [NSString stringWithFormat:@"%02lu:%02lu", day.learning_data.study_times/60, day.learning_data.study_times%60]];
+        [self.amountLabel setText: [NSString stringWithFormat:@"%02lu:%02lu", day.study_duration/60, day.study_duration%60]];
         [self.amountLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.contentView).with.offset(AdaptSize(-18));
         }];

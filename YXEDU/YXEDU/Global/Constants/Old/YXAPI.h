@@ -506,7 +506,7 @@ V = nil;\
 #define DOMAIN_CALENDARMONTHLYDATA STRCAT(SCHEME,STRCAT(YX_IP,@"/api/v1/daily/getmonthly")) // ⭐️
 
 /** 日历-日汇总数据 */
-#define DOMAIN_CALENDARDAILYDATA STRCAT(SCHEME,STRCAT(YX_IP,@"/api/v1/user/punch/daily")) // ⭐️
+#define DOMAIN_CALENDARDAILYDATA STRCAT(SCHEME,STRCAT(YX_IP,@"/api/v1/daily/getdayinfo")) // ⭐️
 
 /** 日历-每月分享图 */
 #define DOMAIN_CALENDARSHAREIMAGE STRCAT(SCHEME,STRCAT(YX_DOMAIN_V2,@"/punch/share")) // ⭐️
