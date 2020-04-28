@@ -82,6 +82,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.registerDaysCountLabel.text = "\(data.registerDaysCount ?? 0)"
             
+            self.selectDate = data.date ?? 0
             if date == 0 || Calendar.current.isDateInToday(Date(timeIntervalSince1970: data.date ?? 0)) {
                 self.reportDateLabel.text = "今日学习报告"
                 
@@ -151,7 +152,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     @IBAction func changeDate(_ sender: Any) {
-        let currentSelectDate = selectDate == 0 ? Date() : Date(timeIntervalSince1970: selectDate)
+        let currentSelectDate = selectDate == 0 ? Date() : Date(timeIntervalSince1970: self.selectDate)
         let calendarView = YXCalendarView(frame: .zero, selected: currentSelectDate)
         calendarView.selectedBlock = { date in
             self.selectDate = date.timeIntervalSince1970
