@@ -624,6 +624,7 @@ static CGFloat const kPickViewHeight = 272.f;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Home" bundle: nil];
     YXStudyReportViewController *studyReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"YXStudyReportViewController"];
     studyReportViewController.selectDate = [self.currentSelectedDate timeIntervalSince1970];
+    studyReportViewController.canSelectDate = NO;
     [self.navigationController pushViewController:studyReportViewController animated:YES];
 }
 

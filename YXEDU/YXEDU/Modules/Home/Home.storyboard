@@ -1468,6 +1468,8 @@
                         <outlet property="studyWordsCountImageView" destination="MLW-Pp-z1F" id="oD5-lj-KmW"/>
                         <outlet property="studyWordsCountLabel" destination="R1H-oq-MVR" id="EuQ-fA-6sB"/>
                         <outlet property="studyWordsCountPercentLabel" destination="jsy-wE-cmd" id="qJL-JK-sib"/>
+                        <outlet property="switchDateButton" destination="llo-x9-Hch" id="ZSe-kx-bCk"/>
+                        <outlet property="switchDateButtonImage" destination="pvx-kG-kZs" id="eI0-My-Qda"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A50-CF-bF8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

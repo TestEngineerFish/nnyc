@@ -283,6 +283,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             } else {
                 startStudyButton.setTitle("开始背单词", for: .normal)
             }
+            
+        } else {
+            startStudyButton.setTitle("开始背单词", for: .normal)
         }
     }
 

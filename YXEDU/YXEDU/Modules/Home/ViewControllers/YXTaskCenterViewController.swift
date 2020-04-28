@@ -186,7 +186,9 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         let cell = tableView.dequeueReusableCell(withIdentifier: "YXTaskCenterCell", for: indexPath) as! YXTaskCenterCell
         let taskList = taskLists[indexPath.row]
         
-        cell.titleLabel.text = taskList.typeName
+        if (taskList.list?.count ?? 0) > 0 {
+            cell.titleLabel.text = taskList.typeName
+        }
 
         cell.collectionView.tag = indexPath.row
         cell.collectionView.delegate = self

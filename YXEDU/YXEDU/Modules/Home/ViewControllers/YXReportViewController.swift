@@ -14,11 +14,14 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     private var studyResult: YXStudyReportResultModel?
     private var studyContent: [YXStudyReportResultContentModel]?
     @objc var selectDate: TimeInterval = 0
-    
+    @objc var canSelectDate = true
+
     @IBOutlet weak var heightOfCenterView: NSLayoutConstraint!
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
     @IBOutlet weak var registerDaysCountLabel: UILabel!
     @IBOutlet weak var reportDateLabel: UILabel!
+    @IBOutlet weak var switchDateButton: UIButton!
+    @IBOutlet weak var switchDateButtonImage: UIImageView!
     @IBOutlet weak var studyDurationLabel: UILabel!
     @IBOutlet weak var newWordsCountLabel: UILabel!
     @IBOutlet weak var reviewWordsCountLabel: UILabel!
@@ -48,6 +51,11 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
         self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xFFA83E)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
         self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+        if canSelectDate == false {
+            switchDateButton.isHidden = true
+            switchDateButtonImage.isHidden = true
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,17 +69,29 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             
             if let data = response.data {
                 if let string = data.user?.avatar, let url = URL(string: string) {
-                    self.avatarImageView.sd_setImage(with: url)
+                    self.avatarImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "challengeAvatar"))
+                    
+                } else {
+                    self.avatarImageView.image = #imageLiteral(resourceName: "challengeAvatar")
                 }
                 
                 self.registerDaysCountLabel.text = "\(data.registerDaysCount ?? 0)"
                 
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "M月d日 学习报告"
-                let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: data.date ?? 0))
-                self.reportDateLabel.text = dateString
+                if date == 0 || Calendar.current.isDateInToday(Date(timeIntervalSince1970: date)) {
+                    self.reportDateLabel.text = "今日学习报告"
 
-                self.studyDurationLabel.text = "\(data.studyDuration ?? 0)"
+                } else if Calendar.current.isDateInYesterday(Date(timeIntervalSince1970: date)) {
+                    self.reportDateLabel.text = "昨日学习报告"
+
+                } else {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "M月d日 学习报告"
+                    let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: data.date ?? 0))
+                    self.reportDateLabel.text = dateString
+                }
+              
+
+                self.studyDurationLabel.text = "\(Int(data.studyDuration ?? 0) / 60)"
                 self.newWordsCountLabel.text = "\(data.newWordsCount ?? 0)"
                 self.reviewWordsCountLabel.text = "\(data.reviewWordsCount ?? 0)"
 
