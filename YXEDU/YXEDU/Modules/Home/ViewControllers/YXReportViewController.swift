@@ -65,57 +65,55 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     private func fetchStudyReport(withDate date: TimeInterval) {
         let taskListRequest = YXStudyReportRequest.stutyReport(date: date)
         YYNetworkService.default.request(YYStructResponse<YXStudyReportModel>.self, request: taskListRequest, success: { [weak self] response in
-            guard let self = self else { return }
-            
-            if let data = response.data {
-                if let string = data.user?.avatar, let url = URL(string: string) {
-                    self.avatarImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "challengeAvatar"))
-                    
-                } else {
-                    self.avatarImageView.image = #imageLiteral(resourceName: "challengeAvatar")
-                }
-                
-                self.registerDaysCountLabel.text = "\(data.registerDaysCount ?? 0)"
-                
-                if date == 0 || Calendar.current.isDateInToday(Date(timeIntervalSince1970: date)) {
-                    self.reportDateLabel.text = "今日学习报告"
-
-                } else if Calendar.current.isDateInYesterday(Date(timeIntervalSince1970: date)) {
-                    self.reportDateLabel.text = "昨日学习报告"
-
-                } else {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "M月d日 学习报告"
-                    let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: data.date ?? 0))
-                    self.reportDateLabel.text = dateString
-                }
-              
-
-                self.studyDurationLabel.text = "\(Int(data.studyDuration ?? 0) / 60)"
-                self.newWordsCountLabel.text = "\(data.newWordsCount ?? 0)"
-                self.reviewWordsCountLabel.text = "\(data.reviewWordsCount ?? 0)"
-
-                self.studyResult = data.studyResult
-                self.betterWordsCountButton.setTitle("\(self.studyResult?.betterWords?.count ?? 0)", for: .normal)
-                self.improveWordsCountButton.setTitle("\(self.studyResult?.improveWords?.count ?? 0)", for: .normal)
-
-                self.studyContent = data.studyContent
-                self.heightOfCenterView.constant = CGFloat(406 + ((self.studyContent?.count ?? 0) * 28))
-                self.studyContentTableView.reloadData()
-                
-                self.studyWordsCountLabel.text = "\(data.studyAnaliysis?.studyWordsCount ?? 0)"
-                self.studyWordsCountPercentLabel.text = "\(data.studyAnaliysis?.studyWordsCountPercent ?? 0)%"
-                if let badge = data.studyBadge, badge.count > 0, let url = URL(string: badge[0]) {
-                    self.studyWordsCountImageView.sd_setImage(with: url)
-                }
-                self.studyDaysCountLabel.text = "\(data.studyAnaliysis?.studyDaysCount ?? 0)"
-                self.studyDaysCountPercentLabel.text = "\(data.studyAnaliysis?.studyDaysCountPercent ?? 0)%"
-                if let badge = data.studyBadge, badge.count > 1, let url = URL(string: badge[1]) {
-                    self.studyDaysCountImageView.sd_setImage(with: url)
-                }
-
-            } else {
+            guard let self = self, let data = response.data else { return }
+            guard let studyDuration = data.studyDuration else {
                 self.showBlankView()
+                return
+            }
+            
+            if let string = data.user?.avatar, let url = URL(string: string) {
+                self.avatarImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "challengeAvatar"))
+                
+            } else {
+                self.avatarImageView.image = #imageLiteral(resourceName: "challengeAvatar")
+            }
+            
+            self.registerDaysCountLabel.text = "\(data.registerDaysCount ?? 0)"
+            
+            if date == 0 || Calendar.current.isDateInToday(Date(timeIntervalSince1970: date)) {
+                self.reportDateLabel.text = "今日学习报告"
+                
+            } else if Calendar.current.isDateInYesterday(Date(timeIntervalSince1970: date)) {
+                self.reportDateLabel.text = "昨日学习报告"
+                
+            } else {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "M月d日 学习报告"
+                let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: data.date ?? 0))
+                self.reportDateLabel.text = dateString
+            }
+            
+            self.studyDurationLabel.text = "\(Int(studyDuration / 60))"
+            self.newWordsCountLabel.text = "\(data.newWordsCount ?? 0)"
+            self.reviewWordsCountLabel.text = "\(data.reviewWordsCount ?? 0)"
+            
+            self.studyResult = data.studyResult
+            self.betterWordsCountButton.setTitle("\(self.studyResult?.betterWords?.count ?? 0)", for: .normal)
+            self.improveWordsCountButton.setTitle("\(self.studyResult?.improveWords?.count ?? 0)", for: .normal)
+            
+            self.studyContent = data.studyContent
+            self.heightOfCenterView.constant = CGFloat(406 + ((self.studyContent?.count ?? 0) * 28))
+            self.studyContentTableView.reloadData()
+            
+            self.studyWordsCountLabel.text = "\(data.studyAnaliysis?.studyWordsCount ?? 0)"
+            self.studyWordsCountPercentLabel.text = "\(data.studyAnaliysis?.studyWordsCountPercent ?? 0)%"
+            if let badge = data.studyBadge, badge.count > 0, let url = URL(string: badge[0]) {
+                self.studyWordsCountImageView.sd_setImage(with: url)
+            }
+            self.studyDaysCountLabel.text = "\(data.studyAnaliysis?.studyDaysCount ?? 0)"
+            self.studyDaysCountPercentLabel.text = "\(data.studyAnaliysis?.studyDaysCountPercent ?? 0)%"
+            if let badge = data.studyBadge, badge.count > 1, let url = URL(string: badge[1]) {
+                self.studyDaysCountImageView.sd_setImage(with: url)
             }
             
         }) { error in
@@ -127,7 +125,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
         heightOfCenterView.constant = 240
         blankView.isHidden = false
         blankView.tapButtonClosure = {
-            
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
     
@@ -140,6 +138,11 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
         let calendarView = YXCalendarView(frame: .zero, selected: currentSelectDate)
         calendarView.selectedBlock = { date in
             self.selectDate = date.timeIntervalSince1970
+            
+            if self.selectDate > Date().timeIntervalSince1970 {
+                self.selectDate = 0
+            }
+            
             self.fetchStudyReport(withDate: self.selectDate)
         }
         
@@ -147,19 +150,21 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func showBetterWords(_ sender: Any) {
+        guard let words = studyResult?.betterWords, words.count > 0 else { return }
+        
         let wrongWordListView = YXWrongWordsListView()
-        wrongWordListView.titleLabel.text = ""
-        let wordsList = studyResult?.betterWords ?? []
-        wrongWordListView.bindData(wordsList)
-        let h = wordsList.count > 3 ? AdaptSize(367) : AdaptSize(170)
+        wrongWordListView.titleLabel.text = "掌握的较好的单词"
+        wrongWordListView.bindData(words)
+        let h = words.count > 3 ? AdaptSize(367) : AdaptSize(170)
         YXAlertCustomView.share.show(wrongWordListView, h: h)
     }
     
     @IBAction func showImproveWords(_ sender: Any) {
+        guard let words = studyResult?.improveWords, words.count > 0 else { return }
+
         let wrongWordListView = YXWrongWordsListView()
-        let wordsList = studyResult?.improveWords ?? []
-        wrongWordListView.bindData(wordsList)
-        let h = wordsList.count > 3 ? AdaptSize(367) : AdaptSize(170)
+        wrongWordListView.bindData(words)
+        let h = words.count > 3 ? AdaptSize(367) : AdaptSize(170)
         YXAlertCustomView.share.show(wrongWordListView, h: h)
     }
 
