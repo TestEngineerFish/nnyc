@@ -2874,21 +2874,21 @@
 		EE5EF1C223273BAD00655654 /* YRNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				EE5EF1C323273BAD00655654 /* YRHttpTask.m */,
-				EE5EF1C423273BAD00655654 /* YRNetworkManager+Cache.h */,
-				EE5EF1C523273BAD00655654 /* YRError.h */,
-				EE5EF1C623273BAD00655654 /* YRHttpResponse.m */,
-				EE5EF1C723273BAD00655654 /* YRNetworkManager.h */,
 				EE5EF1C823273BAD00655654 /* UIKit */,
-				EE5EF1CB23273BAD00655654 /* YRNetworkConfiguration.h */,
-				EE5EF1CC23273BAD00655654 /* YRHttpDownloadTask.h */,
-				EE5EF1CD23273BAD00655654 /* YRHttpTask.h */,
+				EE5EF1C523273BAD00655654 /* YRError.h */,
 				EE5EF1CE23273BAD00655654 /* YRError.m */,
-				EE5EF1CF23273BAD00655654 /* YRNetwork.h */,
-				EE5EF1D023273BAD00655654 /* YRNetworkManager+Cache.m */,
-				EE5EF1D123273BAD00655654 /* YRNetworkManager.m */,
-				EE5EF1D223273BAD00655654 /* YRHttpResponse.h */,
+				EE5EF1CC23273BAD00655654 /* YRHttpDownloadTask.h */,
 				EE5EF1D323273BAE00655654 /* YRHttpDownloadTask.m */,
+				EE5EF1D223273BAD00655654 /* YRHttpResponse.h */,
+				EE5EF1C623273BAD00655654 /* YRHttpResponse.m */,
+				EE5EF1CD23273BAD00655654 /* YRHttpTask.h */,
+				EE5EF1C323273BAD00655654 /* YRHttpTask.m */,
+				EE5EF1CF23273BAD00655654 /* YRNetwork.h */,
+				EE5EF1CB23273BAD00655654 /* YRNetworkConfiguration.h */,
+				EE5EF1C723273BAD00655654 /* YRNetworkManager.h */,
+				EE5EF1D123273BAD00655654 /* YRNetworkManager.m */,
+				EE5EF1C423273BAD00655654 /* YRNetworkManager+Cache.h */,
+				EE5EF1D023273BAD00655654 /* YRNetworkManager+Cache.m */,
 			);
 			path = YRNetwork;
 			sourceTree = "<group>";

@@ -198,12 +198,17 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             self.addLoadingTime += self.timeInterval
             // 更新提示文案
             if self.addStepTime >= self.stepTimeOut {
-                self.descLabel.text = self.status.getDesction()
+//                YXLog("加载超时，更新文案")
+                DispatchQueue.main.async {
+                    self.descLabel.text = self.status.getDesction()
+                }
             }
             if self.addLoadingTime > self.loadingTimeOut {
                 self.stopAnimation()
-                UIView().currentViewController?.navigationController?.popViewController(animated: true)
-                YXUtils.showHUD(kWindow, title: "当前网速较慢，建议稍后重试")
+                DispatchQueue.main.async {
+                    UIView().currentViewController?.navigationController?.popViewController(animated: true)
+                    YXUtils.showHUD(kWindow, title: "当前网速较慢，建议稍后重试")
+                }
             }
             self.updateValue()
         })

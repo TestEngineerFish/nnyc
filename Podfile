@@ -14,7 +14,7 @@ target 'YXEDU' do
      pod 'CocoaLumberjack'
      pod 'CocoaLumberjack/Swift'
      pod 'Bugly'
-     pod 'AFNetworking', '~> 3.2.1'
+     pod 'AFNetworking'
      pod 'SSKeychain'
      pod 'YYKit'
      pod 'IQKeyboardManager' , '~> 6.2.0'

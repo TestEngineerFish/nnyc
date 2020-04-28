@@ -183,7 +183,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 self.starView.isHidden      = false
                 self.starView.layer.opacity = 0.3
             }
-            self.status                 = .playingSecondWordInSecondStage
+            self.status = .playingSecondWordInSecondStage
             self.playByStatus()
             self.starView.showLastNewLearnResultView(score: wordModel?.listenScore ?? 0)
         }

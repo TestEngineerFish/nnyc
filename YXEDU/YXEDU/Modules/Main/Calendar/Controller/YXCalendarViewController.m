@@ -149,8 +149,14 @@ static CGFloat const kPickViewHeight = 272.f;
 - (YXCalendarMonthSummaryView *)monthSummaryView {
     if (!_monthSummaryView) {
         YXCalendarMonthSummaryView *monthSummaryView = [[YXCalendarMonthSummaryView alloc] init];
-        monthSummaryView.backgroundColor = UIColor.clearColor;
-        _monthSummaryView = monthSummaryView;
+        monthSummaryView.backgroundColor     = UIColor.whiteColor;
+        monthSummaryView.layer.cornerRadius  = AdaptSize(6);
+        monthSummaryView.layer.shadowColor   = [UIColor colorWithRed:199/255.0 green:199/255.0 blue:199/255.0 alpha:0.5].CGColor;
+        monthSummaryView.layer.shadowOffset  = CGSizeMake(0,0);
+        monthSummaryView.layer.shadowOpacity = 1;
+        monthSummaryView.layer.shadowRadius  = 10;
+        _monthSummaryView                    = monthSummaryView;
+
     }
     return _monthSummaryView;
 }
@@ -320,7 +326,7 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + AdaptSize(15));
+    self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + kSafeBottomMargin);
 }
 
 - (void)_initUI {
@@ -360,12 +366,12 @@ static CGFloat const kPickViewHeight = 272.f;
 
     [self.monthSummaryView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.monthDataView.mas_bottom).with.offset(AdaptSize(-40.f));
-        make.left.equalTo(self.monthDataView).with.offset(AdaptSize(15.f));
-        make.right.equalTo(self.monthDataView).with.offset(AdaptSize(-15.f));
+        make.left.equalTo(self.monthDataView).with.offset(AdaptSize(25.f));
+        make.right.equalTo(self.monthDataView).with.offset(AdaptSize(-25.f));
         make.height.mas_equalTo(AdaptSize(81.f));
     }];
 
-    CGFloat tableContainerHeight = self.showReportButotn ? AdaptSize(183) + AdaptSize(50) : AdaptSize(183);
+    CGFloat tableContainerHeight = self.showReportButotn ? AdaptSize(221) : AdaptSize(183);
     [self.tableContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentScroll).with.offset(AdaptSize(25));
         make.right.equalTo(self.contentScroll).with.offset(AdaptSize(-25));
@@ -468,9 +474,6 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (void)getDailyData: (NSDate *)date {
     [YXUtils showLoadingInfo:kHUDTipsWait toView:self.view];
-//    NSNumber *year = [NSNumber numberWithUnsignedInteger:date.year];
-//    NSNumber *month = [NSNumber numberWithUnsignedInteger:date.month];
-//    NSNumber *day = [NSNumber numberWithUnsignedInteger:date.day];
     NSDictionary *param = @{@"time" : @(date.timeIntervalSince1970)};
     [YXDataProcessCenter GET:DOMAIN_CALENDARDAILYDATA parameters:param finshedBlock:^(YRHttpResponse *response, BOOL result) {
         [YXUtils hideHUD:self.view];
@@ -486,11 +489,11 @@ static CGFloat const kPickViewHeight = 272.f;
         [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(tableViewHeight);
         }];
-        CGFloat tableContainerHeight = self.showReportButotn ? AdaptSize(183) + AdaptSize(50) : AdaptSize(183);
+        CGFloat tableContainerHeight = self.showReportButotn ? AdaptSize(221) : AdaptSize(183);
         [self.tableContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(tableContainerHeight);
         }];
-        self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + AdaptSize(15));
+        self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + kSafeBottomMargin);
         [self.tableView reloadData];
     }];
 }

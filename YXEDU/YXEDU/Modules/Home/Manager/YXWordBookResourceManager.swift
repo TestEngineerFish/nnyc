@@ -157,7 +157,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             }
             YXLog("下载\(bookId)完成...")
             bookModel.bookHash = newHash
-            self.saveWords(with: bookModel, async: true)
+            DispatchQueue.global().async {
+                self.saveWords(with: bookModel, async: true)
+            }
         }) { (error) in
             self.group.leave()
             YXUtils.showHUD(kWindow, title: error.message)

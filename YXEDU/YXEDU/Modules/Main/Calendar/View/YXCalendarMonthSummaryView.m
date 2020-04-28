@@ -24,16 +24,10 @@
 {
     self = [super init];
     if (self) {
-        UIImageView *msgBubble = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"calendar_msg_bubble"]];
-        [self addSubview:msgBubble];
-        [msgBubble mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self);
-        }];
-
         UIImageView *squirrel = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"calendar_squirrel"]];
         [self addSubview:squirrel];
         [squirrel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(msgBubble.mas_centerY);
+            make.bottom.equalTo(self.mas_centerY);
             make.left.equalTo(self).with.offset(AdaptSize(-13.f));
             make.size.mas_equalTo(CGSizeMake(AdaptSize(75.f), AdaptSize(84.f)));
         }];
@@ -43,16 +37,16 @@
         title1.font = [UIFont regularFontOfSize:12];
         title1.text = @"本月坚持学习";
         title1.textAlignment = NSTextAlignmentCenter;
-        [msgBubble addSubview:title1];
+        [self addSubview:title1];
         CGFloat titleWidth = (kSCREEN_WIDTH - AdaptSize(73.f) - AdaptSize(40.f))/3.f;
         [title1 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(squirrel.mas_right);
-            make.top.equalTo(msgBubble).with.offset(AdaptSize(20));
+            make.top.equalTo(self).with.offset(AdaptSize(20));
             make.width.mas_equalTo(titleWidth);
         }];
 
         UILabel *title2 = [[UILabel alloc] init];
-        [msgBubble addSubview:title2];
+        [self addSubview:title2];
         title2.textColor = UIColorOfHex(0x888888);
         title2.font = [UIFont regularFontOfSize:12];
         title2.text = @"累计学习单词";
@@ -64,7 +58,7 @@
         }];
 
         UILabel *title3 = [[UILabel alloc] init];
-        [msgBubble addSubview:title3];
+        [self addSubview:title3];
         title3.textColor = UIColorOfHex(0x888888);
         title3.font = [UIFont regularFontOfSize:12];
         title3.text = @"累计学习时长";
@@ -76,7 +70,7 @@
         }];
 
         _studyDaysLabel = [[UILabel alloc] init];
-        [msgBubble addSubview:_studyDaysLabel];
+        [self addSubview:_studyDaysLabel];
         NSMutableAttributedString *attrStr1 = [[NSMutableAttributedString alloc] initWithString:@"--天" attributes:@{NSFontAttributeName: [UIFont semiboldFontOfSize:AdaptSize(14)],NSForegroundColorAttributeName: UIColorOfHex(0x8095AB)}];
         [attrStr1 addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:AdaptSize(20)], NSForegroundColorAttributeName: UIColorOfHex(0xFBA217)} range:NSMakeRange(0, 2)];
         _studyDaysLabel.attributedText = attrStr1;
@@ -91,7 +85,7 @@
         [attrStr2 addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:AdaptSize(20)], NSForegroundColorAttributeName: UIColorOfHex(0xFBA217)} range:NSMakeRange(0, 2)];
         _studyWordsLabel.attributedText = attrStr2;
         _studyWordsLabel.textAlignment = NSTextAlignmentCenter;
-        [msgBubble addSubview:_studyWordsLabel];
+        [self addSubview:_studyWordsLabel];
         [_studyWordsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.width.equalTo(title2);
             make.top.equalTo(title2.mas_bottom).with.offset(AdaptSize(3.f));
@@ -102,7 +96,7 @@
         [attrStr3 addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:AdaptSize(20)], NSForegroundColorAttributeName: UIColorOfHex(0xFBA217)} range:NSMakeRange(0, 2)];
         _studyTimesLabel.attributedText = attrStr3;
         _studyTimesLabel.textAlignment = NSTextAlignmentCenter;
-        [msgBubble addSubview:_studyTimesLabel];
+        [self addSubview:_studyTimesLabel];
         [_studyTimesLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.width.equalTo(title3);
             make.top.equalTo(title3.mas_bottom).with.offset(AdaptSize(3.f));

@@ -70,7 +70,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
         calendar.locale                           = Locale(identifier: "zh-CN")
         calendar.scrollDirection                  = .horizontal
         calendar.backgroundColor                  = .white
-        calendar.appearance.weekdayTextColor      = .black3
+        calendar.appearance.weekdayTextColor      = UIColor.black3.withAlphaComponent(0.8)
         calendar.appearance.weekdayFont           = .regularFont(ofSize: AdaptSize(12))
         calendar.appearance.titleDefaultColor     = .black4
         calendar.appearance.titlePlaceholderColor = .black4
@@ -219,6 +219,11 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
             let nextMonthStr = ((date as NSDate).offsetMonths(1) as NSDate).string(withFormat: "M") ?? ""
             return String(format: "%@月", nextMonthStr)
         }()
+        if ((date as NSDate).month() == NSDate().month()) && ((date as NSDate).year() == NSDate().year()) {
+            self.rightButton.isHidden = true
+        } else {
+            self.rightButton.isHidden = false
+        }
         self.titleLabel.text = titleStr
         self.leftButton.setTitle(leftStr, for: .normal)
         self.rightButton.setTitle(rightStr, for: .normal)
@@ -226,13 +231,13 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
 
     @objc internal func clickPreviousButton() {
         self.selectedDate = NSDate.offsetMonths(-1, from: self.selectedDate)
-        self.calendarView.select(self.selectedDate, scrollToDate: true)
+       self.calendarView.setCurrentPage(self.selectedDate, animated: true)
         self.updateDate(self.selectedDate)
     }
 
     @objc internal func clickNextButton() {
         self.selectedDate = NSDate.offsetMonths(1, from: self.selectedDate)
-        self.calendarView.select(self.selectedDate, scrollToDate: true)
+        self.calendarView.setCurrentPage(self.selectedDate, animated: true)
         self.updateDate(self.selectedDate)
     }
 
@@ -259,9 +264,12 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
         }
     }
 
-
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         self.requestCalendarData(calendar.currentPage)
         self.updateDate(calendar.currentPage)
+    }
+
+    func maximumDate(for calendar: FSCalendar) -> Date {
+        return Date()
     }
 }

@@ -19,7 +19,7 @@ class YXAVPlayerManager: NSObject {
 
     var player: AVPlayer = {
         let player = AVPlayer()
-        player.volume = 1.0
+//        player.volume = 1.0
         
         if #available(iOS 10.0, *) {
             do {// 静音键打开的时候，播放也需要有声音
@@ -62,13 +62,18 @@ class YXAVPlayerManager: NSObject {
         let playerItem = YYMediaCache.default.playerItem(url)
         if playerItem.asset.isPlayable {
             self.player.replaceCurrentItem(with: playerItem)
+            self.player.seek(to: .zero)
             self.player.play()
             self.isPlaying = true
+            if let error = self.player.error {
+                YXLog("⚠️", error)
+            }
         } else {
             YXLog("无效音频,地址：" + url.absoluteString)
             YXUtils.showHUD(kWindow, title: "无效音频")
             YYMediaCache.default.deleteCache(url)
             self.playFinished()
+            self.player.cancelPendingPrerolls()
         }
     }
 
