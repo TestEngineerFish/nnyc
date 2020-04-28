@@ -79,20 +79,29 @@ class YXAlertCustomView: UIView {
     }
 
     func show(_ subview: UIView, h: CGFloat) {
+        subview.tag = 999
         self.contentView.addSubview(subview)
         kWindow.addSubview(self)
+        
         self.contentView.snp.updateConstraints { (make) in
             make.height.equalTo(h)
         }
+        
         subview.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        
         self.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
     }
 
     @objc private func hide() {
+        for subview in self.contentView.subviews {
+            guard subview.tag == 999 else { continue }
+            subview.removeFromSuperview()
+        }
+        
         self.removeFromSuperview()
     }
 }

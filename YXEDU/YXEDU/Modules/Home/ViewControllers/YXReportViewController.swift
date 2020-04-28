@@ -82,10 +82,10 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.registerDaysCountLabel.text = "\(data.registerDaysCount ?? 0)"
             
-            if date == 0 || Calendar.current.isDateInToday(Date(timeIntervalSince1970: date)) {
+            if date == 0 || Calendar.current.isDateInToday(Date(timeIntervalSince1970: data.date ?? 0)) {
                 self.reportDateLabel.text = "今日学习报告"
                 
-            } else if Calendar.current.isDateInYesterday(Date(timeIntervalSince1970: date)) {
+            } else if Calendar.current.isDateInYesterday(Date(timeIntervalSince1970: data.date ?? 0)) {
                 self.reportDateLabel.text = "昨日学习报告"
                 
             } else {

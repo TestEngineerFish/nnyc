@@ -16,6 +16,7 @@ class YXWrongWordsListView: UIView, UITableViewDataSource {
         label.textColor     = UIColor.black1
         label.font          = UIFont.regularFont(ofSize: AdaptSize(17))
         label.textAlignment = .center
+        label.backgroundColor = .white
         return label
     }()
 

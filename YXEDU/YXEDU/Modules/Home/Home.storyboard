@@ -996,7 +996,7 @@
                                                 <rect key="frame" x="20" y="118" width="374" height="490"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sx3-xB-3Lm">
-                                                        <rect key="frame" x="224.66666666666663" y="103.33333333333331" width="149.33333333333337" height="20"/>
+                                                        <rect key="frame" x="225" y="103.33333333333331" width="149" height="20"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="vjo-1i-mfH"/>
@@ -1027,19 +1027,22 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BEE-us-epV">
-                                                        <rect key="frame" x="159" y="88.666666666666657" width="28.333333333333343" height="41"/>
+                                                        <rect key="frame" x="158.66666666666666" y="88.666666666666657" width="28.333333333333343" height="41"/>
                                                         <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="35"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分钟" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Y7-Wg-bwH">
-                                                        <rect key="frame" x="189.33333333333334" y="102.66666666666669" width="35.333333333333343" height="21"/>
+                                                        <rect key="frame" x="189" y="102.66666666666669" width="36" height="21"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="36" id="6VS-5p-wdi"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHD-Q9-5Ep" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="143.66666666666669" width="159.33333333333334" height="54"/>
+                                                        <rect key="frame" x="20" y="143.66666666666669" width="159" height="54"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="个" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jH1-HL-Th1">
                                                                 <rect key="frame" x="83.666666666666671" y="10" width="12" height="14"/>
@@ -1077,22 +1080,22 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6rC-d6-cB4" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                                        <rect key="frame" x="189.33333333333337" y="143.66666666666669" width="164.66666666666663" height="54"/>
+                                                        <rect key="frame" x="189" y="143.66666666666669" width="165" height="54"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="个" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aE8-XE-EiS">
-                                                                <rect key="frame" x="86.333333333333343" y="10" width="12" height="15"/>
+                                                                <rect key="frame" x="86.666666666666686" y="10" width="12" height="15"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVT-0M-QaI">
-                                                                <rect key="frame" x="70.333333333333343" y="6" width="16" height="21"/>
+                                                                <rect key="frame" x="70.666666666666686" y="6" width="16" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="复习单词" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vek-ga-4VB">
-                                                                <rect key="frame" x="57.333333333333343" y="29" width="50" height="15"/>
+                                                                <rect key="frame" x="57.666666666666686" y="29" width="50" height="15"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -1188,7 +1191,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXx-h1-ePf">
-                                                        <rect key="frame" x="0.0" y="103.33333333333331" width="159" height="20"/>
+                                                        <rect key="frame" x="0.0" y="103.33333333333331" width="158.66666666666666" height="20"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="ifh-9w-5Li"/>
@@ -1337,16 +1340,16 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MLW-Pp-z1F">
-                                                        <rect key="frame" x="258" y="16.666666666666629" width="96" height="76"/>
+                                                        <rect key="frame" x="258" y="21.666666666666629" width="96" height="66"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="76" id="8e9-iO-n5d"/>
+                                                            <constraint firstAttribute="height" constant="66" id="8e9-iO-n5d"/>
                                                             <constraint firstAttribute="width" constant="96" id="aCm-RW-1dY"/>
                                                         </constraints>
                                                     </imageView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lcP-Mb-w1l">
-                                                        <rect key="frame" x="258" y="94.666666666666629" width="96" height="76"/>
+                                                        <rect key="frame" x="258" y="99.666666666666629" width="96" height="66"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="76" id="XSS-JY-ebN"/>
+                                                            <constraint firstAttribute="height" constant="66" id="XSS-JY-ebN"/>
                                                             <constraint firstAttribute="width" constant="96" id="zNk-Pd-7vP"/>
                                                         </constraints>
                                                     </imageView>
