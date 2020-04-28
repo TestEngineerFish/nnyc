@@ -20,15 +20,6 @@ class YXAVPlayerManager: NSObject {
     var player: AVPlayer = {
         let player = AVPlayer()
 //        player.volume = 1.0
-        
-        if #available(iOS 10.0, *) {
-            do {// 静音键打开的时候，播放也需要有声音
-                let session = AVAudioSession.sharedInstance()
-                try session.setCategory(.playback, mode: .default, options: [])
-            } catch _ as NSError {
-            }
-        }
-        
         return player
     }()
 
@@ -61,6 +52,7 @@ class YXAVPlayerManager: NSObject {
     func play(_ url: URL) {
         let playerItem = YYMediaCache.default.playerItem(url)
         if playerItem.asset.isPlayable {
+            try? AVAudioSession.sharedInstance().setCategory(.playback)
             self.player.replaceCurrentItem(with: playerItem)
             self.player.seek(to: .zero)
             self.player.play()
@@ -73,7 +65,6 @@ class YXAVPlayerManager: NSObject {
             YXUtils.showHUD(kWindow, title: "无效音频")
             YYMediaCache.default.deleteCache(url)
             self.playFinished()
-            self.player.cancelPendingPrerolls()
         }
     }
 

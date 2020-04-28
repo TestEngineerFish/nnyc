@@ -128,6 +128,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     private func downloadProcessor() {
         DispatchQueue.global().async(group: group, qos: .default, flags: []) {
             for (index, model) in YXWordBookResourceManager.downloadDataList.enumerated() {
+                if !YXUserModel.default.didLogin {
+                    YXWordBookResourceManager.downloadDataList.removeAll()
+                    return
+                }
                 if index < 10 {
                     self.group.enter()
                     self.downloadSingleWordBook(with: model.0, newHash: model.1)

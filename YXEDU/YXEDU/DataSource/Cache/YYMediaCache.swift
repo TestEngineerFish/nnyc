@@ -33,7 +33,7 @@ class YYMediaCache: NSObject {
     
     
     public func playerItem(_ url: URL) -> AVPlayerItem {
-        let item = AVPlayerItem(url: url)
+        let item = AVPlayerItem(url: self.proxyUrl(url))
         return item
     }
     
