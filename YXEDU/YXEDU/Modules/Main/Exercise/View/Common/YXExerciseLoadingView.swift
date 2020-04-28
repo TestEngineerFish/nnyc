@@ -39,7 +39,8 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
 
         case normal       = 0
         case downloadBook = 1
-        case requestApi   = 2
+        case requestIng   = 2
+        case requestEnd   = 3
 
         func getDesction() -> String {
             switch self {
@@ -47,7 +48,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 return "努力加载中…"
             case .downloadBook:
                 return "正在下载词书…"
-            case .requestApi:
+            case .requestIng, .requestEnd:
                 return "正在加载学习数据…"
             }
         }
@@ -58,7 +59,11 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 return 1.0
             case .downloadBook:
                 return 0.4
-            case .requestApi:
+            case .requestIng:
+                YXLog("还在请求，进度0.9")
+                return 0.9
+            case .requestEnd:
+                YXLog("已请求，进度1.0")
                 return 1.0
             }
         }
@@ -69,7 +74,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 return 5.0
             case .downloadBook:
                 return 2.0
-            case .requestApi:
+            case .requestIng, .requestEnd:
                 return 2.5
             }
         }
@@ -230,13 +235,15 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             self.status = .downloadBook
             if YXWordBookResourceManager.writeDBFinished == .some(true) {
                 self.downloadCompleteBlock?()
+                self.downloadCompleteBlock = nil
                 self.speed  = .highSpeed
                 // 请求之前需要先下载完词书
                 if YXExerciseViewController.requesting != nil {
-                    self.status = .requestApi
                     if YXExerciseViewController.requesting == .some(true) {
+                        self.status = .requestIng
                         self.speed  = .normal
                     } else {
+                        self.status = .requestEnd
                         self.speed  = .highSpeed
                     }
                 }
