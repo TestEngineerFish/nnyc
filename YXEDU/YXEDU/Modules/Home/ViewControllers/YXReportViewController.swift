@@ -26,7 +26,9 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var newWordsCountLabel: UILabel!
     @IBOutlet weak var reviewWordsCountLabel: UILabel!
     @IBOutlet weak var betterWordsCountButton: UIButton!
+    @IBOutlet weak var betterWordsCountButtonImageView: UIImageView!
     @IBOutlet weak var improveWordsCountButton: UIButton!
+    @IBOutlet weak var improveWordsCountButtonImageView: UIImageView!
     @IBOutlet weak var studyContentTableView: UITableView!
     @IBOutlet weak var studyWordsCountLabel: UILabel!
     @IBOutlet weak var studyWordsCountPercentLabel: UILabel!
@@ -66,7 +68,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
         let taskListRequest = YXStudyReportRequest.stutyReport(date: date)
         YYNetworkService.default.request(YYStructResponse<YXStudyReportModel>.self, request: taskListRequest, success: { [weak self] response in
             guard let self = self, let data = response.data else { return }
-            guard let studyDuration = data.studyDuration else {
+            guard let studyDuration = data.studyDuration, studyDuration > 0 else {
                 self.showBlankView()
                 return
             }
@@ -98,8 +100,23 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             self.reviewWordsCountLabel.text = "\(data.reviewWordsCount ?? 0)"
             
             self.studyResult = data.studyResult
-            self.betterWordsCountButton.setTitle("\(self.studyResult?.betterWords?.count ?? 0)", for: .normal)
-            self.improveWordsCountButton.setTitle("\(self.studyResult?.improveWords?.count ?? 0)", for: .normal)
+            if let betterWordsCount = self.studyResult?.betterWords?.count, betterWordsCount > 0 {
+                self.betterWordsCountButton.setTitle("\(betterWordsCount)", for: .normal)
+
+            } else {
+                self.betterWordsCountButton.setTitle("0", for: .normal)
+                self.betterWordsCountButton.setTitleColor(UIColor.hex(0xDCDCDC), for: .normal)
+                self.betterWordsCountButtonImageView.alpha = 0.5
+            }
+            
+            if let improveWordsCount = self.studyResult?.improveWords?.count, improveWordsCount > 0 {
+                self.improveWordsCountButton.setTitle("\(improveWordsCount)", for: .normal)
+
+            } else {
+                self.improveWordsCountButton.setTitle("0", for: .normal)
+                self.improveWordsCountButton.setTitleColor(UIColor.hex(0xDCDCDC), for: .normal)
+                self.improveWordsCountButtonImageView.alpha = 0.5
+            }
             
             self.studyContent = data.studyContent
             self.heightOfCenterView.constant = CGFloat(406 + ((self.studyContent?.count ?? 0) * 28))

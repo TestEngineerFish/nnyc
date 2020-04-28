@@ -188,6 +188,9 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         
         if (taskList.list?.count ?? 0) > 0 {
             cell.titleLabel.text = taskList.typeName
+            
+        } else {
+            cell.titleLabel.text = " "
         }
 
         cell.collectionView.tag = indexPath.row

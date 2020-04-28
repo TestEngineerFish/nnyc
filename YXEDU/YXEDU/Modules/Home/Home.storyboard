@@ -995,6 +995,13 @@
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pD3-Dv-Cwg" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="118" width="374" height="490"/>
                                                 <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sx3-xB-3Lm">
+                                                        <rect key="frame" x="224.66666666666663" y="103.33333333333331" width="149.33333333333337" height="20"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="20" id="vjo-1i-mfH"/>
+                                                        </constraints>
+                                                    </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学习日报" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Pj-kb-Mxc">
                                                         <rect key="frame" x="20" y="24" width="70" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
@@ -1019,20 +1026,20 @@
                                                         <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BEE-us-epV">
-                                                        <rect key="frame" x="159" y="88.666666666666657" width="28.666666666666657" height="41"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BEE-us-epV">
+                                                        <rect key="frame" x="159" y="88.666666666666657" width="28.333333333333343" height="41"/>
                                                         <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="35"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分钟" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Y7-Wg-bwH">
-                                                        <rect key="frame" x="189.66666666666666" y="102.66666666666669" width="35" height="21"/>
+                                                        <rect key="frame" x="189.33333333333334" y="102.66666666666669" width="35.333333333333343" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHD-Q9-5Ep" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="143.66666666666669" width="159.66666666666666" height="54"/>
+                                                        <rect key="frame" x="20" y="143.66666666666669" width="159.33333333333334" height="54"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="个" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jH1-HL-Th1">
                                                                 <rect key="frame" x="83.666666666666671" y="10" width="12" height="14"/>
@@ -1070,22 +1077,22 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6rC-d6-cB4" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                                                        <rect key="frame" x="189.66666666666663" y="143.66666666666669" width="164.33333333333337" height="54"/>
+                                                        <rect key="frame" x="189.33333333333337" y="143.66666666666669" width="164.66666666666663" height="54"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="个" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aE8-XE-EiS">
-                                                                <rect key="frame" x="86.000000000000028" y="10" width="12" height="15"/>
+                                                                <rect key="frame" x="86.333333333333343" y="10" width="12" height="15"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVT-0M-QaI">
-                                                                <rect key="frame" x="70.000000000000028" y="6" width="16" height="21"/>
+                                                                <rect key="frame" x="70.333333333333343" y="6" width="16" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="复习单词" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vek-ga-4VB">
-                                                                <rect key="frame" x="57.000000000000028" y="29" width="50" height="15"/>
+                                                                <rect key="frame" x="57.333333333333343" y="29" width="50" height="15"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -1146,7 +1153,7 @@
                                                             <constraint firstAttribute="width" constant="8" id="X89-Kf-DPP"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jeA-kR-uN3">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jeA-kR-uN3">
                                                         <rect key="frame" x="312" y="247.66666666666669" width="30" height="32"/>
                                                         <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="17"/>
                                                         <state key="normal" title="--">
@@ -1156,7 +1163,7 @@
                                                             <action selector="showBetterWords:" destination="N4y-4U-KXc" eventType="touchUpInside" id="bY2-CE-sH6"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y4X-pl-gTO">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y4X-pl-gTO">
                                                         <rect key="frame" x="312" y="279.66666666666669" width="30" height="32"/>
                                                         <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="17"/>
                                                         <state key="normal" title="--">
@@ -1180,6 +1187,13 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXx-h1-ePf">
+                                                        <rect key="frame" x="0.0" y="103.33333333333331" width="159" height="20"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="20" id="ifh-9w-5Li"/>
+                                                        </constraints>
+                                                    </view>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XYG-hH-gnn" customClass="YXStudyReportBlankView" customModule="YXEDU" customModuleProvider="target">
                                                         <rect key="frame" x="6" y="6" width="362" height="234"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1194,6 +1208,7 @@
                                                     <constraint firstItem="Da3-C0-7hD" firstAttribute="leading" secondItem="pD3-Dv-Cwg" secondAttribute="leading" constant="20" id="326-3z-Td0"/>
                                                     <constraint firstItem="6rC-d6-cB4" firstAttribute="top" secondItem="0Y7-Wg-bwH" secondAttribute="bottom" constant="20" id="3ah-rH-Qqp"/>
                                                     <constraint firstItem="XYG-hH-gnn" firstAttribute="top" secondItem="pD3-Dv-Cwg" secondAttribute="top" constant="6" id="3b2-cR-l9e"/>
+                                                    <constraint firstItem="BEE-us-epV" firstAttribute="leading" secondItem="sXx-h1-ePf" secondAttribute="trailing" id="3dH-1B-dbD"/>
                                                     <constraint firstItem="tHD-Q9-5Ep" firstAttribute="top" secondItem="0Y7-Wg-bwH" secondAttribute="bottom" constant="20" id="4XW-2w-exA"/>
                                                     <constraint firstAttribute="trailing" secondItem="XYG-hH-gnn" secondAttribute="trailing" constant="6" id="5Pg-7f-nST"/>
                                                     <constraint firstItem="0Y7-Wg-bwH" firstAttribute="leading" secondItem="BEE-us-epV" secondAttribute="trailing" constant="2" id="6Z8-39-Qfm"/>
@@ -1202,25 +1217,31 @@
                                                     <constraint firstItem="i8l-TY-Z0S" firstAttribute="top" secondItem="zS9-la-BHy" secondAttribute="bottom" constant="40" id="FuD-qh-bFg"/>
                                                     <constraint firstItem="pvx-kG-kZs" firstAttribute="leading" secondItem="llo-x9-Hch" secondAttribute="trailing" id="H9R-1o-TLS"/>
                                                     <constraint firstAttribute="trailing" secondItem="NRt-Rs-ChB" secondAttribute="trailing" constant="20" id="HHB-B7-Jwy"/>
+                                                    <constraint firstItem="Sx3-xB-3Lm" firstAttribute="leading" secondItem="0Y7-Wg-bwH" secondAttribute="trailing" id="JOF-cn-cEU"/>
                                                     <constraint firstItem="i8l-TY-Z0S" firstAttribute="leading" secondItem="pD3-Dv-Cwg" secondAttribute="leading" constant="20" id="JxZ-cP-zQB"/>
                                                     <constraint firstItem="6Pj-kb-Mxc" firstAttribute="top" secondItem="pD3-Dv-Cwg" secondAttribute="top" constant="24" id="K84-rY-Toz"/>
                                                     <constraint firstItem="0Y7-Wg-bwH" firstAttribute="leading" secondItem="tHD-Q9-5Ep" secondAttribute="trailing" constant="10" id="L1g-AX-WbO"/>
                                                     <constraint firstItem="Da3-C0-7hD" firstAttribute="top" secondItem="tHD-Q9-5Ep" secondAttribute="bottom" constant="24" id="MtP-2N-GXU"/>
+                                                    <constraint firstItem="sXx-h1-ePf" firstAttribute="leading" secondItem="pD3-Dv-Cwg" secondAttribute="leading" id="Nbo-0B-7id"/>
                                                     <constraint firstItem="6rC-d6-cB4" firstAttribute="leading" secondItem="tHD-Q9-5Ep" secondAttribute="trailing" constant="10" id="PSp-Gd-o6G"/>
                                                     <constraint firstAttribute="trailing" secondItem="2ed-wD-zNh" secondAttribute="trailing" constant="20" id="R2i-JI-ZeV"/>
                                                     <constraint firstItem="Tr0-Uv-TXb" firstAttribute="leading" secondItem="jeA-kR-uN3" secondAttribute="trailing" constant="4" id="TKs-JJ-TGw"/>
+                                                    <constraint firstItem="Sx3-xB-3Lm" firstAttribute="width" secondItem="sXx-h1-ePf" secondAttribute="width" multiplier="0.939203" id="Tgh-O8-7qS"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Sx3-xB-3Lm" secondAttribute="trailing" id="VPs-ZS-A4L"/>
                                                     <constraint firstAttribute="bottom" secondItem="NRt-Rs-ChB" secondAttribute="bottom" constant="24" id="VfQ-II-pkI"/>
                                                     <constraint firstItem="pvx-kG-kZs" firstAttribute="centerY" secondItem="6Pj-kb-Mxc" secondAttribute="centerY" id="WdB-5q-564"/>
                                                     <constraint firstItem="0Y7-Wg-bwH" firstAttribute="top" secondItem="gUE-eo-hyt" secondAttribute="bottom" constant="20" id="ZBq-4e-m3r"/>
                                                     <constraint firstItem="gUE-eo-hyt" firstAttribute="top" secondItem="pD3-Dv-Cwg" secondAttribute="top" constant="68" id="ZsJ-3G-1VE"/>
                                                     <constraint firstItem="jeA-kR-uN3" firstAttribute="centerY" secondItem="Tr0-Uv-TXb" secondAttribute="centerY" id="ZtY-iU-uui"/>
                                                     <constraint firstItem="tHD-Q9-5Ep" firstAttribute="leading" secondItem="pD3-Dv-Cwg" secondAttribute="leading" constant="20" id="aSY-xD-GDV"/>
+                                                    <constraint firstItem="Sx3-xB-3Lm" firstAttribute="centerY" secondItem="0Y7-Wg-bwH" secondAttribute="centerY" id="bCp-gX-swM"/>
                                                     <constraint firstItem="XYG-hH-gnn" firstAttribute="leading" secondItem="pD3-Dv-Cwg" secondAttribute="leading" constant="6" id="c1w-6Q-Fh0"/>
                                                     <constraint firstAttribute="trailing" secondItem="pvx-kG-kZs" secondAttribute="trailing" constant="20" id="fjD-pu-ke2"/>
                                                     <constraint firstItem="y4X-pl-gTO" firstAttribute="centerY" secondItem="2ed-wD-zNh" secondAttribute="centerY" id="ftv-Fs-C52"/>
                                                     <constraint firstItem="zS9-la-BHy" firstAttribute="top" secondItem="vMa-Vi-f2t" secondAttribute="bottom" constant="16" id="fzk-sC-zsm"/>
                                                     <constraint firstItem="0Y7-Wg-bwH" firstAttribute="centerX" secondItem="pD3-Dv-Cwg" secondAttribute="centerX" constant="20" id="gQM-JS-9iW"/>
                                                     <constraint firstItem="BEE-us-epV" firstAttribute="bottom" secondItem="0Y7-Wg-bwH" secondAttribute="bottom" constant="6" id="gpJ-Gc-wZe"/>
+                                                    <constraint firstItem="sXx-h1-ePf" firstAttribute="centerY" secondItem="0Y7-Wg-bwH" secondAttribute="centerY" id="hEd-Fl-PQg"/>
                                                     <constraint firstItem="6Pj-kb-Mxc" firstAttribute="leading" secondItem="pD3-Dv-Cwg" secondAttribute="leading" constant="20" id="jtt-qS-uTy"/>
                                                     <constraint firstAttribute="height" constant="490" id="niq-Zw-Qgd"/>
                                                     <constraint firstItem="gUE-eo-hyt" firstAttribute="centerX" secondItem="pD3-Dv-Cwg" secondAttribute="centerX" id="oN6-no-m2r"/>
@@ -1453,9 +1474,11 @@
                     <connections>
                         <outlet property="avatarImageView" destination="9cl-Ya-2Aj" id="fiH-wC-lqm"/>
                         <outlet property="betterWordsCountButton" destination="jeA-kR-uN3" id="oFT-kJ-ObW"/>
+                        <outlet property="betterWordsCountButtonImageView" destination="Tr0-Uv-TXb" id="GN1-iU-ybp"/>
                         <outlet property="blankView" destination="XYG-hH-gnn" id="HXO-uP-RfZ"/>
                         <outlet property="heightOfCenterView" destination="niq-Zw-Qgd" id="uh0-S0-xbA"/>
                         <outlet property="improveWordsCountButton" destination="y4X-pl-gTO" id="qvw-kb-zpv"/>
+                        <outlet property="improveWordsCountButtonImageView" destination="2ed-wD-zNh" id="Laj-zl-uuK"/>
                         <outlet property="newWordsCountLabel" destination="2x8-zt-oyP" id="KcM-v0-x1E"/>
                         <outlet property="registerDaysCountLabel" destination="BvK-jd-2Nr" id="DAJ-Te-9Mu"/>
                         <outlet property="reportDateLabel" destination="6Pj-kb-Mxc" id="8an-Nh-p8F"/>
@@ -1474,7 +1497,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A50-CF-bF8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="344.92753623188406" y="1642.663043478261"/>
+            <point key="canvasLocation" x="343.47826086956525" y="1642.663043478261"/>
         </scene>
         <!--Add Book Guide View Controller-->
         <scene sceneID="3W5-uv-06V">
