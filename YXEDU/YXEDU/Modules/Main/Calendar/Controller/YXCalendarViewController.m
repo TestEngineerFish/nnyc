@@ -424,7 +424,7 @@ static CGFloat const kPickViewHeight = 272.f;
     }
     //根据后台返回数据,修改有数据天的值
     for (YXNodeModel *node in self.monthData.study_detail) {
-        NSDate *date = [dateFormatter dateFromString:node.date];
+        NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:node.date.doubleValue];
         int index = (int)[date day] - 1;
         dataArray[index][@"numWord"] = [node.num isEqualToNumber:@0] ? @1 : node.num;
         dataArray[index][@"costTime"] = node.cost_time;

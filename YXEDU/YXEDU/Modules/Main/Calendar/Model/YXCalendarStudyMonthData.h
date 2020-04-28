@@ -15,14 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *month;
 @property (nonatomic, assign) NSInteger study_days;
 @property (nonatomic, assign) NSInteger study_words;
-@property (nonatomic, assign) NSInteger study_times;
+@property (nonatomic, assign) NSInteger study_duration;
 @end
 
 @interface YXNodeModel : NSObject
-@property (nonatomic, copy) NSString *date;
+@property (nonatomic, assign) NSNumber *date;
+@property (nonatomic, assign) NSNumber *status;
 @property (nonatomic, assign) NSNumber *num;
 @property (nonatomic, assign) NSNumber *cost_time;
-@property (nonatomic, assign) NSNumber *status;
 @end
 
 @interface YXCalendarStudyMonthData : NSObject

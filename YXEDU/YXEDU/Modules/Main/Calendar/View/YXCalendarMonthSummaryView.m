@@ -122,7 +122,7 @@
     [attrStr2 addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:AdaptSize(20)], NSForegroundColorAttributeName: UIColorOfHex(0xFBA217)} range:NSMakeRange(0, wordsStr.length - 1)];
     self.studyWordsLabel.attributedText = attrStr2;
     
-    NSString *minuteStr = [[NSString stringWithFormat:@"%zd", model.study_times] getMinuteFromSecond];
+    NSString *minuteStr = [[NSString stringWithFormat:@"%zd", model.study_duration] getMinuteFromSecond];
     NSString *timesStr = [NSString stringWithFormat:@"%@分钟", minuteStr];
     NSMutableAttributedString *attrStr3 = [[NSMutableAttributedString alloc] initWithString:timesStr attributes:@{NSFontAttributeName: [UIFont semiboldFontOfSize:AdaptSize(14)],NSForegroundColorAttributeName: UIColorOfHex(0x888888)}];
     [attrStr3 addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:AdaptSize(20)], NSForegroundColorAttributeName: UIColorOfHex(0xFBA217)} range:NSMakeRange(0, timesStr.length - 2)];

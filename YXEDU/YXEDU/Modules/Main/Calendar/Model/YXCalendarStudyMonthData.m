@@ -28,7 +28,10 @@
     if (self.study_detail) {
         for (YXNodeModel *model in self.study_detail) {
             if ([model.status isEqual: @1]) {
-                [images setValue:[UIImage imageNamed:@"calendar_icon_punched"] forKey:model.date];
+                NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+                dateformatter.dateFormat = @"yyyy-MM-dd";
+                NSString *key = [dateformatter stringFromDate:[[NSDate alloc] initWithTimeIntervalSince1970:model.date.doubleValue]];
+                [images setValue:[UIImage imageNamed:@"calendar_icon_punched"] forKey:key];
             }
         }
     }
@@ -40,7 +43,10 @@
     if (self.study_detail) {
         for (YXNodeModel *model in self.study_detail) {
             if ([model.status isEqual: @0]) {
-                [colors setValue:UIColorOfHex(0xBEEEFD) forKey:model.date];
+                NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+                dateformatter.dateFormat = @"yyyy-MM-dd";
+                NSString *key = [dateformatter stringFromDate:[[NSDate alloc] initWithTimeIntervalSince1970:model.date.doubleValue]];
+                [colors setValue:UIColorOfHex(0xBEEEFD) forKey:key];
             }
         }
     }
