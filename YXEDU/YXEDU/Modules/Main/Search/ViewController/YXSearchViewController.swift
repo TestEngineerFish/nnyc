@@ -98,7 +98,7 @@ class YXSearchViewController: YXTableViewController {
     
     func loadHistoryData() {
         
-        self.dataSource = dao.selectWord()
+        self.dataSource = self.filterWord(dao.selectWord())
         
         if self.dataSource.count == 0 {
             self.isHiddenEmptyView = false
@@ -108,6 +108,22 @@ class YXSearchViewController: YXTableViewController {
         }
         
         self.tableView.reloadData()
+    }
+
+    private func filterWord(_ wordModelList: [YXSearchWordModel]) -> [YXSearchWordModel] {
+        var result = [YXSearchWordModel]()
+        wordModelList.forEach { (wordModel) in
+            var isContains = false
+            result.forEach { (_wordModel) in
+                if _wordModel.wordId == wordModel.wordId {
+                    isContains = true
+                }
+            }
+            if !isContains {
+                result.append(wordModel)
+            }
+        }
+        return result
     }
 }
 
