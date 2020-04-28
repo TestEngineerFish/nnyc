@@ -202,6 +202,7 @@
                     }
                 }
             } else {
+                YXExerciseViewController.requesting = false
                 UIView.toast("加载数据失败")
                 self.navigationController?.popViewController(animated: true)
             }

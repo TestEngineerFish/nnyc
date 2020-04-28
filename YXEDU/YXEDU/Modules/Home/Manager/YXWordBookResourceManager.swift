@@ -16,8 +16,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     }
 
     static var wordNumber      = 0
-    var downloadBookCount      = 0
     var totalDownloadCount     = 0
+    var group = DispatchGroup()
+    var backupBlock: (()->Void)?
+    static var downloadDataList = [(Int, String)]()
     static var writeDBFinished: Bool?
     private var closure: ((_ isSuccess: Bool) -> Void)?
     var finishBlock: (()->Void)?
@@ -33,7 +35,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordBookDownloadModel>.self, request: request, success: {  [weak self] (response) in
             guard let self = self else { return }
             if let wordBookDownloadModels = response.dataArray {
-                self.downloadBookCount = 0
                 if let bookId = bookId {
                     for wordBookDownloadModel in wordBookDownloadModels {
                         if wordBookDownloadModel.id == bookId {
@@ -51,50 +52,98 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             closure?(false)
         }
     }
-    
-    /// 检测本地词书Hash值
-    /// 仅针对保存别人分享的词单
-    func checkLocalBookHash(with bookId: Int, newHash: String) {
-        let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId)
-        // 本地不存在，或者本地Hash值与后台不一致，则更新
-        if (wordBook == nil || wordBook?.bookHash != .some(newHash)) {
-            self.downloadSingleWordBook(with: bookId, newHash: newHash)
-        } else {
-            self.downloadBookCount    -= 1
-            if self.downloadBookCount == 0 && self.finishBlock != nil {
-                self.finishBlock?()
+
+
+    /// 保存词单
+    /// - Parameters:
+    ///   - dataList: 需要保存的数据
+    ///   - block: 保存后执行的闭包
+    func saveReviewPlan(dataList: [(Int, String)], finished block: (()->Void)?) {
+        if YXWordBookResourceManager.writeDBFinished == .some(false) {
+            YXLog("正在下载词书")
+            self.backupBlock = {
+                YXLog("词书下载完成，开始检测和下载词单的词书")
+                YXLog("词单的词书列表", dataList)
+                self.finishBlock = block
+                YXWordBookResourceManager.downloadDataList += self.checkLocalBookHash(dataList: dataList)
+                self.totalDownloadCount = YXWordBookResourceManager.downloadDataList.count
+                self.downloadProcessor()
             }
+        } else {
+            YXLog("没有下载词书，直接下载词单的词书")
+            YXLog("词单的词书列表", dataList)
+            self.finishBlock = block
+            YXWordBookResourceManager.downloadDataList += self.checkLocalBookHash(dataList: dataList)
+            self.totalDownloadCount = YXWordBookResourceManager.downloadDataList.count
+            self.downloadProcessor()
         }
     }
 
-    /// 检测本地词书是否需要更新
-    private func checkLocalBooksStatus(with wordBookDownloadModelList: [YXWordBookDownloadModel]) {
-        for wordBookDownloadModel in wordBookDownloadModelList {
-            guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash else { continue }
-            let wordBook = YXWordBookDaoImpl().selectBook(bookId: bookId)
+    /// 检测是否需要下载
+    /// - Parameter dataList: 需要检测的数据
+    /// - Returns: 返回需要下载的数据
+    func checkLocalBookHash(dataList: [(Int, String)]) -> [(Int, String)] {
+        var resultList = [(Int, String)]()
+        dataList.forEach { (data) in
+            let wordBook = YXWordBookDaoImpl().selectBook(bookId: data.0)
             // 本地不存在，或者本地Hash值与后台不一致，则更新
-            if (wordBook == nil || wordBook?.bookHash != .some(bookHash)) {
+            if (wordBook == nil || wordBook?.bookHash != .some(data.1)) {
                 YXLog("开始下载词书")
                 if wordBook == nil {
                     YXLog("本地没有这个本书")
                 } else {
                     YXLog("新Hash，需要更新")
                     YXLog("本地Hash", wordBook?.bookHash ?? "")
-                    YXLog("新的Hash", bookHash)
+                    YXLog("新的Hash", data.1)
                 }
-                self.downloadBookCount += 1
-                self.downloadSingleWordBook(with: bookId, newHash: bookHash)
+                resultList.append(data)
             }
         }
+        return resultList
+    }
+
+    /// 检测本地词书是否需要更新
+    private func checkLocalBooksStatus(with wordBookDownloadModelList: [YXWordBookDownloadModel]) {
+        var dataList = [(Int, String)]()
+        for wordBookDownloadModel in wordBookDownloadModelList {
+            guard let bookId = wordBookDownloadModel.id, let bookHash = wordBookDownloadModel.hash else { continue }
+            dataList.append((bookId, bookHash))
+        }
+        YXWordBookResourceManager.downloadDataList += self.checkLocalBookHash(dataList: dataList)
+
         // 如果有需要下载的词书
-        if self.downloadBookCount > 0 {
-            self.totalDownloadCount = self.downloadBookCount
+        if YXWordBookResourceManager.downloadDataList.count > 0 {
+            self.totalDownloadCount = YXWordBookResourceManager.downloadDataList.count
             YXWordBookResourceManager.writeDBFinished = false
             self.closure?(false)
+            self.downloadProcessor()
         } else {
             YXLog("没有需要更新的词书")
             YXWordBookResourceManager.writeDBFinished = true
             self.closure?(true)
+        }
+    }
+
+    /// 下载任务处理者
+    private func downloadProcessor() {
+        DispatchQueue.global().async(group: group, qos: .default, flags: []) {
+            for (index, model) in YXWordBookResourceManager.downloadDataList.enumerated() {
+                if index < 10 {
+                    self.group.enter()
+                    self.downloadSingleWordBook(with: model.0, newHash: model.1)
+                }
+            }
+        }
+        group.notify(queue: .global()) {
+            if YXWordBookResourceManager.downloadDataList.isEmpty {
+                YXLog("==== 写入DB数据完成✅ ====")
+                YXWordBookResourceManager.writeDBFinished = true
+                self.finishBlock?()
+                self.backupBlock?()
+            } else {
+                YXLog("继续下载词书")
+                self.downloadProcessor()
+            }
         }
     }
 
@@ -106,11 +155,11 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             guard let self = self, var bookModel = response.data else {
                 return
             }
+            YXLog("下载\(bookId)完成...")
             bookModel.bookHash = newHash
-            DispatchQueue.global().async {
-                self.saveWords(with: bookModel, async: true)
-            }
+            self.saveWords(with: bookModel, async: true)
         }) { (error) in
+            self.group.leave()
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
@@ -126,6 +175,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     /// 保存、更新单词
     private func saveWords(with bookModel: YXWordBookModel, async: Bool) {
         guard let unitsList = bookModel.units else {
+            group.leave()
             return
         }
         var lastUnit = false
@@ -150,14 +200,12 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 //                YXLog("当前已写入单词数\(YXWordBookResourceManager.wordNumber)")
                 if index == wordsList.count - 1 && lastUnit {
                     YXLog("==== 词书\(bookModel.bookId ?? 0)写入完成 ====")
-                    self.downloadBookCount -= 1
-                    YXLog("当前剩余下载词书数量：\(self.downloadBookCount)/\(self.totalDownloadCount)")
                     self.saveBook(with: bookModel, async: true)
-                    if self.downloadBookCount == 0 {
-                        YXLog("==== 写入DB数据完成✅ ====")
-                        YXWordBookResourceManager.writeDBFinished = true
-                        self.finishBlock?()
+                    if !YXWordBookResourceManager.downloadDataList.isEmpty {
+                        YXWordBookResourceManager.downloadDataList.removeFirst()
                     }
+                    YXLog("当前剩余下载词书数量：\(YXWordBookResourceManager.downloadDataList.count)/\(self.totalDownloadCount)")
+                    self.group.leave()
                 }
             }
         }

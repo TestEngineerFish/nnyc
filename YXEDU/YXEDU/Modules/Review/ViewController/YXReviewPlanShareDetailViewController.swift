@@ -133,15 +133,15 @@ class YXReviewPlanShareDetailViewController: YXViewController {
                 bookIdList.append(bookId)
             }
         }
-        YXWordBookResourceManager.shared.downloadBookCount = _wordModelList.count
-        YXWordBookResourceManager.shared.finishBlock       = finishBlock
         if _wordModelList.isEmpty {
             finishBlock?()
         } else {
+            var dataList = [(Int, String)]()
             for wordModel in _wordModelList {
                 guard let bookId = wordModel.bookId else { return }
-                YXWordBookResourceManager.shared.checkLocalBookHash(with: bookId, newHash: wordModel.bookHash)
+                dataList.append((bookId, wordModel.bookHash))
             }
+            YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, finished: finishBlock)
         }
     }
 
