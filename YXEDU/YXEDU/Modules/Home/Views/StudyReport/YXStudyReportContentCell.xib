@@ -18,12 +18,12 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uCq-Qm-I80">
-                        <rect key="frame" x="0.0" y="46" width="13" height="16"/>
+                        <rect key="frame" x="0.0" y="46" width="460" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VV-zy-EZa">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VV-zy-EZa">
                         <rect key="frame" x="480" y="45" width="13" height="18"/>
                         <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
                         <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -33,6 +33,7 @@
                 <constraints>
                     <constraint firstItem="7VV-zy-EZa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="LKE-Ig-oW3"/>
                     <constraint firstItem="uCq-Qm-I80" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Oi1-P3-vvY"/>
+                    <constraint firstItem="7VV-zy-EZa" firstAttribute="leading" secondItem="uCq-Qm-I80" secondAttribute="trailing" constant="20" id="Ovk-ve-7bg"/>
                     <constraint firstAttribute="trailing" secondItem="7VV-zy-EZa" secondAttribute="trailing" id="h0Y-Ni-tC2"/>
                     <constraint firstItem="uCq-Qm-I80" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="w7G-Bv-qie"/>
                 </constraints>
