@@ -195,10 +195,12 @@
         
         [YXSetReminderView didSetReminderWithDidOpen:1 time:[NSNumber numberWithDouble:[self.datePicker.date timeIntervalSince1970]]];
         [[NSUserDefaults standardUserDefaults] setObject:self.datePicker.date forKey:@"Reminder"];
-        
+        [[NSUserDefaults standardUserDefaults] setObject:self.datePicker.date forKey:@"DidShowSetupReminderAlert"];
+
     } else {
         [YXSetReminderView didSetReminderWithDidOpen:0 time:0];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"Reminder"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"DidShowSetupReminderAlert"];
     }
         
     [self.navigationController popViewControllerAnimated:YES];

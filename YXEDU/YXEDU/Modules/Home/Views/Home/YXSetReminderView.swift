@@ -50,7 +50,7 @@ class YXSetReminderView: YXTopWindowView {
         alertView.rightOrCenterButton.setTitle("好的", for: .normal)
         alertView.show()
         
-        UserDefaults.standard.set(true, forKey: "DidShowSetupReminderAlert")
+        UserDefaults.standard.set(timePicker.date, forKey: "DidShowSetupReminderAlert")
 
         YXSetReminderView.didSetReminder(didOpen: 0)
         self.removeFromSuperview()
@@ -69,7 +69,7 @@ class YXSetReminderView: YXTopWindowView {
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         notificationCenter.add(request)
         
-        UserDefaults.standard.set(true, forKey: "DidShowSetupReminderAlert")
+        UserDefaults.standard.set(timePicker.date, forKey: "DidShowSetupReminderAlert")
         UserDefaults.standard.set(timePicker.date, forKey: "Reminder")
         
         YXSetReminderView.didSetReminder(didOpen: 1, time: NSNumber(value: timePicker.date.timeIntervalSince1970))

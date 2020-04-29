@@ -362,7 +362,7 @@ class YXExcerciseProgressManager: NSObject {
     private func removeLocalFile(_ localKey: LocalKey) {
         let filePath = YXFileManager.share.getStudyPath() + key(localKey)
         let result = YXFileManager.share.clearFile(path: filePath)
-        YXLog(localKey, "数据完成，本地数据删除：", result )
+        YXLog(localKey, "数据完成，本地数据删除：", result)
     }
     
     class func clearAllKeyCache() {

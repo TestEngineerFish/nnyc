@@ -25,16 +25,14 @@
                         <constraint firstAttribute="height" constant="110" id="oTF-OM-TI9"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xB-IA-2qq">
-                    <rect key="frame" x="96.5" y="160" width="221" height="29"/>
-                    <string key="text">还没有学习报告哦～
-每次学习后的第二天就可以生成报告啦！</string>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学习后就可以生成报告啦！快去学习吧！" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xB-IA-2qq">
+                    <rect key="frame" x="96.5" y="160" width="221" height="14.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DzI-NU-SOK" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="133" y="205" width="148" height="32"/>
+                    <rect key="frame" x="133" y="190.5" width="148" height="32"/>
                     <color key="backgroundColor" red="1" green="0.95686274509803915" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="148" id="58Z-jl-gAN"/>

@@ -123,10 +123,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let setReminderView = YXSetReminderView()
             setReminderView.show()
         }
+        
         if !self.animationPlayFinished {
             self.setSquirrelAnimation()
         }
-        
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -220,7 +220,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
             if userInfomation.reminder?.didOpen == 1, let time = userInfomation.reminder?.timeStamp {
                 UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "Reminder")
-                UserDefaults.standard.set(true, forKey: "DidShowSetupReminderAlert")
+                UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "DidShowSetupReminderAlert")
 
             } else {
                 YYCache.set(nil, forKey: "DidFinishMainStudyProgress")

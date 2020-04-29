@@ -119,7 +119,7 @@ struct YXFileManager {
     /// - Returns: 文件路径
     private func getJsonPath() -> String {
         let documentPath = self.getDocumentPath()
-        let jsonPath = documentPath + "/JSON_" + (YXConfigure.shared().uuid ?? "") + "/"
+        let jsonPath = documentPath + "/JSON_" + (YXUserModel.default.uuid ?? "") + "/"
         if !FileManager.default.fileExists(atPath: jsonPath) {
             try? FileManager.default.createDirectory(atPath: jsonPath, withIntermediateDirectories: true, attributes: nil)
         }
@@ -130,7 +130,7 @@ struct YXFileManager {
     /// - Returns: 文件路径
     func getStudyPath() -> String {
         let documentPath = self.getDocumentPath()
-        let textPath = documentPath + "/Study_" + (YXConfigure.shared().uuid ?? "") + "/"
+        let textPath = documentPath + "/Study_" + (YXUserModel.default.uuid ?? "") + "/"
         if !FileManager.default.fileExists(atPath: textPath) {
             try? FileManager.default.createDirectory(atPath: textPath, withIntermediateDirectories: true, attributes: nil)
         }
