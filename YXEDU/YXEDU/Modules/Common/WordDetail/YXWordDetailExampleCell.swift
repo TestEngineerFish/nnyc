@@ -42,7 +42,11 @@ class YXWordDetailExampleCell: UITableViewCell {
             YXAVPlayerManager.share.pauseAudio()
             playAuoidButton.layer.removeFlickerAnimation()
         } else {
-            guard let pronunciation = pronunciation, let pronunciationUrl = URL(string: pronunciation) else { return }
+            guard let _pronunciation = pronunciation, let pronunciationUrl = URL(string: _pronunciation) else {
+                YXLog("无效的音频地址: \(String(describing: pronunciation))")
+                YXUtils.showHUD(kWindow, title: "无效音频")
+                return
+            }
             playAuoidButton.layer.addFlickerAnimation()
             YXAVPlayerManager.share.playAudio(pronunciationUrl) {
                 self.playAuoidButton.layer.removeFlickerAnimation()

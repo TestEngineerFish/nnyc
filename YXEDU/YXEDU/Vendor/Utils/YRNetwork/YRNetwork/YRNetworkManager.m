@@ -78,7 +78,7 @@
     // 设置两种方式的heeader头参数
     NSDictionary *feilds = [self _setAllHeader:headers params:params url:url];
     YXRequestLog(@"*\nGET = request url:%@ params:%@", url, params);
-    NSURLSessionDataTask *task = [self.sessionManager GET:url parameters:params headers:@{} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    NSURLSessionDataTask *task = [self.sessionManager GET:url parameters:params headers:feilds progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // 删除已完成的task
         [self _removeTask:task];
         YXRequestLog(@"*\n【Success】 request url: %@, respnseObject: %@", url, responseObject);
@@ -126,7 +126,7 @@
     NSDictionary *feilds = [self _setAllHeader:headers params:params url:url];
     YXRequestLog(@"*\nPOST = request url:%@ params:%@", url, params);
 
-    NSURLSessionDataTask *task = [self.sessionManager POST:url parameters:params headers:@{} progress:^(NSProgress * _Nonnull uploadProgress) {
+    NSURLSessionDataTask *task = [self.sessionManager POST:url parameters:params headers:feilds progress:^(NSProgress * _Nonnull uploadProgress) {
 
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // 删除已完成的task
@@ -198,7 +198,7 @@
     
     // 设置两种方式的heeader头参数
     NSDictionary *feilds = [self _setAllHeader:headers params:params url:url];
-    NSURLSessionDataTask *task = [self.sessionManager POST:url parameters:params headers:@{} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    NSURLSessionDataTask *task = [self.sessionManager POST:url parameters:params headers:feilds constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (YRFormFile *formFile in formFiles) {
             if (formFile.filePathURL) {
                 [formData appendPartWithFileURL:formFile.filePathURL name:formFile.name error:nil];

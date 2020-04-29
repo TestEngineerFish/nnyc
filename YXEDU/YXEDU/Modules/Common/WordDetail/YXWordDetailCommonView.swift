@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource, YXAVPlayerProtocol {
+class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource {
     private enum SectionType: String {
         case deformation = "单词变形"
         case examples    = "例句"
@@ -88,6 +88,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     deinit {
         YXLog("释放\(self.classForCoder)")
         YXAVPlayerManager.share.pauseAudio()
+        YXAVPlayerManager.share.finishedBlock = nil
         playAuoidButton.layer.removeFlickerAnimation()
     }
     
@@ -241,11 +242,18 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
 
     /// 播放单词
     private func playWord() {
-        guard let _voice = word.voice, let pronunciationUrl = URL(string: _voice) else { return }
+        guard let _voice = word.voice, let pronunciationUrl = URL(string: _voice) else {
+            YXLog("无效的音频地址: \(String(describing: word.voice))")
+            YXUtils.showHUD(kWindow, title: "无效音频")
+            return
+        }
         playAuoidButton.layer.addFlickerAnimation()
-        YXAVPlayerManager.share.delegate = self
         YXAVPlayerManager.share.playAudio(pronunciationUrl) {
             self.playAuoidButton.layer.removeFlickerAnimation()
+            if self.isAutoPlay {
+                self.playExample()
+                self.isAutoPlay = false
+            }
         }
     }
     
@@ -491,13 +499,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             
         default:
             return 0
-        }
-    }
-    
-    func playFinished() {
-        if isAutoPlay {
-            self.playExample()
-            self.isAutoPlay = false
         }
     }
 }

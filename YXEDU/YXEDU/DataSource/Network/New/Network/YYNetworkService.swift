@@ -242,7 +242,6 @@ struct YYNetworkService {
             
             } else if responseStatusCode == 10003 {
                 YXMediator.shared().userKickedOut()
-                
             }
             
             // 把错误抛会上层

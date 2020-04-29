@@ -283,6 +283,9 @@
             ceview.animateRemove()
             isFirst = false
         }
+        if !isFirst {
+            YXAVPlayerManager.share.pauseAudio()
+        }
         
         self.view.addSubview(exerciseView)
         exerciseViewArray.append(exerciseView)

@@ -60,10 +60,8 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             case .downloadBook:
                 return 0.4
             case .requestIng:
-                YXLog("还在请求，进度0.9")
                 return 0.9
             case .requestEnd:
-                YXLog("已请求，进度1.0")
                 return 1.0
             }
         }
@@ -74,8 +72,10 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 return 5.0
             case .downloadBook:
                 return 2.0
-            case .requestIng, .requestEnd:
-                return 2.5
+            case .requestIng:
+                return 2.0
+            case .requestEnd:
+                return 1.0
             }
         }
     }

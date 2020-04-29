@@ -53,13 +53,14 @@ class YXAVPlayerManager: NSObject {
         let playerItem = YYMediaCache.default.playerItem(url)
         if playerItem.asset.isPlayable {
             try? AVAudioSession.sharedInstance().setCategory(.playback)
+            if let error = self.player.error {
+                YXLog("语音播放加载失败：", error)
+                self.player = AVPlayer()
+            }
             self.player.replaceCurrentItem(with: playerItem)
             self.player.seek(to: .zero)
             self.player.play()
             self.isPlaying = true
-            if let error = self.player.error {
-                YXLog("⚠️", error)
-            }
         } else {
             YXLog("无效音频,地址：" + url.absoluteString)
             YXUtils.showHUD(kWindow, title: "无效音频")
