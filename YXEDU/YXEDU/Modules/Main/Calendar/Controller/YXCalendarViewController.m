@@ -326,7 +326,7 @@ static CGFloat const kPickViewHeight = 272.f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + kSafeBottomMargin);
+    self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + kSafeBottomMargin + AdaptSize(15));
 }
 
 - (void)_initUI {
@@ -352,9 +352,9 @@ static CGFloat const kPickViewHeight = 272.f;
     }];
     
     [self.contentScroll mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
+        make.left.right.bottom.equalTo(self.view);
         make.top.equalTo(self.view).with.offset(kNavHeight);
-        make.bottom.equalTo(self.view);
+        make.bottom.equalTo(self.tableContainerView).offset(AdaptSize(15));
     }];
 
     [self.monthDataView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -493,7 +493,7 @@ static CGFloat const kPickViewHeight = 272.f;
         [self.tableContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(tableContainerHeight);
         }];
-        self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + kSafeBottomMargin);
+        self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + kSafeBottomMargin + AdaptSize(15));
         [self.tableView reloadData];
     }];
 }
