@@ -251,8 +251,10 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         YXAVPlayerManager.share.playAudio(pronunciationUrl) {
             self.playAuoidButton.layer.removeFlickerAnimation()
             if self.isAutoPlay {
-                self.playExample()
-                self.isAutoPlay = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.playExample()
+                    self.isAutoPlay = false
+                }
             }
         }
     }
@@ -268,7 +270,9 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
     /// 自动播放
     func autoPlay() {
         self.isAutoPlay = true
-        self.playWord()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.playWord()
+        }
     }
     
     // MARK: --- Notifcation ----
@@ -387,7 +391,6 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             cell.pronunciation = example?.vocie
             cell.clickPlayBlock = {  [weak self] in
                 guard let self = self else { return }
-                self.isAutoPlay = true
                 self.playAuoidButton.layer.removeFlickerAnimation()
             }
             self.exampleCell   = cell
