@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXWordDetailFeaturedView: UIView, UITableViewDelegate, UITableViewDataSource {
+class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSource {
     private var heightChangeClosure: ((_ height: CGFloat) -> Void)?
     
     private enum SectionType: String {

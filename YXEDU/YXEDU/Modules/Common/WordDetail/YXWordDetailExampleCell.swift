@@ -50,6 +50,7 @@ class YXWordDetailExampleCell: UITableViewCell {
             playAuoidButton.layer.addFlickerAnimation()
             YXAVPlayerManager.share.playAudio(pronunciationUrl) {
                 self.playAuoidButton.layer.removeFlickerAnimation()
+                YXAVPlayerManager.share.finishedBlock = nil
             }
         }
     }

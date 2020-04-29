@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource {
+class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource {
     private enum SectionType: String {
         case deformation = "单词变形"
         case examples    = "例句"
@@ -102,9 +102,10 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         tableView.register(UINib(nibName: "YXWordDetailClassicCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailClassicCell")
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         
-        featuredView = YXWordDetailFeaturedView(word: word, heightChangeClosure: { height in
+        featuredView = YXWordDetailFeaturedView(word: word, heightChangeClosure: { [weak self] height in
+            guard let self = self else { return }
             self.featuredViewheight = height
-            
+
             for index in 0..<self.sections.count {
                 guard self.sections[index].keys.first == SectionType.featured.rawValue else { continue }
                 self.tableView.reloadData()
@@ -235,7 +236,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
         YXNewLearnView(wordModel: wordModel).show()
     }
     
-    private func bindProperty() {
+    override func bindProperty() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateRecordScore(_:)), name: YXNotification.kRecordScore, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
@@ -255,6 +256,8 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
                     self.playExample()
                     self.isAutoPlay = false
                 }
+            } else {
+                YXAVPlayerManager.share.finishedBlock = nil
             }
         }
     }
@@ -265,6 +268,7 @@ class YXWordDetailCommonView: UIView, UITableViewDelegate, UITableViewDataSource
             return  
         }
         cell.playExample()
+        self.exampleCell = nil
     }
     
     /// 自动播放

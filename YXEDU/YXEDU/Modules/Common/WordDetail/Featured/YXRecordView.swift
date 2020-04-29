@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXRecordView: UIView {
+class YXRecordView: YXView {
     let lineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black4.withAlphaComponent(0.5)
