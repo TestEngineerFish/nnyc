@@ -320,7 +320,7 @@ class YXExcerciseProgressManager: NSObject {
         let today = self.today()
         let bid = bookId == nil ? "b_" :  "\(bookId!)_"
         let uid = unitId == nil ? "c_" :  "\(unitId!)_"
-        let uuid = YXConfigure.shared().uuid ?? ""
+        let uuid = YXUserModel.default.uuid ?? ""
         let pid = planId == nil ? "a_" :  "\(planId!)_"
                 
 //        self.addDaliyKey(daliy: today)
@@ -371,7 +371,7 @@ class YXExcerciseProgressManager: NSObject {
             .bookId, .unitId, .currentTurnIndex, .report, .completion, .newWordIds, .newWordExerciseIds, .reviewWordIds,
             .score, .errorCount, .newWordReadScore, .startStudyTime, .studyDuration, .studyCount, .skipNewWord]
         
-        let uuid = YXConfigure.shared().uuid ?? ""
+        let uuid = YXUserModel.default.uuid ?? ""
         for key in allKeyArray {
             for localKey in localKeyArray {
                 if key.hasSuffix(localKey.rawValue) && key.contains(uuid) {

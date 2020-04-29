@@ -239,7 +239,7 @@ class YXUnitMapView: UIView {
     // MARK: ---- Request ----
     /// 学习新单元
     private func learnUnit(_ unitId: Int?, bookId: Int?) {
-        guard let uuidStr = YXConfigure.shared().uuid, let _unitId = unitId, let _bookId = bookId else {
+        guard let uuidStr = YXUserModel.default.uuid, let _unitId = unitId, let _bookId = bookId else {
             return
         }
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: _bookId, unitId: _unitId)

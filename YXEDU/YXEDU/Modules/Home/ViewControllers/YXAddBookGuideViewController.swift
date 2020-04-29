@@ -47,7 +47,7 @@ class YXAddBookGuideViewController: UIViewController {
         guard let book = selectBook, let bookId = book.bookId, let units = book.units, units.count > 0, let unitId = units.first?.unitId else { return }
         let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let uuid = YXConfigure.shared().uuid else { return }
+            guard let self = self, let uuid = YXUserModel.default.uuid else { return }
             YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
 
             YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": uuid]) { (response, isSuccess) in

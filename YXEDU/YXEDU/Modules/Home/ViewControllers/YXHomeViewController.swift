@@ -147,7 +147,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: ---- Request ----
     private func loadData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXConfigure.shared().uuid ?? ""]) { (response, isSuccess) in
+        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXUserModel.default.uuid ?? ""]) { (response, isSuccess) in
             guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
             
             do {
