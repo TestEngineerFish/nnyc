@@ -87,8 +87,6 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
     
     deinit {
         YXLog("释放\(self.classForCoder)")
-        YXAVPlayerManager.share.pauseAudio()
-        YXAVPlayerManager.share.finishedBlock = nil
         playAuoidButton.layer.removeFlickerAnimation()
     }
     
@@ -256,8 +254,6 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
                     self.playExample()
                     self.isAutoPlay = false
                 }
-            } else {
-                YXAVPlayerManager.share.finishedBlock = nil
             }
         }
     }

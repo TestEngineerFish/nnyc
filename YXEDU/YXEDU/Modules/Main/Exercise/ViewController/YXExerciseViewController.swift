@@ -258,6 +258,9 @@
                     make.bottom.equalToSuperview()
                 }
             }
+            if !exerciseViewArray.isEmpty {
+                YXAVPlayerManager.share.pauseAudio()
+            }
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
             exerciseView.frame = CGRect(x: screenWidth, y: self.headerView.frame.maxY, width: screenWidth, height: exerciseViewHeight)
             self.delegate = exerciseView
@@ -268,9 +271,7 @@
         } else {            
             self.report()
         }
-        
     }
-    
     
     /// 加载一个练习
     /// - Parameter exerciseView: 新的练习view
@@ -282,9 +283,6 @@
             exerciseViewArray.removeFirst()
             ceview.animateRemove()
             isFirst = false
-        }
-        if !isFirst {
-            YXAVPlayerManager.share.pauseAudio()
         }
         
         self.view.addSubview(exerciseView)
