@@ -108,7 +108,7 @@ finshedBlock:(finishBlock)block {\
        datas:(NSArray *)dataArr
 finshedBlock:(finishBlock)block {
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
-    [manager POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:url parameters:params headers:@{} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSInteger idx = 0;
         for (NSData *imageData in dataArr) {
             [formData appendPartWithFileData:imageData
