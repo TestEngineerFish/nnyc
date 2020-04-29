@@ -87,7 +87,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
     
     deinit {
         YXLog("释放\(self.classForCoder)")
-        playAuoidButton.layer.removeFlickerAnimation()
+//        playAuoidButton.layer.removeFlickerAnimation()
     }
     
     private func initializationFromNib() {
@@ -247,7 +247,8 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             return
         }
         playAuoidButton.layer.addFlickerAnimation()
-        YXAVPlayerManager.share.playAudio(pronunciationUrl) {
+        YXAVPlayerManager.share.playAudio(pronunciationUrl) { [weak self] in
+            guard let self = self else { return }
             self.playAuoidButton.layer.removeFlickerAnimation()
             if self.isAutoPlay {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {

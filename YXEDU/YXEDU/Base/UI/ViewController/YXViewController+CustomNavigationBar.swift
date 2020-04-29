@@ -105,6 +105,7 @@ extension YXViewController {
             && YRRouter.sharedInstance().currentViewController()?.classForCoder != YYEnvChangeViewController.classForCoder() {
             self.navigationController?.pushViewController(YYEnvChangeViewController(), animated: true)
             YXLog("用户UUID:", YXUserModel.default.uuid ?? "")
+            YXLog("用户目录：", DDFileLogger().logFileManager.logsDirectory)
         }
         #endif
     }
