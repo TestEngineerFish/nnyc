@@ -20,6 +20,8 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
     @IBOutlet weak var registerDaysCountLabel: UILabel!
     @IBOutlet weak var reportDateLabel: UILabel!
+    @IBOutlet weak var reportDateLabelLeftOffset: NSLayoutConstraint!
+    @IBOutlet weak var reportDateLabelCenter: NSLayoutConstraint!
     @IBOutlet weak var switchDateButton: UIButton!
     @IBOutlet weak var switchDateButtonImage: UIImageView!
     @IBOutlet weak var studyDurationLabel: UILabel!
@@ -57,6 +59,8 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
         if canSelectDate == false {
             switchDateButton.isHidden = true
             switchDateButtonImage.isHidden = true
+            
+            reportDateLabelCenter.isActive = true
         }
     }
 
@@ -68,11 +72,6 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
         let taskListRequest = YXStudyReportRequest.stutyReport(date: date)
         YYNetworkService.default.request(YYStructResponse<YXStudyReportModel>.self, request: taskListRequest, success: { [weak self] response in
             guard let self = self, let data = response.data else { return }
-            guard let studyDuration = data.studyDuration, studyDuration > 0 else {
-                self.showBlankView()
-                return
-            }
-            
             if let string = data.user?.avatar, let url = URL(string: string) {
                 self.avatarImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "challengeAvatar"))
                 
@@ -96,14 +95,16 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
                 self.reportDateLabel.text = dateString
             }
             
-            self.studyDurationLabel.text = "\(Int(studyDuration / 60))"
+            self.studyDurationLabel.text = "\(Int((data.studyDuration ?? 0) / 60))"
             self.newWordsCountLabel.text = "\(data.newWordsCount ?? 0)"
             self.reviewWordsCountLabel.text = "\(data.reviewWordsCount ?? 0)"
             
             self.studyResult = data.studyResult
             if let betterWordsCount = self.studyResult?.betterWords?.count, betterWordsCount > 0 {
                 self.betterWordsCountButton.setTitle("\(betterWordsCount)", for: .normal)
-
+                self.betterWordsCountButton.setTitleColor(UIColor.orange1, for: .normal)
+                self.betterWordsCountButtonImageView.alpha = 1
+                
             } else {
                 self.betterWordsCountButton.setTitle("0", for: .normal)
                 self.betterWordsCountButton.setTitleColor(UIColor.hex(0xDCDCDC), for: .normal)
@@ -112,7 +113,9 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             
             if let improveWordsCount = self.studyResult?.improveWords?.count, improveWordsCount > 0 {
                 self.improveWordsCountButton.setTitle("\(improveWordsCount)", for: .normal)
-
+                self.improveWordsCountButton.setTitleColor(UIColor.orange1, for: .normal)
+                self.improveWordsCountButton.alpha = 1
+                
             } else {
                 self.improveWordsCountButton.setTitle("0", for: .normal)
                 self.improveWordsCountButton.setTitleColor(UIColor.hex(0xDCDCDC), for: .normal)
@@ -132,6 +135,10 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             self.studyDaysCountPercentLabel.text = "\(data.studyAnaliysis?.studyDaysCountPercent ?? 0)%"
             if let badge = data.studyBadge, badge.count > 1, let url = URL(string: badge[1]) {
                 self.studyDaysCountImageView.sd_setImage(with: url)
+            }
+            
+            if (data.studyDuration ?? 0) <= 0 {
+                self.showBlankView()
             }
             
         }) { error in
