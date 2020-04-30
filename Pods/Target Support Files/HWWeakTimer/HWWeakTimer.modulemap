@@ -1,0 +1,6 @@
+framework module HWWeakTimer {
+  umbrella header "HWWeakTimer-umbrella.h"
+
+  export *
+  module * { export * }
+}
