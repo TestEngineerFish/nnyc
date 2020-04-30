@@ -142,7 +142,7 @@
         }else if(self.scene == WXSceneTimeline){
             platform = kPlatformWXTimeLine;
         }
-        NSString *des = [NSString stringWithFormat:@"%@-%@",platform,self.shareBusiness];
+        (void)[NSString stringWithFormat:@"%@-%@",platform,self.shareBusiness];
         SendMessageToWXResp *messageResps = (SendMessageToWXResp *)resp;
 
         if (messageResps.errCode == 0){

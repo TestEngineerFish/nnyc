@@ -32,7 +32,7 @@
 }
 
 - (NSNumber *)notify {
-    if (!_notify) {
+    if (_notify == nil) {
         _notify = @0;
     }
     return _notify;

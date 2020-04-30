@@ -439,12 +439,10 @@
 		EE5EF20F23273BAE00655654 /* NSObject+YR.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F323273BAE00655654 /* NSObject+YR.m */; };
 		EE5EF21023273BAE00655654 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */; };
 		EE5EF21123273BAE00655654 /* NSString+YR.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F523273BAE00655654 /* NSString+YR.m */; };
-		EE5EF21223273BAE00655654 /* YRLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1F723273BAE00655654 /* YRLoadingView.m */; };
 		EE5EF21323273BAE00655654 /* NSData+YR.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1FA23273BAE00655654 /* NSData+YR.m */; };
 		EE5EF21423273BAE00655654 /* YRLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF1FB23273BAE00655654 /* YRLocationManager.m */; };
 		EE5EF22423273DD900655654 /* BSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF22323273DD900655654 /* BSUtils.m */; };
 		EE5EF251232740B800655654 /* CALayer+YXCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF233232740B500655654 /* CALayer+YXCustom.m */; };
-		EE5EF252232740B800655654 /* NSArray+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF235232740B600655654 /* NSArray+Safe.m */; };
 		EE5EF253232740B800655654 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF238232740B600655654 /* UITextView+Placeholder.m */; };
 		EE5EF254232740B800655654 /* UIView+SnapShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF23D232740B600655654 /* UIView+SnapShot.m */; };
 		EE5EF255232740B800655654 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF23E232740B600655654 /* UIView+Layout.m */; };
@@ -1015,7 +1013,6 @@
 		EE5EF1D923273BAE00655654 /* YRHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRHelper.m; sourceTree = "<group>"; };
 		EE5EF1DA23273BAE00655654 /* UIImageView+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+YR.m"; sourceTree = "<group>"; };
 		EE5EF1DB23273BAE00655654 /* NSDictionary+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+YR.m"; sourceTree = "<group>"; };
-		EE5EF1DC23273BAE00655654 /* YRLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRLoadingView.h; sourceTree = "<group>"; };
 		EE5EF1DD23273BAE00655654 /* NSTimer+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+YR.m"; sourceTree = "<group>"; };
 		EE5EF1DE23273BAE00655654 /* YRDateFormater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRDateFormater.m; sourceTree = "<group>"; };
 		EE5EF1DF23273BAE00655654 /* YRDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRDevice.m; sourceTree = "<group>"; };
@@ -1036,7 +1033,6 @@
 		EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
 		EE5EF1F523273BAE00655654 /* NSString+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+YR.m"; sourceTree = "<group>"; };
 		EE5EF1F623273BAE00655654 /* YRDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRDevice.h; sourceTree = "<group>"; };
-		EE5EF1F723273BAE00655654 /* YRLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRLoadingView.m; sourceTree = "<group>"; };
 		EE5EF1F823273BAE00655654 /* NSTimer+YR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+YR.h"; sourceTree = "<group>"; };
 		EE5EF1F923273BAE00655654 /* YRDateFormater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRDateFormater.h; sourceTree = "<group>"; };
 		EE5EF1FA23273BAE00655654 /* NSData+YR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+YR.m"; sourceTree = "<group>"; };
@@ -1048,7 +1044,6 @@
 		EE5EF232232740B500655654 /* UIFont+IconFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+IconFont.h"; sourceTree = "<group>"; };
 		EE5EF233232740B500655654 /* CALayer+YXCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+YXCustom.m"; sourceTree = "<group>"; };
 		EE5EF234232740B600655654 /* UIImage+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Custom.h"; sourceTree = "<group>"; };
-		EE5EF235232740B600655654 /* NSArray+Safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Safe.m"; sourceTree = "<group>"; };
 		EE5EF236232740B600655654 /* CALayer+YXCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+YXCustom.h"; sourceTree = "<group>"; };
 		EE5EF238232740B600655654 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		EE5EF239232740B600655654 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
@@ -1058,7 +1053,6 @@
 		EE5EF23E232740B600655654 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		EE5EF23F232740B600655654 /* UIView+SnapShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SnapShot.h"; sourceTree = "<group>"; };
 		EE5EF240232740B600655654 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
-		EE5EF242232740B700655654 /* NSArray+Safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Safe.h"; sourceTree = "<group>"; };
 		EE5EF244232740B700655654 /* UIDevice+YX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+YX.m"; sourceTree = "<group>"; };
 		EE5EF245232740B700655654 /* UIDevice+YX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+YX.h"; sourceTree = "<group>"; };
 		EE5EF246232740B700655654 /* UIFont+IconFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+IconFont.m"; sourceTree = "<group>"; };
@@ -2793,8 +2787,6 @@
 				EE5EF23C232740B600655654 /* UIView */,
 				EE5EF236232740B600655654 /* CALayer+YXCustom.h */,
 				EE5EF233232740B500655654 /* CALayer+YXCustom.m */,
-				EE5EF242232740B700655654 /* NSArray+Safe.h */,
-				EE5EF235232740B600655654 /* NSArray+Safe.m */,
 				EE5EF250232740B800655654 /* NSDate+Extension.h */,
 				EE5EF24F232740B800655654 /* NSDate+Extension.m */,
 				EE5EF231232740B500655654 /* UIColor+YXCustom.h */,
@@ -2913,38 +2905,36 @@
 		EE5EF1D523273BAE00655654 /* YRUtils */ = {
 			isa = PBXGroup;
 			children = (
-				EE5EF1D623273BAE00655654 /* YRCommon.h */,
-				EE5EF1D723273BAE00655654 /* NSArray+YR.m */,
-				EE5EF1D823273BAE00655654 /* UIImage+YR.m */,
-				EE5EF1D923273BAE00655654 /* YRHelper.m */,
-				EE5EF1DA23273BAE00655654 /* UIImageView+YR.m */,
-				EE5EF1DB23273BAE00655654 /* NSDictionary+YR.m */,
-				EE5EF1DC23273BAE00655654 /* YRLoadingView.h */,
-				EE5EF1DD23273BAE00655654 /* NSTimer+YR.m */,
-				EE5EF1DE23273BAE00655654 /* YRDateFormater.m */,
-				EE5EF1DF23273BAE00655654 /* YRDevice.m */,
-				EE5EF1E023273BAE00655654 /* NSString+YR.h */,
-				EE5EF1E123273BAE00655654 /* UIAlertView+Blocks.h */,
-				EE5EF1E223273BAE00655654 /* NSObject+YR.h */,
-				EE5EF1E623273BAE00655654 /* UIView+YR.m */,
-				EE5EF1E723273BAE00655654 /* YRLocationManager.h */,
-				EE5EF1E823273BAE00655654 /* NSData+YR.h */,
-				EE5EF1E923273BAE00655654 /* YRMacro.h */,
-				EE5EF1EA23273BAE00655654 /* NSDictionary+YR.h */,
-				EE5EF1EB23273BAE00655654 /* UIImageView+YR.h */,
-				EE5EF1EC23273BAE00655654 /* UIImage+YR.h */,
-				EE5EF1ED23273BAE00655654 /* YRHelper.h */,
 				EE5EF1EE23273BAE00655654 /* NSArray+YR.h */,
-				EE5EF1EF23273BAE00655654 /* UIView+YR.h */,
-				EE5EF1F323273BAE00655654 /* NSObject+YR.m */,
-				EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */,
-				EE5EF1F523273BAE00655654 /* NSString+YR.m */,
-				EE5EF1F623273BAE00655654 /* YRDevice.h */,
-				EE5EF1F723273BAE00655654 /* YRLoadingView.m */,
-				EE5EF1F823273BAE00655654 /* NSTimer+YR.h */,
-				EE5EF1F923273BAE00655654 /* YRDateFormater.h */,
+				EE5EF1D723273BAE00655654 /* NSArray+YR.m */,
+				EE5EF1E823273BAE00655654 /* NSData+YR.h */,
 				EE5EF1FA23273BAE00655654 /* NSData+YR.m */,
+				EE5EF1EA23273BAE00655654 /* NSDictionary+YR.h */,
+				EE5EF1DB23273BAE00655654 /* NSDictionary+YR.m */,
+				EE5EF1E223273BAE00655654 /* NSObject+YR.h */,
+				EE5EF1F323273BAE00655654 /* NSObject+YR.m */,
+				EE5EF1E023273BAE00655654 /* NSString+YR.h */,
+				EE5EF1F523273BAE00655654 /* NSString+YR.m */,
+				EE5EF1F823273BAE00655654 /* NSTimer+YR.h */,
+				EE5EF1DD23273BAE00655654 /* NSTimer+YR.m */,
+				EE5EF1E123273BAE00655654 /* UIAlertView+Blocks.h */,
+				EE5EF1F423273BAE00655654 /* UIAlertView+Blocks.m */,
+				EE5EF1EC23273BAE00655654 /* UIImage+YR.h */,
+				EE5EF1D823273BAE00655654 /* UIImage+YR.m */,
+				EE5EF1EB23273BAE00655654 /* UIImageView+YR.h */,
+				EE5EF1DA23273BAE00655654 /* UIImageView+YR.m */,
+				EE5EF1EF23273BAE00655654 /* UIView+YR.h */,
+				EE5EF1E623273BAE00655654 /* UIView+YR.m */,
+				EE5EF1D623273BAE00655654 /* YRCommon.h */,
+				EE5EF1F923273BAE00655654 /* YRDateFormater.h */,
+				EE5EF1DE23273BAE00655654 /* YRDateFormater.m */,
+				EE5EF1F623273BAE00655654 /* YRDevice.h */,
+				EE5EF1DF23273BAE00655654 /* YRDevice.m */,
+				EE5EF1ED23273BAE00655654 /* YRHelper.h */,
+				EE5EF1D923273BAE00655654 /* YRHelper.m */,
+				EE5EF1E723273BAE00655654 /* YRLocationManager.h */,
 				EE5EF1FB23273BAE00655654 /* YRLocationManager.m */,
+				EE5EF1E923273BAE00655654 /* YRMacro.h */,
 			);
 			path = YRUtils;
 			sourceTree = "<group>";
@@ -3962,7 +3952,6 @@
 				EEACEB9323AA27930036B3A2 /* YXTableViewCell.swift in Sources */,
 				EE6C7D1A23B0A785009DCC0C /* YXTopWindowView.swift in Sources */,
 				777FAA0E23C4812500FCC976 /* YXOldUserUpdateView.swift in Sources */,
-				EE5EF21223273BAE00655654 /* YRLoadingView.m in Sources */,
 				224A2FC2238233CC00AD99B0 /* LearningMapView.swift in Sources */,
 				EE5EF2B52327423F00655654 /* YXFileDBManager.m in Sources */,
 				77163C6124516897002A41E3 /* YXStudyReportBlankView.swift in Sources */,
@@ -4082,7 +4071,6 @@
 				77CBFD712373B48000A670D7 /* YXWordBookResourceManager.swift in Sources */,
 				7786B6D42361C4E40027D0E3 /* YXSingleGroupWordBookCell.swift in Sources */,
 				77D2777723B35BD600AA4BF2 /* YXUserInfomationModel.swift in Sources */,
-				EE5EF252232740B800655654 /* NSArray+Safe.m in Sources */,
 				223D2683239B4A70008DED9E /* BPSegmentView.swift in Sources */,
 				EEACEB9A23AB81170036B3A2 /* YXSearchHistoryDaoImpl.swift in Sources */,
 				EE5EF25C232740B800655654 /* UIViewController+YXTrace.m in Sources */,

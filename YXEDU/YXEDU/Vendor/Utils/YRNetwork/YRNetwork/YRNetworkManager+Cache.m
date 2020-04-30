@@ -45,7 +45,7 @@
 - (void)saveCacheData:(id) data filePath:(NSString *) url params:(NSDictionary *) params {
     NSString *txtPath = [self cacheFilePath:url params:params]; // 文件保存路径
     if ([data isKindOfClass:[NSDictionary class]]) {
-        BOOL result = [data writeToFile:txtPath atomically:YES];
+        (void)[data writeToFile:txtPath atomically:YES];
     }
 }
 

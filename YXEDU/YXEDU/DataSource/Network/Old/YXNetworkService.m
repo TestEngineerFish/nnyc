@@ -140,7 +140,7 @@
         id data = responseObject[@"data"];
         if ([data isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = data;
-            NSArray *task = [dic objectForKey:@"task"];
+            (void)[dic objectForKey:@"task"];
         }
         YRHttpResponse *httpResponse = [[YRHttpResponse alloc] initWithResponseObject:responseObject[@"data"]
                                                                            statusCode:0

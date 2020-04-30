@@ -9,28 +9,6 @@
 #import "UIViewController+YXTrace.h"
 static NSString *const kTraceTypeKey = @"TraceType";
 @implementation UIViewController (YXTrace)
-- (void)traceEvent:(NSString *)eventId descributtion:(NSString *)desc {
-    if (!desc) {
-        desc = @"";
-    }
-}
-
-+ (void)traceEvent:(NSString *)eventId descributtion:(NSString *)desc {
-    if (!desc) {
-        desc = @"";
-    }
-}
-
-- (void)traceEvent:(NSString *)eventId traceType:(YXTraceType)traceType descributtion:(NSString *)desc
-{
-    if (!desc) {
-        desc = @"";
-    }
-    
-    if (!traceType) {
-        traceType = kTraceOther;
-    }
-}
 
 - (NSString *)controllerName {
     return NSStringFromClass([self class]);

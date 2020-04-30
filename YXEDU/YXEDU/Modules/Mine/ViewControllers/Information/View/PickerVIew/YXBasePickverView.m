@@ -464,7 +464,7 @@
         NSArray *provinces = self.locationArray[0];
         
         NSArray *citylist = self.locationArray[1];
-        NSArray *cities = @[];
+        NSArray *cities;
         if (self.provinceIndex >= 0) {
             cities = citylist[self.provinceIndex];
         } else {
@@ -487,18 +487,18 @@
             return self.yearsArray.count;
         }
         
-        NSInteger yearIndex = [pickerView selectedRowInComponent:0];
+//        NSInteger yearIndex = [pickerView selectedRowInComponent:0];
 
-        NSString *selectYear = self.yearsArray[yearIndex];
+//        NSString *selectYear = self.yearsArray[yearIndex];
 //        if (yearIndex == 0){
 //            selectYear = self.yearsArray.lastObject;
 //        }
         
-        NSString *currentYear = [NSString stringWithFormat:@"%lu", (unsigned long)[NSDate new].year];
-        NSUInteger monthCount = self.monthsArray.count;
-        if ([selectYear isEqualToString:currentYear]) {
-            monthCount = [NSDate new].month;
-        }
+//        NSString *currentYear = [NSString stringWithFormat:@"%lu", (unsigned long)[NSDate new].year];
+//        NSUInteger monthCount = self.monthsArray.count;
+//        if ([selectYear isEqualToString:currentYear]) {
+//            monthCount = [NSDate new].month;
+//        }
 
         return 12;
     }
@@ -521,7 +521,7 @@
 
         NSArray *provinces = self.locationArray[0];
         NSArray *citylist = self.locationArray[1];
-        NSArray *cities = @[];
+        NSArray *cities;
         if (self.provinceIndex >= 0) {
             cities = citylist[self.provinceIndex];
         } else {

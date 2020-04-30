@@ -63,14 +63,14 @@
 
 - (void)showNoDataView:(NSString *)tips {
     if (!self.noDataView) {
-        tips = tips ? tips : @"暂无数据";
+//        tips = tips ? tips : @"暂无数据";
         self.noDataView = [YXTipsBaseView showTipsToView:self.view image:[UIImage imageNamed:@"blankPage"] tips:@"暂无单词数据" touchBlock:nil];
     }
 }
 
 - (void)showNoDataView:(NSString *)tips image:(UIImage *)image {
     if (!self.noDataView) {
-        tips = tips ? tips : @"暂无数据";
+//        tips = tips ? tips : @"暂无数据";
         self.noDataView = [YXTipsBaseView showTipsToView:self.view image:image tips:@"暂无单词数据" touchBlock:nil];
     }
 }

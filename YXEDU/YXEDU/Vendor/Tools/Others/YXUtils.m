@@ -10,7 +10,6 @@
 #import "NSString+YX.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "YRLoadingView.h"
 #import "UIDevice+YYAdd.h"
 #import "SJCall.h"
 #import "BSCommon.h"

@@ -12,15 +12,15 @@
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     
-    NSString *logLevel;
-    switch (logMessage->_flag) {
-        case DDLogFlagError    : logLevel = @"❌Error";     break;
-        case DDLogFlagWarning  : logLevel = @"Warning";     break;
-        case DDLogFlagInfo     : logLevel = @"Info";        break;
-        case DDLogFlagDebug    : logLevel = @"Debug";       break;
-        case DDLogFlagVerbose  : logLevel = @"Verbose";     break;
-        default                : logLevel = @"Default";     break;
-    }
+//    NSString *logLevel;
+//    switch (logMessage->_flag) {
+//        case DDLogFlagError    : logLevel = @"❌Error";     break;
+//        case DDLogFlagWarning  : logLevel = @"Warning";     break;
+//        case DDLogFlagInfo     : logLevel = @"Info";        break;
+//        case DDLogFlagDebug    : logLevel = @"Debug";       break;
+//        case DDLogFlagVerbose  : logLevel = @"Verbose";     break;
+//        default                : logLevel = @"Default";     break;
+//    }
     
     NSDate *date         = logMessage->_timestamp;
 //    NSTimeZone *zone     = [NSTimeZone systemTimeZone];
