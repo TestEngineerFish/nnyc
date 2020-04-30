@@ -119,10 +119,6 @@ class YXUserModel: NSObject {
                 YXLog("设置别名\(alias)成功")
             }
         }
-//        Growing.setPeopleVariableWithKey("user_grade", andNumberValue: <#T##NSNumber!#>)
-        //            JPUSHService.setAlias(YXUserModel.default.uuid, completion: { (code, alias, seq) in
-        //                YXLog("设置别名alias ====登录成功======= \(code),\(alias ?? ""),\(seq)")
-        //            }, seq: Int(Date().timeIntervalSince1970))
     }
     
     @objc

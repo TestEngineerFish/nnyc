@@ -37,10 +37,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Bugly.start(withAppId: kBuglyAppId)
         YXOCLog.shared()?.launch()
         
-//        #if !DEBUG  // 正式环境才开启统计
+        #if !DEBUG  // 正式环境才开启统计
         Growing.start(withAccountId: kGrowingIOID)
-//        #endif
+        if YXUserModel.default.didLogin {
+            Growing.setUserId(YXUserModel.default.uuid ?? "")
+        }
         Growing.setEnableLog(false)
+        #endif
+
         YXFileManager.share.moveToNewStudyPath()
     }
     

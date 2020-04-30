@@ -162,6 +162,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             YXLog("下载\(bookId)完成...")
             bookModel.bookHash = newHash
             DispatchQueue.global().async {
+                self.deleteWords(bookId: bookId)
                 self.saveWords(with: bookModel, async: true)
             }
         }) { (error) in
@@ -172,10 +173,24 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     
     // TODO: ---- 本地词书数据库操作 ----
 
+    /// 删除词书
+    /// - Parameter bookId: 词书ID
+    private func deleteBook(with bookId: Int?) {
+        guard let bookId = bookId else { return }
+        YXWordBookDaoImpl().deleteBook(bookId: bookId)
+        YXLog("删除词书\(bookId)完成")
+    }
     /// 保存、更新词书
     private func saveBook(with bookModel: YXWordBookModel, async: Bool) {
         YXWordBookDaoImpl().insertBook(book: bookModel, async: async)
         YXLog("保存词书\(bookModel.bookName ?? "")完成")
+    }
+
+    /// 删除书中所有单词
+    /// - Parameter bookId: 书本ID
+    private func deleteWords(bookId: Int) {
+        YXWordBookDaoImpl().deleteWord(bookId: bookId)
+        YXLog("删除词书\(bookId)下的单词完成")
     }
 
     /// 保存、更新单词
@@ -201,11 +216,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 wordModel.unitName        = unitModel.unitName
                 wordModel.isExtensionUnit = unitModel.isExtensionUnit
                 YXWordBookDaoImpl().insertWord(word: wordModel, async: async)
-//                YXWordBookResourceManager.wordNumber += 1
-//                YXLog("当前已写入单词书名：\(bookModel.bookName ?? "")")
-//                YXLog("当前已写入单词数\(YXWordBookResourceManager.wordNumber)")
                 if index == wordsList.count - 1 && lastUnit {
                     YXLog("==== 词书\(bookModel.bookId ?? 0)写入完成 ====")
+                    self.deleteBook(with: bookModel.bookId)
                     self.saveBook(with: bookModel, async: true)
                     if !YXWordBookResourceManager.downloadDataList.isEmpty {
                         YXWordBookResourceManager.downloadDataList.removeFirst()
