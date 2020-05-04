@@ -104,17 +104,17 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
         headerView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalToSuperview().offset(top)
-            make.height.equalTo(AdaptSize(60))
+            make.height.equalTo(AdaptIconSize(60))
         }
 
         questionView.snp.makeConstraints { (make) in
             make.top.equalTo(headerView.snp.bottom)
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(answerView.snp.top)
+            make.height.equalTo(AdaptIconSize(206))
         }
         answerView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(AdaptSize(396) + kSafeBottomMargin)
+            make.top.equalTo(questionView.snp.bottom).offset(AdaptSize(isPad() ? 20 : 0))
         }
 
         headerView.backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)

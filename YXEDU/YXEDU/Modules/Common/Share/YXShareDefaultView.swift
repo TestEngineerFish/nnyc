@@ -115,9 +115,9 @@ class YXShareDefaultView: UIView {
         self.addSubview(coinImageView)
         
         qqImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(70))
+            make.right.equalTo(wechatImageView.snp.left).offset(AdaptIconSize(-62))
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(38), height: AdaptSize(38)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(38), height: AdaptIconSize(38)))
         }
         qqLabel.sizeToFit()
         qqLabel.snp.makeConstraints { (make) in
@@ -127,7 +127,7 @@ class YXShareDefaultView: UIView {
         }
         wechatImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(38), height: AdaptSize(38)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(38), height: AdaptIconSize(38)))
             make.top.equalTo(qqImageView)
         }
         wechatLabel.sizeToFit()
@@ -138,11 +138,11 @@ class YXShareDefaultView: UIView {
         }
         timeLineImageView.snp.makeConstraints { (make) in
             make.top.equalTo(qqImageView)
-            make.right.equalToSuperview().offset(AdaptSize(-70))
-            make.size.equalTo(CGSize(width: AdaptSize(38), height: AdaptSize(38)))
+            make.left.equalTo(wechatImageView.snp.right).offset(AdaptIconSize(62))
+            make.size.equalTo(CGSize(width: AdaptIconSize(38), height: AdaptIconSize(38)))
         }
         coinImageView.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(25), height: AdaptSize(25)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(25), height: AdaptIconSize(25)))
             make.right.equalTo(timeLineImageView).offset(AdaptSize(15))
             make.top.equalTo(timeLineImageView).offset(AdaptSize(-6))
         }

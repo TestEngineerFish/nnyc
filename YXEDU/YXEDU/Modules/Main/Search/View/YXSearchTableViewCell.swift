@@ -54,7 +54,7 @@ class YXSearchTableHeaderView: YXView {
     override func bindProperty() {
         historyLabel.text = "历史搜索"
         historyLabel.textColor = UIColor.black3
-        historyLabel.font = UIFont.mediumFont(ofSize: AS(13))
+        historyLabel.font = UIFont.mediumFont(ofSize: AdaptFontSize(13))
         
         removeButton.setImage(UIImage(named: "search_remove"), for: .normal)
         removeButton.addTarget(self, action: #selector(clickRemoveButton), for: .touchUpInside)
@@ -88,7 +88,7 @@ class YXSearchEmptyDataView: YXView {
         imageView.image = UIImage(named: "search_empty_data")
         descLabel.text = "暂无单词数据"
         descLabel.textColor = UIColor.black3
-        descLabel.font = UIFont.mediumFont(ofSize: AS(12))
+        descLabel.font = UIFont.mediumFont(ofSize: AdaptFontSize(12))
     }
     
     override func layoutSubviews() {
@@ -148,7 +148,7 @@ class YXHistorySearchRemoveAlertView: YXTopWindowView {
         mainView.layer.cornerRadius = AS(7)
                         
         
-        titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
+        titleLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(15))
         titleLabel.textColor = UIColor.black
         titleLabel.text = "确定要清空本地搜索记录吗？"
         titleLabel.textAlignment = .center
@@ -160,7 +160,7 @@ class YXHistorySearchRemoveAlertView: YXTopWindowView {
         removeButton.layer.borderColor = UIColor.black6.cgColor
         removeButton.layer.borderWidth = 0.5
         removeButton.setTitle("清空", for: .normal)
-        removeButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(17))
+        removeButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         removeButton.setTitleColor(UIColor.red1, for: .normal)
         removeButton.setTitleColor(UIColor.black4, for: .highlighted)
         removeButton.addTarget(self, action: #selector(clickRemoveButton), for: .touchUpInside)
@@ -173,7 +173,7 @@ class YXHistorySearchRemoveAlertView: YXTopWindowView {
         cancelButton.setTitle("点错了", for: .normal)
         cancelButton.setTitleColor(UIColor.black1, for: .normal)
         cancelButton.setTitleColor(UIColor.black4, for: .highlighted)
-        cancelButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(17))
+        cancelButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         cancelButton.addTarget(self, action: #selector(clickCancelButton), for: .touchUpInside)
     }
 
@@ -249,13 +249,13 @@ class YXSearchTableViewCell: YXTableViewCell<YXSearchWordModel> {
     
     override func bindProperty() {
         wordLabel.textColor = UIColor.black1
-        wordLabel.font = UIFont.mediumFont(ofSize: AS(15))
+        wordLabel.font = UIFont.mediumFont(ofSize: AdaptFontSize(15))
         
         soundmarkLabel.textColor = UIColor.black3
-        soundmarkLabel.font = UIFont.regularFont(ofSize: AS(14))
+        soundmarkLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         
         descLabel.textColor = UIColor.black3
-        descLabel.font = UIFont.regularFont(ofSize: AS(14))
+        descLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
     }
     
     override func layoutSubviews() {

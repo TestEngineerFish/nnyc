@@ -68,7 +68,7 @@ class YXReviewViewController: YXTableViewController {
     func configTableView() {
         self.configHeaderView()
         self.configFooterView()
-        
+
         self.tableView.tableHeaderView = self.headerView
         self.tableView.register(YXReviewPlanTableViewCell.classForCoder(), forCellReuseIdentifier: "YXReviewPlanTableViewCell")
     }
@@ -112,8 +112,9 @@ class YXReviewViewController: YXTableViewController {
         guard let reviewPageModel = self.reviewPageModel else {
             return
         }
-        self.dataSource  = reviewPageModel.reviewPlans ?? []
-        let headerHeight = AdaptSize(360) + kStatusBarHeight + AdaptSize(54) - AdaptSize(7.5)
+        self.dataSource = reviewPageModel.reviewPlans ?? []
+        let otherHeight = kStatusBarHeight + AdaptSize(isPad() ? 101 : 68)
+        let headerHeight = (isPad() ? AdaptSize(560) : AdaptFontSize(360)) + otherHeight
         self.headerView  = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: headerHeight), reviewModel: reviewPageModel)
         self.headerView.reviewModel = reviewPageModel
         if self.dataSource.count == 0 {

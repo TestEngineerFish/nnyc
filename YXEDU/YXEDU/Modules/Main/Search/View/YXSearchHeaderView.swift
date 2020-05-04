@@ -39,7 +39,7 @@ class YXSearchHeaderView: YXView {
         self.backgroundColor = UIColor.gradientColor(with: CGSize(width: screenWidth, height: AS(86)), colors: [UIColor.hex(0xFFC671), UIColor.hex(0xFFA83E)], direction: .leftTop)
         
         cancelButton.setTitle("取消", for: .normal)
-        cancelButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
+        cancelButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.addTarget(self, action: #selector(clickCancelButton), for: .touchUpInside)
         
@@ -49,7 +49,7 @@ class YXSearchHeaderView: YXView {
         searchTextFeild.addTarget(self, action: #selector(didSearchTextFeildChanged), for: .editingChanged)
         searchTextFeild.placeholder = "请输入要查询的单词"
         searchTextFeild.textColor = UIColor.black1
-        searchTextFeild.font = UIFont.regularFont(ofSize: AS(15))
+        searchTextFeild.font = UIFont.regularFont(ofSize: AdaptFontSize(15))
         searchTextFeild.clearButtonMode = .always
         searchTextFeild.leftView = UIView(frame: CGRect(x: 0, y: 0, width: AS(20), height: 0))
         searchTextFeild.leftViewMode = .always

@@ -128,51 +128,51 @@ class YXReviewHeaderView: YXView {
         contentBgView.backgroundColor     = UIColor.white
         contentBgView.layer.masksToBounds = true
         contentBgView.layer.cornerRadius  = AdaptSize(15)
-        
-        titleLabel.font          = UIFont.pfSCRegularFont(withSize: AS(14))
+
+        titleLabel.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         titleLabel.text          = "背过的单词"
         titleLabel.textColor     = UIColor.black2
         titleLabel.textAlignment = .center
         
-        countLabel.font          = UIFont(name: "DIN Alternate", size: AdaptSize(36))
+        countLabel.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(35))
         countLabel.text          = "--"
         countLabel.textColor     = UIColor.black1
         countLabel.textAlignment = .center
                 
-        familiarLabel.font                 = UIFont.pfSCRegularFont(withSize: AS(12))
+        familiarLabel.font                 = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         familiarLabel.textColor            = UIColor.black1
         familiarLabel.text                 = "熟悉的单词"
-        familiarProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AS(10))
+        familiarProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AdaptFontSize(10))
         familiarProgressLabel.textColor    = UIColor.orange5
         familiarProgressLabel.text         = "--"
         familiarPointLabel.backgroundColor = UIColor.orange5
                                 
-        iKnowLabel.font                 = UIFont.pfSCRegularFont(withSize: AS(12))
+        iKnowLabel.font                 = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         iKnowLabel.textColor            = UIColor.black1
         iKnowLabel.text                 = "认识的单词"
-        iKnowProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AS(10))
+        iKnowProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AdaptFontSize(10))
         iKnowProgressLabel.textColor    = UIColor.orange1
         iKnowProgressLabel.text         = "--"
         iKnowPointLabel.backgroundColor = UIColor.orange1
         
-        fuzzyLabel.font                 = UIFont.pfSCRegularFont(withSize: AS(12))
+        fuzzyLabel.font                 = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         fuzzyLabel.textColor            = UIColor.black1
         fuzzyLabel.text                 = "模糊的单词"
-        fuzzyProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AS(10))
+        fuzzyProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AdaptFontSize(10))
         fuzzyProgressLabel.textColor    = UIColor.green2
         fuzzyProgressLabel.text         = "--"
         fuzzyPointLabel.backgroundColor = UIColor.green2
         
-        forgetLabel.font                 = UIFont.pfSCRegularFont(withSize: AS(12))
+        forgetLabel.font                 = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         forgetLabel.textColor            = UIColor.black1
         forgetLabel.text                 = "忘记的单词"
-        forgetProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AS(10))
+        forgetProgressLabel.font         = UIFont.pfSCRegularFont(withSize: AdaptFontSize(10))
         forgetProgressLabel.textColor    = UIColor.blue1
         forgetProgressLabel.text         = "--"
         forgetPointLabel.backgroundColor = UIColor.blue1
         
         reviewButton.setTitle("智能复习", for: .normal)
-        reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
+        reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(17))
         reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
         
         if reviewModel.learnNum == 0 {
@@ -183,18 +183,21 @@ class YXReviewHeaderView: YXView {
                 
         subTitleLabel.textColor = UIColor.black6
         subTitleLabel.text      = "智能计划复习内容巩固薄弱单词"
-        subTitleLabel.font      = UIFont.pfSCRegularFont(withSize: AS(12))
+        subTitleLabel.font      = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         
-        reviewPlanLabel.font      = UIFont.mediumFont(ofSize: AS(15))
+        reviewPlanLabel.font      = UIFont.mediumFont(ofSize: AdaptFontSize(15))
         reviewPlanLabel.textColor = UIColor.black1
         reviewPlanLabel.text      = "词单"
         
         createReviewPlanButton.layer.masksToBounds = true
-        createReviewPlanButton.layer.cornerRadius = AS(12.5)
+        createReviewPlanButton.layer.cornerRadius = AS(isPad() ? 35 : 25)/2
         createReviewPlanButton.setImage(UIImage(named: "review_add_icon"), for: .normal)
         createReviewPlanButton.setTitle("新建词单", for: .normal)
         createReviewPlanButton.setTitleColor(UIColor.hex(0x323232), for: .normal)
-        createReviewPlanButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(12))
+        createReviewPlanButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(12))
+        if isPad() {
+            createReviewPlanButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 11)
+        }
         createReviewPlanButton.layer.borderWidth = 0.5
         createReviewPlanButton.layer.borderColor = UIColor.black4.cgColor
         createReviewPlanButton.addTarget(self, action: #selector(clickCreateReviewPlanButton), for: .touchUpInside)
@@ -204,31 +207,31 @@ class YXReviewHeaderView: YXView {
         
         cannotReviewLabel.text      = "直击薄弱 稳固提分"
         cannotReviewLabel.textColor = UIColor.black3
-        cannotReviewLabel.font      = UIFont.pfSCRegularFont(withSize: AS(14))
+        cannotReviewLabel.font      = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        let bgHeight = isPad() ? AdaptSize(541) : AdaptSize(339)
         bgView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(21) + kStatusBarHeight)
-            make.left.equalTo(AS(22))
-            make.right.equalTo(AS(-22))
-            make.height.equalTo(AS(339))
+            make.top.equalTo(AS(isPad() ? 36 : 21) + kStatusBarHeight)
+            make.left.equalTo(AS(isPad() ? 34 : 22))
+            make.right.equalTo(AS(isPad() ? -34 : -22))
+            make.height.equalTo(bgHeight)
         }
         
         circlrImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(49 + kSafeBottomMargin))
-            make.left.equalTo(AS(11))
-            make.width.equalTo(AS(42))
-            make.height.equalTo(AS(29))
+            make.top.equalTo(bgView).offset(AdaptIconSize(8))
+            make.left.equalTo(AS(isPad() ? 18 : 11))
+            make.width.equalTo(AdaptIconSize(42))
+            make.height.equalTo(AdaptIconSize(29))
         }
 
         contentBgView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(9))
-            make.left.equalTo(AS(8))
-            make.right.equalTo(AS(-8))
-            make.bottom.equalTo(AS(-10))
+            make.top.equalTo(AdaptIconSize(9))
+            make.left.equalTo(AdaptIconSize(8))
+            make.right.equalTo(AdaptIconSize(-8))
+            make.bottom.equalTo(AdaptIconSize(-10))
         }
 
         contentView.snp.makeConstraints { (make) in
@@ -238,119 +241,154 @@ class YXReviewHeaderView: YXView {
         
         reviewButton.snp.makeConstraints { (make) in
             if reviewModel.learnNum > 0 {
-                make.bottom.equalToSuperview().offset(-44)
-                
+                make.bottom.equalToSuperview().offset(AdaptSize(isPad() ? -58 : -44))
             } else {
-                make.bottom.equalToSuperview().offset(-34)
+                make.bottom.equalToSuperview().offset(AdaptSize(isPad() ? -48 : -34))
             }
             
-            make.left.equalTo(AS(44))
-            make.right.equalTo(AS(-44))
-            make.height.equalTo(AS(42))
+            make.centerX.equalToSuperview()
+            if isPad() {
+                make.width.equalTo(AdaptSize(525))
+                make.height.equalTo(AdaptSize(AdaptSize(73)))
+            } else {
+                make.width.equalTo(AdaptSize(226))
+                make.height.equalTo(AdaptSize(AdaptSize(42)))
+            }
         }
         
         if reviewModel.learnNum > 0 {
+            titleLabel.sizeToFit()
             titleLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(AS(23))
+                make.top.equalTo(AS(isPad() ? 36 : 23))
                 make.centerX.equalToSuperview()
-                make.width.equalTo(AS(71))
-                make.height.equalTo(AS(20))
+                make.size.equalTo(titleLabel.size)
             }
-            
+            countLabel.sizeToFit()
             countLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(AS(40))
+                make.top.equalTo(titleLabel.snp.bottom).offset(AdaptSize(isPad() ? 6 : 0))
                 make.centerX.equalToSuperview()
-                make.width.equalTo(AS(300))
-                make.height.equalTo(AS(41))
+                make.size.equalTo(countLabel.size)
             }
             
             familiarPointLabel.snp.makeConstraints { (make) in
                 make.centerY.equalTo(familiarLabel)
-                make.right.equalTo(familiarLabel.snp.left).offset(AS(-4))
-                make.width.height.equalTo(AS(5))
+                make.right.equalTo(familiarLabel.snp.left).offset(AdaptSize(-4))
+                make.left.equalToSuperview().offset(AdaptSize(isPad() ? 48 : 17))
+                make.width.height.equalTo(AdaptFontSize(5))
             }
+            familiarLabel.sizeToFit()
             familiarLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(AS(100))
-                make.left.right.equalTo(familiarProgressView)
-                make.height.equalTo(AS(17))
+                make.top.equalTo(AS(isPad() ? 191 : 100))
+                make.left.equalTo(familiarPointLabel.snp.right).offset(AdaptSize(4))
+                make.size.equalTo(familiarLabel.size)
             }
             familiarProgressView.snp.makeConstraints { (make) in
                 make.top.equalTo(familiarLabel.snp.bottom).offset(AS(4))
-                make.left.equalTo(AS(26))
-                make.height.equalTo(AS(10))
+                make.left.equalTo(familiarLabel)
+                make.size.equalTo(CGSize(width: AdaptSize(isPad() ? 168 : 120), height: AdaptIconSize(10)))
             }
+
+            familiarProgressLabel.sizeToFit()
             familiarProgressLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(familiarProgressView.snp.bottom).offset(AS(3))
-                make.left.right.equalTo(familiarProgressView)
-                make.height.equalTo(AS(14))
+                if isPad() {
+                    make.centerY.equalTo(familiarProgressView)
+                    make.left.equalTo(familiarProgressView.snp.right).offset(AdaptSize(11))
+                } else {
+                    make.top.equalTo(familiarProgressView.snp.bottom).offset(AS(3))
+                    make.left.equalTo(familiarProgressView)
+                }
+                make.size.equalTo(familiarProgressLabel.size)
             }
-                                                            
+
             iKnowPointLabel.snp.makeConstraints { (make) in
                 make.centerY.equalTo(iKnowLabel)
-                make.right.equalTo(iKnowLabel.snp.left).offset(AS(-4))
-                make.width.height.equalTo(AS(5))
+                make.left.equalTo(contentView.snp.centerX).offset(AdaptSize(isPad() ? 48 : 17))
+                make.width.height.equalTo(AdaptFontSize(5))
             }
+            iKnowLabel.sizeToFit()
             iKnowLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(AS(100))
-                make.left.right.equalTo(iKnowProgressView)
-                make.height.equalTo(AS(17))
+                make.top.equalTo(familiarLabel)
+                make.left.equalTo(iKnowPointLabel.snp.right).offset(AdaptSize(4))
+                make.size.equalTo(iKnowLabel.size)
             }
             iKnowProgressView.snp.makeConstraints { (make) in
                 make.top.equalTo(iKnowLabel.snp.bottom).offset(AS(4))
-                make.left.equalTo(familiarProgressView.snp.right).offset(AS(35))
-                make.right.equalTo(AS(-15))
-                make.width.equalTo(familiarProgressView)
-                make.height.equalTo(AS(10))
+                make.left.equalTo(iKnowLabel)
+                make.size.equalTo(familiarProgressView)
             }
+            iKnowProgressLabel.sizeToFit()
             iKnowProgressLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(iKnowProgressView.snp.bottom).offset(AS(3))
-                make.left.right.equalTo(iKnowProgressView)
-                make.height.equalTo(AS(14))
+                if isPad() {
+                    make.centerY.equalTo(iKnowProgressView)
+                    make.left.equalTo(iKnowProgressView.snp.right).offset(AdaptSize(11))
+                } else {
+                    make.top.equalTo(iKnowProgressView.snp.bottom).offset(AS(3))
+                    make.left.equalTo(iKnowProgressView)
+                }
+                make.size.equalTo(iKnowProgressLabel.size)
             }
 
             fuzzyPointLabel.snp.makeConstraints { (make) in
                 make.centerY.equalTo(fuzzyLabel)
-                make.right.equalTo(fuzzyLabel.snp.left).offset(AS(-4))
-                make.width.height.equalTo(AS(5))
+                make.left.equalTo(familiarPointLabel)
+                make.width.height.equalTo(AdaptFontSize(5))
             }
+            fuzzyLabel.sizeToFit()
             fuzzyLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(AS(165))
-                make.left.right.height.equalTo(familiarLabel)
+                make.top.equalTo(familiarProgressView.snp.bottom).offset(AdaptSize(isPad() ? 37 : 34))
+                make.left.equalTo(familiarLabel)
+                make.size.equalTo(fuzzyLabel.size)
             }
             fuzzyProgressView.snp.makeConstraints { (make) in
                 make.top.equalTo(fuzzyLabel.snp.bottom).offset(AS(4))
-                make.left.right.height.equalTo(familiarProgressView)
+                make.left.equalTo(fuzzyLabel)
+                make.size.equalTo(familiarProgressView)
             }
+            fuzzyProgressLabel.sizeToFit()
             fuzzyProgressLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(fuzzyProgressView.snp.bottom).offset(AS(3))
-                make.left.right.equalTo(fuzzyProgressView)
-                make.height.equalTo(AS(14))
+                if isPad() {
+                    make.centerY.equalTo(fuzzyProgressView)
+                    make.left.equalTo(fuzzyProgressView.snp.right).offset(AdaptSize(11))
+                } else {
+                    make.top.equalTo(fuzzyProgressView.snp.bottom).offset(AS(3))
+                    make.left.equalTo(fuzzyProgressView)
+                }
+                make.size.equalTo(fuzzyProgressLabel.size)
             }
             
             forgetPointLabel.snp.makeConstraints { (make) in
                 make.centerY.equalTo(forgetLabel)
-                make.right.equalTo(forgetLabel.snp.left).offset(AS(-4))
-                make.width.height.equalTo(AS(5))
+                make.left.equalTo(iKnowPointLabel)
+                make.width.height.equalTo(AdaptFontSize(5))
             }
+            forgetLabel.sizeToFit()
             forgetLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(AS(165))
-                make.left.right.height.equalTo(iKnowLabel)
+                make.top.equalTo(fuzzyLabel)
+                make.left.equalTo(iKnowLabel)
+                make.size.equalTo(forgetLabel.size)
             }
             forgetProgressView.snp.makeConstraints { (make) in
                 make.top.equalTo(forgetLabel.snp.bottom).offset(AS(4))
-                make.left.right.height.equalTo(iKnowProgressView)
+                make.left.equalTo(forgetLabel)
+                make.size.equalTo(familiarProgressView)
             }
+            forgetProgressLabel.sizeToFit()
             forgetProgressLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(forgetProgressView.snp.bottom).offset(AS(3))
-                make.left.right.equalTo(forgetProgressView)
-                make.height.equalTo(AS(14))
+                if isPad() {
+                    make.centerY.equalTo(forgetProgressView)
+                    make.left.equalTo(forgetProgressView.snp.right).offset(AdaptSize(11))
+                } else {
+                    make.top.equalTo(forgetProgressView.snp.bottom).offset(AS(3))
+                    make.left.equalTo(forgetProgressView)
+                }
+                make.size.equalTo(forgetProgressLabel.size)
             }
-            
+
+            subTitleLabel.sizeToFit()
             subTitleLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(reviewButton.snp.bottom).offset(AS(8))
+                make.top.equalTo(reviewButton.snp.bottom).offset(AS(isPad() ? 16 : 8))
                 make.centerX.equalToSuperview()
-                make.width.equalTo(AS(169))
-                make.height.equalTo(AS(17))
+                make.size.equalTo(subTitleLabel.size)
             }
             
         } else {
@@ -364,20 +402,23 @@ class YXReviewHeaderView: YXView {
                 make.centerX.equalToSuperview()
             }
         }
-        
+
+        reviewPlanLabel.sizeToFit()
         reviewPlanLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(bgView.snp.bottom).offset(AS(17))
-            make.left.equalTo(AS(22))
-            make.width.equalTo(AS(61))
-            make.height.equalTo(AS(21))
+            make.top.equalTo(bgView.snp.bottom).offset(AS(isPad() ? 28 : 17))
+            make.left.equalTo(bgView)
+            make.size.equalTo(reviewPlanLabel.size)
         }
         
         if let reviewPlans = reviewModel.reviewPlans, reviewPlans.count > 0 {
             createReviewPlanButton.snp.makeConstraints { (make) in
                 make.centerY.equalTo(reviewPlanLabel)
-                make.right.equalTo(AS(-22))
-                make.width.equalTo(AS(90))
-                make.height.equalTo(AS(25))
+                make.right.equalTo(bgView)
+                if isPad() {
+                    make.size.equalTo(CGSize(width: AS(146), height: AS(35)))
+                } else {
+                    make.size.equalTo(CGSize(width: AS(90), height: AS(25)))
+                }
             }
         }
         

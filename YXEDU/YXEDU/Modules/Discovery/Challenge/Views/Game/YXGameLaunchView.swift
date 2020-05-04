@@ -66,19 +66,18 @@ class YXGameLaunchView: UIView {
         backgroundImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview().offset(AdaptSize(-20))
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(328), height: AdaptSize(340)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(328), height: AdaptIconSize(340)))
         }
         self.descriptionLabel.sizeToFit()
         descriptionLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.width.equalTo(descriptionLabel.width)
-            make.height.equalTo(AdaptSize(45))
-            make.bottom.equalToSuperview().offset(AdaptSize(-153))
+            make.size.equalTo(descriptionLabel.size)
+            make.bottom.equalToSuperview().offset(AdaptSize(isPad() ? -200 : -153))
         }
         countDownImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(descriptionLabel.snp.top).offset(AdaptSize(-21))
-            make.size.equalTo(CGSize(width: AdaptSize(41), height: AdaptSize(47)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(41), height: AdaptIconSize(47)))
         }
     }
 

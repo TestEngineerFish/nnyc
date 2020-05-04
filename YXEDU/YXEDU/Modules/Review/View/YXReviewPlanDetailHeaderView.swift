@@ -40,10 +40,10 @@ class YXReviewPlanShareDetailHeaderView: YXView {
         bgView.backgroundColor = UIColor.white
         bgView.layer.setDefaultShadow(cornerRadius: AS(4))
         
-        reviewPlanLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
+        reviewPlanLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(15))
         reviewPlanLabel.textColor = UIColor.black1
         
-        fromLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
+        fromLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         fromLabel.textColor = UIColor.black3
     }
     
@@ -145,13 +145,13 @@ class YXReviewPlanDetailHeaderView: YXView {
         bgView.backgroundColor = UIColor.white
         bgView.layer.setDefaultShadow(cornerRadius: AS(6))
         
-        titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
+        titleLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(15))
         titleLabel.textColor = UIColor.black1
         
-        subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
+        subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         subTitleLabel.textColor = UIColor.black3
         
-        fromLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
+        fromLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         fromLabel.textColor = UIColor.black3
 
         editButton.setImage(UIImage(named: "review_plan_detail_edit"), for: .normal)
@@ -276,10 +276,10 @@ class YXReviewPlanDetailHeaderView: YXView {
         if reviewPlanModel?.listenState == .normal {
             let attrString = NSMutableAttributedString(string: "听写成绩：尚未听写")
         
-            let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: AS(12)),.foregroundColor: UIColor.black1]
+            let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: AdaptFontSize(12)),.foregroundColor: UIColor.black1]
             attrString.addAttributes(all, range: NSRange(location: 0, length: attrString.length))
             
-            let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.regularFont(ofSize: AS(12)),.foregroundColor: UIColor.black3]
+            let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.regularFont(ofSize: AdaptFontSize(12)),.foregroundColor: UIColor.black3]
             attrString.addAttributes(nicknameAttr, range: NSRange(location: 5, length: 4))
             
             subTitleLabel.attributedText = attrString

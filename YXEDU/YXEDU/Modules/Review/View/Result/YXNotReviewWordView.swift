@@ -48,11 +48,11 @@ class YXNotReviewWordView: YXTopWindowView {
         
         imageView.image = UIImage(named: "review_not_review_word")
         
-        titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
+        titleLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(15))
         titleLabel.textColor = UIColor.black1
         titleLabel.text = "你太厉害了！"
         
-        descLabel.font = UIFont.pfSCRegularFont(withSize: AS(14))
+        descLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         descLabel.textColor = UIColor.black2
         descLabel.text = "暂时没有复习的单词，先学一些新词，明天再来试试吧～"
         descLabel.textAlignment = .center
@@ -63,7 +63,7 @@ class YXNotReviewWordView: YXTopWindowView {
         doneButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
         doneButton.setTitle("好的", for: .normal)
         doneButton.setTitleColor(UIColor.white, for: .normal)
-        doneButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
+        doneButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(17))
         doneButton.addTarget(self, action: #selector(clickDoneButton), for: .touchUpInside)
     }
     

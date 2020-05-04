@@ -166,7 +166,7 @@ class YXShareViewController: YXViewController {
             make.top.equalTo(headerView.snp.bottom)
         }
 
-        let imageViewSize = CGSize(width: AdaptSize(319), height: AdaptSize(436))
+        let imageViewSize = CGSize(width: AdaptIconSize(319), height: AdaptIconSize(436))
         shareImageBorderView.size = imageViewSize
         shareImageBorderView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
@@ -192,18 +192,18 @@ class YXShareViewController: YXViewController {
         leftLineView.snp.makeConstraints { (make) in
             make.right.equalTo(descriptionLabel.snp.left).offset(AdaptSize(-19))
             make.centerY.equalTo(descriptionLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(83), height: AdaptSize(1)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(83), height: AdaptSize(1)))
         }
         rightLineView.snp.makeConstraints { (make) in
             make.left.equalTo(descriptionLabel.snp.right).offset(AdaptSize(19))
             make.centerY.equalTo(descriptionLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(83), height: AdaptSize(1)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(83), height: AdaptSize(1)))
         }
         shareChannelView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.top.equalTo(descriptionLabel.snp.bottom).offset(AdaptSize(19))
             make.width.equalToSuperview()
-            make.height.equalTo(AdaptSize(65))
+            make.height.equalTo(AdaptIconSize(65))
         }
         shareImageBorderView.layer.setDefaultShadow(cornerRadius: AdaptSize(13), shadowRadius: AdaptSize(13))
         shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))

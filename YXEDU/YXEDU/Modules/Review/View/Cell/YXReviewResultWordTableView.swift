@@ -36,7 +36,7 @@ class YXReviewResultWordTableView: YXView, UITableViewDelegate, UITableViewDataS
     override func bindProperty() {
         
         self.headerLabel.text = "这些单词还需要加强"
-        self.headerLabel.font = UIFont.regularFont(ofSize: AS(14))
+        self.headerLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         self.headerLabel.textColor = UIColor.black3
         
         
@@ -147,10 +147,10 @@ class YXReviewResultTableViewCell: YXTableViewCell<YXBaseWordModel> {
     override func bindProperty() {
         self.backgroundColor = UIColor.clear
         
-        titleLabel.font = UIFont.mediumFont(ofSize: AS(17))
+        titleLabel.font = UIFont.mediumFont(ofSize: AdaptFontSize(17))
         titleLabel.textColor = UIColor.black1
         
-        meaningLabel.font = UIFont.regularFont(ofSize: AS(14))
+        meaningLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         meaningLabel.textColor = UIColor.black2
         meaningLabel.textAlignment = .right
     }
