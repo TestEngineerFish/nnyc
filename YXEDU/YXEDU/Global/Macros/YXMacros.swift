@@ -49,6 +49,14 @@ public var kSafeBottomMargin:CGFloat {
     }
 }
 
+/// 判断当前设备是否是iPad
+public var isPad: Bool {
+    get {
+        return UIDevice.current.userInterfaceIdiom == .pad
+    }
+}
+
+
 public let iPhoneXLater: Bool = {
     return YYDeviceModel.iPhoneXLater_Device
 }()
