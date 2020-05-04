@@ -108,7 +108,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemiPadCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemiPadCell")
 
-        if isPad {
+        if isPad() {
             homeViewAspect.isActive = false
             homeViewiPadAspect.isActive = true
         }
@@ -375,7 +375,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             return cell
             
         } else {
-            if isPad {
+            if isPad() {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemiPadCell", for: indexPath) as! YXHomeSubItemiPadCell
                 cell.setData(indexPath)
                 return cell
@@ -438,7 +438,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             return CGSize(width: (screenWidth - 60) / 3, height: 88)
             
         } else {
-            if isPad {
+            if isPad() {
                 let width = (screenWidth - 40 - 36) / 4
                 subItemCollectionViewHeight.constant = width
                 return CGSize(width: width, height: width)

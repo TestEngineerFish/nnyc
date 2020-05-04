@@ -11,10 +11,10 @@ import CoreGraphics
 /// A value provider that produces a value at Time from a group of keyframes
 final class KeyframeInterpolator<ValueType>: AnyValueProvider where ValueType: Interpolatable {
   
-  init(keyframes: ContiguousArray<Keyframe<ValueType>>) {
+  init(keyframes: [Keyframe<ValueType>]) {
     self.keyframes = keyframes
   }
-  let keyframes: ContiguousArray<Keyframe<ValueType>>
+  let keyframes: [Keyframe<ValueType>]
   
   var valueType: Any.Type {
     return ValueType.self
@@ -67,10 +67,9 @@ final class KeyframeInterpolator<ValueType>: AnyValueProvider where ValueType: I
   
   fileprivate var lastUpdatedFrame: CGFloat?
   
-  @discardableResult
   func value(frame: CGFloat) -> Any {
     // First set the keyframe span for the frame.
-    updateSpanIndices(frame: frame)
+    self.updateSpanIndices(frame: frame)
     lastUpdatedFrame = frame
     // If only one keyframe return its value
     let progress: CGFloat
@@ -211,17 +210,6 @@ final class KeyframeInterpolator<ValueType>: AnyValueProvider where ValueType: I
 }
 
 fileprivate extension Array {
-  
-  func validIndex(_ index: Int) -> Int? {
-    if 0 <= index, index < endIndex {
-      return index
-    }
-    return nil
-  }
-  
-}
-
-fileprivate extension ContiguousArray {
   
   func validIndex(_ index: Int) -> Int? {
     if 0 <= index, index < endIndex {

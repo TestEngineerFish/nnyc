@@ -85,8 +85,8 @@ class YXChallengeHeaderView: UIView {
         }
         iconImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.right.equalTo(titleLabel.snp.left).offset(AdaptSize(-6))
-            make.size.equalTo(CGSize(width: AdaptSize(18), height: AdaptSize(18)))
+            make.right.equalTo(titleLabel.snp.left).offset(AdaptIconSize(-6))
+            make.size.equalTo(CGSize(width: AdaptIconSize(18), height: AdaptIconSize(18)))
         }
         titleLabel.snp.makeConstraints { (make) in
             make.center.equalToSuperview()

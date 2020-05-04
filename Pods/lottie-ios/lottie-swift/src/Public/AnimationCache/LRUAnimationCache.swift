@@ -44,10 +44,7 @@ public class LRUAnimationCache: AnimationCacheProvider {
     cacheMap[forKey] = animation
     lruList.append(forKey)
     if lruList.count > cacheSize {
-      let removed = lruList.remove(at: 0)
-      if removed != forKey {
-        cacheMap[removed] = nil
-      }
+      lruList.remove(at: 0)
     }
   }
   
