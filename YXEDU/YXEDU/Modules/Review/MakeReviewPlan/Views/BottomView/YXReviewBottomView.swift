@@ -26,7 +26,7 @@ class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
 
     var remindLabel: UILabel = {
         let label = UILabel()
-        label.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+        label.font      = UIFont.pfSCMediumFont(withSize: AdaptFontSize(12))
         label.textColor = UIColor.black3
         label.text      = "单个词单控制在150个单词内，效果最佳哦"
         label.layer.masksToBounds = true

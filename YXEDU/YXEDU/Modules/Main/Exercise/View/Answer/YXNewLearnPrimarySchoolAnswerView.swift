@@ -80,7 +80,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         let label = UILabel()
         label.text          = "播放"
         label.textColor     = UIColor.black2
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(13))
         label.textAlignment = .center
         return label
     }()
@@ -106,7 +106,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     lazy var recordAudioLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black2
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(13))
         label.textAlignment = .center
         label.text          = {
             if (self.exerciseModel.word?.listenScore ?? -1) != -1 {

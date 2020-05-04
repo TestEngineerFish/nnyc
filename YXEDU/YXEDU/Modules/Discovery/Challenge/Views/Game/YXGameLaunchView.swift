@@ -32,7 +32,7 @@ class YXGameLaunchView: UIView {
     var descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.white
-        label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptSize(16))
+        label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(16))
         label.textAlignment = .center
         label.numberOfLines = 2
         return label

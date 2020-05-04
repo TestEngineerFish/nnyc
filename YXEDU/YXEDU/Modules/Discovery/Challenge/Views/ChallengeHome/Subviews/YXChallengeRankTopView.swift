@@ -31,7 +31,7 @@ class YXChallengeRankTopView: UIView {
     var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "- -"
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(14))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(14))
         label.textColor     = UIColor.black1
         label.textAlignment = .center
         return label
@@ -46,7 +46,7 @@ class YXChallengeRankTopView: UIView {
 
     var questionLabel: UILabel = {
         let label = UILabel()
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         label.textColor     = UIColor.black3
         label.textAlignment = .left
         label.isHidden      = true
@@ -55,7 +55,7 @@ class YXChallengeRankTopView: UIView {
 
     var consumeTimeLabel: UILabel = {
         let label = UILabel()
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         label.textColor     = UIColor.black3
         label.textAlignment = .left
         label.isHidden      = true
@@ -72,7 +72,7 @@ class YXChallengeRankTopView: UIView {
     var bonusLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0xEE531A)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(11))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(11))
         label.textAlignment = .center
         label.isHidden      = true
         return label

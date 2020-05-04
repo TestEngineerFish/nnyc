@@ -128,6 +128,17 @@ static inline CGFloat AS(CGFloat size) {
     return AdaptSize(size);
 }
 
+static inline CGFloat AdaptIconSize(CGFloat size) {
+    CGFloat newSize;
+    if (isPad()) {
+        newSize = (kPadDesignHorizontalScale * size);
+        newSize *= 1.4;
+    } else {
+        newSize = (kPhoneDesignHorizontalScale * size);
+    }
+    return newSize;
+}
+
 static inline CGSize MakeAdaptCGSize(CGFloat width,CGFloat height) {
     return CGSizeMake(AdaptSize(width), AdaptSize(height));
 }

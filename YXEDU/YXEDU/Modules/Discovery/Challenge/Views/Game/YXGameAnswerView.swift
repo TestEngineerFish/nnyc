@@ -77,7 +77,7 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
         let w = (answerViewSize.width + config.itemMargin) / CGFloat(wordModel.column) - config.itemMargin
         let h = (answerViewSize.height + config.itemMargin) / CGFloat(wordModel.row) - config.itemMargin
         config.itemSize = CGSize(width: w, height: h)
-        config.itemFont = UIFont.pfSCMediumFont(withSize: AdaptSize(24))
+        config.itemFont = UIFont.pfSCMediumFont(withSize: AdaptFontSize(24))
         config.backgroundNormalImage   = UIImage(named: "gameButtonNormal")
         config.backgroundSelectedImage = UIImage(named: "gameButtonSelected")
         config.backgroundErrorImage    = UIImage(named: "gameButtonError")

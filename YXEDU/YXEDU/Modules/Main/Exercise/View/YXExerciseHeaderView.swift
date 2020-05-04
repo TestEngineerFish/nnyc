@@ -76,13 +76,13 @@ class YXExerciseHeaderView: UIView {
         self.switchButton.setTitle("测试-清空", for: .normal)
         self.switchButton.setTitleColor(UIColor.black3, for: .normal)
         self.switchButton.setTitleColor(UIColor.black2, for: .highlighted)
-        self.switchButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
+        self.switchButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         self.switchButton.addTarget(self, action: #selector(clickSwitchButton), for: .touchUpInside)
                 
         self.skipButton.setTitle("跳过", for: .normal)
         self.skipButton.setTitleColor(UIColor.black3, for: .normal)
         self.skipButton.setTitleColor(UIColor.black2, for: .highlighted)
-        self.skipButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
+        self.skipButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         self.skipButton.addTarget(self, action: #selector(clickSkipButton), for: .touchUpInside)
         
         

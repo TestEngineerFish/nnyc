@@ -242,20 +242,21 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let rankedList = self.challengeModel?.rankedList, !rankedList.isEmpty else {
-            return AdaptSize(337)
+            return  isPad() ? AdaptSize(400) : AdaptSize(337)
         }
-        return AdaptSize(408)
+        let headerHeight = isPad() ? AdaptSize(500) : AdaptSize(408)
+        return headerHeight
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return AdaptSize(67)
+        return AdaptIconSize(67)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         guard let rankedList = self.challengeModel?.rankedList, !rankedList.isEmpty else {
-            return AdaptSize(244)
+            return AdaptIconSize(244)
         }
-        return AdaptSize(20)
+        return AdaptIconSize(20)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -35,17 +35,18 @@ class YXChallengeFooterView: UIView {
     private func createSubviews() {
         self.addSubview(contentView)
         contentView.addSubview(squirrelImageView)
+        let margin = isPad() ? AdaptSize(60) : AdaptSize(13)
         contentView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(AdaptSize(13))
-            make.right.equalToSuperview().offset(AdaptSize(-13))
+            make.left.equalToSuperview().offset(margin)
+            make.right.equalToSuperview().offset(-margin)
             make.bottom.equalToSuperview().offset(AdaptSize(-10))
             make.top.equalToSuperview()
         }
         squirrelImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(60))
-            make.top.equalToSuperview().offset(AdaptSize(11))
-            make.size.equalTo(CGSize(width: AdaptSize(222), height: AdaptSize(179)))
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptIconSize(11))
+            make.size.equalTo(CGSize(width: AdaptIconSize(222), height: AdaptIconSize(179)))
         }
     }
 

@@ -20,7 +20,7 @@ class YXReviewSelectedWordCell: UITableViewCell {
     var wordLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black2
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(12))
         label.textAlignment = .left
         return label
     }()
@@ -28,7 +28,7 @@ class YXReviewSelectedWordCell: UITableViewCell {
     var paraphraseLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black3
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         label.textAlignment = .left
         return label
     }()

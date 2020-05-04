@@ -17,7 +17,7 @@ class YXExampleQuestionView: YXBaseQuestionView, YXAudioPlayerViewDelegate {
     override func createSubviews() {
         super.createSubviews()
         self.initTitleLabel()
-        self.titleLabel?.font = UIFont.pfSCMediumFont(withSize: AdaptSize(20))
+        self.titleLabel?.font = UIFont.pfSCMediumFont(withSize: AdaptFontSize(20))
         self.initAudioPlayerView()
     }
     

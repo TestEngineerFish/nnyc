@@ -28,7 +28,7 @@ class YXExerciseBottomView: UIView {
         button.setImage(UIImage(named: "exercise_tips"), for: .normal)
         button.setTitleColor(UIColor.black3, for: .normal)
         button.setTitleColor(UIColor.black2, for: .highlighted)
-        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         return button
     }()
 

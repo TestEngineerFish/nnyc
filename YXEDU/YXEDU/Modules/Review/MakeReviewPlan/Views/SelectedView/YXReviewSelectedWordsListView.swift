@@ -32,7 +32,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
 
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
+        label.font = UIFont.pfSCMediumFont(withSize: AdaptFontSize(15))
         label.textColor = UIColor.black1
         label.textAlignment = .left
         return label

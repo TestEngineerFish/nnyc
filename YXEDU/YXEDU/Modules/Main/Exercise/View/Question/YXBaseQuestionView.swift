@@ -49,7 +49,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     
     func initTitleLabel() {
         self.titleLabel = UILabel()
-        self.titleLabel?.font          = UIFont.pfSCSemiboldFont(withSize: AdaptSize(26))
+        self.titleLabel?.font          = UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(26))
         self.titleLabel?.textColor     = UIColor.black1
         self.titleLabel?.textAlignment = .center
         self.titleLabel?.text          = ""
@@ -59,7 +59,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     
     func initSubTitleLabel() {
         self.subTitleLabel                = UILabel()
-        self.subTitleLabel?.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
+        self.subTitleLabel?.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         self.subTitleLabel?.textColor     = UIColor.black3
         self.subTitleLabel?.textAlignment = .center
         self.subTitleLabel?.numberOfLines = 0
@@ -68,7 +68,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     
     func initDescTitleLabel() {
         self.descTitleLabel = UILabel()
-        self.descTitleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
+        self.descTitleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         self.descTitleLabel?.textColor = UIColor.black3
         self.descTitleLabel?.textAlignment = .center
         self.descTitleLabel?.text = ""

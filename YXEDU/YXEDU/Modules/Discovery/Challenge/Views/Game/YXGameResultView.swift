@@ -36,7 +36,7 @@ class YXGameResultView: UIView {
         let label = UILabel()
         label.text          = "排名"
         label.textColor     = UIColor.hex(0xA0774E)
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()
@@ -62,7 +62,7 @@ class YXGameResultView: UIView {
         let label = UILabel()
         label.text          = "答对"
         label.textColor     = UIColor.hex(0xA0774E)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(14))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(14))
         label.textAlignment = .left
         return label
     }()
@@ -77,7 +77,7 @@ class YXGameResultView: UIView {
         let label = UILabel()
         label.text          = "用时"
         label.textColor     = UIColor.hex(0xA0774E)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(14))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(14))
         label.textAlignment = .left
         return label
     }()
@@ -103,7 +103,7 @@ class YXGameResultView: UIView {
         let label = UILabel()
         label.text          = "不要灰心，下次再来哦"
         label.textColor     = UIColor.hex(0x834A11)
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(15))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(15))
         label.textAlignment = .center
         return label
     }()

@@ -19,7 +19,7 @@ class YXChallengeHeaderTopView: UIView {
         let label = UILabel()
         label.text      = "本活动距离结束还有："
         label.textColor = UIColor.hex(0xE59000)
-        label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.font      = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         return label
     }()
     var leftGoldImageView: UIImageView = {
@@ -48,7 +48,7 @@ class YXChallengeHeaderTopView: UIView {
         let button = UIButton()
         button.setTitle("查看游戏规则", for: .normal)
         button.setTitleColor(UIColor.hex(0xD18714), for: .normal)
-        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         return button
     }()
 
@@ -94,16 +94,25 @@ class YXChallengeHeaderTopView: UIView {
         propertyView.snp.makeConstraints { (make) in
             make.right.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(25))
-            make.size.equalTo(CGSize(width: AdaptSize(44), height: AdaptSize(23)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(44), height: AdaptIconSize(23)))
         }
         squirrelImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(4))
+            if isPad() {
+                make.centerX.equalToSuperview().offset(AdaptSize(-40))
+            } else {
+                make.left.equalToSuperview().offset(AdaptSize(4))
+            }
             make.top.equalTo(propertyView.snp.bottom).offset(AdaptSize(11))
-            make.size.equalTo(CGSize(width: AdaptSize(323), height: AdaptSize(115)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(323), height: AdaptIconSize(115)))
         }
         gameTitleLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(150))
-            make.top.equalTo(squirrelImageView.snp.top).offset(AdaptSize(48))
+            if isPad() {
+                make.centerX.equalToSuperview().offset(AdaptSize(20))
+                make.centerY.equalTo(squirrelImageView)
+            } else {
+                make.left.equalToSuperview().offset(AdaptSize(150))
+                make.top.equalToSuperview().offset(AdaptSize(108))
+            }
             make.size.equalTo(CGSize(width: AdaptSize(121), height: AdaptSize(17)))
         }
         countDownView.snp.makeConstraints { (make) in
@@ -113,28 +122,30 @@ class YXChallengeHeaderTopView: UIView {
         }
         startButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(countDownView.snp.bottom).offset(AdaptSize(33))
-            make.size.equalTo(CGSize(width: AdaptSize(230), height: AdaptSize(57)))
+            make.top.equalTo(squirrelImageView.snp.bottom)
+            make.size.equalTo(CGSize(width: AdaptIconSize(230), height: AdaptIconSize(57)))
         }
+        gameRuleButton.titleLabel?.sizeToFit()
+        let gameRuleBtnSize = gameRuleButton.titleLabel?.size ?? CGSize(width: AdaptSize(73), height: AdaptSize(17))
         gameRuleButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(startButton.snp.bottom).offset(AdaptSize(8))
-            make.size.equalTo(CGSize(width: AdaptSize(73), height: AdaptSize(17)))
+            make.size.equalTo(gameRuleBtnSize)
         }
         leftGoldImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(-25))
             make.top.equalToSuperview().offset(AdaptSize(26))
-            make.size.equalTo(CGSize(width: AdaptSize(55), height: AdaptSize(55)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(55), height: AdaptIconSize(55)))
         }
         centerGoldImageView.snp.makeConstraints { (make) in
             make.right.equalTo(startButton.snp.left).offset(AdaptSize(-10))
             make.top.equalTo(startButton.snp.top).offset(AdaptSize(11))
-            make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(22), height: AdaptIconSize(22)))
         }
         rightGoldImageView.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(25))
             make.top.equalToSuperview().offset(AdaptSize(127))
-            make.size.equalTo(CGSize(width: AdaptSize(55), height: AdaptSize(55)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(55), height: AdaptIconSize(55)))
         }
     }
 

@@ -92,7 +92,7 @@ class YXConnectionItemView: UIButton {
     private func setItemStatus() {
         self.layer.borderColor = UIColor.clear.cgColor
         self.layer.borderWidth = 1.02
-        self.titleLabel?.font  = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
+        self.titleLabel?.font  = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         if itemStatus == .normal {
             self.setTitleColor(UIColor.black1, for: .normal)
             self.backgroundColor = UIColor.orange3

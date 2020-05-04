@@ -26,7 +26,7 @@ class YXChallengeRankCell: UITableViewCell {
         let label = UILabel()
         label.text          = "--"
         label.textColor     = UIColor.orange1
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(15))
         label.textAlignment = .center
         return label
     }()
@@ -43,7 +43,7 @@ class YXChallengeRankCell: UITableViewCell {
         let label = UILabel()
         label.text          = "--"
         label.textColor     = UIColor.black1
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(14))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()
@@ -67,7 +67,7 @@ class YXChallengeRankCell: UITableViewCell {
         let label = UILabel()
         label.text          = "--"
         label.textColor     = UIColor.hex(0xEE531A)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(15))
         label.textAlignment = .center
         return label
     }()
@@ -125,10 +125,11 @@ class YXChallengeRankCell: UITableViewCell {
         bgContentView.addSubview(descriptionLabel)
         bgContentView.addSubview(goldIconImageView)
         bgContentView.addSubview(bonusLabel)
+        let margin = isPad() ? AdaptSize(60) : AdaptSize(13)
         bgContentView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
-            make.left.equalToSuperview().offset(AdaptSize(13))
-            make.right.equalToSuperview().offset(AdaptSize(-13))
+            make.left.equalToSuperview().offset(margin)
+            make.right.equalToSuperview().offset(-margin)
         }
 
         levelLabel.sizeToFit()
@@ -139,25 +140,25 @@ class YXChallengeRankCell: UITableViewCell {
             make.width.equalTo(levelLabel.width)
         }
         levelImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(8))
+            make.left.equalToSuperview().offset(AdaptIconSize(8))
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(25), height: AdaptSize(22)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(25), height: AdaptIconSize(22)))
         }
         avatarImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.width.equalTo(AdaptSize(38))
-            make.height.equalTo(AdaptSize(38))
-            make.left.equalToSuperview().offset(AdaptSize(47))
+            make.width.equalTo(AdaptIconSize(38))
+            make.height.equalTo(AdaptIconSize(38))
+            make.left.equalToSuperview().offset(AdaptIconSize(47))
         }
-        avatarImageView.layer.cornerRadius  = AdaptSize(19)
+        avatarImageView.layer.cornerRadius  = AdaptIconSize(19)
         avatarImageView.layer.masksToBounds = true
 
         nameLabel.sizeToFit()
         nameLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(avatarImageView).offset(-AdaptSize(10))
+            make.bottom.equalTo(avatarImageView.snp.centerY)
             make.left.equalTo(avatarImageView.snp.right).offset(AdaptSize(16))
             make.width.equalTo(nameLabel.width)
-            make.height.equalTo(AdaptSize(20))
+            make.height.equalTo(nameLabel.height)
         }
 
         descriptionLabel.sizeToFit()
@@ -165,13 +166,13 @@ class YXChallengeRankCell: UITableViewCell {
             make.top.equalTo(nameLabel.snp.bottom)
             make.left.equalTo(nameLabel)
             make.width.equalTo(descriptionLabel.width)
-            make.height.equalTo(AdaptSize(17))
+            make.height.equalTo(descriptionLabel.height)
         }
 
         goldIconImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
-            make.right.equalTo(bonusLabel.snp.left).offset(AdaptSize(-5))
+            make.size.equalTo(CGSize(width: AdaptIconSize(20), height: AdaptIconSize(20)))
+            make.right.equalTo(bonusLabel.snp.left).offset(AdaptIconSize(-5))
         }
 
         bonusLabel.sizeToFit()

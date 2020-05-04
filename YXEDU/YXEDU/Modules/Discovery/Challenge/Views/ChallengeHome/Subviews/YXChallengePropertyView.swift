@@ -20,7 +20,7 @@ class YXChallengePropertyView: UIView {
     var numberLabel: UILabel = {
         let label = UILabel()
         label.text      = "0"
-        label.font      = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+        label.font      = UIFont.pfSCMediumFont(withSize: AdaptFontSize(12))
         label.textColor = UIColor.white
         label.isUserInteractionEnabled = true
         return label
@@ -39,10 +39,10 @@ class YXChallengePropertyView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.clipRectCorner(directionList: [.topLeft, .bottomLeft], cornerRadius: AdaptSize(11.5))
+        self.clipRectCorner(directionList: [.topLeft, .bottomLeft], cornerRadius: AdaptIconSize(23)/2)
         if self.superview != nil {
             self.numberLabel.sizeToFit()
-            let w = AdaptSize(32) + self.numberLabel.width
+            let w = AdaptIconSize(32) + self.numberLabel.width
             self.snp.updateConstraints { (make) in
                 make.width.equalTo(w)
             }
@@ -59,8 +59,9 @@ class YXChallengePropertyView: UIView {
         self.addSubview(numberLabel)
 
         goldImageView.snp.makeConstraints { (make) in
-            make.left.top.equalToSuperview().offset(AdaptSize(3))
-            make.size.equalTo(CGSize(width: AdaptSize(17), height: AdaptSize(17)))
+            make.left.equalToSuperview().offset(AdaptSize(3))
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: AdaptIconSize(17), height: AdaptIconSize(17)))
         }
 
         numberLabel.sizeToFit()

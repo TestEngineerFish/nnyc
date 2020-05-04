@@ -58,7 +58,7 @@ class YXNewLearnResultView: UIView {
     var bonusLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.orange1
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(15))
         label.textAlignment = .left
         label.isHidden      = true
         return label

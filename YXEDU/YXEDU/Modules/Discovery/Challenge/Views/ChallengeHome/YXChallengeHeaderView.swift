@@ -57,9 +57,10 @@ class YXChallengeHeaderView: UIView {
     private func createSubviews() {
         if !isPreviousRank {
             self.addSubview(headerView)
+            let headerViewH = isPad() ? AdaptSize(360) : AdaptSize(268)
             headerView.snp.makeConstraints { (make) in
                 make.left.top.right.equalToSuperview()
-                make.height.equalTo(AdaptSize(268))
+                make.height.equalTo(headerViewH)
             }
         }
         self.addSubview(myRankView)
@@ -68,7 +69,8 @@ class YXChallengeHeaderView: UIView {
         headerBackgroundView.addSubview(titleLabel)
         headerBackgroundView.addSubview(previousRankButton)
 
-        headerBackgroundView.size = CGSize(width: screenWidth - AdaptSize(26), height: AdaptSize(48))
+        let headerViewWidth = isPad() ? screenWidth - AdaptSize(120) : screenWidth - AdaptSize(26)
+        headerBackgroundView.size = CGSize(width: headerViewWidth, height: AdaptSize(48))
         headerBackgroundView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
             make.centerX.equalToSuperview()
@@ -88,13 +90,15 @@ class YXChallengeHeaderView: UIView {
         }
         titleLabel.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.height.equalToSuperview()
+            make.height.equalTo(0)
             make.width.equalTo(0)
         }
+        self.previousRankButton.titleLabel?.sizeToFit()
+        let previousW = self.previousRankButton.titleLabel?.width ?? AdaptSize(60)
         previousRankButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-14))
             make.bottom.equalTo(titleLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(50), height: 17))
+            make.size.equalTo(CGSize(width: previousW, height: 17))
         }
     }
 
@@ -123,6 +127,7 @@ class YXChallengeHeaderView: UIView {
         self.titleLabel.sizeToFit()
         self.titleLabel.snp.updateConstraints { (make) in
             make.width.equalTo(self.titleLabel.width)
+            make.height.equalTo(self.titleLabel.height)
         }
     }
 

@@ -72,10 +72,11 @@ class YXCountDownView: UIView {
             make.centerY.equalToSuperview()
             make.size.equalTo(timeSize)
         }
+        dayLabel.sizeToFit()
         dayLabel.snp.makeConstraints { (make) in
             make.left.equalTo(dayRightView.snp.right).offset(AdaptSize(2))
             make.centerY.equalToSuperview()
-            make.size.equalTo(timeSize)
+            make.size.equalTo(dayLabel.size)
         }
         hourLeftView.snp.makeConstraints { (make) in
             make.left.equalTo(dayLabel.snp.right).offset(AdaptSize(2))
@@ -87,10 +88,11 @@ class YXCountDownView: UIView {
             make.centerY.equalToSuperview()
             make.size.equalTo(timeSize)
         }
+        hourLabel.sizeToFit()
         hourLabel.snp.makeConstraints { (make) in
             make.left.equalTo(hourRightView.snp.right).offset(AdaptSize(2))
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: timeSize.width * 2, height: timeSize.height))
+            make.size.equalTo(hourLabel.size)
         }
         minuteLeftView.snp.makeConstraints { (make) in
             make.left.equalTo(hourLabel.snp.right).offset(AdaptSize(2))
@@ -102,10 +104,11 @@ class YXCountDownView: UIView {
             make.centerY.equalToSuperview()
             make.size.equalTo(timeSize)
         }
+        minuteLabel.sizeToFit()
         minuteLabel.snp.makeConstraints { (make) in
             make.left.equalTo(minuteRightView.snp.right).offset(AdaptSize(2))
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: timeSize.width * 2, height: timeSize.height))
+            make.size.equalTo(minuteLabel.size)
         }
     }
 
@@ -115,7 +118,7 @@ class YXCountDownView: UIView {
         let timeLabel: UILabel = {
             let label = UILabel()
             label.text          = text
-            label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(13.2))
+            label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(13.2))
             label.textColor     = UIColor.white
             label.textAlignment = .center
             return label
@@ -131,7 +134,7 @@ class YXCountDownView: UIView {
     private func getLabel(_ text: String) -> UILabel {
         let label = UILabel()
         label.text          = text
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         label.textColor     = UIColor.hex(0xE59000)
         label.textAlignment = .center
         return label

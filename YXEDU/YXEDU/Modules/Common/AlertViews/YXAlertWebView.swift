@@ -22,7 +22,7 @@ class YXAlertWebView: UIView, WKNavigationDelegate {
     var webView: WKWebView = {
         let webView = WKWebView()
         webView.backgroundColor     = UIColor.white
-        webView.layer.cornerRadius  = AdaptSize(14)
+        webView.layer.cornerRadius  = AdaptIconSize(14)
         webView.layer.masksToBounds = true
         return webView
     }()
@@ -62,17 +62,17 @@ class YXAlertWebView: UIView, WKNavigationDelegate {
         }
         webView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(AdaptSize(-40))
-            make.size.equalTo(CGSize(width: AdaptSize(331), height: AdaptSize(474)))
+            make.centerY.equalToSuperview().offset(AdaptIconSize(-40))
+            make.size.equalTo(CGSize(width: AdaptIconSize(331), height: AdaptIconSize(474)))
         }
         closeImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(webView.snp.bottom).offset(AdaptSize(14))
-            make.size.equalTo(CGSize(width: AdaptSize(34), height: AdaptSize(34)))
+            make.top.equalTo(webView.snp.bottom).offset(AdaptIconSize(14))
+            make.size.equalTo(CGSize(width: AdaptIconSize(34), height: AdaptIconSize(34)))
         }
         indicatorView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(34), height: AdaptSize(34)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(34), height: AdaptIconSize(34)))
         }
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(hide))

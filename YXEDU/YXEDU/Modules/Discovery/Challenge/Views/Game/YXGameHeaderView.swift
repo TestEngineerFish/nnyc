@@ -34,7 +34,7 @@ class YXGameHeaderView: UIView {
         let label = UILabel()
         label.text          = "已答对"
         label.textColor     = UIColor.white
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(11.2))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(11.2))
         label.textAlignment = .center
         return label
     }()
@@ -49,7 +49,7 @@ class YXGameHeaderView: UIView {
         let label = UILabel()
         label.text          = "题"
         label.textColor     = UIColor.white
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(11.2))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(11.2))
         label.textAlignment = .center
         return label
     }()

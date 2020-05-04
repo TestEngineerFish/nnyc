@@ -28,8 +28,8 @@ class YXNewLearnJuniorHighSchool: YXBaseAnswerView {
         unknownButton.setTitle("不认识", for: .normal)
         masteredButton.setTitleColor(UIColor.black1, for: .normal)
         unknownButton.setTitleColor(UIColor.black1, for: .normal)
-        masteredButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
-        unknownButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
+        masteredButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
+        unknownButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         masteredButton.addTarget(self, action: #selector(clickMastered), for: .touchUpInside)
         unknownButton.addTarget(self, action: #selector(clickUnknown), for: .touchUpInside)
 

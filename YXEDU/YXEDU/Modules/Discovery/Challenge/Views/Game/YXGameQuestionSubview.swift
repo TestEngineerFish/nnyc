@@ -14,7 +14,7 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
     var wordLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0xC9823D)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(20))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(20))
         label.textAlignment = .center
         return label
     }()

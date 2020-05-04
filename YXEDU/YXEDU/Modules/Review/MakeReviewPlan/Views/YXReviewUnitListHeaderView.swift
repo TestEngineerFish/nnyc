@@ -22,14 +22,14 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     var unitNameLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black2
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         label.textAlignment = .left
         return label
     }()
     var statisticsLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black2
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         label.textAlignment = .left
         return label
     }()
@@ -38,7 +38,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         button.setTitle("全选", for: .normal)
         button.setTitleColor(UIColor.orange1, for: .normal)
         button.contentHorizontalAlignment = .right
-        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptSize(13))
+        button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(13))
         return button
     }()
     var arrowButton: UIButton = {

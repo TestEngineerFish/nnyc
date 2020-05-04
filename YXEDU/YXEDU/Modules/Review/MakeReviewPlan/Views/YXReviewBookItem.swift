@@ -12,14 +12,14 @@ class YXReviewBookItem: UIView {
     var bookImageView = UIImageView()
     var infolabel: UILabel = {
         let label = UILabel()
-        label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(10))
+        label.font      = UIFont.pfSCRegularFont(withSize: AdaptFontSize(10))
         label.textColor = UIColor.white
         label.numberOfLines = 2
         return label
     }()
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(10))
+        label.font      = UIFont.pfSCRegularFont(withSize: AdaptFontSize(10))
         label.textColor = UIColor.black2
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 2

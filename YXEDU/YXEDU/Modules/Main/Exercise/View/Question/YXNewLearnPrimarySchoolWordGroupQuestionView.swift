@@ -20,7 +20,7 @@ class YXNewLearnPrimarySchoolWordGroupQuestionView: YXBaseQuestionView {
     var chineseExampleLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black1
-        label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptSize(16))
+        label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(16))
         label.textAlignment = .center
         return label
     }()
@@ -47,7 +47,7 @@ class YXNewLearnPrimarySchoolWordGroupQuestionView: YXBaseQuestionView {
 
             let result = example.formartTag()
 
-            let mAttr = NSMutableAttributedString(string: result.1, attributes: [NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(16)), NSAttributedString.Key.foregroundColor : UIColor.black1])
+            let mAttr = NSMutableAttributedString(string: result.1, attributes: [NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(16)), NSAttributedString.Key.foregroundColor : UIColor.black1])
             result.0.forEach { (range) in
                 mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1], range: range)
             }

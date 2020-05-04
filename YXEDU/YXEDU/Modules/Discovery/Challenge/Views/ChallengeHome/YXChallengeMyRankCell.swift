@@ -35,14 +35,14 @@ class YXChallengeMyRankCell: UIView {
         let label = UILabel()
         label.text          = "--"
         label.textColor     = UIColor.white
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(12))
         label.textAlignment = .center
         return label
     }()
 
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
-        imageView.layer.cornerRadius  = AdaptSize(38/2)
+        imageView.layer.cornerRadius  = AdaptIconSize(38)/2
         imageView.layer.borderColor   = UIColor.white.cgColor
         imageView.layer.borderWidth   = AdaptSize(2)
         imageView.layer.masksToBounds = true
@@ -54,7 +54,7 @@ class YXChallengeMyRankCell: UIView {
         let label = UILabel()
         label.text          = "--"
         label.textColor     = UIColor.black1
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(14))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()
@@ -63,7 +63,7 @@ class YXChallengeMyRankCell: UIView {
         let label = UILabel()
         label.text          = "--"
         label.textColor     = UIColor.black1
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(12))
         label.textAlignment = .center
         return label
     }()
@@ -78,7 +78,7 @@ class YXChallengeMyRankCell: UIView {
         let label = UILabel()
         label.text          = "--"
         label.textColor     = UIColor.hex(0xEE531A)
-        label.font          = UIFont.pfSCMediumFont(withSize: AdaptSize(15))
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(15))
         label.textAlignment = .center
         return label
     }()
@@ -99,7 +99,7 @@ class YXChallengeMyRankCell: UIView {
             self.nameLabel.textColor          = UIColor.hex(0x4F381D)
             self.descriptionLabel.text        = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time/1000)
             self.descriptionLabel.textColor   = UIColor.hex(0xA18266)
-            self.descriptionLabel.font        = UIFont.pfSCMediumFont(withSize: AdaptSize(12))
+            self.descriptionLabel.font        = UIFont.pfSCMediumFont(withSize: AdaptFontSize(12))
             self.goldIconImageView.isHidden   = false
             self.bonusLabel.isHidden          = false
             self.descriptionLabel.isHidden    = false
@@ -138,8 +138,11 @@ class YXChallengeMyRankCell: UIView {
             self.levelHighlightLabel.isHidden  = false
             self.levelLabel.isHidden           = true
             self.levelHighlightLabel.text      = "未上榜"
-            self.nameLabel.snp.updateConstraints { (make) in
+            self.nameLabel.snp.remakeConstraints { (make) in
                 make.centerY.equalTo(avatarImageView)
+                make.left.equalTo(avatarImageView.snp.right).offset(AdaptSize(16))
+                make.width.equalTo(nameLabel.width)
+                make.height.equalTo(nameLabel.height)
             }
             self.levelHighlightLabel.sizeToFit()
             self.tagImageView.snp.updateConstraints { (make) in
@@ -173,18 +176,19 @@ class YXChallengeMyRankCell: UIView {
             make.height.equalTo(AdaptSize(21))
             make.width.equalTo(levelLabel.width)
         }
+        let margin = isPad() ? AdaptSize(60) : AdaptSize(13)
         bgContentView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
-            make.left.equalToSuperview().offset(AdaptSize(13))
-            make.right.equalToSuperview().offset(AdaptSize(-13))
+            make.left.equalToSuperview().offset(margin)
+            make.right.equalToSuperview().offset(-margin)
         }
 
         levelHighlightLabel.sizeToFit()
         tagImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(12))
-            make.width.equalTo(AdaptSize(levelHighlightLabel.width + AdaptSize(13)))
-            make.height.equalTo(AdaptSize(19))
+            make.width.equalTo(AdaptSize(levelHighlightLabel.width + AdaptIconSize(13)))
+            make.height.equalTo(AdaptIconSize(19))
         }
 
         levelHighlightLabel.snp.makeConstraints { (make) in
@@ -195,17 +199,17 @@ class YXChallengeMyRankCell: UIView {
 
         avatarImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.width.equalTo(AdaptSize(38))
-            make.height.equalTo(AdaptSize(38))
-            make.left.equalToSuperview().offset(AdaptSize(47))
+            make.width.equalTo(AdaptIconSize(38))
+            make.height.equalTo(AdaptIconSize(38))
+            make.left.equalToSuperview().offset(AdaptIconSize(47))
         }
 
         nameLabel.sizeToFit()
         nameLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(avatarImageView).offset(-AdaptSize(10))
+            make.bottom.equalTo(avatarImageView.snp.centerY)
             make.left.equalTo(avatarImageView.snp.right).offset(AdaptSize(16))
             make.width.equalTo(nameLabel.width)
-            make.height.equalTo(AdaptSize(20))
+            make.height.equalTo(nameLabel.height)
         }
 
         descriptionLabel.sizeToFit()
@@ -213,7 +217,7 @@ class YXChallengeMyRankCell: UIView {
             make.top.equalTo(nameLabel.snp.bottom)
             make.left.equalTo(nameLabel)
             make.width.equalTo(descriptionLabel.width)
-            make.height.equalTo(AdaptSize(17))
+            make.height.equalTo(descriptionLabel.height)
         }
 
         goldIconImageView.snp.makeConstraints { (make) in

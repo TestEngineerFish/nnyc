@@ -13,7 +13,7 @@ class YXReviewSearchResultUnitListHederView: UITableViewHeaderFooterView {
     var unitNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black2
-        label.font      = UIFont.pfSCRegularFont(withSize: AdaptSize(12))
+        label.font      = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         return label
     }()
     

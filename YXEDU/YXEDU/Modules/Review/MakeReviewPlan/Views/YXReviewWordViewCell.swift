@@ -25,14 +25,14 @@ class YXReviewWordViewCell: UITableViewCell {
 
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.pfSCSemiboldFont(withSize: AdaptSize(15))
+        label.font = UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(15))
         label.textColor = UIColor.black1
         return label
     }()
 
     var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.pfSCRegularFont(withSize: AdaptSize(14))
+        label.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
         label.textColor = UIColor.black3
         return label
     }()
@@ -41,7 +41,7 @@ class YXReviewWordViewCell: UITableViewCell {
         let button = UIButton()
         button.setTitle("未学", for: .normal)
         button.setTitleColor(UIColor.hex(0xCDB387), for: .normal)
-        button.titleLabel?.font   = UIFont.pfSCRegularFont(withSize: AdaptSize(10))
+        button.titleLabel?.font   = UIFont.pfSCRegularFont(withSize: AdaptFontSize(10))
         button.layer.borderWidth  = AdaptSize(1)
         button.layer.borderColor  = UIColor.hex(0xCDB387).cgColor
         button.layer.cornerRadius = AdaptSize(7)

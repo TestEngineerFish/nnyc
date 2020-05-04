@@ -25,9 +25,9 @@ enum YXChallengeStatusType: Int {
         case .again, .task:
             price = "\(model.gameInfo?.unitCoin ?? 5)/次"
         }
-        let mutAttr = NSMutableAttributedString(string: price, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0xFFED3C), NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(20))])
+        let mutAttr = NSMutableAttributedString(string: price, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0xFFED3C), NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(20))])
         if self == .again || self == .task || self == .free {
-            mutAttr.addAttributes([NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptSize(12))], range: NSRange(location: price.count - 2, length: 2))
+            mutAttr.addAttributes([NSAttributedString.Key.font : UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(12))], range: NSRange(location: price.count - 2, length: 2))
         }
         return mutAttr
     }
@@ -40,7 +40,7 @@ class YXChallengeStartButton: UIButton {
         label.text          = ""
         label.textColor     = UIColor.white
         label.textAlignment = .center
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(20))
+        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(20))
         label.shadowOffset  = CGSize(width: 0, height: 1)
         label.shadowColor   = UIColor.hex(0xE34B0B)
         return label
@@ -90,7 +90,8 @@ class YXChallengeStartButton: UIButton {
             priceView.snp.makeConstraints { (make) in
                 make.left.equalTo(customTitleLabel.snp.right)
                 make.centerY.equalTo(customTitleLabel)
-                make.size.equalTo(CGSize(width: AdaptSize(90), height: AdaptSize(28)))
+                make.height.equalTo(AdaptSize(28))
+                make.right.equalToSuperview()
             }
         case .free:
             let priceView = self.getPriceView(model)
@@ -104,21 +105,27 @@ class YXChallengeStartButton: UIButton {
             priceView.snp.makeConstraints { (make) in
                 make.left.equalTo(customTitleLabel.snp.right)
                 make.centerY.equalTo(customTitleLabel)
-                make.size.equalTo(CGSize(width: AdaptSize(90), height: AdaptSize(28)))
+                make.height.equalTo(AdaptSize(28))
+                make.right.equalToSuperview()
             }
         case .lock:
             let priceView = self.getPriceView(model)
             self.addSubview(priceView)
             self.customTitleLabel.sizeToFit()
             self.customTitleLabel.snp.makeConstraints { (make) in
-                make.left.equalToSuperview().offset(AdaptSize(79))
+                if isPad() {
+                    make.centerX.equalToSuperview()
+                } else {
+                    make.left.equalToSuperview().offset(AdaptSize(79))
+                }
                 make.centerY.equalToSuperview().offset(AdaptSize(-3))
                 make.size.equalTo(customTitleLabel.size)
             }
             priceView.snp.makeConstraints { (make) in
                 make.left.equalTo(customTitleLabel.snp.right)
                 make.centerY.equalTo(customTitleLabel)
-                make.size.equalTo(CGSize(width: AdaptSize(90), height: AdaptSize(28)))
+                make.height.equalTo(AdaptSize(28))
+                make.right.equalToSuperview()
             }
         }
     }
@@ -135,7 +142,7 @@ class YXChallengeStartButton: UIButton {
             label.text          = "（"
             label.textColor     = UIColor.hex(0xFFC372)
             label.textAlignment = .right
-            label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(20))
+            label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(20))
             return label
         }()
         let rightBracket: UILabel = {
@@ -143,7 +150,7 @@ class YXChallengeStartButton: UIButton {
             label.text          = "）"
             label.textColor     = UIColor.hex(0xFFC372)
             label.textAlignment = .left
-            label.font          = UIFont.pfSCRegularFont(withSize: AdaptSize(20))
+            label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(20))
             return label
         }()
         let goldImageView: UIImageView = {
@@ -164,7 +171,7 @@ class YXChallengeStartButton: UIButton {
 
         leftBracket.snp.makeConstraints { (make) in
             make.left.height.top.equalToSuperview()
-            make.width.equalTo(20)
+            make.width.equalTo(AdaptFontSize(20))
         }
         goldImageView.snp.makeConstraints { (make) in
             make.left.equalTo(leftBracket.snp.right)
