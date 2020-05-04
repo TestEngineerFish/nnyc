@@ -12,7 +12,7 @@ class YXRedDotView: UIView {
     let numLabel: UILabel = {
         let label = UILabel()
         label.text      = "0"
-        label.font      = UIFont.regularFont(ofSize: AdaptSize(11))
+        label.font      = UIFont.regularFont(ofSize: AdaptFontSize(11))
         label.textColor = UIColor.white
         label.textAlignment = .center
         return label

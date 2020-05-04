@@ -32,7 +32,7 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
         let label = UILabel()
         label.text          = ""
         label.textColor     = UIColor.white
-        label.font          = UIFont.mediumFont(ofSize: AdaptSize(25))
+        label.font          = UIFont.mediumFont(ofSize: AdaptFontSize(25))
         label.textAlignment = .left
         return label
     }()
@@ -67,7 +67,7 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
         button.size = size
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor.gradientColor(with: size, colors: [UIColor.hex(0xFFBE34), UIColor.hex(0xFF790C)], direction: .vertical)
-        button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptSize(17))
+        button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptFontSize(17))
         button.layer.cornerRadius = AdaptSize(21)
         return button
     }()
@@ -102,7 +102,7 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
     private func createSubviews() {
         self.customNavigationBar?.title                = "松果币"
         self.customNavigationBar?.titleColor           = UIColor.white
-        self.customNavigationBar?.titleLabel.font      = UIFont.regularFont(ofSize: AdaptSize(17))
+        self.customNavigationBar?.titleLabel.font      = UIFont.regularFont(ofSize: AdaptFontSize(17))
         self.customNavigationBar?.leftButtonTitleColor = UIColor.white
         self.customNavigationBar?.backgroundColor      = UIColor.clear
 //        self.view.backgroundColor                      = UIColor.hex(0xF0F2F5)

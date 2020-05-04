@@ -30,7 +30,7 @@ class YXShareCodeView: UIView {
         let label = UILabel()
         label.text          = "分享口令："
         label.textColor     = UIColor.black1
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .left
         return label
     }()
@@ -46,7 +46,7 @@ class YXShareCodeView: UIView {
     var codeLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .center
         label.numberOfLines = 3
         return label
@@ -56,7 +56,7 @@ class YXShareCodeView: UIView {
         let label = UILabel()
         label.text          = "分享到"
         label.textColor     = UIColor.black3
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(12))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(12))
         label.textAlignment = .center
         return label
     }()
@@ -91,7 +91,7 @@ class YXShareCodeView: UIView {
         let label = UILabel()
         label.text          = "QQ"
         label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()
@@ -100,7 +100,7 @@ class YXShareCodeView: UIView {
         let label = UILabel()
         label.text          = "微信"
         label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()

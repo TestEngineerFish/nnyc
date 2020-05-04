@@ -19,7 +19,7 @@ class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
     var makeButton: YXButton = {
         let button = YXButton(.theme)
         button.setTitle("创建词单", for: .normal)
-        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(17))
+        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         button.setStatus(.disable)
         return button
     }()

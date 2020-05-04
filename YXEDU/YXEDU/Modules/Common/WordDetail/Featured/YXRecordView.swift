@@ -23,7 +23,7 @@ class YXRecordView: YXView {
         let label = UILabel()
         label.text          = "单词跟读"
         label.textColor     = UIColor.black1
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .left
         return label
     }()
@@ -31,7 +31,7 @@ class YXRecordView: YXView {
         let button = UIButton()
         button.setTitle("跟读", for: .normal)
         button.setTitleColor(UIColor.orange1, for: .normal)
-        button.titleLabel?.font    = UIFont.regularFont(ofSize: AdaptSize(14))
+        button.titleLabel?.font    = UIFont.regularFont(ofSize: AdaptFontSize(14))
         button.layer.cornerRadius  = AdaptSize(13.5)
         button.layer.masksToBounds = true
         button.backgroundColor     = UIColor.hex(0xFFF4E9)

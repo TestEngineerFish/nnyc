@@ -40,7 +40,8 @@
 
 #define kScreenScale (1.0 * SCREEN_HEIGHT / SCREEN_WIDTH)
 
-#define kDesignHorizontalScale (SCREEN_WIDTH / 375.0)
+#define kPhoneDesignHorizontalScale (SCREEN_WIDTH / 375.0)
+#define kPadDesignHorizontalScale (SCREEN_WIDTH / 768.0)
 
 #define kUserDefault [NSUserDefaults standardUserDefaults]
 
@@ -77,12 +78,54 @@ static const DDLogLevel ddLogLevel = (DDLogLevel)(DDLogLevelInfo | LOG_FLAG_TIME
 #else
 static const DDLogLevel ddLogLevel = (DDLogLevel)(DDLogLevelInfo | LOG_FLAG_TIMERS);
 #endif
+// 判断当前设备是否是iPad
+static inline BOOL isPad() {
+    return [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+}
+
+static inline CGFloat AdaptFontSize(CGFloat size) {
+    CGFloat newSize;
+    if (isPad()) {
+        if (size == 10) {
+            newSize = 13;
+        } else if (size == 12 || size == 13) {
+            newSize = 15;
+        } else if (size == 14) {
+            newSize = 18;
+        } else if (size == 15) {
+            newSize = 20;
+        } else if (size == 17) {
+            newSize = 26;
+        } else if (size == 20) {
+            newSize = 30;
+        } else if (size == 24) {
+            newSize = 38;
+        } else if (size == 40) {
+            newSize = 70;
+        } else {
+            newSize = size;
+        }
+        return (kPadDesignHorizontalScale * newSize);
+    } else {
+        newSize = size;
+        return (kPhoneDesignHorizontalScale * newSize);
+    }
+}
+
+static inline CGFloat AFS(CGFloat size) {
+    return AdaptFontSize(size);
+}
+
+static inline CGFloat AdaptSize(CGFloat size) {
+    CGFloat newSize = (kPhoneDesignHorizontalScale * size);
+    if (isPad()) {
+        newSize = (kPadDesignHorizontalScale * size);
+    }
+    return newSize;
+}
 
 static inline CGFloat AS(CGFloat size) {
-    return (kDesignHorizontalScale * size);
-}
-static inline CGFloat AdaptSize(CGFloat size) {
-    return (kDesignHorizontalScale * size);
+    return AdaptSize(size);
 }
 
 static inline CGSize MakeAdaptCGSize(CGFloat width,CGFloat height) {

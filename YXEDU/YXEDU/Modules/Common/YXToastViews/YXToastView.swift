@@ -38,7 +38,7 @@ class YXToastView: UIView {
     var activityLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.white
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()
@@ -93,8 +93,8 @@ class YXToastView: UIView {
 
     private func bindData(_ coinAmount: Int) {
         let text = "获得 \(coinAmount) 个松果币"
-        let mAttr = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(15))])
-        mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1, NSAttributedString.Key.font : UIFont.mediumFont(ofSize: AdaptSize(22))], range: NSRange(location: 3, length: "\(coinAmount)".count))
+        let mAttr = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(15))])
+        mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.orange1, NSAttributedString.Key.font : UIFont.mediumFont(ofSize: AdaptFontSize(22))], range: NSRange(location: 3, length: "\(coinAmount)".count))
         self.descriptionLabel.attributedText = mAttr
         self.descriptionLabel.sizeToFit()
         self.textBackgroundView.snp.updateConstraints { (make) in

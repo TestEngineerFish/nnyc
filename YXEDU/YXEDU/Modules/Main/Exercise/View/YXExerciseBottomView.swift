@@ -36,7 +36,7 @@ class YXExerciseBottomView: UIView {
         let button = UIButton()
         button.setTitle("Next", for: .normal)
         button.setTitleColor(UIColor.black1, for: .normal)
-        button.titleLabel?.font    = UIFont.regularFont(ofSize: AdaptSize(17))
+        button.titleLabel?.font    = UIFont.regularFont(ofSize: AdaptFontSize(17))
         button.layer.borderColor   = UIColor.black6.cgColor
         button.layer.borderWidth   = AdaptSize(1)
         button.layer.masksToBounds = true
@@ -54,7 +54,7 @@ class YXExerciseBottomView: UIView {
         let label = UILabel()
         label.text          = "Next"
         label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .center
         return label
     }()

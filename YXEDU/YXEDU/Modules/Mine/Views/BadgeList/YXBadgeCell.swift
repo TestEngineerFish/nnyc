@@ -14,7 +14,7 @@ class YXBadgeCell: UICollectionViewCell {
     
     var dateLabel: UILabel = {
         let label = UILabel()
-        label.font          = UIFont.regularFont (ofSize: AdaptSize(12))
+        label.font          = UIFont.regularFont (ofSize: AdaptFontSize(12))
         label.textAlignment = .center
         return label
     }()

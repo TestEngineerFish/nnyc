@@ -20,7 +20,7 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
     
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.font          = UIFont.semiboldFont(ofSize: AdaptSize(26))
+        label.font          = UIFont.semiboldFont(ofSize: AdaptFontSize(26))
         label.textColor     = UIColor.black1
         label.textAlignment = .center
         return label
@@ -28,7 +28,7 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
     
     var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textColor     = UIColor.black1
         label.textAlignment = .center
         return label

@@ -43,7 +43,7 @@ class YXNewLearnResultView: UIView {
         let label = UILabel()
         label.isHidden      = true
         label.textColor     = UIColor.black1
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(17))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(17))
         label.textAlignment = .center
         return label
     }()

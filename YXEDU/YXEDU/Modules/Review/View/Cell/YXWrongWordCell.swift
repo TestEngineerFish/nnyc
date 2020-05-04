@@ -12,7 +12,7 @@ class YXWrongWordCell: UITableViewCell {
     var wordLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black1
-        label.font          = UIFont.mediumFont(ofSize: AdaptSize(17))
+        label.font          = UIFont.mediumFont(ofSize: AdaptFontSize(17))
         label.textAlignment = .left
         return label
     }()
@@ -20,7 +20,7 @@ class YXWrongWordCell: UITableViewCell {
     var meaningLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .right
         return label
     }()

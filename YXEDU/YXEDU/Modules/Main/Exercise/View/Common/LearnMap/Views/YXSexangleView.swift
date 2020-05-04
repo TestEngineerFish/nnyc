@@ -105,12 +105,12 @@ class YXSexangleView: UIView {
             unitLabel.text          = model.unitName
             unitLabel.textColor     = UIColor.hex(0xE38B03)
             unitLabel.textAlignment = .center
-            unitLabel.font          = UIFont.boldSystemFont(ofSize: AdaptSize(12))
+            unitLabel.font          = UIFont.boldSystemFont(ofSize: AdaptFontSize(12))
             self.progressLabel = YXLabel()
             progressLabel?.text          = "0"
             progressLabel?.textColor     = self.getTitleColor()
             progressLabel?.textAlignment = .center
-            progressLabel?.font          = UIFont.boldSystemFont(ofSize: AdaptSize(12))
+            progressLabel?.font          = UIFont.boldSystemFont(ofSize: AdaptFontSize(12))
             progressLabel?.maxNum        = Int(model.rate * 100)
             view.addSubview(unitLabel)
             view.addSubview(progressLabel!)
@@ -150,7 +150,7 @@ class YXSexangleView: UIView {
             label.textAlignment = .center
             label.text = model.unitName
             label.textColor = self.getTitleColor()
-            label.font = UIFont.boldSystemFont(ofSize: AdaptSize(12))
+            label.font = UIFont.boldSystemFont(ofSize: AdaptFontSize(12))
             view.addSubview(imageView)
             imageView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()

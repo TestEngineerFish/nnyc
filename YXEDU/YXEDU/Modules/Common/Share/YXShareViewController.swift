@@ -35,7 +35,7 @@ class YXShareViewController: YXViewController {
         let button = UIButton()
         button.setTitle("换背景", for: .normal)
         button.setTitleColor(UIColor.gray1, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: AdaptSize(14))
+        button.titleLabel?.font = .systemFont(ofSize: AdaptFontSize(14))
         return button
     }()
 
@@ -73,7 +73,7 @@ class YXShareViewController: YXViewController {
         let label = UILabel()
         label.text          = "炫耀一下"
         label.textColor     = UIColor.black3
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(12))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(12))
         label.textAlignment = .center
         return label
     }()

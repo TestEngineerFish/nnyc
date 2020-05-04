@@ -44,7 +44,7 @@ class YXGameResultView: UIView {
     var rankingLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0x834A11)
-        label.font          = UIFont.DINAlternateBold(ofSize: AdaptSize(24))
+        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(24))
         label.textAlignment = .center
         return label
     }()
@@ -85,7 +85,7 @@ class YXGameResultView: UIView {
     var timeLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0x834A11)
-        label.font          = UIFont.DINAlternateBold(ofSize: AdaptSize(24))
+        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(24))
         label.textAlignment = .left
         return label
     }()
@@ -116,13 +116,13 @@ class YXGameResultView: UIView {
         resultImageView.image = UIImage(named: "gameResultSuccessBgImage")
         rankingLabel.text = "\(model.ranking)"
         let questionStr = "\(model.questionNumber)题"
-        let mAttrRanking = NSMutableAttributedString(string:questionStr, attributes: [NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(24)), NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11)])
-        mAttrRanking.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(12))], range: NSRange(location: questionStr.count - 1, length: 1))
+        let mAttrRanking = NSMutableAttributedString(string:questionStr, attributes: [NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptFontSize(24)), NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11)])
+        mAttrRanking.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptFontSize(12))], range: NSRange(location: questionStr.count - 1, length: 1))
         questionLabel.attributedText = mAttrRanking
 
         let timeStr = String(format: "%0.2f秒", Float(model.consumeTime) / 1000)
-        let mAttrTime = NSMutableAttributedString(string:timeStr, attributes: [NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(24)), NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11)])
-        mAttrTime.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(12))], range: NSRange(location: timeStr.count - 1, length: 1))
+        let mAttrTime = NSMutableAttributedString(string:timeStr, attributes: [NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptFontSize(24)), NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11)])
+        mAttrTime.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptFontSize(12))], range: NSRange(location: timeStr.count - 1, length: 1))
         timeLabel.attributedText = mAttrTime
 
 

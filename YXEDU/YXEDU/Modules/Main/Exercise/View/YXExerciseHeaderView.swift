@@ -94,20 +94,20 @@ class YXExerciseHeaderView: UIView {
         
         self.learningLabel.text = "待新学"
         self.learningLabel.textColor = UIColor.black3
-        self.learningLabel.font = UIFont.regularFont(ofSize: AdaptSize(10))
+        self.learningLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(10))
         
         self.reviewLabel.text = "待复习"
         self.reviewLabel.textColor = UIColor.black3
-        self.reviewLabel.font = UIFont.regularFont(ofSize: AdaptSize(10))
+        self.reviewLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(10))
         
         
         self.learningProgressLabel.text = "20"
         self.learningProgressLabel.textColor = UIColor.orange1
-        self.learningProgressLabel.font = UIFont.regularFont(ofSize: AdaptSize(10))
+        self.learningProgressLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(10))
         
         self.reviewProgressLabel.text = "20"
         self.reviewProgressLabel.textColor = UIColor.orange1
-        self.reviewProgressLabel.font = UIFont.regularFont(ofSize: AdaptSize(10))
+        self.reviewProgressLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(10))
         
     }
     

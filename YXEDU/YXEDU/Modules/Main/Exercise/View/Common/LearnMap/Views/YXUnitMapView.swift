@@ -142,10 +142,10 @@ class YXUnitMapView: UIView {
         let label = UILabel()
         if unit == self.currentUnitIndex  {
             label.textColor   = UIColor.orange1
-            label.font        = UIFont.semiboldFont(ofSize: AdaptSize(15))
+            label.font        = UIFont.semiboldFont(ofSize: AdaptFontSize(15))
         } else {
             label.textColor   = UIColor.hex(0xDBC4AD)
-            label.font        = UIFont.mediumFont(ofSize: AdaptSize(13))
+            label.font        = UIFont.mediumFont(ofSize: AdaptFontSize(13))
         }
         label.text  = {
             if unit <= self.unitModelList.count {

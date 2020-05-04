@@ -82,9 +82,9 @@ class YXLearningResultHeaderView: UIView {
 
         let percent = String(format: "%0.0f%%", (model.rate * 100))
         let progressText = "\(model.unitName ?? "") 已学 " + percent
-        let progressMutAttrStr = NSMutableAttributedString(string: progressText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x323232), NSAttributedString.Key.font:UIFont.mediumFont(ofSize: AdaptSize(17))])
-        progressMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.regularFont(ofSize: AdaptSize(17))], range: NSRange(location: progressText.count - percent.count - 3, length: 2))
-        progressMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.semiboldFont(ofSize: AdaptSize(17)), NSAttributedString.Key.foregroundColor:UIColor.orange1], range: NSRange(location: progressText.count - percent.count, length: percent.count))
+        let progressMutAttrStr = NSMutableAttributedString(string: progressText, attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x323232), NSAttributedString.Key.font:UIFont.mediumFont(ofSize: AdaptFontSize(17))])
+        progressMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.regularFont(ofSize: AdaptFontSize(17))], range: NSRange(location: progressText.count - percent.count - 3, length: 2))
+        progressMutAttrStr.addAttributes([NSAttributedString.Key.font:UIFont.semiboldFont(ofSize: AdaptFontSize(17)), NSAttributedString.Key.foregroundColor:UIColor.orange1], range: NSRange(location: progressText.count - percent.count, length: percent.count))
         progressLabel.attributedText = progressMutAttrStr
 
         // 进度条

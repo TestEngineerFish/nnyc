@@ -14,7 +14,7 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
         super.createSubviews()
         self.initTitleLabel()
         self.initDescTitleLabel()
-        self.descTitleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(16))
+        self.descTitleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(16))
         self.descTitleLabel?.textColor = UIColor.black1
         self.initAudioPlayerView()
     }

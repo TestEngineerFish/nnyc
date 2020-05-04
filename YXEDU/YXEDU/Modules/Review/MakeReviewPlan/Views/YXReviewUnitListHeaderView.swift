@@ -81,7 +81,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         }
         let numberColor = selectedNum > 0 ? UIColor.orange1 : UIColor.black6
         let statisticsText = String(format: "(%d/%d词)", selectedNum, model.wordsNumber)
-        let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
+        let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
         attrStr.addAttributes([NSAttributedString.Key.foregroundColor : numberColor], range: NSRange(location: 1, length: "\(selectedNum)".count))
         self.statisticsLabel.attributedText = attrStr
         let checkAllText = model.isSelectedAll ? "取消全选" : "全选"
