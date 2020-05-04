@@ -28,7 +28,7 @@ class YXStudentLearnCell: UICollectionViewCell {
         let label = UILabel()
         label.text          = "--"
         label.textColor     = UIColor.black1
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(16))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(16))
         label.textAlignment = .center
         return label
     }()
@@ -36,7 +36,7 @@ class YXStudentLearnCell: UICollectionViewCell {
         let label = UILabel()
         label.text          = "听写"
         label.textColor     = UIColor.gray3
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .center
         return label
     }()
@@ -44,7 +44,7 @@ class YXStudentLearnCell: UICollectionViewCell {
         let label = UILabel()
         label.text          = "学习"
         label.textColor     = UIColor.gray3
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .center
         return label
     }()
@@ -53,7 +53,7 @@ class YXStudentLearnCell: UICollectionViewCell {
         let label = UILabel()
         label.text          = "尚未完成"
         label.textColor     = UIColor.black6
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .left
         return label
     }()
@@ -61,7 +61,7 @@ class YXStudentLearnCell: UICollectionViewCell {
         let label = UILabel()
         label.text          = "尚未完成"
         label.textColor     = UIColor.black6
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .left
         return label
     }()

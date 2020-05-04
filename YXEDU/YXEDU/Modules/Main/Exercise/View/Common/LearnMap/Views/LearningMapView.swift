@@ -17,7 +17,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         button.setTitle("开始复习", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = AdaptSize(14)
-        button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptSize(13))
+        button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptFontSize(13))
         button.size = CGSize(width: AdaptSize(89), height: AdaptSize(28))
         button.backgroundColor = UIColor.gradientColor(with: button.size, colors: [UIColor.hex(0xFFBE34), UIColor.hex(0xFF790C)], direction: .vertical)
         button.isHidden = true

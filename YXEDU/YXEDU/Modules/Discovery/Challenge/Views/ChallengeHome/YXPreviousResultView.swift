@@ -33,14 +33,14 @@ class YXPreviousResultView: UIView {
         let label = UILabel()
         label.text          = "上期挑战排名"
         label.textColor     = UIColor.hex(0xA0774E)
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()
     var rankLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0x834A11)
-        label.font          = UIFont.DINAlternateBold(ofSize: AdaptSize(24))
+        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(24))
         label.textAlignment = .center
         return label
     }()
@@ -56,7 +56,7 @@ class YXPreviousResultView: UIView {
         let label = UILabel()
         label.text          = "答对"
         label.textColor     = UIColor.hex(0xA0774E)
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .left
         return label
     }()
@@ -64,7 +64,7 @@ class YXPreviousResultView: UIView {
         let label = UILabel()
         label.text          = "用时"
         label.textColor     = UIColor.hex(0xA0774E)
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .left
         return label
     }()
@@ -72,7 +72,7 @@ class YXPreviousResultView: UIView {
         let label = UILabel()
         label.text          = "获得松果币"
         label.textColor     = UIColor.hex(0xA0774E)
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .left
         return label
     }()
@@ -95,7 +95,7 @@ class YXPreviousResultView: UIView {
         let button = UIButton()
         button.setImage(UIImage(named: "gameResultFailButton"), for: .normal)
         button.setTitleColor(UIColor.hex(0xD9552E), for: .normal)
-        button.titleLabel?.font = UIFont.semiboldFont(ofSize: AdaptSize(17))
+        button.titleLabel?.font = UIFont.semiboldFont(ofSize: AdaptFontSize(17))
         return button
     }()
 
@@ -206,12 +206,12 @@ class YXPreviousResultView: UIView {
         let questionValue = String(format: "%ld", userModel.questionCount)
         let timeValue     = String(format: "%0.2f", userModel.time / 1000)
         let coinValue     = String(format: "%ld", userModel.bonus)
-        let questionMAttr = NSMutableAttributedString(string: questionValue + "题", attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11), NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12))])
-        questionMAttr.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(24))], range: NSRange(location: 0, length: questionValue.count))
-        let timeMAttr     = NSMutableAttributedString(string: timeValue + "秒", attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11), NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12))])
-        timeMAttr.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(24))], range: NSRange(location: 0, length: timeValue.count))
-        let coinMAttr     = NSMutableAttributedString(string: coinValue + "个", attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11), NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptSize(12))])
-        coinMAttr.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptSize(24))], range: NSRange(location: 0, length: coinValue.count))
+        let questionMAttr = NSMutableAttributedString(string: questionValue + "题", attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11), NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(12))])
+        questionMAttr.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptFontSize(24))], range: NSRange(location: 0, length: questionValue.count))
+        let timeMAttr     = NSMutableAttributedString(string: timeValue + "秒", attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11), NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(12))])
+        timeMAttr.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptFontSize(24))], range: NSRange(location: 0, length: timeValue.count))
+        let coinMAttr     = NSMutableAttributedString(string: coinValue + "个", attributes: [NSAttributedString.Key.foregroundColor : UIColor.hex(0x834A11), NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(12))])
+        coinMAttr.addAttributes([NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: AdaptFontSize(24))], range: NSRange(location: 0, length: coinValue.count))
         questionAmountLabel.attributedText = questionMAttr
         timeAmountLabel.attributedText     = timeMAttr
         coinAmountLabel.attributedText     = coinMAttr

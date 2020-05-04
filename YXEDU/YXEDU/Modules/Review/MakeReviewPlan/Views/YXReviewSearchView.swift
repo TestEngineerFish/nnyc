@@ -25,7 +25,7 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
         let button = UIButton()
         button.setTitle("取消", for: .normal)
         button.setTitleColor(UIColor.black3, for: .normal)
-        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(14))
+        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         return button
     }()
 
@@ -36,7 +36,7 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     
     let tipsDesciptionLabel: UILabel = {
         let label = UILabel()
-        label.font      = UIFont.regularFont(ofSize: AdaptSize(12))
+        label.font      = UIFont.regularFont(ofSize: AdaptFontSize(12))
         label.textColor = UIColor.black3
         return label
     }()
@@ -58,7 +58,7 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
         let label = UILabel()
         label.text          = "暂无单词数据"
         label.textColor     = UIColor.black3
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(12))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(12))
         label.textAlignment = .center
         return label
     }()

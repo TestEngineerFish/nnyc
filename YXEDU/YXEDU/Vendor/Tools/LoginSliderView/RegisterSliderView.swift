@@ -67,7 +67,7 @@ class RegisterSliderView: UIView {
             let label = UILabel()
             label.text          = "验证失败，再试一下吧！"
             label.textColor     = UIColor.hex(0xFF532B)
-            label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
+            label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
             label.textAlignment = .left
             return label
         }()

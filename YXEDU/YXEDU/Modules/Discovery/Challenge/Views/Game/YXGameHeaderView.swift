@@ -26,7 +26,7 @@ class YXGameHeaderView: UIView {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor     = UIColor.white
-        label.font          = UIFont.DINAlternateBold(ofSize: AdaptSize(19.2))
+        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(19.2))
         return label
     }()
 

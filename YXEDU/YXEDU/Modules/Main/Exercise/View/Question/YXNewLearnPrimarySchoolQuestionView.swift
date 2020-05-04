@@ -20,7 +20,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     var chineseExampleLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black1
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()

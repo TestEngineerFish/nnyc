@@ -52,7 +52,7 @@ class YXChallengeRankCell: UITableViewCell {
         let label = UILabel()
         label.text          = "--"
         label.textColor     = UIColor.black3
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(12))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(12))
         label.textAlignment = .center
         return label
     }()

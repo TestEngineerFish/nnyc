@@ -36,7 +36,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
     var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black1
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(17))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(17))
         label.textAlignment = .center
         return label
     }()
@@ -71,10 +71,10 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
         calendar.scrollDirection                  = .horizontal
         calendar.backgroundColor                  = .white
         calendar.appearance.weekdayTextColor      = UIColor.black3.withAlphaComponent(0.8)
-        calendar.appearance.weekdayFont           = .regularFont(ofSize: AdaptSize(12))
+        calendar.appearance.weekdayFont           = .regularFont(ofSize: AdaptFontSize(12))
         calendar.appearance.titleDefaultColor     = .black4
         calendar.appearance.titlePlaceholderColor = .black4
-        calendar.appearance.titleFont             = .regularFont(ofSize: AdaptSize(15))
+        calendar.appearance.titleFont             = .regularFont(ofSize: AdaptFontSize(15))
         calendar.appearance.todayColor            = .clear
         calendar.appearance.selectionColor        = .orange1
         calendar.appearance.todaySelectionColor   = .orange1
@@ -84,7 +84,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
     var downButton: YXButton = {
         let button = YXButton(.theme, frame: .zero)
         button.setTitle("确定", for: .normal)
-        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(17))
+        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         return button
     }()
 

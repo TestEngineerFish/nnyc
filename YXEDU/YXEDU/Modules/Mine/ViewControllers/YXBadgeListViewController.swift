@@ -33,7 +33,7 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
         let label = UILabel()
         label.text          = "我的徽章"
         label.textColor     = UIColor.orange1
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(12))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(12))
         label.textAlignment = .center
         return label
     }()
@@ -42,7 +42,7 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
         let label = UILabel()
         label.text          = "-/-"
         label.textColor     = UIColor.orange1
-        label.font          = UIFont.DINAlternateBold(ofSize: AdaptSize(17))
+        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(17))
         label.textAlignment = .center
         return label
     }()

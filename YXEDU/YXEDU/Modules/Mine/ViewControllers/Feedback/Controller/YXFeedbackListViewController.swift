@@ -108,7 +108,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
             return AdaptSize(356)
         } else {
             let model = self.feedbackList[indexPath.row]
-            let contentH = model.content?.textHeight(font: UIFont.regularFont(ofSize: AdaptSize(14)), width: screenWidth - AdaptSize(30)) ?? 0
+            let contentH = model.content?.textHeight(font: UIFont.regularFont(ofSize: AdaptFontSize(14)), width: screenWidth - AdaptSize(30)) ?? 0
             return contentH + AdaptSize(61)
         }
     }

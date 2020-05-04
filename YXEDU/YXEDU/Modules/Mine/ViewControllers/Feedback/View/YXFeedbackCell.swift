@@ -12,14 +12,14 @@ class YXFeedbackCell: UITableViewCell {
     var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black1
-        label.font      = UIFont.regularFont(ofSize: AdaptSize(15))
+        label.font      = UIFont.regularFont(ofSize: AdaptFontSize(15))
         return label
     }()
     
     var contentLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.hex(0x666666)
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.numberOfLines = 0
         return label
     }()

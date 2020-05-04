@@ -26,7 +26,7 @@ class YXChallengeHeaderView: UIView {
         let label = UILabel()
         label.text          = "本期排行榜"
         label.textColor     = UIColor.hex(0x4F381D)
-        label.font          = UIFont.mediumFont(ofSize: AdaptSize(15))
+        label.font          = UIFont.mediumFont(ofSize: AdaptFontSize(15))
         label.textAlignment = .center
         return label
     }()
@@ -35,7 +35,7 @@ class YXChallengeHeaderView: UIView {
         button.isHidden = true
         button.setTitle("上期排名", for: .normal)
         button.setTitleColor(UIColor.hex(0xB18550), for: .normal)
-        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(12))
+        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(12))
         return button
     }()
 
@@ -68,7 +68,7 @@ class YXChallengeHeaderView: UIView {
         headerBackgroundView.addSubview(titleLabel)
         headerBackgroundView.addSubview(previousRankButton)
 
-        headerBackgroundView.size = CGSize(width: AdaptSize(349), height: AdaptSize(48))
+        headerBackgroundView.size = CGSize(width: screenWidth - AdaptSize(26), height: AdaptSize(48))
         headerBackgroundView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
             make.centerX.equalToSuperview()
@@ -88,7 +88,8 @@ class YXChallengeHeaderView: UIView {
         }
         titleLabel.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(76), height: AdaptSize(21)))
+            make.height.equalToSuperview()
+            make.width.equalTo(0)
         }
         previousRankButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-14))
@@ -118,6 +119,10 @@ class YXChallengeHeaderView: UIView {
                 make.height.equalTo(AdaptSize(12))
             }
             myRankView.isHidden = true
+        }
+        self.titleLabel.sizeToFit()
+        self.titleLabel.snp.updateConstraints { (make) in
+            make.width.equalTo(self.titleLabel.width)
         }
     }
 

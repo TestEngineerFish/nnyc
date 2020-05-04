@@ -26,7 +26,7 @@ class YXChallengeMyRankCell: UIView {
         let label = UILabel()
         label.text          = ""
         label.textColor     = UIColor.orange1
-        label.font          = UIFont.mediumFont(ofSize: AdaptSize(15))
+        label.font          = UIFont.mediumFont(ofSize: AdaptFontSize(15))
         label.textAlignment = .center
         return label
     }()

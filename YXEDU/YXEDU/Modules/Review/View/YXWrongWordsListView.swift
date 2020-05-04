@@ -14,7 +14,7 @@ class YXWrongWordsListView: UIView, UITableViewDataSource {
         let label = UILabel()
         label.text          = "需要加强的单词"
         label.textColor     = UIColor.black1
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(17))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(17))
         label.textAlignment = .center
         label.backgroundColor = .white
         return label

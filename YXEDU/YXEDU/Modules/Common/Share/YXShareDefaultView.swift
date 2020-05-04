@@ -32,7 +32,7 @@ class YXShareDefaultView: UIView {
         let label = UILabel()
         label.text          = "QQ"
         label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()
@@ -55,7 +55,7 @@ class YXShareDefaultView: UIView {
         let label = UILabel()
         label.text          = "微信"
         label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()
@@ -71,7 +71,7 @@ class YXShareDefaultView: UIView {
         let label = UILabel()
         label.text          = "朋友圈"
         label.textColor     = UIColor.black2
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()

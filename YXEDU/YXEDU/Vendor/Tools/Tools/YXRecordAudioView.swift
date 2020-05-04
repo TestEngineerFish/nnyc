@@ -57,7 +57,7 @@ class YXRecordAudioView: UIView {
         let label = UILabel()
         label.text          = "录音中，请跟读"
         label.textColor     = UIColor.white
-        label.font          = UIFont.regularFont(ofSize: AdaptSize(14))
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .center
         return label
     }()

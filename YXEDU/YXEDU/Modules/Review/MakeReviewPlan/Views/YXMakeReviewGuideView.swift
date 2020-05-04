@@ -19,7 +19,7 @@ class YXMakeReviewGuideView: UIView {
         let label = UILabel()
         label.text          = "手指滑动，快速选中单词"
         label.textColor     = UIColor.white
-        label.font          = UIFont.mediumFont(ofSize: AdaptSize(15))
+        label.font          = UIFont.mediumFont(ofSize: AdaptFontSize(15))
         label.textAlignment = .center
         return label
     }()
@@ -28,7 +28,7 @@ class YXMakeReviewGuideView: UIView {
         let button = UIButton()
         button.setTitle("我知道啦", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(17))
+        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         button.layer.cornerRadius     = AdaptSize(21)
         button.layer.masksToBounds    = true
         button.layer.borderColor      = UIColor.white.cgColor
