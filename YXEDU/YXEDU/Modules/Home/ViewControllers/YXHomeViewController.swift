@@ -24,6 +24,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     public var progressManager = YXExcerciseProgressManager()
     
     @IBOutlet weak var homeEntryView: YXDesignableView!
+    @IBOutlet weak var homeViewAspect: NSLayoutConstraint!
+    @IBOutlet weak var homeViewiPadAspect: NSLayoutConstraint!
     @IBOutlet weak var bookNameButton: UIButton!
     @IBOutlet weak var startStudyView: YXDesignableView!
     @IBOutlet weak var startStudyButton: YXDesignableButton!
@@ -33,6 +35,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var studyDataCollectionView: UICollectionView!
     @IBOutlet weak var subItemCollectionView: UICollectionView!
+    @IBOutlet weak var subItemCollectionViewHeight: NSLayoutConstraint!
+
     var squirrelAnimationView: AnimationView?
     
     @IBAction func startExercise(_ sender: UIButton) {
@@ -95,10 +99,19 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         lineView.backgroundColor = UIColor.hex(0xDCDCDC)
         self.tabBarController?.tabBar.addSubview(lineView)
                 
-        progressBar.progressImage = progressBar.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
-        
+        progressBar.layer.cornerRadius = 5
+        progressBar.clipsToBounds = true
+        progressBar.layer.sublayers![1].cornerRadius = 5
+        progressBar.subviews[1].clipsToBounds = true
+                
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
+        subItemCollectionView.register(UINib(nibName: "YXHomeSubItemiPadCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemiPadCell")
+
+        if isPad {
+            homeViewAspect.isActive = false
+            homeViewiPadAspect.isActive = true
+        }
         
         self.checkUserState()
         self.setSquirrelAnimation()
@@ -362,9 +375,16 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             return cell
             
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemCell", for: indexPath) as! YXHomeSubItemCell
-            cell.setData(indexPath)
-            return cell
+            if isPad {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemiPadCell", for: indexPath) as! YXHomeSubItemiPadCell
+                cell.setData(indexPath)
+                return cell
+                
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemCell", for: indexPath) as! YXHomeSubItemCell
+                cell.setData(indexPath)
+                return cell
+            }
         }
     }
     
@@ -418,7 +438,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             return CGSize(width: (screenWidth - 60) / 3, height: 88)
             
         } else {
-            return CGSize(width: (screenWidth - 40 - 12) / 2, height: 60)
+            if isPad {
+                let width = (screenWidth - 40 - 36) / 4
+                subItemCollectionViewHeight.constant = width
+                return CGSize(width: width, height: width)
+
+            } else {
+                return CGSize(width: (screenWidth - 40 - 12) / 2, height: 60)
+            }
         }
     }
 }

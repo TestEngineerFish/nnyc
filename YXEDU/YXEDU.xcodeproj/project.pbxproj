@@ -231,6 +231,8 @@
 		779ED54124349AB300E452E3 /* JSBridgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53824349AB300E452E3 /* JSBridgeModel.swift */; };
 		779ED54224349AB300E452E3 /* JSActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53924349AB300E452E3 /* JSActionType.swift */; };
 		779ED54324349AB300E452E3 /* ShareActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53A24349AB300E452E3 /* ShareActionModel.swift */; };
+		779F2C57245FBBC9007D3034 /* YXHomeSubItemiPadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779F2C55245FBBC8007D3034 /* YXHomeSubItemiPadCell.swift */; };
+		779F2C58245FBBC9007D3034 /* YXHomeSubItemiPadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779F2C56245FBBC9007D3034 /* YXHomeSubItemiPadCell.xib */; };
 		77AA41C524065A6700473A71 /* YXGuideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AA41C424065A6700473A71 /* YXGuideModel.swift */; };
 		77AA41C72406A8F900473A71 /* YXAddBookGuideView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77AA41C62406A8F900473A71 /* YXAddBookGuideView.xib */; };
 		77AA41C92407E96B00473A71 /* YXCollectionViewLeftFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AA41C82407E96B00473A71 /* YXCollectionViewLeftFlowLayout.swift */; };
@@ -803,6 +805,8 @@
 		779ED53824349AB300E452E3 /* JSBridgeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSBridgeModel.swift; sourceTree = "<group>"; };
 		779ED53924349AB300E452E3 /* JSActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSActionType.swift; sourceTree = "<group>"; };
 		779ED53A24349AB300E452E3 /* ShareActionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareActionModel.swift; sourceTree = "<group>"; };
+		779F2C55245FBBC8007D3034 /* YXHomeSubItemiPadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeSubItemiPadCell.swift; sourceTree = "<group>"; };
+		779F2C56245FBBC9007D3034 /* YXHomeSubItemiPadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXHomeSubItemiPadCell.xib; sourceTree = "<group>"; };
 		77AA41C424065A6700473A71 /* YXGuideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGuideModel.swift; sourceTree = "<group>"; };
 		77AA41C62406A8F900473A71 /* YXAddBookGuideView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAddBookGuideView.xib; sourceTree = "<group>"; };
 		77AA41C82407E96B00473A71 /* YXCollectionViewLeftFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCollectionViewLeftFlowLayout.swift; sourceTree = "<group>"; };
@@ -1956,6 +1960,8 @@
 				77F69A7923617CCB00E55185 /* YXHomeStudyDataCell.xib */,
 				77F69A7C23617CEE00E55185 /* YXHomeSubItemCell.swift */,
 				77F69A7D23617CEE00E55185 /* YXHomeSubItemCell.xib */,
+				779F2C55245FBBC8007D3034 /* YXHomeSubItemiPadCell.swift */,
+				779F2C56245FBBC9007D3034 /* YXHomeSubItemiPadCell.xib */,
 				779DC4FD242C832A00673ED5 /* YXSetReminderView.swift */,
 				779DC4FF242C833200673ED5 /* YXSetReminderView.xib */,
 			);
@@ -3726,6 +3732,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77097539239A30080071A779 /* YXWordDetailClassicCell.xib in Resources */,
+				779F2C58245FBBC9007D3034 /* YXHomeSubItemiPadCell.xib in Resources */,
 				77B7C6F923A77BA200149ACE /* YXTaskCenterCardCell.xib in Resources */,
 				CFB11BF4241785ED00B29B62 /* star3.mp3 in Resources */,
 				22545A50244956CF002A82BE /* right.mp3 in Resources */,
@@ -4403,6 +4410,7 @@
 				EE7720FE2375AA5E00CD632E /* YXExerciseResultModel.swift in Sources */,
 				EEACEB6A23A7AA610036B3A2 /* Int+Extension.swift in Sources */,
 				7720182A237CE7ED00535732 /* YXWordDetailView.swift in Sources */,
+				779F2C57245FBBC9007D3034 /* YXHomeSubItemiPadCell.swift in Sources */,
 				EE88DF5323AF5BEC004DFF10 /* YXSettingRequest.swift in Sources */,
 				22DC471F2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift in Sources */,
 				EE5EF21323273BAE00655654 /* NSData+YR.m in Sources */,
@@ -4571,7 +4579,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "YXEDU/Resources/YXEDU-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -4616,7 +4624,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YXEDU/Resources/YXEDU-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
