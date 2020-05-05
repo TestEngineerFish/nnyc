@@ -360,6 +360,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
 
                             YXConfigure.shared().saveCurrentToken()
                             YXUserModel.default.didLogin = true
+                            Growing.setUserId(YXUserModel.default.uuid ?? "")
                             YXUserModel.default.login()
 
                         } else if let error = response?.error {
