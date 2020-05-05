@@ -35,7 +35,7 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
         audioPlayerView?.snp.makeConstraints({ (make) in
             make.centerY.equalTo(titleLabel!)
             make.left.equalTo(titleLabel!.snp.right).offset(3)
-            make.width.height.equalTo(22)
+            make.width.height.equalTo(AdaptFontSize(22))
         })
         
         imageView?.snp.makeConstraints({ (make) in

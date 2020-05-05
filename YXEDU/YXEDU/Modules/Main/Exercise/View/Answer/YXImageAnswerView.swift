@@ -12,9 +12,9 @@ import UIKit
 class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     enum Config {
-        static var itemHeight: CGFloat   = AdaptSize(128)
-        static var itemWidth: CGFloat    = AdaptSize(177)
-        static var itemInterval: CGFloat = AdaptSize(5)
+        static var itemHeight: CGFloat   = AdaptSize(isPad() ? 180 : 128)
+        static var itemWidth: CGFloat    = AdaptSize(isPad() ? 250 : 177)
+        static var itemInterval: CGFloat = AdaptSize(isPad() ? 15 : 5)
     }
     
 
@@ -101,7 +101,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         
         iv.layer.borderWidth   = 2
         iv.layer.masksToBounds = true
-        iv.layer.cornerRadius  = AdaptSize(4)
+        iv.layer.cornerRadius  = AdaptSize(isPad() ? 9 : 4)
         cell.contentView.addSubview(iv)
         iv.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()

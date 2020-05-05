@@ -41,7 +41,8 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
     }
     
     override func layoutSubviews() {
-        let contentViewH = CGFloat(self.exerciseModel.option?.firstItems?.count ?? 0) * (AdaptSize(30) + AdaptSize(34)) + AdaptSize(108)
+        let itemConfig = YXConnectionWordAndChineseConfig()
+        let contentViewH = CGFloat(self.exerciseModel.option?.firstItems?.count ?? 0) * (itemConfig.leftItemHeight + itemConfig.leftInterval) + AdaptIconSize(108)
         self.contentView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(22))
             make.right.equalToSuperview().offset(AdaptSize(-22))
@@ -52,12 +53,12 @@ class YXConnectionWordAndChineseExerciseView: YXBaseExerciseView {
         self.questionView?.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(AdaptSize(-12))
             make.centerX.equalToSuperview().offset(AdaptSize(10))
-            make.width.equalTo(AdaptSize(231))
-            make.height.equalTo(AdaptSize(87))
+            make.width.equalTo(AdaptIconSize(231))
+            make.height.equalTo(AdaptIconSize(87))
         }
 
         self.answerView?.snp.makeConstraints({ (make) in
-            make.top.equalToSuperview().offset(AdaptSize(108))
+            make.top.equalToSuperview().offset(AdaptIconSize(108))
             make.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
         })

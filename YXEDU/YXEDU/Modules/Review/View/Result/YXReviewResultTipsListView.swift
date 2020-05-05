@@ -20,7 +20,7 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
     private var maxWidth: CGFloat = 0
     private var tableView = UITableView()
     
-    private let cellHeight: CGFloat = AS(40)
+    private let cellHeight: CGFloat = AdaptIconSize(40)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,9 +99,9 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
             cell.addSubview(imageView)
             imageView.snp.remakeConstraints { (make) in
                 make.centerY.equalToSuperview()
-                make.right.equalToSuperview().offset(AS(-33))
-                make.width.equalTo(AS(8))
-                make.height.equalTo(AS(15))
+                make.right.equalToSuperview().offset(AdaptIconSize(-33))
+                make.width.equalTo(AdaptIconSize(8))
+                make.height.equalTo(AdaptIconSize(15))
             }
         }
         return cell

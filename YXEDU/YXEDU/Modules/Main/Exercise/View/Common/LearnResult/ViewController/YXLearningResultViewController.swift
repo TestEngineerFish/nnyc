@@ -13,9 +13,6 @@ class YXLearningResultViewController: YXViewController {
     
     var backButton = BiggerClickAreaButton()
     var headerView: YXExerciseResultView?
-    var taskMapView: YXTaskMapView?
-    var leftImageView = UIImageView()
-    var rightImageView = UIImageView()
     var contentScrollView = UIScrollView()
 
     var currentUnitIndex = 0
@@ -46,9 +43,9 @@ class YXLearningResultViewController: YXViewController {
         
         self.view.addSubview(loadingView)
         loadingView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(kSafeBottomMargin + 123))
+            make.top.equalTo(AdaptIconSize(123))
             make.centerX.width.equalToSuperview()
-            make.height.equalTo(AS(120))
+            make.height.equalTo(AdaptIconSize(120))
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -79,35 +76,40 @@ class YXLearningResultViewController: YXViewController {
  
         // 设置任务地图
         self.initUnitMap()
-        
-        self.contentScrollView.addSubview(leftImageView)
-        self.contentScrollView.addSubview(rightImageView)
     }
 
     private func initUnitMap() {
         guard let model = self.model, let resultView = self.headerView else {return}
-        let mapSize = CGSize(width: AdaptSize(333), height: AdaptSize(192))
+        let mapSize: CGSize = {
+            if isPad() {
+                let w = screenWidth - AdaptSize(172)
+                let h = w / 333 * 193
+                return CGSize(width: w, height: h)
+            } else {
+                return CGSize(width: AdaptSize(333), height: AdaptSize(192))
+            }
+        }()
         self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: self.currentUnitIndex, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
 //        self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: 6, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
         self.contentScrollView.addSubview(unitMapView!)
         unitMapView!.snp.makeConstraints { (make) in
             make.size.equalTo(mapSize)
             make.centerX.equalToSuperview()
-            make.top.equalTo(resultView.snp.bottom).offset(AdaptSize(10))
+            make.top.equalTo(resultView.snp.bottom).offset(AdaptIconSize(10))
         }
         let leftBarImageView  = UIImageView(image: UIImage(named: "linkBar"))
         let rightBarImageView = UIImageView(image: UIImage(named: "linkBar"))
         self.contentScrollView.addSubview(leftBarImageView)
         self.contentScrollView.addSubview(rightBarImageView)
         leftBarImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(resultView.snp.bottom).offset(AdaptSize(-15))
-            make.left.equalTo(unitMapView!).offset(AdaptSize(13))
-            make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(41)))
+            make.top.equalTo(resultView.snp.bottom).offset(AdaptIconSize(-15))
+            make.left.equalTo(unitMapView!).offset(AdaptSize(isPad() ? 30 : 13))
+            make.size.equalTo(CGSize(width: AdaptIconSize(16), height: AdaptIconSize(41)))
         }
         rightBarImageView.snp.makeConstraints { (make) in
             make.top.equalTo(leftBarImageView)
-            make.right.equalTo(unitMapView!).offset(AdaptSize(-13))
-            make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(41)))
+            make.right.equalTo(unitMapView!).offset(AdaptSize(isPad() ? -30 : -13))
+            make.size.equalTo(CGSize(width: AdaptIconSize(16), height: AdaptIconSize(41)))
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.contentScrollView.contentSize = CGSize(width:self.view.width, height:self.unitMapView!.frame.maxY + AdaptSize(15) + kSafeBottomMargin)
@@ -125,19 +127,6 @@ class YXLearningResultViewController: YXViewController {
         self.headerView?.processEvent = { [weak self] in
             self?.punchEvent()
         }
-        
-        taskMapView?.layer.setDefaultShadow()
-        taskMapView?.backgroundColor    = UIColor.white
-        taskMapView?.layer.cornerRadius = 6
-        taskMapView?.learnNewUnit = { [weak self] (unitId: Int?) -> Void in
-            guard let self = self, let id = unitId else {
-                return
-            }
-            self.learnUnit(id)
-        }
-        
-        leftImageView.image = UIImage(named: "review_result_connection")
-        rightImageView.image = UIImage(named: "review_result_connection")
     }
     
     private func setLayout() {
@@ -148,35 +137,16 @@ class YXLearningResultViewController: YXViewController {
         self.contentScrollView.contentSize = CGSize(width: screenWidth, height: contentHeight)
 
         backButton.snp.makeConstraints { (make) in
-            make.left.equalTo(AS(14))
+            make.left.equalTo(AdaptIconSize(14))
             make.top.equalTo(AS(32 + kSafeBottomMargin))
-            make.width.height.equalTo(AS(22))
+            make.width.height.equalTo(AdaptIconSize(22))
         }
         
         headerView?.snp.makeConstraints { (make) in
             make.top.equalTo(AS(68 + kSafeBottomMargin))
-            make.width.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(AdaptSize(isPad() ? -130 : 0))
+            make.centerX.equalToSuperview()
             make.height.equalTo(headerHeight)
-        }
-                
-        if headerView != nil {
-            taskMapView?.snp.makeConstraints { (make) in
-                make.top.equalTo(headerView!.snp.bottom).offset(AS(10))
-                make.centerX.equalToSuperview()
-                make.size.equalTo(taskMapView?.size ?? CGSize.zero)
-            }
-            
-            leftImageView.snp.makeConstraints { (make) in
-                make.top.equalTo(headerView!.snp.bottom).offset(AS(-15))
-                make.left.equalTo(AS(33))
-                make.width.equalTo(AS(16))
-                make.height.equalTo(AS(41))
-            }
-            
-            rightImageView.snp.makeConstraints { (make) in
-                make.top.height.width.equalTo(leftImageView)
-                make.right.equalTo(headerView!).offset(AS(-33))
-            }
         }
     }
     

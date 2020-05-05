@@ -35,7 +35,7 @@ class YXListenAndLackWordQuestionView: YXBaseQuestionView {
             audioPlayerView?.snp.makeConstraints({ (make) in
                 make.top.equalTo(_spellView.snp.bottom).offset(10)
                 make.centerX.equalToSuperview()
-                make.width.height.equalTo(AdaptSize(32))
+                make.width.height.equalTo(AdaptIconSize(32))
             })
         }
     }

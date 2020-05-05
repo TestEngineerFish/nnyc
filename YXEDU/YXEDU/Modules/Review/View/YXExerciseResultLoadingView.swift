@@ -32,21 +32,21 @@ class YXExerciseResultLoadingView: YXView, CAAnimationDelegate {
     
     override func bindProperty() {
         titleLabel.text = "正在生成报告…"
-        titleLabel.font = UIFont.regularFont(ofSize: 13)
+        titleLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(13))
         titleLabel.textColor = UIColor.black3
     }
     
     override func layoutSubviews() {
         resultView.snp.makeConstraints { (make) in
             make.top.centerX.equalToSuperview()
-            make.width.height.equalTo(AS(80))
+            make.width.height.equalTo(AdaptIconSize(80))
         }
-        
+
+        titleLabel.sizeToFit()
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(resultView.snp.bottom).offset(AS(19))
             make.centerX.equalToSuperview()
-            make.width.equalTo(AS(100))
-            make.height.equalTo(AS(18))
+            make.size.equalTo(titleLabel.size)
         }
         
         resultView.play()

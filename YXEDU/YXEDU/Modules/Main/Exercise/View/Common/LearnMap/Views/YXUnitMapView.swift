@@ -64,11 +64,13 @@ class YXUnitMapView: UIView {
     /// 设置单元位置
     private func setUnitPointList() {
         self.unitPointList.removeAll()
-        let startPoint    = CGPoint(x: self.width - AdaptSize(55), y: self.height)
-        let firstPoint    = CGPoint(x: self.width - AdaptSize(94), y: self.height - AdaptSize(36))
-        let secondPoint   = CGPoint(x: firstPoint.x - AdaptSize(70), y: firstPoint.y)
-        let thirdPoint    = CGPoint(x: secondPoint.x - AdaptSize(70), y: firstPoint.y)
-        let fourthlyPoint = CGPoint(x: thirdPoint.x, y: AdaptSize(66))
+        let bottomLineY   = isPad() ? self.height * (1 - 0.2) : self.height * (1 - 0.11)
+        let topLineY      = isPad() ? AdaptSize(85) : AdaptSize(66)
+        let startPoint    = CGPoint(x: self.width / 6 * 5, y: self.height)
+        let firstPoint    = CGPoint(x: self.width * (1 - 0.282), y: bottomLineY)
+        let secondPoint   = CGPoint(x: firstPoint.x - (self.width * 0.21), y: firstPoint.y)
+        let thirdPoint    = CGPoint(x: secondPoint.x - (self.width * 0.21), y: firstPoint.y)
+        let fourthlyPoint = CGPoint(x: thirdPoint.x, y: topLineY)
         let fifthlyPoint  = CGPoint(x: secondPoint.x, y: fourthlyPoint.y)
         let sixthPoint    = CGPoint(x: firstPoint.x, y: fourthlyPoint.y)
         let endPoint      = CGPoint(x: startPoint.x, y: 0)
@@ -88,7 +90,7 @@ class YXUnitMapView: UIView {
         path.move(to: unitPointList[0])
         path.addQuadCurve(to: unitPointList[1], controlPoint: CGPoint(x: unitPointList[0].x, y: self.unitPointList[1].y))
         path.addLine(to: unitPointList[3])
-        path.addCurve(to: unitPointList[4], controlPoint1: CGPoint(x: unitPointList[3].x - AdaptSize(61), y: unitPointList[3].y), controlPoint2: CGPoint(x: unitPointList[4].x - AdaptSize(61), y: unitPointList[4].y))
+        path.addCurve(to: unitPointList[4], controlPoint1: CGPoint(x: unitPointList[3].x - AdaptSize(isPad() ? 120 : 61), y: unitPointList[3].y), controlPoint2: CGPoint(x: unitPointList[4].x - AdaptSize(isPad() ? 120 : 61), y: unitPointList[4].y))
         path.addLine(to: unitPointList[6])
         path.addQuadCurve(to: CGPoint(x: unitPointList[7].x, y: unitPointList[7].y + AdaptSize(15)), controlPoint: CGPoint(x: unitPointList[7].x, y: unitPointList[6].y))
         path.addLine(to: unitPointList[7])
@@ -96,7 +98,7 @@ class YXUnitMapView: UIView {
         let mapLayer = CAShapeLayer()
         mapLayer.frame       = self.bounds
         mapLayer.path        = path.cgPath
-        mapLayer.lineWidth   = AdaptSize(10)
+        mapLayer.lineWidth   = AdaptIconSize(10)
         mapLayer.fillColor   = nil
         mapLayer.strokeColor = UIColor.hex(0xE8DACC).cgColor
         self.layer.addSublayer(mapLayer)
@@ -154,32 +156,32 @@ class YXUnitMapView: UIView {
             return ""
         }()
         label.sizeToFit()
-        label.frame = CGRect(x: 0, y: AdaptSize(25), width: label.width, height: label.height)
+        label.frame = CGRect(x: 0, y: AdaptIconSize(25), width: label.width, height: label.height)
         
         unitView.addSubview(label)
         
         let outsideLayer = CALayer()
-        outsideLayer.frame           = CGRect(x: (label.width / 2) - AdaptSize(11), y: 0, width: AdaptSize(22), height: AdaptSize(22))
+        outsideLayer.frame           = CGRect(x: (label.width / 2) - AdaptIconSize(11), y: 0, width: AdaptIconSize(22), height: AdaptIconSize(22))
         outsideLayer.backgroundColor = UIColor.hex(0xE8DACC).cgColor
-        outsideLayer.cornerRadius    = AdaptSize(11)
+        outsideLayer.cornerRadius    = AdaptIconSize(11)
         
         let insideLayer = CALayer()
-        insideLayer.frame           = CGRect(x: AdaptSize(5), y: AdaptSize(5), width: AdaptSize(12), height: AdaptSize(12))
+        insideLayer.frame           = CGRect(x: AdaptIconSize(5), y: AdaptIconSize(5), width: AdaptIconSize(12), height: AdaptIconSize(12))
         insideLayer.backgroundColor = UIColor.white.cgColor
         insideLayer.setDefaultShadow()
-        insideLayer.cornerRadius    = AdaptSize(6)
+        insideLayer.cornerRadius    = AdaptIconSize(6)
         
         outsideLayer.addSublayer(insideLayer)
         unitView.layer.addSublayer(outsideLayer)
         
-        unitView.frame  = CGRect(x: center.x - (label.width / 2), y: center.y - AdaptSize(11), width: label.width, height: AdaptSize(43))
+        unitView.frame  = CGRect(x: center.x - (label.width / 2), y: center.y - AdaptIconSize(11), width: label.width, height: AdaptIconSize(43))
         return unitView
     }
     
      /// 添加头像图钉
     private func setPinView() {
         let pinPoint = self.unitPointList[self.currentUnitIndex - self.offsetUnit]
-        let pinFrame = CGRect(x: pinPoint.x - AdaptSize(18), y: pinPoint.y - AdaptSize(10), width: AdaptSize(36), height: AdaptSize(42))
+        let pinFrame = CGRect(x: pinPoint.x - AdaptSize(18), y: pinPoint.y - AdaptSize(10), width: AdaptIconSize(36), height: AdaptIconSize(42))
         self.avatarPinView = YXAvatarPinView(isSmallMap: true, frame: pinFrame)
         self.addSubview(avatarPinView!)
     }
@@ -189,7 +191,7 @@ class YXUnitMapView: UIView {
         guard let startPoint = self.unitPointList.first else {
             return
         }
-        let startSize = CGSize(width:  AdaptSize(76), height: AdaptSize(30))
+        let startSize = CGSize(width:  AdaptIconSize(76), height: AdaptIconSize(30))
         let startView = UIView(frame: CGRect(x: startPoint.x - startSize.width / 2, y: self.height - startSize.height, width: startSize.width, height: startSize.height))
         startView.backgroundColor = UIColor.gradientColor(with: startSize, colors: [UIColor.white.withAlphaComponent(0.0), UIColor.white], direction: .vertical)
         self.addSubview(startView)
@@ -200,7 +202,7 @@ class YXUnitMapView: UIView {
         guard let endPoint = self.unitPointList.last else {
             return
         }
-        let endSize = CGSize(width: AdaptSize(76), height: AdaptSize(58))
+        let endSize = CGSize(width: AdaptIconSize(76), height: AdaptIconSize(58))
         let endView = UIView(frame: CGRect(x: endPoint.x - endSize.width / 2, y: 0, width: endSize.width, height: endSize.height))
         endView.backgroundColor = UIColor.gradientColor(with: endSize, colors: [UIColor.white, UIColor.white.withAlphaComponent(0.0)], direction: .vertical)
         self.addSubview(endView)

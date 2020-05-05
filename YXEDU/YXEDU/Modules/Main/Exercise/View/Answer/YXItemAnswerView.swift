@@ -12,9 +12,9 @@ import UIKit
 class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     enum Config {
-        static var itemHeight: CGFloat = AdaptSize(45)
-        static var itemWidth: CGFloat = screenWidth - AdaptSize(35) * 2
-        static var itemInterval: CGFloat = AdaptSize(13)
+        static var itemHeight: CGFloat = AdaptSize(isPad() ? 60 : 45)
+        static var itemWidth: CGFloat = AdaptSize(isPad() ? 540 : 280)
+        static var itemInterval: CGFloat = AdaptSize(isPad() ? 26 : 13)
     }
     
     private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()

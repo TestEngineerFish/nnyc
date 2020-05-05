@@ -40,7 +40,7 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
         audioPlayerView?.snp.makeConstraints({ (make) in
             make.centerY.equalTo(titleLabel!)
             make.left.equalTo(titleLabel!.snp.right).offset(AdaptSize(3))
-            make.width.height.equalTo(AdaptSize(22))
+            make.width.height.equalTo(AdaptIconSize(22))
         })
     }
     

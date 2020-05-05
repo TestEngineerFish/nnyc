@@ -50,7 +50,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
 
     /// 提醒view
     var remindView: YXRemindView?
-    let remindViewDefaultHeight = AdaptSize(90)
+    let remindViewDefaultHeight = AdaptIconSize(90)
     var remindViewHeight = AdaptSize(90) {
         willSet {
             remindView?.snp.updateConstraints({ (make) in
@@ -104,7 +104,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
         }
         questionView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(AdaptSize(32))
-            make.width.equalTo(AdaptSize(332))
+            make.width.equalTo(AdaptSize(isPad() ? 660 : 332))
             make.centerX.equalToSuperview()
         }
         scrollView.snp.makeConstraints { (make) in

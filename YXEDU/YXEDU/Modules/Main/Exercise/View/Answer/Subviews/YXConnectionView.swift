@@ -21,14 +21,14 @@ protocol YXConnectionItemConfigProtocol {
     var leftPardding: CGFloat {get}
 }
 extension YXConnectionItemConfigProtocol {
-    var leftPardding: CGFloat {return AdaptSize(22)}
+    var leftPardding: CGFloat {return AdaptIconSize(22)}
 }
 
 /// 单词 + 中文
 struct YXConnectionWordAndChineseConfig: YXConnectionItemConfigProtocol {
-    var leftItemWidth: CGFloat { return AdaptSize(104)}
-    var leftItemHeight: CGFloat { return AdaptSize(30)}
-    var leftInterval: CGFloat { return AdaptSize(34)}
+    var leftItemWidth: CGFloat { return AdaptIconSize(104)}
+    var leftItemHeight: CGFloat { return AdaptIconSize(30)}
+    var leftInterval: CGFloat { return AdaptIconSize(34)}
 
     var rightItemWidth: CGFloat { return leftItemWidth}
     var rightItemHeight: CGFloat { return leftItemHeight}
@@ -36,13 +36,13 @@ struct YXConnectionWordAndChineseConfig: YXConnectionItemConfigProtocol {
 }
 /// 单词 + 图片
 struct YXConnectionWordAndImageConfig: YXConnectionItemConfigProtocol {
-    var leftItemWidth: CGFloat { return AdaptSize(102)}
-    var leftItemHeight: CGFloat { return AdaptSize(30)}
-    var leftInterval: CGFloat { return AdaptSize(54)}
+    var leftItemWidth: CGFloat { return AdaptIconSize(102)}
+    var leftItemHeight: CGFloat { return AdaptIconSize(30)}
+    var leftInterval: CGFloat { return AdaptIconSize(54)}
 
-    var rightItemWidth: CGFloat { return AdaptSize(90)}
-    var rightItemHeight: CGFloat { return AdaptSize(66)}
-    var rightInterval: CGFloat { return AdaptSize(24)}
+    var rightItemWidth: CGFloat { return AdaptIconSize(90)}
+    var rightItemHeight: CGFloat { return AdaptIconSize(66)}
+    var rightInterval: CGFloat { return AdaptIconSize(24)}
 }
 
 

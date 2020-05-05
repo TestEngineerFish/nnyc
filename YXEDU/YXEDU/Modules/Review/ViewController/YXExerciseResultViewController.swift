@@ -17,13 +17,11 @@ class YXExerciseResultViewController: YXViewController {
     
     var model: YXExerciseResultDisplayModel?
     var resultView: YXExerciseResultView?
-    var unitMapView: YXUnitMapView?
     var shareFinished = false
     var loadingView   = YXExerciseResultLoadingView()
     
     deinit {
         resultView?.removeFromSuperview()
-        unitMapView?.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -47,9 +45,9 @@ class YXExerciseResultViewController: YXViewController {
             self.view.bringSubviewToFront(navBar)
         }
         loadingView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(kSafeBottomMargin + 123))
+            make.top.equalTo(AdaptIconSize(123))
             make.centerX.width.equalToSuperview()
-            make.height.equalTo(AS(117))
+            make.height.equalTo(AdaptIconSize(117))
         }
     }
     
@@ -69,10 +67,12 @@ class YXExerciseResultViewController: YXViewController {
         }
 
         self.view.addSubview(resultView!)
+        let resultH = (resultView?.viewHeight() ?? 0) + (isPad() ? AdaptSize(30) : 0)
         resultView?.snp.makeConstraints { (make) in
-            make.top.equalTo(kNavHeight)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(resultView?.viewHeight() ?? 0)
+            make.top.equalTo(kNavHeight).offset(AdaptSize(isPad() ? 30 : 0))
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(AdaptSize(isPad() ? -150 : 0))
+            make.height.equalTo(resultH)
         }
     }
     

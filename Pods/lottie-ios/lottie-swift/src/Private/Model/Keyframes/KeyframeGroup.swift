@@ -17,13 +17,13 @@ import Foundation
 
 final class KeyframeGroup<T>: Codable where T: Codable, T: Interpolatable {
   
-  let keyframes: ContiguousArray<Keyframe<T>>
+  let keyframes: [Keyframe<T>]
   
   private enum KeyframeWrapperKey: String, CodingKey {
     case keyframeData = "k"
   }
   
-  init(keyframes: ContiguousArray<Keyframe<T>>) {
+  init(keyframes: [Keyframe<T>]) {
     self.keyframes = keyframes
   }
   
@@ -54,7 +54,7 @@ final class KeyframeGroup<T>: Codable where T: Codable, T: Interpolatable {
        */
       
       var keyframesContainer = try container.nestedUnkeyedContainer(forKey: .keyframeData)
-      var keyframes = ContiguousArray<Keyframe<T>>()
+      var keyframes = [Keyframe<T>]()
       var previousKeyframeData: KeyframeData<T>?
       while(!keyframesContainer.isAtEnd) {
         // Ensure that Time and Value are present.

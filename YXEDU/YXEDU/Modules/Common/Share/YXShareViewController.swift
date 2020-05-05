@@ -146,14 +146,15 @@ class YXShareViewController: YXViewController {
         shareTypeBorderView.addSubview(shareChannelView)
 
         backButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(kStatusBarHeight + AdaptSize(13))
+            make.top.equalToSuperview().offset(kStatusBarHeight + AdaptIconSize(13))
             make.width.height.equalTo(AdaptSize(22))
             make.left.equalToSuperview().offset(AdaptSize(14))
         }
+        changeBackgroundImageButton.sizeToFit()
         changeBackgroundImageButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(backButton)
             make.right.equalToSuperview().offset(AdaptSize(-15))
-            make.size.equalTo(CGSize(width: AdaptSize(44), height: AdaptSize(20)))
+            make.size.equalTo(changeBackgroundImageButton.size)
         }
         let headerViewH = (screenHeight - kNavHeight - kSafeBottomMargin) * 0.68
         headerView.snp.makeConstraints { (make) in

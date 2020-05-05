@@ -75,12 +75,12 @@ class YXExerciseResultView: YXView {
             self?.showWordListEvent?()
         }
         
-        let bgColor = UIColor.gradientColor(with: CGSize(width: AS(isHiddenReportButton ? 273 : 134), height: AS(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
+        let bgColor = UIColor.gradientColor(with: CGSize(width: AdaptIconSize(isHiddenReportButton ? 273 : 134), height: AdaptIconSize(42)), colors: [UIColor.hex(0xFDBA33), UIColor.orange1], direction: .vertical)
         
         
         reportButton.backgroundColor = bgColor
         reportButton.layer.masksToBounds = true
-        reportButton.layer.cornerRadius = AS(21)
+        reportButton.layer.cornerRadius = AdaptIconSize(21)
                 
         reportButton.setTitleColor(UIColor.white, for: .normal)
         reportButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
@@ -88,7 +88,7 @@ class YXExerciseResultView: YXView {
                 
         operateButton.backgroundColor = bgColor
         operateButton.layer.masksToBounds = true
-        operateButton.layer.cornerRadius = AS(21)
+        operateButton.layer.cornerRadius = AdaptIconSize(21)
                 
         operateButton.setTitleColor(UIColor.white, for: .normal)
         operateButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
@@ -120,7 +120,7 @@ class YXExerciseResultView: YXView {
         }
         
         titleLabel.snp.remakeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom).offset(AS(11))
+            make.top.equalTo(imageView.snp.bottom).offset(AdaptIconSize(11))
             make.left.equalTo(AS(35))
             make.right.equalTo(AS(-35))
             make.height.equalTo(titleHeight())
@@ -155,22 +155,22 @@ class YXExerciseResultView: YXView {
         if isHiddenReportButton {
             operateButton.snp.remakeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.width.equalTo(AS(273))
-                make.height.equalTo(AS(42))
+                make.width.equalTo(AdaptIconSize(273))
+                make.height.equalTo(AdaptIconSize(42))
                 make.bottom.equalTo(-AS(25))
             }
         } else {
             reportButton.snp.remakeConstraints { (make) in
                 make.left.equalTo(AS(28))
-                make.width.equalTo(AS(134))
-                make.height.equalTo(AS(42))
+                make.width.equalTo(AdaptIconSize(134))
+                make.height.equalTo(AdaptIconSize(42))
                 make.bottom.equalTo(-AS(25))
             }
             
             operateButton.snp.remakeConstraints { (make) in
                 make.right.equalTo(AS(-28))
-                make.width.equalTo(AS(134))
-                make.height.equalTo(AS(42))
+                make.width.equalTo(AdaptIconSize(134))
+                make.height.equalTo(AdaptIconSize(42))
                 make.bottom.equalTo(-AS(25))
             }
         }

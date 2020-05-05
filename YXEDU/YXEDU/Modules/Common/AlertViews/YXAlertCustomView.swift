@@ -21,7 +21,7 @@ class YXAlertCustomView: UIView {
     var contentView: UIView = {
         let view = UIView()
         view.backgroundColor     = UIColor.white
-        view.layer.cornerRadius  = AdaptSize(14)
+        view.layer.cornerRadius  = AdaptIconSize(14)
         view.layer.masksToBounds = true
         return view
     }()
@@ -60,18 +60,18 @@ class YXAlertCustomView: UIView {
         }
         contentView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(AdaptSize(-40))
-            make.width.equalTo(AdaptSize(331))
-            make.height.equalTo(AdaptSize(367))
+            make.centerY.equalToSuperview().offset(AdaptIconSize(-40))
+            make.width.equalTo(AdaptIconSize(331))
+            make.height.equalTo(AdaptIconSize(367))
         }
         closeImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(contentView.snp.bottom).offset(AdaptSize(14))
-            make.size.equalTo(CGSize(width: AdaptSize(34), height: AdaptSize(34)))
+            make.top.equalTo(contentView.snp.bottom).offset(AdaptIconSize(14))
+            make.size.equalTo(CGSize(width: AdaptIconSize(34), height: AdaptIconSize(34)))
         }
         indicatorView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(34), height: AdaptSize(34)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(34), height: AdaptIconSize(34)))
         }
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(hide))

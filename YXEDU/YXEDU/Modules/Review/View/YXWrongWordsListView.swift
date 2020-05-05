@@ -49,7 +49,7 @@ class YXWrongWordsListView: UIView, UITableViewDataSource {
 
     private func bindProperty() {
         self.tableView.dataSource = self
-        self.tableView.rowHeight = AdaptSize(30)
+        self.tableView.rowHeight = AdaptIconSize(30)
         self.tableView.separatorStyle = .none
         self.tableView.indicatorStyle = .default
         self.tableView.register(YXWrongWordCell.classForCoder(), forCellReuseIdentifier: "kYXWrongWordCell")
@@ -63,7 +63,7 @@ class YXWrongWordsListView: UIView, UITableViewDataSource {
         titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalTo(AdaptSize(24))
+            make.height.equalTo(AdaptIconSize(24))
             make.top.equalToSuperview().offset(AdaptSize(24))
         }
         tableView.snp.makeConstraints { (make) in
@@ -74,7 +74,7 @@ class YXWrongWordsListView: UIView, UITableViewDataSource {
         }
         shadowView.snp.makeConstraints { (make) in
             make.width.centerX.bottom.equalTo(tableView)
-            make.height.equalTo(AdaptSize(26))
+            make.height.equalTo(AdaptIconSize(26))
         }
     }
 

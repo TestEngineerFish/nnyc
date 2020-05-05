@@ -23,7 +23,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     var loadingTimeOut = 15.0
     var status         = YXExerciseLoadingEnum.normal
     var isLoading      = false // 动画运行中
-    var progressWidth  = AdaptSize(181.5)
+    var progressWidth  = AdaptIconSize(181.5)
     /// 词书下载完成
     var downloadCompleteBlock: (()->Void)?
     /// 进度条动画执行完成
@@ -118,20 +118,20 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
 
         descLabel.textAlignment = .center
         descLabel.textColor     = UIColor.black6
-        descLabel.font          = UIFont.pfSCRegularFont(withSize: 12)
+        descLabel.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         descLabel.text          = self.status.getDesction()
 
-        progressBgView.layer.cornerRadius  = AdaptSize(15)/2
+        progressBgView.layer.cornerRadius  = AdaptIconSize(15)/2
         progressBgView.layer.masksToBounds = true
         progressBgView.backgroundColor     = UIColor.hex(0xF2F2F2)
 
-        progressLayer.cornerRadius    = AdaptSize(15)/2
+        progressLayer.cornerRadius    = AdaptIconSize(15)/2
         progressLayer.masksToBounds   = true
         progressLayer.backgroundColor = UIColor.clear.cgColor
 
         dotLayer.borderWidth     = 3.0
         dotLayer.borderColor     = UIColor.orange1.cgColor
-        dotLayer.cornerRadius    = AdaptSize(15)/2
+        dotLayer.cornerRadius    = AdaptIconSize(15)/2
         dotLayer.masksToBounds   = true
         dotLayer.backgroundColor = UIColor.white.cgColor
 
@@ -144,7 +144,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         squirrelView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(102))
-            make.size.equalTo(CGSize(width: AdaptSize(330), height: AdaptSize(228)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(330), height: AdaptIconSize(228)))
         }
         descLabel.snp.makeConstraints { (make) in
             make.top.equalTo(squirrelView.snp.bottom).offset(AdaptSize(21))
@@ -153,12 +153,12 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         }
         progressBgView.snp.makeConstraints { (make) in
             make.top.equalTo(descLabel.snp.bottom).offset(AdaptSize(4))
-            make.width.equalTo(progressWidth + AdaptSize(7.5))
-            make.height.equalTo(AdaptSize(15))
+            make.width.equalTo(progressWidth + AdaptIconSize(7.5))
+            make.height.equalTo(AdaptIconSize(15))
             make.centerX.equalToSuperview()
         }
-        self.progressLayer.frame = CGRect(x: 0, y: 0, width: progressWidth + AdaptSize(7.5), height: AdaptSize(15))
-        self.dotLayer.frame      = CGRect(x: 0, y: 0, width: AdaptSize(15), height: AdaptSize(15))
+        self.progressLayer.frame = CGRect(x: 0, y: 0, width: progressWidth + AdaptIconSize(7.5), height: AdaptIconSize(15))
+        self.dotLayer.frame      = CGRect(x: 0, y: 0, width: AdaptIconSize(15), height: AdaptIconSize(15))
         squirrelView.play()
         return headerView
     }
@@ -172,7 +172,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 2
         titleLabel.textColor     = UIColor.orange1
-        titleLabel.font          = UIFont.pfSCMediumFont(withSize: 15)
+        titleLabel.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(15))
         titleLabel.text          = self.getRandomTips()
 
         fooderView.addSubview(bgImageView)
@@ -190,7 +190,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         tipsImageView.snp.makeConstraints { (make) in
             make.left.equalTo(titleLabel).offset(AdaptSize(32))
             make.bottom.equalTo(titleLabel.snp.top).offset(AdaptSize(-9))
-            make.size.equalTo(CGSize(width: AdaptSize(42), height: AdaptSize(24)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(42), height: AdaptIconSize(24)))
         }
 
         return fooderView
@@ -292,10 +292,10 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
 
         let proMaskLayer = CAShapeLayer()
         let path         = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: AdaptSize(15)/2))
-        path.addLine(to: CGPoint(x: progressWidth, y: AdaptSize(15)/2))
+        path.move(to: CGPoint(x: 0, y: AdaptIconSize(15)/2))
+        path.addLine(to: CGPoint(x: progressWidth, y: AdaptIconSize(15)/2))
         proMaskLayer.path        = path.cgPath
-        proMaskLayer.lineWidth   = AdaptSize(15)
+        proMaskLayer.lineWidth   = AdaptIconSize(15)
         proMaskLayer.lineJoin    = .round
         proMaskLayer.strokeColor = UIColor.blue.cgColor
         proMaskLayer.fillColor   = nil

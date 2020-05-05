@@ -33,8 +33,8 @@ class YXAvatarPinView: UIView {
         imageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.top.equalToSuperview()
-            make.width.equalTo(AdaptSize(36))
-            make.height.equalTo(AdaptSize(42))
+            make.width.equalTo(AdaptIconSize(36))
+            make.height.equalTo(AdaptIconSize(42))
         }
 
         let avatarImageView = YXKVOImageView()
@@ -44,13 +44,13 @@ class YXAvatarPinView: UIView {
             avatarImageView.image = UIImage(named: "userPlaceHolder")
         }
         imageView.addSubview(avatarImageView)
-        avatarImageView.frame = CGRect(x: 0, y: 0, width: AdaptSize(24), height: AdaptSize(24))
+        avatarImageView.frame = CGRect(x: 0, y: 0, width: AdaptIconSize(24), height: AdaptIconSize(24))
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width/2
         avatarImageView.layer.masksToBounds = true
         avatarImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(6))
-            make.height.width.equalTo(AdaptSize(24))
+            make.top.equalToSuperview().offset(AdaptIconSize(6))
+            make.height.width.equalTo(AdaptIconSize(24))
         }
     }
 

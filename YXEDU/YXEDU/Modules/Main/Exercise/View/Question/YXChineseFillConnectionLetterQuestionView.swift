@@ -45,7 +45,7 @@ class YXChineseFillConnectionLetterQuestionView: YXBaseQuestionView {
         self.audioPlayerView?.snp.makeConstraints({ (make) in
             make.left.equalTo(self.titleLabel!.snp.right).offset(AdaptSize(3))
             make.centerY.equalTo(self.titleLabel!)
-            make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(22), height: AdaptIconSize(22)))
         })
         let spellViewW = (self.spellView?.maxX ?? 0) - (self.spellView?.margin ?? 0)
         self.spellView?.snp.makeConstraints({ (make) in

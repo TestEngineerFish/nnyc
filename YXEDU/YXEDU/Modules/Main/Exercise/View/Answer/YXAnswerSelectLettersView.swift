@@ -11,8 +11,8 @@ import UIKit
 /// 选择字母答题页面
 class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharacterTextFieldProtocol {
 
-    let itemSize         = CGFloat(60)
-    let margin           = CGFloat(10)
+    let itemSize         = CGSize(width: AdaptSize(isPad() ? 132 : 60), height: AdaptSize(isPad() ? 90 : 60))
+    let margin           = CGFloat(AdaptSize(isPad() ? 15 : 10))
     let horItemNum       = 4
     var verItemNum       = 3
     var buttonArray2     = [[YXLetterButton]]()
@@ -57,20 +57,20 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharac
             cellView.snp.makeConstraints { (make) in
                 make.top.equalToSuperview().offset(maxY)
                 make.centerX.equalToSuperview()
-                make.height.equalTo(itemSize)
+                make.height.equalTo(itemSize.height)
             }
             var maxX = CGFloat(0)
             for button in buttonArray {
                 cellView.addSubview(button)
                 let width: CGFloat = {
-                    let w = CGFloat(button.widthUnit) * itemSize
+                    let w = CGFloat(button.widthUnit) * itemSize.width
                     return button.widthUnit > 1 ? w + margin : w
                 }()
                 button.snp.makeConstraints { (make) in
                     make.left.equalTo(maxX)
                     make.top.equalToSuperview()
                     make.width.equalTo(width)
-                    make.height.equalTo(itemSize)
+                    make.height.equalTo(itemSize.height)
                 }
                 maxX += margin + width
             }
@@ -78,10 +78,10 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharac
             cellView.snp.makeConstraints { (make) in
                 make.width.equalTo(maxX)
             }
-            maxY += itemSize + margin
+            maxY += itemSize.height + margin
         }
         self.addSubview(contentView)
-        let contentViewH = CGFloat(buttonArray2.count) * (itemSize + margin) - margin
+        let contentViewH = CGFloat(buttonArray2.count) * (itemSize.width + margin) - margin
         contentView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.width.equalToSuperview()

@@ -35,7 +35,7 @@ class YXSwitchAnimation: NSObject, CAAnimationDelegate {
         kWindow.addSubview(resultView)
         resultView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(180), height: AdaptSize(180)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(180), height: AdaptIconSize(180)))
         }
         self.owenrView?.isUserInteractionEnabled = false
         resultView.play()

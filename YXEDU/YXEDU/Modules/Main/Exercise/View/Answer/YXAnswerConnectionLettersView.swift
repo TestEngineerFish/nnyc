@@ -11,7 +11,7 @@ import UIKit
 struct YXConnectionLettersConfig {
     var itemSize   = CGSize(width: AdaptSize(48), height: AdaptSize(48))
     var itemMargin = AdaptSize(8)
-    var itemFont = UIFont.pfSCRegularFont(withSize: AdaptFontSize(19.2))
+    var itemFont = UIFont.pfSCRegularFont(withSize: AdaptFontSize(20))
     var backgroundNormalImage: UIImage?   = nil
     var backgroundSelectedImage: UIImage? = nil
     var backgroundErrorImage: UIImage?    = nil
