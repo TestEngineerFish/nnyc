@@ -82,7 +82,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func updateChallengeData(model: YXChallengeModel) {
         self.challengeModel = model
         self.tableView.reloadData()
-        if !(model.userModel?.isShowed ?? true) {
+        if (model.userModel?.isShowed ?? true) {
             self.requestPreviousResult()
         }
     }
