@@ -92,7 +92,7 @@ class YXReviewPlanDetailViewController: YXViewController {
         bottomView.snp.remakeConstraints { (make) in
             make.top.equalTo(wordListView.snp.bottom)
             make.left.right.equalToSuperview()
-            make.height.equalTo(AS(60) + kSafeBottomMargin)
+            make.height.equalTo(AdaptIconSize(60) + kSafeBottomMargin)
             make.bottom.equalToSuperview()
         }
         
