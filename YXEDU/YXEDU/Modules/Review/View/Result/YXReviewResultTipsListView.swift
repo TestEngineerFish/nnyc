@@ -117,14 +117,14 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
     
     private func createTitleLabel() -> UILabel {
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.regularFont(ofSize: AS(14))
+        titleLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         titleLabel.textColor = UIColor.black2
         return titleLabel
     }
     
     private func createCountLabel() -> UILabel {
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.regularFont(ofSize: AS(17))
+        titleLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         titleLabel.textColor = UIColor.orange1
         titleLabel.textAlignment = .right
         return titleLabel
@@ -139,7 +139,7 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
     
     private func processMaxContentWidth() {
         for content in dataSource {
-            let w: CGFloat = content.0.textWidth(font: UIFont.regularFont(ofSize: AS(14)), height: AS(20))
+            let w: CGFloat = content.0.textWidth(font: UIFont.regularFont(ofSize: AdaptFontSize(14)), height: AS(20))
             maxWidth = (w > maxWidth) ? w : maxWidth
         }
     }

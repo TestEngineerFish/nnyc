@@ -215,7 +215,7 @@ class YXListenFillAnswerLineView: YXView {
     private func createLetterLabel() -> UILabel {
         let letterLabel = UILabel()
         letterLabel.textColor = UIColor.black1
-        letterLabel.font = UIFont.mediumFont(ofSize: AS(26))
+        letterLabel.font = UIFont.mediumFont(ofSize: AdaptFontSize(26))
         letterLabel.textAlignment = .center
         
         let lineView = UIView()
@@ -235,7 +235,7 @@ class YXListenFillAnswerLineView: YXView {
         let letterLabel = UILabel()
         letterLabel.text = text
         letterLabel.textColor = UIColor.black1
-        letterLabel.font = UIFont.mediumFont(ofSize: AS(17))
+        letterLabel.font = UIFont.mediumFont(ofSize: AdaptFontSize(17))
         letterLabel.textAlignment = .center
         return letterLabel
     }

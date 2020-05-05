@@ -61,12 +61,12 @@ class YXExerciseResultView: YXView {
         contentView.backgroundColor = UIColor.white
         contentView.layer.setDefaultShadow()
         
-        titleLabel.font = UIFont.regularFont(ofSize: AS(17))
+        titleLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         titleLabel.textAlignment = .center
         titleLabel.textColor     = UIColor.black1
         titleLabel.numberOfLines = 0
                 
-        subTitleLabel.font = UIFont.regularFont(ofSize: AS(14))
+        subTitleLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         subTitleLabel.textAlignment = .center
         subTitleLabel.textColor     = UIColor.black3
         subTitleLabel.numberOfLines = 0
@@ -83,7 +83,7 @@ class YXExerciseResultView: YXView {
         reportButton.layer.cornerRadius = AS(21)
                 
         reportButton.setTitleColor(UIColor.white, for: .normal)
-        reportButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(17))
+        reportButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         reportButton.addTarget(self, action: #selector(clickReportButton), for: .touchUpInside)
                 
         operateButton.backgroundColor = bgColor
@@ -91,7 +91,7 @@ class YXExerciseResultView: YXView {
         operateButton.layer.cornerRadius = AS(21)
                 
         operateButton.setTitleColor(UIColor.white, for: .normal)
-        operateButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(17))
+        operateButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         operateButton.addTarget(self, action: #selector(clickOperateButton), for: .touchUpInside)
     
     }
@@ -354,10 +354,10 @@ class YXExerciseResultView: YXView {
         let attrString = NSMutableAttributedString(string: "\(model.title ?? "")\(typeName) \(score)%")
         let start = attrString.length - "\(score)%".count
         
-        let all: [NSAttributedString.Key : Any] = [.font: UIFont.mediumFont(ofSize: AS(17)),.foregroundColor: UIColor.black1]
+        let all: [NSAttributedString.Key : Any] = [.font: UIFont.mediumFont(ofSize: AdaptFontSize(17)),.foregroundColor: UIColor.black1]
         attrString.addAttributes(all, range: NSRange(location: 0, length: attrString.length))
         
-        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.mediumFont(ofSize: AS(17)),.foregroundColor: UIColor.orange1]
+        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.mediumFont(ofSize: AdaptFontSize(17)),.foregroundColor: UIColor.orange1]
         attrString.addAttributes(nicknameAttr, range: NSRange(location: start, length: "\(score)%".count))
 
         return attrString
@@ -367,10 +367,10 @@ class YXExerciseResultView: YXView {
         
         let attrString = NSMutableAttributedString(string: text)
                         
-        let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: AS(14)),.foregroundColor: UIColor.black3]
+        let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: AdaptFontSize(14)),.foregroundColor: UIColor.black3]
         attrString.addAttributes(all, range: NSRange(location: 0, length: attrString.length))
         
-        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.regularFont(ofSize: AS(14)),.foregroundColor: UIColor.orange1]
+        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.regularFont(ofSize: AdaptFontSize(14)),.foregroundColor: UIColor.orange1]
         attrString.addAttributes(nicknameAttr, range: NSRange(location: start, length: lenght))
 
         return attrString
@@ -398,7 +398,7 @@ class YXExerciseResultView: YXView {
     
     
     private func titleHeight() -> CGFloat {
-        let font = UIFont.regularFont(ofSize: AS(17))
+        let font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         let titleWidth = screenWidth - AS(40)
         
         if let text = titleLabel.text {

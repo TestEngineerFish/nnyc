@@ -70,13 +70,13 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         bgView.backgroundColor = UIColor.white
         bgView.layer.setDefaultShadow(cornerRadius: AS(8), shadowRadius: AS(3))
         
-        titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
+        titleLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(15))
         titleLabel.textColor = UIColor.black1
         
-        countLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
+        countLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         countLabel.textColor = UIColor.black3
         
-        subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AS(12))
+        subTitleLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         subTitleLabel.textColor = UIColor.black3
         
         
@@ -85,13 +85,13 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
         listenImageView.addGestureRecognizer(tap)
         
         listenButton.setTitle("听写练习", for: .normal)
-        listenButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(12))
+        listenButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(12))
         listenButton.setTitleColor(UIColor.orange1, for: .normal)
         listenButton.setTitleColor(UIColor.black3, for: .highlighted)
         listenButton.addTarget(self, action: #selector(clickListenButton), for: .touchUpInside)
                                     
         
-        reviewButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
+        reviewButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         reviewButton.setTitleColor(UIColor.black2, for: .normal)
         reviewButton.setTitleColor(UIColor.black3, for: .highlighted)
         reviewButton.layer.masksToBounds = true
@@ -386,7 +386,7 @@ class YXReviewPlanProgressView: YXView {
     }
     
     override func bindProperty() {
-        titleLabel.font = UIFont.DINAlternateBold(ofSize: AS(17))
+        titleLabel.font = UIFont.DINAlternateBold(ofSize: AdaptFontSize(17))
         titleLabel.textColor = UIColor.black1
         titleLabel.textAlignment = .center
     }

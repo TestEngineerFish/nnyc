@@ -54,8 +54,8 @@ class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
         self.makeButton.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(AdaptSize(10))
             make.centerX.equalToSuperview()
-            make.width.equalTo(AdaptSize(273))
-            make.height.equalTo(AdaptSize(42))
+            make.width.equalTo(AdaptIconSize(273))
+            make.height.equalTo(AdaptIconSize(42))
         }
         self.remindLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.makeButton.snp.bottom).offset(AdaptSize(8))

@@ -148,7 +148,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             return true
         }
         let point = gestureRecognizer.location(in: self.tableView)
-        if point.x <= AdaptSize(56) {
+        if point.x <= AdaptIconSize(56) {
             return true
         } else {
             return false
@@ -161,7 +161,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             self.previousLocation    = pan.location(in: pan.view)
         } else if pan.state == .changed {
             let newLocation = pan.location(in: pan.view)
-            if newLocation.x > AdaptSize(56) {
+            if newLocation.x > AdaptIconSize(56) {
                 return
             }
             self.commitNewLocation(newLocation)
@@ -261,11 +261,11 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return AdaptSize(58)
+        return AdaptIconSize(58)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return AdaptSize(40)
+        return AdaptIconSize(40)
     }
     // MARK: ==== UITableViewDelegate ====
     

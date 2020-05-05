@@ -42,7 +42,7 @@ class YXChallengeMyRankCell: UIView {
 
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
-        imageView.layer.cornerRadius  = AdaptIconSize(38)/2
+        imageView.layer.cornerRadius  = AdaptIconSize(19)
         imageView.layer.borderColor   = UIColor.white.cgColor
         imageView.layer.borderWidth   = AdaptSize(2)
         imageView.layer.masksToBounds = true
@@ -111,8 +111,11 @@ class YXChallengeMyRankCell: UIView {
             self.descriptionLabel.snp.updateConstraints { (make) in
                 make.width.equalTo(self.descriptionLabel.width)
             }
-            self.nameLabel.snp.updateConstraints { (make) in
+            self.nameLabel.snp.remakeConstraints { (make) in
                 make.centerY.equalTo(avatarImageView).offset(-AdaptSize(10))
+                make.left.equalTo(avatarImageView.snp.right).offset(AdaptSize(16))
+                make.width.equalTo(nameLabel.width)
+                make.height.equalTo(nameLabel.height)
             }
             self.bonusLabel.sizeToFit()
             self.bonusLabel.snp.updateConstraints { (make) in

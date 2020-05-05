@@ -113,7 +113,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         self.arrowButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-18))
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(18), height: AdaptSize(18)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(18), height: AdaptIconSize(18)))
         }
 
         self.checkAllButton.snp.makeConstraints { (make) in

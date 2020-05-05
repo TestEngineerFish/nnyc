@@ -20,7 +20,7 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
     }()
     var wordModel: YXGameWordModel?
     var selectedButtonList = [YXLetterButton]()
-    final let maxWidth = AdaptSize(162)
+    final let maxWidth = AdaptSize(isPad() ? 220 : 162)
     weak var vcDelegate: YXGameViewControllerProtocol?
 
     init() {

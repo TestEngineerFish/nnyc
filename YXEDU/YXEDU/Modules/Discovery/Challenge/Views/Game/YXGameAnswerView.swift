@@ -42,9 +42,9 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
             make.edges.equalToSuperview()
         }
         selectedWordView.snp.makeConstraints({ (make) in
-            make.top.equalToSuperview().offset(AdaptSize(32))
+            make.top.equalToSuperview().offset(AdaptIconSize(32))
             make.centerX.equalToSuperview()
-            make.height.equalTo(AdaptSize(37))
+            make.height.equalTo(AdaptIconSize(37))
             make.width.equalTo(selectedWordView.maxWidth)
         })
     }
@@ -55,7 +55,13 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
             return
         }
         self.answerView?.removeFromSuperview()
-        let answerViewSize = CGSize(width: AdaptSize(288), height: AdaptSize(288))
+        let answerViewSize: CGSize = {
+            if isPad() {
+                return CGSize(width: AdaptSize(510), height: AdaptSize(510))
+            } else {
+                return CGSize(width: AdaptSize(288), height: AdaptSize(288))
+            }
+        }()
         let config = self.getConfig(wordModel: wordModel, answerViewSize: answerViewSize)
         answerView = YXAnswerConnectionLettersView(exerciseModel: exerciseModel, config: config)
         answerView?.delegate = selectedWordView

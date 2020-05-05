@@ -95,11 +95,11 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
 
         containerView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(256), height: AdaptSize(183)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(256), height: AdaptIconSize(183)))
         }
         headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(62))
+            make.height.equalTo(AdaptIconSize(62))
         }
         contentImageView.snp.makeConstraints { (make) in
             make.top.equalTo(headerView.snp.bottom)
@@ -115,7 +115,7 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
         }
         bottomView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(AdaptSize(34))
+            make.height.equalTo(AdaptIconSize(34))
         }
         wordMeaningLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(AdaptSize(9))
@@ -130,7 +130,7 @@ class YXGameQuestionView: UIView, CAAnimationDelegate {
         skipButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-13))
             make.bottom.equalToSuperview().offset(AdaptSize(7))
-            make.size.equalTo(CGSize(width: AdaptSize(70), height: AdaptSize(48)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(70), height: AdaptIconSize(48)))
         }
     }
 

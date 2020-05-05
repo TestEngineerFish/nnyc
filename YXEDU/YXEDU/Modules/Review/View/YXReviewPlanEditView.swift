@@ -48,19 +48,19 @@ class YXReviewPlanEditView: YXTopWindowView {
         self.layer.setDefaultShadow()
         
         editButton.setTitle("编辑名称", for: .normal)
-        editButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
+        editButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         editButton.setTitleColor(UIColor.black1, for: .normal)
         editButton.setTitleColor(UIColor.black4, for: .highlighted)
         editButton.addTarget(self, action: #selector(clickEditButton), for: .touchUpInside)
         
         resetButton.setTitle("重置词单", for: .normal)
-        resetButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
+        resetButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         resetButton.setTitleColor(UIColor.black1, for: .normal)
         resetButton.setTitleColor(UIColor.black4, for: .highlighted)
         resetButton.addTarget(self, action: #selector(clickResetButton), for: .touchUpInside)
 
         removeButton.setTitle("删除词单", for: .normal)
-        removeButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(14))
+        removeButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
         removeButton.setTitleColor(UIColor.red1, for: .normal)
         removeButton.setTitleColor(UIColor.black4, for: .highlighted)
         removeButton.addTarget(self, action: #selector(clickRemoveButton), for: .touchUpInside)
@@ -211,7 +211,7 @@ class YXReviewPlanRemoveView: YXTopWindowView {
         mainView.layer.cornerRadius = AS(7)
                         
         
-        titleLabel.font = UIFont.pfSCRegularFont(withSize: AS(15))
+        titleLabel.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(15))
         titleLabel.textColor = UIColor.black1
         titleLabel.text = "该词单删除后无法恢复\n是否确认删除？"
         titleLabel.textAlignment = .center
@@ -223,7 +223,7 @@ class YXReviewPlanRemoveView: YXTopWindowView {
         removeButton.layer.borderColor = UIColor.black6.cgColor
         removeButton.layer.borderWidth = 0.5
         removeButton.setTitle("删除", for: .normal)
-        removeButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(17))
+        removeButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         removeButton.setTitleColor(UIColor.red1, for: .normal)
         removeButton.setTitleColor(UIColor.black4, for: .highlighted)
         removeButton.addTarget(self, action: #selector(clickRemoveButton), for: .touchUpInside)
@@ -236,7 +236,7 @@ class YXReviewPlanRemoveView: YXTopWindowView {
         cancelButton.setTitle("点错了", for: .normal)
         cancelButton.setTitleColor(UIColor.black1, for: .normal)
         cancelButton.setTitleColor(UIColor.black4, for: .highlighted)
-        cancelButton.titleLabel?.font = UIFont.regularFont(ofSize: AS(17))
+        cancelButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         cancelButton.addTarget(self, action: #selector(clickCancelButton), for: .touchUpInside)
     }
 

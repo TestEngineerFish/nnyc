@@ -64,7 +64,7 @@ class YXReviewBookItem: UIView {
         self.bookImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(45), height: AdaptSize(52)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(45), height: AdaptIconSize(52)))
         }
         self.infolabel.snp.makeConstraints { (make) in
             make.center.width.height.equalTo(self.bookImageView)
@@ -72,12 +72,12 @@ class YXReviewBookItem: UIView {
         self.titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.bookImageView.snp.bottom).offset(AdaptSize(4))
             make.left.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(30))
+            make.height.equalTo(AdaptIconSize(30))
         }
         self.arrowImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(11), height: AdaptSize(5)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(11), height: AdaptIconSize(5)))
         }
     }
 

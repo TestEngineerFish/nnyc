@@ -59,7 +59,7 @@ class YXMakeReviewGuideView: UIView {
         fingerImageView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(AdaptSize(200))
             make.left.equalToSuperview().offset(AdaptSize(15))
-            make.size.equalTo(CGSize(width: AdaptSize(50), height: AdaptSize(50)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(50), height: AdaptIconSize(50)))
         }
         descriptionLabel.sizeToFit()
         descriptionLabel.snp.makeConstraints { (make) in
@@ -70,7 +70,7 @@ class YXMakeReviewGuideView: UIView {
         confirmButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(AdaptSize(-130) - kSafeBottomMargin)
-            make.size.equalTo(CGSize(width: AdaptSize(230), height: AdaptSize(42)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(230), height: AdaptIconSize(42)))
         }
     }
 

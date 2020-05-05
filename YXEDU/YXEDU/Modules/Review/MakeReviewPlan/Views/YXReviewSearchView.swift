@@ -137,21 +137,21 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
         self.emptyView.addSubview(self.emptyImageView)
         self.emptyView.addSubview(self.emptyDescLabel)
         self.searchBar.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(20))
-            make.top.equalToSuperview().offset(AdaptSize(6))
-            make.right.equalTo(self.cancelButton.snp.left).offset(AdaptSize(-20))
-            make.height.equalTo(AdaptSize(34))
+            make.left.equalToSuperview().offset(AdaptIconSize(20))
+            make.top.equalToSuperview().offset(AdaptIconSize(6))
+            make.right.equalTo(self.cancelButton.snp.left).offset(AdaptIconSize(-20))
+            make.height.equalTo(AdaptIconSize(34))
         }
         self.cancelButton.sizeToFit()
         self.cancelButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(self.searchBar)
-            make.right.equalToSuperview().offset(AdaptSize(-23))
+            make.right.equalToSuperview().offset(AdaptIconSize(-23))
             make.size.equalTo(self.cancelButton.size)
         }
         self.tipsBookImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(22))
-            make.top.equalTo(self.searchBar.snp.bottom).offset(AdaptSize(21))
-            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(23)))
+            make.left.equalToSuperview().offset(AdaptIconSize(22))
+            make.top.equalTo(self.searchBar.snp.bottom).offset(AdaptIconSize(21))
+            make.size.equalTo(CGSize(width: AdaptIconSize(20), height: AdaptIconSize(23)))
         }
         self.tipsDesciptionLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.tipsBookImageView.snp.right).offset(AdaptSize(8))
@@ -161,20 +161,21 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
         }
         self.tableView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(self.tipsBookImageView.snp.bottom).offset(AdaptSize(12))
+            make.top.equalTo(self.tipsBookImageView.snp.bottom).offset(AdaptIconSize(12))
         }
         self.emptyView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(self.tableView)
-            make.size.equalTo(CGSize(width: AdaptSize(277), height: AdaptSize(227)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(277), height: AdaptIconSize(227)))
         }
         self.emptyImageView.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(205))
+            make.height.equalTo(AdaptIconSize(205))
         }
+        self.emptyDescLabel.sizeToFit()
         self.emptyDescLabel.snp.makeConstraints { (make) in
             make.left.bottom.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(17))
+            make.height.equalTo(emptyDescLabel.height)
         }
     }
     
@@ -287,11 +288,11 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return AdaptSize(58)
+        return AdaptIconSize(58)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return AdaptSize(33)
+        return AdaptIconSize(33)
     }
     
     // MARK: ==== UITableViewDelegate ====

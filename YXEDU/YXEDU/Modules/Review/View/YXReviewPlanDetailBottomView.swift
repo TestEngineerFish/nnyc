@@ -105,7 +105,7 @@ class YXReviewPlanDetailBottomView: YXView {
 //        listenButton.setTitle("听写练习", for: .normal)
         listenButton.setTitleColor(UIColor.black1, for: .normal)
         listenButton.setTitleColor(UIColor.black3, for: .highlighted)
-        listenButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
+        listenButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(17))
         listenButton.addTarget(self, action: #selector(clickListenButton), for: .touchUpInside)
 
         
@@ -115,7 +115,7 @@ class YXReviewPlanDetailBottomView: YXView {
         reviewButton.layer.borderWidth   = 0.5
         reviewButton.setTitleColor(UIColor.black1, for: .normal)
         reviewButton.setTitleColor(UIColor.black3, for: .highlighted)
-        reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
+        reviewButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(17))
         reviewButton.addTarget(self, action: #selector(clickReviewButton), for: .touchUpInside)
     }
     

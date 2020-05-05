@@ -141,45 +141,49 @@ class YXGameResultView: UIView {
             make.edges.equalToSuperview()
         }
         resultImageView.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(375), height: AdaptSize(485)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(375), height: AdaptIconSize(485)))
             make.centerY.equalToSuperview().offset(AdaptSize(-70))
             make.centerX.equalToSuperview()
         }
         avatarImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(217))
-            make.size.equalTo(CGSize(width: AdaptSize(47), height: AdaptSize(47)))
+            make.top.equalToSuperview().offset(AdaptSize(isPad() ? 300 : 217))
+            make.size.equalTo(CGSize(width: AdaptIconSize(47), height: AdaptIconSize(47)))
         }
+        rankingTitleLabel.sizeToFit()
         rankingTitleLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(avatarImageView.snp.bottom)
-            make.size.equalTo(CGSize(width: AdaptSize(29), height: AdaptSize(20)))
+            make.size.equalTo(rankingTitleLabel.size)
         }
+        rankingLabel.sizeToFit()
         rankingLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalTo(AdaptSize(28))
+            make.size.equalTo(rankingLabel.size)
             make.top.equalTo(rankingTitleLabel.snp.bottom)
         }
         contentView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(rankingLabel.snp.bottom).offset(AdaptSize(15))
-            make.size.equalTo(CGSize(width: AdaptSize(176), height: AdaptSize(76)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(176), height: AdaptIconSize(76)))
         }
+        questionTitleLabel.sizeToFit()
         questionTitleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(21))
             make.top.equalToSuperview().offset(AdaptSize(11))
-            make.size.equalTo(CGSize(width: AdaptSize(30), height: AdaptSize(20)))
+            make.size.equalTo(questionTitleLabel.size)
         }
+
         timeTitleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(93))
             make.top.size.equalTo(questionTitleLabel)
         }
+        questionLabel.sizeToFit()
         questionLabel.snp.makeConstraints { (make) in
             make.left.equalTo(questionTitleLabel)
             make.top.equalTo(questionTitleLabel.snp.bottom).offset(AdaptSize(2))
             make.right.equalTo(timeLabel.snp.left).offset(AdaptSize(5))
-            make.height.equalTo(AdaptSize(28))
+            make.height.equalTo(questionLabel.height)
         }
         timeLabel.sizeToFit()
         timeLabel.snp.makeConstraints { (make) in
@@ -202,18 +206,18 @@ class YXGameResultView: UIView {
             make.edges.equalToSuperview()
         }
         resultImageView.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(358), height: AdaptSize(498)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(358), height: AdaptIconSize(498)))
             make.centerY.equalToSuperview().offset(AdaptSize(-40))
             make.centerX.equalToSuperview()
         }
         closeButton.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(AdaptSize(-171))
-            make.size.equalTo(CGSize(width: AdaptSize(190), height: AdaptSize(50)))
+            make.bottom.equalToSuperview().offset(AdaptIconSize(-171))
+            make.size.equalTo(CGSize(width: AdaptIconSize(190), height: AdaptIconSize(50)))
             make.centerX.equalToSuperview()
         }
         descriptionLabel.sizeToFit()
         descriptionLabel.snp.makeConstraints { (make) in
-            make.bottom.equalTo(closeButton.snp.top).offset(AdaptSize(-33))
+            make.bottom.equalTo(closeButton.snp.top).offset(AdaptIconSize(-33))
             make.size.equalTo(descriptionLabel.size)
             make.centerX.equalToSuperview()
         }
