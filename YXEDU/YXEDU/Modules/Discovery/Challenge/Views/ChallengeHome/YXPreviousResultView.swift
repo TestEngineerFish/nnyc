@@ -23,9 +23,9 @@ class YXPreviousResultView: UIView {
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
         imageView.image               = UIImage(named: "challengeAvatar")
-        imageView.layer.borderWidth   = AdaptSize(2)
+        imageView.layer.borderWidth   = AdaptIconSize(2)
         imageView.layer.borderColor   = UIColor.white.cgColor
-        imageView.layer.cornerRadius  = AdaptSize(24)
+        imageView.layer.cornerRadius  = AdaptIconSize(24)
         imageView.layer.masksToBounds = true
         return imageView
     }()
@@ -132,20 +132,21 @@ class YXPreviousResultView: UIView {
             make.edges.equalToSuperview()
         }
         resultBackgroundImageView.snp.makeConstraints { (make) in
-            make.width.equalTo(AdaptSize(375))
-            make.height.equalTo(AdaptSize(485))
-            make.centerY.equalToSuperview().offset(AdaptSize(-50))
+            make.width.equalTo(AdaptIconSize(375))
+            make.height.equalTo(AdaptIconSize(485))
+            make.centerY.equalToSuperview().offset(AdaptIconSize(-50))
             make.centerX.equalToSuperview()
         }
         avatarImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(217))
-            make.size.equalTo(CGSize(width: AdaptSize(48), height: AdaptSize(48)))
+            make.top.equalToSuperview().offset(AdaptIconSize(217))
+            make.size.equalTo(CGSize(width: AdaptIconSize(48), height: AdaptIconSize(48)))
         }
+        titleLabel.sizeToFit()
         titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(avatarImageView.snp.bottom).offset(AdaptSize(4))
-            make.size.equalTo(CGSize(width: AdaptSize(100), height: AdaptSize(20)))
+            make.top.equalTo(avatarImageView.snp.bottom).offset(AdaptIconSize(4))
+            make.size.equalTo(titleLabel.size)
         }
         rankLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -154,45 +155,48 @@ class YXPreviousResultView: UIView {
             make.width.equalTo(0)
         }
         contentView.snp.makeConstraints { (make) in
-            make.top.equalTo(rankLabel.snp.bottom).offset(AdaptSize(15))
+            make.top.equalTo(rankLabel.snp.bottom).offset(AdaptIconSize(15))
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(242), height: AdaptSize(76)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(242), height: AdaptIconSize(76)))
         }
+        questionTitleLabel.sizeToFit()
         questionTitleLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(15))
-            make.size.equalTo(CGSize(width: AdaptSize(30), height: AdaptSize(20)))
-            make.top.equalToSuperview().offset(AdaptSize(11))
+            make.left.equalToSuperview().offset(AdaptIconSize(15))
+            make.size.equalTo(questionTitleLabel.size)
+            make.top.equalToSuperview().offset(AdaptSize(isPad() ? 20 : 11))
         }
+        timeTitleLabel.sizeToFit()
         timeTitleLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(75))
+            make.left.equalToSuperview().offset(AdaptIconSize(75))
             make.top.equalTo(questionTitleLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(30), height: AdaptSize(20)))
+            make.size.equalTo(timeTitleLabel.size)
         }
+        coinTitleLabel.sizeToFit()
         coinTitleLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(164))
+            make.left.equalToSuperview().offset(AdaptIconSize(164))
             make.top.equalTo(questionTitleLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(71), height: AdaptSize(20)))
+            make.size.equalTo(coinTitleLabel.size)
         }
         questionAmountLabel.snp.makeConstraints { (make) in
             make.left.equalTo(questionTitleLabel)
-            make.top.equalTo(questionTitleLabel.snp.bottom).offset(AdaptSize(2))
+            make.top.equalTo(questionTitleLabel.snp.bottom).offset(AdaptIconSize(2))
             make.height.equalTo(AdaptSize(28))
             make.width.equalTo(0)
         }
         timeAmountLabel.snp.makeConstraints { (make) in
             make.left.equalTo(timeTitleLabel)
-            make.top.equalTo(timeTitleLabel.snp.bottom).offset(AdaptSize(2))
+            make.top.equalTo(timeTitleLabel.snp.bottom).offset(AdaptIconSize(2))
             make.height.equalTo(AdaptSize(28))
             make.width.equalTo(0)
         }
         coinAmountLabel.snp.makeConstraints { (make) in
             make.left.equalTo(coinTitleLabel)
-            make.top.equalTo(coinTitleLabel.snp.bottom).offset(AdaptSize(2))
+            make.top.equalTo(coinTitleLabel.snp.bottom).offset(AdaptIconSize(2))
             make.height.equalTo(AdaptSize(28))
             make.width.equalTo(0)
         }
         gainButton.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(204), height: AdaptSize(50)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(204), height: AdaptIconSize(50)))
             make.top.equalTo(resultBackgroundImageView.snp.bottom).offset(AdaptSize(-10))
             make.centerX.equalToSuperview()
         }

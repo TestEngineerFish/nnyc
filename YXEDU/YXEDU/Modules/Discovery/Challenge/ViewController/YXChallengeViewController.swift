@@ -82,7 +82,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func updateChallengeData(model: YXChallengeModel) {
         self.challengeModel = model
         self.tableView.reloadData()
-        if (model.userModel?.isShowed ?? true) {
+        if !(model.userModel?.isShowed ?? true) {
             self.requestPreviousResult()
         }
     }
@@ -138,15 +138,15 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        vc.hidesBottomBarWhenPushed = true
 //        self.navigationController?.pushViewController(vc, animated: true)
 
-        let vc = YXLearningResultViewController()
-        vc.bookId = 41
-        vc.unitId = 436
-        vc.newLearnAmount    = 19
-        vc.reviewLearnAmount = 10
-        vc.hidesBottomBarWhenPushed = true
-        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+//        let vc = YXLearningResultViewController()
+//        vc.bookId = 41
+//        vc.unitId = 436
+//        vc.newLearnAmount    = 19
+//        vc.reviewLearnAmount = 10
+//        vc.hidesBottomBarWhenPushed = true
+//        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
 //        YXFileManager.share.clearStudyCache()
-        return
+//        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
             return
         }
