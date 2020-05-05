@@ -44,7 +44,7 @@ class YXReviewWordViewCell: UITableViewCell {
         button.titleLabel?.font   = UIFont.pfSCRegularFont(withSize: AdaptFontSize(10))
         button.layer.borderWidth  = AdaptSize(1)
         button.layer.borderColor  = UIColor.hex(0xCDB387).cgColor
-        button.layer.cornerRadius = AdaptSize(7)
+        button.layer.cornerRadius = AdaptIconSize(7)
         button.isEnabled = false
         button.isHidden  = true
         return button
@@ -109,9 +109,9 @@ class YXReviewWordViewCell: UITableViewCell {
 
         self.selectBarBtn.snp.makeConstraints { (make) in
             make.left.top.bottom.equalToSuperview()
-            make.width.equalTo(AdaptSize(56))
+            make.width.equalTo(AdaptIconSize(56))
         }
-        let barSize = CGSize(width: AdaptSize(16), height: AdaptSize(16))
+        let barSize = CGSize(width: AdaptIconSize(16), height: AdaptIconSize(16))
         self.barImageView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.size.equalTo(barSize)
@@ -131,7 +131,7 @@ class YXReviewWordViewCell: UITableViewCell {
         }
         self.statusButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-13))
-            make.size.equalTo(CGSize(width: AdaptSize(41), height: AdaptSize(14)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(41), height: AdaptIconSize(14)))
             make.centerY.equalTo(self.titleLabel)
         }
     }

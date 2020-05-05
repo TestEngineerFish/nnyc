@@ -17,11 +17,11 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     // ---- 子视图
     var segmentControllerView: BPSegmentControllerView = {
-        let h = screenHeight - kNavHeight - AdaptSize(60) - kSafeBottomMargin
+        let h = screenHeight - kNavHeight - AdaptIconSize(60) - kSafeBottomMargin
         var config = BPSegmentConfig()
-        config.headerHeight       = AdaptSize(93)
-        config.headerItemSize     = CGSize(width: AdaptSize(60), height: AdaptSize(93))
-        config.headerItemSpacing  = AdaptSize(10)
+        config.headerHeight       = AdaptIconSize(93)
+        config.headerItemSize     = CGSize(width: AdaptIconSize(60), height: AdaptIconSize(93))
+        config.headerItemSpacing  = AdaptIconSize(10)
         config.contentItemSize    = CGSize(width: screenWidth, height: h - config.headerHeight)
         config.contentItemSpacing = CGFloat.zero
         let segmentFrame = CGRect(x: 0, y: kNavHeight, width: screenWidth, height: h)
@@ -61,8 +61,8 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         }
         self.view.addSubview(segmentControllerView)
         self.view.addSubview(bottomView)
-        self.view.addSubview(backgroundView)
         self.view.addSubview(searchView)
+        self.view.addSubview(backgroundView)
         self.view.addSubview(selectedWordsListView)
         self.view.backgroundColor = UIColor.white
         backgroundView.snp.makeConstraints { (make) in
@@ -71,17 +71,17 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         bottomView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
             make.left.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(60) + kSafeBottomMargin)
+            make.height.equalTo(AdaptIconSize(60) + kSafeBottomMargin)
         }
         searchView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
             make.top.equalToSuperview().offset(kStatusBarHeight)
         }
         selectedWordsListView.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(AdaptSize(-10))
-            make.width.equalTo(AdaptSize(155))
+            make.right.equalToSuperview().offset(AdaptIconSize(-10))
+            make.width.equalTo(AdaptIconSize(155))
             make.height.equalTo(selectedWordsListView.defalutHeight)
-            make.bottom.equalTo(bottomView.snp.top).offset(AdaptSize(-30))
+            make.bottom.equalTo(bottomView.snp.top).offset(AdaptIconSize(-30))
         }
     }
 

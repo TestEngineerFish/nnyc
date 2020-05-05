@@ -21,8 +21,8 @@ protocol YXReviewSelectedArrowProtocol: NSObjectProtocol {
 class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewDelegate, YXReviewUnitListViewProtocol {
 
     var wordsModelList: [YXReviewWordModel] = []
-    final let defalutHeight = AdaptSize(54)
-    final let cellHeight    = AdaptSize(30)
+    final let defalutHeight = AdaptIconSize(54)
+    final let cellHeight    = AdaptIconSize(30)
     final let maxWordsCount = 150
     final let kYXReviewSelectedWordCell = "YXReviewSelectedWordCell"
 
@@ -71,13 +71,13 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         arrowButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-5))
             make.centerY.equalTo(titleLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(29), height: AdaptSize(22)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(29), height: AdaptIconSize(22)))
         }
 
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
-            make.top.equalToSuperview().offset(AdaptSize(15))
-            make.height.equalTo(AdaptSize(21))
+            make.top.equalToSuperview().offset(AdaptIconSize(15))
+            make.height.equalTo(AdaptIconSize(21))
             make.right.equalTo(arrowButton.snp.left).offset(AdaptSize(-5))
         }
 

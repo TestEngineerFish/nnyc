@@ -53,8 +53,8 @@ class YXReviewSelectedWordCell: UITableViewCell {
         removeButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(AdaptSize(10))
-            make.width.equalTo(AdaptSize(24))
-            make.height.equalTo(AdaptSize(30))
+            make.width.equalTo(AdaptIconSize(24))
+            make.height.equalTo(AdaptIconSize(30))
         }
 
         wordLabel.snp.makeConstraints { (make) in
