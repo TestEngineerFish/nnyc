@@ -73,6 +73,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var playAudioButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "playAudio"), for: .normal)
+        if isPad() {
+            button.imageView?.snp.makeConstraints({ (make) in
+                make.edges.equalToSuperview()
+            })
+        }
         return button
     }()
 
@@ -100,6 +105,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var recordAudioButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "recordAudio"), for: .normal)
+        if isPad() {
+            button.imageView?.snp.makeConstraints({ (make) in
+                make.edges.equalToSuperview()
+            })
+        }
         return button
     }()
 
@@ -211,28 +221,28 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playAudioButton.snp.makeConstraints { (make) in
             make.top.equalTo(recordAudioButton)
             make.left.equalToSuperview().offset(AdaptSize(80))
-            make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(56), height: AdaptIconSize(56)))
         }
         self.playAudioLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(playAudioButton)
             make.top.equalTo(playAudioButton.snp.bottom).offset(AdaptSize(8))
-            make.size.equalTo(CGSize(width: AdaptSize(100), height: AdaptSize(18)))
+            make.size.equalTo(CGSize(width: AdaptSize(isPad() ? 110 : 100), height: AdaptSize(18)))
         }
         self.starView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.centerX.equalTo(recordAudioButton)
-            make.width.equalTo(AdaptSize(74))
-            make.height.equalTo(AdaptSize(35))
+            make.width.equalTo(AdaptIconSize(74))
+            make.height.equalTo(AdaptIconSize(35))
         }
         self.recordAudioButton.snp.makeConstraints { (make) in
             make.top.equalTo(starView.snp.bottom)
             make.right.equalToSuperview().offset(AdaptSize(-80))
-            make.size.equalTo(CGSize(width: AdaptSize(56), height: AdaptSize(56)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(56), height: AdaptIconSize(56)))
         }
         self.recordAudioLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(recordAudioButton)
             make.top.equalTo(recordAudioButton.snp.bottom).offset(AdaptSize(8))
-            make.width.equalTo(AdaptSize(70))
+            make.width.equalTo(AdaptIconSize(70))
             make.height.equalTo(AdaptSize(18))
         }
         self.recordAnimationView.snp.makeConstraints { (make) in

@@ -120,7 +120,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     func showImageView() {
         self.imageView?.layer.opacity = 1.0
         self.imageView?.snp.updateConstraints({ (make) in
-            make.size.equalTo(CGSize(width: AdaptSize(177), height: AdaptSize(128)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(177), height: AdaptIconSize(128)))
         })
     }
 

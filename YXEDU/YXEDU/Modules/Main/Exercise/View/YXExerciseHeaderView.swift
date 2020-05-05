@@ -95,20 +95,23 @@ class YXExerciseHeaderView: UIView {
         self.learningLabel.text = "待新学"
         self.learningLabel.textColor = UIColor.black3
         self.learningLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(10))
+        self.learningLabel.textAlignment = .right
         
         self.reviewLabel.text = "待复习"
         self.reviewLabel.textColor = UIColor.black3
         self.reviewLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(10))
+        self.reviewLabel.textAlignment = .right
         
         
-        self.learningProgressLabel.text = "20"
+        self.learningProgressLabel.text = "-"
         self.learningProgressLabel.textColor = UIColor.orange1
         self.learningProgressLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(10))
+        self.learningProgressLabel.textAlignment = .left
         
-        self.reviewProgressLabel.text = "20"
+        self.reviewProgressLabel.text = "-"
         self.reviewProgressLabel.textColor = UIColor.orange1
         self.reviewProgressLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(10))
-        
+        self.reviewProgressLabel.textAlignment = .left
     }
     
     
@@ -118,47 +121,47 @@ class YXExerciseHeaderView: UIView {
         self.backButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalTo(AdaptSize(20))
-            make.width.equalTo(AdaptSize(22))
-            make.height.equalTo(AdaptSize(25))
+            make.width.equalTo(AdaptIconSize(22))
+            make.height.equalTo(AdaptIconSize(25))
         }
         
         self.switchButton.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.equalTo(AdaptSize(100))
-            make.height.equalTo(AdaptSize(17))
+            make.width.equalTo(AdaptIconSize(100))
+            make.height.equalTo(AdaptIconSize(17))
         }
         
         self.skipButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalTo(AdaptSize(100))
-            make.width.equalTo(AdaptSize(50))
-            make.height.equalTo(AdaptSize(17))
+            make.width.equalTo(AdaptIconSize(50))
+            make.height.equalTo(AdaptIconSize(17))
         }
-        
+
+        self.learningLabel.sizeToFit()
         self.learningLabel.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.snp.centerY)
-            make.right.equalTo(AdaptSize(-38))
-            make.width.equalTo(AdaptSize(32))
-            make.height.equalTo(AdaptSize(14))
+            make.right.equalTo(AdaptSize(isPad() ? -50 : -38))
+            make.size.equalTo(learningLabel.size)
         }
+        self.reviewLabel.sizeToFit()
         self.reviewLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(AdaptSize(-38))
-            make.width.equalTo(AdaptSize(32))
-            make.height.equalTo(AdaptSize(14))
+            make.right.equalTo(AdaptSize(isPad() ? -50 : -38))
+            make.size.equalTo(reviewLabel.size)
             make.top.equalTo(self.snp.centerY)
         }
-        
+
         self.learningProgressLabel.snp.makeConstraints { (make) in
-            make.top.right.equalToSuperview()
+            make.top.equalTo(learningLabel)
+            make.right.equalToSuperview()
             make.left.equalTo(learningLabel.snp.right).offset(AdaptSize(2))
-            make.height.equalTo(AdaptSize(14))
+            make.height.equalTo(learningLabel)
         }
         
         self.reviewProgressLabel.snp.makeConstraints { (make) in
             make.left.equalTo(reviewLabel.snp.right).offset(AdaptSize(2))
             make.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(14))
-            make.bottom.equalToSuperview()
+            make.height.bottom.equalTo(reviewLabel)
         }
     }
     

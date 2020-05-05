@@ -40,7 +40,7 @@ class YXExerciseBottomView: UIView {
         button.layer.borderColor   = UIColor.black6.cgColor
         button.layer.borderWidth   = AdaptSize(1)
         button.layer.masksToBounds = true
-        button.layer.cornerRadius  = AdaptSize(21)
+        button.layer.cornerRadius  = AdaptIconSize(21)
         button.isHidden            = true
         return button
     }()
@@ -88,26 +88,27 @@ class YXExerciseBottomView: UIView {
         self.tipsButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalTo(AdaptSize(18))
-            make.width.equalTo(AdaptSize(91))
-            make.height.equalTo(AdaptSize(18))
+            make.width.equalTo(AdaptIconSize(91))
+            make.height.equalTo(AdaptIconSize(18))
         }
         self.nextView.snp.makeConstraints { (make) in
             make.top.right.bottom.equalToSuperview()
-            make.width.equalTo(AdaptSize(68))
+            make.width.equalTo(AdaptSize(isPad() ? 100 : 68))
         }
+        nextLabel.sizeToFit()
         nextLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(5))
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(28), height: AdaptSize(18)))
+            make.size.equalTo(nextLabel.size)
         }
         arrowImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.left.equalTo(nextLabel.snp.right).offset(AdaptSize(5))
-            make.size.equalTo(CGSize(width: AdaptSize(8), height: AdaptSize(15)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(8), height: AdaptIconSize(15)))
         }
         self.nextButton.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(273), height: AdaptSize(42)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(273), height: AdaptIconSize(42)))
         }
     }
     

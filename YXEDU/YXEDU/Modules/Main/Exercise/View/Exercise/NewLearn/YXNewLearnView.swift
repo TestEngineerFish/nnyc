@@ -15,6 +15,11 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
     var closeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "close_black"), for: .normal)
+        if isPad() {
+            button.imageView?.snp.makeConstraints({ (make) in
+                make.edges.equalToSuperview()
+            })
+        }
         return button
     }()
     
@@ -64,9 +69,9 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
         self.addSubview(answerView)
         
         closeButton.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(15))
-            make.top.equalToSuperview().offset(AdaptSize(35))
-            make.size.equalTo(CGSize(width: AdaptSize(32), height: AdaptSize(32)))
+            make.left.equalToSuperview().offset(AdaptIconSize(15))
+            make.top.equalToSuperview().offset(AdaptIconSize(35))
+            make.size.equalTo(CGSize(width: AdaptIconSize(32), height: AdaptIconSize(32)))
         }
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(15))
@@ -83,8 +88,8 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
         answerView.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(AdaptSize(-148))
-            make.height.equalTo(AdaptSize(111))
-            make.width.equalToSuperview()
+            make.height.equalTo(AdaptIconSize(111))
+            make.width.equalToSuperview().offset(AdaptSize(isPad() ? -150 : 0))
         })
     }
     
