@@ -54,14 +54,14 @@ class YXNewLearnGuideView: UIView {
         }
         descriptionLabel.sizeToFit()
         descriptionLabel.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(AdaptSize(-5))
-            make.bottom.equalTo(arrowImageView.snp.top).offset(AdaptSize(-6))
+            make.right.equalToSuperview().offset(AdaptIconSize(-5))
+            make.bottom.equalTo(arrowImageView.snp.top).offset(AdaptIconSize(-6))
             make.size.equalTo(descriptionLabel.size)
         }
         squirrelImageView.snp.makeConstraints { (make) in
             make.bottom.equalTo(descriptionLabel.snp.top).offset(AdaptSize(-4))
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(153), height: AdaptSize(105)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(153), height: AdaptIconSize(105)))
         }
     }
 

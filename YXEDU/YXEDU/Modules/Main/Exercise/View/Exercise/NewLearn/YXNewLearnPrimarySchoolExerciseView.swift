@@ -67,8 +67,8 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(AdaptSize(-65))
-            make.height.equalTo(AdaptSize(111))
-            make.width.equalToSuperview()
+            make.height.equalTo(AdaptSize(isPad() ? 160 : 111))
+            make.width.equalToSuperview().offset(AdaptSize(isPad() ? -150 : 0))
         })
         detailView?.snp.makeConstraints({ (make) in
             make.left.bottom.right.equalToSuperview()
