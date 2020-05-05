@@ -24,8 +24,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     public var progressManager = YXExcerciseProgressManager()
     
     @IBOutlet weak var homeEntryView: YXDesignableView!
-    @IBOutlet weak var homeViewAspect: NSLayoutConstraint!
-    @IBOutlet weak var homeViewiPadAspect: NSLayoutConstraint!
     @IBOutlet weak var bookNameButton: UIButton!
     @IBOutlet weak var startStudyView: YXDesignableView!
     @IBOutlet weak var startStudyButton: YXDesignableButton!
@@ -35,6 +33,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var studyDataCollectionView: UICollectionView!
     @IBOutlet weak var subItemCollectionView: UICollectionView!
+    
+    @IBOutlet weak var homeViewAspect: NSLayoutConstraint!
+    @IBOutlet weak var homeViewiPadAspect: NSLayoutConstraint!
+    @IBOutlet weak var startStudyButtonHeight: NSLayoutConstraint!
+    @IBOutlet weak var startStudyButtonTopOffset: NSLayoutConstraint!
+    @IBOutlet weak var startStudyButtonBottomOffset: NSLayoutConstraint!
+    @IBOutlet weak var studyDataCollectionViewBottomOffset: NSLayoutConstraint!
     @IBOutlet weak var subItemCollectionViewHeight: NSLayoutConstraint!
 
     var squirrelAnimationView: AnimationView?
@@ -111,6 +116,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         if isPad() {
             homeViewAspect.isActive = false
             homeViewiPadAspect.isActive = true
+            
+            countOfWaitForStudyWords.font = UIFont.DINAlternateBold(ofSize: 70)
+            startStudyView.cornerRadius = 36
+            startStudyButton.cornerRadius = 36
+            startStudyButton.titleLabel?.font = UIFont.systemFont(ofSize: 26, weight: .medium)
+            startStudyButtonHeight.constant = 72
+            startStudyButtonTopOffset.constant = 24
+            startStudyButtonBottomOffset.constant = 44
+            studyDataCollectionViewBottomOffset.constant = 36
         }
         
         self.checkUserState()
@@ -435,7 +449,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView.tag == 1 {
-            return CGSize(width: (screenWidth - 60) / 3, height: 88)
+            return CGSize(width: collectionView.bounds.width / 3, height: 88)
             
         } else {
             if isPad() {

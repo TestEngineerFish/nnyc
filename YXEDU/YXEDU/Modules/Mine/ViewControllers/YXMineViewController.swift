@@ -25,9 +25,11 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     let badgeView = YXRedDotView()
+    
+    @IBOutlet weak var myIntegralViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var myIntegralViewTopOffset: NSLayoutConstraint!
     @IBOutlet weak var collectionLeftConsraint: NSLayoutConstraint!
     @IBOutlet weak var collectionRightConsraint: NSLayoutConstraint!
-    
     @IBOutlet weak var bgViewHeightConsraint: NSLayoutConstraint!
 
     @IBAction func tapCoin(_ sender: UITapGestureRecognizer) {
@@ -49,6 +51,11 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bindProperty()
+        
+        if isPad() {
+            myIntegralViewHeight.constant = 112
+            myIntegralViewTopOffset.constant = 44
+        }
     }
     
     private func bindProperty() {

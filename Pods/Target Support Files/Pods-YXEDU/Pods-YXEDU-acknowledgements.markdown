@@ -140,7 +140,7 @@ Updated and maintained by Deusty LLC and the Apple development community.
 
 BSD 3-Clause License
 
-Copyright (c) 2010-2019, Deusty, LLC
+Copyright (c) 2010-2020, Deusty, LLC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -249,7 +249,7 @@ THE SOFTWARE.
 
 ## Growing
 
-Copyright (c) 2015-2018 GrowingIO <support@growingio.com>
+Copyright (c) 2015-2020 GrowingIO <support@growingio.com>
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -269,7 +269,7 @@ THE SOFTWARE.
 
 ## GrowingAutoTrackKit
 
-Copyright (c) 2015-2018 GrowingIO <support@growingio.com>
+Copyright (c) 2015-2020 GrowingIO <support@growingio.com>
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -289,7 +289,7 @@ THE SOFTWARE.
 
 ## GrowingCoreKit
 
-Copyright (c) 2015-2018 GrowingIO <support@growingio.com>
+Copyright (c) 2015-2020 GrowingIO <support@growingio.com>
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
