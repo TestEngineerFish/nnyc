@@ -174,7 +174,7 @@ class YXChallengeMyRankCell: UIView {
 
         levelLabel.sizeToFit()
         levelLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(16))
+            make.left.equalToSuperview().offset(AdaptIconSize(16))
             make.centerY.equalToSuperview()
             make.height.equalTo(AdaptSize(21))
             make.width.equalTo(levelLabel.width)
