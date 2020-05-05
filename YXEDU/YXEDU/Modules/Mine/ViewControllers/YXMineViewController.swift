@@ -352,6 +352,12 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             alertController.addAction(usAction)
             alertController.addAction(cancleAction)
 
+            if let cell = tableView.cellForRow(at: indexPath), UIDevice.current.userInterfaceIdiom == .pad, let popoverPresentationController = alertController.popoverPresentationController {
+                let frame = tableView.convert(cell.frame, from: tableView)
+                popoverPresentationController.sourceView = self.view
+                popoverPresentationController.sourceRect = CGRect(x: screenWidth - 44, y: self.tableView.frame.minY + frame.midY, width: 44, height: 44)
+            }
+            
             self.present(alertController, animated: true, completion: nil)
             break
 
