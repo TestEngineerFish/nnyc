@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GrowingCoreKit
+import GrowingAutoTrackKit
 
 class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
 

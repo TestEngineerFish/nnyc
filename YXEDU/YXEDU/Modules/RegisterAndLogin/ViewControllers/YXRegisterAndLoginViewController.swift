@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GrowingCoreKit
+import GrowingAutoTrackKit
 
 public let heightOfStateBar = UIApplication.shared.statusBarFrame.height
 public let heightOfNavigationBar = heightOfStateBar + 44
