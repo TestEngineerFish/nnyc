@@ -10,6 +10,9 @@ import Foundation
 
 class YXReviewPlanCollectionViewItem: UICollectionViewCell {
 
+    var startListenPlanEvent: (()->Void)?
+    var startReviewPlanEvent: (()->Void)?
+
     var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black1
@@ -72,6 +75,48 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
         return button
     }()
 
+    var listenStarView: YXStarView = {
+        let view = YXStarView()
+        view.isHidden = true
+        return view
+    }()
+
+    var reviewStarView: YXStarView = {
+        let view = YXStarView()
+        view.isHidden = true
+        return view
+    }()
+
+    var listenProgressView: YXReviewPlanProgressView = {
+        let view = YXReviewPlanProgressView()
+        view.isHidden = true
+        return view
+    }()
+
+    var reviewProgressView: YXReviewPlanProgressView = {
+        let view = YXReviewPlanProgressView()
+        view.isHidden = true
+        return view
+    }()
+
+    var listenScoreLabel: UILabel = {
+        let label = UILabel()
+        label.textColor     = UIColor.gray4
+        label.font          = UIFont.regularFont(ofSize: AdaptSize(15))
+        label.textAlignment = .center
+        label.isHidden      = true
+        return label
+    }()
+
+    var reviewScoreLabel: UILabel = {
+        let label = UILabel()
+        label.textColor     = UIColor.gray4
+        label.font          = UIFont.regularFont(ofSize: AdaptSize(15))
+        label.textAlignment = .center
+        label.isHidden      = true
+        return label
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
@@ -89,14 +134,20 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
         contentView.addSubview(reviewView)
         listenView.addSubview(listenImageView)
         listenView.addSubview(listenButton)
+        listenView.addSubview(listenStarView)
+        listenView.addSubview(listenProgressView)
+        listenView.addSubview(listenScoreLabel)
         reviewView.addSubview(reviewImageView)
         reviewView.addSubview(reviewButton)
+        reviewView.addSubview(reviewStarView)
+        reviewView.addSubview(reviewProgressView)
+        reviewView.addSubview(reviewScoreLabel)
 
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(AdaptSize(25))
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(AdaptSize(15))
-            make.right.equalToSuperview().offset(AdaptSize(-15))
+            make.left.equalToSuperview().offset(AdaptSize(70))
+            make.right.equalToSuperview().offset(AdaptSize(-70))
             make.height.equalTo(AdaptSize(28))
         }
         descriptionLabel.snp.makeConstraints { (make) in
@@ -128,6 +179,23 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
             make.bottom.equalToSuperview().offset(AdaptSize(-14))
             make.size.equalTo(CGSize(width: AdaptSize(134), height: AdaptSize(42)))
         }
+        listenStarView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(17))
+            make.width.equalTo(AdaptSize(90))
+            make.height.equalTo(AdaptSize(40))
+        }
+        listenProgressView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(8))
+            make.size.equalTo(CGSize(width: AdaptSize(57), height: AdaptSize(57)))
+        }
+        listenScoreLabel.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(listenProgressView.snp.bottom).offset(AdaptSize(9))
+            make.width.equalToSuperview()
+            make.height.equalTo(AdaptSize(21))
+        }
         reviewImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(4))
@@ -137,6 +205,23 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(AdaptSize(-14))
             make.size.equalTo(CGSize(width: AdaptSize(134), height: AdaptSize(42)))
+        }
+        reviewStarView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(17))
+            make.width.equalTo(AdaptSize(90))
+            make.height.equalTo(AdaptSize(40))
+        }
+        reviewProgressView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(8))
+            make.size.equalTo(CGSize(width: AdaptSize(57), height: AdaptSize(57)))
+        }
+        reviewScoreLabel.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(listenProgressView.snp.bottom).offset(AdaptSize(9))
+            make.width.equalToSuperview()
+            make.height.equalTo(AdaptSize(21))
         }
     }
 
@@ -148,10 +233,82 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
         self.reviewView.clipRectCorner(direction: .bottomRight, cornerRadius: AdaptSize(20))
         self.listenView.layer.setGradient(colors: [UIColor.hex(0xFFFFFF), UIColor.hex(0xE8F6EA)], direction: .vertical)
         self.reviewView.layer.setGradient(colors: [UIColor.hex(0xFFFFFF), UIColor.hex(0xFFFAE2)], direction: .vertical)
+        self.listenButton.addTarget(self, action: #selector(startListenEvent), for: .touchUpInside)
+        self.reviewButton.addTarget(self, action: #selector(startReviewEvent), for: .touchUpInside)
     }
 
     func setData(_ model: YXReviewPlanModel) {
-        self.titleLabel.text = model.planName
+        self.titleLabel.text       = model.planName
         self.descriptionLabel.text = "单词：\(model.wordCount)"
+        self.listenProgressView.progress = CGFloat(model.listen)/100
+        self.reviewProgressView.progress = CGFloat(model.review)/100
+        self.listenStarView.showReviewPlanView(starNum: YXStarLevelEnum.getStarNum(model.listen))
+        self.reviewStarView.showReviewPlanView(starNum: YXStarLevelEnum.getStarNum(model.review))
+
+        switch model.listenState {
+        case .normal:
+            self.listenStarView.isHidden     = true
+            self.listenProgressView.isHidden = true
+            self.listenScoreLabel.isHidden   = true
+            self.listenImageView.isHidden    = false
+            self.listenButton.setTitle("开始听写", for: .normal)
+        case .learning:
+            self.listenStarView.isHidden     = true
+            self.listenProgressView.isHidden = false
+            self.listenScoreLabel.isHidden   = false
+            self.listenImageView.isHidden    = true
+            self.listenScoreLabel.text       = "听写进度"
+            self.listenButton.setTitle("继续听写", for: .normal)
+        case .finish:
+            self.listenStarView.isHidden     = false
+            self.listenProgressView.isHidden = true
+            self.listenScoreLabel.isHidden   = false
+            self.listenImageView.isHidden    = true
+            self.listenScoreLabel.text       = "听写成绩"
+            self.listenButton.setTitle("继续听写", for: .normal)
+        }
+
+        switch model.reviewState {
+        case .normal:
+            self.reviewStarView.isHidden     = true
+            self.reviewProgressView.isHidden = true
+            self.reviewScoreLabel.isHidden   = true
+            self.reviewImageView.isHidden    = false
+            self.reviewButton.setTitle("开始复习", for: .normal)
+        case .learning:
+            self.reviewStarView.isHidden     = true
+            self.reviewProgressView.isHidden = false
+            self.reviewScoreLabel.isHidden   = false
+            self.reviewImageView.isHidden    = true
+            self.reviewScoreLabel.text = "复习进度"
+            self.reviewButton.setTitle("继续复习", for: .normal)
+        case .finish:
+            self.reviewStarView.isHidden     = false
+            self.reviewProgressView.isHidden = true
+            self.reviewScoreLabel.isHidden   = false
+            self.reviewImageView.isHidden    = true
+            self.reviewScoreLabel.text = "复习成绩"
+            self.reviewButton.setTitle("继续复习", for: .normal)
+        }
+
+        if model.listenState == .normal && model.reviewState != .normal {
+            self.listenImageView.layer.opacity = 0.24
+        } else {
+            self.listenImageView.layer.opacity = 1.0
+        }
+        if model.listenState != .normal && model.reviewState == .normal {
+            self.reviewImageView.layer.opacity = 0.24
+        } else {
+            self.reviewImageView.layer.opacity = 1.0
+        }
+    }
+
+    // MARK: ==== Event ====
+    @objc internal func startListenEvent() {
+        self.startListenPlanEvent?()
+    }
+
+    @objc internal func startReviewEvent() {
+        self.startReviewPlanEvent?()
     }
 }

@@ -12,6 +12,7 @@ enum YXStarType: Int {
     case lastLearnResult = 0 //上次学习结果
     case newLearnResult  = 1 // 新学结果
     case learnResult     = 2 // 学习流程结果
+    case reviewPlan      = 3
 }
 
 class YXStarView: UIView {
@@ -228,6 +229,44 @@ class YXStarView: UIView {
             make.edges.equalToSuperview()
         }
     }
+
+    /// 复习计划列表
+    func showReviewPlanView(starNum: Int) {
+        self.starNumber = starNum
+        self.setImage(.reviewPlan)
+        self.setStarStatus()
+        self.addSubview(leftStarDisableImageView)
+        self.addSubview(centerStarDisableImageView)
+        self.addSubview(rightStarDisableImageView)
+        self.leftStarDisableImageView.addSubview(leftStarEnableImageView)
+        self.centerStarDisableImageView.addSubview(centerStarEnableImageView)
+        self.rightStarDisableImageView.addSubview(rightStarEnableImageView)
+        let starSize = AdaptSize(38)
+        centerStarDisableImageView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: starSize, height: starSize))
+        }
+        leftStarDisableImageView.snp.makeConstraints { (make) in
+            make.right.equalTo(centerStarDisableImageView.snp.left)
+            make.top.equalTo(centerStarDisableImageView)
+            make.size.equalTo(CGSize(width: starSize, height: starSize))
+        }
+        rightStarDisableImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(centerStarDisableImageView.snp.right)
+            make.top.equalTo(leftStarDisableImageView)
+            make.size.equalTo(CGSize(width: starSize, height: starSize))
+        }
+        centerStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        leftStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        rightStarEnableImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
     
     // MARK: ---- Tools ----
     private func setStarStatus() {
@@ -242,7 +281,7 @@ class YXStarView: UIView {
     private func setImage(_ type: YXStarType) {
         let enabelImage: UIImage? = {
             switch type {
-            case .lastLearnResult:
+            case .lastLearnResult, .reviewPlan:
                 return UIImage(named: "star_new_enable")
             case .learnResult, .newLearnResult:
                 return UIImage(named: "star_h_enable")
@@ -250,7 +289,7 @@ class YXStarView: UIView {
         }()
         let disableImage: UIImage? = {
             switch type {
-            case .lastLearnResult:
+            case .lastLearnResult, .reviewPlan:
                 return UIImage(named: "star_new_disable")
             case .learnResult, .newLearnResult:
                 return UIImage(named: "star_h_disable")
