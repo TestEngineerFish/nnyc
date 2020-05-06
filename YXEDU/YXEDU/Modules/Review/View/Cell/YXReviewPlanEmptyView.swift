@@ -49,19 +49,19 @@ class YXReviewPlanEmptyView: YXView {
         
         backgroundImageView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
-            make.left.right.equalToSuperview().inset(20)
-            make.height.equalTo(70)
+            make.left.right.equalToSuperview().inset(AdaptIconSize(20))
+            make.height.equalTo(AdaptIconSize(70))
         }
         
         plusIconImageView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview().offset(-88)
+            make.centerX.equalToSuperview().offset(AdaptIconSize(-88))
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(44)
+            make.width.height.equalTo(AdaptIconSize(44))
         }
         
         reviewLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalTo(plusIconImageView.snp.right).offset(10)
+            make.left.equalTo(plusIconImageView.snp.right).offset(AdaptIconSize(10))
         }
     }
     

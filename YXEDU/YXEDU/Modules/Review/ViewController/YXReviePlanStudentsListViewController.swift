@@ -16,9 +16,9 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
 
     var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize                = CGSize(width: AdaptSize(168), height: AdaptSize(200))
-        flowLayout.minimumLineSpacing      = AdaptSize(5)
-        flowLayout.minimumInteritemSpacing = AdaptSize(5)
+        flowLayout.itemSize                = CGSize(width: AdaptIconSize(168), height: AdaptIconSize(200))
+        flowLayout.minimumLineSpacing      = AdaptIconSize(5)
+        flowLayout.minimumInteritemSpacing = AdaptIconSize(5)
         flowLayout.scrollDirection         = .vertical
         return UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
     }()
@@ -96,7 +96,7 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: AdaptSize(10), left: AdaptSize(16), bottom: AdaptSize(0), right: AdaptSize(16))
+        return UIEdgeInsets(top: AdaptIconSize(10), left: AdaptIconSize(16), bottom: AdaptSize(0), right: AdaptIconSize(16))
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

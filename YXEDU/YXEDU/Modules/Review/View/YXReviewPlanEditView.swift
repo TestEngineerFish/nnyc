@@ -72,29 +72,29 @@ class YXReviewPlanEditView: YXTopWindowView {
         mainView.snp.makeConstraints { (make) in
             make.top.equalTo(AS(kNavHeight))
             make.right.equalTo(AS(-20))
-            make.width.equalTo(AS(117))
-            make.height.equalTo(AS(120))
+            make.width.equalTo(AdaptIconSize(117))
+            make.height.equalTo(AdaptIconSize(120))
         }
-       
+        editButton.sizeToFit()
         editButton.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(15))
+            make.top.equalTo(AdaptIconSize(15))
             make.centerX.equalToSuperview()
-            make.width.equalTo(AS(57))
-            make.height.equalTo(AS(20))
+            make.width.equalTo(editButton.width)
+            make.height.equalTo(AdaptIconSize(20))
         }
-
+        resetButton.sizeToFit()
         resetButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.width.equalTo(AS(57))
-            make.height.equalTo(AS(20))
-            make.top.equalTo(editButton.snp.bottom).offset(AdaptSize(15))
+            make.width.equalTo(resetButton.width)
+            make.height.equalTo(AdaptIconSize(20))
+            make.top.equalTo(editButton.snp.bottom).offset(AdaptIconSize(15))
         }
-
+        removeButton.sizeToFit()
         removeButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.width.equalTo(AS(57))
-            make.height.equalTo(AS(20))
-            make.top.equalTo(resetButton.snp.bottom).offset(AdaptSize(15))
+            make.width.equalTo(removeButton.width)
+            make.height.equalTo(AdaptIconSize(20))
+            make.top.equalTo(resetButton.snp.bottom).offset(AdaptIconSize(15))
         }
 
     }

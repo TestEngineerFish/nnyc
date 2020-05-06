@@ -280,7 +280,6 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         unitListView.delegate               = self.selectedWordsListView
         self.reviewDelegate                 = unitListView
         self.selectedWordsListView.delegate = self
-//        self.currentContentView             = unitListView
         return unitListView
     }
 

@@ -107,7 +107,7 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
     }
     
     func configFooterView() {
-        self.footerView.size = CGSize(width: screenWidth, height: AS(72))
+        self.footerView.size = CGSize(width: screenWidth, height: AdaptIconSize(72))
         self.footerView.createReviewPlanEvent = { [weak self] in
             self?.createReviewEvent()
         }
@@ -136,7 +136,13 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         guard let reviewPageModel = self.reviewPageModel else {
             return
         }
-        self.dataSource  = isPad() ? [1] : reviewPageModel.reviewPlans ?? []
+        self.dataSource  = {
+            let planList = reviewPageModel.reviewPlans ?? []
+            if isPad() && !planList.isEmpty {
+                return [0]
+            }
+            return planList
+        }()
         let otherHeight  = kStatusBarHeight + AdaptSize(isPad() ? 101 : 68)
         let headerHeight = (isPad() ? AdaptSize(550) : AdaptFontSize(360)) + otherHeight
         self.headerView  = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: headerHeight), reviewModel: reviewPageModel)
@@ -172,7 +178,7 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         cell.startReviewPlanEvent = { [weak self] in
             self?.startReviewPlanEvent(planId: model.planId)
         }
-        return cell 
+        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

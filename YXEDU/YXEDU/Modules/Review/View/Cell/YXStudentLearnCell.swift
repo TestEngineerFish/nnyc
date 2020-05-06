@@ -20,7 +20,7 @@ class YXStudentLearnCell: UICollectionViewCell {
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
         imageView.image = UIImage(named: "userPlaceHolder")
-        imageView.layer.cornerRadius  = AdaptSize(25)
+        imageView.layer.cornerRadius  = AdaptIconSize(25)
         imageView.layer.masksToBounds = true
         return imageView
     }()
@@ -42,7 +42,7 @@ class YXStudentLearnCell: UICollectionViewCell {
     }()
     var reviewLabel: UILabel = {
         let label = UILabel()
-        label.text          = "学习"
+        label.text          = "复习"
         label.textColor     = UIColor.gray3
         label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .center
@@ -90,50 +90,52 @@ class YXStudentLearnCell: UICollectionViewCell {
         self.addSubview(reviewStarView)
 
         bgView.snp.makeConstraints { (make) in
-            make.left.top.equalToSuperview().offset(AdaptSize(5))
-            make.bottom.right.equalToSuperview().offset(AdaptSize(-5))
+            make.left.top.equalToSuperview().offset(AdaptIconSize(5))
+            make.bottom.right.equalToSuperview().offset(AdaptIconSize(-5))
         }
         avatarImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptSize(50), height: AdaptSize(50)))
-            make.top.equalTo(AdaptSize(19))
+            make.size.equalTo(CGSize(width: AdaptIconSize(50), height: AdaptIconSize(50)))
+            make.top.equalTo(AdaptIconSize(19))
         }
         nameLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(avatarImageView.snp.bottom).offset(AdaptSize(10))
-            make.left.equalToSuperview().offset(AdaptSize(15))
-            make.right.equalToSuperview().offset(AdaptSize(-15))
-            make.height.equalTo(AdaptSize(22))
+            make.top.equalTo(avatarImageView.snp.bottom).offset(AdaptIconSize(10))
+            make.left.equalToSuperview().offset(AdaptIconSize(15))
+            make.right.equalToSuperview().offset(AdaptIconSize(-15))
+            make.height.equalTo(AdaptIconSize(22))
         }
+        listenLabel.sizeToFit()
         listenLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(24))
-            make.top.equalTo(nameLabel.snp.bottom).offset(AdaptSize(24))
-            make.size.equalTo(CGSize(width: AdaptSize(27), height: AdaptSize(18)))
+            make.left.equalToSuperview().offset(AdaptIconSize(24))
+            make.top.equalTo(nameLabel.snp.bottom).offset(AdaptIconSize(24))
+            make.size.equalTo(listenLabel.size)
         }
+        reviewLabel.sizeToFit()
         reviewLabel.snp.makeConstraints { (make) in
             make.left.equalTo(listenLabel)
-            make.top.equalTo(listenLabel.snp.bottom).offset(AdaptSize(9))
-            make.size.equalTo(CGSize(width: AdaptSize(27), height: AdaptSize(18)))
+            make.top.equalTo(listenLabel.snp.bottom).offset(AdaptIconSize(9))
+            make.size.equalTo(reviewLabel.size)
         }
         listenResultLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(listenLabel.snp.right).offset(AdaptSize(14))
+            make.left.equalTo(listenLabel.snp.right).offset(AdaptIconSize(14))
             make.centerY.equalTo(listenLabel)
-            make.right.equalToSuperview().offset(AdaptSize(-15))
-            make.height.equalTo(AdaptSize(18))
+            make.right.equalToSuperview().offset(AdaptIconSize(-15))
+            make.height.equalTo(AdaptIconSize(18))
         }
         reviewResultLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(reviewLabel.snp.right).offset(AdaptSize(14))
+            make.left.equalTo(reviewLabel.snp.right).offset(AdaptIconSize(14))
             make.centerY.equalTo(reviewLabel)
-            make.right.equalToSuperview().offset(AdaptSize(-15))
-            make.height.equalTo(AdaptSize(18))
+            make.right.equalToSuperview().offset(AdaptIconSize(-15))
+            make.height.equalTo(AdaptIconSize(18))
         }
         listenStarView.snp.makeConstraints { (make) in
-            make.left.equalTo(listenLabel.snp.right).offset(AdaptSize(10))
-            make.size.equalTo(CGSize(width: AdaptSize(63), height: AdaptSize(21)))
+            make.left.equalTo(listenLabel.snp.right).offset(AdaptIconSize(10))
+            make.size.equalTo(CGSize(width: AdaptIconSize(63), height: AdaptIconSize(21)))
             make.centerY.equalTo(listenLabel)
         }
         reviewStarView.snp.makeConstraints { (make) in
-            make.left.equalTo(reviewLabel.snp.right).offset(AdaptSize(10))
-            make.size.equalTo(CGSize(width: AdaptSize(63), height: AdaptSize(21)))
+            make.left.equalTo(reviewLabel.snp.right).offset(AdaptIconSize(10))
+            make.size.equalTo(CGSize(width: AdaptIconSize(63), height: AdaptIconSize(21)))
             make.centerY.equalTo(reviewLabel)
         }
     }

@@ -59,7 +59,7 @@ class YXNotReviewWordView: YXTopWindowView {
         descLabel.numberOfLines = 0
 
         doneButton.layer.masksToBounds = true
-        doneButton.layer.cornerRadius = AS(20)
+        doneButton.layer.cornerRadius = AdaptIconSize(20)
         doneButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
         doneButton.setTitle("好的", for: .normal)
         doneButton.setTitleColor(UIColor.white, for: .normal)
@@ -72,36 +72,37 @@ class YXNotReviewWordView: YXTopWindowView {
         
         mainView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.equalTo(AS(267))
-            make.height.equalTo(AS(303))
+            make.width.equalTo(AdaptIconSize(267))
+            make.height.equalTo(AdaptIconSize(303))
         }
         
         imageView.snp.makeConstraints { (make) in
-            make.top.equalTo(AS(29))
+            make.top.equalTo(AdaptIconSize(29))
             make.centerX.equalToSuperview()
-            make.width.equalTo(AS(153))
-            make.height.equalTo(AS(105))
+            make.width.equalTo(AdaptIconSize(153))
+            make.height.equalTo(AdaptIconSize(105))
         }
-        
+
+        titleLabel.sizeToFit()
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom).offset(AS(4))
+            make.top.equalTo(imageView.snp.bottom).offset(AdaptIconSize(4))
             make.centerX.equalToSuperview()
-            make.width.equalTo(AS(91))
-            make.height.equalTo(AS(22))
+            make.size.equalTo(titleLabel.size)
         }
-        
+
+        descLabel.sizeToFit()
         descLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom).offset(AS(33))
-            make.left.equalTo(AS(22))
-            make.right.equalTo(AS(-22))
-            make.height.equalTo(AS(52))
+            make.top.equalTo(imageView.snp.bottom).offset(AdaptIconSize(33))
+            make.left.equalTo(AdaptIconSize(22))
+            make.right.equalTo(AdaptIconSize(-22))
+            make.height.equalTo(AdaptIconSize(52))
         }
         
         doneButton.snp.makeConstraints { (make) in
-            make.left.equalTo(AS(22))
-            make.right.equalTo(AS(-22))
-            make.height.equalTo(AS(40))
-            make.bottom.equalTo(AS(-26))
+            make.left.equalTo(AdaptIconSize(22))
+            make.right.equalTo(AdaptIconSize(-22))
+            make.height.equalTo(AdaptIconSize(40))
+            make.bottom.equalTo(AdaptIconSize(-26))
         }
     
         

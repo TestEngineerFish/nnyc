@@ -41,10 +41,10 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(13))
         return button
     }()
-    var arrowButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "unit_arrow"), for: .normal)
-        return button
+    var arrowImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "unit_arrow")
+        return imageView
     }()
     var bottomView: UIView = {
         let view = UIView()
@@ -93,7 +93,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         self.contentView.addSubview(unitNameLabel)
         self.contentView.addSubview(statisticsLabel)
         self.contentView.addSubview(checkAllButton)
-        self.contentView.addSubview(arrowButton)
+        self.contentView.addSubview(arrowImageView)
         self.addSubview(bottomView)
 
         self.contentView.snp.remakeConstraints { (make) in
@@ -110,14 +110,14 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
             make.right.equalTo(self.statisticsLabel.snp.left)
         }
 
-        self.arrowButton.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(AdaptSize(-18))
+        self.arrowImageView.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().offset(AdaptIconSize(-18))
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptIconSize(18), height: AdaptIconSize(18)))
         }
 
         self.checkAllButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.arrowButton.snp.left).offset(AdaptSize(-21))
+            make.right.equalTo(self.arrowImageView.snp.left).offset(AdaptSize(-21))
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(60), height: AdaptSize(18)))
         }
@@ -152,11 +152,14 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         guard let view = tap.view as? YXReviewUnitListHeaderView, let unitModel = view.model else {
             return
         }
-//        unitModel.isOpenUp = !unitModel.isOpenUp
         if unitModel.isOpenUp {
-            view.arrowButton.transform = CGAffineTransform(rotationAngle: .pi)
+            UIView.animate(withDuration: 0.25) {
+                view.arrowImageView.transform = CGAffineTransform(rotationAngle: .pi)
+            }
         } else {
-            view.arrowButton.transform = .identity
+            UIView.animate(withDuration: 0.25) {
+                view.arrowImageView.transform = .identity
+            }
         }
         self.delegate?.clickHeaderView(self.tag)
     }
