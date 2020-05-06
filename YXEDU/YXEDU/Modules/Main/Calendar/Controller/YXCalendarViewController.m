@@ -361,11 +361,22 @@ static CGFloat const kPickViewHeight = 272.f;
         make.top.equalTo(self.contentScroll);
         make.left.right.equalTo(self.contentScroll);
         make.width.equalTo(self.view);
-        make.height.equalTo(self.view.mas_width).multipliedBy(1.15f);
+        
+        if (isPad()) {
+            make.height.equalTo(self.view.mas_width).multipliedBy(0.85f);
+            
+        } else {
+            make.height.equalTo(self.view.mas_width).multipliedBy(1.15f);
+        }
     }];
 
     [self.monthSummaryView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.monthDataView.mas_bottom).with.offset(AdaptSize(-40.f));
+        if (isPad()) {
+            make.top.equalTo(self.monthDataView.mas_bottom).with.offset(AdaptSize(-80.f));
+
+        } else {
+            make.top.equalTo(self.monthDataView.mas_bottom).with.offset(AdaptSize(-40.f));
+        }
         make.left.equalTo(self.monthDataView).with.offset(AdaptSize(25.f));
         make.right.equalTo(self.monthDataView).with.offset(AdaptSize(-25.f));
         make.height.mas_equalTo(AdaptSize(81.f));

@@ -21,14 +21,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="277" height="126"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TS1-5K-eeu">
-                                <rect key="frame" x="10" y="41" width="44" height="44"/>
+                                <rect key="frame" x="77.5" y="41" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="IJw-zH-S96"/>
                                     <constraint firstAttribute="height" constant="44" id="m4I-ut-1ta"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Un-x2-463">
-                                <rect key="frame" x="143.5" y="54" width="14" height="18"/>
+                                <rect key="frame" x="131.5" y="54" width="14" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -37,9 +37,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="TS1-5K-eeu" firstAttribute="centerY" secondItem="cOd-Tb-lBi" secondAttribute="centerY" id="64q-vP-JjU"/>
-                            <constraint firstItem="5Un-x2-463" firstAttribute="centerX" secondItem="cOd-Tb-lBi" secondAttribute="centerX" constant="12" id="Lq2-LW-Jpb"/>
-                            <constraint firstItem="TS1-5K-eeu" firstAttribute="leading" secondItem="cOd-Tb-lBi" secondAttribute="leading" constant="10" id="M76-cK-uw8"/>
+                            <constraint firstItem="5Un-x2-463" firstAttribute="centerX" secondItem="cOd-Tb-lBi" secondAttribute="centerX" priority="750" id="Lq2-LW-Jpb"/>
+                            <constraint firstItem="TS1-5K-eeu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cOd-Tb-lBi" secondAttribute="leading" constant="10" id="M76-cK-uw8"/>
                             <constraint firstItem="5Un-x2-463" firstAttribute="centerY" secondItem="cOd-Tb-lBi" secondAttribute="centerY" id="Nae-Jv-eRL"/>
+                            <constraint firstItem="5Un-x2-463" firstAttribute="leading" secondItem="TS1-5K-eeu" secondAttribute="trailing" constant="10" id="W9A-GM-bDJ"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

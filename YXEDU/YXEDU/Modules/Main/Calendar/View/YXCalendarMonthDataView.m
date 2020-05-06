@@ -86,7 +86,13 @@
         [self.calendarView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.top.equalTo(self.screenShowView);
             make.width.equalTo(self);
-            make.height.equalTo(self).with.offset(AdaptSize(-100.f));
+            
+            if (isPad()) {
+                make.height.equalTo(self).with.offset(AdaptSize(-200.f));
+
+            } else {
+                make.height.equalTo(self).with.offset(AdaptSize(-100.f));
+            }
         }];
 
         [self.calendarStatusView mas_makeConstraints:^(MASConstraintMaker *make) {

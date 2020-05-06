@@ -30,12 +30,15 @@ class YXBadgeCell: UICollectionViewCell {
     }
     
     private func createSubviews() {
+        imageView.contentMode = .scaleAspectFit
         self.addSubview(imageView)
         self.addSubview(dateLabel)
+        
         imageView.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(73.1))
+            make.height.equalTo(imageView.snp.width) // .multipliedBy(96 / 72)
         }
+        
         dateLabel.snp.makeConstraints { (make) in
             make.height.equalTo(AdaptSize(17))
             make.left.right.equalToSuperview()

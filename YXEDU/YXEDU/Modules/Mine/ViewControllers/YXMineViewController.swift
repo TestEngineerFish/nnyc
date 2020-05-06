@@ -30,7 +30,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var myIntegralViewTopOffset: NSLayoutConstraint!
     @IBOutlet weak var collectionLeftConsraint: NSLayoutConstraint!
     @IBOutlet weak var collectionRightConsraint: NSLayoutConstraint!
-    @IBOutlet weak var bgViewHeightConsraint: NSLayoutConstraint!
 
     @IBAction func tapCoin(_ sender: UITapGestureRecognizer) {
         self.performSegue(withIdentifier: "Coin", sender: self)
@@ -60,7 +59,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     
     private func bindProperty() {
         self.collectionLeftConsraint.constant  = AdaptSize(22)
-        self.bgViewHeightConsraint.constant    = self.bgViewHeightConsraint.constant - 25
         self.customNavigationBar?.isHidden     = true
         let tapAction = UITapGestureRecognizer(target: self, action: #selector(pushBadgeListVC))
           self.badgeNumberView.addGestureRecognizer(tapAction)

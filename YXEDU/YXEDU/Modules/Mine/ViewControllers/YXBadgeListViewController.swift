@@ -42,7 +42,7 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
         let label = UILabel()
         label.text          = "-/-"
         label.textColor     = UIColor.orange1
-        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(17))
+        label.font          = UIFont.DINAlternateBold(ofSize: 17)
         label.textAlignment = .center
         return label
     }()
@@ -54,10 +54,11 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
     }()
     
     var collectionView: UICollectionView = {
+        let width = (screenWidth - 120) / 3
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize                = CGSize(width: AdaptSize(94.3), height: AdaptSize(93.1))
-        layout.minimumLineSpacing      = AdaptSize(20)
-        layout.minimumInteritemSpacing = AdaptSize(20)
+        layout.itemSize                = CGSize(width: width, height: width)
+        layout.minimumLineSpacing      = 20
+        layout.minimumInteritemSpacing = 20
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator   = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -109,7 +110,7 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
         titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(20))
-            make.size.equalTo(CGSize(width: AdaptSize(50), height: AdaptSize(17)))
+            make.size.equalTo(CGSize(width: AdaptSize(100), height: AdaptSize(17)))
         }
         badgeNumberLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -118,15 +119,12 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
         }
         collectionViewBackgroundView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().inset(20)
             make.top.equalTo(badgeImageView.snp.bottom).offset(AdaptSize(23))
-            make.width.equalTo(AdaptSize(357))
+            make.left.right.equalToSuperview().inset(20)
         }
         collectionView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(18))
-            make.bottom.equalToSuperview()
-            make.width.equalTo(AdaptSize(323))
+            make.edges.equalToSuperview().inset(20)
         }
     }
     
