@@ -162,14 +162,14 @@ public extension UIColor {
     /// 提示 0x888888
     class var gray1: UIColor { return UIColor.hex(0x888888) }
     
-    /// D8D8D8
-    class var colorD8D8D8: UIColor { return UIColor.hex(0xD8D8D8) }
-    
     /// 进度条底色 EBEBEB
     class var gray2: UIColor { return UIColor.hex(0xEBEBEB) }
 
     /// label 666666
     class var gray3: UIColor { return UIColor.hex(0x666666) }
+
+    /// 提示 8D8D8D
+    class var gray4: UIColor { return UIColor.hex(0x8D8D8D) }
     
     /// 复习按钮字体颜色 7D5311
     class var brown1: UIColor { return UIColor.hex(0x7D5311) }

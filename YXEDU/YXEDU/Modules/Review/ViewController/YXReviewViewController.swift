@@ -8,11 +8,23 @@
 
 import UIKit
 
-class YXReviewViewController: YXTableViewController {
+class YXReviewViewController: YXTableViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
         
     private var headerView: YXReviewHeaderView!
     private var footerView = YXReviewPlanEmptyView()
     private var reviewPageModel: YXReviewPageModel?
+    private var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize                = CGSize(width: AdaptSize(365), height: AdaptSize(269))
+        layout.minimumInteritemSpacing = AdaptSize(30)
+        layout.minimumLineSpacing      = AdaptSize(30)
+        layout.scrollDirection         = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor     = .white
+        collectionView.layer.masksToBounds = false
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: YXNotification.kRefreshReviewTabPage, object: nil)
@@ -22,6 +34,11 @@ class YXReviewViewController: YXTableViewController {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
         self.isMonitorNetwork              = true
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        self.collectionView.setContentOffset(CGPoint(x: AdaptSize(-37), y: 0), animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +67,6 @@ class YXReviewViewController: YXTableViewController {
         }
     }
     
-    
     override func addNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(fetchDataWhenResultPageClosed), name: YXNotification.kRefreshReviewTabPage, object: nil)
     }
@@ -68,9 +84,17 @@ class YXReviewViewController: YXTableViewController {
     func configTableView() {
         self.configHeaderView()
         self.configFooterView()
-
         self.tableView.tableHeaderView = self.headerView
         self.tableView.register(YXReviewPlanTableViewCell.classForCoder(), forCellReuseIdentifier: "YXReviewPlanTableViewCell")
+        if isPad() {
+            self.tableView.separatorColor = .clear
+        }
+    }
+
+    func configCollectionView() {
+        self.collectionView.delegate   = self
+        self.collectionView.dataSource = self
+        self.collectionView.register(YXReviewPlanCollectionViewItem.classForCoder(), forCellWithReuseIdentifier: "kYXReviewPlanCollectionViewItem")
     }
     
     func configHeaderView() {
@@ -112,9 +136,9 @@ class YXReviewViewController: YXTableViewController {
         guard let reviewPageModel = self.reviewPageModel else {
             return
         }
-        self.dataSource = reviewPageModel.reviewPlans ?? []
-        let otherHeight = kStatusBarHeight + AdaptSize(isPad() ? 101 : 68)
-        let headerHeight = (isPad() ? AdaptSize(560) : AdaptFontSize(360)) + otherHeight
+        self.dataSource  = isPad() ? [1] : reviewPageModel.reviewPlans ?? []
+        let otherHeight  = kStatusBarHeight + AdaptSize(isPad() ? 101 : 68)
+        let headerHeight = (isPad() ? AdaptSize(550) : AdaptFontSize(360)) + otherHeight
         self.headerView  = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: headerHeight), reviewModel: reviewPageModel)
         self.headerView.reviewModel = reviewPageModel
         if self.dataSource.count == 0 {
@@ -123,7 +147,42 @@ class YXReviewViewController: YXTableViewController {
             self.tableView.tableFooterView = nil
         }
         self.configTableView()
+        self.configCollectionView()
         self.tableView.reloadData()
+        self.collectionView.reloadData()
+    }
+
+    // MARK: ==== UICollectionViewDataSource, UICollectionViewDelegate ====
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let modelList = self.reviewPageModel?.reviewPlans else {
+            return 0
+        }
+        return modelList.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kYXReviewPlanCollectionViewItem", for: indexPath) as? YXReviewPlanCollectionViewItem, let modelList = self.reviewPageModel?.reviewPlans else {
+            return UICollectionViewCell()
+        }
+        cell.setData(modelList[indexPath.row])
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let modelList = self.reviewPageModel?.reviewPlans else {
+            return
+        }
+
+        let model = modelList[indexPath.row]
+        let vc = YXReviewPlanDetailViewController()
+        vc.planId = model.planId
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    // MARK: ==== UICollectionViewDelegateFlowLayout ====
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: AdaptSize(37), bottom: 0, right: AdaptSize(37))
     }
     
 }
@@ -131,15 +190,26 @@ class YXReviewViewController: YXTableViewController {
 extension YXReviewViewController {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if isPad() { return AdaptSize(270) }
         let model = dataSource[indexPath.row] as! YXReviewPlanModel
         return YXReviewPlanTableViewCell.viewHeight(model: model)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "YXReviewPlanTableViewCell", for: indexPath)
-        cell.selectionStyle = .none
-        tableView.separatorColor = UIColor.clear
-        return cell
+        if isPad() {
+            let cell = UITableViewCell()
+            cell.addSubview(self.collectionView)
+            cell.layer.masksToBounds = false
+            self.collectionView.snp.makeConstraints { (make) in
+                make.edges.equalToSuperview()
+            }
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "YXReviewPlanTableViewCell", for: indexPath)
+            cell.selectionStyle = .none
+            tableView.separatorColor = UIColor.clear
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -158,6 +228,7 @@ extension YXReviewViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isPad() { return }
         let model = dataSource[indexPath.row] as! YXReviewPlanModel
         
         let vc = YXReviewPlanDetailViewController()

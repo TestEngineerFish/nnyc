@@ -116,7 +116,7 @@ class YXReviewHeaderView: YXView {
         bgView.backgroundColor     = UIColor.orange1
         bgView.layer.masksToBounds = true
         bgView.layer.cornerRadius  = AS(20)
-        
+
         contentView.backgroundColor     = UIColor.white
         contentView.layer.cornerRadius  = AS(15)
         contentView.layer.shadowColor   = UIColor.hex(0xE09779).cgColor
@@ -415,7 +415,7 @@ class YXReviewHeaderView: YXView {
                 make.centerY.equalTo(reviewPlanLabel)
                 make.right.equalTo(bgView)
                 if isPad() {
-                    make.size.equalTo(CGSize(width: AS(146), height: AS(35)))
+                    make.size.equalTo(CGSize(width: AS(126), height: AS(35)))
                 } else {
                     make.size.equalTo(CGSize(width: AS(90), height: AS(25)))
                 }
@@ -460,7 +460,7 @@ class YXReviewHeaderView: YXView {
     private class func pointLabel() -> UILabel {
         let label = UILabel()
         label.layer.masksToBounds = true
-        label.layer.cornerRadius = AS(5 / 2.0)
+        label.layer.cornerRadius = AdaptIconSize(5)/2
         return label
     }
     
@@ -492,9 +492,9 @@ class YXReviewProgressView: YXView {
     
     private var type: YXReviewProgressViewType = .familiar
     private var progressView = UIView()
-    private var cornerRadius: CGFloat = 5
+    private var cornerRadius: CGFloat = AdaptIconSize(5)
     
-    init(type: YXReviewProgressViewType, cornerRadius: CGFloat = 5) {
+    init(type: YXReviewProgressViewType, cornerRadius: CGFloat = AdaptIconSize(5)) {
         super.init(frame: CGRect.zero)
         self.type = type
         self.cornerRadius = cornerRadius
