@@ -229,7 +229,6 @@ class YXReviewPlanTableViewCell: YXTableViewCell<YXReviewPlanModel> {
             reviewButton.setTitle("继续学习", for: .normal)
             reviewStarView.count = reviewPlanModel?.review ?? 0
         }
-        
     }
     
     
@@ -408,12 +407,12 @@ class YXReviewPlanProgressView: YXView {
         let beginAngle = CGFloat(Double.pi * (-0.5)) // 起点
         let finishAngle = CGFloat(Double.pi) * (2 * progress - 0.5) // 终点
 
-        let centerP = CGPoint(x: AS(20), y: AS(20))
-        let path = UIBezierPath(arcCenter: centerP, radius: AS(20),
+        let centerP = CGPoint(x: AdaptIconSize(20), y: AdaptIconSize(20))
+        let path = UIBezierPath(arcCenter: centerP, radius: AdaptIconSize(20),
                                 startAngle: beginAngle, endAngle: finishAngle, clockwise: true)
 
         shapeLayer = CAShapeLayer()
-        shapeLayer?.lineWidth = AS(5.0)
+        shapeLayer?.lineWidth = AdaptIconSize(5.0)
         shapeLayer?.lineCap = .round
         shapeLayer?.strokeColor = UIColor.orange1.cgColor
         shapeLayer?.fillColor = UIColor.clear.cgColor
@@ -428,18 +427,18 @@ class YXReviewPlanProgressView: YXView {
         let beginAngle = CGFloat(Double.pi * (-0.5)) // 起点
         let finishAngle = CGFloat(Double.pi * 3 / 2) // 终点
         
-        let centerP = CGPoint(x: AS(20), y: AS(20))
-        let path = UIBezierPath(arcCenter: centerP, radius: AS(20),
+        let centerP = CGPoint(x: AdaptIconSize(20), y: AdaptIconSize(20))
+        let path = UIBezierPath(arcCenter: centerP, radius: AdaptIconSize(20),
                                 startAngle: beginAngle, endAngle: finishAngle, clockwise: true)
         
         let shapeLayer = CAShapeLayer()
-        shapeLayer.lineWidth = AS(5.0)
+        shapeLayer.lineWidth = AdaptIconSize(5.0)
         shapeLayer.lineCap = .round
         shapeLayer.strokeColor = UIColor.hex(0xEBEBEB).cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
 
         shapeLayer.path = path.cgPath
-        shapeLayer.frame = CGRect(x: 0, y: 0, width: AS(40), height: AS(40))
+        shapeLayer.frame = CGRect(x: 0, y: 0, width: AdaptIconSize(40), height: AdaptIconSize(40))
         
         self.layer.addSublayer(shapeLayer)
     }

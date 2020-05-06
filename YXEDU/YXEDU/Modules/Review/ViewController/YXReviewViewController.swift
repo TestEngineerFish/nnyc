@@ -164,8 +164,15 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kYXReviewPlanCollectionViewItem", for: indexPath) as? YXReviewPlanCollectionViewItem, let modelList = self.reviewPageModel?.reviewPlans else {
             return UICollectionViewCell()
         }
-        cell.setData(modelList[indexPath.row])
-        return cell
+        let model = modelList[indexPath.row]
+        cell.setData(model)
+        cell.startListenPlanEvent = { [weak self] in
+            self?.startListenPlanEvent(planId: model.planId)
+        }
+        cell.startReviewPlanEvent = { [weak self] in
+            self?.startReviewPlanEvent(planId: model.planId)
+        }
+        return cell 
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
