@@ -37,7 +37,7 @@ class YXLearnMapViewController: UIViewController {
         let bgImageView = UIImageView(image: UIImage(named: "pathBg"))
         self.view.addSubview(bgImageView)
         bgImageView.snp.makeConstraints { (make) in
-            make.height.equalTo(AdaptSize(358))
+            make.height.equalTo(AdaptIconSize(358))
             make.left.right.equalToSuperview()
             make.centerY.equalToSuperview()
         }
@@ -55,23 +55,23 @@ class YXLearnMapViewController: UIViewController {
         self.view.addSubview(leftCloud)
         leftCloud.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(76))
-            make.width.equalTo(AdaptSize(54))
-            make.height.equalTo(AdaptSize(35))
+            make.top.equalToSuperview().offset(AdaptIconSize(76))
+            make.width.equalTo(AdaptIconSize(54))
+            make.height.equalTo(AdaptIconSize(35))
         }
         // 右边的云
         rightCloud = UIImageView(image: UIImage(named: "cloudRight"))
         self.view.addSubview(rightCloud)
         rightCloud.snp.makeConstraints { (make) in
             make.right.equalToSuperview()
-            make.centerY.equalToSuperview().offset(AdaptSize(96))
-            make.width.equalTo(AdaptSize(36))
-            make.height.equalTo(AdaptSize(24))
+            make.centerY.equalToSuperview().offset(AdaptIconSize(96))
+            make.width.equalTo(AdaptIconSize(36))
+            make.height.equalTo(AdaptIconSize(24))
         }
         // 底部的树
         let treeImageView = UIImageView(image: UIImage(named: "pathTree"))
         self.view.addSubview(treeImageView)
-        let treeImageViewH = AdaptSize(103)
+        let treeImageViewH = AdaptIconSize(103)
         treeImageView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.bottom.equalToSuperview().offset(treeImageViewH + kSafeBottomMargin)

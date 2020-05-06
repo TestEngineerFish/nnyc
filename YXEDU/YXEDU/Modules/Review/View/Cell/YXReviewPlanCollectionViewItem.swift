@@ -117,6 +117,12 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
         return label
     }()
 
+    let dotView: UIView = {
+        let view = YXRedDotView()
+        view.isHidden = true
+        return view
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createSubviews()
@@ -132,6 +138,7 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(listenView)
         contentView.addSubview(reviewView)
+        contentView.addSubview(dotView)
         listenView.addSubview(listenImageView)
         listenView.addSubview(listenButton)
         listenView.addSubview(listenStarView)
@@ -168,6 +175,11 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
             make.left.equalTo(listenView.snp.right)
             make.bottom.right.equalToSuperview()
             make.top.equalTo(descriptionLabel.snp.bottom).offset(AdaptSize(21))
+        }
+        dotView.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: AdaptIconSize(5), height: AdaptIconSize(5)))
+            make.top.equalToSuperview().offset(AdaptSize(20))
+            make.right.equalToSuperview().offset(AdaptSize(-20))
         }
         listenImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -238,6 +250,7 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
     }
 
     func setData(_ model: YXReviewPlanModel) {
+        self.dotView.isHidden      = model.shouldShowRedDot == .some(0)
         self.titleLabel.text       = model.planName
         self.descriptionLabel.text = "单词：\(model.wordCount)"
         self.listenProgressView.progress = CGFloat(model.listen)/100

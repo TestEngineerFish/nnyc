@@ -19,14 +19,14 @@ class YXRedDotView: UIView {
     }()
     
     init(_ num: Int) {
-        super.init(frame: CGRect(x: 0, y: 0, width: AdaptSize(15), height: AdaptSize(15)))
+        super.init(frame: CGRect(x: 0, y: 0, width: AdaptIconSize(15), height: AdaptIconSize(15)))
         self.isHidden = true
         self.createSubviews()
         self.updateBadge(num)
     }
     
     init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: AdaptSize(5), height: AdaptSize(5)))
+        super.init(frame: CGRect(x: 0, y: 0, width: AdaptIconSize(5), height: AdaptIconSize(5)))
         self.createSubviews(false)
     }
     

@@ -73,6 +73,11 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         guard let model = self.model else {
             return
         }
+        if model.isOpenUp {
+            self.arrowImageView.transform = CGAffineTransform(rotationAngle: .pi)
+        } else {
+            self.arrowImageView.transform = .identity
+        }
         var selectedNum = 0
         model.list.forEach { (wordModel) in
             if wordModel.isSelected {
@@ -149,18 +154,6 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     }
 
     @objc private func clickView(_ tap: UITapGestureRecognizer) {
-        guard let view = tap.view as? YXReviewUnitListHeaderView, let unitModel = view.model else {
-            return
-        }
-        if unitModel.isOpenUp {
-            UIView.animate(withDuration: 0.25) {
-                view.arrowImageView.transform = CGAffineTransform(rotationAngle: .pi)
-            }
-        } else {
-            UIView.animate(withDuration: 0.25) {
-                view.arrowImageView.transform = .identity
-            }
-        }
         self.delegate?.clickHeaderView(self.tag)
     }
 }

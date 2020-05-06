@@ -27,7 +27,7 @@ class YXSexangleView: UIView {
         self.model          = model
         self.isExtension    = isExtension
         self.isShowProgress = isShowProgress
-        super.init(frame: CGRect(origin: .zero, size: CGSize(width: AdaptSize(81), height: AdaptSize(81))))
+        super.init(frame: CGRect(origin: .zero, size: CGSize(width: AdaptIconSize(81), height: AdaptIconSize(81))))
         self.createSubview(isShowProgress: isShowProgress)
         if model.status == .uniteEnd {
             // 设置星星等级
@@ -49,7 +49,7 @@ class YXSexangleView: UIView {
         self.layer.addSublayer(outSideLayer)
         // 内部的六边形
         let inSideSexangleView = UIView()
-        inSideSexangleView.frame  = CGRect(origin: CGPoint.zero, size: CGSize(width: AdaptSize(70), height: AdaptSize(70)))
+        inSideSexangleView.frame  = CGRect(origin: CGPoint.zero, size: CGSize(width: AdaptIconSize(70), height: AdaptIconSize(70)))
         let inSideFillColor = self.getInSideFillColor()
         let inSideLayer     = self.getSexangleLayer(inSideSexangleView.width, strokeColor: UIColor.white.cgColor, fillColor: inSideFillColor.cgColor)
         inSideSexangleView.layer.addSublayer(inSideLayer)
@@ -62,7 +62,7 @@ class YXSexangleView: UIView {
         self.addSubview(contentView)
         contentView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.height.equalTo(AdaptSize(42))
+            make.height.equalTo(AdaptIconSize(42))
             make.width.equalToSuperview()
         }
         if model.status == .uniteIng, isShowProgress {
@@ -118,13 +118,13 @@ class YXSexangleView: UIView {
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview()
                 make.width.equalToSuperview()
-                make.height.equalTo(AdaptSize(17))
+                make.height.equalTo(AdaptIconSize(17))
             }
             progressLabel!.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(unitLabel.snp.bottom)
                 make.width.equalToSuperview()
-                make.height.equalTo(AdaptSize(17))
+                make.height.equalTo(AdaptIconSize(17))
             }
             // 设置进度数字动画
             let interval = Double(2/(model.rate*100))
@@ -155,14 +155,14 @@ class YXSexangleView: UIView {
             imageView.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview()
-                make.height.width.equalTo(AdaptSize(25))
+                make.height.width.equalTo(AdaptIconSize(25))
             }
             view.addSubview(label)
             label.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(imageView.snp.bottom)
                 make.width.equalToSuperview()
-                make.height.equalTo(AdaptSize(17))
+                make.height.equalTo(AdaptIconSize(17))
             }
             return view
         }
@@ -179,19 +179,18 @@ class YXSexangleView: UIView {
         self.addSubview(thirdStar)
         secondStar.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(AdaptSize(10))
-            make.width.height.equalTo(
-            AdaptSize(25))
+            make.bottom.equalToSuperview().offset(AdaptIconSize(10))
+            make.width.height.equalTo(AdaptIconSize(25))
         }
         firstStar.snp.makeConstraints { (make) in
-            make.right.equalTo(secondStar.snp.left).offset(AdaptSize(2))
-            make.top.equalTo(secondStar).offset(AdaptSize(-5))
-            make.width.height.equalTo(AdaptSize(25))
+            make.right.equalTo(secondStar.snp.left).offset(AdaptIconSize(2))
+            make.top.equalTo(secondStar).offset(AdaptIconSize(-5))
+            make.width.height.equalTo(AdaptIconSize(25))
         }
         thirdStar.snp.makeConstraints { (make) in
-            make.left.equalTo(secondStar.snp.right).offset(AdaptSize(-2))
-            make.top.equalTo(secondStar).offset(AdaptSize(-5))
-            make.width.height.equalTo(AdaptSize(25))
+            make.left.equalTo(secondStar.snp.right).offset(AdaptIconSize(-2))
+            make.top.equalTo(secondStar).offset(AdaptIconSize(-5))
+            make.width.height.equalTo(AdaptIconSize(25))
         }
 
         if stars > 0 {
@@ -229,7 +228,7 @@ class YXSexangleView: UIView {
 
         let shapLayer         = CAShapeLayer()
         shapLayer.path        = path.cgPath
-        shapLayer.lineWidth   = AdaptSize(5)
+        shapLayer.lineWidth   = AdaptIconSize(5)
         shapLayer.lineCap     = .round
         shapLayer.strokeColor = strokeColor
         shapLayer.fillColor   = fillColor
@@ -238,7 +237,7 @@ class YXSexangleView: UIView {
 
     /// 获得渐变图层
     private func getGradientLayer() -> CAGradientLayer {
-        let offset = CGFloat(AdaptSize(5))
+        let offset = CGFloat(AdaptIconSize(5))
         let gradientLayer = CAGradientLayer()
         let layer0    = CAGradientLayer()
         layer0.frame  = CGRect(x: width/2, y: -offset, width: width/2, height: width/4 + offset)

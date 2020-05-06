@@ -16,9 +16,9 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         let button = UIButton()
         button.setTitle("开始复习", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.layer.cornerRadius = AdaptSize(14)
+        button.layer.cornerRadius = AdaptIconSize(14)
         button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptFontSize(13))
-        button.size = CGSize(width: AdaptSize(89), height: AdaptSize(28))
+        button.size = CGSize(width: AdaptIconSize(89), height: AdaptIconSize(28))
         button.backgroundColor = UIColor.gradientColor(with: button.size, colors: [UIColor.hex(0xFFBE34), UIColor.hex(0xFF790C)], direction: .vertical)
         button.isHidden = true
         return button
@@ -26,7 +26,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
 //    var learnNewUnit:((Int?)->Void)?
     var currentUnitId: Int?
     // 间距
-    let margin = CGFloat(130)
+    let margin = AdaptIconSize(130)
     // 弧线数量
     var sectorAmount: Int
     // 单元格数量
@@ -36,7 +36,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
     // 路径底部开始坐标
     var startPoint = CGPoint.zero
     // 控制点偏移量
-    let centerOffset = CGFloat(60)
+    let centerOffset = AdaptIconSize(60)
     // 单元坐标数组,从低到高
     var unitPointArray = [CGPoint]()
     // 单元视图数组,从低到高
@@ -101,7 +101,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         let stepShort  = margin * 1.5
         let stepLong   = arcHeight - stepShort
         let bezierPath = UIBezierPath()
-        startPoint = CGPoint(x: self.contentSize.width/2, y: self.contentSize.height - 100)
+        startPoint = CGPoint(x: self.contentSize.width/2, y: self.contentSize.height - AdaptIconSize(100))
         bezierPath.move(to: startPoint)
         var p0 = startPoint
         var c  = CGPoint(x: self.contentSize.width/2 + centerOffset, y: startPoint.y - stepShort)
@@ -119,7 +119,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
         let totalLength = CGFloat(sectorAmount) * sectorUnits + 1
         let scaleValue  = CGFloat(self.unitAmount) / totalLength
         proShapeLayer.path        = bezierPath.cgPath
-        proShapeLayer.lineWidth   = 10
+        proShapeLayer.lineWidth   = AdaptIconSize(10)
         proShapeLayer.strokeColor = UIColor.hex(0xE5DDD7).cgColor
         proShapeLayer.strokeStart = 0.0
         proShapeLayer.strokeEnd   = scaleValue
@@ -158,7 +158,7 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
 
     /// 移动到对应单元视图
     private func movePinView(to unitView: YXSexangleView, animation: Bool = true) {
-        let targetFrame = CGRect(x: unitView.frame.midX - AdaptSize(15), y: unitView.frame.minY - AdaptSize(5), width: AdaptSize(30), height: AdaptSize(30))
+        let targetFrame = CGRect(x: unitView.frame.midX - AdaptIconSize(15), y: unitView.frame.minY - AdaptIconSize(5), width: AdaptIconSize(30), height: AdaptIconSize(30))
         if animation {
             UIView.animate(withDuration: 1) {
                 self.avatarPinView?.frame = targetFrame
