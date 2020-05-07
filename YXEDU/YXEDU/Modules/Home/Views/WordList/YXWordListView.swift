@@ -99,7 +99,14 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             } else {
                 topViewHeight.constant = 44
                 topView.isHidden       = false
-                shouldShowBottomView   = true
+                
+                if type == .wrongWords {
+                    shouldShowBottomView = true
+                    
+                } else {
+                    shouldShowBottomView = false
+                }
+                
                 showEmptyView          = false
             }
             
