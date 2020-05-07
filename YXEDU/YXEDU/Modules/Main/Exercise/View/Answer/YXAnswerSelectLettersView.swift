@@ -12,7 +12,7 @@ import UIKit
 class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharacterTextFieldProtocol {
 
     let itemSize         = CGSize(width: AdaptSize(isPad() ? 132 : 60), height: AdaptSize(isPad() ? 90 : 60))
-    let margin           = CGFloat(AdaptSize(isPad() ? 15 : 10))
+    let margin           = CGFloat(AdaptSize(isPad() ? 21 : 10))
     let horItemNum       = 4
     var verItemNum       = 3
     var buttonArray2     = [[YXLetterButton]]()

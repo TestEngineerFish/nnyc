@@ -28,7 +28,7 @@ class YXLookImageChooseWordExerciseView: YXBaseExerciseView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.questionViewHeight = AdaptSize(160)
+        self.questionViewHeight = AdaptIconSize(160)
     }
     
     override func bindData() {

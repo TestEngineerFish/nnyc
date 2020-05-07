@@ -26,9 +26,9 @@ extension YXConnectionItemConfigProtocol {
 
 /// 单词 + 中文
 struct YXConnectionWordAndChineseConfig: YXConnectionItemConfigProtocol {
-    var leftItemWidth: CGFloat { return AdaptIconSize(104)}
-    var leftItemHeight: CGFloat { return AdaptIconSize(30)}
-    var leftInterval: CGFloat { return AdaptIconSize(34)}
+    var leftItemWidth: CGFloat { return AdaptSize(isPad() ? 169 : 104)}
+    var leftItemHeight: CGFloat { return AdaptSize(isPad() ? 76 : 30)}
+    var leftInterval: CGFloat { return AdaptSize(isPad() ? 30 : 34)}
 
     var rightItemWidth: CGFloat { return leftItemWidth}
     var rightItemHeight: CGFloat { return leftItemHeight}
@@ -36,9 +36,9 @@ struct YXConnectionWordAndChineseConfig: YXConnectionItemConfigProtocol {
 }
 /// 单词 + 图片
 struct YXConnectionWordAndImageConfig: YXConnectionItemConfigProtocol {
-    var leftItemWidth: CGFloat { return AdaptIconSize(102)}
-    var leftItemHeight: CGFloat { return AdaptIconSize(30)}
-    var leftInterval: CGFloat { return AdaptIconSize(54)}
+    var leftItemWidth: CGFloat { return AdaptSize(isPad() ? 169 : 104)}
+    var leftItemHeight: CGFloat { return AdaptSize(isPad() ? 76 : 30)}
+    var leftInterval: CGFloat { return AdaptSize(isPad() ? 50 : 54)}
 
     var rightItemWidth: CGFloat { return AdaptIconSize(90)}
     var rightItemHeight: CGFloat { return AdaptIconSize(66)}
@@ -260,8 +260,8 @@ extension YXConnectionView {
         self.audioPlayerView.snp.remakeConstraints { (make) in
             make.top.equalTo(item.snp.bottom)
             make.left.equalTo(item.snp.left)
-            make.width.equalTo(22)
-            make.height.equalTo(22)
+            make.width.equalTo(AdaptIconSize(22))
+            make.height.equalTo(AdaptIconSize(22))
         }
         
         let word = selectWord(wordId: leftItemArray[index].itemModel?.optionId ?? 0)

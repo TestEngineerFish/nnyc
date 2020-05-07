@@ -28,7 +28,7 @@ class YXFillWordAccordingToImageExerciseView: YXBaseExerciseView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.questionViewHeight = AdaptSize(230)
+        self.questionViewHeight = AdaptIconSize(230)
     }
     
     override func bindData() {

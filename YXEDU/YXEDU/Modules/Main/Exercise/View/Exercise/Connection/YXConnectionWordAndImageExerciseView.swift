@@ -44,15 +44,15 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
         let itemConfig = YXConnectionWordAndImageConfig()
         let contentViewH = CGFloat(self.exerciseModel.option?.firstItems?.count ?? 0) * (itemConfig.rightItemHeight + itemConfig.rightInterval) + AdaptIconSize(94)
         self.contentView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(22))
-            make.right.equalToSuperview().offset(AdaptSize(-22))
-            make.top.equalToSuperview().offset(AdaptSize(32))
+            make.left.equalToSuperview().offset(AdaptSize(isPad() ? 54 : 22))
+            make.right.equalToSuperview().offset(AdaptSize(isPad() ? -54 : -22))
+            make.top.equalToSuperview().offset(AdaptIconSize(32))
             make.height.equalTo(contentViewH)
         }
 
         self.questionView?.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(AdaptSize(-12))
-            make.centerX.equalToSuperview().offset(AdaptSize(10))
+            make.top.equalToSuperview().offset(AdaptIconSize(-12))
+            make.centerX.equalToSuperview().offset(AdaptIconSize(10))
             make.width.equalTo(AdaptIconSize(231))
             make.height.equalTo(AdaptIconSize(87))
         }
@@ -64,7 +64,7 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
         })
 
         remindView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(contentView.snp.bottom).offset(15)
+            make.top.equalTo(contentView.snp.bottom).offset(AdaptIconSize(15))
             make.left.width.equalTo(contentView)
             make.bottom.equalToSuperview().priorityLow()
         })

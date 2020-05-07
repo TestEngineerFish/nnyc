@@ -22,7 +22,7 @@ class YXNewLearnResultView: UIView {
         let view = UIView()
         view.isHidden           = true
         view.backgroundColor    = UIColor.white
-        view.layer.cornerRadius = AdaptSize(6)
+        view.layer.cornerRadius = AdaptIconSize(6)
         return view
     }()
     
@@ -80,11 +80,11 @@ class YXNewLearnResultView: UIView {
         }
         if self.goldImageView.isHidden {
             self.contentView.snp.updateConstraints { (make) in
-                make.height.equalTo(AdaptSize(211))
+                make.height.equalTo(AdaptIconSize(211))
             }
         } else {
             self.contentView.snp.updateConstraints { (make) in
-                make.height.equalTo(AdaptSize(226))
+                make.height.equalTo(AdaptIconSize(226))
             }
         }
     }
@@ -108,18 +108,18 @@ class YXNewLearnResultView: UIView {
         
         contentView.snp.remakeConstraints { (make) in
             make.center.equalToSuperview()
-            make.height.equalTo(AdaptSize(220))
-            make.width.equalTo(AdaptSize(270))
+            make.height.equalTo(AdaptIconSize(220))
+            make.width.equalTo(AdaptIconSize(270))
         }
         animationView.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(38))
-            make.size.equalTo(CGSize(width: AdaptSize(80), height: AdaptSize(80)))
+            make.top.equalToSuperview().offset(AdaptIconSize(38))
+            make.size.equalTo(CGSize(width: AdaptIconSize(80), height: AdaptIconSize(80)))
         }
         titleLabel.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(animationView.snp.bottom).offset(AdaptSize(11))
-            make.height.equalTo(AdaptSize(24))
+            make.top.equalTo(animationView.snp.bottom).offset(AdaptIconSize(11))
+            make.height.equalTo(AdaptIconSize(24))
             make.width.equalTo(titleLabel.width)
         }
     }
@@ -135,32 +135,32 @@ class YXNewLearnResultView: UIView {
 
         contentView.snp.remakeConstraints { (make) in
             make.center.equalToSuperview()
-            make.height.equalTo(AdaptSize(226))
-            make.width.equalTo(AdaptSize(275))
+            make.height.equalTo(AdaptIconSize(226))
+            make.width.equalTo(AdaptIconSize(275))
         }
         iconImageView.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(38))
-            make.size.equalTo(CGSize(width: AdaptSize(233), height: AdaptSize(109)))
+            make.top.equalToSuperview().offset(AdaptIconSize(38))
+            make.size.equalTo(CGSize(width: AdaptIconSize(233), height: AdaptIconSize(109)))
         }
         starView.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(iconImageView)
-            make.height.equalTo(AdaptSize(45))
-            make.width.equalTo(AdaptSize(118))
+            make.height.equalTo(AdaptIconSize(45))
+            make.width.equalTo(AdaptIconSize(118))
         }
         titleLabel.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(iconImageView.snp.bottom).offset(AdaptSize(11))
+            make.top.equalTo(iconImageView.snp.bottom).offset(AdaptIconSize(11))
             make.size.equalTo(CGSize.zero)
         }
         goldImageView.snp.remakeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(116))
-            make.top.equalTo(titleLabel.snp.bottom).offset(AdaptSize(6))
-            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
+            make.left.equalToSuperview().offset(AdaptIconSize(116))
+            make.top.equalTo(titleLabel.snp.bottom).offset(AdaptIconSize(6))
+            make.size.equalTo(CGSize(width: AdaptIconSize(20), height: AdaptIconSize(20)))
         }
         bonusLabel.snp.remakeConstraints { (make) in
-            make.left.equalTo(goldImageView.snp.right).offset(AdaptSize(5))
+            make.left.equalTo(goldImageView.snp.right).offset(AdaptIconSize(5))
             make.centerY.equalTo(goldImageView)
             make.size.equalTo(CGSize.zero)
         }
@@ -174,18 +174,18 @@ class YXNewLearnResultView: UIView {
         
         contentView.snp.remakeConstraints { (make) in
             make.center.equalToSuperview()
-            make.height.equalTo(AdaptSize(220))
-            make.width.equalTo(AdaptSize(270))
+            make.height.equalTo(AdaptIconSize(220))
+            make.width.equalTo(AdaptIconSize(270))
         }
         iconImageView.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(2))
-            make.size.equalTo(CGSize(width: AdaptSize(222), height: AdaptSize(177)))
+            make.top.equalToSuperview().offset(AdaptIconSize(2))
+            make.size.equalTo(CGSize(width: AdaptIconSize(222), height: AdaptIconSize(177)))
         }
         titleLabel.snp.remakeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(AdaptSize(-30))
-            make.height.equalTo(AdaptSize(24))
+            make.bottom.equalToSuperview().offset(AdaptIconSize(-30))
+            make.height.equalTo(AdaptIconSize(24))
             make.width.equalTo(titleLabel.width)
         }
     }

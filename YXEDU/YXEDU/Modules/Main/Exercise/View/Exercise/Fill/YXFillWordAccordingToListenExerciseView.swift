@@ -36,7 +36,7 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.questionViewHeight = AdaptSize(180)
+        self.questionViewHeight = AdaptSize(isPad() ? 192 : 180)
     }
 
     override func bindData() {

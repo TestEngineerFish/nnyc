@@ -27,7 +27,7 @@ class YXListenChooseChineseExerciseView: YXBaseExerciseView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.questionViewHeight = AdaptSize(130)
+        self.questionViewHeight = AdaptSize(isPad() ? 192 : 130)
     }
 
     override func bindData() {

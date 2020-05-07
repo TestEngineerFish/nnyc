@@ -20,10 +20,10 @@ struct YXCharacterModel {
 
 class YXSpellSubview: UIView {
     var margin: CGFloat {
-        return isTitle ? AdaptSize(5)  : AdaptSize(3)
+        return isTitle ? AdaptSize(5) : AdaptSize(3)
     }
     var charH: CGFloat {
-        isTitle ? AdaptSize(28) : AdaptSize(22)
+        isTitle ? AdaptIconSize(28) : AdaptIconSize(22)
     }
     var maxX   = CGFloat(0)
     var isTitle: Bool

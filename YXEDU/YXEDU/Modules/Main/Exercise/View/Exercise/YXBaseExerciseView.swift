@@ -50,8 +50,8 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
 
     /// 提醒view
     var remindView: YXRemindView?
-    let remindViewDefaultHeight = AdaptIconSize(90)
-    var remindViewHeight = AdaptSize(90) {
+    let remindViewDefaultHeight = AdaptSize(isPad() ? 140 : 90)
+    var remindViewHeight = AdaptSize(isPad() ? 140 : 90) {
         willSet {
             remindView?.snp.updateConstraints({ (make) in
                 make.height.equalTo(newValue)

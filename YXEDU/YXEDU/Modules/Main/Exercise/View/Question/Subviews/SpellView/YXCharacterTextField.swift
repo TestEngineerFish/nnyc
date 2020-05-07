@@ -22,7 +22,7 @@ class YXCharacterTextField: UITextField, UIGestureRecognizerDelegate {
     init(frame: CGRect, isTitle: Bool) {
         super.init(frame: frame)
         self.tag                    = 999// 用户响应底部答题事件
-        self.font                   = isTitle ? UIFont.boldSystemFont(ofSize: AdaptFontSize(26)) : UIFont.pfSCRegularFont(withSize: 16)
+        self.font                   = isTitle ? UIFont.boldSystemFont(ofSize: AdaptFontSize(26)) : UIFont.pfSCRegularFont(withSize: AdaptFontSize(17))
         self.textColor              = isTitle ? UIColor.black1 : UIColor.black2
         self.borderStyle            = .none
         self.returnKeyType          = .done
@@ -70,11 +70,12 @@ class YXCharacterTextField: UITextField, UIGestureRecognizerDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.keyboardToolbar.bringSubviewToFront(tipsButton)
         }
+        tipsButton.sizeToFit()
         tipsButton.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(15))
+            make.left.equalToSuperview().offset(AdaptIconSize(15))
             make.centerY.equalToSuperview()
             make.height.equalToSuperview()
-            make.width.equalTo(AdaptSize(70))
+            make.width.equalTo(tipsButton.width)
         }
     }
     

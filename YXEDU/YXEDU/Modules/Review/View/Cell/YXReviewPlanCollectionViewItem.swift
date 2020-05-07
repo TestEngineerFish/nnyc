@@ -41,13 +41,13 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
 
     var listenImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "button_height")
+        imageView.image = UIImage(named: "iPad_listenIcon")
         return imageView
     }()
 
     var reviewImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "button_height")
+        imageView.image = UIImage(named: "iPad_reviewIcon")
         return imageView
     }()
 

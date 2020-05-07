@@ -26,7 +26,7 @@ class YXLookExampleChooseImageExerciseView: YXBaseExerciseView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.questionViewHeight = AdaptSize(160)
+        self.questionViewHeight = AdaptSize(isPad() ? 192 : 160)
     }
     
     override func bindData() {

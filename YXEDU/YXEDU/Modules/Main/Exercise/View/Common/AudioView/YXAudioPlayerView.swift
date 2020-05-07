@@ -33,7 +33,7 @@ class YXAudioPlayerView: UIView {
         self.audioButton.imageView?.snp.makeConstraints({ (make) in
             make.edges.equalToSuperview()
         })
-        super.init(frame: CGRect(x: 0, y: 0, width: AdaptSize(22), height: AdaptSize(22)))
+        super.init(frame: CGRect(x: 0, y: 0, width: AdaptIconSize(22), height: AdaptIconSize(22)))
         audioButton.setImage(UIImage(named: "playAudioIcon"), for: .normal)
         audioButton.addTarget(self, action: #selector(clickAudioBtn), for: .touchUpInside)
         self.addSubview(audioButton)

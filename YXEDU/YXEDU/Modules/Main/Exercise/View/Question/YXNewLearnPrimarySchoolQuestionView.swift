@@ -33,7 +33,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let height = self.chineseExampleLabel.text?.textHeight(font: chineseExampleLabel.font, width: screenWidth - AdaptSize(74)) ?? 0
+        let height = self.chineseExampleLabel.text?.textHeight(font: chineseExampleLabel.font, width: screenWidth - AdaptIconSize(74)) ?? 0
         self.chineseExampleLabel.snp.makeConstraints { (make) in
             make.height.equalTo(height)
         }
@@ -85,7 +85,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
         self.titleLabel?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(69))
+            make.top.equalToSuperview().offset(AdaptIconSize(69))
             make.width.equalToSuperview()
             make.height.equalTo(0)
         })
@@ -99,20 +99,20 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
         self.exampleLabel.snp.makeConstraints { (make) in
             make.centerX.width.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(69))
+            make.top.equalToSuperview().offset(AdaptIconSize(69))
             make.height.equalTo(0)
         }
 
         self.chineseExampleLabel.snp.makeConstraints { (make) in
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.top.equalTo(exampleLabel.snp.bottom).offset(AdaptSize(2))
+            make.top.equalTo(exampleLabel.snp.bottom).offset(AdaptIconSize(2))
         }
 
         self.imageView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize.zero)
-            make.top.equalTo(chineseExampleLabel.snp.bottom).offset(AdaptSize(26))
+            make.top.equalTo(chineseExampleLabel.snp.bottom).offset(AdaptIconSize(26))
         })
     }
 
@@ -127,7 +127,7 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     func showExample() {
         self.exampleLabel.layer.opacity = 1.0
         self.exampleLabel.sizeToFit()
-        let h = self.exampleLabel.text?.textHeight(font: exampleLabel.font, width: screenWidth - AdaptSize(44)) ?? CGFloat.zero
+        let h = self.exampleLabel.text?.textHeight(font: exampleLabel.font, width: screenWidth - AdaptIconSize(44)) ?? CGFloat.zero
         self.exampleLabel.snp.updateConstraints { (make) in
             make.height.equalTo(h)
         }
@@ -143,9 +143,9 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
 
     func showWordView() {
         UIView.animate(withDuration: 0.8, animations: {
-            self.exampleLabel.transform        = CGAffineTransform(translationX: 0, y: AdaptSize(78))
-            self.chineseExampleLabel.transform = CGAffineTransform(translationX: 0, y: AdaptSize(78))
-            self.imageView?.transform          = CGAffineTransform(translationX: 0, y: AdaptSize(78))
+            self.exampleLabel.transform        = CGAffineTransform(translationX: 0, y: AdaptIconSize(78))
+            self.chineseExampleLabel.transform = CGAffineTransform(translationX: 0, y: AdaptIconSize(78))
+            self.imageView?.transform          = CGAffineTransform(translationX: 0, y: AdaptIconSize(78))
         })
         UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut, animations: {
             self.titleLabel?.layer.opacity     = 1.0

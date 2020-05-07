@@ -100,6 +100,8 @@ static inline CGFloat AdaptFontSize(CGFloat size) {
             newSize = 30;
         } else if (size == 24) {
             newSize = 38;
+        } else if (size == 26) {
+            newSize = 40;
         } else if (size == 35 || size == 40) {
             newSize = 70;
         } else {

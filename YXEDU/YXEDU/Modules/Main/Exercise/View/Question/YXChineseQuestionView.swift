@@ -14,7 +14,7 @@ class YXChineseQuestionView: YXBaseQuestionView {
     override func createSubviews() {
         super.createSubviews()
         self.initTitleLabel()
-        self.titleLabel?.font = UIFont.pfSCSemiboldFont(withSize: 20)
+        self.titleLabel?.font = UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(20))
         self.initSubTitleLabel()
     }
     
@@ -22,15 +22,15 @@ class YXChineseQuestionView: YXBaseQuestionView {
         super.layoutSubviews()
         
         titleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(56)
+            make.top.equalTo(AdaptSize(56))
             make.left.right.equalToSuperview()
-            make.height.equalTo(28)
+            make.height.equalTo(AdaptIconSize(28))
         })
         
         subTitleLabel?.snp.makeConstraints({ (make) in
             make.top.equalTo(titleLabel!.snp.bottom)
             make.left.right.equalToSuperview()
-            make.height.equalTo(20)
+            make.height.equalTo(AdaptIconSize(20))
         })
     }
     

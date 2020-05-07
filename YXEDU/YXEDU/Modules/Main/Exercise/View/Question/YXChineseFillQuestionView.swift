@@ -37,10 +37,10 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview().offset(topPadding)
                 make.width.equalTo(w)
-                make.height.equalTo(30)
+                make.height.equalTo(AdaptIconSize(30))
             }
             subTitleLabel?.snp.makeConstraints({ (make) in
-                make.top.equalTo(_spellView.snp.bottom).offset(10)
+                make.top.equalTo(_spellView.snp.bottom).offset(AdaptIconSize(10))
                 make.centerX.equalToSuperview()
                 make.width.equalToSuperview()
             })

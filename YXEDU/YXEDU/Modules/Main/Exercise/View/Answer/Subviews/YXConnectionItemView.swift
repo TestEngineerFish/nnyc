@@ -67,6 +67,7 @@ class YXConnectionItemView: UIButton {
 
     
     private func bindProperty() {
+        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: AdaptSize(15), bottom: 0, right: AdaptSize(15))
         self.addTarget(self, action: #selector(clickButton), for: .touchUpInside)
     }
     

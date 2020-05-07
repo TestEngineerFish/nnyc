@@ -9,8 +9,8 @@
 import UIKit
 
 struct YXConnectionLettersConfig {
-    var itemSize   = CGSize(width: AdaptSize(48), height: AdaptSize(48))
-    var itemMargin = AdaptSize(8)
+    var itemSize   = CGSize(width: AdaptIconSize(48), height: AdaptIconSize(48))
+    var itemMargin = AdaptIconSize(8)
     var itemFont = UIFont.pfSCRegularFont(withSize: AdaptFontSize(20))
     var backgroundNormalImage: UIImage?   = nil
     var backgroundSelectedImage: UIImage? = nil
@@ -279,7 +279,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
         bezierPath.addLine(to: toButton.center)
         let shaperLayer         = CAShapeLayer()
         shaperLayer.path        = bezierPath.cgPath
-        shaperLayer.lineWidth   = AdaptSize(6)
+        shaperLayer.lineWidth   = AdaptIconSize(6)
         shaperLayer.fillColor   = nil
         shaperLayer.zPosition   = -1
         shaperLayer.strokeColor = UIColor.orange4.cgColor

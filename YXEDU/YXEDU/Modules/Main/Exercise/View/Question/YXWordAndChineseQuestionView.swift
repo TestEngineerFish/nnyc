@@ -21,25 +21,23 @@ class YXWordAndChineseQuestionView: YXBaseQuestionView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        let titleWidth = self.exerciseModel.question?.word?.textWidth(font: titleLabel!.font, height: 28) ?? 0
+        titleLabel?.sizeToFit()
         titleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(AdaptSize(33))
+            make.top.equalTo(AdaptIconSize(33))
             make.centerX.equalToSuperview()
-            make.width.equalTo(titleWidth)
-            make.height.equalTo(AdaptSize(37))
+            make.size.equalTo(titleLabel?.size ?? CGSize.zero)
         })
         
         descTitleLabel?.snp.makeConstraints({ (make) in
             make.top.equalTo(titleLabel!.snp.bottom).offset(AdaptSize(28))
             make.centerX.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalTo(20)
+            make.height.equalTo(AdaptIconSize(20))
         })
         
         audioPlayerView?.snp.makeConstraints({ (make) in
             make.centerY.equalTo(titleLabel!)
-            make.left.equalTo(titleLabel!.snp.right).offset(AdaptSize(3))
+            make.left.equalTo(titleLabel!.snp.right).offset(AdaptIconSize(3))
             make.width.height.equalTo(AdaptIconSize(22))
         })
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// 听录音选单词
+/// 听例句读音选单词
 class YXListenChooseWordExerciseView: YXBaseExerciseView {
         
     override func createSubview() {
@@ -27,7 +27,7 @@ class YXListenChooseWordExerciseView: YXBaseExerciseView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.questionViewHeight = AdaptSize(130)
+        self.questionViewHeight = AdaptSize(isPad() ? 192 : 130)
     }
     
     override func bindData() {

@@ -29,6 +29,13 @@ class YXExerciseBottomView: UIView {
         button.setTitleColor(UIColor.black3, for: .normal)
         button.setTitleColor(UIColor.black2, for: .highlighted)
         button.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
+        if isPad() {
+            button.imageView?.snp.makeConstraints({ (make) in
+                make.width.height.equalTo(AdaptSize(22))
+                make.centerY.equalToSuperview()
+                make.left.equalToSuperview()
+            })
+        }
         return button
     }()
 

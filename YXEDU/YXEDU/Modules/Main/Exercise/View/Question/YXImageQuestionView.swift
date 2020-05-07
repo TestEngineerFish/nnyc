@@ -21,8 +21,8 @@ class YXImageQuestionView: YXBaseQuestionView {
         
         imageView?.snp.makeConstraints({ (make) in
             make.center.equalToSuperview()
-            make.width.equalTo(130)
-            make.height.equalTo(94)
+            make.width.equalTo(AdaptIconSize(130))
+            make.height.equalTo(AdaptIconSize(94))
         })
     }
     

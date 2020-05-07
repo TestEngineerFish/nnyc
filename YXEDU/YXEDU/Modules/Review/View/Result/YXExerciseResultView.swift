@@ -23,7 +23,7 @@ class YXExerciseResultView: YXView {
     var titleLabel    = UILabel()
     var subTitleLabel = UILabel()
     var starView      = YXStarView()
-    var progressView  = YXReviewProgressView(type: .iKnow, cornerRadius: AS(4))
+    var progressView  = YXReviewProgressView(type: .iKnow, cornerRadius: AdaptIconSize(4))
     var tipsView      = YXReviewResultTipsListView()
     var reportButton  = UIButton()
     var operateButton = UIButton()
@@ -101,53 +101,53 @@ class YXExerciseResultView: YXView {
         
         contentView.snp.remakeConstraints { (make) in
             make.top.bottom.equalToSuperview()
-            make.left.equalTo(AS(21))
-            make.right.equalTo(AS(-21))
+            make.left.equalTo(AdaptIconSize(21))
+            make.right.equalTo(AdaptIconSize(-21))
         }
         
         imageView.snp.remakeConstraints { (make) in
-            make.top.equalTo(AS(-8))
+            make.top.equalTo(AdaptIconSize(-8))
             make.centerX.equalToSuperview()
-            make.width.equalTo(AS(233))
-            make.height.equalTo(AS(141))
+            make.width.equalTo(AdaptIconSize(233))
+            make.height.equalTo(AdaptIconSize(141))
         }
         
         starView.snp.remakeConstraints { (make) in
             make.centerX.equalTo(imageView)
-            make.bottom.equalTo(imageView).offset(AS(6))
-            make.width.equalTo(AS(94))
-            make.height.equalTo(AS(45))
+            make.bottom.equalTo(imageView).offset(AdaptIconSize(6))
+            make.width.equalTo(AdaptIconSize(94))
+            make.height.equalTo(AdaptIconSize(45))
         }
         
         titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(AdaptIconSize(11))
-            make.left.equalTo(AS(35))
-            make.right.equalTo(AS(-35))
+            make.left.equalTo(AdaptIconSize(35))
+            make.right.equalTo(AdaptIconSize(-35))
             make.height.equalTo(titleHeight())
         }
         
         var topView: UIView = titleLabel
         if subTitleLabel.isHidden == false {
             subTitleLabel.snp.remakeConstraints { (make) in
-                make.top.equalTo(titleLabel.snp.bottom).offset(AS(5))
+                make.top.equalTo(titleLabel.snp.bottom).offset(AdaptIconSize(5))
                 make.left.right.equalToSuperview()
-                make.height.equalTo(AS(17))
+                make.height.equalTo(AdaptIconSize(17))
             }
             topView = subTitleLabel
         }
                 
         if model.state == false {
             progressView.snp.remakeConstraints { (make) in
-                make.top.equalTo(topView.snp.bottom).offset(AS(11))
+                make.top.equalTo(topView.snp.bottom).offset(AdaptIconSize(11))
                 make.left.right.equalTo(imageView)
-                make.height.equalTo(AS(8))
+                make.height.equalTo(AdaptIconSize(8))
             }
             topView = progressView
         }
         
         let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
         tipsView.snp.remakeConstraints { (make) in
-            make.top.equalTo(topView.snp.bottom).offset(AS(28))
+            make.top.equalTo(topView.snp.bottom).offset(AdaptIconSize(28))
             make.left.right.equalToSuperview()
             make.height.equalTo(tipsHeight)
         }
@@ -157,21 +157,21 @@ class YXExerciseResultView: YXView {
                 make.centerX.equalToSuperview()
                 make.width.equalTo(AdaptIconSize(273))
                 make.height.equalTo(AdaptIconSize(42))
-                make.bottom.equalTo(-AS(25))
+                make.bottom.equalTo(-AdaptIconSize(25))
             }
         } else {
             reportButton.snp.remakeConstraints { (make) in
-                make.left.equalTo(AS(28))
+                make.left.equalTo(AdaptIconSize(28))
                 make.width.equalTo(AdaptIconSize(134))
                 make.height.equalTo(AdaptIconSize(42))
-                make.bottom.equalTo(-AS(25))
+                make.bottom.equalTo(-AdaptIconSize(25))
             }
             
             operateButton.snp.remakeConstraints { (make) in
-                make.right.equalTo(AS(-28))
+                make.right.equalTo(AdaptIconSize(-28))
                 make.width.equalTo(AdaptIconSize(134))
                 make.height.equalTo(AdaptIconSize(42))
-                make.bottom.equalTo(-AS(25))
+                make.bottom.equalTo(-AdaptIconSize(25))
             }
         }
         
@@ -399,7 +399,7 @@ class YXExerciseResultView: YXView {
     
     private func titleHeight() -> CGFloat {
         let font = UIFont.regularFont(ofSize: AdaptFontSize(17))
-        let titleWidth = screenWidth - AS(40)
+        let titleWidth = screenWidth - AdaptIconSize(40)
         
         if let text = titleLabel.text {
             return text.textHeight(font: font, width: titleWidth)
@@ -415,21 +415,21 @@ class YXExerciseResultView: YXView {
     /// 高度
     func viewHeight() -> CGFloat {
         var allHeight: CGFloat = 0
-        allHeight += AS(24 + 109 + 11)
+        allHeight += AdaptIconSize(24 + 109 + 11)
         allHeight += titleHeight()
                 
         if isHiddenSubTitleLabel == false {
-            allHeight += AS(5 + 17)
+            allHeight += AdaptIconSize(5 + 17)
         }
         
         if model.state == false {
-            allHeight += AS(6 + 8)
+            allHeight += AdaptIconSize(6 + 8)
         }
         
         let tipsHeight = tipsView.viewHeight(count: self.createDataSource().count)
-        allHeight += AS(28) + tipsHeight
+        allHeight += AdaptIconSize(28) + tipsHeight
         
-        allHeight += AS(25 + 42 + 25)
+        allHeight += AdaptIconSize(25 + 42 + 25)
         
         return allHeight
     }

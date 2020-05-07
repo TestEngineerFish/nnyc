@@ -39,20 +39,20 @@ class YXChineseFillConnectionLetterQuestionView: YXBaseQuestionView {
         self.titleLabel?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(36))
-            make.height.equalTo(AdaptSize(30))
+            make.height.equalTo(AdaptIconSize(30))
             make.width.equalTo(self.titleLabel!.width)
         })
         self.audioPlayerView?.snp.makeConstraints({ (make) in
-            make.left.equalTo(self.titleLabel!.snp.right).offset(AdaptSize(3))
+            make.left.equalTo(self.titleLabel!.snp.right).offset(AdaptIconSize(3))
             make.centerY.equalTo(self.titleLabel!)
             make.size.equalTo(CGSize(width: AdaptIconSize(22), height: AdaptIconSize(22)))
         })
         let spellViewW = (self.spellView?.maxX ?? 0) - (self.spellView?.margin ?? 0)
         self.spellView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(self.titleLabel!.snp.bottom).offset(AdaptSize(10))
+            make.top.equalTo(self.titleLabel!.snp.bottom).offset(AdaptIconSize(10))
             make.centerX.equalToSuperview()
             make.width.equalTo(spellViewW)
-            make.height.equalTo(AdaptSize(22))
+            make.height.equalTo(AdaptIconSize(22))
         })
     }
 

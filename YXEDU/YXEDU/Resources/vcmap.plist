@@ -6,6 +6,8 @@
 	<dict>
 		<key>Home</key>
 		<dict>
+			<key>user/studydaily</key>
+			<string>YXStudyReportViewController</string>
 			<key>word/list</key>
 			<string>YXWordListViewController</string>
 			<key>setting/feedback</key>

@@ -10,8 +10,6 @@ import UIKit
 
 /// 看中文选单词
 class YXLookChineseChooseWordExerciseView: YXBaseExerciseView {
-
-    private let answerHeight: CGFloat = 42 * 4 + 13 * 3
         
     override func createSubview() {
         questionView = YXChineseQuestionView(exerciseModel: exerciseModel)
@@ -29,7 +27,7 @@ class YXLookChineseChooseWordExerciseView: YXBaseExerciseView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.questionViewHeight = AdaptSize(160)
+        self.questionViewHeight = AdaptSize(isPad() ? 192 : 160)
     }
 
     override func bindData() {

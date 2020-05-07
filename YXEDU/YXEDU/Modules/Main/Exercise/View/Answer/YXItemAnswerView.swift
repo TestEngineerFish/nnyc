@@ -100,8 +100,8 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         
         cell.contentView.addSubview(label)
         label.snp.makeConstraints { (make) in
-            make.left.equalTo(AdaptSize(21))
-            make.right.equalTo(AdaptSize(-21))
+            make.left.equalTo(AdaptSize(isPad() ? 45 : 21))
+            make.right.equalTo(AdaptSize(isPad() ? -45 : -21))
             make.top.bottom.equalToSuperview()
         }
         

@@ -37,17 +37,17 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         guard let question = self.exerciseModel.question else {
             return
         }
-        let questionH = AdaptSize(110)
+        let questionH = AdaptIconSize(110)
         questionView?.snp.makeConstraints({ (make) in
             make.top.equalToSuperview()
             make.height.equalTo(questionH)
             make.left.width.equalToSuperview()
         })
 
-        let answerViewTop    = AdaptSize(35)
-        let answerViewBottom = AdaptSize(50)
-        let itemInterval     = AdaptSize(8)
-        let itemSize         = AdaptSize(48)
+        let answerViewTop    = AdaptIconSize(35)
+        let answerViewBottom = AdaptIconSize(50)
+        let itemInterval     = AdaptIconSize(8)
+        let itemSize         = AdaptIconSize(48)
         let answerViewW = CGFloat(question.column) * (itemInterval + itemSize) - itemInterval
         let answerViewH = CGFloat(question.row) * (itemInterval + itemSize) - itemInterval
         answerView?.snp.makeConstraints({ (make) in
@@ -60,9 +60,9 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         let contentH = questionH + answerViewTop + answerViewH + answerViewBottom
         self.contentView.snp.makeConstraints { (make) in
             make.height.equalTo(contentH)
-            make.left.equalToSuperview().offset(AdaptSize(22))
-            make.right.equalToSuperview().offset(AdaptSize(-22))
-            make.top.equalToSuperview().offset(AdaptSize(32))
+            make.left.equalToSuperview().offset(AdaptSize(isPad() ? 54 : 22))
+            make.right.equalToSuperview().offset(AdaptSize(isPad() ? -54 : -22))
+            make.top.equalToSuperview().offset(AdaptIconSize(32))
         }
         
         remindView?.snp.makeConstraints({ (make) in

@@ -24,25 +24,24 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let titleWidth = self.exerciseModel.question?.word?.textWidth(font: titleLabel!.font, height: 28) ?? 0
+        titleLabel?.sizeToFit()
         titleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(24)
+            make.top.equalTo(AdaptIconSize(24))
             make.centerX.equalToSuperview()
-            make.width.equalTo(titleWidth)
-            make.height.equalTo(28)
+            make.size.equalTo(titleLabel?.size ?? CGSize.zero)
         })
         
         audioPlayerView?.snp.makeConstraints({ (make) in
             make.centerY.equalTo(titleLabel!)
-            make.left.equalTo(titleLabel!.snp.right).offset(3)
-            make.width.height.equalTo(AdaptFontSize(22))
+            make.left.equalTo(titleLabel!.snp.right).offset(AdaptIconSize(3))
+            make.width.height.equalTo(AdaptIconSize(22))
         })
         
         imageView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(titleLabel!.snp.bottom).offset(28)
+            make.top.equalTo(titleLabel!.snp.bottom).offset(AdaptIconSize(28))
             make.centerX.equalToSuperview()
-            make.width.equalTo(130)
-            make.height.equalTo(94)
+            make.width.equalTo(AdaptIconSize(130))
+            make.height.equalTo(AdaptIconSize(94))
         })
         
     }

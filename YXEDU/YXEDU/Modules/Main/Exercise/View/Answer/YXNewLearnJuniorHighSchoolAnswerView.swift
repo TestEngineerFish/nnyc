@@ -37,13 +37,13 @@ class YXNewLearnJuniorHighSchool: YXBaseAnswerView {
         self.addSubview(unknownButton)
         masteredButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(27))
-            make.top.equalToSuperview().offset(AdaptSize(11))
+            make.top.equalToSuperview().offset(AdaptIconSize(11))
             make.width.equalTo(AdaptSize(154))
             make.height.equalTo(defaultH)
         }
         unknownButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-27))
-            make.top.equalToSuperview().offset(AdaptSize(11))
+            make.top.equalToSuperview().offset(AdaptIconSize(11))
             make.width.equalTo(AdaptSize(154))
             make.height.equalTo(AdaptSize(defaultH))
         }
