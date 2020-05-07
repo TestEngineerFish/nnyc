@@ -10,8 +10,8 @@ import UIKit
 
 class YXListenFillAnswerView: YXBaseAnswerView {
         
-    var textField = YXCharacterTextField()
-    var lineView = YXListenFillAnswerLineView()
+    var textField       = YXCharacterTextField()
+    var lineView        = YXListenFillAnswerLineView()
     var audioPlayerView = YXAudioPlayerView()
     
     private var audioBackgroundView: UIView = UIView()
@@ -34,18 +34,18 @@ class YXListenFillAnswerView: YXBaseAnswerView {
     
     override func bindProperty() {
         
-        self.audioBackgroundView.backgroundColor = UIColor.orange3
+        self.audioBackgroundView.backgroundColor     = UIColor.orange3
         self.audioBackgroundView.layer.masksToBounds = true
-        self.audioBackgroundView.layer.cornerRadius = AdaptSize(26)
-        self.audioBackgroundView.layer.borderWidth = 3
-        self.audioBackgroundView.layer.borderColor = UIColor.orange2.cgColor
+        self.audioBackgroundView.layer.cornerRadius  = AdaptIconSize(26)
+        self.audioBackgroundView.layer.borderWidth   = AdaptIconSize(3)
+        self.audioBackgroundView.layer.borderColor   = UIColor.orange2.cgColor
         
 //        textField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
-        textField.textColor = UIColor.clear
-        textField.autocorrectionType = .no
+        textField.textColor              = UIColor.clear
+        textField.autocorrectionType     = .no
         textField.autocapitalizationType = .none
-        textField.keyboardType = .asciiCapable
-        textField.tintColor = UIColor.clear
+        textField.keyboardType           = .asciiCapable
+        textField.tintColor              = UIColor.clear
         textField.addTarget(self, action: #selector(textChanged), for: .editingChanged)
         textField.becomeFirstResponder()
         
@@ -63,19 +63,19 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         audioBackgroundView.snp.makeConstraints({ (make) in
             make.top.equalTo(AS(35))
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(AS(52))
+            make.width.height.equalTo(AdaptIconSize(52))
         })
 
         audioPlayerView.snp.makeConstraints({ (make) in
             make.center.equalTo(audioBackgroundView)
-            make.width.height.equalTo(AdaptSize(37))
+            make.width.height.equalTo(AdaptIconSize(37))
         })
         
         textField.snp.makeConstraints { (make) in
             make.width.equalTo(lineView.viewWidth)
-            make.height.equalTo(AdaptSize(43))
+            make.height.equalTo(AdaptIconSize(43))
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(AS(-39))
+            make.bottom.equalTo(AdaptIconSize(-39))
         }
 
         lineView.snp.makeConstraints { (make) in
@@ -192,14 +192,14 @@ class YXListenFillAnswerLineView: YXView {
             let letter = String(v)
             if YXListenFillAnswerHelp.isLetter(text: letter) {
                 let letterLabel = createLetterLabel()
-                letterLabel.frame = CGRect(x: lineX, y: 0, width: lineWidth, height: AS(42))
+                letterLabel.frame = CGRect(x: lineX, y: 0, width: lineWidth, height: AdaptIconSize(42))
                 self.addSubview(letterLabel)
                 letterLabels.append(letterLabel)
                 
                 lastView = letterLabel
             } else {
                 let symbolLabel = createSymbolLabel(text: letter)
-                symbolLabel.frame = CGRect(x: lineX, y: 0, width: sysbolWidth, height: AS(42))
+                symbolLabel.frame = CGRect(x: lineX, y: 0, width: sysbolWidth, height: AdaptIconSize(42))
                 self.addSubview(symbolLabel)
                 symbolLabels.append(symbolLabel)
                 
