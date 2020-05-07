@@ -9,7 +9,8 @@
 import UIKit
 
 public enum YXWordListRequest: YYBaseRequest {
-    case wordList(type: Int, page: Int)
+    case wordList(type: Int)
+    case collectionWordList(type: Int, page: Int)
     case wrongWordList
     case collectWord(wordId: Int, isComplexWord: Int)
     case cancleCollectWord(wordIds: String)
@@ -20,7 +21,7 @@ public enum YXWordListRequest: YYBaseRequest {
 extension YXWordListRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .wordList, .wrongWordList, .didCollectWord:
+        case .wordList, .collectionWordList, .wrongWordList, .didCollectWord:
             return .get
             
         case .collectWord, .cancleCollectWord, .deleteWrongWord:
@@ -35,6 +36,9 @@ extension YXWordListRequest {
         case .wordList:
             return YXAPI.WordList.wordList
             
+        case .collectionWordList:
+            return YXAPI.WordList.collectionWordList
+
         case .wrongWordList:
             return YXAPI.WordList.wrongWordList
             
@@ -56,7 +60,10 @@ extension YXWordListRequest {
 extension YXWordListRequest {
     var parameters: [String : Any?]? {
         switch self {
-        case .wordList(let type, let page):
+        case .wordList(let type):
+            return ["type": type]
+            
+        case .collectionWordList(let type, let page):
             return ["type": type, "page": page]
             
         case .collectWord(let wordId, let isComplexWord):

@@ -95,6 +95,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 topView.isHidden       = true
                 shouldShowBottomView   = false
                 showEmptyView          = true
+                
             } else {
                 topViewHeight.constant = 44
                 topView.isHidden       = false
@@ -214,21 +215,43 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 return -1
             }
         }()
+        
         // 错词本不在此请求
         if requestType < 0 { return }
-        if page <= 1 {
-            self.words.removeAll()
-        }
-        let request = YXWordListRequest.wordList(type: requestType, page: page)
-        YYNetworkService.default.request(YYStructResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let model = response.data else { return }
-            self.currentPage         = model.page
-            self.haveMore            = model.haveMore
-            self.words              += model.wordModelList
-            self.wordCountLabel.text = "\(model.total)"
-            self.tableView.reloadData()
-        }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+        
+        if requestType == 0 {
+            if page <= 1 {
+                self.words.removeAll()
+            }
+            
+            let request = YXWordListRequest.collectionWordList(type: requestType, page: page)
+            YYNetworkService.default.request(YYStructResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self, let model = response.data else { return }
+                self.currentPage         = model.page
+                self.haveMore            = model.haveMore
+                self.words              += model.wordModelList
+                self.wordCountLabel.text = "\(model.total)"
+                self.tableView.reloadData()
+                
+            }) { (error) in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
+            
+        } else {
+            let request = YXWordListRequest.wrongWordList
+            YYNetworkService.default.request(YYStructDataArrayResponse<YXWordListModel>.self, request: request, success: { (response) in
+                guard let wordLists = response.dataArray else { return }
+                
+                var wordSectionData: [[String: [YXWordModel]]] = []
+                wordLists.forEach { wordList in
+                    wordSectionData.append(["\(wordList.unitName ?? "")": wordList.wordModelList])
+                }
+                 
+                self.wrongWordSectionData = wordSectionData
+                
+            }) { error in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
         }
     }
 

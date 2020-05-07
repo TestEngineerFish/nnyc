@@ -13,6 +13,7 @@ struct YXWordListModel: Mappable {
     var page: Int = 0
     var haveMore: Bool = false
     var total: Int = 0
+    var unitName: String?
     var wordModelList: [YXWordModel] = []
 
     init?(map: Map) {}
@@ -21,6 +22,7 @@ struct YXWordListModel: Mappable {
         self.page          <- map["page"]
         self.haveMore      <- map["has_more"]
         self.total         <- map["total"]
+        self.unitName <- map["unit_name"]
         self.wordModelList <- map["list"]
     }
 }
