@@ -9,8 +9,8 @@
 import UIKit
 
 struct YXConnectionLettersConfig {
-    var itemSize   = CGSize(width: AdaptIconSize(48), height: AdaptIconSize(48))
-    var itemMargin = AdaptIconSize(8)
+    var itemSize   = CGSize(width: AdaptSize(isPad() ? 90 : 48), height: AdaptSize(isPad() ? 90 : 48))
+    var itemMargin = AdaptSize(isPad() ? 15 : 8)
     var itemFont = UIFont.pfSCRegularFont(withSize: AdaptFontSize(20))
     var backgroundNormalImage: UIImage?   = nil
     var backgroundSelectedImage: UIImage? = nil
@@ -102,7 +102,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     }
     
     private func createUI() {
-        allButtonArray = []
+        allButtonArray   = []
         selectedBtnArray = []
         var maxX = CGFloat.zero
         var maxY = CGFloat.zero

@@ -182,9 +182,10 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         bgImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        titleLabel.sizeToFit()
         titleLabel.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(50))
+            make.height.equalTo(titleLabel.height)
             make.bottom.equalToSuperview().offset(AdaptSize(-63)-kSafeBottomMargin)
         }
         tipsImageView.snp.makeConstraints { (make) in

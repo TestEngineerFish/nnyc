@@ -46,10 +46,9 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
 
         let answerViewTop    = AdaptIconSize(35)
         let answerViewBottom = AdaptIconSize(50)
-        let itemInterval     = AdaptIconSize(8)
-        let itemSize         = AdaptIconSize(48)
-        let answerViewW = CGFloat(question.column) * (itemInterval + itemSize) - itemInterval
-        let answerViewH = CGFloat(question.row) * (itemInterval + itemSize) - itemInterval
+        let answerViewConfit = YXConnectionLettersConfig()
+        let answerViewW = CGFloat(question.column) * (answerViewConfit.itemMargin + answerViewConfit.itemSize.width) - answerViewConfit.itemMargin
+        let answerViewH = CGFloat(question.row) * (answerViewConfit.itemMargin + answerViewConfit.itemSize.height) - answerViewConfit.itemMargin
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(questionView!.snp.bottom).offset(answerViewTop)
