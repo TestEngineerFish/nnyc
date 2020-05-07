@@ -238,7 +238,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
             
         } else {
-            let request = YXWordListRequest.wrongWordList
+            let request = YXWordListRequest.wordList(type: requestType - 1)
             YYNetworkService.default.request(YYStructDataArrayResponse<YXWordListModel>.self, request: request, success: { (response) in
                 guard let wordLists = response.dataArray else { return }
                 
@@ -258,15 +258,16 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - table view
     func numberOfSections(in tableView: UITableView) -> Int {
-        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, self.type == .wrongWords {
+        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0 {
             return wrongWordSectionCount
+            
         } else {
             return 1
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, self.type == .wrongWords else { return nil }
+        guard let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0 else { return nil }
         let wrongWordSection = wrongWordSectionData?[section]
         let title = wrongWordSection?.keys.first
         
@@ -303,7 +304,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, self.type == .wrongWords {
+        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0 {
             return 30
 
         } else {
@@ -316,7 +317,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, let wordsCount = wrongWordSectionData?[section].values.first?.count, self.type == .wrongWords {
+        if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, let wordsCount = wrongWordSectionData?[section].values.first?.count {
             
             if wrongWordSectionData?[section].keys.first?.contains("熟识的单词") ?? false {
                 if isExpandWrongWords {
@@ -342,11 +343,12 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         if indexPath.row >= (self.words.count - 1) && self.haveMore {
             self.requestWordsList(page: self.currentPage + 1)
         }
-        if ((wrongWordSectionData?.count ?? 0) > 0 && self.type == .wrongWords) || words.count > 0 {
+        
+        if (wrongWordSectionData?.count ?? 0) > 0 || words.count > 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as! YXWordListCell
             var word: YXWordModel!
 
-            if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, self.type == .wrongWords {
+            if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0 {
                 if var wrongWords = wrongWordSectionData?[indexPath.section].values.first, wrongWords.count > 0 {
                     word = wrongWords[indexPath.row]
                     
@@ -370,6 +372,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
             cell.setData(word)
             return cell
+            
         } else {
             let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as! YXWordListEmptyCell
             return emptyCell
@@ -377,7 +380,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if ((wrongWordSectionData?.count ?? 0) > 0 && self.type == .wrongWords) || words.count > 0 {
+        if (wrongWordSectionData?.count ?? 0) > 0 || words.count > 0 {
             return 44
 
         } else {
