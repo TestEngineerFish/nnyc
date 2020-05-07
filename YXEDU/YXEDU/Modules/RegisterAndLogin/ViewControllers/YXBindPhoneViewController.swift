@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GrowingCoreKit
+import GrowingAutoTrackKit
 
 class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
 
@@ -59,6 +61,7 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
             YXConfigure.shared().saveCurrentToken()
 
             YXUserModel.default.didLogin = true
+            Growing.setUserId(YXUserModel.default.uuid ?? "")
             YXUserModel.default.login()
         }
     }

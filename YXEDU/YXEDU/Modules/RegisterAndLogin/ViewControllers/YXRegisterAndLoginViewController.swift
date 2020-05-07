@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GrowingCoreKit
+import GrowingAutoTrackKit
 
 public let heightOfStateBar = UIApplication.shared.statusBarFrame.height
 public let heightOfNavigationBar = heightOfStateBar + 44
@@ -342,7 +344,11 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
 
             } else {
                 YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/mobile/\(resultOfLogin.data?["token"] ?? "")", parameters: [:]) { (response, isSuccess) in
-                    guard isSuccess, let response = response else { return }
+                    guard isSuccess, let response = response else {
+                        CLShanYanSDKManager.finishAuthControllerCompletion(nil)
+                        return
+                    }
+
                     let phoneNumber = response.responseObject as! [String]
 
                     YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/login/\(phoneNumber[0])", parameters: [:]) { (response, isSuccess) in
@@ -360,6 +366,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
 
                             YXConfigure.shared().saveCurrentToken()
                             YXUserModel.default.didLogin = true
+                            Growing.setUserId(YXUserModel.default.uuid ?? "")
                             YXUserModel.default.login()
 
                         } else if let error = response?.error {
