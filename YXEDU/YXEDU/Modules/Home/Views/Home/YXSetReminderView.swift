@@ -79,7 +79,11 @@ class YXSetReminderView: YXTopWindowView {
     @objc
     class func didSetReminder(didOpen: Int, time: NSNumber = 0) {
         let jsonString = "{\"is_open\":\(didOpen),\"time\":\(time.doubleValue)}"
-        let request = YXHomeRequest.setReminder(dataString: "{\"learn_remind\": \(jsonString)}")
+        self.requestReportNotification(dataString: "{\"learn_remind\": \(jsonString)}")
+    }
+
+    class func requestReportNotification(dataString: String) {
+        let request = YXHomeRequest.setReminder(dataString: dataString)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { response in
 
         }) { error in

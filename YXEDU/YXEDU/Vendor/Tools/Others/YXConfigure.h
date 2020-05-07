@@ -18,8 +18,6 @@
 @property (nonatomic, assign) BOOL isShowKeyboard;
 // 是否开启新学跳过
 @property (nonatomic, assign) BOOL isSkipNewLearn;
-// 上报GIO是否为跳过组
-@property (nonatomic, assign) BOOL isUploadGIO;
 
 - (void)loginOut;
 

@@ -45,6 +45,10 @@ class YXUserModel: NSObject {
         if let reviewNameType = YYCache.object(forKey: "YXReviewNameType") as? Int {
             self.reviewNameType = YXUserInfomationModel.ReviewNameType(rawValue: reviewNameType) ?? .reviewPlan
         }
+
+        if let grade = YYCache.object(forKey: "kCurrentGrade") as? Int {
+            self.currentGrade = grade
+        }
     }
     
     var didLogin = false {
@@ -98,6 +102,12 @@ class YXUserModel: NSObject {
     var reviewNameType: YXUserInfomationModel.ReviewNameType = .reviewPlan {
         didSet {
             YYCache.set(reviewNameType.rawValue, forKey: "YXReviewNameType")
+        }
+    }
+
+    var currentGrade: Int? {
+        didSet {
+            YYCache.set(currentGrade, forKey: "kCurrentGrade")
         }
     }
     

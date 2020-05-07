@@ -37,12 +37,16 @@ extension AppDelegate {
             }
         }
     }
-    
     /// 处理推送
     /// - Parameter userInfo: 数据
     func processNotification(userInfo: [AnyHashable: Any]?) {        
         if UIApplication.shared.applicationState == .active {
             return
+        }
+        // 上报后台
+        if let pushId = userInfo?["push_id"] as? String {
+            let dict = ["push_notify": ["action":2, "push_id":pushId]]
+            YXSetReminderView.requestReportNotification(dataString: dict.toJson())
         }
         YXRedDotManager.share.updateFeedbackReplyBadge()
         if let action = userInfo?["open_scheme"] as? String {
