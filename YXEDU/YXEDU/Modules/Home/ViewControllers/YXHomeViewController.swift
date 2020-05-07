@@ -268,7 +268,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         let isFirstShowHome = YYCache.object(forKey: YXLocalKey.firstShowHome) as? Bool ?? true
         if isFirstShowHome {
-            squirrelAnimationView = AnimationView(name: "homeFirst")
+            if isPad() {
+                squirrelAnimationView = AnimationView(name: "homeFirstiPad")
+
+            } else {
+                squirrelAnimationView = AnimationView(name: "homeFirst")
+            }
+            
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
                 let animation = CAKeyframeAnimation(keyPath: "transform.scale")
                 animation.values         = [1.0, 0.8, 1.0, 0.8, 1.0]
@@ -278,7 +284,12 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self?.startStudyView.layer.add(animation, forKey: nil)
             }
         } else {
-            squirrelAnimationView = AnimationView(name: "homeNormal")
+            if isPad() {
+                squirrelAnimationView = AnimationView(name: "homeNormaliPad")
+
+            } else {
+                squirrelAnimationView = AnimationView(name: "homeNormal")
+            }
         }
         YYCache.set(false, forKey: YXLocalKey.firstShowHome)
         self.homeEntryView.insertSubview(squirrelAnimationView!, at: 1)
