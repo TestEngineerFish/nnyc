@@ -97,14 +97,21 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     /// 在前台时收到通知
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        if let pushId = userInfo["push_id"] as? String {
+            let dict = ["push_notify": ["action":1, "push_id":pushId]]
+            YXSetReminderView.requestReportNotification(dataString: dict.toJson())
+        }
+        
         completionHandler(.badge)
     }
 
-    /// 在后台收到通知
+    /// 点击通知
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        completionHandler()
         processNotification(userInfo: userInfo)
+        completionHandler()
     }
 }
 

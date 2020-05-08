@@ -256,8 +256,10 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             wordListType = .notLearned
         case 2:
             wordListType = .collected
+            wordListViews[indexPath.row]?.requestWordsList(page: 1)
         case 3:
             wordListType = .wrongWords
+            requestWrongWordsList()
         default:
             return
         }
