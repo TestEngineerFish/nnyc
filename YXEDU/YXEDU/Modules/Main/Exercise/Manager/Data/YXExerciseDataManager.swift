@@ -192,6 +192,7 @@ class YXExerciseDataManager: NSObject {
         
         // 更新积分
         updateNewWordReadScore(exerciseModel: exerciseModel)
+        updateQuestionTypeScore(exerciseModel: exerciseModel)
         updateWordScore(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, type: exerciseModel.type)
         
         // 更新对错

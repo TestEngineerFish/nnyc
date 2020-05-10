@@ -40,6 +40,7 @@ class YXExcerciseProgressManager: NSObject {
         case score = "Exercise_Score"
         case errorCount = "Error_Count"
         case newWordReadScore = "New_Word_Read_Score"   // 新学跟读得分
+        case questionTypeScore = "Question_Type_Score"       // 题型分数 新学的已掌握7，不认识0
         
         case startStudyTime = "Start_Study_Time"    // 开始时间
         case studyDuration = "Study_Duration"
@@ -129,6 +130,13 @@ class YXExcerciseProgressManager: NSObject {
             return 10
         }
         return map[wordId] ?? 10
+    }
+    
+    func fetchQuestionTypeScore(wordId: Int) -> Int {
+        guard let map = YYCache.object(forKey: key(.questionTypeScore)) as? [Int : Int]  else {
+            return 0
+        }
+        return map[wordId] ?? 0
     }
     
     func fetchNewWordReadScore(wordId: Int) -> Int {
@@ -232,6 +240,15 @@ class YXExcerciseProgressManager: NSObject {
         }
     }
     
+    func updateQuestionTypeScore(wordId: Int, score: Int) {
+        if var map = YYCache.object(forKey: key(.questionTypeScore)) as? [Int : Int] {
+            map[wordId] = score
+            YYCache.set(map, forKey: key(.questionTypeScore))
+        } else {
+            YYCache.set([wordId : score], forKey: key(.questionTypeScore))
+        }
+    }
+    
     
     func updateErrorCount(wordId: Int) {
         if var map = YYCache.object(forKey: key(.errorCount)) as? [Int : Int] {
@@ -294,8 +311,12 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.remove(forKey: key(.bookId))
         YYCache.remove(forKey: key(.unitId))
         YYCache.remove(forKey: key(.report))
+        
         YYCache.remove(forKey: key(.score))
+        YYCache.remove(forKey: key(.newWordReadScore))
         YYCache.remove(forKey: key(.errorCount))
+        YYCache.remove(forKey: key(.questionTypeScore))
+        
         YYCache.remove(forKey: key(.currentTurnIndex))
         YYCache.remove(forKey: key(.newWordIds))
         YYCache.remove(forKey: key(.reviewWordIds))
@@ -369,7 +390,7 @@ class YXExcerciseProgressManager: NSObject {
         let allKeyArray: [String] = Array(UserDefaults.standard.dictionaryRepresentation().keys)
         let localKeyArray: [LocalKey] = [
             .bookId, .unitId, .currentTurnIndex, .report, .completion, .newWordIds, .newWordExerciseIds, .reviewWordIds,
-            .score, .errorCount, .newWordReadScore, .startStudyTime, .studyDuration, .studyCount, .skipNewWord]
+            .score, .errorCount, .newWordReadScore, .questionTypeScore, .startStudyTime, .studyDuration, .studyCount, .skipNewWord]
         
         let uuid = YXUserModel.default.uuid ?? ""
         for key in allKeyArray {

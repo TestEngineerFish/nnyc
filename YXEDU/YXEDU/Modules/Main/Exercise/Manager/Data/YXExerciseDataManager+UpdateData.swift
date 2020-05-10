@@ -56,11 +56,8 @@ extension YXExerciseDataManager {
     public func updateWordScore(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
         
         var score = 10
-        
-        if type == .newLearnPrimarySchool || type == .newLearnPrimarySchool_Group {// 小学新学
+        if type == .newLearnPrimarySchool || type == .newLearnPrimarySchool_Group || type == .newLearnJuniorHighSchool {// 小学新学 和 初中新学 不计算分数
             return
-        } else if type == .newLearnJuniorHighSchool {// 初中新学
-            score = (right ? 7 : 0)
         } else {
             score = self.progressManager.fetchScore(wordId: wordId)
                                                             
@@ -88,8 +85,6 @@ extension YXExerciseDataManager {
     
     /// 更新新学单词跟读得分
     /// - Parameters:
-    ///   - wordId:
-    ///   - score:
     public func updateNewWordReadScore(exerciseModel: YXWordExerciseModel) {
         // 只有新学题型才算听力分，否则其他题型的分数把听力发给覆盖了
         if exerciseModel.type == .newLearnPrimarySchool || exerciseModel.type == .newLearnPrimarySchool_Group {
@@ -100,6 +95,21 @@ extension YXExerciseDataManager {
         }
 
     }
+    
+    
+    /// 更新题型得分
+    /// - Parameter exerciseModel: <#exerciseModel description#>
+    public func updateQuestionTypeScore(exerciseModel: YXWordExerciseModel) {
+        // 只有初中新学，才更新题型分
+        if exerciseModel.type == .newLearnJuniorHighSchool {
+            if let wordId = exerciseModel.word?.wordId {
+                let score = exerciseModel.questionTypeScore
+                self.progressManager.updateQuestionTypeScore(wordId: wordId, score: score)
+            }
+        }
+
+    }
+    
     
     /// 更新每个Step的 对错
     /// - Parameters:
