@@ -398,7 +398,7 @@ extension YXExerciseDataManager {
         var model: YXWordExerciseModel?
         if exerciseArray.count > 1 { // 根据得分取
             for exercise in exerciseArray {
-                if exercise.isCareScore && exercise.score == fetchWordScore(wordId: exercise.word?.wordId ?? 0) {
+                if exercise.isCareScore && exercise.score == fetchQuestionTypeScore(wordId: exercise.word?.wordId ?? 0) {
                     model = exercise
                 }
             }
@@ -410,10 +410,10 @@ extension YXExerciseDataManager {
 
     
 
-    /// 查询单词练习得分
+    /// 查询题型得分【已掌握7分，不认识0分，和做题分数无关】
     /// - Parameter wordId: id
-    func fetchWordScore(wordId: Int) -> Int {
-       return 7
+    func fetchQuestionTypeScore(wordId: Int) -> Int {
+        return self.progressManager.fetchQuestionTypeScore(wordId: wordId)
     }
     
     
