@@ -50,7 +50,7 @@ class YXNewLearnJuniorHighSchool: YXBaseAnswerView {
     }
 
     @objc private func clickMastered() {
-        self.exerciseModel.score = 10
+        self.exerciseModel.score = 7
         self.answerDelegate?.answerCompletion(self.exerciseModel, true)
     }
 

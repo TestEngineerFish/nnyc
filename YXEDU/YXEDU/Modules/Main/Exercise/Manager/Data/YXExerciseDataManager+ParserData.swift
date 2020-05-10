@@ -55,7 +55,7 @@ extension YXExerciseDataManager {
                 exercise.isNewWord = true
                 exercise.isListenAndRepeat = true
                 
-                if (word.gradeId ?? 0) <= 7 {// 小学
+                if (word.gradeId ?? 0) <= 6 {// 小学
                     exercise.type = .newLearnPrimarySchool
                     if word.partOfSpeechAndMeanings?.first?.isPhrase ?? false {
                         exercise.type = .newLearnPrimarySchool_Group
