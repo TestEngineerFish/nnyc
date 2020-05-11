@@ -29,6 +29,7 @@ class YXExerciseDataManager: NSObject {
     /// 哪本书，哪个单元
     public var bookId: Int?, unitId: Int?
     public var dataType: YXExerciseDataType = .base
+    public var ruleType: YXExerciseRuleType = .p
     
     /// 进度管理器
     public var progressManager: YXExcerciseProgressManager!
@@ -55,7 +56,7 @@ class YXExerciseDataManager: NSObject {
     
     /// 当前轮
     var currentTurnArray: [YXWordExerciseModel] = []
-    /// 上一轮
+    /// 上一轮 【目前好像没有使用这个字段】
     var previousTurnArray: [YXWordExerciseModel] = []
     
     /// 本地数据库访问
@@ -127,6 +128,8 @@ class YXExerciseDataManager: NSObject {
             dataStatus = .empty
         }
         
+        ruleType = progressManager.ruleType()
+        
         let turnData = progressManager.loadLocalTurnData()
         currentTurnArray = turnData.0
         previousTurnArray = turnData.1
@@ -150,7 +153,7 @@ class YXExerciseDataManager: NSObject {
         // 打印
 //        printReportResult()
         
-        if !progressManager.isSkipNewWord() {
+        if !self.isSkipNewWord() {
             for exercise in self.newWordArray {
                 if !exercise.isFinish {
                     var e = exercise                
@@ -266,6 +269,14 @@ class YXExerciseDataManager: NSObject {
         progressManager.setSkipNewWord()
     }
     
+    
+    func isSkipNewWord() -> Bool {
+        if (progressManager.isSkipNewWord() || ruleType == .p1 || ruleType == .p2) {
+            return true
+        }
+        return false // 默认不跳过新学
+        
+    }
 
 //    func fetchWord(bookId: Int, wordId: Int) -> YXWordModel? {
 //        return dao.selectWord(bookId: bookId, wordId: wordId)

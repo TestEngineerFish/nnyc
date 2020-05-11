@@ -343,6 +343,7 @@
 		EE1E4AA823694D8B007D248F /* YXFillWordGroupExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E4AA723694D8B007D248F /* YXFillWordGroupExerciseView.swift */; };
 		EE1E4AAA236AA455007D248F /* YXListenQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E4AA9236AA455007D248F /* YXListenQuestionView.swift */; };
 		EE1FDF0623C70EDB00B6C6DF /* YXCheckApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FDF0523C70EDB00B6C6DF /* YXCheckApp.swift */; };
+		EE268ED0246979B600E9509B /* YXExerciseDataManager+SkipNewWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE268ECF246979B600E9509B /* YXExerciseDataManager+SkipNewWord.swift */; };
 		EE3DAB9923750E1600B2FF40 /* YXAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3DAB9823750E1500B2FF40 /* YXAPI.swift */; };
 		EE3DAB9D2375122300B2FF40 /* YXWordBookDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3DAB9C2375122300B2FF40 /* YXWordBookDao.swift */; };
 		EE3DABA02375124B00B2FF40 /* YXWordBookDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3DAB9F2375124B00B2FF40 /* YXWordBookDaoImpl.swift */; };
@@ -921,6 +922,7 @@
 		EE1E4AA723694D8B007D248F /* YXFillWordGroupExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFillWordGroupExerciseView.swift; sourceTree = "<group>"; };
 		EE1E4AA9236AA455007D248F /* YXListenQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXListenQuestionView.swift; sourceTree = "<group>"; };
 		EE1FDF0523C70EDB00B6C6DF /* YXCheckApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXCheckApp.swift; sourceTree = "<group>"; };
+		EE268ECF246979B600E9509B /* YXExerciseDataManager+SkipNewWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YXExerciseDataManager+SkipNewWord.swift"; sourceTree = "<group>"; };
 		EE3DAB9823750E1500B2FF40 /* YXAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXAPI.swift; sourceTree = "<group>"; };
 		EE3DAB9C2375122300B2FF40 /* YXWordBookDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookDao.swift; sourceTree = "<group>"; };
 		EE3DAB9F2375124B00B2FF40 /* YXWordBookDaoImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookDaoImpl.swift; sourceTree = "<group>"; };
@@ -2492,6 +2494,7 @@
 				EE4E6B1B2398F049002B845A /* YXExerciseDataManager+BuildData.swift */,
 				EE4E6B182398F049002B845A /* YXExerciseDataManager+ParserData.swift */,
 				EE4E6B1D2398F049002B845A /* YXExerciseDataManager+UpdateData.swift */,
+				EE268ECF246979B600E9509B /* YXExerciseDataManager+SkipNewWord.swift */,
 				EE4E6B1A2398F049002B845A /* YXExerciseOptionManager.swift */,
 			);
 			path = Data;
@@ -4404,6 +4407,7 @@
 				771E886A2362ACFB000BFAAD /* YXBindPhoneViewController.swift in Sources */,
 				EE88DF4723ACC7C8004DFF10 /* YXListenFillQuestionView.swift in Sources */,
 				EE5EF20523273BAE00655654 /* YRHelper.m in Sources */,
+				EE268ED0246979B600E9509B /* YXExerciseDataManager+SkipNewWord.swift in Sources */,
 				22298BF8237D49B400F24786 /* YXNewLearnJuniorHighSchoolQuestionView.swift in Sources */,
 				EE6C7D2023B0DE23009DCC0C /* YXReviewPlanDetailBottomView.swift in Sources */,
 				7709752C23992B880071A779 /* YXWordDetailCommonPhrasesCell.swift in Sources */,

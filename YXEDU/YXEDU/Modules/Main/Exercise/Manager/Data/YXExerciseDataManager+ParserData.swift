@@ -28,6 +28,7 @@ extension YXExerciseDataManager {
             progressManager.unitId = self.unitId
         }
         
+        self.ruleType = result?.ruleType ?? .p
         self.processNewWord(result: result)
         self.processReviewWord(result: result)
         
@@ -38,6 +39,7 @@ extension YXExerciseDataManager {
         progressManager.initProgressStatus(newWordIds: result?.newWordIds, reviewWordIds: result?.reviewWordIds)
         
         // 保存数据
+        progressManager.setRuleType(type: self.ruleType)
         progressManager.updateProgress(newWordArray: newWordArray, reviewWordArray: reviewWordArray)
     }
     

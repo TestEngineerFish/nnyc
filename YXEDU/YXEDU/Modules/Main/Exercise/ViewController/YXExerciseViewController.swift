@@ -147,7 +147,7 @@
         }
         // 如果符合条件，则跳过新学
         if YXConfigure.shared().isSkipNewLearn {
-            dataManager.skipNewWord()
+//            dataManager.skipNewWord()
             YXLog("跳过新学流程")
             // 跳过上报新学到GIO
             YYCache.set(true, forKey: .newLearnReportGIO)
@@ -382,7 +382,13 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     
     /// 答对处理
     func answerRight() {
-        if self.exerciseViewArray.first?.isWrong ?? false {
+        let e = self.exerciseViewArray.first
+        
+        let isWrong = e?.isWrong ?? false
+        let wordId = e?.exerciseModel.word?.wordId ?? 0
+        let step = e?.exerciseModel.step ?? 0
+                
+        if isWrong || dataManager.isShowWordDetail(wordId: wordId, step: step) {
             self.showRemindDetail()
         } else {// 切题
             self.switchExerciseView()
@@ -458,16 +464,29 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
                                 
                 if finish {// 这一题全部连线完后要切题
                     dataManager.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
-                    self.exerciseViewArray[0].remindView?.remindDetail {
+                    self.exerciseViewArray[0].remindView?.remindDetail {// 显示完详情页，再切题
                         self.switchExerciseView()
                     }
-                } else {
+                } else { // 没连完，只显示详情页
                     self.exerciseViewArray[0].remindView?.remindDetail()
                 }
             } else { // 没有错时
                 if finish {// 全部连完，直接切题
                     dataManager.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
-                    self.switchExerciseView()
+                    
+                    if dataManager.isShowWordDetail(wordId: wordId, step: step) { // 判断是不是P2类型首次的学习
+                        self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
+                        self.exerciseViewArray[0].remindView?.remindDetail {
+                            self.switchExerciseView()
+                        }
+                    } else { // 不是P2类型，直接切题
+                        self.switchExerciseView()
+                    }
+                    
+                    
+                } else if dataManager.isShowWordDetail(wordId: wordId, step: step) {// 没有连完，判断是不是P2类型首次的学习
+                    self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
+                    self.exerciseViewArray[0].remindView?.remindDetail()
                 }
             }
         }
