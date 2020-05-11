@@ -12,6 +12,7 @@ import ObjectMapper
 /// 当天学习数据总j模型
 struct YXExerciseResultModel: Mappable {
     var type: YXExerciseDataType = .base
+    var ruleType: YXExerciseRuleType = .p
     var bookId: Int?
     var unitId: Int?
     var newWordIds: [Int]?
@@ -23,6 +24,7 @@ struct YXExerciseResultModel: Mappable {
     
     mutating func mapping(map: Map) {
         type          <- (map["review_type"], YXExerciseDataTypeTransform())
+        ruleType      <- (map["learn_rule"], EnumTransform<YXExerciseRuleType>())
         bookId        <- map["book_id"]
         unitId        <- map["unit_id"]
         newWordIds    <- map["new_word_list"]
