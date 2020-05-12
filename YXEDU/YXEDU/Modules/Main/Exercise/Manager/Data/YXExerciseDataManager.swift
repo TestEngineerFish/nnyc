@@ -40,8 +40,13 @@ class YXExerciseDataManager: NSObject {
     var currentBatchIndex = 0
     /// 当前第几轮, 从第一轮开始
     var currentTurnIndex = 0
-    /// 每批的新学和复习的大小限制
-    var batchSize = 5
+    
+    /// 每批新学的大小限制
+    var newWordBatchSize: Int { return newWordBatchSizeConfig() }
+    /// 每批复习的大小限制
+    var reviewWordBatchSize: Int { return reviewWordBatchSizeConfig() }
+    
+    
     var isChangeBatch = true
     /// 新学 和 复习的单词数量
     var needNewStudyCount = 0, needReviewCount = 0
@@ -153,18 +158,10 @@ class YXExerciseDataManager: NSObject {
         // 打印
 //        printReportResult()
         
-        if !self.isSkipNewWord() {
-            for exercise in self.newWordArray {
-                if !exercise.isFinish {
-                    var e = exercise                
-                    let wid = e.word?.wordId ?? 0
-                    let bid = e.word?.bookId ?? 0
-                    e.word = dao.selectWord(bookId: bid, wordId: wid)
-                    return (needNewStudyCount, needReviewCount, e)
-                }
-            }
+        // 新学出题
+        if let e = buildNewExercise() {
+            return (needNewStudyCount, needReviewCount, e)
         }
-        
         
         // 生成题型
         var e = buildExercise()
@@ -265,18 +262,6 @@ class YXExerciseDataManager: NSObject {
         return false
     }
     
-    func skipNewWord() {
-        progressManager.setSkipNewWord()
-    }
-    
-    
-    func isSkipNewWord() -> Bool {
-        if (progressManager.isSkipNewWord() || ruleType == .p1 || ruleType == .p2) {
-            return true
-        }
-        return false // 默认不跳过新学
-        
-    }
 
 //    func fetchWord(bookId: Int, wordId: Int) -> YXWordModel? {
 //        return dao.selectWord(bookId: bookId, wordId: wordId)

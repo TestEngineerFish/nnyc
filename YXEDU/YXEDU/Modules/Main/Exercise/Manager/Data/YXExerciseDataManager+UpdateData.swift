@@ -289,11 +289,11 @@ extension YXExerciseDataManager {
         }
         
         if reviewIndex > -1 {
-            if (reviewIndex + 1) % batchSize == 0 {
-                currentBatchIndex = lround(Double(reviewIndex + 1) / Double(batchSize))
+            if (reviewIndex + 1) % reviewWordBatchSize == 0 {
+                currentBatchIndex = lround(Double(reviewIndex + 1) / Double(reviewWordBatchSize))
                 currentBatchIndex += 1
             } else {
-                currentBatchIndex = lround(Double(reviewIndex + 1) / Double(batchSize) + 0.5)
+                currentBatchIndex = lround(Double(reviewIndex + 1) / Double(reviewWordBatchSize) + 0.5)
             }
             YXLog("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
         }
@@ -307,34 +307,51 @@ extension YXExerciseDataManager {
             return
         }
         YXLog("bb+++++++++++++当前 currentPatchIndex = ", currentBatchIndex)
-        var batch1 = 0
+        
+        // 新学分批下标
+//        var newWordBatch = 0
+//        if isNewWordInBatch() {
+//            for (index, exercise) in self.newWordArray.enumerated() {
+//                if exercise.isFinish == false {
+//                    newWordBatch = lround(Double(index + 1) / Double(newWordBatchSize) + 0.4)
+//                }
+//            }
+//        }
+//        YXLog("bb+++++++++++++新学 currentPatchIndex = ", newWordBatch)
+        
+        
+        // 训练批次下标
+        var exerciseBatch = 0
         for (index, wordId) in exerciseWordIdArray.enumerated() {
             if isFinishWord(wordId: wordId) == false {
-                batch1 = lround(Double(index + 1) / Double(batchSize) + 0.4)
+                exerciseBatch = lround(Double(index + 1) / Double(newWordBatchSize) + 0.4)
                 break
             }
         }
-        YXLog("bb+++++++++++++训练 currentPatchIndex = ", batch1)
+        YXLog("bb+++++++++++++训练 currentPatchIndex = ", exerciseBatch)
 
         
-        var batch2 = 0
+        var reviewBatch = 0
         for (index, wordId) in reviewWordIdArray.enumerated() {
             if isFinishWord(wordId: wordId) == false {
-                batch2 = lround(Double(index + 1) / Double(batchSize) + 0.4)
+                reviewBatch = lround(Double(index + 1) / Double(reviewWordBatchSize) + 0.4)
                 break
             }
         }
-        YXLog("bb+++++++++++++复习 currentPatchIndex = ", batch2)
+        YXLog("bb+++++++++++++复习 currentPatchIndex = ", reviewBatch)
         
-        var minBatch = 1  
-        if batch1 == 0 {
-            minBatch = batch2
+        var minBatch = 1
+//        if newWordBatch == 0 {
+//            minBatch = exerciseBatch
+//        }
+        if exerciseBatch == 0 {
+            minBatch = reviewBatch
         }
-        if batch2 == 0 {
-            minBatch = batch1
+        if reviewBatch == 0 {
+            minBatch = exerciseBatch
         }
-        if batch1 != 0 && batch2 != 0 {
-            minBatch = min(batch1, batch2)
+        if exerciseBatch != 0 && reviewBatch != 0 {
+            minBatch = min(exerciseBatch, reviewBatch)
         }
                 
         if minBatch > currentBatchIndex {

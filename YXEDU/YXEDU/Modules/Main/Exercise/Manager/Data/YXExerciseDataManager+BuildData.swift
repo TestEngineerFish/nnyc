@@ -10,6 +10,33 @@ import UIKit
 
 extension YXExerciseDataManager {
     
+    // 新学出题
+    func buildNewExercise() ->YXWordExerciseModel? {
+        
+        if self.isSkipNewWord() {
+            return nil
+        }
+        
+        // 不跳过，才从新学取
+        for (index, exercise) in self.newWordArray.enumerated() {
+            
+            if isNewWordInBatch() && index >= currentBatchIndex * newWordBatchSize {
+                continue
+            }
+            
+            if !exercise.isFinish {
+                var e = exercise
+                let wid = e.word?.wordId ?? 0
+                let bid = e.word?.bookId ?? 0
+                e.word = dao.selectWord(bookId: bid, wordId: wid)
+                return e
+            }
+        }
+        return nil
+    }
+    
+    
+    
     /// 出题逻辑（根据step，上轮对错）
     func buildExercise() -> YXWordExerciseModel? {
         // 筛选数据
@@ -59,6 +86,7 @@ extension YXExerciseDataManager {
             
             // 只有基础学习时才分多批
             let newIndex = transformIndex(stepModel: word)
+            let batchSize = transformSize(stepModel: word)
             if dataType == .base && newIndex >= currentBatchIndex * batchSize {
                 continue
             }
@@ -109,6 +137,7 @@ extension YXExerciseDataManager {
             
             // 只有基础学习时才分多批
             let newIndex = transformIndex(stepModel: word)
+            let batchSize = transformSize(stepModel: word)
             if dataType == .base && newIndex >= currentBatchIndex * batchSize {
                 continue
             }
@@ -149,6 +178,7 @@ extension YXExerciseDataManager {
         }
     }
     
+    // 转换下标
     func transformIndex(stepModel: YXWordStepsModel) -> Int {
         var exercise: YXWordExerciseModel? = nil
         for step in stepModel.exerciseSteps {
@@ -163,6 +193,27 @@ extension YXExerciseDataManager {
                 return exerciseWordIdArray.index(of: stepModel.wordId) ?? -1
             } else {
                 return reviewWordIdArray.index(of: stepModel.wordId) ?? -1
+            }
+        }
+
+        return -1
+    }
+    
+    /// 转换大小
+    func transformSize(stepModel: YXWordStepsModel) -> Int {
+        var exercise: YXWordExerciseModel? = nil
+        for step in stepModel.exerciseSteps {
+            if step.count > 0 {
+                exercise = step.first
+                break
+            }
+        }
+        
+        if let e = exercise {
+            if e.isNewWord {
+                return newWordBatchSize
+            } else {
+                return reviewWordBatchSize
             }
         }
 
