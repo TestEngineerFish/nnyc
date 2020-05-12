@@ -33,6 +33,7 @@ class YXExcerciseProgressManager: NSObject {
         case report = "Exercise_Report_Status"
         case completion = "Exercise_Completion_Status"
         
+        case ruleType = "Exercise_Rule_Type"
         case newWordIds = "New_Word_Id_List" // 新学跟读流程的
         case newWordExerciseIds = "New_Word_Exercise_Id_List" // 新学训练流程的
         case reviewWordIds = "Review_Word_Id_List"
@@ -94,6 +95,15 @@ class YXExcerciseProgressManager: NSObject {
         }
         return 0
     }
+    
+    
+    func ruleType() -> YXExerciseRuleType {
+        if let rule = YYCache.object(forKey: key(.ruleType)) as? String {
+            return YXExerciseRuleType(rawValue: rule) ?? .p
+        }
+        return .p
+    }
+    
     
     
     class func isReport(bookId: Int, unitId: Int) -> Bool {
@@ -214,6 +224,9 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.set(index, forKey: key(.currentTurnIndex))
     }
     
+    func setRuleType(type: YXExerciseRuleType) {
+        YYCache.set(type.rawValue, forKey: key(.ruleType))
+    }
     
     /// 跟新练习进度
     /// - Parameters:
@@ -318,6 +331,7 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.remove(forKey: key(.questionTypeScore))
         
         YYCache.remove(forKey: key(.currentTurnIndex))
+        YYCache.remove(forKey: key(.ruleType))
         YYCache.remove(forKey: key(.newWordIds))
         YYCache.remove(forKey: key(.reviewWordIds))
         
@@ -389,7 +403,7 @@ class YXExcerciseProgressManager: NSObject {
     class func clearAllKeyCache() {
         let allKeyArray: [String] = Array(UserDefaults.standard.dictionaryRepresentation().keys)
         let localKeyArray: [LocalKey] = [
-            .bookId, .unitId, .currentTurnIndex, .report, .completion, .newWordIds, .newWordExerciseIds, .reviewWordIds,
+            .bookId, .unitId, .currentTurnIndex, .report, .completion, .newWordIds, .newWordExerciseIds, .reviewWordIds, .ruleType,
             .score, .errorCount, .newWordReadScore, .questionTypeScore, .startStudyTime, .studyDuration, .studyCount, .skipNewWord]
         
         let uuid = YXUserModel.default.uuid ?? ""

@@ -34,7 +34,7 @@ extension YXExerciseDataManager {
         if finishCount == currentTurnArray.count {
             currentTurnIndex += 1
             
-            self.previousTurnArray = self.currentTurnArray
+//            self.previousTurnArray = self.currentTurnArray
             self.currentTurnArray.removeAll()
             
             if dataType == .base {

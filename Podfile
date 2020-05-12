@@ -30,7 +30,6 @@ target 'YXEDU' do
      pod 'MagicalRecord'
      pod 'MJExtension'
      pod 'SGQRCode'
-     pod 'JPush'
      pod 'Masonry'
      pod 'SDWebImage', '~> 4.4.2'
      pod 'LEEAlert', '~> 1.2.8'

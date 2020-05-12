@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         
-        setRemoteNotification(application, launchOptions)
         initThirdPartyServices()
+        setRemoteNotification(application, launchOptions)
         initViewAndData()
         
         initConfig()
@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initThirdPartyServices() {
+        UMConfigure.initWithAppkey(kUmengAppKey, channel: kUmengChannel)
         QQApiManager.shared().registerQQ("101475072")
         WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
         Bugly.start(withAppId: kBuglyAppId)
