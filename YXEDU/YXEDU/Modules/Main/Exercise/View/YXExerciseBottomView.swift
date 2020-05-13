@@ -10,7 +10,7 @@ import UIKit
 
 protocol YXExerciseBottomViewProtocol: NSObjectProtocol {
     /// 点击提示一下按钮事件
-    func clickTipsBtnEvent()
+    func clickTipsBtnEventWithBottom()
     /// 点击下一步视图事件
     func clickNextViewEvent()
     /// 点击下一步按钮事件
@@ -129,7 +129,7 @@ class YXExerciseBottomView: UIView {
     }
 
     @objc func clickTipsButton() {
-        self.delegate?.clickTipsBtnEvent()
+        self.delegate?.clickTipsBtnEventWithBottom()
     }
 
     @objc func clickNextView() {
