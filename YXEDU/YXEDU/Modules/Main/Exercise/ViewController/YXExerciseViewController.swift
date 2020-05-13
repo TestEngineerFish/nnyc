@@ -207,6 +207,12 @@
     /// 切换题目
     private func switchExerciseView() {
         YXLog("==== 切题 ====")
+        
+        // 新学流程是否允许打断
+        if self.dataManager.progressManager.ruleType() == .a2 {
+            self.showRightNextView()
+        }
+        
         let data = dataManager.fetchOneExerciseModel()
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
