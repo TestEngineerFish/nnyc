@@ -22,7 +22,7 @@ class YXListenFillWordExerciseView: YXBaseExerciseView {
         questionView?.addSubview(answerView!)
         super.createSubview()
         (answerView as! YXListenFillAnswerView).textField.showRemindButton { [weak self] (button) in
-            self?.remindView?.show()
+            self?.exerciseDelegate?.clickTipsBtnEventWithExercise()
         }
         
         IQKeyboardManager.shared().shouldResignOnTouchOutside = true

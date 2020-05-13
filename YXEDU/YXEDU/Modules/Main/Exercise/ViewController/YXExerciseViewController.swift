@@ -327,10 +327,42 @@
     private func uploadGrowing() {
         YXGrowingManager.share.uploadLearnStop()
     }
+
+    private func clickTipsBtnEvent() {
+        YXLog("点击提示按钮")
+        guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
+
+        switch exerciseModel.type {
+        case .connectionWordAndImage, .connectionWordAndChinese :
+            dataManager.connectionAnswerAction(wordId: remindWordId, step: exerciseModel.step, right: false, type: exerciseModel.type)
+        case .newLearnPrimarySchool, .newLearnPrimarySchool_Group:
+            guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView, let questionView = exerciseView.questionView as? YXNewLearnPrimarySchoolQuestionView else {
+                return
+            }
+            questionView.showChineseExample()
+            if questionView.chineseExampleLabel.isHidden {
+                self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
+            } else {
+                self.bottomView.tipsButton.setTitle("收起例句中文", for: .normal)
+            }
+        default:
+            self.dataManager.normalAnswerAction(exerciseModel: exerciseModel, right: false)
+        }
+
+        if exerciseModel.type != .connectionWordAndChinese && exerciseModel.type != .connectionWordAndImage {
+            self.exerciseViewArray[0].isWrong = true
+        }
+        self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
+        self.exerciseViewArray.first?.remindView?.show()
+    }
 }
  
 extension YXExerciseViewController: YXExerciseViewDelegate {
-    
+
+    func clickTipsBtnEventWithExercise() {
+        self.clickTipsBtnEvent()
+    }
+
     ///答完题回调处理， 正常题型处理（不包括连线题）
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
@@ -542,33 +574,10 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
 }
  
 extension YXExerciseViewController: YXExerciseBottomViewProtocol {
-    func clickTipsBtnEvent() {
-        YXLog("点击提示按钮")
-        guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
-
-        switch exerciseModel.type {
-        case .connectionWordAndImage, .connectionWordAndChinese :
-            dataManager.connectionAnswerAction(wordId: remindWordId, step: exerciseModel.step, right: false, type: exerciseModel.type)
-        case .newLearnPrimarySchool, .newLearnPrimarySchool_Group:
-            guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView, let questionView = exerciseView.questionView as? YXNewLearnPrimarySchoolQuestionView else {
-                return
-            }
-            questionView.showChineseExample()
-            if questionView.chineseExampleLabel.isHidden {
-                self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
-            } else {
-                self.bottomView.tipsButton.setTitle("收起例句中文", for: .normal)
-            }
-        default:
-            self.dataManager.normalAnswerAction(exerciseModel: exerciseModel, right: false)
-        }
-        
-        if exerciseModel.type != .connectionWordAndChinese && exerciseModel.type != .connectionWordAndImage {
-            self.exerciseViewArray[0].isWrong = true
-        }
-        self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
-        self.exerciseViewArray.first?.remindView?.show()
+    func clickTipsBtnEventWithBottom() {
+        self.clickTipsBtnEvent()
     }
+
     func clickNextViewEvent() {
         YXLog("新学，查看单词详情")
         // 显示单词详情
