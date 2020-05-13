@@ -24,7 +24,7 @@ struct YXExerciseResultModel: Mappable {
     
     mutating func mapping(map: Map) {
         type          <- (map["review_type"], YXExerciseDataTypeTransform())
-        ruleType      <- (map["learn_rule"], EnumTransform<YXExerciseRuleType>())
+        ruleType      <- (map["learn_rule"], YXExerciseRuleTypeTransform())
         bookId        <- map["book_id"]
         unitId        <- map["unit_id"]
         newWordIds    <- map["new_word_list"]
@@ -128,6 +128,27 @@ struct YXExerciseDataTypeTransform: TransformType {
     }
     
     func transformToJSON(_ value: YXExerciseDataType?) -> Int? {
+        return value?.rawValue
+    }
+
+}
+
+
+struct YXExerciseRuleTypeTransform: TransformType {
+        
+    typealias Object = YXExerciseRuleType
+    typealias JSON = String
+    
+    init() {}
+    
+    func transformFromJSON(_ value: Any?) -> YXExerciseRuleType? {
+        if let v = value as? String, let rule = YXExerciseRuleType(rawValue: v.lowercased()) {
+            return rule
+        }
+        return .p
+    }
+    
+    func transformToJSON(_ value: YXExerciseRuleType?) -> String? {
         return value?.rawValue
     }
 

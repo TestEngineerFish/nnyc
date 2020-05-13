@@ -309,15 +309,16 @@ extension YXExerciseDataManager {
         YXLog("bb+++++++++++++当前 currentPatchIndex = ", currentBatchIndex)
         
         // 新学分批下标
-//        var newWordBatch = 0
-//        if isNewWordInBatch() {
-//            for (index, exercise) in self.newWordArray.enumerated() {
-//                if exercise.isFinish == false {
-//                    newWordBatch = lround(Double(index + 1) / Double(newWordBatchSize) + 0.4)
-//                }
-//            }
-//        }
-//        YXLog("bb+++++++++++++新学 currentPatchIndex = ", newWordBatch)
+        var newWordBatch = 0
+        if isNewWordInBatch() {
+            for (index, exercise) in self.newWordArray.enumerated() {
+                if exercise.isFinish == false {
+                    newWordBatch = lround(Double(index + 1) / Double(newWordBatchSize) + 0.4)
+                    break
+                }
+            }
+        }
+        YXLog("bb+++++++++++++新学批次 currentPatchIndex = ", newWordBatch)
         
         
         // 训练批次下标
@@ -328,7 +329,7 @@ extension YXExerciseDataManager {
                 break
             }
         }
-        YXLog("bb+++++++++++++训练 currentPatchIndex = ", exerciseBatch)
+        YXLog("bb+++++++++++++训练批次 currentPatchIndex = ", exerciseBatch)
 
         
         var reviewBatch = 0
@@ -338,12 +339,9 @@ extension YXExerciseDataManager {
                 break
             }
         }
-        YXLog("bb+++++++++++++复习 currentPatchIndex = ", reviewBatch)
+        YXLog("bb+++++++++++++复习批次 currentPatchIndex = ", reviewBatch)
         
         var minBatch = 1
-//        if newWordBatch == 0 {
-//            minBatch = exerciseBatch
-//        }
         if exerciseBatch == 0 {
             minBatch = reviewBatch
         }
@@ -352,8 +350,17 @@ extension YXExerciseDataManager {
         }
         if exerciseBatch != 0 && reviewBatch != 0 {
             minBatch = min(exerciseBatch, reviewBatch)
+            
+            if isNewWordInBatch() { // 如果新学要分批, 处理新学比训练和复习的数量不一致，造成的后续根据批次取数据问题
+                // 如果新学比 训练和复习的多
+                if newWordBatch > minBatch && isAllWordFinish() {
+                    minBatch = newWordBatch
+                }
+            }
+            
         }
                 
+        // 开始新的批次了
         if minBatch > currentBatchIndex {
             isChangeBatch = true
             currentBatchIndex = minBatch
@@ -398,4 +405,32 @@ extension YXExerciseDataManager {
         return false
     }
 
+    
+    /// 是否全部完成
+    func isAllNewWordFinish() -> Bool {
+        var finishCount = 0
+        for exercise in self.newWordArray {
+            if exercise.isFinish {
+                finishCount += 1
+            }
+        }
+        
+        return finishCount == newWordArray.count
+    }
+    
+    
+    /// 训练和复习是否全部完成
+    func isAllWordFinish() -> Bool {
+        var finishCount = 0
+        for e in reviewWordArray {
+            if isFinishWord(wordId: e.wordId) {
+                finishCount += 1
+            }
+        }
+        
+        return finishCount == reviewWordArray.count
+    }
+    
+    
+    
 }

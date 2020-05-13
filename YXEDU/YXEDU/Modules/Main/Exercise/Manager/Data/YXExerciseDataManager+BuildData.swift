@@ -106,7 +106,7 @@ extension YXExerciseDataManager {
                             break
                         }
                     } else {// 没做
-                        if exericse.isNewWord {// 如果是新学，1到4步都要做    && currentTurnIndex >= exericse.step
+                        if exericse.isNewWord {// 如果是新学，1到4步都要做
                             currentTurnArray.append(exericse)
                             break
                         } else if currentTurnIndex >= exericse.step {// 复习，到指定轮次和 step 相同是才开始训练

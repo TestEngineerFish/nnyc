@@ -52,7 +52,7 @@ enum YXExerciseType: String {
 
 
 enum YXExerciseRuleType: String {
-    case p = "p"        // 原始规则
+    case p = "p0"        // 原始规则
     case p1 = "p1"      // 跳过新学
     case p2 = "p2"      // 跳过新学，做题时首次做新学词题目后无论对错必定出现单词详情
     case p3 = "p3"      // 新学为看所有单词列表

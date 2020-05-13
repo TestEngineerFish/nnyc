@@ -36,7 +36,9 @@ class YXExerciseDataManager: NSObject {
     
     public var dataStatus: YXExerciseDataStatus = .finish
     
-    /// 当前批，一次学习分成了多批
+    /// 当前新学批次，一次学习分成了多批
+    var currentNewBatchIndex = 0
+    /// 当前批次，一次学习分成了多批
     var currentBatchIndex = 0
     /// 当前第几轮, 从第一轮开始
     var currentTurnIndex = 0

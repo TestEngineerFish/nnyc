@@ -51,11 +51,11 @@ extension YXExerciseDataManager {
 
     
     func newWordBatchSizeConfig() -> Int {
-        return ruleType == .a1 || ruleType == .a2 ? 3 : 5
+        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
     }
     
     func reviewWordBatchSizeConfig() -> Int {
-        return ruleType == .a1 || ruleType == .a2 ? 4 : 5
+        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
     }
     
     
