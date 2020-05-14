@@ -17,10 +17,7 @@ extension YXExerciseDataManager {
     
     /// 获取跳过新学状态
     func isSkipNewWord() -> Bool {
-        if (progressManager.isSkipNewWord() || ruleType == .p1 || ruleType == .p2) {
-            return true
-        }
-        return false // 默认不跳过新学
+         return (progressManager.isSkipNewWord() || ruleType == .p1 || ruleType == .p2)
     }
     
     
@@ -51,11 +48,11 @@ extension YXExerciseDataManager {
 
     
     func newWordBatchSizeConfig() -> Int {
-        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
+        return ruleType == .a1 || ruleType == .a2 ? 3 : 5
     }
     
     func reviewWordBatchSizeConfig() -> Int {
-        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
+        return ruleType == .a1 || ruleType == .a2 ? 4 : 5
     }
     
     
