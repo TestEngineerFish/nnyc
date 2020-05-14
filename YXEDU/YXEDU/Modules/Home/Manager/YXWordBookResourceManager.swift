@@ -162,7 +162,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             YXLog("下载\(bookId)完成...")
             bookModel.bookHash = newHash
             DispatchQueue.global().async {
-                self.deleteWords(bookId: bookId)
+                self.deleteWords(bookId: bookId, async: true)
                 self.saveWords(with: bookModel, async: true)
             }
         }) { (error) in
@@ -175,9 +175,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     /// 删除词书
     /// - Parameter bookId: 词书ID
-    private func deleteBook(with bookId: Int?) {
+    private func deleteBook(with bookId: Int?, async: Bool) {
         guard let bookId = bookId else { return }
-        YXWordBookDaoImpl().deleteBook(bookId: bookId)
+        YXWordBookDaoImpl().deleteBook(bookId: bookId, async: async)
         YXLog("删除词书\(bookId)完成")
     }
     /// 保存、更新词书
@@ -188,8 +188,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     /// 删除书中所有单词
     /// - Parameter bookId: 书本ID
-    private func deleteWords(bookId: Int) {
-        YXWordBookDaoImpl().deleteWord(bookId: bookId)
+    private func deleteWords(bookId: Int, async: Bool) {
+        YXWordBookDaoImpl().deleteWord(bookId: bookId, async: async)
         YXLog("删除词书\(bookId)下的单词完成")
     }
 
@@ -218,7 +218,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 YXWordBookDaoImpl().insertWord(word: wordModel, async: async)
                 if index == wordsList.count - 1 && lastUnit {
                     YXLog("==== 词书\(bookModel.bookId ?? 0)写入完成 ====")
-                    self.deleteBook(with: bookModel.bookId)
+                    self.deleteBook(with: bookModel.bookId, async: true)
                     self.saveBook(with: bookModel, async: true)
                     if !YXWordBookResourceManager.downloadDataList.isEmpty {
                         YXWordBookResourceManager.downloadDataList.removeFirst()
