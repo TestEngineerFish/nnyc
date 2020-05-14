@@ -179,7 +179,6 @@
         } else {
             self.fetchExerciseData()
         }
-        YXLog("==== 当前学习规则: 【", dataManager.ruleType.rawValue, "】 ====")
         dataManager.progressManager.updateStudyCount()
     }
     

@@ -27,7 +27,7 @@ extension YXExerciseDataManager {
         
         var firstStep = 0
         for word in reviewWordArray {
-            if word.wordId == wordId {
+            if word.wordId == wordId && exerciseWordIdArray.contains(wordId) {
                 for step in word.exerciseSteps {
                     if let e = step.first, let _ = e.word {
                         firstStep = e.step

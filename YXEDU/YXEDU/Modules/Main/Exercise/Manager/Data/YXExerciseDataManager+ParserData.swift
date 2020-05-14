@@ -31,7 +31,7 @@ extension YXExerciseDataManager {
         self.ruleType = result?.ruleType ?? .p
         self.processNewWord(result: result)
         self.processReviewWord(result: result)
-        
+        YXLog("==== 当前学习规则: 【", self.ruleType.rawValue, "】 ====")
         // 处理练习答案选项
         optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
                         

@@ -136,7 +136,7 @@ class YXExerciseDataManager: NSObject {
         }
         
         ruleType = progressManager.ruleType()
-        
+        YXLog("==== 当前学习规则: 【", ruleType.rawValue, "】 ====")
         let turnData = progressManager.loadLocalTurnData()
         currentTurnArray = turnData.0
         previousTurnArray = turnData.1
