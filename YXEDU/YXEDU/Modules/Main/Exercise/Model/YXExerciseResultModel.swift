@@ -61,8 +61,8 @@ struct YXExerciseQuestionModel: Mappable {
 
 struct YXExerciseQuestionExtendModel: Mappable {
     
-    var isNewWord: Bool = false
-    var isOldOrEmptyImage: Bool = false
+//    var isNewWord: Bool = false
+//    var isOldOrEmptyImage: Bool = false
     var power: Int = 0 // 能力值
     
     init?(map: Map) {
@@ -70,8 +70,8 @@ struct YXExerciseQuestionExtendModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        isNewWord              <- map["is_new_word"]
-        isOldOrEmptyImage      <- map["is_old_img_or_no_img"]
+//        isNewWord              <- map["is_new_word"]
+//        isOldOrEmptyImage      <- map["is_old_img_or_no_img"]
         power                  <- map["last_score"]
     }
 }
