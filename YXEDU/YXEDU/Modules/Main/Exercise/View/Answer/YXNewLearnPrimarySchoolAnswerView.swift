@@ -283,6 +283,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     private func endRecordAction() {
         if self.status == .recording {
             self.enginer?.stop()
+            self.status = .alreadLearn
         }
     }
 
@@ -663,9 +664,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
-//        if error != nil {
-//            self.showNetworkErrorAnimation()
-//        }
         return
     }
 
