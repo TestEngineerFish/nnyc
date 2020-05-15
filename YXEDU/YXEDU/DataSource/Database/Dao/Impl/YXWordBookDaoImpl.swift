@@ -12,6 +12,89 @@ import FMDB
 
 class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
+    /// 保存词书（存在则删除）
+    /// - Parameter bookModel: 词书对象
+    func saveBook(bookModel: YXWordBookModel) {
+        guard let bookId = bookModel.bookId else {return}
+        let deleteSQL = YYSQLManager.WordBookSQL.deleteBook.rawValue
+        let insertSQL = YYSQLManager.WordBookSQL.insertBook.rawValue
+        let deleteParams: [Any] = [bookId]
+        let insertParams: [Any] = [bookId,
+                                   bookModel.bookName ?? "",
+                                   bookModel.bookWordSourcePath ?? "",
+                                   bookModel.bookHash ?? "",
+                                   bookModel.gradeId ?? 0,
+                                   bookModel.gradeType ?? 0]
+
+        self.wordRunner.beginTransaction()
+        // 删除词书
+        let deleteSuccess = self.wordRunner.executeUpdate(deleteSQL, withArgumentsIn: deleteParams)
+        if deleteSuccess {
+             YXLog("删除词书\(bookId)完成")
+        } else {
+            self.wordRunner.rollback()
+        }
+        // 插入词书
+        let insertSuccess = self.wordRunner.executeUpdate(insertSQL, withArgumentsIn: insertParams)
+        if insertSuccess {
+            YXLog("保存词书\(bookModel.bookName ?? "")完成")
+        } else {
+            self.wordRunner.rollback()
+        }
+        self.wordRunner.commit()
+    }
+
+    /// 保存词书中所有单词
+    /// - Parameter bookModel: 词书对象
+    func saveWords(bookModel: YXWordBookModel) {
+        guard let bookId = bookModel.bookId, let unitsList = bookModel.units else {
+            YXWordBookResourceManager.shared.group.leave()
+            return
+        }
+        self.wordRunner.beginTransaction()
+        // 删除词书下所有单词
+        let deleteWordsSuccess = self.deleteWords(bookId: bookId)
+        if deleteWordsSuccess {
+            YXLog("删除\(bookModel.bookName ?? "")下所有单词成功")
+        } else {
+            self.wordRunner.rollback()
+            return
+        }
+        var lastUnit = false
+        /// 赋值自定义数据
+        for (unitIndex, unitModel) in unitsList.enumerated() {
+            guard let wordsList = unitModel.words else {
+                continue
+            }
+            if unitIndex == unitsList.count - 1 {
+                lastUnit = true
+            }
+
+            for (index, var wordModel) in wordsList.enumerated() {
+                wordModel.gradeId         = bookModel.gradeId
+                wordModel.gardeType       = bookModel.gradeType ?? 1
+                wordModel.bookId          = bookModel.bookId
+                wordModel.unitId          = unitModel.unitId
+                wordModel.unitName        = unitModel.unitName
+                wordModel.isExtensionUnit = unitModel.isExtensionUnit
+                let insertWrodSuccess = self.insertWord(word: wordModel)
+                if !insertWrodSuccess {
+                    self.wordRunner.rollback()
+                }
+                if index == wordsList.count - 1 && lastUnit {
+                    YXLog("==== 词书\(bookModel.bookId ?? 0)写入完成 ====")
+                    self.saveBook(bookModel: bookModel)
+                    if !YXWordBookResourceManager.downloadDataList.isEmpty {
+                        YXWordBookResourceManager.downloadDataList.removeFirst()
+                    }
+                    YXLog("当前剩余下载词书数量：\(YXWordBookResourceManager.downloadDataList.count)/\(YXWordBookResourceManager.shared.totalDownloadCount)")
+                    YXWordBookResourceManager.shared.group.leave()
+                }
+            }
+        }
+    }
+
+
     @discardableResult
     func insertBook(book: YXWordBookModel, async: Bool = false) -> Bool {
         let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
@@ -147,7 +230,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
 
     @discardableResult
-    func deleteWord(bookId: Int, async: Bool = false) -> Bool {
+    func deleteWords(bookId: Int, async: Bool = false) -> Bool {
         let sql = YYSQLManager.WordBookSQL.deleteWord.rawValue
         let params: [Any] = [bookId]
         if async {

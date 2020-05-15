@@ -27,7 +27,7 @@ protocol YXWordBookDao {
 
     /// 删除单词
     /// - Parameter bookId: 词书 id
-    func deleteWord(bookId: Int, async: Bool) -> Bool
+    func deleteWords(bookId: Int, async: Bool) -> Bool
     
     // TODO: ==== 查询 ====
     /// 查询词书

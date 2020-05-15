@@ -17,7 +17,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     static var wordNumber      = 0
     var totalDownloadCount     = 0
-    var group = DispatchGroup()
+    let group = DispatchGroup()
     var backupBlock: (()->Void)?
     static var downloadDataList = [(Int, String)]()
     static var writeDBFinished: Bool?
@@ -133,7 +133,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                     return
                 }
                 if index < 10 {
-                    self.group.enter()
+                    YXWordBookResourceManager.shared.group.enter()
                     self.downloadSingleWordBook(with: model.0, newHash: model.1)
                 }
             }
@@ -162,72 +162,27 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             YXLog("下载\(bookId)完成...")
             bookModel.bookHash = newHash
             DispatchQueue.global().async {
-                self.deleteWords(bookId: bookId)
+                self.deleteWords(bookId: bookId, async: true)
                 self.saveWords(with: bookModel, async: true)
             }
         }) { (error) in
-            self.group.leave()
+            YXWordBookResourceManager.shared.group.leave()
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
     // TODO: ---- 本地词书数据库操作 ----
 
-    /// 删除词书
-    /// - Parameter bookId: 词书ID
-    private func deleteBook(with bookId: Int?) {
-        guard let bookId = bookId else { return }
-        YXWordBookDaoImpl().deleteBook(bookId: bookId)
-        YXLog("删除词书\(bookId)完成")
-    }
-    /// 保存、更新词书
-    private func saveBook(with bookModel: YXWordBookModel, async: Bool) {
-        YXWordBookDaoImpl().insertBook(book: bookModel, async: async)
-        YXLog("保存词书\(bookModel.bookName ?? "")完成")
-    }
-
     /// 删除书中所有单词
     /// - Parameter bookId: 书本ID
-    private func deleteWords(bookId: Int) {
-        YXWordBookDaoImpl().deleteWord(bookId: bookId)
+    private func deleteWords(bookId: Int, async: Bool) {
+        YXWordBookDaoImpl().deleteWords(bookId: bookId, async: async)
         YXLog("删除词书\(bookId)下的单词完成")
     }
 
     /// 保存、更新单词
     private func saveWords(with bookModel: YXWordBookModel, async: Bool) {
-        guard let unitsList = bookModel.units else {
-            group.leave()
-            return
-        }
-        var lastUnit = false
-        /// 赋值自定义数据
-        for (unitIndex, unitModel) in unitsList.enumerated() {
-            guard let wordsList = unitModel.words else {
-                continue
-            }
-            if unitIndex == unitsList.count - 1 {
-                lastUnit = true
-            }
-            for (index,var wordModel) in wordsList.enumerated() {
-                wordModel.gradeId         = bookModel.gradeId
-                wordModel.gardeType       = bookModel.gradeType ?? 1
-                wordModel.bookId          = bookModel.bookId
-                wordModel.unitId          = unitModel.unitId
-                wordModel.unitName        = unitModel.unitName
-                wordModel.isExtensionUnit = unitModel.isExtensionUnit
-                YXWordBookDaoImpl().insertWord(word: wordModel, async: async)
-                if index == wordsList.count - 1 && lastUnit {
-                    YXLog("==== 词书\(bookModel.bookId ?? 0)写入完成 ====")
-                    self.deleteBook(with: bookModel.bookId)
-                    self.saveBook(with: bookModel, async: true)
-                    if !YXWordBookResourceManager.downloadDataList.isEmpty {
-                        YXWordBookResourceManager.downloadDataList.removeFirst()
-                    }
-                    YXLog("当前剩余下载词书数量：\(YXWordBookResourceManager.downloadDataList.count)/\(self.totalDownloadCount)")
-                    self.group.leave()
-                }
-            }
-        }
+        YXWordBookDaoImpl().saveWords(bookModel: bookModel)
     }
 }
 
