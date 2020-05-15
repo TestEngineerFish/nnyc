@@ -162,8 +162,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             YXLog("下载\(bookId)完成...")
             bookModel.bookHash = newHash
             DispatchQueue.global().async {
-                self.deleteWords(bookId: bookId, async: true)
-                self.saveWords(with: bookModel, async: true)
+                self.updateWords(with: bookModel, async: true)
             }
         }) { (error) in
             YXWordBookResourceManager.shared.group.leave()
@@ -173,16 +172,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     
     // TODO: ---- 本地词书数据库操作 ----
 
-    /// 删除书中所有单词
-    /// - Parameter bookId: 书本ID
-    private func deleteWords(bookId: Int, async: Bool) {
-        YXWordBookDaoImpl().deleteWords(bookId: bookId, async: async)
-        YXLog("删除词书\(bookId)下的单词完成")
-    }
-
     /// 保存、更新单词
-    private func saveWords(with bookModel: YXWordBookModel, async: Bool) {
-        YXWordBookDaoImpl().saveWords(bookModel: bookModel)
+    private func updateWords(with bookModel: YXWordBookModel) {
+        YXWordBookDaoImpl().updateWords(bookModel: bookModel)
     }
 }
 
