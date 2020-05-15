@@ -206,28 +206,30 @@
     /// 切换题目
     private func switchExerciseView() {
         YXLog("==== 切题 ====")
-        
-        // 新学流程是否允许打断
-        if self.dataManager.progressManager.ruleType() == .a2 {
-            self.showRightNextView()
-        }
-        
+
         let data = dataManager.fetchOneExerciseModel()
         headerView.learningProgress = "\(data.0)"
         headerView.reviewProgress = "\(data.1)"
         
         if var model = data.2 {
             model.dataType = dataType
+
             YXRequestLog("==== 题目内容：%@", model.toJSONString() ?? "--")
-            // ---- 新学隐藏提示
-            let hideTipsTypeArray: [YXExerciseType] = [.newLearnPrimarySchool_Group,
-                                                       .newLearnPrimarySchool,
-                                                       .newLearnJuniorHighSchool,
-                                                       .validationImageAndWord,
-                                                       .validationWordAndChinese]
+
+            // 小学新学
+            let primaryNewLearnArray: [YXExerciseType] = [.newLearnPrimarySchool_Group, .newLearnPrimarySchool]
+            // 新学
+            let newLearnArray: [YXExerciseType]        = [.newLearnJuniorHighSchool] + primaryNewLearnArray
+            // 新学和连线题
+            let hideTipsTypeArray: [YXExerciseType]    = [.validationImageAndWord, .validationWordAndChinese] + newLearnArray
+            // ---- 新学、连线题隐藏提示
             self.bottomView.tipsButton.isHidden  = hideTipsTypeArray.contains(model.type)
+
+            // 新学流程是否允许打断
+            if self.dataManager.progressManager.ruleType() == .a2 && primaryNewLearnArray.contains(model.type) {
+                self.showRightNextView()
+            }
             // ---- Growing
-            let newLearnArray: [YXExerciseType] = [.newLearnPrimarySchool_Group, .newLearnPrimarySchool, .newLearnJuniorHighSchool]
             if newLearnArray.contains(model.type) {
                 YXGrowingManager.share.newLearnNumber += 1
             } else {
