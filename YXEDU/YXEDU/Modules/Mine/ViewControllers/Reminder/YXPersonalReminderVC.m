@@ -99,12 +99,6 @@
         make.top.equalTo(intervalView.mas_bottom);
     }];
     _bottomView = bottomView;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
     
     if ([[NSUserDefaults standardUserDefaults] valueForKey:@"Reminder"] == nil) {
         self.remindDate = nil;
@@ -116,6 +110,12 @@
     }
     
     [self switchTaped];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void) switchTaped {
