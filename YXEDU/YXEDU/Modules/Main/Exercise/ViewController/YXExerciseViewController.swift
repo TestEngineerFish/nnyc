@@ -347,7 +347,7 @@
                 return
             }
             questionView.showChineseExample()
-            if questionView.chineseExampleLabel.isHidden {
+            if questionView.chineseExampleLabel.layer.opacity == 0.0 {
                 self.bottomView.tipsButton.setTitle("显示例句中文", for: .normal)
             } else {
                 self.bottomView.tipsButton.setTitle("收起例句中文", for: .normal)
