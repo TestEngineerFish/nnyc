@@ -162,7 +162,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             YXLog("下载\(bookId)完成...")
             bookModel.bookHash = newHash
             DispatchQueue.global().async {
-                self.updateWords(with: bookModel, async: true)
+                self.updateWords(with: bookModel)
             }
         }) { (error) in
             YXWordBookResourceManager.shared.group.leave()
