@@ -24,7 +24,6 @@ struct YXHomeModel: Codable {
     var wrongWords: Int?
     var learnedWords: Int?
     var isSkipNewLearn: Int?
-    var isUploadGIO: Int?
     var bookGrade: Int?
     var bookVersionName: String?
     
@@ -43,8 +42,7 @@ struct YXHomeModel: Codable {
         case collectedWords  = "fav_num"
         case wrongWords      = "wrong_num"
         case learnedWords    = "learned_num"
-        case isSkipNewLearn  = "is_skip_new_learn"
-        case isUploadGIO     = "is_gio_upload"
+        case isSkipNewLearn  = "is_skip_new_word_learn"
         case bookGrade       = "book_grade"
         case bookVersionName = "book_ver_name"
     }

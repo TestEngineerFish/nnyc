@@ -37,7 +37,7 @@ class YXExerciseDataManager: NSObject {
     public var dataStatus: YXExerciseDataStatus = .finish
     
     /// 当前新学批次，一次学习分成了多批
-    var currentNewBatchIndex = 0
+//    var currentNewBatchIndex = 0
     /// 当前批次，一次学习分成了多批
     var currentBatchIndex = 0
     /// 当前第几轮, 从第一轮开始
@@ -136,7 +136,7 @@ class YXExerciseDataManager: NSObject {
         }
         
         ruleType = progressManager.ruleType()
-        
+        YXLog("==== 当前学习规则: 【", ruleType.rawValue, "】 ====")
         let turnData = progressManager.loadLocalTurnData()
         currentTurnArray = turnData.0
         previousTurnArray = turnData.1
@@ -160,12 +160,12 @@ class YXExerciseDataManager: NSObject {
         // 打印
 //        printReportResult()
         
-        // 新学出题
+        // 新学出题【跟读】
         if let e = buildNewExercise() {
             return (needNewStudyCount, needReviewCount, e)
         }
         
-        // 生成题型
+        // 生成题型【训练+复习】
         var e = buildExercise()
         let wid = e?.word?.wordId ?? 0
         e?.word = selectWord(wordId: wid)

@@ -10,7 +10,7 @@ import UIKit
 
 extension YXExerciseDataManager {
     
-    // 新学出题
+    // 新学出题【跟读】
     func buildNewExercise() ->YXWordExerciseModel? {
         
         if self.isSkipNewWord() {
@@ -19,9 +19,8 @@ extension YXExerciseDataManager {
         
         // 不跳过，才从新学取
         for (index, exercise) in self.newWordArray.enumerated() {
-            
             if isNewWordInBatch() && index >= currentBatchIndex * newWordBatchSize {
-                continue
+                return nil
             }
             
             if !exercise.isFinish {
@@ -65,9 +64,9 @@ extension YXExerciseDataManager {
             self.currentTurnArray.removeAll()
             
             if dataType == .base {
-                filterNewExcercise()
+                filterExcercise()
             }
-            filterReviewExcercise()
+            filterReview()
             
             removeErrorStep()
             // 排序
@@ -75,7 +74,9 @@ extension YXExerciseDataManager {
         }
     }
     
-    func filterNewExcercise() {
+    
+    /// 筛选训练
+    func filterExcercise() {
         var jumpStep = 0
         for (i, word) in reviewWordArray.enumerated() {
             
@@ -127,7 +128,8 @@ extension YXExerciseDataManager {
         }
     }
     
-    func filterReviewExcercise() {
+    /// 筛选复习
+    func filterReview() {
         var jumpStep = 0
         for (i, word) in reviewWordArray.enumerated() {
             

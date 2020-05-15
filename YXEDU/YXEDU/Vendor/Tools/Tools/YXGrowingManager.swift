@@ -44,8 +44,9 @@ struct YXGrowingManager {
 
     /// 七年级跳过新学上报
     func uploadSkipNewLearn() {
-        let value = YXConfigure.shared().isUploadGIO ? "7年级跳过新学" : "7年级参照组"
-        Growing.setPeopleVariableWithKey("new_study_test", andStringValue: value)
+        guard let grade = YXUserModel.default.currentGrade else { return }
+        let value = YXConfigure.shared().isSkipNewLearn ? "\(grade)年级跳过新学" : "\(grade)年级参照组"
+        Growing.setPeopleVariableWithKey("new_study_skip", andStringValue: value)
     }
 
     /// 换书时上传书信息

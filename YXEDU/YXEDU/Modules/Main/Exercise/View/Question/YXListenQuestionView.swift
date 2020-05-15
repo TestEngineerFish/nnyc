@@ -44,7 +44,11 @@ class YXListenQuestionView: YXBaseQuestionView {
     
     override func bindData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {[weak self] in
-            self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice
+            if self?.exerciseModel.type == .some(.listenChooseImage) {
+                self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.examples?.first?.vocie
+            } else {
+                self?.audioPlayerView?.urlStr = self?.exerciseModel.word?.voice
+            }
             self?.audioPlayerView?.play()
         }
     }

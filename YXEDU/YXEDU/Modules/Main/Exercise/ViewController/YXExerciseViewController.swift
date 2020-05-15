@@ -179,7 +179,6 @@
         } else {
             self.fetchExerciseData()
         }
-        
         dataManager.progressManager.updateStudyCount()
     }
     

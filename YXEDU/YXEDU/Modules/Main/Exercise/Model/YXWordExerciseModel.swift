@@ -44,10 +44,11 @@ struct YXWordExerciseModel: Mappable {
     
     var isBackup: Bool = false
     
-    // 是否为新学单词
-    var isNewWord: Bool = false
     // 是否为跟读流程
     var isListenAndRepeat = false
+    // 是否为新学单词【跟读和训练】
+    var isNewWord: Bool = false
+
     
     /// 第几步
     var step: Int = 0
