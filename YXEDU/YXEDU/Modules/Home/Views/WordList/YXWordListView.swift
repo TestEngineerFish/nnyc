@@ -283,7 +283,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
             
         } else {
-            let request = YXWordListRequest.wordList(type: requestType - 1)
+            let request = YXWordListRequest.wordList(type: requestType)
             YYNetworkService.default.request(YYStructDataArrayResponse<YXWordListModel>.self, request: request, success: { (response) in
                 guard let wordLists = response.dataArray else { return }
                 
