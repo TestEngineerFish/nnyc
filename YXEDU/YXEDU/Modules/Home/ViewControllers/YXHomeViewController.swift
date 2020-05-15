@@ -164,8 +164,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
                 self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
                 self.studyDataCollectionView.reloadData()
+                YXUserModel.default.currentGrade    = self.homeModel.bookGrade
                 YXConfigure.shared().isSkipNewLearn = self.homeModel?.isSkipNewLearn == .some(1)
-                YXConfigure.shared().isUploadGIO    = self.homeModel?.isUploadGIO    == .some(1)
                 self.handleTabData()
 
                 self.initDataManager()

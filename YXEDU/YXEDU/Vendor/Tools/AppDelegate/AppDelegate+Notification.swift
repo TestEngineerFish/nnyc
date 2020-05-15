@@ -37,6 +37,12 @@ extension AppDelegate {
         if UIApplication.shared.applicationState == .active {
             return
         }
+        // 上报后台
+        if let pushId = userInfo?["push_id"] as? String {
+            let dict = ["push_notify": ["action":2, "push_id":pushId]]
+            YXSetReminderView.requestReportNotification(dataString: dict.toJson())
+        }
+
         YXRedDotManager.share.updateFeedbackReplyBadge()
         if let action = userInfo?["open_scheme"] as? String {
             YRRouter.openURL(action, query: nil, animated: true)

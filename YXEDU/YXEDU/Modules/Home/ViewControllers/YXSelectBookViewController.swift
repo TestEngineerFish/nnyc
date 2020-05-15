@@ -101,6 +101,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 guard let self = self else { return }
+                YXUserModel.default.currentGrade = wordBook.bookGrade
                 YXWordBookResourceManager.shared.contrastBookData(by: bookId) { [weak self] (isSuccess) in
                     if let self = self, isSuccess {
                         self.navigationController?.popViewController(animated: true)
@@ -178,7 +179,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 guard let jsonString = String(data: jsonData, encoding: .utf8), let result = YXWordBookStatusModel(JSONString: jsonString) else { return }
                 self.wordBookStateModels = result
-                
+
                 self.unitLabel.text = self.wordBookStateModels.learningUnit
                 
                 let countOfDaysForStudyString = "\(self.wordBookStateModels.learnedDays ?? 0)天"
