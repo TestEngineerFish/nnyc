@@ -15,9 +15,9 @@ class YXWordListHeaderView: UIView {
     var isExpand = false {
         didSet {
             if isExpand {
-                expandButton.setImage(#imageLiteral(resourceName: "collapsedState"), for: .normal)
-            } else {
                 expandButton.setImage(#imageLiteral(resourceName: "expandState"), for: .normal)
+            } else {
+                expandButton.setImage(#imageLiteral(resourceName: "collapsedState"), for: .normal)
             }
         }
     }
