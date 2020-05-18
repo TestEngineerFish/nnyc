@@ -267,7 +267,7 @@ extension YXExerciseDataManager {
         }
         YXLog("bb+++++++++++++训练批次 currentPatchIndex = ", exerciseBatch)
 
-        
+        // 复习批次下标
         var reviewBatch = 0
         for (index, wordId) in reviewWordIdArray.enumerated() {
             if isFinishWord(wordId: wordId) == false {

@@ -58,6 +58,7 @@ class YXExerciseDataManager: NSObject {
     /// 训练和复习单词集合
     var reviewWordArray: [YXWordStepsModel] = []
     
+    
     // 训练单词的Id集合，复习单词的Id集合
     var exerciseWordIdArray: [Int] = [], reviewWordIdArray: [Int] = []
     
@@ -126,6 +127,7 @@ class YXExerciseDataManager: NSObject {
         
         exerciseWordIdArray = progressManager.loadNewWordExerciseIds()
         for e in reviewWordArray {
+            // 不是训练的，就是复习单词
             if exerciseWordIdArray.contains(e.wordId) == false {
                 reviewWordIdArray.append(e.wordId)
             }

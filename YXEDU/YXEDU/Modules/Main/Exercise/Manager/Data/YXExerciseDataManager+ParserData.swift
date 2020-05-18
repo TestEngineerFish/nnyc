@@ -47,6 +47,9 @@ extension YXExerciseDataManager {
     /// 处理新学跟读
     /// - Parameter result:
     func processNewWord(result: YXExerciseResultModel?) {
+        self.exerciseWordIdArray = result?.newWordIds ?? []
+        progressManager.initNewWordExerciseIds(exerciseIds: exerciseWordIdArray)
+        
         // 处理新学单词
         for wordId in result?.newWordIds ?? [] {
             let bookId = result?.bookId ?? 0
@@ -109,13 +112,13 @@ extension YXExerciseDataManager {
         let ids = result?.newWordIds ?? []
         for e in reviewWordArray {
             if ids.contains(e.wordId) {
-                exerciseWordIdArray.append(e.wordId)
+//                exerciseWordIdArray.append(e.wordId)
             } else {
                 reviewWordIdArray.append(e.wordId)
             }
         }
     
-        progressManager.initNewWordExerciseIds(exerciseIds: exerciseWordIdArray)
+        
     }
     
     func addWordStep(exerciseModel: YXWordExerciseModel, isBackup: Bool) {

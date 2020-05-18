@@ -56,7 +56,14 @@ extension YXExerciseDataManager {
     }
     
     
-    
-    
-    
+    func currentBatchNewWordIds() -> [Int] {
+        var wids: [Int] = []
+        for (index, e) in newWordArray.enumerated() {
+            if index < currentBatchIndex * newWordBatchSize
+                && index >= (currentBatchIndex - 1) * newWordBatchSize {
+                wids.append(e.word?.wordId ?? 0)
+            }
+        }
+        return wids
+    }
 }

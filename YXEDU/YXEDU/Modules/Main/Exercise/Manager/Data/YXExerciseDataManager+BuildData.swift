@@ -84,6 +84,9 @@ extension YXExerciseDataManager {
                 continue
             }
             
+            if dataType == .base && currentBatchNewWordIds().contains(word.wordId) == false {
+                continue
+            }
             
             // 只有基础学习时才分多批
             let newIndex = transformIndex(stepModel: word)

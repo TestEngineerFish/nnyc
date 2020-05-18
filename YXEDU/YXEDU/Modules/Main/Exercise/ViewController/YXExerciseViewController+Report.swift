@@ -16,6 +16,7 @@ extension YXExerciseViewController {
         if dataManager.dataStatus == .empty {
             processEmptyData()
         } else {
+//            return
             // 没有数据，就是完成了练习
             dataManager.progressManager.completionExercise()
 
