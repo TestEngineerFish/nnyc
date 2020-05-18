@@ -12,7 +12,7 @@ import UIKit
 class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtocol {
 
     var guideView = YXNewLearnGuideView()
-
+    var isLearned = false
     var detailView: YXWordDetailCommonView?
     var rightContentView: UIView = {
         let view = UIView()
@@ -112,6 +112,7 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         if let _answerView = self.answerView as? YXNewLearnAnswerView {
             _answerView.learnResultView.isHidden = true
         }
+        self.isLearned = true
         UIView.animate(withDuration: 0.5, animations: {
             self.contentView.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
         }) { (finished) in
@@ -170,10 +171,12 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         } else {
             _answerView.status.forward()
         }
-        if exerciseModel.word?.examples?.first?.english != nil {
-            self.exerciseDelegate?.showTipsButton()
+        if !self.isLearned {
+            if exerciseModel.word?.examples?.first?.english != nil {
+                self.exerciseDelegate?.showTipsButton()
+            }
+            self.exerciseDelegate?.showRightNextView()
         }
-        self.exerciseDelegate?.showRightNextView()
     }
 
     /// 显示新学单词详情
