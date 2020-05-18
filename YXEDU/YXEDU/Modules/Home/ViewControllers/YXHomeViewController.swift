@@ -174,32 +174,31 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: ---- Request ----
     private func loadData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": YXUserModel.default.uuid ?? ""]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
-            
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                self.homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
-                YXLog("==== 当前用户User ID", self.homeModel?.userId ?? 0)
-                self.adjustStartStudyButtonState()
-                self.bookNameButton.setTitle(self.homeModel?.bookName, for: .normal)
-                self.unitNameButton.setTitle(self.homeModel?.unitName, for: .normal)
-                self.countOfWaitForStudyWords.text = "\((self.homeModel?.newWords ?? 0) + (self.homeModel?.reviewWords ?? 0))"
-                self.progressBar.setProgress(Float(self.homeModel?.unitProgress ?? 0), animated: true)
-                
-                self.learnedWordsCount   = "\(self.homeModel?.learnedWords ?? 0)"
-                self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
-                self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
-                self.studyDataCollectionView.reloadData()
-                YXUserModel.default.currentGrade    = self.homeModel.bookGrade
-                YXConfigure.shared().isSkipNewLearn = self.homeModel?.isSkipNewLearn == .some(1)
-                self.handleTabData()
+        let request = YXHomeRequest.getBaseInfo(userId: YXUserModel.default.uuid ?? "")
+        YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { (response) in
+            guard let userInfomation = response.data else { return }
+            self.homeModel = userInfomation
+            YXLog("==== 当前用户User ID", self.homeModel?.userId ?? 0)
 
-                self.initDataManager()
-                self.uploadGrowing()
-            } catch {
-                YXLog("获取主页基础数据失败：", error.localizedDescription)
-            }
+            self.adjustStartStudyButtonState()
+            self.bookNameButton.setTitle(self.homeModel?.bookName, for: .normal)
+            self.unitNameButton.setTitle(self.homeModel?.unitName, for: .normal)
+            self.countOfWaitForStudyWords.text = "\((self.homeModel?.newWords ?? 0) + (self.homeModel?.reviewWords ?? 0))"
+            self.progressBar.setProgress(Float(self.homeModel?.unitProgress ?? 0), animated: true)
+            
+            self.learnedWordsCount   = "\(self.homeModel?.learnedWords ?? 0)"
+            self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
+            self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
+            self.studyDataCollectionView.reloadData()
+            YXUserModel.default.currentGrade    = self.homeModel.bookGrade
+            YXConfigure.shared().isSkipNewLearn = self.homeModel?.isSkipNewLearn == .some(1)
+            self.handleTabData()
+
+            self.initDataManager()
+            self.uploadGrowing()
+            
+        }) { error in
+            YXLog("获取主页基础数据失败：", error.localizedDescription)
         }
     }
 

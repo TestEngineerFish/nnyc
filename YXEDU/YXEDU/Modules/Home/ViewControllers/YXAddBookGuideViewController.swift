@@ -49,19 +49,14 @@ class YXAddBookGuideViewController: UIViewController {
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let uuid = YXUserModel.default.uuid else { return }
             YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
-
-            YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/learn/getbaseinfo", parameters: ["user_id": uuid]) { (response, isSuccess) in
-                guard isSuccess, let response = response?.responseObject as? [String: Any] else { return }
-
-                do {
-                    let jsonData  = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                    let homeModel = try JSONDecoder().decode(YXHomeModel.self, from: jsonData)
-                    YXUserModel.default.currentGrade    = homeModel.bookGrade
-                    YXConfigure.shared().isSkipNewLearn = homeModel.isSkipNewLearn == .some(1)
-                } catch {
-                    YXLog("获取主页基础数据失败：", error.localizedDescription)
-                }
-
+            
+            let request = YXHomeRequest.getBaseInfo(userId: uuid)
+            YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { (response) in
+                guard let userInfomation = response.data else { return }
+                
+                YXUserModel.default.currentGrade    = userInfomation.bookGrade
+                YXConfigure.shared().isSkipNewLearn = userInfomation.isSkipNewLearn == .some(1)
+                
                 YYCache.set(Date(), forKey: "LastStoredDate")
                 YXLog("====新注册 - 开始主流程的学习====")
                 YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
@@ -75,12 +70,15 @@ class YXAddBookGuideViewController: UIViewController {
                 }
                 
                 self.navigationController?.pushViewController(vc, animated: true)
+                
+            }) { error in
+                YXUtils.showHUD(kWindow, title: error.message)
             }
+            self.updateGIO()
             
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }
-        self.updateGIO()
     }
     
     @IBAction func goHome(_ sender: Any) {
@@ -112,31 +110,27 @@ class YXAddBookGuideViewController: UIViewController {
         selectVersionView.isHidden  = true
         selectBookNameView.isHidden = true
 
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject as? [Any] else { return }
-
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                guard let jsonString = String(data: jsonData, encoding: .utf8), let grades = [YXGradeWordBookListModel](JSONString: jsonString) else { return }
-                self.dataSource = grades
-
-                for grade in grades {
-                    if let gradeName = grade.gradeName, gradeName.isEmpty == false, self.grades.contains(gradeName) == false {
-                        self.grades.append(gradeName)
-                    }
+        let request = YXHomeRequest.getBookList
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { (response) in
+            guard let grades = response.dataArray else { return }
+            self.dataSource = grades
+            
+            for grade in grades {
+                if let gradeName = grade.gradeName, gradeName.isEmpty == false, self.grades.contains(gradeName) == false {
+                    self.grades.append(gradeName)
                 }
-                
-                self.initSelectViews()
-                
-                self.selectGradeView.isHidden = false
-                self.selectVersionView.isHidden = false
-                self.selectBookNameView.isHidden = false
-                
-                self.chengeCenter(withoutAnimation: true)
-                
-            } catch {
-                YXLog("获取全部词书列表失败：", error.localizedDescription)
             }
+            
+            self.initSelectViews()
+            
+            self.selectGradeView.isHidden = false
+            self.selectVersionView.isHidden = false
+            self.selectBookNameView.isHidden = false
+            
+            self.chengeCenter(withoutAnimation: true)
+            
+        }) { error in
+            YXLog("获取全部词书失败：", error.localizedDescription)
         }
     }
     

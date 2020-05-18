@@ -45,24 +45,20 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func loadData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getbooklist", parameters: [:]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject as? [Any] else { return }
+        let request = YXHomeRequest.getBookList
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { (response) in
+            guard let data = response.dataArray else { return }
+            self.grades       = data
+            self.filterGrades = self.grades
             
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                guard let jsonString = String(data: jsonData, encoding: .utf8), let grades = [YXGradeWordBookListModel](JSONString: jsonString) else { return }
-                self.grades       = grades
-                self.filterGrades = self.grades
-                
-                self.createGradeSelectView()
-                self.tableView.reloadData()
-                
-            } catch {
-                YXLog("获取书列表，error:", error.localizedDescription)
-            }
+            self.createGradeSelectView()
+            self.tableView.reloadData()
+            
+        }) { error in
+            YXLog("获取全部词书失败：", error.localizedDescription)
         }
     }
-    
+        
     private func createGradeSelectView() {
         selectGradeView = YXSelectGradeView(frame: CGRect(x: 0, y: 44, width: screenWidth, height: screenHeight), grades: grades, selectClosure: { gradeName, versionName in
             self.filterButton.setTitle("  " + gradeName + " " + (versionName ?? "所有版本") + "  ", for: .normal)

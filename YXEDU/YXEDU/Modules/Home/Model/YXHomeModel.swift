@@ -6,9 +6,9 @@
 //  Copyright © 2019 shiji. All rights reserved.
 //
 
-import UIKit
+import ObjectMapper
 
-struct YXHomeModel: Codable {
+struct YXHomeModel: Mappable {
     var userId: Int?
     var bookId: Int?
     var bookName: String?
@@ -27,23 +27,27 @@ struct YXHomeModel: Codable {
     var bookGrade: Int?
     var bookVersionName: String?
     
-    enum CodingKeys: String, CodingKey {
-        case userId          = "user_id"
-        case bookId          = "book_id"
-        case bookName        = "book_name"
-        case bookSource      = "book_url"
-        case bookHash        = "hash"
-        case unitId          = "unit_id"
-        case unitName        = "unit_name"
-        case isLastUnit      = "is_last_unit"
-        case unitProgress    = "learn_rate"
-        case newWords        = "new_num"
-        case reviewWords     = "review_num"
-        case collectedWords  = "fav_num"
-        case wrongWords      = "wrong_num"
-        case learnedWords    = "learned_num"
-        case isSkipNewLearn  = "is_skip_new_word_learn"
-        case bookGrade       = "book_grade"
-        case bookVersionName = "book_ver_name"
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+    
+    mutating func mapping(map: Map) {
+        userId <- map["user_id"]
+         bookId <- map["book_id"]
+         bookName <- map["book_name"]
+         bookSource <- map["book_url"]
+         bookHash <- map["hash"]
+         unitId <- map["unit_id"]
+         unitName <- map["unit_name"]
+         isLastUnit <- map["is_last_unit"]
+         unitProgress <- map["learn_rate"]
+         newWords <- map["new_num"]
+         reviewWords <- map["review_num"]
+         collectedWords <- map["fav_num"]
+         wrongWords <- map["wrong_num"]
+         learnedWords <- map["learned_num"]
+         isSkipNewLearn <- map["is_skip_new_word_learn"]
+         bookGrade <- map["book_grade"]
+         bookVersionName <- map["book_ver_name"]
     }
 }

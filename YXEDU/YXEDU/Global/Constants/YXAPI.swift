@@ -19,20 +19,32 @@ struct YXAPI {
         
         // 發送短信
         static let sendSms = "/api/v1/user/sendsms"
+        
+        // 闪验获取手机号
+        static let SYGetPhoneNumber = "/api/v1/flash/mobile/"
+        
+        // 闪验登录
+        static let SYLogin = "/api/v1/flash/login/"
     }
     
     //MARK: - 主页
     struct Home {
+        static let getBaseInfo = "/api/v1/learn/getbaseinfo"
+        
         static let report = "/api/v1/user/learnreport"
         static let task   = "/api/v1/user/task/available"
         
-        static let setReminder = "api/v1/user/setting"
+        static let setReminder = "/api/v1/user/setting"
+        
+        static let getBookList = "/api/v1/book/getbooklist"
     }
     
     //MARK: - 用户模块
     struct User {
         // 更新 TOKEN
         static let updateToken = "/api/v1/user/gettoken"
+        
+        static let getInfo = "/v2/user/getinfo"
     }
     
     //MARK: - 个人模块
@@ -78,8 +90,18 @@ struct YXAPI {
         static let searchWord       = "/api/v1/search"
         /// 获得词书中所有单词
         static let getBookWords     = "/api/v1/book/getbookwords"
-        // 所以词书
+        
+        // 所有词书
         static let bookList = "/api/v1/book/getbooklist"
+        
+        // 用户词书
+        static let userBookList = "/api/v1/book/getuserbooklist"
+        
+        // 词书状态
+        static let getBooksStatus = "/api/v1/book/getuserbookstatus"
+        
+        // 删除词书
+        static let deleteBook = "/api/v1/book/deluserbook"
     }
 
     // MARK: - 复习模块

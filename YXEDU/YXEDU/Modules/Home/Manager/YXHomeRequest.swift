@@ -9,6 +9,8 @@
 import UIKit
 
 public enum YXHomeRequest: YYBaseRequest {
+    case getBaseInfo(userId: String)
+    case getBookList
     case report
     case updateToken
     case task
@@ -16,7 +18,7 @@ public enum YXHomeRequest: YYBaseRequest {
 
     var method: YYHTTPMethod {
         switch self {
-        case .report, .updateToken, .task:
+        case .report, .updateToken, .task, .getBaseInfo, .getBookList:
             return .get
             
         case .setReminder:
@@ -26,6 +28,12 @@ public enum YXHomeRequest: YYBaseRequest {
 
     var path: String {
         switch self {
+        case .getBaseInfo:
+            return YXAPI.Home.getBaseInfo
+            
+        case .getBookList:
+            return YXAPI.Home.getBookList
+
         case .report:
             return YXAPI.Home.report
         case .updateToken:
@@ -39,6 +47,9 @@ public enum YXHomeRequest: YYBaseRequest {
     
     var parameters: [String : Any?]? {
         switch self {
+            case .getBaseInfo(let userId):
+            return ["user_id": userId]
+            
         case .setReminder(let dataString):
             return ["data": dataString]
             

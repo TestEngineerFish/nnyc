@@ -18,7 +18,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     var shouldShowShanYan = true
     var platform: String!
-
+    
     private var timer: Timer?
     private var countingDown = 60
     private var slidingVerificationCode: String?
@@ -37,7 +37,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     @IBOutlet weak var fastLoginLabel: UILabel!
     @IBOutlet weak var fastLoginLeftLineView: UIView!
     @IBOutlet weak var fastLoginRightLineView: UIView!
-
+    
     @IBAction func clearphoneNumberTextField(_ sender: UIButton) {
         clearPhoneNumberTextFieldButton.isHidden = true
         
@@ -46,7 +46,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         
         sendSMSButton.isUserInteractionEnabled = false
         sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
-    
+        
         loginButton.isUserInteractionEnabled = false
     }
     
@@ -58,13 +58,24 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     @IBAction func phoneLogin(_ sender: UIButton) {
-        let loginModel = YXLoginSendModel()
-        loginModel.pf = "mobile"
-        loginModel.mobile = phoneNumberTextField.text
-        loginModel.code = authCodeTextField.text
-        loginModel.openid = ""
-
-        login(loginModel)
+        
+        let request = YXRegisterAndLoginRequest.login(platfrom: "mobile", phoneNumber: phoneNumberTextField.text ?? "", code: authCodeTextField.text ?? "")
+        YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let data = response.data else { return }
+            
+            YXUserModel.default.token = data.token
+            YXUserModel.default.uuid  = data.uuid
+            YXUserModel.default.username       = data.info?.username
+            YXUserModel.default.userAvatarPath = data.info?.avatar
+            
+            YXConfigure.shared().token = YXUserModel.default.token
+            YXConfigure.shared().uuid  = YXUserModel.default.uuid
+            
+            self.checkUserInfomation()
+            
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
     
     @IBAction func loginWithQQ(_ sender: UIButton) {
@@ -136,7 +147,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     private func changePhoneNumberTextField() {
         if var phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false {
             clearPhoneNumberTextFieldButton.isHidden = false
-
+            
             if phoneNumber.count >= 11 {
                 phoneNumberTextField.text = phoneNumber.substring(maxIndex: 11)
                 phoneNumber = phoneNumberTextField.text!
@@ -169,7 +180,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             if let phoneNumber = phoneNumberTextField.text, phoneNumber.count == 11 {
                 loginButton.isUserInteractionEnabled = true
             }
-
+            
         } else {
             loginButton.isUserInteractionEnabled = false
         }
@@ -214,10 +225,10 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 
                 self.startCountingDown()
                 self.authCodeTextField.becomeFirstResponder()
-
+                
             } else if slidingVerificationCodeModel.shouldShowSlidingVerification == 1 {
                 self.authCodeTextField.resignFirstResponder()
-
+                
                 RegisterSliderView.show(.puzzle) { (isSuccess) in
                     if isSuccess {
                         self.slidingVerificationCode = slidingVerificationCodeModel.slidingVerificationCode
@@ -232,33 +243,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         }
     }
     
-    /// 手机号登陆
-    /// - Parameter loginModel:
-    private func login(_ loginModel: YXLoginSendModel) {
-        let parameters = loginModel.yrModelToDictionary() as! [AnyHashable : Any]
-        YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/api/v1/user/login", parameters: parameters) { (response, isSuccess) in
-            
-            if isSuccess, let response = response?.responseObject {
-                let d1 = response as! [String: Any]
-                YXUserModel.default.token = d1["token"] as? String
-                YXUserModel.default.uuid  = d1["uuid"] as? String
-                
-                let d2 = d1["user_info"] as! [String: Any]
-                YXUserModel.default.username       = d2["nick"] as? String
-                YXUserModel.default.userAvatarPath = d2["avatar"] as? String
-                
-                YXConfigure.shared().token = YXUserModel.default.token
-                YXConfigure.shared().uuid  = YXUserModel.default.uuid
-                
-                self.checkUserInfomation()
-                
-            } else if let error = response?.error {
-                YXLog("手机号登录失败：", error.desc)
-            }
-        }
-    }
-    
-
     /// 更新用户信息
     private func checkUserInfomation() {
         YXUserDataManager.share.updateUserInfomation { [weakSelf = self] (userInfomation) in
@@ -304,15 +288,25 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     @objc
     private func thirdPartLogin(_ notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
+        self.platform = userInfo["platfrom"] as? String
         
-        let loginModel = YXLoginSendModel()
-        loginModel.pf = userInfo["platfrom"] as? String
-        loginModel.code = userInfo["token"] as? String
-        loginModel.openid = (userInfo["openID"] as? String == nil) ? "" : userInfo["openID"] as? String
-
-        self.platform = loginModel.pf
-        
-        login(loginModel)
+        let request = YXRegisterAndLoginRequest.thirdLogin(platfrom: self.platform, openId: (userInfo["openID"] as? String) ?? "", code: (userInfo["token"] as? String) ?? "")
+        YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let data = response.data else { return }
+            
+            YXUserModel.default.token = data.token
+            YXUserModel.default.uuid  = data.uuid
+            YXUserModel.default.username = data.info?.username
+            YXUserModel.default.userAvatarPath = data.info?.avatar
+            
+            YXConfigure.shared().token = YXUserModel.default.token
+            YXConfigure.shared().uuid  = YXUserModel.default.uuid
+            
+            self.checkUserInfomation()
+            
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
     
     
@@ -341,39 +335,54 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         }) { (resultOfLogin) in
             if let _ = resultOfLogin.error {
                 CLShanYanSDKManager.finishAuthControllerCompletion(nil)
-
+                
             } else {
-                YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/mobile/\(resultOfLogin.data?["token"] ?? "")", parameters: [:]) { (response, isSuccess) in
-                    guard isSuccess, let response = response else {
-                        CLShanYanSDKManager.finishAuthControllerCompletion(nil)
-                        return
-                    }
-
-                    let phoneNumber = response.responseObject as! [String]
-
-                    YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/flash/login/\(phoneNumber[0])", parameters: [:]) { (response, isSuccess) in
-                        if isSuccess, let response = response?.responseObject {
-                            let d1 = response as! [String: Any]
-                            YXUserModel.default.token = d1["token"] as? String
-                            YXUserModel.default.uuid  = d1["uuid"] as? String
+                let request = YXRegisterAndLoginRequest.SYGetPhoneNumber(token: (resultOfLogin.data?["token"] as? String) ?? "")
+                let task = URLSession.shared.dataTask(with: request.url) { data, response, error in
+                    DispatchQueue.main.async {
+                        guard let data = data else {
+                            CLShanYanSDKManager.finishAuthControllerCompletion(nil)
+                            return
+                        }
+                        
+                        struct PhoneNumber: Codable {
+                            let data: [String]?
+                        }
+                                                
+                        do {
+                            let responseObject = try JSONDecoder().decode(PhoneNumber.self, from: data)
+                            let request = YXRegisterAndLoginRequest.SYLogin(phoneNumber: responseObject.data?[0] ?? "0")
+                            YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { response in
+                                guard let data = response.data else {
+                                    CLShanYanSDKManager.finishAuthControllerCompletion(nil)
+                                    return
+                                }
+                                
+                                YXUserModel.default.token = data.token
+                                YXUserModel.default.uuid  = data.uuid
+                                YXUserModel.default.username = data.info?.username
+                                YXUserModel.default.userAvatarPath = data.info?.avatar
+                                
+                                YXConfigure.shared().token = YXUserModel.default.token
+                                YXConfigure.shared().uuid  = YXUserModel.default.uuid
+                                
+                                YXConfigure.shared().saveCurrentToken()
+                                YXUserModel.default.didLogin = true
+                                Growing.setUserId(YXUserModel.default.uuid ?? "")
+                                YXUserModel.default.login()
+                                
+                            }) { error in
+                                YXUtils.showHUD(kWindow, title: error.message)
+                                CLShanYanSDKManager.finishAuthControllerCompletion(nil)
+                            }
                             
-                            let d2 = d1["user_info"] as! [String: Any]
-                            YXUserModel.default.username       = d2["nick"] as? String
-                            YXUserModel.default.userAvatarPath = d2["avatar"] as? String
-
-                            YXConfigure.shared().token = YXUserModel.default.token
-                            YXConfigure.shared().uuid  = YXUserModel.default.uuid
-
-                            YXConfigure.shared().saveCurrentToken()
-                            YXUserModel.default.didLogin = true
-                            Growing.setUserId(YXUserModel.default.uuid ?? "")
-                            YXUserModel.default.login()
-
-                        } else if let error = response?.error {
-                            YXUtils.showHUD(kWindow, title: error.desc)
+                        } catch {
+                            CLShanYanSDKManager.finishAuthControllerCompletion(nil)
                         }
                     }
                 }
+                
+                task.resume()
             }
         }
     }
@@ -394,7 +403,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         configure.clShanYanSloganTextColor = .clear
         configure.clAppPrivacyFirst = ["《用户协议》", URL(string: "\(YXEvnOC.baseUrl())/agreement.html")!]
         configure.clAppPrivacySecond = ["《隐私政策》", URL(string: "\(YXEvnOC.baseUrl())/privacy.html")!]
-
+        
         let layoutConfigure = CLOrientationLayOut()
         layoutConfigure.clLayoutPhoneCenterX = NSNumber(0)
         layoutConfigure.clLayoutPhoneCenterY = NSNumber(-84)
@@ -441,7 +450,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             qqLoginButton.tag = 1
             qqLoginButton.setImage(#imageLiteral(resourceName: "QQ"), for: .normal)
             qqLoginButton.addTarget(self, action: #selector(self.clickOtherLoginButton), for: .touchUpInside)
-
+            
             let wechatLoginButton = UIButton()
             wechatLoginButton.tag = 2
             wechatLoginButton.setImage(#imageLiteral(resourceName: "Wechat"), for: .normal)

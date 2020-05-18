@@ -10,23 +10,26 @@ import UIKit
 
 public enum YXRegisterAndLoginRequest: YYBaseRequest {
     case sendSms(phoneNumber: String, loginType: String, SlidingVerificationCode: String?)
-    case login(phoneNumber: String, code: Int)
+    case login(platfrom: String, phoneNumber: String, code: String)
+    case thirdLogin(platfrom: String, openId: String, code: String)
     case userInfomation
     case logout
-    
+    case SYGetPhoneNumber(token: String)
+    case SYLogin(phoneNumber: String)
+
     var method: YYHTTPMethod {
         switch self {
-        case .sendSms, .login, .logout:
+        case .sendSms, .login, .logout, .thirdLogin:
             return .post
             
-        case .userInfomation:
+        case .userInfomation, .SYGetPhoneNumber, .SYLogin:
             return .get
         }
     }
     
     var path: String {
         switch self {
-        case .login:
+        case .login, .thirdLogin:
             return YXAPI.RegisterAndLogin.login
             
         case .sendSms:
@@ -37,18 +40,27 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
             
         case .logout:
             return YXAPI.RegisterAndLogin.logout
+            
+        case .SYGetPhoneNumber(let token):
+            return YXAPI.RegisterAndLogin.SYGetPhoneNumber + token
+            
+        case .SYLogin(let phoneNumber):
+            return YXAPI.RegisterAndLogin.SYLogin + phoneNumber
         }
     }
     
     var parameters: [String : Any?]? {
         switch self {
-        case .login(let phoneNumber, let code):
-            return ["phone": phoneNumber, "code": code]
+        case .login(let platfrom, let phoneNumber, let code):
+            return ["pf": platfrom, "mobile": phoneNumber, "code": code]
+            
+        case .thirdLogin(let platfrom, let openId, let code):
+            return ["pf": platfrom, "openid": openId, "code": code]
             
         case .sendSms(let phoneNumber, let loginType, let SlidingVerificationCode):
             if let SlidingVerificationCode = SlidingVerificationCode {
                 return ["mobile": phoneNumber, "type": loginType, "slide_code": SlidingVerificationCode]
-
+                
             } else {
                 return ["mobile": phoneNumber, "type": loginType]
             }

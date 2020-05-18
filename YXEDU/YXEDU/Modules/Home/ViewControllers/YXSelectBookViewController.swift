@@ -42,8 +42,9 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     nextSelectWordBook = self.wordBookModels[index + 1]
                 }
                 
-                YXDataProcessCenter.post("\(YXEvnOC.baseUrl())/api/v1/book/deluserbook", parameters: ["book_id": selectedBookId]) { [weak self] (response, isSuccess) in
-                    guard let self = self, isSuccess else { return }
+                let request = YXWordBookRequest.deleteBook(bookId: selectedBookId)
+                YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                    guard let self = self else { return }
                     
                     if index == self.wordBookModels.count - 1 - 1 {
                         self.wordBookModels[index - 1 ].isSelected = true
@@ -58,6 +59,8 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     
                     YXWordBookDaoImpl().deleteBook(bookId: selectedBookId)
 //                    try? FileManager.default.removeItem(at: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(selectedBookId)"))
+                }) { error in
+                    YXUtils.showHUD(kWindow, title: error.message)
                 }
                 
                 break
@@ -135,27 +138,25 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func fetchWordBooks() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbooklist", parameters: ["user_id": YXUserModel.default.uuid ?? ""]) { [weak self] (response, isSuccess) in
-            guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
+        let request = YXWordBookRequest.userBookList(userId: YXUserModel.default.uuid ?? "")
+        YYNetworkService.default.request(YYStructResponse<YXUserWordBookListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let result = response.data, let wordBookStateModels = result.currentLearnWordBookStatus, var learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 else { return }
             
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                guard let jsonString = String(data: jsonData, encoding: .utf8), let result = YXUserWordBookListModel(JSONString: jsonString), let wordBookStateModels = result.currentLearnWordBookStatus, var learnedWordBooks = result.learnedWordBooks, learnedWordBooks.count > 0 else { return }
-                learnedWordBooks[0].isSelected     = true
-                learnedWordBooks[0].isCurrentStudy = true
-                self.wordBookModels = learnedWordBooks
-                
-                self.wordBookStateModels = wordBookStateModels
-                self.fetchWordBookDetail(learnedWordBooks[0])
-                
-                var newWordBook = YXWordBookModel()
-                newWordBook.bookName      = "添加词书"
-                newWordBook.isNewWordBook = true
-                self.wordBookModels.append(newWordBook)
-                self.bookCollectionView.reloadData()
-            } catch {
-                YXLog("获取词书列表失败 :", error.localizedDescription)
-            }
+            learnedWordBooks[0].isSelected     = true
+            learnedWordBooks[0].isCurrentStudy = true
+            self.wordBookModels = learnedWordBooks
+            
+            self.wordBookStateModels = wordBookStateModels
+            self.fetchWordBookDetail(learnedWordBooks[0])
+            
+            var newWordBook = YXWordBookModel()
+            newWordBook.bookName      = "添加词书"
+            newWordBook.isNewWordBook = true
+            self.wordBookModels.append(newWordBook)
+            self.bookCollectionView.reloadData()
+            
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
@@ -173,31 +174,28 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             startStudyButton.setTitle("开始学习", for: .normal)
         }
         
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/api/v1/book/getuserbookstatus", parameters: ["user_id": YXUserModel.default.uuid, "book_id": "\(wordBook.bookId ?? 0)"]) { [weak self] (response, isSuccess) in
-            guard let self = self, isSuccess, let response = response?.responseObject as? [String: Any] else { return }
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                guard let jsonString = String(data: jsonData, encoding: .utf8), let result = YXWordBookStatusModel(JSONString: jsonString) else { return }
-                self.wordBookStateModels = result
-                
-                self.unitLabel.text = self.wordBookStateModels.learningUnit
-                
-                let countOfDaysForStudyString = "\(self.wordBookStateModels.learnedDays ?? 0)天"
-                let index1 = countOfDaysForStudyString.distance(from: countOfDaysForStudyString.startIndex, to: countOfDaysForStudyString.firstIndex(of: "天")!)
-                let attributedText1 = NSMutableAttributedString(string: countOfDaysForStudyString)
-                attributedText1.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index1))
-                attributedText1.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index1))
-                self.countOfDaysForStudyLabel.attributedText = attributedText1
-                
-                let countOfWordsForStudyString = "\(self.wordBookStateModels.learnedWordsCount ?? 0)个"
-                let index2 = countOfWordsForStudyString.distance(from: countOfWordsForStudyString.startIndex, to: countOfWordsForStudyString.firstIndex(of: "个")!)
-                let attributedText2 = NSMutableAttributedString(string: countOfWordsForStudyString)
-                attributedText2.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index2))
-                attributedText2.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index2))
-                self.countOfWordsForStudyLabel.attributedText = attributedText2
-            } catch {
-                YXLog("获取词书状态失败，error：",error.localizedDescription)
-            }
+        let request = YXWordBookRequest.getBooksStatus(userId: YXUserModel.default.uuid ?? "", bookId: wordBook.bookId ?? 0)
+        YYNetworkService.default.request(YYStructResponse<YXWordBookStatusModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let result = response.data else { return }
+            self.wordBookStateModels = result
+            
+            self.unitLabel.text = self.wordBookStateModels.learningUnit
+            
+            let countOfDaysForStudyString = "\(self.wordBookStateModels.learnedDays ?? 0)天"
+            let index1 = countOfDaysForStudyString.distance(from: countOfDaysForStudyString.startIndex, to: countOfDaysForStudyString.firstIndex(of: "天")!)
+            let attributedText1 = NSMutableAttributedString(string: countOfDaysForStudyString)
+            attributedText1.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index1))
+            attributedText1.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index1))
+            self.countOfDaysForStudyLabel.attributedText = attributedText1
+            
+            let countOfWordsForStudyString = "\(self.wordBookStateModels.learnedWordsCount ?? 0)个"
+            let index2 = countOfWordsForStudyString.distance(from: countOfWordsForStudyString.startIndex, to: countOfWordsForStudyString.firstIndex(of: "个")!)
+            let attributedText2 = NSMutableAttributedString(string: countOfWordsForStudyString)
+            attributedText2.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSRange(location: 0, length: index2))
+            attributedText2.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index2))
+            self.countOfWordsForStudyLabel.attributedText = attributedText2
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     

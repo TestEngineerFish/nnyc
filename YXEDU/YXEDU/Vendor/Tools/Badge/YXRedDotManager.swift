@@ -37,15 +37,19 @@ import Foundation
     func updateFeedbackReplyBadge() {
         // 清除本地通知的badge
         UIApplication.shared.applicationIconBadgeNumber = 0
-        YXComHttpService.shared()?.requestUserInfo({ (objc, result) in
-            guard let userModel = objc as? YXLoginModel else {
-                return
-            }
-            let badgeNum = userModel.notify.intValue
+        
+        let request = YXHomeRequest.task
+        YYNetworkService.default.request(YYStructResponse<YXNewLoginModel>.self, request: request, success: { (response) in
+            guard let userModel = response.data else { return }
+ 
+            let badgeNum = userModel.notify
             YYCache.set(badgeNum, forKey: YXLocalKey.newFeedbackReply)
-            UIApplication.shared.applicationIconBadgeNumber = badgeNum
+            UIApplication.shared.applicationIconBadgeNumber = badgeNum ?? 0
             NotificationCenter.default.post(name: YXNotification.kUpdateFeedbackReplyBadge, object: nil)
-        })
+            
+        }) { (error) in
+            YXLog("更新反馈回复小红点失败，error msg：\(error.message)")
+        }
     }
     
     /// 更新任务中心小红点
