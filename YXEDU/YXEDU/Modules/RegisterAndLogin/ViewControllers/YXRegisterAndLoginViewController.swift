@@ -246,7 +246,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     /// 更新用户信息
     private func checkUserInfomation() {
         YXUserDataManager.share.updateUserInfomation { [weakSelf = self] (userInfomation) in
-            guard userInfomation.didBindPhone == 1 else {
+            guard userInfomation.didBindPhone == 0 else {
                 weakSelf.performSegue(withIdentifier: "Bind", sender: weakSelf)
                 return
             }
@@ -351,7 +351,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                                 
                         do {
                             let responseObject = try JSONDecoder().decode(PhoneNumber.self, from: data)
-                            let request = YXRegisterAndLoginRequest.SYLogin(phoneNumber: responseObject.data?[0] ?? "0")
+                            let request = YXRegisterAndLoginRequest.SYLogin(phoneNumber: responseObject.data?[0] ?? "")
                             YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { response in
                                 guard let data = response.data else {
                                     CLShanYanSDKManager.finishAuthControllerCompletion(nil)
