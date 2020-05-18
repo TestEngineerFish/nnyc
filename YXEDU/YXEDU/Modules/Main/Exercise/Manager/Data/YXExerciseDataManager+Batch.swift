@@ -37,7 +37,7 @@ extension YXExerciseDataManager {
             }
         }
         
-        return ruleType == .p2 && firstStep == step
+        return ruleType == .p2 && firstStep == step && progressManager.fetchErrorCount(wordId: wordId) == 0
     }
     
     // 新学是否分批
