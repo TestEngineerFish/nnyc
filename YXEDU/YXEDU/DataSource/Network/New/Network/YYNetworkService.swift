@@ -17,8 +17,8 @@ enum YXMiMeType: String {
     case file  = "application/octet-stream"
 }
 
-struct YYNetworkService {
-    public static let `default` = YYNetworkService()
+class YYNetworkService {
+    public static var `default` = YYNetworkService()
     public let networkManager = NetworkReachabilityManager()
     
     private let maxOperationCount: Int = 3
@@ -31,6 +31,8 @@ struct YYNetworkService {
         _configuration.timeoutIntervalForRequest = timeout
         return _configuration
     }
+
+    private var requestCountDict: [String:Int] = [:]
     
     
     private init() {
@@ -108,7 +110,7 @@ struct YYNetworkService {
      *  文件内容上传 Request
      */
     public func upload <T> (_ type: T.Type, request: YYBaseRequest, mimeType: String = YXMiMeType.image.rawValue, fileName: String = "photo", success: ((_ response: T) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) -> Void where T: YYBaseResopnse {
-        
+
         guard let parameters = request.parameters else {
             return
         }
@@ -170,20 +172,34 @@ struct YYNetworkService {
     
     //MARK: ----------------- Method -----------------
     @discardableResult
-    private func postBody <T> (_ type: T.Type, request: URLRequest, success:@escaping (_ response: T, _ httpStatusCode: Int) -> Void?, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
-
-        let request = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
+    private func postBody <T> (_ type: T.Type, request: URLRequest, success: @escaping (_ response: T, _ httpStatusCode: Int) -> Void?, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
+        let requestStr = request.url?.absoluteString ?? ""
+        YXRequestLog(String(format: "POST = request url:%@ params:%@", requestStr))
+        let dataResquest = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
             switch response.result {
             case .success(var x):
                 x.response = response.response
                 x.request = response.request
-                success(x, (response.response?.statusCode) ?? 0)
+                if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8) {
+                    YXRequestLog(String(format: "【Success】 request url: %@, respnseObject: %@", requestStr, dataStr))
+                }
+                if (x as YYBaseResopnse).statusCode == .some(10002) {
+                    if self.addCountAction(requestStr) {
+                        self.postBody(type, request: request, success: success, fail: fail)
+                    }
+                } else {
+                    success(x, (response.response?.statusCode) ?? 0)
+                    self.clearCountAction(requestStr)
+                }
             case .failure(let error):
+                let msg = (error as NSError).message
+                YXRequestLog(String(format: "【❌Fail❌】 POST = request url:%@, error:%@", requestStr, msg))
                 fail(error as NSError)
+                self.clearCountAction(requestStr)
             }
         }
 
-        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: request)
+        let taskRequest: YYTaskRequest = YYTaskRequestModel(request: dataResquest)
         return taskRequest
     }
     
@@ -197,27 +213,51 @@ struct YYNetworkService {
         let method = HTTPMethod(rawValue: request.method.rawValue) ?? .get
         YXRequestLog(String(format: "%@ = request url:%@ params:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? ""))
         let task = sessionManager.request(request.url, method: method, parameters: params, encoding: encoding, headers: header)
+
         task.responseObject { (response: DataResponse <T>) in
+            let requestStr = request.url.absoluteString
             switch response.result {
             case .success(var x):
-                if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8), !request.url.absoluteString.hasSuffix("api/v1/book/getbookwords") {
+                if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8), !request.url.absoluteString.hasSuffix(YXAPI.Word.getBookWords) {
                     YXRequestLog(String(format: "【Success】 request url: %@, respnseObject: %@", request.url.absoluteString, dataStr))
                 }
                 x.response = response.response
                 x.request  = response.request
-                success(x, (response.response?.statusCode) ?? 0)
+                if (x as YYBaseResopnse).statusCode == .some(10002) {
+                    if self.addCountAction(requestStr) {
+                        _ = self.httpRequest(type, request: request, success: success, fail: fail)
+                    }
+                } else {
+                    success(x, (response.response?.statusCode) ?? 0)
+                    self.clearCountAction(requestStr)
+                }
             case .failure(let error):
                 let msg = (error as NSError).message
                 YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? "", msg))
                 fail(error as NSError)
+                self.clearCountAction(requestStr)
             }
         }
         
         let taskRequest: YYTaskRequest = YYTaskRequestModel(request: task)
         return taskRequest
     }
-    
-    
+
+    /// 添加请求计数
+    private func addCountAction(_ key: String) -> Bool {
+        let count = self.requestCountDict[key] ?? 0
+        if count < 3 {
+            YXLog("接口", key, "返回；10002，重新请求接口，次数：\(count)")
+            self.requestCountDict.updateValue(count + 1, forKey: key)
+            return true
+        }
+        return false
+    }
+
+    /// 清除请求计数
+    private func clearCountAction(_ key: String) {
+        self.requestCountDict.updateValue(0, forKey: key)
+    }
     
     
     //MARK: ----------------- Response -----------------
@@ -234,7 +274,8 @@ struct YYNetworkService {
         } else {
             if responseStatusCode == 10002 {
                 // 当登录状态失效时，通知上层
-                YXMediator.shared()?.tokenExpired()
+                YXLog("Token过期 10002")
+//                YXMediator.shared()?.tokenExpired()
             } else if responseStatusCode == 6666 {
                 // 停服
                 let serviceStop = YXNotification.kServiceStop
