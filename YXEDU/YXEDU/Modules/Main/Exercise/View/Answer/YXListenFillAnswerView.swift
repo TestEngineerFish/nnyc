@@ -16,11 +16,11 @@ class YXListenFillAnswerView: YXBaseAnswerView {
     
     private var audioBackgroundView: UIView = UIView()
     
-//    private var errorCount = 0
+    private var errorCount = 0
 
     deinit {
         NotificationCenter.default.removeObserver(self, name: YXNotification.kCloseWordDetailPage, object: nil)
-        NotificationCenter.default.removeObserver(self, name: YXNotification.kShowWordDetailPage, object: nil)
+        NotificationCenter.default.removeObserver(self, name: YXNotification.kClickTipsButton, object: nil)
     }
     
     override func createSubviews() {
@@ -56,7 +56,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(closeWordDetailPage), name: YXNotification.kCloseWordDetailPage, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(showWordDetailPage), name: YXNotification.kShowWordDetailPage, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(clickTipsBtnAction), name: YXNotification.kClickTipsButton, object: nil)
     }
      
     override func layoutSubviews() {
@@ -126,11 +126,11 @@ class YXListenFillAnswerView: YXBaseAnswerView {
             textField.resignFirstResponder()
             answerCompletion(right: true)
         } else {
-//            errorCount += 1
-//
-//            if errorCount > 3 {
-//                textField.resignFirstResponder()
-//            }
+            errorCount += 1
+
+            if errorCount > 3 {
+                textField.resignFirstResponder()
+            }
             answerCompletion(right: false)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
@@ -140,14 +140,17 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         }
     }
 
-    @objc func showWordDetailPage() {
-        self.textField.resignFirstResponder()
+    @objc func clickTipsBtnAction() {
+        self.errorCount += 1
+        if errorCount > 3 {
+            self.textField.resignFirstResponder()
+        }
     }
 
     @objc func closeWordDetailPage() {
-//        if errorCount > 3 {
+        if errorCount > 3 {
             textField.becomeFirstResponder()
-//        }
+        }
     }
 
     

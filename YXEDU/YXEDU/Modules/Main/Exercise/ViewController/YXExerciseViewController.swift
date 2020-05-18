@@ -361,6 +361,7 @@
         }
         self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
         self.exerciseViewArray.first?.remindView?.show()
+        NotificationCenter.default.post(name: YXNotification.kClickTipsButton, object: nil)
     }
 }
  

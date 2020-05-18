@@ -21,6 +21,8 @@ struct YXNotification {
     static let kRefreshReviewDetailPage  = NSNotification.Name("kRefreshReviewDetailPage")
     /// 详情页显示的时候
     static let kShowWordDetailPage       = NSNotification.Name("kShowWordDetailPage")
+    /// 点击【提示一下】按钮
+    static let kClickTipsButton          = NSNotification.Name("kClickTipsButton")
     /// 详情页关闭的时候
     static let kCloseWordDetailPage      = NSNotification.Name("kCloseWordDetailPage")
     /// 更新反馈回复红点
