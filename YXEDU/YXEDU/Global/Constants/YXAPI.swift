@@ -25,6 +25,12 @@ struct YXAPI {
         
         // 闪验登录
         static let SYLogin = "/api/v1/flash/login/"
+        
+        static let bind = "/api/v1/user/bindmobile"
+        
+        static let bind2 = "/v1//user/bind"
+        
+        static let unbind = "/v1/user/unbind"
     }
     
     //MARK: - 主页
@@ -217,7 +223,9 @@ struct YXAPI {
         /// 老用户更新版本后的提示，上报接口
         static let oldUserReport = "api/v1/user/setting"
         
+        static let setup = "v1/user/setup"
 
+        static let setAvatar = "v2/user/setavatar"
     }
 
     // MARK: - 其他
@@ -226,6 +234,10 @@ struct YXAPI {
         static let report = "/api/v1/device/report"
         /// 用户反馈回复已读接口
         static let feedbackReport = "/api/v1/feedback/reply/report"
+        
+        static let feedback = "/v1/api/feedback"
+        
+        static let errorWordFeedback = "/api/v1/errorwordfeedback"
     }
     
     // MARK: - Badge
@@ -239,6 +251,8 @@ struct YXAPI {
 
         /// 获得月报学习时间列表
         static let getMonthly = "/api/v1/daily/getmonthly"
+        
+        static let getDayInfo = "/api/v1/daily/getdayinfo"
     }
 }
 

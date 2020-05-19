@@ -241,17 +241,16 @@ extension YYEnvChangeViewController {
         
         
         if (YXConfigure.shared().token?.count ?? 0) > 0 {
-            let logoutModel = YXLogoutModel()
-            logoutModel.jp_devices_id = YXConfigure.shared().deviceId
-            logoutModel.jp_registration_id = jgId
+            let request = YXRegisterAndLoginRequest.logout
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: nil) { (error) in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
             
-            YXPersonalViewModel().logout(logoutModel, finish: { (obj, result) in
-                YXUserModel.default.logout()
-                UserDefaults.standard.set("", forKey: kDailyCheckInNotify)
-                UserDefaults.standard.synchronize()
-                
-                exitBlock()
-            })
+            YXUserModel.default.logout()
+            UserDefaults.standard.set("", forKey: kDailyCheckInNotify)
+            UserDefaults.standard.synchronize()
+            
+            exitBlock()
             
         } else {
             exitBlock()

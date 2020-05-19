@@ -15,7 +15,6 @@
 #import "YXLogoutModel.h"
 #import "YXConfigure.h"
 #import "YXAccount.h"
-#import "YXPersonalViewModel.h"
 #import "YXMediator.h"
 #import "YXNotification.h"
 #import "BSCommon.h"
@@ -25,7 +24,6 @@
 
 #import "YXPolicyVC.h"
 #import "YXAgreementVC.h"
-#import "YXBindViewModel.h"
 #import "QQApiManager.h"
 #import "WXApiManager.h"
 #import "YXDataProcessCenter.h"

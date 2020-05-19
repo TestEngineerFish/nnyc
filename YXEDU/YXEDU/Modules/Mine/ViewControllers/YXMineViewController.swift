@@ -299,9 +299,13 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
                 if self.bindInfo[1] == "1" {
                     let alert = UIAlertController(title: "解绑后将无法使用QQ进行登录", message: "", preferredStyle: .alert)
                     let action1 = UIAlertAction(title: "确定", style: .default) { action in
-                        YXPersonalViewModel().unbindSO("qq") { (response, isSuccess) in
-                            guard isSuccess, let _ = response else { return }
+                        let request = YXRegisterAndLoginRequest.unbind(platfrom: "qq")
+                        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                            guard let self = self, let data = response.data else { return }
                             self.loadData()
+
+                        }) { error in
+                            YXUtils.showHUD(kWindow, title: error.message)
                         }
                     }
                     alert.addAction(action1)
@@ -320,9 +324,13 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
                 if self.bindInfo[2] == "2" {
                     let alert = UIAlertController(title: "解绑后将无法使用微信进行登录", message: "", preferredStyle: .alert)
                     let action1 = UIAlertAction(title: "确定", style: .default) { action in
-                        YXPersonalViewModel().unbindSO("wechat") { (response, isSuccess) in
-                            guard isSuccess, let _ = response else { return }
+                        let request = YXRegisterAndLoginRequest.unbind(platfrom: "wechat")
+                        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                            guard let self = self, let data = response.data else { return }
                             self.loadData()
+
+                        }) { error in
+                            YXUtils.showHUD(kWindow, title: error.message)
                         }
                     }
                     alert.addAction(action1)
@@ -461,15 +469,14 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     @objc
     private func thirdPartLogin(_ notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
-        
-        let personalBindModel = YXPersonalBindModel()
-        personalBindModel.bind_pf = userInfo["platfrom"] as? String
-        personalBindModel.code    = userInfo["token"] as? String
-        personalBindModel.openid  = (userInfo["openID"] as? String == nil) ? "" : userInfo["openID"] as? String
-        
-        YXPersonalViewModel().bindSO(personalBindModel) { (response, isSuccess) in
-            guard isSuccess, let _ = response else { return }
+  
+        let request = YXRegisterAndLoginRequest.bind2(platfrom: userInfo["platfrom"] as? String ?? "", openId: userInfo["openID"] as? String ?? "", code: userInfo["token"] as? String ?? "")
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let data = response.data else { return }
             self.loadData()
+
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 }

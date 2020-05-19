@@ -50,19 +50,18 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
     }
     
     @IBAction func login(_ sender: UIButton) {
-        let bindModel = YXBindModel()
-        bindModel.mobile = phoneNumberTextField.text
-        bindModel.code = authCodeTextField.text
-        bindModel.pf = platform
-        
-        let bindViewModel = YXBindViewModel()
-        bindViewModel.bindPhone(bindModel) { (response, isSuccess) in
-            guard isSuccess else { return }
+        let request = YXRegisterAndLoginRequest.bind(platfrom: platform, phoneNumber: phoneNumberTextField.text ?? "", code: authCodeTextField.text ?? "")
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard response.statusCode == 200 else { return }
+            
             YXConfigure.shared().saveCurrentToken()
 
             YXUserModel.default.didLogin = true
             Growing.setUserId(YXUserModel.default.uuid ?? "")
             YXUserModel.default.login()
+            
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
