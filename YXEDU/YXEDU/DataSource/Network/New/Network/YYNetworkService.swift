@@ -22,7 +22,7 @@ class YYNetworkService {
     public let networkManager = NetworkReachabilityManager()
     
     private let maxOperationCount: Int = 3
-    private let timeout: TimeInterval = 15
+    private let timeout: TimeInterval  = 15
     
     private var sessionManager: SessionManager!
     
@@ -179,23 +179,25 @@ class YYNetworkService {
             switch response.result {
             case .success(var x):
                 x.response = response.response
-                x.request = response.request
+                x.request  = response.request
                 if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8) {
                     YXRequestLog(String(format: "【Success】 request url: %@, respnseObject: %@", requestStr, dataStr))
                 }
                 if (x as YYBaseResopnse).statusCode == .some(10002) {
                     if self.addCountAction(requestStr) {
-                        self.postBody(type, request: request, success: success, fail: fail)
+                        self.tokenRenewal {
+                            self.postBody(type, request: request, success: success, fail: fail)
+                        }
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)
-                    self.clearCountAction(requestStr)
+                    self.clearCountAction()
                 }
             case .failure(let error):
                 let msg = (error as NSError).message
                 YXRequestLog(String(format: "【❌Fail❌】 POST = request url:%@, error:%@", requestStr, msg))
                 fail(error as NSError)
-                self.clearCountAction(requestStr)
+                self.clearCountAction()
             }
         }
 
@@ -225,17 +227,19 @@ class YYNetworkService {
                 x.request  = response.request
                 if (x as YYBaseResopnse).statusCode == .some(10002) {
                     if self.addCountAction(requestStr) {
-                        _ = self.httpRequest(type, request: request, success: success, fail: fail)
+                        self.tokenRenewal {
+                            _ = self.httpRequest(type, request: request, success: success, fail: fail)
+                        }
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)
-                    self.clearCountAction(requestStr)
+                    self.clearCountAction()
                 }
             case .failure(let error):
                 let msg = (error as NSError).message
                 YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? "", msg))
                 fail(error as NSError)
-                self.clearCountAction(requestStr)
+                self.clearCountAction()
             }
         }
         
@@ -243,11 +247,13 @@ class YYNetworkService {
         return taskRequest
     }
 
+    // MARK: ==== Token 管理 ====
+
     /// 添加请求计数
     private func addCountAction(_ key: String) -> Bool {
         let count = self.requestCountDict[key] ?? 0
+        YXLog("接口", key, "返回；10002，重新请求接口，次数：\(count)")
         if count < 3 {
-            YXLog("接口", key, "返回；10002，重新请求接口，次数：\(count)")
             self.requestCountDict.updateValue(count + 1, forKey: key)
             return true
         }
@@ -255,8 +261,22 @@ class YYNetworkService {
     }
 
     /// 清除请求计数
-    private func clearCountAction(_ key: String) {
-        self.requestCountDict.updateValue(0, forKey: key)
+    private func clearCountAction() {
+        self.requestCountDict.removeAll()
+    }
+
+    /// Token续期
+    private func tokenRenewal(complete block:@escaping (()->Void)) {
+        let request = YXNetworkRequest.renewal
+        YYNetworkService.default.request(YYStructResponse<YXNetworkModel>.self, request: request, success: { (response) in
+            self.clearCountAction()
+            block()
+            guard let model = response.data else {return}
+            YXLog("Token续期成功，新Token:", model.token)
+        }, fail: { (error) in
+            block()
+            YXLog("Token续期失败，error:\(error)")
+        })
     }
     
     
