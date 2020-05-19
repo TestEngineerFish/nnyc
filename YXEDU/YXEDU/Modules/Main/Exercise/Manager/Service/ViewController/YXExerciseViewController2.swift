@@ -7,17 +7,17 @@
  //
  
  import UIKit
- protocol YXExerciseViewControllerProtocol: NSObjectProtocol {
-    /// 显示弹框事件
-    func showAlertEvnet()
-    /// 返回首页事件
-    func backHomeEvent()
-    /// 隐藏弹框事件
-    func hideAlertEvent()
- }
- 
+// protocol YXExerciseViewControllerProtocol: NSObjectProtocol {
+//    /// 显示弹框事件
+//    func showAlertEvnet()
+//    /// 返回首页事件
+//    func backHomeEvent()
+//    /// 隐藏弹框事件
+//    func hideAlertEvent()
+// }
+//
  /// 练习模块，主控制器
- class YXExerciseViewController: YXViewController {
+ class YXExerciseViewController2: YXViewController {
     
     // 基础学习时，必须要传 bookId和unitId，要缓存进度
     public var bookId: Int?
@@ -185,15 +185,6 @@
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        let service: YXExerciseServiceImpl = YXExerciseServiceImpl()
-        service.bookId = bookId ?? 0
-        service.unitId = bookId ?? 0
-        service.dataType = dataType
-        service.planId = planId ?? 0
-        service.fetchExerciseResultModels(planId: planId) { [weak self] (result, msg) in
-            
-        }
-        
         dataManager.fetchTodayExerciseResultModels(type: dataType, planId: planId) { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
@@ -285,7 +276,7 @@
             exerciseView.answerView?.connectionAnswerViewDelegate = self
 
             loadExerciseView(exerciseView: exerciseView)
-        } else {            
+        } else {
             self.report()
         }
     }
@@ -374,7 +365,7 @@
     }
 }
  
-extension YXExerciseViewController: YXExerciseViewDelegate {
+extension YXExerciseViewController2: YXExerciseViewDelegate {
 
     func clickTipsBtnEventWithExercise() {
         self.clickTipsBtnEvent()
@@ -482,7 +473,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     }
 }
 
-extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
+extension YXExerciseViewController2: YXConnectionAnswerViewDelegate {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int) {
         bottomView.tipsButton.isEnabled = selected
         if selected {
@@ -545,7 +536,7 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
 }
 
 
-extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
+extension YXExerciseViewController2: YXExerciseHeaderViewProtocol {
     func clickHomeBtnEvent() {
         YXLog("学习中点击【回首页】按钮")
         self.delegate?.showAlertEvnet()
@@ -590,7 +581,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     }
 }
  
-extension YXExerciseViewController: YXExerciseBottomViewProtocol {
+extension YXExerciseViewController2: YXExerciseBottomViewProtocol {
     func clickTipsBtnEventWithBottom() {
         self.clickTipsBtnEvent()
     }
@@ -612,5 +603,6 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
         answerView.answerCompletion(right: true)
     }
 }
+
 
 

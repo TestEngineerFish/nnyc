@@ -8,16 +8,42 @@
 
 import UIKit
 
+//两种方法
+//C++ ==> Objective-C++ / Objective-C ==> Swift
+//C++ ==> C ==> Swift
 
-/// 练习状态
-enum YXExerciseStatus: Int {
+//MARK: - 练习单词分类
+/// 练习单词分类
+enum YXExerciseWordType: Int {
+    case new = 1        // 新学
+    case exercise = 2   // 训练
+    case review = 3     // 复习
+    
+    var desc: String {
+        if self == .new {
+            return "新学"
+        } else if self == .exercise {
+            return "训练"
+        } else {
+            return "复习"
+        }
+        
+    }
+}
+
+//MARK: - 练习进度
+/// 练习进度
+enum YXExerciseProgress: Int {
+    case none = 0       // 空数据
     case learning = 1   // 学习中【未学完】
     case finished = 2   // 已学完【未上报】
     case reported = 3   // 已上报
 }
 
+//MARK: - 练习出题逻辑管理器
 /// 练习出题逻辑管理器
 protocol YXExerciseService {
+    
     
     //MARK: - 属性
     // ----------------------------
@@ -27,21 +53,23 @@ protocol YXExerciseService {
     /// 哪个单元
     var unitId: Int { get set }
     
+    /// 哪个复习计划
+    var planId: Int { get set }
+    
     /// 数据类型
     var dataType: YXExerciseDataType { get set }
     
     /// 练习规则
     var ruleType: YXExerciseRuleType { get }
     
-    /// 练习状态
-    var exerciseStatus: YXExerciseStatus { get }
-    
+    /// 练习进度
+    var exerciseProgress: YXExerciseProgress { get }
     
     
     //MARK: - 方法
     // ----------------------------
     /// 获取一个练习数据
-    func getExerciseModel() -> YXWordExerciseModel?
+    func fetchExerciseModel() -> YXWordExerciseModel?
     
     
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态（连线题单个选项的对错有其他的方法处理）
@@ -73,3 +101,24 @@ protocol YXExerciseService {
     func hasErrorInCurrentTurn(wordId: Int, step: Int)
 
 }
+
+
+extension YXExerciseService {
+    /// 每批新学的大小限制
+    var newWordBatchSize: Int {
+        return ruleType == .a1 || ruleType == .a2 ? 3 : 5
+    }
+    
+    /// 每批训练的大小限制
+    var exerciseWordBatchSize: Int {
+        return newWordBatchSize
+    }
+    
+    /// 每批复习的大小限制
+    var reviewWordBatchSize: Int {
+        return ruleType == .a1 || ruleType == .a2 ? 4 : 5
+    }
+    
+    
+}
+

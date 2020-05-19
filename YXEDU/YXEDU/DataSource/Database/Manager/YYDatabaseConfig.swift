@@ -21,7 +21,10 @@ struct YYSQLManager {
     static let CreateWordTables: [String] = {
         var sqlArray = [CreateWordTableSQLs.bookTable.rawValue,
                         CreateWordTableSQLs.wordTable.rawValue,
-                        CreateWordTableSQLs.searchHistoryTable.rawValue]
+                        CreateWordTableSQLs.searchHistoryTable.rawValue,
+                        CreateExerciseTableSQLs.allExercise.rawValue,
+                        CreateExerciseTableSQLs.allWordStep.rawValue
+        ]
         if YYCache.object(forKey: "updateDatabase") as? Bool ?? true {
             sqlArray.insert(DeleteTableSQLs.bookTable.rawValue, at: 0)
             sqlArray.insert(DeleteTableSQLs.wordTable.rawValue, at: 0)

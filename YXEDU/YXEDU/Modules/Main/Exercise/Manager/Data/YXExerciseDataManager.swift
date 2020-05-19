@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-enum YXExerciseDataType: Int {
+@objc enum YXExerciseDataType: Int {
     case base = 1               // 基础学习
     case wrong = 2              // 抽查
     case planListenReview = 3   // 计划——听力复习

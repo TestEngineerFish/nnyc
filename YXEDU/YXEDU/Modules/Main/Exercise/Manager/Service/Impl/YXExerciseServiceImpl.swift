@@ -10,22 +10,36 @@ import UIKit
 
 class YXExerciseServiceImpl: YXExerciseService {
     
+    // ----------------------------
     //MARK: - 属性
     var bookId: Int = 0
     
     var unitId: Int = 0
     
+    var planId: Int = 0
+    
     var dataType: YXExerciseDataType = .base
     
-    var ruleType: YXExerciseRuleType { return .p }
+    var ruleType: YXExerciseRuleType = .p
     
-    var exerciseStatus: YXExerciseStatus { return .learning }
+    var exerciseProgress: YXExerciseProgress = .reported
     
-//    var isShowWordDetail: Bool { return false }
+    // ----------------------------
+    //MARK: - Private 属性
+    /// 本地数据库访问
+    var wordDao: YXWordBookDao = YXWordBookDaoImpl()
+    var exerciseDao: YXExerciseDao = YXExerciseDaoImpl()
+    var stepDao: YXWordStepDao = YXWordStepDaoImpl()
+    
+    
+    // ----------------------------
     
     //MARK: - 方法
-    func getExerciseModel() -> YXWordExerciseModel? {
-        return nil
+    func fetchExerciseModel() -> YXWordExerciseModel? {
+        self.clearExpiredData()
+        self.updateProgress()
+        
+        return self.queryExerciseModel()
     }
     
     func answerAction(exerciseModel: YXWordExerciseModel, right: Bool) {
@@ -34,9 +48,18 @@ class YXExerciseServiceImpl: YXExerciseService {
         } else {
             
         }
+        
+        // 答完题后，清理数据
+        self.clearExpiredData()
+        
+        // 更新状态
+        self.updateProgress()
     }
     
     func answerAction(exerciseModel: YXWordExerciseModel, right: Bool, optionIndex: Int) {
+        
+        
+        
         
     }
     
@@ -47,4 +70,13 @@ class YXExerciseServiceImpl: YXExerciseService {
     func hasErrorInCurrentTurn(wordId: Int, step: Int) {
         
     }
+    
+    
+    // ----------------------------
+    //MARK: - Private 方法
+    
+
+    
+    
+
 }
