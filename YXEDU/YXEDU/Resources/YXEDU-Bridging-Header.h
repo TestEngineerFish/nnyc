@@ -27,7 +27,6 @@
 #import "YXAgreementVC.h"
 #import "QQApiManager.h"
 #import "WXApiManager.h"
-#import "YXDataProcessCenter.h"
 #import "YXStatusCode.h"
 #import "UIImageView+WebCache.h"
 #import "YXPersonalInformationVC.h"

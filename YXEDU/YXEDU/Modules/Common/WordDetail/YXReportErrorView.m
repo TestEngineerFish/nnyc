@@ -7,6 +7,8 @@
 //
 
 #import "YXReportErrorView.h"
+#import "YRNetworkManager.h"
+
 @interface UITextView (Placeholder)
 -(void)setPlaceholder:(NSString *)placeholdStr placeholdColor:(UIColor *)placeholdColor;
 @end
@@ -224,19 +226,16 @@ static const NSInteger MAX_NAME_LENGTH = 50;
 
 - (void)submitAction {//当前question_id: 单词发音;好多好多简单就
     if (self.wordId) {
-        NSDictionary *param = @{
-            @"word_id" : self.wordId,
-            @"word" : self.word,
-            @"content" : self.feedBackTextView.text,
-            @"type" : self.errorIds.mj_JSONString
-        };
-        NSString *url = [NSString stringWithFormat:@"%@/api/v1/errorwordfeedback", [YXEvnOC baseUrl]];
-        [YXDataProcessCenter POST:url parameters:param finshedBlock:^(YRHttpResponse *response, BOOL result) {
-            if (result) {
+        [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeErrorWordFeedback params:@{@"wordId": self.wordId, @"word": self.word, @"content": self.feedBackTextView.text, @"type": self.errorIds.mj_JSONString} isUpload:NO success:^(YXOCModel* model) {
+            if (model != nil) {
                 [self close];
                 [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:@"提交成功"];
             }
+            
+        } fail:^(NSError* error) {
+            
         }];
+        
         return;
     };
     
@@ -245,18 +244,30 @@ static const NSInteger MAX_NAME_LENGTH = 50;
     NSString *env = [NSString stringWithFormat:@"%@;%@;%@;%@;%@;%@;%@", [YXUtils machineName], [YXUtils systemVersion],[YXUtils appVersion],[YXUtils carrierName],[YXUtils networkType],[YXUtils screenInch],[YXUtils screenResolution]];
     UIImage *image = self.image;
     NSArray *files = @[image];
-    NSDictionary *param = @{
-                            @"feed" : feed,
-                            @"env"  : env
-                            };
-    [YXDataProcessCenter UPLOAD:DOMAIN_FEEDBACK parameters:param datas:files finshedBlock:^(YRHttpResponse *response, BOOL result) {
-        if (result) {
+    
+    NSMutableArray *fileArr = [NSMutableArray array];
+    for (int i =0; i<files.count; i++) {
+        YRFormFile *formFile = [[YRFormFile alloc]init];
+        NSData *imageData = UIImageJPEGRepresentation(files[i], 0.2);
+        formFile.name = @"files[]";
+        formFile.filename = [NSString stringWithFormat:@"image%ld.jpeg",(long)i];
+        formFile.mineType = @"image/jpeg";
+        
+        if (!imageData) {
+            imageData = UIImagePNGRepresentation(files[i]);
+            formFile.filename = [NSString stringWithFormat:@"image%ld.png",(long)i];
+            formFile.mineType = @"image/png";
+        }
+        
+        formFile.data = imageData;
+        [fileArr addObject:formFile];
+    }
+    
+    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeFeedback params:@{@"feed": feed, @"env": env, @"file": fileArr} isUpload:YES success:^(YXOCModel* model) {
+        if (model != nil) {
             [self close];
             [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:@"提交成功"];
         }
-    }];
-    
-    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeCalendar isUpload:NO success:^(YXOCModel* model) {
         
     } fail:^(NSError* error) {
         

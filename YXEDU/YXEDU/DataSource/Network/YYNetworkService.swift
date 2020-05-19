@@ -47,16 +47,40 @@ enum YXMiMeType: String {
 
     @objc enum YXOCRequestType: Int {
         case feedback
-        case calendar
+        case errorWordFeedback
+        case getMonthlyInfo
+        case getDayInfo
+        case changeName
+        case changeAvatar
+        case changeUserInfo
     }
 
-    @objc public func ocRequest(type: YXOCRequestType, isUpload: Bool = false, success: ((_ model: YXOCModel) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) {
+    @objc public func ocRequest(type: YXOCRequestType, params: [String: Any], isUpload: Bool = false, success: ((_ model: YXOCModel) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) {
 
         var request: YYBaseRequest!
         switch type {
-        case .calendar:
-            request  = YXOCRequest.calendar
+        case .errorWordFeedback:
+            request = YXOCRequest.errorWordFeedback(wordId: params["wordId"] as? String ?? "", word: params["word"] as? String ?? "", content: params["content"] as? String ?? "", type: params["type"] as? String ?? "")
+            
+        case .feedback:
+            request = YXOCRequest.feedback(feed: params["feed"] as? String ?? "", env: params["env"] as? String ?? "", file: params["worfiledId"] as? Data)
+            
+        case .getMonthlyInfo:
+            request = YXOCRequest.getMonthlyInfo(time: params["time"] as? Double ?? 0)
+            
+        case .getDayInfo:
+            request = YXOCRequest.getDayInfo(time: params["time"] as? Double ?? 0)
+            
+        case .changeName:
+                request = YXOCRequest.changeName(name: params["name"] as? String ?? "")
+            
+        case .changeAvatar:
+            request = YXOCRequest.changeAvatar(file: params["file"] as! Data)
+            
+        case .changeUserInfo:
+            request = YXOCRequest.changeUserInfo(params: params as? [String : String] ?? ["": ""])
         }
+        
         if isUpload {
             YYNetworkService.default.upload(YYStructResponse<YXOCModel>.self, request: request, success: { (response) in
                 guard let model = response.data else {

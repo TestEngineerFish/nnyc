@@ -19,7 +19,6 @@
 #import "YXConfigure.h"
 #import "MJExtension.h"
 #import "UIView+Layout.h"
-#import "YXDataProcessCenter.h"
 
 #import "PersonCenterURLs.h"
 #import "MJRefresh.h"

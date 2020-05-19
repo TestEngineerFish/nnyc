@@ -179,9 +179,6 @@
 		77342B7F247270590082C771 /* YXLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77342B7E247270590082C771 /* YXLoginModel.swift */; };
 		77342B89247289780082C771 /* YXAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77342B88247289780082C771 /* YXAccountModel.swift */; };
 		77342B99247387A30082C771 /* YXUserModel_Old.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342B98247387A30082C771 /* YXUserModel_Old.m */; };
-		77342BA3247390F90082C771 /* YXHttpService.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342B9C247390F80082C771 /* YXHttpService.m */; };
-		77342BA4247390F90082C771 /* YXNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342B9E247390F80082C771 /* YXNetworkService.m */; };
-		77342BA6247390F90082C771 /* YXDataProcessCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BA2247390F80082C771 /* YXDataProcessCenter.m */; };
 		77342BAE2473A8730082C771 /* YXBookModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BA82473A8730082C771 /* YXBookModel.m */; };
 		77342BAF2473A8730082C771 /* YXVersionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BAA2473A8730082C771 /* YXVersionModel.m */; };
 		77342BB02473A8730082C771 /* YXPunchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BAC2473A8730082C771 /* YXPunchModel.m */; };
@@ -749,12 +746,6 @@
 		77342B88247289780082C771 /* YXAccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAccountModel.swift; sourceTree = "<group>"; };
 		77342B97247387A30082C771 /* YXUserModel_Old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXUserModel_Old.h; sourceTree = "<group>"; };
 		77342B98247387A30082C771 /* YXUserModel_Old.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXUserModel_Old.m; sourceTree = "<group>"; };
-		77342B9C247390F80082C771 /* YXHttpService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXHttpService.m; sourceTree = "<group>"; };
-		77342B9D247390F80082C771 /* YXDataProcessCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXDataProcessCenter.h; sourceTree = "<group>"; };
-		77342B9E247390F80082C771 /* YXNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXNetworkService.m; sourceTree = "<group>"; };
-		77342BA0247390F80082C771 /* YXHttpService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXHttpService.h; sourceTree = "<group>"; };
-		77342BA1247390F80082C771 /* YXNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXNetworkService.h; sourceTree = "<group>"; };
-		77342BA2247390F80082C771 /* YXDataProcessCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXDataProcessCenter.m; sourceTree = "<group>"; };
 		77342BA82473A8730082C771 /* YXBookModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXBookModel.m; sourceTree = "<group>"; };
 		77342BA92473A8730082C771 /* YXPunchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPunchModel.h; sourceTree = "<group>"; };
 		77342BAA2473A8730082C771 /* YXVersionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXVersionModel.m; sourceTree = "<group>"; };
@@ -1910,19 +1901,6 @@
 			path = WechtSDK1.8.2_NoPay;
 			sourceTree = "<group>";
 		};
-		77342B9A247390F80082C771 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				77342B9C247390F80082C771 /* YXHttpService.m */,
-				77342B9D247390F80082C771 /* YXDataProcessCenter.h */,
-				77342B9E247390F80082C771 /* YXNetworkService.m */,
-				77342BA0247390F80082C771 /* YXHttpService.h */,
-				77342BA1247390F80082C771 /* YXNetworkService.h */,
-				77342BA2247390F80082C771 /* YXDataProcessCenter.m */,
-			);
-			path = Old;
-			sourceTree = "<group>";
-		};
 		77342BA72473A8730082C771 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -3010,7 +2988,6 @@
 			isa = PBXGroup;
 			children = (
 				22E9FFC22473BF36006B6F60 /* Model */,
-				77342B9A247390F80082C771 /* Old */,
 				EEE8EA1F23D328AC00729463 /* Expired */,
 				EEACEB3423A22B1E0036B3A2 /* Check */,
 				EE08F3702372E3C200FA3FDF /* Error */,
@@ -3958,7 +3935,6 @@
 				EE5E02612327793800655654 /* BSRootVC.m in Sources */,
 				224352D523A369A600F278E6 /* YXChallengeRequest.swift in Sources */,
 				EE5EF20923273BAE00655654 /* YRDateFormater.m in Sources */,
-				77342BA3247390F90082C771 /* YXHttpService.m in Sources */,
 				CF53B49524067CA200625892 /* YXFeedbackData.swift in Sources */,
 				CF0BD8D6240288BC00FE9AA6 /* YXFeedbackReplyModel.swift in Sources */,
 				223D2685239B4A70008DED9E /* BPItemHeaderView.swift in Sources */,
@@ -4170,7 +4146,6 @@
 				7786B6D02361C3820027D0E3 /* YXGroupWordBookCell.swift in Sources */,
 				77342BAF2473A8730082C771 /* YXVersionModel.m in Sources */,
 				771E88682362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift in Sources */,
-				77342BA6247390F90082C771 /* YXDataProcessCenter.m in Sources */,
 				224A2FC6238233E100AD99B0 /* YXLearningResultHeaderView.swift in Sources */,
 				2205A93C2361C92500C6E674 /* UIFont+Extension.swift in Sources */,
 				22164C0F23A11E4200E9252D /* YXChallengeStartButton.swift in Sources */,
@@ -4190,7 +4165,6 @@
 				77B7C6F023A735F200149ACE /* YXResultModel.swift in Sources */,
 				EE5EF20823273BAE00655654 /* NSTimer+YR.m in Sources */,
 				EE5E027123277CD600655654 /* YXIconfont.m in Sources */,
-				77342BA4247390F90082C771 /* YXNetworkService.m in Sources */,
 				77B7C6EE23A7254200149ACE /* YXTaskCenterViewController.swift in Sources */,
 				EE7721222388D58200CD632E /* YXSwitchAnimation.swift in Sources */,
 				EE4C7CDB236817550092751D /* YXLookWordChooseImageExerciseView.swift in Sources */,

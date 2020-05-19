@@ -7,7 +7,6 @@
 //
 
 #import "YXFeedBackViewModel.h"
-#import "YXHttpService.h"
 #import "NSObject+YR.h"
 #import "YXAPI.h"
 
@@ -27,8 +26,11 @@
 }
 
 - (void)submitFeedBack:(YXFeedSendModel *)sendModel finish:(finishBlock)block {
-    [[YXHttpService shared]UPLOAD:DOMAIN_FEEDBACK parameters:@{@"feed":sendModel.feed, @"env":sendModel.env} datas:sendModel.files finshedBlock:^(id obj, BOOL result) {
-        block(obj, result);
+    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeFeedback params:@{@"feed": sendModel.feed, @"env": sendModel.env, @"file": sendModel.files} isUpload:YES success:^(YXOCModel* model) {
+        block(model, model != nil);
+
+    } fail:^(NSError* error) {
+        
     }];
 }
 

@@ -746,13 +746,14 @@
     }
     
     __weak typeof(self) weakSelf = self;
-    [YXDataProcessCenter POST:DOMAIN_SETUP parameters:paramter finshedBlock:^(YRHttpResponse *response, BOOL result) {
-        if (result) {
+    
+    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeChangeUserInfo params:paramter isUpload:NO success:^(YXOCModel* model) {
+        if (model != nil) {
             [weakSelf saveInfoSuccess];
-            YXLog(@"++++++Key: %@, Value: %@++++++", key, value);
-        } else {
-            YXLog(@"------Key: %@, Value: %@------", key, value);
         }
+        
+    } fail:^(NSError* error) {
+     
     }];
 }
 

@@ -147,22 +147,17 @@
 }
 
 - (void)postName:(NSString *)name {
-    NSDictionary *paramter = @{@"nick":name};
     __weak typeof(self) weakSelf = self;
-    [YXDataProcessCenter POST:DOMAIN_SETUP parameters:paramter finshedBlock:^(YRHttpResponse *response, BOOL result) {
-        if (result) {
+
+    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeChangeName params:@{@"name": name} isUpload:NO success:^(YXOCModel* model) {
+        if (model != nil) {
             YXLog(@"_+_+_++_++_++_+_+_+");
             weakSelf.returnNameStringBlock(name);
             [self.navigationController popViewControllerAnimated:YES];
         }
-        else{
-            NSInteger code = [[response.responseObject objectForKey:@"code"]longValue];
-            
-            if (code == 13051) {
-                NSString *msg = [response.responseObject objectForKey:@"msg"];
-                [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:msg];
-            }
-        }
+        
+    } fail:^(NSError* error) {
+     
     }];
 }
 

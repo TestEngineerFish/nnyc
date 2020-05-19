@@ -14,6 +14,7 @@
 #import "BSCommon.h"
 #import "YXUtils.h"
 #import "LEEAlert.h"
+#import "YRNetworkManager.h"
 
 @interface YXPersonalInformationVC () <UITableViewDelegate, UITableViewDataSource, YXBasePickverViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -418,7 +419,6 @@
 - (void)postAvatar:(UIImage *)image {
     NSData *imageData = UIImageJPEGRepresentation(image,0.2);
     
-        
     YRFormFile *formFile = [[YRFormFile alloc] init];
     formFile.mineType = @"image/jpeg";
     formFile.data = imageData;
@@ -427,19 +427,15 @@
     
     __weak typeof(self)weakSelf = self;
     [YXUtils showHUD:self.view];
-    [YXDataProcessCenter upload:DOMAIN_SETAVATAR parameters:@{} appendFormFiles:@[formFile] headers:@{} uploadProgress:^(NSProgress *uploadProgress) {
-
-    } completion:^(YRHttpResponse *response, BOOL result) {
-        [YXUtils hideHUD:weakSelf.view];
-        if (result) {            
+    
+    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeChangeAvatar params:@{@"file": formFile} isUpload:YES  success:^(YXOCModel* model) {
+        if (model != nil) {
             weakSelf.avatarImage = image;
-            NSString *newAvatar = [response.responseObject objectForKey:@"avatar"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"AvatarChanged" object:newAvatar];
-//            [YXUtils hideHUD:weakSelf.view];
             [weakSelf.tableView reloadData];
-        } else {
-//            [YXUtils showHUD:weakSelf.view title:@"网络错误!"];
         }
+        
+    } fail:^(NSError* error) {
+        
     }];
 }
 

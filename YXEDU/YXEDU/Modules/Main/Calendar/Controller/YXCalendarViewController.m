@@ -454,11 +454,12 @@ static CGFloat const kPickViewHeight = 272.f;
 - (void)getMonthlyData:(NSDate *)date {
     [YXUtils showLoadingInfo:kHUDTipsWait toView:self.view];
     __weak typeof(self) weakSelf = self;
-    NSDictionary *param = @{@"time" : @(date.timeIntervalSince1970)};
-    [YXDataProcessCenter GET:DOMAIN_CALENDARMONTHLYDATA parameters:param finshedBlock:^(YRHttpResponse *response, BOOL result) {
+    
+    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeGetMonthlyInfo params:@{@"time": @(date.timeIntervalSince1970)} isUpload:NO success:^(YXOCModel* model) {
         [YXUtils hideHUD:self.view];
-        if (result) {
-            YXCalendarStudyMonthData *monthdata = [YXCalendarStudyMonthData mj_objectWithKeyValues:response.responseObject];
+
+        if (model != nil) {
+            YXCalendarStudyMonthData *monthdata = [YXCalendarStudyMonthData mj_objectWithKeyValues:model];
             weakSelf.monthData = monthdata;
             //更新日历组件,(因为用户可能通过PickView选择月份)
             if (weakSelf.monthDataView.calendarView.currentPage.year != date.year || weakSelf.monthDataView.calendarView.currentPage.month != date.month) {
@@ -480,20 +481,25 @@ static CGFloat const kPickViewHeight = 272.f;
             //                self.monthDataView.calendarView.appearance.titleSelectionColor  = UIColor.whiteColor;
             //            }
         }
+        
+    } fail:^(NSError* error) {
+        
     }];
 }
 
 - (void)getDailyData: (NSDate *)date {
     [YXUtils showLoadingInfo:kHUDTipsWait toView:self.view];
-    NSDictionary *param = @{@"time" : @(date.timeIntervalSince1970)};
-    [YXDataProcessCenter GET:DOMAIN_CALENDARDAILYDATA parameters:param finshedBlock:^(YRHttpResponse *response, BOOL result) {
+    
+    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeGetDayInfo params:@{@"time": @(date.timeIntervalSince1970)} isUpload:NO success:^(YXOCModel* model) {
         [YXUtils hideHUD:self.view];
-        if (result) {
-            YXCalendarStudyDayData *dailyData = [YXCalendarStudyDayData mj_objectWithKeyValues:response.responseObject];
+        
+        if (model != nil) {
+            YXCalendarStudyDayData *dailyData = [YXCalendarStudyDayData mj_objectWithKeyValues:model];
             self.dayData = dailyData;
-        }else {
+        } else {
             self.dayData = nil;
         }
+        
         self.showReportButotn = self.dayData.study_duration > 0;
         CGFloat tableViewHeight = AdaptSize(kHeaderHeight) * 3.f;
         tableViewHeight = self.showReportButotn ? tableViewHeight + AdaptSize(50) : tableViewHeight;
@@ -506,6 +512,9 @@ static CGFloat const kPickViewHeight = 272.f;
         }];
         self.contentScroll.contentSize = CGSizeMake(self.view.width, CGRectGetMaxY(self.tableContainerView.frame) + kSafeBottomMargin + AdaptSize(15));
         [self.tableView reloadData];
+        
+    } fail:^(NSError* error) {
+        
     }];
 }
 
