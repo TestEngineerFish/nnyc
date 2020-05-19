@@ -180,7 +180,6 @@
 		77342B99247387A30082C771 /* YXUserModel_Old.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342B98247387A30082C771 /* YXUserModel_Old.m */; };
 		77342BA3247390F90082C771 /* YXHttpService.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342B9C247390F80082C771 /* YXHttpService.m */; };
 		77342BA4247390F90082C771 /* YXNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342B9E247390F80082C771 /* YXNetworkService.m */; };
-		77342BA5247390F90082C771 /* YXComHttpService.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342B9F247390F80082C771 /* YXComHttpService.m */; };
 		77342BA6247390F90082C771 /* YXDataProcessCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BA2247390F80082C771 /* YXDataProcessCenter.m */; };
 		77342BAE2473A8730082C771 /* YXBookModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BA82473A8730082C771 /* YXBookModel.m */; };
 		77342BAF2473A8730082C771 /* YXVersionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BAA2473A8730082C771 /* YXVersionModel.m */; };
@@ -753,11 +752,9 @@
 		77342B88247289780082C771 /* YXAccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAccountModel.swift; sourceTree = "<group>"; };
 		77342B97247387A30082C771 /* YXUserModel_Old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXUserModel_Old.h; sourceTree = "<group>"; };
 		77342B98247387A30082C771 /* YXUserModel_Old.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXUserModel_Old.m; sourceTree = "<group>"; };
-		77342B9B247390F80082C771 /* YXComHttpService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXComHttpService.h; sourceTree = "<group>"; };
 		77342B9C247390F80082C771 /* YXHttpService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXHttpService.m; sourceTree = "<group>"; };
 		77342B9D247390F80082C771 /* YXDataProcessCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXDataProcessCenter.h; sourceTree = "<group>"; };
 		77342B9E247390F80082C771 /* YXNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXNetworkService.m; sourceTree = "<group>"; };
-		77342B9F247390F80082C771 /* YXComHttpService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXComHttpService.m; sourceTree = "<group>"; };
 		77342BA0247390F80082C771 /* YXHttpService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXHttpService.h; sourceTree = "<group>"; };
 		77342BA1247390F80082C771 /* YXNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXNetworkService.h; sourceTree = "<group>"; };
 		77342BA2247390F80082C771 /* YXDataProcessCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXDataProcessCenter.m; sourceTree = "<group>"; };
@@ -1919,11 +1916,9 @@
 		77342B9A247390F80082C771 /* Old */ = {
 			isa = PBXGroup;
 			children = (
-				77342B9B247390F80082C771 /* YXComHttpService.h */,
 				77342B9C247390F80082C771 /* YXHttpService.m */,
 				77342B9D247390F80082C771 /* YXDataProcessCenter.h */,
 				77342B9E247390F80082C771 /* YXNetworkService.m */,
-				77342B9F247390F80082C771 /* YXComHttpService.m */,
 				77342BA0247390F80082C771 /* YXHttpService.h */,
 				77342BA1247390F80082C771 /* YXNetworkService.h */,
 				77342BA2247390F80082C771 /* YXDataProcessCenter.m */,
@@ -4114,7 +4109,6 @@
 				224352E123A4B94300F278E6 /* YXGameHeaderView.swift in Sources */,
 				EE4584E923B3ACEF00E45367 /* YXReviewResultModel.swift in Sources */,
 				EE88DF5923AF871E004DFF10 /* YXReviewPlanCommandView.swift in Sources */,
-				77342BA5247390F90082C771 /* YXComHttpService.m in Sources */,
 				EE54F7CF2362AA3100EC605A /* YXExerciseViewEvent.swift in Sources */,
 				EE5E016D232754FA00655654 /* YXConfigure.m in Sources */,
 				EE5EF20623273BAE00655654 /* UIImageView+YR.m in Sources */,
