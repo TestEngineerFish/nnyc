@@ -44,6 +44,28 @@ class YYNetworkService {
     }
     
     //MARK: ----------------- Request -----------------
+//    @objc enum YXOCRequestType: Int {
+//        case calendar
+//    }
+//
+//    @objc public func ocRequest(type: YXOCRequestType, success: ((_ response: Any) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) {
+//
+//        var response: YYBaseResopnse!
+//        var request: YYBaseRequest!
+//        switch type {
+//        case .calendar:
+//            response = YYStructResponse<YXLogModel>.self as! YYBaseResopnse
+//            request  = YXNetworkRequest.renewal
+//        default:
+//            <#code#>
+//        }
+//
+//        YYNetworkService.default.request(YYStructResponse<YXLogModel>.self, request: request, success: { (response) in
+//            success?(response)
+//        }) { (error) in
+//            fail?(error)
+//        }
+//    }
     /**
      *  普通HTTP Request, 支持GET、POST方式
      */
@@ -191,13 +213,13 @@ class YYNetworkService {
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)
-                    self.clearCountAction()
+                    self.clearCountAction(requestStr)
                 }
             case .failure(let error):
                 let msg = (error as NSError).message
                 YXRequestLog(String(format: "【❌Fail❌】 POST = request url:%@, error:%@", requestStr, msg))
                 fail(error as NSError)
-                self.clearCountAction()
+                self.clearCountAction(requestStr)
             }
         }
 
@@ -233,13 +255,13 @@ class YYNetworkService {
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)
-                    self.clearCountAction()
+                    self.clearCountAction(requestStr)
                 }
             case .failure(let error):
                 let msg = (error as NSError).message
                 YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? "", msg))
                 fail(error as NSError)
-                self.clearCountAction()
+                self.clearCountAction(requestStr)
             }
         }
         
@@ -253,7 +275,7 @@ class YYNetworkService {
     private func addCountAction(_ key: String) -> Bool {
         let count = self.requestCountDict[key] ?? 0
         YXLog("接口", key, "返回；10002，重新请求接口，次数：\(count)")
-        if count < 3 {
+        if count < 2 {
             self.requestCountDict.updateValue(count + 1, forKey: key)
             return true
         }
@@ -261,15 +283,17 @@ class YYNetworkService {
     }
 
     /// 清除请求计数
-    private func clearCountAction() {
-        self.requestCountDict.removeAll()
+    private func clearCountAction(_ path: String) {
+        if self.requestCountDict.isEmpty { return }
+        if !path.hasSuffix(YXNetworkRequest.renewal.path) {
+            self.requestCountDict.removeAll()
+        }
     }
 
     /// Token续期
     private func tokenRenewal(complete block:@escaping (()->Void)) {
         let request = YXNetworkRequest.renewal
         YYNetworkService.default.request(YYStructResponse<YXNetworkModel>.self, request: request, success: { (response) in
-            self.clearCountAction()
             block()
             guard let model = response.data else {return}
             YXLog("Token续期成功，新Token:", model.token)
@@ -293,8 +317,8 @@ class YYNetworkService {
             
         } else {
             if responseStatusCode == 10002 {
-                // 当登录状态失效时，通知上层
-                YXLog("Token过期 10002")
+                // 上层已处理
+//                YXLog("Token过期 10002")
 //                YXMediator.shared()?.tokenExpired()
             } else if responseStatusCode == 6666 {
                 // 停服
