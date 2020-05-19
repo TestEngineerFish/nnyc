@@ -20,6 +20,12 @@ struct YXAPI {
         // 發送短信
         static let sendSms = "/api/v1/user/sendsms"
     }
+
+    // MARK: - 网络
+    struct Network {
+        // Token 续期
+        static let tokenRenewal = "/api/v1/user/gettoken"
+    }
     
     //MARK: - 主页
     struct Home {

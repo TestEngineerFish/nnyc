@@ -75,6 +75,10 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         didSet {
             var wordsCount = 0
             
+            if wrongWordSectionData != nil {
+                wrongWordSectionDataBackup = wrongWordSectionData
+            }
+            
             if let sectionData = wrongWordSectionData {
                 for dataIndex in 0..<sectionData.count {
                     guard let key = sectionData[dataIndex].keys.first, var words = sectionData[dataIndex].values.first, words.count > 0 else { continue }
@@ -119,6 +123,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             tableView.reloadData()
         }
     }
+    var wrongWordSectionDataBackup: [[String: [YXWordModel]]]?
     
     var orderType: YXWordListOrderType = .default {
         didSet {
@@ -133,25 +138,58 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                     }
                     
                 } else {
-                    words = defaultOrder(words: words)
+                    if let data = wrongWordSectionDataBackup {
+                        wrongWordSectionData = data
+
+                    } else {
+                        words = defaultOrder(words: words)
+                    }
                 }
                 
             case .az:
                 if let data = wrongWordSectionData {
-                    for index in 0..<data.count {
-                        guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
-                        wrongWordSectionData?[index] = [key: atoz(words: words)]
+                    if type == .learned || type == .notLearned {
+                        var orderWords: [YXWordModel] = []
+                        
+                        for section in data {
+                            for word in (section.values.first ?? []) {
+                                orderWords.append(word)
+                            }
+                        }
+                        
+                        wrongWordSectionData = nil
+                        words = atoz(words: orderWords)
+
+                    } else {
+                        for index in 0..<data.count {
+                            guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
+                            wrongWordSectionData?[index] = [key: atoz(words: words)]
+                        }
                     }
-                    
+                   
                 } else {
                     words = atoz(words: words)
                 }
 
             case .za:
                 if let data = wrongWordSectionData {
-                    for index in 0..<data.count {
-                        guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
-                        wrongWordSectionData?[index] = [key: ztoa(words: words)]
+                    if type == .learned || type == .notLearned {
+                        var orderWords: [YXWordModel] = []
+                        
+                        for section in data {
+                            for word in (section.values.first ?? []) {
+                                orderWords.append(word)
+                            }
+                        }
+                        
+                        wrongWordSectionData = nil
+                        words = ztoa(words: orderWords)
+                        
+                    } else {
+                        for index in 0..<data.count {
+                            guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
+                            wrongWordSectionData?[index] = [key: ztoa(words: words)]
+                        }
                     }
                     
                 } else {
@@ -286,7 +324,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         let wordListHeaderView = YXWordListHeaderView()
         wordListHeaderView.titleLabel.text = title
         
-        if (title?.contains("熟识的单词") ?? false) {
+        if title?.contains("熟识的单词") ?? false {
             wordListHeaderView.deleteButton.isHidden = false
             wordListHeaderView.deleteAllWordsClosure = {
                 guard let wrongWords = wrongWordSection?.values.first else { return }
@@ -342,7 +380,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0, let wordsCount = wrongWordSectionData?[section].values.first?.count {
             
-            if (wrongWordSectionData?[section].keys.first?.contains("熟识的单词") ?? false) {
+            if wrongWordSectionData?[section].keys.first?.contains("熟识的单词") ?? false {
                 if isExpandWrongWords {
                     return wordsCount
 

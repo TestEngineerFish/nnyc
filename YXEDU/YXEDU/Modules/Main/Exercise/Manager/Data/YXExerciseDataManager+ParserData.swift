@@ -18,7 +18,7 @@ extension YXExerciseDataManager {
             YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(dataType)")
             dataStatus = .empty
         }
-        
+
         // 为base时进入就带过来了
         if progressManager.dataType != .base {
             self.bookId = result?.bookId
@@ -31,6 +31,7 @@ extension YXExerciseDataManager {
         self.ruleType = result?.ruleType ?? .p
         self.processNewWord(result: result)
         self.processReviewWord(result: result)
+        YXGrowingManager.share.uploadExerciseType(self.ruleType.rawValue)
         YXLog("==== 当前学习规则: 【", self.ruleType.rawValue, "】 ====")
         // 处理练习答案选项
         optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
