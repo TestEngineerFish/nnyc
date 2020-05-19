@@ -102,12 +102,8 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 guard let self = self else { return }
                 YXUserModel.default.currentGrade = wordBook.bookGrade
-                YXWordBookResourceManager.shared.contrastBookData(by: bookId) { [weak self] (isSuccess) in
-                    if let self = self, isSuccess {
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                }
-                
+                YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
+                self.navigationController?.popViewController(animated: true)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
             }
