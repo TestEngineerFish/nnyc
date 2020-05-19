@@ -185,7 +185,6 @@
 		77342BAE2473A8730082C771 /* YXBookModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BA82473A8730082C771 /* YXBookModel.m */; };
 		77342BAF2473A8730082C771 /* YXVersionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BAA2473A8730082C771 /* YXVersionModel.m */; };
 		77342BB02473A8730082C771 /* YXPunchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342BAC2473A8730082C771 /* YXPunchModel.m */; };
-		77342BB22473BA1B0082C771 /* YXOCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77342BB12473BA1B0082C771 /* YXOCModel.swift */; };
 		773452CA236A7EFA00801FDD /* YXAccountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */; };
 		773452CC236A7F1A00801FDD /* YXAccountInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */; };
 		773B4C6123B5A3D600E8E395 /* YXBadgeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B4C6023B5A3D600E8E395 /* YXBadgeDetailView.swift */; };
@@ -762,7 +761,6 @@
 		77342BAB2473A8730082C771 /* YXBookModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXBookModel.h; sourceTree = "<group>"; };
 		77342BAC2473A8730082C771 /* YXPunchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPunchModel.m; sourceTree = "<group>"; };
 		77342BAD2473A8730082C771 /* YXVersionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXVersionModel.h; sourceTree = "<group>"; };
-		77342BB12473BA1B0082C771 /* YXOCModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXOCModel.swift; sourceTree = "<group>"; };
 		773452C9236A7EFA00801FDD /* YXAccountInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAccountInfoView.swift; sourceTree = "<group>"; };
 		773452CB236A7F1A00801FDD /* YXAccountInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXAccountInfoView.xib; sourceTree = "<group>"; };
 		773B4C6023B5A3D600E8E395 /* YXBadgeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeDetailView.swift; sourceTree = "<group>"; };
@@ -2134,7 +2132,6 @@
 			isa = PBXGroup;
 			children = (
 				77B7C6EF23A735F200149ACE /* YXResultModel.swift */,
-				77342BB12473BA1B0082C771 /* YXOCModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3904,7 +3901,6 @@
 				77B7C6F423A77B7A00149ACE /* YXTaskCenterDateCell.swift in Sources */,
 				EE3DAB9923750E1600B2FF40 /* YXAPI.swift in Sources */,
 				EE1E4A9823694779007D248F /* YXListenChooseChineseExerciseView.swift in Sources */,
-				77342BB22473BA1B0082C771 /* YXOCModel.swift in Sources */,
 				2227629C23CC0D63006A30B1 /* YXSquirrelCoinViewController.swift in Sources */,
 				EE08F3782372E3C200FA3FDF /* YYNetworkError.swift in Sources */,
 				EE54F7D52362AA3100EC605A /* YXWordAnswerView.swift in Sources */,

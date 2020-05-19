@@ -19,6 +19,7 @@
 #import "YXNotification.h"
 #import "BSCommon.h"
 #import "UIFont+IconFont.h"
+#import "YXEvnOC.h"
 // 闪验
 #import <CL_ShanYanSDK/CL_ShanYanSDK.h>
 

@@ -255,6 +255,12 @@ static const NSInteger MAX_NAME_LENGTH = 50;
             [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:@"提交成功"];
         }
     }];
+    
+    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeCalendar isUpload:NO success:^(YXOCModel* model) {
+        
+    } fail:^(NSError* error) {
+        
+    }];
 }
 
 - (void)layoutSubviews {

@@ -46,6 +46,7 @@ enum YXMiMeType: String {
 
 
     @objc enum YXOCRequestType: Int {
+        case feedback
         case calendar
     }
 
