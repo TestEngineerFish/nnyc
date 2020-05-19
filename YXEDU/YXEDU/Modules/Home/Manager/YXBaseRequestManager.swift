@@ -36,13 +36,12 @@ struct YXBaseRequestManager {
 
     /// 请求我的Tab - 个人信息数据
     func requestMineTabUserData() {
-        YXComHttpService.shared()?.requestUserInfo({ (response, isSuccess) in
-            guard let loginModel = response as? YXLoginModel, let jsonStr = loginModel.yrModelToJSONString() else {
-                return
-            }
+        let request = YXMineRequest.getUserInfo
+        YYNetworkService.default.request(YYStructResponse<YXNewLoginModel>.self, request: request, success: { (response) in
+            guard let jsonStr = response.data?.toJSONString() else { return }
             YXFileManager.share.saveJsonToFile(with: jsonStr, type: .mine_userInfo)
             NotificationCenter.default.post(name: YXNotification.kMineTabUserInfo, object: nil)
-        })
+        }, fail: nil)
     }
 
     /// 请求我的Tab - 徽章数据
@@ -59,13 +58,11 @@ struct YXBaseRequestManager {
 
     /// 请求我的Tab - 积分数据
     func requestMineTabIntegralData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/user/credits", parameters: [:]) { (response, isSuccess) in
-            guard let responseObj = response?.responseObject, let dict = responseObj as? [String:Any] else {
-                return
-            }
-            YXFileManager.share.saveJsonToFile(with: dict.toJson(), type: .mine_integral)
+        let request = YXMineRequest.getCreditsInfo
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            guard let jsonStr = response.data?.toJSONString() else { return }
+            YXFileManager.share.saveJsonToFile(with: jsonStr, type: .mine_integral)
             NotificationCenter.default.post(name: YXNotification.kMineTabIntegral, object: nil)
-        }
+        }, fail: nil)
     }
-
 }

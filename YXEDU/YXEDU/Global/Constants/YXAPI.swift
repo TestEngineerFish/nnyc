@@ -45,6 +45,8 @@ struct YXAPI {
         static let updateToken = "/api/v1/user/gettoken"
         
         static let getInfo = "/v2/user/getinfo"
+        
+        static let getCreditsInfo = "/v1/user/credits"
     }
     
     //MARK: - 个人模块

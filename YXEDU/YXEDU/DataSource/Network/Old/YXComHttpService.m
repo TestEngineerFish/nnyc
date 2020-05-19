@@ -13,6 +13,7 @@
 #import "YXConfigure.h"
 #import "YXAPI.h"
 #import "YXInterfaceCacheService.h"
+#import "YXVersionModel.h"
 
 @interface YXComHttpService ()
 
@@ -37,18 +38,18 @@
 }
 
 // 请求用户信息
-- (void)requestUserInfo:(finishBlock)block {
-    [[YXHttpService shared] GET:DOMAIN_GETINFO parameters:nil finshedBlock:^(id obj, BOOL result) {
-        if (result) {
-            YXLoginModel *model = [YXLoginModel yrModelWithJSON:obj];
-            [YXConfigure shared].loginModel = model;
-            block(model, result);
-        }else {
-            block(obj,result);
-        }
-        
-    }];
-}
+//- (void)requestUserInfo:(finishBlock)block {
+//    [[YXHttpService shared] GET:DOMAIN_GETINFO parameters:nil finshedBlock:^(id obj, BOOL result) {
+//        if (result) {
+//            YXLoginModel *model = [YXLoginModel yrModelWithJSON:obj];
+//            [YXConfigure shared].loginModel = model;
+//            block(model, result);
+//        }else {
+//            block(obj,result);
+//        }
+//
+//    }];
+//}
 
 - (void)requestBadgesInfo:(finishBlock)block {
     [[YXHttpService shared] GET:DOMAIN_BADGES parameters:nil finshedBlock:^(id obj, BOOL result) {
@@ -80,23 +81,23 @@
     }];
 }
 
-- (void)setLearning:(NSString *)bookid finish:(finishBlock)block {
-    [[YXHttpService shared]POST:DOMAIN_SETLEARNING parameters:@{@"bookids":bookid} finshedBlock:^(id obj, BOOL result) {
-        if (result) {
-            YXBookModel *learning = [YXBookModel yrModelWithJSON:obj[@"learning"]];
-            NSMutableArray *bookList = [NSMutableArray array];
-            for (NSDictionary *dic in obj[@"addBook"]) {
-                YXBookModel *addBook = [YXBookModel yrModelWithJSON:dic];
-                [bookList addObject:addBook];
-            }
-            [YXConfigure shared].loginModel.learning = learning;
-            [YXConfigure shared].loginModel.booklist = bookList;
-            
-            [[YXInterfaceCacheService shared]remove:STRCAT(@"learningModel", userId)];
-            block(obj, result);
-        }
-    }];
-}
+//- (void)setLearning:(NSString *)bookid finish:(finishBlock)block {
+//    [[YXHttpService shared]POST:DOMAIN_SETLEARNING parameters:@{@"bookids":bookid} finshedBlock:^(id obj, BOOL result) {
+//        if (result) {
+//            YXBookModel *learning = [YXBookModel yrModelWithJSON:obj[@"learning"]];
+//            NSMutableArray *bookList = [NSMutableArray array];
+//            for (NSDictionary *dic in obj[@"addBook"]) {
+//                YXBookModel *addBook = [YXBookModel yrModelWithJSON:dic];
+//                [bookList addObject:addBook];
+//            }
+//            [YXConfigure shared].loginModel.learning = learning;
+//            [YXConfigure shared].loginModel.booklist = bookList;
+//
+//            [[YXInterfaceCacheService shared]remove:STRCAT(@"learningModel", userId)];
+//            block(obj, result);
+//        }
+//    }];
+//}
 
 // 检测版本号r
 - (void)checkVersion:(YXVersionModel *)model complete:(finishBlock)block { // 暂无包资源 待调试

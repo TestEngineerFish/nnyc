@@ -10,7 +10,7 @@ import UIKit
 
 class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
-    private var temporaryUserModel: YXUserModel_Old?
+    private var temporaryUserModel: YXNewLoginUserInfoModel?
     private var earnedBadgeCount = 0
     private var badgeModelList   = [YXBadgeModel]()
     private var bindInfo         = ["", "", ""]
@@ -100,7 +100,17 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Edit" {
             let destinationViewController = segue.destination as! YXPersonalInformationVC
-            destinationViewController.userModel = temporaryUserModel!
+            let userModel = YXUserModel_Old()
+            userModel.avatar = temporaryUserModel?.avatar
+            userModel.nick = temporaryUserModel?.nick
+            userModel.sex = "\(temporaryUserModel?.sex ?? 0)"
+            userModel.area = temporaryUserModel?.area
+            userModel.mobile = temporaryUserModel?.mobile
+            userModel.birthday = temporaryUserModel?.birthday
+            userModel.speech = temporaryUserModel?.speech
+            userModel.grade = temporaryUserModel?.grade
+
+            destinationViewController.userModel = userModel
             
         } else if segue.identifier == "Coin" {
             let squirrelCoinViewController = segue.destination as! YXSquirrelCoinViewController
@@ -112,13 +122,12 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
 
     /// 请求个人信息
     private func loadData() {
-        YXComHttpService.shared().requestUserInfo({ (response, isSuccess) in
-            if isSuccess, let response = response {
-                let loginModel = response as! YXLoginModel
-                self.updateUserInfo(loginModel: loginModel)
-                YXFileManager.share.saveJsonToFile(with: loginModel.yrModelToJSONString(), type: .mine_userInfo)
-            }
-        })
+        let request = YXMineRequest.getUserInfo
+        YYNetworkService.default.request(YYStructResponse<YXNewLoginModel>.self, request: request, success: { (response) in
+            guard let loginModel = response.data else { return }
+            self.updateUserInfo(loginModel: loginModel)
+            YXFileManager.share.saveJsonToFile(with: loginModel.toJSONString() ?? "", type: .mine_userInfo)
+        }, fail: nil)
     }
 
     /// 请求徽章列表
@@ -137,37 +146,38 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
 
     /// 请求积分信息
     private func loadIntegralData() {
-        YXDataProcessCenter.get("\(YXEvnOC.baseUrl())/v1/user/credits", parameters: [:]) { (response, isSuccess) in
-            guard isSuccess, let response = response?.responseObject, let dict = response as? [String: Any] else { return }
+        let request = YXMineRequest.getCreditsInfo
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            guard let credits = response.data?.credits else { return }
+            let dict = ["userCredits": credits]
             self.updateIntegralData(dict: dict)
             YXFileManager.share.saveJsonToFile(with: dict.toJson(), type: .mine_integral)
-        }
+        }, fail: nil)
     }
 
     // MARK: ---- Update UI ----
 
     /// 更新个人信息
-    private func updateUserInfo(loginModel: YXLoginModel) {
-        YXConfigure.shared().loginModel    = loginModel
+    private func updateUserInfo(loginModel: YXNewLoginModel) {
         self.temporaryUserModel            = loginModel.user
-        YXUserModel.default.userAvatarPath = loginModel.user.avatar
-        YXUserModel.default.username       = loginModel.user.nick
+        YXUserModel.default.userAvatarPath = loginModel.user?.avatar
+        YXUserModel.default.username       = loginModel.user?.nick
         self.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), placeholderImage: #imageLiteral(resourceName: "challengeAvatar"), completed: nil)
         self.nameLabel.text     = YXUserModel.default.username
-        if let garde = loginModel.user.grade, !garde.isEmpty {
+        if let garde = loginModel.user?.grade, !garde.isEmpty {
             self.nameLabel.text = (YXUserModel.default.username ?? "") + "   " + garde + "年级"
         }
-        self.calendarLabel.text = "\(loginModel.user.punchDays ?? 0)"
+        self.calendarLabel.text = "\(loginModel.user?.punchDays ?? 0)"
 
         // 账户信息
         let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel
-        self.bindInfo = [loginModel.user.mobile, "", ""]
+        self.bindInfo = [loginModel.user?.mobile ?? "", "", ""]
 
-        if loginModel.user.userBind.contains(",1") || loginModel.user.userBind.contains("1") {
+        if loginModel.user?.userBind?.contains(",1") ?? false || loginModel.user?.userBind?.contains("1")  ?? false {
             self.bindInfo[1] = "1"
         }
 
-        if loginModel.user.userBind.contains(",2") || loginModel.user.userBind.contains("2") {
+        if loginModel.user?.userBind?.contains(",2") ?? false || loginModel.user?.userBind?.contains("2")  ?? false {
             self.bindInfo[2] = "2"
         }
 
@@ -424,7 +434,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
 
     /// 刷新个人信息
     @objc private func refreshUserInfoData() {
-        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .mine_userInfo), let loginModel = YXLoginModel.yrModel(withJSON: jsonStr) as? YXLoginModel {
+        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .mine_userInfo), let loginModel = YXNewLoginModel.init(JSONString: jsonStr) {
             self.updateUserInfo(loginModel: loginModel)
         }
     }

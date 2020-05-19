@@ -73,32 +73,33 @@
     }
 }
 
-- (void)logout:(YXLogoutModel *)model finish:(finishBlock)block {
-    NSDictionary *dic = [model yrModelToDictionary];
-    [[YXHttpService shared]POST:DOMAIN_LOGOUT parameters:dic finshedBlock:^(id obj, BOOL result) {
+//- (void)logout:(YXLogoutModel *)model finish:(finishBlock)block {
+//    NSDictionary *dic = [model yrModelToDictionary];
+//    [[YXHttpService shared]POST:DOMAIN_LOGOUT parameters:dic finshedBlock:^(id obj, BOOL result) {
 //        [[YXConfigure shared] saveToken:@""];
 //        [YXConfigure shared].mobile = @"";
-        block(obj, result);
-    }];
-}
+//        block(obj, result);
+//    }];
+//}
 
 - (void)bindSO:(YXPersonalBindModel *)bindModel complete:(finishBlock)block {
     NSDictionary *dic = [bindModel yrModelToDictionary];
-    [[YXHttpService shared] POST:DOMAIN_BINDSO parameters:dic finshedBlock:^(id obj, BOOL result) {
-        block(obj, result);
-    }];
+    
+//    [[YXHttpService shared] POST:DOMAIN_BINDSO parameters:dic finshedBlock:^(id obj, BOOL result) {
+//        block(obj, result);
+//    }];
 }
 
 - (void)unbindSO:(NSString *)unbind complete:(finishBlock)block {
-    [[YXHttpService shared] POST:DOMAIN_UNBINDSO parameters:@{@"unbind_pf":unbind} finshedBlock:^(id obj, BOOL result) {
-        block(obj, result);
-    }];
+//    [[YXHttpService shared] POST:DOMAIN_UNBINDSO parameters:@{@"unbind_pf":unbind} finshedBlock:^(id obj, BOOL result) {
+//        block(obj, result);
+//    }];
 }
 
-- (void)requestUserInfo:(finishBlock)block {
-    [[YXComHttpService shared]requestUserInfo:^(id obj, BOOL result) {
-        block(obj, result);
-    }];
-}
+//- (void)requestUserInfo:(finishBlock)block {
+//    [[YXComHttpService shared]requestUserInfo:^(id obj, BOOL result) {
+//        block(obj, result);
+//    }];
+//}
 
 @end

@@ -12,12 +12,14 @@ public enum YXMineRequest: YYBaseRequest {
     case badgeList
     case latestBadge
     case badgeDisplayReport(badgeId: Int)
+    case getUserInfo
+    case getCreditsInfo
 }
 
 extension YXMineRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .badgeList, .latestBadge:
+        case .badgeList, .latestBadge, .getUserInfo, .getCreditsInfo:
             return .get
         case .badgeDisplayReport:
             return .post
@@ -32,6 +34,10 @@ extension YXMineRequest {
             return YXAPI.Profile.latestBadge
         case .badgeDisplayReport:
             return YXAPI.Profile.badgeDisplayReport
+            case .getUserInfo:
+            return YXAPI.User.getInfo
+            case .getCreditsInfo:
+            return YXAPI.User.getCreditsInfo
         }
     }
     

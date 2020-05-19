@@ -26,7 +26,6 @@
 #import "YXPolicyVC.h"
 #import "YXAgreementVC.h"
 #import "YXBindViewModel.h"
-#import "YXLoginSendModel.h"
 #import "QQApiManager.h"
 #import "WXApiManager.h"
 #import "YXDataProcessCenter.h"
@@ -69,4 +68,5 @@
 
 #import "YRWebViewJSBridge.h"
 #import "YRWebViewJSAction.h"
+
 

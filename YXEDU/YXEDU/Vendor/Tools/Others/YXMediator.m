@@ -20,6 +20,8 @@
 #import "YXModelArchiverManager.h"
 #import "YXComHttpService.h"
 #import "SJCall.h"
+#import "YXVersionModel.h"
+
 // #import "AppDelegate.h"
 #import "Growing.h"
 

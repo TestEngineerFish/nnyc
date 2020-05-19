@@ -246,7 +246,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     /// 更新用户信息
     private func checkUserInfomation() {
         YXUserDataManager.share.updateUserInfomation { [weakSelf = self] (userInfomation) in
-            guard userInfomation.didBindPhone == 0 else {
+            guard userInfomation.didBindPhone == 1 else {
                 weakSelf.performSegue(withIdentifier: "Bind", sender: weakSelf)
                 return
             }

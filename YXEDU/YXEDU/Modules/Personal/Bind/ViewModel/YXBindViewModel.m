@@ -54,7 +54,7 @@
     [[YXHttpService shared]POST:DOMAIN_BINDMOBILE parameters:params finshedBlock:^(id obj, BOOL result) {
         if (result) {
             YXBindResultModel *bindResult = [YXBindResultModel yrModelWithJSON:obj];
-            [YXConfigure shared].loginModel.user.mobile = bindResult.bindmobile.mobile;
+//            [YXConfigure shared].loginModel.user.mobile = bindResult.bindmobile.mobile;
             block(obj, result);
         } else {
             block(obj, result);

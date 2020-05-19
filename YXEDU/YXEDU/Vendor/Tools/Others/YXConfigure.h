@@ -7,13 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YXLoginModel.h"
 #import <CoreLocation/CoreLocation.h>
 
 #define userId [YXConfigure shared].uuid
 
 @interface YXConfigure : NSObject
-@property (nonatomic, strong, nullable) YXLoginModel *  loginModel;
 // A/B Test,Q-B-1、Q-B-2显示软键盘，不显示可选项
 @property (nonatomic, assign) BOOL isShowKeyboard;
 // 是否开启新学跳过
@@ -21,7 +19,6 @@
 
 - (void)loginOut;
 
-@property (nonatomic, strong, nullable) YXBookModel *learningModel; // 无网络状态下设置单前学习的书
 @property (nonatomic, strong, nullable) CLLocation *location;
 @property (nonatomic, strong, nullable) NSString *token;
 @property (nonatomic, strong, nullable) NSString *uuid;

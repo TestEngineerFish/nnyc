@@ -24,7 +24,7 @@
 @synthesize uuid = _uuid;
 @synthesize isShowGuideView = _isShowGuideView;
 @synthesize isUSVoice = _isUSVoice;
-@synthesize learningModel = _learningModel;
+//@synthesize learningModel = _learningModel;
 
 + (instancetype)shared {
     static YXConfigure *shared = nil;
@@ -39,7 +39,7 @@
 {
     self = [super init];
     if (self) {
-        self.loginModel = [[YXLoginModel alloc]init];
+//        self.loginModel = [[YXLoginModel alloc]init];
         _token = [[NSString alloc]init];
     }
     return self;
@@ -141,17 +141,17 @@
 }
 
 // 设置学习的model
-- (void)setLearningModel:(YXBookModel *)learningModel {
-    _learningModel = learningModel;
-    [[YXInterfaceCacheService shared]write:learningModel key:STRCAT(@"learningModel", userId)];
-}
+//- (void)setLearningModel:(YXBookModel *)learningModel {
+//    _learningModel = learningModel;
+//    [[YXInterfaceCacheService shared]write:learningModel key:STRCAT(@"learningModel", userId)];
+//}
 
-- (YXBookModel *)learningModel {
-    if (_learningModel) {
-        return _learningModel;
-    }
-    return [[YXInterfaceCacheService shared]read:STRCAT(@"learningModel", userId)];
-}
+//- (YXBookModel *)learningModel {
+//    if (_learningModel) {
+//        return _learningModel;
+//    }
+//    return [[YXInterfaceCacheService shared]read:STRCAT(@"learningModel", userId)];
+//}
 
 - (void)setWordsInfos:(NSMutableArray *)wordsInfos {
     _wordsInfos = [wordsInfos copy];

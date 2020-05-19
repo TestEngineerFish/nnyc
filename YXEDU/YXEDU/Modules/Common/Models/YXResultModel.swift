@@ -17,6 +17,8 @@ struct YXResultModel: Mappable {
     // 更換分享頁背景圖片地址
     var imageUrls: [String]?
     
+    var credits: Int?
+    
     init?(map: Map) {
         self.mapping(map: map)
     }
@@ -25,5 +27,6 @@ struct YXResultModel: Mappable {
         didCollectWord <- map["is_favorite"]
         token <- map["token"]
         imageUrls <- map["img_urls"]
+        credits <- map["userCredits"]
     }
 }
