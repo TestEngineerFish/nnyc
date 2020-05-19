@@ -44,28 +44,6 @@ class YYNetworkService {
     }
     
     //MARK: ----------------- Request -----------------
-//    @objc enum YXOCRequestType: Int {
-//        case calendar
-//    }
-//
-//    @objc public func ocRequest(type: YXOCRequestType, success: ((_ response: Any) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) {
-//
-//        var response: YYBaseResopnse!
-//        var request: YYBaseRequest!
-//        switch type {
-//        case .calendar:
-//            response = YYStructResponse<YXLogModel>.self as! YYBaseResopnse
-//            request  = YXNetworkRequest.renewal
-//        default:
-//            <#code#>
-//        }
-//
-//        YYNetworkService.default.request(YYStructResponse<YXLogModel>.self, request: request, success: { (response) in
-//            success?(response)
-//        }) { (error) in
-//            fail?(error)
-//        }
-//    }
     /**
      *  普通HTTP Request, 支持GET、POST方式
      */
