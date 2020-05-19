@@ -17,8 +17,8 @@ enum YXMiMeType: String {
     case file  = "application/octet-stream"
 }
 
-struct YYNetworkService {
-    public static let `default` = YYNetworkService()
+@objc class YYNetworkService: NSObject {
+    @objc public static let `default` = YYNetworkService()
     public let networkManager = NetworkReachabilityManager()
     
     private let maxOperationCount: Int = 3
@@ -33,7 +33,8 @@ struct YYNetworkService {
     }
     
     
-    private init() {
+    private override init() {
+        super.init()
         // 网络权限管理
         YXNetworkAuthManager.default.check()
         
@@ -42,6 +43,36 @@ struct YYNetworkService {
     }
     
     //MARK: ----------------- Request -----------------
+
+
+    @objc enum YXOCRequestType: Int {
+        case calendar
+    }
+
+    @objc public func ocRequest(type: YXOCRequestType, isUpload: Bool = false, success: ((_ model: YXOCModel) -> Void)?, fail: ((_ responseError: NSError) -> Void)?) {
+
+        var request: YYBaseRequest!
+        switch type {
+        case .calendar:
+            request  = YXOCRequest.calendar
+        }
+        if isUpload {
+            YYNetworkService.default.upload(YYStructResponse<YXOCModel>.self, request: request, success: { (response) in
+                guard let model = response.data else {
+                    return
+                }
+                success?(model)
+            }, fail: fail)
+        } else {
+            YYNetworkService.default.request(YYStructResponse<YXOCModel>.self, request: request, success: { (response) in
+                guard let model = response.data else {
+                    return
+                }
+                success?(model)
+            }, fail: fail)
+        }
+    }
+
     /**
      *  普通HTTP Request, 支持GET、POST方式
      */

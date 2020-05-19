@@ -254,5 +254,11 @@ struct YXAPI {
         
         static let getDayInfo = "/api/v1/daily/getdayinfo"
     }
+
+    // MARK: - OC
+    struct OC {
+        /// 获得月报学习时间列表
+        static let getMonthly2 = "/api/v1/daily/getmonthly"
+    }
 }
 

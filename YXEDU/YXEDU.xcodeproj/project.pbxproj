@@ -129,6 +129,8 @@
 		22D6FA0023BDCAC900B05BC8 /* YXMakeReviewGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6F9FF23BDCAC900B05BC8 /* YXMakeReviewGuideView.swift */; };
 		22DC471F2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC471E2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift */; };
 		22DEA77023B9914300E30FB7 /* YXShareCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEA76F23B9914300E30FB7 /* YXShareCodeView.swift */; };
+		22E9FFC42473BF6B006B6F60 /* YXOCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E9FFC32473BF6B006B6F60 /* YXOCModel.swift */; };
+		22E9FFC62473BF80006B6F60 /* YXOCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E9FFC52473BF80006B6F60 /* YXOCRequest.swift */; };
 		22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */; };
 		22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */; };
 		22ED54A92367076B00011B82 /* YXAnswerConnectionLettersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A82367076B00011B82 /* YXAnswerConnectionLettersView.swift */; };
@@ -690,6 +692,8 @@
 		22DC471E2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChineseFillConnectionLetterQuestionView.swift; sourceTree = "<group>"; };
 		22DC4724238BC140002F7120 /* USCRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCRecognizer.h; sourceTree = "<group>"; };
 		22DEA76F23B9914300E30FB7 /* YXShareCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareCodeView.swift; sourceTree = "<group>"; };
+		22E9FFC32473BF6B006B6F60 /* YXOCModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXOCModel.swift; sourceTree = "<group>"; };
+		22E9FFC52473BF80006B6F60 /* YXOCRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXOCRequest.swift; sourceTree = "<group>"; };
 		22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionMeaningView.swift; sourceTree = "<group>"; };
 		22ED549C2366D80400011B82 /* YXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXModel.h; sourceTree = "<group>"; };
 		22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YXModel.m"; sourceTree = "<group>"; };
@@ -1707,6 +1711,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		22E9FFC22473BF36006B6F60 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				22E9FFC32473BF6B006B6F60 /* YXOCModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		22ED548F2366837300011B82 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
@@ -2362,6 +2374,7 @@
 			children = (
 				EEACEB3B23A22B8B0036B3A2 /* YYTaskRequest.swift */,
 				EE08F36E2372E3C200FA3FDF /* YYBaseRequest.swift */,
+				22E9FFC52473BF80006B6F60 /* YXOCRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -2999,6 +3012,7 @@
 		EE5EF29C2327423F00655654 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				22E9FFC22473BF36006B6F60 /* Model */,
 				77342B9A247390F80082C771 /* Old */,
 				EEE8EA1F23D328AC00729463 /* Expired */,
 				EEACEB3423A22B1E0036B3A2 /* Check */,
@@ -3910,6 +3924,7 @@
 				EE1E4A8A23694343007D248F /* YXLookWordChooseChineseExerciseView.swift in Sources */,
 				EE1E4A8E2369438C007D248F /* YXLookChineseChooseWordExerciseView.swift in Sources */,
 				EE5EF2B42327423F00655654 /* YXModelArchiverManager.m in Sources */,
+				22E9FFC62473BF80006B6F60 /* YXOCRequest.swift in Sources */,
 				2248AE3B239DEDDC003AADCF /* YXReviewWordViewCell.swift in Sources */,
 				EE6FB0B42366E95F00E96015 /* YXExerciseBottomView.swift in Sources */,
 				224A2FBF238233CC00AD99B0 /* YXSexangleView.swift in Sources */,
@@ -4323,6 +4338,7 @@
 				EEACEB6A23A7AA610036B3A2 /* Int+Extension.swift in Sources */,
 				7720182A237CE7ED00535732 /* YXWordDetailView.swift in Sources */,
 				779F2C57245FBBC9007D3034 /* YXHomeSubItemiPadCell.swift in Sources */,
+				22E9FFC42473BF6B006B6F60 /* YXOCModel.swift in Sources */,
 				EE88DF5323AF5BEC004DFF10 /* YXSettingRequest.swift in Sources */,
 				22DC471F2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift in Sources */,
 				EE5EF21323273BAE00655654 /* NSData+YR.m in Sources */,
