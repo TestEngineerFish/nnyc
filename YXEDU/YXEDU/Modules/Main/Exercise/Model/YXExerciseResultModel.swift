@@ -142,7 +142,7 @@ struct YXExerciseRuleTypeTransform: TransformType {
     init() {}
     
     func transformFromJSON(_ value: Any?) -> YXExerciseRuleType? {
-        if let v = value as? String, let rule = YXExerciseRuleType(rawValue: v.lowercased()) {
+        if let v = value as? String, let rule = YXExerciseRuleType(rawValue: v.uppercased()) {
             return rule
         }
         return .p
