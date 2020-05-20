@@ -21,7 +21,8 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             exerciseModel.wordType.rawValue,
             exerciseModel.word?.bookId as Any,
             exerciseModel.word?.unitId as Any,
-            planId as Any
+            planId as Any,
+            exerciseModel.group
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }

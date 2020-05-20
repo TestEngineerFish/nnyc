@@ -106,17 +106,17 @@ protocol YXExerciseService {
 extension YXExerciseService {
     /// 每批新学的大小限制
     var newWordBatchSize: Int {
-        return ruleType == .a1 || ruleType == .a2 ? 3 : 5
+        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
     }
     
     /// 每批训练的大小限制
     var exerciseWordBatchSize: Int {
-        return newWordBatchSize
+        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
     }
     
     /// 每批复习的大小限制
     var reviewWordBatchSize: Int {
-        return ruleType == .a1 || ruleType == .a2 ? 4 : 5
+        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
     }
     
     

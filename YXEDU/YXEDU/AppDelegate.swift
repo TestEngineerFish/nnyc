@@ -104,6 +104,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func initConfig() {
+        let documentPath =  NSHomeDirectory() + "/Documents/"
+        YXLog(documentPath)
+        
         // 网络状态监听
         YYNetworkService.default.startMonitorNetwork()
         YXAlertCheckManager.default.checkServiceState()

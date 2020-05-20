@@ -53,6 +53,7 @@ struct YXWordExerciseModel: Mappable {
     var isNewWord: Bool = false
     
     var wordType: YXExerciseWordType = .new
+    var group: Int = 1
     
     /// 第几步
     var step: Int = 0
@@ -97,6 +98,7 @@ struct YXWordExerciseModel: Mappable {
     }
     
 }
+
 
 
 

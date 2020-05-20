@@ -54,7 +54,7 @@ extension YXExerciseServiceImpl {
     func processExercise(wordIds: [Int], type: YXExerciseWordType) {
         YXLog("\n插入\(type.desc)数据====== 开始")
         // 处理单词列表
-        for wordId in wordIds {
+        for (index, wordId) in wordIds.enumerated() {
             
             var word = YXWordModel()
             word.wordId = wordId
@@ -65,10 +65,11 @@ extension YXExerciseServiceImpl {
             exercise.dataType = dataType
             exercise.word = word
             exercise.wordType = type
+            exercise.group = groupIndex(index: index, count: wordIds.count, type: type)
             
             // 插入练习数据
             let result = exerciseDao.insertExercise(type: ruleType, planId: planId, exerciseModel: exercise)
-            YXLog("插入练习数据——\(type.desc) ", word.wordId ?? 0," ", result ? "成功" : "失败")
+            YXLog("插入练习数据——\(type.desc) ", word.wordId ?? 0," \(exercise.group)", result ? "成功" : "失败")
             
         }
     }
@@ -149,5 +150,44 @@ extension YXExerciseServiceImpl {
         question.word   = w.word
         return question
     }
+    
+    
+    /// 获取分组下标
+    /// - Parameters:
+    ///   - index:
+    ///   - count:
+    ///   - type: 单词类型
+    private func groupIndex(index: Int, count: Int, type: YXExerciseWordType) -> Int {
+        ruleType = .p4
+        // 只有新学才有分组学习
+        if self.dataType != .base {
+            return 1
+        }
+        
+        // 新学是否分组
+        if type == .new && isGroup() == false {
+            return 1
+        }
+                
+        var batchSize = 0
+        switch type {
+            case .new:
+                batchSize = self.newWordBatchSize
+            case .exercise:
+                batchSize = self.exerciseWordBatchSize
+            default:
+                batchSize = self.reviewWordBatchSize
+        }
+
+        return lround(Double(index + 1) / Double(batchSize) + 0.4)
+    }
+    
+    
+    // 新学是否分组学习
+    func isGroup() -> Bool {
+        return ruleType == .p4 || ruleType == .a1 || ruleType == .a2
+    }
+    
+    
 }
 

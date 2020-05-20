@@ -31,6 +31,7 @@ extension YYSQLManager {
             book_id integer(8),
             unit_id integer(8),
             plan_id integer(8),
+            "group" integer(4) NOT NULL DEFAULT(1),
             status integer(2) NOT NULL DEFAULT(0),
             create_ts text(32) NOT NULL DEFAULT(datetime('now'))
         );
@@ -90,9 +91,10 @@ extension YYSQLManager {
             word_type,
             book_id,
             unit_id,
-            plan_id
+            plan_id,
+            "group"
         )
-        values(?, ?, ?, ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
         
         case insertCurrentExercise =
