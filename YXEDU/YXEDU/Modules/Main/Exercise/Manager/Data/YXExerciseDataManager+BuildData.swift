@@ -10,6 +10,32 @@ import UIKit
 
 extension YXExerciseDataManager {
     
+    // 新学出题【跟读】
+    func buildNewExercise() ->YXWordExerciseModel? {
+        
+        if self.isSkipNewWord() {
+            return nil
+        }
+        
+        // 不跳过，才从新学取
+        for (index, exercise) in self.newWordArray.enumerated() {
+            if isNewWordInBatch() && index >= currentBatchIndex * newWordBatchSize {
+                return nil
+            }
+            
+            if !exercise.isFinish {
+                var e = exercise
+                let wid = e.word?.wordId ?? 0
+                let bid = e.word?.bookId ?? 0
+                e.word = dao.selectWord(bookId: bid, wordId: wid)
+                return e
+            }
+        }
+        return nil
+    }
+    
+    
+    
     /// 出题逻辑（根据step，上轮对错）
     func buildExercise() -> YXWordExerciseModel? {
         // 筛选数据
@@ -34,13 +60,13 @@ extension YXExerciseDataManager {
         if finishCount == currentTurnArray.count {
             currentTurnIndex += 1
             
-            self.previousTurnArray = self.currentTurnArray
+//            self.previousTurnArray = self.currentTurnArray
             self.currentTurnArray.removeAll()
             
             if dataType == .base {
-                filterNewExcercise()
+                filterExcercise()
             }
-            filterReviewExcercise()
+            filterReview()
             
             removeErrorStep()
             // 排序
@@ -48,7 +74,9 @@ extension YXExerciseDataManager {
         }
     }
     
-    func filterNewExcercise() {
+    
+    /// 筛选训练
+    func filterExcercise() {
         var jumpStep = 0
         for (i, word) in reviewWordArray.enumerated() {
             
@@ -56,59 +84,13 @@ extension YXExerciseDataManager {
                 continue
             }
             
-            
-            // 只有基础学习时才分多批
-            let newIndex = transformIndex(stepModel: word)
-            if dataType == .base && newIndex >= currentBatchIndex * batchSize {
-                continue
-            }
-                            
-            for (j, step) in word.exerciseSteps.enumerated() {
-                if var exericse = fetchExerciseOfStep(exerciseArray: step) {
-                    // 放到当前轮中的数据，清空掉这个对错的值，用于连线题在当前轮中，单个选项连接连错后提示
-                    exericse.isRight = nil
-                    
-                    if exericse.isFinish {// 做过
-                        if exericse.isContinue == true {// 如果上一轮有做错，需要继续做
-                            for z in 0..<step.count {
-                                reviewWordArray[i].exerciseSteps[j][z].isContinue = nil
-                                reviewWordArray[i].exerciseSteps[j][z].isFinish = false
-                            }
-                            currentTurnArray.append(exericse)
-                            break
-                        }
-                    } else {// 没做
-                        if exericse.isNewWord {// 如果是新学，1到4步都要做    && currentTurnIndex >= exericse.step
-                            currentTurnArray.append(exericse)
-                            break
-                        } else if currentTurnIndex >= exericse.step {// 复习，到指定轮次和 step 相同是才开始训练
-                            currentTurnArray.append(exericse)
-                            break
-                        } else if currentTurnArray.count == 0 { // 第1轮做对，进入第2轮，但其他的单词没有step1和step2，只有s3或者s4的情况
-                            jumpStep = exericse.step // 保存跳跃的step下标
-                            currentTurnArray.append(exericse)
-                            break
-                        } else if jumpStep == exericse.step {
-                            currentTurnArray.append(exericse)
-                            break
-                        }
-                    }
-
-                }
-            }
-        }
-    }
-    
-    func filterReviewExcercise() {
-        var jumpStep = 0
-        for (i, word) in reviewWordArray.enumerated() {
-            
-            if dataType == .base && reviewWordIdArray.contains(word.wordId) == false {
+            if dataType == .base && currentBatchNewWordIds().contains(word.wordId) == false {
                 continue
             }
             
             // 只有基础学习时才分多批
             let newIndex = transformIndex(stepModel: word)
+            let batchSize = transformSize(stepModel: word)
             if dataType == .base && newIndex >= currentBatchIndex * batchSize {
                 continue
             }
@@ -149,6 +131,59 @@ extension YXExerciseDataManager {
         }
     }
     
+    /// 筛选复习
+    func filterReview() {
+        var jumpStep = 0
+        for (i, word) in reviewWordArray.enumerated() {
+            
+            if dataType == .base && reviewWordIdArray.contains(word.wordId) == false {
+                continue
+            }
+            
+            // 只有基础学习时才分多批
+            let newIndex = transformIndex(stepModel: word)
+            let batchSize = transformSize(stepModel: word)
+            if dataType == .base && newIndex >= currentBatchIndex * batchSize {
+                continue
+            }
+                            
+            for (j, step) in word.exerciseSteps.enumerated() {
+                if var exericse = fetchExerciseOfStep(exerciseArray: step) {
+                    // 放到当前轮中的数据，清空掉这个对错的值，用于连线题在当前轮中，单个选项连接连错后提示
+                    exericse.isRight = nil
+                    
+                    if exericse.isFinish {// 做过
+                        if exericse.isContinue == true {// 如果上一轮有做错，需要继续做
+                            for z in 0..<step.count {
+                                reviewWordArray[i].exerciseSteps[j][z].isContinue = nil
+                                reviewWordArray[i].exerciseSteps[j][z].isFinish = false
+                            }
+                            currentTurnArray.append(exericse)
+                            break
+                        }
+                    } else {// 没做
+                        if exericse.isNewWord {// 如果是新学，1到4步都要做
+                            currentTurnArray.append(exericse)
+                            break
+                        } else if currentTurnIndex >= exericse.step {// 复习，到指定轮次和 step 相同是才开始训练
+                            currentTurnArray.append(exericse)
+                            break
+                        } else if currentTurnArray.count == 0 { // 第1轮做对，进入第2轮，但其他的单词没有step1和step2，只有s3或者s4的情况
+                            jumpStep = exericse.step // 保存跳跃的step下标
+                            currentTurnArray.append(exericse)
+                            break
+                        } else if jumpStep == exericse.step {
+                            currentTurnArray.append(exericse)
+                            break
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+    
+    // 转换下标
     func transformIndex(stepModel: YXWordStepsModel) -> Int {
         var exercise: YXWordExerciseModel? = nil
         for step in stepModel.exerciseSteps {
@@ -163,6 +198,27 @@ extension YXExerciseDataManager {
                 return exerciseWordIdArray.index(of: stepModel.wordId) ?? -1
             } else {
                 return reviewWordIdArray.index(of: stepModel.wordId) ?? -1
+            }
+        }
+
+        return -1
+    }
+    
+    /// 转换大小
+    func transformSize(stepModel: YXWordStepsModel) -> Int {
+        var exercise: YXWordExerciseModel? = nil
+        for step in stepModel.exerciseSteps {
+            if step.count > 0 {
+                exercise = step.first
+                break
+            }
+        }
+        
+        if let e = exercise {
+            if e.isNewWord {
+                return newWordBatchSize
+            } else {
+                return reviewWordBatchSize
             }
         }
 

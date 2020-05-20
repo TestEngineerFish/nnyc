@@ -16,7 +16,6 @@ extension AppDelegate {
     ///   - launchOptions:
     func setRemoteNotification(_ application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         // 初始化 友盟 推送
-        UMConfigure.initWithAppkey(kUmengAppKey, channel: kUmengChannel)
         UNUserNotificationCenter.current().delegate = self
         let entity = UMessageRegisterEntity()
         entity.types = Int(UMessageAuthorizationOptions.badge.rawValue | UMessageAuthorizationOptions.alert.rawValue | UMessageAuthorizationOptions.sound.rawValue)
@@ -24,12 +23,6 @@ extension AppDelegate {
             print(result)
         }
         
-        /// 初始化 JPush 代码
-        //        let entity = JPUSHRegisterEntity()
-        //        entity.types = Int(JPAuthorizationOptions.alert.rawValue | JPAuthorizationOptions.badge.rawValue | JPAuthorizationOptions.sound.rawValue)
-        //        JPUSHService.register(forRemoteNotificationConfig: entity, delegate: self)
-        //        JPUSHService.setup(withOption: launchOptions, appKey: kJPushAppKey, channel: kJPushChannel, apsForProduction: kJPushProduction > 0)
-
         /// app冷启动，从通知栏点击进去
         if let remoteNotification = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable : Any] {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
@@ -48,6 +41,7 @@ extension AppDelegate {
             let dict = ["push_notify": ["action":2, "push_id":pushId]]
             YXSetReminderView.requestReportNotification(dataString: dict.toJson())
         }
+
         YXRedDotManager.share.updateFeedbackReplyBadge()
         if let action = userInfo?["open_scheme"] as? String {
             YRRouter.openURL(action, query: nil, animated: true)
@@ -60,7 +54,6 @@ extension AppDelegate {
     func resetIconBadge() {
         
         UIApplication.shared.applicationIconBadgeNumber = 0
-        JPUSHService.setBadge(0)
     }
 }
 
@@ -69,8 +62,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let token = NSObject.deviceTokenToString(with: deviceToken) ?? ""
         YXLog("获取deviceToken成功 ===========", token)
-        //        JPUSHService.registerDeviceToken(deviceToken)
-        UMessage.registerDeviceToken(deviceToken)
+        
         if YXUserModel.default.didLogin == false {
             // 未登录
             return
@@ -85,9 +77,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     YXLog("设置别名\(alias)成功 ====已经登录过=======")
                 }
             }
-//            JPUSHService.setAlias(alias, completion: { (code, alias, seq) in
-//                YXLog("设置别名alias ====已经登录过======= \(code),\(alias ?? ""),\(seq)")
-//            }, seq: Int(Date().timeIntervalSince1970))
         }
     }
     /// 获取token 失败
@@ -114,43 +103,5 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler()
     }
 }
-
-
-//extension AppDelegate: JPUSHRegisterDelegate {
-//
-//    /// 当app在前台时，静默推送
-//    @available(iOS 10.0, *)
-//    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, willPresent notification: UNNotification!, withCompletionHandler completionHandler: ((Int) -> Void)!) {
-//
-//        let userInfo = notification.request.content.userInfo
-//        if notification.request.trigger is UNPushNotificationTrigger {
-//            JPUSHService.handleRemoteNotification(userInfo)
-//        }
-//        // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
-//        completionHandler(Int(UNNotificationPresentationOptions.alert.rawValue))
-//    }
-//
-//    @available(iOS 10.0, *)
-//    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, didReceive response: UNNotificationResponse!, withCompletionHandler completionHandler: (() -> Void)!) {
-//        let userInfo = response.notification.request.content.userInfo
-//        if response.notification.request.trigger is UNPushNotificationTrigger {
-//            JPUSHService.handleRemoteNotification(userInfo)
-//        }
-//        // 系统要求执行这个方法
-//        completionHandler()
-//
-//        processNotification(userInfo: userInfo)
-//    }
-//
-//
-//    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, openSettingsFor notification: UNNotification!) {
-//
-//    }
-//
-//    func jpushNotificationAuthorization(_ status: JPAuthorizationStatus, withInfo info: [AnyHashable : Any]!) {
-//
-//    }
-//}
-
 
 

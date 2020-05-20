@@ -18,6 +18,9 @@ import ObjectMapper
 
 /// 练习数据模型
 struct YXWordExerciseModel: Mappable {
+    // id，数据库自增
+    var eid: Int = 0
+    
     // 题型
     var type: YXExerciseType = .none
     // 数据类型
@@ -44,10 +47,13 @@ struct YXWordExerciseModel: Mappable {
     
     var isBackup: Bool = false
     
-    // 是否为新学单词
-    var isNewWord: Bool = false
     // 是否为跟读流程
     var isListenAndRepeat = false
+    // 是否为新学单词【跟读和训练】
+    var isNewWord: Bool = false
+    
+    var wordType: YXExerciseWordType = .new
+    var group: Int = 1
     
     /// 第几步
     var step: Int = 0
@@ -92,6 +98,7 @@ struct YXWordExerciseModel: Mappable {
     }
     
 }
+
 
 
 

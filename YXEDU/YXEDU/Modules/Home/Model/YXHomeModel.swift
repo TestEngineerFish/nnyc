@@ -27,6 +27,7 @@ struct YXHomeModel: Mappable {
     var bookGrade: Int?
     var bookVersionName: String?
     
+
     init?(map: Map) {
         self.mapping(map: map)
     }

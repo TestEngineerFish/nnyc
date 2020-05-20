@@ -24,6 +24,8 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
     func disableAllButton()
     /// 启用底部所有按钮
     func enableAllButton()
+    /// 点击提示一下按钮
+    func clickTipsBtnEventWithExercise()
 }
 
 

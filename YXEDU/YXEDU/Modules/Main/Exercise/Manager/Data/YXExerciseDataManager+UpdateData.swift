@@ -235,70 +235,6 @@ extension YXExerciseDataManager {
         
         
     }
-    
-    
-    func updateCurrentPatchIndex2() {
-        // 只有基础学习时才分多批
-        if dataType != .base {
-            return
-        }
-                
-        // 初始值为第一批
-        currentBatchIndex = 1
-        
-        /*
-        var newIndex = -1//, newPatchIndex = 1
-        if !progressManager.isSkipNewWord() {
-            for (index, exercise) in self.newExerciseArray.enumerated() {
-                if exercise.isFinish {
-                    newIndex = index
-                }
-            }
-        }
-        if newIndex > -1 {
-            if (newIndex + 1) % batchSize == 0 {
-                currentBatchIndex = lround(Double(newIndex + 1) / Double(batchSize))
-            } else {
-                currentBatchIndex = lround(Double(newIndex + 1) / Double(batchSize) + 0.5)
-            }
-        }*/
-        
-        var reviewIndex = -1
-        
-        var oneWordFinishCount = 0
-        var wordStepCount = 0
-        for (i, word) in reviewWordArray.enumerated() {
-            
-//            if i >= currentPatchIndex * patchSize {
-//                continue
-//            }
-            
-            for step in word.exerciseSteps {
-                if let exericse = fetchExerciseOfStep(exerciseArray: step) {
-                    wordStepCount += 1
-                    if exericse.isFinish && exericse.isContinue == nil {// 做过
-                        oneWordFinishCount += 1
-                    }
-                }
-            }
-            
-            // 一个单词全部完成
-            if wordStepCount == oneWordFinishCount {
-                reviewIndex = i
-            }
-        }
-        
-        if reviewIndex > -1 {
-            if (reviewIndex + 1) % batchSize == 0 {
-                currentBatchIndex = lround(Double(reviewIndex + 1) / Double(batchSize))
-                currentBatchIndex += 1
-            } else {
-                currentBatchIndex = lround(Double(reviewIndex + 1) / Double(batchSize) + 0.5)
-            }
-            YXLog("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
-        }
-        
-    }
         
     
     func updateCurrentPatchIndex() {
@@ -307,36 +243,60 @@ extension YXExerciseDataManager {
             return
         }
         YXLog("bb+++++++++++++当前 currentPatchIndex = ", currentBatchIndex)
-        var batch1 = 0
+        
+        // 新学分批下标
+        var newWordBatch = 0
+        if isNewWordInBatch() {
+            for (index, exercise) in self.newWordArray.enumerated() {
+                if exercise.isFinish == false {
+                    newWordBatch = lround(Double(index + 1) / Double(newWordBatchSize) + 0.4)
+                    break
+                }
+            }
+        }
+        YXLog("bb+++++++++++++新学批次 currentPatchIndex = ", newWordBatch)
+        
+        
+        // 训练批次下标
+        var exerciseBatch = 0
         for (index, wordId) in exerciseWordIdArray.enumerated() {
             if isFinishWord(wordId: wordId) == false {
-                batch1 = lround(Double(index + 1) / Double(batchSize) + 0.4)
+                exerciseBatch = lround(Double(index + 1) / Double(newWordBatchSize) + 0.4)
                 break
             }
         }
-        YXLog("bb+++++++++++++训练 currentPatchIndex = ", batch1)
+        YXLog("bb+++++++++++++训练批次 currentPatchIndex = ", exerciseBatch)
 
-        
-        var batch2 = 0
+        // 复习批次下标
+        var reviewBatch = 0
         for (index, wordId) in reviewWordIdArray.enumerated() {
             if isFinishWord(wordId: wordId) == false {
-                batch2 = lround(Double(index + 1) / Double(batchSize) + 0.4)
+                reviewBatch = lround(Double(index + 1) / Double(reviewWordBatchSize) + 0.4)
                 break
             }
         }
-        YXLog("bb+++++++++++++复习 currentPatchIndex = ", batch2)
+        YXLog("bb+++++++++++++复习批次 currentPatchIndex = ", reviewBatch)
         
-        var minBatch = 1  
-        if batch1 == 0 {
-            minBatch = batch2
+        var minBatch = 1
+        if exerciseBatch == 0 {
+            minBatch = reviewBatch
         }
-        if batch2 == 0 {
-            minBatch = batch1
+        if reviewBatch == 0 {
+            minBatch = exerciseBatch
         }
-        if batch1 != 0 && batch2 != 0 {
-            minBatch = min(batch1, batch2)
+        if exerciseBatch != 0 && reviewBatch != 0 {
+            minBatch = min(exerciseBatch, reviewBatch)
+            
+            if isNewWordInBatch() { // 如果新学要分批, 处理新学比训练和复习的数量不一致，造成的后续根据批次取数据问题
+                // 如果新学比 训练和复习的多
+                if newWordBatch > minBatch && isAllWordFinish() {
+                    minBatch = newWordBatch
+                }
+            }
+            
         }
                 
+        // 开始新的批次了
         if minBatch > currentBatchIndex {
             isChangeBatch = true
             currentBatchIndex = minBatch
@@ -381,4 +341,32 @@ extension YXExerciseDataManager {
         return false
     }
 
+    
+    /// 是否全部完成
+    func isAllNewWordFinish() -> Bool {
+        var finishCount = 0
+        for exercise in self.newWordArray {
+            if exercise.isFinish {
+                finishCount += 1
+            }
+        }
+        
+        return finishCount == newWordArray.count
+    }
+    
+    
+    /// 训练和复习是否全部完成
+    func isAllWordFinish() -> Bool {
+        var finishCount = 0
+        for e in reviewWordArray {
+            if isFinishWord(wordId: e.wordId) {
+                finishCount += 1
+            }
+        }
+        
+        return finishCount == reviewWordArray.count
+    }
+    
+    
+    
 }

@@ -68,6 +68,15 @@ class YXChallengeMyRankCell: UIView {
         return label
     }()
 
+    var heraldLabel: UILabel = {
+        let label = UILabel()
+        label.text          = "活动结束可得"
+        label.textColor     = UIColor.red1
+        label.font          = UIFont.regularFont(ofSize: AdaptSize(12))
+        label.textAlignment = .center
+        return label
+    }()
+
     var goldIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "challengeGoldIcon")
@@ -83,8 +92,11 @@ class YXChallengeMyRankCell: UIView {
         return label
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var isPreviousRank: Bool
+
+    init(isPreviousRank: Bool) {
+        self.isPreviousRank = isPreviousRank
+        super.init(frame: CGRect.zero)
         self.backgroundColor = .clear
         self.setSubviews()
     }
@@ -100,6 +112,7 @@ class YXChallengeMyRankCell: UIView {
             self.descriptionLabel.text        = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time/1000)
             self.descriptionLabel.textColor   = UIColor.hex(0xA18266)
             self.descriptionLabel.font        = UIFont.pfSCMediumFont(withSize: AdaptFontSize(12))
+            self.heraldLabel.isHidden         = self.isPreviousRank
             self.goldIconImageView.isHidden   = false
             self.bonusLabel.isHidden          = false
             self.descriptionLabel.isHidden    = false
@@ -135,6 +148,7 @@ class YXChallengeMyRankCell: UIView {
             self.nameLabel.textColor           = UIColor.hex(0x4F381D)
             self.descriptionLabel.text         = ""
             self.descriptionLabel.isHidden     = true
+            self.heraldLabel.isHidden          = true
             self.goldIconImageView.isHidden    = true
             self.bonusLabel.isHidden           = true
             self.tagImageView.isHidden         = false
@@ -152,7 +166,6 @@ class YXChallengeMyRankCell: UIView {
                 make.width.equalTo(AdaptSize(levelHighlightLabel.width + AdaptSize(13)))
             }
         }
-
         self.avatarImageView.showImage(with: userModel.avatarStr)
         
         self.nameLabel.sizeToFit()
@@ -167,6 +180,7 @@ class YXChallengeMyRankCell: UIView {
         bgContentView.addSubview(avatarImageView)
         bgContentView.addSubview(nameLabel)
         bgContentView.addSubview(descriptionLabel)
+        bgContentView.addSubview(heraldLabel)
         bgContentView.addSubview(goldIconImageView)
         bgContentView.addSubview(bonusLabel)
         bgContentView.addSubview(tagImageView)
@@ -217,21 +231,31 @@ class YXChallengeMyRankCell: UIView {
 
         descriptionLabel.sizeToFit()
         descriptionLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(nameLabel.snp.bottom)
+            make.top.equalTo(nameLabel.snp.bottom).offset(AdaptSize(3))
             make.left.equalTo(nameLabel)
-            make.width.equalTo(descriptionLabel.width)
-            make.height.equalTo(descriptionLabel.height)
+            make.size.equalTo(descriptionLabel.size)
+        }
+
+        heraldLabel.sizeToFit()
+        heraldLabel.snp.makeConstraints { (make) in
+            make.top.centerY.equalTo(nameLabel)
+            make.size.equalTo(heraldLabel.size)
+            make.right.equalToSuperview().offset(AdaptSize(-12))
         }
 
         goldIconImageView.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            if isPreviousRank {
+                make.centerY.equalToSuperview()
+            } else {
+                make.centerY.equalTo(descriptionLabel)
+            }
             make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
             make.right.equalTo(bonusLabel.snp.left).offset(AdaptSize(-5))
         }
 
         bonusLabel.sizeToFit()
         bonusLabel.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            make.centerY.equalTo(goldIconImageView)
             make.width.equalTo(bonusLabel.width)
             make.height.equalTo(AdaptSize(21))
             make.right.equalToSuperview().offset(AdaptSize(-14))

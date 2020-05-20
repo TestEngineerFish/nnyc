@@ -11,7 +11,10 @@ import UIKit
 class YXChallengeHeaderView: UIView {
     var isPreviousRank: Bool
     let headerView = YXChallengeHeaderTopView()
-    let myRankView = YXChallengeMyRankCell()
+    lazy var myRankView: YXChallengeMyRankCell = {
+        let view = YXChallengeMyRankCell(isPreviousRank: self.isPreviousRank)
+        return view
+    }()
     var headerBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.hex(0xEFE1CE)

@@ -32,6 +32,12 @@ struct YXAPI {
         
         static let unbind = "/v1/user/unbind"
     }
+
+    // MARK: - 网络
+    struct Network {
+        // Token 续期
+        static let tokenRenewal = "/api/v1/user/gettoken"
+    }
     
     //MARK: - 主页
     struct Home {

@@ -12,6 +12,7 @@ import ObjectMapper
 /// 当天学习数据总j模型
 struct YXExerciseResultModel: Mappable {
     var type: YXExerciseDataType = .base
+    var ruleType: YXExerciseRuleType = .p
     var bookId: Int?
     var unitId: Int?
     var newWordIds: [Int]?
@@ -23,6 +24,7 @@ struct YXExerciseResultModel: Mappable {
     
     mutating func mapping(map: Map) {
         type          <- (map["review_type"], YXExerciseDataTypeTransform())
+        ruleType      <- (map["learn_rule"], YXExerciseRuleTypeTransform())
         bookId        <- map["book_id"]
         unitId        <- map["unit_id"]
         newWordIds    <- map["new_word_list"]
@@ -59,8 +61,8 @@ struct YXExerciseQuestionModel: Mappable {
 
 struct YXExerciseQuestionExtendModel: Mappable {
     
-    var isNewWord: Bool = false
-    var isOldOrEmptyImage: Bool = false
+//    var isNewWord: Bool = false
+//    var isOldOrEmptyImage: Bool = false
     var power: Int = 0 // 能力值
     
     init?(map: Map) {
@@ -68,8 +70,8 @@ struct YXExerciseQuestionExtendModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        isNewWord              <- map["is_new_word"]
-        isOldOrEmptyImage      <- map["is_old_img_or_no_img"]
+//        isNewWord              <- map["is_new_word"]
+//        isOldOrEmptyImage      <- map["is_old_img_or_no_img"]
         power                  <- map["last_score"]
     }
 }
@@ -126,6 +128,27 @@ struct YXExerciseDataTypeTransform: TransformType {
     }
     
     func transformToJSON(_ value: YXExerciseDataType?) -> Int? {
+        return value?.rawValue
+    }
+
+}
+
+
+struct YXExerciseRuleTypeTransform: TransformType {
+        
+    typealias Object = YXExerciseRuleType
+    typealias JSON = String
+    
+    init() {}
+    
+    func transformFromJSON(_ value: Any?) -> YXExerciseRuleType? {
+        if let v = value as? String, let rule = YXExerciseRuleType(rawValue: v.uppercased()) {
+            return rule
+        }
+        return .p
+    }
+    
+    func transformToJSON(_ value: YXExerciseRuleType?) -> String? {
         return value?.rawValue
     }
 

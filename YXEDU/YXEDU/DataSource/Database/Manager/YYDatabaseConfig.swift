@@ -21,7 +21,10 @@ struct YYSQLManager {
     static let CreateWordTables: [String] = {
         var sqlArray = [CreateWordTableSQLs.bookTable.rawValue,
                         CreateWordTableSQLs.wordTable.rawValue,
-                        CreateWordTableSQLs.searchHistoryTable.rawValue]
+                        CreateWordTableSQLs.searchHistoryTable.rawValue,
+                        CreateExerciseTableSQLs.allExercise.rawValue,
+                        CreateExerciseTableSQLs.allWordStep.rawValue
+        ]
         if YYCache.object(forKey: "updateDatabase") as? Bool ?? true {
             sqlArray.insert(DeleteTableSQLs.bookTable.rawValue, at: 0)
             sqlArray.insert(DeleteTableSQLs.wordTable.rawValue, at: 0)
@@ -150,101 +153,7 @@ extension YYSQLManager {
         );
         """
     }
-    
-    
-    
-    // MARK: Update & Select
-    enum NormalSQL: String {
-        case queryBookMaterial =
-        """
-        SELECT * FROM T_BOOKMATERIAL
-        WHERE bookId IN (%@)
-        """
-        case queryMaterialOfAllBooks =
-        """
-        SELECT * FROM T_BOOKMATERIAL
-        """
-        case deleteBookMaterials =
-        """
-        DELETE FROM T_BOOKMATERIAL
-        WHERE bookId IN (%@)
-        """
-        case deleteAllBookMaterials =
-        """
-        DELETE FROM T_BOOKMATERIAL
-        """
-        case insertWordsDetail =
-        """
-        INSERT OR REPLACE INTO T_WORDSDETAIL_INFO
-        (wordid, meanings,word_root, word, usvoice, usphone, usage, ukvoice, ukphone,
-        synonym, speech, property, paraphrase, morph, image, eng, confusion, chs,bookId,toolkit,antonym)
-        VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """
-        case queryWordsDetail =
-        """
-        SELECT * FROM T_WORDSDETAIL_INFO
-        WHERE wordid IN (%@)
-        """
-        case fuzzyQueryWords =
-        """
-        SELECT * FROM T_WORDSDETAIL_INFO
-        WHERE
-        word LIKE '%%%@%%'
-        OR
-        paraphrase LIKE '%%%@%%'
-        LIMIT 10
-        """
-        case insertMaterial =
-        """
-        INSERT INTO MATERIAL_INFO (path, resname, size, resid, date)
-        VALUES (?, ?, ?, ?, ?)
-        """
-        case queryMaterial =
-        """
-        SELECT * FROM MATERIAL_INFO
-        ORDER BY resid ASC
-        """
-        case deleteMaterial =
-        """
-        DELETE FROM MATERIAL_INFO
-        WHERE date = ?
-        """
-        case deleteAllMaterial =
-        """
-        DELETE FROM MATERIAL_INFO
-        """
-        case insertStudyRecord =
-        """
-        INSERT INTO STUDYPROGRESS_INFO (recordid, bookid, unitid, questionidx, questionid, learn_status, uuid, log)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """
-        case replaceStudyRecord =
-        """
-        REPLACE INTO STUDYPROGRESS_INFO (recordid, bookid, unitid, questionidx, questionid, learn_status, uuid, log)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """
-        case queryStudyRecord =
-        """
-        SELECT * FROM STUDYPROGRESS_INFO
-        """
-        case queryStudyRecordById =
-        """
-        SELECT * FROM STUDYPROGRESS_INFO
-        WHERE recordid = ?
-        """
-        case deleteStudyRecord =
-        """
-        DELETE FROM STUDYPROGRESS_INFO
-        WHERE recordid = ?
-        """
-        case deleteAllStudyRecord =
-        """
-        DELETE FROM STUDYPROGRESS_INFO
-        """
-    }
-    
-    
-    
+
     enum WordBookSQL: String {
         case insertBook =
         """
@@ -267,7 +176,7 @@ extension YYSQLManager {
         
         case insertWord =
         """
-        INSERT OR REPLACE INTO word
+        INSERT INTO word
         (wordId, word, partOfSpeechAndMeanings, imageUrl, englishPhoneticSymbol,
         americanPhoneticSymbol, englishPronunciation, americanPronunciation, deformations, examples,
         fixedMatchs, commonPhrases, wordAnalysis, detailedSyntaxs, synonyms,
@@ -326,7 +235,7 @@ extension YYSQLManager {
         
         case insertWord =
         """
-        INSERT OR REPLACE INTO search_history_table
+        INSERT INTO search_history_table
         (wordId, word, partOfSpeechAndMeanings, englishPhoneticSymbol, americanPhoneticSymbol,
         englishPronunciation, americanPronunciation, isComplexWord)
         VALUES (?, ?, ?, ?, ?,

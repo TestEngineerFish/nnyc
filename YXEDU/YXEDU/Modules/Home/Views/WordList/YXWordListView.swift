@@ -70,13 +70,22 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     var isExpandWrongWords = false
+    var expandWordsStatus: [Bool] = []
     var wrongWordSectionData: [[String: [YXWordModel]]]? {
         didSet {
             var wordsCount = 0
             
+            if wrongWordSectionData != nil {
+                wrongWordSectionDataBackup = wrongWordSectionData
+            }
+            
             if let sectionData = wrongWordSectionData {
                 for dataIndex in 0..<sectionData.count {
                     guard let key = sectionData[dataIndex].keys.first, var words = sectionData[dataIndex].values.first, words.count > 0 else { continue }
+                    
+                    if type != .wrongWords {
+                        self.expandWordsStatus.append(true)
+                    }
                     
                     for index in 0..<words.count {
                         wordsCount = wordsCount + 1
@@ -114,6 +123,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             tableView.reloadData()
         }
     }
+    var wrongWordSectionDataBackup: [[String: [YXWordModel]]]?
     
     var orderType: YXWordListOrderType = .default {
         didSet {
@@ -128,25 +138,58 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                     }
                     
                 } else {
-                    words = defaultOrder(words: words)
+                    if let data = wrongWordSectionDataBackup {
+                        wrongWordSectionData = data
+
+                    } else {
+                        words = defaultOrder(words: words)
+                    }
                 }
                 
             case .az:
                 if let data = wrongWordSectionData {
-                    for index in 0..<data.count {
-                        guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
-                        wrongWordSectionData?[index] = [key: atoz(words: words)]
+                    if type == .learned || type == .notLearned {
+                        var orderWords: [YXWordModel] = []
+                        
+                        for section in data {
+                            for word in (section.values.first ?? []) {
+                                orderWords.append(word)
+                            }
+                        }
+                        
+                        wrongWordSectionData = nil
+                        words = atoz(words: orderWords)
+
+                    } else {
+                        for index in 0..<data.count {
+                            guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
+                            wrongWordSectionData?[index] = [key: atoz(words: words)]
+                        }
                     }
-                    
+                   
                 } else {
                     words = atoz(words: words)
                 }
 
             case .za:
                 if let data = wrongWordSectionData {
-                    for index in 0..<data.count {
-                        guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
-                        wrongWordSectionData?[index] = [key: ztoa(words: words)]
+                    if type == .learned || type == .notLearned {
+                        var orderWords: [YXWordModel] = []
+                        
+                        for section in data {
+                            for word in (section.values.first ?? []) {
+                                orderWords.append(word)
+                            }
+                        }
+                        
+                        wrongWordSectionData = nil
+                        words = ztoa(words: orderWords)
+                        
+                    } else {
+                        for index in 0..<data.count {
+                            guard let key = data[index].keys.first, let words = data[index].values.first, words.count > 0 else { continue }
+                            wrongWordSectionData?[index] = [key: ztoa(words: words)]
+                        }
                     }
                     
                 } else {
@@ -305,6 +348,17 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 self.isExpandWrongWords = !isExpand
                 self.tableView.reloadSections(IndexSet(arrayLiteral: section), with: .automatic)
             }
+            
+        } else if type == .learned || type == .notLearned {
+            wordListHeaderView.expandButton.isHidden = false
+            
+            wordListHeaderView.isExpand = expandWordsStatus[section]
+            
+            wordListHeaderView.expandClosure = { [weak self] isExpand in
+                guard let self = self else { return }
+                self.expandWordsStatus[section] = !self.expandWordsStatus[section]
+                self.tableView.reloadSections(IndexSet(arrayLiteral: section), with: .automatic)
+            }
         }
         
         return wordListHeaderView
@@ -330,6 +384,14 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 if isExpandWrongWords {
                     return wordsCount
 
+                } else {
+                    return 0
+                }
+                
+            } else if type == .learned || type == .notLearned {
+                if expandWordsStatus[section] == true {
+                    return wordsCount
+                    
                 } else {
                     return 0
                 }

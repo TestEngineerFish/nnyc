@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-enum YXExerciseDataType: Int {
+@objc enum YXExerciseDataType: Int {
     case base = 1               // 基础学习
     case wrong = 2              // 抽查
     case planListenReview = 3   // 计划——听力复习
@@ -29,18 +29,26 @@ class YXExerciseDataManager: NSObject {
     /// 哪本书，哪个单元
     public var bookId: Int?, unitId: Int?
     public var dataType: YXExerciseDataType = .base
+    public var ruleType: YXExerciseRuleType = .p
     
     /// 进度管理器
     public var progressManager: YXExcerciseProgressManager!
     
     public var dataStatus: YXExerciseDataStatus = .finish
     
-    /// 当前批，一次学习分成了多批
+    /// 当前新学批次，一次学习分成了多批
+//    var currentNewBatchIndex = 0
+    /// 当前批次，一次学习分成了多批
     var currentBatchIndex = 0
     /// 当前第几轮, 从第一轮开始
     var currentTurnIndex = 0
-    /// 每批的新学和复习的大小限制
-    var batchSize = 5
+    
+    /// 每批新学的大小限制
+    var newWordBatchSize: Int { return newWordBatchSizeConfig() }
+    /// 每批复习的大小限制
+    var reviewWordBatchSize: Int { return reviewWordBatchSizeConfig() }
+    
+    
     var isChangeBatch = true
     /// 新学 和 复习的单词数量
     var needNewStudyCount = 0, needReviewCount = 0
@@ -50,12 +58,13 @@ class YXExerciseDataManager: NSObject {
     /// 训练和复习单词集合
     var reviewWordArray: [YXWordStepsModel] = []
     
+    
     // 训练单词的Id集合，复习单词的Id集合
     var exerciseWordIdArray: [Int] = [], reviewWordIdArray: [Int] = []
     
     /// 当前轮
     var currentTurnArray: [YXWordExerciseModel] = []
-    /// 上一轮
+    /// 上一轮 【目前好像没有使用这个字段】
     var previousTurnArray: [YXWordExerciseModel] = []
     
     /// 本地数据库访问
@@ -118,6 +127,7 @@ class YXExerciseDataManager: NSObject {
         
         exerciseWordIdArray = progressManager.loadNewWordExerciseIds()
         for e in reviewWordArray {
+            // 不是训练的，就是复习单词
             if exerciseWordIdArray.contains(e.wordId) == false {
                 reviewWordIdArray.append(e.wordId)
             }
@@ -127,6 +137,8 @@ class YXExerciseDataManager: NSObject {
             dataStatus = .empty
         }
         
+        ruleType = progressManager.ruleType()
+        YXLog("==== 当前学习规则: 【", ruleType.rawValue, "】 ====")
         let turnData = progressManager.loadLocalTurnData()
         currentTurnArray = turnData.0
         previousTurnArray = turnData.1
@@ -150,20 +162,12 @@ class YXExerciseDataManager: NSObject {
         // 打印
 //        printReportResult()
         
-        if !progressManager.isSkipNewWord() {
-            for exercise in self.newWordArray {
-                if !exercise.isFinish {
-                    var e = exercise                
-                    let wid = e.word?.wordId ?? 0
-                    let bid = e.word?.bookId ?? 0
-                    e.word = dao.selectWord(bookId: bid, wordId: wid)
-                    return (needNewStudyCount, needReviewCount, e)
-                }
-            }
+        // 新学出题【跟读】
+        if let e = buildNewExercise() {
+            return (needNewStudyCount, needReviewCount, e)
         }
         
-        
-        // 生成题型
+        // 生成题型【训练+复习】
         var e = buildExercise()
         let wid = e?.word?.wordId ?? 0
         e?.word = selectWord(wordId: wid)
@@ -260,10 +264,6 @@ class YXExerciseDataManager: NSObject {
             }
         }
         return false
-    }
-    
-    func skipNewWord() {
-        progressManager.setSkipNewWord()
     }
     
 

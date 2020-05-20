@@ -18,7 +18,7 @@ extension YXExerciseDataManager {
             YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(dataType)")
             dataStatus = .empty
         }
-        
+
         // 为base时进入就带过来了
         if progressManager.dataType != .base {
             self.bookId = result?.bookId
@@ -28,9 +28,11 @@ extension YXExerciseDataManager {
             progressManager.unitId = self.unitId
         }
         
+        self.ruleType = result?.ruleType ?? .p
         self.processNewWord(result: result)
         self.processReviewWord(result: result)
-        
+        YXGrowingManager.share.uploadExerciseType(self.ruleType.rawValue)
+        YXLog("==== 当前学习规则: 【", self.ruleType.rawValue, "】 ====")
         // 处理练习答案选项
         optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
                         
@@ -38,6 +40,7 @@ extension YXExerciseDataManager {
         progressManager.initProgressStatus(newWordIds: result?.newWordIds, reviewWordIds: result?.reviewWordIds)
         
         // 保存数据
+        progressManager.setRuleType(type: self.ruleType)
         progressManager.updateProgress(newWordArray: newWordArray, reviewWordArray: reviewWordArray)
     }
     
@@ -45,6 +48,9 @@ extension YXExerciseDataManager {
     /// 处理新学跟读
     /// - Parameter result:
     func processNewWord(result: YXExerciseResultModel?) {
+        self.exerciseWordIdArray = result?.newWordIds ?? []
+        progressManager.initNewWordExerciseIds(exerciseIds: exerciseWordIdArray)
+        
         // 处理新学单词
         for wordId in result?.newWordIds ?? [] {
             let bookId = result?.bookId ?? 0
@@ -107,13 +113,13 @@ extension YXExerciseDataManager {
         let ids = result?.newWordIds ?? []
         for e in reviewWordArray {
             if ids.contains(e.wordId) {
-                exerciseWordIdArray.append(e.wordId)
+//                exerciseWordIdArray.append(e.wordId)
             } else {
                 reviewWordIdArray.append(e.wordId)
             }
         }
     
-        progressManager.initNewWordExerciseIds(exerciseIds: exerciseWordIdArray)
+        
     }
     
     func addWordStep(exerciseModel: YXWordExerciseModel, isBackup: Bool) {
