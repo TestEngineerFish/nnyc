@@ -12,7 +12,7 @@ import UIKit
 extension YXExerciseServiceImpl {
     func queryExerciseModel() -> YXWordExerciseModel? {
         
-        if dataType != .base {
+        if learnConfig.learnType != .base {
             
         }
         

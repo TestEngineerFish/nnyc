@@ -13,29 +13,29 @@ extension YXExerciseServiceImpl {
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
-    func fetchExerciseResultModels(planId: Int? = nil, completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
-        let request = YXExerciseRequest.exercise(type: dataType.rawValue, planId: planId)
+    func fetchExerciseResultModels(planId: Int? = nil, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+        let request = YXExerciseRequest.exercise(type: learnConfig.learnType.rawValue, planId: learnConfig.planId)
         YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
-            self.processExerciseData(result: response.data)
-            completion(true, nil)
+            self.processData(result: response.data)
+            completion?(true, nil)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
-            completion(false, error.message)
+            completion?(false, error.message)
         }
     }
     
     /// 处理从网络请求的数据
     /// - Parameter result: 网络数据
-    func processExerciseData(result: YXExerciseResultModel?) {
+    func processData(result: YXExerciseResultModel?) {
         if (result?.newWordIds?.count ?? 0 == 0 && result?.steps?.count ?? 0 == 0) {
-            YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(dataType)")
+            YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(learnConfig.learnType)")
             exerciseProgress = .none
             return
         }
         
         self.ruleType = result?.ruleType ?? .p
-        self.bookId = result?.bookId ?? 0
-        self.unitId = result?.unitId ?? 0
+        self.learnConfig.bookId = result?.bookId ?? 0
+        self.learnConfig.unitId = result?.unitId ?? 0
         
         // 插入练习数据【新学/训练/复习】
         self.processExercise(wordIds: result?.newWordIds ?? [], type: .new)
@@ -58,17 +58,17 @@ extension YXExerciseServiceImpl {
             
             var word = YXWordModel()
             word.wordId = wordId
-            word.bookId = bookId
-            word.unitId = unitId
+            word.bookId = learnConfig.bookId
+            word.unitId = learnConfig.unitId
             
             var exercise = YXWordExerciseModel()
-            exercise.dataType = dataType
+            exercise.dataType = learnConfig.learnType
             exercise.word = word
             exercise.wordType = type
             exercise.group = groupIndex(index: index, count: wordIds.count, type: type)
             
             // 插入练习数据
-            let result = exerciseDao.insertExercise(type: ruleType, planId: planId, exerciseModel: exercise)
+            let result = exerciseDao.insertExercise(type: ruleType, planId: learnConfig.planId, exerciseModel: exercise)
             YXLog("插入练习数据——\(type.desc) ", word.wordId ?? 0," \(exercise.group)", result ? "成功" : "失败")
             
         }
@@ -86,11 +86,11 @@ extension YXExerciseServiceImpl {
         // 处理新学单词
         for wordId in wordIds {
             
-            if let word = wordDao.selectWord(bookId: bookId, wordId: wordId) {
+            if let word = wordDao.selectWord(bookId: learnConfig.bookId, wordId: wordId) {
                 
                 var exercise = YXWordExerciseModel()
                 exercise.question = createQuestionModel(word: word)
-                exercise.dataType = dataType
+                exercise.dataType = learnConfig.learnType
                 exercise.word = word
                 exercise.wordType = .new
                 
@@ -123,12 +123,12 @@ extension YXExerciseServiceImpl {
         for step in result?.steps ?? [] {
             for subStep in step {
                 
-                if let word = dataType == .base ?
-                    wordDao.selectWord(bookId: bookId, wordId: subStep.question?.wordId ?? 0) :
+                if let word = learnConfig.learnType == .base ?
+                    wordDao.selectWord(bookId: learnConfig.bookId, wordId: subStep.question?.wordId ?? 0) :
                     wordDao.selectWord(wordId: subStep.question?.wordId ?? 0) {
                     
                     var exercise = subStep
-                    exercise.dataType = self.dataType
+                    exercise.dataType = self.learnConfig.learnType
                     exercise.wordType = exercise.isNewWord ? .exercise : .review
                     exercise.word = word
                     let result = stepDao.insertWordStep(type: ruleType, exerciseModel: exercise)
@@ -160,7 +160,7 @@ extension YXExerciseServiceImpl {
     private func groupIndex(index: Int, count: Int, type: YXExerciseWordType) -> Int {
         ruleType = .p4
         // 只有新学才有分组学习
-        if self.dataType != .base {
+        if self.learnConfig.learnType != .base {
             return 1
         }
         

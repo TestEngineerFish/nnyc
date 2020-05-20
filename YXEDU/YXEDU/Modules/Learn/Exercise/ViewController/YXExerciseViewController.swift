@@ -185,14 +185,16 @@
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        let service: YXExerciseServiceImpl = YXExerciseServiceImpl()
-        service.bookId = bookId ?? 0
-        service.unitId = bookId ?? 0
-        service.dataType = dataType
-        service.planId = planId ?? 0
-        service.fetchExerciseResultModels(planId: planId) { [weak self] (result, msg) in
-            
-        }
+        
+        let config = YXBaseLearnConfig(bookId: 0, unitId: 0, learnType: dataType)
+        var service: YXExerciseService = YXExerciseServiceImpl()
+        service.learnConfig = config
+//        service.bookId = bookId ?? 0
+//        service.unitId = bookId ?? 0
+//        service.dataType = dataType
+//        service.planId = planId ?? 0
+        service.fetchExerciseModel()
+
         
         dataManager.fetchTodayExerciseResultModels(type: dataType, planId: planId) { [weak self] (result, msg) in
             guard let self = self else { return }

@@ -12,13 +12,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     // ----------------------------
     //MARK: - 属性
-    var bookId: Int = 0
-    
-    var unitId: Int = 0
-    
-    var planId: Int = 0
-    
-    var dataType: YXExerciseDataType = .base
+    var learnConfig: YXLearnConfig = YXBaseLearnConfig()
     
     var ruleType: YXExerciseRuleType = .p
     
@@ -36,6 +30,8 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     //MARK: - 方法
     func fetchExerciseModel() -> YXWordExerciseModel? {
+        fetchExerciseResultModels(planId: learnConfig.planId, completion: nil)
+        
         self.clearExpiredData()
         self.updateProgress()
         

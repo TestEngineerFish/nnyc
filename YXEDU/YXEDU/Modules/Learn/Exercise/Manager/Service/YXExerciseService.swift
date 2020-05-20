@@ -32,6 +32,7 @@ enum YXExerciseWordType: Int {
 }
 
 //MARK: - 练习进度
+
 /// 练习进度
 enum YXExerciseProgress: Int {
     case none = 0       // 空数据
@@ -47,17 +48,7 @@ protocol YXExerciseService {
     
     //MARK: - 属性
     // ----------------------------
-    /// 哪本书
-    var bookId: Int { get set }
-        
-    /// 哪个单元
-    var unitId: Int { get set }
-    
-    /// 哪个复习计划
-    var planId: Int { get set }
-    
-    /// 数据类型
-    var dataType: YXExerciseDataType { get set }
+    var learnConfig: YXLearnConfig { get set }
     
     /// 练习规则
     var ruleType: YXExerciseRuleType { get }

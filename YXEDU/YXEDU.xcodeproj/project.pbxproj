@@ -351,7 +351,7 @@
 		EE1B696C2472BEA9000EADB2 /* YXExerciseViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B696B2472BEA8000EADB2 /* YXExerciseViewController2.swift */; };
 		EE1B696E2472BF19000EADB2 /* YXExerciseViewController+Report2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B696D2472BF19000EADB2 /* YXExerciseViewController+Report2.swift */; };
 		EE1B69702473B031000EADB2 /* YXExerciseDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B696F2473B031000EADB2 /* YXExerciseDaoImpl.swift */; };
-		EE1B69732473DB55000EADB2 /* YXLearnType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B69722473DB54000EADB2 /* YXLearnType.swift */; };
+		EE1B69732473DB55000EADB2 /* YXLearnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B69722473DB54000EADB2 /* YXLearnConfig.swift */; };
 		EE1E4A832369428F007D248F /* YXLookExampleChooseImageExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E4A822369428F007D248F /* YXLookExampleChooseImageExerciseView.swift */; };
 		EE1E4A8A23694343007D248F /* YXLookWordChooseChineseExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E4A8923694343007D248F /* YXLookWordChooseChineseExerciseView.swift */; };
 		EE1E4A8C23694371007D248F /* YXLookExampleChooseChineseExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E4A8B23694371007D248F /* YXLookExampleChooseChineseExerciseView.swift */; };
@@ -947,7 +947,7 @@
 		EE1B696B2472BEA8000EADB2 /* YXExerciseViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseViewController2.swift; sourceTree = "<group>"; };
 		EE1B696D2472BF19000EADB2 /* YXExerciseViewController+Report2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YXExerciseViewController+Report2.swift"; sourceTree = "<group>"; };
 		EE1B696F2473B031000EADB2 /* YXExerciseDaoImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseDaoImpl.swift; sourceTree = "<group>"; };
-		EE1B69722473DB54000EADB2 /* YXLearnType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnType.swift; sourceTree = "<group>"; };
+		EE1B69722473DB54000EADB2 /* YXLearnConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnConfig.swift; sourceTree = "<group>"; };
 		EE1E4A822369428F007D248F /* YXLookExampleChooseImageExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLookExampleChooseImageExerciseView.swift; sourceTree = "<group>"; };
 		EE1E4A8923694343007D248F /* YXLookWordChooseChineseExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLookWordChooseChineseExerciseView.swift; sourceTree = "<group>"; };
 		EE1E4A8B23694371007D248F /* YXLookExampleChooseChineseExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLookExampleChooseChineseExerciseView.swift; sourceTree = "<group>"; };
@@ -2498,10 +2498,10 @@
 			children = (
 				EE1B696A2472BE92000EADB2 /* ViewController */,
 				EE1B6963246E659B000EADB2 /* Impl */,
+				EE1B69722473DB54000EADB2 /* YXLearnConfig.swift */,
 				EE1B6959246E3B6C000EADB2 /* YXExerciseService.swift */,
 				EE1B695B246E3D40000EADB2 /* YXExerciseProcessService.swift */,
 				EE1B695D246E3D61000EADB2 /* YXExerciseProgressService.swift */,
-				EE1B69722473DB54000EADB2 /* YXLearnType.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -4456,7 +4456,7 @@
 				22DC471F2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift in Sources */,
 				EE5EF21323273BAE00655654 /* NSData+YR.m in Sources */,
 				2218AE3623D07CC600EF2E42 /* YXLogManager.swift in Sources */,
-				EE1B69732473DB55000EADB2 /* YXLearnType.swift in Sources */,
+				EE1B69732473DB55000EADB2 /* YXLearnConfig.swift in Sources */,
 				EE7E1D082363679500600A88 /* YXExerciseConfig.swift in Sources */,
 				223D2684239B4A70008DED9E /* BPSegmentControllerView.swift in Sources */,
 				2252B50D24469CD1002AE9F2 /* YXGrowingManager.swift in Sources */,
