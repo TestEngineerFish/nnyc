@@ -30,7 +30,7 @@ extension YXExerciseViewController {
         dataManager.progressManager.completionExercise()
         dataManager.progressManager.completionReport()
 
-        if dataType == .aiReview {
+        if learnConfig.learnType == .aiReview {
             let nrView = YXNotReviewWordView()
             nrView.doneEvent = {
                 YRRouter.popViewController(true)
@@ -46,7 +46,7 @@ extension YXExerciseViewController {
     /// 上报数据
     func submitResult() {
         YXLog("====上报数据====")
-        dataManager.reportExercise(type: dataType) { [weak self] (result, errorMsg) in
+        dataManager.reportExercise(type: learnConfig.learnType) { [weak self] (result, errorMsg) in
             guard let self = self else {return}
             if result {
                 // 统计打点
@@ -56,7 +56,7 @@ extension YXExerciseViewController {
                 // 上报结束, 清空数据
                 self.dataManager.progressManager.completionReport()
                 
-                switch self.dataType {
+                switch self.learnConfig.learnType {
                 case .base:
                     YXGrowingManager.share.uploadLearnFinished()
                     // 记录学完一次主流程，用于首页弹出设置提醒弹框
@@ -95,8 +95,8 @@ extension YXExerciseViewController {
     /// 处理复习结果页
     func processReviewResult() {
         let vc = YXExerciseResultViewController()
-        vc.dataType = dataType
-        vc.planId   = planId ?? 0
+        vc.dataType = learnConfig.learnType
+        vc.planId   = learnConfig.planId
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
@@ -108,7 +108,7 @@ extension YXExerciseViewController {
     func biReport() {
         
         var typeName = "主流程"
-        switch dataType {
+        switch learnConfig.learnType {
             case .wrong:
                 typeName = "抽查复习"
             case .planListenReview:

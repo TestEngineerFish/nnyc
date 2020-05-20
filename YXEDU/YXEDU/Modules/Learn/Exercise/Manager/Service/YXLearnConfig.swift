@@ -24,7 +24,7 @@ protocol YXLearnConfig {
     var learnType: YXExerciseDataType { get set }
 }
 
-
+/// 学习配置，基础实现
 class YXLearnConfigImpl: YXLearnConfig {
     var bookId: Int = 0
     var unitId: Int = 0
@@ -41,16 +41,24 @@ class YXLearnConfigImpl: YXLearnConfig {
 
 /// 基础学习配置
 class YXBaseLearnConfig: YXLearnConfigImpl {
+    /// 基础学习时，必须要传 bookId和unitId，要缓存进度
     init(bookId: Int = 0, unitId: Int = 0, learnType: YXExerciseDataType = .base) {
         super.init(bookId: bookId, unitId: unitId, planId: 0, learnType: learnType)
     }
 }
 
 
+/// 复习配置的基类
+class YXReviewLearnConfig: YXLearnConfigImpl {
+    init(planId: Int, learnType: YXExerciseDataType) {
+        super.init(bookId: 0, unitId: 0, planId: planId, learnType: learnType)
+    }
+}
+
 /// 智能复习配置
-class YXAIReviewLearnConfig: YXLearnConfigImpl {
+class YXAIReviewLearnConfig: YXReviewLearnConfig {
     init(learnType: YXExerciseDataType = .aiReview) {
-        super.init(bookId: 0, unitId: 0, planId: 0, learnType: learnType)
+        super.init(planId: 0, learnType: learnType)
     }
 }
 
@@ -64,9 +72,9 @@ class YXWrongLearnConfig: YXAIReviewLearnConfig {
 
 
 /// 复习计划配置
-class YXReviewPlanLearnConfig: YXLearnConfigImpl {
-    init(planId: Int = 0, learnType: YXExerciseDataType = .planReview) {
-        super.init(bookId: 0, unitId: 0, planId: planId, learnType: learnType)
+class YXReviewPlanLearnConfig: YXReviewLearnConfig {
+    override init(planId: Int = 0, learnType: YXExerciseDataType = .planReview) {
+        super.init(planId: planId, learnType: learnType)
     }
 }
 

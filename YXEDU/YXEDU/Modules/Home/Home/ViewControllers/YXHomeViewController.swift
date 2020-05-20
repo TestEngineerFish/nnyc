@@ -85,8 +85,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YYCache.set(Date(), forKey: "LastStoredDate")
             YXLog(String(format: "开始学习书(%ld),第(%ld)单元", homeData.bookId ?? 0, homeData.unitId ?? 0))
             let vc = YXExerciseViewController()
-            vc.bookId = homeData.bookId
-            vc.unitId = homeData.unitId
+            vc.learnConfig = YXBaseLearnConfig(bookId: homeData.bookId ?? 0, unitId: homeData.unitId ?? 0)
             vc.hidesBottomBarWhenPushed = true
             
             if YYCache.object(forKey: "StartStudyTime") == nil {

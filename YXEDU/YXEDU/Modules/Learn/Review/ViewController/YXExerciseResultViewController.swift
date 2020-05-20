@@ -89,9 +89,12 @@ class YXExerciseResultViewController: YXViewController {
     private func reviewEvent() {
         YRRouter.popViewController(false)
         
+        let planId = model?.id ?? 0
+        let learnType = model?.type ?? .aiReview
+        let learnConfig = YXReviewLearnConfig(planId: planId, learnType: learnType)
+        
         let vc = YXExerciseViewController()
-        vc.dataType = model?.type ?? .aiReview
-        vc.planId = model?.id ?? 0
+        vc.learnConfig = learnConfig
         vc.hidesBottomBarWhenPushed = true
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }

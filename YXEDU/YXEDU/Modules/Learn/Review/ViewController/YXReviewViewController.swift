@@ -259,7 +259,7 @@ extension YXReviewViewController {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.aiReview.rawValue], animated: true)
         if headerView.reviewModel.canMakeReviewPlans > 0 {
             let vc = YXExerciseViewController()
-            vc.dataType = .aiReview
+            vc.learnConfig = YXAIReviewLearnConfig()
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
             YXLog("==== 开始智能复习 ====")
@@ -274,8 +274,7 @@ extension YXReviewViewController {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.normalReview.rawValue], animated: true)
         
         let vc = YXExerciseViewController()
-        vc.dataType                 = .planReview
-        vc.planId                   = planId
+        vc.learnConfig = YXReviewPlanLearnConfig(planId: planId)
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         YXLog("==== 开始复习计划复习 ====")
@@ -287,8 +286,7 @@ extension YXReviewViewController {
 //        YRRouter.openURL(url, query: nil, animated: true)
         
         let vc = YXExerciseViewController()
-        vc.dataType                 = .planListenReview
-        vc.planId                   = planId
+        vc.learnConfig = YXListenReviewLearnConfig(planId: planId)
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         YXLog("==== 开始听力复习 ====")

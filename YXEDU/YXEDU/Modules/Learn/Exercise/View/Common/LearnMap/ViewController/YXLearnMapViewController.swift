@@ -163,9 +163,7 @@ class YXLearnMapViewController: UIViewController {
             YXWordBookResourceManager.shared.contrastBookData(by: bookId) { (isSuccess) in
                 YRRouter.popViewController(false)
                 let vc = YXExerciseViewController()
-                vc.dataType = .base
-                vc.bookId   = bookId
-                vc.unitId   = unitId
+                vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
                 vc.hidesBottomBarWhenPushed = true
                 YXLog("==== 从地图页选择单元学习 ====")
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: false)

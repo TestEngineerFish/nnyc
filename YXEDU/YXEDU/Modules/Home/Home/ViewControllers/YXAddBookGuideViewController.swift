@@ -61,8 +61,7 @@ class YXAddBookGuideViewController: UIViewController {
                 YXLog("====新注册 - 开始主流程的学习====")
                 YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
                 let vc = YXExerciseViewController()
-                vc.bookId = bookId
-                vc.unitId = unitId
+                vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
                 vc.hidesBottomBarWhenPushed = true
                 
                 if YYCache.object(forKey: "StartStudyTime") == nil {

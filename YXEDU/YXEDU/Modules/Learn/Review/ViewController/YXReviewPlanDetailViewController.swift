@@ -138,8 +138,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     func listenEvent() {
         let vc = YXExerciseViewController()
-        vc.dataType = .planListenReview
-        vc.planId   = planId
+        vc.learnConfig = YXListenReviewLearnConfig(planId: planId)
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         YXLog("====开始听写练习====")
@@ -147,9 +146,8 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     
     func reviewEvent() {
-        let vc = YXExerciseViewController()
-        vc.dataType = .planReview
-        vc.planId   = planId
+        let vc = YXExerciseViewController()        
+        vc.learnConfig = YXReviewPlanLearnConfig(planId: planId)
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         YXLog("====开始复习计划复习====")

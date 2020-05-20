@@ -19,11 +19,9 @@
  /// 练习模块，主控制器
  class YXExerciseViewController: YXViewController {
     
-    // 基础学习时，必须要传 bookId和unitId，要缓存进度
-    public var bookId: Int?
-    public var unitId: Int?
-    public var planId: Int?
-    public var dataType: YXExerciseDataType = .base
+    /// 学习配置
+    public var learnConfig: YXLearnConfig = YXBaseLearnConfig()
+    
     
     // 数据管理器
     public var dataManager: YXExerciseDataManager!
@@ -126,17 +124,17 @@
         dataManager = YXExerciseDataManager()
         
         // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
-        if dataType == .base {
-            dataManager.bookId = bookId
-            dataManager.unitId = unitId
+        if learnConfig.learnType == .base {
+            dataManager.bookId = learnConfig.bookId
+            dataManager.unitId = learnConfig.unitId
             
-            dataManager.progressManager.bookId = bookId
-            dataManager.progressManager.unitId = unitId
+            dataManager.progressManager.bookId = learnConfig.bookId
+            dataManager.progressManager.unitId = learnConfig.unitId
         }
         
-        dataManager.dataType = dataType
-        dataManager.progressManager.planId = planId
-        dataManager.progressManager.dataType = dataType
+        dataManager.dataType = learnConfig.learnType
+        dataManager.progressManager.planId = learnConfig.planId
+        dataManager.progressManager.dataType = learnConfig.learnType
                         
         var array: [YXExerciseDataType] = [.base, .aiReview, .planListenReview, .planReview, .wrong]
         array = []
@@ -186,17 +184,12 @@
     // 加载当天的学习数据
     private func fetchExerciseData() {
         
-//        let config = YXBaseLearnConfig(bookId: 0, unitId: 0, learnType: dataType)
 //        var service: YXExerciseService = YXExerciseServiceImpl()
-//        service.learnConfig = config
-//        service.bookId = bookId ?? 0
-//        service.unitId = bookId ?? 0
-//        service.dataType = dataType
-//        service.planId = planId ?? 0
+//        service.learnConfig = learnConfig
 //        service.fetchExerciseModel()
 
         
-        dataManager.fetchTodayExerciseResultModels(type: dataType, planId: planId) { [weak self] (result, msg) in
+        dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
                 YXExerciseViewController.requesting = false
@@ -223,7 +216,7 @@
         headerView.reviewProgress = "\(data.1)"
         
         if var model = data.2 {
-            model.dataType = dataType
+            model.dataType = learnConfig.learnType
 
             YXRequestLog("==== 题目内容：%@", model.toJSONString() ?? "--")
 
