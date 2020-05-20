@@ -186,14 +186,14 @@
     // 加载当天的学习数据
     private func fetchExerciseData() {
         
-        let config = YXBaseLearnConfig(bookId: 0, unitId: 0, learnType: dataType)
-        var service: YXExerciseService = YXExerciseServiceImpl()
-        service.learnConfig = config
+//        let config = YXBaseLearnConfig(bookId: 0, unitId: 0, learnType: dataType)
+//        var service: YXExerciseService = YXExerciseServiceImpl()
+//        service.learnConfig = config
 //        service.bookId = bookId ?? 0
 //        service.unitId = bookId ?? 0
 //        service.dataType = dataType
 //        service.planId = planId ?? 0
-        service.fetchExerciseModel()
+//        service.fetchExerciseModel()
 
         
         dataManager.fetchTodayExerciseResultModels(type: dataType, planId: planId) { [weak self] (result, msg) in
