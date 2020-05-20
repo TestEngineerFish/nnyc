@@ -40,9 +40,6 @@ PODS:
     - Growing (= 2.8.15)
   - HWWeakTimer (1.0)
   - IQKeyboardManager (6.2.1)
-  - JCore (2.2.5)
-  - JPush (3.3.2):
-    - JCore (< 3.0.0, >= 2.0.0)
   - Kingfisher (5.9.0):
     - Kingfisher/Core (= 5.9.0)
   - Kingfisher/Core (5.9.0)
@@ -101,7 +98,6 @@ DEPENDENCIES:
   - GrowingAutoTrackKit
   - HWWeakTimer
   - IQKeyboardManager (~> 6.2.0)
-  - JPush
   - Kingfisher (~> 5.9.0)
   - KTVHTTPCache
   - LEEAlert (~> 1.2.8)
@@ -150,8 +146,6 @@ SPEC REPOS:
     - GrowingCoreKit
     - HWWeakTimer
     - IQKeyboardManager
-    - JCore
-    - JPush
     - Kingfisher
     - KTVCocoaHTTPServer
     - KTVHTTPCache
@@ -200,8 +194,6 @@ SPEC CHECKSUMS:
   GrowingCoreKit: 5b9ada602ec7c17deaced05d626eb0fcd5dfe94a
   HWWeakTimer: 79488095ef2dd8937f94b676d12bd5fa954486e6
   IQKeyboardManager: 964638372b4a61892cc74fdfa6fd26de8c9464a2
-  JCore: d75c0306dc99875d323d23e5a063b3a3ef22335a
-  JPush: 9468c84a3809dc3ac2fc1c89c6d1d6c858a91bf5
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   KTVCocoaHTTPServer: df8d7b861e603ff8037e9b2138aca2563a6b768d
   KTVHTTPCache: 588c3eb16f6bd1e6fde1e230dabfb7bd4e490a4d
@@ -232,6 +224,6 @@ SPEC CHECKSUMS:
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 69c8962418108d6ecf4409d5e342aed1d4060bad
+PODFILE CHECKSUM: 2cce1d06dc47295991a27413aab7d3b191f25399
 
 COCOAPODS: 1.8.4
