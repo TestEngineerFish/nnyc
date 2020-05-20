@@ -15,7 +15,6 @@ target 'YXEDU' do
      pod 'CocoaLumberjack/Swift'
      pod 'Bugly'
      pod 'AFNetworking'
-     pod 'SSKeychain'
      pod 'YYKit'
      pod 'IQKeyboardManager' , '~> 6.2.0'
      pod 'BMKLocationKit'
@@ -71,4 +70,214 @@ target 'YXEDU' do
      pod 'Toast'
      pod 'DZNEmptyDataSet'
      
+end
+
+# Swift 版本声明
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+
+        if ['MBProgressHUD'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['SSKeychain'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['CocoaLumberjack'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['AFNetworking'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['IQKeyboardManager'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['HWWeakTimer'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['UICollectionViewLeftAlignedLayout'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['SVProgressHUD'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['ZipArchive'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['MJRefresh'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['WMPageController'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['TZImagePickerController'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['FMDB'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['MagicalRecord'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['MJExtension'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['SGQRCode'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['Masonry'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['SDWebImage'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['LEEAlert'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['DACircularProgress'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['SnapKit'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['Alamofire'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['ObjectMapper'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['AlamofireObjectMapper'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['SDCycleScrollView'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['Reachability'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['FSCalendar'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['lottie-ios'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['Zip'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['Kingfisher'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['KTVHTTPCache'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['Toast-Swift'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['Toast'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+
+        if ['DZNEmptyDataSet'].include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['MACH_O_TYPE'] = 'staticlib'
+          end
+        end
+    end
 end
