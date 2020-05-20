@@ -1838,10 +1838,10 @@
 		7709751C2398F4E10071A779 /* Review */ = {
 			isa = PBXGroup;
 			children = (
+				7709751A2398F4DC0071A779 /* Review.storyboard */,
 				EEACEB5E23A4F1BA0036B3A2 /* Model */,
 				223D2686239B4B3A008DED9E /* MakeReviewPlan */,
 				2296F772239B9DCD00C50660 /* Manager */,
-				7709751A2398F4DC0071A779 /* Review.storyboard */,
 				EEACEB03239E42A60036B3A2 /* View */,
 				EEACEB04239E42B20036B3A2 /* ViewController */,
 			);
@@ -1872,10 +1872,10 @@
 			isa = PBXGroup;
 			children = (
 				771512DF2367126800F6D400 /* Mine.storyboard */,
-				771512E5236717E000F6D400 /* ViewControllers */,
-				773452C8236A7E9A00801FDD /* Views */,
 				776F747B238BC5DD0027D166 /* Manager */,
 				771512E62367180E00F6D400 /* Models */,
+				771512E5236717E000F6D400 /* ViewControllers */,
+				773452C8236A7E9A00801FDD /* Views */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -2072,6 +2072,10 @@
 		77706E3E2372EBA200149D09 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				77342BA72473A8730082C771 /* Model */,
+				223D267D239B4A70008DED9E /* SegmentController */,
+				EE5EFC8B23274E5500655654 /* Controller */,
+				EE5EFC9F23274E5500655654 /* View */,
 				CFB11BE82414950A00B29B62 /* CommonView */,
 				227F477C23CC53F900D6C603 /* YXToastViews */,
 				2297D98323AE377700DAF3B0 /* Share */,
@@ -2224,11 +2228,8 @@
 		77F69A602361492500E55185 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				771512E12367131500F6D400 /* Home.storyboard */,
-				77F69A6B236149F300E55185 /* ViewControllers */,
-				77F69A7723617C9F00E55185 /* Views */,
-				77D048F82361A0FC00CE95D8 /* Model */,
-				77077EC82383F649005C1176 /* Manager */,
+				EE1506072474E947008F9CC4 /* Home */,
+				EE5EFEAB23274FE900655654 /* Calendar */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -2418,6 +2419,78 @@
 				EE08F3732372E3C200FA3FDF /* Mappable+Transform.swift */,
 			);
 			path = Transform;
+			sourceTree = "<group>";
+		};
+		EE1506022474E6ED008F9CC4 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				EE5EFF9823274FEA00655654 /* Personal */,
+				771E88612362ABB2000BFAAD /* RegisterAndLogin */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		EE1506032474E6FA008F9CC4 /* Word */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Word;
+			sourceTree = "<group>";
+		};
+		EE1506042474E702008F9CC4 /* Challenge */ = {
+			isa = PBXGroup;
+			children = (
+				228F9D4723A09CBB00F15F19 /* Challenge */,
+				228F9D4523A099C300F15F19 /* Discovery.storyboard */,
+			);
+			path = Challenge;
+			sourceTree = "<group>";
+		};
+		EE1506052474E718008F9CC4 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				EE88DF4E23AF5981004DFF10 /* Manager */,
+				EE88DF4F23AF598F004DFF10 /* Model */,
+				EE1506082474EB44008F9CC4 /* View */,
+				EE1506092474EB58008F9CC4 /* ViewController */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		EE1506062474E748008F9CC4 /* Learn */ = {
+			isa = PBXGroup;
+			children = (
+				EE5EFEFB23274FE900655654 /* Search */,
+				7709751C2398F4E10071A779 /* Review */,
+				EE54F7AE2362AA3100EC605A /* Exercise */,
+			);
+			path = Learn;
+			sourceTree = "<group>";
+		};
+		EE1506072474E947008F9CC4 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				771512E12367131500F6D400 /* Home.storyboard */,
+				77F69A6B236149F300E55185 /* ViewControllers */,
+				77F69A7723617C9F00E55185 /* Views */,
+				77D048F82361A0FC00CE95D8 /* Model */,
+				77077EC82383F649005C1176 /* Manager */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		EE1506082474EB44008F9CC4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EE1506092474EB58008F9CC4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		EE1B6958246E3AF1000EADB2 /* Service */ = {
@@ -2890,16 +2963,15 @@
 		EE5EF13C2327371D00655654 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				77F69A612361495300E55185 /* Main.storyboard */,
-				7709751C2398F4E10071A779 /* Review */,
-				77706E3E2372EBA200149D09 /* Common */,
-				771E88612362ABB2000BFAAD /* RegisterAndLogin */,
+				EE1506022474E6ED008F9CC4 /* User */,
 				77F69A602361492500E55185 /* Home */,
+				EE1506032474E6FA008F9CC4 /* Word */,
+				EE1506062474E748008F9CC4 /* Learn */,
+				EE1506042474E702008F9CC4 /* Challenge */,
 				771512DC236710F200F6D400 /* Mine */,
-				EE5EFC8723274E5500655654 /* Comm */,
-				EE5EFCEC23274F0900655654 /* Discovery */,
-				EE5EFD6623274FE800655654 /* Main */,
-				EE5EFF9823274FEA00655654 /* Personal */,
+				EE1506052474E718008F9CC4 /* Setting */,
+				77706E3E2372EBA200149D09 /* Common */,
+				77F69A612361495300E55185 /* Main.storyboard */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -3130,17 +3202,6 @@
 			path = ExportOptionPlist;
 			sourceTree = "<group>";
 		};
-		EE5EFC8723274E5500655654 /* Comm */ = {
-			isa = PBXGroup;
-			children = (
-				77342BA72473A8730082C771 /* Model */,
-				223D267D239B4A70008DED9E /* SegmentController */,
-				EE5EFC8B23274E5500655654 /* Controller */,
-				EE5EFC9F23274E5500655654 /* View */,
-			);
-			path = Comm;
-			sourceTree = "<group>";
-		};
 		EE5EFC8B23274E5500655654 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -3161,26 +3222,6 @@
 				EE5EFCC523274E5500655654 /* YXTipsBaseView.m */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		EE5EFCEC23274F0900655654 /* Discovery */ = {
-			isa = PBXGroup;
-			children = (
-				228F9D4723A09CBB00F15F19 /* Challenge */,
-				228F9D4523A099C300F15F19 /* Discovery.storyboard */,
-			);
-			path = Discovery;
-			sourceTree = "<group>";
-		};
-		EE5EFD6623274FE800655654 /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				EE88DF4D23AF5973004DFF10 /* Setting */,
-				EE54F7AE2362AA3100EC605A /* Exercise */,
-				EE5EFEAB23274FE900655654 /* Calendar */,
-				EE5EFEFB23274FE900655654 /* Search */,
-			);
-			path = Main;
 			sourceTree = "<group>";
 		};
 		EE5EFEAB23274FE900655654 /* Calendar */ = {
@@ -3412,15 +3453,6 @@
 				EEA50FDF23BA3C7400518BE8 /* YXAlertQueueManager.swift */,
 			);
 			path = AlertManager;
-			sourceTree = "<group>";
-		};
-		EE88DF4D23AF5973004DFF10 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				EE88DF4F23AF598F004DFF10 /* Model */,
-				EE88DF4E23AF5981004DFF10 /* Manager */,
-			);
-			path = Setting;
 			sourceTree = "<group>";
 		};
 		EE88DF4E23AF5981004DFF10 /* Manager */ = {
