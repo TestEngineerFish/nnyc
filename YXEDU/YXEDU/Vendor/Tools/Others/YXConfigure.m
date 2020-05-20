@@ -110,7 +110,7 @@
     if (_time.length) {
         return _time;
     }
-    _time = [[NSUserDefaults standardUserDefaults]objectForKey:@"time"];
+    _time = [NSString stringWithFormat:@"%d", (int)[[NSDate alloc] init].timeIntervalSince1970];
     return _time;
 }
 
