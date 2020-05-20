@@ -12,7 +12,7 @@ struct YXAPI {
     //MARK: - 登陸註冊
     struct RegisterAndLogin {
         // 登陸
-        static let login = "/v1/user/reg"
+        static let login = "/api/v1/user/login"
         
         // 退出
         static let logout = "/api/v1/user/logout"
