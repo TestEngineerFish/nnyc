@@ -258,10 +258,8 @@
                     make.bottom.equalToSuperview()
                 }
             }
-            if !exerciseViewArray.isEmpty {
-                YXAVPlayerManager.share.pauseAudio()
-                YXAVPlayerManager.share.finishedBlock = nil
-            }
+            YXAVPlayerManager.share.pauseAudio()
+            YXAVPlayerManager.share.finishedBlock = nil
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
             exerciseView.frame = CGRect(x: screenWidth, y: self.headerView.frame.maxY, width: screenWidth, height: exerciseViewHeight)
             self.delegate = exerciseView
