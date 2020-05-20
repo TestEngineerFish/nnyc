@@ -111,13 +111,6 @@ class YXUserModel: NSObject {
         }
     }
     
-    var currentGrade: Int? {
-        didSet {
-            YYCache.set(currentGrade, forKey: "kCurrentGrade")
-        }
-    }
-
-    
     var didFinishDownloadAllStudyWordBooks = false
 
     func login() {
