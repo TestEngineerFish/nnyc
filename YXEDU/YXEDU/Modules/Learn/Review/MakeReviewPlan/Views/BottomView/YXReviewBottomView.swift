@@ -69,10 +69,11 @@ class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
         if self.superview != nil {
             self.remindLabel.isHidden = false
             self.snp.updateConstraints { (make) in
-                make.height.equalTo(AdaptSize(81) + kSafeBottomMargin)
+                make.height.equalTo(AdaptIconSize(81) + kSafeBottomMargin)
             }
+            self.remindLabel.sizeToFit()
             self.remindLabel.snp.updateConstraints { (make) in
-                make.height.equalTo(AdaptSize(17))
+                make.height.equalTo(self.remindLabel.height)
             }
         }
     }
@@ -81,7 +82,7 @@ class YXReviewBottomView: UIView, YXReviewBottomViewProtocol {
         if self.superview != nil {
             self.remindLabel.isHidden = true
             self.snp.updateConstraints { (make) in
-                make.height.equalTo(AdaptSize(60))
+                make.height.equalTo(AdaptIconSize(60) + kSafeBottomMargin)
             }
             self.remindLabel.snp.updateConstraints { (make) in
                 make.height.equalTo(CGFloat.zero)

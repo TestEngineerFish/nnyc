@@ -172,13 +172,13 @@ class YXListenFillAnswerLineView: YXView {
     }
     var viewWidth: CGFloat = 0
     private var lineWidth: CGFloat {
-        let maxWidth = AS(332) / CGFloat(allText.count)
-        let defaultWidth = AS(23)
+        let maxWidth = AdaptIconSize(332) / CGFloat(allText.count)
+        let defaultWidth = AdaptIconSize(23)
         return (maxWidth < defaultWidth ? maxWidth : defaultWidth)
     }
-    private var sysbolWidth: CGFloat = AS(12)
+    private var sysbolWidth: CGFloat = AdaptIconSize(12)
     
-    private let interval: CGFloat = AS(2.5)
+    private let interval: CGFloat = AdaptIconSize(2.5)
     private var letterLabels: [UILabel] = []
     private var symbolLabels: [UILabel] = []
     private var frontView = UIView()

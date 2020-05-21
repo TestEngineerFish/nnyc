@@ -40,7 +40,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
         let request = YXChallengeRequest.rankedList
         YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
             self.challengeModel = response.data
-            self.customNavigationBar?.title = self.challengeModel?.title
+            self.customNavigationBar?.title = "上期排行"
             self.tableView.reloadData()
         }) { (error) in
             YXUtils.showHUD(self.view, title: error.message)

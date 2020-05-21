@@ -65,7 +65,7 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
 
     var reviewButton: UIButton = {
         let button = UIButton()
-        button.setTitle("开始复习", for: .normal)
+        button.setTitle("开始学习", for: .normal)
         button.setTitleColor(UIColor.hex(0xFB7A19), for: .normal)
         button.titleLabel?.font   = UIFont.regularFont(ofSize: AdaptSize(20))
         button.backgroundColor    = .clear
@@ -255,8 +255,8 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
         self.descriptionLabel.text = "单词：\(model.wordCount)"
         self.listenProgressView.progress = CGFloat(model.listen)/100
         self.reviewProgressView.progress = CGFloat(model.review)/100
-        self.listenStarView.showReviewPlanView(starNum: YXStarLevelEnum.getStarNum(model.listen))
-        self.reviewStarView.showReviewPlanView(starNum: YXStarLevelEnum.getStarNum(model.review))
+        self.listenStarView.showReviewPlanView(starNum: model.listen)
+        self.reviewStarView.showReviewPlanView(starNum: model.review)
 
         switch model.listenState {
         case .normal:
@@ -287,21 +287,21 @@ class YXReviewPlanCollectionViewItem: UICollectionViewCell {
             self.reviewProgressView.isHidden = true
             self.reviewScoreLabel.isHidden   = true
             self.reviewImageView.isHidden    = false
-            self.reviewButton.setTitle("开始复习", for: .normal)
+            self.reviewButton.setTitle("开始学习", for: .normal)
         case .learning:
             self.reviewStarView.isHidden     = true
             self.reviewProgressView.isHidden = false
             self.reviewScoreLabel.isHidden   = false
             self.reviewImageView.isHidden    = true
-            self.reviewScoreLabel.text = "复习进度"
-            self.reviewButton.setTitle("继续复习", for: .normal)
+            self.reviewScoreLabel.text = "学习进度"
+            self.reviewButton.setTitle("继续学习", for: .normal)
         case .finish:
             self.reviewStarView.isHidden     = false
             self.reviewProgressView.isHidden = true
             self.reviewScoreLabel.isHidden   = false
             self.reviewImageView.isHidden    = true
-            self.reviewScoreLabel.text = "复习成绩"
-            self.reviewButton.setTitle("继续复习", for: .normal)
+            self.reviewScoreLabel.text = "学习成绩"
+            self.reviewButton.setTitle("继续学习", for: .normal)
         }
 
         if model.listenState == .normal && model.reviewState != .normal {
