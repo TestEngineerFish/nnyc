@@ -72,212 +72,106 @@ target 'YXEDU' do
      
 end
 
-## Swift 版本声明
-#post_install do |installer|
-#    installer.pods_project.targets.each do |target|
+## transform dynamic to static
+post_install do |installer|
+
+  def supported_staticlib_pods
+    return ['MBProgressHUD', 'SSKeychain', 'CocoaLumberjack', 'AFNetworking', 'IQKeyboardManager', 'HWWeakTimer', 'UICollectionViewLeftAlignedLayout', 'SVProgressHUD', 'ZipArchive', 'MJRefresh', 'WMPageController', 'TZImagePickerController', 'FMDB', 'MagicalRecord', 'MJExtension', 'SGQRCode', 'Masonry', 'SDWebImage', 'LEEAlert', 'DACircularProgress', 'SnapKit', 'Alamofire', 'ObjectMapper', 'AlamofireObjectMapper', 'SDCycleScrollView', 'Reachability', 'FSCalendar', 'lottie-ios', 'Zip', 'Kingfisher', 'KTVHTTPCache', 'Toast-Swift', 'Toast', 'DZNEmptyDataSet']
+  end
+
+  def improve_pre_main_time_loading(installer)
+  pod_frameworks_path = "Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU-frameworks.sh"
+  if(File.exist?(pod_frameworks_path))
+    # Get Pods-#{project_name}-frameworks.sh
+    pod_frameworks_content = File.read(pod_frameworks_path)
+    is_updated_files = false
+    installer.pods_project.targets.each do |target|
+      if supported_staticlib_pods.include?(target.name)
+        # Using 'staticlib' for every configs
+        target.build_configurations.each do |config|
+          config.build_settings['MACH_O_TYPE'] = 'staticlib'
+        end
+
+        # Removing `supported_staticlib_pods` from `Pods-#{project_name}-frameworks.sh`
+        lib_path = "\"${BUILT_PRODUCTS_DIR}/#{target.name}/"
+
+        if target.name == "lottie-ios"
+          lib_path = "#{lib_path}Lottie.framework\""
+          elsif target.name == "Toast-Swift"
+          lib_path = "#{lib_path}Toast_Swift.framework\""
+          else
+          lib_path = "#{lib_path}#{target.name}.framework\""
+        end
+
+        pod_frameworks_content = pod_frameworks_content.gsub("install_framework #{lib_path}", "")
+
+        is_updated_files = true
+      end
+    end
+
+    if is_updated_files
+      puts "Improving Pre-main Time"
+      pod_frameworks_content = pod_frameworks_content.gsub("  \n", "")
+      File.write(pod_frameworks_path, pod_frameworks_content)
+    end
+
+    else
+    puts pod_frameworks_path + ' not found'
+  end
+
+end
+
+improve_pre_main_time_loading(installer)
+
+end
+
+
 #
-#        if ['MBProgressHUD'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
+#def use_dylibs
+#    project_name = "YXEDU"
+#    pods_path = "Pods/Pods.xcodeproj/project.pbxproj"
+#    pod_frameworks_path = "Pods/Target Support Files/Pods-#{project_name}/Pods-#{project_name}-frameworks.sh"
+#
+#    if(File.exist?(pods_path)) and (File.exist?(pod_frameworks_path))
+#
+#        pods_content = File.read(pods_path)
+#        pod_frameworks_content = File.read(pod_frameworks_path)
+#        is_updated_files = false
+#
+#        supported_staticlib_pods.each do |pod|
+#            pods_mach_o_modulemap = "MODULEMAP_FILE = \"Target Support Files/#{pod}/#{pod}.modulemap\";"
+#            pods_mach_o = "MACH_O_TYPE = staticlib;\n        #{pods_mach_o_modulemap}"
+#            if pods_content.include? pod
+#                # Use dylib
+#                pods_content = pods_content.gsub(pods_mach_o, pods_mach_o_modulemap)
+#
+#                # For Pods script file
+#                lib_path = "\"${BUILT_PRODUCTS_DIR}/#{pod}/"
+#                if pod == "UINavigationBar+Addition"
+#                    lib_path = "#{lib_path}UINavigationBar_Addition.framework\""
+#                elsif pod == "GzipSwift"
+#                    lib_path = "#{lib_path}Gzip.framework\""
+#                else
+#                    lib_path = "#{lib_path}#{pod}.framework\""
+#                end
+#
+#                unless pod_frameworks_content.include? lib_path
+#                    pod_frameworks_content = pod_frameworks_content.gsub(".framework\"\nfi", ".framework\"\n\tinstall_framework #{lib_path}\nfi")
+#                    is_updated_files = true
+#                end
+#            end
 #        end
 #
-#        if ['SSKeychain'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
+#        File.write(pods_path, pods_content)
+#        if is_updated_files
+#            File.write(pod_frameworks_path, pod_frameworks_content)
 #        end
 #
-#        if ['CocoaLumberjack'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['AFNetworking'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['IQKeyboardManager'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['HWWeakTimer'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['UICollectionViewLeftAlignedLayout'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['SVProgressHUD'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['ZipArchive'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['MJRefresh'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['WMPageController'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['TZImagePickerController'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['FMDB'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['MagicalRecord'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['MJExtension'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['SGQRCode'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['Masonry'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['SDWebImage'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['LEEAlert'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['DACircularProgress'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['SnapKit'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['Alamofire'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['ObjectMapper'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['AlamofireObjectMapper'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['SDCycleScrollView'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['Reachability'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['FSCalendar'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['lottie-ios'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['Zip'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['Kingfisher'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['KTVHTTPCache'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['Toast-Swift'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['Toast'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
-#
-#        if ['DZNEmptyDataSet'].include? target.name
-#            target.build_configurations.each do |config|
-#                config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#          end
-#        end
+#        puts "Converted white-list libs back to use dylib!"
+#    else
+#      puts pods_path ' or ' + pod_frameworks_path + ' not found'
 #    end
 #end
+#
+#use_dylibs
+
