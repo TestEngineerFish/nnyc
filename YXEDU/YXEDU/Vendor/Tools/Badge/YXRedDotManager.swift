@@ -38,7 +38,7 @@ import Foundation
         // 清除本地通知的badge
         UIApplication.shared.applicationIconBadgeNumber = 0
         
-        let request = YXHomeRequest.task
+        let request = YXMineRequest.getUserInfo
         YYNetworkService.default.request(YYStructResponse<YXNewLoginModel>.self, request: request, success: { (response) in
             guard let userModel = response.data else { return }
  
