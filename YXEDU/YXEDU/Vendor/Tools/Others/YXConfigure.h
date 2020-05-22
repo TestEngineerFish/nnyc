@@ -12,8 +12,6 @@
 #define userId [YXConfigure shared].uuid
 
 @interface YXConfigure : NSObject
-// A/B Test,Q-B-1、Q-B-2显示软键盘，不显示可选项
-@property (nonatomic, assign) BOOL isShowKeyboard;
 // 是否开启新学跳过
 @property (nonatomic, assign) BOOL isSkipNewLearn;
 

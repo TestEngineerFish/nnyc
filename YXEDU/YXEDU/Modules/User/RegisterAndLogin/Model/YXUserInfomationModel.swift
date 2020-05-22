@@ -36,8 +36,7 @@ struct YXUserInfomationModel: Mappable {
     var oldUserUpdateMessage: String?
     var coinExplainUrl: String?  //松果币H5文件
     var gameExplainUrl: String? //游戏挑战H5文件
-    var reviewNameType: ReviewNameType = .reviewPlan //
-    var fillType: ExerciseFillType     = .choose
+    var reviewNameType: ReviewNameType = .reviewPlan
     var reminder: YXReminderModel?
 
     init?(map: Map) {
@@ -50,8 +49,6 @@ struct YXUserInfomationModel: Mappable {
         didSelectBook        <- map["is_selected_book"]
         coinExplainUrl       <- map["coin_explain_url"]
         gameExplainUrl       <- map["game_explain_url"]
-        reviewNameType       <- (map["plan_execute_ab"], EnumTransform<ReviewNameType>())
-        fillType             <- (map["spell_execute_ab"], EnumTransform<ExerciseFillType>())
         reminder             <- map["learn_remind"]
     }
 }
