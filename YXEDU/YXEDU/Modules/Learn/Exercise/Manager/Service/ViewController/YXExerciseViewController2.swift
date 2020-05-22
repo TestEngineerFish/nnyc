@@ -304,7 +304,7 @@
     /// 显示loading动画
     private func showLoadAnimation() {
         YXLog("显示学习前加载动画")
-        self.loadingView = YXExerciseLoadingView(frame: kWindow.bounds)
+        self.loadingView = YXExerciseLoadingView(type: self.dataType)
         kWindow.addSubview(self.loadingView!)
         self.loadingView?.startAnimation()
     }

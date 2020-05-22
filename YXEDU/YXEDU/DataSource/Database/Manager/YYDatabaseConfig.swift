@@ -22,13 +22,16 @@ struct YYSQLManager {
         var sqlArray = [CreateWordTableSQLs.bookTable.rawValue,
                         CreateWordTableSQLs.wordTable.rawValue,
                         CreateWordTableSQLs.searchHistoryTable.rawValue,
+                        CreateWordTableSQLs.stepConfigTable.rawValue,
                         CreateExerciseTableSQLs.allExercise.rawValue,
-                        CreateExerciseTableSQLs.allWordStep.rawValue
+                        CreateExerciseTableSQLs.allWordStep.rawValue,
+
         ]
         if YYCache.object(forKey: "updateDatabase") as? Bool ?? true {
             sqlArray.insert(DeleteTableSQLs.bookTable.rawValue, at: 0)
             sqlArray.insert(DeleteTableSQLs.wordTable.rawValue, at: 0)
             sqlArray.insert(DeleteTableSQLs.searchHistoryTable.rawValue, at: 0)
+            sqlArray.insert(DeleteTableSQLs.stepConfigTable.rawValue, at: 0)
         }
         YYCache.set(false, forKey: "updateDatabase")
         return sqlArray
@@ -94,6 +97,7 @@ extension YYSQLManager {
         case bookTable = "DROP TABLE IF EXISTS book;"
         case wordTable = "DROP TABLE IF EXISTS word;"
         case searchHistoryTable = "DROP TABLE IF EXISTS search_history_table;"
+        case stepConfigTable = "DROP TABLE IF EXISTS step_config_table;"
     }
     
     enum  CreateWordTableSQLs: String {
@@ -152,6 +156,17 @@ extension YYSQLManager {
         isComplexWord integer
         );
         """
+
+        case stepConfigTable =
+        """
+        CREATE TABLE IF NOT EXISTS step_config_table (
+        id integer primary key,
+        wordId integer NOT NULL,
+        step integer,
+        black_list text
+        )
+        """
+
     }
 
     enum WordBookSQL: String {
@@ -245,6 +260,26 @@ extension YYSQLManager {
         case deleteWord =
         """
         delete from search_history_table
+        """
+    }
+
+    enum StepConfigSQL: String {
+        case insert =
+        """
+        INSERT INTO step_config_table
+        (wordId, step, black_list)
+        VALUES (?, ?, ?)
+        """
+
+        case seleteBlackList =
+        """
+        SELECT * FROM step_config_table
+        WHERE step = ? and wordId = ?
+        """
+
+        case deleteAll =
+        """
+        delete from step_config_table
         """
     }
 }

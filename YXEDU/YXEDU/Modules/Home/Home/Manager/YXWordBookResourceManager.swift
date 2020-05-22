@@ -10,19 +10,36 @@ import Foundation
 import ObjectMapper
 
 class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
-    static let shared = YXWordBookResourceManager()
-    private override init() {
-        super.init()
+    var group                              = DispatchGroup()
+    var totalDownloadCount                 = 0
+    static let shared                      = YXWordBookResourceManager()
+    static var currentBookDownloadFinished = false
+    static var groupCount = 0
+    static var isLearning                  = false {
+        willSet {
+            YXWordBookResourceManager.writeDBFinished = true
+            if newValue {
+                YXLog("开始学习")
+                YXWordBookResourceManager.shared.finishBlock?()
+                YXWordBookResourceManager.shared.backupBlock?()
+                YXWordBookResourceManager.downloadDataList.removeAll()
+            } else {
+                YXLog("学习结束")
+                YXWordBookResourceManager.shared.group    = DispatchGroup()
+                YXWordBookResourceManager.shared.contrastBookData()
+            }
+        }
     }
 
-    static var wordNumber      = 0
-    var totalDownloadCount     = 0
-    let group = DispatchGroup()
     var backupBlock: (()->Void)?
     static var downloadDataList = [(Int, String)]()
     static var writeDBFinished: Bool?
     private var closure: ((_ isSuccess: Bool) -> Void)?
     var finishBlock: (()->Void)?
+
+    private override init() {
+        super.init()
+    }
 
     /// 检测词书是否需要下载（可指定词书ID，未指定则检测当前用户所有词书）
     func contrastBookData(by bookId: Int? = nil, _ closure: ((_ isSuccess: Bool) -> Void)? = nil) {
@@ -119,13 +136,16 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             self.downloadProcessor()
         } else {
             YXLog("没有需要更新的词书")
-            YXWordBookResourceManager.writeDBFinished = true
+            YXWordBookResourceManager.currentBookDownloadFinished = true
+            YXWordBookResourceManager.writeDBFinished             = true
             self.closure?(true)
         }
     }
 
     /// 下载任务处理者
     private func downloadProcessor() {
+        // 优先下载当前正在学习的词书
+        self.sortDownloadDataList()
         DispatchQueue.global().async(group: group, qos: .default, flags: []) {
             for (index, model) in YXWordBookResourceManager.downloadDataList.enumerated() {
                 if !YXUserModel.default.didLogin {
@@ -134,6 +154,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 }
                 if index < 10 {
                     YXWordBookResourceManager.shared.group.enter()
+                    YXWordBookResourceManager.groupCount += 1
+                    YXLog("当前线程进入数量：\(YXWordBookResourceManager.groupCount)")
                     self.downloadSingleWordBook(with: model.0, newHash: model.1)
                 }
             }
@@ -141,7 +163,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         group.notify(queue: .global()) {
             if YXWordBookResourceManager.downloadDataList.isEmpty {
                 YXLog("==== 写入DB数据完成✅ ====")
-                YXWordBookResourceManager.writeDBFinished = true
+                YXWordBookResourceManager.writeDBFinished             = true
+                YXWordBookResourceManager.currentBookDownloadFinished = true
                 self.finishBlock?()
                 self.backupBlock?()
             } else {
@@ -166,14 +189,35 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             }
         }) { (error) in
             YXWordBookResourceManager.shared.group.leave()
+            YXWordBookResourceManager.groupCount -= 1
+            YXLog("当前线程剩余数量：\(YXWordBookResourceManager.groupCount)")
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
-    
+
+    // TODO: ---- Tools ----
+    private func sortDownloadDataList() {
+        var tmpList = YXWordBookResourceManager.downloadDataList
+        let currentLearningBookId = YXUserModel.default.currentBookId ?? 0
+        YXLog("当前正在学习的词书ID：\(currentLearningBookId)")
+        for (index, data) in YXWordBookResourceManager.downloadDataList.enumerated() {
+            if data.0 == currentLearningBookId {
+                tmpList.remove(at: index)
+                tmpList.insert(data, at: 0)
+                YXWordBookResourceManager.currentBookDownloadFinished = false
+            }
+        }
+        YXWordBookResourceManager.downloadDataList = tmpList
+    }
+
     // TODO: ---- 本地词书数据库操作 ----
 
     /// 保存、更新单词
     private func updateWords(with bookModel: YXWordBookModel) {
+        if YXWordBookResourceManager.isLearning {
+            YXLog("当前正在学习中，不再下载其他词书")
+            return
+        }
         YXWordBookDaoImpl().updateWords(bookModel: bookModel)
     }
 }

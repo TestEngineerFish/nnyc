@@ -89,6 +89,8 @@ struct YXAPI {
         static let report = "/api/v1/learn/report"
         /// 单词跟读分上报
         static let reportListenScore = "/api/v1/learn/updatelistenscore"
+        /// 获得学习步骤配置
+        static let stepConfig = "/api/v1/learn/getstepsconfig"
     }
     
     

@@ -9,6 +9,7 @@
 import Foundation
 import CocoaLumberjack
 import ZipArchive
+import MBProgressHUD
 
 class YXLogManager: NSObject {
 
@@ -26,11 +27,13 @@ class YXLogManager: NSObject {
         YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, mimeType: YXMiMeType.file.rawValue, fileName: "log", success: { (response) in
             if showToast {
                 YXUtils.showHUD(kWindow, title: "上传完成")
+                MBProgressHUD.hide(for: kWindow, animated: true)
             }
             self.deleteZip()
             self.deleteFile()
         }) { (error) in
             if showToast {
+                MBProgressHUD.hide(for: kWindow, animated: true)
                 YXUtils.showHUD(kWindow, title: "上传失败，请稍后再试")
             }
         }

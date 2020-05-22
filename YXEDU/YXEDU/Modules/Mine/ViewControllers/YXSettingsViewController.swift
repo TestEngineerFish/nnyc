@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -106,6 +107,7 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
             break
             
         case 4:
+            MBProgressHUD.showAdded(to: kWindow, animated: true)
             YXLogManager.share.report(true)
             break
             

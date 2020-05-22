@@ -10,6 +10,7 @@ import UIKit
 import Lottie
 import GrowingCoreKit
 import GrowingAutoTrackKit
+import StoreKit
 
 @objc
 class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -153,6 +154,16 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         if !self.animationPlayFinished {
             self.setSquirrelAnimation()
         }
+
+        if YYCache.object(forKey: "ShowedRate") as? Bool == nil, let count = YYCache.object(forKey: "PunchCount") as? Int, count >= 4 {
+            YYCache.set(true, forKey: "ShowedRate")
+
+            if #available(iOS 10.3, *) {
+                SKStoreReviewController.requestReview()
+            } else {
+                // Fallback on earlier versions
+            }
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -189,6 +200,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
             self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
             self.studyDataCollectionView.reloadData()
+            YXUserModel.default.currentBookId   = self.homeModel.bookId
             YXUserModel.default.currentGrade    = self.homeModel.bookGrade
             YXConfigure.shared().isSkipNewLearn = self.homeModel?.isSkipNewLearn == .some(1)
             self.handleTabData()
@@ -223,6 +235,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         if YXFileManager.share.getJsonFromFile(type: .mine_integral) == nil {
             YXBaseRequestManager.share.requestMineTabIntegralData()
         }
+        YXStepConfigManager.share.contrastStepConfig()
         YXWordBookResourceManager.shared.contrastBookData()
     }
 

@@ -80,8 +80,11 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var exercisType: YXExerciseDataType
+
+    init(type: YXExerciseDataType) {
+        exercisType = type
+        super.init(frame: kWindow.bounds)
         self.createSubviews()
     }
 
@@ -232,9 +235,9 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         if isLoading { return }
         // 更新状态
         let originStatus = self.status
-        if YXWordBookResourceManager.writeDBFinished != nil {
+        if exercisType == .base {
             self.status = .downloadBook
-            if YXWordBookResourceManager.writeDBFinished == .some(true) {
+            if YXWordBookResourceManager.currentBookDownloadFinished {
                 self.downloadCompleteBlock?()
                 self.downloadCompleteBlock = nil
                 self.speed  = .highSpeed
@@ -251,7 +254,29 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             } else {
                 self.speed  = .normal
             }
+        } else {
+            if YXWordBookResourceManager.writeDBFinished != nil {
+                self.status = .downloadBook
+                if YXWordBookResourceManager.writeDBFinished == .some(true) {
+                    self.downloadCompleteBlock?()
+                    self.downloadCompleteBlock = nil
+                    self.speed  = .highSpeed
+                    // 请求之前需要先下载完词书
+                    if YXExerciseViewController.requesting != nil {
+                        if YXExerciseViewController.requesting == .some(true) {
+                            self.status = .requestIng
+                            self.speed  = .normal
+                        } else {
+                            self.status = .requestEnd
+                            self.speed  = .highSpeed
+                        }
+                    }
+                } else {
+                    self.speed  = .normal
+                }
+            }
         }
+
 
         self.fromRatio = self.toRatio
         self.toRatio   = Double(self.status.getRatio())

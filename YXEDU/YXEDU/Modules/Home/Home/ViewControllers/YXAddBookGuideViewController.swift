@@ -48,12 +48,14 @@ class YXAddBookGuideViewController: UIViewController {
         let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let uuid = YXUserModel.default.uuid else { return }
+            YXStepConfigManager.share.contrastStepConfig()
             YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
             
             let request = YXHomeRequest.getBaseInfo(userId: uuid)
             YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { (response) in
                 guard let userInfomation = response.data else { return }
-                
+
+                YXUserModel.default.currentBookId   = bookId
                 YXUserModel.default.currentGrade    = userInfomation.bookGrade
                 YXConfigure.shared().isSkipNewLearn = userInfomation.isSkipNewLearn == .some(1)
                 

@@ -60,6 +60,9 @@
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.loadingView?.removeFromSuperview()
+        if self.learnConfig.learnType == .base {
+            YXWordBookResourceManager.isLearning = false
+        }
     }
 
     override func handleData(withQuery query: [AnyHashable : Any]!) {
@@ -76,6 +79,9 @@
         self.bindProperty()
         self.initManager()
         self.loadingView?.downloadCompleteBlock = {
+            if self.learnConfig.learnType == .base {
+                YXWordBookResourceManager.isLearning = true
+            }
             self.startStudy()
         }
         YXGrowingManager.share.startDate = NSDate()
@@ -306,7 +312,7 @@
     /// 显示loading动画
     private func showLoadAnimation() {
         YXLog("显示学习前加载动画")
-        self.loadingView = YXExerciseLoadingView(frame: kWindow.bounds)
+        self.loadingView = YXExerciseLoadingView(type: self.learnConfig.learnType)
         kWindow.addSubview(self.loadingView!)
         self.loadingView?.startAnimation()
     }

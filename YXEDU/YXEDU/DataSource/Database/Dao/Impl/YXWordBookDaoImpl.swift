@@ -17,6 +17,9 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     func updateWords(bookModel: YXWordBookModel) {
         guard let bookId = bookModel.bookId, let unitsList = bookModel.units else {
             YXWordBookResourceManager.shared.group.leave()
+            YXWordBookResourceManager.groupCount -= 1
+            YXLog("当前线程剩余数量：\(YXWordBookResourceManager.groupCount)")
+
             return
         }
         let deleteWordsSQL = YYSQLManager.WordBookSQL.deleteWord.rawValue
@@ -42,6 +45,12 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             }
             // 遍历添加单词
             var lastUnit = false
+            if YXWordBookResourceManager.isLearning {
+                YXLog("当前正在学习中，回滚DB操作，不再写入数据")
+                db.rollback()
+                return
+            }
+
             for (unitIndex, unitModel) in unitsList.enumerated() {
                 guard let wordsList = unitModel.words else {
                     continue
@@ -89,6 +98,11 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                         }
                         YXLog("当前剩余下载词书数量：\(YXWordBookResourceManager.downloadDataList.count)/\(YXWordBookResourceManager.shared.totalDownloadCount)")
                         YXWordBookResourceManager.shared.group.leave()
+                        YXWordBookResourceManager.groupCount -= 1
+                        YXLog("当前线程剩余数量：\(YXWordBookResourceManager.groupCount)")
+                        if bookModel.bookId == YXUserModel.default.currentBookId {
+                            YXWordBookResourceManager.currentBookDownloadFinished = true
+                        }
                     }
                 }
             }

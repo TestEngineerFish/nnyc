@@ -104,7 +104,8 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 guard let self = self else { return }
-                YXUserModel.default.currentGrade = wordBook.bookGrade
+                YXUserModel.default.currentBookId = bookId
+                YXUserModel.default.currentGrade  = wordBook.bookGrade
                 YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
                 self.navigationController?.popViewController(animated: true)
             }) { error in

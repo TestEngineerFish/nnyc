@@ -49,6 +49,11 @@ class YXUserModel: NSObject {
         if let grade = YYCache.object(forKey: "kCurrentGrade") as? Int {
             self.currentGrade = grade
         }
+
+        if let bookId = YYCache.object(forKey: "kCurrentBookId") as? Int {
+            self.currentBookId = bookId
+        }
+
     }
     
     var didLogin = false {
@@ -111,7 +116,11 @@ class YXUserModel: NSObject {
         }
     }
     
-    var didFinishDownloadAllStudyWordBooks = false
+    var currentBookId: Int? {
+        didSet {
+            YYCache.set(currentBookId, forKey: "kCurrentBookId")
+        }
+    }
 
     func login() {
         let storyboard = UIStoryboard(name:"Main", bundle: nil)

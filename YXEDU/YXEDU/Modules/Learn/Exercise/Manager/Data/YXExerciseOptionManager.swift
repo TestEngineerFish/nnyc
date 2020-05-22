@@ -51,14 +51,18 @@ class YXExerciseOptionManager: NSObject {
         }
         // 提高查找速度,拿空间换时间
         var whiteList = [String?]()
-        // 从新学单词获取数据
         whiteList.append(wordModel.word)
-        let otherNewWordArray = self.otherNewWordArray(wordModel: wordModel)
+        // 从【新学、复习】单词列表获取数据
+        let otherNewWordArray = self.otherNewWordArray(wordModel: wordModel) + self.otherReviewWordArray(wordModel: wordModel)
         var tmpOtherNewWordArray = otherNewWordArray
         for _ in otherNewWordArray {
             let randomInt = Int.random(in: 0..<tmpOtherNewWordArray.count)
             let _wordExerciseModel = tmpOtherNewWordArray[randomInt]
             guard let otherWordModel = _wordExerciseModel.word else {
+                continue
+            }
+            // 如果选项单词在题目单词的黑名单中，则不使用
+            if YXStepConfigManager.share.onBlockList(step: exerciseModel.step, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
                 continue
             }
             if !whiteList.contains(otherWordModel.word) {
@@ -68,38 +72,14 @@ class YXExerciseOptionManager: NSObject {
                 items.append(itemModel)
                 whiteList.append(otherWordModel.word)
             }
+            // 移除已经随机过的对象
             tmpOtherNewWordArray.remove(at: randomInt)
             if items.count >= itemCount {
                 break
             }
         }
 
-        // 从学习流程获取数据
-        if items.count < itemCount {
-            // 防止无限随机同一个对象
-            let otherReviewWordArray = self.otherReviewWordArray(wordModel: wordModel)
-            var tmpReviewWordArray = otherReviewWordArray
-            for _ in 0..<otherReviewWordArray.count {
-                let randomInt = Int.random(in: 0..<tmpReviewWordArray.count)
-                let _wordExerciseModel = tmpReviewWordArray[randomInt]
-                guard let otherWordModel = _wordExerciseModel.word else {
-                    continue
-                }
-                if !whiteList.contains(otherWordModel.word) {
-                    guard let itemModel = self.filterRepeatWord(exerciseModel: exerciseModel, otherWordModel: otherWordModel) else {
-                        continue
-                    }
-                    items.append(itemModel)
-                    whiteList.append(otherWordModel.word)
-                }
-                // 移除已经随机过的对象
-                tmpReviewWordArray.remove(at: randomInt)
-                if items.count >= itemCount {
-                    break
-                }
-            }
-        }
-        // 从单元词书获取数据
+        // 从当前词书单元获取数据
         if items.count < itemCount {
             if let unitId = exerciseModel.word?.unitId {
                 let wordModelArray = YXWordBookDaoImpl().selectWordByUnitId(unitId: unitId)
@@ -109,6 +89,10 @@ class YXExerciseOptionManager: NSObject {
                     let otherWordModel = tmpWordModelArray[randomInt]
                     if !whiteList.contains(otherWordModel.word) {
                         guard let itemModel = self.filterRepeatWord(exerciseModel: exerciseModel, otherWordModel: otherWordModel) else {
+                            continue
+                        }
+                        // 如果选项单词在题目单词的黑名单中，则不使用
+                        if YXStepConfigManager.share.onBlockList(step: exerciseModel.step, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
                             continue
                         }
                         items.append(itemModel)
@@ -132,6 +116,10 @@ class YXExerciseOptionManager: NSObject {
                     let otherWordModel = tmpWordModelArray[randomInt]
                     if !whiteList.contains(otherWordModel.word) {
                         guard let itemModel = self.filterRepeatWord(exerciseModel: exerciseModel, otherWordModel: otherWordModel) else {
+                            continue
+                        }
+                        // 如果选项单词在题目单词的黑名单中，则不使用
+                        if YXStepConfigManager.share.onBlockList(step: exerciseModel.step, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
                             continue
                         }
                         items.append(itemModel)
@@ -160,6 +148,10 @@ class YXExerciseOptionManager: NSObject {
                         let otherWordModel = tmpWordModelArray[randomInt]
                         if !whiteList.contains(otherWordModel.word) {
                             guard let itemModel = self.filterRepeatWord(exerciseModel: exerciseModel, otherWordModel: otherWordModel) else {
+                                continue
+                            }
+                            // 如果选项单词在题目单词的黑名单中，则不使用
+                            if YXStepConfigManager.share.onBlockList(step: exerciseModel.step, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
                                 continue
                             }
                             items.append(itemModel)
