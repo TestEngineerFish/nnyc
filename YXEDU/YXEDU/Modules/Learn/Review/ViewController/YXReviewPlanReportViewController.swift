@@ -75,7 +75,7 @@ class YXReviewPlanReportViewController: YXViewController, WKNavigationDelegate {
         shareChannelView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.bottom.equalToSuperview().offset(AdaptSize(-kSafeBottomMargin - AdaptSize(38)))
-            make.height.equalTo(AdaptSize(65))
+            make.height.equalTo(AdaptIconSize(65))
         }
         indicatorView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()

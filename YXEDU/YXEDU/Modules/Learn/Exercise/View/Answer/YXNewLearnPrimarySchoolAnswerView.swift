@@ -555,7 +555,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         if self.status == .showResult || self.status == .reporting {
             return
         }
-        self.playByStatus()
+        self.startView()
     }
     
     // MARK: ---- Request ----

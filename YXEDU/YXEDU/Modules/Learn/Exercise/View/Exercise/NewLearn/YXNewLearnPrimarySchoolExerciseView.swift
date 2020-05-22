@@ -43,6 +43,8 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         self.leftContentView.addSubview(answerView!)
         if let wordModel = exerciseModel.word {
             detailView = YXWordDetailCommonView(frame: CGRect.zero, word: wordModel)
+            detailView?.collectionButton.isHidden = true
+            detailView?.feedbackButton.isHidden   = true
             self.contentView.addSubview(rightContentView)
             self.rightContentView.addSubview(detailView!)
         }
@@ -93,7 +95,14 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         let roundSize  = CGSize(width: AdaptSize(115), height: AdaptSize(115))
         let audioView  = (answerView as! YXNewLearnAnswerView).recordAudioButton
         let audioFrame = audioView.convert(audioView.frame, to: kWindow)
-        self.guideView.show(CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.midY - roundSize.height/2 - AdaptSize(10), width: roundSize.width, height: roundSize.height))
+        let guideFrame: CGRect = {
+            if isPad() {
+                return CGRect(x: audioView.frame.midX - roundSize.width/2 + AdaptSize(75), y: audioFrame.midY - roundSize.height + AdaptSize(18), width: roundSize.width, height: roundSize.height)
+            } else {
+                return CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.midY - roundSize.height/2 - AdaptSize(10), width: roundSize.width, height: roundSize.height)
+            }
+        }()
+        self.guideView.show(guideFrame)
         YYCache.set(true, forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue)
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideGuideView))
         self.guideView.addGestureRecognizer(tap)
@@ -166,11 +175,11 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             return
         }
         _answerView.status = .showGuideView
-        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
+//        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
             self.showGuideView()
-        } else {
-            _answerView.status.forward()
-        }
+//        } else {
+//            _answerView.status.forward()
+//        }
         if !self.isLearned {
             if exerciseModel.word?.examples?.first?.english != nil {
                 self.exerciseDelegate?.showTipsButton()

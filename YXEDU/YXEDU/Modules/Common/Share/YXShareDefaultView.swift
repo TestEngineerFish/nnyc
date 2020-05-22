@@ -171,6 +171,10 @@ class YXShareDefaultView: UIView {
     }
     
     @objc private func shareToWechat() {
+        if WXApiManager.shared()?.wxIsInstalled() != .some(true) {
+            YXUtils.showHUD(kWindow, title: "你未安装微信，无法进行分享，请下载安装最新版微信")
+            return
+        }
         switch self.shareType {
         case .image:
             guard let image = self.shareImage else {
@@ -186,6 +190,10 @@ class YXShareDefaultView: UIView {
     }
     
     @objc private func shareToTimeLine() {
+        if WXApiManager.shared()?.wxIsInstalled() != .some(true) {
+            YXUtils.showHUD(kWindow, title: "你未安装微信，无法进行分享，请下载安装最新版微信")
+            return
+        }
         switch self.shareType {
         case .image:
             guard let image = self.shareImage else {
