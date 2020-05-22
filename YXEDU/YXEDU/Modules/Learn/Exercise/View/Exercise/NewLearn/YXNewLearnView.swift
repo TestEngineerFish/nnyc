@@ -135,7 +135,14 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
         let roundSize  = CGSize(width: AdaptSize(115), height: AdaptSize(115))
         let audioView  = self.answerView.recordAudioButton
         let audioFrame = audioView.convert(audioView.frame, to: kWindow)
-        self.guideView.show(CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.midY - AdaptSize(roundSize.height/2), width: roundSize.width, height: roundSize.height))
+        let guideFrame: CGRect = {
+            if isPad() {
+                return CGRect(x: audioView.frame.midX - roundSize.width/2 + AdaptSize(75), y: audioFrame.midY - roundSize.height + AdaptSize(18), width: roundSize.width, height: roundSize.height)
+            } else {
+                return CGRect(x: screenWidth - AdaptSize(108) - roundSize.width/2, y: audioFrame.midY - AdaptSize(roundSize.height/2), width: roundSize.width, height: roundSize.height)
+            }
+        }()
+        self.guideView.show(guideFrame)
         YYCache.set(true, forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue)
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideGuideView))
         self.guideView.addGestureRecognizer(tap)
@@ -150,11 +157,11 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
     /// 单词和单词播放结束
     func playWordAndWordFinished() {
         self.answerView.status = .showGuideView
-        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
+//        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
             self.showGuideView()
-        } else {
-            self.answerView.status.forward()
-        }
+//        } else {
+//            self.answerView.status.forward()
+//        }
     }
     
     /// 单词和例句播放结束

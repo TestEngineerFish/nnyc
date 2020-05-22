@@ -29,6 +29,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var collectionButton: UIButton!
+    @IBOutlet weak var feedbackButton: UIButton!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var phoneticSymbolLabel: UILabel!
     @IBOutlet weak var partOfSpeechAndSenseLabel: UILabel!
