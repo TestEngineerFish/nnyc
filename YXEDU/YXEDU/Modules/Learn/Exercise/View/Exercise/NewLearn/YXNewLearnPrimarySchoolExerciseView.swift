@@ -175,11 +175,11 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             return
         }
         _answerView.status = .showGuideView
-//        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
+        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
             self.showGuideView()
-//        } else {
-//            _answerView.status.forward()
-//        }
+        } else {
+            _answerView.status.forward()
+        }
         if !self.isLearned {
             if exerciseModel.word?.examples?.first?.english != nil {
                 self.exerciseDelegate?.showTipsButton()

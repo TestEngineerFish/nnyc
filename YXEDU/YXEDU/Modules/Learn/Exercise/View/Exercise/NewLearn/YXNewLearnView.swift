@@ -157,11 +157,11 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
     /// 单词和单词播放结束
     func playWordAndWordFinished() {
         self.answerView.status = .showGuideView
-//        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
+        if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
             self.showGuideView()
-//        } else {
-//            self.answerView.status.forward()
-//        }
+        } else {
+            self.answerView.status.forward()
+        }
     }
     
     /// 单词和例句播放结束

@@ -69,7 +69,7 @@ class YXExerciseResultViewController: YXViewController {
         self.view.addSubview(resultView!)
         let resultH = (resultView?.viewHeight() ?? 0) + (isPad() ? AdaptSize(30) : 0)
         resultView?.snp.makeConstraints { (make) in
-            make.top.equalTo(kNavHeight).offset(AdaptSize(isPad() ? 30 : 0))
+            make.top.equalToSuperview().offset(kNavHeight + AdaptSize(isPad() ? 30 : 0))
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(AdaptSize(isPad() ? -150 : 0))
             make.height.equalTo(resultH)
