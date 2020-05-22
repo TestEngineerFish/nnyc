@@ -11,8 +11,8 @@ import Foundation
 public enum YXOCRequest: YYBaseRequest {
     case getMonthlyInfo(time: Double)
     case getDayInfo(time: Double)
-    case feedback(feed: String, env: String, file: Data?)
-    case errorWordFeedback(wordId: String, word: String, content: String, type: String)
+    case feedback(feed: String, env: String, file: [Data]?)
+    case errorWordFeedback(wordId: Int, word: String, content: String, type: String)
     case changeName(name: String)
     case changeAvatar(file: Data)
     case changeUserInfo(params: [String: String])
@@ -53,7 +53,7 @@ public enum YXOCRequest: YYBaseRequest {
         switch self {
         case .feedback(let feed, let env, let file):
             if let file = file {
-                return ["feed": feed, "env": env, "file": file]
+                return ["feed": feed, "env": env, "files[]": file]
 
             } else {
                 return ["feed": feed, "env": env]
@@ -74,7 +74,7 @@ public enum YXOCRequest: YYBaseRequest {
         case .getMonthlyInfo(let time):
             return ["time": time]
             
-        case .getDayInfo(let params):
+        case .getDayInfo(let time):
             return ["time": time]
 
         default:

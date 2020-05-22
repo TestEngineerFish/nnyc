@@ -67,16 +67,16 @@ enum YXMiMeType: String {
         var request: YYBaseRequest!
         switch type {
         case .errorWordFeedback:
-            request = YXOCRequest.errorWordFeedback(wordId: params["wordId"] as? String ?? "", word: params["word"] as? String ?? "", content: params["content"] as? String ?? "", type: params["type"] as? String ?? "")
+            request = YXOCRequest.errorWordFeedback(wordId: params["wordId"] as? Int ?? 0, word: params["word"] as? String ?? "", content: params["content"] as? String ?? "", type: params["type"] as? String ?? "")
             
         case .feedback:
-            request = YXOCRequest.feedback(feed: params["feed"] as? String ?? "", env: params["env"] as? String ?? "", file: params["worfiledId"] as? Data)
+            request = YXOCRequest.feedback(feed: params["feed"] as? String ?? "", env: params["env"] as? String ?? "", file: params["files"] as? [Data])
             
         case .getMonthlyInfo:
-            request = YXOCRequest.getMonthlyInfo(time: params["time"] as? Double ?? 0)
+            request = YXOCRequest.getMonthlyInfo(time: params["time"] as? TimeInterval ?? 0)
             
         case .getDayInfo:
-            request = YXOCRequest.getDayInfo(time: params["time"] as? Double ?? 0)
+            request = YXOCRequest.getDayInfo(time: params["time"] as? TimeInterval ?? 0)
             
         case .changeName:
                 request = YXOCRequest.changeName(name: params["name"] as? String ?? "")

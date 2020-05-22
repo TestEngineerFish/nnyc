@@ -242,7 +242,7 @@
 - (void)submit:(id)sender {
     NSMutableArray *imageArr = [NSMutableArray array];
     for (UIImage *image in _selectImageView.imageArr) {
-        [imageArr addObject:image];
+        [imageArr addObject:UIImageJPEGRepresentation(image,0.2)];
     }
     if ([self.feedBackTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length == 0) {
         [YXUtils showHUD:self.navigationController.view title:@"请填写反馈内容!"];
@@ -466,6 +466,7 @@
 
 - (void)didClickedAddImage:(id)sender {
     TZImagePickerController *pickerCtrl = [[TZImagePickerController alloc] initWithMaxImagesCount:3-_selectImageView.imageArr.count delegate:self];
+    pickerCtrl.allowPickingVideo = NO;
     
     __weak typeof(self)weakSelf = self;
     [pickerCtrl setDidFinishPickingPhotosWithInfosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto, NSArray<NSDictionary *> *infos) {

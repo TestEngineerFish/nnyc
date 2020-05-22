@@ -55,15 +55,14 @@ class YXReviewPlanCommandView: YXTopWindowView {
         iconImageView.image = UIImage(named: "share_scan_book")
         shareImageView.image = UIImage(named: "share_scan_share")
         
-        
         titleLabel.textColor = UIColor.black1
-        titleLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(15))
+        titleLabel.font = UIFont.regularFont(ofSize: AS(15))
         
         subTitleLable.textColor = UIColor.black3
-        subTitleLable.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
+        subTitleLable.font = UIFont.regularFont(ofSize: AS(14))
         
         descLabel.textColor = UIColor.black3
-        descLabel.font = UIFont.regularFont(ofSize: AdaptFontSize(14))
+        descLabel.font = UIFont.regularFont(ofSize: AS(14))
                 
         
         detailButton.layer.masksToBounds = true
@@ -71,7 +70,7 @@ class YXReviewPlanCommandView: YXTopWindowView {
         detailButton.setBackgroundImage(UIImage.imageWithColor(UIColor.orange1), for: .normal)
         detailButton.setTitle("查看详情", for: .normal)
         detailButton.setTitleColor(UIColor.white, for: .normal)
-        detailButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AdaptFontSize(17))
+        detailButton.titleLabel?.font = UIFont.pfSCRegularFont(withSize: AS(17))
         detailButton.addTarget(self, action: #selector(clickDetailButton), for: .touchUpInside)
         
         closeButton.setImage(UIImage(named: "share_scan_close"), for: .normal)
@@ -168,10 +167,10 @@ class YXReviewPlanCommandView: YXTopWindowView {
         
         let attrString = NSMutableAttributedString(string: "来自 \(model?.nickname ?? "") 分享的词单")
                         
-        let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: AdaptFontSize(14)),.foregroundColor: color1]
+        let all: [NSAttributedString.Key : Any] = [.font: UIFont.regularFont(ofSize: AS(14)),.foregroundColor: color1]
         attrString.addAttributes(all, range: NSRange(location: 0, length: attrString.length))
         
-        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.regularFont(ofSize: AdaptFontSize(14)),.foregroundColor: color2]
+        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.regularFont(ofSize: AS(14)),.foregroundColor: color2]
         attrString.addAttributes(nicknameAttr, range: NSRange(location: 3, length: model?.nickname?.count ?? 0))
 
         return attrString

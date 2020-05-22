@@ -43,6 +43,13 @@ class YXWordListHeaderView: UIView {
         Bundle.main.loadNibNamed("YXWordListHeaderView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
+        
+        contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapToExpand)))
+    }
+    
+    @objc
+    private func tapToExpand() {
+        expandClosure?(isExpand)
     }
     
     @IBAction func edit(_ sender: Any) {

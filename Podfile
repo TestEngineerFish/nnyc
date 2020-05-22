@@ -20,7 +20,6 @@ target 'YXEDU' do
      pod 'BMKLocationKit'
      pod 'HWWeakTimer'
      pod 'UICollectionViewLeftAlignedLayout'
-     pod 'SVProgressHUD'
      pod 'ZipArchive'
      pod 'MJRefresh'
      pod 'WMPageController'

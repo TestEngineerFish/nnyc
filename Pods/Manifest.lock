@@ -66,7 +66,6 @@ PODS:
   - SGQRCode (3.0.1)
   - SnapKit (4.0.1)
   - SSKeychain (1.4.1)
-  - SVProgressHUD (2.2.5)
   - Toast (4.0.0)
   - Toast-Swift (5.0.1)
   - TZImagePickerController (3.3.1)
@@ -114,7 +113,6 @@ DEPENDENCIES:
   - SGQRCode
   - SnapKit (~> 4.0.0)
   - SSKeychain
-  - SVProgressHUD
   - Toast
   - Toast-Swift
   - TZImagePickerController
@@ -163,7 +161,6 @@ SPEC REPOS:
     - SGQRCode
     - SnapKit
     - SSKeychain
-    - SVProgressHUD
     - Toast
     - Toast-Swift
     - TZImagePickerController
@@ -211,7 +208,6 @@ SPEC CHECKSUMS:
   SGQRCode: bf02d60e18d6660a9d75ff1c8b9b467f064f054e
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
-  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   TZImagePickerController: 99f03b64145a8c92c55b9b1b931410967d9be4cb
@@ -224,6 +220,6 @@ SPEC CHECKSUMS:
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: b845c97b6dbd72d94652be1c48c8206f12c96d8c
+PODFILE CHECKSUM: 1978dbc514f4050966254e3abf8b9e287be1e640
 
 COCOAPODS: 1.8.4

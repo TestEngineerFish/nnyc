@@ -28,7 +28,8 @@ struct YXAccountModel: Mappable {
 struct YXAccountInfoModel: Mappable {
     var username: String?
     var avatar: String?
-    
+    var uuid: String?
+
     init?(map: Map) {
         self.mapping(map: map)
     }
@@ -36,6 +37,7 @@ struct YXAccountInfoModel: Mappable {
     mutating func mapping(map: Map) {
         username <- map["nick"]
         avatar <- map["avatar"]
+        uuid <- map["uuid"]
     }
 }
 

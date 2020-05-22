@@ -35,15 +35,34 @@ class YXHomeSubItemiPadCell: UICollectionViewCell {
             self.titleLabel.text           = "任务中心"
             self.dotView.isHidden          = hideDotView
         case 1:
-            self.colorView.backgroundColor = UIColor.hex(0xE8F6EA)
-            self.iconView.image            = #imageLiteral(resourceName: "homeCalendar")
-            self.titleLabel.text           = "打卡日历"
-            self.dotView.isHidden          = true
+            
+            if isPad() {
+                self.colorView.backgroundColor = UIColor.hex(0xF0F6FF)
+                self.iconView.image            = #imageLiteral(resourceName: "homeReport")
+                self.titleLabel.text           = "学习报告"
+                self.dotView.isHidden          = true
+                
+            } else {
+                self.colorView.backgroundColor = UIColor.hex(0xE8F6EA)
+                self.iconView.image            = #imageLiteral(resourceName: "homeCalendar")
+                self.titleLabel.text           = "打卡日历"
+                self.dotView.isHidden          = true
+            }
+            
         case 2:
-            self.colorView.backgroundColor = UIColor.hex(0xF0F6FF)
-            self.iconView.image            = #imageLiteral(resourceName: "homeReport")
-            self.titleLabel.text           = "学习报告"
-            self.dotView.isHidden          = true
+            if isPad() {
+                self.colorView.backgroundColor = UIColor.hex(0xE8F6EA)
+                self.iconView.image            = #imageLiteral(resourceName: "homeCalendar")
+                self.titleLabel.text           = "打卡日历"
+                self.dotView.isHidden          = true
+                
+            } else {
+                self.colorView.backgroundColor = UIColor.hex(0xF0F6FF)
+                self.iconView.image            = #imageLiteral(resourceName: "homeReport")
+                self.titleLabel.text           = "学习报告"
+                self.dotView.isHidden          = true
+            }
+      
         case 3:
             self.colorView.backgroundColor = UIColor.hex(0xFFF4E1)
             self.iconView.image            = #imageLiteral(resourceName: "homeChallenge")

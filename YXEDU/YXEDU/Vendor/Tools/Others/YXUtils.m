@@ -14,7 +14,6 @@
 #import "SJCall.h"
 #import "BSCommon.h"
 #import "UIDevice+YX.h"
-#import "SVProgressHUD.h"
 #import "YXKeyChain.h"
 // #import "AppDelegate.h"
 #define RESOURCE @"RESOURCE"

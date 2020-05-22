@@ -426,9 +426,9 @@
     formFile.filename = @"avatar.png";
     
     __weak typeof(self)weakSelf = self;
-    [YXUtils showHUD:self.view];
+//    [YXUtils showHUD:self.view];
     
-    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeChangeAvatar params:@{@"file": formFile} isUpload:YES  success:^(YXOCModel* model) {
+    [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeChangeAvatar params:@{@"file": imageData} isUpload:YES  success:^(YXOCModel* model) {
         if (model != nil) {
             weakSelf.avatarImage = image;
             [weakSelf.tableView reloadData];
