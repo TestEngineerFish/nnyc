@@ -89,7 +89,7 @@ class YXWrongWordsListView: UIView, UITableViewDataSource {
             return UITableViewCell()
         }
         let wordModel = self.wordsArray[indexPath.row]
-        cell.bindData(wordModel.word ?? "", meaning: wordModel.meaning ?? "我居然没有值我居然没有值")
+        cell.bindData(wordModel.word ?? "", meaning: wordModel.meaning ?? "")
         return cell
     }
 }

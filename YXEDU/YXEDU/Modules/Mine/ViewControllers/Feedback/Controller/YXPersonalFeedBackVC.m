@@ -269,6 +269,7 @@
 //            [YXUtils showHUD:self.view title:@"网络错误!"];
         }
     }];
+    [YXLogManager.share report:NO];
 }
 
 - (void)enableSubmitBtn {
