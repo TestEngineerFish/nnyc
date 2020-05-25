@@ -10,7 +10,7 @@ import UIKit
 import Lottie
 
 /// 跟读页面
-class YXNewLearnView: UIView, YXNewLearnProtocol {
+class YXNewLearnView: YXView, YXNewLearnProtocol {
     
     var closeButton: UIButton = {
         let button = UIButton()
@@ -62,7 +62,7 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func createSubviews() {
+    override func createSubviews() {
         self.addSubview(closeButton)
         self.addSubview(titleLabel)
         self.addSubview(subtitleLabel)
@@ -93,7 +93,7 @@ class YXNewLearnView: UIView, YXNewLearnProtocol {
         })
     }
     
-    private func bindProperty() {
+    override func bindProperty() {
         self.backgroundColor    = UIColor.white.withAlphaComponent(0.95)
         self.titleLabel.text    = wordModel.word
         self.subtitleLabel.text = (wordModel.partOfSpeech ?? "") + " " + (wordModel.meaning ?? "")
