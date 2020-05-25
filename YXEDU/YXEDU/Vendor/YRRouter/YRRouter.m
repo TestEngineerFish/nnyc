@@ -172,6 +172,7 @@
     UINavigationController *navi = vc.navigationController;
     
     NSUInteger selfIndex = [[navi viewControllers] indexOfObject:vc];
+    if (selfIndex < index.intValue) { return; } // 容错处理
     UIViewController *targetVC = [[navi viewControllers] objectAtIndex:selfIndex - [index integerValue]];
     [navi popToViewController:targetVC animated:animated];
 }
