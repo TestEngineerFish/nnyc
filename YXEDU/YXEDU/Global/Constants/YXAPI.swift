@@ -28,7 +28,7 @@ struct YXAPI {
         
         static let bind = "/api/v1/user/bindmobile"
         
-        static let bind2 = "/v1//user/bind"
+        static let bind2 = "/v1/user/bind"
         
         static let unbind = "/v1/user/unbind"
     }
