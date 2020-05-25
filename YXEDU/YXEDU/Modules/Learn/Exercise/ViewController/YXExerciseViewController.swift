@@ -225,7 +225,6 @@
             model.dataType = learnConfig.learnType
 
             YXRequestLog("==== 题目内容：%@", model.toJSONString() ?? "--")
-
             // 小学新学
             let primaryNewLearnArray: [YXExerciseType] = [.newLearnPrimarySchool_Group, .newLearnPrimarySchool]
             // 新学
@@ -293,6 +292,7 @@
     /// - Parameter exerciseView: 新的练习view
     private func loadExerciseView(exerciseView: YXBaseExerciseView) {
         YXLog("==== 加载练习题 ====")
+        YXLog(String(format: "==== 当前题型:%@，当前单词ID：%d ====", exerciseView.exerciseModel.type.rawValue, exerciseView.exerciseModel.word?.wordId ?? 0))
         // 是否第一次进来
         var isFirst = true
         if let ceview = exerciseViewArray.first {
