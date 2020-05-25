@@ -87,11 +87,18 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
             make.left.equalTo(AS(31))
             make.size.equalTo(titleLabel.size)
         }
-        
+
+        let offsetR: CGFloat = {
+            if isPad() {
+                return AS(value.2 ? -60 : -34)
+            } else {
+                return AS(value.2 ? -44 : -34)
+            }
+        }()
         countLabel.snp.remakeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.width.equalTo(AS(80))
-            make.right.equalToSuperview().offset(AS(value.2 ? -44 : -34))
+            make.right.equalToSuperview().offset(offsetR)
         }
         
         if value.2 {
@@ -99,7 +106,7 @@ class YXReviewResultTipsListView: YXView, UITableViewDelegate, UITableViewDataSo
             cell.addSubview(imageView)
             imageView.snp.remakeConstraints { (make) in
                 make.centerY.equalToSuperview()
-                make.right.equalToSuperview().offset(AdaptIconSize(-33))
+                make.right.equalToSuperview().offset(AdaptSize(-33))
                 make.width.equalTo(AdaptIconSize(8))
                 make.height.equalTo(AdaptIconSize(15))
             }
