@@ -9,6 +9,7 @@
 import UIKit
 import ObjectMapper
 import FMDB
+import Bugly
 
 class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
@@ -19,7 +20,6 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             YXWordBookResourceManager.shared.group.leave()
             YXWordBookResourceManager.groupCount -= 1
             YXLog("当前线程剩余数量：\(YXWordBookResourceManager.groupCount)")
-
             return
         }
         let deleteWordsSQL = YYSQLManager.WordBookSQL.deleteWord.rawValue
@@ -34,15 +34,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                                    bookModel.bookHash ?? "",
                                    bookModel.gradeId ?? 0,
                                    bookModel.gradeType ?? 0]
-
-        self.wordRunnerQueue.inTransaction { (db, rollback) in
-            // 删除词书下所有单词
-            let deleteWordsSuccess = db.executeUpdate(deleteWordsSQL, withArgumentsIn: deleteWordsParams)
-            if deleteWordsSuccess {
-                YXLog("删除\(bookModel.bookName ?? "")，id\(bookId)下所有单词成功")
-            } else {
-                YXLog("删除\(bookModel.bookName ?? "")，id\(bookId)下所有单词失败")
-            }
+        self.wordRunnerQueue.inImmediateTransaction { (db, rollback) in
             // 遍历添加单词
             var lastUnit = false
             if YXWordBookResourceManager.isLearning {
@@ -50,15 +42,34 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                 db.rollback()
                 return
             }
-
+            // 删除词书下所有单词
+            let deleteWordsSuccess = db.executeUpdate(deleteWordsSQL, withArgumentsIn: deleteWordsParams)
+            let msg = String(format: "删除:%@，id:%d下所有单词", bookModel.bookName ?? "", bookId)
+            if deleteWordsSuccess {
+                Bugly.reportError(NSError(domain: msg + "成功", code: 0, userInfo: nil))
+                YXLog(msg + "成功")
+            } else {
+                Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
+                YXLog(msg + "失败")
+            }
             for (unitIndex, unitModel) in unitsList.enumerated() {
                 guard let wordsList = unitModel.words else {
                     continue
+                }
+                if YXWordBookResourceManager.isLearning {
+                    YXLog("当前正在学习中，回滚DB操作，不再写入数据")
+                    db.rollback()
+                    return
                 }
                 if unitIndex == unitsList.count - 1 {
                     lastUnit = true
                 }
                 for (index, var wordModel) in wordsList.enumerated() {
+                    if YXWordBookResourceManager.isLearning {
+                        YXLog("当前正在学习中，回滚DB操作，不再写入数据")
+                        db.rollback()
+                        return
+                    }
                     wordModel.gradeId         = bookModel.gradeId
                     wordModel.gardeType       = bookModel.gradeType ?? 1
                     wordModel.bookId          = bookModel.bookId
@@ -69,7 +80,9 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                     let insertWordParams  = self.getWordSQLParams(word: wordModel)
                     let insertWrodSuccess = db.executeUpdate(insertWordSQL, withArgumentsIn: insertWordParams)
                     if !insertWrodSuccess {
-                        YXLog("插入单词\(wordModel.word ?? "")， id\(wordModel.wordId ?? 0)失败")
+                        let msg = String(format: "插入单词:%@， id:%d失败", wordModel.word ?? "", wordModel.wordId ?? 0)
+                        Bugly.reportError(NSError(domain: msg, code: 0, userInfo: nil))
+                        YXLog(msg)
                         db.rollback()
                         return
                     }
@@ -77,19 +90,25 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                         YXLog("==== 词书\(bookModel.bookId ?? 0)写入完成 ====")
                         // 删除旧词书
                         let deleteBookSuccess = db.executeUpdate(deleteBookSQL, withArgumentsIn: deleteBookParams)
+                        var msg = String(format: "删除词书:%@，id:%d", bookModel.bookName ?? "", bookId)
                         if deleteBookSuccess {
-                            YXLog("删除\(bookModel.bookName ?? "")，id\(bookId)完成")
+                            Bugly.reportError(NSError(domain: msg + "成功", code: 0, userInfo: nil))
+                            YXLog(msg + "成功")
                         } else {
-                            YXLog("删除\(bookModel.bookName ?? "")，id\(bookId)失败")
+                            Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
+                            YXLog(msg + "失败")
                             db.rollback()
                             return
                         }
                         // 添加新词书
                         let insertBookSuccess = db.executeUpdate(insertBookSQL, withArgumentsIn: insertBookParams)
+                        msg = String(format: "保存词书:%@，id:%d", bookModel.bookName ?? "", bookId)
                         if insertBookSuccess {
-                            YXLog("保存词书\(bookModel.bookName ?? "")，id\(bookId)完成")
+                            Bugly.reportError(NSError(domain: msg + "成功", code: 0, userInfo: nil))
+                            YXLog(msg + "成功")
                         } else {
-                            YXLog("保存词书\(bookModel.bookName ?? "")，id\(bookId)失败")
+                            Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
+                            YXLog(msg + "失败")
                             db.rollback()
                             return
                         }
@@ -109,6 +128,18 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         }
     }
 
+    /// 仅测试用，删除所用词书和单词
+    func deleteAll() {
+        let deleteBooksSQL = YYSQLManager.WordBookSQL.deleteAllBooks.rawValue
+        let deleteWordsSQL = YYSQLManager.WordBookSQL.deleteAllWords.rawValue
+        self.wordRunnerQueue.inTransaction { (db, rollback) in
+            db.executeUpdate(deleteBooksSQL, withArgumentsIn: [])
+            db.executeUpdate(deleteWordsSQL, withArgumentsIn: [])
+            DispatchQueue.main.async {
+                YXUtils.showHUD(kWindow, title: "删除成功")
+            }
+        }
+    }
 
     @discardableResult
     func insertBook(book: YXWordBookModel, async: Bool = false) -> Bool {

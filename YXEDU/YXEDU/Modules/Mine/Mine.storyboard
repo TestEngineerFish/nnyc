@@ -146,6 +146,16 @@
                                 <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.78039215689999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aux-7m-DMZ">
+                                <rect key="frame" x="157" y="366" width="100" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="3lS-Ha-0xv"/>
+                                    <constraint firstAttribute="width" constant="100" id="mge-Gi-Vj6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -154,7 +164,9 @@
                             <constraint firstItem="qei-kz-KWI" firstAttribute="top" secondItem="J21-wq-Dzo" secondAttribute="bottom" constant="2" id="9en-T2-q3R"/>
                             <constraint firstItem="QOb-hD-5PX" firstAttribute="centerX" secondItem="lRi-Ce-Ezh" secondAttribute="centerX" id="Jkr-k9-UB6"/>
                             <constraint firstItem="xuW-Dh-b82" firstAttribute="bottom" secondItem="WmH-WJ-oag" secondAttribute="bottom" constant="16" id="QlO-89-OVh"/>
+                            <constraint firstItem="aux-7m-DMZ" firstAttribute="centerX" secondItem="J21-wq-Dzo" secondAttribute="centerX" id="TrP-VP-lbh"/>
                             <constraint firstItem="qei-kz-KWI" firstAttribute="centerX" secondItem="lRi-Ce-Ezh" secondAttribute="centerX" id="Wh9-6Y-V0Z"/>
+                            <constraint firstItem="aux-7m-DMZ" firstAttribute="top" secondItem="J21-wq-Dzo" secondAttribute="bottom" constant="40" id="XEi-at-kCM"/>
                             <constraint firstItem="QOb-hD-5PX" firstAttribute="centerY" secondItem="lRi-Ce-Ezh" secondAttribute="centerY" constant="88" id="Xj1-KZ-9SW"/>
                             <constraint firstItem="QOb-hD-5PX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xuW-Dh-b82" secondAttribute="leading" constant="40" id="YdT-ez-kyg"/>
                             <constraint firstItem="qei-kz-KWI" firstAttribute="centerY" secondItem="lRi-Ce-Ezh" secondAttribute="centerY" constant="-44" id="aBN-xc-KdF"/>
@@ -170,6 +182,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="buildLabel" destination="aux-7m-DMZ" id="TKV-6e-U0v"/>
                         <outlet property="copyrightLabel" destination="WmH-WJ-oag" id="nkp-V9-Dks"/>
                         <outlet property="logoImageView" destination="J21-wq-Dzo" id="nOA-Vo-S1i"/>
                         <outlet property="versionLabel" destination="qei-kz-KWI" id="E94-4h-WJV"/>

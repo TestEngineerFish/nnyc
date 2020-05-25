@@ -238,6 +238,16 @@ extension YYSQLManager {
         DELETE FROM word
         WHERE bookId = ?
         """
+
+        case deleteAllBooks =
+        """
+        DELETE FROM book
+        """
+
+        case deleteAllWords =
+        """
+        DELETE FROM word
+        """
     }
 
     

@@ -12,6 +12,7 @@ class YXAboutUsViewController: UIViewController {
     @IBOutlet weak var copyrightLabel: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
 
+    @IBOutlet weak var buildLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
 
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -25,18 +26,22 @@ class YXAboutUsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         versionLabel.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+        let year = Calendar.current.component(.year, from: Date())
+        copyrightLabel.text = "Copyright @2018-\(year) 念念有词"
+        #if DEBUG
+        self.buildLabel.text     = "Build：" + YRDevice.appBuild()
+        self.buildLabel.isHidden = false
         let touchAction = UITapGestureRecognizer(target: self, action: #selector(reportLog))
         touchAction.numberOfTapsRequired = 5
         touchAction.numberOfTouchesRequired = 1
         self.logoImageView.isUserInteractionEnabled = true
         self.logoImageView.addGestureRecognizer(touchAction)
-        
-        let year = Calendar.current.component(.year, from: Date())
-        copyrightLabel.text = "Copyright @2018-\(year) 念念有词"
+        #endif
     }
 
     @objc private func reportLog(_ tapGes: UITapGestureRecognizer) {
         YXLogManager.share.report(true)
+        YXWordBookDaoImpl().deleteAll()
     }
 
     /*

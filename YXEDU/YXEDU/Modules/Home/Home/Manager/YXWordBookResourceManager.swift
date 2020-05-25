@@ -13,7 +13,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     var group                              = DispatchGroup()
     var totalDownloadCount                 = 0
     static let shared                      = YXWordBookResourceManager()
-    static var currentBookDownloadFinished = false
+    static var currentBookDownloadFinished = true
     static var groupCount = 0
     static var isLearning                  = false {
         willSet {
@@ -25,6 +25,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 YXWordBookResourceManager.downloadDataList.removeAll()
             } else {
                 YXLog("学习结束")
+//                还在下载，返回重新设置group。crash
+
                 YXWordBookResourceManager.shared.group    = DispatchGroup()
                 YXWordBookResourceManager.shared.contrastBookData()
             }
