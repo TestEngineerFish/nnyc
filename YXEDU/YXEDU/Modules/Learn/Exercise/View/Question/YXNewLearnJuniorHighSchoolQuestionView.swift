@@ -20,6 +20,8 @@ class YXNewLearnJuniorHighSchoolQuestionView: YXBaseQuestionView {
         wordDetailView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        wordDetailView.collectionButton.isHidden = true
+        wordDetailView.feedbackButton.isHidden   = true
         wordDetailView.autoPlay()
         self.layer.removeShadow()
     }

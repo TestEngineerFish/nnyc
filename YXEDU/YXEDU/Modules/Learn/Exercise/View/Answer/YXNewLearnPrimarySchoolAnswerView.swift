@@ -161,11 +161,11 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.isNewLearn = false
         }
         // 云之声设置
-        self.enginer = USCRecognizer.sharedManager()
-        self.enginer?.setIdentifier(YXUserModel.default.uuid)
-        self.enginer?.delegate        = self
-        self.enginer?.vadControl      = true
-        self.enginer?.setVadFrontTimeout(5000, backTimeout: 700)
+//        self.enginer = USCRecognizer.sharedManager()
+        USCRecognizer.sharedManager().setIdentifier(YXUserModel.default.uuid)
+        USCRecognizer.sharedManager().delegate        = self
+        USCRecognizer.sharedManager().vadControl      = true
+        USCRecognizer.sharedManager().setVadFrontTimeout(5000, backTimeout: 700)
         
         self.recordAudioButton.isEnabled    = false
         self.recordAudioLabel.layer.opacity = 0.3
@@ -203,6 +203,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.endRecordAction()
         self.timer?.invalidate()
         self.timer = nil
+        USCRecognizer.sharedManager().delegate = nil
+        YXLog("---- 移除")
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -270,8 +272,10 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 guard let word = self.exerciseModel.word?.word else {
                     return
                 }
-                self.enginer?.oralText = word
-                self.enginer?.start()
+                USCRecognizer.sharedManager().oralText = word
+                YXLog("开始录制")
+                USCRecognizer.sharedManager().start()
+                self.status = .recording
                 self.disablePlayButton()
             } else {
                 self.endRecordAction()
@@ -282,7 +286,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     private func endRecordAction() {
         if self.status == .recording {
-            self.enginer?.stop()
+            USCRecognizer.sharedManager().stop()
             self.status = .alreadLearn
         }
     }
@@ -395,7 +399,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         YXAVPlayerManager.share.pauseAudio()
         YXAVPlayerManager.share.finishedBlock = nil
         if self.status == .recording {
-            self.enginer?.stop()
+            USCRecognizer.sharedManager().cancel()
         }
     }
 
@@ -590,7 +594,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onBeginOral() {
         // 显示录音动画
-        self.status = .recording
         self.showRecordAnimation()
         YXAVPlayerManager.share.pauseAudio()
         self.resetOpusTempData()
@@ -629,7 +632,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
         // 判断重试次数
         if self.retryCount < 3 {
-            self.enginer?.retry(withFilePath: self.retryPath)
+            USCRecognizer.sharedManager().retry(withFilePath: self.retryPath)
             self.retryCount += 1
         } else {
             self.showNetworkErrorAnimation()
