@@ -26,8 +26,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             } else {
                 YXLog("学习结束")
 //                还在下载，返回重新设置group。crash
-
-                YXWordBookResourceManager.shared.group    = DispatchGroup()
+//                YXWordBookResourceManager.shared.group    = DispatchGroup()
                 YXWordBookResourceManager.shared.contrastBookData()
             }
         }
@@ -154,7 +153,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                     YXWordBookResourceManager.downloadDataList.removeAll()
                     return
                 }
-                if index < 10 {
+                if index < 1 {
                     YXWordBookResourceManager.shared.group.enter()
                     YXWordBookResourceManager.groupCount += 1
                     YXLog("当前线程进入数量：\(YXWordBookResourceManager.groupCount)")
