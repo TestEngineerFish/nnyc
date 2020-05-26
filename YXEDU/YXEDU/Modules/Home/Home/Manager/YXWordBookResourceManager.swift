@@ -13,7 +13,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     var group                              = DispatchGroup()
     var totalDownloadCount                 = 0
     static let shared                      = YXWordBookResourceManager()
-    static var currentBookDownloadFinished = true
+    static var currentBookDownloadFinished = false
     static var groupCount = 0
     static var isLearning                  = false {
         willSet {
@@ -140,6 +140,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 }
                 resultList.append(data)
             }
+            if YXUserModel.default.currentBookId == wordBook?.bookId {
+                YXWordBookResourceManager.currentBookDownloadFinished = true
+            }
         }
         return resultList
     }
@@ -169,8 +172,12 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 self.finishBlock?()
                 self.backupBlock?()
             } else {
-                YXLog("继续下载词书")
-                self.downloadProcessor()
+                if YXWordBookResourceManager.isLearning {
+                    YXLog("学习中，不再继续下载词书")
+                } else {
+                    YXLog("继续下载词书")
+                    self.downloadProcessor()
+                }
             }
         }
     }
