@@ -112,6 +112,7 @@ class YXChallengeHeaderView: UIView {
         if !isPreviousRank {
             self.headerView.bindData(challengeModel)
         }
+        self.titleLabel.text = isPreviousRank ? challengeModel.title + "排行榜" : "本期排行榜"
         if (challengeModel.gameInfo?.lastRanking ?? false) && !self.isPreviousRank {
             self.previousRankButton.isHidden = false
         }
