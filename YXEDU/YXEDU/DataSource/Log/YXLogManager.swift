@@ -23,11 +23,14 @@ class YXLogManager: NSObject {
         guard let fileData = self.zipLogFile() else {
             return
         }
+        if showToast {
+            MBProgressHUD.showAdded(to: kWindow, animated: true)
+        }
         let request = YXLogRequest.report(file: fileData)
         YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, mimeType: YXMiMeType.file.rawValue, fileName: "log", success: { (response) in
             if showToast {
-                YXUtils.showHUD(kWindow, title: "上传完成")
                 MBProgressHUD.hide(for: kWindow, animated: true)
+                YXUtils.showHUD(kWindow, title: "上传完成")
             }
             self.deleteZip()
             self.deleteFile()
@@ -202,16 +205,16 @@ class YXLogManager: NSObject {
         
         requestLogFileList.forEach { (path) in
             if ((try? FileManager.default.removeItem(atPath: path)) != nil) {
-                YXLog("删除Request日志成功")
+                print("删除Request日志成功")
             } else {
-                YXLog("删除Request日志失败")
+                print("删除Request日志失败")
             }
         }
         eventLogFileList.forEach { (path) in
             if ((try? FileManager.default.removeItem(atPath: path)) != nil) {
-                YXLog("删除Even日志成功")
+                print("删除Even日志成功")
             } else {
-                YXLog("删除Event日志失败")
+                print("删除Event日志失败")
             }
         }
     }
