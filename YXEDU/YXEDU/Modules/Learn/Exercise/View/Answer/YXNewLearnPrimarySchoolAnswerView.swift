@@ -275,7 +275,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 self.enginer?.oralText = word
                 YXLog("开始录制")
                 self.enginer?.start()
-//                self.status = .recording
                 self.hidePlayAnimation()
                 self.disablePlayButton()
             } else {
@@ -595,6 +594,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onBeginOral() {
         // 显示录音动画
+        self.status = .recording
         self.showRecordAnimation()
         YXAVPlayerManager.share.pauseAudio()
         self.resetOpusTempData()
@@ -668,6 +668,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
+        if error != nil {
+            self.enginer?.cancel()
+        }
         return
     }
 
