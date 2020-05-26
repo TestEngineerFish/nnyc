@@ -20,7 +20,7 @@ enum YXLocalKey: String {
     case taskCenterCanReceive          = "kTaskCenterCanReceive" // 任务中心未领任务
     
     case makePlanNameIndex             = "YX_Plan_Name_Index"
-    case currentChooseBookId           = "currentChooseBookId"
+    case currentChooseBookId           = "currentChooseBookId" //当前在学的词书ID
     case newLearnReportGIO             = "NewLearnReportGIO" // 新学完成上报GIO
 }
 

@@ -275,7 +275,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 self.enginer?.oralText = word
                 YXLog("开始录制")
                 self.enginer?.start()
-                self.status = .recording
+//                self.status = .recording
                 self.hidePlayAnimation()
                 self.disablePlayButton()
             } else {

@@ -40,10 +40,23 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         super.init()
     }
 
+    func reset() {
+        self.backupBlock = nil
+        self.closure     = nil
+        self.finishBlock = nil
+        self.totalDownloadCount = 0
+        YXWordBookResourceManager.currentBookDownloadFinished = false
+        YXWordBookResourceManager.writeDBFinished             = nil
+        YXWordBookResourceManager.downloadDataList            = []
+    }
+
     /// 检测词书是否需要下载（可指定词书ID，未指定则检测当前用户所有词书）
     func contrastBookData(by bookId: Int? = nil, _ closure: ((_ isSuccess: Bool) -> Void)? = nil) {
         // 下载中，并且不指定词书ID，则不做检测处理，防止重复下载
-        if YXWordBookResourceManager.writeDBFinished == .some(false) && bookId == nil {
+        if (YXWordBookResourceManager.writeDBFinished == .some(false) && bookId == nil) || YXUserModel.default.currentBookId == .some(0) {
+            if YXUserModel.default.currentBookId == .some(0) {
+                YXLog("当前用户没有正在学习的词书")
+            }
             return
         }
         self.closure = closure
@@ -139,8 +152,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                     YXWordBookResourceManager.currentBookDownloadFinished = false
                 }
                 resultList.append(data)
-            }
-            if YXUserModel.default.currentBookId == wordBook?.bookId {
+            } else if YXUserModel.default.currentBookId == wordBook?.bookId {
+                YXLog("》〉》已存在当前词书")
                 YXWordBookResourceManager.currentBookDownloadFinished = true
             }
         }
