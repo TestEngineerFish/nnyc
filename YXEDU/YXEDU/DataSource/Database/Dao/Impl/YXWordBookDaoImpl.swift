@@ -39,6 +39,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             var lastUnit = false
             if YXWordBookResourceManager.isLearning {
                 YXLog("当前正在学习中，回滚DB操作，不再写入数据")
+                YXWordBookResourceManager.shared.group.leave()
                 db.rollback()
                 return
             }
@@ -58,6 +59,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                 }
                 if YXWordBookResourceManager.isLearning {
                     YXLog("当前正在学习中，回滚DB操作，不再写入数据")
+                    YXWordBookResourceManager.shared.group.leave()
                     db.rollback()
                     return
                 }
@@ -67,6 +69,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                 for (index, var wordModel) in wordsList.enumerated() {
                     if YXWordBookResourceManager.isLearning {
                         YXLog("当前正在学习中，回滚DB操作，不再写入数据")
+                        YXWordBookResourceManager.shared.group.leave()
                         db.rollback()
                         return
                     }
@@ -83,6 +86,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                         let msg = String(format: "插入单词:%@， id:%d失败", wordModel.word ?? "", wordModel.wordId ?? 0)
                         Bugly.reportError(NSError(domain: msg, code: 0, userInfo: nil))
                         YXLog(msg)
+                        YXWordBookResourceManager.shared.group.leave()
                         db.rollback()
                         return
                     }
@@ -97,6 +101,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                         } else {
                             Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
                             YXLog(msg + "失败")
+                            YXWordBookResourceManager.shared.group.leave()
                             db.rollback()
                             return
                         }
@@ -109,6 +114,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                         } else {
                             Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
                             YXLog(msg + "失败")
+                            YXWordBookResourceManager.shared.group.leave()
                             db.rollback()
                             return
                         }
