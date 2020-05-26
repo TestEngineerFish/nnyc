@@ -249,19 +249,24 @@ class YXShareViewController: YXViewController {
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else { return }
             var isFinished = false
-            if model.state && channel == .timeLine {
-                self.shareChannelView.coinImageView.isHidden = true
-                isFinished = true
-                if let count = YYCache.object(forKey: "PunchCount") as? Int {
-                    YYCache.set(count + 1, forKey: "PunchCount")
-                } else {
-                    YYCache.set(1, forKey: "PunchCount")
-                }
+            if model.state {
                 self.navigationController?.popViewController(animated: true)
+
+                if channel == .timeLine {
+                    self.shareChannelView.coinImageView.isHidden = true
+                    isFinished = true
+                    if let count = YYCache.object(forKey: "PunchCount") as? Int {
+                        YYCache.set(count + 1, forKey: "PunchCount")
+                    } else {
+                        YYCache.set(1, forKey: "PunchCount")
+                    }
+                }
+                
             } else {
                 YXLog("打卡分享失败")
             }
             NotificationCenter.default.post(name: YXNotification.kShareResult, object: nil, userInfo: ["isFinished":isFinished])
+            
         }) { (error) in
             YXUtils.showHUD(self.view, title: error.message)
         }

@@ -9,8 +9,8 @@
 import Foundation
 
 public enum YXOCRequest: YYBaseRequest {
-    case getMonthlyInfo(time: Double)
-    case getDayInfo(time: Double)
+    case getMonthlyInfo(time: Int)
+    case getDayInfo(time: Int)
     case feedback(feed: String, env: String, file: [Data]?)
     case errorWordFeedback(wordId: Int, word: String, content: String, type: String)
     case changeName(name: String)

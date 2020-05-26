@@ -73,13 +73,13 @@ enum YXMiMeType: String {
             request = YXOCRequest.feedback(feed: params["feed"] as? String ?? "", env: params["env"] as? String ?? "", file: params["files"] as? [Data])
             
         case .getMonthlyInfo:
-            request = YXOCRequest.getMonthlyInfo(time: params["time"] as? TimeInterval ?? 0)
+            request = YXOCRequest.getMonthlyInfo(time: Int(params["time"] as? Double ?? 0))
             
         case .getDayInfo:
-            request = YXOCRequest.getDayInfo(time: params["time"] as? TimeInterval ?? 0)
+            request = YXOCRequest.getDayInfo(time: Int(params["time"] as? Double ?? 0))
             
         case .changeName:
-                request = YXOCRequest.changeName(name: params["name"] as? String ?? "")
+            request = YXOCRequest.changeName(name: params["name"] as? String ?? "")
             
         case .changeAvatar:
             request = YXOCRequest.changeAvatar(file: params["file"] as! Data)

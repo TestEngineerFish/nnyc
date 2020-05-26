@@ -64,6 +64,13 @@ static CGFloat const kPickViewHeight = 272.f;
 @implementation YXCalendarViewController
 @synthesize currentTitleDate = _currentTitleDate;
 
+- (YXCalendarStudyMonthData *)monthData {
+    if (!_monthData) {
+        _monthData = [[YXCalendarStudyMonthData alloc] init];
+    }
+    return _monthData;
+}
+
 - (void)setCurrentSelectedDate:(NSDate *)currentDate {
     _currentSelectedDate = currentDate;
     [self getDailyData:currentDate];
@@ -459,15 +466,32 @@ static CGFloat const kPickViewHeight = 272.f;
         [YXUtils hideHUD:self.view];
 
         if (model != nil) {
-            YXCalendarStudyMonthData *monthdata = [YXCalendarStudyMonthData mj_objectWithKeyValues:model];
-            weakSelf.monthData = monthdata;
+//            YXCalendarStudyMonthData *monthdata = [YXCalendarStudyMonthData mj_objectWithKeyValues:model];
+            weakSelf.monthData.summary.study_days = model.summary.days;
+            weakSelf.monthData.summary.study_words = model.summary.words;
+            weakSelf.monthData.summary.study_duration = model.summary.duration;
+
+//            NSMutableArray *study_details = [NSMutableArray arrayWithCapacity:10];
+            
+            for (YXSummaryDetialModel *detial in model.detail) {
+                YXNodeModel *study_detail = [[YXNodeModel alloc] init];
+                study_detail.date = [NSNumber numberWithDouble:detial.date];
+                study_detail.status = [NSNumber numberWithInteger:detial.status];
+                
+                [ weakSelf.monthData.study_detail addObject:study_detail];
+            }
+            
+//            [weakSelf.monthData.study_detail addObjectsFromArray:study_details];
+//            weakSelf.monthData.study_detail = study_details;
+            
+//            weakSelf.monthData = monthdata;
             //更新日历组件,(因为用户可能通过PickView选择月份)
             if (weakSelf.monthDataView.calendarView.currentPage.year != date.year || weakSelf.monthDataView.calendarView.currentPage.month != date.month) {
                 [weakSelf.monthDataView.calendarView setCurrentPage:date animated:YES];
             }
             [weakSelf.monthDataView.calendarView reloadData];
             //更新月统计结果
-            [weakSelf.monthSummaryView updateView:monthdata.summary];
+            [weakSelf.monthSummaryView updateView:weakSelf.monthData.summary];
             //更新图表组件
             [weakSelf.monthDataView.chartView setDataArray:[weakSelf setupChartData] selected:[NSNumber numberWithUnsignedInteger:weakSelf.currentSelectedDate.day - 1]];
             [self.monthDataView.calendarView selectDate:self.currentSelectedDate scrollToDate:NO];
@@ -495,7 +519,53 @@ static CGFloat const kPickViewHeight = 272.f;
         
         if (model != nil) {
             YXCalendarStudyDayData *dailyData = [YXCalendarStudyDayData mj_objectWithKeyValues:model];
+            dailyData.date = [NSNumber numberWithDouble:model.date];
+            dailyData.study_duration = model.duration;
+
+            for (YXSummaryItemsModel *item in model.reviewItems) {
+                YXCalendarNewBookModel *reviewItem = [[YXCalendarNewBookModel alloc] init];
+                reviewItem.name = item.name;
+                
+                for (YXSummaryItemsWordModel *word in item.wordList) {
+                    YXCalendarWordsModel *wordItem = [[YXCalendarWordsModel alloc] init];
+                    wordItem.word = word.word;
+                    wordItem.word_id = word.wordId;
+                    wordItem.paraphrase = word.partOfSpeechAndMeanings;
+                    wordItem.voice_us = word.americanPronunciation;
+                    wordItem.voice_uk = word.englishPronunciation;
+                    
+                    NSString *string = [NSString stringWithFormat:@"%ld", (long)word.isComplexWord];
+                    wordItem.is_synthesis = string;
+
+                    [reviewItem.word_list addObject:wordItem];
+                }
+                
+                [dailyData.review_item addObject:reviewItem];
+            }
+            
+            for (YXSummaryItemsModel *item in model.studyItems) {
+                YXCalendarNewBookModel *studyItem = [[YXCalendarNewBookModel alloc] init];
+                studyItem.name = item.name;
+                
+                for (YXSummaryItemsWordModel *word in item.wordList) {
+                    YXCalendarWordsModel *wordItem = [[YXCalendarWordsModel alloc] init];
+                    wordItem.word = word.word;
+                    wordItem.word_id = word.wordId;
+                    wordItem.paraphrase = word.partOfSpeechAndMeanings;
+                    wordItem.voice_us = word.americanPronunciation;
+                    wordItem.voice_uk = word.englishPronunciation;
+                    
+                    NSString *string = [NSString stringWithFormat:@"%ld", (long)word.isComplexWord];
+                    wordItem.is_synthesis = string;
+                    
+                    [studyItem.word_list addObject:wordItem];
+                }
+                
+                [dailyData.study_item addObject:studyItem];
+            }
+            
             self.dayData = dailyData;
+            
         } else {
             self.dayData = nil;
         }

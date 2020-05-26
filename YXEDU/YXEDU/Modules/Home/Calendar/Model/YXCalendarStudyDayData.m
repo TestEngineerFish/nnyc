@@ -13,15 +13,23 @@
 @end
 
 @implementation YXCalendarWordsModel
+
 - (NSString *)descValue {
-    NSDictionary *firstParaphrase = self.paraphrase.firstObject;
-    NSString *key = [firstParaphrase valueForKey:@"k"];
-    NSString *value = [firstParaphrase valueForKey:@"v"];
+    YXSummaryItemsWordPartOfSpeechAndMeaningModel *firstParaphrase = self.paraphrase.firstObject;
+    NSString *key = firstParaphrase.partOfSpeech;
+    NSString *value = firstParaphrase.meaning;
     return [NSString stringWithFormat:@"%@%@", key, value];
 }
 @end
 
 @implementation YXCalendarNewBookModel
+
+- (NSMutableArray<YXCalendarWordsModel *> *)word_list {
+    if (!_word_list) {
+        _word_list = [[NSMutableArray alloc] init];
+    }
+    return _word_list;
+}
 
 + (NSDictionary *)mj_objectClassInArray {
     return @{
@@ -33,6 +41,20 @@
 
 
 @implementation YXCalendarStudyDayData
+
+- (NSMutableArray<YXCalendarNewBookModel *> *)review_item {
+    if (!_review_item) {
+        _review_item = [[NSMutableArray alloc] init];
+    }
+    return _review_item;
+}
+
+- (NSMutableArray<YXCalendarNewBookModel *> *)study_item {
+    if (!_study_item) {
+        _study_item = [[NSMutableArray alloc] init];
+    }
+    return _study_item;
+}
 
 +(NSDictionary *)mj_objectClassInArray {
 return @{

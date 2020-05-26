@@ -17,6 +17,22 @@
 @end
 
 @implementation YXCalendarStudyMonthData
+
+- (YXStudyMonthSummaryModel *)summary {
+    if (!_summary) {
+        _summary = [[YXStudyMonthSummaryModel alloc] init];
+    }
+    return _summary;
+}
+
+- (NSMutableArray<YXNodeModel *> *)study_detail {
+    if (!_study_detail) {
+        _study_detail = [[NSMutableArray alloc] init];
+    }
+    return _study_detail;
+}
+
+
 +(NSDictionary *)mj_objectClassInArray {
     return @{
              @"study_detail" : [YXNodeModel class]

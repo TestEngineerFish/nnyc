@@ -102,7 +102,10 @@ class YXSummaryItemsWordModel: NSObject, Mappable {
 
 @objc
 class YXSummaryItemsWordPartOfSpeechAndMeaningModel: NSObject, Mappable {
+    @objc
     var partOfSpeech: String = ""
+    
+    @objc
     var meaning: String = ""
     
     required init?(map: Map) {}

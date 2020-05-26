@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YXCalendarNewBookModel : NSObject
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSArray<YXCalendarWordsModel *> *word_list;
+@property (nonatomic, strong) NSMutableArray<YXCalendarWordsModel *> *word_list;
 @end
 
 @interface YXCalendarStudyDayData : NSObject
