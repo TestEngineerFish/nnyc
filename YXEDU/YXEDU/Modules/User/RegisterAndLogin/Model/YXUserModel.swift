@@ -49,11 +49,6 @@ class YXUserModel: NSObject {
         if let grade = YYCache.object(forKey: "kCurrentGrade") as? Int {
             self.currentGrade = grade
         }
-
-        if let bookId = YYCache.object(forKey: "kCurrentBookId") as? Int {
-            self.currentBookId = bookId
-        }
-
     }
     
     var didLogin = false {
@@ -117,8 +112,11 @@ class YXUserModel: NSObject {
     }
     
     var currentBookId: Int? {
-        didSet {
-            YYCache.set(currentBookId, forKey: "kCurrentBookId")
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.currentChooseBookId)
+        }
+        get {
+            YYCache.object(forKey: YXLocalKey.currentChooseBookId) as? Int
         }
     }
 
@@ -169,6 +167,8 @@ class YXUserModel: NSObject {
         self.didLogin = false
         YYCache.set(nil, forKey: "LastStoredDate")
         YYCache.set(nil, forKey: "LastStoreTokenDate")
+        YXUserModel.default.currentBookId = nil
+        YXWordBookResourceManager.shared.reset()
         YXMediator().loginOut()
         
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)

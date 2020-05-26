@@ -75,7 +75,7 @@ end
 post_install do |installer|
 
   def supported_staticlib_pods
-    return ['MBProgressHUD', 'SSKeychain', 'CocoaLumberjack', 'AFNetworking', 'IQKeyboardManager', 'HWWeakTimer', 'UICollectionViewLeftAlignedLayout', 'ZipArchive', 'MJRefresh', 'WMPageController', 'FMDB', 'MagicalRecord', 'MJExtension', 'SGQRCode', 'Masonry', 'SDWebImage', 'LEEAlert', 'DACircularProgress', 'SnapKit', 'Alamofire', 'ObjectMapper', 'AlamofireObjectMapper', 'SDCycleScrollView', 'Reachability', 'FSCalendar', 'lottie-ios', 'Zip', 'Kingfisher', 'KTVHTTPCache', 'Toast-Swift', 'Toast', 'DZNEmptyDataSet']
+    return ['MBProgressHUD', 'SSKeychain', 'CocoaLumberjack', 'AFNetworking', 'HWWeakTimer', 'UICollectionViewLeftAlignedLayout', 'ZipArchive', 'MJRefresh', 'WMPageController', 'FMDB', 'MagicalRecord', 'MJExtension', 'SGQRCode', 'Masonry', 'SDWebImage', 'LEEAlert', 'DACircularProgress', 'SnapKit', 'Alamofire', 'ObjectMapper', 'AlamofireObjectMapper', 'SDCycleScrollView', 'Reachability', 'FSCalendar', 'lottie-ios', 'Zip', 'Kingfisher', 'KTVHTTPCache', 'Toast-Swift', 'Toast', 'DZNEmptyDataSet']
   end
 
   def improve_pre_main_time_loading(installer)

@@ -238,6 +238,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         if exercisType == .base {
             self.status = .downloadBook
             if YXWordBookResourceManager.currentBookDownloadFinished {
+                YXLog("当前词书下载完成，开始主流程的学习")
                 self.downloadCompleteBlock?()
                 self.downloadCompleteBlock = nil
                 self.speed  = .highSpeed

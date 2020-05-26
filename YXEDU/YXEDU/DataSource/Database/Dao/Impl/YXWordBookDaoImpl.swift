@@ -127,6 +127,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                         YXLog("当前线程剩余数量：\(YXWordBookResourceManager.groupCount)")
                         if bookModel.bookId == YXUserModel.default.currentBookId {
                             YXWordBookResourceManager.currentBookDownloadFinished = true
+                            YXLog("》〉》当前学习的书写入数据库")
                         }
                     }
                 }

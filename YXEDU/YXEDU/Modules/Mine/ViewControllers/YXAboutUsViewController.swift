@@ -40,7 +40,7 @@ class YXAboutUsViewController: UIViewController {
     }
 
     @objc private func reportLog(_ tapGes: UITapGestureRecognizer) {
-        YXLogManager.share.report(true)
+//        YXLogManager.share.report(true)
         YXWordBookDaoImpl().deleteAll()
     }
 

@@ -106,7 +106,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         phoneNumberTextField.delegate = self
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
         authCodeTextField.addTarget(self, action: #selector(changeAuthCodeTextField), for: UIControl.Event.editingChanged)
-        
         if let phoneNumber = YYCache.object(forKey: "PhoneNumber") as? String {
             phoneNumberTextField.text = phoneNumber
             sendSMSButton.isUserInteractionEnabled = true
