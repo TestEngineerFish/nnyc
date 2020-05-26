@@ -25,8 +25,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 YXWordBookResourceManager.downloadDataList.removeAll()
             } else {
                 YXLog("学习结束")
-//                还在下载，返回重新设置group。crash
-//                YXWordBookResourceManager.shared.group    = DispatchGroup()
                 YXWordBookResourceManager.shared.contrastBookData()
             }
         }
