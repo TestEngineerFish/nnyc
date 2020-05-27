@@ -48,18 +48,21 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
             return nil
         }
         var model: YXStepModel?
-        if result.next() {
+        var list = [Int]()
+        while result.next() {
             model = YXStepModel()
             model?.step = Int(result.int(forColumn: "step"))
             if let listData = (result.string(forColumn: "black_list") ?? "[]").data(using: .utf8) {
                 do {
-                    let list = try JSONSerialization.jsonObject(with: listData, options: .mutableLeaves) as? [Int]
-                    model?.wordIdList = list ?? []
+                    let _list = try JSONSerialization.jsonObject(with: listData, options: .mutableLeaves) as? [Int]
+                    list += _list ?? []
                 } catch {
-                    model?.wordIdList = []
+                    YXLog("数据库读取StepConfig的list失败")
                 }
             }
         }
+        YXLog("查询结果： \(list)")
+        model?.wordIdList = list
         return model
     }
 }
