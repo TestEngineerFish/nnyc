@@ -266,6 +266,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 点击跟读按钮
     @objc private func startRecordAction(_ button: UIButton) {
+        YXAVPlayerManager.share.pauseAudio()
         YXAuthorizationManager.authorizeMicrophoneWith { [weak self] (isAuth) in
             guard let self = self else { return }
             if isAuth {
@@ -281,7 +282,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 self.endRecordAction()
             }
         }
-        YXAVPlayerManager.share.pauseAudio()
     }
 
     private func endRecordAction() {

@@ -45,8 +45,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         self.closure     = nil
         self.finishBlock = nil
         self.totalDownloadCount = 0
-        YXWordBookResourceManager.currentBookDownloadFinished = false
-        YXWordBookResourceManager.writeDBFinished             = nil
         YXWordBookResourceManager.downloadDataList            = []
     }
 
