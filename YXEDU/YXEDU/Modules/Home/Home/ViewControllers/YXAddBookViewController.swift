@@ -51,8 +51,8 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             self.grades       = data
             self.filterGrades = self.grades
             
-            self.createGradeSelectView()
             self.tableView.reloadData()
+            self.createGradeSelectView()
             
         }) { error in
             YXLog("获取全部词书失败：", error.localizedDescription)
@@ -104,18 +104,18 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "YXGroupWordBookCell", for: indexPath) as! YXGroupWordBookCell
         let grade = filterGrades[indexPath.row]
-        
+
         cell.gradeTitleLabel.text = grade.gradeName
-        
+
         cell.bookCollectionView.tag = indexPath.row
         cell.bookCollectionView.delegate = self
         cell.bookCollectionView.dataSource = self
         cell.bookCollectionView.register(UINib(nibName: "YXSingleGroupWordBookCell", bundle: nil), forCellWithReuseIdentifier: "YXSingleGroupWordBookCell")
         cell.bookCollectionView.reloadData()
-        
+
         if indexPath.row == 0 {
             cell.divierView.isHidden = true
-            
+
         } else {
             cell.divierView.isHidden = false
         }
@@ -187,7 +187,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             
             let wordBookModel = wordBookModels[indexPath.row]
-            cell.coverImageView.sd_setImage(with: URL(string: wordBookModel.coverImagePath ?? ""), completed: nil)
+            cell.coverImageView.sd_setImage(with: URL(string: wordBookModel.coverImagePath ?? ""), placeholderImage: nil, options: [.lowPriority], progress: nil, completed: nil)
             cell.nameLabel.text = wordBookModel.bookName
         }
         
