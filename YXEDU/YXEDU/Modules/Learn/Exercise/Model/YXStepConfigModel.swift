@@ -21,8 +21,8 @@ struct YXStepConfigModel: Mappable {
 }
 
 struct YXStepModel: Mappable {
-    var step: Int  = 0
-    var wordIdList = [Int]()
+    var step: Int = 0
+    var wordIdList: Set<Int> = []
 
     init() {}
     init?(map: Map) {}

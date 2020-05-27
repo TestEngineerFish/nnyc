@@ -137,6 +137,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     
     func listenEvent() {
+        YXWordBookResourceManager.shared.contrastBookData()
         let vc = YXExerciseViewController()
         vc.learnConfig = YXListenReviewLearnConfig(planId: planId)
         vc.hidesBottomBarWhenPushed = true
@@ -146,6 +147,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     
     func reviewEvent() {
+        YXWordBookResourceManager.shared.contrastBookData()
         let vc = YXExerciseViewController()        
         vc.learnConfig = YXReviewPlanLearnConfig(planId: planId)
         vc.hidesBottomBarWhenPushed = true
