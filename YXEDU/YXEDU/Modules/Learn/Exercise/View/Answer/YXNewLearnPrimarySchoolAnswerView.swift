@@ -162,9 +162,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
         // 云之声设置
         self.enginer = USCRecognizer.sharedManager()
+        self.enginer?.vadControl = true
         self.enginer?.setIdentifier(YXUserModel.default.uuid)
-        self.enginer?.delegate        = self
-        self.enginer?.vadControl      = true
         self.enginer?.setVadFrontTimeout(5000, backTimeout: 700)
         
         self.recordAudioButton.isEnabled    = false
@@ -275,6 +274,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 }
                 self.enginer?.oralText = word
                 YXLog("开始录制")
+                self.enginer?.delegate = self
                 self.enginer?.start()
                 self.hidePlayAnimation()
                 self.disablePlayButton()
@@ -594,6 +594,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onBeginOral() {
         // 显示录音动画
+        YXLog("开始录音")
         self.status = .recording
         self.showRecordAnimation()
         YXAVPlayerManager.share.pauseAudio()
