@@ -16,7 +16,7 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
         let insertSql    = YYSQLManager.StepConfigSQL.insert.rawValue
         let deleteAllSql = YYSQLManager.StepConfigSQL.deleteAll.rawValue
 
-        self.wordRunnerQueue.inTransaction { (db, rollback) in
+        self.wordRunnerQueue.inImmediateTransaction { (db, rollback) in
             let deleteSuccess = db.executeUpdate(deleteAllSql, withArgumentsIn: [])
             if deleteSuccess {
                 YXLog("删除本地学习步骤成功")

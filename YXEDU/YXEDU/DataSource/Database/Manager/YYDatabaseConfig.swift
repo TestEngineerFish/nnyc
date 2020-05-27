@@ -24,16 +24,7 @@ struct YYSQLManager {
                         CreateWordTableSQLs.searchHistoryTable.rawValue,
                         CreateWordTableSQLs.stepConfigTable.rawValue,
                         CreateExerciseTableSQLs.allExercise.rawValue,
-                        CreateExerciseTableSQLs.allWordStep.rawValue,
-
-        ]
-        if YYCache.object(forKey: "updateDatabase") as? Bool ?? true {
-            sqlArray.insert(DeleteTableSQLs.bookTable.rawValue, at: 0)
-            sqlArray.insert(DeleteTableSQLs.wordTable.rawValue, at: 0)
-            sqlArray.insert(DeleteTableSQLs.searchHistoryTable.rawValue, at: 0)
-            sqlArray.insert(DeleteTableSQLs.stepConfigTable.rawValue, at: 0)
-        }
-        YYCache.set(false, forKey: "updateDatabase")
+                        CreateExerciseTableSQLs.allWordStep.rawValue,]
         return sqlArray
     }()
     
@@ -97,7 +88,6 @@ extension YYSQLManager {
         case bookTable = "DROP TABLE IF EXISTS book;"
         case wordTable = "DROP TABLE IF EXISTS word;"
         case searchHistoryTable = "DROP TABLE IF EXISTS search_history_table;"
-        case stepConfigTable = "DROP TABLE IF EXISTS step_config_table;"
     }
     
     enum  CreateWordTableSQLs: String {

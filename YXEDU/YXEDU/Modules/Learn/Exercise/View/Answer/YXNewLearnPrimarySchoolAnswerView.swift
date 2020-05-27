@@ -669,7 +669,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
         if error != nil {
-            self.enginer?.cancel()
+//            self.enginer?.cancel()
         }
         return
     }

@@ -184,6 +184,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 YXWordBookResourceManager.writeDBFinished             = true
                 self.finishBlock?()
                 self.backupBlock?()
+                self.reset()
             } else {
                 if YXWordBookResourceManager.isLearning {
                     YXLog("学习中，不再继续下载词书")

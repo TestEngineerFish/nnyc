@@ -114,6 +114,7 @@ class YXUserModel: NSObject {
     var currentBookId: Int? {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.currentChooseBookId)
+            YXWordBookResourceManager.currentBookDownloadFinished = false
         }
         get {
             YYCache.object(forKey: YXLocalKey.currentChooseBookId) as? Int
