@@ -20,7 +20,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     var addLoadingTime = 0.0 // 总加载时间
     var timeInterval   = 0.1
     var stepTimeOut    = 4.0
-    var loadingTimeOut = 15.0
+    var loadingTimeOut = 30.0
     var status         = YXExerciseLoadingEnum.normal
     var isLoading      = false // 动画运行中
     var progressWidth  = AdaptIconSize(181.5)

@@ -236,7 +236,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXBaseRequestManager.share.requestMineTabIntegralData()
         }
         YXStepConfigManager.share.contrastStepConfig()
-        YXWordBookResourceManager.shared.contrastBookData()
+        YXWordBookResourceManager.shared.contrastBookData(by: self.homeModel.bookId, nil)
     }
 
     private func uploadGrowing() {

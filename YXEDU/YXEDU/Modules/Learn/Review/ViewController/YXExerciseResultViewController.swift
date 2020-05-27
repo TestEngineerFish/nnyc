@@ -92,7 +92,8 @@ class YXExerciseResultViewController: YXViewController {
         let planId = model?.id ?? 0
         let learnType = model?.type ?? .aiReview
         let learnConfig = YXReviewLearnConfig(planId: planId, learnType: learnType)
-        
+
+        YXWordBookResourceManager.shared.contrastBookData()
         let vc = YXExerciseViewController()
         vc.learnConfig = learnConfig
         vc.hidesBottomBarWhenPushed = true

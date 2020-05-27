@@ -25,7 +25,7 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
             }
             for (stepIndex, stepModel) in stepConfigModel.stepList.enumerated() {
                 for (wordIndex, wordId) in stepModel.wordIdList.enumerated() {
-                    let insertParams: [Any] = [wordId, stepModel.step, stepModel.wordIdList.toJson()]
+                    let insertParams: [Any] = [wordId, stepModel.step, stepModel.wordIdList.sorted().toJson()]
                     let insertSuccess = db.executeUpdate(insertSql, withArgumentsIn: insertParams)
                     if !insertSuccess {
                         YXLog("插入StepConfig失败")
@@ -40,7 +40,6 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
         }
     }
 
-
     func selecte(step: Int, wordId: Int) -> YXStepModel? {
         let sql = YYSQLManager.StepConfigSQL.seleteBlackList.rawValue
         let params = [step, wordId]
@@ -48,14 +47,14 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
             return nil
         }
         var model: YXStepModel?
-        var list = [Int]()
+        var list: Set<Int> = []
         while result.next() {
             model = YXStepModel()
             model?.step = Int(result.int(forColumn: "step"))
             if let listData = (result.string(forColumn: "black_list") ?? "[]").data(using: .utf8) {
                 do {
                     let _list = try JSONSerialization.jsonObject(with: listData, options: .mutableLeaves) as? [Int]
-                    list += _list ?? []
+                    list.formUnion(Set(_list ?? []))
                 } catch {
                     YXLog("数据库读取StepConfig的list失败")
                 }
