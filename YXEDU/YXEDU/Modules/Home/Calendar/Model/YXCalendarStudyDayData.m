@@ -42,6 +42,13 @@
 
 @implementation YXCalendarStudyDayData
 
+- (NSInteger)study_duration {
+    if (!_study_duration) {
+        _study_duration = 0;
+    }
+    return _study_duration;
+}
+
 - (NSMutableArray<YXCalendarNewBookModel *> *)review_item {
     if (!_review_item) {
         _review_item = [[NSMutableArray alloc] init];

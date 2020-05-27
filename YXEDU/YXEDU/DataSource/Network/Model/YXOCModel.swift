@@ -26,7 +26,7 @@ class YXOCModel: NSObject, Mappable {
         detail <- map["study_detail"]
 
         date <- map["date"]
-        duration <- map["duration"]
+        duration <- map["study_duration"]
         reviewItems <- map["review_item"]
         studyItems <- map["review_item"]
     }
