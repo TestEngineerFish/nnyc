@@ -250,17 +250,18 @@ class YXShareViewController: YXViewController {
             guard let self = self, let model = response.data else { return }
             var isFinished = false
             if model.state {
-                self.navigationController?.popViewController(animated: true)
-
+                if let count = YYCache.object(forKey: "PunchCount") as? Int {
+                    YYCache.set(count + 1, forKey: "PunchCount")
+                } else {
+                    YYCache.set(1, forKey: "PunchCount")
+                }
+                
                 if channel == .timeLine {
                     self.shareChannelView.coinImageView.isHidden = true
                     isFinished = true
-                    if let count = YYCache.object(forKey: "PunchCount") as? Int {
-                        YYCache.set(count + 1, forKey: "PunchCount")
-                    } else {
-                        YYCache.set(1, forKey: "PunchCount")
-                    }
                 }
+                
+                self.navigationController?.popViewController(animated: true)
                 
             } else {
                 YXLog("打卡分享失败")
