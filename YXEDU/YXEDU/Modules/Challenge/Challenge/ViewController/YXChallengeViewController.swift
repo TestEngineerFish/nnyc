@@ -145,7 +145,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        vc.reviewLearnAmount = 10
 //        vc.hidesBottomBarWhenPushed = true
 //        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-//        YXFileManager.share.clearStudyCache()
 //        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
             return

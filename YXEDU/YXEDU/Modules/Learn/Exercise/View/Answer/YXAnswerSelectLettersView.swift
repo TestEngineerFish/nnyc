@@ -222,10 +222,14 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharac
     }
      // MARK: ---- YXCharacterTextFieldProtocol ----
     func yxDeleteBackward() {
-        guard let button = self.selectedBtnArray.last else {
+//        guard let button = self.selectedBtnArray.last else {
+//            return
+//        }
+        if self.selectedBtnArray.isEmpty {
             return
         }
+        let button = self.selectedBtnArray.removeLast()
         self.delegate?.unselectAnswerButton(button)
-        YXLog("删除")
+//        YXLog("删除")
     }
 }

@@ -27,6 +27,8 @@ class YXAVPlayerManager: NSObject {
     var sourceIndex: Int     = 0
     var finishedBlock:FinishedBlock?
     weak var delegate: YXAVPlayerProtocol?
+    let rightAudioPath = Bundle.main.path(forResource: "right", ofType: "mp3")
+    let wrongAudioPath = Bundle.main.path(forResource: "wrong", ofType: "mp3")
 
     static let share = YXAVPlayerManager()
     
@@ -84,8 +86,12 @@ class YXAVPlayerManager: NSObject {
     /// 停止播放
     func pauseAudio() {
         if isPlaying {
-            self.player.pause()
             self.isPlaying = false
+            if (self.player.currentItem?.asset as? AVURLAsset)?.url.absoluteString.hasSuffix(rightAudioPath ?? "") == .some(true) || (self.player.currentItem?.asset as? AVURLAsset)?.url.absoluteString.hasSuffix(wrongAudioPath ?? "") == .some(true) {
+                YXLog("结果音，切题不暂停")
+                return
+            }
+            self.player.pause()
         }
     }
 
@@ -125,7 +131,7 @@ class YXAVPlayerManager: NSObject {
 
     /// 播放答题正确音效
     func playRightAudio() {
-        guard let path = Bundle.main.path(forResource: "right", ofType: "mp3") else {
+        guard let path = rightAudioPath else {
             return
         }
         let url = URL(fileURLWithPath: path)
@@ -134,7 +140,7 @@ class YXAVPlayerManager: NSObject {
 
     /// 播放答题错误音效
     func playWrongAudio() {
-        guard let path = Bundle.main.path(forResource: "wrong", ofType: "mp3") else {
+        guard let path = wrongAudioPath else {
             return
         }
         let url = URL(fileURLWithPath: path)
