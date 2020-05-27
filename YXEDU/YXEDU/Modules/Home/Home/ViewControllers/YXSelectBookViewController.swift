@@ -109,7 +109,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 guard let self = self else { return }
                 YXUserModel.default.currentBookId = bookId
                 YXUserModel.default.currentGrade  = wordBook.bookGrade
-                YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
+                YXWordBookResourceManager.shared.contrastBookData(by: bookId)
                 self.navigationController?.popViewController(animated: true)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)

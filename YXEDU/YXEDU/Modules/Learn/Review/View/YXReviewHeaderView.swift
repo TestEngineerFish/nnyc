@@ -466,7 +466,6 @@ class YXReviewHeaderView: YXView {
     
     @objc private func clickReviewButton() {
         guard reviewButton.isEnabled else { return }
-        YXLog("====开始智能复习====")
         self.startReviewEvent?()
     }
     
