@@ -215,7 +215,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             if self.addLoadingTime > self.loadingTimeOut {
                 self.stopAnimation()
                 DispatchQueue.main.async {
-                    UIView().currentViewController?.navigationController?.popViewController(animated: true)
+                    UIView().currentViewController?.navigationController?.popToRootViewController(animated: true)
                     YXUtils.showHUD(kWindow, title: "当前网速较慢，建议稍后重试")
                 }
             }

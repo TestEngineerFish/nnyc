@@ -64,7 +64,7 @@ class YXUnitMapView: UIView {
     /// 设置单元位置
     private func setUnitPointList() {
         self.unitPointList.removeAll()
-        let bottomLineY   = isPad() ? self.height * (1 - 0.2) : self.height * (1 - 0.11)
+        let bottomLineY   = isPad() ? self.height * (1 - 0.2) : self.height - AdaptSize(36)
         let topLineY      = isPad() ? AdaptSize(85) : AdaptSize(66)
         let startPoint    = CGPoint(x: self.width / 6 * 5, y: self.height)
         let firstPoint    = CGPoint(x: self.width * (1 - 0.282), y: bottomLineY)

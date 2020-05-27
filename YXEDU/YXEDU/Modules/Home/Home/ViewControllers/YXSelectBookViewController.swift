@@ -57,7 +57,10 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     self.wordBookModels.remove(at: index)
                     self.bookCollectionView.reloadData()
                     
-                    YXWordBookDaoImpl().deleteBook(bookId: selectedBookId)
+                    let result = YXWordBookDaoImpl().deleteBook(bookId: selectedBookId)
+                    if result {
+                        YXWordBookResourceManager.currentBookDownloadFinished = false
+                    }
 //                    try? FileManager.default.removeItem(at: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(selectedBookId)"))
                 }) { error in
                     YXUtils.showHUD(kWindow, title: error.message)

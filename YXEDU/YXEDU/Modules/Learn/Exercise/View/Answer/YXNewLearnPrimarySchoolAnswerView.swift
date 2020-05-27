@@ -162,9 +162,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
         // 云之声设置
         self.enginer = USCRecognizer.sharedManager()
+        self.enginer?.vadControl = true
         self.enginer?.setIdentifier(YXUserModel.default.uuid)
-        self.enginer?.delegate        = self
-        self.enginer?.vadControl      = true
         self.enginer?.setVadFrontTimeout(5000, backTimeout: 700)
         
         self.recordAudioButton.isEnabled    = false
@@ -266,6 +265,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     /// 点击跟读按钮
     @objc private func startRecordAction(_ button: UIButton) {
+        YXAVPlayerManager.share.pauseAudio()
         YXAuthorizationManager.authorizeMicrophoneWith { [weak self] (isAuth) in
             guard let self = self else { return }
             if isAuth {
@@ -274,6 +274,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 }
                 self.enginer?.oralText = word
                 YXLog("开始录制")
+                self.enginer?.delegate = self
                 self.enginer?.start()
                 self.hidePlayAnimation()
                 self.disablePlayButton()
@@ -281,7 +282,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 self.endRecordAction()
             }
         }
-        YXAVPlayerManager.share.pauseAudio()
     }
 
     private func endRecordAction() {
@@ -594,6 +594,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onBeginOral() {
         // 显示录音动画
+        YXLog("开始录音")
         self.status = .recording
         self.showRecordAnimation()
         YXAVPlayerManager.share.pauseAudio()
@@ -669,7 +670,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func monitoringLifecycle(_ lifecycle: Int32, error: Error!) {
         if error != nil {
-            self.enginer?.cancel()
+//            self.enginer?.cancel()
         }
         return
     }

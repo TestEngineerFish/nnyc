@@ -45,8 +45,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         self.closure     = nil
         self.finishBlock = nil
         self.totalDownloadCount = 0
-        YXWordBookResourceManager.currentBookDownloadFinished = false
-        YXWordBookResourceManager.writeDBFinished             = nil
         YXWordBookResourceManager.downloadDataList            = []
     }
 
@@ -184,6 +182,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 YXWordBookResourceManager.writeDBFinished             = true
                 self.finishBlock?()
                 self.backupBlock?()
+                self.reset()
             } else {
                 if YXWordBookResourceManager.isLearning {
                     YXLog("学习中，不再继续下载词书")
