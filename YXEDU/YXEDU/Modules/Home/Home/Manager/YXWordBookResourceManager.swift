@@ -34,16 +34,21 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     /// 检测词书是否需要下载（可指定词书ID，未指定则检测当前用户所有词书）
     func contrastBookData(by bookId: Int? = nil) {
+//        if bookId == .some(0) { return }
         let request = YXWordBookRequest.downloadWordBook(bookId: bookId)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordBookDownloadModel>.self, request: request, success: {  [weak self] (response) in
             guard let self = self else { return }
             if let wordBookDownloadModels = response.dataArray {
                 if let bookId = bookId {
                     // 下载单本书
-                    wordBookDownloadModels.forEach { (wordBookDownloadModel) in
-                        if wordBookDownloadModel.id == bookId {
-                            self.checkLocalBooksStatus(with: [wordBookDownloadModel])
-                            return
+                    if wordBookDownloadModels.isEmpty {
+                        self.downloadFinished()
+                    } else {
+                        wordBookDownloadModels.forEach { (wordBookDownloadModel) in
+                            if wordBookDownloadModel.id == bookId {
+                                self.checkLocalBooksStatus(with: [wordBookDownloadModel])
+                                return
+                            }
                         }
                     }
                 } else {
@@ -51,10 +56,12 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 }
             } else {
                 YXLog("后台返回词书列表数据错误")
+                self.downloadFinished()
                 self.popRootVC()
             }
         }) { error in
             YXLog("检测词书接口请求失败:\(error.message)")
+            self.downloadFinished()
             YXUtils.showHUD(kWindow, title: error.message)
             self.popRootVC()
         }
@@ -129,6 +136,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         YXWordBookResourceManager.taskList.forEach { (_model) in
             if _model.type == model.type {
                 existed = true
+                return
             }
         }
         if !existed {
@@ -252,8 +260,8 @@ class YXWordBookResourceModel: NSObject {
     var type: YXDownloadType
     var status: YXDownloadStatus {
         didSet {
-            YXLog("下载完成，发送通知")
             if status == .finished {
+                YXLog("下载完成，发送通知")
                 switch self.type {
                 case .single:
                     YXLog("单本词书下载完成")
