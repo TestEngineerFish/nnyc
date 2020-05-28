@@ -89,8 +89,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     /// 保存词单
       /// - Parameters:
       ///   - dataList: 需要保存的数据
-      ///   - block: 保存后执行的闭包
-      func saveReviewPlan(dataList: [(Int, String)], finished block: FinishedBlock?) {
+      func saveReviewPlan(dataList: [(Int, String)]) {
           YXLog("词单的词书列表", dataList)
         let task = YXWordBookResourceModel(type: .reviewPlan) {
              YXLog("词书下载完成，开始检测和下载词单的词书")

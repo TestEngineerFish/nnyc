@@ -14,7 +14,9 @@ class YXReviewPlanShareDetailViewController: YXViewController {
         
     var planId: Int = -1
     var fromUser: String?
-    
+    var reviewPlanName: String = ""
+
+    let toastView = YXToastView()
     var reviewPlanModel: YXReviewPlanModel?
     var wordListView = YXWordListView()
     var bottomView   = YXReviewPlanShareDetailBottomView()
@@ -46,6 +48,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
         bottomView.saveReviewPlanEvent = { [weak self] in
             self?.saveReviewPlanEvent()
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadReviewPlanFinished), name: YXNotification.kDownloadReviewPlanFinished, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -82,45 +85,24 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     }
     
     func saveReviewPlanEvent() {
-        let pid = self.reviewPlanModel?.planId ?? 0
-        
         // 显示弹框
         let placeholder = self.reviewPlanModel?.planName ?? ""
         let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
         alertView.titleLabel.text = "请设置词单名称"
         alertView.shouldOnlyShowOneButton = false
         alertView.doneClosure = {(text: String?) in
-            guard let name = text else {
+            guard let _name = text else {
                 return
             }
-            let toastView = YXToastView()
-            toastView.showLoadView("数据保存中，请稍等片刻...")
-            self.downLoadBookData({ [weak self] in
-                guard let self = self else { return }
-                let request = YXReviewRequest.makeReviewPlan(name: name, code: pid, idsList: nil)
-                YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
-                    toastView.hideView()
-                    NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
-                    UIView.toast("保存成功")
-                    YRRouter.popViewController(true)
-                }) { (error) in
-                    toastView.hideView()
-                    if error.code == 101 {
-                        let alertView = YXAlertView(type: .normal)
-                        alertView.descriptionLabel.text   = error.message
-                        alertView.shouldOnlyShowOneButton = true
-                        alertView.show()
-                    } else {
-                        YXUtils.showHUD(self.view, title: error.message)
-                    }
-                }
-            })
+            self.reviewPlanName = _name
+            self.toastView.showLoadView("数据保存中，请稍等片刻...")
+            self.downLoadBookData()
         }
         alertView.show()
     }
 
     /// 下载词书
-    private func downLoadBookData(_ finishBlock: (()->Void)?) {
+    private func downLoadBookData() {
         guard let wordModelList = detailModel?.words else {
             return
         }
@@ -134,14 +116,35 @@ class YXReviewPlanShareDetailViewController: YXViewController {
             }
         }
         if _wordModelList.isEmpty {
-            finishBlock?()
+            self.downloadReviewPlanFinished()
         } else {
             var dataList = [(Int, String)]()
             for wordModel in _wordModelList {
                 guard let bookId = wordModel.bookId else { return }
                 dataList.append((bookId, wordModel.bookHash))
             }
-            YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, finished: finishBlock)
+            YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList)
+        }
+    }
+
+    @objc private func downloadReviewPlanFinished() {
+        let pid = self.reviewPlanModel?.planId ?? 0
+        let request = YXReviewRequest.makeReviewPlan(name: self.reviewPlanName, code: pid, idsList: nil)
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
+            self.toastView.hideView()
+            NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
+            UIView.toast("保存成功")
+            YRRouter.popViewController(true)
+        }) { (error) in
+            self.toastView.hideView()
+            if error.code == 101 {
+                let alertView = YXAlertView(type: .normal)
+                alertView.descriptionLabel.text   = error.message
+                alertView.shouldOnlyShowOneButton = true
+                alertView.show()
+            } else {
+                YXUtils.showHUD(self.view, title: error.message)
+            }
         }
     }
 

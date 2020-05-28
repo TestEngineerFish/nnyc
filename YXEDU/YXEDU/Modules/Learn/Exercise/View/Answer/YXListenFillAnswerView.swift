@@ -40,8 +40,7 @@ class YXListenFillAnswerView: YXBaseAnswerView {
         self.audioBackgroundView.layer.cornerRadius  = AdaptIconSize(26)
         self.audioBackgroundView.layer.borderWidth   = AdaptIconSize(3)
         self.audioBackgroundView.layer.borderColor   = UIColor.orange2.cgColor
-        
-//        textField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+
         textField.textColor              = UIColor.clear
         textField.autocorrectionType     = .no
         textField.autocapitalizationType = .none
@@ -226,7 +225,8 @@ class YXListenFillAnswerLineView: YXView {
         letterLabel.textColor = UIColor.black1
         letterLabel.font = UIFont.mediumFont(ofSize: AdaptFontSize(26))
         letterLabel.textAlignment = .center
-        
+        letterLabel.adjustsFontSizeToFitWidth = true
+        letterLabel.minimumScaleFactor = 0.2
         let lineView = UIView()
         lineView.backgroundColor = UIColor.black4
         letterLabel.addSubview(lineView)
@@ -246,6 +246,8 @@ class YXListenFillAnswerLineView: YXView {
         letterLabel.textColor = UIColor.black1
         letterLabel.font = UIFont.mediumFont(ofSize: AdaptFontSize(17))
         letterLabel.textAlignment = .center
+        letterLabel.adjustsFontSizeToFitWidth = true
+        letterLabel.minimumScaleFactor = 0.2
         return letterLabel
     }
     

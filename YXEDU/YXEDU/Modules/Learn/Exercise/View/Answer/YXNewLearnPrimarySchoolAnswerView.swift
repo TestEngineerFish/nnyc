@@ -203,7 +203,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.timer?.invalidate()
         self.timer = nil
         self.enginer?.delegate = nil
-        YXLog("---- 移除")
         NotificationCenter.default.removeObserver(self)
     }
 

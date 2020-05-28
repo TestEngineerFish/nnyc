@@ -24,6 +24,7 @@ class YXCharacterTextField: UITextField, UIGestureRecognizerDelegate {
         self.tag                    = 999// 用户响应底部答题事件
         self.font                   = isTitle ? UIFont.boldSystemFont(ofSize: AdaptFontSize(26)) : UIFont.pfSCRegularFont(withSize: AdaptFontSize(17))
         self.textColor              = isTitle ? UIColor.black1 : UIColor.black2
+//        self.minimumFontSize        = 0.3
         self.borderStyle            = .none
         self.returnKeyType          = .done
         self.textAlignment          = .center
