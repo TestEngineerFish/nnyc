@@ -236,7 +236,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
                 YXUserModel.default.currentBookId   = bookId
                 YXUserModel.default.currentGrade    = gradeId
                 self.navigationController?.popToRootViewController(animated: true)
-                let taskModel = YXWordBookResourceModel(type: .single) {
+                let taskModel = YXWordBookResourceModel(type: .single, book: bookId) {
                     YXWordBookResourceManager.shared.contrastBookData(by: bookId)
                 }
                 YXWordBookResourceManager.shared.addTask(model: taskModel)

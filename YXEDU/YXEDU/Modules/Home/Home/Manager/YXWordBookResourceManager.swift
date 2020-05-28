@@ -257,6 +257,7 @@ class YXWordBookResourceModel: NSObject {
         case downloading
         case finished
     }
+    var bookId: Int?
     var type: YXDownloadType
     var status: YXDownloadStatus {
         didSet {
@@ -279,8 +280,9 @@ class YXWordBookResourceModel: NSObject {
     }
     var eventBlock: (()->Void)
 
-    init(type: YXDownloadType, block: @escaping (()->Void)) {
+    init(type: YXDownloadType, book id: Int? = -1, block: @escaping (()->Void)) {
         self.type       = type
+        self.bookId     = id
         self.status     = .normal
         self.eventBlock = block
         super.init()

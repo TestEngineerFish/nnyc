@@ -258,7 +258,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             // 下载的任务中不存在未下载的单本词书
             var singleDownloadFinished = true
             YXWordBookResourceManager.taskList.forEach { (task) in
-                if task.type == .single && task.status != .finished {
+                if task.type == .single && task.bookId == YXUserModel.default.currentBookId && task.status != .finished {
                     singleDownloadFinished = false
                 }
             }

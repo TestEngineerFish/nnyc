@@ -93,7 +93,7 @@ class YXExerciseResultViewController: YXViewController {
         let learnType = model?.type ?? .aiReview
         let learnConfig = YXReviewLearnConfig(planId: planId, learnType: learnType)
 
-        let taskModel = YXWordBookResourceModel(type: .single) {
+        let taskModel = YXWordBookResourceModel(type: .all) {
             YXWordBookResourceManager.shared.contrastBookData()
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
