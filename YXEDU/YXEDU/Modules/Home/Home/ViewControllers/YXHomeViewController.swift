@@ -155,8 +155,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.setSquirrelAnimation()
         }
 
-        if YYCache.object(forKey: "ShowedRate") as? Bool == nil, let count = YYCache.object(forKey: "PunchCount") as? Int, count >= 4 {
-            YYCache.set(true, forKey: "ShowedRate")
+        if YYCache.object(forKey: YXLocalKey.didShowRate) as? Bool == nil, let count = YYCache.object(forKey: YXLocalKey.punchCount) as? Int, count >= 4 {
+            YYCache.set(true, forKey: YXLocalKey.didShowRate)
 
             if #available(iOS 10.3, *) {
                 SKStoreReviewController.requestReview()

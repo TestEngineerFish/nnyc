@@ -22,6 +22,8 @@ enum YXLocalKey: String {
     case makePlanNameIndex             = "YX_Plan_Name_Index"
     case currentChooseBookId           = "currentChooseBookId" //当前在学的词书ID
     case newLearnReportGIO             = "NewLearnReportGIO" // 新学完成上报GIO
+    case didShowRate = "DidShowRate" // 是否弹过评分弹窗
+    case punchCount = "PunchCount" // 打卡次数大于等于 4，弹出评分弹窗
 }
 
 

@@ -83,12 +83,6 @@ class YXBadgeDetailView: YXTopWindowView {
             
             descriptionLabel.text = badge.description
 
-            if let currentProgress = badge.currentProgress, let totalProgress = badge.totalProgress {
-                progressBar.setProgress(Float(currentProgress / totalProgress), animated: true)
-                currentProgressLabel.text = "\(currentProgress)"
-                totalProgressLabel.text = "/\(totalProgress)"
-            }
-            
             backgroundImageView.image           = #imageLiteral(resourceName: "badgeIncompleteBackground")
             completedImageView.isHidden         = true
             completedDescriptionLabel.isHidden  = true
@@ -97,6 +91,12 @@ class YXBadgeDetailView: YXTopWindowView {
             incompleteDescriptionLabel.isHidden = false
             currentProgressLabel.isHidden       = false
             totalProgressLabel.isHidden         = false
+            
+            if let currentProgress = badge.currentProgress, let totalProgress = badge.totalProgress {
+                progressBar.setProgress(Float(currentProgress) / Float(totalProgress), animated: true)
+                currentProgressLabel.text = "\(currentProgress)"
+                totalProgressLabel.text = "/\(totalProgress)"
+            }
         }
     }
 

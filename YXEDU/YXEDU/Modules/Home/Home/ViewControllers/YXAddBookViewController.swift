@@ -125,28 +125,36 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if filterVersion == "所有版本" {
-            if let count = filterGrades[indexPath.row].wordBooks?.count {
-                let countOfRow = Int(count / 3) + ((count % 3 != 0) ? 1 : 0)
-                return CGFloat(228 + ((countOfRow - 1) * 182))
-                
+            if let count = filterGrades[indexPath.row].wordBooks?.count, count != 0 {
+                if count <= 3 {
+                    return 228
+
+                } else {
+                    let countOfRow = Int(count / 3) + (count % 3) - 1
+                    return CGFloat(228 + (countOfRow * 182))
+                }
+
             } else {
                 return 0
             }
-            
+
         } else {
             var count = 0
-            
+
             for wordBook in filterGrades[indexPath.row].wordBooks ?? [] {
                 guard wordBook.bookVersionName == filterVersion else { continue }
                 count = count + 1
             }
-            
+
             if count == 0 {
                 return 0
-                
+
+            } else if count <= 3 {
+                return 228
+
             } else {
-                let countOfRow = Int(count / 3) + ((count % 3 != 0) ? 1 : 0)
-                return CGFloat(228 + ((countOfRow - 1) * 182))
+                let countOfRow = Int(count / 3) + (count % 3) - 1
+                return CGFloat(228 + (countOfRow * 182))
             }
         }
     }
@@ -175,7 +183,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if filterVersion == "所有版本" {
             let wordBookModel = filterGrades[collectionView.tag].wordBooks?[indexPath.row]
-            cell.coverImageView.sd_setImage(with: URL(string: wordBookModel?.coverImagePath ?? ""), completed: nil)
+            cell.coverImageView.sd_setImage(with: URL(string: wordBookModel?.coverImagePath ?? ""), placeholderImage: nil, options: [.lowPriority], progress: nil, completed: nil)
             cell.nameLabel.text = wordBookModel?.bookName
             
         } else {

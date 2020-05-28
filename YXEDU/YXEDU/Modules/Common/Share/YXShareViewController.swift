@@ -250,10 +250,11 @@ class YXShareViewController: YXViewController {
             guard let self = self, let model = response.data else { return }
             var isFinished = false
             if model.state {
-                if let count = YYCache.object(forKey: "PunchCount") as? Int {
-                    YYCache.set(count + 1, forKey: "PunchCount")
+                if let count = YYCache.object(forKey: YXLocalKey.punchCount) as? Int {
+                    YYCache.set(count + 1, forKey: YXLocalKey.punchCount)
+                    
                 } else {
-                    YYCache.set(1, forKey: "PunchCount")
+                    YYCache.set(1, forKey: YXLocalKey.punchCount)
                 }
                 
                 if channel == .timeLine {
