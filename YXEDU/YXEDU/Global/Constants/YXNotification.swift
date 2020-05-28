@@ -45,6 +45,12 @@ struct YXNotification {
     static let kMineTabIntegral          = NSNotification.Name("kMineTabIntegral")
     /// 分享结果
     static let kShareResult              = NSNotification.Name("kShareResult")
+    /// 下载单本词书结束
+    static let kDownloadSingleFinished   = NSNotification.Name("kDownloadSingleFinished")
+    /// 下载所有词书结束
+    static let kDownloadAllFinished   = NSNotification.Name("kDownloadAllFinished")
+    /// 下载所有词单结束
+    static let kDownloadReviewPlanFinished   = NSNotification.Name("kDownloadReviewPlanFinished")
 
     
 }

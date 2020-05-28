@@ -97,6 +97,21 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadSingleFinished), name: YXNotification.kDownloadSingleFinished, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadAllFinished), name: YXNotification.kDownloadAllFinished, object: nil)
+    }
+
+    @objc
+    private func downloadSingleFinished() {
+        self.status = .requestIng
+    }
+
+    @objc
+    private func downloadAllFinished() {
+        self.status = .requestIng
+    }
+
     private func createSubviews() {
         self.backgroundColor = UIColor.white
 
@@ -240,7 +255,14 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             if self.status.rawValue < YXExerciseLoadingEnum.downloadBook.rawValue {
                 self.status = .downloadBook
             }
-            if YXWordBookResourceManager.currentBookDownloadFinished {
+            // 下载的任务中不存在未下载的单本词书
+            var singleDownloadFinished = true
+            YXWordBookResourceManager.taskList.forEach { (task) in
+                if task.type == .single && task.status != .finished {
+                    singleDownloadFinished = false
+                }
+            }
+            if singleDownloadFinished {
                 YXLog("当前词书下载完成，开始主流程的学习")
                 self.downloadCompleteBlock?()
                 self.downloadCompleteBlock = nil
@@ -259,26 +281,30 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 self.speed  = .normal
             }
         } else {
-            if YXWordBookResourceManager.downloading != nil {
+//            if YXWordBookResourceManager.downloading != nil {
+                // 防止进度回滚
+            if self.status.rawValue < YXExerciseLoadingEnum.downloadBook.rawValue {
                 self.status = .downloadBook
-                if YXWordBookResourceManager.downloading == .some(false) && YXWordBookResourceManager.shared.targetBookId == nil && !YXWordBookResourceManager.hasDownloadTask {
-                    self.downloadCompleteBlock?()
-                    self.downloadCompleteBlock = nil
-                    self.speed  = .highSpeed
-                    // 请求之前需要先下载完词书
-                    if YXExerciseViewController.requesting != nil {
-                        if YXExerciseViewController.requesting == .some(true) {
-                            self.status = .requestIng
-                            self.speed  = .normal
-                        } else {
-                            self.status = .requestEnd
-                            self.speed  = .highSpeed
-                        }
-                    }
-                } else {
-                    self.speed  = .normal
-                }
             }
+            // 所有任务下载完成，才可以进入下一步
+            if YXWordBookResourceManager.taskList.isEmpty {
+                self.downloadCompleteBlock?()
+                self.downloadCompleteBlock = nil
+                self.speed  = .highSpeed
+                // 请求之前需要先下载完词书
+                if YXExerciseViewController.requesting != nil {
+                    if YXExerciseViewController.requesting == .some(true) {
+                        self.status = .requestIng
+                        self.speed  = .normal
+                    } else {
+                        self.status = .requestEnd
+                        self.speed  = .highSpeed
+                    }
+                }
+            } else {
+                self.speed  = .normal
+            }
+//            }
         }
 
 

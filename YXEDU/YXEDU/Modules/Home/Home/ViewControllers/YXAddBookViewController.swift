@@ -228,8 +228,10 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
                 YXUserModel.default.currentBookId   = bookId
                 YXUserModel.default.currentGrade    = gradeId
                 self.navigationController?.popToRootViewController(animated: true)
-                YXWordBookResourceManager.shared.contrastBookData(by: bookId)
-                
+                let taskModel = YXWordBookResourceModel(type: .single) {
+                    YXWordBookResourceManager.shared.contrastBookData(by: bookId)
+                }
+                YXWordBookResourceManager.shared.addTask(model: taskModel)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
             }
