@@ -85,7 +85,7 @@ enum YXMiMeType: String {
             request = YXOCRequest.changeAvatar(file: params["file"] as! Data)
             
         case .changeUserInfo:
-            request = YXOCRequest.changeUserInfo(params: params as? [String : String] ?? ["": ""])
+            request = YXOCRequest.changeUserInfo(params: params as? [String : Any?] ?? ["": nil])
         }
         
         if isUpload {

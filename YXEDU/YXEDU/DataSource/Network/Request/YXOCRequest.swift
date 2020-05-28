@@ -15,7 +15,7 @@ public enum YXOCRequest: YYBaseRequest {
     case errorWordFeedback(wordId: Int, word: String, content: String, type: String)
     case changeName(name: String)
     case changeAvatar(file: Data)
-    case changeUserInfo(params: [String: String])
+    case changeUserInfo(params: [String: Any?])
 
     public var method: YYHTTPMethod {
         switch self {
