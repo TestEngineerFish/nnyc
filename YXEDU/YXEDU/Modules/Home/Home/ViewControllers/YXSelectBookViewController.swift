@@ -57,10 +57,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                     self.wordBookModels.remove(at: index)
                     self.bookCollectionView.reloadData()
                     
-                    let result = YXWordBookDaoImpl().deleteBook(bookId: selectedBookId)
-                    if result {
-                        YXWordBookResourceManager.currentBookDownloadFinished = false
-                    }
+                    YXWordBookDaoImpl().deleteBook(bookId: selectedBookId)
 //                    try? FileManager.default.removeItem(at: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(selectedBookId)"))
                 }) { error in
                     YXUtils.showHUD(kWindow, title: error.message)
@@ -109,7 +106,10 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 guard let self = self else { return }
                 YXUserModel.default.currentBookId = bookId
                 YXUserModel.default.currentGrade  = wordBook.bookGrade
-                YXWordBookResourceManager.shared.contrastBookData(by: bookId)
+                let taskModel = YXWordBookResourceModel(type: .single) {
+                    YXWordBookResourceManager.shared.contrastBookData(by: bookId)
+                }
+                YXWordBookResourceManager.shared.addTask(model: taskModel)
                 self.navigationController?.popViewController(animated: true)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)

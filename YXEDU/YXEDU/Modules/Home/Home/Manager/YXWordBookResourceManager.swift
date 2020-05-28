@@ -12,90 +12,43 @@ import ObjectMapper
 class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     typealias FinishedBlock = (()->Void)
 
-    var group                              = DispatchGroup()
-    static var totalDownloadCount          = 0
-    static let shared                      = YXWordBookResourceManager()
-    static var currentBookDownloadFinished = false
-    static var isLearning                  = false {
+    var group                     = DispatchGroup()
+    static var totalDownloadCount = 0
+    static let shared             = YXWordBookResourceManager()
+    static var stop               = false {
         willSet {
             if newValue {
-                YXLog("开始学习")
+                YXLog("开始学习/退出登录停止下载")
                 YXWordBookResourceManager.downloadDataList.removeAll()
-            } else {
-                YXLog("学习结束")
             }
         }
     }
-    var targetBookId: Int? // 如果有目标词书ID，则只检测一本词书，否则全部检测下载
     static var downloadDataList = [(Int, String)]()
-    static var downloading: Bool?
-    static var hasDownloadTask: Bool = false
 
-    // ---- 仅保存词单用----
-    /// 词单下载完成闭包
-    static var reviewPlanEventBlock: FinishedBlock?
-    /// 下载词单结束闭包
-    static var reviewPlanFinishBlock: FinishedBlock?
+    /// 下载对象列表，存储所以需要下载的任务式对象
+    static var taskList = [YXWordBookResourceModel]()
 
     private override init() {
         super.init()
     }
 
-    func reset() {
-        YXWordBookResourceManager.totalDownloadCount    = .zero
-        YXWordBookResourceManager.downloading           = false
-        YXWordBookResourceManager.reviewPlanFinishBlock = nil
-        YXWordBookResourceManager.reviewPlanEventBlock  = nil
-        YXWordBookResourceManager.downloadDataList      = []
-        if YXWordBookResourceManager.shared.targetBookId == nil {
-            YXWordBookResourceManager.hasDownloadTask = false
-        }
-    }
-
     /// 检测词书是否需要下载（可指定词书ID，未指定则检测当前用户所有词书）
     func contrastBookData(by bookId: Int? = nil) {
-        // 下载中，则不做检测处理，防止重复下载
-        if (YXWordBookResourceManager.downloading == .some(true) || YXUserModel.default.currentBookId == .some(0)) && !YXWordBookResourceManager.hasDownloadTask {
-            YXLog("词书下载中，请勿重复下载")
-            // 新用户会先进入首页再进入词书选择页
-            if YXUserModel.default.currentBookId == .some(0) {
-                YXLog("当前用户没有正在学习的词书")
-                return
-            }
-            if bookId == nil {
-                // -- 检测所有词书
-                // 如果还在下载当前词书，则在下载完当前词书后，开始检测其他词书
-                if YXWordBookResourceManager.currentBookDownloadFinished == false {
-                    YXWordBookResourceManager.hasDownloadTask = true
-                    YXLog("还在下载当前词书，则在下载完当前词书后，开始检测其他词书")
-                    YXWordBookResourceManager.reviewPlanEventBlock = {
-                        YXLog("当前词书已完成，开始下载所有词书")
-                        self.contrastBookData()
-                    }
-                }
-            } else {
-                // -- 下载当前词书
-                // 暂停所有下载，优先下载当前词书
-                YXLog("停止所有未下载的词书")
-                YXWordBookResourceManager.downloadDataList.removeAll()
-            }
-            return
-        }
-        YXWordBookResourceManager.downloading = true
+//        if bookId == .some(0) { return }
         let request = YXWordBookRequest.downloadWordBook(bookId: bookId)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordBookDownloadModel>.self, request: request, success: {  [weak self] (response) in
-            self?.targetBookId = bookId
-            guard let self = self else {
-                YXWordBookResourceManager.downloading = false
-                return
-            }
+            guard let self = self else { return }
             if let wordBookDownloadModels = response.dataArray {
                 if let bookId = bookId {
                     // 下载单本书
-                    wordBookDownloadModels.forEach { (wordBookDownloadModel) in
-                        if wordBookDownloadModel.id == bookId {
-                            self.checkLocalBooksStatus(with: [wordBookDownloadModel])
-                            return
+                    if wordBookDownloadModels.isEmpty {
+                        self.downloadFinished()
+                    } else {
+                        wordBookDownloadModels.forEach { (wordBookDownloadModel) in
+                            if wordBookDownloadModel.id == bookId {
+                                self.checkLocalBooksStatus(with: [wordBookDownloadModel])
+                                return
+                            }
                         }
                     }
                 } else {
@@ -103,13 +56,13 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 }
             } else {
                 YXLog("后台返回词书列表数据错误")
-                YXWordBookResourceManager.downloading = false
+                self.downloadFinished()
                 self.popRootVC()
             }
         }) { error in
             YXLog("检测词书接口请求失败:\(error.message)")
+            self.downloadFinished()
             YXUtils.showHUD(kWindow, title: error.message)
-            YXWordBookResourceManager.downloading = false
             self.popRootVC()
         }
     }
@@ -125,12 +78,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
         // 如果有需要下载的词书
         if YXWordBookResourceManager.downloadDataList.count > 0 {
-            YXWordBookResourceManager.downloading = true
             self.downloadProcessor()
         } else {
             YXLog("没有需要更新的词书")
-            YXWordBookResourceManager.currentBookDownloadFinished = true
-            YXWordBookResourceManager.downloading                 = false
             self.downloadFinished()
         }
     }
@@ -142,19 +92,12 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
       ///   - block: 保存后执行的闭包
       func saveReviewPlan(dataList: [(Int, String)], finished block: FinishedBlock?) {
           YXLog("词单的词书列表", dataList)
-          YXWordBookResourceManager.reviewPlanFinishBlock = block
-          if YXWordBookResourceManager.downloading == .some(true) {
-              YXLog("正在下载词书")
-              YXWordBookResourceManager.reviewPlanEventBlock = {
-                  YXLog("词书下载完成，开始检测和下载词单的词书")
-                  YXWordBookResourceManager.downloadDataList += self.getUpdateList(dataList: dataList)
-                  self.downloadProcessor()
-              }
-          } else {
-              YXLog("没有下载词书，直接下载词单的词书")
-              YXWordBookResourceManager.downloadDataList += self.getUpdateList(dataList: dataList)
-              self.downloadProcessor()
-          }
+        let task = YXWordBookResourceModel(type: .reviewPlan) {
+             YXLog("词书下载完成，开始检测和下载词单的词书")
+            YXWordBookResourceManager.downloadDataList += self.getUpdateList(dataList: dataList)
+            self.downloadProcessor()
+        }
+        self.addTask(model: task)
       }
 
     /// 下载任务处理者
@@ -176,7 +119,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             if YXWordBookResourceManager.downloadDataList.isEmpty {
                 self.downloadFinished()
             } else {
-                if YXWordBookResourceManager.isLearning {
+                if YXWordBookResourceManager.stop {
                     YXLog("学习中，不再继续下载词书")
                     self.downloadFinished()
                 } else {
@@ -185,6 +128,44 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 }
             }
         }
+    }
+
+    /// 添加任务
+    func addTask(model: YXWordBookResourceModel) {
+        var existed = false
+        YXWordBookResourceManager.taskList.forEach { (_model) in
+            if _model.type == model.type {
+                existed = true
+                return
+            }
+        }
+        if !existed {
+            YXWordBookResourceManager.taskList.append(model)
+        }
+        // 如果首个任务未开始下载，则开始任务
+        if YXWordBookResourceManager.taskList.first?.status != .some(.downloading) {
+            self.processorTask()
+        }
+    }
+
+    /// 处理任务
+    func processorTask() {
+        guard let taskModel = YXWordBookResourceManager.taskList.first else {
+            YXLog("✅所有下载词书队列任务处理完成✅")
+            return
+        }
+        taskModel.status = .downloading
+        taskModel.eventBlock()
+    }
+
+    /// 单词任务完成事件
+    private func downloadFinished() {
+        YXLog("==== 当前任务处理完成✅ ====")
+        //用于发送完成通知
+        YXWordBookResourceManager.taskList.first?.status = .finished
+        YXWordBookResourceManager.taskList.removeFirst()
+        // 处理之后的任务
+        self.processorTask()
     }
 
     /// 下载单本词书
@@ -205,19 +186,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             self.downloadError(with: bookId, newHash: newHash, error: error.message)
             YXUtils.showHUD(kWindow, title: error.message)
         }
-    }
-
-    /// 下载、检测完成事件
-    private func downloadFinished() {
-        YXLog("==== 写入DB数据完成✅ ====")
-        if self.targetBookId != nil {
-            YXWordBookResourceManager.currentBookDownloadFinished = true
-        }
-        YXWordBookResourceManager.reviewPlanEventBlock?()
-        YXWordBookResourceManager.reviewPlanEventBlock = nil
-        YXWordBookResourceManager.reviewPlanFinishBlock?()
-        YXWordBookResourceManager.reviewPlanFinishBlock = nil
-        self.reset()
     }
 
     /// 词书下载处理
@@ -254,14 +222,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                     YXLog("本地Hash", wordBook?.bookHash ?? "")
                     YXLog("新的Hash", data.1)
                 }
-                if YXUserModel.default.currentBookId == wordBook?.bookId {
-                    YXLog("当前学习的词书需要更新")
-                    YXWordBookResourceManager.currentBookDownloadFinished = false
-                }
                 resultList.append(data)
-            } else if YXUserModel.default.currentBookId == wordBook?.bookId {
-                YXLog("》〉》已存在当前词书")
-                YXWordBookResourceManager.currentBookDownloadFinished = true
             }
         }
         YXWordBookResourceManager.totalDownloadCount = resultList.count
@@ -276,11 +237,54 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     /// 保存、更新单词
     private func updateWords(with bookModel: YXWordBookModel) {
-        if YXWordBookResourceManager.isLearning {
+        if YXWordBookResourceManager.stop {
             YXWordBookResourceManager.shared.downloadError(with: bookModel.bookId, newHash: bookModel.bookHash, error: "当前正在学习中，不再下载其他词书")
             return
         }
         YXWordBookDaoImpl().updateWords(bookModel: bookModel)
     }
+}
+
+///  下载对象
+class YXWordBookResourceModel: NSObject {
+    enum YXDownloadType: Int {
+        case single
+        case all
+        case reviewPlan
+    }
+    enum YXDownloadStatus: Int {
+        case normal
+        case downloading
+        case finished
+    }
+    var type: YXDownloadType
+    var status: YXDownloadStatus {
+        didSet {
+            if status == .finished {
+                YXLog("下载完成，发送通知")
+                switch self.type {
+                case .single:
+                    YXLog("单本词书下载完成")
+                    NotificationCenter.default.post(name: YXNotification.kDownloadSingleFinished, object: nil)
+                case .all:
+                    YXLog("所有词书下载完成")
+                    NotificationCenter.default.post(name: YXNotification.kDownloadAllFinished, object: nil)
+                case .reviewPlan:
+                    YXLog("所有词单下载完成")
+                    NotificationCenter.default.post(name: YXNotification.kDownloadReviewPlanFinished, object: nil)
+                }
+
+            }
+        }
+    }
+    var eventBlock: (()->Void)
+
+    init(type: YXDownloadType, block: @escaping (()->Void)) {
+        self.type       = type
+        self.status     = .normal
+        self.eventBlock = block
+        super.init()
+    }
+
 }
 

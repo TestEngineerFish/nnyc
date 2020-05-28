@@ -114,7 +114,6 @@ class YXUserModel: NSObject {
     var currentBookId: Int? {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.currentChooseBookId)
-            YXWordBookResourceManager.currentBookDownloadFinished = false
         }
         get {
             YYCache.object(forKey: YXLocalKey.currentChooseBookId) as? Int
@@ -169,7 +168,7 @@ class YXUserModel: NSObject {
         YYCache.set(nil, forKey: "LastStoredDate")
         YYCache.set(nil, forKey: "LastStoreTokenDate")
         YXUserModel.default.currentBookId = nil
-        YXWordBookResourceManager.shared.reset()
+        YXWordBookResourceManager.stop    = true
         YXMediator().loginOut()
         
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)

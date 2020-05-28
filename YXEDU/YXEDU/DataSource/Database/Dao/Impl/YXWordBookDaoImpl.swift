@@ -36,7 +36,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         self.wordRunnerQueue.inImmediateTransaction { (db, rollback) in
             // 遍历添加单词
             var lastUnit = false
-            if YXWordBookResourceManager.isLearning {
+            if YXWordBookResourceManager.stop {
                 YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: errorMsg)
                 db.rollback()
                 return
@@ -55,7 +55,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                 guard let wordsList = unitModel.words else {
                     continue
                 }
-                if YXWordBookResourceManager.isLearning {
+                if YXWordBookResourceManager.stop {
                     YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: errorMsg)
                     db.rollback()
                     return
@@ -64,7 +64,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                     lastUnit = true
                 }
                 for (index, var wordModel) in wordsList.enumerated() {
-                    if YXWordBookResourceManager.isLearning {
+                    if YXWordBookResourceManager.stop {
                         YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: errorMsg)
                         db.rollback()
                         return
@@ -116,10 +116,6 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                         }
                         YXLog("当前剩余下载词书数量：\(YXWordBookResourceManager.downloadDataList.count)/\(YXWordBookResourceManager.totalDownloadCount)")
                         YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: nil)
-                        if bookModel.bookId == YXUserModel.default.currentBookId {
-                            YXWordBookResourceManager.currentBookDownloadFinished = true
-                            YXLog("》〉》当前学习的书写入数据库")
-                        }
                     }
                 }
             }

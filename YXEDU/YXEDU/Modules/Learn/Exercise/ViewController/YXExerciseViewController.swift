@@ -61,7 +61,7 @@
         super.viewDidDisappear(animated)
         self.loadingView?.removeFromSuperview()
         if self.learnConfig.learnType == .base {
-            YXWordBookResourceManager.isLearning = false
+            YXWordBookResourceManager.stop = false
         }
     }
 
@@ -80,7 +80,7 @@
         self.initManager()
         self.loadingView?.downloadCompleteBlock = {
             if self.learnConfig.learnType == .base {
-                YXWordBookResourceManager.isLearning = true
+                YXWordBookResourceManager.stop = true
             }
             self.startStudy()
         }

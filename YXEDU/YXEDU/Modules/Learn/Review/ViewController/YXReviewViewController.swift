@@ -258,7 +258,10 @@ extension YXReviewViewController {
     func startReviewEvent() {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.aiReview.rawValue], animated: true)
         if headerView.reviewModel.canMakeReviewPlans > 0 {
-            YXWordBookResourceManager.shared.contrastBookData()
+            let taskModel = YXWordBookResourceModel(type: .all) {
+                YXWordBookResourceManager.shared.contrastBookData()
+            }
+            YXWordBookResourceManager.shared.addTask(model: taskModel)
             let vc = YXExerciseViewController()
             vc.learnConfig = YXAIReviewLearnConfig()
             vc.hidesBottomBarWhenPushed = true
@@ -273,7 +276,10 @@ extension YXReviewViewController {
     /// 开始复习 —— 复习计划
     func startReviewPlanEvent(planId: Int) {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.normalReview.rawValue], animated: true)
-        YXWordBookResourceManager.shared.contrastBookData()
+        let taskModel = YXWordBookResourceModel(type: .all) {
+            YXWordBookResourceManager.shared.contrastBookData()
+        }
+        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXReviewPlanLearnConfig(planId: planId)
         vc.hidesBottomBarWhenPushed = true
@@ -285,7 +291,10 @@ extension YXReviewViewController {
     func startListenPlanEvent(planId: Int) {
 //        let url = "exercise/study?type=" + "\(YXExerciseDataType.listenReview.rawValue)"
 //        YRRouter.openURL(url, query: nil, animated: true)
-        YXWordBookResourceManager.shared.contrastBookData()
+        let taskModel = YXWordBookResourceModel(type: .all) {
+            YXWordBookResourceManager.shared.contrastBookData()
+        }
+        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXListenReviewLearnConfig(planId: planId)
         vc.hidesBottomBarWhenPushed = true
