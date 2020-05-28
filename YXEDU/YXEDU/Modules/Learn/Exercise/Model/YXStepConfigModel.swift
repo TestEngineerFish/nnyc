@@ -23,12 +23,17 @@ struct YXStepConfigModel: Mappable {
 struct YXStepModel: Mappable {
     var step: Int = 0
     var wordIdList: Set<Int> = []
+    var tmpList: [Int] = [] {
+        didSet {
+            self.wordIdList = Set(tmpList)
+        }
+    }
 
     init() {}
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        step       <- map["step"]
-        wordIdList <- map["word_ids"]
+        step    <- map["step"]
+        tmpList <- map["word_ids"]
     }
 }

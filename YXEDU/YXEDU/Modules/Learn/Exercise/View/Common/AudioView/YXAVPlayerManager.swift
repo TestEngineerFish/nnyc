@@ -88,7 +88,6 @@ class YXAVPlayerManager: NSObject {
         if isPlaying {
             self.isPlaying = false
             if (self.player.currentItem?.asset as? AVURLAsset)?.url.absoluteString.hasSuffix(rightAudioPath ?? "") == .some(true) || (self.player.currentItem?.asset as? AVURLAsset)?.url.absoluteString.hasSuffix(wrongAudioPath ?? "") == .some(true) {
-                YXLog("结果音，切题不暂停")
                 return
             }
             self.player.pause()
