@@ -29,7 +29,7 @@ class YXAboutUsViewController: UIViewController {
         let year = Calendar.current.component(.year, from: Date())
         copyrightLabel.text = "Copyright @2018-\(year) 念念有词"
         #if DEBUG
-        self.buildLabel.text     = "Build：" + YRDevice.appBuild()
+        self.buildLabel.text     = "build " + YRDevice.appBuild()
         self.buildLabel.isHidden = false
         let touchAction = UITapGestureRecognizer(target: self, action: #selector(reportLog))
         touchAction.numberOfTapsRequired = 5

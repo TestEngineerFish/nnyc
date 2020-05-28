@@ -137,7 +137,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     
     func listenEvent() {
-        let taskModel = YXWordBookResourceModel(type: .single) {
+        let taskModel = YXWordBookResourceModel(type: .all) {
             YXWordBookResourceManager.shared.contrastBookData()
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
@@ -150,7 +150,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     
     func reviewEvent() {
-        let taskModel = YXWordBookResourceModel(type: .single) {
+        let taskModel = YXWordBookResourceModel(type: .all) {
             YXWordBookResourceManager.shared.contrastBookData()
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)

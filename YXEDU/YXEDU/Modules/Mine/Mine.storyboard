@@ -147,13 +147,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aux-7m-DMZ">
-                                <rect key="frame" x="157" y="366" width="100" height="27"/>
+                                <rect key="frame" x="157" y="371" width="100" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="3lS-Ha-0xv"/>
                                     <constraint firstAttribute="width" constant="100" id="mge-Gi-Vj6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.81975064210000004" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -166,7 +166,7 @@
                             <constraint firstItem="xuW-Dh-b82" firstAttribute="bottom" secondItem="WmH-WJ-oag" secondAttribute="bottom" constant="16" id="QlO-89-OVh"/>
                             <constraint firstItem="aux-7m-DMZ" firstAttribute="centerX" secondItem="J21-wq-Dzo" secondAttribute="centerX" id="TrP-VP-lbh"/>
                             <constraint firstItem="qei-kz-KWI" firstAttribute="centerX" secondItem="lRi-Ce-Ezh" secondAttribute="centerX" id="Wh9-6Y-V0Z"/>
-                            <constraint firstItem="aux-7m-DMZ" firstAttribute="top" secondItem="J21-wq-Dzo" secondAttribute="bottom" constant="40" id="XEi-at-kCM"/>
+                            <constraint firstItem="aux-7m-DMZ" firstAttribute="top" secondItem="J21-wq-Dzo" secondAttribute="bottom" constant="25" id="XEi-at-kCM"/>
                             <constraint firstItem="QOb-hD-5PX" firstAttribute="centerY" secondItem="lRi-Ce-Ezh" secondAttribute="centerY" constant="88" id="Xj1-KZ-9SW"/>
                             <constraint firstItem="QOb-hD-5PX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xuW-Dh-b82" secondAttribute="leading" constant="40" id="YdT-ez-kyg"/>
                             <constraint firstItem="qei-kz-KWI" firstAttribute="centerY" secondItem="lRi-Ce-Ezh" secondAttribute="centerY" constant="-44" id="aBN-xc-KdF"/>

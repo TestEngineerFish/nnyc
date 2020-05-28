@@ -51,7 +51,7 @@ class YXAddBookGuideViewController: UIViewController {
             YXUserModel.default.currentBookId   = bookId
             YXStepConfigManager.share.contrastStepConfig()
 
-            let taskModel = YXWordBookResourceModel(type: .single) {
+            let taskModel = YXWordBookResourceModel(type: .single, book: bookId) {
                 YXWordBookResourceManager.shared.contrastBookData(by: bookId)
             }
             YXWordBookResourceManager.shared.addTask(model: taskModel)
@@ -91,7 +91,7 @@ class YXAddBookGuideViewController: UIViewController {
         let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
-            let taskModel = YXWordBookResourceModel(type: .single) {
+            let taskModel = YXWordBookResourceModel(type: .single, book: bookId) {
                 YXWordBookResourceManager.shared.contrastBookData(by: bookId)
             }
             YXWordBookResourceManager.shared.addTask(model: taskModel)

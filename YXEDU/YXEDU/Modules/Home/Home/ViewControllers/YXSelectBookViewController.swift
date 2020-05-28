@@ -106,7 +106,7 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
                 guard let self = self else { return }
                 YXUserModel.default.currentBookId = bookId
                 YXUserModel.default.currentGrade  = wordBook.bookGrade
-                let taskModel = YXWordBookResourceModel(type: .single) {
+                let taskModel = YXWordBookResourceModel(type: .single, book: bookId) {
                     YXWordBookResourceManager.shared.contrastBookData(by: bookId)
                 }
                 YXWordBookResourceManager.shared.addTask(model: taskModel)
