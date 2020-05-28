@@ -236,7 +236,10 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         // 更新状态
         let originStatus = self.status
         if exercisType == .base {
-            self.status = .downloadBook
+            // 防止进度回滚
+            if self.status.rawValue < YXExerciseLoadingEnum.downloadBook.rawValue {
+                self.status = .downloadBook
+            }
             if YXWordBookResourceManager.currentBookDownloadFinished {
                 YXLog("当前词书下载完成，开始主流程的学习")
                 self.downloadCompleteBlock?()
@@ -256,9 +259,9 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 self.speed  = .normal
             }
         } else {
-            if YXWordBookResourceManager.writeDBFinished != nil {
+            if YXWordBookResourceManager.downloading != nil {
                 self.status = .downloadBook
-                if YXWordBookResourceManager.writeDBFinished == .some(true) {
+                if YXWordBookResourceManager.downloading == .some(false) && YXWordBookResourceManager.shared.targetBookId == nil && !YXWordBookResourceManager.hasDownloadTask {
                     self.downloadCompleteBlock?()
                     self.downloadCompleteBlock = nil
                     self.speed  = .highSpeed

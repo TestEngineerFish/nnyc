@@ -50,7 +50,7 @@ class YXAddBookGuideViewController: UIViewController {
             guard let self = self, let uuid = YXUserModel.default.uuid else { return }
             YXUserModel.default.currentBookId   = bookId
             YXStepConfigManager.share.contrastStepConfig()
-            YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
+            YXWordBookResourceManager.shared.contrastBookData(by: bookId)
             
             let request = YXHomeRequest.getBaseInfo(userId: uuid)
             YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { (response) in
@@ -87,7 +87,7 @@ class YXAddBookGuideViewController: UIViewController {
         let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
-            YXWordBookResourceManager.shared.contrastBookData(by: bookId, nil)
+            YXWordBookResourceManager.shared.contrastBookData(by: bookId)
             self.navigationController?.popToRootViewController(animated: true)
             NotificationCenter.default.post(name: YXNotification.kSquirrelAnimation, object: nil)
         }) { error in

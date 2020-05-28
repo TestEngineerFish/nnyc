@@ -16,12 +16,11 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     /// 更新词书中所有单词
     /// - Parameter bookModel: 词书对象
     func updateWords(bookModel: YXWordBookModel) {
-        guard let bookId = bookModel.bookId, let unitsList = bookModel.units else {
-            YXWordBookResourceManager.shared.group.leave()
-            YXWordBookResourceManager.groupCount -= 1
-            YXLog("当前线程剩余数量：\(YXWordBookResourceManager.groupCount)")
+        guard let bookId = bookModel.bookId, let unitsList = bookModel.units, let newHash = bookModel.bookHash else {
+            YXWordBookResourceManager.shared.downloadError(with: bookModel.bookId, newHash: bookModel.bookHash, error: "数据解析失败")
             return
         }
+        let errorMsg = "当前正在学习中，回滚DB操作，不再写入数据"
         let deleteWordsSQL = YYSQLManager.WordBookSQL.deleteWord.rawValue
         let insertWordSQL  = YYSQLManager.WordBookSQL.insertWord.rawValue
         let deleteBookSQL  = YYSQLManager.WordBookSQL.deleteBook.rawValue
@@ -31,15 +30,14 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         let insertBookParams: [Any]  = [bookId,
                                    bookModel.bookName ?? "",
                                    bookModel.bookWordSourcePath ?? "",
-                                   bookModel.bookHash ?? "",
+                                   newHash,
                                    bookModel.gradeId ?? 0,
                                    bookModel.gradeType ?? 0]
         self.wordRunnerQueue.inImmediateTransaction { (db, rollback) in
             // 遍历添加单词
             var lastUnit = false
             if YXWordBookResourceManager.isLearning {
-                YXLog("当前正在学习中，回滚DB操作，不再写入数据")
-                YXWordBookResourceManager.shared.group.leave()
+                YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: errorMsg)
                 db.rollback()
                 return
             }
@@ -58,8 +56,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                     continue
                 }
                 if YXWordBookResourceManager.isLearning {
-                    YXLog("当前正在学习中，回滚DB操作，不再写入数据")
-                    YXWordBookResourceManager.shared.group.leave()
+                    YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: errorMsg)
                     db.rollback()
                     return
                 }
@@ -68,8 +65,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                 }
                 for (index, var wordModel) in wordsList.enumerated() {
                     if YXWordBookResourceManager.isLearning {
-                        YXLog("当前正在学习中，回滚DB操作，不再写入数据")
-                        YXWordBookResourceManager.shared.group.leave()
+                        YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: errorMsg)
                         db.rollback()
                         return
                     }
@@ -85,13 +81,12 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                     if !insertWrodSuccess {
                         let msg = String(format: "插入单词:%@， id:%d失败", wordModel.word ?? "", wordModel.wordId ?? 0)
                         Bugly.reportError(NSError(domain: msg, code: 0, userInfo: nil))
-                        YXLog(msg)
-                        YXWordBookResourceManager.shared.group.leave()
+                        YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: msg)
                         db.rollback()
                         return
                     }
                     if index == wordsList.count - 1 && lastUnit {
-                        YXLog("==== 词书\(bookModel.bookId ?? 0)写入完成 ====")
+                        YXLog(String(format: "保存:%@，id:%d下所有单词成功", bookModel.bookName ?? "", bookId))
                         // 删除旧词书
                         let deleteBookSuccess = db.executeUpdate(deleteBookSQL, withArgumentsIn: deleteBookParams)
                         var msg = String(format: "删除词书:%@，id:%d", bookModel.bookName ?? "", bookId)
@@ -100,8 +95,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                             YXLog(msg + "成功")
                         } else {
                             Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
-                            YXLog(msg + "失败")
-                            YXWordBookResourceManager.shared.group.leave()
+                            YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: msg + "失败")
                             db.rollback()
                             return
                         }
@@ -113,18 +107,15 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                             YXLog(msg + "成功")
                         } else {
                             Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
-                            YXLog(msg + "失败")
-                            YXWordBookResourceManager.shared.group.leave()
+                            YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: msg + "失败")
                             db.rollback()
                             return
                         }
                         if !YXWordBookResourceManager.downloadDataList.isEmpty {
                             YXWordBookResourceManager.downloadDataList.removeFirst()
                         }
-                        YXLog("当前剩余下载词书数量：\(YXWordBookResourceManager.downloadDataList.count)/\(YXWordBookResourceManager.shared.totalDownloadCount)")
-                        YXWordBookResourceManager.shared.group.leave()
-                        YXWordBookResourceManager.groupCount -= 1
-                        YXLog("当前线程剩余数量：\(YXWordBookResourceManager.groupCount)")
+                        YXLog("当前剩余下载词书数量：\(YXWordBookResourceManager.downloadDataList.count)/\(YXWordBookResourceManager.totalDownloadCount)")
+                        YXWordBookResourceManager.shared.downloadError(with: bookId, newHash: newHash, error: nil)
                         if bookModel.bookId == YXUserModel.default.currentBookId {
                             YXWordBookResourceManager.currentBookDownloadFinished = true
                             YXLog("》〉》当前学习的书写入数据库")

@@ -160,14 +160,12 @@ class YXLearnMapViewController: UIViewController {
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
             YXLog("学习新单元成功")
-            YXWordBookResourceManager.shared.contrastBookData(by: bookId) { (isSuccess) in
-                YRRouter.popViewController(false)
-                let vc = YXExerciseViewController()
-                vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
-                vc.hidesBottomBarWhenPushed = true
-                YXLog("==== 从地图页选择单元学习 ====")
-                YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: false)
-            }
+            YRRouter.popViewController(false)
+            let vc = YXExerciseViewController()
+            vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
+            vc.hidesBottomBarWhenPushed = true
+            YXLog("==== 从地图页选择单元学习 ====")
+            YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: false)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
