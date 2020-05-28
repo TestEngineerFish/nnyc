@@ -157,7 +157,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
         if YYCache.object(forKey: YXLocalKey.didShowRate) as? Bool == nil, let count = YYCache.object(forKey: YXLocalKey.punchCount) as? Int, count >= 4 {
             YYCache.set(true, forKey: YXLocalKey.didShowRate)
-
+            YXLog("用户 \(YXUserModel.default.uuid ?? "") 弹出评分弹窗")
+            
             if #available(iOS 10.3, *) {
                 SKStoreReviewController.requestReview()
             } else {

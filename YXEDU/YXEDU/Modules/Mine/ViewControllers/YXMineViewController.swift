@@ -55,6 +55,8 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             myIntegralViewHeight.constant = 112
             myIntegralViewTopOffset.constant = 44
         }
+        
+//        self.refreshUserInfoData()
     }
     
     private func bindProperty() {
@@ -82,7 +84,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         navigationController?.navigationBar.tintColor = UIColor.black
         
         // 个人信息
-        self.refreshUserInfoData()
         self.loadData()
         // 徽章
         self.refreshBadgeData()
@@ -126,7 +127,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         YYNetworkService.default.request(YYStructResponse<YXNewLoginModel>.self, request: request, success: { (response) in
             guard let loginModel = response.data else { return }
             self.updateUserInfo(loginModel: loginModel)
-            YXFileManager.share.saveJsonToFile(with: loginModel.toJSONString() ?? "", type: .mine_userInfo)
+//            YXFileManager.share.saveJsonToFile(with: loginModel.toJSONString() ?? "", type: .mine_userInfo)
         }, fail: nil)
     }
 
@@ -442,9 +443,9 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
 
     /// 刷新个人信息
     @objc private func refreshUserInfoData() {
-        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .mine_userInfo), let loginModel = YXNewLoginModel.init(JSONString: jsonStr) {
-            self.updateUserInfo(loginModel: loginModel)
-        }
+//        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .mine_userInfo), let loginModel = YXNewLoginModel.init(JSONString: jsonStr) {
+//            self.updateUserInfo(loginModel: loginModel)
+//        }
     }
 
     /// 刷新徽章

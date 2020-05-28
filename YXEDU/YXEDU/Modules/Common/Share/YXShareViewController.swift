@@ -251,9 +251,11 @@ class YXShareViewController: YXViewController {
             var isFinished = false
             if model.state {
                 if let count = YYCache.object(forKey: YXLocalKey.punchCount) as? Int {
+                    YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： \(count + 1)")
                     YYCache.set(count + 1, forKey: YXLocalKey.punchCount)
                     
                 } else {
+                    YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： 1")
                     YYCache.set(1, forKey: YXLocalKey.punchCount)
                 }
                 
