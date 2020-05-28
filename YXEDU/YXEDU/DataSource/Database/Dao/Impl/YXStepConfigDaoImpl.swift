@@ -60,7 +60,6 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
                 }
             }
         }
-        YXLog("查询结果： \(list)")
         model?.wordIdList = list
         return model
     }

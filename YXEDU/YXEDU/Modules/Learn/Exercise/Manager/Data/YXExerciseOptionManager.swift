@@ -42,6 +42,25 @@ class YXExerciseOptionManager: NSObject {
             return exercise
         }
     }
+
+    private func reviewWordOption(exerciseModel: YXWordExerciseModel)  -> YXWordExerciseModel? {
+        // 选项个数
+        let itemCount = exerciseModel.question?.itemCount ?? 4
+
+        var _exerciseModel = exerciseModel
+        var items          = self.filterOtherWord(exerciseModel: _exerciseModel, itemCount: itemCount - 1)
+
+        // 添加正取的选项
+        let at = random(max: items.count + 1)
+        items.insert(itemModel(word: _exerciseModel.word!, type: _exerciseModel.type, dataType: _exerciseModel.dataType), at: at)
+        YXLog("选项ID列表\(items)")
+        var option = YXExerciseOptionModel()
+        option.firstItems = items
+
+        _exerciseModel.option = option
+        _exerciseModel.answers = [_exerciseModel.word?.wordId ?? 0]
+        return _exerciseModel
+    }
     
     /// 获取其他选项
     private func filterOtherWord(exerciseModel: YXWordExerciseModel, itemCount: Int) -> [YXOptionItemModel] {
@@ -170,25 +189,6 @@ class YXExerciseOptionManager: NSObject {
             }
         }
         return items
-    }
-
-    private func reviewWordOption(exerciseModel: YXWordExerciseModel)  -> YXWordExerciseModel? {
-        // 选项个数
-        let itemCount = exerciseModel.question?.itemCount ?? 4
-        
-        var _exerciseModel = exerciseModel
-        var items          = self.filterOtherWord(exerciseModel: _exerciseModel, itemCount: itemCount - 1)
-        
-        // 添加正取的选项
-        let at = random(max: items.count + 1)
-        items.insert(itemModel(word: _exerciseModel.word!, type: _exerciseModel.type, dataType: _exerciseModel.dataType), at: at)
-        
-        var option = YXExerciseOptionModel()
-        option.firstItems = items
-        
-        _exerciseModel.option = option
-        _exerciseModel.answers = [_exerciseModel.word?.wordId ?? 0]
-        return _exerciseModel
     }
     
     // TODO: ==== Tools ====

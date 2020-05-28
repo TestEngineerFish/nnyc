@@ -29,19 +29,19 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     /// 进度条动画执行完成
     var animationCompleteBlock: (()->Void)?
     var timer: Timer?
-
+    
     enum YXExerciseLoadingSpeedEnum: CGFloat {
         case normal    = 0.2
         case highSpeed = 1.0
     }
-
+    
     enum YXExerciseLoadingEnum: Int {
-
+        
         case normal       = 0
         case downloadBook = 1
         case requestIng   = 2
         case requestEnd   = 3
-
+        
         func getDesction() -> String {
             switch self {
             case .normal:
@@ -52,7 +52,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 return "正在加载学习数据…"
             }
         }
-
+        
         func getRatio() -> CGFloat {
             switch self {
             case .normal:
@@ -65,7 +65,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 return 1.0
             }
         }
-
+        
         func getDuration() -> Double {
             switch self {
             case .normal:
@@ -79,42 +79,42 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             }
         }
     }
-
+    
     var exercisType: YXExerciseDataType
-
+    
     init(type: YXExerciseDataType) {
         exercisType = type
         super.init(frame: kWindow.bounds)
         self.createSubviews()
     }
-
+    
     deinit {
         self.timer?.invalidate()
         self.timer = nil
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(downloadSingleFinished), name: YXNotification.kDownloadSingleFinished, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(downloadAllFinished), name: YXNotification.kDownloadAllFinished, object: nil)
     }
-
+    
     @objc
     private func downloadSingleFinished() {
         self.status = .requestIng
     }
-
+    
     @objc
     private func downloadAllFinished() {
         self.status = .requestIng
     }
-
+    
     private func createSubviews() {
         self.backgroundColor = UIColor.white
-
+        
         let headerView = self.createHeaderView()
         let fooderView = self.createFooterView()
         self.addSubview(headerView)
@@ -128,37 +128,37 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             make.height.equalToSuperview().multipliedBy(0.3)
         }
     }
-
+    
     private func createHeaderView() -> UIView {
         let headerView     = UIView()
         let squirrelView   = AnimationView(name: "learnLoading")
         let progressBgView = UIView()
-
+        
         descLabel.textAlignment = .center
         descLabel.textColor     = UIColor.black6
         descLabel.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
         descLabel.text          = self.status.getDesction()
-
+        
         progressBgView.layer.cornerRadius  = AdaptIconSize(15)/2
         progressBgView.layer.masksToBounds = true
         progressBgView.backgroundColor     = UIColor.hex(0xF2F2F2)
-
+        
         progressLayer.cornerRadius    = AdaptIconSize(15)/2
         progressLayer.masksToBounds   = true
         progressLayer.backgroundColor = UIColor.clear.cgColor
-
+        
         dotLayer.borderWidth     = 3.0
         dotLayer.borderColor     = UIColor.orange1.cgColor
         dotLayer.cornerRadius    = AdaptIconSize(15)/2
         dotLayer.masksToBounds   = true
         dotLayer.backgroundColor = UIColor.white.cgColor
-
+        
         headerView.addSubview(squirrelView)
         headerView.addSubview(descLabel)
         headerView.addSubview(progressBgView)
         progressBgView.layer.addSublayer(progressLayer)
         progressBgView.layer.addSublayer(dotLayer)
-
+        
         squirrelView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(102))
@@ -180,23 +180,23 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         squirrelView.play()
         return headerView
     }
-
+    
     private func createFooterView() -> UIView {
         let fooderView    = UIView()
         let bgImageView   = UIImageView(image: UIImage(named: "loading_bg"))
         let tipsImageView = UIImageView(image: UIImage(named: "icon_tips"))
         let titleLabel    = UILabel()
-
+        
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 2
         titleLabel.textColor     = UIColor.orange1
         titleLabel.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(15))
         titleLabel.text          = self.getRandomTips()
-
+        
         fooderView.addSubview(bgImageView)
         fooderView.addSubview(tipsImageView)
         fooderView.addSubview(titleLabel)
-
+        
         bgImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
@@ -211,10 +211,10 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             make.bottom.equalTo(titleLabel.snp.top).offset(AdaptSize(-9))
             make.size.equalTo(CGSize(width: AdaptIconSize(42), height: AdaptIconSize(24)))
         }
-
+        
         return fooderView
     }
-
+    
     // MARK: ==== Event ====
     func startAnimation() {
         let _timer = Timer(timeInterval: timeInterval, repeats: true, block: { (timer) in
@@ -222,7 +222,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             self.addLoadingTime += self.timeInterval
             // 更新提示文案
             if self.addStepTime >= self.stepTimeOut {
-//                YXLog("加载超时，更新文案")
+                //                YXLog("加载超时，更新文案")
                 DispatchQueue.main.async {
                     self.descLabel.text = self.status.getDesction()
                 }
@@ -239,13 +239,13 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         RunLoop.current.add(_timer, forMode: .common)
         self.timer = _timer
     }
-
+    
     func stopAnimation() {
         self.timer?.invalidate()
         self.timer = nil
         self.removeFromSuperview()
     }
-
+    
     private func updateValue() {
         if isLoading { return }
         // 更新状态
@@ -281,8 +281,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
                 self.speed  = .normal
             }
         } else {
-//            if YXWordBookResourceManager.downloading != nil {
-                // 防止进度回滚
+            // 防止进度回滚
             if self.status.rawValue < YXExerciseLoadingEnum.downloadBook.rawValue {
                 self.status = .downloadBook
             }
@@ -304,20 +303,19 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             } else {
                 self.speed  = .normal
             }
-//            }
         }
-
-
+        
+        
         self.fromRatio = self.toRatio
         self.toRatio   = Double(self.status.getRatio())
-
+        
         // 执行动画
         if self.status != originStatus {
             self.isLoading = true
             self.showAnimation()
         }
     }
-
+    
     // MARK: Animation
     private func showAnimation() {
         YXLog("开始加载动画，当前状态\(self.status)")
@@ -345,7 +343,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         dotAnimation.fillMode       = .forwards
         dotAnimation.isRemovedOnCompletion = false
         dotLayer.add(dotAnimation, forKey: "dotAnimation")
-
+        
         let proMaskLayer = CAShapeLayer()
         let path         = UIBezierPath()
         path.move(to: CGPoint(x: 0, y: AdaptIconSize(15)/2))
@@ -356,7 +354,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         proMaskLayer.strokeColor = UIColor.blue.cgColor
         proMaskLayer.fillColor   = nil
         self.progressLayer.mask = proMaskLayer
-
+        
         let proAnimation = CABasicAnimation(keyPath: "strokeEnd")
         proAnimation.fromValue      = self.fromRatio
         proAnimation.toValue        = self.toRatio
@@ -370,9 +368,9 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         proMaskLayer.add(proAnimation, forKey: "proAnimation")
         self.progressLayer.backgroundColor = UIColor.orange1.cgColor
     }
-
+    
     // MARK: CAAnimationDelegate
-
+    
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if flag {
             self.isLoading   = false
@@ -383,7 +381,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             }
         }
     }
-
+    
     // TODO: ==== Tools ====
     private func getRandomTips() -> String {
         let tipsArray = ["阅读碰到不认识的单词\n主页点击右上角放大镜图片",
