@@ -79,9 +79,8 @@
         self.bindProperty()
         self.initManager()
         self.loadingView?.downloadCompleteBlock = {
-            if self.learnConfig.learnType == .base {
-                YXWordBookResourceManager.stop = true
-            }
+            // 开始学习，停止下载
+            YXWordBookResourceManager.stop = true
             self.startStudy()
         }
         YXGrowingManager.share.startDate = NSDate()
@@ -189,20 +188,17 @@
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        
-//        var service: YXExerciseService = YXExerciseServiceImpl()
-//        service.learnConfig = learnConfig
-//        service.fetchExerciseModel()
 
-        
+        //
         dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
                 YXExerciseViewController.requesting = false
                 DispatchQueue.main.async {
                     self.loadingView?.animationCompleteBlock = { [weak self] in
-                        self?.dataManager.progressManager.setStartStudyTime()
-                        self?.switchExerciseView()
+                        guard let self = self else {return}
+                        self.dataManager.progressManager.setStartStudyTime()
+                        self.switchExerciseView()
                     }
                 }
             } else {
@@ -216,12 +212,20 @@
     /// 切换题目
     private func switchExerciseView() {
         YXLog("==== 切题 ====")
-
+        // - 更新待学习数
+        dataManager.updateNeedNewStudyCount()
+        dataManager.updateNeedReviewCount()
+        headerView.learningProgress = "\(dataManager.needNewStudyCount)"
+        headerView.reviewProgress = "\(dataManager.needReviewCount)"
+        // - 更新轮次
+        if dataManager.dataType == .base {
+            dataManager.updateCurrentPatchIndex()
+        }
+        // 获取新题数据
         let data = dataManager.fetchOneExerciseModel()
-        headerView.learningProgress = "\(data.0)"
-        headerView.reviewProgress = "\(data.1)"
+
         
-        if var model = data.2 {
+        if var model = data {
             model.dataType = learnConfig.learnType
 
             YXRequestLog("==== 题目内容：%@", model.toJSONString() ?? "--")

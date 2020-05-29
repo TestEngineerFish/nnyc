@@ -33,7 +33,7 @@ extension YXExerciseServiceImpl {
             return
         }
         
-        self.ruleType = result?.ruleType ?? .p
+        self.ruleType = result?.ruleType ?? .p0
         self.learnConfig.bookId = result?.bookId ?? 0
         self.learnConfig.unitId = result?.unitId ?? 0
         

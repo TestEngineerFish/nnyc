@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+// 数据清洗，得到我们需要的数据结构
 extension YXExerciseDataManager {
     
     
@@ -28,20 +28,23 @@ extension YXExerciseDataManager {
             progressManager.unitId = self.unitId
         }
         
-        self.ruleType = result?.ruleType ?? .p
-        self.processNewWord(result: result)
-        self.processReviewWord(result: result)
+        self.ruleType = result?.ruleType ?? .p0
         YXGrowingManager.share.uploadExerciseType(self.ruleType.rawValue)
         YXLog("==== 当前学习规则: 【", self.ruleType.rawValue, "】 ====")
-        // 处理练习答案选项
-        optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
-                        
-        // 处理进度状态
-        progressManager.initProgressStatus(newWordIds: result?.newWordIds, reviewWordIds: result?.reviewWordIds)
-        
+
+        // 处理新学
+        self.processNewWord(result: result)
+
+        // 处理复习
+        self.processReviewWord(result: result)
+
+        // 赋值选项处理器，便于后面题目处理练习答案选项
+        self.optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
+
+        // 初始化进度状态
+        self.progressManager.initProgressStatus(newWordIds: result?.newWordIds, reviewWordIds: result?.reviewWordIds, type: self.ruleType)
         // 保存数据
-        progressManager.setRuleType(type: self.ruleType)
-        progressManager.updateProgress(newWordArray: newWordArray, reviewWordArray: reviewWordArray)
+        self.progressManager.updateProgress(newWordArray: newWordArray, reviewWordArray: reviewWordArray)
     }
     
     
@@ -83,7 +86,6 @@ extension YXExerciseDataManager {
         currentTurnIndex = 4
         
         for step in result?.steps ?? [] {
-
             for subStep in step {
                 var exercise = subStep
                 
@@ -106,10 +108,9 @@ extension YXExerciseDataManager {
                     }
                 }
             }
-
         }
-        
-        
+
+        // 获得所有需要复习的单词ID？？？，这个在接口里不是就给到了吗？
         let ids = result?.newWordIds ?? []
         for e in reviewWordArray {
             if ids.contains(e.wordId) {
@@ -141,6 +142,8 @@ extension YXExerciseDataManager {
             if isBackup {
                 stepsModel.backupExerciseStep[String(step)] = exerciseModel
             } else {
+                // 1.这里的数据结构可以调整
+                // 2.这里是新创建的对象，这个数组肯定是空呀，为什么需要step-1呢？？
                 stepsModel.exerciseSteps[step - 1].append(exerciseModel)
             }
             

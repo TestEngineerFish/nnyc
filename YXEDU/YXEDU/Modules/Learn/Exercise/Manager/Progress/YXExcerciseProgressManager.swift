@@ -99,9 +99,9 @@ class YXExcerciseProgressManager: NSObject {
     
     func ruleType() -> YXExerciseRuleType {
         if let rule = YYCache.object(forKey: key(.ruleType)) as? String {
-            return YXExerciseRuleType(rawValue: rule) ?? .p
+            return YXExerciseRuleType(rawValue: rule) ?? .p0
         }
-        return .p
+        return .p0
     }
     
     
@@ -224,10 +224,6 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.set(index, forKey: key(.currentTurnIndex))
     }
     
-    func setRuleType(type: YXExerciseRuleType) {
-        YYCache.set(type.rawValue, forKey: key(.ruleType))
-    }
-    
     /// 跟新练习进度
     /// - Parameters:
     ///   - newExerciseModel: 新学
@@ -281,10 +277,12 @@ class YXExcerciseProgressManager: NSObject {
         }
     }
     
-    func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?) {
+    /// 初始化进度状态
+    func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?, type: YXExerciseRuleType) {
         YYCache.set(false, forKey: key(.completion))
         YYCache.set(newWordIds, forKey: key(.newWordIds))
         YYCache.set(reviewWordIds, forKey: key(.reviewWordIds))
+        YYCache.set(type.rawValue, forKey: key(.ruleType))
     }
     
     // 训练单词id集合

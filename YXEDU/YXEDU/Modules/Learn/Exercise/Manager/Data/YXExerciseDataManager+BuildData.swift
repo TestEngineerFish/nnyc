@@ -12,13 +12,14 @@ extension YXExerciseDataManager {
     
     // 新学出题【跟读】
     func buildNewExercise() ->YXWordExerciseModel? {
-        
+
+        // 不跳过，才从新学取
         if self.isSkipNewWord() {
             return nil
         }
-        
-        // 不跳过，才从新学取
+
         for (index, exercise) in self.newWordArray.enumerated() {
+            // 如果分批并且已经取得一组的数据，则返回nil
             if isNewWordInBatch() && index >= currentBatchIndex * newWordBatchSize {
                 return nil
             }
@@ -33,9 +34,7 @@ extension YXExerciseDataManager {
         }
         return nil
     }
-    
-    
-    
+
     /// 出题逻辑（根据step，上轮对错）
     func buildExercise() -> YXWordExerciseModel? {
         // 筛选数据
@@ -48,21 +47,19 @@ extension YXExerciseDataManager {
 //    13800070
     /// 筛选数据
     func filterExercise() {
-        // 当前轮次的完成数
-        var finishCount = 0
+        // 当前轮是否做完
+        var isFinished = true
         for e in currentTurnArray {
-            if e.isCurrentTurnFinish {
-                finishCount += 1
+            if !e.isCurrentTurnFinish {
+                isFinished = false
             }
         }
-        
-                
-        if finishCount == currentTurnArray.count {
+
+        if isFinished {
             currentTurnIndex += 1
-            
-//            self.previousTurnArray = self.currentTurnArray
+            // 清空当前轮已做完的数据
             self.currentTurnArray.removeAll()
-            
+            // 如果是主流程，则需要添加训练题
             if dataType == .base {
                 filterExcercise()
             }
@@ -75,21 +72,22 @@ extension YXExerciseDataManager {
     }
     
     
-    /// 筛选训练
+    /// 主流程，筛选训练
     func filterExcercise() {
         var jumpStep = 0
         for (i, word) in reviewWordArray.enumerated() {
-            
+            // 
             if dataType == .base && exerciseWordIdArray.contains(word.wordId) == false {
                 continue
             }
-            
+//            1.这个函数调用的上层已经限定了主流程，所以也没有必要这里在检测是否是主流程了
+//            2.这个条件是上一个if的子集，所以上一个if条件没有必要了吧
             if dataType == .base && currentBatchNewWordIds().contains(word.wordId) == false {
                 continue
             }
             
             // 只有基础学习时才分多批
-            let newIndex = transformIndex(stepModel: word)
+            let newIndex  = transformIndex(stepModel: word)
             let batchSize = transformSize(stepModel: word)
             if dataType == .base && newIndex >= currentBatchIndex * batchSize {
                 continue
