@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "二维码.png",
+      "filename" : "日期.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "二维码@2x.png",
+      "filename" : "日期@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "二维码@3x.png",
+      "filename" : "日期@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

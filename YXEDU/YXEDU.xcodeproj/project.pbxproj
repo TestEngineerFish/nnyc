@@ -225,6 +225,8 @@
 		7784ADB82480D9F600185806 /* YXPickWordsBySelfView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7784ADB72480D9F600185806 /* YXPickWordsBySelfView.xib */; };
 		7784ADBB2480DDEA00185806 /* YXPickWordsBySelfViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7784ADB92480DDEA00185806 /* YXPickWordsBySelfViewCell.swift */; };
 		7784ADBC2480DDEA00185806 /* YXPickWordsBySelfViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7784ADBA2480DDEA00185806 /* YXPickWordsBySelfViewCell.xib */; };
+		7784ADBE248108BB00185806 /* YXShareImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7784ADBD248108BB00185806 /* YXShareImageView.swift */; };
+		7784ADC0248108D600185806 /* YXShareImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7784ADBF248108D600185806 /* YXShareImageView.xib */; };
 		7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */; };
 		7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */; };
 		7786B6D02361C3820027D0E3 /* YXGroupWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6CE2361C3820027D0E3 /* YXGroupWordBookCell.swift */; };
@@ -822,6 +824,8 @@
 		7784ADB72480D9F600185806 /* YXPickWordsBySelfView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXPickWordsBySelfView.xib; sourceTree = "<group>"; };
 		7784ADB92480DDEA00185806 /* YXPickWordsBySelfViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXPickWordsBySelfViewCell.swift; sourceTree = "<group>"; };
 		7784ADBA2480DDEA00185806 /* YXPickWordsBySelfViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXPickWordsBySelfViewCell.xib; sourceTree = "<group>"; };
+		7784ADBD248108BB00185806 /* YXShareImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareImageView.swift; sourceTree = "<group>"; };
+		7784ADBF248108D600185806 /* YXShareImageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXShareImageView.xib; sourceTree = "<group>"; };
 		7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookCell.swift; sourceTree = "<group>"; };
 		7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordBookCell.xib; sourceTree = "<group>"; };
 		7786B6CE2361C3820027D0E3 /* YXGroupWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGroupWordBookCell.swift; sourceTree = "<group>"; };
@@ -1735,6 +1739,8 @@
 				2297D98423AE37EA00DAF3B0 /* YXShareViewController.swift */,
 				22DEA76F23B9914300E30FB7 /* YXShareCodeView.swift */,
 				CFFB700923EBDEB50088DAAA /* YXShareDefaultView.swift */,
+				7784ADBD248108BB00185806 /* YXShareImageView.swift */,
+				7784ADBF248108D600185806 /* YXShareImageView.xib */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -3847,6 +3853,7 @@
 				CFB11BEC241623F500B29B62 /* homeFirst.json in Resources */,
 				77CBFD6F2372EBF000A670D7 /* YXAlertView.xib in Resources */,
 				775FB33323F6984600B5B8AA /* resultLoading.json in Resources */,
+				7784ADC0248108D600185806 /* YXShareImageView.xib in Resources */,
 				7784ADB82480D9F600185806 /* YXPickWordsBySelfView.xib in Resources */,
 				770975232399267B0071A779 /* YXWordDetailFeaturedSectionHeaderView.xib in Resources */,
 				7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */,
@@ -4035,6 +4042,7 @@
 				EE08F3782372E3C200FA3FDF /* YYNetworkError.swift in Sources */,
 				EE1B6965246E66F2000EADB2 /* YXExerciseServiceImpl+Data.swift in Sources */,
 				EE54F7D52362AA3100EC605A /* YXWordAnswerView.swift in Sources */,
+				7784ADBE248108BB00185806 /* YXShareImageView.swift in Sources */,
 				EE5EFC4C23274BBB00655654 /* YXPolicyVC.m in Sources */,
 				EE5EF25D232740B800655654 /* UIColor+YXCustom.m in Sources */,
 				779ED54224349AB300E452E3 /* JSActionType.swift in Sources */,
@@ -4651,7 +4659,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "YXEDU/Resources/YXEDU-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -4696,7 +4704,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YXEDU/Resources/YXEDU-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -330,69 +330,20 @@ class YXShareViewController: YXViewController {
     /// 创建学习结果打卡页面
     private func createLearnResultShareImage(_ backgroundImage: UIImage?) -> UIImage? {
         
-        // ---- 数据准备 ----
-        let shareBgImage = backgroundImage
-        let iconImage    = UIImage(named: "gameShareLogo")
-        let titleLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "我在念念有词背单词"
-            label.textColor     = UIColor.black2
-            label.font          = UIFont.mediumFont(ofSize: 15)
-            label.textAlignment = .center
-            return label
-        }()
-        let contentImage = UIImage(named: "learnShareContent")
-        let learnWordsAmountLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "\(self.wordsAmount)"
-            label.textColor     = UIColor.black1
-            label.font          = UIFont.DINAlternateBold(ofSize: 34)
-            label.textAlignment = .left
-            return label
-        }()
-        let daysAmountLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "\(self.daysAmount)"
-            label.textColor     = UIColor.black1
-            label.font          = UIFont.DINAlternateBold(ofSize: 34)
-            label.textAlignment = .left
-            return label
-        }()
-        let learnWordTitleLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "今日单词"
-            label.textColor     = UIColor.black2
-            label.font          = UIFont.regularFont(ofSize: 14)
-            label.textAlignment = .left
-            return label
-        }()
-        let daysTitleLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "坚持天数"
-            label.textColor     = UIColor.black2
-            label.font          = UIFont.regularFont(ofSize: 14)
-            label.textAlignment = .left
-            return label
-        }()
-        let qrcordImage = UIImage(named: "shareQRCode")
-        
-        // ---- 内容绘制 ----
-        let imageSize = CGSize(width: 375, height: 513)
-        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
-        shareBgImage?.draw(in: CGRect(origin: CGPoint.zero, size: imageSize))
-        iconImage?.draw(in: CGRect(x: 20, y: 16, width: 37, height: 37))
-        titleLabel.drawText(in: CGRect(x: 67, y: 23, width: 136, height: 21))
-        contentImage?.draw(in: CGRect(x: 21, y: 395, width: 333, height: 100))
-        learnWordsAmountLabel.drawText(in: CGRect(x: 52, y: 415, width: 66, height: 40))
-        daysAmountLabel.drawText(in: CGRect(x: 159, y: 415, width: 60, height: 40))
-        learnWordTitleLabel.drawText(in: CGRect(x: 52, y: 455, width: 57, height: 20))
-        daysTitleLabel.drawText(in: CGRect(x: 159, y: 455, width: 57, height: 20))
-        qrcordImage?.draw(in: CGRect(x: 275, y: 418, width: 55, height: 55))
-        guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
-            return nil
+        let shareImageView = YXShareImageView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: 518)))
+        shareImageView.backgroundImageView.image = backgroundImage
+        shareImageView.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), completed: nil)
+        shareImageView.nameLabel.text = YXUserModel.default.username
+        shareImageView.dateLabel.text = Date().description(with: .current)
+        shareImageView.wordCountLabel.text = "\(self.wordsAmount)"
+        shareImageView.dayCountLabel.text = "\(self.daysAmount)"
+                
+        let renderer = UIGraphicsImageRenderer(size: shareImageView.bounds.size)
+        let image = renderer.image { context in
+            shareImageView.drawHierarchy(in: shareImageView.bounds, afterScreenUpdates: true)
         }
-        
-        return shareImage
+                
+        return image
     }
     
     /// 创建听写复习打卡分享页面
