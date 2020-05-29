@@ -208,6 +208,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             remindLabel?.text = "已关闭"
         }
 
+        YYCache.set(loginModel.notify, forKey: YXLocalKey.newFeedbackReply)
         self.tableView.reloadData()
     }
 

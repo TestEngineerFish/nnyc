@@ -164,8 +164,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 SKStoreReviewController.requestReview()
                 
             } else {
-                guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id1379948642?action=write-review")
-                    else { return }
+                guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id1379948642?action=write-review") else { return }
                 UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
             }
         }

@@ -221,6 +221,10 @@
 		777C1E2A236BDF380097A822 /* YXHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C1E29236BDF380097A822 /* YXHomeModel.swift */; };
 		777FAA0E23C4812500FCC976 /* YXOldUserUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777FAA0C23C4812500FCC976 /* YXOldUserUpdateView.swift */; };
 		777FAA0F23C4812500FCC976 /* YXOldUserUpdateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 777FAA0D23C4812500FCC976 /* YXOldUserUpdateView.xib */; };
+		7784ADB62480D9EE00185806 /* YXPickWordsBySelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7784ADB52480D9EE00185806 /* YXPickWordsBySelfView.swift */; };
+		7784ADB82480D9F600185806 /* YXPickWordsBySelfView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7784ADB72480D9F600185806 /* YXPickWordsBySelfView.xib */; };
+		7784ADBB2480DDEA00185806 /* YXPickWordsBySelfViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7784ADB92480DDEA00185806 /* YXPickWordsBySelfViewCell.swift */; };
+		7784ADBC2480DDEA00185806 /* YXPickWordsBySelfViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7784ADBA2480DDEA00185806 /* YXPickWordsBySelfViewCell.xib */; };
 		7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */; };
 		7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */; };
 		7786B6D02361C3820027D0E3 /* YXGroupWordBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786B6CE2361C3820027D0E3 /* YXGroupWordBookCell.swift */; };
@@ -814,6 +818,10 @@
 		777C1E29236BDF380097A822 /* YXHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeModel.swift; sourceTree = "<group>"; };
 		777FAA0C23C4812500FCC976 /* YXOldUserUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXOldUserUpdateView.swift; sourceTree = "<group>"; };
 		777FAA0D23C4812500FCC976 /* YXOldUserUpdateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YXOldUserUpdateView.xib; sourceTree = "<group>"; };
+		7784ADB52480D9EE00185806 /* YXPickWordsBySelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXPickWordsBySelfView.swift; sourceTree = "<group>"; };
+		7784ADB72480D9F600185806 /* YXPickWordsBySelfView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXPickWordsBySelfView.xib; sourceTree = "<group>"; };
+		7784ADB92480DDEA00185806 /* YXPickWordsBySelfViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXPickWordsBySelfViewCell.swift; sourceTree = "<group>"; };
+		7784ADBA2480DDEA00185806 /* YXPickWordsBySelfViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXPickWordsBySelfViewCell.xib; sourceTree = "<group>"; };
 		7786B6C82361A58E0027D0E3 /* YXWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordBookCell.swift; sourceTree = "<group>"; };
 		7786B6C92361A58E0027D0E3 /* YXWordBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordBookCell.xib; sourceTree = "<group>"; };
 		7786B6CE2361C3820027D0E3 /* YXGroupWordBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGroupWordBookCell.swift; sourceTree = "<group>"; };
@@ -2695,6 +2703,10 @@
 				EE7721212388D57300CD632E /* YXSwitchAnimation.swift */,
 				7720182B237CEB9B00535732 /* YXWordDetailTipView.swift */,
 				7720182D237CEBAA00535732 /* YXWordDetailTipView.xib */,
+				7784ADB52480D9EE00185806 /* YXPickWordsBySelfView.swift */,
+				7784ADB72480D9F600185806 /* YXPickWordsBySelfView.xib */,
+				7784ADB92480DDEA00185806 /* YXPickWordsBySelfViewCell.swift */,
+				7784ADBA2480DDEA00185806 /* YXPickWordsBySelfViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3773,6 +3785,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77097539239A30080071A779 /* YXWordDetailClassicCell.xib in Resources */,
+				7784ADBC2480DDEA00185806 /* YXPickWordsBySelfViewCell.xib in Resources */,
 				779F2C58245FBBC9007D3034 /* YXHomeSubItemiPadCell.xib in Resources */,
 				77B7C6F923A77BA200149ACE /* YXTaskCenterCardCell.xib in Resources */,
 				CFB11BF4241785ED00B29B62 /* star3.mp3 in Resources */,
@@ -3834,6 +3847,7 @@
 				CFB11BEC241623F500B29B62 /* homeFirst.json in Resources */,
 				77CBFD6F2372EBF000A670D7 /* YXAlertView.xib in Resources */,
 				775FB33323F6984600B5B8AA /* resultLoading.json in Resources */,
+				7784ADB82480D9F600185806 /* YXPickWordsBySelfView.xib in Resources */,
 				770975232399267B0071A779 /* YXWordDetailFeaturedSectionHeaderView.xib in Resources */,
 				7786B6CB2361A58E0027D0E3 /* YXWordBookCell.xib in Resources */,
 				77626BFD239E280A00B9407A /* YXWordListCell.xib in Resources */,
@@ -4283,6 +4297,7 @@
 				EEA50FE423BDDA2A00518BE8 /* YXReviewPlanEditView.swift in Sources */,
 				224A2FD6238283C100AD99B0 /* YXLearnMapModel.swift in Sources */,
 				77163C65245174D3002A41E3 /* YXStudyReportRequest.swift in Sources */,
+				7784ADBB2480DDEA00185806 /* YXPickWordsBySelfViewCell.swift in Sources */,
 				EE772108237A8BF400CD632E /* YXAudioPlayerView.swift in Sources */,
 				2269DD872398F9E3001F116A /* RegisterSliderView.swift in Sources */,
 				2205A9342361AD5B00C6E674 /* YXMacros.swift in Sources */,
@@ -4335,6 +4350,7 @@
 				221E779A24349570000377DB /* YXReportErrorView.m in Sources */,
 				EE4E6B1E2398F04A002B845A /* YXExerciseDataManager+ParserData.swift in Sources */,
 				EE6C7D2723B0F477009DCC0C /* YXNotReviewWordView.swift in Sources */,
+				7784ADB62480D9EE00185806 /* YXPickWordsBySelfView.swift in Sources */,
 				22C3A5FF2477C5410020694E /* YXStepConfigModel.swift in Sources */,
 				227F477723CC459400D6C603 /* YXWrongWordsListView.swift in Sources */,
 				EEACEB5323A4F0E40036B3A2 /* YXTableViewController.swift in Sources */,
