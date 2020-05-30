@@ -15,7 +15,6 @@ struct YXExerciseReportModel: Mappable {
     var bookId: Int?
     var unitId: Int?
     var score: Int = 0
-//    var listenScore: Int = 0
     var errorCount: Int = 0
     var result: ResultModel?
     
@@ -28,12 +27,11 @@ struct YXExerciseReportModel: Mappable {
         
     mutating func mapping(map: Map) {
         wordId     <- map["word_id"]
-        bookId <- map["book_id"]
-        unitId   <- map["unit_id"]
-        score   <- map["score"]
-//        listenScore <- map["listen_score"]
-        errorCount  <- map["error_count"]
-        result  <- map["result"]
+        bookId     <- map["book_id"]
+        unitId     <- map["unit_id"]
+        score      <- map["score"]
+        errorCount <- map["error_count"]
+        result     <- map["result"]
     }
     
     
@@ -51,9 +49,9 @@ struct YXExerciseReportModel: Mappable {
         }
             
         mutating func mapping(map: Map) {
-            one     <- map["1"]
-            two <- map["2"]
-            three   <- map["3"]
+            one   <- map["1"]
+            two   <- map["2"]
+            three <- map["3"]
             four  <- map["4"]
         }
     }

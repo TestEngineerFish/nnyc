@@ -149,14 +149,6 @@ class YXExcerciseProgressManager: NSObject {
         return map[wordId] ?? 0
     }
     
-    func fetchNewWordReadScore(wordId: Int) -> Int {
-        guard let map = YYCache.object(forKey: key(.newWordReadScore)) as? [Int : Int]  else {
-            return 0
-        }
-        return map[wordId] ?? 0
-    }
-    
-    
     func fetchBookIdAndUnitId() -> (Int?, Int?) {
         var bookId: Int?, unitId: Int?
         if let b = YYCache.object(forKey: key(.bookId)) as? Int {
@@ -268,14 +260,6 @@ class YXExcerciseProgressManager: NSObject {
         }
     }
 
-    func updateNewWordReadScore(wordId: Int, score: Int) {
-        if var map = YYCache.object(forKey: key(.newWordReadScore)) as? [Int : Int] {
-            map[wordId] = score
-            YYCache.set(map, forKey: key(.newWordReadScore))
-        } else {
-            YYCache.set([wordId : score], forKey: key(.newWordReadScore))
-        }
-    }
     
     /// 初始化进度状态
     func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?, type: YXExerciseRuleType) {
@@ -324,7 +308,6 @@ class YXExcerciseProgressManager: NSObject {
         YYCache.remove(forKey: key(.report))
         
         YYCache.remove(forKey: key(.score))
-        YYCache.remove(forKey: key(.newWordReadScore))
         YYCache.remove(forKey: key(.errorCount))
         YYCache.remove(forKey: key(.questionTypeScore))
         
