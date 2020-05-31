@@ -64,8 +64,6 @@ class YXExerciseDataManager: NSObject {
     
     /// 当前轮
     var currentTurnArray: [YXWordExerciseModel] = []
-    /// 上一轮 【目前好像没有使用这个字段】
-    var previousTurnArray: [YXWordExerciseModel] = []
     
     /// 本地数据库访问
     var dao: YXWordBookDao!
@@ -94,7 +92,6 @@ class YXExerciseDataManager: NSObject {
                 self.reviewWordArray[index].exerciseSteps.removeLast()
             }
         }
-        
     }
     
     
@@ -151,8 +148,7 @@ class YXExerciseDataManager: NSObject {
         ruleType = progressManager.ruleType()
         YXLog("==== 当前学习规则: 【", ruleType.rawValue, "】 ====")
         let turnData = progressManager.loadLocalTurnData()
-        currentTurnArray = turnData.0
-        previousTurnArray = turnData.1
+        currentTurnArray = turnData
                 
         currentTurnIndex = progressManager.currentTurnIndex()
         
@@ -181,8 +177,7 @@ class YXExerciseDataManager: NSObject {
         // 保持当前轮次
         progressManager.setCurrentTurn(index: currentTurnIndex)
         // 取出来一个后，保存当前轮的进度
-        progressManager.updateTurnProgress(currentTurnArray: currentTurnArray, previousTurnArray: previousTurnArray)
-        
+        progressManager.updateTurnProgress(currentTurnArray: currentTurnArray)
         return e
     }
     

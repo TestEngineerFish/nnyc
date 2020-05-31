@@ -178,7 +178,7 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    func loadLocalTurnData() -> ([YXWordExerciseModel], [YXWordExerciseModel]) {
+    func loadLocalTurnData() -> [YXWordExerciseModel] {
         var filePath = YXFileManager.share.getStudyPath() + key(.current)
         var current: [YXWordExerciseModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
@@ -186,12 +186,7 @@ class YXExcerciseProgressManager: NSObject {
         }
         
         filePath = YXFileManager.share.getStudyPath() + key(.previous)
-        var previous: [YXWordExerciseModel]?
-        if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
-            previous = Array<YXWordExerciseModel>(JSONString: str)
-        }
-        
-        return (current ?? [], previous ?? [])
+        return (current ?? [])
     }
     
     
@@ -226,9 +221,8 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    func updateTurnProgress(currentTurnArray: [YXWordExerciseModel], previousTurnArray: [YXWordExerciseModel]) {
+    func updateTurnProgress(currentTurnArray: [YXWordExerciseModel]) {
         self.saveToLocalFile(jsonString: currentTurnArray.toJSONString(), localKey: .current)
-        self.saveToLocalFile(jsonString: previousTurnArray.toJSONString(), localKey: .previous)
     }
     
     
