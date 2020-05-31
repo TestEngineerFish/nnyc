@@ -80,10 +80,21 @@ class YXExerciseDataManager: NSObject {
         dao             = YXWordBookDaoImpl()
         optionManager   = YXExerciseOptionManager()
         progressManager = YXExcerciseProgressManager()
-                
-//        let data = progressManager.fetchBookIdAndUnitId()
-//        self.bookId = data.0
-//        self.unitId = data.1
+        NotificationCenter.default.addObserver(self, selector: #selector(removeStep1_4(_:)), name: YXNotification.kNewWordMastered, object: nil)
+    }
+    
+    /// 新学标记已掌握，能力值等于10，将移除Step1和4的题型
+    @objc private func removeStep1_4(_ notification: Notification) {
+        guard let wordId = notification.userInfo?["id"] as? Int else {
+            return
+        }
+        for (index, model) in self.reviewWordArray.enumerated() {
+            if model.wordId == wordId {
+                self.reviewWordArray[index].exerciseSteps.removeFirst()
+                self.reviewWordArray[index].exerciseSteps.removeLast()
+            }
+        }
+        
     }
     
     
