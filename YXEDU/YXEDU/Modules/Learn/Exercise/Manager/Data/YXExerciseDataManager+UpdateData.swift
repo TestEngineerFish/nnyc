@@ -183,17 +183,18 @@ extension YXExerciseDataManager {
     /// 更新待学习数 - 新学
     func updateNeedNewStudyCount() {
         let wordIds = progressManager.loadLocalWordsProgress().0
-        
+//        这里可以不需要，空数组不会参与For循环
         if wordIds.count == 0 {
             needNewStudyCount = 0
             return
         }
-
+// 这里看Map的Value没有被用到，是不是只需要一个数组就可以了
         var map: [Int : Bool] = [:]
         for wordId in wordIds {
             for word in reviewWordArray {
                 for step in word.exerciseSteps {
                     let e = step.first
+                    // 新学的单词只要有没做完的练习就不从新学组中移出
                     if wordId == word.wordId && (e?.isFinish == false || e?.isContinue == true) {
                         map[wordId] = false
                     }
@@ -208,12 +209,13 @@ extension YXExerciseDataManager {
     /// 更新待学习数 - 复习
     func updateNeedReviewCount() {
         let wordIds = progressManager.loadLocalWordsProgress().1
-        
+//        这里可以不需要，空数组不会参与For循环
         if wordIds.count == 0 {
             needReviewCount = 0
             return
         }
-
+//这里的判断和新学数量的一致，可否合并，减少一次循环
+//        用newWordID和reviewWordID列表的包含函数来判断即可
         var map: [Int : Bool] = [:]
         for wordId in wordIds {
             for word in reviewWordArray {
@@ -226,23 +228,13 @@ extension YXExerciseDataManager {
             }
         }
         YXLog("更新：复习单词数\(map.count)")
-        YXLog("----------------- 听写数量：", map.count)
         needReviewCount = map.count
-        
-        if needReviewCount == 0 {
-            
-        }
-        
-        
     }
         
-    
+
+    /// 更新批次
     func updateCurrentPatchIndex() {
-        // 只有基础学习时才分多批
-        if dataType != .base {
-            return
-        }
-        YXLog("bb+++++++++++++当前 currentPatchIndex = ", currentBatchIndex)
+        YXLog("bb+++++++++++++更新前 currentPatchIndex = ", currentBatchIndex)
         
         // 新学分批下标
         var newWordBatch = 0
@@ -253,9 +245,8 @@ extension YXExerciseDataManager {
                     break
                 }
             }
+            YXLog("bb+++++++++++++新学批次 currentPatchIndex = ", newWordBatch)
         }
-        YXLog("bb+++++++++++++新学批次 currentPatchIndex = ", newWordBatch)
-        
         
         // 训练批次下标
         var exerciseBatch = 0
@@ -288,7 +279,7 @@ extension YXExerciseDataManager {
             minBatch = min(exerciseBatch, reviewBatch)
             
             if isNewWordInBatch() { // 如果新学要分批, 处理新学比训练和复习的数量不一致，造成的后续根据批次取数据问题
-                // 如果新学比 训练和复习的多
+                // 如果新学比训练和复习的多
                 if newWordBatch > minBatch && isAllWordFinish() {
                     minBatch = newWordBatch
                 }
@@ -314,7 +305,7 @@ extension YXExerciseDataManager {
         
         isResetTurnIndex = true
         
-        YXLog("bb+++++++++++++ currentPatchIndex = ", currentBatchIndex)
+        YXLog("bb+++++++++++++更新后 currentPatchIndex = ", currentBatchIndex)
         
     }
     
@@ -342,7 +333,7 @@ extension YXExerciseDataManager {
     }
 
     
-    /// 是否全部完成
+    /// 新学是否全部完成
     func isAllNewWordFinish() -> Bool {
         var finishCount = 0
         for exercise in self.newWordArray {

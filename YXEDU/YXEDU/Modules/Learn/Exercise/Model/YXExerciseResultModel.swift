@@ -9,10 +9,10 @@
 import ObjectMapper
 
 
-/// 当天学习数据总j模型
+/// 当天学习数据总模型
 struct YXExerciseResultModel: Mappable {
-    var type: YXExerciseDataType = .base
-    var ruleType: YXExerciseRuleType = .p
+    var type: YXExerciseDataType     = .base
+    var ruleType: YXExerciseRuleType = .p0
     var bookId: Int?
     var unitId: Int?
     var newWordIds: [Int]?
@@ -145,7 +145,7 @@ struct YXExerciseRuleTypeTransform: TransformType {
         if let v = value as? String, let rule = YXExerciseRuleType(rawValue: v.uppercased()) {
             return rule
         }
-        return .p
+        return .p0
     }
     
     func transformToJSON(_ value: YXExerciseRuleType?) -> String? {

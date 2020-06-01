@@ -29,7 +29,7 @@ class YXExerciseDataManager: NSObject {
     /// 哪本书，哪个单元
     public var bookId: Int?, unitId: Int?
     public var dataType: YXExerciseDataType = .base
-    public var ruleType: YXExerciseRuleType = .p
+    public var ruleType: YXExerciseRuleType = .p0
     
     /// 进度管理器
     public var progressManager: YXExcerciseProgressManager!
@@ -151,20 +151,13 @@ class YXExerciseDataManager: NSObject {
 
     
     /// 从当前关卡数据中，获取一个练习数据对象
-    func fetchOneExerciseModel() -> (Int, Int, YXWordExerciseModel?) {
-        // 更新待学习数
-        updateNeedNewStudyCount()
-        updateNeedReviewCount()
-        
-        // 更新批次
-        updateCurrentPatchIndex()
-        
+    func fetchOneExerciseModel() -> YXWordExerciseModel? {
         // 打印
-//        printReportResult()
-        
+        printCurrentTurn()
+
         // 新学出题【跟读】
         if let e = buildNewExercise() {
-            return (needNewStudyCount, needReviewCount, e)
+            return e
         }
         
         // 生成题型【训练+复习】
@@ -172,15 +165,14 @@ class YXExerciseDataManager: NSObject {
         let wid = e?.word?.wordId ?? 0
         e?.word = selectWord(wordId: wid)
         
-        // 打印
-        printCurrentTurn()
+
         
         // 保持当前轮次
         progressManager.setCurrentTurn(index: currentTurnIndex)
         // 取出来一个后，保存当前轮的进度
         progressManager.updateTurnProgress(currentTurnArray: currentTurnArray, previousTurnArray: previousTurnArray)
         
-        return (needNewStudyCount, needReviewCount, e)
+        return e
     }
     
     
@@ -331,11 +323,6 @@ class YXExerciseDataManager: NSObject {
     
     
     //MARK: ----- print
-    
-    func printReportResult() {
-        let json = self.reportJson()
-        YXLog("上报内容：", json)
-    }
     
     func printCurrentTurn() {
         YXLog(String(format: "第\(currentTurnIndex)轮数量：%ld", currentTurnArray.count))

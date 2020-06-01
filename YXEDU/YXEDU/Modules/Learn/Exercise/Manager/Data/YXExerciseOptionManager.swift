@@ -10,7 +10,7 @@ import UIKit
 
 class YXExerciseOptionManager: NSObject {
     
-    private var newWordArray: [YXWordExerciseModel] = []
+    private var newWordArray: [YXWordExerciseModel]    = []
     private var reviewWordArray: [YXWordExerciseModel] = []
     
     /// 随机数

@@ -207,11 +207,20 @@
     private func switchExerciseView() {
         YXLog("==== 切题 ====")
 
+        // - 更新待学习数
+        dataManager.updateNeedNewStudyCount()
+        dataManager.updateNeedReviewCount()
+        headerView.learningProgress = "\(dataManager.needNewStudyCount)"
+        headerView.reviewProgress = "\(dataManager.needReviewCount)"
+        // - 更新轮次
+        if dataManager.dataType == .base {
+            dataManager.updateCurrentPatchIndex()
+        }
+        // 获取新题数据
         let data = dataManager.fetchOneExerciseModel()
-        headerView.learningProgress = "\(data.0)"
-        headerView.reviewProgress = "\(data.1)"
-        
-        if var model = data.2 {
+
+
+        if var model = data {
             model.dataType = dataType
 
             YXRequestLog("==== 题目内容：%@", model.toJSONString() ?? "--")
