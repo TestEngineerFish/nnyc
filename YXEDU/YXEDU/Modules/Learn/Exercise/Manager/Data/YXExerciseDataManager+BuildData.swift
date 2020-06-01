@@ -44,7 +44,6 @@ extension YXExerciseDataManager {
         return findType()
     }
     
-//    13800070
     /// 筛选数据
     func filterExercise() {
         // 当前轮是否做完

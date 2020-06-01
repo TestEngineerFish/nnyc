@@ -47,6 +47,91 @@ extension YXExerciseDataManager {
         self.progressManager.updateProgress(newWordArray: newWordArray, reviewWordArray: reviewWordArray)
     }
     
+    private func parserStepArray(result: YXExerciseResultModel?) {
+        self.processNewWord(result: result)
+        self.processReviewWord(result: result)
+        guard let stepArray = result?.steps else {
+            return
+        }
+        var reviewWordIndex = 0
+        var currentGroup    = 0
+        var newWordIndex    = 0
+        /// 一组新学单词的数量
+        let newWordBatchCount = self.isNewWordInBatch() ? self.newWordBatchSizeConfig() : self.newWordArray.count
+        /// 一组复习单词的数量
+        let reviewBatchCount = self.isNewWordInBatch() ? self.reviewWordBatchSizeConfig() : self.reviewWordArray.count
+        var _newArray    = [YXWordExerciseModel]()
+        // 添加新学
+        while newWordIndex < self.newWordArray.count {
+            let model = self.newWordArray[newWordIndex]
+            _newArray.append(model)
+            newWordIndex += 1
+            // 满一组
+            if newWordIndex - currentGroup * newWordBatchCount >= newWordBatchCount {
+                // 总数组中已有可存放的位置
+                if self.stepArray.count > currentGroup {
+                    self.stepArray[currentGroup]["new"] = _newArray
+                } else {
+                    self.stepArray.append(["new" : _newArray])
+                }
+                // 更新
+                _newArray     = []
+                currentGroup += 1
+            }
+        }
+        // 添加练习、复习
+        currentGroup = 0
+        var step1 = [[YXWordExerciseModel]]()
+        var step2 = [[YXWordExerciseModel]]()
+        var step3 = [[YXWordExerciseModel]]()
+        var step4 = [[YXWordExerciseModel]]()
+        self.reviewWordArray.forEach { (stepsModel) in
+            stepsModel.exerciseSteps.forEach { (modelArray) in
+                switch modelArray.first?.step {
+                case .some(1):
+                    step1.append(modelArray)
+                case .some(2):
+                    step2.append(modelArray)
+                case .some(3):
+                    step3.append(modelArray)
+                case .some(4):
+                    step4.append(modelArray)
+                default:
+                    break
+                }
+            }
+        }
+        step1.forEach { (wordModel) in
+            if self.stepArray.count > currentGroup {
+                let _newWordArray = self.stepArray[currentGroup]["new"] ?? []
+            }
+        }
+        // 添加Step1的训练
+        var _step1NewWordArray = [YXWordExerciseModel]()
+        while !step1.isEmpty {
+            // 获取当前组的新学单词列表
+            if self.stepArray.count > currentGroup {
+                _step1NewWordArray = self.stepArray[currentGroup]["new"] as? [YXWordExerciseModel] ?? []
+            } else {
+                self.stepArray.append(["step1":[]])
+            }
+            let modelArray = step1.first
+            // 当前单词是否在当前新学组中
+            let isContain  = _step1NewWordArray.contains { (model) -> Bool in
+                model.word?.wordId == modelArray?.first?.word?.wordId
+            }
+            if isContain {
+                if self.stepArray[currentGroup]["step1"]?.isEmpty ?? true {
+                    self.stepArray[currentGroup]["step1"] = []
+                }
+                self.stepArray[currentGroup]["step1"]?.append(modelArray!)
+            }
+        }
+        
+//        self.stepArray.append(groupDict)
+    }
+
+    
     
     /// 处理新学跟读
     /// - Parameter result:

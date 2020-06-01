@@ -36,8 +36,6 @@ class YXExerciseDataManager: NSObject {
     
     public var dataStatus: YXExerciseDataStatus = .finish
     
-    /// 当前新学批次，一次学习分成了多批
-//    var currentNewBatchIndex = 0
     /// 当前批次，一次学习分成了多批
     var currentBatchIndex = 0
     /// 当前第几轮, 从第一轮开始
@@ -58,6 +56,8 @@ class YXExerciseDataManager: NSObject {
     /// 训练和复习单词集合
     var reviewWordArray: [YXWordStepsModel] = []
     
+    /// 新Step集合，按组归类
+    var stepArray: [[String:[Any]]] = []
     
     // 训练单词的Id集合，复习单词的Id集合
     var exerciseWordIdArray: [Int] = [], reviewWordIdArray: [Int] = []
@@ -130,7 +130,7 @@ class YXExerciseDataManager: NSObject {
         if data.0.first?.type == .some(.none) {
             return false
         }
-        newWordArray = data.0
+        newWordArray    = data.0
         reviewWordArray = data.1
         
         exerciseWordIdArray = progressManager.loadNewWordExerciseIds()
