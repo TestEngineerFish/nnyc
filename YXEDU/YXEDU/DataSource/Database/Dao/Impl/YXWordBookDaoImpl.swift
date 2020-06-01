@@ -45,7 +45,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             let deleteWordsSuccess = db.executeUpdate(deleteWordsSQL, withArgumentsIn: deleteWordsParams)
             let msg = String(format: "删除:%@，id:%d下所有单词", bookModel.bookName ?? "", bookId)
             if deleteWordsSuccess {
-                Bugly.reportError(NSError(domain: msg + "成功", code: 0, userInfo: nil))
+//                Bugly.reportError(NSError(domain: msg + "成功", code: 0, userInfo: nil))
                 YXLog(msg + "成功")
             } else {
                 Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
@@ -91,7 +91,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                         let deleteBookSuccess = db.executeUpdate(deleteBookSQL, withArgumentsIn: deleteBookParams)
                         var msg = String(format: "删除词书:%@，id:%d", bookModel.bookName ?? "", bookId)
                         if deleteBookSuccess {
-                            Bugly.reportError(NSError(domain: msg + "成功", code: 0, userInfo: nil))
+//                            Bugly.reportError(NSError(domain: msg + "成功", code: 0, userInfo: nil))
                             YXLog(msg + "成功")
                         } else {
                             Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
@@ -103,7 +103,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                         let insertBookSuccess = db.executeUpdate(insertBookSQL, withArgumentsIn: insertBookParams)
                         msg = String(format: "保存词书:%@，id:%d", bookModel.bookName ?? "", bookId)
                         if insertBookSuccess {
-                            Bugly.reportError(NSError(domain: msg + "成功", code: 0, userInfo: nil))
+//                            Bugly.reportError(NSError(domain: msg + "成功", code: 0, userInfo: nil))
                             YXLog(msg + "成功")
                         } else {
                             Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
