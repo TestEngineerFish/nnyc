@@ -4627,7 +4627,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/Unisound",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 2.6.5;
+				MARKETING_VERSION = 2.6.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4635,7 +4635,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "YXEDU/Resources/YXEDU-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -4673,14 +4673,14 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/Unisound",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 2.6.5;
+				MARKETING_VERSION = 2.6.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YXEDU/Resources/YXEDU-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

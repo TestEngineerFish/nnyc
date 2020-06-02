@@ -437,7 +437,7 @@ static CGFloat const kPickViewHeight = 272.f;
     NSMutableArray<NSMutableDictionary *> *dataArray = [NSMutableArray arrayWithCapacity:days];
     NSDate *firstDate = [self.currentTitleDate begindayOfMonth];
     //生成本月数据列表
-    for (int i = 0; i < days; ++i) {
+    for (int i = 0; i <= days; ++i) {
         NSDate *nextDay = [firstDate offsetDays:i];
         NSDictionary *dict = @{@"date":nextDay,
                                @"numWord":@1,//默认显示1,不然XJYkChart控件为空时比较丑
