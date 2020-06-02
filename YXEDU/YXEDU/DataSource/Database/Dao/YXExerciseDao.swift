@@ -17,8 +17,10 @@ protocol YXExerciseDao {
     
     
     /// 清除过期的数据
+    @discardableResult
     func deleteExpiredExercise() -> Bool
-    
+
+    @discardableResult
     func deleteAllExercise() -> Bool
 
 }
@@ -52,6 +54,7 @@ protocol YXWordStepDao {
     
     
     /// 清除过期的数据
+    @discardableResult
     func deleteExpiredWordStep() -> Bool
     
     func deleteAllWordStep() -> Bool

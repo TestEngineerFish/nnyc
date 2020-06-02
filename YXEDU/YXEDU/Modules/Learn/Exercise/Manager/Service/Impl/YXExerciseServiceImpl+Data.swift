@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// 处理网络数据，加载本地缓存数据
+/// 处理网络数据，存储到数据库
 extension YXExerciseServiceImpl {
     
     /// 获取今天要学习的练习数据

@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// 出题逻辑
+/// 出题逻辑，从数据库读取数据
 extension YXExerciseServiceImpl {
     func queryExerciseModel() -> YXWordExerciseModel? {
         
@@ -25,5 +25,10 @@ extension YXExerciseServiceImpl {
             return exercise
         }
         return nil
+    }
+
+    /// 更新单条Step数据状态
+    func updateStep(exercise model: YXWordExerciseModel) {
+
     }
 }

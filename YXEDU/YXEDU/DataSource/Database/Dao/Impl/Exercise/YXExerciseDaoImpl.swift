@@ -26,7 +26,8 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
-    
+
+    @discardableResult
     func deleteExpiredExercise() -> Bool {
         let sql = YYSQLManager.ExerciseSQL.deleteExpiredExercise.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])

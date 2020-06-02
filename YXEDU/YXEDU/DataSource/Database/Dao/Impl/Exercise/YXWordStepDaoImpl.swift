@@ -62,7 +62,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     
 
     
-    
+    @discardableResult
     func deleteExpiredWordStep() -> Bool {
         let sql = YYSQLManager.WordStepSQL.deleteExpiredWordStep.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])
