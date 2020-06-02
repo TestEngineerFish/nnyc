@@ -207,17 +207,17 @@ class YXStarView: UIView {
         centerStarDisableImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptIconSize(20), height: AdaptIconSize(20)))
+            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
         }
         leftStarDisableImageView.snp.makeConstraints { (make) in
             make.right.equalTo(centerStarDisableImageView.snp.left)
             make.top.equalTo(centerStarDisableImageView)
-            make.size.equalTo(CGSize(width: AdaptIconSize(20), height: AdaptIconSize(20)))
+            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
         }
         rightStarDisableImageView.snp.makeConstraints { (make) in
             make.left.equalTo(centerStarDisableImageView.snp.right)
             make.top.equalTo(leftStarDisableImageView)
-            make.size.equalTo(CGSize(width: AdaptIconSize(20), height: AdaptIconSize(20)))
+            make.size.equalTo(CGSize(width: AdaptSize(20), height: AdaptSize(20)))
         }
         centerStarEnableImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
