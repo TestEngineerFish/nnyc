@@ -53,22 +53,25 @@ extension YXExerciseDataManager {
     /// - Parameters:
     ///   - exerciseModel:
     ///   - right:
-    public func updateWordScore(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
+    public func updateWordScore(wordId: Int, step: Int, right: Bool, type: YXExerciseType, isDouble: Bool = false) {
         
         var score = 10
         if type == .newLearnPrimarySchool || type == .newLearnPrimarySchool_Group || type == .newLearnJuniorHighSchool {// 小学新学 和 初中新学 不计算分数
             return
         } else {
             score = self.progressManager.fetchScore(wordId: wordId)
-                                                            
+            let step1Deduct = 3
+            let step2Deduct = isDouble ? 4 : 2
+            let step3Deduct = isDouble ? 2 : 1
+            let step4Deduct = 1
             if step == 1 {
-                score -= (right ? 0 : 3)
+                score -= (right ? 0 : step1Deduct)
             } else if step == 2 {
-                score -= (right ? 0 : 2)
+                score -= (right ? 0 : step2Deduct)
             } else if step == 3 {
-                score -= (right ? 0 : 1)
+                score -= (right ? 0 : step3Deduct)
             } else if step == 4 {
-                score -= (right ? 0 : 1)
+                score -= (right ? 0 : step4Deduct)
             }
             
             score = score < 0 ? 0 : score

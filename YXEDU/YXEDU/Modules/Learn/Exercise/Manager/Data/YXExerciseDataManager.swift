@@ -88,8 +88,12 @@ class YXExerciseDataManager: NSObject {
         }
         for (index, model) in self.reviewWordArray.enumerated() {
             if model.wordId == wordId {
-                self.reviewWordArray[index].exerciseSteps.removeFirst()
-                self.reviewWordArray[index].exerciseSteps.removeLast()
+                if model.exerciseSteps.first?.first?.step == 1 {
+                    self.reviewWordArray[index].exerciseSteps.removeFirst()
+                }
+                if model.exerciseSteps.last?.last?.step == 4 {
+                    self.reviewWordArray[index].exerciseSteps.removeLast()
+                }
             }
         }
     }
@@ -194,7 +198,7 @@ class YXExerciseDataManager: NSObject {
         
         // 更新积分
         updateQuestionTypeScore(exerciseModel: exerciseModel)
-        updateWordScore(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, type: exerciseModel.type)
+        updateWordScore(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, type: exerciseModel.type, isDouble: exerciseModel.power == 10)
         
         // 更新对错
         updateStepRightOrWrongStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right)
