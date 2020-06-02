@@ -12,7 +12,7 @@ import UIKit
 protocol YXConnectionAnswerViewDelegate: NSObjectProtocol {
     func connectionViewSelectedStatus(selected: Bool, wordId: Int)
     func remindEvent(wordId: Int)
-    func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXExerciseType, finish: Bool)
+    func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXQuestionType, finish: Bool)
 }
 
 /// 连线题目， 1. 词义连线，2. 词图连线

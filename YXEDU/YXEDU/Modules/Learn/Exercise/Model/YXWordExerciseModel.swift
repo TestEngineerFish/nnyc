@@ -22,7 +22,7 @@ struct YXWordExerciseModel: Mappable {
     var eid: Int = 0
     
     // 题型
-    var type: YXExerciseType = .none
+    var type: YXQuestionType = .none
     // 数据类型
     var dataType: YXExerciseDataType = .base
         
@@ -85,7 +85,7 @@ struct YXWordExerciseModel: Mappable {
     }
         
     mutating func mapping(map: Map) {
-        type     <- (map["type"], EnumTransform<YXExerciseType>())
+        type     <- (map["type"], EnumTransform<YXQuestionType>())
         word     <- map["word"]
         question <- map["question"]
         option   <- map["option"]

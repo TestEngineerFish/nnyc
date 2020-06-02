@@ -228,11 +228,11 @@
 
             YXRequestLog("==== 题目内容：%@", model.toJSONString() ?? "--")
             // 小学新学
-            let primaryNewLearnArray: [YXExerciseType] = [.newLearnPrimarySchool_Group, .newLearnPrimarySchool]
+            let primaryNewLearnArray: [YXQuestionType] = [.newLearnPrimarySchool_Group, .newLearnPrimarySchool]
             // 新学
-            let newLearnArray: [YXExerciseType]        = [.newLearnJuniorHighSchool] + primaryNewLearnArray
+            let newLearnArray: [YXQuestionType]        = [.newLearnJuniorHighSchool] + primaryNewLearnArray
             // 新学和连线题
-            let hideTipsTypeArray: [YXExerciseType]    = [.validationImageAndWord, .validationWordAndChinese] + newLearnArray
+            let hideTipsTypeArray: [YXQuestionType]    = [.validationImageAndWord, .validationWordAndChinese] + newLearnArray
             // ---- 新学、连线题隐藏提示
             self.bottomView.tipsButton.isHidden  = hideTipsTypeArray.contains(model.type)
 
@@ -501,7 +501,7 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     
     
     ///答完题回调处理， 仅连线题处理
-    func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXExerciseType, finish: Bool) {
+    func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXQuestionType, finish: Bool) {
         dataManager.connectionAnswerAction(wordId: wordId, step: step, right: right, type: type)
         
         // 只处理做对的情况，做错进入了 remindEvent方法处理

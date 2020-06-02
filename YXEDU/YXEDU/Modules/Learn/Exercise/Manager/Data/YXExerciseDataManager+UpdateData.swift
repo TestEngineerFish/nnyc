@@ -53,7 +53,7 @@ extension YXExerciseDataManager {
     /// - Parameters:
     ///   - exerciseModel:
     ///   - right:
-    public func updateWordScore(wordId: Int, step: Int, right: Bool, type: YXExerciseType, isDouble: Bool = false) {
+    public func updateWordScore(wordId: Int, step: Int, right: Bool, type: YXQuestionType, isDouble: Bool = false) {
         
         var score = 10
         if type == .newLearnPrimarySchool || type == .newLearnPrimarySchool_Group || type == .newLearnJuniorHighSchool {// 小学新学 和 初中新学 不计算分数

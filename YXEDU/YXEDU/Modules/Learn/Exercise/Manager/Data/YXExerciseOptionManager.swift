@@ -30,9 +30,9 @@ class YXExerciseOptionManager: NSObject {
     
     func processReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
         // 判断题
-        let vaildationArray: [YXExerciseType] = [.validationImageAndWord, .validationWordAndChinese]
+        let vaildationArray: [YXQuestionType] = [.validationImageAndWord, .validationWordAndChinese]
         // 选择题
-        let chooseArray: [YXExerciseType] = [.lookWordChooseImage, .lookExampleChooseImage, .listenChooseImage, .lookWordChooseChinese, .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord, .listenChooseWord, .listenChooseChinese]
+        let chooseArray: [YXQuestionType] = [.lookWordChooseImage, .lookExampleChooseImage, .listenChooseImage, .lookWordChooseChinese, .lookExampleChooseChinese, .lookChineseChooseWord, .lookImageChooseWord, .listenChooseWord, .listenChooseChinese]
         if vaildationArray.contains(exercise.type) {
             return validReviewWordOption(exercise: exercise)
         } else if chooseArray.contains(exercise.type) {
@@ -384,7 +384,7 @@ class YXExerciseOptionManager: NSObject {
     /// - Parameters:
     ///   - word:
     ///   - type:
-    func itemModel(word: YXWordModel, type: YXExerciseType, dataType: YXExerciseDataType) -> YXOptionItemModel {
+    func itemModel(word: YXWordModel, type: YXQuestionType, dataType: YXExerciseDataType) -> YXOptionItemModel {
         var item = YXOptionItemModel()
         item.optionId = word.wordId ?? -1
         

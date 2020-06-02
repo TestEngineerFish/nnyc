@@ -10,7 +10,7 @@ import UIKit
 
 
 /// 单词练习类型
-enum YXExerciseType: String {
+enum YXQuestionType: String {
     //MARK: ---- 选择题
     case lookWordChooseImage = "Q-A-1"                    // 看单词选图片
     case lookExampleChooseImage = "Q-A-2"                 // 看例句选图片

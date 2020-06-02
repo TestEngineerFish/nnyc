@@ -396,10 +396,10 @@ extension YXExerciseDataManager {
 
     
     /// 查找当前轮中，没有开始做的连线题type和step，如果没有就返回空
-    func findConnectionType() -> (Int, YXExerciseType)? {
+    func findConnectionType() -> (Int, YXQuestionType)? {
         
         var step: Int?
-        var type: YXExerciseType?
+        var type: YXQuestionType?
         
         for (i, e) in currentTurnArray.enumerated() {
             if e.isCurrentTurnFinish {

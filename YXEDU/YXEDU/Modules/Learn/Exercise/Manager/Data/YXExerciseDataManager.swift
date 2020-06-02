@@ -220,7 +220,7 @@ class YXExerciseDataManager: NSObject {
     ///   - step:
     ///   - right:
     ///   - type:
-    func connectionAnswerAction(wordId: Int, step: Int, right: Bool, type: YXExerciseType) {
+    func connectionAnswerAction(wordId: Int, step: Int, right: Bool, type: YXQuestionType) {
         
         // 更新单个项的完成状态
         updateWordStepStatus(wordId: wordId, step: step, right: right, finish: false)
