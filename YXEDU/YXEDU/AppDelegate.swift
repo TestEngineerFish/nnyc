@@ -115,6 +115,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YYCache.remove(forKey: .learningState)
     }
     
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
 }
 
 
