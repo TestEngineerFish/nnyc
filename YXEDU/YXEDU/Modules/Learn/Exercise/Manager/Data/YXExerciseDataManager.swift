@@ -36,8 +36,6 @@ class YXExerciseDataManager: NSObject {
     
     public var dataStatus: YXExerciseDataStatus = .finish
     
-    /// 当前新学批次，一次学习分成了多批
-//    var currentNewBatchIndex = 0
     /// 当前批次，一次学习分成了多批
     var currentBatchIndex = 0
     /// 当前第几轮, 从第一轮开始
@@ -58,14 +56,14 @@ class YXExerciseDataManager: NSObject {
     /// 训练和复习单词集合
     var reviewWordArray: [YXWordStepsModel] = []
     
+    /// 新Step集合，按组归类
+    var stepArray: [[String:[Any]]] = []
     
     // 训练单词的Id集合，复习单词的Id集合
     var exerciseWordIdArray: [Int] = [], reviewWordIdArray: [Int] = []
     
     /// 当前轮
     var currentTurnArray: [YXWordExerciseModel] = []
-    /// 上一轮 【目前好像没有使用这个字段】
-    var previousTurnArray: [YXWordExerciseModel] = []
     
     /// 本地数据库访问
     var dao: YXWordBookDao!
@@ -80,10 +78,20 @@ class YXExerciseDataManager: NSObject {
         dao             = YXWordBookDaoImpl()
         optionManager   = YXExerciseOptionManager()
         progressManager = YXExcerciseProgressManager()
-                
-//        let data = progressManager.fetchBookIdAndUnitId()
-//        self.bookId = data.0
-//        self.unitId = data.1
+        NotificationCenter.default.addObserver(self, selector: #selector(removeStep1_4(_:)), name: YXNotification.kNewWordMastered, object: nil)
+    }
+    
+    /// 新学标记已掌握，能力值等于10，将移除Step1和4的题型
+    @objc private func removeStep1_4(_ notification: Notification) {
+        guard let wordId = notification.userInfo?["id"] as? Int else {
+            return
+        }
+        for (index, model) in self.reviewWordArray.enumerated() {
+            if model.wordId == wordId {
+                self.reviewWordArray[index].exerciseSteps.removeFirst()
+                self.reviewWordArray[index].exerciseSteps.removeLast()
+            }
+        }
     }
     
     
@@ -122,7 +130,7 @@ class YXExerciseDataManager: NSObject {
         if data.0.first?.type == .some(.none) {
             return false
         }
-        newWordArray = data.0
+        newWordArray    = data.0
         reviewWordArray = data.1
         
         exerciseWordIdArray = progressManager.loadNewWordExerciseIds()
@@ -140,8 +148,7 @@ class YXExerciseDataManager: NSObject {
         ruleType = progressManager.ruleType()
         YXLog("==== 当前学习规则: 【", ruleType.rawValue, "】 ====")
         let turnData = progressManager.loadLocalTurnData()
-        currentTurnArray = turnData.0
-        previousTurnArray = turnData.1
+        currentTurnArray = turnData
                 
         currentTurnIndex = progressManager.currentTurnIndex()
         
@@ -170,8 +177,7 @@ class YXExerciseDataManager: NSObject {
         // 保持当前轮次
         progressManager.setCurrentTurn(index: currentTurnIndex)
         // 取出来一个后，保存当前轮的进度
-        progressManager.updateTurnProgress(currentTurnArray: currentTurnArray, previousTurnArray: previousTurnArray)
-        
+        progressManager.updateTurnProgress(currentTurnArray: currentTurnArray)
         return e
     }
     
@@ -187,7 +193,6 @@ class YXExerciseDataManager: NSObject {
         updateNormalExerciseFinishStatus(exerciseModel: exerciseModel, right: right)
         
         // 更新积分
-        updateNewWordReadScore(exerciseModel: exerciseModel)
         updateQuestionTypeScore(exerciseModel: exerciseModel)
         updateWordScore(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, type: exerciseModel.type)
         
@@ -289,7 +294,6 @@ class YXExerciseDataManager: NSObject {
                 report.bookId = self.bookId
                 report.unitId = self.unitId
                 report.score  = progressManager.fetchScore(wordId: word.wordId)
-//                report.listenScore  = progressManager.fetchNewWordReadScore(wordId: word.wordId)
                 report.errorCount = progressManager.fetchErrorCount(wordId: word.wordId)
                 report.result = YXExerciseReportModel.ResultModel()
                 

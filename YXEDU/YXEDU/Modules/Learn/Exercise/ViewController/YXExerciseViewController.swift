@@ -189,7 +189,6 @@
     // 加载当天的学习数据
     private func fetchExerciseData() {
 
-        //
         dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
@@ -216,14 +215,13 @@
         dataManager.updateNeedNewStudyCount()
         dataManager.updateNeedReviewCount()
         headerView.learningProgress = "\(dataManager.needNewStudyCount)"
-        headerView.reviewProgress = "\(dataManager.needReviewCount)"
+        headerView.reviewProgress   = "\(dataManager.needReviewCount)"
         // - 更新轮次
         if dataManager.dataType == .base {
             dataManager.updateCurrentPatchIndex()
         }
         // 获取新题数据
         let data = dataManager.fetchOneExerciseModel()
-
         
         if var model = data {
             model.dataType = learnConfig.learnType
