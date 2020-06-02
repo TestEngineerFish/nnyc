@@ -114,7 +114,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 启动时，删除学习中状态
         YYCache.remove(forKey: .learningState)
     }
-    
+
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return .portrait
+    }
 }
 
 
