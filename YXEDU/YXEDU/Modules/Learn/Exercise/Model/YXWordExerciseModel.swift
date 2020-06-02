@@ -39,8 +39,16 @@ struct YXWordExerciseModel: Mappable {
     /// 得分
     var score: Int = 10
     var questionTypeScore: Int = 0  // 题型分[已掌握7分，不认识0分]
-    var power: Int = 0
-        
+    var power: Int = 0 {
+        didSet {
+            if power == 10 {
+                // 移除当前单词的Step1和4
+                guard let id = self.word?.wordId else { return }
+                NotificationCenter.default.post(name: YXNotification.kNewWordMastered, object: nil, userInfo: ["id":id])
+            }
+        }
+    }
+
     //MARK: - 以下几个属性用于本地记录进度时使用
     /// 是否根据得分选择题型
     var isCareScore: Bool = false
@@ -87,13 +95,13 @@ struct YXWordExerciseModel: Mappable {
 
         isCareScore <- map["is_care_score"]
         isBackup    <- map["is_backup"]
-        isNewWord <- map["is_new_word"]
+        isNewWord   <- map["is_new_word"]
         isListenAndRepeat <- map["is_listen_and_repeat"]
         
-        step <- map["step"]
-        isRight <- map["is_right"]
+        step       <- map["step"]
+        isRight    <- map["is_right"]
         isContinue <- map["is_continue"]
-        isFinish <- map["is_finish"]
+        isFinish   <- map["is_finish"]
         isCurrentTurnFinish <- map["is_current_turn_finish"]
         
     }

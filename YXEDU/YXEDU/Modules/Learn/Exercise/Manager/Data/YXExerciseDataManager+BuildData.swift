@@ -73,9 +73,6 @@ extension YXExerciseDataManager {
     
     /// 主流程，筛选训练
     func filterExcercise() {
-        
-        let rules = [YXExerciseRuleType.p0, YXExerciseRuleType.p3, YXExerciseRuleType.p4]
-        
         var jumpStep = 0
         for (i, word) in reviewWordArray.enumerated() {
             // 
@@ -98,10 +95,6 @@ extension YXExerciseDataManager {
                             
             for (j, step) in word.exerciseSteps.enumerated() {
                 if var exericse = fetchExerciseOfStep(exerciseArray: step) {
-                    if (rules.contains(ruleType) && exericse.power == 10 && (exericse.step == 1 || exericse.step == 4)) {
-                        continue
-                    }                    
-                    
                     // 放到当前轮中的数据，清空掉这个对错的值，用于连线题在当前轮中，单个选项连接连错后提示
                     exericse.isRight = nil
                     
