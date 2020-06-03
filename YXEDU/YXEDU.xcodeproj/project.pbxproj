@@ -101,6 +101,7 @@
 		227F478023CC638F00D6C603 /* YXPreviousResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F477F23CC638F00D6C603 /* YXPreviousResultView.swift */; };
 		227F478223CD967900D6C603 /* wrong.json in Resources */ = {isa = PBXBuildFile; fileRef = 227F478123CD967900D6C603 /* wrong.json */; };
 		227F478423CD968800D6C603 /* right.json in Resources */ = {isa = PBXBuildFile; fileRef = 227F478323CD968800D6C603 /* right.json */; };
+		228105D924876F960025F03F /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228105D824876F960025F03F /* libWeChatSDK.a */; };
 		228F9D4623A099C300F15F19 /* Discovery.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 228F9D4523A099C300F15F19 /* Discovery.storyboard */; };
 		2290EAC1236DB036000BCA47 /* YXRemindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2290EAC0236DB036000BCA47 /* YXRemindView.swift */; };
 		2290EAC4236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2290EAC3236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift */; };
@@ -181,7 +182,6 @@
 		77252A7123628909007D86A0 /* YXSelectGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77252A6F23628909007D86A0 /* YXSelectGradeView.swift */; };
 		77252A7423628940007D86A0 /* YXSelectGradeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77252A7223628940007D86A0 /* YXSelectGradeCell.swift */; };
 		77252A7523628940007D86A0 /* YXSelectGradeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77252A7323628940007D86A0 /* YXSelectGradeCell.xib */; };
-		77322CC723687ABB00EAC8B6 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77322CC323687ABB00EAC8B6 /* libWeChatSDK.a */; };
 		77342B7F247270590082C771 /* YXLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77342B7E247270590082C771 /* YXLoginModel.swift */; };
 		77342B89247289780082C771 /* YXAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77342B88247289780082C771 /* YXAccountModel.swift */; };
 		77342B99247387A30082C771 /* YXUserModel_Old.m in Sources */ = {isa = PBXBuildFile; fileRef = 77342B98247387A30082C771 /* YXUserModel_Old.m */; };
@@ -684,6 +684,10 @@
 		227F477F23CC638F00D6C603 /* YXPreviousResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXPreviousResultView.swift; sourceTree = "<group>"; };
 		227F478123CD967900D6C603 /* wrong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = wrong.json; sourceTree = "<group>"; };
 		227F478323CD968800D6C603 /* right.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = right.json; sourceTree = "<group>"; };
+		228105D624876F960025F03F /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		228105D724876F960025F03F /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		228105D824876F960025F03F /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		228105DA248770720025F03F /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		228F9D4523A099C300F15F19 /* Discovery.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discovery.storyboard; sourceTree = "<group>"; };
 		2290EAC0236DB036000BCA47 /* YXRemindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRemindView.swift; sourceTree = "<group>"; };
 		2290EAC3236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnPrimarySchoolExerciseView.swift; sourceTree = "<group>"; };
@@ -771,10 +775,6 @@
 		77252A6F23628909007D86A0 /* YXSelectGradeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXSelectGradeView.swift; sourceTree = "<group>"; };
 		77252A7223628940007D86A0 /* YXSelectGradeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectGradeCell.swift; sourceTree = "<group>"; };
 		77252A7323628940007D86A0 /* YXSelectGradeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXSelectGradeCell.xib; sourceTree = "<group>"; };
-		77322CC323687ABB00EAC8B6 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		77322CC423687ABB00EAC8B6 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
-		77322CC523687ABB00EAC8B6 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
-		77322CC623687ABB00EAC8B6 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		77342B7E247270590082C771 /* YXLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLoginModel.swift; sourceTree = "<group>"; };
 		77342B88247289780082C771 /* YXAccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAccountModel.swift; sourceTree = "<group>"; };
 		77342B97247387A30082C771 /* YXUserModel_Old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXUserModel_Old.h; sourceTree = "<group>"; };
@@ -1289,6 +1289,7 @@
 			files = (
 				D665A0B82091A43200FBC9D2 /* libresolv.tbd in Frameworks */,
 				CFF4914C23F56D7F00038113 /* TencentOpenAPI.framework in Frameworks */,
+				228105D924876F960025F03F /* libWeChatSDK.a in Frameworks */,
 				D665A0B62091A42700FBC9D2 /* UserNotifications.framework in Frameworks */,
 				D62C1E2920897EDF002BB11A /* AdSupport.framework in Frameworks */,
 				D665A0B42091A41300FBC9D2 /* libz.tbd in Frameworks */,
@@ -1302,7 +1303,6 @@
 				D62C1E2720897EC7002BB11A /* CoreLocation.framework in Frameworks */,
 				D672C2552064D21800696828 /* libsqlite3.tbd in Frameworks */,
 				BADF1A8A393F92D5A79919AA /* Pods_YXEDU.framework in Frameworks */,
-				77322CC723687ABB00EAC8B6 /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1601,6 +1601,17 @@
 				227F477D23CC540D00D6C603 /* YXToastView.swift */,
 			);
 			path = YXToastViews;
+			sourceTree = "<group>";
+		};
+		228105D524876F960025F03F /* WechtSDK1.8.2_NoPay */ = {
+			isa = PBXGroup;
+			children = (
+				228105DA248770720025F03F /* WXApi.h */,
+				228105D624876F960025F03F /* WXApiObject.h */,
+				228105D724876F960025F03F /* WechatAuthSDK.h */,
+				228105D824876F960025F03F /* libWeChatSDK.a */,
+			);
+			path = WechtSDK1.8.2_NoPay;
 			sourceTree = "<group>";
 		};
 		228F9D4723A09CBB00F15F19 /* Challenge */ = {
@@ -1955,17 +1966,6 @@
 				771E88692362ACFB000BFAAD /* YXBindPhoneViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		77322CC823687AC400EAC8B6 /* WechtSDK1.8.2_NoPay */ = {
-			isa = PBXGroup;
-			children = (
-				77322CC323687ABB00EAC8B6 /* libWeChatSDK.a */,
-				77322CC423687ABB00EAC8B6 /* WechatAuthSDK.h */,
-				77322CC623687ABB00EAC8B6 /* WXApi.h */,
-				77322CC523687ABB00EAC8B6 /* WXApiObject.h */,
-			);
-			path = WechtSDK1.8.2_NoPay;
 			sourceTree = "<group>";
 		};
 		77342BA72473A8730082C771 /* Model */ = {
@@ -2873,8 +2873,8 @@
 		EE5E017A232756BE00655654 /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				228105D524876F960025F03F /* WechtSDK1.8.2_NoPay */,
 				2265905E23743282006C9925 /* Unisound */,
-				77322CC823687AC400EAC8B6 /* WechtSDK1.8.2_NoPay */,
 				22ED54992366D80400011B82 /* YXModel */,
 				EE5E017B232756BE00655654 /* MDMulticastDelegate */,
 				EE5E017E232756BE00655654 /* TencentAPI */,
@@ -4633,6 +4633,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.2_NoPay",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/Unisound",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WXSDK1.8.7.1_NoPay",
 				);
 				MACH_O_TYPE = mh_execute;
 				MARKETING_VERSION = 2.6.5;
@@ -4679,6 +4680,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.2_NoPay",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/Unisound",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WXSDK1.8.7.1_NoPay",
 				);
 				MACH_O_TYPE = mh_execute;
 				MARKETING_VERSION = 2.6.5;

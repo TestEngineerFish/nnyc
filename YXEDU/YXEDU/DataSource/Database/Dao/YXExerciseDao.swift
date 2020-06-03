@@ -58,6 +58,8 @@ protocol YXWordStepDao {
     func deleteExpiredWordStep() -> Bool
     
     func deleteAllWordStep() -> Bool
+    /// 查询单词得分
+    func selecteWordScore(exercise model: YXWordExerciseModel) -> Int
 }
 
 

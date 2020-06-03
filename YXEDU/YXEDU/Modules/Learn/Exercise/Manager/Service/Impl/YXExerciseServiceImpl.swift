@@ -33,7 +33,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         fetchExerciseResultModels(planId: learnConfig.planId, completion: nil)
         
         self.clearExpiredData()
-        self.updateProgress()
+//        self.updateProgress()
         
         return self.queryExerciseModel()
     }
@@ -49,7 +49,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.clearExpiredData()
         
         // 更新状态
-        self.updateProgress()
+//        self.updateProgress()
     }
     
     func answerAction(exerciseModel: YXWordExerciseModel, right: Bool, optionIndex: Int) {

@@ -73,6 +73,9 @@ struct YXWordExerciseModel: Mappable {
         
     // 做完
     var isFinish: Bool = false
+
+    // 答题结果，是否正确
+    var result: Bool?
         
     /// 在当前轮中，是否已经完成，（当前轮完成后，不是删除数据，而且是改变状态为true）
     var isCurrentTurnFinish: Bool = false

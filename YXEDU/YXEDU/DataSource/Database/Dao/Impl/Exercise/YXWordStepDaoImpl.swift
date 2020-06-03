@@ -72,4 +72,9 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         let sql = YYSQLManager.WordStepSQL.deleteAllWordStep.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])
     }
+
+    /// 查询单词得分
+    func selecteWordScore(exercise model: YXWordExerciseModel) -> Int {
+        return 10
+    }
 }
