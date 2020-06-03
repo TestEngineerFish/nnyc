@@ -4636,7 +4636,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WXSDK1.8.7.1_NoPay",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 2.6.5;
+				MARKETING_VERSION = 2.6.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4683,7 +4683,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WXSDK1.8.7.1_NoPay",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 2.6.5;
+				MARKETING_VERSION = 2.6.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
