@@ -22,7 +22,6 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             exerciseModel.word?.unitId as Any,
             planId as Any,
             exerciseModel.isNewWord,
-            exerciseModel.group,
             exerciseModel.unfinishStepCount
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)

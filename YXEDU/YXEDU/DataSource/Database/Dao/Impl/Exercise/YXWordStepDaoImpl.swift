@@ -38,7 +38,8 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
             exerciseModel.step,
             exerciseModel.isBackup,
             exerciseModel.wrongScore,
-            exerciseModel.wrongMultiple
+            exerciseModel.wrongMultiple,
+            exerciseModel.group,
         ]
         
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)

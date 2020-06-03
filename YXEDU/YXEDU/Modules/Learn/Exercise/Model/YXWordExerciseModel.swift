@@ -36,9 +36,9 @@ struct YXWordExerciseModel: Mappable {
     /// 答案
     var answers: [Int]?
         
-    /// 得分
+    /// 得分【这个字段有歧义，开始是当题型分数来使用的，后面做了答题分数在用，后面要改】
     var score: Int = 10
-    // 做错后的减分
+    // 做错后要减去多少分
     var wrongScore = 0
     // 减分倍数
     var wrongMultiple = 1
@@ -66,7 +66,7 @@ struct YXWordExerciseModel: Mappable {
     var isNewWord: Bool = false
     
     var wordType: YXExerciseWordType = .new
-    var group: Int = 1
+    var group: Int = 0
     
     /// 第几步
     var step: Int = 0

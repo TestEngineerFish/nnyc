@@ -48,7 +48,6 @@ extension YYSQLManager {
             unit_id integer(8),
             plan_id integer(8),
             is_new integer(1) NOT NULL DEFAULT(0),
-            group_index integer(1) NOT NULL DEFAULT(0),
             power integer(1) NOT NULL DEFAULT(0),
             score integer(1) NOT NULL DEFAULT(10),
             unfinish_count integer(1) NOT NULL DEFAULT(0),
@@ -80,6 +79,7 @@ extension YYSQLManager {
             wrong_score integer(1),
             wrong_multiple integer(1),
             wrong_count integer(2),
+            group_index integer(1) NOT NULL DEFAULT(0),
             create_ts text(128) NOT NULL DEFAULT(datetime('now'))
         );
         """
@@ -135,10 +135,9 @@ extension YYSQLManager {
             unit_id,
             plan_id,
             is_new,
-            group_index,
             unfinish_count
         )
-        values(?, ?, ?, ?, ? , ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ? , ?, ?, ?, ?)
         """
         
         case insertCurrentExercise =
@@ -174,11 +173,12 @@ extension YYSQLManager {
             step,
             backup,
             wrong_score,
-            wrong_multiple
+            wrong_multiple,
+            group_index
         )
         values(
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?, ?, ?
         )
         """
         
