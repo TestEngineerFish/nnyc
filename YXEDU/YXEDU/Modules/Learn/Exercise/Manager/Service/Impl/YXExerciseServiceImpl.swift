@@ -21,10 +21,11 @@ class YXExerciseServiceImpl: YXExerciseService {
     // ----------------------------
     //MARK: - Private 属性
     /// 本地数据库访问
-    var wordDao: YXWordBookDao = YXWordBookDaoImpl()
+    var wordDao: YXWordBookDao     = YXWordBookDaoImpl()
+    var studyDao: YXStudyRecordDao = YXStudyRecordDaoImpl()
     var exerciseDao: YXExerciseDao = YXExerciseDaoImpl()
-    var stepDao: YXWordStepDao = YXWordStepDaoImpl()
-    
+    var stepDao: YXWordStepDao     = YXWordStepDaoImpl()
+
     
     // ----------------------------
     

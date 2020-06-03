@@ -102,6 +102,8 @@
 		227F478223CD967900D6C603 /* wrong.json in Resources */ = {isa = PBXBuildFile; fileRef = 227F478123CD967900D6C603 /* wrong.json */; };
 		227F478423CD968800D6C603 /* right.json in Resources */ = {isa = PBXBuildFile; fileRef = 227F478323CD968800D6C603 /* right.json */; };
 		228105D924876F960025F03F /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228105D824876F960025F03F /* libWeChatSDK.a */; };
+		228105DC2487E1FC0025F03F /* YXStudyRecordDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228105DB2487E1FC0025F03F /* YXStudyRecordDaoImpl.swift */; };
+		228105DE2487E21F0025F03F /* YXStudyRecordDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228105DD2487E21F0025F03F /* YXStudyRecordDao.swift */; };
 		228F9D4623A099C300F15F19 /* Discovery.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 228F9D4523A099C300F15F19 /* Discovery.storyboard */; };
 		2290EAC1236DB036000BCA47 /* YXRemindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2290EAC0236DB036000BCA47 /* YXRemindView.swift */; };
 		2290EAC4236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2290EAC3236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift */; };
@@ -688,6 +690,8 @@
 		228105D724876F960025F03F /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
 		228105D824876F960025F03F /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		228105DA248770720025F03F /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		228105DB2487E1FC0025F03F /* YXStudyRecordDaoImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXStudyRecordDaoImpl.swift; sourceTree = "<group>"; };
+		228105DD2487E21F0025F03F /* YXStudyRecordDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXStudyRecordDao.swift; sourceTree = "<group>"; };
 		228F9D4523A099C300F15F19 /* Discovery.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discovery.storyboard; sourceTree = "<group>"; };
 		2290EAC0236DB036000BCA47 /* YXRemindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRemindView.swift; sourceTree = "<group>"; };
 		2290EAC3236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnPrimarySchoolExerciseView.swift; sourceTree = "<group>"; };
@@ -1454,6 +1458,7 @@
 				EE3DAB9C2375122300B2FF40 /* YXWordBookDao.swift */,
 				EE1B6953246C2A91000EADB2 /* YXExerciseDao.swift */,
 				22C3A5F82477C2AF0020694E /* YXStepConfigDao.swift */,
+				228105DD2487E21F0025F03F /* YXStudyRecordDao.swift */,
 			);
 			path = Dao;
 			sourceTree = "<group>";
@@ -2540,6 +2545,7 @@
 			children = (
 				EE1B696F2473B031000EADB2 /* YXExerciseDaoImpl.swift */,
 				EE1B69682472B0C8000EADB2 /* YXWordStepDaoImpl.swift */,
+				228105DB2487E1FC0025F03F /* YXStudyRecordDaoImpl.swift */,
 			);
 			path = Exercise;
 			sourceTree = "<group>";
@@ -4015,6 +4021,7 @@
 				EEACEB9123AA12500036B3A2 /* YXSearchHeaderView.swift in Sources */,
 				EE5E0177232754FA00655654 /* QQApiManager.m in Sources */,
 				CF8F08C6242665B00067A004 /* YXLogFormatter.m in Sources */,
+				228105DC2487E1FC0025F03F /* YXStudyRecordDaoImpl.swift in Sources */,
 				EE1B69692472B0C8000EADB2 /* YXWordStepDaoImpl.swift in Sources */,
 				227F477923CC466200D6C603 /* YXWrongWordCell.swift in Sources */,
 				2202D27123A8AB6700882E5D /* YXGameResultView.swift in Sources */,
@@ -4326,6 +4333,7 @@
 				77B7C6EE23A7254200149ACE /* YXTaskCenterViewController.swift in Sources */,
 				EE7721222388D58200CD632E /* YXSwitchAnimation.swift in Sources */,
 				EE4C7CDB236817550092751D /* YXLookWordChooseImageExerciseView.swift in Sources */,
+				228105DE2487E21F0025F03F /* YXStudyRecordDao.swift in Sources */,
 				EE5EF20223273BAE00655654 /* YRHttpDownloadTask.m in Sources */,
 				2290EAC6236FCB72000BCA47 /* YXNewLearnPrimarySchoolQuestionView.swift in Sources */,
 				2290EAC1236DB036000BCA47 /* YXRemindView.swift in Sources */,
