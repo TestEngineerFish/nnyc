@@ -38,6 +38,11 @@ struct YXWordExerciseModel: Mappable {
         
     /// 得分
     var score: Int = 10
+    // 做错后的减分
+    var wrongScore = 0
+    // 减分倍数
+    var wrongMultiple = 1
+    
     var questionTypeScore: Int = 0  // 题型分[已掌握7分，不认识0分]
     var power: Int = 0 {
         didSet {
@@ -79,8 +84,10 @@ struct YXWordExerciseModel: Mappable {
         
     /// 在当前轮中，是否已经完成，（当前轮完成后，不是删除数据，而且是改变状态为true）
     var isCurrentTurnFinish: Bool = false
-    
 
+//    未学完的Step数量
+    var unfinishStepCount = 0
+    
     init() {}
     
     init?(map: Map) {

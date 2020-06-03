@@ -18,11 +18,12 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             exerciseModel.dataType.rawValue,
             exerciseModel.word?.wordId as Any,
             exerciseModel.word?.word as Any,
-            exerciseModel.wordType.rawValue,
             exerciseModel.word?.bookId as Any,
             exerciseModel.word?.unitId as Any,
             planId as Any,
-            exerciseModel.group
+            exerciseModel.isNewWord,
+            exerciseModel.group,
+            exerciseModel.unfinishStepCount
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }

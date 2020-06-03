@@ -18,6 +18,7 @@ struct YXExerciseResultModel: Mappable {
     var newWordIds: [Int]?
     var reviewWordIds: [Int]?
     var steps: [[YXWordExerciseModel]]?
+    var steps2: [[[YXWordExerciseModel]]]?
     
     init?(map: Map) {
     }
@@ -30,6 +31,7 @@ struct YXExerciseResultModel: Mappable {
         newWordIds    <- map["new_word_list"]
         reviewWordIds <- map["review_word_list"]
         steps         <- map["step_list"]
+        steps2         <- map["step_list"]
     }
 }
 

@@ -22,27 +22,23 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     func insertWordStep(type: YXExerciseRuleType, exerciseModel: YXWordExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
         
-        let bookId = exerciseModel.word?.bookId as Any
-        let unitId = exerciseModel.word?.unitId as Any
-        let learnType = exerciseModel.dataType.rawValue
-        let wordId = exerciseModel.word?.wordId as Any
-        let questionType = exerciseModel.type.rawValue
-        let questionWordId = exerciseModel.question?.wordId as Any
-        let questionWordContent = exerciseModel.question?.word as Any
-        let questionOptionCount = exerciseModel.question?.itemCount as Any
-        let questionRowCount = exerciseModel.question?.row as Any
-        let questionRolumnCount = exerciseModel.question?.column as Any
-        let questionExtScore = exerciseModel.question?.extend?.power as Any
-        let careScore = exerciseModel.isCareScore
-        let score = exerciseModel.score
-        let step = exerciseModel.step
-        let backup = exerciseModel.isBackup
-        let answer = exerciseModel.answers?.first as Any
-        let wordType = exerciseModel.wordType.rawValue
-        
         let params: [Any] = [
-            type.rawValue, bookId, unitId, learnType, wordId, questionType, questionWordId, questionWordContent, questionOptionCount,
-            questionRowCount, questionRolumnCount, questionExtScore,careScore, score, step, backup, answer, wordType
+            exerciseModel.eid,
+            exerciseModel.word?.bookId as Any,
+            exerciseModel.word?.unitId as Any,
+            exerciseModel.type.rawValue,
+            exerciseModel.question?.wordId as Any,
+            exerciseModel.question?.word as Any,
+            exerciseModel.question?.itemCount as Any,
+            exerciseModel.question?.row as Any,
+            exerciseModel.question?.column as Any,
+            exerciseModel.question?.extend?.power as Any,
+            exerciseModel.score,
+            exerciseModel.isCareScore,
+            exerciseModel.step,
+            exerciseModel.isBackup,
+            exerciseModel.wrongScore,
+            exerciseModel.wrongMultiple
         ]
         
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
