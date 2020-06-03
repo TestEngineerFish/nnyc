@@ -61,21 +61,23 @@ protocol YXExerciseService {
     // ----------------------------
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXWordExerciseModel?
+
+    /// 设置开始学习时间
+    /// - Parameters:
+    ///   - type: 学习类型
+    ///   - id: 词单ID，非必选
+    func setStartTime(type: YXExerciseDataType, plan id: Int?)
+
+    /// 更新学习时长
+    /// - Parameters:
+    ///   - type: 学习类型
+    ///   - id: 词单ID，非必选
+    func updateDurationTime(type: YXExerciseDataType, plan id: Int?)
     
-    
-    /// 做题动作，不管答题对错，都需要调用次方法修改相关状态（连线题单个选项的对错有其他的方法处理）
+    /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
     /// - Parameters:
     ///   - exerciseModel:  练习数据
-    ///   - right:          对错
-    func answerAction(exerciseModel: YXWordExerciseModel, right: Bool)
-    
-    
-    /// 连线题，仅单个选项的做题动作处理
-    /// - Parameters:
-    ///   - exerciseModel:  练习数据
-    ///   - right:          对错
-    ///   - optionIndex:    选项下标，做的是连线题的哪一个选项
-    func answerAction(exerciseModel: YXWordExerciseModel, right: Bool, optionIndex: Int)
+    func normalAnswerAction(exercise model: YXWordExerciseModel)
     
     
     /// 是否需要显示单词详情页
