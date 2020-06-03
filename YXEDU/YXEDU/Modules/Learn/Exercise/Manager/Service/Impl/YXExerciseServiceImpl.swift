@@ -43,12 +43,15 @@ class YXExerciseServiceImpl: YXExerciseService {
     func setStartTime(type: YXExerciseDataType, plan id: Int?) {
         let time = Date().local().timeIntervalSince1970
         // 数据库操作 - 设置时间
+        self.studyDao.setStartTime(type: type, plan: id, start: Int(time))
     }
 
     /// 更新学习时长
     func updateDurationTime(type: YXExerciseDataType, plan id: Int?) {
-        let startTime = Date().local().timeIntervalSince1970 // 数据库查询得到
-        // 数据库操作 - 更新时间
+        let currentTime = Int(Date().local().timeIntervalSince1970)
+        let startTime = self.studyDao.getStartTime(type: type, plan: id)
+        let duration = currentTime - startTime
+        self.studyDao.updateDurationTime(type: type, plan: id, duration: duration)
     }
 
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
