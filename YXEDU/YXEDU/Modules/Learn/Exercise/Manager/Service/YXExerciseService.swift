@@ -35,7 +35,7 @@ enum YXExerciseWordType: Int {
 
 /// 练习进度
 enum YXExerciseProgress: Int {
-    case none = 0       // 空数据
+    case none     = 0   // 空数据
     case learning = 1   // 学习中【未学完】
     case finished = 2   // 已学完【未上报】
     case reported = 3   // 已上报
