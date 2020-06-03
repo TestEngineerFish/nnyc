@@ -175,15 +175,13 @@ enum YXMiMeType: String {
         guard let parameters = request.parameters else {
             return
         }
-        
-        // 文件参数名称
-        let name: String = "file"
                 
         // 去除空值，删除文件参数
         var params = removeNilValue(parameters) ?? [:]
-        if params.keys.contains(name) {
-            params.removeValue(forKey: name)
+        if params.keys.contains("file") {
+            params.removeValue(forKey: "file")
         }
+
         
         // 构建新的header
         var headers = request.header
@@ -194,16 +192,35 @@ enum YXMiMeType: String {
         let method = HTTPMethod(rawValue: request.method.rawValue) ?? .post
     
         sessionManager.upload(multipartFormData: { (multipartFormData) in
-            guard let fileData = parameters[name] else {
+            var fileData: Any!
+            var name: String!
+            
+            if let data = parameters["file"] {
+                fileData = data
+                name = "file"
+                
+            } else if let data = parameters["files[]"] {
+                fileData = data
+                name = "files[]"
+
+            } else {
                 return
             }
+
             
             // 文件数据 （先放前面）
             if fileData is String {
                 multipartFormData.append(URL(fileURLWithPath:(fileData as! String)), withName: name, fileName: fileName, mimeType: mimeType)
+                
             } else if fileData is Data {
                 multipartFormData.append(fileData as! Data, withName: name, fileName: fileName, mimeType: mimeType)
+                
+            } else if fileData is [Data] {
+                for data in fileData as! [Data] {
+                    multipartFormData.append(data, withName: name, fileName: fileName, mimeType: mimeType)
+                }
             }
+
             
             // 普通表单参数 （放在文件数据的后面还是前面，要看后端接口的支持情况，目前是放在后面）
             // 普通表单数据使用 params 填充，删除了文件数据的
