@@ -18,7 +18,7 @@ struct YXExerciseResultModel: Mappable {
     var newWordIds: [Int]?
     var reviewWordIds: [Int]?
     var steps: [[YXExerciseModel]]?
-    var groups: [[[YXExerciseModel]]]?
+    var groups: [[[YXExerciseModel]]] = []
     var scoreRule: [YXScoreRuleModel] = []
     
     init?(map: Map) {
@@ -31,11 +31,34 @@ struct YXExerciseResultModel: Mappable {
         unitId        <- map["unit_id"]
         newWordIds    <- map["new_word_list"]
         reviewWordIds <- map["review_word_list"]
-        steps         <- map["step_list"]
-        groups         <- map["step_list"]
-        scoreRule         <- map["step_score"]
+        scoreRule     <- map["step_score"]
+//        steps         <- map["step_list"]
+//        groups        <- map["step_list"]
+
+        if let groupAnyArray = map["step_list"].currentValue as? Array<Any> {
+            for stepAny in groupAnyArray {
+                if let stepAnyArray = stepAny as? Array<Any> {
+                    var stepArray = [[YXExerciseModel]]()
+                    for stepAny in stepAnyArray {
+                        var wordModelArray = [YXExerciseModel]()
+                        if let wordAnyArray = stepAny as? Array<Any> {
+                            for wordAny in wordAnyArray {
+                                if let wordDic = wordAny as? [String:Any], let wordModel = YXExerciseModel(JSON: wordDic) {
+                                    wordModelArray.append(wordModel)
+                                }
+                            }
+                            stepArray.append(wordModelArray)
+                        }
+                    }
+                    self.groups.append(stepArray)
+                    self.steps = self.groups.first
+                }
+            }
+        }
     }
 }
+
+
 
 /// 问题数据模型
 struct YXExerciseQuestionModel: Mappable {

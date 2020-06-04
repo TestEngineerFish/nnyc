@@ -35,7 +35,6 @@ struct YXExerciseModel: Mappable {
     var option: YXExerciseOptionModel?
     /// 答案
     var answers: [Int]?
-        
     /// 得分【这个字段有歧义，开始是当题型分数来使用的，后面做了答题分数在用，后面要改】
     var score: Int = 10
     // 做错后要减去多少分
