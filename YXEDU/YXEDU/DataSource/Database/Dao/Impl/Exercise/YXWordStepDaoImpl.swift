@@ -53,7 +53,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
             exerciseModel.wrongCount,
             exerciseModel.eid,
             exerciseModel.step,
-            exerciseModel.questionTypeScore]
+            exerciseModel.group]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
@@ -74,20 +74,16 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         return (dict, wrongCount)
     }
 
-    func deleteStep(with model: YXWordExerciseModel) {
-        let sql = YYSQLManager.WordStepSQL.deleteStep.rawValue
-        let params: [Any] = [
-            model.eid,
-            model.step,
-            model.questionTypeScore]
-        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
-    }
     
     func selectExerciseProgress() -> YXExerciseProgress {
         return .reported
     }
-    
 
+    func deleteStep(with model: YXExerciseModel) {
+        let sql = YYSQLManager.WordStepSQL.deleteStep.rawValue
+        let params: [Any] = [model.eid, model.step, model.questionTypeScore]
+        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+    }
     
     @discardableResult
     func deleteExpiredWordStep() -> Bool {

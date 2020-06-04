@@ -115,6 +115,26 @@ extension YYSQLManager {
         """
 
         """
+
+        case getInfo =
+        """
+        SELECT * FROM study_record
+        WHERE learn_type = ? and plan_id = ?
+        """
+
+        case updateStartTime =
+        """
+        UPDATE study_record
+        SET start_time = ?
+        WHERE learn_type = ? and plan_id = ?
+        """
+
+        case updateDurationTime =
+        """
+        UPDATE study_record
+        SET study_duration = ?
+        WHERE learn_type = ? and plan_id = ?
+        """
         
         
         case deleteExpiredExercise = "delete from all_exercise where date(create_ts) < date('now')"

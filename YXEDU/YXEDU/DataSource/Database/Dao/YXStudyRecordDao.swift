@@ -22,12 +22,18 @@ protocol YXStudyRecordDao {
     ///   - type: 学习类型
     ///   - id: 词单ID，可选
     ///   - time: 持续时长
-    func updateDurationTime(type: YXLearnType, plan id: Int?, duration time: Int)
+    func setDurationTime(type: YXLearnType, plan id: Int?, duration time: Int)
 
     /// 获得开始学习时间
     /// - Parameters:
     ///   - type: 学习类习
     ///   - id: 词单ID，可选
     func getStartTime(type: YXLearnType, plan id: Int?) -> Int
+
+    /// 获得学习持续时间
+    /// - Parameters:
+    ///   - type: 学习类习
+    ///   - id: 词单ID，可选
+    func getDurationTime(type: YXLearnType, plan id: Int?) -> Int
     
 }

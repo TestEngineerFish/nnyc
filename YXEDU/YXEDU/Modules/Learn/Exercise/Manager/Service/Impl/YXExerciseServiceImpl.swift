@@ -51,7 +51,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         let currentTime = Int(Date().local().timeIntervalSince1970)
         let startTime = self.studyDao.getStartTime(type: type, plan: id)
         let duration = currentTime - startTime
-        self.studyDao.updateDurationTime(type: type, plan: id, duration: duration)
+        self.studyDao.setDurationTime(type: type, plan: id, duration: duration)
     }
 
     /// 做题动作，不管答题对错，都需要调用此方法修改相关状态
@@ -81,7 +81,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     /// 上报关卡
     func report(type: YXLearnType, plan id: Int?, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let reportContent = self.getReportJson(type: type, plan: id)
-        let duration      = self.getLearnDuration()
+        let duration      = self.getLearnDuration(type: type, plan: id)
         YXLog("上报内容：" + reportContent)
         YXLog("学习时长：\(duration)")
         let request = YXExerciseRequest.report(type: type.rawValue, time: duration, result: reportContent)
@@ -125,8 +125,8 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 获取学习时长
-    private func getLearnDuration() -> Int {
-        return 0
+    private func getLearnDuration(type: YXLearnType, plan id: Int?) -> Int {
+        return self.studyDao.getDurationTime(type: type, plan: id)
     }
 
     /// 更新得分
