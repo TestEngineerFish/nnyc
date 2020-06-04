@@ -48,7 +48,7 @@ extension YYSQLManager {
             unit_id integer(8),
             plan_id integer(8),
             is_new integer(1) NOT NULL DEFAULT(0),
-            power integer(1) NOT NULL DEFAULT(0),
+            mastered integer(1) NOT NULL DEFAULT(0),
             score integer(1) NOT NULL DEFAULT(10),
             unfinish_count integer(1) NOT NULL DEFAULT(0),
             create_ts text(32) NOT NULL DEFAULT(datetime('now'))
@@ -169,7 +169,7 @@ extension YYSQLManager {
         case updateExercise =
         """
         UPDATE all_exercise
-        SET power = ?, score = ?, unfinish_count = ?
+        SET mastered = ?, score = ?, unfinish_count = ?
         WHERE exercise_id = ?
         """
 

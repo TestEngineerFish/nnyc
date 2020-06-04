@@ -30,7 +30,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
     func updateExercise(exercise model: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.ExerciseSQL.updateExercise.rawValue
         let params: [Any] = [
-            model.power,
+            model.mastered ? 1 : 0,
             model.score,
             model.unfinishStepCount,
             model.eid]
@@ -75,7 +75,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         model.word?.wordId = Int(result.int(forColumn: "word_id"))
         model.word?.bookId = Int(result.int(forColumn: "book_id"))
         model.word?.unitId = Int(result.int(forColumn: "unit_id"))
-        model.power        = Int(result.int(forColumn: "power"))
+        model.mastered     = result.bool(forColumn:"mastered")
         model.score        = Int(result.int(forColumn: "score"))
         model.wrongCount   = Int(result.int(forColumn: "wrong_count"))
         model.isNewWord    = result.bool(forColumn: "is_new")

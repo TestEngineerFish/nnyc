@@ -216,7 +216,7 @@ class YXExerciseDataManager: NSObject {
         
         // 更新积分
         updateQuestionTypeScore(exerciseModel: exerciseModel)
-        updateWordScore(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, type: exerciseModel.type, isDouble: exerciseModel.power == 10)
+        updateWordScore(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right, type: exerciseModel.type, isDouble: exerciseModel.mastered)
         
         // 更新对错
         updateStepRightOrWrongStatus(wordId: exerciseModel.word?.wordId ?? 0, step: exerciseModel.step, right: right)

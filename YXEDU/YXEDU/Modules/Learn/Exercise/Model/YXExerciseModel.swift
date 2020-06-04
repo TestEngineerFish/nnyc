@@ -42,11 +42,13 @@ struct YXExerciseModel: Mappable {
     var wrongScore = 0
     // 减分倍数
     var wrongRate = 1
-    
+
+    /// 代移除
     var questionTypeScore: Int = 0  // 题型分[已掌握7分，不认识0分]
-    var power: Int = 0 {
+    /// 是否已掌握
+    var mastered: Bool = false {
         didSet {
-            if power == 10 {
+            if mastered {
                 // 移除当前单词的Step1和4
                 guard let id = self.word?.wordId else { return }
                 NotificationCenter.default.post(name: YXNotification.kNewWordMastered, object: nil, userInfo: ["id":id])
@@ -103,7 +105,7 @@ struct YXExerciseModel: Mappable {
         option   <- map["option"]
         answers  <- map["answer_list"]
         score    <- map["score"]
-        power    <- map["power"]
+        mastered <- map["mastered"]
 
         isCareScore <- map["is_care_score"]
         isBackup    <- map["is_backup"]

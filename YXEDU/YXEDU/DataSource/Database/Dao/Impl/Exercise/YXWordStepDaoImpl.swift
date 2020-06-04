@@ -48,7 +48,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     func updateExercise(exerciseModel: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.updateWordStep.rawValue
         let params: [Any] = [
-            exerciseModel.score,
+            exerciseModel.mastered ? 1 : 0,
             exerciseModel.result ?? false,
             exerciseModel.wrongCount,
             exerciseModel.eid,
@@ -81,7 +81,8 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
 
     func deleteStep(with model: YXExerciseModel) {
         let sql = YYSQLManager.WordStepSQL.deleteStep.rawValue
-        let params: [Any] = [model.eid, model.step, model.questionTypeScore]
+        let score = model.mastered ? 0 : 7
+        let params: [Any] = [model.eid, model.step, score]
         self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
     

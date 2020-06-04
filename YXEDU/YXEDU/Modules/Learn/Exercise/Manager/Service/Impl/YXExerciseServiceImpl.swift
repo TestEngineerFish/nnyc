@@ -69,7 +69,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         // 如果是0、7分题，先移除未做的题
         if _model.isCareScore {
             var deleteModel = _model
-            deleteModel.questionTypeScore = _model.questionTypeScore == 0 ? 7 : 0
+            deleteModel.mastered = !_model.mastered
             self.stepDao.deleteStep(with: deleteModel)
         }
         // 保存数据到数据库
@@ -133,7 +133,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     func updateScore(exercise model: YXExerciseModel) -> YXExerciseModel {
 
         var _model      = model
-        if model.power == 10 {
+        if model.mastered {
             _model.score -= model.result == .some(true) ? 0 : model.wrongScore * model.wrongRate
         } else {
             _model.score -= model.result == .some(true) ? 0 : model.wrongScore
