@@ -169,11 +169,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
         }
         
-        let shareVC = YXShareViewController()
-        shareVC.shareType = .learnResult
-        shareVC.wordsAmount = 10
-        shareVC.daysAmount = 10
-        self.navigationController?.pushViewController(shareVC, animated: true)
+//        let shareVC = YXShareViewController()
+//        shareVC.shareType = .learnResult
+//        shareVC.wordsAmount = 10
+//        shareVC.daysAmount = 10
+//        self.navigationController?.pushViewController(shareVC, animated: true)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
