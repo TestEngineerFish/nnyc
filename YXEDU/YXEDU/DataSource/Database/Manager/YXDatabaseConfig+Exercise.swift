@@ -199,13 +199,19 @@ extension YYSQLManager {
         """
         UPDATE all_word_step
         SET score = ?, result = ?, wrong_count = ?
-        WHERE exercise_id = ? and step = ? and group_index = ?
+        WHERE exercise_id = ? and step = ? and score = ?
         """
 
         case selsetStps =
         """
         SELECT * FROM all_word_step
         WHERE exercise_id = ? and step != 0
+        """
+
+        case deleteStep =
+        """
+        DELETE FROM all_word_step
+        WHERE exercise_id = ? and step = ? and score = ?
         """
         
         case deleteExpiredWordStep = "delete from all_word_step where date(create_ts) < date('now')"

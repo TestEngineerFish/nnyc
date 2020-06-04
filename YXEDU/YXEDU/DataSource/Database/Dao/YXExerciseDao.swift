@@ -66,10 +66,9 @@ protocol YXWordStepDao {
     /// - Returns: step结果和总的错误次数
     func getSteps(with model: YXExerciseModel) -> ([String:Any], Int)
 
-    /// 删除所有学习数据【1.学习完，2.第二天清除，3.清除缓存】
-//    func deleteExercise() -> Bool
-    
-    
+    /// 删除某一个Step
+    /// - Parameter model: 练习对象
+    func deleteStep(with model: YXWordExerciseModel)
     /// 清除过期的数据
     @discardableResult
     func deleteExpiredWordStep() -> Bool
