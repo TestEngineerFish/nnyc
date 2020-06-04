@@ -69,6 +69,7 @@ protocol YXWordStepDao {
     /// 删除某一个Step
     /// - Parameter model: 练习对象
     func deleteStep(with model: YXExerciseModel)
+
     /// 清除过期的数据
     @discardableResult
     func deleteExpiredWordStep() -> Bool
