@@ -332,11 +332,12 @@ class YXShareViewController: YXViewController {
         
         let shareImageView = YXShareImageView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: 518)))
         shareImageView.backgroundImageView.image = backgroundImage
-        shareImageView.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), completed: nil)
+        shareImageView.avatarImageView.image = YXUserModel.default.userAvatarImageView.image
         shareImageView.nameLabel.text = YXUserModel.default.username
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
+        dateFormatter.dateFormat = "EEEE MMMM, d"
+        dateFormatter.locale = Locale(identifier: "en")
         
         shareImageView.dateLabel.text = dateFormatter.string(from: Date())
         shareImageView.wordCountLabel.text = "\(self.wordsAmount)"

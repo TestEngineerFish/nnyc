@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class YXDesignableImageView: UIImageView {
+class YXDesignableImageView: YXKVOImageView {
     
     @IBInspectable
     var cornerRadius: CGFloat = 0.0 {

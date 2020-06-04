@@ -10,6 +10,8 @@ class YXUserModel: NSObject {
     @objc static var `default` = YXUserModel()
 
     private override init() {
+        self.userAvatarImageView = YXKVOImageView()
+        
         if let didLogin = YYCache.object(forKey: "DidLogin") as? Bool {
             self.didLogin = didLogin
         }
@@ -84,8 +86,14 @@ class YXUserModel: NSObject {
     var userAvatarPath: String? {
         didSet {
             YYCache.set(userAvatarPath, forKey: "UserAvatarPath")
+            
+            userAvatarImageView.showImage(with: userAvatarPath ?? "", placeholder: #imageLiteral(resourceName: "challengeAvatar"), progress: nil) { (image, error, url) in
+                YYCache.set(image, forKey: "UserAvatar")
+            }
         }
     }
+    
+    var userAvatarImageView: YXKVOImageView!
 
     var coinExplainUrl: String? {
         didSet {
