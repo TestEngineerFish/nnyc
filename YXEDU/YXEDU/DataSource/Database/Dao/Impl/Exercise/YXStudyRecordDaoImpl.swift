@@ -10,15 +10,15 @@ import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
 
-    func setStartTime(type: YXExerciseDataType, plan id: Int?, start time: Int) {
+    func setStartTime(type: YXLearnType, plan id: Int?, start time: Int) {
 
     }
 
-    func updateDurationTime(type: YXExerciseDataType, plan id: Int?, duration time: Int) {
+    func updateDurationTime(type: YXLearnType, plan id: Int?, duration time: Int) {
 
     }
 
-    func getStartTime(type: YXExerciseDataType, plan id: Int?) -> Int {
+    func getStartTime(type: YXLearnType, plan id: Int?) -> Int {
         return 0
     }
 }

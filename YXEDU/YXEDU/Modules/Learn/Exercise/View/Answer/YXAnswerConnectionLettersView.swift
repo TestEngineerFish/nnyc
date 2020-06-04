@@ -65,7 +65,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     var util: YXFindRouteUtil?
     var pan: UIPanGestureRecognizer?
 
-    init(exerciseModel: YXWordExerciseModel, config: YXConnectionLettersConfig = YXConnectionLettersConfig()) {
+    init(exerciseModel: YXExerciseModel, config: YXConnectionLettersConfig = YXConnectionLettersConfig()) {
         itemNumberH = exerciseModel.question?.row ?? 0
         itemNumberW = exerciseModel.question?.column ?? 0
         self.config = config

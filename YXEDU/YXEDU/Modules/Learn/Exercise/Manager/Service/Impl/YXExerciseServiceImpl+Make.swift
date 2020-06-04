@@ -10,7 +10,7 @@ import UIKit
 
 /// 出题逻辑，从数据库读取数据
 extension YXExerciseServiceImpl {
-    func queryExerciseModel() -> YXWordExerciseModel? {
+    func queryExerciseModel() -> YXExerciseModel? {
         
         if learnConfig.learnType != .base {
             

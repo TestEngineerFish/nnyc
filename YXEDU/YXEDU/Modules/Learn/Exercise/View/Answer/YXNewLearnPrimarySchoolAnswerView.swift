@@ -150,12 +150,12 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     weak var newLearnDelegate: YXNewLearnProtocol?
     
-    init(wordModel: YXWordModel?, exerciseModel: YXWordExerciseModel?) {
+    init(wordModel: YXWordModel?, exerciseModel: YXExerciseModel?) {
         if let exerciseModel = exerciseModel {
             super.init(exerciseModel: exerciseModel)
             self.isNewLearn = true
         } else {
-            var exerciseModel = YXWordExerciseModel()
+            var exerciseModel = YXExerciseModel()
             exerciseModel.word = wordModel
             super.init(exerciseModel: exerciseModel)
             self.isNewLearn = false

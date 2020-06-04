@@ -13,7 +13,7 @@ import UIKit
 protocol YXExerciseViewDelegate: NSObjectProtocol {
     /// 普通题型练习完成（不包括连线题）
     /// - Parameter right: 是否答对
-    func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool)
+    func exerciseCompletion(_ exerciseModel: YXExerciseModel, _ right: Bool)
     /// 隐藏底部右侧视图
     func showTipsButton()
     /// 显示底部右侧视图
@@ -32,7 +32,7 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
 /// 练习模块基类：内容主页面，包括题目View、答案View、TipsView
 class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YXExerciseViewControllerProtocol {
 
-    var exerciseModel: YXWordExerciseModel
+    var exerciseModel: YXExerciseModel
     
     /// 是否做错过
     var isWrong: Bool = false
@@ -76,7 +76,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
         YXLog("练习view 释放")
     }
 
-    init(exerciseModel: YXWordExerciseModel) {
+    init(exerciseModel: YXExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.white
@@ -169,7 +169,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     
     // MARK: ==== YXAnswerViewDelegate ====
 
-    func answerCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
+    func answerCompletion(_ exerciseModel: YXExerciseModel, _ right: Bool) {
         self.exerciseDelegate?.exerciseCompletion(exerciseModel, right)
     }
 

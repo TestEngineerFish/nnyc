@@ -13,19 +13,19 @@ protocol YXExerciseDao {
     // TODO: ==== 插入 ====add
     /// 添加练习数据
     /// - Parameter exerciseModel: 练习
-    func insertExercise(type: YXExerciseRuleType, planId: Int?, exerciseModel: YXWordExerciseModel) -> Int
+    func insertExercise(type: YXExerciseRuleType, planId: Int?, exerciseModel: YXExerciseModel) -> Int
 
     /// 更新练习记录
     /// - Parameter model: 练习对象
     @discardableResult
-    func updateExercise(exercise model: YXWordExerciseModel) -> Bool
+    func updateExercise(exercise model: YXExerciseModel) -> Bool
 
 
     /// 获得当前学习流程的所有练习
     /// - Parameters:
     ///   - type: 学习类型
     ///   - id: 词单ID，可选
-    func getAllExercise(type: YXExerciseDataType, plan id: Int?) -> [YXWordExerciseModel]
+    func getAllExercise(type: YXLearnType, plan id: Int?) -> [YXExerciseModel]
 
     /// 清除过期的数据
     @discardableResult
@@ -41,11 +41,11 @@ protocol YXWordStepDao {
     // TODO: ==== 查询 ====
     /// 查询练习数据
     /// - Parameter type: 单词类型【1.新学；2.训练；3.复习】
-    func selectExercise(type: Int) -> YXWordExerciseModel?
+    func selectExercise(type: Int) -> YXExerciseModel?
     
     /// 查询连线题的备份数据
     /// - Parameter wordId: 单词Id
-    func selectBackupExercise(wordId: Int, step: Int) -> YXWordExerciseModel?
+    func selectBackupExercise(wordId: Int, step: Int) -> YXExerciseModel?
     
     /// 查询练习进度
     func selectExerciseProgress() -> YXExerciseProgress
@@ -53,18 +53,18 @@ protocol YXWordStepDao {
     // TODO: ==== 插入 ====add
     /// 添加练习数据
     /// - Parameter exerciseModel: 练习
-    func insertWordStep(type: YXExerciseRuleType, exerciseModel: YXWordExerciseModel) -> Bool
+    func insertWordStep(type: YXExerciseRuleType, exerciseModel: YXExerciseModel) -> Bool
     
     // TODO: ==== 修改/删除 ====
     /// 更新练习数据状态
     /// - Parameter exerciseModel: 练习
     @discardableResult
-    func updateExercise(exerciseModel: YXWordExerciseModel) -> Bool
+    func updateExercise(exerciseModel: YXExerciseModel) -> Bool
 
     /// 获取单词的所有已做的练习题，字典返回，用于上报
     /// - Parameter model: 练习对象
     /// - Returns: step结果和总的错误次数
-    func getSteps(with model: YXWordExerciseModel) -> ([String:Any], Int)
+    func getSteps(with model: YXExerciseModel) -> ([String:Any], Int)
 
     /// 删除所有学习数据【1.学习完，2.第二天清除，3.清除缓存】
 //    func deleteExercise() -> Bool
@@ -76,14 +76,14 @@ protocol YXWordStepDao {
     
     func deleteAllWordStep() -> Bool
     /// 查询单词得分
-    func selecteWordScore(exercise model: YXWordExerciseModel) -> Int
+    func selecteWordScore(exercise model: YXExerciseModel) -> Int
 }
 
 
 
 protocol YXAllExerciseDao {
     // 更新当前练习的数据
-    func updateCurrentExercise(type: YXExerciseDataType,bookId: Int, unitId: Int) -> Bool
+    func updateCurrentExercise(type: YXLearnType,bookId: Int, unitId: Int) -> Bool
     
     
     /// 删除当前练习的数据

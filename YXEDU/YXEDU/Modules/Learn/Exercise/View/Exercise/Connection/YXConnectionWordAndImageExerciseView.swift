@@ -109,7 +109,7 @@ class YXConnectionWordAndImageExerciseView: YXBaseExerciseView {
     }
     
     func selectWord(wordId: Int) -> YXWordModel? {
-        if exerciseModel.dataType == .base {
+        if exerciseModel.learnType == .base {
             let bookId = exerciseModel.word?.bookId ?? 0
             return YXWordBookDaoImpl().selectWord(bookId: bookId, wordId: wordId)
         } else {

@@ -10,16 +10,16 @@ import UIKit
 
 class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     
-    func selectExercise(type: Int) -> YXWordExerciseModel? {
+    func selectExercise(type: Int) -> YXExerciseModel? {
         return nil
     }
     
-    func selectBackupExercise(wordId: Int, step: Int) -> YXWordExerciseModel? {
+    func selectBackupExercise(wordId: Int, step: Int) -> YXExerciseModel? {
         return nil
     }
     
     
-    func insertWordStep(type: YXExerciseRuleType, exerciseModel: YXWordExerciseModel) -> Bool {
+    func insertWordStep(type: YXExerciseRuleType, exerciseModel: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
         
         let params: [Any] = [
@@ -45,7 +45,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func updateExercise(exerciseModel: YXWordExerciseModel) -> Bool {
+    func updateExercise(exerciseModel: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.updateWordStep.rawValue
         let params: [Any] = [
             exerciseModel.score,
@@ -57,7 +57,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func getSteps(with model: YXWordExerciseModel) -> ([String:Any], Int) {
+    func getSteps(with model: YXExerciseModel) -> ([String:Any], Int) {
         let sql = YYSQLManager.WordStepSQL.selsetStps.rawValue
         let params: [Any] = [model.eid]
         var dict = [String:Any]()
@@ -96,7 +96,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     }
 
     /// 查询单词得分
-    func selecteWordScore(exercise model: YXWordExerciseModel) -> Int {
+    func selecteWordScore(exercise model: YXExerciseModel) -> Int {
         return 10
     }
 }

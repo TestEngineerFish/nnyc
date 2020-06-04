@@ -30,7 +30,7 @@ enum YXRemindType: Int {
 class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     
     public var remindSteps: [[YXRemindType]] = []
-    public var exerciseModel: YXWordExerciseModel
+    public var exerciseModel: YXExerciseModel
     
     private var remindLabel = UILabel()
 
@@ -48,7 +48,7 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
 
     weak var delegate: YXRemindViewProtocol?
     
-    init(exerciseModel: YXWordExerciseModel) {
+    init(exerciseModel: YXExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
         self.createSubview()

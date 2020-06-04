@@ -57,7 +57,7 @@ extension YXExerciseDataManager {
         for wordId in result?.newWordIds ?? [] {
             let bookId = result?.bookId ?? 0
             if let word = dao.selectWord(bookId: bookId, wordId: wordId) {
-                var exercise = YXWordExerciseModel()
+                var exercise = YXExerciseModel()
                 exercise.question = createQuestionModel(word: word)
                 exercise.word = word
                 exercise.isNewWord = true
@@ -122,7 +122,7 @@ extension YXExerciseDataManager {
         
     }
     
-    func addWordStep(exerciseModel: YXWordExerciseModel, isBackup: Bool) {
+    func addWordStep(exerciseModel: YXExerciseModel, isBackup: Bool) {
         
         let step = exerciseModel.step
         
@@ -169,8 +169,8 @@ extension YXExerciseDataManager {
     }
 
     
-    func reviewWords() -> [YXWordExerciseModel] {
-        var array: [YXWordExerciseModel] = []
+    func reviewWords() -> [YXExerciseModel] {
+        var array: [YXExerciseModel] = []
         for word in reviewWordArray {
             if let e = word.exerciseSteps.first?.first {
                 array.append(e)
@@ -179,7 +179,7 @@ extension YXExerciseDataManager {
         return array
     }
     
-    func isNewWordStatus(wordId: Int, exerciseArray: [YXWordExerciseModel]) -> Bool {
+    func isNewWordStatus(wordId: Int, exerciseArray: [YXExerciseModel]) -> Bool {
         for exercise in exerciseArray {
             if wordId == exercise.question?.wordId {
                 return exercise.isNewWord

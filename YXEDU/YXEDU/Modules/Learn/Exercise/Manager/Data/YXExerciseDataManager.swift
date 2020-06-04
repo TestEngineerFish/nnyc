@@ -9,14 +9,14 @@
 import UIKit
 import ObjectMapper
 
-@objc enum YXExerciseDataType: Int {
+@objc enum YXLearnType: Int {
     case base = 1               // 基础学习
     case wrong = 2              // 抽查
     case planListenReview = 3   // 计划——听力复习
     case planReview = 4         // 计划——复习
     case aiReview = 5           // 智能复习
 
-    static func transform(raw: Int) -> YXExerciseDataType {
+    static func transform(raw: Int) -> YXLearnType {
         switch raw {
         case 1:
             return .base
@@ -45,7 +45,7 @@ enum YXExerciseDataStatus: Int {
 class YXExerciseDataManager: NSObject {
     /// 哪本书，哪个单元
     public var bookId: Int?, unitId: Int?
-    public var dataType: YXExerciseDataType = .base
+    public var dataType: YXLearnType = .base
     public var ruleType: YXExerciseRuleType = .p0
     
     /// 进度管理器
@@ -69,7 +69,7 @@ class YXExerciseDataManager: NSObject {
     var needNewStudyCount = 0, needReviewCount = 0
     
     /// 新学跟读集合
-    var newWordArray: [YXWordExerciseModel] = []
+    var newWordArray: [YXExerciseModel] = []
     /// 训练和复习单词集合
     var reviewWordArray: [YXWordStepsModel] = []
     
@@ -80,7 +80,7 @@ class YXExerciseDataManager: NSObject {
     var exerciseWordIdArray: [Int] = [], reviewWordIdArray: [Int] = []
     
     /// 当前轮
-    var currentTurnArray: [YXWordExerciseModel] = []
+    var currentTurnArray: [YXExerciseModel] = []
     
     /// 本地数据库访问
     var dao: YXWordBookDao!
@@ -121,7 +121,7 @@ class YXExerciseDataManager: NSObject {
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
-    func fetchTodayExerciseResultModels(type: YXExerciseDataType, planId: Int? = nil, completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
+    func fetchTodayExerciseResultModels(type: YXLearnType, planId: Int? = nil, completion: @escaping ((_ result: Bool, _ msg: String?) -> Void)) {
         let request = YXExerciseRequest.exercise(type: type.rawValue, planId: planId)
         YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
             self.processExerciseData(result: response.data)
@@ -180,7 +180,7 @@ class YXExerciseDataManager: NSObject {
 
     
     /// 从当前关卡数据中，获取一个练习数据对象
-    func fetchOneExerciseModel() -> YXWordExerciseModel? {
+    func fetchOneExerciseModel() -> YXExerciseModel? {
         // 打印
         printCurrentTurn()
 
@@ -209,7 +209,7 @@ class YXExerciseDataManager: NSObject {
     /// - Parameters:
     ///   - exerciseModel: 练习数据
     ///   - right: 对错
-    func normalAnswerAction(exerciseModel: YXWordExerciseModel, right: Bool) {
+    func normalAnswerAction(exerciseModel: YXExerciseModel, right: Bool) {
         
         // 更新每个练习的完成状态
         updateNormalExerciseFinishStatus(exerciseModel: exerciseModel, right: right)
@@ -257,7 +257,7 @@ class YXExerciseDataManager: NSObject {
     /// 上报关卡
     /// - Parameter test: 参数待定
     /// - Parameter completion: 上报后成功或失败的回调处理
-    func reportExercise(type: YXExerciseDataType, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+    func reportExercise(type: YXLearnType, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let result = self.reportJson()
         YXLog("上报内容：" + result)
         let duration = progressManager.fetchStudyDuration()

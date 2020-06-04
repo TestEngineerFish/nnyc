@@ -141,7 +141,7 @@
         dataManager.progressManager.planId = learnConfig.planId
         dataManager.progressManager.dataType = learnConfig.learnType
                         
-        var array: [YXExerciseDataType] = [.base, .aiReview, .planListenReview, .planReview, .wrong]
+        var array: [YXLearnType] = [.base, .aiReview, .planListenReview, .planReview, .wrong]
         array = []
         for type in array {
             dataManager.progressManager.dataType = type
@@ -224,7 +224,7 @@
         let data = dataManager.fetchOneExerciseModel()
         
         if var model = data {
-            model.dataType = learnConfig.learnType
+            model.learnType = learnConfig.learnType
 
             YXRequestLog("==== 题目内容：%@", model.toJSONString() ?? "--")
             // 小学新学
@@ -382,7 +382,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
 
     ///答完题回调处理， 正常题型处理（不包括连线题）
     /// - Parameter right:
-    func exerciseCompletion(_ exerciseModel: YXWordExerciseModel, _ right: Bool) {
+    func exerciseCompletion(_ exerciseModel: YXExerciseModel, _ right: Bool) {
         YXLog("回答" + (right ? "正确" : "错误"))
         // 答题后，数据处理
         self.dataManager.normalAnswerAction(exerciseModel: exerciseModel, right: right)

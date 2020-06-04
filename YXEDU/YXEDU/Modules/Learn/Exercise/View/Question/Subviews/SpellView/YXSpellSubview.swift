@@ -28,11 +28,11 @@ class YXSpellSubview: UIView {
     var maxX   = CGFloat(0)
     var isTitle: Bool
 
-    var exerciseModel: YXWordExerciseModel
+    var exerciseModel: YXExerciseModel
     var wordViewList = [YXLackWordView]()
     var resultArrary: [NSRange]?
 
-    init(_ model: YXWordExerciseModel, isTitle: Bool) {
+    init(_ model: YXExerciseModel, isTitle: Bool) {
         self.exerciseModel = model
         self.isTitle       = isTitle
         super.init(frame: CGRect.zero)

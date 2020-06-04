@@ -10,12 +10,12 @@ import UIKit
 
 class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
     
-    func insertExercise(type: YXExerciseRuleType, planId: Int? = nil, exerciseModel: YXWordExerciseModel) -> Int {
+    func insertExercise(type: YXExerciseRuleType, planId: Int? = nil, exerciseModel: YXExerciseModel) -> Int {
         
         let sql = YYSQLManager.ExerciseSQL.insertExercise.rawValue
         let params: [Any] = [
             type.rawValue,
-            exerciseModel.dataType.rawValue,
+            exerciseModel.learnType.rawValue,
             exerciseModel.word?.wordId as Any,
             exerciseModel.word?.word as Any,
             exerciseModel.word?.bookId as Any,
@@ -24,10 +24,10 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             exerciseModel.isNewWord,
             exerciseModel.unfinishStepCount
         ]
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? self.wordRunner.lastInsertRowId : 0
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? Int(self.wordRunner.lastInsertRowId) : 0
     }
 
-    func updateExercise(exercise model: YXWordExerciseModel) -> Bool {
+    func updateExercise(exercise model: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.ExerciseSQL.updateExercise.rawValue
         let params: [Any] = [
             model.power,
@@ -37,8 +37,8 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func getAllExercise(type: YXExerciseDataType, plan id: Int?) -> [YXWordExerciseModel] {
-        var modelList = [YXWordExerciseModel]()
+    func getAllExercise(type: YXLearnType, plan id: Int?) -> [YXExerciseModel] {
+        var modelList = [YXExerciseModel]()
         let sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
         let params: [Any] = [type, id ?? 0]
         let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params)
@@ -63,13 +63,13 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
 
     // MARK: ==== Tools ====
     /// 转换练习模型
-    private func transformModel(result: FMResultSet?) -> YXWordExerciseModel? {
+    private func transformModel(result: FMResultSet?) -> YXExerciseModel? {
         guard let result = result else {
             return nil
         }
-        var model = YXWordExerciseModel()
+        var model = YXExerciseModel()
         model.eid          = Int(result.int(forColumn: "exercise_id"))
-        model.dataType     = YXExerciseDataType.transform(raw: Int(result.int(forColumn: "learn_type")))
+        model.learnType     = YXLearnType.transform(raw: Int(result.int(forColumn: "learn_type")))
         model.word         = YXWordModel()
         model.word?.word   = result.string(forColumn: "word")
         model.word?.wordId = Int(result.int(forColumn: "word_id"))

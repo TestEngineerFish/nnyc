@@ -30,7 +30,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     // ----------------------------
     
     //MARK: - 方法
-    func fetchExerciseModel() -> YXWordExerciseModel? {
+    func fetchExerciseModel() -> YXExerciseModel? {
         fetchExerciseResultModels(planId: learnConfig.planId, completion: nil)
         
         self.clearExpiredData()
@@ -40,14 +40,14 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 设置开始学习时间
-    func setStartTime(type: YXExerciseDataType, plan id: Int?) {
+    func setStartTime(type: YXLearnType, plan id: Int?) {
         let time = Date().local().timeIntervalSince1970
         // 数据库操作 - 设置时间
         self.studyDao.setStartTime(type: type, plan: id, start: Int(time))
     }
 
     /// 更新学习时长
-    func updateDurationTime(type: YXExerciseDataType, plan id: Int?) {
+    func updateDurationTime(type: YXLearnType, plan id: Int?) {
         let currentTime = Int(Date().local().timeIntervalSince1970)
         let startTime = self.studyDao.getStartTime(type: type, plan: id)
         let duration = currentTime - startTime
@@ -57,7 +57,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     /// 做题动作，不管答题对错，都需要调用此方法修改相关状态
     /// - Parameters:
     ///   - model: 练习对象
-    func normalAnswerAction(exercise model: YXWordExerciseModel) {
+    func normalAnswerAction(exercise model: YXExerciseModel) {
         var _model = model
         let ignoreTypeArray: [YXQuestionType] = [.newLearnPrimarySchool,
                                                  .newLearnPrimarySchool_Group,
@@ -77,7 +77,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 上报关卡
-    func report(type: YXExerciseDataType, plan id: Int?, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+    func report(type: YXLearnType, plan id: Int?, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let reportContent = self.getReportJson(type: type, plan: id)
         let duration      = self.getLearnDuration()
         YXLog("上报内容：" + reportContent)
@@ -103,7 +103,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     // ----------------------------
     //MARK: - Private 方法
     /// 获取上报内容
-    private func getReportJson(type: YXExerciseDataType, plan id: Int?) -> String {
+    private func getReportJson(type: YXLearnType, plan id: Int?) -> String {
         var modelArray = [YXExerciseReportModel]()
         // 获得所有学习的单词单词
         let exerciseModelList = self.exerciseDao.getAllExercise(type: type, plan: id)
@@ -128,7 +128,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 更新得分
-    func updateScore(exercise model: YXWordExerciseModel) -> YXWordExerciseModel {
+    func updateScore(exercise model: YXExerciseModel) -> YXExerciseModel {
 
         var _model      = model
         if model.power == 10 {
@@ -142,12 +142,12 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 更新、保存Step到数据库
-    func saveStep(exercise model: YXWordExerciseModel) {
+    func saveStep(exercise model: YXExerciseModel) {
         self.stepDao.updateExercise(exerciseModel: model)
     }
 
     /// 更新进度
-    func updateProgress(exercise model: YXWordExerciseModel) {
+    func updateProgress(exercise model: YXExerciseModel) {
         if model.result == .some(true) {
             var _model = model
             _model.unfinishStepCount -= 1

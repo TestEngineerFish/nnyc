@@ -25,7 +25,7 @@ class YXNewLearnPrimarySchoolWordGroupQuestionView: YXBaseQuestionView {
         return label
     }()
 
-    override init(exerciseModel: YXWordExerciseModel) {
+    override init(exerciseModel: YXExerciseModel) {
         super.init(exerciseModel: exerciseModel)
         self.layer.removeShadow()
         self.clipsToBounds = true

@@ -80,9 +80,9 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         }
     }
     
-    var exercisType: YXExerciseDataType
+    var exercisType: YXLearnType
     
-    init(type: YXExerciseDataType) {
+    init(type: YXLearnType) {
         exercisType = type
         super.init(frame: kWindow.bounds)
         self.createSubviews()

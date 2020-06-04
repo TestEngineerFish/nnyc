@@ -12,7 +12,7 @@ import UIKit
 /// 复习结果页（除基础学习外）
 class YXExerciseResultViewController: YXViewController {
     
-    var dataType: YXExerciseDataType = .planReview
+    var dataType: YXLearnType = .planReview
     var planId: Int = 0
     
     var model: YXExerciseResultDisplayModel?

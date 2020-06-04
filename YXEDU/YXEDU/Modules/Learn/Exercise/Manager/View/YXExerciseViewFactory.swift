@@ -14,7 +14,7 @@ struct YXExerciseViewFactory {
     
     /// 工厂方法，构建练习视图
     /// - Parameter exerciseModel: 单词数据模型
-    static func buildView(exerciseModel: YXWordExerciseModel) -> YXBaseExerciseView {
+    static func buildView(exerciseModel: YXExerciseModel) -> YXBaseExerciseView {
 
         switch exerciseModel.type {
         //MARK: choose

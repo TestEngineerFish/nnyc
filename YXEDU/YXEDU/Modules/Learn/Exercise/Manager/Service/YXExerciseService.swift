@@ -60,24 +60,24 @@ protocol YXExerciseService {
     //MARK: - 方法
     // ----------------------------
     /// 获取一个练习数据
-    func fetchExerciseModel() -> YXWordExerciseModel?
+    func fetchExerciseModel() -> YXExerciseModel?
 
     /// 设置开始学习时间
     /// - Parameters:
     ///   - type: 学习类型
     ///   - id: 词单ID，非必选
-    func setStartTime(type: YXExerciseDataType, plan id: Int?)
+    func setStartTime(type: YXLearnType, plan id: Int?)
 
     /// 更新学习时长
     /// - Parameters:
     ///   - type: 学习类型
     ///   - id: 词单ID，非必选
-    func updateDurationTime(type: YXExerciseDataType, plan id: Int?)
+    func updateDurationTime(type: YXLearnType, plan id: Int?)
     
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
     /// - Parameters:
     ///   - exerciseModel:  练习数据
-    func normalAnswerAction(exercise model: YXWordExerciseModel)
+    func normalAnswerAction(exercise model: YXExerciseModel)
     
     
     /// 是否需要显示单词详情页

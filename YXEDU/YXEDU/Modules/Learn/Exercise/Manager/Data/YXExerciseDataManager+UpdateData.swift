@@ -11,7 +11,7 @@ import UIKit
 extension YXExerciseDataManager {
     /// 更新正常题型练习的完成状态 （不包括连线题）
     /// - Parameter exerciseModel: 哪个练习
-    func updateNormalExerciseFinishStatus(exerciseModel: YXWordExerciseModel, right: Bool) {
+    func updateNormalExerciseFinishStatus(exerciseModel: YXExerciseModel, right: Bool) {
         if exerciseModel.isListenAndRepeat && (exerciseModel.type == .newLearnPrimarySchool || exerciseModel.type == .newLearnPrimarySchool_Group || exerciseModel.type == .newLearnJuniorHighSchool) {
             
             for (i, e) in newWordArray.enumerated() {
@@ -39,7 +39,7 @@ extension YXExerciseDataManager {
     
     
     /// 连线题型 ，连线题所有项全部连完
-    func updateConnectionExerciseFinishStatus(exerciseModel: YXWordExerciseModel, right: Bool) {
+    func updateConnectionExerciseFinishStatus(exerciseModel: YXExerciseModel, right: Bool) {
         // 进入这个分支，表示连线题，所有项都完成（不管中间是否有出错）
         for item in exerciseModel.option?.firstItems ?? [] {
             updateCurrentTurnStatus(wordId: item.optionId)
@@ -87,7 +87,7 @@ extension YXExerciseDataManager {
     
     /// 更新题型得分
     /// - Parameter exerciseModel: <#exerciseModel description#>
-    public func updateQuestionTypeScore(exerciseModel: YXWordExerciseModel) {
+    public func updateQuestionTypeScore(exerciseModel: YXExerciseModel) {
         // 只有初中新学，才更新题型分
         if exerciseModel.type == .newLearnJuniorHighSchool {
             if let wordId = exerciseModel.word?.wordId {

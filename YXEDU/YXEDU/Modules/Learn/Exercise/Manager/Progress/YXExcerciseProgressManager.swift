@@ -14,7 +14,7 @@ class YXExcerciseProgressManager: NSObject {
     
     public var bookId: Int? { didSet { updateBookId() } }
     public var unitId: Int? { didSet { updateUnitId() } }
-    public var dataType: YXExerciseDataType = .base
+    public var dataType: YXLearnType = .base
     public var planId: Int?
     
     /// 本地存储Key
@@ -114,7 +114,7 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    class func isCompletion(bookId: Int, unitId: Int, dataType: YXExerciseDataType) -> Bool {
+    class func isCompletion(bookId: Int, unitId: Int, dataType: YXLearnType) -> Bool {
         let manager = YXExcerciseProgressManager()
         manager.bookId = bookId
         manager.unitId = unitId
@@ -162,11 +162,11 @@ class YXExcerciseProgressManager: NSObject {
     
     
     /// 本地未学完的数据
-    func loadLocalExerciseModels() -> ([YXWordExerciseModel], [YXWordStepsModel]) {
+    func loadLocalExerciseModels() -> ([YXExerciseModel], [YXWordStepsModel]) {
         var filePath = YXFileManager.share.getStudyPath() + key(.new)
-        var new: [YXWordExerciseModel]?
+        var new: [YXExerciseModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
-            new = Array<YXWordExerciseModel>(JSONString: str)
+            new = Array<YXExerciseModel>(JSONString: str)
         }
         
         filePath = YXFileManager.share.getStudyPath() + key(.review)
@@ -178,11 +178,11 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    func loadLocalTurnData() -> [YXWordExerciseModel] {
+    func loadLocalTurnData() -> [YXExerciseModel] {
         var filePath = YXFileManager.share.getStudyPath() + key(.current)
-        var current: [YXWordExerciseModel]?
+        var current: [YXExerciseModel]?
         if let str = try? String(contentsOfFile: filePath, encoding: .utf8) {
-            current = Array<YXWordExerciseModel>(JSONString: str)
+            current = Array<YXExerciseModel>(JSONString: str)
         }
         
         filePath = YXFileManager.share.getStudyPath() + key(.previous)
@@ -215,13 +215,13 @@ class YXExcerciseProgressManager: NSObject {
     /// - Parameters:
     ///   - newExerciseModel: 新学
     ///   - reviewExerciseModel: 复习
-    func updateProgress(newWordArray: [YXWordExerciseModel], reviewWordArray: [YXWordStepsModel]) {
+    func updateProgress(newWordArray: [YXExerciseModel], reviewWordArray: [YXWordStepsModel]) {
         self.saveToLocalFile(jsonString: newWordArray.toJSONString(), localKey: .new)
         self.saveToLocalFile(jsonString: reviewWordArray.toJSONString(), localKey: .review)
     }
     
     
-    func updateTurnProgress(currentTurnArray: [YXWordExerciseModel]) {
+    func updateTurnProgress(currentTurnArray: [YXExerciseModel]) {
         self.saveToLocalFile(jsonString: currentTurnArray.toJSONString(), localKey: .current)
     }
     

@@ -63,7 +63,7 @@ class YXConnectionView: UIView {
     }
     
     
-    var exerciseModel: YXWordExerciseModel? {
+    var exerciseModel: YXExerciseModel? {
         didSet { bindData() }
     }
 
@@ -88,7 +88,7 @@ class YXConnectionView: UIView {
     /// 点击后连线状态， 用于防止快速点击时出错, true 连线完毕，false连线中
     private var connectionStatus: Bool = true
     
-    init(exerciseModel: YXWordExerciseModel) {
+    init(exerciseModel: YXExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
         self.addGesture()
@@ -187,7 +187,7 @@ class YXConnectionView: UIView {
     }
     
     func selectWord(wordId: Int) -> YXWordModel? {
-        if exerciseModel?.dataType == .base {
+        if exerciseModel?.learnType == .base {
             let bookId = exerciseModel?.word?.bookId ?? 0
             return YXWordBookDaoImpl().selectWord(bookId: bookId, wordId: wordId)
         } else {

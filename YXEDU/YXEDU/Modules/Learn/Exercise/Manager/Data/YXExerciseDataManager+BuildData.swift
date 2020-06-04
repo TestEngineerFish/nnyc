@@ -11,7 +11,7 @@ import UIKit
 extension YXExerciseDataManager {
     
     // 新学出题【跟读】
-    func buildNewExercise() ->YXWordExerciseModel? {
+    func buildNewExercise() ->YXExerciseModel? {
 
         // 不跳过，才从新学取
         if self.isSkipNewWord() {
@@ -36,7 +36,7 @@ extension YXExerciseDataManager {
     }
 
     /// 出题逻辑（根据step，上轮对错）
-    func buildExercise() -> YXWordExerciseModel? {
+    func buildExercise() -> YXExerciseModel? {
         // 筛选数据
         self.filterExercise()
         
@@ -183,7 +183,7 @@ extension YXExerciseDataManager {
     
     // 转换下标
     func transformIndex(stepModel: YXWordStepsModel) -> Int {
-        var exercise: YXWordExerciseModel? = nil
+        var exercise: YXExerciseModel? = nil
         for step in stepModel.exerciseSteps {
             if step.count > 0 {
                 exercise = step.first
@@ -204,7 +204,7 @@ extension YXExerciseDataManager {
     
     /// 转换大小
     func transformSize(stepModel: YXWordStepsModel) -> Int {
-        var exercise: YXWordExerciseModel? = nil
+        var exercise: YXExerciseModel? = nil
         for step in stepModel.exerciseSteps {
             if step.count > 0 {
                 exercise = step.first
@@ -235,7 +235,7 @@ extension YXExerciseDataManager {
             }
         }
         
-        var array: [YXWordExerciseModel] = []
+        var array: [YXExerciseModel] = []
         if hasCurrentTurnStep {
             for e in currentTurnArray {
                 if e.step <= currentTurnIndex {
@@ -260,8 +260,8 @@ extension YXExerciseDataManager {
         if isChangeBatch {
             isChangeBatch = false
             
-            var tmpExerciseArray: [YXWordExerciseModel] = []
-            var tmpReviewArray: [YXWordExerciseModel] = []
+            var tmpExerciseArray: [YXExerciseModel] = []
+            var tmpReviewArray: [YXExerciseModel] = []
             for exercise in currentTurnArray {
                 if exercise.isNewWord {
                     tmpExerciseArray.append(exercise)
@@ -345,13 +345,13 @@ extension YXExerciseDataManager {
     
     
     /// 查找题型
-    func findType() -> YXWordExerciseModel? {
+    func findType() -> YXExerciseModel? {
         // 连线题中，是否有单词拼写相同的，如果有都用备选题
         var sameWordIds: [Int] = []
         
         /// 连线题型
         if let ct = findConnectionType() {
-            var connectionArray: [YXWordExerciseModel] = []
+            var connectionArray: [YXExerciseModel] = []
             for exercise in currentTurnArray {
                 if exercise.step == ct.0 && exercise.type == ct.1 && exercise.isCurrentTurnFinish == false {
                     connectionArray.append(exercise)
@@ -437,7 +437,7 @@ extension YXExerciseDataManager {
     /// - Parameters:
     ///   - wordId: 单词Id
     ///   - step: 步骤
-    func backupExercise(wordId: Int, step: Int) -> YXWordExerciseModel? {
+    func backupExercise(wordId: Int, step: Int) -> YXExerciseModel? {
         for word in reviewWordArray {
             if word.wordId == wordId {
                 return word.backupExerciseStep[String(step)]
@@ -448,8 +448,8 @@ extension YXExerciseDataManager {
    
     /// 获取单词下某个step 具体的练习数据，可能需要根据得分来获取
     /// - Parameter exerciseArray:
-    func fetchExerciseOfStep(exerciseArray: [YXWordExerciseModel]) -> YXWordExerciseModel? {
-        var model: YXWordExerciseModel?
+    func fetchExerciseOfStep(exerciseArray: [YXExerciseModel]) -> YXExerciseModel? {
+        var model: YXExerciseModel?
         if exerciseArray.count > 1 { // 根据得分取
             for exercise in exerciseArray {
                 if exercise.isCareScore && exercise.score == fetchQuestionTypeScore(wordId: exercise.word?.wordId ?? 0) {
@@ -471,7 +471,7 @@ extension YXExerciseDataManager {
     }
     
     
-    func sameWordIdArray(connectionArray: [YXWordExerciseModel]) -> [Int] {
+    func sameWordIdArray(connectionArray: [YXExerciseModel]) -> [Int] {
         var ids: [Int] = []
         for exercise in connectionArray {
             for e in connectionArray {

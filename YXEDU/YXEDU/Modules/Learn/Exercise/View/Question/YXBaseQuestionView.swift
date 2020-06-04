@@ -15,7 +15,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     let topPadding    = CGFloat(54)
     let bottomPadding = CGFloat(54)
     
-    var exerciseModel: YXWordExerciseModel
+    var exerciseModel: YXExerciseModel
     
     /// 主标题
     var titleLabel: UILabel?
@@ -32,7 +32,7 @@ class YXBaseQuestionView: YXView, YXAnswerEventProtocol {
     /// 播放器
     var audioPlayerView: YXAudioPlayerView?
     
-    init(exerciseModel: YXWordExerciseModel) {
+    init(exerciseModel: YXExerciseModel) {
         self.exerciseModel = exerciseModel
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.white

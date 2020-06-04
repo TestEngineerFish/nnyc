@@ -37,7 +37,7 @@ extension YXExerciseServiceImpl {
         self.learnConfig.bookId = result?.bookId ?? 0
         self.learnConfig.unitId = result?.unitId ?? 0
         
-        // 插入练习数据【新学/训练/复习】
+        // 插入练习数据【新学/复习】
         self.processExercise(wordIds: result?.newWordIds ?? [], isNew: true)
         self.processExercise(wordIds: result?.reviewWordIds ?? [], isNew: false)
 //        self.processExercise(wordIds: result?.reviewWordIds ?? [], type: .review)
@@ -73,12 +73,10 @@ extension YXExerciseServiceImpl {
             word.bookId = learnConfig.bookId
             word.unitId = learnConfig.unitId
             
-            var exercise = YXWordExerciseModel()
-            exercise.dataType = learnConfig.learnType
+            var exercise = YXExerciseModel()
+            exercise.learnType = learnConfig.learnType
             exercise.word = word
             exercise.isNewWord = isNew
-            
-//            exercise.group = groupIndex(index: index, count: wordIds.count, type: type)
             
             // 插入练习数据
             let exerciseId = exerciseDao.insertExercise(type: ruleType, planId: learnConfig.planId, exerciseModel: exercise)
@@ -101,9 +99,9 @@ extension YXExerciseServiceImpl {
             
             if let word = wordDao.selectWord(bookId: learnConfig.bookId, wordId: wordId) {
                 
-                var exercise = YXWordExerciseModel()
+                var exercise = YXExerciseModel()
                 exercise.question = createQuestionModel(word: word)
-                exercise.dataType = learnConfig.learnType
+                exercise.learnType = learnConfig.learnType
                 exercise.word = word
                 exercise.wordType = .new
                 
@@ -141,7 +139,7 @@ extension YXExerciseServiceImpl {
                     wordDao.selectWord(wordId: subStep.question?.wordId ?? 0) {
                     
                     var exercise = subStep
-                    exercise.dataType = self.learnConfig.learnType
+                    exercise.learnType = self.learnConfig.learnType
                     exercise.wordType = exercise.isNewWord ? .exercise : .review
                     exercise.word = word
                     let result = stepDao.insertWordStep(type: ruleType, exerciseModel: exercise)

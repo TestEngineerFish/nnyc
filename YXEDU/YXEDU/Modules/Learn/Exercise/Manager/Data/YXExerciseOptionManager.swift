@@ -10,8 +10,8 @@ import UIKit
 
 class YXExerciseOptionManager: NSObject {
     
-    private var newWordArray: [YXWordExerciseModel]    = []
-    private var reviewWordArray: [YXWordExerciseModel] = []
+    private var newWordArray: [YXExerciseModel]    = []
+    private var reviewWordArray: [YXExerciseModel] = []
     
     /// 随机数
     /// - Parameter max: 最大数，不包括这个数
@@ -23,12 +23,12 @@ class YXExerciseOptionManager: NSObject {
     }
     
 
-    func initData(newArray: [YXWordExerciseModel], reviewArray: [YXWordExerciseModel]) {
+    func initData(newArray: [YXExerciseModel], reviewArray: [YXExerciseModel]) {
         self.newWordArray = newArray
         self.reviewWordArray = reviewArray
     }
     
-    func processReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
+    func processReviewWordOption(exercise: YXExerciseModel) -> YXExerciseModel? {
         // 判断题
         let vaildationArray: [YXQuestionType] = [.validationImageAndWord, .validationWordAndChinese]
         // 选择题
@@ -43,7 +43,7 @@ class YXExerciseOptionManager: NSObject {
         }
     }
 
-    private func reviewWordOption(exerciseModel: YXWordExerciseModel)  -> YXWordExerciseModel? {
+    private func reviewWordOption(exerciseModel: YXExerciseModel)  -> YXExerciseModel? {
         // 选项个数
         let itemCount = exerciseModel.question?.itemCount ?? 4
 
@@ -52,7 +52,7 @@ class YXExerciseOptionManager: NSObject {
 
         // 添加正取的选项
         let at = random(max: items.count + 1)
-        items.insert(itemModel(word: _exerciseModel.word!, type: _exerciseModel.type, dataType: _exerciseModel.dataType), at: at)
+        items.insert(itemModel(word: _exerciseModel.word!, type: _exerciseModel.type, dataType: _exerciseModel.learnType), at: at)
         YXLog("选项ID列表\(items)")
         var option = YXExerciseOptionModel()
         option.firstItems = items
@@ -63,7 +63,7 @@ class YXExerciseOptionManager: NSObject {
     }
     
     /// 获取其他选项
-    private func filterOtherWord(exerciseModel: YXWordExerciseModel, itemCount: Int) -> [YXOptionItemModel] {
+    private func filterOtherWord(exerciseModel: YXExerciseModel, itemCount: Int) -> [YXOptionItemModel] {
         var items = [YXOptionItemModel]()
         guard let wordModel = exerciseModel.word else {
             return items
@@ -193,7 +193,7 @@ class YXExerciseOptionManager: NSObject {
     
     // TODO: ==== Tools ====
     /// 根据题型过滤数据
-    private func filterRepeatWord(exerciseModel: YXWordExerciseModel, otherWordModel: YXWordModel) -> YXOptionItemModel? {
+    private func filterRepeatWord(exerciseModel: YXExerciseModel, otherWordModel: YXWordModel) -> YXOptionItemModel? {
         guard let rightWordModel = exerciseModel.word else {
             return nil
         }
@@ -225,12 +225,12 @@ class YXExerciseOptionManager: NSObject {
             YXLog("其他题型不用生成选项")
             return nil
         }
-        let itemModel = self.itemModel(word: otherWordModel, type: exerciseModel.type, dataType: exerciseModel.dataType)
+        let itemModel = self.itemModel(word: otherWordModel, type: exerciseModel.type, dataType: exerciseModel.learnType)
         return itemModel
     }
     
     
-    func validReviewWordOption(exercise: YXWordExerciseModel) -> YXWordExerciseModel? {
+    func validReviewWordOption(exercise: YXExerciseModel) -> YXExerciseModel? {
         let wordId = exercise.word?.wordId ?? 0
         var exerciseModel = exercise
         
@@ -244,7 +244,7 @@ class YXExerciseOptionManager: NSObject {
             var item = YXOptionItemModel()
             item.optionId = -1
             
-            items.append(itemModel(word: exerciseModel.word!, type: exerciseModel.type, dataType: exerciseModel.dataType))
+            items.append(itemModel(word: exerciseModel.word!, type: exerciseModel.type, dataType: exerciseModel.learnType))
             items.append(item)
         } else {// 错
             let rightItemArray = self.filterOtherWord(exerciseModel: exerciseModel, itemCount: 1)
@@ -266,7 +266,7 @@ class YXExerciseOptionManager: NSObject {
     }
     
     
-    public func connectionExercise(exerciseArray: [YXWordExerciseModel]) -> YXWordExerciseModel {
+    public func connectionExercise(exerciseArray: [YXExerciseModel]) -> YXExerciseModel {
 
         var exercise = exerciseArray.first!
         var option = YXExerciseOptionModel()
@@ -303,7 +303,7 @@ class YXExerciseOptionManager: NSObject {
     
     /// 其他新学单词
     /// - Parameter index: 需要排除的
-    func otherNewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXWordExerciseModel] {
+    func otherNewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXExerciseModel] {
         guard let wordModel = wordModel else {
             return []
         }
@@ -317,7 +317,7 @@ class YXExerciseOptionManager: NSObject {
         return array
     }
     
-    func otherReviewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXWordExerciseModel] {
+    func otherReviewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXExerciseModel] {
         guard let wordModel = wordModel else {
             return []
         }
@@ -384,7 +384,7 @@ class YXExerciseOptionManager: NSObject {
     /// - Parameters:
     ///   - word:
     ///   - type:
-    func itemModel(word: YXWordModel, type: YXQuestionType, dataType: YXExerciseDataType) -> YXOptionItemModel {
+    func itemModel(word: YXWordModel, type: YXQuestionType, dataType: YXLearnType) -> YXOptionItemModel {
         var item = YXOptionItemModel()
         item.optionId = word.wordId ?? -1
         
@@ -425,7 +425,7 @@ class YXExerciseOptionManager: NSObject {
     }
     
     
-    func selectWord(bookId: Int, wordId: Int, dataType: YXExerciseDataType) -> YXWordModel? {
+    func selectWord(bookId: Int, wordId: Int, dataType: YXLearnType) -> YXWordModel? {
         if dataType == .base {
             return YXWordBookDaoImpl().selectWord(bookId: bookId, wordId: wordId)
         } else {

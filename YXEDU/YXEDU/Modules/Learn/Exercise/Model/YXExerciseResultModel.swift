@@ -11,14 +11,14 @@ import ObjectMapper
 
 /// 当天学习数据总模型
 struct YXExerciseResultModel: Mappable {
-    var type: YXExerciseDataType     = .base
+    var type: YXLearnType     = .base
     var ruleType: YXExerciseRuleType = .p0
     var bookId: Int?
     var unitId: Int?
     var newWordIds: [Int]?
     var reviewWordIds: [Int]?
-    var steps: [[YXWordExerciseModel]]?
-    var steps2: [[[YXWordExerciseModel]]]?
+    var steps: [[YXExerciseModel]]?
+    var steps2: [[[YXExerciseModel]]]?
     
     init?(map: Map) {
     }
@@ -117,19 +117,19 @@ struct YXOptionItemModel: Mappable {
 
 struct YXExerciseDataTypeTransform: TransformType {
         
-    typealias Object = YXExerciseDataType
+    typealias Object = YXLearnType
     typealias JSON = Int
     
     init() {}
     
-    func transformFromJSON(_ value: Any?) -> YXExerciseDataType? {
-        if let v = value as? Int, let state = YXExerciseDataType(rawValue: v) {
+    func transformFromJSON(_ value: Any?) -> YXLearnType? {
+        if let v = value as? Int, let state = YXLearnType(rawValue: v) {
             return state
         }
         return .base
     }
     
-    func transformToJSON(_ value: YXExerciseDataType?) -> Int? {
+    func transformToJSON(_ value: YXLearnType?) -> Int? {
         return value?.rawValue
     }
 

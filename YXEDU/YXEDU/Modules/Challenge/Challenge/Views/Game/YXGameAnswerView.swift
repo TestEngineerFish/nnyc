@@ -24,7 +24,7 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
 
     func bindData(_ wordModel: YXGameWordModel) {
         self.selectedWordView.bindData(wordModel)
-        var exerciseModel = YXWordExerciseModel()
+        var exerciseModel = YXExerciseModel()
         var questionModel = YXExerciseQuestionModel()
         questionModel.word     = wordModel.word
         questionModel.column   = wordModel.column
@@ -50,7 +50,7 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
     }
 
     // MARK: ==== Tools ====
-    private func switchAnswerView(_ exerciseModel: YXWordExerciseModel) {
+    private func switchAnswerView(_ exerciseModel: YXExerciseModel) {
         guard let wordModel = exerciseModel.question else {
             return
         }
