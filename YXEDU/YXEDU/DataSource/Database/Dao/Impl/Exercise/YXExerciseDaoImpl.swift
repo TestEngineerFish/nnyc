@@ -10,7 +10,7 @@ import UIKit
 
 class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
     
-    func insertExercise(type: YXExerciseRuleType, planId: Int? = nil, exerciseModel: YXWordExerciseModel) -> Bool {
+    func insertExercise(type: YXExerciseRuleType, planId: Int? = nil, exerciseModel: YXWordExerciseModel) -> Int {
         
         let sql = YYSQLManager.ExerciseSQL.insertExercise.rawValue
         let params: [Any] = [
@@ -24,7 +24,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             exerciseModel.isNewWord,
             exerciseModel.unfinishStepCount
         ]
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? self.wordRunner.lastInsertRowId : 0
     }
 
     @discardableResult

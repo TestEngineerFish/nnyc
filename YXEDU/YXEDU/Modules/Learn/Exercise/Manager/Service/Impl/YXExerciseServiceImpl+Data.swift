@@ -38,9 +38,9 @@ extension YXExerciseServiceImpl {
         self.learnConfig.unitId = result?.unitId ?? 0
         
         // 插入练习数据【新学/训练/复习】
-        self.processExercise(wordIds: result?.newWordIds ?? [], type: .new)
-        self.processExercise(wordIds: result?.newWordIds ?? [], type: .exercise)
-        self.processExercise(wordIds: result?.reviewWordIds ?? [], type: .review)
+        self.processExercise(wordIds: result?.newWordIds ?? [], isNew: true)
+        self.processExercise(wordIds: result?.reviewWordIds ?? [], isNew: false)
+//        self.processExercise(wordIds: result?.reviewWordIds ?? [], type: .review)
         
         // 插入单词步骤数据【新学/训练+复习】
         self.processNewWordStep(wordIds: result?.newWordIds ?? [])
@@ -48,11 +48,23 @@ extension YXExerciseServiceImpl {
     }
     
     
-    
+    /**
+     *
+    type.rawValue,
+    exerciseModel.dataType.rawValue,
+    exerciseModel.word?.wordId as Any,
+    exerciseModel.word?.word as Any,
+    exerciseModel.word?.bookId as Any,
+    exerciseModel.word?.unitId as Any,
+    planId as Any,
+    exerciseModel.isNewWord,
+    exerciseModel.unfinishStepCount
+
+     */
     /// 练习数据
     /// - Parameter result: 网络数据
-    func processExercise(wordIds: [Int], type: YXExerciseWordType) {
-        YXLog("\n插入\(type.desc)数据====== 开始")
+    func processExercise(wordIds: [Int], isNew: Bool) {
+        YXLog("\n插入数据 is_new= \(isNew ) ====== 开始")
         // 处理单词列表
         for (index, wordId) in wordIds.enumerated() {
             
@@ -64,12 +76,13 @@ extension YXExerciseServiceImpl {
             var exercise = YXWordExerciseModel()
             exercise.dataType = learnConfig.learnType
             exercise.word = word
-            exercise.wordType = type
-            exercise.group = groupIndex(index: index, count: wordIds.count, type: type)
+            exercise.isNewWord = isNew
+            
+//            exercise.group = groupIndex(index: index, count: wordIds.count, type: type)
             
             // 插入练习数据
-            let result = exerciseDao.insertExercise(type: ruleType, planId: learnConfig.planId, exerciseModel: exercise)
-            YXLog("插入练习数据——\(type.desc) ", word.wordId ?? 0," \(exercise.group)", result ? "成功" : "失败")
+            let exerciseId = exerciseDao.insertExercise(type: ruleType, planId: learnConfig.planId, exerciseModel: exercise)
+            YXLog("插入练习数据——\(isNew) ", word.wordId ?? 0," \(exercise.group)", exerciseId > 0 ? "成功" : "失败")
             
         }
     }

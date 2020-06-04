@@ -13,7 +13,7 @@ protocol YXExerciseDao {
     // TODO: ==== 插入 ====add
     /// 添加练习数据
     /// - Parameter exerciseModel: 练习
-    func insertExercise(type: YXExerciseRuleType, planId: Int?, exerciseModel: YXWordExerciseModel) -> Bool
+    func insertExercise(type: YXExerciseRuleType, planId: Int?, exerciseModel: YXWordExerciseModel) -> Int
     
     
     /// 清除过期的数据
