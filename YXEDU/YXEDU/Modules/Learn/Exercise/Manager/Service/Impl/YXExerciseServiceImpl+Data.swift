@@ -16,7 +16,8 @@ extension YXExerciseServiceImpl {
     func fetchExerciseResultModels(planId: Int? = nil, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let request = YXExerciseRequest.exercise(type: learnConfig.learnType.rawValue, planId: learnConfig.planId)
         YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
-            self.processData(result: response.data)
+            self._resultModel = response.data
+            self.processData()
             completion?(true, nil)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -26,25 +27,24 @@ extension YXExerciseServiceImpl {
     
     /// 处理从网络请求的数据
     /// - Parameter result: 网络数据
-    func processData(result: YXExerciseResultModel?) {
-        if (result?.newWordIds?.count ?? 0 == 0 && result?.steps?.count ?? 0 == 0) {
+    func processData() {
+        if (_resultModel?.newWordIds?.count ?? 0 == 0 && _resultModel?.groups?.count ?? 0 == 0) {
             YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(learnConfig.learnType)")
             exerciseProgress = .none
             return
         }
         
-        self.ruleType = result?.ruleType ?? .p0
-        self.learnConfig.bookId = result?.bookId ?? 0
-        self.learnConfig.unitId = result?.unitId ?? 0
+        self.ruleType = _resultModel?.ruleType ?? .p0
+        self.learnConfig.bookId = _resultModel?.bookId ?? 0
+        self.learnConfig.unitId = _resultModel?.unitId ?? 0
         
         // 插入练习数据【新学/复习】
-        self.processExercise(wordIds: result?.newWordIds ?? [], isNew: true)
-        self.processExercise(wordIds: result?.reviewWordIds ?? [], isNew: false)
+        self.processExercise(wordIds: _resultModel?.newWordIds ?? [], isNew: true)
+        self.processExercise(wordIds: _resultModel?.reviewWordIds ?? [], isNew: false)
 //        self.processExercise(wordIds: result?.reviewWordIds ?? [], type: .review)
         
         // 插入单词步骤数据【新学/训练+复习】
-        self.processNewWordStep(wordIds: result?.newWordIds ?? [])
-        self.processWordStep(result: result)
+        self.processWordStep()
     }
     
     
@@ -80,6 +80,9 @@ extension YXExerciseServiceImpl {
             
             // 插入练习数据
             let exerciseId = exerciseDao.insertExercise(type: ruleType, planId: learnConfig.planId, exerciseModel: exercise)
+            
+            // 更新原始数据的 eid
+            self.setExerciseId(wordId: wordId, eid: exerciseId)
             YXLog("插入练习数据——\(isNew) ", word.wordId ?? 0," \(exercise.group)", exerciseId > 0 ? "成功" : "失败")
             
         }
@@ -91,39 +94,39 @@ extension YXExerciseServiceImpl {
     
     /// 处理新学跟读步骤
     /// - Parameter result:
-    func processNewWordStep(wordIds: [Int]) {
-        
-        YXLog("\n插入新学步骤数据====== 开始")
-        // 处理新学单词
-        for wordId in wordIds {
-            
-            if let word = wordDao.selectWord(bookId: learnConfig.bookId, wordId: wordId) {
-                
-                var exercise = YXExerciseModel()
-                exercise.question = createQuestionModel(word: word)
-                exercise.learnType = learnConfig.learnType
-                exercise.word = word
-//                exercise.wordType = .new
-                
-                if (word.gradeId ?? 0) <= 6 {// 小学
-                    exercise.type = .newLearnPrimarySchool
-                    if word.partOfSpeechAndMeanings?.first?.isPhrase ?? false {
-                        exercise.type = .newLearnPrimarySchool_Group
-                    }
-                } else { // 初中及其他
-                    exercise.type = .newLearnJuniorHighSchool
-                }
-                
-                // 插入单词——新学步骤
-                let result = stepDao.insertWordStep(type: ruleType, exerciseModel: exercise)
-                YXLog("插入单词——新学步骤", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
-            } else {
-                YXLog("插入新学数据, 单词不存在:", wordId)
-            }
-        }
-        YXLog("\n插入新学步骤数据====== 结束")
-    }
-    
+//    func processNewWordStep(wordIds: [Int]) {
+//
+//        YXLog("\n插入新学步骤数据====== 开始")
+//        // 处理新学单词
+//        for wordId in wordIds {
+//
+//            if let word = wordDao.selectWord(bookId: learnConfig.bookId, wordId: wordId) {
+//
+//                var exercise = YXExerciseModel()
+//                exercise.question = createQuestionModel(word: word)
+//                exercise.learnType = learnConfig.learnType
+//                exercise.word = word
+////                exercise.wordType = .new
+//
+//                if (word.gradeId ?? 0) <= 6 {// 小学
+//                    exercise.type = .newLearnPrimarySchool
+//                    if word.partOfSpeechAndMeanings?.first?.isPhrase ?? false {
+//                        exercise.type = .newLearnPrimarySchool_Group
+//                    }
+//                } else { // 初中及其他
+//                    exercise.type = .newLearnJuniorHighSchool
+//                }
+//
+//                // 插入单词——新学步骤
+//                let result = stepDao.insertWordStep(type: ruleType, exerciseModel: exercise)
+//                YXLog("插入单词——新学步骤", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
+//            } else {
+//                YXLog("插入新学数据, 单词不存在:", wordId)
+//            }
+//        }
+//        YXLog("\n插入新学步骤数据====== 结束")
+//    }
+//
     
     
     
@@ -150,9 +153,9 @@ extension YXExerciseServiceImpl {
      */
     /// 处理训练和复习步骤
     /// - Parameter result:
-    func processWordStep(result: YXExerciseResultModel?) {
+    func processWordStep() {
         YXLog("\n插入步骤数据====== 开始")
-        guard let groups = result?.groups else {
+        guard let groups = _resultModel?.groups else {
             return
         }
         for (index, group) in groups.enumerated() {
@@ -164,7 +167,6 @@ extension YXExerciseServiceImpl {
                         wordDao.selectWord(wordId: subStep.question?.wordId ?? 0) {
                         
                         var exercise = subStep
-                        exercise.eid = 1
                         exercise.learnType = self.learnConfig.learnType
                         exercise.word = word
                         exercise.group = index
@@ -191,6 +193,25 @@ extension YXExerciseServiceImpl {
         return question
     }
     
+    /// 更新原始数据的 eid
+    /// - Parameters:
+    ///   - wordId:
+    ///   - eid:
+    func setExerciseId(wordId: Int, eid: Int) {
+        guard let groups = _resultModel?.groups else {
+            return
+        }
+        for (i, group) in groups.enumerated() {
+            for (j, step) in group.enumerated() {
+                for (k, subStep) in step.enumerated() {
+                    if subStep.question?.wordId == wordId {
+                        _resultModel?.groups?[i][j][k].eid = eid
+                    }
+                }
+            }
+        }
+        
+    }
     
 //    /// 获取分组下标
 //    /// - Parameters:

@@ -18,6 +18,8 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     var exerciseProgress: YXExerciseProgress = .reported
     
+    var _resultModel: YXExerciseResultModel?
+    
     // ----------------------------
     //MARK: - Private 属性
     /// 本地数据库访问
