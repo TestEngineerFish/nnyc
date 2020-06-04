@@ -14,8 +14,19 @@ protocol YXExerciseDao {
     /// 添加练习数据
     /// - Parameter exerciseModel: 练习
     func insertExercise(type: YXExerciseRuleType, planId: Int?, exerciseModel: YXWordExerciseModel) -> Int
-    
-    
+
+    /// 更新练习记录
+    /// - Parameter model: 练习对象
+    @discardableResult
+    func updateExercise(exercise model: YXWordExerciseModel) -> Bool
+
+
+    /// 获得当前学习流程的所有练习
+    /// - Parameters:
+    ///   - type: 学习类型
+    ///   - id: 词单ID，可选
+    func getAllExercise(type: YXExerciseDataType, plan id: Int?) -> [YXWordExerciseModel]
+
     /// 清除过期的数据
     @discardableResult
     func deleteExpiredExercise() -> Bool
@@ -47,8 +58,14 @@ protocol YXWordStepDao {
     // TODO: ==== 修改/删除 ====
     /// 更新练习数据状态
     /// - Parameter exerciseModel: 练习
+    @discardableResult
     func updateExercise(exerciseModel: YXWordExerciseModel) -> Bool
-    
+
+    /// 获取单词的所有已做的练习题，字典返回，用于上报
+    /// - Parameter model: 练习对象
+    /// - Returns: step结果和总的错误次数
+    func getSteps(with model: YXWordExerciseModel) -> ([String:Any], Int)
+
     /// 删除所有学习数据【1.学习完，2.第二天清除，3.清除缓存】
 //    func deleteExercise() -> Bool
     

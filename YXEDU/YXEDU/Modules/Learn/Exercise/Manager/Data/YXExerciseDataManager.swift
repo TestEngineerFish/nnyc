@@ -15,6 +15,23 @@ import ObjectMapper
     case planListenReview = 3   // 计划——听力复习
     case planReview = 4         // 计划——复习
     case aiReview = 5           // 智能复习
+
+    static func transform(raw: Int) -> YXExerciseDataType {
+        switch raw {
+        case 1:
+            return .base
+        case 2:
+            return .wrong
+        case 3:
+            return .planListenReview
+        case 4:
+            return .planReview
+        case 5:
+            return .aiReview
+        default:
+            return .base
+        }
+    }
 }
 
 
@@ -300,7 +317,7 @@ class YXExerciseDataManager: NSObject {
                 report.unitId = self.unitId
                 report.score  = progressManager.fetchScore(wordId: word.wordId)
                 report.errorCount = progressManager.fetchErrorCount(wordId: word.wordId)
-                report.result = YXExerciseReportModel.ResultModel()
+                report.result = ResultModel()
                 
                 map[word.wordId]  = report
             }

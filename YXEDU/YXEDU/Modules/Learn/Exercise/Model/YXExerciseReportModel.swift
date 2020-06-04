@@ -33,29 +33,27 @@ struct YXExerciseReportModel: Mappable {
         errorCount <- map["error_count"]
         result     <- map["result"]
     }
-    
-    
-    struct ResultModel: Mappable {
-        
-        var one: Bool?
-        var two: Bool?
-        var three: Bool?
-        var four: Bool?
-        
-        init() {}
-        
-        init?(map: Map) {
-            self.mapping(map: map)
-        }
-            
-        mutating func mapping(map: Map) {
-            one   <- map["1"]
-            two   <- map["2"]
-            three <- map["3"]
-            four  <- map["4"]
-        }
+}
+
+struct ResultModel: Mappable {
+
+    var one: Bool?
+    var two: Bool?
+    var three: Bool?
+    var four: Bool?
+
+    init() {}
+
+    init?(map: Map) {
+        self.mapping(map: map)
     }
-    
+
+    mutating func mapping(map: Map) {
+        one   <- map["1"]
+        two   <- map["2"]
+        three <- map["3"]
+        four  <- map["4"]
+    }
 }
 
 struct YXListenScoreModel: Mappable {

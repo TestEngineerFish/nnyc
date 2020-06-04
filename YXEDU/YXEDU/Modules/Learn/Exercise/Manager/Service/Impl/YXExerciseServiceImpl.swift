@@ -54,7 +54,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.studyDao.updateDurationTime(type: type, plan: id, duration: duration)
     }
 
-    /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
+    /// 做题动作，不管答题对错，都需要调用此方法修改相关状态
     /// - Parameters:
     ///   - model: 练习对象
     func normalAnswerAction(exercise model: YXWordExerciseModel) {
@@ -66,6 +66,10 @@ class YXExerciseServiceImpl: YXExerciseService {
             // 更新得分
             _model = self.updateScore(exercise: _model)
         }
+        // 如果是0、7分题，先移除未做的题
+        if _model.isCareScore {
+//            _model.questionTypeScore
+        }
         // 保存数据到数据库
         self.saveStep(exercise: _model)
         // 更新单词状态
@@ -73,8 +77,8 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 上报关卡
-    func report(type: YXExerciseDataType, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        let reportContent = self.getReportJson()
+    func report(type: YXExerciseDataType, plan id: Int?, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+        let reportContent = self.getReportJson(type: type, plan: id)
         let duration      = self.getLearnDuration()
         YXLog("上报内容：" + reportContent)
         YXLog("学习时长：\(duration)")
@@ -99,18 +103,20 @@ class YXExerciseServiceImpl: YXExerciseService {
     // ----------------------------
     //MARK: - Private 方法
     /// 获取上报内容
-    private func getReportJson() -> String {
+    private func getReportJson(type: YXExerciseDataType, plan id: Int?) -> String {
         var modelArray = [YXExerciseReportModel]()
         // 获得所有学习的单词单词
-        let exerciseModelList = [YXExerciseReportModel]() // 查询所有单词
+        let exerciseModelList = self.exerciseDao.getAllExercise(type: type, plan: id)
+
         exerciseModelList.forEach { (model) in
+            let data = self.stepDao.getSteps(with: model)
             var _model = YXExerciseReportModel()
-            _model.wordId     = model.wordId
-            _model.bookId     = model.bookId
-            _model.unitId     = model.unitId
+            _model.wordId     = model.word?.wordId ?? 0
+            _model.bookId     = model.word?.bookId
+            _model.unitId     = model.word?.unitId
             _model.score      = model.score
-            _model.errorCount = model.errorCount
-            _model.result     = model.result
+            _model.errorCount = model.wrongCount
+            _model.result     = ResultModel(JSON: data.0)
             modelArray.append(_model)
         }
         return modelArray.toJson()
@@ -119,6 +125,41 @@ class YXExerciseServiceImpl: YXExerciseService {
     /// 获取学习时长
     private func getLearnDuration() -> Int {
         return 0
+    }
+
+    /// 更新得分
+    func updateScore(exercise model: YXWordExerciseModel) -> YXWordExerciseModel {
+
+        var _model      = model
+        if model.power == 10 {
+            _model.score -= model.result == .some(true) ? 0 : model.wrongScore * model.wrongRate
+        } else {
+            _model.score -= model.result == .some(true) ? 0 : model.wrongScore
+        }
+        _model.score = _model.score < 0 ? 0 : _model.score
+        // 更新单词得分
+        return _model
+    }
+
+    /// 更新、保存Step到数据库
+    func saveStep(exercise model: YXWordExerciseModel) {
+        self.stepDao.updateExercise(exerciseModel: model)
+    }
+
+    /// 更新进度
+    func updateProgress(exercise model: YXWordExerciseModel) {
+        if model.result == .some(true) {
+            var _model = model
+            _model.unfinishStepCount -= 1
+            self.exerciseDao.updateExercise(exercise: _model)
+            if _model.unfinishStepCount == 0 {
+                if model.isNewWord {
+                    // 发通知
+                } else {
+                    // 发通知
+                }
+            }
+        }
     }
 
 }

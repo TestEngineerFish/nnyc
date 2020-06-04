@@ -41,7 +41,7 @@ struct YXWordExerciseModel: Mappable {
     // 做错后要减去多少分
     var wrongScore = 0
     // 减分倍数
-    var wrongMultiple = 1
+    var wrongRate = 1
     
     var questionTypeScore: Int = 0  // 题型分[已掌握7分，不认识0分]
     var power: Int = 0 {
@@ -79,8 +79,10 @@ struct YXWordExerciseModel: Mappable {
     // 做完
     var isFinish: Bool = false
 
-    // 答题结果，是否正确
+    /// 答题结果，是否正确
     var result: Bool?
+    /// 当题错误次数
+    var wrongCount: Int = 0
         
     /// 在当前轮中，是否已经完成，（当前轮完成后，不是删除数据，而且是改变状态为true）
     var isCurrentTurnFinish: Bool = false

@@ -38,17 +38,42 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
             exerciseModel.step,
             exerciseModel.isBackup,
             exerciseModel.wrongScore,
-            exerciseModel.wrongMultiple,
+            exerciseModel.wrongRate,
             exerciseModel.group,
         ]
         
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
-    
+
     func updateExercise(exerciseModel: YXWordExerciseModel) -> Bool {
-        return true
+        let sql = YYSQLManager.WordStepSQL.updateWordStep.rawValue
+        let params: [Any] = [
+            exerciseModel.score,
+            exerciseModel.result ?? false,
+            exerciseModel.wrongCount,
+            exerciseModel.eid,
+            exerciseModel.step,
+            exerciseModel.group]
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
-    
+
+    func getSteps(with model: YXWordExerciseModel) -> ([String:Any], Int) {
+        let sql = YYSQLManager.WordStepSQL.selsetStps.rawValue
+        let params: [Any] = [model.eid]
+        var dict = [String:Any]()
+        var wrongCount = 0
+        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params){
+            while result.next() {
+                let step = Int(result.int(forColumn: "step"))
+                let stepResult = Int(result.int(forColumn: "result")) == 1
+                wrongCount += Int(result.int(forColumn: "wrong_count"))
+
+                dict["\(step)"] = stepResult
+            }
+        }
+        return (dict, wrongCount)
+    }
+
 //    func deleteExercise() -> Bool {
 //        return true
 //    }

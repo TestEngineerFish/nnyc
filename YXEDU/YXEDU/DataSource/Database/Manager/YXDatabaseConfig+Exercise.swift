@@ -75,11 +75,12 @@ extension YYSQLManager {
             care_score integer(1) DEFAULT(0),
             step integer(1),
             backup integer(1),
-            result integer(1),
+            result integer(1) DEFAULT(-1),
             wrong_score integer(1),
-            wrong_multiple integer(1),
-            wrong_count integer(2),
+            wrong_rate integer(1),
+            wrong_count integer(2) DEFAULT(0),
             group_index integer(1) NOT NULL DEFAULT(0),
+            invalid integer(1) DEFAULT(0),
             create_ts text(128) NOT NULL DEFAULT(datetime('now'))
         );
         """
@@ -144,7 +145,19 @@ extension YYSQLManager {
         """
 
         """
-        
+
+        case updateExercise =
+        """
+        UPDATE all_exercise
+        SET power = ?, score = ?, unfinish_count = ?
+        WHERE exercise_id = ?
+        """
+
+        case getAllExercise =
+        """
+        SELECT * FROM all_exercise
+        WHERE learn_type = ? and plan_id = ?
+        """
         
         case deleteExpiredExercise = "delete from all_exercise where date(create_ts) < date('now')"
         
@@ -173,13 +186,26 @@ extension YYSQLManager {
             step,
             backup,
             wrong_score,
-            wrong_multiple,
+            wrong_rate,
             group_index
         )
         values(
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?
         )
+        """
+
+        case updateWordStep =
+        """
+        UPDATE all_word_step
+        SET score = ?, result = ?, wrong_count = ?
+        WHERE exercise_id = ? and step = ? and group_index = ?
+        """
+
+        case selsetStps =
+        """
+        SELECT * FROM all_word_step
+        WHERE exercise_id = ? and step != 0
         """
         
         case deleteExpiredWordStep = "delete from all_word_step where date(create_ts) < date('now')"
