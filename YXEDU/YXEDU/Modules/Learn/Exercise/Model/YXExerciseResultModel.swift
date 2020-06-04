@@ -18,7 +18,8 @@ struct YXExerciseResultModel: Mappable {
     var newWordIds: [Int]?
     var reviewWordIds: [Int]?
     var steps: [[YXExerciseModel]]?
-    var steps2: [[[YXExerciseModel]]]?
+    var groups: [[[YXExerciseModel]]]?
+    var scoreRule: [YXScoreRuleModel] = []
     
     init?(map: Map) {
     }
@@ -31,7 +32,8 @@ struct YXExerciseResultModel: Mappable {
         newWordIds    <- map["new_word_list"]
         reviewWordIds <- map["review_word_list"]
         steps         <- map["step_list"]
-        steps2         <- map["step_list"]
+        groups         <- map["step_list"]
+        scoreRule         <- map["step_score"]
     }
 }
 
@@ -113,6 +115,28 @@ struct YXOptionItemModel: Mappable {
     }
 }
 
+
+
+/// 扣分规则
+struct YXScoreRuleModel: Mappable {
+    /// 扣几分
+    var score: Int  = 3
+    /// 扣分倍数
+    var rate: Int   = 1
+    /// 第几步
+    var step: Int   = 1
+
+    init() {}
+            
+    init?(map: Map) {
+    }
+    
+    mutating func mapping(map: Map) {
+        score <- map["score"]
+        step  <- map["rate"]
+        step  <- map["rate"]
+    }
+}
 
 
 struct YXExerciseDataTypeTransform: TransformType {

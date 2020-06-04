@@ -74,7 +74,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         return (dict, wrongCount)
     }
 
-    func deleteStep(with model: YXWordExerciseModel) {
+    func deleteStep(with model: YXExerciseModel) {
         let sql = YYSQLManager.WordStepSQL.deleteStep.rawValue
         let params: [Any] = [
             model.eid,

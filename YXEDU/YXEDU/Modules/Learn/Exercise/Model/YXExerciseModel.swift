@@ -65,7 +65,7 @@ struct YXExerciseModel: Mappable {
     // 是否为新学单词【跟读和训练】
     var isNewWord: Bool = false
     
-    var wordType: YXExerciseWordType = .new
+//    var wordType: YXExerciseWordType = .new
     var group: Int = 0
     
     /// 第几步

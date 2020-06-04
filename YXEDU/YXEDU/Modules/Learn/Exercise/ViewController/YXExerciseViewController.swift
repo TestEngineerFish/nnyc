@@ -188,7 +188,11 @@
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-
+        var service: YXExerciseService = YXExerciseServiceImpl()
+        service.learnConfig = learnConfig
+        service.fetchExerciseModel()
+        
+        
         dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {

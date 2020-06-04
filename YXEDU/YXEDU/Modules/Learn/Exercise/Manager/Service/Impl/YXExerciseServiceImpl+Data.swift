@@ -103,7 +103,7 @@ extension YXExerciseServiceImpl {
                 exercise.question = createQuestionModel(word: word)
                 exercise.learnType = learnConfig.learnType
                 exercise.word = word
-                exercise.wordType = .new
+//                exercise.wordType = .new
                 
                 if (word.gradeId ?? 0) <= 6 {// 小学
                     exercise.type = .newLearnPrimarySchool
@@ -127,29 +127,58 @@ extension YXExerciseServiceImpl {
     
     
     
+    /**
+     *
+    exerciseModel.eid,
+    exerciseModel.word?.bookId as Any,
+    exerciseModel.word?.unitId as Any,
+    exerciseModel.type.rawValue,
+    exerciseModel.question?.wordId as Any,
+    exerciseModel.question?.word as Any,
+    exerciseModel.question?.itemCount as Any,
+    exerciseModel.question?.row as Any,
+    exerciseModel.question?.column as Any,
+    exerciseModel.question?.extend?.power as Any,
+    exerciseModel.score,
+    exerciseModel.isCareScore,
+    exerciseModel.step,
+    exerciseModel.isBackup,
+    exerciseModel.wrongScore,
+    exerciseModel.wrongRate,
+    exerciseModel.group,
+    
+     */
     /// 处理训练和复习步骤
     /// - Parameter result:
     func processWordStep(result: YXExerciseResultModel?) {
-        YXLog("\n插入训练+复习步骤数据====== 开始")
-        for step in result?.steps ?? [] {
-            for subStep in step {
-                
-                if let word = learnConfig.learnType == .base ?
-                    wordDao.selectWord(bookId: learnConfig.bookId, wordId: subStep.question?.wordId ?? 0) :
-                    wordDao.selectWord(wordId: subStep.question?.wordId ?? 0) {
+        YXLog("\n插入步骤数据====== 开始")
+        guard let groups = result?.groups else {
+            return
+        }
+        for (index, group) in groups.enumerated() {
+            for step in group {
+                for subStep in step {
                     
-                    var exercise = subStep
-                    exercise.learnType = self.learnConfig.learnType
-                    exercise.wordType = exercise.isNewWord ? .exercise : .review
-                    exercise.word = word
-                    let result = stepDao.insertWordStep(type: ruleType, exerciseModel: exercise)
-                    YXLog("插入\(exercise.wordType.desc)步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
-                } else {
-                    YXLog("插入步骤数据, 不存在, id:",subStep.question?.wordId ?? 0)
+                    if let word = learnConfig.learnType == .base ?
+                        wordDao.selectWord(bookId: learnConfig.bookId, wordId: subStep.question?.wordId ?? 0) :
+                        wordDao.selectWord(wordId: subStep.question?.wordId ?? 0) {
+                        
+                        var exercise = subStep
+                        exercise.eid = 1
+                        exercise.learnType = self.learnConfig.learnType
+                        exercise.word = word
+                        exercise.group = index
+                        
+                        let result = stepDao.insertWordStep(type: ruleType, exerciseModel: exercise)
+                        YXLog("插入\(stepString(exercise))步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
+                    } else {
+                        YXLog("插入步骤数据, 不存在, id:",subStep.question?.wordId ?? 0)
+                    }
                 }
             }
         }
-        YXLog("\n插入训练+复习步骤数据====== 结束")
+        
+        YXLog("\n插入步骤数据====== 结束")
     }
     
     
@@ -163,42 +192,56 @@ extension YXExerciseServiceImpl {
     }
     
     
-    /// 获取分组下标
-    /// - Parameters:
-    ///   - index:
-    ///   - count:
-    ///   - type: 单词类型
-    private func groupIndex(index: Int, count: Int, type: YXExerciseWordType) -> Int {
-        ruleType = .p4
-        // 只有新学才有分组学习
-        if self.learnConfig.learnType != .base {
-            return 1
-        }
-        
-        // 新学是否分组
-        if type == .new && isGroup() == false {
-            return 1
-        }
-                
-        var batchSize = 0
-        switch type {
-            case .new:
-                batchSize = self.newWordBatchSize
-            case .exercise:
-                batchSize = self.exerciseWordBatchSize
-            default:
-                batchSize = self.reviewWordBatchSize
-        }
-
-        return lround(Double(index + 1) / Double(batchSize) + 0.4)
+//    /// 获取分组下标
+//    /// - Parameters:
+//    ///   - index:
+//    ///   - count:
+//    ///   - type: 单词类型
+//    private func groupIndex(index: Int, count: Int, type: YXExerciseWordType) -> Int {
+//        ruleType = .p4
+//        // 只有新学才有分组学习
+//        if self.learnConfig.learnType != .base {
+//            return 1
+//        }
+//
+//        // 新学是否分组
+//        if type == .new && isGroup() == false {
+//            return 1
+//        }
+//
+//        var batchSize = 0
+//        switch type {
+//            case .new:
+//                batchSize = self.newWordBatchSize
+//            case .exercise:
+//                batchSize = self.exerciseWordBatchSize
+//            default:
+//                batchSize = self.reviewWordBatchSize
+//        }
+//
+//        return lround(Double(index + 1) / Double(batchSize) + 0.4)
+//    }
+    
+    
+//    // 新学是否分组学习
+//    func isGroup() -> Bool {
+//        return ruleType == .p4 || ruleType == .a1 || ruleType == .a2
+//    }
+//
+    
+    func stepScoreRule() -> Int {
+        return 0
     }
     
     
-    // 新学是否分组学习
-    func isGroup() -> Bool {
-        return ruleType == .p4 || ruleType == .a1 || ruleType == .a2
+    func stepString(_ exercise: YXExerciseModel) -> String {
+        if exercise.step == 0 {
+            return "新学 step\(exercise.step)"
+        } else if exercise.isNewWord {
+            return "训练 step\(exercise.step)"
+        } else {
+            return "复习  step\(exercise.step)"
+        }
     }
-    
-    
 }
 
