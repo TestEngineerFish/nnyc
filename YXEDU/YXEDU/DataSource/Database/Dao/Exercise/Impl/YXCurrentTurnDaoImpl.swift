@@ -8,6 +8,6 @@
 
 import UIKit
 
-class YXCurrentTurnDao: NSObject {
+class YXCurrentTurnDaoImpl: NSObject {
 
 }
