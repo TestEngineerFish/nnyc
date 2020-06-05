@@ -33,16 +33,6 @@ struct YXNotification {
     static let kRecordScore              = NSNotification.Name("kRecordScore")
     /// 播放松鼠动画
     static let kSquirrelAnimation        = NSNotification.Name("kSquirrelAnimation")
-    /// 下载词书结束
-    static let kDownloadBookFinished     = NSNotification.Name("kDownloadBookFinished")
-    /// 挑战Tab
-    static let kChallengeTab             = NSNotification.Name("kChallengeTab")
-    /// 我的 - 个人信息
-    static let kMineTabUserInfo          = NSNotification.Name("kMineTabUserInfo")
-    /// 我的 - 徽章
-    static let kMineTabBadge             = NSNotification.Name("kMineTabBadge")
-    /// 我的 - 积分
-    static let kMineTabIntegral          = NSNotification.Name("kMineTabIntegral")
     /// 分享结果
     static let kShareResult              = NSNotification.Name("kShareResult")
     /// 下载单本词书结束

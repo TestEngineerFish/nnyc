@@ -225,26 +225,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     /// 处理基础信息请求
     private func handleTabData() {
-        // 复习Tab
-        if YXFileManager.share.getJsonFromFile(type: .review) == nil {
-            YXBaseRequestManager.share.requestReviewPlanTabData()
-        }
-        // 挑战Tab
-        if YXFileManager.share.getJsonFromFile(type: .challenge) == nil {
-            YXBaseRequestManager.share.requestChallengeTabData()
-        }
-        // 我的Tab - 个人信息
-        if YXFileManager.share.getJsonFromFile(type: .mine_userInfo) == nil {
-            YXBaseRequestManager.share.requestMineTabUserData()
-        }
-        // 我的Tab - 徽章
-        if YXFileManager.share.getJsonFromFile(type: .mine_badge) == nil {
-            YXBaseRequestManager.share.requestMineTabBadgeData()
-        }
-        // 我的Tab - 积分
-        if YXFileManager.share.getJsonFromFile(type: .mine_integral) == nil {
-            YXBaseRequestManager.share.requestMineTabIntegralData()
-        }
         YXStepConfigManager.share.contrastStepConfig()
         let taskModel = YXWordBookResourceModel(type: .single, book: self.homeModel.bookId) {
             YXWordBookResourceManager.shared.contrastBookData(by: self.homeModel.bookId)

@@ -46,10 +46,6 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         tabBarController?.tabBar.isHidden = false
         navigationController?.setNavigationBarHidden(true, animated: animated)
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
-        if self.reviewPageModel == nil, let jsonStr = YXFileManager.share.getJsonFromFile(type: .review) {
-            self.reviewPageModel = YXReviewPageModel(JSONString: jsonStr)
-            self.setData()
-        }
         self.fetchData()
 //        YXTest.default.test()
     }
@@ -117,7 +113,6 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         YXReviewDataManager().fetchReviewPlanData { [weak self] (pageModel, errorMsg) in
             guard let self = self else { return }
             if let reviewModel = pageModel {
-                YXFileManager.share.saveJsonToFile(with: pageModel?.toJSONString() ?? "", type: .review)
                 self.reviewPageModel = reviewModel
                 self.setData()
             } else if let msg = errorMsg {

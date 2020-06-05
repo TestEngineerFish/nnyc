@@ -24,21 +24,12 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
         self.setSubviews()
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: YXNotification.kChallengeTab, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.refreshData()
         self.requestChallengeData()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
-    }
-
-    @objc private func refreshData() {
-        if let jsonStr = YXFileManager.share.getJsonFromFile(type: .challenge) {
-            guard let challengeModel = YXChallengeModel(JSONString: jsonStr) else { return }
-            self.updateChallengeData(model: challengeModel)
-        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -72,7 +63,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
                 return
             }
             self.updateChallengeData(model: _challengeModel)
-            YXFileManager.share.saveJsonToFile(with: _challengeModel.toJSONString() ?? "", type: .challenge)
         }) { (error) in
             YXUtils.showHUD(self.view, title: error.message)
         }
