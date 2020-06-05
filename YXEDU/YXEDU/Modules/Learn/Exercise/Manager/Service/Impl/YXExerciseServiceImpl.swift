@@ -53,13 +53,6 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.studyDao.setStartTime(learn: learnConfig, start: Int(time))
     }
 
-    func updateDurationTime() {
-        let currentTime = Int(Date().local().timeIntervalSince1970)
-        let startTime = self.studyDao.getStartTime(learn: learnConfig)
-        let duration = currentTime - startTime
-        self.studyDao.setDurationTime(learn: learnConfig, duration: duration)
-    }
-
     func normalAnswerAction(exercise model: YXExerciseModel) {
         var _model = model
         let ignoreTypeArray: [YXQuestionType] = [.newLearnPrimarySchool,
@@ -79,6 +72,12 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.updateStep(exercise: _model)
         // 更新单词状态
         self.updateProgress(exercise: _model)
+        // 更新学习时长
+        self.updateDurationTime()
+    }
+
+    func isStudyFinished() -> Bool? {
+        return self.studyDao.isFinished(learn: learnConfig)
     }
 
     /// 上报关卡
@@ -133,6 +132,14 @@ class YXExerciseServiceImpl: YXExerciseService {
     /// 获取学习时长
     private func getLearnDuration() -> Int {
         return self.studyDao.getDurationTime(learn: learnConfig)
+    }
+
+    /// 更新学习时间
+    func updateDurationTime() {
+        let currentTime = Int(Date().local().timeIntervalSince1970)
+        let startTime = self.studyDao.getStartTime(learn: learnConfig)
+        let duration = currentTime - startTime
+        self.studyDao.setDurationTime(learn: learnConfig, duration: duration)
     }
 
     /// 扣分逻辑

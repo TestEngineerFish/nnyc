@@ -182,6 +182,20 @@
             self.fetchExerciseData()
         }
         dataManager.progressManager.updateStudyCount()
+        return
+// ----------- new -----------
+        switch self.service.isStudyFinished() {
+        case .some(true):
+            YXLog("本地存在学完未上报的关卡，先加载，再上报")
+            self.service.report { (result, errorMsg) in
+
+            }
+        case .some(false):
+            YXLog("本地存在未学完的关卡，先加载")
+        default:
+            YXLog("未开始学习，请求学习数据")
+            self.fetchExerciseData()
+        }
     }
     
     

@@ -24,6 +24,20 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return 0
     }
 
+    func isFinished(learn config: YXLearnConfig) -> Bool? {
+        let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
+        let params: [Any] = [
+            config.learnType.rawValue,
+            config.planId as Any]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return nil
+        }
+        if result.next() {
+            return result.bool(forColumn: "complete")
+        }
+        return nil
+    }
+
     func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType) -> Bool {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
         let params: [Any] = [
