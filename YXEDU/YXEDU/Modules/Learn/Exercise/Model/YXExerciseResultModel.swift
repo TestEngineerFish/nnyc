@@ -33,7 +33,7 @@ struct YXExerciseResultModel: Mappable {
         reviewWordIds <- map["review_word_list"]
 
         steps         <- map["step_list"]
-        groups        <- map["group_list"]
+//        groups        <- map["group_list"]
         scoreRule     <- map["step_score"]
         
         // Mappable库不能解析三维数组，手动解析

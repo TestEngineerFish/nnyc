@@ -9,6 +9,7 @@
 import UIKit
 
 protocol YXGameViewControllerProtocol: NSObjectProtocol {
+    func disableView()
     func switchQuestion()
     func skipQuestion()
     func startGame()
@@ -204,6 +205,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             questionView.bindData(wordModel, timeout: config.timeOut)
             answerView.bindData(wordModel)
             currentQuestionIndex += 1
+            YXLog("当前挑战的单词：", wordModel.word, "ID：", wordModel.wordId)
         } else {
             // 显示结果视图
             self.showResultView()
@@ -223,10 +225,16 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     }
 
     // MARK: ==== YXGameViewControllerProtocol ====
+
+    func disableView() {
+        self.answerView.isUserInteractionEnabled = false
+    }
+
     func switchQuestion() {
         YXLog("游戏：切图")
         self.headerView.addQuestionNumber()
         self.showNextQuestion(true)
+        self.answerView.isUserInteractionEnabled = true
     }
 
     func skipQuestion() {
