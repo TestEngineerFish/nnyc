@@ -33,41 +33,40 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     // ----------------------------
     
-    //MARK: - 方法
+    //MARK: ==== 对外暴露的方法 ====
     func fetchExerciseModel() -> YXExerciseModel? {
+        // 从缓存表中获取
+        let model = self.queryExerciseModel()
+        // 如果缓存表没有可做题型，添加新的可做题型
+
         fetchExerciseResultModels(planId: learnConfig.planId, completion: nil)
         
         self.clearExpiredData()
 //        self.updateProgress()
         
-        return self.queryExerciseModel()
+        return model
     }
 
-    /// 设置开始学习时间
-    func setStartTime(type: YXLearnType, plan id: Int?) {
+    func setStartTime() {
         let time = Date().local().timeIntervalSince1970
         // 数据库操作 - 设置时间
-        self.studyDao.setStartTime(type: type, plan: id, start: Int(time))
+        self.studyDao.setStartTime(learn: learnConfig, start: Int(time))
     }
 
-    /// 更新学习时长
-    func updateDurationTime(type: YXLearnType, plan id: Int?) {
+    func updateDurationTime() {
         let currentTime = Int(Date().local().timeIntervalSince1970)
-        let startTime = self.studyDao.getStartTime(type: type, plan: id)
+        let startTime = self.studyDao.getStartTime(learn: learnConfig)
         let duration = currentTime - startTime
-        self.studyDao.setDurationTime(type: type, plan: id, duration: duration)
+        self.studyDao.setDurationTime(learn: learnConfig, duration: duration)
     }
 
-    /// 做题动作，不管答题对错，都需要调用此方法修改相关状态
-    /// - Parameters:
-    ///   - model: 练习对象
     func normalAnswerAction(exercise model: YXExerciseModel) {
         var _model = model
         let ignoreTypeArray: [YXQuestionType] = [.newLearnPrimarySchool,
                                                  .newLearnPrimarySchool_Group,
                                                  .newLearnJuniorHighSchool]
         if ignoreTypeArray.contains(_model.type) {
-            // 更新得分
+            // 扣分逻辑
             _model = self.updateScore(exercise: _model)
         }
         // 如果是0、7分题，先移除未做的题
@@ -77,7 +76,7 @@ class YXExerciseServiceImpl: YXExerciseService {
             self.stepDao.deleteStep(with: deleteModel)
         }
         // 保存数据到数据库
-        self.saveStep(exercise: _model)
+        self.updateStep(exercise: _model)
         // 更新单词状态
         self.updateProgress(exercise: _model)
     }
@@ -90,6 +89,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         YXLog("学习时长：\(duration)")
         let request = YXExerciseRequest.report(type: type.rawValue, time: duration, result: reportContent)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
+            // 清除数据库对应数据
             completion?(response.dataArray != nil, nil)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -130,10 +130,10 @@ class YXExerciseServiceImpl: YXExerciseService {
 
     /// 获取学习时长
     private func getLearnDuration(type: YXLearnType, plan id: Int?) -> Int {
-        return self.studyDao.getDurationTime(type: type, plan: id)
+        return self.studyDao.getDurationTime(learn: learnConfig)
     }
 
-    /// 更新得分
+    /// 扣分逻辑
     func updateScore(exercise model: YXExerciseModel) -> YXExerciseModel {
 
         var _model      = model
@@ -147,13 +147,13 @@ class YXExerciseServiceImpl: YXExerciseService {
         return _model
     }
 
-    /// 更新、保存Step到数据库
-    func saveStep(exercise model: YXExerciseModel) {
+    /// 更新Step数据库
+    private func updateStep(exercise model: YXExerciseModel) {
         self.stepDao.updateExercise(exerciseModel: model)
     }
 
     /// 更新进度
-    func updateProgress(exercise model: YXExerciseModel) {
+    private func updateProgress(exercise model: YXExerciseModel) {
         if model.result == .some(true) {
             var _model = model
             _model.unfinishStepCount -= 1

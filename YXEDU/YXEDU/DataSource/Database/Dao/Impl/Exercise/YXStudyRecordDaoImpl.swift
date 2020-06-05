@@ -21,34 +21,39 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
-    
-    func setStartTime(type: YXLearnType, plan id: Int?, start time: Int) {
+
+    func setStartTime(learn config: YXLearnConfig, start time: Int) {
         let sql = YYSQLManager.StudyRecordSQL.updateStartTime.rawValue
-        let params: [Any] = [type.rawValue, id as Any]
+        let params: [Any] = [config.learnType.rawValue, config.planId as Any]
         self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func setDurationTime(type: YXLearnType, plan id: Int?, duration time: Int) {
+    func setDurationTime(learn config: YXLearnConfig, duration time: Int) {
         let sql = YYSQLManager.StudyRecordSQL.updateDurationTime.rawValue
-        let params: [Any] = [type.rawValue, id as Any]
+        let params: [Any] = [config.learnType.rawValue, config.planId as Any]
         self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func getStartTime(type: YXLearnType, plan id: Int?) -> Int {
+    func getStartTime(learn config: YXLearnConfig) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-         let params: [Any] = [type.rawValue, id as Any]
+         let params: [Any] = [config.learnType.rawValue, config.planId as Any]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return .zero
         }
         return Int(result.int(forColumn: "start_time"))
     }
 
-    func getDurationTime(type: YXLearnType, plan id: Int?) -> Int {
+    func getDurationTime(learn config: YXLearnConfig) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-        let params: [Any] = [type.rawValue, id as Any]
+        let params: [Any] = [config.learnType.rawValue, config.planId as Any]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return .zero
         }
         return Int(result.int(forColumn: "study_duration"))
     }
+
+    func delete(learn config: YXLearnConfig) {
+
+    }
+
 }

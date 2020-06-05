@@ -60,19 +60,14 @@ protocol YXExerciseService {
     //MARK: - 方法
     // ----------------------------
     /// 获取一个练习数据
+    /// - returns: 练习对象，如果做完则返回nil
     func fetchExerciseModel() -> YXExerciseModel?
 
     /// 设置开始学习时间
-    /// - Parameters:
-    ///   - type: 学习类型
-    ///   - id: 词单ID，非必选
-    func setStartTime(type: YXLearnType, plan id: Int?)
+    func setStartTime()
 
     /// 更新学习时长
-    /// - Parameters:
-    ///   - type: 学习类型
-    ///   - id: 词单ID，非必选
-    func updateDurationTime(type: YXLearnType, plan id: Int?)
+    func updateDurationTime()
     
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
     /// - Parameters:
