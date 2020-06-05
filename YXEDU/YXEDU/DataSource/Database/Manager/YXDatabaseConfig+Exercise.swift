@@ -78,7 +78,7 @@ extension YYSQLManager {
             care_score integer(1) DEFAULT(0),
             step integer(1),
             backup integer(1),
-            result integer(1) DEFAULT(-1),
+            status integer(1) DEFAULT(-1),
             wrong_score integer(1),
             wrong_rate integer(1),
             wrong_count integer(2) DEFAULT(0),
@@ -111,10 +111,9 @@ extension YYSQLManager {
             learn_type,
             book_id,
             unit_id,
-            plan_id,
-            study_duration,
+            plan_id
         )
-        values(?, ?, ?, ?, ? , ?)
+        values(?, ?, ?, ?, ?)
         """
         
         case insertCurrentExercise =
@@ -224,7 +223,7 @@ extension YYSQLManager {
         case updateWordStep =
         """
         UPDATE all_word_step
-        SET score = ?, result = ?, wrong_count = ?
+        SET score = ?, status = ?, wrong_count = ?
         WHERE exercise_id = ? and step = ? and score = ?
         """
 

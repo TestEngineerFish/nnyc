@@ -9,7 +9,19 @@
 import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
-
+    
+    func insertStudyRecord(type: YXExerciseRuleType, model: YXLearnConfig) -> Bool {
+        let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
+        let params: [Any] = [
+            type.rawValue,
+            model.learnType.rawValue,
+            model.bookId as Any,
+            model.unitId as Any,
+            model.planId as Any
+        ]
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+    }
+    
     func setStartTime(type: YXLearnType, plan id: Int?, start time: Int) {
         let sql = YYSQLManager.StudyRecordSQL.updateStartTime.rawValue
         let params: [Any] = [type.rawValue, id as Any]

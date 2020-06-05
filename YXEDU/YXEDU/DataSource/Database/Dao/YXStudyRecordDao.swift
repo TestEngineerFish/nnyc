@@ -9,7 +9,10 @@
 import Foundation
 
 protocol YXStudyRecordDao {
-
+    
+    func insertStudyRecord(type: YXExerciseRuleType, model: YXLearnConfig) -> Bool
+    
+    
     /// 设置开始学习时间
     /// - Parameters:
     ///   - type: 学习类型

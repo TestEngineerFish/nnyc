@@ -38,29 +38,23 @@ extension YXExerciseServiceImpl {
         self.learnConfig.bookId = _resultModel?.bookId ?? 0
         self.learnConfig.unitId = _resultModel?.unitId ?? 0
         
+        // 插入学习记录
+        self.processStudyRecord()
+        
         // 插入练习数据【新学/复习】
         self.processExercise(wordIds: _resultModel?.newWordIds ?? [], isNew: true)
         self.processExercise(wordIds: _resultModel?.reviewWordIds ?? [], isNew: false)
-//        self.processExercise(wordIds: result?.reviewWordIds ?? [], type: .review)
         
         // 插入单词步骤数据【新学/训练+复习】
         self.processWordStep()
     }
     
     
-    /**
-     *
-    type.rawValue,
-    exerciseModel.dataType.rawValue,
-    exerciseModel.word?.wordId as Any,
-    exerciseModel.word?.word as Any,
-    exerciseModel.word?.bookId as Any,
-    exerciseModel.word?.unitId as Any,
-    planId as Any,
-    exerciseModel.isNewWord,
-    exerciseModel.unfinishStepCount
-
-     */
+    func processStudyRecord() {
+        self.studyDao.insertStudyRecord(type: ruleType, model: learnConfig)
+    }
+    
+    
     /// 练习数据
     /// - Parameter result: 网络数据
     func processExercise(wordIds: [Int], isNew: Bool) {
@@ -88,67 +82,6 @@ extension YXExerciseServiceImpl {
     }
     
     
-    
-    
-    /// 处理新学跟读步骤
-    /// - Parameter result:
-//    func processNewWordStep(wordIds: [Int]) {
-//
-//        YXLog("\n插入新学步骤数据====== 开始")
-//        // 处理新学单词
-//        for wordId in wordIds {
-//
-//            if let word = wordDao.selectWord(bookId: learnConfig.bookId, wordId: wordId) {
-//
-//                var exercise = YXExerciseModel()
-//                exercise.question = createQuestionModel(word: word)
-//                exercise.learnType = learnConfig.learnType
-//                exercise.word = word
-////                exercise.wordType = .new
-//
-//                if (word.gradeId ?? 0) <= 6 {// 小学
-//                    exercise.type = .newLearnPrimarySchool
-//                    if word.partOfSpeechAndMeanings?.first?.isPhrase ?? false {
-//                        exercise.type = .newLearnPrimarySchool_Group
-//                    }
-//                } else { // 初中及其他
-//                    exercise.type = .newLearnJuniorHighSchool
-//                }
-//
-//                // 插入单词——新学步骤
-//                let result = stepDao.insertWordStep(type: ruleType, exerciseModel: exercise)
-//                YXLog("插入单词——新学步骤", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
-//            } else {
-//                YXLog("插入新学数据, 单词不存在:", wordId)
-//            }
-//        }
-//        YXLog("\n插入新学步骤数据====== 结束")
-//    }
-//
-    
-    
-    
-    /**
-     *
-    exerciseModel.eid,
-    exerciseModel.word?.bookId as Any,
-    exerciseModel.word?.unitId as Any,
-    exerciseModel.type.rawValue,
-    exerciseModel.question?.wordId as Any,
-    exerciseModel.question?.word as Any,
-    exerciseModel.question?.itemCount as Any,
-    exerciseModel.question?.row as Any,
-    exerciseModel.question?.column as Any,
-    exerciseModel.question?.extend?.power as Any,
-    exerciseModel.score,
-    exerciseModel.isCareScore,
-    exerciseModel.step,
-    exerciseModel.isBackup,
-    exerciseModel.wrongScore,
-    exerciseModel.wrongRate,
-    exerciseModel.group,
-    
-     */
     /// 处理训练和复习步骤
     /// - Parameter result:
     func processWordStep() {
@@ -164,7 +97,7 @@ extension YXExerciseServiceImpl {
                         for item in subStep.option?.firstItems ?? [] {
                             // 连线题，wordId没有，需要构造一个
                             exercise.wordId = item.optionId
-                            addWordStep(subStep: subStep, group: index)
+                            addWordStep(subStep: exercise, group: index)
                         }
                     } else {
                         addWordStep(subStep: subStep, group: index)
@@ -209,63 +142,7 @@ extension YXExerciseServiceImpl {
     func isConnectionType(model: YXExerciseModel) -> Bool {
         return model.type == .connectionWordAndChinese || model.type == .connectionWordAndImage
     }
-    
-    /// 更新原始数据的 eid
-    /// - Parameters:
-    ///   - wordId:
-    ///   - eid:
-//    func setExerciseId(wordId: Int, eid: Int) {
-//        guard let groups = _resultModel?.groups else {
-//            return
-//        }
-//        for (i, group) in groups.enumerated() {
-//            for (j, step) in group.enumerated() {
-//                for (k, subStep) in step.enumerated() {
-//                    if subStep.question?.wordId == wordId {
-//                        _resultModel?.groups?[i][j][k].eid = eid
-//                    }
-//                }
-//            }
-//        }
-//
-//    }
-    
-//    /// 获取分组下标
-//    /// - Parameters:
-//    ///   - index:
-//    ///   - count:
-//    ///   - type: 单词类型
-//    private func groupIndex(index: Int, count: Int, type: YXExerciseWordType) -> Int {
-//        ruleType = .p4
-//        // 只有新学才有分组学习
-//        if self.learnConfig.learnType != .base {
-//            return 1
-//        }
-//
-//        // 新学是否分组
-//        if type == .new && isGroup() == false {
-//            return 1
-//        }
-//
-//        var batchSize = 0
-//        switch type {
-//            case .new:
-//                batchSize = self.newWordBatchSize
-//            case .exercise:
-//                batchSize = self.exerciseWordBatchSize
-//            default:
-//                batchSize = self.reviewWordBatchSize
-//        }
-//
-//        return lround(Double(index + 1) / Double(batchSize) + 0.4)
-//    }
-    
-    
-//    // 新学是否分组学习
-//    func isGroup() -> Bool {
-//        return ruleType == .p4 || ruleType == .a1 || ruleType == .a2
-//    }
-//
+
     
     func stepScoreRule() -> Int {
         return 0
