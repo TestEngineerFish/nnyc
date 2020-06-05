@@ -51,7 +51,7 @@ extension YXExerciseServiceImpl {
     
     
     func processStudyRecord() {
-        self.studyDao.insertStudyRecord(type: ruleType, model: learnConfig)
+        self.studyDao.insertStudyRecord(type: ruleType, config: learnConfig)
     }
     
     
