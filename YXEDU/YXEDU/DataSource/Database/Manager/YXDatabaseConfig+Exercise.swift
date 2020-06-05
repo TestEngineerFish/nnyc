@@ -68,7 +68,6 @@ extension YYSQLManager {
             book_id integer,
             unit_id integer,
             question_type char(10),
-            word_id integer DEFAULT(0),
             question_word_content varchar,
             question_option_count integer(1),
             question_row_count integer(1),
@@ -199,7 +198,7 @@ extension YYSQLManager {
         insert into
         all_word_step(
             exercise_id,
-            question_word_id,
+            word_id,
             book_id,
             unit_id,
             question_type,
