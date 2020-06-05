@@ -12,22 +12,24 @@ import UIKit
 
 protocol YXExerciseDao {
 
-    // TODO: ==== 插入 ====add
     /// 添加练习数据
-    /// - Parameter exerciseModel: 练习
-    func insertExercise(type: YXExerciseRuleType, planId: Int?, exerciseModel: YXExerciseModel) -> Int
+    /// - Parameters:
+    ///   - config: 学习配置信息
+    ///   - exerciseModel: 练习对象
+    func insertExercise(learn config: YXLearnConfig, rule: YXExerciseRuleType, study recordId: Int, exerciseModel: YXExerciseModel) -> Int
 
     /// 更新练习记录
     /// - Parameter model: 练习对象
     @discardableResult
     func updateExercise(exercise model: YXExerciseModel) -> Bool
 
-
     /// 获得当前学习流程的所有练习
-    /// - Parameters:
-    ///   - type: 学习类型
-    ///   - id: 词单ID，可选
-    func getAllExercise(type: YXLearnType, plan id: Int?) -> [YXExerciseModel]
+    /// - Parameter config: 学习配置信息
+    func getAllExercise(learn config: YXLearnConfig) -> [YXExerciseModel]
+
+    /// 删除一个学习记录所有单词
+    /// - Parameter id: 学习记录ID
+    func deleteExercise(study id: Int)
 
     /// 清除过期的数据
     @discardableResult

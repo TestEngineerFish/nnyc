@@ -24,7 +24,7 @@ extension YYSQLManager {
         case studyRecord =
         """
         CREATE TABLE IF NOT EXISTS study_record (
-            id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+            study_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
             rule_type char(10),
             learn_type integer(1),
             book_id integer(4),
@@ -43,6 +43,7 @@ extension YYSQLManager {
         """
         CREATE TABLE IF NOT EXISTS all_exercise (
             exercise_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+            study_id integer(8) NOT NULL,
             rule_type char(10),
             learn_type integer(1) NOT NULL,
             word_id integer NOT NULL,
@@ -63,6 +64,7 @@ extension YYSQLManager {
         """
         CREATE TABLE IF NOT EXISTS all_word_step (
             step_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+            study_id integer(8) NOT NULL,
             exercise_id integer(8) NOT NULL,
             word_id integer DEFAULT(0),
             book_id integer,
@@ -105,7 +107,7 @@ extension YYSQLManager {
         
         case insertStudyRecord =
         """
-        insert into
+        INSERT INTO
         study_record(
             rule_type,
             learn_type,
@@ -123,9 +125,10 @@ extension YYSQLManager {
 
         case getInfo =
         """
-        SELECT * FROM study_record
-        WHERE learn_type = ? and plan_id = ?
+        SELECT * FROM study_record WHERE learn_type = %d and plan_id is %@
+
         """
+
 
         case updateStartTime =
         """
@@ -144,7 +147,7 @@ extension YYSQLManager {
         case deleteRecord =
         """
         DELETE FROM study_record
-        WHERE learn_type = ? and plan_id = ?
+        WHERE study_id = ?
         """
         
         case deleteExpiredRecord =
@@ -165,6 +168,7 @@ extension YYSQLManager {
         """
         insert into
         all_exercise(
+            study_id,
             rule_type,
             learn_type,
             word_id,
@@ -175,7 +179,7 @@ extension YYSQLManager {
             is_new,
             unfinish_count
         )
-        values(?, ?, ?, ?, ? , ?, ?, ?, ?)
+        values(?, ?, ?, ?, ? , ?, ?, ?, ?, ?)
         """
         
         case insertCurrentExercise =
@@ -195,6 +199,12 @@ extension YYSQLManager {
         SELECT * FROM all_exercise
         WHERE learn_type = ? and plan_id = ?
         """
+
+        case deleteExerciseWithStudy =
+        """
+        DELETE FROM all_exercise
+        WHERE study_id = ?
+        """
         
         case deleteExpiredExercise = "delete from all_exercise where date(create_ts) < date('now')"
         
@@ -208,6 +218,7 @@ extension YYSQLManager {
         """
         insert into
         all_word_step(
+            study_id,
             exercise_id,
             word_id,
             book_id,
@@ -227,7 +238,7 @@ extension YYSQLManager {
             group_index
         )
         values(
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?
         )
         """
@@ -249,6 +260,12 @@ extension YYSQLManager {
         """
         DELETE FROM all_word_step
         WHERE exercise_id = ? and step = ? and score = ?
+        """
+
+        case deleteStepWithStudy =
+        """
+        DELETE FROM all_word_step
+        WHERE study_id = ?
         """
         
         case deleteExpiredWordStep = "delete from all_word_step where date(create_ts) < date('now')"

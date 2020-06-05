@@ -11,17 +11,18 @@ import FMDB
 
 class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
     
-    func insertExercise(type: YXExerciseRuleType, planId: Int? = nil, exerciseModel: YXExerciseModel) -> Int {
+    func insertExercise(learn config: YXLearnConfig, rule: YXExerciseRuleType, study recordId: Int, exerciseModel: YXExerciseModel) -> Int {
         
         let sql = YYSQLManager.ExerciseSQL.insertExercise.rawValue
         let params: [Any] = [
-            type.rawValue,
-            exerciseModel.learnType.rawValue,
+            recordId,
+            rule.rawValue,
+            config.learnType.rawValue,
             exerciseModel.word?.wordId as Any,
             exerciseModel.word?.word as Any,
             exerciseModel.word?.bookId as Any,
             exerciseModel.word?.unitId as Any,
-            planId as Any,
+            config.planId as Any,
             exerciseModel.isNewWord,
             exerciseModel.unfinishStepCount
         ]
@@ -38,10 +39,12 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func getAllExercise(type: YXLearnType, plan id: Int?) -> [YXExerciseModel] {
+    func getAllExercise(learn config: YXLearnConfig) -> [YXExerciseModel] {
         var modelList = [YXExerciseModel]()
         let sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
-        let params: [Any] = [type, id ?? 0]
+        let params: [Any] = [
+            config.learnType.rawValue,
+            config.planId ?? 0]
         let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params)
         while result?.next() == .some(true) {
             if let model = self.transformModel(result: result) {
@@ -49,6 +52,12 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             }
         }
         return modelList
+    }
+
+    func deleteExercise(study id: Int) {
+        let sql = YYSQLManager.ExerciseSQL.deleteExerciseWithStudy.rawValue
+        let params: [Any] = [id]
+        self.wordRunner.executeQuery(sql, withArgumentsIn: params)
     }
 
     @discardableResult

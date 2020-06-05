@@ -88,8 +88,10 @@ class YXExerciseServiceImpl: YXExerciseService {
         YXLog("上报内容：" + reportContent)
         YXLog("学习时长：\(duration)")
         let request = YXExerciseRequest.report(type: type.rawValue, time: duration, result: reportContent)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             // 清除数据库对应数据
+            self.deleteLearnRecord()
             completion?(response.dataArray != nil, nil)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -112,7 +114,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     private func getReportJson(type: YXLearnType, plan id: Int?) -> String {
         var modelArray = [YXExerciseReportModel]()
         // 获得所有学习的单词单词
-        let exerciseModelList = self.exerciseDao.getAllExercise(type: type, plan: id)
+        let exerciseModelList = self.exerciseDao.getAllExercise(learn: learnConfig)
 
         exerciseModelList.forEach { (model) in
             let data = self.stepDao.getSteps(with: model)
@@ -134,7 +136,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 扣分逻辑
-    func updateScore(exercise model: YXExerciseModel) -> YXExerciseModel {
+    private func updateScore(exercise model: YXExerciseModel) -> YXExerciseModel {
 
         var _model      = model
         if model.mastered {
@@ -166,6 +168,14 @@ class YXExerciseServiceImpl: YXExerciseService {
                 }
             }
         }
+    }
+
+    /// 删除当前学习记录
+    private func deleteLearnRecord() {
+        let studyId = self.studyDao.getStudyID(learn: learnConfig)
+        self.studyDao.delete(study: studyId)
+        self.exerciseDao.deleteExercise(study: studyId)
+        self.stepDao.deleteStepWithStudy(study: studyId)
     }
 
 }

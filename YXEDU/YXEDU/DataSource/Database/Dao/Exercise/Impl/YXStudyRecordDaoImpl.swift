@@ -9,8 +9,23 @@
 import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
-    
-    func insertStudyRecord(type: YXExerciseRuleType, config: YXLearnConfig) -> Bool {
+
+    func getStudyID(learn config: YXLearnConfig) -> Int {
+        let planId = config.planId == nil ? "NULL" : "\(config.planId!)"
+        let sql = String(format: YYSQLManager.StudyRecordSQL.getInfo.rawValue, config.learnType.rawValue, planId)
+//        let params: [Any] = [
+//           config.learnType.rawValue,
+//           config.planId ?? 0]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+            return .zero
+        }
+        let id = result.int(forColumn: "study_id")
+        let studyID = Int(result.int(forColumn: "study_id"))
+        YXLog("====id===",id, studyID)
+        return studyID
+    }
+
+    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType) -> Bool {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
         let params: [Any] = [
             type.rawValue,
@@ -36,7 +51,9 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
 
     func getStartTime(learn config: YXLearnConfig) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-         let params: [Any] = [config.learnType.rawValue, config.planId as Any]
+         let params: [Any] = [
+            config.learnType.rawValue,
+            config.planId as Any]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return .zero
         }
@@ -52,9 +69,9 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return Int(result.int(forColumn: "study_duration"))
     }
 
-    func delete(learn config: YXLearnConfig) {
+    func delete(study id: Int) {
         let sql = YYSQLManager.StudyRecordSQL.deleteRecord.rawValue
-        let params: [Any] = [config.learnType.rawValue, config.planId as Any]
+        let params: [Any] = [id]
         self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 

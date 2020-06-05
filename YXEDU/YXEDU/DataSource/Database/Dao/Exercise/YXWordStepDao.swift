@@ -25,7 +25,7 @@ protocol YXWordStepDao {
     // TODO: ==== 插入 ====add
     /// 添加练习数据
     /// - Parameter exerciseModel: 练习
-    func insertWordStep(type: YXExerciseRuleType, exerciseModel: YXExerciseModel) -> Bool
+    func insertWordStep(type: YXExerciseRuleType, study recordId: Int, exerciseModel: YXExerciseModel) -> Bool
     
     // TODO: ==== 修改/删除 ====
     /// 更新练习数据状态
@@ -41,6 +41,10 @@ protocol YXWordStepDao {
     /// 删除某一个Step
     /// - Parameter model: 练习对象
     func deleteStep(with model: YXExerciseModel)
+
+    /// 删除一个学习记录的所有学习步骤
+    /// - Parameter id: 学习记录ID
+    func deleteStepWithStudy(study id: Int)
 
     /// 清除过期的数据
     @discardableResult

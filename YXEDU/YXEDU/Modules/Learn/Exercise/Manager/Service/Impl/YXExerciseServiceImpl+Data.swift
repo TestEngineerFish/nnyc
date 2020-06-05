@@ -51,7 +51,7 @@ extension YXExerciseServiceImpl {
     
     
     func processStudyRecord() {
-        self.studyDao.insertStudyRecord(type: ruleType, config: learnConfig)
+        self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType)
     }
     
     
@@ -59,6 +59,7 @@ extension YXExerciseServiceImpl {
     /// - Parameter result: 网络数据
     func processExercise(wordIds: [Int], isNew: Bool) {
         YXLog("\n插入数据 is_new= \(isNew ) ====== 开始")
+        let studyRecordId = self.studyDao.getStudyID(learn: learnConfig)
         // 处理单词列表
         for wordId in wordIds {
             var word = YXWordModel()
@@ -72,7 +73,7 @@ extension YXExerciseServiceImpl {
             exercise.isNewWord = isNew
 
             // 插入练习数据
-            let exerciseId = exerciseDao.insertExercise(type: ruleType, planId: learnConfig.planId, exerciseModel: exercise)
+            let exerciseId = exerciseDao.insertExercise(learn: learnConfig, rule: ruleType, study: studyRecordId, exerciseModel: exercise)
 
             // 映射单词ID和表ID
             self.wordIdMap[wordId] = exerciseId
@@ -89,6 +90,7 @@ extension YXExerciseServiceImpl {
         guard let groups = _resultModel?.groups else {
             return
         }
+        let studyRecordId = self.studyDao.getStudyID(learn: learnConfig)
         for (index, group) in groups.enumerated() {
             for step in group {
                 for subStep in step {
@@ -97,10 +99,10 @@ extension YXExerciseServiceImpl {
                         for item in subStep.option?.firstItems ?? [] {
                             // 连线题，wordId没有，需要构造一个
                             exercise.wordId = item.optionId
-                            addWordStep(subStep: exercise, group: index)
+                            addWordStep(subStep: exercise, study: studyRecordId, group: index)
                         }
                     } else {
-                        addWordStep(subStep: subStep, group: index)
+                        addWordStep(subStep: subStep, study: studyRecordId, group: index)
                     }
                 }
             }
@@ -111,7 +113,7 @@ extension YXExerciseServiceImpl {
     
     
     
-    func addWordStep(subStep: YXExerciseModel, group: Int) {
+    func addWordStep(subStep: YXExerciseModel, study recordId: Int, group: Int) {
         if let word = learnConfig.learnType == .base ?
             wordDao.selectWord(bookId: learnConfig.bookId ?? 0, wordId: subStep.wordId) :
             wordDao.selectWord(wordId: subStep.wordId) {
@@ -122,7 +124,7 @@ extension YXExerciseServiceImpl {
             exercise.group = group
             exercise.eid = wordIdMap[exercise.wordId] ?? 0
 
-            let result = stepDao.insertWordStep(type: ruleType, exerciseModel: exercise)
+            let result = stepDao.insertWordStep(type: ruleType, study: recordId, exerciseModel: exercise)
             YXLog("插入\(stepString(exercise))步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
         } else {
             YXLog("插入步骤数据, 不存在, id:",subStep.wordId)

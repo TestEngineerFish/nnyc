@@ -19,10 +19,11 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     }
     
     
-    func insertWordStep(type: YXExerciseRuleType, exerciseModel: YXExerciseModel) -> Bool {
+    func insertWordStep(type: YXExerciseRuleType, study recordId: Int, exerciseModel: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
         
         let params: [Any] = [
+            recordId,
             exerciseModel.eid,
             exerciseModel.wordId as Any,
             exerciseModel.word?.bookId as Any,
@@ -74,7 +75,6 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         return (dict, wrongCount)
     }
 
-    
     func selectExerciseProgress() -> YXExerciseProgress {
         return .reported
     }
@@ -83,6 +83,12 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         let sql = YYSQLManager.WordStepSQL.deleteStep.rawValue
         let score = model.mastered ? 0 : 7
         let params: [Any] = [model.eid, model.step, score]
+        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+    }
+
+    func deleteStepWithStudy(study id: Int) {
+        let sql = YYSQLManager.WordStepSQL.deleteStepWithStudy.rawValue
+        let params: [Any] = [id]
         self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
     
