@@ -82,12 +82,12 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 上报关卡
-    func report(type: YXLearnType, plan id: Int?, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        let reportContent = self.getReportJson(type: type, plan: id)
-        let duration      = self.getLearnDuration(type: type, plan: id)
-        YXLog("上报内容：" + reportContent)
-        YXLog("学习时长：\(duration)")
-        let request = YXExerciseRequest.report(type: type.rawValue, time: duration, result: reportContent)
+    func report(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+        let reportContent = self.getReportJson()
+        let duration      = self.getLearnDuration()
+        YXLog("new上报内容：" + reportContent)
+        YXLog("new学习时长：\(duration)")
+        let request = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, time: duration, result: reportContent)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
             // 清除数据库对应数据
@@ -111,7 +111,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     // ----------------------------
     //MARK: - Private 方法
     /// 获取上报内容
-    private func getReportJson(type: YXLearnType, plan id: Int?) -> String {
+    private func getReportJson() -> String {
         var modelArray = [YXExerciseReportModel]()
         // 获得所有学习的单词单词
         let exerciseModelList = self.exerciseDao.getAllExercise(learn: learnConfig)
@@ -131,7 +131,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 获取学习时长
-    private func getLearnDuration(type: YXLearnType, plan id: Int?) -> Int {
+    private func getLearnDuration() -> Int {
         return self.studyDao.getDurationTime(learn: learnConfig)
     }
 
@@ -176,6 +176,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.studyDao.delete(study: studyId)
         self.exerciseDao.deleteExercise(study: studyId)
         self.stepDao.deleteStepWithStudy(study: studyId)
+        YXLog("清除\(learnConfig.learnType.rawValue)的学习记录完成, Plan ID:", learnConfig.planId ?? 0)
     }
 
 }

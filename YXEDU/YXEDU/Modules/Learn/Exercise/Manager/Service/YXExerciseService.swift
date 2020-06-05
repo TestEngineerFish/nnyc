@@ -73,8 +73,13 @@ protocol YXExerciseService {
     /// - Parameters:
     ///   - exerciseModel:  练习数据
     func normalAnswerAction(exercise model: YXExerciseModel)
-    
-    
+
+    /// 上报学习数据
+    /// - Parameters:
+    ///   - config: 学习配置
+    ///   - completion: 完成回调
+    func report(completion: ((_ result: Bool, _ msg: String?) -> Void)?)
+
     /// 是否需要显示单词详情页
     /// - Parameters:
     ///   - wordId: 单词ID

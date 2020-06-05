@@ -22,10 +22,9 @@
     /// 学习配置
     public var learnConfig: YXLearnConfig = YXBaseLearnConfig()
     
-    
+    var service: YXExerciseService = YXExerciseServiceImpl()
     // 数据管理器
     public var dataManager: YXExerciseDataManager!
-    
     
     // 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
@@ -188,10 +187,9 @@
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        var service: YXExerciseService = YXExerciseServiceImpl()
         service.learnConfig = learnConfig
         service.fetchExerciseModel()
-        
+
         
         dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
             guard let self = self else { return }
@@ -289,7 +287,7 @@
             exerciseView.answerView?.connectionAnswerViewDelegate = self
 
             loadExerciseView(exerciseView: exerciseView)
-        } else {            
+        } else {
             self.report()
         }
     }

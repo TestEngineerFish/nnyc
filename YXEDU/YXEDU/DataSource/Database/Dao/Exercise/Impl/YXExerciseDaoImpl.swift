@@ -57,7 +57,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
     func deleteExercise(study id: Int) {
         let sql = YYSQLManager.ExerciseSQL.deleteExerciseWithStudy.rawValue
         let params: [Any] = [id]
-        self.wordRunner.executeQuery(sql, withArgumentsIn: params)
+        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
     @discardableResult

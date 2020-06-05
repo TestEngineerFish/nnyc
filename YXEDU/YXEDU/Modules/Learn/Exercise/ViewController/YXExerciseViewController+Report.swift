@@ -12,7 +12,8 @@ import GrowingAutoTrackKit
 
 extension YXExerciseViewController {
     
-    func report() {        
+    func report() {
+        self.service.report(completion: nil)
         if dataManager.dataStatus == .empty {
             processEmptyData()
         } else {
