@@ -140,11 +140,23 @@ extension YYSQLManager {
         SET study_duration = ?
         WHERE learn_type = ? and plan_id = ?
         """
+
+        case deleteRecord =
+        """
+        DELETE FROM study_record
+        WHERE learn_type = ? and plan_id = ?
+        """
         
+        case deleteExpiredRecord =
+        """
+        DELETE FROM study_record
+        WHERE date(create_ts) < date('now')
+        """
         
-        case deleteExpiredExercise = "delete from all_exercise where date(create_ts) < date('now')"
-        
-        case deleteAllExercise = "delete from all_exercise"
+        case deleteAllRecord =
+        """
+        DELETE FROM study_record
+        """
     }
     
     enum ExerciseSQL: String {

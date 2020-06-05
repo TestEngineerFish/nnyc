@@ -9,10 +9,10 @@
 import Foundation
 
 protocol YXStudyRecordDao {
-    
+
     func insertStudyRecord(type: YXExerciseRuleType, model: YXLearnConfig) -> Bool
-    
-    
+
+
     /// 设置开始学习时间
     /// - Parameters:
     ///   - config: 学习配置信息
@@ -26,13 +26,14 @@ protocol YXStudyRecordDao {
     func setDurationTime(learn config: YXLearnConfig, duration time: Int)
 
     /// 获得开始学习时间
-    /// - Parameters:
-    ///   - config: 学习配置信息
+    /// - Parameter config: 学习配置信息
     func getStartTime(learn config: YXLearnConfig) -> Int
 
     /// 获得学习持续时间
-    /// - Parameters:
-    ///   - config: 学习配置信息
+    /// - Parameter config: 学习配置信息
     func getDurationTime(learn config: YXLearnConfig) -> Int
-    
+
+    /// 删除学习记录
+    /// - Parameter config: 学习配置信息
+    func delete(learn config: YXLearnConfig)
 }

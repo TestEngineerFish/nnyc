@@ -53,7 +53,9 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     }
 
     func delete(learn config: YXLearnConfig) {
-
+        let sql = YYSQLManager.StudyRecordSQL.deleteRecord.rawValue
+        let params: [Any] = [config.learnType.rawValue, config.planId as Any]
+        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
 }
