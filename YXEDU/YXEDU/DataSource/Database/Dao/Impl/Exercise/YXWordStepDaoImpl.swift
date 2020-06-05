@@ -24,10 +24,10 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         
         let params: [Any] = [
             exerciseModel.eid,
+            exerciseModel.wordId as Any,
             exerciseModel.word?.bookId as Any,
             exerciseModel.word?.unitId as Any,
-            exerciseModel.type.rawValue,
-            exerciseModel.question?.wordId as Any,
+            exerciseModel.type.rawValue,            
             exerciseModel.question?.word as Any,
             exerciseModel.question?.itemCount as Any,
             exerciseModel.question?.row as Any,

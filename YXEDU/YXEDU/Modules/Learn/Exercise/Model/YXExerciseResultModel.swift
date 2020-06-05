@@ -18,7 +18,7 @@ struct YXExerciseResultModel: Mappable {
     var newWordIds: [Int]?
     var reviewWordIds: [Int]?
     var steps: [[YXExerciseModel]]?
-    var groups: Array<Array<Array<YXExerciseModel>>>?
+    var groups: [[[YXExerciseModel]]] = []
     var scoreRule: [YXScoreRuleModel] = []
     
     init?(map: Map) {
@@ -31,9 +31,45 @@ struct YXExerciseResultModel: Mappable {
         unitId        <- map["unit_id"]
         newWordIds    <- map["new_word_list"]
         reviewWordIds <- map["review_word_list"]
+
         steps         <- map["step_list"]
-        groups         <- map["group_list"]
-        scoreRule         <- map["step_score"]
+        groups        <- map["group_list"]
+        scoreRule     <- map["step_score"]
+        
+        // Mappable库不能解析三维数组，手动解析
+        parserGroup(map: map["group_list"])
+        
+    }
+    
+    
+    /// 解析分组数据，Mappable库不能解析三维数组，手动解析
+    /// - Parameter list:
+    mutating func parserGroup(map: Map) {
+        guard let groupAnyArray = map.currentValue as? Array<Any> else {
+            return
+        }
+        
+        for groupAny in groupAnyArray {
+            // 单个group的原始数据
+            guard let groupData = groupAny as? Array<Any> else {
+                continue
+            }
+            var group = [[YXExerciseModel]]()
+            for stepAny in groupData {
+                // 单个step的原始数据
+                guard let stepData = stepAny as? Array<Any> else {
+                    continue
+                }
+                var step = [YXExerciseModel]()
+                for subStep in stepData {
+                    if let subStepJson = subStep as? [String:Any], let exerciseModel = YXExerciseModel(JSON: subStepJson) {
+                        step.append(exerciseModel)
+                    }
+                }
+                group.append(step)
+            }
+            self.groups.append(group)
+        }
     }
 }
 

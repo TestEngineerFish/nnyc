@@ -27,6 +27,7 @@ struct YXExerciseModel: Mappable {
     var learnType: YXLearnType = .base
         
     /// 对应的单词数据
+    var wordId: Int = 0
     var word: YXWordModel?
     
     /// 问题（使用 word 模型）
@@ -35,7 +36,6 @@ struct YXExerciseModel: Mappable {
     var option: YXExerciseOptionModel?
     /// 答案
     var answers: [Int]?
-        
     /// 得分【这个字段有歧义，开始是当题型分数来使用的，后面做了答题分数在用，后面要改】
     var score: Int = 10
     // 做错后要减去多少分
@@ -100,6 +100,7 @@ struct YXExerciseModel: Mappable {
         
     mutating func mapping(map: Map) {
         type     <- (map["type"], EnumTransform<YXQuestionType>())
+        wordId   <- map["word_id"]
         word     <- map["word"]
         question <- map["question"]
         option   <- map["option"]

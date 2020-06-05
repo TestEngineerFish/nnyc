@@ -22,10 +22,9 @@ struct YYSQLManager {
         var sqlArray = [CreateWordTableSQLs.bookTable.rawValue,
                         CreateWordTableSQLs.wordTable.rawValue,
                         CreateWordTableSQLs.searchHistoryTable.rawValue,
-                        CreateWordTableSQLs.stepConfigTable.rawValue,
-                        CreateExerciseTableSQLs.allExercise.rawValue,
-                        CreateExerciseTableSQLs.allWordStep.rawValue,]
-        return sqlArray
+                        CreateWordTableSQLs.stepConfigTable.rawValue
+        ]
+        return sqlArray + CreateExerciseTables
     }()
     
 }

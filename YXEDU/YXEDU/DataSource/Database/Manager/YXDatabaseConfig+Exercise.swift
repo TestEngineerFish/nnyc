@@ -11,16 +11,17 @@ import UIKit
 extension YYSQLManager {
     // 创建学习训练数据表
     static let CreateExerciseTables: [String] = [
+        CreateExerciseTableSQLs.studyRecord.rawValue,
         CreateExerciseTableSQLs.allExercise.rawValue,
         CreateExerciseTableSQLs.allWordStep.rawValue,
-        CreateExerciseTableSQLs.currentExercise.rawValue
+        CreateExerciseTableSQLs.currentTurn.rawValue,
     ]
     
     /// 练习相关的数据表
     enum  CreateExerciseTableSQLs: String {
         
         // 学习记录表
-        case study =
+        case studyRecord =
         """
         CREATE TABLE IF NOT EXISTS study_record (
             id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -29,6 +30,8 @@ extension YYSQLManager {
             book_id integer(4),
             unit_id integer(4),
             plan_id integer(4),
+            current_group integer(1),
+            current_turn integer(2),
             study_duration integer(4),
             start_time integer(8),
             create_ts text(32) NOT NULL DEFAULT(datetime('now'))
@@ -59,12 +62,13 @@ extension YYSQLManager {
         case allWordStep =
         """
         CREATE TABLE IF NOT EXISTS all_word_step (
-            id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+            step_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
             exercise_id integer(8) NOT NULL,
+            word_id integer DEFAULT(0),
             book_id integer,
             unit_id integer,
-            question_type char(10) NOT NULL DEFAULT('Q-A-1'),
-            question_word_id integer DEFAULT(0),
+            question_type char(10),
+            word_id integer DEFAULT(0),
             question_word_content varchar,
             question_option_count integer(1),
             question_row_count integer(1),
@@ -86,11 +90,14 @@ extension YYSQLManager {
         """
         
         // 当前轮次表
-        case currentExercise =
+        case currentTurn =
         """
-            
+        CREATE TABLE IF NOT EXISTS current_turn (
+            step_id integer PRIMARY KEY NOT NULL,
+            finish integer(1) NOT NULL DEFAULT(0),
+            turn_index integer(1) NOT NULL DEFAULT(1)
+        );
         """
-        
     }
     
     
@@ -192,10 +199,10 @@ extension YYSQLManager {
         insert into
         all_word_step(
             exercise_id,
+            question_word_id,
             book_id,
             unit_id,
             question_type,
-            question_word_id,
             question_word_content,
             question_option_count,
             question_row_count,

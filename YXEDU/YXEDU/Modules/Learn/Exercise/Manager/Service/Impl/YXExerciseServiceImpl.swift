@@ -19,6 +19,8 @@ class YXExerciseServiceImpl: YXExerciseService {
     var exerciseProgress: YXExerciseProgress = .reported
     
     var _resultModel: YXExerciseResultModel?
+
+     var wordIdMap = [Int:Int]()
     
     // ----------------------------
     //MARK: - Private 属性
