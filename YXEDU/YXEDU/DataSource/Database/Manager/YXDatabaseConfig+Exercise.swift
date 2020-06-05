@@ -125,8 +125,8 @@ extension YYSQLManager {
 
         case getInfo =
         """
-        SELECT * FROM study_record WHERE learn_type = %d and plan_id is %@
-
+        SELECT * FROM study_record
+        WHERE learn_type = ? and plan_id is ?
         """
 
 
