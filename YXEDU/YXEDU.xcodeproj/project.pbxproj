@@ -2617,11 +2617,11 @@
 			isa = PBXGroup;
 			children = (
 				EE4201CB248A308900231704 /* Impl */,
-				228105DD2487E21F0025F03F /* YXStudyRecordDao.swift */,
-				EE1B6953246C2A91000EADB2 /* YXExerciseDao.swift */,
 				EE4201CD248A30E000231704 /* YXCurrentTurnDao.swift */,
-				EE4201CF248A310400231704 /* YXWordStepDao.swift */,
+				EE1B6953246C2A91000EADB2 /* YXExerciseDao.swift */,
 				EE4201D1248A315200231704 /* YXExerciseProgressDao.swift */,
+				228105DD2487E21F0025F03F /* YXStudyRecordDao.swift */,
+				EE4201CF248A310400231704 /* YXWordStepDao.swift */,
 			);
 			path = Exercise;
 			sourceTree = "<group>";
@@ -2629,10 +2629,10 @@
 		EE4201CB248A308900231704 /* Impl */ = {
 			isa = PBXGroup;
 			children = (
-				EE1B696F2473B031000EADB2 /* YXExerciseDaoImpl.swift */,
-				EE1B69682472B0C8000EADB2 /* YXWordStepDaoImpl.swift */,
-				228105DB2487E1FC0025F03F /* YXStudyRecordDaoImpl.swift */,
 				EE4201C8248A2F1C00231704 /* YXCurrentTurnDaoImpl.swift */,
+				EE1B696F2473B031000EADB2 /* YXExerciseDaoImpl.swift */,
+				228105DB2487E1FC0025F03F /* YXStudyRecordDaoImpl.swift */,
+				EE1B69682472B0C8000EADB2 /* YXWordStepDaoImpl.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";

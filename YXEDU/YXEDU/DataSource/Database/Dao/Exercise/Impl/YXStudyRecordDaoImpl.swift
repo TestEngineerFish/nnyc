@@ -10,14 +10,14 @@ import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     
-    func insertStudyRecord(type: YXExerciseRuleType, model: YXLearnConfig) -> Bool {
+    func insertStudyRecord(type: YXExerciseRuleType, config: YXLearnConfig) -> Bool {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
         let params: [Any] = [
             type.rawValue,
-            model.learnType.rawValue,
-            model.bookId as Any,
-            model.unitId as Any,
-            model.planId as Any
+            config.learnType.rawValue,
+            config.bookId as Any,
+            config.unitId as Any,
+            config.planId as Any
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
