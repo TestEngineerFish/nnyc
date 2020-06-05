@@ -96,7 +96,7 @@ extension YXExerciseViewController {
     func processReviewResult() {
         let vc = YXExerciseResultViewController()
         vc.dataType = learnConfig.learnType
-        vc.planId   = learnConfig.planId
+        vc.planId   = learnConfig.planId ?? 0
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)

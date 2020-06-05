@@ -18,7 +18,7 @@ struct YXExerciseResultModel: Mappable {
     var newWordIds: [Int]?
     var reviewWordIds: [Int]?
     var steps: [[YXExerciseModel]]?
-    var groups: [[[YXExerciseModel]]]?
+    var groups: Array<Array<Array<YXExerciseModel>>>?
     var scoreRule: [YXScoreRuleModel] = []
     
     init?(map: Map) {
@@ -32,10 +32,11 @@ struct YXExerciseResultModel: Mappable {
         newWordIds    <- map["new_word_list"]
         reviewWordIds <- map["review_word_list"]
         steps         <- map["step_list"]
-        groups         <- map["step_list"]
+        groups         <- map["group_list"]
         scoreRule         <- map["step_score"]
     }
 }
+
 
 /// 问题数据模型
 struct YXExerciseQuestionModel: Mappable {

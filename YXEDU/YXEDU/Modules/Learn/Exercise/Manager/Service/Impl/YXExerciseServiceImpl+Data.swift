@@ -163,7 +163,7 @@ extension YXExerciseServiceImpl {
                 for subStep in step {
                     
                     if let word = learnConfig.learnType == .base ?
-                        wordDao.selectWord(bookId: learnConfig.bookId, wordId: subStep.question?.wordId ?? 0) :
+                        wordDao.selectWord(bookId: learnConfig.bookId ?? 0, wordId: subStep.question?.wordId ?? 0) :
                         wordDao.selectWord(wordId: subStep.question?.wordId ?? 0) {
                         
                         var exercise = subStep
