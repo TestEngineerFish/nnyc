@@ -41,7 +41,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return nil
     }
 
-    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType, turn: Int) -> Bool {
+    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType, turn: Int) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
         let params: [Any] = [
             type.rawValue,
@@ -51,7 +51,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
             config.planId,
             turn
         ]
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? Int(wordRunner.lastInsertRowId) : 0
     }
 
     func setStartTime(learn config: YXLearnConfig, start time: Int) {

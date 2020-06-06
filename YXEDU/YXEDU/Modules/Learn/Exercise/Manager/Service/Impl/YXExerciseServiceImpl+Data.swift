@@ -39,22 +39,22 @@ extension YXExerciseServiceImpl {
         self.learnConfig.unitId = _resultModel?.unitId ?? 0
         
         // 插入学习记录
-        self.processStudyRecord()
+        let recordId = self.processStudyRecord()
         
         // 插入练习数据【新学/复习】
-        self.processExercise(wordIds: _resultModel?.newWordIds ?? [], isNew: true)
-        self.processExercise(wordIds: _resultModel?.reviewWordIds ?? [], isNew: false)
+        self.processExercise(wordIds: _resultModel?.newWordIds ?? [], isNew: true, recordId: recordId)
+        self.processExercise(wordIds: _resultModel?.reviewWordIds ?? [], isNew: false, recordId: recordId)
         
         // 插入单词步骤数据【新学/训练/复习】
-        self.processWordStep()
+        self.processWordStep(recordId: recordId)
     }
     
     
-    func processStudyRecord() {
+    func processStudyRecord() -> Int {
         
         guard let group = _resultModel?.groups.first, group.count > 0 else {
             YXLog("学习数据异常，无法查找初始最小 Turn")
-            return
+            return 0
         }
         
         // 正常情况下取首个step的下标，有可能服务端数据异常，前面的step是空数组，还是遍历查找 s0到s4中，起始step是哪个
@@ -67,15 +67,15 @@ extension YXExerciseServiceImpl {
             break
         }
         
-        self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType, turn: currentMinStep)
+        return self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType, turn: currentMinStep)
     }
     
     
     /// 练习数据
     /// - Parameter result: 网络数据
-    func processExercise(wordIds: [Int], isNew: Bool) {
+    func processExercise(wordIds: [Int], isNew: Bool, recordId: Int) {
         YXLog("\n插入数据 is_new= \(isNew ) ====== 开始")
-        let studyRecordId = self.studyDao.getStudyID(learn: learnConfig)
+//        let studyRecordId = self.studyDao.getStudyID(learn: learnConfig)
         // 处理单词列表
         for wordId in wordIds {
             var word = YXWordModel()
@@ -90,7 +90,7 @@ extension YXExerciseServiceImpl {
             exercise.unfinishStepCount = unfinishStepCount(wordId: wordId)
             
             // 插入练习数据
-            let exerciseId = exerciseDao.insertExercise(learn: learnConfig, rule: ruleType, study: studyRecordId, exerciseModel: exercise)
+            let exerciseId = exerciseDao.insertExercise(learn: learnConfig, rule: ruleType, study: recordId, exerciseModel: exercise)
 
             // 映射单词ID和表ID
             self.wordIdMap[wordId] = exerciseId
@@ -102,12 +102,12 @@ extension YXExerciseServiceImpl {
     
     /// 处理训练和复习步骤
     /// - Parameter result:
-    func processWordStep() {
+    func processWordStep(recordId: Int) {
         YXLog("\n插入步骤数据====== 开始")
         guard let groups = _resultModel?.groups else {
             return
         }
-        let studyRecordId = self.studyDao.getStudyID(learn: learnConfig)
+//        let studyRecordId = self.studyDao.getStudyID(learn: learnConfig)
         for (index, group) in groups.enumerated() {
             for step in group {
                 for subStep in step {
@@ -116,10 +116,10 @@ extension YXExerciseServiceImpl {
                         for item in subStep.option?.firstItems ?? [] {
                             // 连线题，wordId没有，需要构造一个
                             exercise.wordId = item.optionId
-                            addWordStep(subStep: exercise, study: studyRecordId, group: index)
+                            addWordStep(subStep: exercise, recordId: recordId, group: index)
                         }
                     } else {
-                        addWordStep(subStep: subStep, study: studyRecordId, group: index)
+                        addWordStep(subStep: subStep, recordId: recordId, group: index)
                     }
                 }
             }
@@ -130,7 +130,7 @@ extension YXExerciseServiceImpl {
     
     
     
-    func addWordStep(subStep: YXExerciseModel, study recordId: Int, group: Int) {
+    func addWordStep(subStep: YXExerciseModel, recordId: Int, group: Int) {
         if let word = learnConfig.learnType == .base ?
             wordDao.selectWord(bookId: learnConfig.bookId ?? 0, wordId: subStep.wordId) :
             wordDao.selectWord(wordId: subStep.wordId) {
