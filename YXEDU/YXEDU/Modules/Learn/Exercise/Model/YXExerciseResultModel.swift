@@ -105,6 +105,7 @@ struct YXExerciseQuestionExtendModel: Mappable {
 //    var isNewWord: Bool = false
 //    var isOldOrEmptyImage: Bool = false
     var power: Int = 0 // 能力值
+    init() {}
     
     init?(map: Map) {
         mapping(map: map)

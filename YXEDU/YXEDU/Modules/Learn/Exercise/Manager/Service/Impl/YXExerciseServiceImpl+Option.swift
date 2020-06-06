@@ -69,13 +69,13 @@ extension YXExerciseServiceImpl {
     
     /// 判断题 【待实现】
     func _judgmentExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
-        return nil
+        return exercise
     }
     
     
     /// 选择题 【待实现】
     func _chooseExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
-        return nil
+        return exercise
     }
     
 }

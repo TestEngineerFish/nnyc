@@ -44,7 +44,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         let sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
         let params: [Any] = [
             config.learnType.rawValue,
-            config.planId ?? 0]
+            config.planId]
         let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params)
         while result?.next() == .some(true) {
             if let model = self.transformModel(result: result) {

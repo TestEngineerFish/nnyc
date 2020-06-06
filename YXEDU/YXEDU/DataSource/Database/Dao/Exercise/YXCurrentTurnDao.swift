@@ -12,14 +12,14 @@ protocol YXCurrentTurnDao {
     
     
     /// 插入当前轮的数据
-    func insertCurrentTurn() -> Bool
+    func insertCurrentTurn(studyId: Int) -> Bool
     
     
     /// 正常获取首个未做的练习
     func selectExercise() -> YXExerciseModel?
     
     /// 获取连线题
-    func selectExercise(step: Int, type: YXQuestionType) -> [YXExerciseModel]
+    func selectExercise(type: YXQuestionType, step: Int) -> [YXExerciseModel]
     
     ///获取备选题型
     func selectBackupExercise(exerciseId: Int, step: Int) -> YXExerciseModel?

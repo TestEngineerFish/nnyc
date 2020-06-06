@@ -20,6 +20,7 @@ import ObjectMapper
 struct YXExerciseModel: Mappable {
     // id，数据库自增
     var eid: Int = 0
+    var stepId: Int = 0
     
     // 题型
     var type: YXQuestionType = .none

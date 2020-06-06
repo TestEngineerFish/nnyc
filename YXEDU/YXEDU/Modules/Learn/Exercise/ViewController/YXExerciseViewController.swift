@@ -207,26 +207,26 @@
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
-            guard let self = self else { return }
-            if result {
-                YXExerciseViewController.requesting = false
-                DispatchQueue.main.async {
-                    self.loadingView?.animationCompleteBlock = { [weak self] in
-                        guard let self = self else {return}
-                        self.dataManager.progressManager.setStartStudyTime()
-                        self.switchExerciseView()
-                    }
-                }
-            } else {
-                YXExerciseViewController.requesting = false
-                UIView.toast("加载数据失败")
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
+//        dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
+//            guard let self = self else { return }
+//            if result {
+//                YXExerciseViewController.requesting = false
+//                DispatchQueue.main.async {
+//                    self.loadingView?.animationCompleteBlock = { [weak self] in
+//                        guard let self = self else {return}
+//                        self.dataManager.progressManager.setStartStudyTime()
+//                        self.switchExerciseView()
+//                    }
+//                }
+//            } else {
+//                YXExerciseViewController.requesting = false
+//                UIView.toast("加载数据失败")
+//                self.navigationController?.popViewController(animated: true)
+//            }
+//        }
         
         // new
-        return
+        
         service.fetchExerciseResultModels { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {

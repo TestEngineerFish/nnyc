@@ -32,7 +32,7 @@ extension YYSQLManager {
             plan_id integer(4) NOT NULL DEFAULT(0),
             complete integer(1) NOT NULL DEFAULT(0),
             current_group integer(1) NOT NULL DEFAULT(0),
-            current_turn integer(2) NOT NULL DEFAULT(0),
+            current_turn integer(2) NOT NULL DEFAULT(-1),
             study_duration integer(4),
             start_time integer(8),
             create_ts text(32) NOT NULL DEFAULT(datetime('now'))
@@ -332,6 +332,10 @@ extension YYSQLManager {
         
         /// 更新完成状态
         case updateFinish = "update current_turn set finish = 1 where step_id = ?"
+        
+        
+        case deleteTurn = "delete from current_turn"
+        
         
         case updateError = ""
     }

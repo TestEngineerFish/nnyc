@@ -149,14 +149,6 @@ extension YXExerciseServiceImpl {
     }
     
     
-    func createQuestionModel(word: YXBaseWordModel?) -> YXExerciseQuestionModel? {
-        guard let w = word else { return nil }
-        var question = YXExerciseQuestionModel()
-        question.wordId = w.wordId
-        question.word   = w.word
-        return question
-    }
-    
     
     func isConnectionType(model: YXExerciseModel) -> Bool {
         return model.type == .connectionWordAndChinese || model.type == .connectionWordAndImage

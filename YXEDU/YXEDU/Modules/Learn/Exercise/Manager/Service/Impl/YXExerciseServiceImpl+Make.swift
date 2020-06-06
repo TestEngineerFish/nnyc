@@ -22,68 +22,52 @@ extension YXExerciseServiceImpl {
     }
 
     
-    /*
-     // 当前轮是否做完
-     var isFinished = true
-     for e in currentTurnArray {
-         if !e.isCurrentTurnFinish {
-             isFinished = false
-         }
-     }
-
-     if isFinished {
-         currentTurnIndex += 1
-         // 清空当前轮已做完的数据
-         self.currentTurnArray.removeAll()
-         // 如果是主流程，则需要添加训练题
-         if dataType == .base {
-             filterExcercise()
-         }
-         filterReview()
-         
-         removeErrorStep()
-         // 排序
-         self.sortCurrentTurn()
-     }
-     */
+    /// 筛选数据
     func _filterExercise() {
         // 当前轮是否做完
         if turnDao.selectTurnFinishStatus() {
             //更新轮下标
-            studyDao.updateCurrentTurn(learn: learnConfig, turn: nil)
+            let r1 = studyDao.updateCurrentTurn(learn: learnConfig, turn: nil)
             
             // 清空当前轮
-            turnDao.deleteCurrentTurn()
-            
+            let r2 = turnDao.deleteCurrentTurn()
+                        
             // 插入新的轮
-            turnDao.insertCurrentTurn()
+            let studyId = self.studyDao.getStudyID(learn: learnConfig)
+            let r3 = turnDao.insertCurrentTurn(studyId: studyId)
+            
+            YXLog("筛选数据， 更新轮下标", r1, "清空当前轮", r2, "插入新的轮 ,id", studyId, r3)
         }
     }
     
-    
+    /// 查找一个练习
     func _findExercise() -> YXExerciseModel? {
-        guard let exericse = turnDao.selectExercise() else {
+        guard let exercise = turnDao.selectExercise() else {
+            YXLog("当前轮没有数据了")
             return nil
         }
-        
         // 有连线题
-        if exericse.type == .connectionWordAndImage || exericse.type == .connectionWordAndChinese {
-            return _findExercise(step: exericse.step, type: exericse.type)
+        if isConnectionType(model: exercise) {
+            return _findExercise(exercise: exercise)
         } else {// 正常返回连线
-            return processExerciseOption(exercise: exericse)
+            return processExerciseOption(exercise: exercise)
         }
     }
     
     
-    func _findExercise(step: Int, type: YXQuestionType) -> YXExerciseModel? {
-        let exercises = turnDao.selectExercise(step: step, type: type)
+    /// 查找一个连线题，有可能是备选题
+    /// - Parameters:
+    ///   - step:
+    ///   - type:
+    func _findExercise(exercise: YXExerciseModel) -> YXExerciseModel? {
+        let connectionExercises = turnDao.selectExercise(type: exercise.type, step: exercise.step)
         
         // 连线题中，是否有单词拼写相同的，如果有都用备选题
-        let sameWordIds = sameWordIdArray(connectionArray: exercises)
+        let sameWords = sameWordArray(connectionArray: connectionExercises)
         
         // 有相同拼写，或者连线只有一个，都用备选题
-        if sameWordIds.count > 0 || exercises.count == 1 {
-            let e = exercises.first
+        if sameWords.count > 0 || connectionExercises.count == 1 {
+            let e = connectionExercises.first
             if let backupExercise = turnDao.selectBackupExercise(exerciseId: e?.eid ?? 0, step: e?.step ?? 0) {
                 return processExerciseOption(exercise: backupExercise)
             } else {
@@ -93,14 +77,14 @@ extension YXExerciseServiceImpl {
         }
         
         // 正常出连线题
-        if exercises.count > 1 {
-            return processConnectionExerciseOption(exercises: exercises)
+        if connectionExercises.count > 1 {
+            return processConnectionExerciseOption(exercises: connectionExercises)
         }
         return nil
     }
     
     
-    func sameWordIdArray(connectionArray: [YXExerciseModel]) -> [Int] {
+    func sameWordArray(connectionArray: [YXExerciseModel]) -> [Int] {
         var ids: [Int] = []
         for exercise in connectionArray {
             for e in connectionArray {
