@@ -30,40 +30,9 @@ extension YXExerciseServiceImpl {
         }
     }
     
-    /// 连线题 【已完成】
+    /// 连线题 
     func processConnectionExerciseOption(exercises: [YXExerciseModel]) -> YXExerciseModel {
-
-        var exercise = exercises.first!
-        var option = YXExerciseOptionModel()
-
-        option.firstItems = []
-        option.secondItems = []
-
-        for e in exercises {
-            var item = YXOptionItemModel()
-            item.optionId = e.word?.wordId ?? 0
-            item.content = e.word?.word
-            option.firstItems?.append(item)
-
-
-            var rightItem = YXOptionItemModel()
-            rightItem.optionId = e.word?.wordId ?? 0
-
-            if exercise.type == .connectionWordAndImage {
-                rightItem.content = e.word?.imageUrl
-            } else if exercise.type == .connectionWordAndChinese {
-                rightItem.content = e.word?.meaning
-            }
-
-
-            option.secondItems?.append(rightItem)
-        }
-
-        option.secondItems = option.secondItems?.shuffled()
-
-        exercise.option = option
-
-        return exercise
+        return exerciseOptionManange.connectionExercise(exerciseArray: exercises)
     }
     
     

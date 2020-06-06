@@ -623,6 +623,9 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
         self.delegate?.backHomeEvent()
         self.dataManager.progressManager.completionExercise()
         self.dataManager.progressManager.completionReport()
+        
+        self.service.cleanExercise()
+        
         self.navigationController?.popViewController(animated: true)
     }
     

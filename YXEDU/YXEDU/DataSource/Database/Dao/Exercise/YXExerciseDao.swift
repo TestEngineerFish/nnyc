@@ -45,7 +45,7 @@ protocol YXExerciseDao {
 
     /// 删除一个学习记录所有单词
     /// - Parameter id: 学习记录ID
-    func deleteExercise(study id: Int)
+    func deleteExercise(study id: Int) -> Bool
 
     /// 清除过期的数据
     @discardableResult

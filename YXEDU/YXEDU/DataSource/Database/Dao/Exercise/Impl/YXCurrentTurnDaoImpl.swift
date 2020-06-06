@@ -29,9 +29,9 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         return exercise
     }
     
-    func selectExercise(type: YXQuestionType, step: Int) -> [YXExerciseModel] {
+    func selectExercise(type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel] {
         let sql = YYSQLManager.CurrentTurnSQL.selectConnectionExercise.rawValue
-        let params: [Any] = [type.rawValue, step, 4]
+        let params: [Any] = [type.rawValue, step, size]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return []
         }
@@ -58,7 +58,7 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         return exercise
     }
     
-    
+    // 暂时没有使用
     func selectConnectionType() -> (YXQuestionType, Int)? {
         let sql = YYSQLManager.CurrentTurnSQL.selectConnectionType.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {

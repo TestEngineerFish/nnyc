@@ -107,10 +107,10 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return Int(result.int(forColumn: "study_duration"))
     }
 
-    func delete(study id: Int) {
+    func delete(study id: Int) -> Bool {
         let sql = YYSQLManager.StudyRecordSQL.deleteRecord.rawValue
         let params: [Any] = [id]
-        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
 }

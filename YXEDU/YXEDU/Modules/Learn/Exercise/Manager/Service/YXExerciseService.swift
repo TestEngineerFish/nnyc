@@ -97,6 +97,9 @@ protocol YXExerciseService {
     ///   - wordId: 单词ID
     ///   - step:   step
     func hasErrorInCurrentTurn(wordId: Int, step: Int)
+    
+    @discardableResult
+    func cleanExercise() -> Bool
 
 }
 

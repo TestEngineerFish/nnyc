@@ -19,11 +19,13 @@ protocol YXCurrentTurnDao {
     func selectExercise() -> YXExerciseModel?
     
     /// 获取连线题
-    func selectExercise(type: YXQuestionType, step: Int) -> [YXExerciseModel]
+    func selectExercise(type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel]
     
     ///获取备选题型
     func selectBackupExercise(exerciseId: Int, step: Int) -> YXExerciseModel?
     
+    
+    // 暂时没有使用
     /// 当前未做的第一个，是否为连线题，返回 type 和 step
     func selectConnectionType() -> (YXQuestionType, Int)?
 

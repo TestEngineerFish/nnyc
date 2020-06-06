@@ -109,10 +109,10 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return modelList
     }
 
-    func deleteExercise(study id: Int) {
+    func deleteExercise(study id: Int) -> Bool {
         let sql = YYSQLManager.ExerciseSQL.deleteExerciseWithStudy.rawValue
         let params: [Any] = [id]
-        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
     @discardableResult

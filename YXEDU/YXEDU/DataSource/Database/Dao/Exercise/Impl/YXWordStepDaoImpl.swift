@@ -86,10 +86,10 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func deleteStepWithStudy(study id: Int) {
+    func deleteStepWithStudy(study id: Int) -> Bool {
         let sql = YYSQLManager.WordStepSQL.deleteStepWithStudy.rawValue
         let params: [Any] = [id]
-        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
     
     @discardableResult
