@@ -10,6 +10,7 @@ import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     
+
     func getStudyID(learn config: YXLearnConfig) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
         let params: [Any] = [
@@ -53,6 +54,26 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? Int(wordRunner.lastInsertRowId) : 0
     }
+    
+    
+    func updateCurrentTurn(learn config: YXLearnConfig, turn: Int? = nil) -> Bool {
+        var sql = YYSQLManager.StudyRecordSQL.updateCurrentTurn.rawValue
+        var params: [Any] = [
+            config.learnType.rawValue,
+            config.bookId,
+            config.unitId,
+            config.planId,
+        ]
+        if let index = turn {
+            sql = YYSQLManager.StudyRecordSQL.updateCurrentTurnByTurn.rawValue
+            params.insert(index, at: 0)
+        }
+        
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+    }
+    
+    
+    
 
     func setStartTime(learn config: YXLearnConfig, start time: Int) {
         let sql = YYSQLManager.StudyRecordSQL.updateStartTime.rawValue

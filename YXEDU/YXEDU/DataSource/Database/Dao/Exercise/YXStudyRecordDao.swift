@@ -9,7 +9,8 @@
 import Foundation
 
 protocol YXStudyRecordDao {
-
+    
+    
     /// 获得学习记录的ID
     /// - Parameter config: 学习配置信息
     /// - Returns: 记录ID
@@ -26,6 +27,13 @@ protocol YXStudyRecordDao {
     @discardableResult
     func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType, turn: Int) -> Int
 
+    
+    /// 更新当前轮下标
+    /// - Parameters:
+    ///   - config:
+    ///   - turn:
+    func updateCurrentTurn(learn config: YXLearnConfig, turn: Int?) -> Bool
+    
     /// 设置开始学习时间
     /// - Parameters:
     ///   - config: 学习配置信息

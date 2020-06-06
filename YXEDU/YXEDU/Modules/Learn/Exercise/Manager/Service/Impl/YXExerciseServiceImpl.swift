@@ -29,20 +29,44 @@ class YXExerciseServiceImpl: YXExerciseService {
     var studyDao: YXStudyRecordDao = YXStudyRecordDaoImpl()
     var exerciseDao: YXExerciseDao = YXExerciseDaoImpl()
     var stepDao: YXWordStepDao     = YXWordStepDaoImpl()
-
+    var turnDao: YXCurrentTurnDao  = YXCurrentTurnDaoImpl()
     
     // ----------------------------
     
     //MARK: ==== 对外暴露的方法 ====
+    
+    func initData() {
+        self.clearExpiredData()
+        self.loadProgressStatus()
+    }
+    
+    
     func fetchExerciseModel() -> YXExerciseModel? {
+        
+        
+        // 筛选数据
+        self._filterExercise()
+        
+        // 查找类型
+        return self._findExercise()
+        
+        
         // 从缓存表中获取
         let model = self.queryExerciseModel()
         // 如果缓存表没有可做题型，添加新的可做题型
 
-        fetchExerciseResultModels(planId: learnConfig.planId, completion: nil)
+//        fetchExerciseResultModels(planId: learnConfig.planId, completion: nil)
         
-        self.clearExpiredData()
+//        self.clearExpiredData()
 //        self.updateProgress()
+        
+        
+        
+        
+        
+        
+        
+        
         
         return model
     }

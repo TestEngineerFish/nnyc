@@ -31,8 +31,8 @@ extension YYSQLManager {
             unit_id integer(4) NOT NULL DEFAULT(0),
             plan_id integer(4) NOT NULL DEFAULT(0),
             complete integer(1) NOT NULL DEFAULT(0),
-            current_group integer(1),
-            current_turn integer(2),
+            current_group integer(1) NOT NULL DEFAULT(0),
+            current_turn integer(2) NOT NULL DEFAULT(0),
             study_duration integer(4),
             start_time integer(8),
             create_ts text(32) NOT NULL DEFAULT(datetime('now'))
@@ -127,7 +127,19 @@ extension YYSQLManager {
         SELECT * FROM study_record
         where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
         """
+        
+        
+        case updateCurrentTurn =
+        """
+        update study_record set current_turn = current_turn + 1
+        where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        """
 
+        case updateCurrentTurnByTurn =
+        """
+        update study_record set current_turn = ?
+        where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        """
 
         case updateStartTime =
         """
@@ -284,12 +296,38 @@ extension YYSQLManager {
         order by step desc, exercise_id asc
         """
         
-        ///
-        case queryExercise =
+        /// 正常查询一个
+        case selectExercise =
         """
         select c.current_id, s.* from current_turn c inner join all_word_step s
         on s.step_id = c.step_id and c.finish = 0
         order by c.current_id asc
+        limit 1
+        """
+        
+        /// 查询连线题
+        case selectConnectionExercise =
+        """
+        select c.current_id, s.* from current_turn c inner join all_word_step s
+        on s.step_id = c.step_id and c.finish = 0
+        where question_type = ? and c.step = ?
+        order by c.current_id asc
+        limit ?
+        """
+        
+        /// 查询未做的连线题类型和step
+        case selectConnectionType =
+        """
+        select question_type, c.step from current_turn c inner join all_word_step s
+        on s.step_id = c.step_id and c.finish = 0
+        where question_type = 'Q-A-9' or question_type = 'Q-A-10'
+        order by c.current_id asc
+        limit 1
+        """
+        
+        case selectTurnFinishStatus =
+        """
+        select count(*) = 0 finish from current_turn where finish = 0
         """
         
         /// 更新完成状态

@@ -388,6 +388,7 @@
 		EE4201CE248A30E000231704 /* YXCurrentTurnDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4201CD248A30E000231704 /* YXCurrentTurnDao.swift */; };
 		EE4201D0248A310400231704 /* YXWordStepDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4201CF248A310400231704 /* YXWordStepDao.swift */; };
 		EE4201D4248A77AD00231704 /* YXStepStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4201D3248A77AC00231704 /* YXStepStatus.swift */; };
+		EE4201D6248BB7F300231704 /* YXExerciseServiceImpl+Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4201D5248BB7F200231704 /* YXExerciseServiceImpl+Option.swift */; };
 		EE4584E923B3ACEF00E45367 /* YXReviewResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4584E823B3ACEF00E45367 /* YXReviewResultModel.swift */; };
 		EE4584ED23B4BB2500E45367 /* YXExerciseViewController+Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4584EC23B4BB2400E45367 /* YXExerciseViewController+Report.swift */; };
 		EE4584EF23B4D86400E45367 /* vcmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE4584EE23B4D86400E45367 /* vcmap.plist */; };
@@ -997,6 +998,7 @@
 		EE4201CD248A30E000231704 /* YXCurrentTurnDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCurrentTurnDao.swift; sourceTree = "<group>"; };
 		EE4201CF248A310400231704 /* YXWordStepDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordStepDao.swift; sourceTree = "<group>"; };
 		EE4201D3248A77AC00231704 /* YXStepStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXStepStatus.swift; sourceTree = "<group>"; };
+		EE4201D5248BB7F200231704 /* YXExerciseServiceImpl+Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YXExerciseServiceImpl+Option.swift"; sourceTree = "<group>"; };
 		EE4584E823B3ACEF00E45367 /* YXReviewResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewResultModel.swift; sourceTree = "<group>"; };
 		EE4584EC23B4BB2400E45367 /* YXExerciseViewController+Report.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YXExerciseViewController+Report.swift"; sourceTree = "<group>"; };
 		EE4584EE23B4D86400E45367 /* vcmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = vcmap.plist; sourceTree = "<group>"; };
@@ -2537,6 +2539,7 @@
 				EE1B6964246E66F2000EADB2 /* YXExerciseServiceImpl+Data.swift */,
 				EE1B6966246E672B000EADB2 /* YXExerciseServiceImpl+Make.swift */,
 				EE1B6961246E6584000EADB2 /* YXExerciseServiceImpl+Answer.swift */,
+				EE4201D5248BB7F200231704 /* YXExerciseServiceImpl+Option.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -4465,6 +4468,7 @@
 				2202D27523A9166F00882E5D /* YXGameLaunchView.swift in Sources */,
 				EE5E008A23274FEB00655654 /* YXCalendarStudyDayData.m in Sources */,
 				22A15A7B242F3FCE00AECA0A /* YXReviePlanStudentsListViewController.swift in Sources */,
+				EE4201D6248BB7F300231704 /* YXExerciseServiceImpl+Option.swift in Sources */,
 				77706E402372EBCF00149D09 /* YXAlertView.swift in Sources */,
 				EE77210A237C1F8400CD632E /* YYMediaCache.swift in Sources */,
 				EE5E0218232756BF00655654 /* MDMulticastDelegate.m in Sources */,

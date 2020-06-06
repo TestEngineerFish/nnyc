@@ -59,12 +59,18 @@ protocol YXExerciseService {
     
     //MARK: - 方法
     // ----------------------------
+    /// 初始化
+    func initData()
+    
+    /// 设置开始学习时间
+    func setStartTime()
+    
     /// 获取一个练习数据
     /// - returns: 练习对象，如果做完则返回nil
     func fetchExerciseModel() -> YXExerciseModel?
-
-    /// 设置开始学习时间
-    func setStartTime()
+    
+    /// 加载网络数据
+    func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?)
     
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
     /// - Parameters:
@@ -97,21 +103,6 @@ protocol YXExerciseService {
 
 
 extension YXExerciseService {
-    /// 每批新学的大小限制
-    var newWordBatchSize: Int {
-        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
-    }
-    
-    /// 每批训练的大小限制
-    var exerciseWordBatchSize: Int {
-        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
-    }
-    
-    /// 每批复习的大小限制
-    var reviewWordBatchSize: Int {
-        return ruleType == .a1 || ruleType == .a2 ? 2 : 5
-    }
-    
     
 }
 

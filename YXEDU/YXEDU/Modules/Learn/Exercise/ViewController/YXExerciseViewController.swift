@@ -125,6 +125,10 @@
     }
     
     private func initManager() {
+        service.learnConfig = self.learnConfig
+        service.initData()
+        
+        
         dataManager = YXExerciseDataManager()
         
         // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
@@ -182,15 +186,17 @@
             self.fetchExerciseData()
         }
         dataManager.progressManager.updateStudyCount()
+        
+        
         return
 // ----------- new -----------
-        switch self.service.isStudyFinished() {
-        case .some(true):
+        switch self.service.exerciseProgress {
+        case .finished:
             YXLog("本地存在学完未上报的关卡，先加载，再上报")
             self.service.report { (result, errorMsg) in
 
             }
-        case .some(false):
+        case .learning:
             YXLog("本地存在未学完的关卡，先加载")
         default:
             YXLog("未开始学习，请求学习数据")
@@ -201,11 +207,27 @@
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        service.learnConfig = learnConfig
-        service.fetchExerciseModel()
-
-        
         dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
+            guard let self = self else { return }
+            if result {
+                YXExerciseViewController.requesting = false
+                DispatchQueue.main.async {
+                    self.loadingView?.animationCompleteBlock = { [weak self] in
+                        guard let self = self else {return}
+                        self.dataManager.progressManager.setStartStudyTime()
+                        self.switchExerciseView()
+                    }
+                }
+            } else {
+                YXExerciseViewController.requesting = false
+                UIView.toast("加载数据失败")
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
+        // new
+        return
+        service.fetchExerciseResultModels { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {
                 YXExerciseViewController.requesting = false
@@ -238,6 +260,9 @@
         }
         // 获取新题数据
         let data = dataManager.fetchOneExerciseModel()
+        
+        // new
+//        let data = service.fetchExerciseModel()
         
         if var model = data {
             model.learnType = learnConfig.learnType
