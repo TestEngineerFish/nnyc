@@ -80,7 +80,7 @@ extension YYSQLManager {
             care_score integer(1) DEFAULT(0),
             step integer(1),
             backup integer(1),
-            status integer(1) DEFAULT(-1),
+            status integer(1) DEFAULT(0),
             wrong_score integer(1),
             wrong_rate integer(1),
             wrong_count integer(2) DEFAULT(0),
@@ -94,9 +94,11 @@ extension YYSQLManager {
         case currentTurn =
         """
         CREATE TABLE IF NOT EXISTS current_turn (
-            step_id integer PRIMARY KEY NOT NULL,
-            finish integer(1) NOT NULL DEFAULT(0),
-            turn_index integer(1) NOT NULL DEFAULT(1)
+            current_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+            step_id integer NOT NULL,
+            step integer(1) NOT NULL DEFAULT(0),
+            turn integer(2) NOT NULL DEFAULT(1),
+            finish integer(1) NOT NULL DEFAULT(0)
         );
         """
     }
@@ -113,9 +115,10 @@ extension YYSQLManager {
             learn_type,
             book_id,
             unit_id,
-            plan_id
+            plan_id,
+            current_turn
         )
-        values(?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?)
         """
         
         case insertCurrentExercise =
@@ -271,5 +274,36 @@ extension YYSQLManager {
         case deleteExpiredWordStep = "delete from all_word_step where date(create_ts) < date('now')"
         
         case deleteAllWordStep = "delete from all_word_step"
+    }
+    
+    enum CurrentTurnSQL: String {
+    
+        case insertTurn =
+        """
+        insert into current_turn(step_id, step, turn)
+        select step_id, step, (select current_turn from study_record) turn from (
+            select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
+            where e.learn_type = ? and e.book_id = ? and e.unit_id = ? and e.plan_id is NULL
+            and s.backup = 0
+            and (s.status = 0 or s.status = 1) and s.status != 3
+            order by s.step desc
+        )
+        where turn >= step
+        group by word_id
+        order by step desc, exercise_id asc
+        """
+        
+        ///
+        case queryExercise =
+        """
+        select c.current_id, s.* from current_turn c inner join all_word_step s
+        on s.step_id = c.step_id and c.finish = 0
+        order by c.current_id asc
+        """
+        
+        /// 更新完成状态
+        case updateFinish = "update current_turn set finish = 1 where step_id = ?"
+        
+        case updateError = ""
     }
 }

@@ -45,13 +45,29 @@ extension YXExerciseServiceImpl {
         self.processExercise(wordIds: _resultModel?.newWordIds ?? [], isNew: true)
         self.processExercise(wordIds: _resultModel?.reviewWordIds ?? [], isNew: false)
         
-        // 插入单词步骤数据【新学/训练+复习】
+        // 插入单词步骤数据【新学/训练/复习】
         self.processWordStep()
     }
     
     
     func processStudyRecord() {
-        self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType)
+        
+        guard let group = _resultModel?.groups.first, group.count > 0 else {
+            YXLog("学习数据异常，无法查找初始最小 Turn")
+            return
+        }
+        
+        // 正常情况下取首个step的下标，有可能服务端数据异常，前面的step是空数组，还是遍历查找 s0到s4中，起始step是哪个
+        var currentMinStep = 0
+        for step in group {
+            if step.count == 0 {
+                continue
+            }
+            currentMinStep = step.first?.step ?? 0
+            break
+        }
+        
+        self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType, turn: currentMinStep)
     }
     
     
@@ -71,7 +87,8 @@ extension YXExerciseServiceImpl {
             exercise.learnType = learnConfig.learnType
             exercise.word      = word
             exercise.isNewWord = isNew
-
+            exercise.unfinishStepCount = unfinishStepCount(wordId: wordId)
+            
             // 插入练习数据
             let exerciseId = exerciseDao.insertExercise(learn: learnConfig, rule: ruleType, study: studyRecordId, exerciseModel: exercise)
 
@@ -159,6 +176,22 @@ extension YXExerciseServiceImpl {
         } else {
             return "复习  step\(exercise.step)"
         }
+    }
+    
+    
+    func unfinishStepCount(wordId: Int) -> Int {
+        var count = 0
+        for group in _resultModel?.groups ?? [] {
+            for step in group {
+                for subStep in step {
+                    if subStep.wordId == wordId {
+                        count += 1
+                        break;
+                    }
+                }
+            }
+        }
+        return count
     }
 }
 

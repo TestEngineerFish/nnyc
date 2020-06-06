@@ -25,14 +25,15 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return studyID
     }
 
-    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType) -> Bool {
+    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType, turn: Int) -> Bool {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
         let params: [Any] = [
             type.rawValue,
             config.learnType.rawValue,
             config.bookId as Any,
             config.unitId as Any,
-            config.planId as Any
+            config.planId as Any,
+            turn
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }

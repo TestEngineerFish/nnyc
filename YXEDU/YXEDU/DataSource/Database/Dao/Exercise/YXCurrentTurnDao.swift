@@ -9,10 +9,16 @@
 import UIKit
 
 protocol YXCurrentTurnDao {
-    // 更新当前练习的数据
-    func updateCurrentExercise(type: YXLearnType,bookId: Int, unitId: Int) -> Bool
+    
+    func insertCurrentTurn() -> Bool
+    
+    
+    func queryExercise() -> YXExerciseModel?
+    
+    
+    func updateExerciseFinishStatus() -> Bool
     
     
     /// 删除当前练习的数据
-    func deleteCurrentExercise() -> Bool
+    func deleteCurrentTurn() -> Bool
 }

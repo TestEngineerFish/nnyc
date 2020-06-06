@@ -387,6 +387,7 @@
 		EE4201C9248A2F1C00231704 /* YXCurrentTurnDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4201C8248A2F1C00231704 /* YXCurrentTurnDaoImpl.swift */; };
 		EE4201CE248A30E000231704 /* YXCurrentTurnDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4201CD248A30E000231704 /* YXCurrentTurnDao.swift */; };
 		EE4201D0248A310400231704 /* YXWordStepDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4201CF248A310400231704 /* YXWordStepDao.swift */; };
+		EE4201D4248A77AD00231704 /* YXStepStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4201D3248A77AC00231704 /* YXStepStatus.swift */; };
 		EE4584E923B3ACEF00E45367 /* YXReviewResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4584E823B3ACEF00E45367 /* YXReviewResultModel.swift */; };
 		EE4584ED23B4BB2500E45367 /* YXExerciseViewController+Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4584EC23B4BB2400E45367 /* YXExerciseViewController+Report.swift */; };
 		EE4584EF23B4D86400E45367 /* vcmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE4584EE23B4D86400E45367 /* vcmap.plist */; };
@@ -995,6 +996,7 @@
 		EE4201C8248A2F1C00231704 /* YXCurrentTurnDaoImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCurrentTurnDaoImpl.swift; sourceTree = "<group>"; };
 		EE4201CD248A30E000231704 /* YXCurrentTurnDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCurrentTurnDao.swift; sourceTree = "<group>"; };
 		EE4201CF248A310400231704 /* YXWordStepDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordStepDao.swift; sourceTree = "<group>"; };
+		EE4201D3248A77AC00231704 /* YXStepStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXStepStatus.swift; sourceTree = "<group>"; };
 		EE4584E823B3ACEF00E45367 /* YXReviewResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewResultModel.swift; sourceTree = "<group>"; };
 		EE4584EC23B4BB2400E45367 /* YXExerciseViewController+Report.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YXExerciseViewController+Report.swift"; sourceTree = "<group>"; };
 		EE4584EE23B4D86400E45367 /* vcmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = vcmap.plist; sourceTree = "<group>"; };
@@ -2617,7 +2619,6 @@
 				EE4201CB248A308900231704 /* Impl */,
 				EE4201CD248A30E000231704 /* YXCurrentTurnDao.swift */,
 				EE1B6953246C2A91000EADB2 /* YXExerciseDao.swift */,
-				EE4201D1248A315200231704 /* YXExerciseProgressDao.swift */,
 				228105DD2487E21F0025F03F /* YXStudyRecordDao.swift */,
 				EE4201CF248A310400231704 /* YXWordStepDao.swift */,
 			);
@@ -2707,6 +2708,7 @@
 				EE7720FD2375AA5E00CD632E /* YXExerciseResultModel.swift */,
 				EE54F7B42362AA3100EC605A /* YXExerciseModel.swift */,
 				EE77211D23841FEC00CD632E /* YXExerciseReportModel.swift */,
+				EE4201D3248A77AC00231704 /* YXStepStatus.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4287,6 +4289,7 @@
 				77CCB9BB237A4B5B004EB781 /* YXWordDetailViewControllerNew.swift in Sources */,
 				EE95031723C37B5400B7AA11 /* YXExcerciseProgressManager+Duration.swift in Sources */,
 				22750820239F747700A53B9B /* YXReviewBottomView.swift in Sources */,
+				EE4201D4248A77AD00231704 /* YXStepStatus.swift in Sources */,
 				EEE8E99C23D0594F00729463 /* YXReviewResultStarView.swift in Sources */,
 				2204145C238671FB002A44DA /* YXAuthorizationManager.swift in Sources */,
 				224352E323A4D26100F278E6 /* YXGameModel.swift in Sources */,

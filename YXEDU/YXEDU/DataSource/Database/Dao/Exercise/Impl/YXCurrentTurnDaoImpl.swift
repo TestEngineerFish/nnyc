@@ -8,6 +8,22 @@
 
 import UIKit
 
-class YXCurrentTurnDaoImpl: NSObject {
-
+class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
+    func insertCurrentTurn() -> Bool {
+        return false
+    }
+    
+    func queryExercise() -> YXExerciseModel? {
+        return nil
+    }
+    
+    func updateExerciseFinishStatus() -> Bool {
+        return false
+    }
+    
+    func deleteCurrentTurn() -> Bool {
+        return false
+    }
+    
+    
 }

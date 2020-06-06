@@ -19,7 +19,8 @@ protocol YXStudyRecordDao {
     /// - Parameters:
     ///   - config: 学习配置信息
     ///   - type: 学习规则
-    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType) -> Bool
+    @discardableResult
+    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType, turn: Int) -> Bool
 
     /// 设置开始学习时间
     /// - Parameters:

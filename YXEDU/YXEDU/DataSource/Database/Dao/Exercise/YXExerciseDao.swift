@@ -16,6 +16,7 @@ protocol YXExerciseDao {
     /// - Parameters:
     ///   - config: 学习配置信息
     ///   - exerciseModel: 练习对象
+    @discardableResult
     func insertExercise(learn config: YXLearnConfig, rule: YXExerciseRuleType, study recordId: Int, exerciseModel: YXExerciseModel) -> Int
 
     /// 更新练习记录
