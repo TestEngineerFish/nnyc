@@ -200,6 +200,24 @@ extension YYSQLManager {
         SET mastered = ?, score = ?, unfinish_count = ?
         WHERE exercise_id = ?
         """
+        
+        case getNewWordCount =
+        """
+        SELECT count(*) FROM all_exercise
+        WHERE learn_type = ? and plan_id = ? and is_new = 1
+        """
+        
+        case getReviewWordCount =
+        """
+        SELECT count(*) FROM all_exercise
+        WHERE learn_type = ? and plan_id = ? and is_new = 0
+        """
+        
+        case getAllExerciseCount =
+        """
+        SELECT count(*) FROM all_exercise
+        WHERE learn_type = ? and plan_id = ?
+        """
 
         case getAllExercise =
         """

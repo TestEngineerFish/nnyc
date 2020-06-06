@@ -166,38 +166,35 @@
     private func startStudy() {
         YXLog("====开始学习====")
         YXExerciseViewController.requesting = true
-        // 存在学完未上报的关卡
-        if !dataManager.progressManager.isReport() {
+        switch self.service.isStudyFinished() {
+        case .some(true):
             YXLog("本地存在学完未上报的关卡，先加载，再上报")
-            // 先加载本地数据
-            dataManager.fetchLocalExerciseModels()
             YXExerciseViewController.requesting = false
-            // 再上报关卡
-            self.report()
-        } else if !dataManager.progressManager.isCompletion() && dataManager.fetchLocalExerciseModels() {// 存在未学完的关卡
+            self.service.report { (result, dict) in
+                if result {
+                    YXLog("上报关卡成功")
+                    if self.learnConfig.learnType == .base {
+                        // 记录学完一次主流程，用于首页弹出设置提醒弹框
+                        YYCache.set(true, forKey: "DidFinishMainStudyProgress")
+                        let newWordCount = dict["newWordCount"] ?? 0
+                        let reviewWordCount = dict["reviewWordCount"] ?? 0
+                        self.processBaseExerciseResult(newCount: newWordCount, reviewCount: reviewWordCount)
+                    } else {
+                        self.processReviewResult()
+                    }
+                } else {
+                    YXLog("上报关卡失败")
+                    UIView.toast("上报关卡失败")
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        case .some(false):
             YXLog("本地存在未学完的关卡，先加载")
             YXExerciseViewController.requesting = false
-            // 开始答题
             self.loadingView?.animationCompleteBlock = { [weak self] in
                 self?.dataManager.progressManager.setStartStudyTime()
                 self?.switchExerciseView()
             }
-        } else {
-            self.fetchExerciseData()
-        }
-        dataManager.progressManager.updateStudyCount()
-        
-        
-        return
-// ----------- new -----------
-        switch self.service.exerciseProgress {
-        case .finished:
-            YXLog("本地存在学完未上报的关卡，先加载，再上报")
-            self.service.report { (result, errorMsg) in
-
-            }
-        case .learning:
-            YXLog("本地存在未学完的关卡，先加载")
         default:
             YXLog("未开始学习，请求学习数据")
             self.fetchExerciseData()

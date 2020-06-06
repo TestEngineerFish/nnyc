@@ -82,9 +82,8 @@ protocol YXExerciseService {
 
     /// 上报学习数据
     /// - Parameters:
-    ///   - config: 学习配置
     ///   - completion: 完成回调
-    func report(completion: ((_ result: Bool, _ msg: String?) -> Void)?)
+    func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?)
 
     /// 是否需要显示单词详情页
     /// - Parameters:

@@ -51,7 +51,7 @@ extension YXExerciseViewController {
             guard let self = self else {return}
             if result {
                 // 统计打点
-                self.biReport()
+//                self.biReport()
                 let duration = self.dataManager.progressManager.fetchStudyDuration()
                 let count    = self.dataManager.progressManager.fetchStudyCount()
                 YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, word: count)
