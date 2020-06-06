@@ -282,7 +282,10 @@ extension YYSQLManager {
         WHERE exercise_id = ? and step != 0
         """
         
-        case selectBackupStep = "select * from all_word_step where exercise_id = ? and step = ? and backup = 1"
+        case selectBackupStep = """
+        select * from all_word_step
+        where study_id = ? exercise_id = ? and step = ? and backup = 1
+        """
         
         case deleteStep =
         """
@@ -321,7 +324,7 @@ extension YYSQLManager {
         case selectExercise =
         """
         select c.current_id, s.* from current_turn c inner join all_word_step s
-        on s.step_id = c.step_id and c.finish = 0
+        on s.step_id = c.step_id and c.finish = 0 and c.study_id = ?
         order by c.current_id asc
         limit 1
         """
@@ -330,7 +333,7 @@ extension YYSQLManager {
         case selectConnectionExercise =
         """
         select c.current_id, s.* from current_turn c inner join all_word_step s
-        on s.step_id = c.step_id and c.finish = 0
+        on s.step_id = c.step_id and c.finish = 0 and c.study_id = ?
         where question_type = ? and c.step = ?
         order by c.current_id asc
         limit ?

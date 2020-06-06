@@ -16,13 +16,13 @@ protocol YXCurrentTurnDao {
     
     
     /// 正常获取首个未做的练习
-    func selectExercise() -> YXExerciseModel?
+    func selectExercise(studyId: Int) -> YXExerciseModel?
     
     /// 获取连线题
-    func selectExercise(type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel]
+    func selectExercise(studyId: Int, type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel]
     
     ///获取备选题型
-    func selectBackupExercise(exerciseId: Int, step: Int) -> YXExerciseModel?
+    func selectBackupExercise(studyId: Int, exerciseId: Int, step: Int) -> YXExerciseModel?
     
     
     // 暂时没有使用

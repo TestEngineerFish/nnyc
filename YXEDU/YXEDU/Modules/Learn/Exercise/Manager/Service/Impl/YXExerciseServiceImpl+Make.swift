@@ -18,7 +18,6 @@ extension YXExerciseServiceImpl {
     
     /// 筛选数据
     func _filterExercise() {
-        let studyId = self.studyDao.getStudyID(learn: learnConfig)
         
         // 当前轮是否做完
         if turnDao.selectTurnFinishStatus(studyId: studyId) {
@@ -39,7 +38,7 @@ extension YXExerciseServiceImpl {
     
     /// 查找一个练习
     func _findExercise() -> YXExerciseModel? {
-        guard var exercise = turnDao.selectExercise() else {
+        guard var exercise = turnDao.selectExercise(studyId: studyId) else {
             YXLog("当前轮没有数据了")
             return nil
         }
@@ -58,7 +57,7 @@ extension YXExerciseServiceImpl {
     ///   - step:
     ///   - type:
     func _findConnectionExercise(exercise: YXExerciseModel) -> YXExerciseModel? {
-        var connectionExercises = turnDao.selectExercise(type: exercise.type, step: exercise.step, size: 4)
+        var connectionExercises = turnDao.selectExercise(studyId: studyId, type: exercise.type, step: exercise.step, size: 4)
         
         // 填充word
         connectionExercises = _fillConnectionWordModel(exercises: connectionExercises)
@@ -69,7 +68,7 @@ extension YXExerciseServiceImpl {
         // 有相同拼写，或者连线只有一个，都用备选题
         if sameWords.count > 0 || connectionExercises.count == 1 {
             let e = connectionExercises.first
-            if var backupExercise = turnDao.selectBackupExercise(exerciseId: e?.eid ?? 0, step: e?.step ?? 0) {
+            if var backupExercise = turnDao.selectBackupExercise(studyId: studyId, exerciseId: e?.eid ?? 0, step: e?.step ?? 0) {
                 backupExercise.word = _selectWord(wordId: backupExercise.wordId)
                 return processExerciseOption(exercise: backupExercise)
             } else {

@@ -16,9 +16,9 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
     
-    func selectExercise() -> YXExerciseModel? {
+    func selectExercise(studyId: Int) -> YXExerciseModel? {
         let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
             return nil
         }
         var exercise: YXExerciseModel?
@@ -29,9 +29,9 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         return exercise
     }
     
-    func selectExercise(type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel] {
+    func selectExercise(studyId: Int, type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel] {
         let sql = YYSQLManager.CurrentTurnSQL.selectConnectionExercise.rawValue
-        let params: [Any] = [type.rawValue, step, size]
+        let params: [Any] = [studyId, type.rawValue, step, size]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return []
         }
@@ -44,9 +44,9 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         return es
     }
     
-    func selectBackupExercise(exerciseId: Int, step: Int) -> YXExerciseModel? {
+    func selectBackupExercise(studyId: Int, exerciseId: Int, step: Int) -> YXExerciseModel? {
         let sql = YYSQLManager.WordStepSQL.selectBackupStep.rawValue
-        let params = [exerciseId, step]
+        let params = [studyId, exerciseId, step]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return nil
         }

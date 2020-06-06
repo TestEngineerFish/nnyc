@@ -28,6 +28,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     //MARK: - Private 属性
     
     /// 当前第几轮, 从第一轮开始
+    var studyId = 0
     var currentTurnIndex = -1
     
     
@@ -52,6 +53,8 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     
     func fetchExerciseModel() -> YXExerciseModel? {
+        studyId = self.studyDao.getStudyID(learn: learnConfig)
+        
         // 筛选数据
         self._filterExercise()
         
