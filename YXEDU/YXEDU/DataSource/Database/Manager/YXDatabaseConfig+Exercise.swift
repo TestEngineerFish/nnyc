@@ -27,9 +27,9 @@ extension YYSQLManager {
             study_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
             rule_type char(10),
             learn_type integer(1),
-            book_id integer(4),
-            unit_id integer(4),
-            plan_id integer(4),
+            book_id integer(4) NOT NULL DEFAULT(0),
+            unit_id integer(4) NOT NULL DEFAULT(0),
+            plan_id integer(4) NOT NULL DEFAULT(0),
             complete integer(1) NOT NULL DEFAULT(0),
             current_group integer(1),
             current_turn integer(2),
@@ -49,9 +49,9 @@ extension YYSQLManager {
             learn_type integer(1) NOT NULL,
             word_id integer NOT NULL,
             word char(128),
-            book_id integer(4),
-            unit_id integer(8),
-            plan_id integer(8),
+            book_id integer(4) NOT NULL DEFAULT(0),
+            unit_id integer(8) NOT NULL DEFAULT(0),
+            plan_id integer(8) NOT NULL DEFAULT(0),
             is_new integer(1) NOT NULL DEFAULT(0),
             mastered integer(1) NOT NULL DEFAULT(0),
             score integer(1) NOT NULL DEFAULT(10),
@@ -68,8 +68,8 @@ extension YYSQLManager {
             study_id integer(8) NOT NULL,
             exercise_id integer(8) NOT NULL,
             word_id integer DEFAULT(0),
-            book_id integer,
-            unit_id integer,
+            book_id integer NOT NULL DEFAULT(0),
+            unit_id integer NOT NULL DEFAULT(0),
             question_type char(10),
             question_word_content varchar,
             question_option_count integer(1),
@@ -121,16 +121,11 @@ extension YYSQLManager {
         )
         values(?, ?, ?, ?, ?, ?)
         """
-        
-        case insertCurrentExercise =
-        """
-
-        """
 
         case getInfo =
         """
         SELECT * FROM study_record
-        WHERE learn_type = ? and plan_id is ?
+        where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
         """
 
 
@@ -185,11 +180,7 @@ extension YYSQLManager {
         )
         values(?, ?, ?, ?, ? , ?, ?, ?, ?, ?)
         """
-        
-        case insertCurrentExercise =
-        """
 
-        """
 
         case updateExercise =
         """
@@ -282,7 +273,7 @@ extension YYSQLManager {
         case insertTurn =
         """
         insert into current_turn(step_id, step, turn)
-        select step_id, step, (select current_turn from study_record) turn from (
+        select step_id, step, (select current_turn from study_record where %@ limit 1) turn from (
             select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
             where e.learn_type = ? and e.book_id = ? and e.unit_id = ? and e.plan_id is NULL
             and s.backup = 0

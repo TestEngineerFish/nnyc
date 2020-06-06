@@ -12,13 +12,13 @@ import UIKit
 /// 学习配置
 protocol YXLearnConfig {
     /// 哪本书
-    var bookId: Int? { get set }
+    var bookId: Int { get set }
         
     /// 哪个单元
-    var unitId: Int? { get set }
+    var unitId: Int { get set }
 
     /// 哪个复习计划
-    var planId: Int? { get set }
+    var planId: Int { get set }
 
     /// 学习类型
     var learnType: YXLearnType { get set }
@@ -26,12 +26,12 @@ protocol YXLearnConfig {
 
 /// 学习配置，基础实现
 class YXLearnConfigImpl: YXLearnConfig {
-    var bookId: Int? = nil
-    var unitId: Int? = nil
-    var planId: Int? = nil
+    var bookId: Int = 0
+    var unitId: Int = 0
+    var planId: Int = 0
     var learnType: YXLearnType = .base
     
-    init(bookId: Int?, unitId: Int?, planId: Int?, learnType: YXLearnType) {
+    init(bookId: Int, unitId: Int, planId: Int, learnType: YXLearnType) {
         self.bookId     = bookId
         self.unitId     = unitId
         self.planId     = planId
@@ -43,7 +43,7 @@ class YXLearnConfigImpl: YXLearnConfig {
 class YXBaseLearnConfig: YXLearnConfigImpl {
     /// 基础学习时，必须要传 bookId和unitId，要缓存进度
     init(bookId: Int = 0, unitId: Int = 0, learnType: YXLearnType = .base) {
-        super.init(bookId: bookId, unitId: unitId, planId: nil, learnType: learnType)
+        super.init(bookId: bookId, unitId: unitId, planId: 0, learnType: learnType)
     }
 }
 
@@ -51,7 +51,7 @@ class YXBaseLearnConfig: YXLearnConfigImpl {
 /// 智能复习配置
 class YXAIReviewLearnConfig: YXLearnConfigImpl {
     init(learnType: YXLearnType = .aiReview) {
-        super.init(bookId: nil, unitId: nil, planId: nil, learnType: learnType)
+        super.init(bookId: 0, unitId: 0, planId: 0, learnType: learnType)
     }
 }
 
@@ -67,14 +67,14 @@ class YXWrongLearnConfig: YXAIReviewLearnConfig {
 /// 复习配置的基类
 class YXReviewLearnConfig: YXLearnConfigImpl {
     init(planId: Int, learnType: YXLearnType) {
-        super.init(bookId: nil, unitId: nil, planId: planId, learnType: learnType)
+        super.init(bookId: 0, unitId: 0, planId: planId, learnType: learnType)
     }
 }
 
 
 /// 复习计划配置
 class YXReviewPlanLearnConfig: YXReviewLearnConfig {
-    override init(planId: Int = 0, learnType: YXLearnType = .planReview) {
+    override init(planId: Int, learnType: YXLearnType = .planReview) {
         super.init(planId: planId, learnType: learnType)
     }
 }
@@ -82,7 +82,7 @@ class YXReviewPlanLearnConfig: YXReviewLearnConfig {
 
 /// 听力复习配置
 class YXListenReviewLearnConfig: YXReviewPlanLearnConfig {
-    override init(planId: Int = 0, learnType: YXLearnType = .planListenReview) {
+    override init(planId: Int, learnType: YXLearnType = .planListenReview) {
         super.init(planId: planId, learnType: learnType)
     }
 }

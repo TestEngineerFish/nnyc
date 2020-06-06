@@ -9,12 +9,15 @@
 import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
-
+    
     func getStudyID(learn config: YXLearnConfig) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
         let params: [Any] = [
-           config.learnType.rawValue,
-           config.planId as Any]
+            config.learnType.rawValue,
+            config.bookId,
+            config.unitId,
+            config.planId
+        ]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return .zero
         }
@@ -43,9 +46,9 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         let params: [Any] = [
             type.rawValue,
             config.learnType.rawValue,
-            config.bookId as Any,
-            config.unitId as Any,
-            config.planId as Any,
+            config.bookId,
+            config.unitId,
+            config.planId,
             turn
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
