@@ -67,7 +67,10 @@ extension YXExerciseServiceImpl {
             break
         }
         
-        return self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType, turn: currentMinStep)
+        // 设置初始轮下标，需要 -1，因为筛选数据的时候，做了+1处理
+        currentTurnIndex = currentMinStep - 1
+        
+        return self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType, turn: currentTurnIndex)
     }
     
     

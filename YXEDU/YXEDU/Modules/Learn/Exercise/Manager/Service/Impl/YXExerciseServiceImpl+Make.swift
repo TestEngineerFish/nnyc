@@ -26,8 +26,10 @@ extension YXExerciseServiceImpl {
     func _filterExercise() {
         // 当前轮是否做完
         if turnDao.selectTurnFinishStatus() {
+            currentTurnIndex += 1
+            
             //更新轮下标
-            let r1 = studyDao.updateCurrentTurn(learn: learnConfig, turn: nil)
+            let r1 = studyDao.updateCurrentTurn(learn: learnConfig, turn: currentTurnIndex)
             
             // 清空当前轮
             let r2 = turnDao.deleteCurrentTurn()

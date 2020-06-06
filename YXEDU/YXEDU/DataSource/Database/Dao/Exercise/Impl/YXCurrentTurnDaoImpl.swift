@@ -31,7 +31,7 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
     
     func selectExercise(type: YXQuestionType, step: Int) -> [YXExerciseModel] {
         let sql = YYSQLManager.CurrentTurnSQL.selectConnectionExercise.rawValue
-        let params: [Any] = [type, step, 4]
+        let params: [Any] = [type.rawValue, step, 4]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return []
         }
@@ -45,7 +45,17 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
     }
     
     func selectBackupExercise(exerciseId: Int, step: Int) -> YXExerciseModel? {
-        return nil
+        let sql = YYSQLManager.WordStepSQL.selectBackupStep.rawValue
+        let params = [exerciseId, step]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return nil
+        }
+        var exercise: YXExerciseModel?
+        if result.next() {
+            exercise = self.createExercise(rs: result)
+        }
+        result.close()
+        return exercise
     }
     
     

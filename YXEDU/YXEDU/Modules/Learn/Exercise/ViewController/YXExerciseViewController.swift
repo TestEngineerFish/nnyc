@@ -196,28 +196,14 @@
                 self?.dataManager.progressManager.setStartStudyTime()
                 self?.switchExerciseView()
             }
-
         default:
             YXLog("未开始学习，请求学习数据")
             self.fetchExerciseData()
         }
+        
+        
         dataManager.progressManager.updateStudyCount()
         
-        
-//        return
-// ----------- new -----------
-        switch self.service.exerciseProgress {
-        case .finished:
-            YXLog("本地存在学完未上报的关卡，先加载，再上报")
-            self.service.report { (result, errorMsg) in
-
-            }
-        case .learning:
-            YXLog("本地存在未学完的关卡，先加载")
-        default:
-            YXLog("未开始学习，请求学习数据")
-            self.fetchExerciseData()
-        }
     }
     
     
@@ -241,8 +227,8 @@
 //            }
 //        }
         
-        // new
         
+        // new
         service.fetchExerciseResultModels { [weak self] (result, msg) in
             guard let self = self else { return }
             if result {

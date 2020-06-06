@@ -20,10 +20,17 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     var _resultModel: YXExerciseResultModel?
 
-     var wordIdMap = [Int:Int]()
+    var wordIdMap = [Int:Int]()
+    
+    
     
     // ----------------------------
     //MARK: - Private 属性
+    
+    /// 当前第几轮, 从第一轮开始
+    var currentTurnIndex = -1
+    
+    
     /// 本地数据库访问
     var wordDao: YXWordBookDao     = YXWordBookDaoImpl()
     var studyDao: YXStudyRecordDao = YXStudyRecordDaoImpl()
@@ -36,7 +43,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     //MARK: ==== 对外暴露的方法 ====
     
     func initData() {
-        self.clearExpiredData()
+//        self.clearExpiredData()
         self.loadProgressStatus()
     }
     

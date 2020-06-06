@@ -280,7 +280,9 @@ extension YYSQLManager {
         SELECT * FROM all_word_step
         WHERE exercise_id = ? and step != 0
         """
-
+        
+        case selectBackupStep = "select * from all_word_step where exercise_id = ? and step = ? and backup = 1"
+        
         case deleteStep =
         """
         DELETE FROM all_word_step
