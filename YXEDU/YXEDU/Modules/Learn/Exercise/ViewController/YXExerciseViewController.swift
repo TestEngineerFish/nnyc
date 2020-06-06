@@ -23,6 +23,7 @@
     public var learnConfig: YXLearnConfig = YXBaseLearnConfig()
     
     var service: YXExerciseService = YXExerciseServiceImpl()
+    
     // 数据管理器
     public var dataManager: YXExerciseDataManager!
     
@@ -188,7 +189,7 @@
         dataManager.progressManager.updateStudyCount()
         
         
-        return
+//        return
 // ----------- new -----------
         switch self.service.exerciseProgress {
         case .finished:
@@ -259,10 +260,10 @@
             dataManager.updateCurrentPatchIndex()
         }
         // 获取新题数据
-        let data = dataManager.fetchOneExerciseModel()
+//        let data = dataManager.fetchOneExerciseModel()
         
         // new
-//        let data = service.fetchExerciseModel()
+        let data = service.fetchExerciseModel()
         
         if var model = data {
             model.learnType = learnConfig.learnType
@@ -327,7 +328,7 @@
 
             loadExerciseView(exerciseView: exerciseView)
         } else {
-            self.report()
+//            self.report()
         }
     }
     
