@@ -23,6 +23,18 @@ protocol YXExerciseDao {
     /// - Parameter model: 练习对象
     @discardableResult
     func updateExercise(exercise model: YXExerciseModel) -> Bool
+    
+    /// 获得新学单词数量
+    /// - Parameter config: 学习配置信息
+    func getNewWordCount(learn config: YXLearnConfig) -> Int
+    
+    /// 获得复习单词数量
+    /// - Parameter config: 学习配置信息
+    func getReviewWordCount(learn config: YXLearnConfig) -> Int
+    
+    /// 获得当前学习流程的所有练习数量
+    /// - Parameter config: 练习对象
+    func getAllExerciseCount(learn config: YXLearnConfig) -> Int
 
     /// 获得当前学习流程的所有练习
     /// - Parameter config: 学习配置信息

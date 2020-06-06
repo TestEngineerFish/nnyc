@@ -83,20 +83,39 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 上报关卡
-    func report(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+    func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?) {
         let reportContent = self.getReportJson()
         let duration      = self.getLearnDuration()
+        YXLog("====上报数据====")
         YXLog("new上报内容：" + reportContent)
         YXLog("new学习时长：\(duration)")
         let request = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, time: duration, result: reportContent)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
-            // 清除数据库对应数据
-            self.deleteLearnRecord()
-            completion?(response.dataArray != nil, nil)
+            let result = response.dataArray != nil
+            var newWordCount    = 0
+            var reviewWordCount = 0
+            if result {
+                // 获取学习数据
+                let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
+                let wordCount   = self.exerciseDao.getAllExerciseCount(learn: self.learnConfig)
+                newWordCount    = self.exerciseDao.getNewWordCount(learn: self.learnConfig)
+                reviewWordCount = self.exerciseDao.getReviewWordCount(learn: self.learnConfig)
+                // 上报Growing
+                YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, word: wordCount)
+                if self.learnConfig.learnType == .base {
+                    YXGrowingManager.share.uploadLearnFinished()
+                    // 记录学完一次主流程，用于首页弹出设置提醒弹框
+                    YYCache.set(true, forKey: "DidFinishMainStudyProgress")
+                }
+                
+                // 清除数据库对应数据
+                self.deleteLearnRecord()
+            }
+            completion?(result, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
-            completion?(false, error.message)
+            completion?(false, [:])
         }
     }
     

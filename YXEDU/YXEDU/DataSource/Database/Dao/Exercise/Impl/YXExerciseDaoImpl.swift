@@ -38,6 +38,51 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             model.eid]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
+    
+    func getNewWordCount(learn config: YXLearnConfig) -> Int {
+        let sql = YYSQLManager.ExerciseSQL.getNewWordCount.rawValue
+        let params: [Any] = [
+            config.learnType.rawValue,
+            config.planId]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return 0
+        }
+        var count = 0
+        if result.next() {
+            count = Int(result.int(forColumn: "count"))
+        }
+        return count
+    }
+    
+    func getReviewWordCount(learn config: YXLearnConfig) -> Int {
+        let sql = YYSQLManager.ExerciseSQL.getReviewWordCount.rawValue
+        let params: [Any] = [
+            config.learnType.rawValue,
+            config.planId]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return 0
+        }
+        var count = 0
+        if result.next() {
+            count = Int(result.int(forColumn: "count"))
+        }
+        return count
+    }
+    
+    func getAllExerciseCount(learn config: YXLearnConfig) -> Int {
+        let sql = YYSQLManager.ExerciseSQL.getAllExerciseCount.rawValue
+        let params: [Any] = [
+            config.learnType.rawValue,
+            config.planId]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return 0
+        }
+        var count = 0
+        if result.next() {
+            count = Int(result.int(forColumn: "count"))
+        }
+        return count
+    }
 
     func getAllExercise(learn config: YXLearnConfig) -> [YXExerciseModel] {
         var modelList = [YXExerciseModel]()
