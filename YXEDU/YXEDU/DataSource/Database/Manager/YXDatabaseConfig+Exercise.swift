@@ -30,6 +30,7 @@ extension YYSQLManager {
             book_id integer(4),
             unit_id integer(4),
             plan_id integer(4),
+            complete integer(1) NOT NULL DEFAULT(0),
             current_group integer(1),
             current_turn integer(2),
             study_duration integer(4),
@@ -128,8 +129,8 @@ extension YYSQLManager {
 
         case getInfo =
         """
-        SELECT * FROM study_record WHERE learn_type = %d and plan_id is %@
-
+        SELECT * FROM study_record
+        WHERE learn_type = ? and plan_id is ?
         """
 
 

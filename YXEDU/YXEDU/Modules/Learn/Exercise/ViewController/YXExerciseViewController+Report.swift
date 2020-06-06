@@ -12,7 +12,8 @@ import GrowingAutoTrackKit
 
 extension YXExerciseViewController {
     
-    func report() {        
+    func report() {
+        self.service.report(completion: nil)
         if dataManager.dataStatus == .empty {
             processEmptyData()
         } else {
@@ -51,6 +52,9 @@ extension YXExerciseViewController {
             if result {
                 // 统计打点
                 self.biReport()
+                let duration = self.dataManager.progressManager.fetchStudyDuration()
+                let count    = self.dataManager.progressManager.fetchStudyCount()
+                YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, word: count)
                 
                 let progress = self.dataManager.progressManager.loadLocalWordsProgress()
                 // 上报结束, 清空数据
@@ -101,12 +105,12 @@ extension YXExerciseViewController {
         self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
-    
-    
-    
+
+
+
     /// 数据打点
     func biReport() {
-        
+
         var typeName = "主流程"
         switch learnConfig.learnType {
             case .wrong:
@@ -120,10 +124,10 @@ extension YXExerciseViewController {
             default:
                 typeName = "主流程"
         }
-        
+
         let bid = (YYCache.object(forKey: .currentChooseBookId) as? Int) ?? 0
         let grade = YXWordBookDaoImpl().selectBook(bookId: bid)?.gradeId ?? 0
-        
+
         let studyResult: [String : Any] = [
             "study_grade" : "\(grade)",      //学习书本年级
             "study_cost_time" : dataManager.progressManager.fetchStudyDuration(),   //学习时间
@@ -132,6 +136,6 @@ extension YXExerciseViewController {
         ]
         Growing.track("study_result", withVariable: studyResult)
     }
-    
-    
+
+
 }

@@ -11,18 +11,31 @@ import Foundation
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
 
     func getStudyID(learn config: YXLearnConfig) -> Int {
-        let planId = config.planId == nil ? "NULL" : "\(config.planId!)"
-        let sql = String(format: YYSQLManager.StudyRecordSQL.getInfo.rawValue, config.learnType.rawValue, planId)
-//        let params: [Any] = [
-//           config.learnType.rawValue,
-//           config.planId ?? 0]
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+        let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
+        let params: [Any] = [
+           config.learnType.rawValue,
+           config.planId as Any]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return .zero
         }
-        let id = result.int(forColumn: "study_id")
-        let studyID = Int(result.int(forColumn: "study_id"))
-        YXLog("====id===",id, studyID)
-        return studyID
+        if result.next() {
+            return Int(result.int(forColumn: "study_id"))
+        }
+        return 0
+    }
+
+    func isFinished(learn config: YXLearnConfig) -> Bool? {
+        let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
+        let params: [Any] = [
+            config.learnType.rawValue,
+            config.planId as Any]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return nil
+        }
+        if result.next() {
+            return result.bool(forColumn: "complete")
+        }
+        return nil
     }
 
     func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType, turn: Int) -> Bool {

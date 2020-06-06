@@ -65,16 +65,21 @@ protocol YXExerciseService {
 
     /// 设置开始学习时间
     func setStartTime()
-
-    /// 更新学习时长
-    func updateDurationTime()
     
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
     /// - Parameters:
     ///   - exerciseModel:  练习数据
     func normalAnswerAction(exercise model: YXExerciseModel)
-    
-    
+
+    /// 是否学习完成
+    func isStudyFinished() -> Bool?
+
+    /// 上报学习数据
+    /// - Parameters:
+    ///   - config: 学习配置
+    ///   - completion: 完成回调
+    func report(completion: ((_ result: Bool, _ msg: String?) -> Void)?)
+
     /// 是否需要显示单词详情页
     /// - Parameters:
     ///   - wordId: 单词ID

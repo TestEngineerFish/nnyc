@@ -22,10 +22,9 @@
     /// 学习配置
     public var learnConfig: YXLearnConfig = YXBaseLearnConfig()
     
-    
+    var service: YXExerciseService = YXExerciseServiceImpl()
     // 数据管理器
     public var dataManager: YXExerciseDataManager!
-    
     
     // 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
@@ -183,15 +182,28 @@
             self.fetchExerciseData()
         }
         dataManager.progressManager.updateStudyCount()
+        return
+// ----------- new -----------
+        switch self.service.isStudyFinished() {
+        case .some(true):
+            YXLog("本地存在学完未上报的关卡，先加载，再上报")
+            self.service.report { (result, errorMsg) in
+
+            }
+        case .some(false):
+            YXLog("本地存在未学完的关卡，先加载")
+        default:
+            YXLog("未开始学习，请求学习数据")
+            self.fetchExerciseData()
+        }
     }
     
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-        var service: YXExerciseService = YXExerciseServiceImpl()
         service.learnConfig = learnConfig
         service.fetchExerciseModel()
-        
+
         
         dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
             guard let self = self else { return }
@@ -289,7 +301,7 @@
             exerciseView.answerView?.connectionAnswerViewDelegate = self
 
             loadExerciseView(exerciseView: exerciseView)
-        } else {            
+        } else {
             self.report()
         }
     }

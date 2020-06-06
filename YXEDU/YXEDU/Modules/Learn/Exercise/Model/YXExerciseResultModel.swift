@@ -38,7 +38,7 @@ struct YXExerciseResultModel: Mappable {
         
         // Mappable库不能解析三维数组，手动解析
         parserGroup(map: map["group_list"])
-        
+
     }
     
     
