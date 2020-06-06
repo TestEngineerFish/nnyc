@@ -35,10 +35,13 @@ protocol YXExerciseDao {
     /// 获得当前学习流程的所有练习数量
     /// - Parameter config: 练习对象
     func getAllExerciseCount(learn config: YXLearnConfig) -> Int
-
+    
     /// 获得当前学习流程的所有练习
-    /// - Parameter config: 学习配置信息
-    func getAllExercise(learn config: YXLearnConfig) -> [YXExerciseModel]
+    /// - Parameters:
+    ///   - config: 学习配置信息
+    ///   - includeNewWord: 是否包含新学单词
+    ///   - includeReviewWord: 是否包含复习单词
+    func getExerciseList(learn config: YXLearnConfig, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel]
 
     /// 删除一个学习记录所有单词
     /// - Parameter id: 学习记录ID

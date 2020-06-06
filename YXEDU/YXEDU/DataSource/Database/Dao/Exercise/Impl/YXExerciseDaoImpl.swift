@@ -84,9 +84,19 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return count
     }
 
-    func getAllExercise(learn config: YXLearnConfig) -> [YXExerciseModel] {
+    func getExerciseList(learn config: YXLearnConfig, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel] {
         var modelList = [YXExerciseModel]()
-        let sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
+        var sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
+        if includeNewWord && !includeReviewWord {
+            // 仅获取新学
+            sql += " and is_new = 1"
+        } else if !includeNewWord && includeReviewWord {
+            // 仅获取复习
+            sql += " and is_new = 0"
+        } else if !includeNewWord && !includeReviewWord {
+            // 都不获取
+            return []
+        }
         let params: [Any] = [
             config.learnType.rawValue,
             config.planId]

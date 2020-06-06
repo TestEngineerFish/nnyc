@@ -18,9 +18,11 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     var exerciseProgress: YXExerciseProgress = .reported
     
+    var exerciseOptionManange = YXExerciseOptionManager()
+    
     var _resultModel: YXExerciseResultModel?
 
-     var wordIdMap = [Int:Int]()
+    var wordIdMap = [Int:Int]()
     
     // ----------------------------
     //MARK: - Private 属性
@@ -38,6 +40,9 @@ class YXExerciseServiceImpl: YXExerciseService {
     func initData() {
         self.clearExpiredData()
         self.loadProgressStatus()
+        let newExerciseModelList    = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: true, includeReviewWord: false)
+        let reviewExerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: false, includeReviewWord: true)
+        self.exerciseOptionManange.initData(newArray: newExerciseModelList, reviewArray: reviewExerciseModelList)
     }
     
     
@@ -134,7 +139,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     private func getReportJson() -> String {
         var modelArray = [YXExerciseReportModel]()
         // 获得所有学习的单词单词
-        let exerciseModelList = self.exerciseDao.getAllExercise(learn: learnConfig)
+        let exerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: true, includeReviewWord: true)
 
         exerciseModelList.forEach { (model) in
             let data = self.stepDao.getSteps(with: model)

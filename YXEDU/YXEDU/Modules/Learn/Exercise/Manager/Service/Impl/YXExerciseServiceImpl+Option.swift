@@ -67,15 +67,17 @@ extension YXExerciseServiceImpl {
     }
     
     
-    /// 判断题 【待实现】
+    /// 判断题
     func _judgmentExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
-        return exercise
+        let _exercise = self.exerciseOptionManange.processReviewWordOption(exercise: exercise)
+        return _exercise
     }
     
     
-    /// 选择题 【待实现】
+    /// 选择题
     func _chooseExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
-        return exercise
+        let _exercise = self.exerciseOptionManange.processReviewWordOption(exercise: exercise)
+        return _exercise
     }
     
 }
