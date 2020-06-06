@@ -28,7 +28,7 @@ extension YXExerciseServiceImpl {
             let r1 = studyDao.updateCurrentTurn(learn: learnConfig, turn: currentTurnIndex)
             
             // 清空当前轮
-            let r2 = turnDao.deleteCurrentTurn()
+            let r2 = turnDao.deleteCurrentTurn(studyId: studyId)
             
             // 插入新的轮
             let r3 = turnDao.insertCurrentTurn(studyId: studyId)

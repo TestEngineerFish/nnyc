@@ -76,7 +76,7 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
     }
     
     func selectTurnFinishStatus(studyId: Int) -> Bool {
-        let sql = YYSQLManager.CurrentTurnSQL.selectTurnFinishStatus.rawValue        
+        let sql = YYSQLManager.CurrentTurnSQL.selectTurnFinishStatus.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
             return true
         }
@@ -93,9 +93,9 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         return false
     }
     
-    func deleteCurrentTurn() -> Bool {
-        let sql = YYSQLManager.CurrentTurnSQL.deleteTurn.rawValue
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])
+    func deleteCurrentTurn(studyId: Int) -> Bool {
+        let sql = YYSQLManager.CurrentTurnSQL.deleteCurrentTurn.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [studyId])
     }
     
     func createExercise(rs: FMResultSet) ->YXExerciseModel {

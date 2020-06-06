@@ -355,8 +355,11 @@ extension YYSQLManager {
         /// 更新完成状态
         case updateFinish = "update current_turn set finish = 1 where step_id = ?"
         
+        /// 删除当前轮
+        case deleteCurrentTurn = "delete from current_turn where study_id = ?"
         
-        case deleteTurn = "delete from current_turn"
+        /// 删除所有的轮
+        case deleteAllTurn = "delete from current_turn"
         
         
         case updateError = ""
