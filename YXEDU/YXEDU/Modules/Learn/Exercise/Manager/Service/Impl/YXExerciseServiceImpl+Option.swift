@@ -23,22 +23,11 @@ extension YXExerciseServiceImpl {
         if judgmentArray.contains(exercise.type) {
             return _judgmentExerciseOption(exercise: exercise)
         } else if chooseArray.contains(exercise.type) {
-            return chooseExerciseOption(exercise: exercise)
+            return _chooseExerciseOption(exercise: exercise)
         } else {
             YXLog("其他题型不用生成选项")
             return exercise
         }
-    }
-    
-    /// 判断题 【待实现】
-    func _judgmentExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
-        return nil
-    }
-    
-    
-    /// 选择题 【待实现】
-    func chooseExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
-        return nil
     }
     
     /// 连线题 【已完成】
@@ -76,4 +65,17 @@ extension YXExerciseServiceImpl {
 
         return exercise
     }
+    
+    
+    /// 判断题 【待实现】
+    func _judgmentExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
+        return nil
+    }
+    
+    
+    /// 选择题 【待实现】
+    func _chooseExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
+        return nil
+    }
+    
 }
