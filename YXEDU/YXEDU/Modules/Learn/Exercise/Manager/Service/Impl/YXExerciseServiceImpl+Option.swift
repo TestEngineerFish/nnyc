@@ -30,22 +30,18 @@ extension YXExerciseServiceImpl {
         }
     }
     
-    /// 判断题
+    /// 判断题 【待实现】
     func _judgmentExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
         return nil
     }
     
     
-    func connectLineExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
-        return nil
-    }
-    
-    /// 选择题
+    /// 选择题 【待实现】
     func chooseExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
         return nil
     }
     
-    /// 连线题
+    /// 连线题 【已完成】
     func processConnectionExerciseOption(exercises: [YXExerciseModel]) -> YXExerciseModel {
 
         var exercise = exercises.first!
