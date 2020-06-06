@@ -41,6 +41,11 @@ extension YXExerciseServiceImpl {
         // 插入学习记录
         let recordId = self.processStudyRecord()
         
+        if recordId == 0 {
+            YXLog("插入学习记录失败")
+            return
+        }
+        
         // 插入练习数据【新学/复习】
         self.processExercise(wordIds: _resultModel?.newWordIds ?? [], isNew: true, recordId: recordId)
         self.processExercise(wordIds: _resultModel?.reviewWordIds ?? [], isNew: false, recordId: recordId)

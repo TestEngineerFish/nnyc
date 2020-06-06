@@ -30,7 +30,7 @@ protocol YXCurrentTurnDao {
     func selectConnectionType() -> (YXQuestionType, Int)?
 
     /// 当前轮是否都完成
-    func selectTurnFinishStatus() -> Bool
+    func selectTurnFinishStatus(studyId: Int) -> Bool
     
     /// 更新完成状态
     func updateExerciseFinishStatus(stepId: Int) -> Bool

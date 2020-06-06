@@ -96,6 +96,7 @@ extension YYSQLManager {
         """
         CREATE TABLE IF NOT EXISTS current_turn (
             current_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+            study_id integer NOT NULL,
             step_id integer NOT NULL,
             step integer(1) NOT NULL DEFAULT(0),
             turn integer(2) NOT NULL DEFAULT(1),
@@ -304,8 +305,8 @@ extension YYSQLManager {
     
         case insertTurn =
         """
-        insert into current_turn(step_id, step, turn)
-        select step_id, step, (select current_turn from study_record where study_id = ? limit 1) turn from (
+        insert into current_turn(study_id, step_id, step, turn)
+        select study_id, step_id, step, (select current_turn from study_record where study_id = ? limit 1) turn from (
             select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
             where e.study_id = ? and s.backup = 0
             and (s.status = 0 or s.status = 1) and s.status != 3
@@ -347,7 +348,8 @@ extension YYSQLManager {
         
         case selectTurnFinishStatus =
         """
-        select count(*) = 0 finish from current_turn where finish = 0
+        select count(*) = 0 finish from current_turn
+        where finish = 0 and study_id = ?
         """
         
         /// 更新完成状态

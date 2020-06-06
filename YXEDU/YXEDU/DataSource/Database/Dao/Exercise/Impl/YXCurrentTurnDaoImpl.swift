@@ -75,9 +75,9 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         return nil
     }
     
-    func selectTurnFinishStatus() -> Bool {
-        let sql = YYSQLManager.CurrentTurnSQL.selectTurnFinishStatus.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+    func selectTurnFinishStatus(studyId: Int) -> Bool {
+        let sql = YYSQLManager.CurrentTurnSQL.selectTurnFinishStatus.rawValue        
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
             return true
         }
         if result.next() {

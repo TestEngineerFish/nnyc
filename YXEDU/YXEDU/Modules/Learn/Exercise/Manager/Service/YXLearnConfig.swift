@@ -24,6 +24,12 @@ protocol YXLearnConfig {
     var learnType: YXLearnType { get set }
 }
 
+extension YXLearnConfig {
+    var params: [Any] {
+        return [learnType.rawValue, bookId, unitId, planId]
+    }
+}
+
 /// 学习配置，基础实现
 class YXLearnConfigImpl: YXLearnConfig {
     var bookId: Int = 0

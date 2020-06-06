@@ -18,8 +18,10 @@ extension YXExerciseServiceImpl {
     
     /// 筛选数据
     func _filterExercise() {
+        let studyId = self.studyDao.getStudyID(learn: learnConfig)
+        
         // 当前轮是否做完
-        if turnDao.selectTurnFinishStatus() {
+        if turnDao.selectTurnFinishStatus(studyId: studyId) {
             currentTurnIndex += 1
             
             //更新轮下标
@@ -27,9 +29,8 @@ extension YXExerciseServiceImpl {
             
             // 清空当前轮
             let r2 = turnDao.deleteCurrentTurn()
-                        
+            
             // 插入新的轮
-            let studyId = self.studyDao.getStudyID(learn: learnConfig)
             let r3 = turnDao.insertCurrentTurn(studyId: studyId)
             
             YXLog("筛选数据， 更新轮下标", r1, "清空当前轮", r2, "插入新的轮 ,id", studyId, r3)
