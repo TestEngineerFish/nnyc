@@ -51,7 +51,7 @@ protocol YXExerciseService {
     var learnConfig: YXLearnConfig { get set }
     
     /// 练习规则
-    var ruleType: YXExerciseRuleType { get }
+    var ruleType: YXExerciseRule { get }
     
     /// 练习进度
     var exerciseProgress: YXExerciseProgress { get }

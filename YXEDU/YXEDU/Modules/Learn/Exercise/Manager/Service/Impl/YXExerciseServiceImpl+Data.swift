@@ -121,13 +121,10 @@ extension YXExerciseServiceImpl {
         
         YXLog("\n插入步骤数据====== 结束")
     }
-    
-    
+
     
     func addWordStep(subStep: YXExerciseModel, recordId: Int, group: Int) {
-        if let word = learnConfig.learnType == .base ?
-            wordDao.selectWord(bookId: learnConfig.bookId ?? 0, wordId: subStep.wordId) :
-            wordDao.selectWord(wordId: subStep.wordId) {
+        if let word = _queryWord(wordId: subStep.wordId) {
 
             var exercise = subStep
             exercise.learnType = self.learnConfig.learnType
@@ -135,7 +132,7 @@ extension YXExerciseServiceImpl {
             exercise.group = group
             exercise.eid = _wordIdMap[exercise.wordId] ?? 0
 
-            let result = stepDao.insertWordStep(type: ruleType, study: recordId, exerciseModel: exercise)
+            let result = stepDao.insertWordStep(study: recordId, exerciseModel: exercise)
             YXLog("插入\(stepString(exercise))步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
         } else {
             YXLog("插入步骤数据, 不存在, id:",subStep.wordId)

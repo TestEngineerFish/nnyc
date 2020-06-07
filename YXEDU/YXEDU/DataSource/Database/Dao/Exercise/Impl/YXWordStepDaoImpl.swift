@@ -28,7 +28,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     
     func selectUnFinishMinStep(studyRecord: YXStudyRecordModel) -> Int? {
         let sql = YYSQLManager.WordStepSQL.selectUnfinishMinStepByTurn.rawValue
-        let params = [studyRecord.studyId,                      
+        let params = [studyRecord.studyId,
                       studyRecord.currentTurn,
                       studyRecord.currentGroup]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
@@ -44,7 +44,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         return nil
     }
     
-    func insertWordStep(type: YXExerciseRuleType, study recordId: Int, exerciseModel: YXExerciseModel) -> Bool {
+    func insertWordStep(study recordId: Int, exerciseModel: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
         
         let params: [Any] = [
@@ -53,12 +53,9 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
             exerciseModel.wordId as Any,
             exerciseModel.word?.bookId as Any,
             exerciseModel.word?.unitId as Any,
-            exerciseModel.type.rawValue,            
-            exerciseModel.question?.word as Any,
-            exerciseModel.question?.itemCount as Any,
-            exerciseModel.question?.row as Any,
-            exerciseModel.question?.column as Any,
-            exerciseModel.question?.extend?.power as Any,
+            exerciseModel.type.rawValue,
+            exerciseModel.question?.toJSONString() as Any,
+            exerciseModel.option?.toJSONString() as Any,
             exerciseModel.score,
             exerciseModel.isCareScore,
             exerciseModel.step,

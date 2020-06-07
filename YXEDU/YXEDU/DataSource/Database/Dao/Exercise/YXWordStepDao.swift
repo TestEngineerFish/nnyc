@@ -23,7 +23,7 @@ protocol YXWordStepDao {
     // TODO: ==== 插入 ====add
     /// 添加练习数据
     /// - Parameter exerciseModel: 练习
-    func insertWordStep(type: YXExerciseRuleType, study recordId: Int, exerciseModel: YXExerciseModel) -> Bool
+    func insertWordStep(study recordId: Int, exerciseModel: YXExerciseModel) -> Bool
     
     // TODO: ==== 修改/删除 ====
     /// 更新练习数据状态

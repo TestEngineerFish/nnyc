@@ -11,7 +11,7 @@ import FMDB
 
 class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
     
-    func insertExercise(learn config: YXLearnConfig, rule: YXExerciseRuleType, study recordId: Int, exerciseModel: YXExerciseModel) -> Int {
+    func insertExercise(learn config: YXLearnConfig, rule: YXExerciseRule, study recordId: Int, exerciseModel: YXExerciseModel) -> Int {
         
         let sql = YYSQLManager.ExerciseSQL.insertExercise.rawValue
         let params: [Any] = [

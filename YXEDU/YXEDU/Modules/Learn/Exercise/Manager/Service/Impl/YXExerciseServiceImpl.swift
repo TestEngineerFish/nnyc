@@ -14,7 +14,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     //MARK: - 属性
     var learnConfig: YXLearnConfig = YXBaseLearnConfig()
     
-    var ruleType: YXExerciseRuleType = .p0
+    var ruleType: YXExerciseRule = .p0
     
     var exerciseProgress: YXExerciseProgress = .none
     

@@ -116,19 +116,14 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         model.word?.unitId  = Int(rs.int(forColumn: "unit_id"))
 
         // 问题
-        var question        = YXExerciseQuestionModel()
-        question.wordId     = Int(rs.int(forColumn: "word_id"))
-        question.word       = rs.string(forColumn: "question_word_content")
-        question.itemCount  = Int(rs.int(forColumn: "question_option_count"))
-        question.column     = Int(rs.int(forColumn: "question_column_count"))
-        question.row        = Int(rs.int(forColumn: "question_row_count"))
+        if let json = rs.string(forColumn: "question") {
+            model.question = YXExerciseQuestionModel(JSONString: json)
+        }
         
-        var extend          = YXExerciseQuestionExtendModel()
-        extend.power        = Int(rs.int(forColumn: "question_ext_power"))
-
+        if let json = rs.string(forColumn: "option") {
+            model.option = YXExerciseOptionModel(JSONString: json)
+        }
         
-        question.extend     = extend
-        model.question      = question
         
         return model
     }

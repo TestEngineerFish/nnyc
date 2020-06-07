@@ -11,7 +11,7 @@ import UIKit
 struct YXStudyRecordModel {
     var studyId: Int = 0
     var learnConfg: YXLearnConfig = YXBaseLearnConfig()
-    var ruleType: YXExerciseRuleType = .p0
+    var ruleType: YXExerciseRule = .p0
     var currentGroup: Int = -1
     var currentTurn: Int = -1
 }

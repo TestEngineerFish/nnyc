@@ -46,7 +46,7 @@ class YXExerciseDataManager: NSObject {
     /// 哪本书，哪个单元
     public var bookId: Int?, unitId: Int?
     public var dataType: YXLearnType = .base
-    public var ruleType: YXExerciseRuleType = .p0
+    public var ruleType: YXExerciseRule = .p0
     
     /// 进度管理器
     public var progressManager: YXExcerciseProgressManager!

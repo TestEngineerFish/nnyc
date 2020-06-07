@@ -21,7 +21,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
             model = YXStudyRecordModel()
             model?.learnConfg       = config
             model?.studyId          = Int(result.int(forColumn: "study_id"))
-            model?.ruleType         = YXExerciseRuleType(rawValue: result.string(forColumn: "rule_type") ?? "") ?? .p0
+            model?.ruleType         = YXExerciseRule(rawValue: result.string(forColumn: "rule_type") ?? "") ?? .p0
             model?.currentGroup     = Int(result.int(forColumn: "current_group"))
             model?.currentTurn      = Int(result.int(forColumn: "current_turn"))
             
@@ -56,7 +56,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return nil
     }
 
-    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType, turn: Int) -> Int {
+    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule, turn: Int) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
         let params: [Any] = [
             type.rawValue,

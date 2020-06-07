@@ -27,7 +27,7 @@ protocol YXStudyRecordDao {
     ///   - config: 学习配置信息
     ///   - type: 学习规则
     @discardableResult
-    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRuleType, turn: Int) -> Int
+    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule, turn: Int) -> Int
 
     
     /// 更新当前轮下标

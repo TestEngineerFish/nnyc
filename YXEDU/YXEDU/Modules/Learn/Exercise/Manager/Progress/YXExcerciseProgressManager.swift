@@ -97,9 +97,9 @@ class YXExcerciseProgressManager: NSObject {
     }
     
     
-    func ruleType() -> YXExerciseRuleType {
+    func ruleType() -> YXExerciseRule {
         if let rule = YYCache.object(forKey: key(.ruleType)) as? String {
-            return YXExerciseRuleType(rawValue: rule) ?? .p0
+            return YXExerciseRule(rawValue: rule) ?? .p0
         }
         return .p0
     }
@@ -256,7 +256,7 @@ class YXExcerciseProgressManager: NSObject {
 
     
     /// 初始化进度状态
-    func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?, type: YXExerciseRuleType) {
+    func initProgressStatus(newWordIds: [Int]?, reviewWordIds: [Int]?, type: YXExerciseRule) {
         YYCache.set(false, forKey: key(.completion))
         YYCache.set(newWordIds, forKey: key(.newWordIds))
         YYCache.set(reviewWordIds, forKey: key(.reviewWordIds))

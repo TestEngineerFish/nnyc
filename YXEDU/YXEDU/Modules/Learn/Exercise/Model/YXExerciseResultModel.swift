@@ -12,7 +12,7 @@ import ObjectMapper
 /// 当天学习数据总模型
 struct YXExerciseResultModel: Mappable {
     var type: YXLearnType     = .base
-    var ruleType: YXExerciseRuleType = .p0
+    var ruleType: YXExerciseRule = .p0
     var bookId: Int?
     var unitId: Int?
     var newWordIds: [Int]?
@@ -26,7 +26,7 @@ struct YXExerciseResultModel: Mappable {
     
     mutating func mapping(map: Map) {
         type          <- (map["review_type"], YXExerciseDataTypeTransform())
-        ruleType      <- (map["learn_rule"], YXExerciseRuleTypeTransform())
+        ruleType      <- (map["learn_rule"], YXExerciseRuleTransform())
         bookId        <- map["book_id"]
         unitId        <- map["unit_id"]
         newWordIds    <- map["new_word_list"]
@@ -198,21 +198,21 @@ struct YXExerciseDataTypeTransform: TransformType {
 }
 
 
-struct YXExerciseRuleTypeTransform: TransformType {
+struct YXExerciseRuleTransform: TransformType {
         
-    typealias Object = YXExerciseRuleType
+    typealias Object = YXExerciseRule
     typealias JSON = String
     
     init() {}
     
-    func transformFromJSON(_ value: Any?) -> YXExerciseRuleType? {
-        if let v = value as? String, let rule = YXExerciseRuleType(rawValue: v.uppercased()) {
+    func transformFromJSON(_ value: Any?) -> YXExerciseRule? {
+        if let v = value as? String, let rule = YXExerciseRule(rawValue: v.uppercased()) {
             return rule
         }
         return .p0
     }
     
-    func transformToJSON(_ value: YXExerciseRuleType?) -> String? {
+    func transformToJSON(_ value: YXExerciseRule?) -> String? {
         return value?.rawValue
     }
 

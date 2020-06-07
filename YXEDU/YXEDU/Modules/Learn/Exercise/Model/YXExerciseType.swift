@@ -51,7 +51,7 @@ enum YXQuestionType: String {
 }
 
 
-enum YXExerciseRuleType: String {
+enum YXExerciseRule: String {
     case p0 = "P0"      // 原始规则
     case p1 = "P1"      // 跳过新学
     case p2 = "P2"      // 跳过新学，做题时首次做新学词题目后无论对错必定出现单词详情
