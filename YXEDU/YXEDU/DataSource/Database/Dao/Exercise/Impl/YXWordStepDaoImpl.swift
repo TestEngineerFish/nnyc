@@ -61,7 +61,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
             exerciseModel.wrongCount,
             exerciseModel.eid,
             exerciseModel.step,
-            exerciseModel.score]
+            exerciseModel.questionTypeScore]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 

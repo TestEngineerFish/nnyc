@@ -204,7 +204,7 @@ class YXExerciseServiceImpl: YXExerciseService {
             _model.result     = ResultModel(JSON: data.0)
             modelArray.append(_model)
         }
-        return modelArray.toJson()
+        return modelArray.toJSONString() ?? ""
     }
 
     /// 获取学习时长
