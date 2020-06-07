@@ -239,12 +239,13 @@ extension YYSQLManager {
             word_id,
             book_id,
             unit_id,
-            question_type,
         
+            question_type,
             question,
             option,
             score,
             care_score,
+        
             step,
             backup,
             wrong_score,
@@ -252,8 +253,9 @@ extension YYSQLManager {
             group_index
         )
         values(
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, ?            
         )
         """
 
