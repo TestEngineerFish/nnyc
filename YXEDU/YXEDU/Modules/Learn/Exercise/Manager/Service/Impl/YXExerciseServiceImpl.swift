@@ -75,7 +75,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {
-//        self.loadStudyRecord()
+        self.loadStudyRecord()
         
         // 筛选数据
         self._filterExercise()

@@ -18,6 +18,7 @@ protocol YXWordStepDao {
     /// 查找当前组(group)未做的最小step
     /// - Parameter studyId:
     func selectUnFinishMinStep(studyId: Int, group: Int) -> Int?
+    func selectUnFinishMinStep(studyRecord: YXStudyRecordModel) -> Int?
     
     // TODO: ==== 插入 ====add
     /// 添加练习数据
