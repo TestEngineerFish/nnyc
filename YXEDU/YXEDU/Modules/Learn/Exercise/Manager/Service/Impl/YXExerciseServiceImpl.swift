@@ -113,10 +113,13 @@ class YXExerciseServiceImpl: YXExerciseService {
             self.stepDao.deleteStep(with: deleteModel)
         }
         // 保存数据到数据库
+        // - 更新缓存表
+        self.updateCache(exercise: _model)
+        // - 更新Step表
         self.updateStep(exercise: _model)
-        // 更新单词状态
+        // - 更新练习表
         self.updateProgress(exercise: _model)
-        // 更新学习时长
+        // - 更新学习流程表
         self.updateDurationTime()
     }
 
@@ -230,10 +233,15 @@ class YXExerciseServiceImpl: YXExerciseService {
         // 更新单词得分
         return _model
     }
+    
+    /// 更新缓存表
+    private func updateCache(exercise model: YXExerciseModel) {
+        self.turnDao.updateExerciseFinishStatus(stepId: model.stepId)
+    }
 
     /// 更新Step数据库
     private func updateStep(exercise model: YXExerciseModel) {
-        self.stepDao.updateExercise(exerciseModel: model)
+        self.stepDao.updateStep(exerciseModel: model)
     }
 
     /// 更新进度

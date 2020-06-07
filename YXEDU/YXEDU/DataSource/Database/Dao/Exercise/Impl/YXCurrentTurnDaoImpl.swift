@@ -90,7 +90,9 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
     }
     
     func updateExerciseFinishStatus(stepId: Int) -> Bool {
-        return false
+        let sql = YYSQLManager.CurrentTurnSQL.updateFinish.rawValue
+        let params: [Any] = [stepId]
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
     
     func deleteCurrentTurn(studyId: Int) -> Bool {
@@ -105,6 +107,7 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         model.wordId        = Int(rs.int(forColumn: "word_id"))
         model.type          = YXQuestionType(rawValue: rs.string(forColumn: "question_type") ?? "") ?? .none
         model.step          = Int(rs.int(forColumn: "step"))
+        model.status        = YXStepStatus.getStatus(Int(rs.int(forColumn: "status")))
         
         // 单词
         model.word          = YXWordModel()

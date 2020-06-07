@@ -404,7 +404,9 @@
                 self.bottomView.tipsButton.setTitle("收起例句中文", for: .normal)
             }
         default:
-            self.dataManager.normalAnswerAction(exerciseModel: exerciseModel, right: false)
+            var _exerciseModel = exerciseModel
+            _exerciseModel.status = .wrong
+            self.service.normalAnswerAction(exercise: _exerciseModel)
         }
 
         if exerciseModel.type != .connectionWordAndChinese && exerciseModel.type != .connectionWordAndImage {
@@ -427,7 +429,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     func exerciseCompletion(_ exerciseModel: YXExerciseModel, _ right: Bool) {
         YXLog("回答" + (right ? "正确" : "错误"))
         // 答题后，数据处理
-        self.dataManager.normalAnswerAction(exerciseModel: exerciseModel, right: right)
+        self.service.normalAnswerAction(exercise: exerciseModel)
         
         // 新学直接切题，不用显示动画后
         if exerciseModel.type == .newLearnPrimarySchool
