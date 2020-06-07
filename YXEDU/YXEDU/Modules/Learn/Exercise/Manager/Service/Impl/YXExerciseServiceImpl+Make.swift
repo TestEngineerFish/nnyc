@@ -33,19 +33,18 @@ extension YXExerciseServiceImpl {
             // 新的轮开始
             studyRecord.currentTurn = studyRecord.currentTurn + 1
             
-            //更新轮下标
-            let r0 = studyDao.updateCurrentTurn(learn: learnConfig, turn: studyRecord.currentTurn)
-            
             // 查找当前组(group)未做的最小step
             // 例如只有s1 s3 s4时， s1全做对，因为要满足Turn>=Step,T2轮的就没法做s3了，T3轮就没法做s4
             if let minStep = stepDao.selectUnFinishMinStep(studyRecord: studyRecord) {
                 if minStep > studyRecord.currentTurn {
                     studyRecord.currentTurn = minStep
-                    // 有跳跃step时，保持到表中
-                    let r1 = studyDao.updateCurrentTurn(learn: learnConfig, turn: studyRecord.currentTurn)
-                    YXLog("筛选数据， 更新轮下标, 跳跃 下标", r1)
+                    // 有跳跃step时，保持到表中                    
+                    YXLog("筛选数据， 更新轮下标, 跳跃 下标", minStep)
                 }
             }
+            
+            //更新轮下标
+            let r1 = studyDao.updateCurrentTurn(learn: learnConfig, turn: studyRecord.currentTurn)
             
             // 清空当前轮
             let r2 = turnDao.deleteCurrentTurn(studyId: studyRecord.studyId)
@@ -53,7 +52,7 @@ extension YXExerciseServiceImpl {
             // 插入新的轮
             let r3 = turnDao.insertCurrentTurn(studyId: studyRecord.studyId, group: studyRecord.currentGroup)
             
-            YXLog("筛选数据， 更新轮下标", r0, "清空当前轮", r2, "插入新的轮 ,id", studyRecord.studyId, r3)
+            YXLog("筛选数据， 更新轮下标", r1, "清空当前轮", r2, "插入新的轮 ,id", studyRecord.studyId, r3)
         }
     }
     

@@ -293,7 +293,7 @@ extension YYSQLManager {
         
         case selectUnfinishMinStepByTurn =
         """
-        select study_id, step_id, step, group_index 'group' from (
+        select study_id, step_id, step, group_index from (
             select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
             where e.study_id = ? and s.backup = 0
             and (s.status = 0 or s.status = 1) and s.status != 3
