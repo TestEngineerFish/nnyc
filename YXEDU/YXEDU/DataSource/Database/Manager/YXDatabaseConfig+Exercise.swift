@@ -191,7 +191,7 @@ extension YYSQLManager {
             is_new,
             unfinish_count
         )
-        values(?, ?, ?, ?, ? , ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         case updateExercise =

@@ -90,7 +90,9 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
     }
     
     func updateExerciseFinishStatus(stepId: Int) -> Bool {
-        return false
+        let sql = YYSQLManager.CurrentTurnSQL.updateFinish.rawValue
+        let params: [Any] = [stepId]
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
     
     func deleteCurrentTurn(studyId: Int) -> Bool {
