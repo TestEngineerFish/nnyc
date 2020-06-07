@@ -11,18 +11,10 @@ import UIKit
 class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     
     
-//    func selectExercise(type: Int) -> YXExerciseModel? {
-//        return nil
-//    }
-//
-//    func selectBackupExercise(wordId: Int, step: Int) -> YXExerciseModel? {
-//        return nil
-//    }
-    
-    
-    func selectMinUnFinishStep(studyId: Int, group: Int) -> Int? {
-        let sql = YYSQLManager.CurrentTurnSQL.selectConnectionType.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+    func selectUnFinishMinStep(studyId: Int, group: Int) -> Int? {
+        let sql = YYSQLManager.WordStepSQL.selectUnfinishMinStep.rawValue
+        let params = [studyId, studyId, group]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return nil
         }
         if result.next() {

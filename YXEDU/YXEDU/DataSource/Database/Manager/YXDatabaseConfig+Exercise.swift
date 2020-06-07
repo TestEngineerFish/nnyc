@@ -196,7 +196,17 @@ extension YYSQLManager {
         
         case selectMinUnfinishStep =
         """
-        
+        select study_id, step_id, step, group_index 'group', (select current_turn from study_record where study_id = ? limit 1) turn from (
+            select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
+            where e.study_id = ? and s.backup = 0
+            and (s.status = 0 or s.status = 1) and s.status != 3
+            order by s.step desc
+        )
+        where turn >= step
+        group by word_id
+        having group_index = ?
+        order by step asc
+        limit 1
         """
         
         
@@ -281,6 +291,12 @@ extension YYSQLManager {
         where study_id = ? exercise_id = ? and step = ? and backup = 1
         """
         
+        case selectUnfinishMinStep =
+        """
+        
+        """
+        
+        
         case deleteStep =
         """
         DELETE FROM all_word_step
@@ -305,7 +321,7 @@ extension YYSQLManager {
         insert into current_turn(study_id, step_id, step, turn)
         select study_id, step_id, step, (select current_turn from study_record where study_id = ? limit 1) turn from (
             select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
-            where e.study_id = ? and s.backup = 0
+            where e.study_id = ? and group_index = ? and s.backup = 0
             and (s.status = 0 or s.status = 1) and s.status != 3
             order by s.step desc
         )

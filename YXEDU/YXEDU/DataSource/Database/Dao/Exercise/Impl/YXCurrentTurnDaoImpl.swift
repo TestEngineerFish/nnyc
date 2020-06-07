@@ -10,9 +10,9 @@ import UIKit
 import FMDB
 
 class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
-    func insertCurrentTurn(studyId: Int) -> Bool {
+    func insertCurrentTurn(studyId: Int, group: Int) -> Bool {
         let sql = YYSQLManager.CurrentTurnSQL.insertTurn.rawValue
-        let params = [studyId, studyId]
+        let params = [studyId, studyId, group]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
     

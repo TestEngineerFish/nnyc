@@ -48,7 +48,7 @@ extension YXExerciseServiceImpl {
             let r2 = turnDao.deleteCurrentTurn(studyId: studyRecord.studyId)
             
             // 插入新的轮
-            let r3 = turnDao.insertCurrentTurn(studyId: studyRecord.studyId)
+            let r3 = turnDao.insertCurrentTurn(studyId: studyRecord.studyId, group: studyRecord.currentGroup)
             
             YXLog("筛选数据， 更新轮下标", r1, "清空当前轮", r2, "插入新的轮 ,id", studyRecord.studyId, r3)
         }
