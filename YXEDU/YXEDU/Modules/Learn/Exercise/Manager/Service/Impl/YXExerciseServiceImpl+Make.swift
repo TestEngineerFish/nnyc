@@ -17,7 +17,7 @@ extension YXExerciseServiceImpl {
     
     
     /// 加载学习记录
-    func loadStudyRecord() {
+    func _loadStudyRecord() {
         if let record = studyDao.selectStudyRecordModel(config: learnConfig) {
             self.studyRecord = record
         }
@@ -38,7 +38,7 @@ extension YXExerciseServiceImpl {
             if let minStep = stepDao.selectUnFinishMinStep(studyRecord: studyRecord) {
                 if minStep > studyRecord.currentTurn {
                     studyRecord.currentTurn = minStep
-                    // 有跳跃step时，保持到表中                    
+                    // 有跳跃step时，保持到表中
                     YXLog("筛选数据， 更新轮下标, 跳跃 下标", minStep)
                 }
             }
@@ -63,13 +63,13 @@ extension YXExerciseServiceImpl {
             return nil
         }
         
-        if isConnectionType(model: exercise) {
+        if _isConnectionType(model: exercise) {
             // 连线题
             return _findConnectionExercise(exercise: exercise)
         } else {
             // 正常出题
             exercise.word = _queryWord(wordId: exercise.wordId)
-            return processExerciseOption(exercise: exercise)
+            return _processExerciseOption(exercise: exercise)
         }
     }
     
@@ -92,7 +92,7 @@ extension YXExerciseServiceImpl {
             let e = connectionExercises.first
             if var backupExercise = turnDao.selectBackupExercise(studyId: studyRecord.studyId, exerciseId: e?.eid ?? 0, step: e?.step ?? 0) {
                 backupExercise.word = _queryWord(wordId: backupExercise.wordId)
-                return processExerciseOption(exercise: backupExercise)
+                return _processExerciseOption(exercise: backupExercise)
             } else {
                 YXLog("备选题为空， 出错")
                 return nil
@@ -101,7 +101,7 @@ extension YXExerciseServiceImpl {
         
         // 正常出连线题
         if connectionExercises.count > 1 {
-            return processConnectionExerciseOption(exercises: connectionExercises)
+            return _processConnectionExerciseOption(exercises: connectionExercises)
         }
         return nil
     }

@@ -13,7 +13,7 @@ extension YXExerciseServiceImpl {
     
     /// 处理从网络请求的数据
     /// - Parameter result: 网络数据
-    func processData() {
+    func _processData() {
         if (_resultModel?.newWordIds?.count == .some(0) && _resultModel?.groups.count == .some(0)) {
             YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(learnConfig.learnType)")
             exerciseProgress = .emtpy
@@ -25,7 +25,7 @@ extension YXExerciseServiceImpl {
         self.learnConfig.unitId = _resultModel?.unitId ?? 0
         
         // 插入学习记录
-        let recordId = self.processStudyRecord()
+        let recordId = self._processStudyRecord()
         
         if recordId == 0 {
             YXLog("插入学习记录失败")
@@ -33,15 +33,15 @@ extension YXExerciseServiceImpl {
         }
         
         // 插入练习数据【新学/复习】
-        self.processExercise(wordIds: _resultModel?.newWordIds ?? [], isNew: true, recordId: recordId)
-        self.processExercise(wordIds: _resultModel?.reviewWordIds ?? [], isNew: false, recordId: recordId)
+        self._processExercise(wordIds: _resultModel?.newWordIds ?? [], isNew: true, recordId: recordId)
+        self._processExercise(wordIds: _resultModel?.reviewWordIds ?? [], isNew: false, recordId: recordId)
         
         // 插入单词步骤数据【新学/训练/复习】
-        self.processWordStep(recordId: recordId)
+        self._processWordStep(recordId: recordId)
     }
     
     
-    func processStudyRecord() -> Int {
+    func _processStudyRecord() -> Int {
         
         guard let group = _resultModel?.groups.first, group.count > 0 else {
             YXLog("学习数据异常，无法查找第一组初始最小 Turn")
@@ -67,7 +67,7 @@ extension YXExerciseServiceImpl {
     
     /// 练习数据
     /// - Parameter result: 网络数据
-    func processExercise(wordIds: [Int], isNew: Bool, recordId: Int) {
+    func _processExercise(wordIds: [Int], isNew: Bool, recordId: Int) {
         YXLog("\n插入数据 is_new= \(isNew ) ====== 开始")
 //        let studyRecordId = self.studyDao.getStudyID(learn: learnConfig)
         // 处理单词列表
@@ -81,7 +81,7 @@ extension YXExerciseServiceImpl {
             exercise.learnType = learnConfig.learnType
             exercise.word      = word
             exercise.isNewWord = isNew
-            exercise.unfinishStepCount = unfinishStepCount(wordId: wordId)
+            exercise.unfinishStepCount = _unfinishStepCount(wordId: wordId)
             
             // 插入练习数据
             let exerciseId = exerciseDao.insertExercise(learn: learnConfig, rule: ruleType, study: recordId, exerciseModel: exercise)
@@ -96,7 +96,7 @@ extension YXExerciseServiceImpl {
     
     /// 处理训练和复习步骤
     /// - Parameter result:
-    func processWordStep(recordId: Int) {
+    func _processWordStep(recordId: Int) {
         YXLog("\n插入步骤数据====== 开始")
         guard let groups = _resultModel?.groups else {
             return
@@ -105,15 +105,15 @@ extension YXExerciseServiceImpl {
         for (index, group) in groups.enumerated() {
             for step in group {
                 for subStep in step {
-                    if isConnectionType(model: subStep) {
+                    if _isConnectionType(model: subStep) {
                         var exercise = subStep
                         for item in subStep.option?.firstItems ?? [] {
                             // 连线题，wordId没有，需要构造一个
                             exercise.wordId = item.optionId
-                            addWordStep(subStep: exercise, recordId: recordId, group: index)
+                            _addWordStep(subStep: exercise, recordId: recordId, group: index)
                         }
                     } else {
-                        addWordStep(subStep: subStep, recordId: recordId, group: index)
+                        _addWordStep(subStep: subStep, recordId: recordId, group: index)
                     }
                 }
             }
@@ -123,7 +123,7 @@ extension YXExerciseServiceImpl {
     }
 
     
-    func addWordStep(subStep: YXExerciseModel, recordId: Int, group: Int) {
+    func _addWordStep(subStep: YXExerciseModel, recordId: Int, group: Int) {
         if let word = _queryWord(wordId: subStep.wordId) {
 
             var exercise = subStep
@@ -133,7 +133,7 @@ extension YXExerciseServiceImpl {
             exercise.eid = _wordIdMap[exercise.wordId] ?? 0
 
             let result = stepDao.insertWordStep(study: recordId, exerciseModel: exercise)
-            YXLog("插入\(stepString(exercise))步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
+            YXLog("插入\(_stepString(exercise))步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
         } else {
             YXLog("插入步骤数据, 不存在, id:",subStep.wordId)
         }
@@ -141,17 +141,17 @@ extension YXExerciseServiceImpl {
     
     
     
-    func isConnectionType(model: YXExerciseModel) -> Bool {
+    func _isConnectionType(model: YXExerciseModel) -> Bool {
         return model.type == .connectionWordAndChinese || model.type == .connectionWordAndImage
     }
 
     
-    func stepScoreRule() -> Int {
+    func _stepScoreRule() -> Int {
         return 0
     }
     
     
-    func stepString(_ exercise: YXExerciseModel) -> String {
+    func _stepString(_ exercise: YXExerciseModel) -> String {
         if exercise.step == 0 {
             return "新学 step\(exercise.step)"
         } else if exercise.isNewWord {
@@ -162,7 +162,7 @@ extension YXExerciseServiceImpl {
     }
     
     
-    func unfinishStepCount(wordId: Int) -> Int {
+    func _unfinishStepCount(wordId: Int) -> Int {
         var count = 0
         for group in _resultModel?.groups ?? [] {
             for step in group {

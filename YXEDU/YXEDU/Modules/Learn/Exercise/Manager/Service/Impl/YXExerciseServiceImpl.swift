@@ -65,7 +65,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         let request = YXExerciseRequest.exercise(type: learnConfig.learnType.rawValue, planId: learnConfig.planId)
         YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
             self._resultModel = response.data
-            self.processData()
+            self._processData()
             completion?(true, nil)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -75,7 +75,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {
-        self.loadStudyRecord()
+        self._loadStudyRecord()
         
         // 筛选数据
         self._filterExercise()

@@ -12,7 +12,7 @@ import UIKit
 extension YXExerciseServiceImpl {
     
     /// 处理题目的选项
-    func processExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
+    func _processExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
         
         // 判断题
         let judgmentArray: [YXQuestionType] = [.validationImageAndWord, .validationWordAndChinese]
@@ -31,7 +31,7 @@ extension YXExerciseServiceImpl {
     }
     
     /// 连线题 
-    func processConnectionExerciseOption(exercises: [YXExerciseModel]) -> YXExerciseModel {
+    func _processConnectionExerciseOption(exercises: [YXExerciseModel]) -> YXExerciseModel {
         return _exerciseOptionManange.connectionExercise(exerciseArray: exercises)
     }
     
