@@ -46,27 +46,26 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func updateExercise(exerciseModel: YXExerciseModel) -> Bool {
+    func updateStep(exerciseModel: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.updateWordStep.rawValue
         let params: [Any] = [
-            exerciseModel.mastered ? 1 : 0,
-            exerciseModel.result ?? false,
+            exerciseModel.status.rawValue,
             exerciseModel.wrongCount,
             exerciseModel.eid,
             exerciseModel.step,
-            exerciseModel.group]
+            exerciseModel.score]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
     func getSteps(with model: YXExerciseModel) -> ([String:Any], Int) {
-        let sql = YYSQLManager.WordStepSQL.selsetStps.rawValue
+        let sql = YYSQLManager.WordStepSQL.selsetSteps.rawValue
         let params: [Any] = [model.eid]
         var dict = [String:Any]()
         var wrongCount = 0
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params){
             while result.next() {
                 let step = Int(result.int(forColumn: "step"))
-                let stepResult = Int(result.int(forColumn: "result")) == 1
+                let stepResult = Int(result.int(forColumn: "status")) == 1
                 wrongCount += Int(result.int(forColumn: "wrong_count"))
 
                 dict["\(step)"] = stepResult

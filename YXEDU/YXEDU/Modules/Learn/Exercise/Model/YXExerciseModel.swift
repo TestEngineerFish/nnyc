@@ -75,6 +75,8 @@ struct YXExerciseModel: Mappable {
     var step: Int = 0
     /// 对错
     var isRight: Bool?
+    /// 状态
+    var status: YXStepStatus = .normal
     
     /// 是否继续做
     var isContinue: Bool?

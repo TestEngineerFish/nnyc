@@ -14,4 +14,19 @@ enum YXStepStatus: Int {
     case wrong  = 1
     case right  = 2
     case skip   = 3
+    
+    static func getStatus(_ value: Int) -> YXStepStatus {
+        switch value {
+            case 0:
+                return .normal
+            case 1:
+                return .wrong
+            case 2:
+                return .right
+            case 3:
+                return .skip
+            default:
+            return .normal
+        }
+    }
 }

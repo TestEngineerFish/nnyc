@@ -107,6 +107,7 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         model.wordId        = Int(rs.int(forColumn: "word_id"))
         model.type          = YXQuestionType(rawValue: rs.string(forColumn: "question_type") ?? "") ?? .none
         model.step          = Int(rs.int(forColumn: "step"))
+        model.status        = YXStepStatus.getStatus(Int(rs.int(forColumn: "status")))
         
         // 单词
         model.word          = YXWordModel()

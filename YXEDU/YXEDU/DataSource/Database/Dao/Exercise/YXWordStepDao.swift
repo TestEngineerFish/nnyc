@@ -31,7 +31,7 @@ protocol YXWordStepDao {
     /// 更新练习数据状态
     /// - Parameter exerciseModel: 练习
     @discardableResult
-    func updateExercise(exerciseModel: YXExerciseModel) -> Bool
+    func updateStep(exerciseModel: YXExerciseModel) -> Bool
 
     /// 获取单词的所有已做的练习题，字典返回，用于上报
     /// - Parameter model: 练习对象

@@ -212,7 +212,7 @@ class YXExerciseServiceImpl: YXExerciseService {
 
     /// 更新Step数据库
     private func updateStep(exercise model: YXExerciseModel) {
-        self.stepDao.updateExercise(exerciseModel: model)
+        self.stepDao.updateStep(exerciseModel: model)
     }
 
     /// 更新进度

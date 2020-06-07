@@ -259,17 +259,18 @@ extension YYSQLManager {
         case updateWordStep =
         """
         UPDATE all_word_step
-        SET score = ?, status = ?, wrong_count = ?
+        SET status = ?, wrong_count = ?
         WHERE exercise_id = ? and step = ? and score = ?
         """
 
-        case selsetStps =
+        case selsetSteps =
         """
         SELECT * FROM all_word_step
         WHERE exercise_id = ? and step != 0
         """
         
-        case selectBackupStep = """
+        case selectBackupStep =
+        """
         select * from all_word_step
         where study_id = ? exercise_id = ? and step = ? and backup = 1
         """
