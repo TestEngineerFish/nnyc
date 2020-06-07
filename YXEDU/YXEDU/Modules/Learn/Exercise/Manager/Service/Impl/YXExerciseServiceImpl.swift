@@ -75,7 +75,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {
-        self.loadStudyRecord()
+//        self.loadStudyRecord()
         
         // 筛选数据
         self._filterExercise()
@@ -191,7 +191,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     private func getReportJson() -> String {
         var modelArray = [YXExerciseReportModel]()
         // 获得所有学习的单词单词
-        let exerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: true, includeReviewWord: true)
+        let exerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: false, includeReviewWord: true)
 
         exerciseModelList.forEach { (model) in
             let data = self.stepDao.getSteps(with: model)
@@ -199,9 +199,9 @@ class YXExerciseServiceImpl: YXExerciseService {
             _model.wordId     = model.word?.wordId ?? 0
             _model.bookId     = model.word?.bookId
             _model.unitId     = model.word?.unitId
-            _model.score      = data.1
+            _model.score      = model.score
             _model.errorCount = model.wrongCount
-            _model.result     = ResultModel(JSON: data.0)
+            _model.result     = ResultModel(JSON: data)
             modelArray.append(_model)
         }
         return modelArray.toJSONString() ?? ""

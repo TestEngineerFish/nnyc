@@ -10,7 +10,6 @@ import UIKit
 
 class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     
-    
     func selectUnFinishMinStep(studyId: Int, group: Int) -> Int? {
         let sql = YYSQLManager.WordStepSQL.selectUnfinishMinStep.rawValue
         let params = [studyId, studyId, group]
@@ -65,21 +64,18 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func getSteps(with model: YXExerciseModel) -> ([String:Any], Int) {
+    func getSteps(with model: YXExerciseModel) -> [String:Any] {
         let sql = YYSQLManager.WordStepSQL.selsetSteps.rawValue
         let params: [Any] = [model.eid]
         var dict = [String:Any]()
-        var wrongCount = 0
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params){
             while result.next() {
-                let step = Int(result.int(forColumn: "step"))
-                let stepResult = Int(result.int(forColumn: "status")) == 1
-                wrongCount += Int(result.int(forColumn: "wrong_count"))
-
+                let step        = Int(result.int(forColumn: "step"))
+                let stepResult  = Int(result.int(forColumn: "status")) == 2
                 dict["\(step)"] = stepResult
             }
         }
-        return (dict, wrongCount)
+        return dict
     }
 
     func selectExerciseProgress() -> YXExerciseProgress {
