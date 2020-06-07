@@ -11,26 +11,12 @@ import UIKit
 /// 处理网络数据，存储到数据库
 extension YXExerciseServiceImpl {
     
-    /// 获取今天要学习的练习数据
-    /// - Parameter completion: 数据加载成功后的回调
-    func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
-        let request = YXExerciseRequest.exercise(type: learnConfig.learnType.rawValue, planId: learnConfig.planId)
-        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
-            self._resultModel = response.data
-            self.processData()
-            completion?(true, nil)
-        }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
-            completion?(false, error.message)
-        }
-    }
-    
     /// 处理从网络请求的数据
     /// - Parameter result: 网络数据
     func processData() {
         if (_resultModel?.newWordIds?.count == .some(0) && _resultModel?.groups.count == .some(0)) {
             YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(learnConfig.learnType)")
-            exerciseProgress = .none
+            exerciseProgress = .emtpy
             return
         }
         
@@ -58,7 +44,7 @@ extension YXExerciseServiceImpl {
     func processStudyRecord() -> Int {
         
         guard let group = _resultModel?.groups.first, group.count > 0 else {
-            YXLog("学习数据异常，无法查找初始最小 Turn")
+            YXLog("学习数据异常，无法查找第一组初始最小 Turn")
             return 0
         }
         
@@ -73,9 +59,9 @@ extension YXExerciseServiceImpl {
         }
         
         // 设置初始轮下标，需要 -1，因为筛选数据的时候，做了+1处理
-        currentTurnIndex = currentMinStep - 1
+        let startTurn = currentMinStep - 1
         
-        return self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType, turn: currentTurnIndex)
+        return self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType, turn: startTurn)
     }
     
     
@@ -101,7 +87,7 @@ extension YXExerciseServiceImpl {
             let exerciseId = exerciseDao.insertExercise(learn: learnConfig, rule: ruleType, study: recordId, exerciseModel: exercise)
 
             // 映射单词ID和表ID
-            self.wordIdMap[wordId] = exerciseId
+            self._wordIdMap[wordId] = exerciseId
 
             YXLog("插入练习数据——\(isNew) ", word.wordId ?? 0," \(exercise.group)", exerciseId > 0 ? "成功" : "失败")
         }
@@ -147,7 +133,7 @@ extension YXExerciseServiceImpl {
             exercise.learnType = self.learnConfig.learnType
             exercise.word = word
             exercise.group = group
-            exercise.eid = wordIdMap[exercise.wordId] ?? 0
+            exercise.eid = _wordIdMap[exercise.wordId] ?? 0
 
             let result = stepDao.insertWordStep(type: ruleType, study: recordId, exerciseModel: exercise)
             YXLog("插入\(stepString(exercise))步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")

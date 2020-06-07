@@ -11,16 +11,20 @@ import UIKit
 protocol YXWordStepDao {
     
     // TODO: ==== 查询 ====
-    /// 查询练习数据
-    /// - Parameter type: 单词类型【1.新学；2.训练；3.复习】
-    func selectExercise(type: Int) -> YXExerciseModel?
-    
-    /// 查询连线题的备份数据
-    /// - Parameter wordId: 单词Id
-    func selectBackupExercise(wordId: Int, step: Int) -> YXExerciseModel?
+//    /// 查询练习数据
+//    /// - Parameter type: 单词类型【1.新学；2.训练；3.复习】
+//    func selectExercise(type: Int) -> YXExerciseModel?
+//
+//    /// 查询连线题的备份数据
+//    /// - Parameter wordId: 单词Id
+//    func selectBackupExercise(wordId: Int, step: Int) -> YXExerciseModel?
     
     /// 查询练习进度
     func selectExerciseProgress() -> YXExerciseProgress
+    
+    /// 查找当前组(group)未做的最小step
+    /// - Parameter studyId:
+    func selectUnFinishMinStep(studyId: Int, group: Int) -> Int?
     
     // TODO: ==== 插入 ====add
     /// 添加练习数据

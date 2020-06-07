@@ -10,15 +10,29 @@ import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     
-
+    func selectStudyRecordModel(config: YXLearnConfig) -> YXStudyRecordModel? {
+        let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
+        let params = configParams(config: config)
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return nil
+        }
+        var model: YXStudyRecordModel?
+        if result.next() {
+            model = YXStudyRecordModel()
+            model?.learnConfg       = config
+            model?.studyId          = Int(result.int(forColumn: "study_id"))
+            model?.ruleType         = YXExerciseRuleType(rawValue: result.string(forColumn: "rule_type") ?? "") ?? .p0
+            model?.currentGroup     = Int(result.int(forColumn: "current_group"))
+            model?.currentTurn      = Int(result.int(forColumn: "current_turn"))
+            
+        }
+        result.close()
+        return model
+    }
+    
     func getStudyID(learn config: YXLearnConfig) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-        let params: [Any] = [
-            config.learnType.rawValue,
-            config.bookId,
-            config.unitId,
-            config.planId
-        ]
+        let params = configParams(config: config)
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return .zero
         }
@@ -113,4 +127,14 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
+    
+    func configParams(config: YXLearnConfig) -> [Any] {
+        return [
+            config.learnType.rawValue,
+            config.bookId,
+            config.unitId,
+            config.planId
+        ]
+        
+    }
 }

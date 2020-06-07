@@ -16,20 +16,27 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     var ruleType: YXExerciseRuleType = .p0
     
-    var exerciseProgress: YXExerciseProgress = .reported
-    
-    var exerciseOptionManange = YXExerciseOptionManager()
-    
-    var _resultModel: YXExerciseResultModel?
-
-    var wordIdMap = [Int:Int]()
+    var exerciseProgress: YXExerciseProgress = .none
     
     // ----------------------------
     //MARK: - Private 属性
+    var _studyRecord = YXStudyRecordModel()
     
-    /// 当前第几轮, 从第一轮开始
-    var studyId = 0
-    var currentTurnIndex = -1
+    var _exerciseOptionManange = YXExerciseOptionManager()
+    
+    var _resultModel: YXExerciseResultModel?
+
+    var _wordIdMap = [Int:Int]()
+    
+    // 当前学习记录
+    var studyRecord = YXStudyRecordModel()
+//    var studyId = 0
+    
+    // 当前组，从0开始
+//    var currentGroupIndex = 0
+    
+    /// 当前轮，有s0，从-1开始，没有s0，从0开始
+//    var currentTurnIndex = -1
     
     
     /// 本地数据库访问
@@ -48,12 +55,27 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.loadProgressStatus()
         let newExerciseModelList    = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: true, includeReviewWord: false)
         let reviewExerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: false, includeReviewWord: true)
-        self.exerciseOptionManange.initData(newArray: newExerciseModelList, reviewArray: reviewExerciseModelList)
+        self._exerciseOptionManange.initData(newArray: newExerciseModelList, reviewArray: reviewExerciseModelList)
     }
     
     
+    /// 获取今天要学习的练习数据
+    /// - Parameter completion: 数据加载成功后的回调
+    func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+        let request = YXExerciseRequest.exercise(type: learnConfig.learnType.rawValue, planId: learnConfig.planId)
+        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
+            self._resultModel = response.data
+            self.processData()
+            completion?(true, nil)
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+            completion?(false, error.message)
+        }
+    }
+    
+    /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {
-        studyId = self.studyDao.getStudyID(learn: learnConfig)
+        self.loadStudyRecord()
         
         // 筛选数据
         self._filterExercise()
@@ -61,6 +83,13 @@ class YXExerciseServiceImpl: YXExerciseService {
         // 查找类型
         return self._findExercise()
     }
+    
+    
+//    func loadLocalExercise() {
+//        if let record = studyDao.selectStudyRecordModel(config: learnConfig) {
+//            self.studyRecord = record
+//        }
+//    }
 
     func setStartTime() {
         let time = Date().local().timeIntervalSince1970

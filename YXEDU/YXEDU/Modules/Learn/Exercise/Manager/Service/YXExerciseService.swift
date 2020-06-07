@@ -35,10 +35,10 @@ enum YXExerciseWordType: Int {
 
 /// 练习进度
 enum YXExerciseProgress: Int {
-    case none     = 0   // 空数据
-    case learning = 1   // 学习中【未学完】
-    case finished = 2   // 已学完【未上报】
-    case reported = 3   // 已上报
+    case none       = 1     // 没有学习记录，可能是首次，也可能是学完了
+    case learning   = 2     // 学习中【未学完】
+    case unreport   = 3     // 已学完【未上报】
+    case emtpy      = 4     // 学习数据异常
 }
 
 //MARK: - 练习出题逻辑管理器
@@ -71,6 +71,9 @@ protocol YXExerciseService {
     
     /// 加载网络数据
     func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?)
+        
+    /// 如果本地没有学完，获取练习前，需要加载
+//    func loadLocalExercise()
     
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
     /// - Parameters:

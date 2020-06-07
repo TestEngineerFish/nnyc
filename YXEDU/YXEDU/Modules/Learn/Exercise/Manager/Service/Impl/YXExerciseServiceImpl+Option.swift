@@ -32,20 +32,20 @@ extension YXExerciseServiceImpl {
     
     /// 连线题 
     func processConnectionExerciseOption(exercises: [YXExerciseModel]) -> YXExerciseModel {
-        return exerciseOptionManange.connectionExercise(exerciseArray: exercises)
+        return _exerciseOptionManange.connectionExercise(exerciseArray: exercises)
     }
     
     
     /// 判断题
     func _judgmentExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
-        let _exercise = self.exerciseOptionManange.processReviewWordOption(exercise: exercise)
+        let _exercise = self._exerciseOptionManange.processReviewWordOption(exercise: exercise)
         return _exercise
     }
     
     
     /// 选择题
     func _chooseExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
-        let _exercise = self.exerciseOptionManange.processReviewWordOption(exercise: exercise)
+        let _exercise = self._exerciseOptionManange.processReviewWordOption(exercise: exercise)
         return _exercise
     }
     

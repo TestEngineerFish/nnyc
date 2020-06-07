@@ -10,14 +10,30 @@ import UIKit
 
 class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     
-    func selectExercise(type: Int) -> YXExerciseModel? {
+    
+//    func selectExercise(type: Int) -> YXExerciseModel? {
+//        return nil
+//    }
+//
+//    func selectBackupExercise(wordId: Int, step: Int) -> YXExerciseModel? {
+//        return nil
+//    }
+    
+    
+    func selectMinUnFinishStep(studyId: Int, group: Int) -> Int? {
+        let sql = YYSQLManager.CurrentTurnSQL.selectConnectionType.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+            return nil
+        }
+        if result.next() {
+            let step = Int(result.int(forColumn: "step"))
+            result.close()
+            
+            return step
+        }
+        result.close()
         return nil
     }
-    
-    func selectBackupExercise(wordId: Int, step: Int) -> YXExerciseModel? {
-        return nil
-    }
-    
     
     func insertWordStep(type: YXExerciseRuleType, study recordId: Int, exerciseModel: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
@@ -76,7 +92,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     }
 
     func selectExerciseProgress() -> YXExerciseProgress {
-        return .reported
+        return .none
     }
 
     func deleteStep(with model: YXExerciseModel) {

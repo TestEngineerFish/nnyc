@@ -193,7 +193,13 @@ extension YYSQLManager {
         )
         values(?, ?, ?, ?, ? , ?, ?, ?, ?, ?)
         """
-
+        
+        case selectMinUnfinishStep =
+        """
+        
+        """
+        
+        
         case updateExercise =
         """
         UPDATE all_exercise

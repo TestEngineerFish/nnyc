@@ -10,6 +10,8 @@ import Foundation
 
 protocol YXStudyRecordDao {
     
+    // 查询学习记录对象
+    func selectStudyRecordModel(config: YXLearnConfig) -> YXStudyRecordModel?
     
     /// 获得学习记录的ID
     /// - Parameter config: 学习配置信息
