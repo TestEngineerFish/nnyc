@@ -194,7 +194,6 @@ extension YYSQLManager {
         values(?, ?, ?, ?, ? , ?, ?, ?, ?, ?)
         """
 
-
         case updateExercise =
         """
         UPDATE all_exercise
@@ -202,28 +201,16 @@ extension YYSQLManager {
         WHERE exercise_id = ?
         """
         
-        case getNewWordCount =
+        case getExerciseCount =
         """
         SELECT count(*) FROM all_exercise
-        WHERE learn_type = ? and plan_id = ? and is_new = 1
-        """
-        
-        case getReviewWordCount =
-        """
-        SELECT count(*) FROM all_exercise
-        WHERE learn_type = ? and plan_id = ? and is_new = 0
-        """
-        
-        case getAllExerciseCount =
-        """
-        SELECT count(*) FROM all_exercise
-        WHERE learn_type = ? and plan_id = ?
+        WHERE learn_type = ? and plan_id = ? and book_id = ? and unit_id = ?
         """
 
         case getAllExercise =
         """
         SELECT * FROM all_exercise
-        WHERE learn_type = ? and plan_id = ?
+        WHERE learn_type = ? and plan_id = ? and book_id = ? and unit_id = ?
         """
 
         case deleteExerciseWithStudy =

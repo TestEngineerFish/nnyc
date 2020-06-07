@@ -111,9 +111,9 @@ class YXExerciseServiceImpl: YXExerciseService {
             if result {
                 // 获取学习数据
                 let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
-                let wordCount   = self.exerciseDao.getAllExerciseCount(learn: self.learnConfig)
-                newWordCount    = self.exerciseDao.getNewWordCount(learn: self.learnConfig)
-                reviewWordCount = self.exerciseDao.getReviewWordCount(learn: self.learnConfig)
+                let wordCount   = self.exerciseDao.getExerciseCount(learn: self.learnConfig, includeNewWord: true, includeReviewWord: true)
+                newWordCount    = self.exerciseDao.getExerciseCount(learn: self.learnConfig, includeNewWord: true, includeReviewWord: false)
+                reviewWordCount = self.exerciseDao.getExerciseCount(learn: self.learnConfig, includeNewWord: false, includeReviewWord: true)
                 // 上报Growing
                 YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, word: wordCount)
                 if self.learnConfig.learnType == .base {

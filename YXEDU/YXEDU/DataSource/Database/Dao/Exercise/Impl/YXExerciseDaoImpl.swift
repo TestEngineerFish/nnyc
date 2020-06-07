@@ -39,41 +39,23 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
     
-    func getNewWordCount(learn config: YXLearnConfig) -> Int {
-        let sql = YYSQLManager.ExerciseSQL.getNewWordCount.rawValue
-        let params: [Any] = [
-            config.learnType.rawValue,
-            config.planId]
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+    func getExerciseCount(learn config: YXLearnConfig, includeNewWord: Bool, includeReviewWord: Bool) -> Int {
+        var sql = YYSQLManager.ExerciseSQL.getExerciseCount.rawValue
+        if includeNewWord && !includeReviewWord {
+            // 仅获取新学
+            sql += " and is_new = 1"
+        } else if !includeNewWord && includeReviewWord {
+            // 仅获取复习
+            sql += " and is_new = 0"
+        } else if !includeNewWord && !includeReviewWord {
+            // 都不获取
             return 0
         }
-        var count = 0
-        if result.next() {
-            count = Int(result.int(forColumn: "count"))
-        }
-        return count
-    }
-    
-    func getReviewWordCount(learn config: YXLearnConfig) -> Int {
-        let sql = YYSQLManager.ExerciseSQL.getReviewWordCount.rawValue
         let params: [Any] = [
             config.learnType.rawValue,
-            config.planId]
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
-            return 0
-        }
-        var count = 0
-        if result.next() {
-            count = Int(result.int(forColumn: "count"))
-        }
-        return count
-    }
-    
-    func getAllExerciseCount(learn config: YXLearnConfig) -> Int {
-        let sql = YYSQLManager.ExerciseSQL.getAllExerciseCount.rawValue
-        let params: [Any] = [
-            config.learnType.rawValue,
-            config.planId]
+            config.planId,
+            config.bookId,
+            config.unitId]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return 0
         }
@@ -99,7 +81,9 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         }
         let params: [Any] = [
             config.learnType.rawValue,
-            config.planId]
+            config.planId,
+            config.bookId,
+            config.unitId]
         let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params)
         while result?.next() == .some(true) {
             if let model = self.transformModel(result: result) {
