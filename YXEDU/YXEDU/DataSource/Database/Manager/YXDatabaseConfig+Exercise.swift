@@ -73,11 +73,6 @@ extension YYSQLManager {
             question_type char(10),
             question text,
             option text,
-            question_word_content varchar,
-            question_option_count integer(1),
-            question_row_count integer(1),
-            question_column_count integer(1),
-            question_ext_power integer(1),
             answer text,
             score integer(1),
             care_score integer(1) DEFAULT(0),
@@ -255,7 +250,7 @@ extension YYSQLManager {
         values(
             ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?            
+            ?, ?, ?, ?, ?
         )
         """
 
