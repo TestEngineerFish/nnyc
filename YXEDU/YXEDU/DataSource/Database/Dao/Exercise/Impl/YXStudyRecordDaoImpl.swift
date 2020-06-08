@@ -69,6 +69,16 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? Int(wordRunner.lastInsertRowId) : 0
     }
+
+    func updateCurrentGroup(studyId: Int, group: Int) -> Bool {
+        let sql = YYSQLManager.StudyRecordSQL.updateCurrentGroup.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [group, studyId])
+    }
+    
+    func updateProgress(studyId: Int, progress: YXExerciseProgress) -> Bool {
+        let sql = YYSQLManager.StudyRecordSQL.updateProgress.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [progress.rawValue, studyId])
+    }
     
     
     func updateCurrentTurn(learn config: YXLearnConfig, turn: Int? = nil) -> Bool {
@@ -86,8 +96,6 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
-    
-    
     
 
     func setStartTime(learn config: YXLearnConfig, start time: Int) {

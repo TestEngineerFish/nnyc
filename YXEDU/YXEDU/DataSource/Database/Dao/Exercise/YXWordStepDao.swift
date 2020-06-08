@@ -14,10 +14,13 @@ protocol YXWordStepDao {
     
     /// 查询练习进度
     func selectExerciseProgress() -> YXExerciseProgress
+        
+    /// 查询当前未学完的分组下标，nil 分组说明学完了
+    func selectCurrentGroup() -> Int?
     
     /// 查找当前组(group)未做的最小step
     /// - Parameter studyId:
-    func selectUnFinishMinStep(studyId: Int, group: Int) -> Int?
+//    func selectUnFinishMinStep(studyId: Int, group: Int) -> Int?
     func selectUnFinishMinStep(studyRecord: YXStudyRecordModel) -> Int?
 
     /// 获取错误次数

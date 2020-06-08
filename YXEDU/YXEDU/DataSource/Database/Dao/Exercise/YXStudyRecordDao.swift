@@ -29,12 +29,26 @@ protocol YXStudyRecordDao {
     @discardableResult
     func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule, turn: Int) -> Int
 
+    /// 跟新当前组下标
+    @discardableResult
+    func updateCurrentGroup(studyId: Int, group: Int) -> Bool
+    
+    
+    /// 更新学习进度
+    /// - Parameters:
+    ///   - studyId: 哪个学习
+    ///   - progress: 进度
+    func updateProgress(studyId: Int, progress: YXExerciseProgress) -> Bool
     
     /// 更新当前轮下标
     /// - Parameters:
     ///   - config:
     ///   - turn:
     func updateCurrentTurn(learn config: YXLearnConfig, turn: Int?) -> Bool
+    
+    
+    
+    
     
     /// 设置开始学习时间
     /// - Parameters:

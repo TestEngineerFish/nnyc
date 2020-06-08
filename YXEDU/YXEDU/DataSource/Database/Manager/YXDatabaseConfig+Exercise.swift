@@ -126,13 +126,26 @@ extension YYSQLManager {
         where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
         """
         
+        // 更新学习的当前组下标
+        case updateCurrentGroup =
+        """
+        update study_record set current_group = ? where study_id = ?
+        """
         
+        /// 更新学习进度
+        case updateProgress =
+        """
+        update study_record set status = ? where study_id = ?
+        """
+        
+        // 更新学习的当前轮下标，轮参数自增
         case updateCurrentTurn =
         """
         update study_record set current_turn = current_turn + 1
         where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
         """
-
+        
+        // 更新学习的当前轮下标，指定轮参数
         case updateCurrentTurnByTurn =
         """
         update study_record set current_turn = ?
@@ -268,7 +281,16 @@ extension YYSQLManager {
         )
         WHERE exercise_id = ? and step = ? and score = ?
         """
-
+        
+        case selectCurrentGroup =
+        """
+        select group_index current_group from all_word_step
+        where status = 0 || status = 1
+        group by group_index
+        order by group_index asc
+        limit 1
+        """
+        
         case selsetSteps =
         """
         SELECT * FROM all_word_step

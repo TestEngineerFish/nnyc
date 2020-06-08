@@ -18,11 +18,37 @@ extension YXExerciseServiceImpl {
     
     /// 加载学习记录
     func _loadStudyRecord() {
+        // 先更新分组下标
+        self._updateCurrentGroup()
+        
+        // 加载学习记录
         if let record = studyDao.selectStudyRecordModel(config: learnConfig) {
             self.studyRecord = record
+            YXLog("查询当前学习记录")
         }
     }
 
+    
+    func _updateCurrentGroup() {
+        // 未完成的组下标
+        if let group = stepDao.selectCurrentGroup() {
+            if group > studyRecord.currentGroup {
+                // 新的一组开始
+                let r1 = studyDao.updateCurrentGroup(studyId: studyRecord.studyId, group: group)
+                
+                // 新的一组开始后，重置当前轮的下标为 -1
+                let r2 = studyDao.updateCurrentTurn(learn: learnConfig, turn: -1)
+                YXLog("新组开始, 第\(group)组, ", r1, r2)
+            }
+        } else {
+            // 没有分组，就是学习完成，等待上报
+            progress = .unreport
+            
+            // 更新未待上报状态
+            let r1 = studyDao.updateProgress(studyId: studyRecord.studyId, progress: progress)
+            YXLog("当前学习已经完成，等待上报", r1)
+        }
+    }
     
     /// 筛选数据
     func _filterExercise() {
@@ -43,7 +69,7 @@ extension YXExerciseServiceImpl {
                 }
             }
             
-            //更新轮下标
+            // 更新轮下标
             let r1 = studyDao.updateCurrentTurn(learn: learnConfig, turn: studyRecord.currentTurn)
             
             // 清空当前轮

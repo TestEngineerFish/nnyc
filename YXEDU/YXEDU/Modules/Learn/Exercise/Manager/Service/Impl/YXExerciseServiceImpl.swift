@@ -16,7 +16,8 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     var ruleType: YXExerciseRule = .p0
     
-    var exerciseProgress: YXExerciseProgress = .none
+    
+    var progress: YXExerciseProgress = .none
     
     // ----------------------------
     //MARK: - Private 属性
@@ -76,12 +77,13 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {
+        // 加载学习记录信息
         self._loadStudyRecord()
         
         // 筛选数据
         self._filterExercise()
         
-        // 查找类型
+        // 查找练习
         return self._findExercise()
     }
     
@@ -119,7 +121,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         }
         // 保存数据到数据库
         // - 更新缓存表
-        self.updateCache(exercise: _model)
+        self.updateCurrentTurn(exercise: _model)
         // - 更新Step表
         self.updateStep(exercise: _model)
         // - 更新练习表
@@ -240,7 +242,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     /// 更新缓存表
-    private func updateCache(exercise model: YXExerciseModel) {
+    private func updateCurrentTurn(exercise model: YXExerciseModel) {
         self.turnDao.updateExerciseFinishStatus(stepId: model.stepId)
     }
 

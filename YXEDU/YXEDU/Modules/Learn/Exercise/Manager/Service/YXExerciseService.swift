@@ -54,7 +54,7 @@ protocol YXExerciseService {
     var ruleType: YXExerciseRule { get }
     
     /// 练习进度
-    var exerciseProgress: YXExerciseProgress { get }
+    var progress: YXExerciseProgress { get }
     
     
     //MARK: - 方法

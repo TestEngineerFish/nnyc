@@ -10,14 +10,13 @@ import UIKit
 
 class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     
-    func selectUnFinishMinStep(studyId: Int, group: Int) -> Int? {
-        let sql = YYSQLManager.WordStepSQL.selectUnfinishMinStep.rawValue
-        let params = [studyId, studyId, group]
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+    func selectCurrentGroup() -> Int? {
+        let sql = YYSQLManager.WordStepSQL.selectCurrentGroup.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
             return nil
         }
         if result.next() {
-            let step = Int(result.int(forColumn: "step"))
+            let step = Int(result.int(forColumn: "current_group"))
             result.close()
             return step
         }
@@ -36,7 +35,6 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         if result.next() {
             let step = Int(result.int(forColumn: "step"))
             result.close()
-            
             return step
         }
         result.close()
