@@ -18,6 +18,8 @@ struct YXStudyRecordModel {
     
     /// 当前轮，有s0，从-1开始，没有s0，从0开始
     var currentTurn: Int = -1
+    
+    var studyCount: Int = 0
 }
 
 

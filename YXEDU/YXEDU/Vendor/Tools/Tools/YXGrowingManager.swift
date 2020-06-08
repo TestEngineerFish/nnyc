@@ -65,7 +65,7 @@ struct YXGrowingManager {
     }
 
     /// 数据打点
-    func biReport(learn config: YXLearnConfig, duration: Int, word count: Int) {
+    func biReport(learn config: YXLearnConfig, duration: Int,  study count: Int) {
           var typeName = "主流程"
           switch config.learnType {
               case .wrong:

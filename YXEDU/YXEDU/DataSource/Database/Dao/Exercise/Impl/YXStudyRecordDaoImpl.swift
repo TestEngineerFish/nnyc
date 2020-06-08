@@ -24,6 +24,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
             model?.ruleType         = YXExerciseRule(rawValue: result.string(forColumn: "rule_type") ?? "") ?? .p0
             model?.currentGroup     = Int(result.int(forColumn: "current_group"))
             model?.currentTurn      = Int(result.int(forColumn: "current_turn"))
+            model?.studyCount       = Int(result.int(forColumn: "study_count"))
             
         }
         result.close()

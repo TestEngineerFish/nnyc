@@ -177,11 +177,11 @@ class YXExerciseServiceImpl: YXExerciseService {
             if result {
                 // 获取学习数据
                 let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
-                let wordCount   = self.exerciseDao.getExerciseCount(learn: self.learnConfig, includeNewWord: true, includeReviewWord: true)
+                let studyCount   = self.studyDao.selectStudyRecordModel(config: self.learnConfig)?.studyCount ?? 0
                 newWordCount    = self.exerciseDao.getExerciseCount(learn: self.learnConfig, includeNewWord: true, includeReviewWord: false)
                 reviewWordCount = self.exerciseDao.getExerciseCount(learn: self.learnConfig, includeNewWord: false, includeReviewWord: true)
                 // 上报Growing
-                YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, word: wordCount)
+                YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, study: studyCount)
                 if self.learnConfig.learnType == .base {
                     YXGrowingManager.share.uploadLearnFinished()
                     // 记录学完一次主流程，用于首页弹出设置提醒弹框
