@@ -10,9 +10,9 @@ import UIKit
 
 class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     
-    func selectCurrentGroup() -> Int? {
+    func selectCurrentGroup(studyId: Int) -> Int? {
         let sql = YYSQLManager.WordStepSQL.selectCurrentGroup.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
             return nil
         }
         if result.next() {

@@ -12,7 +12,7 @@ protocol YXWordStepDao {
     
     // TODO: ==== 查询 ====        
     /// 查询当前未学完的分组下标，nil 分组说明学完了
-    func selectCurrentGroup() -> Int?
+    func selectCurrentGroup(studyId: Int) -> Int?
     
     /// 查找当前组(group)未做的最小step
     /// - Parameter studyId:

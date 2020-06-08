@@ -317,7 +317,7 @@ extension YYSQLManager {
         case selectCurrentGroup =
         """
         select group_index current_group from all_word_step
-        where status = 0 || status = 1
+        where status = 0 || status = 1 and study_id = ?
         group by group_index
         order by group_index asc
         limit 1

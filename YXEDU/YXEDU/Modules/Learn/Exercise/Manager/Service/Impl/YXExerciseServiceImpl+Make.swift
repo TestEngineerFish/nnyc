@@ -22,7 +22,7 @@ extension YXExerciseServiceImpl {
     /// 更新分组下标
     func _updateCurrentGroup() {
         // 未完成的组下标
-        if let group = stepDao.selectCurrentGroup() {
+        if let group = stepDao.selectCurrentGroup(studyId: _studyRecord.studyId) {
             if group > _studyRecord.currentGroup {
                 // 新的一组开始
                 let r1 = studyDao.updateCurrentGroup(studyId: _studyRecord.studyId, group: group)
