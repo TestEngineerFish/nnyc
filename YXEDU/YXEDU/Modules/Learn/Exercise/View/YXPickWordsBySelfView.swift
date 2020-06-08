@@ -8,21 +8,22 @@
 
 import UIKit
 
-class YXPickWordsBySelfView: UIView, UITableViewDelegate, UITableViewDataSource {
-    private var words: [YXWordModel] = []
-    private var tapStartLearnClosure: ((_ words: [YXWordModel]) -> Void)!
+class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableViewDataSource {
+//    private var words: [YXWordModel] = []
+    private var tapStartLearnClosure: ((_ exerciseModel: YXExerciseModel) -> Void)!
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
-    init(frame: CGRect, words: [YXWordModel], tapStartLearnClosure: @escaping ((_ words: [YXWordModel]) -> Void)) {
-        super.init(frame: frame)
+    init(frame: CGRect, exerciseModel: YXExerciseModel, tapStartLearnClosure: @escaping ((_ exerciseModel: YXExerciseModel) -> Void)) {
+        super.init(exerciseModel: exerciseModel)
         
-        self.words = words
+        self.words = exerciseModel.answers
         self.tapStartLearnClosure = tapStartLearnClosure
         
         initializationFromNib()
     }
+
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
