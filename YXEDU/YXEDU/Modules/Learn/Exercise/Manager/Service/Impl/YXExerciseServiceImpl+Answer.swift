@@ -41,7 +41,7 @@ extension YXExerciseServiceImpl {
         if model.status == .right {
             // 是否做过
             let status = self.stepDao.getStepStatus(exercise: model)
-            let count = status == .some(.normal) ? 1 : 0
+            let count = status == .some(.wrong) ? 0 : 1
             self.exerciseDao.updateUnfinishedCount(exercise: model.eid, reduceCount: count)
             if model.step == 0 {
                 self.exerciseDao.updateMastered(exercise: model.eid, isMastered: model.mastered)
