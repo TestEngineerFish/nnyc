@@ -115,9 +115,10 @@ extension YYSQLManager {
             book_id,
             unit_id,
             plan_id,
-            current_turn
+            current_turn,
+            status
         )
-        values(?, ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?, ?)
         """
 
         case getInfo =

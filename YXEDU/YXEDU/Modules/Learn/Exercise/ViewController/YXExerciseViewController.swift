@@ -168,7 +168,7 @@
     private func startStudy() {
         YXLog("====开始学习====")
         YXExerciseViewController.requesting = true
-        switch self.service.getStatus() {
+        switch self.service.progress {
         case .unreport:
             YXLog("本地存在学完未上报的关卡，先加载，再上报")
             YXExerciseViewController.requesting = false

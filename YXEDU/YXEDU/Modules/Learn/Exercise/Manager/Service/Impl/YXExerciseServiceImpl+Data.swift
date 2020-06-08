@@ -38,6 +38,9 @@ extension YXExerciseServiceImpl {
         
         // 插入单词步骤数据【新学/训练/复习】
         self._processWordStep(recordId: recordId)
+        
+        // 加载答题选项
+        self._loadExerciseOption()
     }
     
     

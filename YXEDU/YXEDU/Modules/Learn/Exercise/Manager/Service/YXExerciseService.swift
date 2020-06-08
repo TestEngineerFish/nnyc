@@ -80,8 +80,6 @@ protocol YXExerciseService {
     ///   - exerciseModel:  练习数据
     func normalAnswerAction(exercise model: YXExerciseModel)
 
-    /// 获得学习流程的当前状态
-    func getStatus() -> YXExerciseProgress
 
     /// 上报学习数据
     /// - Parameters:

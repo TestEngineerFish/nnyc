@@ -42,31 +42,26 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return 0
     }
 
-    func getStatus(learn config: YXLearnConfig) -> YXExerciseProgress {
+    func getProgress(learn config: YXLearnConfig) -> YXExerciseProgress {
         let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-        let params: [Any] = [
-            config.learnType.rawValue,
-            config.planId as Any]
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: config.params) else {
             return .none
         }
         if result.next() {
-            let statusInt = Int(result.int(forColumn: "status"))
-            return YXExerciseProgress(rawValue: statusInt) ?? .none
+            let progress = Int(result.int(forColumn: "status"))
+            result.close()
+            return YXExerciseProgress(rawValue: progress) ?? .none
         }
+        result.close()
         return .none
     }
 
     func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule, turn: Int) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
-        let params: [Any] = [
-            type.rawValue,
-            config.learnType.rawValue,
-            config.bookId,
-            config.unitId,
-            config.planId,
-            turn
-        ]
+        var params: [Any] = config.params
+        params.insert(type.rawValue, at: 0)
+        params.append(turn)
+        params.append(YXExerciseProgress.learning.rawValue)
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? Int(wordRunner.lastInsertRowId) : 0
     }
 

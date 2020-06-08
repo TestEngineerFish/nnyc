@@ -11,10 +11,6 @@ import UIKit
 /// 出题逻辑，从数据库读取数据
 extension YXExerciseServiceImpl {
     
-    func loadProgressStatus() {
-        
-    }
-    
     
     /// 加载学习记录
     func _loadStudyRecord() {
@@ -23,7 +19,7 @@ extension YXExerciseServiceImpl {
         
         // 加载学习记录
         if let record = studyDao.selectStudyRecordModel(config: learnConfig) {
-            self.studyRecord = record
+            self._studyRecord = record
             YXLog("查询当前学习记录")
         }
     }
@@ -32,9 +28,9 @@ extension YXExerciseServiceImpl {
     func _updateCurrentGroup() {
         // 未完成的组下标
         if let group = stepDao.selectCurrentGroup() {
-            if group > studyRecord.currentGroup {
+            if group > _studyRecord.currentGroup {
                 // 新的一组开始
-                let r1 = studyDao.updateCurrentGroup(studyId: studyRecord.studyId, group: group)
+                let r1 = studyDao.updateCurrentGroup(studyId: _studyRecord.studyId, group: group)
                 
                 // 新的一组开始后，重置当前轮的下标为 -1
                 let r2 = studyDao.updateCurrentTurn(learn: learnConfig, turn: -1)
@@ -45,7 +41,7 @@ extension YXExerciseServiceImpl {
             progress = .unreport
             
             // 更新未待上报状态
-            let r1 = studyDao.updateProgress(studyId: studyRecord.studyId, progress: progress)
+            let r1 = studyDao.updateProgress(studyId: _studyRecord.studyId, progress: progress)
             YXLog("当前学习已经完成，等待上报", r1)
         }
     }
@@ -54,37 +50,37 @@ extension YXExerciseServiceImpl {
     func _filterExercise() {
         
         // 当前轮是否做完
-        if turnDao.selectTurnFinishStatus(studyId: studyRecord.studyId) {
+        if turnDao.selectTurnFinishStatus(studyId: _studyRecord.studyId) {
             
             // 新的轮开始
-            studyRecord.currentTurn = studyRecord.currentTurn + 1
+            _studyRecord.currentTurn = _studyRecord.currentTurn + 1
             
             // 查找当前组(group)未做的最小step
             // 例如只有s1 s3 s4时， s1全做对，因为要满足Turn>=Step,T2轮的就没法做s3了，T3轮就没法做s4
-            if let minStep = stepDao.selectUnFinishMinStep(studyRecord: studyRecord) {
-                if minStep > studyRecord.currentTurn {
-                    studyRecord.currentTurn = minStep
+            if let minStep = stepDao.selectUnFinishMinStep(studyRecord: _studyRecord) {
+                if minStep > _studyRecord.currentTurn {
+                    _studyRecord.currentTurn = minStep
                     // 有跳跃step时，保持到表中
                     YXLog("筛选数据， 更新轮下标, 跳跃 下标", minStep)
                 }
             }
             
             // 更新轮下标
-            let r1 = studyDao.updateCurrentTurn(learn: learnConfig, turn: studyRecord.currentTurn)
+            let r1 = studyDao.updateCurrentTurn(learn: learnConfig, turn: _studyRecord.currentTurn)
             
             // 清空当前轮
-            let r2 = turnDao.deleteCurrentTurn(studyId: studyRecord.studyId)
+            let r2 = turnDao.deleteCurrentTurn(studyId: _studyRecord.studyId)
             
             // 插入新的轮
-            let r3 = turnDao.insertCurrentTurn(studyId: studyRecord.studyId, group: studyRecord.currentGroup)
+            let r3 = turnDao.insertCurrentTurn(studyId: _studyRecord.studyId, group: _studyRecord.currentGroup)
             
-            YXLog("筛选数据， 更新轮下标", r1, "清空当前轮", r2, "插入新的轮 ,id", studyRecord.studyId, r3)
+            YXLog("筛选数据， 更新轮下标", r1, "清空当前轮", r2, "插入新的轮 ,id", _studyRecord.studyId, r3)
         }
     }
     
     /// 查找一个练习
     func _findExercise() -> YXExerciseModel? {
-        guard var exercise = turnDao.selectExercise(studyId: studyRecord.studyId) else {
+        guard var exercise = turnDao.selectExercise(studyId: _studyRecord.studyId) else {
             YXLog("当前轮没有数据了")
             return nil
         }
@@ -105,7 +101,7 @@ extension YXExerciseServiceImpl {
     ///   - step:
     ///   - type:
     func _findConnectionExercise(exercise: YXExerciseModel) -> YXExerciseModel? {
-        var connectionExercises = turnDao.selectExercise(studyId: studyRecord.studyId, type: exercise.type, step: exercise.step, size: 4)
+        var connectionExercises = turnDao.selectExercise(studyId: _studyRecord.studyId, type: exercise.type, step: exercise.step, size: 4)
         
         // 填充word
         connectionExercises = _fillConnectionWordModel(exercises: connectionExercises)
@@ -116,7 +112,7 @@ extension YXExerciseServiceImpl {
         // 有相同拼写，或者连线只有一个，都用备选题
         if sameWords.count > 0 || connectionExercises.count == 1 {
             let e = connectionExercises.first
-            if var backupExercise = turnDao.selectBackupExercise(studyId: studyRecord.studyId, exerciseId: e?.eid ?? 0, step: e?.step ?? 0) {
+            if var backupExercise = turnDao.selectBackupExercise(studyId: _studyRecord.studyId, exerciseId: e?.eid ?? 0, step: e?.step ?? 0) {
                 backupExercise.word = _queryWord(wordId: backupExercise.wordId)
                 return _processExerciseOption(exercise: backupExercise)
             } else {

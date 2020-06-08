@@ -15,14 +15,11 @@ class YXExerciseServiceImpl: YXExerciseService {
     var learnConfig: YXLearnConfig = YXBaseLearnConfig()
     
     var ruleType: YXExerciseRule = .p0
-    
-    
+        
     var progress: YXExerciseProgress = .none
     
     // ----------------------------
     //MARK: - Private 属性
-    var _studyRecord = YXStudyRecordModel()
-    
     var _exerciseOptionManange = YXExerciseOptionManager()
     
     var _resultModel: YXExerciseResultModel?
@@ -30,15 +27,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     var _wordIdMap = [Int:Int]()
     
     // 当前学习记录
-    var studyRecord = YXStudyRecordModel()
-//    var studyId = 0
-    
-    // 当前组，从0开始
-//    var currentGroupIndex = 0
-    
-    /// 当前轮，有s0，从-1开始，没有s0，从0开始
-//    var currentTurnIndex = -1
-    
+    var _studyRecord = YXStudyRecordModel()
     
     /// 本地数据库访问
     var wordDao: YXWordBookDao     = YXWordBookDaoImpl()
@@ -52,11 +41,17 @@ class YXExerciseServiceImpl: YXExerciseService {
     //MARK: ==== 对外暴露的方法 ====
     
     func initData() {
-//        self.clearExpiredData()
-        self.loadProgressStatus()
-        let newExerciseModelList    = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: true, includeReviewWord: false)
-        let reviewExerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: false, includeReviewWord: true)
-        self._exerciseOptionManange.initData(newArray: newExerciseModelList, reviewArray: reviewExerciseModelList)
+        
+        // 1.清除过期数据
+        self.clearExpiredData()
+        
+        // 2. 加载学习状态
+        self.progress = studyDao.getProgress(learn: learnConfig)
+        
+        // 3. 加载答题选项
+        if self.progress == .learning {
+            self._loadExerciseOption()
+        }
     }
     
     
@@ -128,10 +123,6 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.updateProgress(exercise: _model)
         // - 更新学习流程表
         self.updateDurationTime()
-    }
-
-    func getStatus() -> YXExerciseProgress {
-        return self.studyDao.getStatus(learn: learnConfig)
     }
 
     /// 上报关卡
