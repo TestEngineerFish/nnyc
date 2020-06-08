@@ -80,7 +80,7 @@ protocol YXExerciseService {
     ///   - exerciseModel:  练习数据
     func normalAnswerAction(exercise model: YXExerciseModel)
 
-    func connectionAnswerAction(wordId: Int, step: Int, right: Bool, type: YXQuestionType)
+    func connectionAnswerAction(wordId: Int, step: Int, right: Bool)
     
     /// 连线题型 ，连线题所有项全部连完
     func updateConnectionExerciseFinishStatus(exerciseModel: YXExerciseModel, right: Bool)
@@ -107,7 +107,7 @@ protocol YXExerciseService {
     /// - Parameters:
     ///   - wordId: 单词ID
     ///   - step:   step
-    func hasErrorInCurrentTurn(wordId: Int, step: Int)
+    func hasErrorInCurrentTurn(wordId: Int, step: Int) -> Bool
     
     @discardableResult
     func cleanExercise() -> Bool

@@ -26,7 +26,7 @@
     var service: YXExerciseService = YXExerciseServiceImpl()
     
     // 数据管理器
-    public var dataManager: YXExerciseDataManager!
+    public var dataManager2: YXExerciseDataManager!
     
     // 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
@@ -130,29 +130,6 @@
         service.learnConfig = self.learnConfig
         service.initService()
         
-        
-        dataManager = YXExerciseDataManager()
-        
-        // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
-        if learnConfig.learnType == .base {
-            dataManager.bookId = learnConfig.bookId
-            dataManager.unitId = learnConfig.unitId
-            
-            dataManager.progressManager.bookId = learnConfig.bookId
-            dataManager.progressManager.unitId = learnConfig.unitId
-        }
-        
-        dataManager.dataType = learnConfig.learnType
-        dataManager.progressManager.planId = learnConfig.planId
-        dataManager.progressManager.dataType = learnConfig.learnType
-                        
-        var array: [YXLearnType] = [.base, .aiReview, .planListenReview, .planReview, .wrong]
-        array = []
-        for type in array {
-            dataManager.progressManager.dataType = type
-            dataManager.progressManager.completionExercise()
-            dataManager.progressManager.completionReport()
-        }
         // 如果符合条件，则跳过新学
         if YXConfigure.shared().isSkipNewLearn {
 //            dataManager.skipNewWord()
@@ -195,7 +172,7 @@
             self.service.setStartTime()
             YXExerciseViewController.requesting = false
             self.loadingView?.animationCompleteBlock = { [weak self] in
-                self?.dataManager.progressManager.setStartStudyTime()
+//                self?.dataManager.progressManager.setStartStudyTime()
                 self?.switchExerciseView()
             }
         default:
@@ -205,33 +182,13 @@
         }
         
         
-        dataManager.progressManager.updateStudyCount()
+//        dataManager.progressManager.updateStudyCount()
         
     }
     
     
     // 加载当天的学习数据
     private func fetchExerciseData() {
-//        dataManager.fetchTodayExerciseResultModels(type: learnConfig.learnType, planId: learnConfig.planId) { [weak self] (result, msg) in
-//            guard let self = self else { return }
-//            if result {
-//                YXExerciseViewController.requesting = false
-//                DispatchQueue.main.async {
-//                    self.loadingView?.animationCompleteBlock = { [weak self] in
-//                        guard let self = self else {return}
-//                        self.dataManager.progressManager.setStartStudyTime()
-//                        self.switchExerciseView()
-//                    }
-//                }
-//            } else {
-//                YXExerciseViewController.requesting = false
-//                UIView.toast("加载数据失败")
-//                self.navigationController?.popViewController(animated: true)
-//            }
-//        }
-        
-        
-        // new
         service.fetchExerciseResultModels { [weak self] (result, msg) in
             guard let self = self else { return }
             YXExerciseViewController.requesting = false
@@ -239,7 +196,7 @@
                 DispatchQueue.main.async {
                     self.loadingView?.animationCompleteBlock = { [weak self] in
                         guard let self = self else {return}
-                        self.dataManager.progressManager.setStartStudyTime()
+//                        self.dataManager.progressManager.setStartStudyTime()
                         self.switchExerciseView()
                     }
                 }
@@ -254,18 +211,10 @@
     private func switchExerciseView() {
         YXLog("==== 切题 ====")
         // - 更新待学习数
-        dataManager.updateNeedNewStudyCount()
-        dataManager.updateNeedReviewCount()
         headerView.learningProgress = "\(self.service.getNewWordCount())"
         headerView.reviewProgress   = "\(self.service.getReviewWordCount())"
-        // - 更新轮次
-        if dataManager.dataType == .base {
-            dataManager.updateCurrentPatchIndex()
-        }
-        // 获取新题数据
-//        let data = dataManager.fetchOneExerciseModel()
-        
-        // new
+
+        // 获取题数据
         let data = service.fetchExerciseModel()
         
         if var model = data {
@@ -282,7 +231,7 @@
             self.bottomView.tipsButton.isHidden  = hideTipsTypeArray.contains(model.type)
 
             // 新学流程是否允许打断
-            if self.dataManager.progressManager.ruleType() == .a2 && primaryNewLearnArray.contains(model.type) {
+            if self.service.ruleType == .a2 && primaryNewLearnArray.contains(model.type) {
                 self.showRightNextView()
             }
             // ---- Growing
@@ -353,7 +302,7 @@
         exerciseView.animateAdmission(isFirst, nil)
         
         YYCache.set(true, forKey: .learningState)
-        self.dataManager.progressManager.setOneExerciseFinishStudyTime()
+//        self.dataManager.progressManager.setOneExerciseFinishStudyTime()
     }
     
     /// 显示loading动画
@@ -395,7 +344,8 @@
 
         switch exerciseModel.type {
         case .connectionWordAndImage, .connectionWordAndChinese :
-            dataManager.connectionAnswerAction(wordId: remindWordId, step: exerciseModel.step, right: false, type: exerciseModel.type)
+//            dataManager.connectionAnswerAction(wordId: remindWordId, step: exerciseModel.step, right: false, type: exerciseModel.type)
+            service.connectionAnswerAction(wordId: remindWordId, step: exerciseModel.step, right: false)
         case .newLearnPrimarySchool, .newLearnPrimarySchool_Group:
             guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView, let questionView = exerciseView.questionView as? YXNewLearnPrimarySchoolQuestionView else {
                 return
@@ -484,7 +434,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         let wordId = e?.exerciseModel.word?.wordId ?? 0
         let step = e?.exerciseModel.step ?? 0
                 
-        if isWrong || dataManager.isShowWordDetail(wordId: wordId, step: step) {
+        if isWrong || service.isShowWordDetail(wordId: wordId, step: step) {
             self.showRemindDetail()
         } else {// 切题
             self.switchExerciseView()
@@ -549,17 +499,19 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
     
     ///答完题回调处理， 仅连线题处理
     func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXQuestionType, finish: Bool) {
-        dataManager.connectionAnswerAction(wordId: wordId, step: step, right: right, type: type)
+//        dataManager.connectionAnswerAction(wordId: wordId, step: step, right: right, type: type)
+        service.connectionAnswerAction(wordId: wordId, step: step, right: right)
         
         // 只处理做对的情况，做错进入了 remindEvent方法处理
         if right {// 连线正确
             
             // 当前轮次中是否有错, 有错显示详情页
-            if dataManager.hasErrorInCurrentTurn(wordId: wordId, step: step) {
+            if service.hasErrorInCurrentTurn(wordId: wordId, step: step) {
                 self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
                                 
                 if finish {// 这一题全部连线完后要切题
-                    dataManager.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
+//                    dataManager.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
+                    service.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
                     self.exerciseViewArray[0].remindView?.remindDetail {// 显示完详情页，再切题
                         self.switchExerciseView()
                     }
@@ -568,9 +520,9 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
                 }
             } else { // 没有错时
                 if finish {// 全部连完，直接切题
-                    dataManager.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
-                    
-                    if dataManager.isShowWordDetail(wordId: wordId, step: step) { // 判断是不是P2类型首次的学习
+//                    dataManager.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
+                    service.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
+                    if service.isShowWordDetail(wordId: wordId, step: step) { // 判断是不是P2类型首次的学习
                         self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
                         self.exerciseViewArray[0].remindView?.remindDetail {
                             self.switchExerciseView()
@@ -580,7 +532,7 @@ extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
                     }
                     
                     
-                } else if dataManager.isShowWordDetail(wordId: wordId, step: step) {// 没有连完，判断是不是P2类型首次的学习
+                } else if service.isShowWordDetail(wordId: wordId, step: step) {// 没有连完，判断是不是P2类型首次的学习
                     self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
                     self.exerciseViewArray[0].remindView?.remindDetail()
                 }
@@ -606,7 +558,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             }
             YXLog("返回首页")
             self.uploadGrowing()
-            self.dataManager.progressManager.setOneExerciseFinishStudyTime()
+//            self.dataManager.progressManager.setOneExerciseFinishStudyTime()
             
             self.delegate?.backHomeEvent()
             
@@ -625,17 +577,13 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     
     func clickSwitchBtnEvent() {
         self.delegate?.backHomeEvent()
-        self.dataManager.progressManager.completionExercise()
-        self.dataManager.progressManager.completionReport()
-        
         self.service.cleanExercise()
-        
         self.navigationController?.popViewController(animated: true)
     }
     
     func clickSkipBtnEvent() {
         self.delegate?.backHomeEvent()
-        self.dataManager.skipNewWord()
+//        self.dataManager.skipNewWord()
         self.navigationController?.popViewController(animated: true)
     }
 }

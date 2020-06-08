@@ -10,7 +10,7 @@ import UIKit
 
 protocol YXCurrentTurnDao {
     /// 查询新的轮数据
-    func selectNewTurn(studyId: Int, group: Int) -> [YXCurrentTurnModel]
+//    func selectNewTurn(studyId: Int, group: Int) -> [YXCurrentTurnModel]
     
     /// 插入当前轮的数据
     func insertCurrentTurn(studyId: Int, group: Int) -> Bool

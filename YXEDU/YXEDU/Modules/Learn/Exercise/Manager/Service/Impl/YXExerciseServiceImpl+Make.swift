@@ -66,7 +66,7 @@ extension YXExerciseServiceImpl {
             // 清空当前轮
             let r2 = turnDao.deleteCurrentTurn(studyId: _studyRecord.studyId)
             
-            let newTurn = turnDao.selectNewTurn(studyId: _studyRecord.studyId, group: _studyRecord.currentGroup)
+//            let newTurn = turnDao.selectNewTurn(studyId: _studyRecord.studyId, group: _studyRecord.currentGroup)
             
             // 插入新的轮
             let r3 = turnDao.insertCurrentTurn(studyId: _studyRecord.studyId, group: _studyRecord.currentGroup)

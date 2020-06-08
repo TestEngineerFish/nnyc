@@ -21,8 +21,11 @@ extension YXExerciseServiceImpl {
         }
         
         self.ruleType = _resultModel?.ruleType ?? .p0
-        self.learnConfig.bookId = _resultModel?.bookId ?? 0
-        self.learnConfig.unitId = _resultModel?.unitId ?? 0
+        
+//        if learnConfig.learnType == .base {
+//            self.learnConfig.bookId = _resultModel?.bookId ?? 0
+//            self.learnConfig.unitId = _resultModel?.unitId ?? 0
+//        }
         
         // 插入学习记录
         let recordId = self._processStudyRecord()

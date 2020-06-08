@@ -120,9 +120,11 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     
-    func connectionAnswerAction(wordId: Int, step: Int, right: Bool, type: YXQuestionType) {        
+    func connectionAnswerAction(wordId: Int, step: Int, right: Bool) {        
         // 把连线题的子项查出来
-        if let model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
+        if var model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
+            model.status = right ? .right : .wrong
+                
             // - 更新Step表 [更新完成状态 和 错误次数]
             self.updateStep(exercise: model)
             
@@ -166,7 +168,7 @@ class YXExerciseServiceImpl: YXExerciseService {
                 }
                 
                 // 清除数据库对应数据
-                self.deleteLearnRecord()
+                self.cleanExercise()
             }
             completion?(result, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
         }) { (error) in
@@ -179,8 +181,8 @@ class YXExerciseServiceImpl: YXExerciseService {
         return false
     }
     
-    func hasErrorInCurrentTurn(wordId: Int, step: Int) {
-        
+    func hasErrorInCurrentTurn(wordId: Int, step: Int) -> Bool {
+        return false
     }
     
     func cleanExercise() -> Bool {
@@ -192,6 +194,7 @@ class YXExerciseServiceImpl: YXExerciseService {
             let r3 = stepDao.deleteStepWithStudy(study: studyId)
             let r4 = turnDao.deleteCurrentTurn(studyId: studyId)
             
+            YXLog("清除\(learnConfig.learnType.rawValue)的学习记录完成, Plan ID:", learnConfig.planId )
             YXLog("删除当前学习记录 studyId=", studyId, r1, r2, r3, r4)
             return r1 && r2 && r3 && r4
         }
@@ -199,15 +202,4 @@ class YXExerciseServiceImpl: YXExerciseService {
         return false
     }
     
-    // ----------------------------
-    //MARK: - Private 方法
-    /// 删除当前学习记录
-    private func deleteLearnRecord() {
-        let studyId = self.studyDao.getStudyID(learn: learnConfig)
-        self.studyDao.delete(study: studyId)
-        self.exerciseDao.deleteExercise(study: studyId)
-        self.stepDao.deleteStepWithStudy(study: studyId)
-        YXLog("清除\(learnConfig.learnType.rawValue)的学习记录完成, Plan ID:", learnConfig.planId )
-    }
-
 }

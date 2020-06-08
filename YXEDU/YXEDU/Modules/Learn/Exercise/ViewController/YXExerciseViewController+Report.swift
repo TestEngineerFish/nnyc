@@ -17,9 +17,10 @@ extension YXExerciseViewController {
             processEmptyData()
         } else {
             // 没有数据，就是完成了练习
-            dataManager.progressManager.completionExercise()
+//            dataManager.progressManager.completionExercise()
 
-            dataManager.progressManager.setOneExerciseFinishStudyTime()
+//            dataManager.progressManager.setOneExerciseFinishStudyTime()
+            
             // 学完，上报
             submitResult()
         }
@@ -27,8 +28,7 @@ extension YXExerciseViewController {
     
         
     func processEmptyData() {
-        dataManager.progressManager.completionExercise()
-        dataManager.progressManager.completionReport()
+        service.cleanExercise()
 
         if learnConfig.learnType == .aiReview {
             let nrView = YXNotReviewWordView()
@@ -70,8 +70,8 @@ extension YXExerciseViewController {
     // 处理基本练习结果页
     func processBaseExerciseResult(newCount: Int, reviewCount: Int) {
         let vc = YXLearningResultViewController()
-        vc.bookId = self.dataManager.bookId
-        vc.unitId = self.dataManager.unitId
+        vc.bookId = service.learnConfig.bookId
+        vc.unitId = service.learnConfig.unitId
         vc.newLearnAmount = newCount
         vc.reviewLearnAmount = reviewCount
         vc.hidesBottomBarWhenPushed = true
@@ -94,33 +94,33 @@ extension YXExerciseViewController {
 
 
     /// 数据打点
-    func biReport() {
-
-        var typeName = "主流程"
-        switch learnConfig.learnType {
-            case .wrong:
-                typeName = "抽查复习"
-            case .planListenReview:
-                typeName = "词单听写"
-            case .planReview:
-                typeName = "词单复习"
-            case .aiReview:
-                typeName = "智能复习"
-            default:
-                typeName = "主流程"
-        }
-
-        let bid = (YYCache.object(forKey: .currentChooseBookId) as? Int) ?? 0
-        let grade = YXWordBookDaoImpl().selectBook(bookId: bid)?.gradeId ?? 0
-
-        let studyResult: [String : Any] = [
-            "study_grade" : "\(grade)",      //学习书本年级
-            "study_cost_time" : dataManager.progressManager.fetchStudyDuration(),   //学习时间
-            "study_count" : dataManager.progressManager.fetchStudyCount(),
-            "study_type" : typeName
-        ]
-        Growing.track("study_result", withVariable: studyResult)
-    }
+//    func biReport() {
+//
+//        var typeName = "主流程"
+//        switch learnConfig.learnType {
+//            case .wrong:
+//                typeName = "抽查复习"
+//            case .planListenReview:
+//                typeName = "词单听写"
+//            case .planReview:
+//                typeName = "词单复习"
+//            case .aiReview:
+//                typeName = "智能复习"
+//            default:
+//                typeName = "主流程"
+//        }
+//
+//        let bid = (YYCache.object(forKey: .currentChooseBookId) as? Int) ?? 0
+//        let grade = YXWordBookDaoImpl().selectBook(bookId: bid)?.gradeId ?? 0
+//
+//        let studyResult: [String : Any] = [
+//            "study_grade" : "\(grade)",      //学习书本年级
+//            "study_cost_time" : dataManager.progressManager.fetchStudyDuration(),   //学习时间
+//            "study_count" : dataManager.progressManager.fetchStudyCount(),
+//            "study_type" : typeName
+//        ]
+//        Growing.track("study_result", withVariable: studyResult)
+//    }
 
 
 }

@@ -9,27 +9,27 @@
 import UIKit
 
 class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
-    func selectNewTurn(studyId: Int, group: Int) -> [YXCurrentTurnModel] {
-        var sql = YYSQLManager.CurrentTurnSQL.selectNewTurn.rawValue
-//        let params = [studyId, studyId, group]
-        sql = String(format: sql, studyId, studyId, group)
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
-            return []
-        }
-        var es: [YXCurrentTurnModel] = []
-        while result.next() {
-            var model = YXCurrentTurnModel()
-            model.studyId = studyId
-            model.stepId = Int(result.int(forColumn: "step_id"))
-            model.step = Int(result.int(forColumn: "step"))
-            model.turn = Int(result.int(forColumn: "turn"))
-            es.append(model)
-        }
-        result.close()
-        
-        return es
-        
-    }
+//    func selectNewTurn(studyId: Int, group: Int) -> [YXCurrentTurnModel] {
+//        var sql = YYSQLManager.CurrentTurnSQL.selectNewTurn.rawValue
+////        let params = [studyId, studyId, group]
+//        sql = String(format: sql, studyId, studyId, group)
+//        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+//            return []
+//        }
+//        var es: [YXCurrentTurnModel] = []
+//        while result.next() {
+//            var model = YXCurrentTurnModel()
+//            model.studyId = studyId
+//            model.stepId = Int(result.int(forColumn: "step_id"))
+//            model.step = Int(result.int(forColumn: "step"))
+//            model.turn = Int(result.int(forColumn: "turn"))
+//            es.append(model)
+//        }
+//        result.close()
+//        
+//        return es
+//        
+//    }
     
     func insertCurrentTurn(studyId: Int, group: Int) -> Bool {
         let sql = YYSQLManager.CurrentTurnSQL.insertTurn.rawValue

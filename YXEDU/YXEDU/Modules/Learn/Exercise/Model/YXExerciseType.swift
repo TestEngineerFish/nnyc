@@ -46,6 +46,7 @@ enum YXQuestionType: String {
     case newLearnPrimarySchool = "N-1"                    // 小学新学
     case newLearnPrimarySchool_Group = "N-1-1"            // 小学新学(词组)
     case newLearnJuniorHighSchool = "N-2"                 // 初中新学
+    case newLearnMasterList = "N-3"                       // 掌握列表
     
     case none = ""
 }
