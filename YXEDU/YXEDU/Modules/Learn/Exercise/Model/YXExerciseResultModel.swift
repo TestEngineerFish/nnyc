@@ -105,6 +105,13 @@ struct YXExerciseQuestionExtendModel: Mappable {
 //    var isNewWord: Bool = false
 //    var isOldOrEmptyImage: Bool = false
     var power: Int = 0 // 能力值
+    
+    /// 是否显示单词详情页
+    var isShowWordDetail: YXShowWordDetailType = .none
+    
+    /// 新学时，可以点击《下一个》
+    var allowClickNext = false
+    
     init() {}
     
     init?(map: Map) {
@@ -115,6 +122,9 @@ struct YXExerciseQuestionExtendModel: Mappable {
 //        isNewWord              <- map["is_new_word"]
 //        isOldOrEmptyImage      <- map["is_old_img_or_no_img"]
         power                  <- map["last_score"]
+        isShowWordDetail       <- (map["show_info_action"], EnumTransform<YXShowWordDetailType>())
+        allowClickNext         <- map["click_next_action"]
+        
     }
 }
 
@@ -217,3 +227,4 @@ struct YXExerciseRuleTransform: TransformType {
     }
 
 }
+

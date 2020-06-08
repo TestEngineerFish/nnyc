@@ -124,7 +124,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         // 把连线题的子项查出来
         if var model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
             model.status = right ? .right : .wrong
-                
+            
             // - 更新Step表 [更新完成状态 和 错误次数]
             self.updateStep(exercise: model)
             
@@ -168,7 +168,7 @@ class YXExerciseServiceImpl: YXExerciseService {
                 }
                 
                 // 清除数据库对应数据
-                self.cleanExercise()
+                self.cleanStudyRecord()
             }
             completion?(result, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
         }) { (error) in
@@ -178,15 +178,24 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     func isShowWordDetail(wordId: Int, step: Int) -> Bool {
+        if let model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
+            // 答对时，并且题型配置是答应显示，就返回true
+            if model.status == .right && model.question?.extend?.isShowWordDetail == .right {
+                return true
+            }
+        }
         return false
     }
     
+    /// 当前轮，有没有做错
     func hasErrorInCurrentTurn(wordId: Int, step: Int) -> Bool {
+        if let model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
+            return model.status == .wrong
+        }
         return false
     }
     
-    func cleanExercise() -> Bool {
-        // studyDao.getStudyID(learn: learnConfig)
+    func cleanStudyRecord() {
         let studyId = _studyRecord.studyId
         if studyId > 0 {
             let r1 = studyDao.delete(study: studyId)
@@ -196,10 +205,9 @@ class YXExerciseServiceImpl: YXExerciseService {
             
             YXLog("清除\(learnConfig.learnType.rawValue)的学习记录完成, Plan ID:", learnConfig.planId )
             YXLog("删除当前学习记录 studyId=", studyId, r1, r2, r3, r4)
-            return r1 && r2 && r3 && r4
+        } else {
+            YXLog("删除当前学习记录失败, studyId=", studyId)
         }
-        YXLog("删除当前学习记录失败, studyId=", studyId)
-        return false
     }
     
 }

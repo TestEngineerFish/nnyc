@@ -332,6 +332,7 @@ extension YYSQLManager {
         where s.study_id = ? and s.word_id = ? and s.step = ?
         """
         
+        
         case selsetSteps =
         """
         SELECT * FROM all_word_step

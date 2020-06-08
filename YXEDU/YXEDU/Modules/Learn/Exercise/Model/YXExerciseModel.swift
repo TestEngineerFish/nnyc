@@ -25,6 +25,8 @@ struct YXExerciseModel: Mappable {
     var wordId: Int = 0
     var word: YXWordModel?
     
+    var n3List: [YXExerciseModel] = []
+    
     /// 问题（使用 word 模型）
     var question: YXExerciseQuestionModel?
     /// 选项

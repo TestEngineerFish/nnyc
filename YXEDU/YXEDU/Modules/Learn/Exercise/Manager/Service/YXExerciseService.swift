@@ -96,7 +96,8 @@ protocol YXExerciseService {
     ///   - completion: 完成回调
     func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?)
 
-    /// 是否需要显示单词详情页
+    /// 是否需要显示单词详情页  （仅用在P2规则首次练习）
+    /// 注意：次方法并非通用方法，仅用在P2规则首次练习，因为VC中，做错了直接显示了详情页，没有调这个方法，后续可以考虑合并逻辑
     /// - Parameters:
     ///   - wordId: 单词ID
     ///   - step:   步骤ID
@@ -109,8 +110,8 @@ protocol YXExerciseService {
     ///   - step:   step
     func hasErrorInCurrentTurn(wordId: Int, step: Int) -> Bool
     
-    @discardableResult
-    func cleanExercise() -> Bool
+    /// 删除当前的学习数据
+    func cleanStudyRecord()
 
 }
 
