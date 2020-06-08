@@ -21,7 +21,8 @@
     
     /// 学习配置
     public var learnConfig: YXLearnConfig = YXBaseLearnConfig()
-    
+        
+    /// 练习出题逻辑管理器
     var service: YXExerciseService = YXExerciseServiceImpl()
     
     // 数据管理器

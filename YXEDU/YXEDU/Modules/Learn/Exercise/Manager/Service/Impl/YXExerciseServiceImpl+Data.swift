@@ -16,7 +16,7 @@ extension YXExerciseServiceImpl {
     func _processData() {
         if (_resultModel?.newWordIds?.count == .some(0) && _resultModel?.groups.count == .some(0)) {
             YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(learnConfig.learnType)")
-            exerciseProgress = .emtpy
+            exerciseProgress = .empty
             return
         }
         

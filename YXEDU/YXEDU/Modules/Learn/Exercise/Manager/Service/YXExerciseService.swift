@@ -38,7 +38,7 @@ enum YXExerciseProgress: Int {
     case none       = 1     // 没有学习记录，可能是首次，也可能是学完了
     case learning   = 2     // 学习中【未学完】
     case unreport   = 3     // 已学完【未上报】
-    case emtpy      = 4     // 学习数据异常
+    case empty      = 4     // 学习数据异常
 }
 
 //MARK: - 练习出题逻辑管理器

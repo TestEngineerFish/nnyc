@@ -14,7 +14,7 @@ extension YXExerciseViewController {
     
     func report() {
         self.service.report(completion: nil)
-        if dataManager.dataStatus == .empty {
+        if service.exerciseProgress == .empty {
             processEmptyData()
         } else {
             // 没有数据，就是完成了练习
