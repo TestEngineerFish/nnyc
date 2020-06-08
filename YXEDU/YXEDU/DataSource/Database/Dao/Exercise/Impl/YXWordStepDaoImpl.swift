@@ -107,9 +107,11 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [model.eid])
     }
 
-    func selectExerciseProgress() -> YXExerciseProgress {
-        return .none
+    func updatePreviousWrongStatus(studyId: Int) -> Bool {
+        let sql = YYSQLManager.WordStepSQL.updatePreviousWrongStatus.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [studyId])
     }
+
 
     func deleteStep(with model: YXExerciseModel) {
         let sql = YYSQLManager.WordStepSQL.deleteStep.rawValue

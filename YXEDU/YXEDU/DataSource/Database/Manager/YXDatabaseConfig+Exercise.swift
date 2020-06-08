@@ -336,7 +336,13 @@ extension YYSQLManager {
         SET status = 3
         WHERE exercise_id = ? and (step = 1 or step = 4)
         """
-
+        
+        case updatePreviousWrongStatus =
+        """
+        update all_word_step set status = 0 where step_id in (select step_id from current_turn where study_id = ?)
+        and status = 1
+        """
+        
         case selectBackupStep =
         """
         select * from all_word_step

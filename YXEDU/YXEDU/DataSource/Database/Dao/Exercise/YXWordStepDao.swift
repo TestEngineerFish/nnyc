@@ -10,11 +10,7 @@ import UIKit
 
 protocol YXWordStepDao {
     
-    // TODO: ==== 查询 ====
-    
-    /// 查询练习进度
-    func selectExerciseProgress() -> YXExerciseProgress
-        
+    // TODO: ==== 查询 ====        
     /// 查询当前未学完的分组下标，nil 分组说明学完了
     func selectCurrentGroup() -> Int?
     
@@ -42,6 +38,10 @@ protocol YXWordStepDao {
     /// - Parameter model: 练习对象
     func skipStep1_4(exercise model: YXExerciseModel) -> Bool
 
+    
+    /// 上一轮做错的状态，重置为未做（status  = 0）
+    func updatePreviousWrongStatus(studyId: Int) -> Bool
+    
     /// 获取单词的所有已做的练习题，字典返回，用于上报
     /// - Parameter model: 练习对象
     /// - Returns: step结果

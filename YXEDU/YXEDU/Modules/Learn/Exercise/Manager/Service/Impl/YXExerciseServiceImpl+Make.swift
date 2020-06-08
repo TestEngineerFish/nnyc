@@ -69,7 +69,10 @@ extension YXExerciseServiceImpl {
             // 插入新的轮
             let r3 = turnDao.insertCurrentTurn(studyId: _studyRecord.studyId, group: _studyRecord.currentGroup)
             
-            YXLog("筛选数据， 更新轮下标", r1, "清空当前轮", r2, "插入新的轮 ,id", _studyRecord.studyId, r3)
+            // 把上轮做错的状态恢复成未做
+            let r4 = stepDao.updatePreviousWrongStatus(studyId: _studyRecord.studyId)
+            
+            YXLog("筛选数据， 更新轮下标", r1, "清空当前轮", r2, "插入新的轮 ,id", _studyRecord.studyId, r3, "重置上轮做错的 ", r4)
         }
     }
     
@@ -142,7 +145,7 @@ extension YXExerciseServiceImpl {
     
     
     /// 填充连线题的单词
-    /// - Parameter exercises: 
+    /// - Parameter exercises:
     func _fillConnectionWordModel(exercises: [YXExerciseModel]) -> [YXExerciseModel] {
         var es: [YXExerciseModel] = []
         for e in exercises {
