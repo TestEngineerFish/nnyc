@@ -65,8 +65,9 @@ class YXExerciseServiceImpl: YXExerciseService {
         let request = YXExerciseRequest.exercise(type: learnConfig.learnType.rawValue, planId: planId)
         YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
             self._resultModel = response.data
-            self._processData()
-            completion?(true, nil)
+            self._processData {
+                completion?(true, nil)
+            }
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
             completion?(false, error.message)

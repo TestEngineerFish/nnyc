@@ -71,58 +71,58 @@ target 'YXEDU' do
      
 end
 
-## transform dynamic to static
-#post_install do |installer|
-#
-#  def supported_staticlib_pods
-#    return ['MBProgressHUD', 'SSKeychain', 'CocoaLumberjack', 'AFNetworking', 'HWWeakTimer', 'UICollectionViewLeftAlignedLayout', 'ZipArchive', 'MJRefresh', 'WMPageController', 'FMDB', 'MagicalRecord', 'MJExtension', 'SGQRCode', 'Masonry', 'SDWebImage', 'LEEAlert', 'DACircularProgress', 'SnapKit', 'Alamofire', 'ObjectMapper', 'AlamofireObjectMapper', 'SDCycleScrollView', 'Reachability', 'FSCalendar', 'lottie-ios', 'Zip', 'Kingfisher', 'KTVHTTPCache', 'Toast-Swift', 'Toast', 'DZNEmptyDataSet']
-#  end
-#
-#  def improve_pre_main_time_loading(installer)
-#  pod_frameworks_path = "Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU-frameworks.sh"
-#  if(File.exist?(pod_frameworks_path))
-#    # Get Pods-#{project_name}-frameworks.sh
-#    pod_frameworks_content = File.read(pod_frameworks_path)
-#    is_updated_files = false
-#    installer.pods_project.targets.each do |target|
-#      if supported_staticlib_pods.include?(target.name)
-#        # Using 'staticlib' for every configs
-#        target.build_configurations.each do |config|
-#          config.build_settings['MACH_O_TYPE'] = 'staticlib'
-#        end
-#
-#        # Removing `supported_staticlib_pods` from `Pods-#{project_name}-frameworks.sh`
-#        lib_path = "\"${BUILT_PRODUCTS_DIR}/#{target.name}/"
-#
-#        if target.name == "lottie-ios"
-#          lib_path = "#{lib_path}Lottie.framework\""
-#          elsif target.name == "Toast-Swift"
-#          lib_path = "#{lib_path}Toast_Swift.framework\""
-#          else
-#          lib_path = "#{lib_path}#{target.name}.framework\""
-#        end
-#
-#        pod_frameworks_content = pod_frameworks_content.gsub("install_framework #{lib_path}", "")
-#
-#        is_updated_files = true
-#      end
-#    end
-#
-#    if is_updated_files
-#      puts "Improving Pre-main Time"
-#      pod_frameworks_content = pod_frameworks_content.gsub("  \n", "")
-#      File.write(pod_frameworks_path, pod_frameworks_content)
-#    end
-#
-#    else
-#    puts pod_frameworks_path + ' not found'
-#  end
-#
-#end
-#
-#improve_pre_main_time_loading(installer)
-#
-#end
+# transform dynamic to static
+post_install do |installer|
+
+  def supported_staticlib_pods
+    return ['MBProgressHUD', 'SSKeychain', 'CocoaLumberjack', 'AFNetworking', 'HWWeakTimer', 'UICollectionViewLeftAlignedLayout', 'ZipArchive', 'MJRefresh', 'WMPageController', 'FMDB', 'MagicalRecord', 'MJExtension', 'SGQRCode', 'Masonry', 'SDWebImage', 'LEEAlert', 'DACircularProgress', 'SnapKit', 'Alamofire', 'ObjectMapper', 'AlamofireObjectMapper', 'SDCycleScrollView', 'Reachability', 'FSCalendar', 'lottie-ios', 'Zip', 'Kingfisher', 'KTVHTTPCache', 'Toast-Swift', 'Toast', 'DZNEmptyDataSet']
+  end
+
+  def improve_pre_main_time_loading(installer)
+  pod_frameworks_path = "Pods/Target Support Files/Pods-YXEDU/Pods-YXEDU-frameworks.sh"
+  if(File.exist?(pod_frameworks_path))
+    # Get Pods-#{project_name}-frameworks.sh
+    pod_frameworks_content = File.read(pod_frameworks_path)
+    is_updated_files = false
+    installer.pods_project.targets.each do |target|
+      if supported_staticlib_pods.include?(target.name)
+        # Using 'staticlib' for every configs
+        target.build_configurations.each do |config|
+          config.build_settings['MACH_O_TYPE'] = 'staticlib'
+        end
+
+        # Removing `supported_staticlib_pods` from `Pods-#{project_name}-frameworks.sh`
+        lib_path = "\"${BUILT_PRODUCTS_DIR}/#{target.name}/"
+
+        if target.name == "lottie-ios"
+          lib_path = "#{lib_path}Lottie.framework\""
+          elsif target.name == "Toast-Swift"
+          lib_path = "#{lib_path}Toast_Swift.framework\""
+          else
+          lib_path = "#{lib_path}#{target.name}.framework\""
+        end
+
+        pod_frameworks_content = pod_frameworks_content.gsub("install_framework #{lib_path}", "")
+
+        is_updated_files = true
+      end
+    end
+
+    if is_updated_files
+      puts "Improving Pre-main Time"
+      pod_frameworks_content = pod_frameworks_content.gsub("  \n", "")
+      File.write(pod_frameworks_path, pod_frameworks_content)
+    end
+
+    else
+    puts pod_frameworks_path + ' not found'
+  end
+
+end
+
+improve_pre_main_time_loading(installer)
+
+end
 
 
 #
