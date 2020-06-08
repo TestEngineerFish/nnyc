@@ -81,6 +81,12 @@ protocol YXExerciseService {
     func normalAnswerAction(exercise model: YXExerciseModel)
 
 
+    /// 获得未学完的新学单词数
+    func getNewWordCount() -> Int
+
+    /// 获得未学完的复习单词数
+    func getReviewWordCount() -> Int
+
     /// 上报学习数据
     /// - Parameters:
     ///   - completion: 完成回调

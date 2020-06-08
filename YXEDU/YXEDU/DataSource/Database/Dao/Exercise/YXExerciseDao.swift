@@ -37,6 +37,12 @@ protocol YXExerciseDao {
     ///   - includeReviewWord: 是否包含复习单词
     func getExerciseList(learn config: YXLearnConfig, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel]
 
+    /// 获取未学完的新学单词数量
+    func getNewWordCount() -> Int
+
+    /// 获取未学完的复习单词数量
+    func getReviewWordCount() -> Int
+
     /// 删除一个学习记录所有单词
     /// - Parameter id: 学习记录ID
     func deleteExercise(study id: Int) -> Bool
