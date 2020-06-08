@@ -303,15 +303,14 @@ extension YYSQLManager {
         case updateWordStep =
         """
         UPDATE all_word_step
-        SET status = ?, wrong_count =
-        (wrong_count +
-            (SELECT CASE
-                WHEN ? = 1
-                THEN 1
-                ELSE 0
-                END
-            )
-        )
+        SET status =
+        (SELECT CASE
+            WHEN status = 1
+            THEN 1
+            ELSE ?
+            END
+        ),
+        wrong_count = wrong_count + ?
         WHERE exercise_id = ? and step = ? and score = ?
         """
         

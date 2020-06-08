@@ -79,7 +79,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         let sql = YYSQLManager.WordStepSQL.updateWordStep.rawValue
         let params: [Any] = [
             exerciseModel.status.rawValue,
-            exerciseModel.status.rawValue,
+            exerciseModel.status == .wrong ? 1 : 0,
             exerciseModel.eid,
             exerciseModel.step,
             exerciseModel.questionTypeScore]
