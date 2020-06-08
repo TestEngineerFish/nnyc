@@ -56,13 +56,15 @@ class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableVie
         
         cell.wordLabel.text = exerciseModel.word?.word
         cell.isPicked = exerciseModel.word?.isSelected == .some(true)
+        self.exerciseModel.n3List[indexPath.row].status = .right
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.exerciseModel.n3List[indexPath.row].word?.isSelected = !(self.exerciseModel.n3List[indexPath.row].word?.isSelected == .some(true))
-        self.exerciseModel.n3List[indexPath.row].mastered = self.exerciseModel.n3List[indexPath.row].word?.isSelected == .some(true)
+        let _isSelect = (self.exerciseModel.n3List[indexPath.row].word?.isSelected == .some(true))
+        self.exerciseModel.n3List[indexPath.row].word?.isSelected = !_isSelect
+        self.exerciseModel.n3List[indexPath.row].mastered         = !_isSelect
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
