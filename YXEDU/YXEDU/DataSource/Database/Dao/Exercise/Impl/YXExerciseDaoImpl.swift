@@ -69,6 +69,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         if result.next() {
             count = Int(result.int(forColumn: "count"))
         }
+        result.close()
         return count
     }
 
@@ -96,6 +97,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
                 modelList.append(model)
             }
         }
+        result?.close()
         return modelList
     }
 
@@ -104,6 +106,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [1]), result.next() {
             count = Int(result.int(forColumn: "count"))
+            result.close()
         }
         return count
     }
@@ -113,6 +116,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [0]), result.next() {
             count = Int(result.int(forColumn: "count"))
+            result.close()
         }
         return count
     }
@@ -150,7 +154,6 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         model.word?.unitId = Int(result.int(forColumn: "unit_id"))
         model.mastered     = result.bool(forColumn:"mastered")
         model.score        = Int(result.int(forColumn: "score"))
-//        model.wrongCount   = Int(result.int(forColumn: "wrong_count"))
         model.isNewWord    = result.bool(forColumn: "is_new")
         model.unfinishStepCount = Int(result.int(forColumn: "unfinish_count"))
         return model

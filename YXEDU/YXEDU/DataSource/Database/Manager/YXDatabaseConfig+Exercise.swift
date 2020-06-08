@@ -399,6 +399,12 @@ extension YYSQLManager {
         case deleteExpiredWordStep = "delete from all_word_step where date(create_ts) < date('now')"
         
         case deleteAllWordStep = "delete from all_word_step"
+
+        case selectInfo =
+         """
+         SELECT * FROM all_word_step
+         WHERE exercise_id = ? and step = ? and score = ?
+         """
     }
     
     enum CurrentTurnSQL: String {
