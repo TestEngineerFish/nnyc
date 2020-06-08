@@ -171,16 +171,19 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     func cleanExercise() -> Bool {
-        let studyId = studyDao.getStudyID(learn: learnConfig)
-        
-        let r1 = studyDao.delete(study: studyId)
-        let r2 = exerciseDao.deleteExercise(study: studyId)
-        let r3 = stepDao.deleteStepWithStudy(study: studyId)
-        let r4 = turnDao.deleteCurrentTurn(studyId: studyId)
-        
-        YXLog("删除当前学习记录 studyId=", studyId, r1, r2, r3, r4)
-        return r1 && r2 && r3 && r4
-        
+        // studyDao.getStudyID(learn: learnConfig)
+        let studyId = _studyRecord.studyId
+        if studyId > 0 {
+            let r1 = studyDao.delete(study: studyId)
+            let r2 = exerciseDao.deleteExercise(study: studyId)
+            let r3 = stepDao.deleteStepWithStudy(study: studyId)
+            let r4 = turnDao.deleteCurrentTurn(studyId: studyId)
+            
+            YXLog("删除当前学习记录 studyId=", studyId, r1, r2, r3, r4)
+            return r1 && r2 && r3 && r4
+        }
+        YXLog("删除当前学习记录失败, studyId=", studyId)
+        return false
     }
     
     // ----------------------------

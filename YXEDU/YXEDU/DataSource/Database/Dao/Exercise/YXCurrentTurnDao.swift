@@ -38,4 +38,7 @@ protocol YXCurrentTurnDao {
     
     /// 删除当前练习的数据
     func deleteCurrentTurn(studyId: Int) -> Bool
+    
+    /// 删除过期的轮
+    func deleteExpiredTurn() -> Bool
 }

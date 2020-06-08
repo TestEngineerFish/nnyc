@@ -23,7 +23,7 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         }
         var exercise: YXExerciseModel?
         if result.next() {
-            exercise = self.createExercise(rs: result)
+            exercise = self._createExercise(rs: result)
         }
         result.close()
         return exercise
@@ -37,7 +37,7 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         }
         var es: [YXExerciseModel] = []
         while result.next() {
-            es.append(self.createExercise(rs: result))
+            es.append(self._createExercise(rs: result))
         }
         result.close()
         
@@ -52,7 +52,7 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         }
         var exercise: YXExerciseModel?
         if result.next() {
-            exercise = self.createExercise(rs: result)
+            exercise = self._createExercise(rs: result)
         }
         result.close()
         return exercise
@@ -100,7 +100,12 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [studyId])
     }
     
-    func createExercise(rs: FMResultSet) ->YXExerciseModel {
+    func deleteExpiredTurn() -> Bool {
+        let sql = YYSQLManager.CurrentTurnSQL.deleteExpiredTurn.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])
+    }
+    
+    func _createExercise(rs: FMResultSet) ->YXExerciseModel {
         var model = YXExerciseModel()
         model.eid           = Int(rs.int(forColumn: "exercise_id"))
         model.stepId        = Int(rs.int(forColumn: "step_id"))

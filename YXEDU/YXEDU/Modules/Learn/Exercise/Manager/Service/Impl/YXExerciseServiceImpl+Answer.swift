@@ -12,8 +12,13 @@ import UIKit
 extension YXExerciseServiceImpl {
 
     func clearExpiredData() {
-        exerciseDao.deleteExpiredExercise()
-        stepDao.deleteExpiredWordStep()
+        let r1 = studyDao.deleteExpiredStudyRecord()
+        let r2 = exerciseDao.deleteExpiredExercise()
+        let r3 = stepDao.deleteExpiredWordStep()
+        let r4 = turnDao.deleteExpiredTurn()
+        
+        YXLog("删除过期的学习记录", r1, r2, r3, r4)
     }
     
 }
+

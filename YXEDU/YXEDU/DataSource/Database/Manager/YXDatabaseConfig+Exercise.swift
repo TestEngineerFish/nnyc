@@ -97,7 +97,8 @@ extension YYSQLManager {
             step_id integer NOT NULL,
             step integer(1) NOT NULL DEFAULT(0),
             turn integer(2) NOT NULL DEFAULT(1),
-            finish integer(1) NOT NULL DEFAULT(0)
+            finish integer(1) NOT NULL DEFAULT(0),
+            create_ts text(32) NOT NULL DEFAULT(datetime('now'))
         );
         """
     }
@@ -426,6 +427,9 @@ extension YYSQLManager {
         
         /// 删除当前轮
         case deleteCurrentTurn = "delete from current_turn where study_id = ?"
+        
+        /// 删除过期的轮
+        case deleteExpiredTurn = "delete from current_turn where date(create_ts) < date('now')"
         
         /// 删除所有的轮
         case deleteAllTurn = "delete from current_turn"

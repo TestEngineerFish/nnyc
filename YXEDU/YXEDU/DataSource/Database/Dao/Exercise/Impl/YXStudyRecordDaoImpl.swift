@@ -132,6 +132,11 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     }
 
     
+    func deleteExpiredStudyRecord() -> Bool {
+        let sql = YYSQLManager.StudyRecordSQL.deleteExpiredRecord.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])
+    }
+    
     func configParams(config: YXLearnConfig) -> [Any] {
         return [
             config.learnType.rawValue,
