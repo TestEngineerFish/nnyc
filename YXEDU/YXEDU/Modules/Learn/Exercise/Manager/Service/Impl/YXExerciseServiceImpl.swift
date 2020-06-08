@@ -219,6 +219,14 @@ class YXExerciseServiceImpl: YXExerciseService {
         return self.studyDao.getDurationTime(learn: learnConfig)
     }
 
+    func getNewWordCount() -> Int {
+        return self.exerciseDao.getNewWordCount()
+    }
+
+    func getReviewWordCount() -> Int {
+        return self.exerciseDao.getReviewWordCount()
+    }
+
     /// 更新学习时间
     func updateDurationTime() {
         let currentTime = Int(Date().local().timeIntervalSince1970)
@@ -263,13 +271,6 @@ class YXExerciseServiceImpl: YXExerciseService {
             var _model = model
             _model.unfinishStepCount -= 1
             self.exerciseDao.updateExercise(exercise: _model)
-            if _model.unfinishStepCount == 0 {
-                if model.isNewWord {
-                    // 发通知
-                } else {
-                    // 发通知
-                }
-            }
         }
     }
 

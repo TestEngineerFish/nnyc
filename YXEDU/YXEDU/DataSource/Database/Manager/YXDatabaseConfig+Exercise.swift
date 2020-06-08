@@ -224,6 +224,12 @@ extension YYSQLManager {
         WHERE learn_type = ? and plan_id = ? and book_id = ? and unit_id = ?
         """
 
+        case getWordsCount =
+        """
+        SELECT count(*) count FROM all_exercise
+        WHERE unfinish_count != 0 and is_new = ?
+        """
+
         case deleteExerciseWithStudy =
         """
         DELETE FROM all_exercise

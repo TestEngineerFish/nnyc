@@ -93,6 +93,24 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return modelList
     }
 
+    func getNewWordCount() -> Int {
+        var count = 0
+        let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
+        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [1]), result.next() {
+            count = Int(result.int(forColumn: "count"))
+        }
+        return count
+    }
+
+    func getReviewWordCount() -> Int {
+        var count = 0
+        let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
+        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [0]), result.next() {
+            count = Int(result.int(forColumn: "count"))
+        }
+        return count
+    }
+
     func deleteExercise(study id: Int) -> Bool {
         let sql = YYSQLManager.ExerciseSQL.deleteExerciseWithStudy.rawValue
         let params: [Any] = [id]

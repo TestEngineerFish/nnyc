@@ -254,8 +254,8 @@
         // - 更新待学习数
         dataManager.updateNeedNewStudyCount()
         dataManager.updateNeedReviewCount()
-        headerView.learningProgress = "\(dataManager.needNewStudyCount)"
-        headerView.reviewProgress   = "\(dataManager.needReviewCount)"
+        headerView.learningProgress = "\(self.service.getNewWordCount())"
+        headerView.reviewProgress   = "\(self.service.getReviewWordCount())"
         // - 更新轮次
         if dataManager.dataType == .base {
             dataManager.updateCurrentPatchIndex()
