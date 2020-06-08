@@ -113,6 +113,10 @@ class YXExerciseServiceImpl: YXExerciseService {
             deleteModel.mastered = !_model.mastered
             self.stepDao.deleteStep(with: deleteModel)
         }
+        if _model.step == 0 && self.ruleType == .p3 && _model.mastered  {
+            // 更新S1和S4为跳过
+            self.updateStep(exercise: _model)
+        }
         // 保存数据到数据库
         // - 更新缓存表
         self.updateCache(exercise: _model)
@@ -216,8 +220,8 @@ class YXExerciseServiceImpl: YXExerciseService {
     /// 更新学习时间
     func updateDurationTime() {
         let currentTime = Int(Date().local().timeIntervalSince1970)
-        let startTime = self.studyDao.getStartTime(learn: learnConfig)
-        let duration = currentTime - startTime
+        let startTime   = self.studyDao.getStartTime(learn: learnConfig)
+        let duration    = currentTime - startTime
         self.studyDao.setDurationTime(learn: learnConfig, duration: duration)
     }
 
@@ -245,9 +249,14 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.stepDao.updateStep(exerciseModel: model)
     }
 
+    /// 跳过Step1-4
+    private func skipStep1_4(exercise model: YXExerciseModel) {
+        self.stepDao.skipStep1_4(exercise: model)
+    }
+
     /// 更新进度
     private func updateProgress(exercise model: YXExerciseModel) {
-        if model.result == .some(true) {
+        if model.status == .right {
             var _model = model
             _model.unfinishStepCount -= 1
             self.exerciseDao.updateExercise(exercise: _model)

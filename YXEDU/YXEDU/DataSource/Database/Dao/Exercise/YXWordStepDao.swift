@@ -31,6 +31,10 @@ protocol YXWordStepDao {
     @discardableResult
     func updateStep(exerciseModel: YXExerciseModel) -> Bool
 
+    /// 跳过Step1-4
+    /// - Parameter model: 练习对象
+    func skipStep1_4(exercise model: YXExerciseModel) -> Bool
+
     /// 获取单词的所有已做的练习题，字典返回，用于上报
     /// - Parameter model: 练习对象
     /// - Returns: step结果

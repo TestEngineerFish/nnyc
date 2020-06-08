@@ -19,7 +19,6 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         if result.next() {
             let step = Int(result.int(forColumn: "step"))
             result.close()
-            
             return step
         }
         result.close()
@@ -91,6 +90,11 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
             }
         }
         return dict
+    }
+
+    func skipStep1_4(exercise model: YXExerciseModel) -> Bool {
+        let sql = YYSQLManager.WordStepSQL.skipStep1_4.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [model.eid])
     }
 
     func selectExerciseProgress() -> YXExerciseProgress {
