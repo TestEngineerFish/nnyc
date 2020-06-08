@@ -61,6 +61,8 @@ protocol YXExerciseService {
     // ----------------------------
     /// 初始化
     func initService()
+
+    func addStudyCount()
     
     /// 设置开始学习时间
     func setStartTime()

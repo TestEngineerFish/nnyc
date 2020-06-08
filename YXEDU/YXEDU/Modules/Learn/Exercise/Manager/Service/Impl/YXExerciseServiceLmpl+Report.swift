@@ -44,9 +44,10 @@ extension YXExerciseServiceImpl {
 
     /// 更新学习时间
     func updateDurationTime() {
-        let currentTime = Int(Date().local().timeIntervalSince1970)
-        let startTime   = self.studyDao.getStartTime(learn: learnConfig)
-        let duration    = currentTime - startTime
-        self.studyDao.setDurationTime(learn: learnConfig, duration: duration)
+        let currentTime  = Date().local()
+        let startTimeStr = self.studyDao.getStartTime(learn: learnConfig)
+        let startTime    = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat())
+        let duration     = currentTime.timeIntervalSince(startTime! as Date)
+        self.studyDao.setDurationTime(learn: learnConfig, duration: Int(duration))
     }
 }

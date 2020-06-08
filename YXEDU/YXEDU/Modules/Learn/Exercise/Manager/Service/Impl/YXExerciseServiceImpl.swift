@@ -89,10 +89,15 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
 
+    func addStudyCount() {
+        self.studyDao.addStudyCount(learn: learnConfig)
+    }
+
     func setStartTime() {
-        let time = Date().local().timeIntervalSince1970
+        let localTime = Date().local().timeIntervalSince1970
         // 数据库操作 - 设置时间
-        self.studyDao.setStartTime(learn: learnConfig, start: Int(time))
+        let time = NSDate(timeIntervalSince1970: localTime).string(withFormat: NSDate.ymdHmsFormat()) ?? ""
+        self.studyDao.setStartTime(learn: learnConfig, start: time)
     }
 
     func normalAnswerAction(exercise model: YXExerciseModel) {

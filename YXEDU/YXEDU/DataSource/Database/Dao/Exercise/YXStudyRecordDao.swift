@@ -32,8 +32,7 @@ protocol YXStudyRecordDao {
     /// 跟新当前组下标
     @discardableResult
     func updateCurrentGroup(studyId: Int, group: Int) -> Bool
-    
-    
+
     /// 更新学习进度
     /// - Parameters:
     ///   - studyId: 哪个学习
@@ -46,11 +45,14 @@ protocol YXStudyRecordDao {
     ///   - turn:
     func updateCurrentTurn(learn config: YXLearnConfig, turn: Int?) -> Bool
 
+    /// 添加学习次数
+    func addStudyCount(learn config: YXLearnConfig)
+
     /// 设置开始学习时间
     /// - Parameters:
     ///   - config: 学习配置信息
     ///   - time: 开始学习时间
-    func setStartTime(learn config: YXLearnConfig, start time: Int)
+    func setStartTime(learn config: YXLearnConfig, start time: String)
 
     /// 更新学习持续时长
     /// - Parameters:
@@ -60,7 +62,7 @@ protocol YXStudyRecordDao {
 
     /// 获得开始学习时间
     /// - Parameter config: 学习配置信息
-    func getStartTime(learn config: YXLearnConfig) -> Int
+    func getStartTime(learn config: YXLearnConfig) -> String
 
     /// 获得学习持续时间
     /// - Parameter config: 学习配置信息
