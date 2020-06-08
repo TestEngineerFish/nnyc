@@ -42,15 +42,17 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     }
 
     func getWrongCount(exercise model: YXExerciseModel) -> Int {
+        var count = 0
         let sql = YYSQLManager.WordStepSQL.selectStepInfo.rawValue
         let params: [Any] = [model.eid,
                              model.step,
                              model.isBackup ? 1 : 0,
                              model.mastered ? 7 : 0]
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
-            return Int(result.int(forColumn: "wrong_count"))
+            count = Int(result.int(forColumn: "wrong_count"))
+            result.close()
         }
-        return 0
+        return count
     }
     
     func insertWordStep(study recordId: Int, exerciseModel: YXExerciseModel) -> Bool {
@@ -98,6 +100,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
                     dict["\(step)"] = stepResult
                 }
             }
+            result.close()
         }
         return dict
     }
@@ -151,6 +154,7 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
             let statusInt = Int(result.int(forColumn: "status"))
             status = YXStepStatus.getStatus(statusInt)
+            result.close()
         }
         return status
     }

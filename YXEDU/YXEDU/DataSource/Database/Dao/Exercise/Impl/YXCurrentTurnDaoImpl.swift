@@ -128,7 +128,7 @@ class YXCurrentTurnDaoImpl: YYDatabase, YXCurrentTurnDao {
         if let json = rs.string(forColumn: "option") {
             model.option = YXExerciseOptionModel(JSONString: json)
         }
-        
+        rs.close()
         
         return model
     }
