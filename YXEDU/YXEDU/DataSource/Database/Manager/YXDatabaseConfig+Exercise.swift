@@ -403,6 +403,20 @@ extension YYSQLManager {
     
     enum CurrentTurnSQL: String {
     
+        case selectNewTurn =
+        """
+        select study_id, step_id, step, (select current_turn from study_record where study_id = %d limit 1) turn from (
+            select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
+            where e.study_id = %d and group_index = %d and s.backup = 0
+            and (s.status = 0 or s.status = 1) and s.status != 3
+            order by s.step desc
+        )
+        where turn >= step
+        group by word_id
+        order by step desc, exercise_id asc
+        """
+        
+        
         case insertTurn =
         """
         insert into current_turn(study_id, step_id, step, turn)
