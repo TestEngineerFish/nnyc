@@ -33,9 +33,10 @@ extension YYSQLManager {
             status integer(1) NOT NULL DEFAULT(0),
             current_group integer(1) NOT NULL DEFAULT(0),
             current_turn integer(2) NOT NULL DEFAULT(-1),
-            study_duration integer(4),
-            start_time integer(16),
-            create_ts text(32) NOT NULL DEFAULT(datetime('now'))
+            study_count integer(1) NOT NULL DEFAULT(1),
+            study_duration integer(4) NOT NULL DEFAULT(0),
+            start_time text(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
+            create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );
         """
         
@@ -56,7 +57,7 @@ extension YYSQLManager {
             mastered integer(1) NOT NULL DEFAULT(0),
             score integer(1) NOT NULL DEFAULT(10),
             unfinish_count integer(1) NOT NULL DEFAULT(0),
-            create_ts text(32) NOT NULL DEFAULT(datetime('now'))
+            create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );
         """
         
@@ -82,7 +83,7 @@ extension YYSQLManager {
             wrong_count integer(2) DEFAULT(0),
             group_index integer(1) NOT NULL DEFAULT(0),
             invalid integer(1) DEFAULT(0),
-            create_ts text(128) NOT NULL DEFAULT(datetime('now'))
+            create_ts text(128) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );
         """
         
@@ -157,6 +158,13 @@ extension YYSQLManager {
         """
         UPDATE study_record
         SET start_time = ?
+        WHERE learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        """
+
+        case updateStudyCount =
+        """
+        UPDATE study_record
+        SET study_count = study_count + 1
         WHERE learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
         """
 
