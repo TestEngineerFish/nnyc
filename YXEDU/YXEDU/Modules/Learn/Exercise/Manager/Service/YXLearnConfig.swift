@@ -53,14 +53,12 @@ class YXBaseLearnConfig: YXLearnConfigImpl {
     }
 }
 
-
 /// 智能复习配置
 class YXAIReviewLearnConfig: YXLearnConfigImpl {
     init(learnType: YXLearnType = .aiReview) {
         super.init(bookId: 0, unitId: 0, planId: 0, learnType: learnType)
     }
 }
-
 
 /// 错题本配置
 class YXWrongLearnConfig: YXAIReviewLearnConfig {

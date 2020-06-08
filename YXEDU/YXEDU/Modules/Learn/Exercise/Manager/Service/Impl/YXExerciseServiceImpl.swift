@@ -100,24 +100,23 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     func normalAnswerAction(exercise model: YXExerciseModel) {
-        var _model = model
         // 如果是0、7分题，先移除未做的题
-        if _model.isCareScore {
-            var deleteModel = _model
-            deleteModel.mastered = !_model.mastered
+        if model.isCareScore {
+            var deleteModel = model
+            deleteModel.mastered = !model.mastered
             self.stepDao.deleteStep(with: deleteModel)
         }
-        if _model.step == 0 && self.ruleType == .p3 && _model.mastered  {
+        if model.step == 0 && self.ruleType == .p3 && model.mastered  {
             // 更新S1和S4为跳过
-            self.skipStep1_4(exercise: _model)
+            self.skipStep1_4(exercise: model)
         }
         // 保存数据到数据库
         // - 更新缓存表
-        self.updateCurrentTurn(exercise: _model)
+        self.updateCurrentTurn(exercise: model)
         // - 更新Step表
-        self.updateStep(exercise: _model)
+        self.updateStep(exercise: model)
         // - 更新练习表
-        self.updateExercise(exercise: _model)
+        self.updateExercise(exercise: model)
         // - 更新学习流程表
         self.updateDurationTime()
     }
