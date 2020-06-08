@@ -539,6 +539,7 @@
 		EE9434DE23CC8FF2005319EC /* YXExerciseResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9434DD23CC8FF2005319EC /* YXExerciseResultViewController.swift */; };
 		EE9434E023CC908A005319EC /* YXExerciseResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9434DF23CC908A005319EC /* YXExerciseResultView.swift */; };
 		EE95031723C37B5400B7AA11 /* YXExcerciseProgressManager+Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE95031623C37B5400B7AA11 /* YXExcerciseProgressManager+Duration.swift */; };
+		EEA487E1248E788C00C9B0F6 /* YXBaseExerciseDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA487E0248E788C00C9B0F6 /* YXBaseExerciseDaoImpl.swift */; };
 		EEA50FE023BA3C7400518BE8 /* YXAlertQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA50FDF23BA3C7400518BE8 /* YXAlertQueueManager.swift */; };
 		EEA50FE423BDDA2A00518BE8 /* YXReviewPlanEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA50FE323BDDA2A00518BE8 /* YXReviewPlanEditView.swift */; };
 		EEA50FE923BF48BE00518BE8 /* BiggerClickAreaButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA50FE823BF48BD00518BE8 /* BiggerClickAreaButton.m */; };
@@ -1238,6 +1239,7 @@
 		EE9434DD23CC8FF2005319EC /* YXExerciseResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseResultViewController.swift; sourceTree = "<group>"; };
 		EE9434DF23CC908A005319EC /* YXExerciseResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseResultView.swift; sourceTree = "<group>"; };
 		EE95031623C37B5400B7AA11 /* YXExcerciseProgressManager+Duration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YXExcerciseProgressManager+Duration.swift"; sourceTree = "<group>"; };
+		EEA487E0248E788C00C9B0F6 /* YXBaseExerciseDaoImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBaseExerciseDaoImpl.swift; sourceTree = "<group>"; };
 		EEA50FDF23BA3C7400518BE8 /* YXAlertQueueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAlertQueueManager.swift; sourceTree = "<group>"; };
 		EEA50FE323BDDA2A00518BE8 /* YXReviewPlanEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanEditView.swift; sourceTree = "<group>"; };
 		EEA50FE723BF48BC00518BE8 /* BiggerClickAreaButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BiggerClickAreaButton.h; sourceTree = "<group>"; };
@@ -2634,6 +2636,7 @@
 				EE1B696F2473B031000EADB2 /* YXExerciseDaoImpl.swift */,
 				228105DB2487E1FC0025F03F /* YXStudyRecordDaoImpl.swift */,
 				EE1B69682472B0C8000EADB2 /* YXWordStepDaoImpl.swift */,
+				EEA487E0248E788C00C9B0F6 /* YXBaseExerciseDaoImpl.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -4503,6 +4506,7 @@
 				EE6C7D2023B0DE23009DCC0C /* YXReviewPlanDetailBottomView.swift in Sources */,
 				7709752C23992B880071A779 /* YXWordDetailCommonPhrasesCell.swift in Sources */,
 				223D5F002452D18200482127 /* YXCalendarModel.swift in Sources */,
+				EEA487E1248E788C00C9B0F6 /* YXBaseExerciseDaoImpl.swift in Sources */,
 				77AED817242EF71300E3F884 /* YXReviewPlanStatusModel.swift in Sources */,
 				22ED54C0236B23AD00011B82 /* YXLetterButton.swift in Sources */,
 				EE5EF251232740B800655654 /* CALayer+YXCustom.m in Sources */,
@@ -4681,7 +4685,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OBJC_BRIDGING_HEADER = "YXEDU/Resources/YXEDU-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -4729,7 +4733,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
-				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OBJC_BRIDGING_HEADER = "YXEDU/Resources/YXEDU-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

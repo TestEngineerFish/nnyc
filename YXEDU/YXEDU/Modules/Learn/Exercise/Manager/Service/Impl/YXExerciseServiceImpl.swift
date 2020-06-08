@@ -28,7 +28,9 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     // 当前学习记录
     var _studyRecord = YXStudyRecordModel()
-    
+    var _studyId: Int {
+        return self._studyRecord.studyId
+    }
     /// 本地数据库访问
     var wordDao: YXWordBookDao     = YXWordBookDaoImpl()
     var studyDao: YXStudyRecordDao = YXStudyRecordDaoImpl()
@@ -86,12 +88,6 @@ class YXExerciseServiceImpl: YXExerciseService {
         return self._findExercise()
     }
     
-    
-//    func loadLocalExercise() {
-//        if let record = studyDao.selectStudyRecordModel(config: learnConfig) {
-//            self.studyRecord = record
-//        }
-//    }
 
     func setStartTime() {
         let time = Date().local().timeIntervalSince1970
@@ -120,7 +116,26 @@ class YXExerciseServiceImpl: YXExerciseService {
         // - 更新学习流程表
         self.updateDurationTime()
     }
-
+    
+    
+    func connectionAnswerAction(wordId: Int, step: Int, right: Bool, type: YXQuestionType) {        
+        // 把连线题的子项查出来
+        if let model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
+            // - 更新Step表 [更新完成状态 和 错误次数]
+            self.updateStep(exercise: model)
+            
+            // - 更新练习表
+            self.updateExercise(exercise: model)
+        }
+    }
+    
+    func updateConnectionExerciseFinishStatus(exerciseModel: YXExerciseModel, right: Bool) {
+        for item in exerciseModel.option?.firstItems ?? [] {
+            turnDao.updateExerciseFinishStatus(studyId: _studyId, wordId: item.optionId)
+        }
+    }
+    
+    
     /// 上报关卡
     func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?) {
         let reportContent = self.getReportJson()

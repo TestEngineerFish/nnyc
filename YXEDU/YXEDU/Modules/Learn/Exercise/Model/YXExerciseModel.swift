@@ -9,12 +9,6 @@
 import ObjectMapper
 
 
-///// 单词学习类型
-//enum YXWordStudyType: Int {
-//    case newStudy = 0       // 新学，跟读流程
-//    case exercise = 1      // 训练，练习（也是新学单词，非跟读流程）
-//    case review = 2         // 复习
-//}
 
 /// 练习数据模型
 struct YXExerciseModel: Mappable {
@@ -46,16 +40,8 @@ struct YXExerciseModel: Mappable {
 
     /// 代移除
     var questionTypeScore: Int = 0  // 题型分[已掌握7分，不认识0分]
-    /// 是否已掌握
-    var mastered: Bool = false {
-        didSet {
-            if mastered {
-                // 移除当前单词的Step1和4
-                guard let id = self.word?.wordId else { return }
-                NotificationCenter.default.post(name: YXNotification.kNewWordMastered, object: nil, userInfo: ["id":id])
-            }
-        }
-    }
+    /// 是否已掌握 [用于双倍扣分，和 P3时跳过s1和s4]
+    var mastered: Bool = false
 
     //MARK: - 以下几个属性用于本地记录进度时使用
     /// 是否根据得分选择题型

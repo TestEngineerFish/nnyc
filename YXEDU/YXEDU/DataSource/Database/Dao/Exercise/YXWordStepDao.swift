@@ -10,7 +10,7 @@ import UIKit
 
 protocol YXWordStepDao {
     
-    // TODO: ==== 查询 ====        
+    // TODO: ==== 查询 ====
     /// 查询当前未学完的分组下标，nil 分组说明学完了
     func selectCurrentGroup(studyId: Int) -> Int?
     
@@ -19,9 +19,8 @@ protocol YXWordStepDao {
 //    func selectUnFinishMinStep(studyId: Int, group: Int) -> Int?
     func selectUnFinishMinStep(studyRecord: YXStudyRecordModel) -> Int?
 
-    /// 获取错误次数
-    /// - Parameter model: 练习对象
-    func getWrongCount(exercise model: YXExerciseModel) -> Int
+    /// 查询一个 练习对象 （当前仅用在了连线题中，查单个的model）
+    func selectWordStepModel(studyId: Int, wordId: Int, step: Int) -> YXExerciseModel?
     
     // TODO: ==== 插入 ====add
     /// 添加练习数据

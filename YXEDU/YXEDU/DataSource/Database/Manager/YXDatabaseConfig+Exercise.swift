@@ -92,6 +92,7 @@ extension YYSQLManager {
         CREATE TABLE IF NOT EXISTS current_turn (
             current_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
             study_id integer NOT NULL,
+            word_id integer DEFAULT(0),
             step_id integer NOT NULL,
             step integer(1) NOT NULL DEFAULT(0),
             turn integer(2) NOT NULL DEFAULT(1),
@@ -237,8 +238,8 @@ extension YYSQLManager {
         case updateMastered =
         """
         UPDATE all_exercise
-        SET score = ?
-        WHERE mastered = ?
+        SET mastered = ?
+        WHERE exercise_id = ?
         """
         
         case getExerciseCount =
@@ -311,7 +312,7 @@ extension YYSQLManager {
             END
         ),
         wrong_count = wrong_count + ?
-        WHERE exercise_id = ? and step = ? and score = ?
+        WHERE exercise_id = ? and step = ?
         """
         
         case selectCurrentGroup =
@@ -321,6 +322,14 @@ extension YYSQLManager {
         group by group_index
         order by group_index asc
         limit 1
+        """
+        
+        
+        case selectWordStep =
+        """
+        select mastered, s.* from all_exercise e inner join all_word_step s
+        on e.exercise_id = s.exercise_id
+        where s.study_id = ? and s.word_id = ? and s.step = ?
         """
         
         case selsetSteps =
@@ -377,12 +386,6 @@ extension YYSQLManager {
         order by step asc
         limit 1
         """
-
-        case selectStepInfo =
-        """
-        select * from all_word_step
-        where exercise_id = ? and step = ? and backup = 0 and score = ?
-        """
         
         case deleteStep =
         """
@@ -403,7 +406,7 @@ extension YYSQLManager {
         case selectInfo =
          """
          SELECT * FROM all_word_step
-         WHERE exercise_id = ? and step = ? and score = ?
+         WHERE exercise_id = ? and step = ?
          """
     }
     
@@ -425,8 +428,8 @@ extension YYSQLManager {
         
         case insertTurn =
         """
-        insert into current_turn(study_id, step_id, step, turn)
-        select study_id, step_id, step, (select current_turn from study_record where study_id = ? limit 1) turn from (
+        insert into current_turn(study_id, word_id, step_id, step, turn)
+        select study_id, word_id, step_id, step, (select current_turn from study_record where study_id = ? limit 1) turn from (
             select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
             where e.study_id = ? and group_index = ? and s.backup = 0
             and (s.status = 0 or s.status = 1) and s.status != 3
@@ -474,6 +477,8 @@ extension YYSQLManager {
         
         /// 更新完成状态
         case updateFinish = "update current_turn set finish = 1 where step_id = ?"
+        /// 更新完成状态，根据当前轮和单词ID
+        case updateFinishByWordId = "update current_turn set finish = 1 where study_id = ? and word_id = ?"
         
         /// 删除当前轮
         case deleteCurrentTurn = "delete from current_turn where study_id = ?"

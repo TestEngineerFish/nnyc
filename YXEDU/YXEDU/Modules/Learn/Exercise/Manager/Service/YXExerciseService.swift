@@ -80,7 +80,11 @@ protocol YXExerciseService {
     ///   - exerciseModel:  练习数据
     func normalAnswerAction(exercise model: YXExerciseModel)
 
-
+    func connectionAnswerAction(wordId: Int, step: Int, right: Bool, type: YXQuestionType)
+    
+    /// 连线题型 ，连线题所有项全部连完
+    func updateConnectionExerciseFinishStatus(exerciseModel: YXExerciseModel, right: Bool)
+    
     /// 获得未学完的新学单词数
     func getNewWordCount() -> Int
 

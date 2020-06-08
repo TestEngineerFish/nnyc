@@ -36,6 +36,8 @@ protocol YXCurrentTurnDao {
     /// 更新完成状态
     @discardableResult
     func updateExerciseFinishStatus(stepId: Int) -> Bool
+    @discardableResult
+    func updateExerciseFinishStatus(studyId: Int, wordId: Int) -> Bool
     
     
     /// 删除当前练习的数据

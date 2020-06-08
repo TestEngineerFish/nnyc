@@ -329,7 +329,7 @@
 
             loadExerciseView(exerciseView: exerciseView)
         } else {
-            self.report()
+//            self.report()
         }
     }
     

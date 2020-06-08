@@ -95,7 +95,7 @@ class YXExerciseDataManager: NSObject {
         dao             = YXWordBookDaoImpl()
         optionManager   = YXExerciseOptionManager()
         progressManager = YXExcerciseProgressManager()
-        NotificationCenter.default.addObserver(self, selector: #selector(removeStep1_4(_:)), name: YXNotification.kNewWordMastered, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(removeStep1_4(_:)), name: YXNotification.kNewWordMastered, object: nil)
     }
 
     /// 新学标记已掌握，能力值等于10，将移除Step1和4的题型
