@@ -266,7 +266,14 @@ extension YYSQLManager {
         SELECT * FROM all_word_step
         WHERE exercise_id = ? and step != 0
         """
-        
+
+        case skipStep1_4 =
+        """
+        UPDATE all_word_step
+        SET status = 3
+        WHERE exercise_id = ? and (step = 1 or step = 4)
+        """
+
         case selectBackupStep =
         """
         select * from all_word_step
