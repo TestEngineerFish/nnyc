@@ -72,6 +72,7 @@ protocol YXStudyRecordDao {
 
     /// 删除学习记录
     /// - Parameter id: 学习记录的ID
+    @discardableResult
     func delete(study id: Int) -> Bool
         
     /// 删除过期的学习记录

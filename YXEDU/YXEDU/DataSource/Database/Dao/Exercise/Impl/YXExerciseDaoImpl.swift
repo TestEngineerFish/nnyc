@@ -29,15 +29,21 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? Int(self.wordRunner.lastInsertRowId) : 0
     }
 
-    func updateExercise(exercise model: YXExerciseModel) -> Bool {
-        let sql = YYSQLManager.ExerciseSQL.updateExercise.rawValue
-        let params: [Any] = [
-            model.mastered ? 1 : 0,
-            model.score,
-            model.unfinishStepCount,
-            model.eid]
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+    func updateScore(exercise id: Int, reduceScore: Int) -> Bool {
+        let sql = YYSQLManager.ExerciseSQL.updateScore.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [reduceScore, reduceScore, id])
     }
+
+    func updateUnfinishedCount(exercise id: Int, reduceCount: Int) -> Bool {
+        let sql = YYSQLManager.ExerciseSQL.updateUnfinishedCount.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [reduceCount, id])
+    }
+
+    func updateMastered(exercise id: Int, isMastered: Bool) -> Bool {
+        let sql = YYSQLManager.ExerciseSQL.updateMastered.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [isMastered ? 1 : 0, id])
+    }
+
     
     func getExerciseCount(learn config: YXLearnConfig, includeNewWord: Bool, includeReviewWord: Bool) -> Int {
         var sql = YYSQLManager.ExerciseSQL.getExerciseCount.rawValue

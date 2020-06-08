@@ -101,13 +101,6 @@ class YXExerciseServiceImpl: YXExerciseService {
 
     func normalAnswerAction(exercise model: YXExerciseModel) {
         var _model = model
-        let ignoreTypeArray: [YXQuestionType] = [.newLearnPrimarySchool,
-                                                 .newLearnPrimarySchool_Group,
-                                                 .newLearnJuniorHighSchool]
-        if ignoreTypeArray.contains(_model.type) {
-            // 扣分逻辑
-            _model = self.updateScore(exercise: _model)
-        }
         // 如果是0、7分题，先移除未做的题
         if _model.isCareScore {
             var deleteModel = _model
@@ -124,7 +117,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         // - 更新Step表
         self.updateStep(exercise: _model)
         // - 更新练习表
-        self.updateProgress(exercise: _model)
+        self.updateExercise(exercise: _model)
         // - 更新学习流程表
         self.updateDurationTime()
     }
@@ -196,10 +189,10 @@ class YXExerciseServiceImpl: YXExerciseService {
     private func getReportJson() -> String {
         var modelArray = [YXExerciseReportModel]()
         // 获得所有学习的单词单词
-        let exerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: false, includeReviewWord: true)
+        let exerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: true, includeReviewWord: true)
 
         exerciseModelList.forEach { (model) in
-            let data = self.stepDao.getSteps(with: model)
+            let data = self.stepDao.getReportSteps(with: model)
             var _model = YXExerciseReportModel()
             _model.wordId     = model.word?.wordId ?? 0
             _model.bookId     = model.word?.bookId
@@ -234,17 +227,14 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 扣分逻辑
-    private func updateScore(exercise model: YXExerciseModel) -> YXExerciseModel {
-
-        var _model      = model
+    private func getReduceScore(exercise model: YXExerciseModel) -> Int {
+        var reduceScore = 0
         if model.mastered {
-            _model.score -= model.result == .some(true) ? 0 : model.wrongScore * model.wrongRate
+            reduceScore = model.status == .right ? 0 : model.wrongScore * model.wrongRate
         } else {
-            _model.score -= model.result == .some(true) ? 0 : model.wrongScore
+            reduceScore = model.status == .right ? 0 : model.wrongScore
         }
-        _model.score = _model.score < 0 ? 0 : _model.score
-        // 更新单词得分
-        return _model
+        return reduceScore
     }
     
     /// 更新缓存表
@@ -263,12 +253,16 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.stepDao.skipStep1_4(exercise: model)
     }
 
-    /// 更新进度
-    private func updateProgress(exercise model: YXExerciseModel) {
+    /// 减少未做Step的数量
+    private func updateExercise(exercise model: YXExerciseModel) {
         if model.status == .right {
-            var _model = model
-            _model.unfinishStepCount -= 1
-            self.exerciseDao.updateExercise(exercise: _model)
+            self.exerciseDao.updateUnfinishedCount(exercise: model.eid, reduceCount: 1)
+            if model.step == 0 {
+                self.exerciseDao.updateMastered(exercise: model.eid, isMastered: model.mastered)
+            }
+        } else {
+            let reduceScore = self.getReduceScore(exercise: model)
+            self.exerciseDao.updateScore(exercise: model.eid, reduceScore: reduceScore)
         }
     }
 
@@ -278,7 +272,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.studyDao.delete(study: studyId)
         self.exerciseDao.deleteExercise(study: studyId)
         self.stepDao.deleteStepWithStudy(study: studyId)
-        YXLog("清除\(learnConfig.learnType.rawValue)的学习记录完成, Plan ID:", learnConfig.planId ?? 0)
+        YXLog("清除\(learnConfig.learnType.rawValue)的学习记录完成, Plan ID:", learnConfig.planId )
     }
 
 }
