@@ -103,7 +103,8 @@ class YXExerciseServiceImpl: YXExerciseService {
 
     func answerAction(exercise: YXExerciseModel) {
         if exercise.isBackup {
-            if let model = stepDao.selectOriginalWordStepModelByBackup(studyId: _studyId, wordId: exercise.wordId, step: exercise.step) {
+            if var model = stepDao.selectOriginalWordStepModelByBackup(studyId: _studyId, wordId: exercise.wordId, step: exercise.step) {
+                model.status = exercise.status
                 normalAnswerAction(exercise: model)
             }
         } else if exercise.step == 0 && exercise.type == .newLearnMasterList {
