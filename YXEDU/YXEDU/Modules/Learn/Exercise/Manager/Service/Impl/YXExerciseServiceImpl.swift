@@ -229,10 +229,21 @@ class YXExerciseServiceImpl: YXExerciseService {
     /// 扣分逻辑
     private func getReduceScore(exercise model: YXExerciseModel) -> Int {
         var reduceScore = 0
-        if model.mastered {
-            reduceScore = model.status == .right ? 0 : model.wrongScore * model.wrongRate
-        } else {
-            reduceScore = model.status == .right ? 0 : model.wrongScore
+        let step1Deduct = 3
+        let step2Deduct = model.mastered ? 4 : 2
+        let step3Deduct = model.mastered ? 2 : 1
+        let step4Deduct = 1
+        switch model.step {
+        case 1:
+            reduceScore = model.status == .right ? 0 : step1Deduct
+        case 2:
+            reduceScore = model.status == .right ? 0 : step2Deduct
+        case 3:
+            reduceScore = model.status == .right ? 0 : step3Deduct
+        case 4:
+            reduceScore = model.status == .right ? 0 : step4Deduct
+        default:
+            break
         }
         return reduceScore
     }

@@ -69,8 +69,6 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
             exerciseModel.isCareScore,
             exerciseModel.step,
             exerciseModel.isBackup,
-            exerciseModel.wrongScore,
-            exerciseModel.wrongRate,
             exerciseModel.group,
         ]
         

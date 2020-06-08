@@ -79,8 +79,6 @@ extension YYSQLManager {
             step integer(1),
             backup integer(1),
             status integer(1) DEFAULT(0),
-            wrong_score integer(1),
-            wrong_rate integer(1),
             wrong_count integer(2) DEFAULT(0),
             group_index integer(1) NOT NULL DEFAULT(0),
             invalid integer(1) DEFAULT(0),
@@ -293,14 +291,12 @@ extension YYSQLManager {
         
             step,
             backup,
-            wrong_score,
-            wrong_rate,
             group_index
         )
         values(
             ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?
+            ?, ?, ?
         )
         """
 
