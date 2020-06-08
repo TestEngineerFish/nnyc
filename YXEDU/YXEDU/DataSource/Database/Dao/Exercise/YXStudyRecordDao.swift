@@ -45,11 +45,7 @@ protocol YXStudyRecordDao {
     ///   - config:
     ///   - turn:
     func updateCurrentTurn(learn config: YXLearnConfig, turn: Int?) -> Bool
-    
-    
-    
-    
-    
+
     /// 设置开始学习时间
     /// - Parameters:
     ///   - config: 学习配置信息

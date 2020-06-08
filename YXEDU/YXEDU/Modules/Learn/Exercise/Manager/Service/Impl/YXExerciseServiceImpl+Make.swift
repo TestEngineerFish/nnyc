@@ -74,7 +74,13 @@ extension YXExerciseServiceImpl {
             // 把上轮做错的状态恢复成未做
             let r4 = stepDao.updatePreviousWrongStatus(studyId: _studyRecord.studyId)
             
-            YXLog("筛选数据， 更新轮下标", r1, "清空当前轮", r2, "插入新的轮 ,id", _studyRecord.studyId, r3, "重置上轮做错的 ", r4)
+            YXLog("\n筛选数据， 更新轮下标", r1, "\n清空当前轮", r2, "\n插入新的轮 ,study_id", _studyRecord.studyId, r3, "\n重置上轮做错的 ", r4)
+            let modelList = turnDao.selectCurrentTurn(studyId: _studyRecord.studyId)
+            modelList.forEach { (model) in
+                YXLog("-----------------------")
+                YXLog("当前Group:\(model.group),当前Step：\(model.step),当前WordId：\(model.wordId),当前Type：\(model.type.rawValue)")
+                YXLog("-----------------------")
+            }
         }
     }
     

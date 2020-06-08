@@ -36,9 +36,23 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
         let params = [studyId, studyId, group]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
+
+    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel] {
+        let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
+            return []
+        }
+        var modelList = [YXExerciseModel]()
+        while result.next() {
+            let model = self._createExercise(rs: result)
+            modelList.append(model)
+        }
+        result.close()
+        return modelList
+    }
     
     func selectExercise(studyId: Int) -> YXExerciseModel? {
-        let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue
+        let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue + " limit 1"
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
             return nil
         }
