@@ -40,7 +40,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     //MARK: ==== 对外暴露的方法 ====
     
-    func initData() {
+    func initService() {
         
         // 1.清除过期数据
         self.clearExpiredData()

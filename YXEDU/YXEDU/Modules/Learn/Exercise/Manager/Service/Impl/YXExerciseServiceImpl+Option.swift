@@ -15,7 +15,7 @@ extension YXExerciseServiceImpl {
     func _loadExerciseOption() {
         let newExerciseModelList    = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: true, includeReviewWord: false)
         let reviewExerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: false, includeReviewWord: true)
-        self._exerciseOptionManange.initData(newArray: newExerciseModelList, reviewArray: reviewExerciseModelList)
+        self._exerciseOptionManange.initOption(newArray: newExerciseModelList, reviewArray: reviewExerciseModelList)
     }
     
     /// 处理题目的选项

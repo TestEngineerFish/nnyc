@@ -128,7 +128,7 @@
     
     private func initManager() {
         service.learnConfig = self.learnConfig
-        service.initData()
+        service.initService()
         
         
         dataManager = YXExerciseDataManager()

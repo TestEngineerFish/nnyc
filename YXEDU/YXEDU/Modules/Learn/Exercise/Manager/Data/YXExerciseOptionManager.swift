@@ -23,7 +23,7 @@ class YXExerciseOptionManager: NSObject {
     }
     
 
-    func initData(newArray: [YXExerciseModel], reviewArray: [YXExerciseModel]) {
+    func initOption(newArray: [YXExerciseModel], reviewArray: [YXExerciseModel]) {
         self.newWordArray = newArray
         self.reviewWordArray = reviewArray
     }

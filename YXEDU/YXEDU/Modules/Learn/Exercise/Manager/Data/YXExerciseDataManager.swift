@@ -174,7 +174,7 @@ class YXExerciseDataManager: NSObject {
                 
         currentTurnIndex = progressManager.currentTurnIndex()
         
-        optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
+        optionManager.initOption(newArray: newWordArray, reviewArray: self.reviewWords())
         return true
     }
 

@@ -39,7 +39,7 @@ extension YXExerciseDataManager {
         self.processReviewWord(result: result)
 
         // 赋值选项处理器，便于后面题目处理练习答案选项
-        self.optionManager.initData(newArray: newWordArray, reviewArray: self.reviewWords())
+        self.optionManager.initOption(newArray: newWordArray, reviewArray: self.reviewWords())
 
         // 初始化进度状态
         self.progressManager.initProgressStatus(newWordIds: result?.newWordIds, reviewWordIds: result?.reviewWordIds, type: self.ruleType)

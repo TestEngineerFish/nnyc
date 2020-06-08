@@ -60,7 +60,7 @@ protocol YXExerciseService {
     //MARK: - 方法
     // ----------------------------
     /// 初始化
-    func initData()
+    func initService()
     
     /// 设置开始学习时间
     func setStartTime()
