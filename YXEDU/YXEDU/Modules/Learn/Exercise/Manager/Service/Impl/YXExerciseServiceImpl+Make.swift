@@ -11,20 +11,15 @@ import UIKit
 /// 出题逻辑，从数据库读取数据
 extension YXExerciseServiceImpl {
     
-    
     /// 加载学习记录
     func _loadStudyRecord() {
-        // 先更新分组下标
-        self._updateCurrentGroup()
-        
-        // 加载学习记录
         if let record = studyDao.selectStudyRecordModel(config: learnConfig) {
             self._studyRecord = record
             YXLog("查询当前学习记录")
         }
     }
 
-    
+    /// 更新分组下标
     func _updateCurrentGroup() {
         // 未完成的组下标
         if let group = stepDao.selectCurrentGroup() {
@@ -128,7 +123,7 @@ extension YXExerciseServiceImpl {
         return nil
     }
     
-    
+    /// 连线题中，是否有单词拼写相同的
     func _sameWords(connectionExercises: [YXExerciseModel]) -> [Int] {
         var ids: [Int] = []
         for exercise in connectionExercises {
@@ -146,6 +141,8 @@ extension YXExerciseServiceImpl {
     }
     
     
+    /// 填充连线题的单词
+    /// - Parameter exercises: 
     func _fillConnectionWordModel(exercises: [YXExerciseModel]) -> [YXExerciseModel] {
         var es: [YXExerciseModel] = []
         for e in exercises {

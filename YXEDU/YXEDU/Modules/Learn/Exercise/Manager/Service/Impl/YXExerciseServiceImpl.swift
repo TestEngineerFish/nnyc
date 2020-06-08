@@ -50,6 +50,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         
         // 3. 加载答题选项
         if self.progress == .learning {
+            self._loadStudyRecord()
             self._loadExerciseOption()
         }
     }
@@ -74,6 +75,9 @@ class YXExerciseServiceImpl: YXExerciseService {
     func fetchExerciseModel() -> YXExerciseModel? {
         // 加载学习记录信息
         self._loadStudyRecord()
+        
+        // 更新分组下标
+        self._updateCurrentGroup()
         
         // 筛选数据
         self._filterExercise()
