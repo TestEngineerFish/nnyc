@@ -51,6 +51,7 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
 
     // 答题完成时，子类必须调用该方法
     func answerCompletion(right: Bool) {
+        exerciseModel.status = right ? .right : .wrong
         self.answerDelegate?.answerCompletion(exerciseModel, right)
     }
 

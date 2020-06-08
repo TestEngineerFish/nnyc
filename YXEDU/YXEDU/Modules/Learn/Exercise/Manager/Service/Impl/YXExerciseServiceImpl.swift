@@ -115,7 +115,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         }
         if _model.step == 0 && self.ruleType == .p3 && _model.mastered  {
             // 更新S1和S4为跳过
-            self.updateStep(exercise: _model)
+            self.skipStep1_4(exercise: _model)
         }
         // 保存数据到数据库
         // - 更新缓存表
@@ -250,7 +250,8 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     /// 跳过Step1-4
-    private func skipStep1_4(exercise model: YXExerciseModel) {
+    @discardableResult
+    private func skipStep1_4(exercise model: YXExerciseModel) -> Bool {
         self.stepDao.skipStep1_4(exercise: model)
     }
 

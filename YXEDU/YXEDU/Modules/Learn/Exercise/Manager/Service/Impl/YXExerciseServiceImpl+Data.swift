@@ -89,7 +89,7 @@ extension YXExerciseServiceImpl {
             // 映射单词ID和表ID
             self._wordIdMap[wordId] = exerciseId
 
-            YXLog("插入练习数据——\(isNew) ", word.wordId ?? 0," \(exercise.group)", exerciseId > 0 ? "成功" : "失败")
+            YXLog("插入练习数据—— 是否新学：\(isNew) ，单词ID：", word.wordId ?? 0,"Group： \(exercise.group)", exerciseId > 0 ? "成功" : "失败")
         }
     }
     

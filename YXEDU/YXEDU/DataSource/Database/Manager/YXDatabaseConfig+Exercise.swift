@@ -257,7 +257,15 @@ extension YYSQLManager {
         case updateWordStep =
         """
         UPDATE all_word_step
-        SET status = ?, wrong_count = ?
+        SET status = ?, wrong_count =
+        (wrong_count +
+            (SELECT CASE
+                WHEN ? = 1
+                THEN 1
+                ELSE 0
+                END
+            )
+        )
         WHERE exercise_id = ? and step = ? and score = ?
         """
 
@@ -309,7 +317,12 @@ extension YYSQLManager {
         order by step asc
         limit 1
         """
-        
+
+        case selectStepInfo =
+        """
+        select * from all_word_step
+        where exercise_id = ? and step = ? and backup = 0 and score = ?
+        """
         
         case deleteStep =
         """

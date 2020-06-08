@@ -19,6 +19,10 @@ protocol YXWordStepDao {
     /// - Parameter studyId:
     func selectUnFinishMinStep(studyId: Int, group: Int) -> Int?
     func selectUnFinishMinStep(studyRecord: YXStudyRecordModel) -> Int?
+
+    /// 获取错误次数
+    /// - Parameter model: 练习对象
+    func getWrongCount(exercise model: YXExerciseModel) -> Int
     
     // TODO: ==== 插入 ====add
     /// 添加练习数据
