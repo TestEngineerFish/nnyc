@@ -9,7 +9,7 @@
 import UIKit
 
 class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableViewDataSource {
-//    private var words: [YXWordModel] = []
+
     private var tapStartLearnClosure: ((_ exerciseModel: YXExerciseModel) -> Void)!
 
     @IBOutlet var contentView: UIView!
@@ -62,6 +62,7 @@ class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.exerciseModel.n3List[indexPath.row].word?.isSelected = !(self.exerciseModel.n3List[indexPath.row].word?.isSelected == .some(true))
+        self.exerciseModel.n3List[indexPath.row].mastered = self.exerciseModel.n3List[indexPath.row].word?.isSelected == .some(true)
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

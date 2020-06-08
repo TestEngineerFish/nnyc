@@ -24,7 +24,7 @@ class YXNewLearnListExerciseView: YXBaseExerciseView {
         questionView?.snp.makeConstraints({ (make) in
             make.top.equalToSuperview()
             make.left.right.equalToSuperview()
-            make.bottom.equalToSuperview().offset(YXExerciseConfig.exerciseViewBottom - kSafeBottomMargin)
+            make.bottom.equalToSuperview()
         })
     }
 }

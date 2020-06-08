@@ -258,7 +258,7 @@
             self.bottomView.tipsButton.isEnabled = tipsEnabled
             // 如果是高中新学，则隐藏底部栏
             var exerciseViewHeight = YXExerciseConfig.exerciseViewHeight
-            if model.type == .newLearnJuniorHighSchool {
+            if model.type == .newLearnJuniorHighSchool || model.type == .newLearnMasterList {
                 self.bottomView.snp.remakeConstraints { (make) in
                     make.left.right.equalToSuperview()
                     make.height.equalTo(0)
