@@ -178,7 +178,7 @@
                     if self.learnConfig.learnType == .base {
                         // 记录学完一次主流程，用于首页弹出设置提醒弹框
                         YYCache.set(true, forKey: "DidFinishMainStudyProgress")
-                        let newWordCount = dict["newWordCount"] ?? 0
+                        let newWordCount    = dict["newWordCount"] ?? 0
                         let reviewWordCount = dict["reviewWordCount"] ?? 0
                         self.processBaseExerciseResult(newCount: newWordCount, reviewCount: reviewWordCount)
                     } else {
@@ -329,7 +329,7 @@
 
             loadExerciseView(exerciseView: exerciseView)
         } else {
-//            self.report()
+            self.report()
         }
     }
     

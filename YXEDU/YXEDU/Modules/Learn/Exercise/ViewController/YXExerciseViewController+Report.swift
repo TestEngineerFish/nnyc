@@ -13,7 +13,6 @@ import GrowingAutoTrackKit
 extension YXExerciseViewController {
     
     func report() {
-        self.service.report(completion: nil)
         if service.progress == .empty {
             processEmptyData()
         } else {
@@ -46,37 +45,23 @@ extension YXExerciseViewController {
     //MARK: submit report
     /// 上报数据
     func submitResult() {
-        YXLog("====上报数据====")
-        dataManager.reportExercise(type: learnConfig.learnType) { [weak self] (result, errorMsg) in
-            guard let self = self else {return}
+        self.service.report { (result, dict) in
             if result {
-                // 统计打点
-//                self.biReport()
-                let duration = self.dataManager.progressManager.fetchStudyDuration()
-                let count    = self.dataManager.progressManager.fetchStudyCount()
-                YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, word: count)
-                
-                let progress = self.dataManager.progressManager.loadLocalWordsProgress()
-                // 上报结束, 清空数据
-                self.dataManager.progressManager.completionReport()
-                
-                switch self.learnConfig.learnType {
-                case .base:
-                    YXGrowingManager.share.uploadLearnFinished()
+                YXLog("上报关卡成功")
+                if self.learnConfig.learnType == .base {
                     // 记录学完一次主流程，用于首页弹出设置提醒弹框
                     YYCache.set(true, forKey: "DidFinishMainStudyProgress")
-                    
-                    self.processBaseExerciseResult(newCount: progress.0.count, reviewCount: progress.1.count)
-                default:
+                    let newWordCount    = dict["newWordCount"] ?? 0
+                    let reviewWordCount = dict["reviewWordCount"] ?? 0
+                    self.processBaseExerciseResult(newCount: newWordCount, reviewCount: reviewWordCount)
+                } else {
                     self.processReviewResult()
                 }
-                
-                YXLog("学完")
             } else {
+                YXLog("上报关卡失败")
                 UIView.toast("上报关卡失败")
                 self.navigationController?.popViewController(animated: true)
             }
-            
         }
     }
     
