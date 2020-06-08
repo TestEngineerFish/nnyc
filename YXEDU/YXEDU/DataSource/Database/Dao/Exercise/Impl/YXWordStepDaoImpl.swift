@@ -141,4 +141,17 @@ class YXWordStepDaoImpl: YYDatabase, YXWordStepDao {
     func selecteWordScore(exercise model: YXExerciseModel) -> Int {
         return 10
     }
+
+    func getStepStatus(exercise model: YXExerciseModel) -> YXStepStatus {
+        var status = YXStepStatus.normal
+        let sql = YYSQLManager.WordStepSQL.selectInfo.rawValue
+        let params: [Any] = [model.eid,
+                             model.step,
+                             model.questionTypeScore]
+        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
+            let statusInt = Int(result.int(forColumn: "status"))
+            status = YXStepStatus.getStatus(statusInt)
+        }
+        return status
+    }
 }

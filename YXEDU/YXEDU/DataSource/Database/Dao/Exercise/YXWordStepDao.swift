@@ -63,4 +63,8 @@ protocol YXWordStepDao {
     func deleteAllWordStep() -> Bool
     /// 查询单词得分
     func selecteWordScore(exercise model: YXExerciseModel) -> Int
+
+    /// 获得一个Step的状态
+    /// - Parameter model: 练习对象
+    func getStepStatus(exercise model: YXExerciseModel) -> YXStepStatus
 }

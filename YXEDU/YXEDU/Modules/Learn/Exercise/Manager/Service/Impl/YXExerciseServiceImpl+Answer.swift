@@ -39,7 +39,10 @@ extension YXExerciseServiceImpl {
     /// 减少未做Step的数量
     func updateExercise(exercise model: YXExerciseModel) {
         if model.status == .right {
-            self.exerciseDao.updateUnfinishedCount(exercise: model.eid, reduceCount: 1)
+            // 是否做过
+            let status = self.stepDao.getStepStatus(exercise: model)
+            let count = status == .some(.normal) ? 1 : 0
+            self.exerciseDao.updateUnfinishedCount(exercise: model.eid, reduceCount: count)
             if model.step == 0 {
                 self.exerciseDao.updateMastered(exercise: model.eid, isMastered: model.mastered)
             }

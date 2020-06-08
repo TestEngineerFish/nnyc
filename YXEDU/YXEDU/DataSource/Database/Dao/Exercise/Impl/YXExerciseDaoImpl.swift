@@ -150,7 +150,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         model.word?.unitId = Int(result.int(forColumn: "unit_id"))
         model.mastered     = result.bool(forColumn:"mastered")
         model.score        = Int(result.int(forColumn: "score"))
-//        model.wrongCount   = Int(result.int(forColumn: "wrong_count"))
+        model.status       = YXStepStatus.getStatus(Int(result.int(forColumn: "status")))
         model.isNewWord    = result.bool(forColumn: "is_new")
         model.unfinishStepCount = Int(result.int(forColumn: "unfinish_count"))
         return model
