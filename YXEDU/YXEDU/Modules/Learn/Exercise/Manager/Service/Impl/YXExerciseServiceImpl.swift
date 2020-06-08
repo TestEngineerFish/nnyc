@@ -100,6 +100,14 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.studyDao.setStartTime(learn: learnConfig, start: time)
     }
 
+    func answerAction(exercise: YXExerciseModel) {
+        if exercise.step == 0 && exercise.type == .newLearnMasterList {
+            n3AnswerAction(exercise: exercise)
+        } else {
+            normalAnswerAction(exercise: exercise)
+        }
+    }
+    
     func normalAnswerAction(exercise model: YXExerciseModel) {
         // 如果是0、7分题，先移除未做的题
         if model.isCareScore {
@@ -122,6 +130,14 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.updateExercise(exercise: model)
         // - 更新学习流程表
         self.updateDurationTime()
+    }
+    
+    
+    
+    func n3AnswerAction(exercise: YXExerciseModel) {
+        for model in exercise.n3List {
+            self.normalAnswerAction(exercise: model)
+        }
     }
     
     

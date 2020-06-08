@@ -106,7 +106,7 @@ extension YXExerciseServiceImpl {
         }
     }
     
-    
+    /// 查找N3题型
     func _finedN3Exercise(exercise: YXExerciseModel) -> YXExerciseModel? {
         if exercise.step == 0 && exercise.type == .newLearnMasterList {
             var n3List = [YXExerciseModel]()

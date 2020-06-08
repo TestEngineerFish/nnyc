@@ -80,7 +80,7 @@ protocol YXExerciseService {
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
     /// - Parameters:
     ///   - exerciseModel:  练习数据
-    func normalAnswerAction(exercise model: YXExerciseModel)
+    func answerAction(exercise model: YXExerciseModel)
 
     func connectionAnswerAction(wordId: Int, step: Int, right: Bool)
     
