@@ -18,10 +18,25 @@ protocol YXExerciseDao {
     @discardableResult
     func insertExercise(learn config: YXLearnConfig, rule: YXExerciseRule, study recordId: Int, exerciseModel: YXExerciseModel) -> Int
 
-    /// 更新练习记录
-    /// - Parameter model: 练习对象
+    /// 更新练习得分
+    /// - Parameter id: 练习ID
+    /// - Parameter reduceScore: 减少分数
     @discardableResult
-    func updateExercise(exercise model: YXExerciseModel) -> Bool
+    func updateScore(exercise id: Int, reduceScore: Int) -> Bool
+
+    /// 更新未做题数
+    /// - Parameters:
+    ///   - id: 练习ID
+    ///   - reduceCount: 减少数量
+    @discardableResult
+    func updateUnfinishedCount(exercise id: Int, reduceCount: Int) -> Bool
+
+    /// 更新是否掌握状态
+    /// - Parameters:
+    ///   - id: 练习ID
+    ///   - isMastered: 是否掌握
+    @discardableResult
+    func updateMastered(exercise id: Int, isMastered: Bool) -> Bool
     
     /// 获得当前学习流程的练习数量
     /// - Parameters:
@@ -45,6 +60,7 @@ protocol YXExerciseDao {
 
     /// 删除一个学习记录所有单词
     /// - Parameter id: 学习记录ID
+    @discardableResult
     func deleteExercise(study id: Int) -> Bool
 
     /// 清除过期的数据

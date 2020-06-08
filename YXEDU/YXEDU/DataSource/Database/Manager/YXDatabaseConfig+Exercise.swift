@@ -205,13 +205,42 @@ extension YYSQLManager {
         )
         values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
-        
-        
-        case updateExercise =
+
+        case updateScore =
         """
         UPDATE all_exercise
-        SET mastered = ?, score = ?, unfinish_count = ?
+        SET score =
+        (score -
+            (SELECT CASE
+             WHEN score >= ?
+             THEN ?
+             ELSE score
+             END
+            )
+        )
         WHERE exercise_id = ?
+        """
+
+        case updateUnfinishedCount =
+        """
+        UPDATE all_exercise
+        SET unfinish_count =
+        (unfinish_count -
+            (SELECT CASE
+             WHEN unfinish_count > 0
+             THEN ?
+             ELSE 0
+             END
+            )
+        )
+        WHERE exercise_id = ?
+        """
+
+        case updateMastered =
+        """
+        UPDATE all_exercise
+        SET score = ?
+        WHERE mastered = ?
         """
         
         case getExerciseCount =

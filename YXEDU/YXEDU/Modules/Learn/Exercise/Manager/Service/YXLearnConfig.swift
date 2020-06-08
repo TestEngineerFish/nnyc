@@ -49,7 +49,7 @@ class YXLearnConfigImpl: YXLearnConfig {
 class YXBaseLearnConfig: YXLearnConfigImpl {
     /// 基础学习时，必须要传 bookId和unitId，要缓存进度
     init(bookId: Int = 0, unitId: Int = 0, learnType: YXLearnType = .base) {
-        super.init(bookId: bookId, unitId: unitId, planId: 0, learnType: learnType)
+        super.init(bookId: bookId, unitId: 436, planId: 0, learnType: learnType)
     }
 }
 

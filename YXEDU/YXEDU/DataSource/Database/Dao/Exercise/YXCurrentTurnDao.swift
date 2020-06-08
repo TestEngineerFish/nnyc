@@ -33,6 +33,7 @@ protocol YXCurrentTurnDao {
     func selectTurnFinishStatus(studyId: Int) -> Bool
     
     /// 更新完成状态
+    @discardableResult
     func updateExerciseFinishStatus(stepId: Int) -> Bool
     
     

@@ -45,7 +45,7 @@ protocol YXWordStepDao {
     /// 获取单词的所有已做的练习题，字典返回，用于上报
     /// - Parameter model: 练习对象
     /// - Returns: step结果
-    func getSteps(with model: YXExerciseModel) -> [String:Any]
+    func getReportSteps(with model: YXExerciseModel) -> [String:Any]
 
     /// 删除某一个Step
     /// - Parameter model: 练习对象
@@ -53,6 +53,7 @@ protocol YXWordStepDao {
 
     /// 删除一个学习记录的所有学习步骤
     /// - Parameter id: 学习记录ID
+    @discardableResult
     func deleteStepWithStudy(study id: Int) -> Bool
 
     /// 清除过期的数据
