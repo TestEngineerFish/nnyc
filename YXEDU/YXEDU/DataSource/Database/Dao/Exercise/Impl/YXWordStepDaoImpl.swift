@@ -58,6 +58,21 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
     }
 
     
+    func selectOriginalWordStepModelByBackup(studyId: Int, wordId: Int, step: Int) -> YXExerciseModel? {
+        let sql = YYSQLManager.WordStepSQL.selectOriginalWordStepModelByBackup.rawValue
+        let params = [studyId, wordId, step]
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return nil
+        }
+        var exercise: YXExerciseModel?
+        if result.next() {
+            exercise            = self._createExercise(rs: result)
+            exercise?.mastered  = result.bool(forColumn:"mastered")
+        }
+        result.close()
+        return exercise
+    }
+    
     func insertWordStep(study recordId: Int, exerciseModel: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
         

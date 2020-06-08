@@ -22,6 +22,9 @@ protocol YXWordStepDao {
     /// 查询一个 练习对象 （当前仅用在了连线题中，查单个的model）
     func selectWordStepModel(studyId: Int, wordId: Int, step: Int) -> YXExerciseModel?
     
+    /// 根据备选查原始对象
+    func selectOriginalWordStepModelByBackup(studyId: Int, wordId: Int, step: Int) -> YXExerciseModel?
+    
     // TODO: ==== 插入 ====add
     /// 添加练习数据
     /// - Parameter exerciseModel: 练习

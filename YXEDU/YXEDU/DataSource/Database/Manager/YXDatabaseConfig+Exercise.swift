@@ -340,6 +340,12 @@ extension YYSQLManager {
         where s.study_id = ? and s.word_id = ? and s.step = ?
         """
         
+        case selectOriginalWordStepModelByBackup =
+        """
+        select mastered, s.* from all_exercise e inner join all_word_step s
+        on e.exercise_id = s.exercise_id and s.backup = 0
+        where s.study_id = ? and s.word_id = ? and s.step = ?
+        """
         
         case selsetSteps =
         """
@@ -363,7 +369,7 @@ extension YYSQLManager {
         case selectBackupStep =
         """
         select * from all_word_step
-        where study_id = ? exercise_id = ? and step = ? and backup = 1
+        where study_id = ? and exercise_id = ? and step = ? and backup = 1
         """
         
         case selectUnfinishMinStep =
