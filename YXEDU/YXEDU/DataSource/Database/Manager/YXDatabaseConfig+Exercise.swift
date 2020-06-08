@@ -34,7 +34,7 @@ extension YYSQLManager {
             current_group integer(1) NOT NULL DEFAULT(0),
             current_turn integer(2) NOT NULL DEFAULT(-1),
             study_duration integer(4),
-            start_time integer(8),
+            start_time integer(16),
             create_ts text(32) NOT NULL DEFAULT(datetime('now'))
         );
         """
@@ -156,14 +156,14 @@ extension YYSQLManager {
         """
         UPDATE study_record
         SET start_time = ?
-        WHERE learn_type = ? and plan_id = ?
+        WHERE learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
         """
 
         case updateDurationTime =
         """
         UPDATE study_record
-        SET study_duration = ?
-        WHERE learn_type = ? and plan_id = ?
+        SET study_duration = study_duration + ?
+        WHERE learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
         """
 
         case deleteRecord =
@@ -437,13 +437,12 @@ extension YYSQLManager {
         order by step desc, exercise_id asc
         """
         
-        /// 正常查询一个
+        /// 正常查询
         case selectExercise =
         """
         select c.current_id, s.* from current_turn c inner join all_word_step s
         on s.step_id = c.step_id and c.finish = 0 and c.study_id = ?
         order by c.current_id asc
-        limit 1
         """
         
         /// 查询连线题

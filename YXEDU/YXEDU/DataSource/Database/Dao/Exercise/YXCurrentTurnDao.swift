@@ -14,7 +14,9 @@ protocol YXCurrentTurnDao {
     
     /// 插入当前轮的数据
     func insertCurrentTurn(studyId: Int, group: Int) -> Bool
-    
+
+    /// 获得当前轮的所有数据
+    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel]
     
     /// 正常获取首个未做的练习
     func selectExercise(studyId: Int) -> YXExerciseModel?

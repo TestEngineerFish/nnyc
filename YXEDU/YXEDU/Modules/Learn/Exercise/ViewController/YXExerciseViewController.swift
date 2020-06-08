@@ -192,6 +192,7 @@
             }
         case .learning:
             YXLog("本地存在未学完的关卡，先加载")
+            self.service.setStartTime()
             YXExerciseViewController.requesting = false
             self.loadingView?.animationCompleteBlock = { [weak self] in
                 self?.dataManager.progressManager.setStartStudyTime()
@@ -199,6 +200,7 @@
             }
         default:
             YXLog("未开始学习，请求学习数据")
+            self.service.setStartTime()
             self.fetchExerciseData()
         }
         

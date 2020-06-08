@@ -42,13 +42,16 @@ extension YXExerciseServiceImpl {
             // 是否做过
             let status = self.stepDao.getStepStatus(exercise: model)
             let count = status == .some(.wrong) ? 0 : 1
-            self.exerciseDao.updateUnfinishedCount(exercise: model.eid, reduceCount: count)
+            if count > 0 {
+                self.exerciseDao.updateUnfinishedCount(exercise: model.eid, reduceCount: count)
+            }
             if model.step == 0 {
                 self.exerciseDao.updateMastered(exercise: model.eid, isMastered: model.mastered)
             }
         } else {
             let reduceScore = self.getReduceScore(exercise: model)
             self.exerciseDao.updateScore(exercise: model.eid, reduceScore: reduceScore)
+            YXLog("做错扣-\(reduceScore)分")
         }
     }
 
