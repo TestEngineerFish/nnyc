@@ -18,9 +18,9 @@ protocol YXStudyRecordDao {
     /// - Returns: 记录ID
     func getStudyID(learn config: YXLearnConfig) -> Int
 
-    /// 是否已做完所有题型
+    /// 获得学习流程的当前状态
     /// - Parameter config: 学习配置信息
-    func isFinished(learn config: YXLearnConfig) -> Bool?
+    func getStatus(learn config: YXLearnConfig) -> YXExerciseProgress
 
     /// 插入学习记录
     /// - Parameters:

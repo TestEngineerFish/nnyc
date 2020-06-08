@@ -123,8 +123,8 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.updateDurationTime()
     }
 
-    func isStudyFinished() -> Bool? {
-        return self.studyDao.isFinished(learn: learnConfig)
+    func getStatus() -> YXExerciseProgress {
+        return self.studyDao.getStatus(learn: learnConfig)
     }
 
     /// 上报关卡

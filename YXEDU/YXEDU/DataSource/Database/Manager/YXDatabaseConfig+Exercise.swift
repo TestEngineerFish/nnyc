@@ -30,7 +30,7 @@ extension YYSQLManager {
             book_id integer(4) NOT NULL DEFAULT(0),
             unit_id integer(4) NOT NULL DEFAULT(0),
             plan_id integer(4) NOT NULL DEFAULT(0),
-            complete integer(1) NOT NULL DEFAULT(0),
+            status integer(1) NOT NULL DEFAULT(0),
             current_group integer(1) NOT NULL DEFAULT(0),
             current_turn integer(2) NOT NULL DEFAULT(-1),
             study_duration integer(4),

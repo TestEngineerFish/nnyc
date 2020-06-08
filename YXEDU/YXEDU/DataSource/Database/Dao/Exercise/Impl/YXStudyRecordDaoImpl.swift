@@ -42,18 +42,19 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return 0
     }
 
-    func isFinished(learn config: YXLearnConfig) -> Bool? {
+    func getStatus(learn config: YXLearnConfig) -> YXExerciseProgress {
         let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
         let params: [Any] = [
             config.learnType.rawValue,
             config.planId as Any]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
-            return nil
+            return .none
         }
         if result.next() {
-            return result.bool(forColumn: "complete")
+            let statusInt = Int(result.int(forColumn: "status"))
+            return YXExerciseProgress(rawValue: statusInt) ?? .none
         }
-        return nil
+        return .none
     }
 
     func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule, turn: Int) -> Int {

@@ -167,8 +167,8 @@
     private func startStudy() {
         YXLog("====开始学习====")
         YXExerciseViewController.requesting = true
-        switch self.service.isStudyFinished() {
-        case .some(true):
+        switch self.service.getStatus() {
+        case .unreport:
             YXLog("本地存在学完未上报的关卡，先加载，再上报")
             YXExerciseViewController.requesting = false
             self.service.report { (result, dict) in
@@ -189,7 +189,7 @@
                     self.navigationController?.popViewController(animated: true)
                 }
             }
-        case .some(false):
+        case .learning:
             YXLog("本地存在未学完的关卡，先加载")
             YXExerciseViewController.requesting = false
             self.loadingView?.animationCompleteBlock = { [weak self] in
