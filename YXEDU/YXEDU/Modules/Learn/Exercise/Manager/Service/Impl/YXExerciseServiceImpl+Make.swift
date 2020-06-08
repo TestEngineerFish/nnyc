@@ -91,6 +91,11 @@ extension YXExerciseServiceImpl {
             return nil
         }
         
+        // 是否有N3的题
+        if let model = _finedN3Exercise(exercise: exercise) {
+            return model
+        }
+        
         if _isConnectionType(model: exercise) {
             // 连线题
             return _findConnectionExercise(exercise: exercise)
@@ -100,6 +105,26 @@ extension YXExerciseServiceImpl {
             return _processExerciseOption(exercise: exercise)
         }
     }
+    
+    
+    func _finedN3Exercise(exercise: YXExerciseModel) -> YXExerciseModel? {
+        if exercise.step == 0 && exercise.type == .newLearnMasterList {
+            var n3List = [YXExerciseModel]()
+            let es = turnDao.selectCurrentTurn(studyId: _studyId)
+            for e in es {
+                if e.type == .newLearnMasterList {
+                    var newE = e
+                    newE.word = _queryWord(wordId: e.wordId)
+                    n3List.append(newE)
+                }
+            }
+            var exerciseContainer = exercise
+            exerciseContainer.n3List = n3List
+            return exerciseContainer
+        }
+        return nil
+    }
+    
     
     
     /// 查找一个连线题，有可能是备选题

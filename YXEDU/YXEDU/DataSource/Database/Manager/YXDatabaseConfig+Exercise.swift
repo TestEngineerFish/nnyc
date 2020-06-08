@@ -455,6 +455,7 @@ extension YYSQLManager {
         select c.current_id, s.* from current_turn c inner join all_word_step s
         on s.step_id = c.step_id and c.finish = 0 and c.study_id = ?
         order by c.current_id asc
+        limit ?
         """
         
         /// 查询连线题
