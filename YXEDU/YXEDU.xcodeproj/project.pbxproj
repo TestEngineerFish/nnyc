@@ -353,8 +353,6 @@
 		EE1B6954246C2A91000EADB2 /* YXExerciseDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B6953246C2A91000EADB2 /* YXExerciseDao.swift */; };
 		EE1B6956246C2ED1000EADB2 /* YXDatabaseConfig+Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B6955246C2ED1000EADB2 /* YXDatabaseConfig+Exercise.swift */; };
 		EE1B695A246E3B6C000EADB2 /* YXExerciseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B6959246E3B6C000EADB2 /* YXExerciseService.swift */; };
-		EE1B695C246E3D40000EADB2 /* YXExerciseOptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B695B246E3D40000EADB2 /* YXExerciseOptionService.swift */; };
-		EE1B695E246E3D61000EADB2 /* YXExerciseProgressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B695D246E3D61000EADB2 /* YXExerciseProgressService.swift */; };
 		EE1B6960246E40E1000EADB2 /* YXExerciseServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B695F246E40E1000EADB2 /* YXExerciseServiceImpl.swift */; };
 		EE1B6962246E6585000EADB2 /* YXExerciseServiceImpl+Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B6961246E6584000EADB2 /* YXExerciseServiceImpl+Answer.swift */; };
 		EE1B6965246E66F2000EADB2 /* YXExerciseServiceImpl+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B6964246E66F2000EADB2 /* YXExerciseServiceImpl+Data.swift */; };
@@ -964,8 +962,6 @@
 		EE1B6953246C2A91000EADB2 /* YXExerciseDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseDao.swift; sourceTree = "<group>"; };
 		EE1B6955246C2ED1000EADB2 /* YXDatabaseConfig+Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YXDatabaseConfig+Exercise.swift"; sourceTree = "<group>"; };
 		EE1B6959246E3B6C000EADB2 /* YXExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseService.swift; sourceTree = "<group>"; };
-		EE1B695B246E3D40000EADB2 /* YXExerciseOptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseOptionService.swift; sourceTree = "<group>"; };
-		EE1B695D246E3D61000EADB2 /* YXExerciseProgressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseProgressService.swift; sourceTree = "<group>"; };
 		EE1B695F246E40E1000EADB2 /* YXExerciseServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXExerciseServiceImpl.swift; sourceTree = "<group>"; };
 		EE1B6961246E6584000EADB2 /* YXExerciseServiceImpl+Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YXExerciseServiceImpl+Answer.swift"; sourceTree = "<group>"; };
 		EE1B6964246E66F2000EADB2 /* YXExerciseServiceImpl+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YXExerciseServiceImpl+Data.swift"; sourceTree = "<group>"; };
@@ -2526,10 +2522,8 @@
 			isa = PBXGroup;
 			children = (
 				EE1B6963246E659B000EADB2 /* Impl */,
-				EE1B695B246E3D40000EADB2 /* YXExerciseOptionService.swift */,
-				EE1B695D246E3D61000EADB2 /* YXExerciseProgressService.swift */,
-				EE1B6959246E3B6C000EADB2 /* YXExerciseService.swift */,
 				EE1B69722473DB54000EADB2 /* YXLearnConfig.swift */,
+				EE1B6959246E3B6C000EADB2 /* YXExerciseService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -4103,7 +4097,6 @@
 				EE1E4AA223694D01007D248F /* YXFillWordAccordingToListenExerciseView.swift in Sources */,
 				EE5E0170232754FA00655654 /* YXUtils.m in Sources */,
 				2279F257236D544F0080A0B2 /* YXWordButton.swift in Sources */,
-				EE1B695E246E3D61000EADB2 /* YXExerciseProgressService.swift in Sources */,
 				EE4E6B1F2398F04A002B845A /* YXExerciseDataManager.swift in Sources */,
 				EE6C7D1C23B0B7DD009DCC0C /* YXReviewPlanDetailModel.swift in Sources */,
 				EE5EF254232740B800655654 /* UIView+SnapShot.m in Sources */,
@@ -4158,7 +4151,6 @@
 				221E779D24349A1E000377DB /* YXComNaviView.m in Sources */,
 				2290EAC4236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift in Sources */,
 				EE4201D0248A310400231704 /* YXWordStepDao.swift in Sources */,
-				EE1B695C246E3D40000EADB2 /* YXExerciseOptionService.swift in Sources */,
 				EE5E00EE23274FEC00655654 /* YXPersonalInformationVC.m in Sources */,
 				224529042327A82500510507 /* YYDatabase.swift in Sources */,
 				7720182C237CEB9B00535732 /* YXWordDetailTipView.swift in Sources */,
