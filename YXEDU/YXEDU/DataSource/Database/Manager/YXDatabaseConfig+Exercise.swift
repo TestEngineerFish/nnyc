@@ -436,6 +436,11 @@ extension YYSQLManager {
          SELECT * FROM all_word_step
          WHERE exercise_id = ? and step = ?
          """
+        case selectExerciseStep =
+        """
+        SELECT * FROM all_word_step
+        WHERE exercise_id = ?
+        """
     }
     
     enum CurrentTurnSQL: String {

@@ -69,4 +69,8 @@ protocol YXWordStepDao {
     /// 获得一个Step的状态
     /// - Parameter model: 练习对象
     func getStepStatus(exercise model: YXExerciseModel) -> YXStepStatus
+
+    /// 获得一个练习单词的总错误数
+    /// - Parameter model: 练习表ID
+    func getExerciseWrongAmount(exercise id: Int) -> Int
 }

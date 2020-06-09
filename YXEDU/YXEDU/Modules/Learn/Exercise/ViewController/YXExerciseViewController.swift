@@ -257,7 +257,7 @@
             // 连线未选中时，禁用提示
             let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese)
             self.bottomView.tipsButton.isEnabled = tipsEnabled
-            // 如果是高中新学，则隐藏底部栏
+            // 如果是高中新学、新学列表，则隐藏底部栏
             var exerciseViewHeight = YXExerciseConfig.exerciseViewHeight
             if model.type == .newLearnJuniorHighSchool || model.type == .newLearnMasterList {
                 self.bottomView.snp.remakeConstraints { (make) in

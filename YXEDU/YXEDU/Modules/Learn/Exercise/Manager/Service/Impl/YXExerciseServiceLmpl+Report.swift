@@ -22,7 +22,7 @@ extension YXExerciseServiceImpl {
             _model.bookId     = model.word?.bookId
             _model.unitId     = model.word?.unitId
             _model.score      = model.score
-            _model.errorCount = model.wrongCount
+            _model.errorCount = self.getExerciseWrongAmount(exercise: model.eid)
             _model.result     = ResultModel(JSON: data)
             modelArray.append(_model)
         }
@@ -42,6 +42,8 @@ extension YXExerciseServiceImpl {
         return self.exerciseDao.getReviewWordCount(studyId: _studyId)
     }
 
-
-
+    func getExerciseWrongAmount(exercise id: Int) -> Int {
+        let amount = self.stepDao.getExerciseWrongAmount(exercise: id)
+        return amount
+    }
 }

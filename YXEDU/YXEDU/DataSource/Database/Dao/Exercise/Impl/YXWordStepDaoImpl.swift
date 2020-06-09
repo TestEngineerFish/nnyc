@@ -113,7 +113,7 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params){
             while result.next() {
                 let step        = Int(result.int(forColumn: "step"))
-                let stepResult  = Int(result.int(forColumn: "status")) == 2
+                let stepResult  = Int(result.int(forColumn: "wrong_count")) == 0
                 if step != 0 {
                     dict["\(step)"] = stepResult
                 }
@@ -173,5 +173,18 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
             result.close()
         }
         return status
+    }
+
+    func getExerciseWrongAmount(exercise id: Int) -> Int {
+        var amount = 0
+        let sql = YYSQLManager.WordStepSQL.selectExerciseStep.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return amount
+        }
+        while result.next() {
+            let count = Int(result.int(forColumn: "wrong_count"))
+            amount += count
+        }
+        return amount
     }
 }
