@@ -11,44 +11,41 @@ import UIKit
 class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
     
     func selectCurrentGroup(studyId: Int) -> Int? {
+        var step: Int?
         let sql = YYSQLManager.WordStepSQL.selectCurrentGroup.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
-            return nil
-        }
-        if result.next() {
-            let step = Int(result.int(forColumn: "current_group"))
-            result.close()
             return step
         }
+        if result.next() {
+            step = Int(result.int(forColumn: "current_group"))
+        }
         result.close()
-        return nil
+        return step
     }
     
     func selectUnFinishMinStep(studyRecord: YXStudyRecordModel) -> Int? {
+        var step: Int?
         let sql = YYSQLManager.WordStepSQL.selectUnfinishMinStepByTurn.rawValue
         let params = [studyRecord.studyId,
                       studyRecord.currentTurn,
                       studyRecord.currentGroup]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
-            return nil
-        }
-        if result.next() {
-            let step = Int(result.int(forColumn: "step"))
-            result.close()
             return step
         }
+        if result.next() {
+            step = Int(result.int(forColumn: "step"))
+        }
         result.close()
-        return nil
+        return step
     }
     
-    
     func selectWordStepModel(studyId: Int, wordId: Int, step: Int) -> YXExerciseModel? {
+        var exercise: YXExerciseModel?
         let sql = YYSQLManager.WordStepSQL.selectWordStep.rawValue
         let params = [studyId, wordId, step]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
-            return nil
+            return exercise
         }
-        var exercise: YXExerciseModel?
         if result.next() {
             exercise            = self._createExercise(rs: result)
             exercise?.mastered  = result.bool(forColumn:"mastered")
@@ -59,12 +56,12 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
 
     
     func selectOriginalWordStepModelByBackup(studyId: Int, wordId: Int, step: Int) -> YXExerciseModel? {
+        var exercise: YXExerciseModel?
         let sql = YYSQLManager.WordStepSQL.selectOriginalWordStepModelByBackup.rawValue
         let params = [studyId, wordId, step]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
-            return nil
+            return exercise
         }
-        var exercise: YXExerciseModel?
         if result.next() {
             exercise            = self._createExercise(rs: result)
             exercise?.mastered  = result.bool(forColumn:"mastered")
@@ -110,16 +107,17 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         let sql = YYSQLManager.WordStepSQL.selsetSteps.rawValue
         let params: [Any] = [model.eid]
         var dict = [String:Any]()
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params){
-            while result.next() {
-                let step        = Int(result.int(forColumn: "step"))
-                let stepResult  = Int(result.int(forColumn: "wrong_count")) == 0
-                if step != 0 {
-                    dict["\(step)"] = stepResult
-                }
-            }
-            result.close()
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return dict
         }
+        while result.next() {
+            let step       = Int(result.int(forColumn: "step"))
+            let stepResult = Int(result.int(forColumn: "wrong_count")) == 0
+            if step != 0 {
+                dict["\(step)"] = stepResult
+            }
+        }
+        result.close()
         return dict
     }
 
@@ -167,11 +165,14 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         var status = YXStepStatus.normal
         let sql = YYSQLManager.WordStepSQL.selectInfo.rawValue
         let params = [model.eid, model.step]
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return status
+        }
+        if result.next() {
             let statusInt = Int(result.int(forColumn: "status"))
             status = YXStepStatus.getStatus(statusInt)
-            result.close()
         }
+        result.close()
         return status
     }
 
@@ -185,6 +186,7 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
             let count = Int(result.int(forColumn: "wrong_count"))
             amount += count
         }
+        result.close()
         return amount
     }
 }

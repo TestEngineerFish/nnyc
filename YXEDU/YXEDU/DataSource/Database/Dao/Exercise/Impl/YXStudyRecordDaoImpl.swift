@@ -31,7 +31,6 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
             model?.currentGroup     = Int(result.int(forColumn: "current_group"))
             model?.currentTurn      = Int(result.int(forColumn: "current_turn"))
             model?.studyCount       = Int(result.int(forColumn: "study_count"))
-            
             model?.startTime        = result.string(forColumn: "start_time") ?? ""
             model?.studyDuration    = Int(result.int(forColumn: "study_duration"))
             
