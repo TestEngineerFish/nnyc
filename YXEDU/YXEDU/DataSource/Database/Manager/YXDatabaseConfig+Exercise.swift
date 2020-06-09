@@ -404,13 +404,11 @@ extension YYSQLManager {
         """
         select study_id, step_id, step, group_index from (
             select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
-            where e.study_id = ? and s.backup = 0
+            where e.study_id = ? and group_index = ? and s.backup = 0
             and (s.status = 0 or s.status = 1) and s.status != 3
             order by s.step desc
         )
-        where ? >= step
         group by word_id
-        having group_index = ?
         order by step asc
         limit 1
         """

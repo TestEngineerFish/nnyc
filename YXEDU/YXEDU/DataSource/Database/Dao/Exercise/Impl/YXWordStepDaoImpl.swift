@@ -27,7 +27,6 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         var step: Int?
         let sql = YYSQLManager.WordStepSQL.selectUnfinishMinStepByTurn.rawValue
         let params = [studyRecord.studyId,
-                      studyRecord.currentTurn,
                       studyRecord.currentGroup]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return step
