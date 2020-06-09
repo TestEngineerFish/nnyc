@@ -41,13 +41,4 @@ extension YXExerciseServiceImpl {
     func getReviewWordCount() -> Int {
         return self.exerciseDao.getReviewWordCount(learn: learnConfig)
     }
-
-    /// 更新学习时间
-    func updateDurationTime() {
-        let currentTime  = Date().local()
-        let startTimeStr = self.studyDao.getStartTime(learn: learnConfig)
-        let startTime    = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat())
-        let duration     = currentTime.timeIntervalSince(startTime! as Date)
-        self.studyDao.setDurationTime(learn: learnConfig, duration: Int(duration))
-    }
 }

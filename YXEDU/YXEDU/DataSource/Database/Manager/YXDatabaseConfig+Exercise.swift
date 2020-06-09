@@ -35,7 +35,7 @@ extension YYSQLManager {
             current_turn integer(2) NOT NULL DEFAULT(-1),
             study_count integer(1) NOT NULL DEFAULT(1),
             study_duration integer(4) NOT NULL DEFAULT(0),
-            start_time text(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
+            start_time integer(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
             create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );
         """
@@ -157,7 +157,7 @@ extension YYSQLManager {
         case updateStartTime =
         """
         UPDATE study_record
-        SET start_time = ?
+        SET start_time = datetime('now', 'localtime')
         WHERE learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
         """
 

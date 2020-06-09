@@ -97,8 +97,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
 
     func setStartTime(learn config: YXLearnConfig, start time: String) {
         let sql = YYSQLManager.StudyRecordSQL.updateStartTime.rawValue
-        let params: [Any] = [time, config.learnType.rawValue, config.bookId, config.unitId, config.planId]
-        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        self.wordRunner.executeUpdate(sql, withArgumentsIn: config.params)
     }
 
     func setDurationTime(learn config: YXLearnConfig, duration time: Int) {

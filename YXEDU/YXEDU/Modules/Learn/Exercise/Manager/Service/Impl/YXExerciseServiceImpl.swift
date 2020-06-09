@@ -101,6 +101,14 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.studyDao.setStartTime(learn: learnConfig, start: time)
     }
 
+    func updateDurationTime() {
+        let currentTime  = Date()
+        let startTimeStr = self.studyDao.getStartTime(learn: learnConfig)
+        let startTime    = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat())
+        let duration     = currentTime.timeIntervalSince(startTime! as Date)
+        self.studyDao.setDurationTime(learn: learnConfig, duration: Int(duration))
+    }
+
     func answerAction(exercise: YXExerciseModel) {
         if exercise.isBackup {
             if var model = stepDao.selectOriginalWordStepModelByBackup(studyId: _studyId, wordId: exercise.wordId, step: exercise.step) {

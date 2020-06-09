@@ -333,6 +333,7 @@
 
     @objc private func willEnterForeground() {
         YXGrowingManager.share.startDate = NSDate()
+        self.service.setStartTime()
     }
 
     // TODO: ---- Event ----
@@ -560,6 +561,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
                 return
             }
             YXLog("返回首页")
+            self.service.updateDurationTime()
             self.uploadGrowing()
 //            self.dataManager.progressManager.setOneExerciseFinishStudyTime()
             
