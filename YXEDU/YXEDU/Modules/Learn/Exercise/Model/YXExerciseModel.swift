@@ -74,7 +74,7 @@ struct YXExerciseModel: Mappable {
 
     /// 答题结果，是否正确
     var result: Bool?
-    /// 当题错误次数
+    /// 答题错误次数
     var wrongCount: Int = 0
         
     /// 在当前轮中，是否已经完成，（当前轮完成后，不是删除数据，而且是改变状态为true）

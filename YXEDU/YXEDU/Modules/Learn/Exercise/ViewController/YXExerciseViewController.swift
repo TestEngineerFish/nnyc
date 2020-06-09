@@ -233,9 +233,10 @@
             self.bottomView.tipsButton.isHidden  = hideTipsTypeArray.contains(model.type)
 
             // 新学流程是否允许打断
-            if self.service.ruleType == .a2 && primaryNewLearnArray.contains(model.type) {
+            if model.question?.extend?.allowClickNext ?? false {
                 self.showRightNextView()
             }
+            
             // ---- Growing
             if newLearnArray.contains(model.type) {
                 YXGrowingManager.share.newLearnNumber += 1

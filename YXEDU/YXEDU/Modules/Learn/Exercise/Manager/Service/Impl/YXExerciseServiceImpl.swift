@@ -214,14 +214,11 @@ class YXExerciseServiceImpl: YXExerciseService {
                 // 对错都要显示
                 return true
             case .right:
-                // 答对时显示
-                return model.status == .right
+                // 答对并且是首次作答，要显示
+                return model.status == .right && model.wrongCount == 0
             case .wrong:
                 // 答错时显示
                 return model.status == .wrong
-            default:
-                return false
-            }
         }
         return false
     }
