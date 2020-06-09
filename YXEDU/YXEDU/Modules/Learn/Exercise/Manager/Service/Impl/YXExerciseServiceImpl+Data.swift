@@ -22,10 +22,9 @@ extension YXExerciseServiceImpl {
         
         self.ruleType = _resultModel?.ruleType ?? .p0
         
-//        if learnConfig.learnType == .base {
-//            self.learnConfig.bookId = _resultModel?.bookId ?? 0
-//            self.learnConfig.unitId = _resultModel?.unitId ?? 0
-//        }
+        // 如果不是基础学习类型，bookId和unitId是虚拟的
+        self.learnConfig.bookId = _resultModel?.bookId ?? 0
+        self.learnConfig.unitId = _resultModel?.unitId ?? 0
         
         // 插入学习记录
         let recordId = self._processStudyRecord()
@@ -135,6 +134,8 @@ extension YXExerciseServiceImpl {
         
         var word = YXWordModel()
         word.wordId = subStep.wordId
+        
+        // 如果不是基础学习类型，bookId和unitId是虚拟的
         word.bookId = learnConfig.bookId
         word.unitId = learnConfig.unitId
         
@@ -145,7 +146,7 @@ extension YXExerciseServiceImpl {
         exercise.eid = _wordIdMap[exercise.wordId] ?? 0
 
         let result = stepDao.insertWordStep(study: recordId, exerciseModel: exercise)
-        YXLog("插入\(_stepString(exercise))步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
+        YXLog("插入\(_stepString(exercise))步骤数据, wordId:", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
     }
     
     
@@ -162,11 +163,11 @@ extension YXExerciseServiceImpl {
     
     func _stepString(_ exercise: YXExerciseModel) -> String {
         if exercise.step == 0 {
-            return "新学 step\(exercise.step)"
+            return "新学step\(exercise.step)"
         } else if exercise.isNewWord {
-            return "训练 step\(exercise.step)"
+            return "训练step\(exercise.step)"
         } else {
-            return "复习  step\(exercise.step)"
+            return "复习step\(exercise.step)"
         }
     }
     

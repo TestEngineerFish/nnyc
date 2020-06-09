@@ -240,7 +240,7 @@ class YXExerciseServiceImpl: YXExerciseService {
             let r3 = stepDao.deleteStepWithStudy(study: studyId)
             let r4 = turnDao.deleteCurrentTurn(studyId: studyId)
             
-            YXLog("清除\(learnConfig.learnType.rawValue)的学习记录完成, Plan ID:", learnConfig.planId )
+            YXLog("清除学习记录完成, 学习类型：\(learnConfig.learnType), learnConfig:", learnConfig)
             YXLog("删除当前学习记录 studyId=", studyId, r1, r2, r3, r4)
         } else {
             YXLog("删除当前学习记录失败, studyId=", studyId)
