@@ -38,7 +38,7 @@
 
 - (void)registerWX:(NSString *)appid {
 //    [WXApi registerApp:appid enableMTA:NO];
-    [WXApi registerApp:appid universalLink:@"nnyc-api-test.xstudyedu.com"];
+    [WXApi registerApp:appid universalLink:@"https://nnyc-api.xstudyedu.com"];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
