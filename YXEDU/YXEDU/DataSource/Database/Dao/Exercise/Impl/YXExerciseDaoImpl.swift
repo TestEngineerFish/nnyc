@@ -101,20 +101,22 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return modelList
     }
 
-    func getNewWordCount() -> Int {
+    func getNewWordCount(learn config: YXLearnConfig) -> Int {
         var count = 0
         let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [1]), result.next() {
+        let params: [Any] = [1] + config.params
+        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
             count = Int(result.int(forColumn: "count"))
             result.close()
         }
         return count
     }
 
-    func getReviewWordCount() -> Int {
+    func getReviewWordCount(learn config: YXLearnConfig) -> Int {
         var count = 0
         let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [0]), result.next() {
+        let params: [Any] = [0] + config.params
+        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
             count = Int(result.int(forColumn: "count"))
             result.close()
         }

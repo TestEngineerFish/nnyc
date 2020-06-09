@@ -35,11 +35,11 @@ extension YXExerciseServiceImpl {
     }
 
     func getNewWordCount() -> Int {
-        return self.exerciseDao.getNewWordCount()
+        return self.exerciseDao.getNewWordCount(learn: learnConfig)
     }
 
     func getReviewWordCount() -> Int {
-        return self.exerciseDao.getReviewWordCount()
+        return self.exerciseDao.getReviewWordCount(learn: learnConfig)
     }
 
     /// 更新学习时间

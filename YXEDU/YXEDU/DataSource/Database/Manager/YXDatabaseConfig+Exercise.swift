@@ -265,7 +265,7 @@ extension YYSQLManager {
         case getWordsCount =
         """
         SELECT count(*) count FROM all_exercise
-        WHERE unfinish_count != 0 and is_new = ?
+        WHERE unfinish_count != 0 and is_new = ? and learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
         """
 
         case deleteExerciseWithStudy =
