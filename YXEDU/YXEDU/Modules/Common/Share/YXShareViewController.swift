@@ -329,19 +329,20 @@ class YXShareViewController: YXViewController {
     
     /// 创建学习结果打卡页面
     private func createLearnResultShareImage(_ backgroundImage: UIImage?) -> UIImage? {
-        
+
+        let avatarImage = YXUserModel.default.userAvatarImageView.image == nil ? UIImage(named: "userPlaceHolder") : YXUserModel.default.userAvatarImageView.image
         let shareImageView = YXShareImageView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: 518)))
         shareImageView.backgroundImageView.image = backgroundImage
-        shareImageView.avatarImageView.image = YXUserModel.default.userAvatarImageView.image
-        shareImageView.nameLabel.text = YXUserModel.default.username
+        shareImageView.avatarImageView.image     = avatarImage
+        shareImageView.nameLabel.text            = YXUserModel.default.username
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE MMMM, d"
-        dateFormatter.locale = Locale(identifier: "en")
+        let dateFormatter        = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMMM d"
+        dateFormatter.locale     = Locale(identifier: "en")
         
-        shareImageView.dateLabel.text = dateFormatter.string(from: Date())
+        shareImageView.dateLabel.text      = dateFormatter.string(from: Date())
         shareImageView.wordCountLabel.text = "\(self.wordsAmount)"
-        shareImageView.dayCountLabel.text = "\(self.daysAmount)"
+        shareImageView.dayCountLabel.text  = "\(self.daysAmount)"
                 
         let renderer = UIGraphicsImageRenderer(size: shareImageView.bounds.size)
         let image = renderer.image { context in
