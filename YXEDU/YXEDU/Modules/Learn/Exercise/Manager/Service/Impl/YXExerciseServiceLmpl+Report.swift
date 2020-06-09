@@ -13,7 +13,7 @@ extension YXExerciseServiceImpl {
     func getReportJson() -> String {
         var modelArray = [YXExerciseReportModel]()
         // 获得所有学习的单词单词
-        let exerciseModelList = self.exerciseDao.getExerciseList(learn: self.learnConfig, includeNewWord: true, includeReviewWord: true)
+        let exerciseModelList = self.exerciseDao.getExerciseList(studyId: _studyId, includeNewWord: true, includeReviewWord: true)
 
         exerciseModelList.forEach { (model) in
             let data = self.stepDao.getReportSteps(with: model)
@@ -35,11 +35,11 @@ extension YXExerciseServiceImpl {
     }
 
     func getNewWordCount() -> Int {
-        return self.exerciseDao.getNewWordCount(learn: learnConfig)
+        return self.exerciseDao.getNewWordCount(studyId: _studyId)
     }
 
     func getReviewWordCount() -> Int {
-        return self.exerciseDao.getReviewWordCount(learn: learnConfig)
+        return self.exerciseDao.getReviewWordCount(studyId: _studyId)
     }
 
     /// 更新学习时间
@@ -48,6 +48,6 @@ extension YXExerciseServiceImpl {
         let startTimeStr = self.studyDao.getStartTime(learn: learnConfig)
         let startTime    = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat())
         let duration     = currentTime.timeIntervalSince(startTime! as Date)
-        self.studyDao.setDurationTime(learn: learnConfig, duration: Int(duration))
+        self.studyDao.setDurationTime(studyId: _studyId, duration: Int(duration))
     }
 }

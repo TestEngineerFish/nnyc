@@ -43,22 +43,22 @@ protocol YXStudyRecordDao {
     /// - Parameters:
     ///   - config:
     ///   - turn:
-    func updateCurrentTurn(learn config: YXLearnConfig, turn: Int?) -> Bool
+    func updateCurrentTurn(studyId: Int, turn: Int?) -> Bool
 
     /// 添加学习次数
-    func addStudyCount(learn config: YXLearnConfig)
+    func addStudyCount(studyId: Int)
 
     /// 设置开始学习时间
     /// - Parameters:
     ///   - config: 学习配置信息
     ///   - time: 开始学习时间
-    func setStartTime(learn config: YXLearnConfig, start time: String)
+    func setStartTime(studyId: Int, start time: String)
 
     /// 更新学习持续时长
     /// - Parameters:
     ///   - config: 学习配置信息
     ///   - time: 持续时长
-    func setDurationTime(learn config: YXLearnConfig, duration time: Int)
+    func setDurationTime(studyId: Int, duration time: Int)
 
     /// 获得开始学习时间
     /// - Parameter config: 学习配置信息

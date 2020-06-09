@@ -122,11 +122,24 @@ extension YYSQLManager {
         values(?, ?, ?, ?, ?, ?, ?)
         """
 
-        case getInfo =
+        case selectStudyRecord_Base =
         """
         SELECT * FROM study_record
-        where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        where learn_type = ? and book_id = ? and unit_id = ?
         """
+        
+        case selectStudyRecord_Review =
+        """
+        SELECT * FROM study_record
+        where learn_type = ? and plan_id = ?
+        """
+        
+//        case getInfo =
+//        """
+//        SELECT * FROM study_record
+//        where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+//        """
+        
         
         // 更新学习的当前组下标
         case updateCurrentGroup =
@@ -144,35 +157,35 @@ extension YYSQLManager {
         case updateCurrentTurn =
         """
         update study_record set current_turn = current_turn + 1
-        where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        where study_id = ?
         """
         
         // 更新学习的当前轮下标，指定轮参数
         case updateCurrentTurnByTurn =
         """
         update study_record set current_turn = ?
-        where learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        where study_id = ?
         """
 
         case updateStartTime =
         """
         UPDATE study_record
         SET start_time = ?
-        WHERE learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        WHERE study_id = ?
         """
 
         case updateStudyCount =
         """
         UPDATE study_record
         SET study_count = study_count + 1
-        WHERE learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        WHERE study_id = ?
         """
 
         case updateDurationTime =
         """
         UPDATE study_record
         SET study_duration = study_duration + ?
-        WHERE learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        WHERE study_id = ?
         """
 
         case deleteRecord =
@@ -253,19 +266,19 @@ extension YYSQLManager {
         case getExerciseCount =
         """
         SELECT count(*) FROM all_exercise
-        WHERE learn_type = ? and plan_id = ? and book_id = ? and unit_id = ?
+        WHERE study_id = ?
         """
 
         case getAllExercise =
         """
         SELECT * FROM all_exercise
-        WHERE learn_type = ? and plan_id = ? and book_id = ? and unit_id = ?
+        WHERE study_id = ?
         """
 
         case getWordsCount =
         """
         SELECT count(*) count FROM all_exercise
-        WHERE unfinish_count != 0 and is_new = ? and learn_type = ? and book_id = ? and unit_id = ? and plan_id = ?
+        WHERE unfinish_count != 0 and is_new = ? and study_id = ?
         """
 
         case deleteExerciseWithStudy =

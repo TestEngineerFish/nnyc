@@ -91,14 +91,14 @@ class YXExerciseServiceImpl: YXExerciseService {
     
 
     func addStudyCount() {
-        self.studyDao.addStudyCount(learn: learnConfig)
+        self.studyDao.addStudyCount(studyId: _studyId)
     }
 
     func setStartTime() {
         let localTime = Date().local().timeIntervalSince1970
         // 数据库操作 - 设置时间
         let time = NSDate(timeIntervalSince1970: localTime).string(withFormat: NSDate.ymdHmsFormat()) ?? ""
-        self.studyDao.setStartTime(learn: learnConfig, start: time)
+        self.studyDao.setStartTime(studyId: _studyId, start: time)
     }
 
     func answerAction(exercise: YXExerciseModel) {
@@ -184,8 +184,8 @@ class YXExerciseServiceImpl: YXExerciseService {
                 // 获取学习数据
                 let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
                 let studyCount   = self.studyDao.selectStudyRecordModel(config: self.learnConfig)?.studyCount ?? 0
-                newWordCount    = self.exerciseDao.getExerciseCount(learn: self.learnConfig, includeNewWord: true, includeReviewWord: false)
-                reviewWordCount = self.exerciseDao.getExerciseCount(learn: self.learnConfig, includeNewWord: false, includeReviewWord: true)
+                newWordCount    = self.exerciseDao.getExerciseCount(studyId: self._studyId, includeNewWord: true, includeReviewWord: false)
+                reviewWordCount = self.exerciseDao.getExerciseCount(studyId: self._studyId, includeNewWord: false, includeReviewWord: true)
                 // 上报Growing
                 YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, study: studyCount)
                 if self.learnConfig.learnType == .base {

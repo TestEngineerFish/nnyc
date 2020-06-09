@@ -11,8 +11,14 @@ import Foundation
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     
     func selectStudyRecordModel(config: YXLearnConfig) -> YXStudyRecordModel? {
-        let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-        let params = configParams(config: config)
+        
+        var sql = YYSQLManager.StudyRecordSQL.selectStudyRecord_Review.rawValue
+        var params = [config.learnType.rawValue, config.planId]
+        if config.learnType == .base {
+            sql = YYSQLManager.StudyRecordSQL.selectStudyRecord_Base.rawValue
+            params = [config.learnType.rawValue, config.bookId, config.unitId]
+        }
+
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return nil
         }
@@ -26,32 +32,22 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
             model?.currentTurn      = Int(result.int(forColumn: "current_turn"))
             model?.studyCount       = Int(result.int(forColumn: "study_count"))
             
+            model?.startTime = result.string(forColumn: "start_time") ?? ""
+            model?.studyDuration = Int(result.int(forColumn: "study_duration"))
+            
+            let progressInt = Int(result.int(forColumn: "status"))
+            model?.progress = YXExerciseProgress(rawValue: progressInt) ?? .none
         }
         result.close()
         return model
     }
     
     func getStudyID(learn config: YXLearnConfig) -> Int {
-        var studyId = 0
-        let sql     = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-        let params  = configParams(config: config)
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
-            studyId = Int(result.int(forColumn: "study_id"))
-            result.close()
-        }
-        return studyId
+        return self.selectStudyRecordModel(config: config)?.studyId ?? 0
     }
 
     func getProgress(learn config: YXLearnConfig) -> YXExerciseProgress {
-        var progress = YXExerciseProgress.none
-        let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: config.params), result.next() {
-            let progressInt = Int(result.int(forColumn: "status"))
-            result.close()
-            progress = YXExerciseProgress(rawValue: progressInt) ?? .none
-            result.close()
-        }
-        return progress
+        return selectStudyRecordModel(config: config)?.progress ?? .none
     }
 
     func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule, turn: Int) -> Int {
@@ -74,14 +70,10 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     }
     
     
-    func updateCurrentTurn(learn config: YXLearnConfig, turn: Int? = nil) -> Bool {
+    func updateCurrentTurn(studyId: Int, turn: Int? = nil) -> Bool {
         var sql = YYSQLManager.StudyRecordSQL.updateCurrentTurn.rawValue
-        var params: [Any] = [
-            config.learnType.rawValue,
-            config.bookId,
-            config.unitId,
-            config.planId,
-        ]
+        var params: [Any] = [studyId]
+        
         if let index = turn {
             sql = YYSQLManager.StudyRecordSQL.updateCurrentTurnByTurn.rawValue
             params.insert(index, at: 0)
@@ -90,47 +82,30 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func addStudyCount(learn config: YXLearnConfig) {
+    func addStudyCount(studyId: Int) {
         let sql = YYSQLManager.StudyRecordSQL.updateStudyCount.rawValue
-        self.wordRunner.executeUpdate(sql, withArgumentsIn: config.params)
+        self.wordRunner.executeUpdate(sql, withArgumentsIn: [studyId])
     }
 
-    func setStartTime(learn config: YXLearnConfig, start time: String) {
+    func setStartTime(studyId: Int, start time: String) {
         let sql = YYSQLManager.StudyRecordSQL.updateStartTime.rawValue
-        let params: [Any] = [time, config.learnType.rawValue, config.bookId, config.unitId, config.planId]
+        let params: [Any] = [time, studyId]
         self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func setDurationTime(learn config: YXLearnConfig, duration time: Int) {
+    func setDurationTime(studyId: Int, duration time: Int) {
         let sql = YYSQLManager.StudyRecordSQL.updateDurationTime.rawValue
-        let params: [Any] = [time, config.learnType.rawValue, config.bookId, config.unitId, config.planId]
+        let params: [Any] = [time, studyId]
         self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
     func getStartTime(learn config: YXLearnConfig) -> String {
-        var startTime = ""
-        let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-        let params: [Any] = [
-            config.learnType.rawValue,
-            config.bookId,
-            config.unitId,
-            config.planId]
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
-            startTime = result.string(forColumn: "start_time") ?? ""
-            result.close()
-        }
-        return startTime
+        return self.selectStudyRecordModel(config: config)?.startTime ?? ""
+        
     }
 
     func getDurationTime(learn config: YXLearnConfig) -> Int {
-        var duration = 0
-        let sql = YYSQLManager.StudyRecordSQL.getInfo.rawValue
-        let params: [Any] = [config.learnType.rawValue, config.bookId, config.unitId, config.planId]
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
-            duration = Int(result.int(forColumn: "study_duration"))
-            result.close()
-        }
-        return duration
+        return self.selectStudyRecordModel(config: config)?.studyDuration ?? 0
     }
 
     func delete(study id: Int) -> Bool {

@@ -20,6 +20,9 @@ struct YXStudyRecordModel {
     var currentTurn: Int = -1
     
     var studyCount: Int = 0
+    var startTime: String = ""
+    var studyDuration = 0
+    var progress: YXExerciseProgress = .none
 }
 
 

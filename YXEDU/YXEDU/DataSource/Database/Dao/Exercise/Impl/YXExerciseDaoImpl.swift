@@ -45,7 +45,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
     }
 
     
-    func getExerciseCount(learn config: YXLearnConfig, includeNewWord: Bool, includeReviewWord: Bool) -> Int {
+    func getExerciseCount(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> Int {
         var sql = YYSQLManager.ExerciseSQL.getExerciseCount.rawValue
         if includeNewWord && !includeReviewWord {
             // 仅获取新学
@@ -57,12 +57,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             // 都不获取
             return 0
         }
-        let params: [Any] = [
-            config.learnType.rawValue,
-            config.planId,
-            config.bookId,
-            config.unitId]
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
             return 0
         }
         var count = 0
@@ -73,7 +68,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return count
     }
 
-    func getExerciseList(learn config: YXLearnConfig, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel] {
+    func getExerciseList(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel] {
         var modelList = [YXExerciseModel]()
         var sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
         if includeNewWord && !includeReviewWord {
@@ -86,12 +81,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             // 都不获取
             return []
         }
-        let params: [Any] = [
-            config.learnType.rawValue,
-            config.planId,
-            config.bookId,
-            config.unitId]
-        let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params)
+        let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId])
         while result?.next() == .some(true) {
             if let model = self.transformModel(result: result) {
                 modelList.append(model)
@@ -101,10 +91,10 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return modelList
     }
 
-    func getNewWordCount(learn config: YXLearnConfig) -> Int {
+    func getNewWordCount(studyId: Int) -> Int {
         var count = 0
         let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
-        let params: [Any] = [1] + config.params
+        let params: [Any] = [1, studyId]
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
             count = Int(result.int(forColumn: "count"))
             result.close()
@@ -112,10 +102,10 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return count
     }
 
-    func getReviewWordCount(learn config: YXLearnConfig) -> Int {
+    func getReviewWordCount(studyId: Int) -> Int {
         var count = 0
         let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
-        let params: [Any] = [0] + config.params
+        let params: [Any] = [0, studyId]
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
             count = Int(result.int(forColumn: "count"))
             result.close()
