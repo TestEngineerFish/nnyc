@@ -206,9 +206,21 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     func isShowWordDetail(wordId: Int, step: Int) -> Bool {
         if let model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
-            // 答对时，并且题型配置是答应显示，就返回true
-            if model.status == .right && model.question?.extend?.isShowWordDetail == .right {
+            switch model.question?.extend?.isShowWordDetail ?? .none {
+            case .none:
+                // 对错都不显示
+                return false
+            case .all:
+                // 对错都要显示
                 return true
+            case .right:
+                // 答对时显示
+                return model.status == .right
+            case .wrong:
+                // 答错时显示
+                return model.status == .wrong
+            default:
+                return false
             }
         }
         return false
