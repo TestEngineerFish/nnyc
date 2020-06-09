@@ -9,27 +9,24 @@
 import UIKit
 
 protocol YXCurrentTurnDao {
-    /// 查询新的轮数据
-//    func selectNewTurn(studyId: Int, group: Int) -> [YXCurrentTurnModel]
     
     /// 插入当前轮的数据
     func insertCurrentTurn(studyId: Int, group: Int) -> Bool
 
-    /// 获得当前轮的所有数据[【未完成】
-    func selectCurrentTurnUnfinish(studyId: Int) -> [YXExerciseModel]
+    /// 正常获取首个未做的练习
+    func selectExercise(studyId: Int) -> YXExerciseModel?
+    
+    /// 获得当前轮的所有数据【未完成的】
+    func selectAllExercise(studyId: Int) -> [YXExerciseModel]
     
     /// 获得当前轮的所有数据[【包含完成和未完成，仅用于打印】
     func selectCurrentTurn(studyId: Int) -> [YXExerciseModel]
-    
-    /// 正常获取首个未做的练习
-    func selectExercise(studyId: Int) -> YXExerciseModel?
     
     /// 获取连线题
     func selectExercise(studyId: Int, type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel]
     
     ///获取备选题型
     func selectBackupExercise(studyId: Int, exerciseId: Int, step: Int) -> YXExerciseModel?
-
 
     /// 当前轮是否都完成
     func selectTurnFinishStatus(studyId: Int) -> Bool

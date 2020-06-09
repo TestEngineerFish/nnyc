@@ -119,7 +119,7 @@ extension YXExerciseServiceImpl {
     func _finedN3Exercise(exercise: YXExerciseModel) -> YXExerciseModel? {
         if exercise.step == 0 && exercise.type == .newLearnMasterList {
             var n3List = [YXExerciseModel]()
-            let es = turnDao.selectCurrentTurnUnfinish(studyId: _studyId)
+            let es = turnDao.selectAllExercise(studyId: _studyId)
             for e in es {
                 if e.type == .newLearnMasterList {
                     var newE = e

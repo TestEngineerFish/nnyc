@@ -485,7 +485,7 @@ extension YYSQLManager {
         /// 正常查询 【当前轮，包括完成和未完成】
         case selectCurrentTurn =
         """
-        select c.current_id, s.* from current_turn c inner join all_word_step s
+        select c.current_id, c.finish finish, s.* from current_turn c inner join all_word_step s
         on s.step_id = c.step_id and c.study_id = ?
         order by c.current_id asc
         """

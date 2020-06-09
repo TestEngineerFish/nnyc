@@ -9,35 +9,29 @@
 import UIKit
 
 class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
-//    func selectNewTurn(studyId: Int, group: Int) -> [YXCurrentTurnModel] {
-//        var sql = YYSQLManager.CurrentTurnSQL.selectNewTurn.rawValue
-////        let params = [studyId, studyId, group]
-//        sql = String(format: sql, studyId, studyId, group)
-//        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
-//            return []
-//        }
-//        var es: [YXCurrentTurnModel] = []
-//        while result.next() {
-//            var model = YXCurrentTurnModel()
-//            model.studyId = studyId
-//            model.stepId = Int(result.int(forColumn: "step_id"))
-//            model.step = Int(result.int(forColumn: "step"))
-//            model.turn = Int(result.int(forColumn: "turn"))
-//            es.append(model)
-//        }
-//        result.close()
-//        
-//        return es
-//        
-//    }
     
     func insertCurrentTurn(studyId: Int, group: Int) -> Bool {
         let sql = YYSQLManager.CurrentTurnSQL.insertTurn.rawValue
         let params = [studyId, studyId, group]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
+    
+    
+    func selectExercise(studyId: Int) -> YXExerciseModel? {
+        let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId, 1]) else {
+            return nil
+        }
+        var exercise: YXExerciseModel?
+        if result.next() {
+            exercise = self._createExercise(rs: result)
+        }
+        result.close()
+        return exercise
+    }
 
-    func selectCurrentTurnUnfinish(studyId: Int) -> [YXExerciseModel] {
+    
+    func selectAllExercise(studyId: Int) -> [YXExerciseModel] {
         let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId, 10000]) else {
             return []
@@ -58,25 +52,14 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
         }
         var modelList = [YXExerciseModel]()
         while result.next() {
-            let model = self._createExercise(rs: result)
+            var model = self._createExercise(rs: result)
+            model.isCurrentTurnFinish = result.bool(forColumn: "finish")
             modelList.append(model)
         }
         result.close()
         return modelList
     }
     
-    func selectExercise(studyId: Int) -> YXExerciseModel? {
-        let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId, 1]) else {
-            return nil
-        }
-        var exercise: YXExerciseModel?
-        if result.next() {
-            exercise = self._createExercise(rs: result)
-        }
-        result.close()
-        return exercise
-    }
     
     func selectExercise(studyId: Int, type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel] {
         let sql = YYSQLManager.CurrentTurnSQL.selectConnectionExercise.rawValue
