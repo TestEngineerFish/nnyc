@@ -113,4 +113,7 @@ protocol YXExerciseService {
     /// 删除当前的学习数据
     func cleanStudyRecord()
 
+    /// 删除所有的学习数据
+    func cleanAllStudyRecord()
+
 }

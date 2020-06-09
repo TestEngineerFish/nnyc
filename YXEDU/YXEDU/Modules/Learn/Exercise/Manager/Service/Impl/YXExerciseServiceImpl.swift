@@ -246,5 +246,12 @@ class YXExerciseServiceImpl: YXExerciseService {
             YXLog("删除当前学习记录失败, studyId=", studyId)
         }
     }
+
+    func cleanAllStudyRecord() {
+//        let r1 = studyDao.delete(study: studyId)
+//        let r2 = exerciseDao.deleteExercise(study: studyId)
+//        let r3 = stepDao.deleteStepWithStudy(study: studyId)
+//        let r4 = turnDao.deleteCurrentTurn(studyId: studyId)
+    }
     
 }

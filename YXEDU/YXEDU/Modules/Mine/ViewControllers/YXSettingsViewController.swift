@@ -125,6 +125,8 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
         alertView.doneClosure = { _ in
 
             YXFileManager.share.clearStudyCache()
+            var service: YXExerciseService = YXExerciseServiceImpl()
+            
             YYCache.set(nil, forKey: "LastStoredDate")
             self.view.makeToast("清除成功")
         }

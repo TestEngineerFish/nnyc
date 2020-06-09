@@ -75,5 +75,7 @@ protocol YXStudyRecordDao {
         
     /// 删除过期的学习记录
     func deleteExpiredStudyRecord() -> Bool
+
+    func deleteAllStudyRecord() -> Bool
     
 }

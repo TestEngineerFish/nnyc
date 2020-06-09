@@ -153,4 +153,9 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         ]
         
     }
+
+    func deleteAllStudyRecord() -> Bool {
+        //
+        return true
+    }
 }
