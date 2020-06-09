@@ -45,9 +45,9 @@ class YXExerciseServiceImpl: YXExerciseService {
     func initService() {
         
         // 1.清除过期数据
-        self.clearExpiredData()
+        self._clearExpiredData()
         
-        // 2. 加载学习状态
+        // 2. 加载学习进度
         self.progress = studyDao.getProgress(learn: learnConfig)
         
         // 3. 加载答题选项
@@ -76,6 +76,9 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {
+        // 打印
+        printCurrentTurn()
+        
         // 加载学习记录信息
         self._loadStudyRecord()
         
@@ -219,6 +222,7 @@ class YXExerciseServiceImpl: YXExerciseService {
             case .wrong:
                 // 答错时显示
                 return model.status == .wrong
+            }
         }
         return false
     }

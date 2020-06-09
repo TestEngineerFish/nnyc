@@ -11,7 +11,7 @@ import UIKit
 /// 做题后修改状态
 extension YXExerciseServiceImpl {
 
-    func clearExpiredData() {
+    func _clearExpiredData() {
         let r1 = studyDao.deleteExpiredStudyRecord()
         let r2 = exerciseDao.deleteExpiredExercise()
         let r3 = stepDao.deleteExpiredWordStep()

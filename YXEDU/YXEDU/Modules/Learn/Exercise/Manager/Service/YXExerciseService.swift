@@ -45,9 +45,9 @@ enum YXExerciseProgress: Int {
 /// 练习出题逻辑管理器
 protocol YXExerciseService {
     
-    
     //MARK: - 属性
     // ----------------------------
+    /// 学习配置
     var learnConfig: YXLearnConfig { get set }
     
     /// 练习规则
@@ -59,7 +59,7 @@ protocol YXExerciseService {
     
     //MARK: - 方法
     // ----------------------------
-    /// 初始化
+    /// 初始化服务
     func initService()
 
     func addStudyCount()
@@ -73,15 +73,13 @@ protocol YXExerciseService {
     
     /// 加载网络数据
     func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?)
-        
-    /// 如果本地没有学完，获取练习前，需要加载
-//    func loadLocalExercise()
     
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
     /// - Parameters:
     ///   - exerciseModel:  练习数据
     func answerAction(exercise model: YXExerciseModel)
 
+    /// 连线题，仅单个选项的做题动作处理
     func connectionAnswerAction(wordId: Int, step: Int, right: Bool)
     
     /// 连线题型 ，连线题所有项全部连完
@@ -116,9 +114,3 @@ protocol YXExerciseService {
     func cleanStudyRecord()
 
 }
-
-
-extension YXExerciseService {
-    
-}
-

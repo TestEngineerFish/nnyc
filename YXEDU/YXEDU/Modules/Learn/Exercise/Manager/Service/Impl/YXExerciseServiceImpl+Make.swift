@@ -200,4 +200,14 @@ extension YXExerciseServiceImpl {
         }
     }
     
+    
+    func printCurrentTurn() {
+        let currentTurnIndex = _studyRecord.currentTurn
+        let currentTurnArray = turnDao.selectCurrentTurn(studyId: _studyId)
+        YXLog(String(format: "第\(currentTurnIndex)轮数量：%ld", currentTurnArray.count))
+        for e in currentTurnArray {
+            YXLog(String(format: "id = %ld, word = %@", e.word?.wordId ?? 0, e.word?.word ?? ""))
+            YXLog(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
+        }
+    }
 }
