@@ -87,10 +87,9 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         self.wordRunner.executeUpdate(sql, withArgumentsIn: [studyId])
     }
 
-    func setStartTime(studyId: Int, start time: String) {
+    func setStartTime(studyId: Int) {
         let sql = YYSQLManager.StudyRecordSQL.updateStartTime.rawValue
-        let params: [Any] = [time, studyId]
-        self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        self.wordRunner.executeUpdate(sql, withArgumentsIn: [studyId])
     }
 
     func setDurationTime(studyId: Int, duration time: Int) {

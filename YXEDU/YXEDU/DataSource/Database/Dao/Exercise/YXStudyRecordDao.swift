@@ -52,7 +52,7 @@ protocol YXStudyRecordDao {
     /// - Parameters:
     ///   - config: 学习配置信息
     ///   - time: 开始学习时间
-    func setStartTime(studyId: Int, start time: String)
+    func setStartTime(studyId: Int)
 
 
     /// 更新学习持续时长

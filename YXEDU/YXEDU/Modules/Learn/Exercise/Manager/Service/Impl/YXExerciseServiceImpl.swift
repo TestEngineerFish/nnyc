@@ -95,7 +95,15 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     func setStartTime() {
+        self.studyDao.setStartTime(studyId: _studyId)
+    }
 
+    func updateDurationTime() {
+        let currentTime  = Date()
+        let startTimeStr = self.studyDao.getStartTime(learn: learnConfig)
+        let startTime    = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat())
+        let duration     = currentTime.timeIntervalSince(startTime! as Date)
+        self.studyDao.setDurationTime(studyId: _studyId, duration: Int(duration))
     }
 
     func answerAction(exercise: YXExerciseModel) {
