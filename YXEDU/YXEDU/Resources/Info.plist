@@ -133,6 +133,7 @@
 		<string>timopensdkdataline</string>
 		<string>wtlogintimV1</string>
 		<string>timapiV1</string>
+		<string>weixinULAPI</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

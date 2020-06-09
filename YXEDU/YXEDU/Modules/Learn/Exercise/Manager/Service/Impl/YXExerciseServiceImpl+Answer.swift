@@ -33,7 +33,12 @@ extension YXExerciseServiceImpl {
     /// 跳过Step1-4
     @discardableResult
     func skipStep1_4(exercise model: YXExerciseModel) -> Bool {
-        self.stepDao.skipStep1_4(exercise: model)
+        let result = self.stepDao.skipStep1_4(exercise: model)
+        // 获得跳过的数量(仅支持跳过一次，多次跳过不支持)
+        let count = self.stepDao.getStep1_4Count(exercise: model.eid)
+        // 减少Exercise的未做题数
+        self.exerciseDao.updateUnfinishedCount(exercise: model.eid, reduceCount: count)
+        return result
     }
 
     /// 减少未做Step的数量

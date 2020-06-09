@@ -40,6 +40,10 @@ protocol YXWordStepDao {
     /// - Parameter model: 练习对象
     func skipStep1_4(exercise model: YXExerciseModel) -> Bool
 
+    /// 获得跳过题型的数量
+    /// - Parameter id: 练习ID
+    func getStep1_4Count(exercise id: Int) -> Int
+
     
     /// 上一轮做错的状态，重置为未做（status  = 0）
     func updatePreviousWrongStatus(studyId: Int) -> Bool

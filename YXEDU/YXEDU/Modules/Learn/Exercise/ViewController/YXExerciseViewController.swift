@@ -391,7 +391,8 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         // 新学直接切题，不用显示动画后
         if exerciseModel.type == .newLearnPrimarySchool
             || exerciseModel.type == .newLearnPrimarySchool_Group
-            || exerciseModel.type == .newLearnJuniorHighSchool {
+            || exerciseModel.type == .newLearnJuniorHighSchool
+            || exerciseModel.type == .newLearnMasterList {
             self.switchExerciseView()
             return
         }

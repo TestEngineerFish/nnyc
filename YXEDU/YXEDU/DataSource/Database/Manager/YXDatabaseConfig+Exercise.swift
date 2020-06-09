@@ -372,6 +372,12 @@ extension YYSQLManager {
         SET status = 3
         WHERE exercise_id = ? and (step = 1 or step = 4)
         """
+
+        case selectStep_4Count =
+        """
+        SELECT count(*) count FROM all_word_step
+        WHERE exercise_id = ? and (step = 1 or step = 4)
+        """
         
         case updatePreviousWrongStatus =
         """

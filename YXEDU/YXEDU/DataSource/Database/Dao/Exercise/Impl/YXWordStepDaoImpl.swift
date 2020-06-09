@@ -125,6 +125,19 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [model.eid])
     }
 
+    func getStep1_4Count(exercise id: Int) -> Int {
+        var count = 0
+        let sql = YYSQLManager.WordStepSQL.selectStep_4Count.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return count
+        }
+        if result.next() {
+            count = Int(result.int(forColumn: "count"))
+        }
+        result.close()
+        return count
+    }
+
     func updatePreviousWrongStatus(studyId: Int) -> Bool {
         let sql = YYSQLManager.WordStepSQL.updatePreviousWrongStatus.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [studyId])

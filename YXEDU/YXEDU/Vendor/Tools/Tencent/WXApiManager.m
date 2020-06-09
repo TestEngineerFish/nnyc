@@ -37,7 +37,8 @@
 }
 
 - (void)registerWX:(NSString *)appid {
-    [WXApi registerApp:appid enableMTA:NO];
+//    [WXApi registerApp:appid enableMTA:NO];
+    [WXApi registerApp:appid universalLink:@"nnyc-api-test.xstudyedu.com"];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
@@ -49,7 +50,7 @@
         SendAuthReq *req = [[SendAuthReq alloc] init];
         req.scope = @"snsapi_userinfo";
         req.state = kWechatLogin;
-        [WXApi sendReq:req];
+        [WXApi sendReq:req completion:nil];
     } else {
         [YXUtils showHUD: nil title: @"还没有安装微信，请安装后再使用微信登录"];
     }
@@ -84,7 +85,7 @@
         WXMediaMessage *message = [WXMediaMessage message];
         message.mediaObject = imageObject;
         req.message = message;
-        [WXApi sendReq:req];
+        [WXApi sendReq:req completion:nil];
         
     } else {
         [YXUtils showHUD: nil title: @"还没有安装微信，请安装后再使用微信登录"];
@@ -204,7 +205,7 @@
     sentMsg.bText = NO;
     sentMsg.scene = (platform == YXShareWXSession) ? WXSceneSession : WXSceneTimeline;
     self.scene = sentMsg.scene;
-    [WXApi sendReq:sentMsg];
+    [WXApi sendReq:sentMsg completion:nil];
 }
 
 - (void)shareUrl:(NSString *)url
@@ -228,7 +229,7 @@
     sentMsg.bText = NO;
     sentMsg.scene = (platform == YXShareWXSession) ? WXSceneSession : WXSceneTimeline;
     self.scene = sentMsg.scene;
-    [WXApi sendReq:sentMsg];
+    [WXApi sendReq:sentMsg completion:nil];
 }
 
 - (void)shareText:(NSString *)text toPaltform:(YXSharePalform)platform {
@@ -237,6 +238,6 @@
     req.bText = YES;
     req.scene = platform;
     
-    [WXApi sendReq:req];
+    [WXApi sendReq:req completion:nil];
 }
 @end
