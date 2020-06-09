@@ -119,7 +119,8 @@ extension YYDataSourceManager {
 
 extension YYDataSourceManager {
     class func dbFilePath(fileName: String) -> String {
-        let documentPath =  NSHomeDirectory() + "/Documents/"
+        let uuid = YXUserModel.default.uuid ?? ""
+        let documentPath =  NSHomeDirectory() + "/Documents/" + uuid
         if !FileManager.default.fileExists(atPath: documentPath){
             do{
                 try FileManager.default.createDirectory(atPath: documentPath, withIntermediateDirectories: true, attributes: nil)
