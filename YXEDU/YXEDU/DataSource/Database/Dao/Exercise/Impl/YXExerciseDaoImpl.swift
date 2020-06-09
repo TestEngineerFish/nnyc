@@ -106,10 +106,13 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         var count = 0
         let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
         let params: [Any] = [0, studyId]
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
-            count = Int(result.int(forColumn: "count"))
-            result.close()
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+            return 0
         }
+        if result.next() {
+            count = Int(result.int(forColumn: "count"))
+        }
+        result.close()
         return count
     }
 
