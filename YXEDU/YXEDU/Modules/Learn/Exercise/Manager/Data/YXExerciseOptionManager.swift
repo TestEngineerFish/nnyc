@@ -44,15 +44,18 @@ class YXExerciseOptionManager: NSObject {
     }
 
     private func reviewWordOption(exerciseModel: YXExerciseModel)  -> YXExerciseModel? {
+        guard var wordModel = exerciseModel.word else {
+            return nil
+        }
         // 选项个数
         let itemCount = exerciseModel.question?.itemCount ?? 4
 
-        var _exerciseModel = exerciseModel
+        var _exerciseModel  = exerciseModel
         var items          = self.filterOtherWord(exerciseModel: _exerciseModel, itemCount: itemCount - 1)
 
         // 添加正取的选项
         let at = random(max: items.count + 1)
-        items.insert(itemModel(word: _exerciseModel.word!, type: _exerciseModel.type, dataType: _exerciseModel.learnType), at: at)
+        items.insert(itemModel(word: wordModel, type: _exerciseModel.type, dataType: _exerciseModel.learnType), at: at)
         YXLog("选项ID列表\(items)")
         var option = YXExerciseOptionModel()
         option.firstItems = items
@@ -231,6 +234,9 @@ class YXExerciseOptionManager: NSObject {
     
     
     func validReviewWordOption(exercise: YXExerciseModel) -> YXExerciseModel? {
+        guard let wordModel = exercise.word else {
+            return nil
+        }
         let wordId = exercise.word?.wordId ?? 0
         var exerciseModel = exercise
         
@@ -244,7 +250,7 @@ class YXExerciseOptionManager: NSObject {
             var item = YXOptionItemModel()
             item.optionId = -1
             
-            items.append(itemModel(word: exerciseModel.word!, type: exerciseModel.type, dataType: exerciseModel.learnType))
+            items.append(itemModel(word: wordModel, type: exerciseModel.type, dataType: exerciseModel.learnType))
             items.append(item)
         } else {// 错
             let rightItemArray = self.filterOtherWord(exerciseModel: exerciseModel, itemCount: 1)
