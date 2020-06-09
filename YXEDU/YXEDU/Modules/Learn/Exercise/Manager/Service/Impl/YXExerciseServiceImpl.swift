@@ -95,10 +95,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     func setStartTime() {
-        let localTime = Date().local().timeIntervalSince1970
-        // 数据库操作 - 设置时间
-        let time = NSDate(timeIntervalSince1970: localTime).string(withFormat: NSDate.ymdHmsFormat()) ?? ""
-        self.studyDao.setStartTime(studyId: _studyId, start: time)
+
     }
 
     func answerAction(exercise: YXExerciseModel) {

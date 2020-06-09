@@ -42,6 +42,7 @@ extension YXExerciseServiceImpl {
         return self.exerciseDao.getReviewWordCount(studyId: _studyId)
     }
 
+
     /// 更新学习时间
     func updateDurationTime() {
         let currentTime  = Date().local()
@@ -50,4 +51,5 @@ extension YXExerciseServiceImpl {
         let duration     = currentTime.timeIntervalSince(startTime! as Date)
         self.studyDao.setDurationTime(studyId: _studyId, duration: Int(duration))
     }
+
 }

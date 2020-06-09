@@ -66,6 +66,9 @@ protocol YXExerciseService {
     
     /// 设置开始学习时间
     func setStartTime()
+
+    /// 更新学习时间
+    func updateDurationTime()
     
     /// 获取一个练习数据
     /// - returns: 练习对象，如果做完则返回nil
