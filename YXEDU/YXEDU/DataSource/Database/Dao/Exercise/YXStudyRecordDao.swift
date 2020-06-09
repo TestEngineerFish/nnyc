@@ -51,8 +51,7 @@ protocol YXStudyRecordDao {
     /// 设置开始学习时间
     /// - Parameters:
     ///   - config: 学习配置信息
-    ///   - time: 开始学习时间
-    func setStartTime(learn config: YXLearnConfig, start time: String)
+    func setStartTime(learn config: YXLearnConfig)
 
     /// 更新学习持续时长
     /// - Parameters:

@@ -329,6 +329,7 @@
     // TODO: ---- Notification ----
     @objc private func didEnterBackground() {
         self.uploadGrowing()
+        self.service.updateDurationTime()
     }
 
     @objc private func willEnterForeground() {
