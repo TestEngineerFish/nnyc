@@ -22,10 +22,6 @@ extension YXExerciseServiceImpl {
         
         self.ruleType = _resultModel?.ruleType ?? .p0
         
-        // 如果不是基础学习类型，bookId和unitId是虚拟的
-        self.learnConfig.bookId = _resultModel?.bookId ?? 0
-        self.learnConfig.unitId = _resultModel?.unitId ?? 0
-        
         // 插入学习记录
         let recordId = self._processStudyRecord()
         
@@ -33,6 +29,12 @@ extension YXExerciseServiceImpl {
             YXLog("插入学习记录失败")
             return
         }
+        
+        // 如果不是基础学习类型，bookId和unitId是虚拟的
+        // 注意，必须放在记录表下面赋值，因为记录表是不能插入虚拟ID的，否则复习未做完，下次进来会重复插入数据
+        self.learnConfig.bookId = _resultModel?.bookId ?? 0
+        self.learnConfig.unitId = _resultModel?.unitId ?? 0
+        
         
         // 插入练习数据【新学/复习】
         self._processExercise(wordIds: _resultModel?.newWordIds ?? [], isNew: true, recordId: recordId)

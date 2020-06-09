@@ -207,7 +207,7 @@ extension YXExerciseServiceImpl {
         let currentTurnArray = turnDao.selectCurrentTurn(studyId: _studyId)
         YXLog(String(format: "第\(currentGroupIndex)组, 第\(currentTurnIndex)轮，数量：%ld", currentTurnArray.count))
         for e in currentTurnArray {
-            YXLog(String(format: "id = %ld, word = %@", e.wordId, e.word?.word ?? ""))
+            YXLog(String(format: "id = %ld, word = %@", e.wordId, e.word?.word ?? "", "backup = ", e.isBackup))
             YXLog(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
         }
     }

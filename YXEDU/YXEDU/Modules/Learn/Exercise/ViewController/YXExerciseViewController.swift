@@ -291,7 +291,7 @@
     /// - Parameter exerciseView: 新的练习view
     private func loadExerciseView(exerciseView: YXBaseExerciseView) {
         YXLog("==== 加载练习题 ====")
-        YXLog(String(format: "==== 当前题型:%@，当前单词ID：%d，Step:%d ====", exerciseView.exerciseModel.type.rawValue, exerciseView.exerciseModel.word?.wordId ?? 0, exerciseView.exerciseModel.step))
+        YXLog(String(format: "==== 当前题型:%@，当前单词ID：%d，Step:%d ==== Backup:%d", exerciseView.exerciseModel.type.rawValue, exerciseView.exerciseModel.word?.wordId ?? 0, exerciseView.exerciseModel.step, exerciseView.exerciseModel.isBackup))
         // 是否第一次进来
         var isFirst = true
         if let ceview = exerciseViewArray.first {
