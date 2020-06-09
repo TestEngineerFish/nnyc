@@ -143,6 +143,11 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
         let sql = YYSQLManager.CurrentTurnSQL.deleteExpiredTurn.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])
     }
+
+    func deleteAllExpiredTurn() -> Bool {
+        let sql = YYSQLManager.CurrentTurnSQL.deleteAllTurn.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])
+    }
     
     
     

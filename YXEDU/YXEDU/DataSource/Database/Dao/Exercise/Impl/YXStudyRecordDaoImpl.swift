@@ -155,7 +155,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     }
 
     func deleteAllStudyRecord() -> Bool {
-        //
-        return true
+        let sql = YYSQLManager.StudyRecordSQL.deleteAllRecord.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [])
     }
 }

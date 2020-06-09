@@ -47,4 +47,7 @@ protocol YXCurrentTurnDao {
     
     /// 删除过期的轮
     func deleteExpiredTurn() -> Bool
+
+    /// 删除所有轮
+    func deleteAllExpiredTurn() -> Bool
 }

@@ -248,10 +248,11 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     func cleanAllStudyRecord() {
-//        let r1 = studyDao.delete(study: studyId)
-//        let r2 = exerciseDao.deleteExercise(study: studyId)
-//        let r3 = stepDao.deleteStepWithStudy(study: studyId)
-//        let r4 = turnDao.deleteCurrentTurn(studyId: studyId)
+        let r1 = studyDao.deleteAllStudyRecord()
+        let r2 = exerciseDao.deleteAllExercise()
+        let r3 = stepDao.deleteAllWordStep()
+        let r4 = turnDao.deleteAllExpiredTurn()
+        YXLog("删除所有学习记录", r1, r2, r3, r4)
     }
     
 }

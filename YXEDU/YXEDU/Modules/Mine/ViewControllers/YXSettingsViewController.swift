@@ -123,14 +123,10 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
         let alertView = YXAlertView()
         alertView.descriptionLabel.text = "清除后将删除当前尚未学完的学习记录，是否确定？"
         alertView.doneClosure = { _ in
-
-            YXFileManager.share.clearStudyCache()
-            var service: YXExerciseService = YXExerciseServiceImpl()
-            
-            YYCache.set(nil, forKey: "LastStoredDate")
+            let service: YXExerciseService = YXExerciseServiceImpl()
+            service.cleanAllStudyRecord()
             self.view.makeToast("清除成功")
         }
-
         alertView.show()
     }
 }
