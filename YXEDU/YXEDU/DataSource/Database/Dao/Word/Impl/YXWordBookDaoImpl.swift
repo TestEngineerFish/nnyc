@@ -280,7 +280,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
     
     func selectWord(bookId: Int, wordId: Int) -> YXWordModel? {
-        YXLog("查找--------------  bookId", bookId, "------------- wordId", wordId )
+//        YXLog("查找--------------  bookId", bookId, "------------- wordId", wordId )
         
         let sql = YYSQLManager.WordBookSQL.selectWordByBookIdAndWordId.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [bookId, wordId]) else {

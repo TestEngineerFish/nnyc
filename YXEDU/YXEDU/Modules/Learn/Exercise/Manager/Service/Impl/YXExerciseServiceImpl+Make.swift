@@ -37,6 +37,9 @@ extension YXExerciseServiceImpl {
         if let group = stepDao.selectCurrentGroup(studyId: _studyId) {
             if group > _studyRecord.currentGroup {
                 // 新的一组开始
+                _studyRecord.currentGroup = group
+                
+                // 更新组下标
                 let r1 = studyDao.updateCurrentGroup(studyId: _studyId, group: group)
                 
                 // 新的一组开始后，重置当前轮的下标为 -1
@@ -64,7 +67,7 @@ extension YXExerciseServiceImpl {
             
             // 查找当前组(group)未做的最小step
             // 例如只有s1 s3 s4时， s1全做对，因为要满足Turn>=Step,T2轮的就没法做s3了，T3轮就没法做s4
-            if let minStep = stepDao.selectUnFinishMinStep(studyRecord: _studyRecord) {
+            if let minStep = stepDao.selectUnFinishMinStep(studyId: _studyId, group: _studyRecord.currentGroup) {
                 if minStep > _studyRecord.currentTurn {
                     _studyRecord.currentTurn = minStep
                     // 有跳跃step时，保持到表中
@@ -216,7 +219,8 @@ extension YXExerciseServiceImpl {
         let currentTurnArray = turnDao.selectCurrentTurn(studyId: _studyId)
         YXLog(String(format: "第\(currentGroupIndex)组, 第\(currentTurnIndex)轮，数量：%ld", currentTurnArray.count))
         for e in currentTurnArray {
-            YXLog(String(format: "id = %ld, word = %@", e.wordId, e.word?.word ?? "", "backup = ", e.isBackup))
+            let word = _queryWord(wordId: e.wordId)
+            YXLog(String(format: "id = %ld, word = %@", e.wordId, word?.word ?? "", "backup = ", e.isBackup))
             YXLog(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
         }
     }
