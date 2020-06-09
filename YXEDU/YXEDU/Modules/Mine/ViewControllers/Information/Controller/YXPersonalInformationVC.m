@@ -388,7 +388,8 @@
 }
 
 - (void) pickImage {
-    [[UINavigationBar appearance]setTranslucent:NO];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
