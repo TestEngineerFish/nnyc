@@ -47,13 +47,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         self._clearExpiredData()
         
         // 2. 加载学习进度
-        self.progress = studyDao.getProgress(learn: learnConfig)
-        
-        // 3. 加载答题选项
-        if self.progress == .learning {
-            self._loadStudyRecord()
-            self._loadExerciseOption()
-        }
+        self._loadStudyPropress()
     }
     
     
@@ -86,7 +80,11 @@ class YXExerciseServiceImpl: YXExerciseService {
         self._filterExercise()
         
         // 查找练习
-        return self._findExercise()
+        let model = self._findExercise()
+        
+        // 打印
+        self._printCurrentTurn()
+        return model
     }
     
 

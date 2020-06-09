@@ -473,13 +473,21 @@ extension YYSQLManager {
         order by step desc, exercise_id asc
         """
         
-        /// 正常查询
+        /// 正常查询【未完成的】
         case selectExercise =
         """
         select c.current_id, s.* from current_turn c inner join all_word_step s
         on s.step_id = c.step_id and c.finish = 0 and c.study_id = ?
         order by c.current_id asc
         limit ?
+        """
+        
+        /// 正常查询 【当前轮，包括完成和未完成】
+        case selectCurrentTurn =
+        """
+        select c.current_id, s.* from current_turn c inner join all_word_step s
+        on s.step_id = c.step_id and c.study_id = ?
+        order by c.current_id asc
         """
         
         /// 查询连线题
@@ -492,15 +500,6 @@ extension YYSQLManager {
         limit ?
         """
         
-        /// 查询未做的连线题类型和step
-        case selectConnectionType =
-        """
-        select question_type, c.step from current_turn c inner join all_word_step s
-        on s.step_id = c.step_id and c.finish = 0
-        where question_type = 'Q-A-9' or question_type = 'Q-A-10'
-        order by c.current_id asc
-        limit 1
-        """
         
         case selectTurnFinishStatus =
         """

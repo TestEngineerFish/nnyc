@@ -32,22 +32,14 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
             model?.currentTurn      = Int(result.int(forColumn: "current_turn"))
             model?.studyCount       = Int(result.int(forColumn: "study_count"))
             
-            model?.startTime = result.string(forColumn: "start_time") ?? ""
-            model?.studyDuration = Int(result.int(forColumn: "study_duration"))
+            model?.startTime        = result.string(forColumn: "start_time") ?? ""
+            model?.studyDuration    = Int(result.int(forColumn: "study_duration"))
             
-            let progressInt = Int(result.int(forColumn: "status"))
-            model?.progress = YXExerciseProgress(rawValue: progressInt) ?? .none
+            let progress            = Int(result.int(forColumn: "status"))
+            model?.progress         = YXExerciseProgress(rawValue: progress) ?? .none
         }
         result.close()
         return model
-    }
-    
-    func getStudyID(learn config: YXLearnConfig) -> Int {
-        return self.selectStudyRecordModel(config: config)?.studyId ?? 0
-    }
-
-    func getProgress(learn config: YXLearnConfig) -> YXExerciseProgress {
-        return selectStudyRecordModel(config: config)?.progress ?? .none
     }
 
     func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule, turn: Int) -> Int {

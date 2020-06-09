@@ -11,6 +11,18 @@ import UIKit
 /// 出题逻辑，从数据库读取数据
 extension YXExerciseServiceImpl {
     
+    /// 加载学习进度
+    func _loadStudyPropress() {
+        // 1.获取本地记录
+        self._loadStudyRecord()
+        self.progress = self._studyRecord.progress
+        
+        // 2. 加载答题选项
+        if self.progress == .learning {
+            self._loadExerciseOption()
+        }
+    }
+    
     /// 加载学习记录
     func _loadStudyRecord() {
         if let record = studyDao.selectStudyRecordModel(config: learnConfig) {
@@ -83,9 +95,6 @@ extension YXExerciseServiceImpl {
     
     /// 查找一个练习
     func _findExercise() -> YXExerciseModel? {
-        // 打印
-        _printCurrentTurn()
-        
         guard var exercise = turnDao.selectExercise(studyId: _studyId) else {
             YXLog("当前轮没有数据了")
             return nil
@@ -110,7 +119,7 @@ extension YXExerciseServiceImpl {
     func _finedN3Exercise(exercise: YXExerciseModel) -> YXExerciseModel? {
         if exercise.step == 0 && exercise.type == .newLearnMasterList {
             var n3List = [YXExerciseModel]()
-            let es = turnDao.selectCurrentTurn(studyId: _studyId)
+            let es = turnDao.selectCurrentTurnUnfinish(studyId: _studyId)
             for e in es {
                 if e.type == .newLearnMasterList {
                     var newE = e

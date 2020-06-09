@@ -15,7 +15,10 @@ protocol YXCurrentTurnDao {
     /// 插入当前轮的数据
     func insertCurrentTurn(studyId: Int, group: Int) -> Bool
 
-    /// 获得当前轮的所有数据
+    /// 获得当前轮的所有数据[【未完成】
+    func selectCurrentTurnUnfinish(studyId: Int) -> [YXExerciseModel]
+    
+    /// 获得当前轮的所有数据[【包含完成和未完成，仅用于打印】
     func selectCurrentTurn(studyId: Int) -> [YXExerciseModel]
     
     /// 正常获取首个未做的练习
@@ -26,11 +29,7 @@ protocol YXCurrentTurnDao {
     
     ///获取备选题型
     func selectBackupExercise(studyId: Int, exerciseId: Int, step: Int) -> YXExerciseModel?
-    
-    
-    // 暂时没有使用
-    /// 当前未做的第一个，是否为连线题，返回 type 和 step
-    func selectConnectionType() -> (YXQuestionType, Int)?
+
 
     /// 当前轮是否都完成
     func selectTurnFinishStatus(studyId: Int) -> Bool

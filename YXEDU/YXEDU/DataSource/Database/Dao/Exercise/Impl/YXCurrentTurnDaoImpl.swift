@@ -37,9 +37,23 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel] {
+    func selectCurrentTurnUnfinish(studyId: Int) -> [YXExerciseModel] {
         let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId, 10000]) else {
+            return []
+        }
+        var modelList = [YXExerciseModel]()
+        while result.next() {
+            let model = self._createExercise(rs: result)
+            modelList.append(model)
+        }
+        result.close()
+        return modelList
+    }
+    
+    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel] {
+        let sql = YYSQLManager.CurrentTurnSQL.selectCurrentTurn.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
             return []
         }
         var modelList = [YXExerciseModel]()
@@ -93,22 +107,6 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
         return exercise
     }
     
-    // 暂时没有使用
-    func selectConnectionType() -> (YXQuestionType, Int)? {
-        let sql = YYSQLManager.CurrentTurnSQL.selectConnectionType.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
-            return nil
-        }
-        if result.next() {
-            let type = YXQuestionType(rawValue: result.string(forColumn: "question_type") ?? "") ?? YXQuestionType.none
-            let step = Int(result.int(forColumn: "step"))
-            result.close()
-            
-            return (type, step)
-        }
-        result.close()
-        return nil
-    }
     
     func selectTurnFinishStatus(studyId: Int) -> Bool {
         let sql = YYSQLManager.CurrentTurnSQL.selectTurnFinishStatus.rawValue

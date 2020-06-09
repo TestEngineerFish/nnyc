@@ -12,15 +12,6 @@ protocol YXStudyRecordDao {
     
     // 查询学习记录对象
     func selectStudyRecordModel(config: YXLearnConfig) -> YXStudyRecordModel?
-    
-    /// 获得学习记录的ID
-    /// - Parameter config: 学习配置信息
-    /// - Returns: 记录ID
-    func getStudyID(learn config: YXLearnConfig) -> Int
-
-    /// 获得学习进度
-    /// - Parameter config: 学习配置信息
-    func getProgress(learn config: YXLearnConfig) -> YXExerciseProgress
 
     /// 插入学习记录
     /// - Parameters:
