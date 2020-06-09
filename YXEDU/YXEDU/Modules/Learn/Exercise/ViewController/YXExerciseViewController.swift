@@ -212,12 +212,11 @@
     /// 切换题目
     private func switchExerciseView() {
         YXLog("==== 切题 ====")
+        // 获取题数据
+        let data = service.fetchExerciseModel()
         // - 更新待学习数
         headerView.learningProgress = "\(self.service.getNewWordCount())"
         headerView.reviewProgress   = "\(self.service.getReviewWordCount())"
-
-        // 获取题数据
-        let data = service.fetchExerciseModel()
         
         if var model = data {
             model.learnType = learnConfig.learnType
