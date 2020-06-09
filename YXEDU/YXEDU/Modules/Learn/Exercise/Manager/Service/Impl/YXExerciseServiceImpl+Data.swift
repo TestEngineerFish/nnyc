@@ -132,19 +132,20 @@ extension YXExerciseServiceImpl {
 
     
     func _addWordStep(subStep: YXExerciseModel, recordId: Int, group: Int) {
-        if let word = _queryWord(wordId: subStep.wordId) {
+        
+        var word = YXWordModel()
+        word.wordId = subStep.wordId
+        word.bookId = learnConfig.bookId
+        word.unitId = learnConfig.unitId
+        
+        var exercise = subStep
+        exercise.learnType = learnConfig.learnType
+        exercise.word = word
+        exercise.group = group
+        exercise.eid = _wordIdMap[exercise.wordId] ?? 0
 
-            var exercise = subStep
-            exercise.learnType = self.learnConfig.learnType
-            exercise.word = word
-            exercise.group = group
-            exercise.eid = _wordIdMap[exercise.wordId] ?? 0
-
-            let result = stepDao.insertWordStep(study: recordId, exerciseModel: exercise)
-            YXLog("插入\(_stepString(exercise))步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
-        } else {
-            YXLog("插入步骤数据, 不存在, id:",subStep.wordId)
-        }
+        let result = stepDao.insertWordStep(study: recordId, exerciseModel: exercise)
+        YXLog("插入\(_stepString(exercise))步骤数据", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
     }
     
     

@@ -43,7 +43,6 @@ class YXExerciseServiceImpl: YXExerciseService {
     //MARK: ==== 对外暴露的方法 ====
     
     func initService() {
-        
         // 1.清除过期数据
         self._clearExpiredData()
         
@@ -76,8 +75,6 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {
-        // 打印
-        printCurrentTurn()
         
         // 加载学习记录信息
         self._loadStudyRecord()
