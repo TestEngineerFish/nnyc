@@ -53,16 +53,16 @@ class YXExerciseServiceImpl: YXExerciseService {
         // 2. 加载学习进度
         self._loadStudyPropress()
     }
-    
+
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
     func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let planId = learnConfig.planId == 0 ? nil : learnConfig.planId
         let request = YXExerciseRequest.exercise(type: learnConfig.learnType.rawValue, planId: planId)
-        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
-            self._resultModel = response.data
-            self._processData {
+        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { [weak self] (response) in
+            self?._resultModel = response.data
+            self?._processData {
                 completion?(true, nil)
             }
         }) { (error) in
