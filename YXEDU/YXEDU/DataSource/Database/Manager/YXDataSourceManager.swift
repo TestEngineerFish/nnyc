@@ -91,7 +91,7 @@ extension YYDataSourceManager {
         if let runner = runners[type] {
             return runner
         }
-        
+        YXFileManager.share.moveToNewDataSourcePath()
         let runner = FMDatabase(path: filePath)
         guard runner.open() else {
             DDLogError(String(format:"error open database failed %@", filePath))
@@ -120,7 +120,7 @@ extension YYDataSourceManager {
 extension YYDataSourceManager {
     class func dbFilePath(fileName: String) -> String {
         let uuid = YXUserModel.default.uuid ?? "temp"
-        let documentPath =  NSHomeDirectory() + "/Documents/" + uuid + "/"
+        let documentPath = NSHomeDirectory() + "/Documents/" + uuid + "/"
         if !FileManager.default.fileExists(atPath: documentPath){
             do{
                 try FileManager.default.createDirectory(atPath: documentPath, withIntermediateDirectories: true, attributes: nil)

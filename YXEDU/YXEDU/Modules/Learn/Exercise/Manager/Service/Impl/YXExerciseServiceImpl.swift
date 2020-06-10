@@ -102,6 +102,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         if let startTime = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat()) {
             let duration = currentTime.timeIntervalSince(startTime as Date)
             self.studyDao.setDurationTime(studyId: _studyId, duration: Int(duration))
+            self.setStartTime()
         }
     }
 

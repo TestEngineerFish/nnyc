@@ -81,7 +81,7 @@ extension YYDataSourceQueueManager {
         if let runner = runners[type] {
             return runner
         }
-
+        YXFileManager.share.moveToNewDataSourcePath()
         let runner = FMDatabaseQueue(path: filePath)
 
         for sql in sqls {
