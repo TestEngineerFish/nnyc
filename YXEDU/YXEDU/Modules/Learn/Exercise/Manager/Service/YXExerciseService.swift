@@ -41,6 +41,7 @@ enum YXExerciseProgress: Int {
     case empty      = 4     // 学习数据异常
 }
 
+
 //MARK: - 练习出题逻辑管理器
 /// 练习出题逻辑管理器
 protocol YXExerciseService {
@@ -78,8 +79,6 @@ protocol YXExerciseService {
     func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?)
     
     /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
-    /// - Parameters:
-    ///   - exerciseModel:  练习数据
     func answerAction(exercise model: YXExerciseModel)
 
     /// 连线题，仅单个选项的做题动作处理
