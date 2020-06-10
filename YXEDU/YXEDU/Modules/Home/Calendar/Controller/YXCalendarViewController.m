@@ -437,7 +437,7 @@ static CGFloat const kPickViewHeight = 272.f;
     NSMutableArray<NSMutableDictionary *> *dataArray = [NSMutableArray arrayWithCapacity:days];
     NSDate *firstDate = [self.currentTitleDate begindayOfMonth];
     //生成本月数据列表
-    for (int i = 0; i <= days; ++i) {
+    for (int i = 0; i < days; ++i) {
         NSDate *nextDay = [firstDate offsetDays:i];
         NSDictionary *dict = @{@"date":nextDay,
                                @"numWord":@1,//默认显示1,不然XJYkChart控件为空时比较丑
@@ -450,9 +450,16 @@ static CGFloat const kPickViewHeight = 272.f;
     for (YXNodeModel *node in self.monthData.study_detail) {
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:node.date.doubleValue];
         int index = (int)[date day] - 1;
-        dataArray[index][@"numWord"] = [node.num isEqualToNumber:@0] ? @1 : node.num;
-        dataArray[index][@"costTime"] = node.cost_time;
-        dataArray[index][@"status"] = node.status;
+        
+        if (index <= dataArray.count - 1) {
+            dataArray[index][@"numWord"] = [node.num isEqualToNumber:@0] ? @1 : node.num;
+            dataArray[index][@"costTime"] = node.cost_time;
+            dataArray[index][@"status"] = node.status;
+            
+        } else {
+            break;
+        }
+     
     }
     return dataArray;
 }
