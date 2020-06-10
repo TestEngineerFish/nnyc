@@ -20,6 +20,8 @@ struct YXExerciseModel: Mappable {
     var type: YXQuestionType = .none
     // 学习类型
     var learnType: YXLearnType = .base
+    // 练习规则
+    var rule: YXExerciseRule = .p0
         
     /// 对应的单词数据
     var wordId: Int = 0

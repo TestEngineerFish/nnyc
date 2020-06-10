@@ -210,7 +210,18 @@ class YXExerciseServiceImpl: YXExerciseService {
         }
     }
     
+    /// 是否显示单词详情页
+    /// P2  跳过新学，做题时首次做新学词题目后无论对错必定出现单词详情
     func isShowWordDetail(wordId: Int, step: Int) -> Bool {
+        guard let data = stepDao.selectMinStepWrongCount(studyId: _studyId, wordId: wordId) else {
+            return false
+        }
+        
+        return ruleType == .p2 && data.0 == step && data.1 == 0
+    }
+    
+    // 备份，后续显示详情配置到step上后再启用
+    func isShowWordDetail_backup(wordId: Int, step: Int) -> Bool {
         if let model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
             switch model.question?.extend?.isShowWordDetail ?? .none {
             case .none:

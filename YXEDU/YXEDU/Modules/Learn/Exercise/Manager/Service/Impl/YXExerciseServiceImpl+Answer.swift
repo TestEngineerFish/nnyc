@@ -22,7 +22,12 @@ extension YXExerciseServiceImpl {
 
     /// 更新缓存表
     func updateCurrentTurn(exercise model: YXExerciseModel) {
-        self.turnDao.updateExerciseFinishStatus(stepId: model.stepId)
+        let isValidationType =  (model.type == .validationWordAndChinese || model.type == .validationImageAndWord)
+        
+        // 做对或者判断题，才改完成状态【做题时，做错一次，立即退出学习，如果改了状态，下次进来当前轮就没法做了】
+        if model.status == .right || isValidationType {
+            self.turnDao.updateExerciseFinishStatus(stepId: model.stepId)
+        }
     }
 
     /// 更新Step数据库

@@ -27,7 +27,8 @@ extension YXExerciseServiceImpl {
     func _loadStudyRecord() {
         if let model = studyDao.selectStudyRecordModel(config: learnConfig) {
             _studyRecord = model
-            progress = _studyRecord.progress
+            ruleType = _studyRecord.ruleType
+            progress = _studyRecord.progress            
             YXLog("查询当前学习记录")
         } else {
             YXLog("查询当前学习记录为空：", learnConfig.learnType, learnConfig.bookId, learnConfig.unitId, learnConfig.planId)

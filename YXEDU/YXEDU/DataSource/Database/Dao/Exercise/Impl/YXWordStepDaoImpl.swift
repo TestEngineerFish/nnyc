@@ -68,6 +68,23 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         return exercise
     }
     
+    
+    func selectMinStepWrongCount(studyId: Int, wordId: Int) -> (Int, Int)? {
+        let sql = YYSQLManager.WordStepSQL.selectMinStepWrongCount.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId, wordId]) else {
+            return nil
+        }
+        if result.next() {
+            let minStep = Int(result.int(forColumn: "min_step"))
+            let wrongCount = Int(result.int(forColumn: "wrong_count"))
+            result.close()
+            return (minStep, wrongCount)
+        }
+        result.close()
+        return nil
+    }
+    
+    
     func insertWordStep(study recordId: Int, exerciseModel: YXExerciseModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
         

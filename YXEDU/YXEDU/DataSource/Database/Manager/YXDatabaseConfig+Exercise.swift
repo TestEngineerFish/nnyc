@@ -376,6 +376,11 @@ extension YYSQLManager {
         WHERE exercise_id = ? and (step = 1 or step = 4)
         """
         
+        case selectMinStepWrongCount =
+        """
+        select min(step) min_step, wrong_count from all_word_step where study_id = ? and word_id = ? and step != 0
+        """
+        
         case updatePreviousWrongStatus =
         """
         update all_word_step set status = 0 where step_id in (select step_id from current_turn where study_id = ?)

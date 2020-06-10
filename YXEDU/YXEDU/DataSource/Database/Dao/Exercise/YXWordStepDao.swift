@@ -25,6 +25,8 @@ protocol YXWordStepDao {
     /// 根据备选查原始对象
     func selectOriginalWordStepModelByBackup(studyId: Int, wordId: Int, step: Int) -> YXExerciseModel?
     
+    func selectMinStepWrongCount(studyId: Int, wordId: Int) -> (Int, Int)?
+    
     // TODO: ==== 插入 ====add
     /// 添加练习数据
     /// - Parameter exerciseModel: 练习
