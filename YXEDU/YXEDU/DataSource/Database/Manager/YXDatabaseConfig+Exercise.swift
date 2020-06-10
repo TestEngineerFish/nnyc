@@ -191,7 +191,7 @@ extension YYSQLManager {
         case deleteExpiredRecord =
         """
         DELETE FROM study_record
-        WHERE date(create_ts) < datetime('now', 'localtime')
+        WHERE date(create_ts) < date('now', 'localtime')
         """
         
         case deleteAllRecord =
@@ -281,7 +281,7 @@ extension YYSQLManager {
         WHERE study_id = ?
         """
         
-        case deleteExpiredExercise = "delete from all_exercise where date(create_ts) < datetime('now', 'localtime')"
+        case deleteExpiredExercise = "delete from all_exercise where date(create_ts) < date('now', 'localtime')"
         
         case deleteAllExercise = "delete from all_exercise"
     }
@@ -401,7 +401,7 @@ extension YYSQLManager {
         WHERE study_id = ?
         """
         
-        case deleteExpiredWordStep = "delete from all_word_step where date(create_ts) < datetime('now', 'localtime')"
+        case deleteExpiredWordStep = "delete from all_word_step where date(create_ts) < date('now', 'localtime')"
         
         case deleteAllWordStep = "delete from all_word_step"
 
@@ -472,7 +472,7 @@ extension YYSQLManager {
         case deleteCurrentTurn = "delete from current_turn where study_id = ?"
         
         /// 删除过期的轮
-        case deleteExpiredTurn = "delete from current_turn where date(create_ts) < datetime('now', 'localtime')"
+        case deleteExpiredTurn = "delete from current_turn where date(create_ts) < date('now', 'localtime')"
         
         /// 删除所有的轮
         case deleteAllTurn = "delete from current_turn"
