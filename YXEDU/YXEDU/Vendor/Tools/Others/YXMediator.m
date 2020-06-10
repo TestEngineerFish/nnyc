@@ -122,7 +122,7 @@
     if ([userActivity.webpageURL.absoluteString hasSuffix:@"wxa16b70cc1b2c98a0/"]) {
         return [[WXApiManager shared] handleOpenUniversalLink:userActivity];
     } else {
-        return [TencentOAuth HandleUniversalLink:url];
+        return [TencentOAuth HandleUniversalLink:userActivity.webpageURL];
     }
 }
 
