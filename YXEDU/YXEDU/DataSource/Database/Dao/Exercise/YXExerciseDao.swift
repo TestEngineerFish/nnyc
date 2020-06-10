@@ -18,6 +18,10 @@ protocol YXExerciseDao {
     @discardableResult
     func insertExercise(learn config: YXLearnConfig, rule: YXExerciseRule, study recordId: Int, exerciseModel: YXExerciseModel) -> Int
 
+    /// 获得单词是否已掌握
+    /// - Parameter id: 练习ID
+    func getExerciseMastered(exercise id: Int) -> Bool
+
     /// 更新练习得分
     /// - Parameter id: 练习ID
     /// - Parameter reduceScore: 减少分数

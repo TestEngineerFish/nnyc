@@ -29,6 +29,18 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? Int(self.wordRunner.lastInsertRowId) : 0
     }
 
+    func getExerciseMastered(exercise id: Int) -> Bool {
+        var isMastered = false
+        let sql = YYSQLManager.ExerciseSQL.selectExerciseInfo.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return isMastered
+        }
+        if result.next() {
+            isMastered = result.bool(forColumn: "mastered")
+        }
+        return isMastered
+    }
+
     func updateScore(exercise id: Int, reduceScore: Int) -> Bool {
         let sql = YYSQLManager.ExerciseSQL.updateScore.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [reduceScore, reduceScore, id])
