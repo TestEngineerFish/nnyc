@@ -77,7 +77,6 @@ extension YXExerciseServiceImpl {
     /// - Parameter result: 网络数据
     func _processExercise(wordIds: [Int], isNew: Bool, recordId: Int) {
         YXLog("\n插入数据 is_new= \(isNew ) ====== 开始")
-//        let studyRecordId = self.studyDao.getStudyID(learn: learnConfig)
         // 处理单词列表
         for wordId in wordIds {
             var word = YXWordModel()
@@ -97,7 +96,7 @@ extension YXExerciseServiceImpl {
             // 映射单词ID和表ID
             self._wordIdMap[wordId] = exerciseId
 
-            YXLog("插入练习数据—— 是否新学：\(isNew) ，单词ID：", word.wordId ?? 0,"Group： \(exercise.group)", exerciseId > 0 ? "成功" : "失败")
+            YXLog("插入练习数据—— 是否新学：\(isNew) ，单词ID：", word.wordId ?? 0, exerciseId > 0 ? "成功" : "失败")
         }
     }
     
@@ -109,7 +108,6 @@ extension YXExerciseServiceImpl {
         guard let groups = _resultModel?.groups else {
             return
         }
-//        let studyRecordId = self.studyDao.getStudyID(learn: learnConfig)
         for (index, group) in groups.enumerated() {
             for step in group {
                 for subStep in step {
@@ -147,7 +145,7 @@ extension YXExerciseServiceImpl {
         exercise.eid = _wordIdMap[exercise.wordId] ?? 0
 
         let result = stepDao.insertWordStep(study: recordId, exerciseModel: exercise)
-        YXLog("插入\(_stepString(exercise))步骤数据, wordId:", word.wordId ?? 0, ":", word.word ?? "", " ", result ? "成功" : "失败")
+        YXLog("插入 Group:\(group) \(_stepString(exercise)) 数据, wordId:", subStep.wordId, result ? "成功" : "失败")
     }
     
     
@@ -164,11 +162,11 @@ extension YXExerciseServiceImpl {
     
     func _stepString(_ exercise: YXExerciseModel) -> String {
         if exercise.step == 0 {
-            return "新学step\(exercise.step)"
+            return "新学step:\(exercise.step)"
         } else if exercise.isNewWord {
-            return "训练step\(exercise.step)"
+            return "训练step:\(exercise.step)"
         } else {
-            return "复习step\(exercise.step)"
+            return "复习step:\(exercise.step)"
         }
     }
     

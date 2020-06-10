@@ -32,6 +32,23 @@ import ObjectMapper
             return .base
         }
     }
+    
+    var desc: String {
+        switch self {
+        case .base:
+            return "基础学习1"
+        case .wrong:
+            return "错题本抽查2"
+        case .planListenReview:
+            return "听力复习3"
+        case .planReview:
+            return "复习计划4"
+        case .aiReview:
+            return "智能复习5"
+        default:
+            return "基础学习1"
+        }
+    }
 }
 
 

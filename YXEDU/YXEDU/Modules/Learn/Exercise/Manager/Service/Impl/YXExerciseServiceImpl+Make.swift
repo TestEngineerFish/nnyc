@@ -28,8 +28,10 @@ extension YXExerciseServiceImpl {
         if let record = studyDao.selectStudyRecordModel(config: learnConfig) {
             self._studyRecord = record
             YXLog("查询当前学习记录")
+        } else {
+            YXLog("查询当前学习记录为空：", learnConfig.learnType, learnConfig.bookId, learnConfig.unitId, learnConfig.planId)
         }
-    }
+    }// "book_id":81,"unit_id":752
 
     /// 更新分组下标
     func _updateCurrentGroup() {

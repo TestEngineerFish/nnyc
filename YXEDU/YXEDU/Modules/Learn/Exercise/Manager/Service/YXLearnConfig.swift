@@ -28,6 +28,9 @@ extension YXLearnConfig {
     var params: [Any] {
         return [learnType.rawValue, bookId, unitId, planId]
     }
+    var desc: String {
+        return String("LearnConfig - type: \(learnType.desc), bookId: \(bookId), unitId: \(unitId), bookId: \(planId)")
+    }
 }
 
 /// 学习配置，基础实现
