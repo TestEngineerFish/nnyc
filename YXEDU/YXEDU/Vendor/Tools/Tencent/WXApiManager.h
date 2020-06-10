@@ -33,6 +33,8 @@ typedef void (^wxFinishBlock) (id obj, BOOL result);
 
 - (BOOL)handleOpenURL:(NSURL *)url;
 
+- (BOOL)handleOpenUniversalLink:(NSUserActivity *)userActivity;
+
 - (void)wxLogin;
 
 - (BOOL)wxIsInstalled;

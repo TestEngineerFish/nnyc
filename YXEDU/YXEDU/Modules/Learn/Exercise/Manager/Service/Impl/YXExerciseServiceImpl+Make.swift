@@ -48,6 +48,9 @@ extension YXExerciseServiceImpl {
                 
                 // 新的一组开始后，重置当前轮的下标为 -1
                 let r2 = studyDao.updateCurrentTurn(studyId: _studyId, turn: -1)
+                if r2 {
+                    _studyRecord.currentTurn = -1
+                }
                 YXLog("新组开始, 第\(group)组, ", r1, r2)
             }
         } else {

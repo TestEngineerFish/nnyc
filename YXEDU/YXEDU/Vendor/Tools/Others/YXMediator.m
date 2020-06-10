@@ -118,9 +118,12 @@
     return YES;
 }
 
--(BOOL)handleOpenUnivrsalLinkURL:(NSURL *)url {
-//    [QQApiInterface handleOpenURL:url delegate:(id<QQApiInterfaceDelegate>)[QQApiManager class]];
-    return [TencentOAuth HandleUniversalLink:url];
+-(BOOL)handleOpenUnivrsalLinkURL:(NSUserActivity *)userActivity {
+    if ([userActivity.webpageURL.absoluteString hasSuffix:@"wxa16b70cc1b2c98a0/"]) {
+        return [[WXApiManager shared] handleOpenUniversalLink:userActivity];
+    } else {
+        return [TencentOAuth HandleUniversalLink:url];
+    }
 }
 
 //- (void)checkVersion {
