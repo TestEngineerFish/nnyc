@@ -162,6 +162,18 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         return count
     }
 
+    func getStepCount(exercise eid: Int, step: Int) -> Int {
+        var amount = 0
+        let sql = YYSQLManager.WordStepSQL.selectStepCount.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [eid, step]) else {
+            return amount
+        }
+        if result.next() {
+            amount = Int(result.int(forColumn: "count"))
+        }
+        return amount
+    }
+
     func updatePreviousWrongStatus(studyId: Int) -> Bool {
         let sql = YYSQLManager.WordStepSQL.updatePreviousWrongStatus.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [studyId])
@@ -170,7 +182,7 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
 
     func deleteStep(with model: YXExerciseModel) {
         let sql = YYSQLManager.WordStepSQL.deleteStep.rawValue
-        let score = model.mastered ? 0 : 7
+        let score = model.mastered ? 7 : 0
         let params: [Any] = [model.eid, model.step, score]
         self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }

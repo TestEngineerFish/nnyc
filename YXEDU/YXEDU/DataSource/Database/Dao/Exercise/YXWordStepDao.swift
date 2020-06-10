@@ -46,6 +46,11 @@ protocol YXWordStepDao {
     /// - Parameter id: 练习ID
     func getStep1_4Count(exercise id: Int) -> Int
 
+    /// 获得单独单词的单独Step的数量
+    /// - Parameters:
+    ///   - eid: 练习ID
+    ///   - step: StepID
+    func getStepCount(exercise eid: Int, step: Int) -> Int
     
     /// 上一轮做错的状态，重置为未做（status  = 0）
     func updatePreviousWrongStatus(studyId: Int) -> Bool
