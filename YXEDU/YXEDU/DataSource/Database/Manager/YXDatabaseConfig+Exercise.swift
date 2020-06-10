@@ -447,13 +447,9 @@ extension YYSQLManager {
         case insertTurn =
         """
         insert into current_turn(study_id, word_id, step_id, step, turn)
-        select study_id, word_id, step_id, step, (select current_turn from study_record where study_id = ? limit 1) turn from (
-            select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
-            where e.study_id = ? and group_index = ? and s.backup = 0
-            and (s.status = 0 or s.status = 1) and s.status != 3
-            order by s.step desc
-        )
-        where turn >= step
+        select study_id, word_id, step_id, min(step) step, (select current_turn from study_record where study_id = ? limit 1) turn from all_word_step
+        where study_id = ? and group_index = ? and backup = 0
+        and (status = 0 or status = 1) and turn >= step
         group by word_id
         order by step desc, exercise_id asc
         """
