@@ -13,10 +13,11 @@ extension YXExerciseServiceImpl {
     
     /// 处理从网络请求的数据
     /// - Parameter result: 网络数据
-    func _processData(competion: (() -> Void)?) {
+    func _processData(completion: (() -> Void)?) {
         if (_resultModel?.newWordIds?.count == .some(0) && _resultModel?.groups.count == .some(0)) {
             YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(learnConfig.learnType)")
             progress = .empty
+            completion?()
             return
         }
         
@@ -45,7 +46,7 @@ extension YXExerciseServiceImpl {
         // 加载答题选项
         self._loadExerciseOption()
 
-        competion?()
+        completion?()
     }
     
     

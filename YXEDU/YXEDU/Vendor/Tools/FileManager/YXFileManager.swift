@@ -174,6 +174,35 @@ struct YXFileManager {
         }
     }
 
+    /// 移动老数据库到新数据库地址（区分用户存储）
+    func moveToNewDataSourcePath() {
+        let documentPath = self.getDocumentPath()
+        guard let nameList = try? FileManager.default.contentsOfDirectory(atPath: documentPath) else {
+            YXLog("查找老数据库失败")
+            return
+        }
+        let uuid      = YXUserModel.default.uuid ?? "temp"
+        let newDBPath = NSHomeDirectory() + "/Documents/\(uuid)/\(YYDataSourceType.word.rawValue)"
+        if FileManager.default.fileExists(atPath: newDBPath) {
+            YXLog("已存在新DB地址，无需移动老数据库")
+            return
+        }
+        nameList.forEach { (name) in
+            if name == YYDataSourceType.word.rawValue {
+                do {
+                    let oldPath = documentPath + "/" + name
+                    let newPath = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.word.rawValue)
+                    YXLog("oldPath\(oldPath)")
+                    YXLog("newPath\(newPath)")
+                    try FileManager.default.moveItem(atPath: oldPath, toPath: newPath)
+                    YXLog("移动老数据库成功")
+                } catch {
+                    YXLog("移动老数据库失败")
+                }
+            }
+        }
+    }
+
     /// 清除学习记录缓存
     func clearStudyCache() {
         self.clearFile(path: self.getStudyPath())

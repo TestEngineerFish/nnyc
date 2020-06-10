@@ -68,11 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        if Growing.handle(url) {
-            return true
-        }
-        
-        return false
+        Growing.handle(url)
+        return YXMediator.shared().handleOpen(url)
     }
     
     /** 每次启动时，该方法不会执行，App完全退到后台，再回到前台，该方法才会执行 */
@@ -93,12 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     /// 通用链接跳转
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-            guard let url = userActivity.webpageURL else {
-                return true
-            }
-            YXMediator.shared()?.handleOpenUnivrsalLinkURL(url)
-        }
+        YXMediator.shared()?.handleOpenUnivrsalLinkURL(userActivity)
         return true
     }
     

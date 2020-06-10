@@ -37,12 +37,15 @@
 }
 
 - (void)registerWX:(NSString *)appid {
-//    [WXApi registerApp:appid enableMTA:NO];
-    [WXApi registerApp:appid universalLink:@"https://nnyc-api.xstudyedu.com"];
+    [WXApi registerApp:appid universalLink:@"https://nnyc-api.xstudyedu.com/"];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
     return [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)handleOpenUniversalLink:(NSUserActivity *)userActivity {
+    return [WXApi handleOpenUniversalLink:userActivity delegate:self];
 }
 
 - (void)wxLogin {

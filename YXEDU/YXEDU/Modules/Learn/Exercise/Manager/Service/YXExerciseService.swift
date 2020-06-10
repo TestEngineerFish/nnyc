@@ -38,7 +38,7 @@ enum YXExerciseProgress: Int {
     case none       = 1     // 没有学习记录，可能是首次，也可能是学完了
     case learning   = 2     // 学习中【未学完】
     case unreport   = 3     // 已学完【未上报】
-    case empty      = 4     // 学习数据异常
+    case empty      = 4     // 学习数据异常，或者当天没有要学的
 }
 
 
@@ -57,6 +57,11 @@ protocol YXExerciseService {
     /// 练习进度
     var progress: YXExerciseProgress { get }
     
+    /// 获得未学完的新学单词数
+    var newWordCount: Int { get }
+    
+    /// 获得未学完的复习单词数
+    var reviewWordCount: Int { get }
     
     //MARK: - 方法
     // ----------------------------
@@ -87,11 +92,6 @@ protocol YXExerciseService {
     /// 连线题型 ，连线题所有项全部连完
     func updateConnectionExerciseFinishStatus(exerciseModel: YXExerciseModel, right: Bool)
     
-    /// 获得未学完的新学单词数
-    func getNewWordCount() -> Int
-
-    /// 获得未学完的复习单词数
-    func getReviewWordCount() -> Int
 
     /// 上报学习数据
     /// - Parameters:

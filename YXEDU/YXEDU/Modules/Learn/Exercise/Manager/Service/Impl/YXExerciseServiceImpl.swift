@@ -9,7 +9,7 @@
 import UIKit
 // 供练习VC调用
 class YXExerciseServiceImpl: YXExerciseService {
-    
+
     // ----------------------------
     //MARK: - 属性
     var learnConfig: YXLearnConfig = YXBaseLearnConfig()
@@ -17,6 +17,10 @@ class YXExerciseServiceImpl: YXExerciseService {
     var ruleType: YXExerciseRule = .p0
         
     var progress: YXExerciseProgress = .none
+    
+    var newWordCount: Int { return getNewWordCount() }
+    
+    var reviewWordCount: Int { return getReviewWordCount() }
     
     // ----------------------------
     //MARK: - Private 属性
@@ -49,16 +53,16 @@ class YXExerciseServiceImpl: YXExerciseService {
         // 2. 加载学习进度
         self._loadStudyPropress()
     }
-    
+
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
     func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let planId = learnConfig.planId == 0 ? nil : learnConfig.planId
         let request = YXExerciseRequest.exercise(type: learnConfig.learnType.rawValue, planId: planId)
-        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { (response) in
-            self._resultModel = response.data
-            self._processData {
+        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { [weak self] (response) in
+            self?._resultModel = response.data
+            self?._processData {
                 completion?(true, nil)
             }
         }) { (error) in
@@ -95,9 +99,11 @@ class YXExerciseServiceImpl: YXExerciseService {
     func updateDurationTime() {
         let currentTime  = Date()
         let startTimeStr = self.studyDao.getStartTime(learn: learnConfig)
-        let startTime    = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat())
-        let duration     = currentTime.timeIntervalSince(startTime! as Date)
-        self.studyDao.setDurationTime(studyId: _studyId, duration: Int(duration))
+        if let startTime = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat()) {
+            let duration = currentTime.timeIntervalSince(startTime as Date)
+            self.studyDao.setDurationTime(studyId: _studyId, duration: Int(duration))
+            self.setStartTime()
+        }
     }
 
     func answerAction(exercise: YXExerciseModel) {
@@ -121,7 +127,8 @@ class YXExerciseServiceImpl: YXExerciseService {
             YXLog(model.mastered ? "已" : "未", "掌握，移除", model.mastered ? "0":"7", "分题")
             self.stepDao.deleteStep(with: deleteModel)
         }
-        if model.step == 0 && self.ruleType == .p3 && model.mastered  {
+        let skipStep1_4TypeList: [YXExerciseRule] = [.p0, .p3, .p4]
+        if model.step == 0 && skipStep1_4TypeList.contains(self.ruleType) && model.mastered  {
             // 更新S1和S4为跳过
             YXLog("P3，新学已掌握，标记Step1和Step4为跳过")
             self.skipStep1_4(exercise: model)

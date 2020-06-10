@@ -215,8 +215,8 @@
         // 获取题数据
         let data = service.fetchExerciseModel()
         // - 更新待学习数
-        headerView.learningProgress = "\(self.service.getNewWordCount())"
-        headerView.reviewProgress   = "\(self.service.getReviewWordCount())"
+        headerView.learningProgress = "\(self.service.newWordCount)"
+        headerView.reviewProgress   = "\(self.service.reviewWordCount)"
         
         if var model = data {
             model.learnType = learnConfig.learnType

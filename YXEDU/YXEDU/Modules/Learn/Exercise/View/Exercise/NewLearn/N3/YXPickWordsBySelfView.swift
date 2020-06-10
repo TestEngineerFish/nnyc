@@ -14,11 +14,11 @@ class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableVie
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!
+
     init(frame: CGRect, exerciseModel: YXExerciseModel, tapStartLearnClosure: @escaping ((_ exerciseModel: YXExerciseModel) -> Void)) {
         super.init(exerciseModel: exerciseModel)
         self.tapStartLearnClosure = tapStartLearnClosure
-        
         initializationFromNib()
     }
 
@@ -30,6 +30,7 @@ class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableVie
     
     private func initializationFromNib() {
         Bundle.main.loadNibNamed("YXPickWordsBySelfView", owner: self, options: nil)
+        self.bottomViewHeight.constant += kSafeBottomMargin
         addSubview(contentView)
         contentView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
