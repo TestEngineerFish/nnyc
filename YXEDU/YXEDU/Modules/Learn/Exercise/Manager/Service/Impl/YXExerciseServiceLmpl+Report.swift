@@ -23,7 +23,7 @@ extension YXExerciseServiceImpl {
             _model.unitId     = model.word?.unitId
             _model.score      = model.score
             _model.errorCount = self.getExerciseWrongAmount(exercise: model.eid)
-            _model.result     = ResultModel(JSON: data)
+            _model.result     = ResultModel(dict: data)
             modelArray.append(_model)
         }
         return modelArray.toJSONString() ?? ""

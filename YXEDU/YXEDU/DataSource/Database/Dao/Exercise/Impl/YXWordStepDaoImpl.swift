@@ -101,7 +101,7 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func getReportSteps(with model: YXExerciseModel) -> [String:Any] {
+    func getReportSteps(with model: YXExerciseModel) -> [String:Any?] {
         let sql = YYSQLManager.WordStepSQL.selsetSteps.rawValue
         let params: [Any] = [model.eid]
         var dict = [String:Any]()
@@ -110,7 +110,15 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         }
         while result.next() {
             let step       = Int(result.int(forColumn: "step"))
-            let stepResult = Int(result.int(forColumn: "wrong_count")) == 0
+            let stepResult: Any? = {
+                let status = Int(result.int(forColumn: "status"))
+                // 跳过
+                if status == 3 {
+                    return nil
+                } else {
+                    return Int(result.int(forColumn: "wrong_count")) == 0
+                }
+            }()
             if step != 0 {
                 dict["\(step)"] = stepResult
             }

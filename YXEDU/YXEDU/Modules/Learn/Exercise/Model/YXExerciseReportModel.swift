@@ -48,6 +48,13 @@ struct ResultModel: Mappable {
         self.mapping(map: map)
     }
 
+    init(dict: [String:Any?]) {
+        one   = dict["1"] as? Bool
+        two   = dict["2"] as? Bool
+        three = dict["3"] as? Bool
+        four  = dict["4"] as? Bool
+    }
+
     mutating func mapping(map: Map) {
         one   <- map["1"]
         two   <- map["2"]

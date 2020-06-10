@@ -235,6 +235,12 @@ extension YYSQLManager {
         WHERE exercise_id = ?
         """
 
+        case selectExerciseInfo =
+        """
+        SELECT * FROM all_exercise
+        WHERE exercise_id = ?
+        """
+
         case updateUnfinishedCount =
         """
         UPDATE all_exercise

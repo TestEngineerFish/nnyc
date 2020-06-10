@@ -62,10 +62,11 @@ extension YXExerciseServiceImpl {
 
     /// 扣分逻辑
     private func getReduceScore(exercise model: YXExerciseModel) -> Int {
+        let isMastered  = self.exerciseDao.getExerciseMastered(exercise: model.eid)
         var reduceScore = 0
         let step1Deduct = 3
-        let step2Deduct = model.mastered ? 4 : 2
-        let step3Deduct = model.mastered ? 2 : 1
+        let step2Deduct = isMastered ? 4 : 2
+        let step3Deduct = isMastered ? 2 : 1
         let step4Deduct = 1
         switch model.step {
         case 1:
