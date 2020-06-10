@@ -25,7 +25,7 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
     
     func selectUnFinishMinStep(studyId: Int, group: Int) -> Int? {
         var step: Int?
-        let sql = YYSQLManager.WordStepSQL.selectUnfinishMinStepByTurn.rawValue
+        let sql = YYSQLManager.WordStepSQL.selectUnfinishMinStep.rawValue
         let params = [studyId, group]                      
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return step
