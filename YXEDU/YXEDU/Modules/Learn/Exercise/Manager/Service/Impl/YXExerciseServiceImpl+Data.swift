@@ -49,8 +49,8 @@ extension YXExerciseServiceImpl {
     }
     
     
+    /// 处理学习记录
     func _processStudyRecord() -> Int {
-        
         guard let group = _resultModel?.groups.first, group.count > 0 else {
             YXLog("学习数据异常，无法查找第一组初始最小 Turn")
             return 0
@@ -66,7 +66,7 @@ extension YXExerciseServiceImpl {
             break
         }
         
-        // 设置初始轮下标，需要 -1，因为筛选数据的时候，做了+1处理
+        // 设置初始轮下标，需要减1，因为筛选数据的时候，做了+1处理
         let startTurn = currentMinStep - 1
         
         return self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType, turn: startTurn)

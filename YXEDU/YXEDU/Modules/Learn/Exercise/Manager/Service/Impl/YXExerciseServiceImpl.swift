@@ -28,9 +28,9 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     // 当前学习记录
     var _studyRecord = YXStudyRecordModel()
-    var _studyId: Int {
-        return self._studyRecord.studyId
-    }
+    var _studyId: Int { return _studyRecord.studyId }
+        
+
     /// 本地数据库访问
     var wordDao: YXWordBookDao     = YXWordBookDaoImpl()
     var studyDao: YXStudyRecordDao = YXStudyRecordDaoImpl()
@@ -68,13 +68,9 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     /// 获取一个练习数据
-    func fetchExerciseModel() -> YXExerciseModel? {
-        
+    func fetchExerciseModel() -> YXExerciseModel? {        
         // 加载学习记录信息
         self._loadStudyRecord()
-        
-        // 更新分组下标
-        self._updateCurrentGroup()
         
         // 筛选数据
         self._filterExercise()

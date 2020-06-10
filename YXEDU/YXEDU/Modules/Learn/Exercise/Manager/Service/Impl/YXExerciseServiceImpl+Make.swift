@@ -15,26 +15,28 @@ extension YXExerciseServiceImpl {
     func _loadStudyPropress() {
         // 1.获取本地记录
         self._loadStudyRecord()
-        self.progress = self._studyRecord.progress
         
         // 2. 加载答题选项
-        if self.progress == .learning {
+        if progress == .learning {
             self._loadExerciseOption()
         }
     }
     
+    
     /// 加载学习记录
     func _loadStudyRecord() {
-        if let record = studyDao.selectStudyRecordModel(config: learnConfig) {
-            self._studyRecord = record
+        if let model = studyDao.selectStudyRecordModel(config: learnConfig) {
+            _studyRecord = model
+            progress = _studyRecord.progress
             YXLog("查询当前学习记录")
         } else {
             YXLog("查询当前学习记录为空：", learnConfig.learnType, learnConfig.bookId, learnConfig.unitId, learnConfig.planId)
         }
-    }// "book_id":81,"unit_id":752
+    }
 
+    
     /// 更新分组下标
-    func _updateCurrentGroup() {
+    func _updateCurrentGroupIndex() {
         // 未完成的组下标
         if let group = stepDao.selectCurrentGroup(studyId: _studyId) {
             if group > _studyRecord.currentGroup {
@@ -58,45 +60,54 @@ extension YXExerciseServiceImpl {
         }
     }
     
+    
+    /// 更新轮次下标
+    func _updateCurrentTurnIndex() {
+        // 新的轮开始
+        _studyRecord.currentTurn = _studyRecord.currentTurn + 1
+        
+        // 查找当前组(group)未做的最小step
+        if let minStep = stepDao.selectUnFinishMinStep(studyId: _studyId, group: _studyRecord.currentGroup) {
+            // 例如只有s1 s3 s4时， s1全做对，因为要满足Turn>=Step,T2轮的就没法做s3了，T3轮就没法做s4
+            if minStep > _studyRecord.currentTurn {
+                // 使用跳跃的 step
+                _studyRecord.currentTurn = minStep
+                YXLog("轮下标跳跃至 turn_index:", minStep)
+            }
+        }
+        
+        // 保存轮下标到数据表
+        let r1 = studyDao.updateCurrentTurn(studyId: _studyId, turn: _studyRecord.currentTurn)
+        YXLog("新轮开始 turn_index:", _studyRecord.currentTurn, r1)
+    }
+    
+    
     /// 筛选数据
     func _filterExercise() {
+        // 更新分组下标
+        self._updateCurrentGroupIndex()
         
-        // 当前轮是否做完
+        // 当前轮是否做完(1可能刚进来，2做完)
         if turnDao.selectTurnFinishStatus(studyId: _studyId) {
             
-            // 新的轮开始
-            _studyRecord.currentTurn = _studyRecord.currentTurn + 1
-            
-            // 查找当前组(group)未做的最小step
-            // 例如只有s1 s3 s4时， s1全做对，因为要满足Turn>=Step,T2轮的就没法做s3了，T3轮就没法做s4
-            if let minStep = stepDao.selectUnFinishMinStep(studyId: _studyId, group: _studyRecord.currentGroup) {
-                if minStep > _studyRecord.currentTurn {
-                    _studyRecord.currentTurn = minStep
-                    // 有跳跃step时，保持到表中
-                    YXLog("筛选数据， 更新轮下标, 跳跃 下标", minStep)
-                }
-            }
-            
-            // 更新轮下标
-            let r1 = studyDao.updateCurrentTurn(studyId: _studyId, turn: _studyRecord.currentTurn)
+            // 更新轮次下标
+            self._updateCurrentTurnIndex()
             
             // 清空当前轮
-            let r2 = turnDao.deleteCurrentTurn(studyId: _studyId)
-            
-//            let newTurn = turnDao.selectNewTurn(studyId: _studyId, group: _studyRecord.currentGroup)
+            let r1 = turnDao.deleteCurrentTurn(studyId: _studyId)
             
             // 插入新的轮
-            let r3 = turnDao.insertCurrentTurn(studyId: _studyId, group: _studyRecord.currentGroup)
+            let r2 = turnDao.insertCurrentTurn(studyId: _studyId, group: _studyRecord.currentGroup)
             
             // 把上轮做错的状态恢复成未做
-            let r4 = stepDao.updatePreviousWrongStatus(studyId: _studyId)
+            let r3 = stepDao.updatePreviousWrongStatus(studyId: _studyId)
             
-            YXLog("\n筛选数据， 更新轮下标", r1,
-                  "\n清空当前轮", r2,
-                  "\n插入新的轮 ,study_id:\(_studyId)", r3,
-                  "\n重置上轮做错的 ", r4)
+            YXLog("\n清空当前轮", r1,
+                  "\n插入新的轮 ,study_id:\(_studyId)", r2,
+                  "\n重置上轮做错的 ", r3)
         }
     }
+    
     
     /// 查找一个练习
     func _findExercise() -> YXExerciseModel? {
@@ -120,6 +131,7 @@ extension YXExerciseServiceImpl {
         }
     }
     
+    
     /// 查找N3题型
     func _finedN3Exercise(exercise: YXExerciseModel) -> YXExerciseModel? {
         if exercise.step == 0 && exercise.type == .newLearnMasterList {
@@ -142,9 +154,6 @@ extension YXExerciseServiceImpl {
     
     
     /// 查找一个连线题，有可能是备选题
-    /// - Parameters:
-    ///   - step:
-    ///   - type:
     func _findConnectionExercise(exercise: YXExerciseModel) -> YXExerciseModel? {
         var connectionExercises = turnDao.selectExercise(studyId: _studyId, type: exercise.type, step: exercise.step, size: 4)
         
@@ -192,7 +201,6 @@ extension YXExerciseServiceImpl {
     
     
     /// 填充连线题的单词
-    /// - Parameter exercises:
     func _fillConnectionWordModel(exercises: [YXExerciseModel]) -> [YXExerciseModel] {
         var es: [YXExerciseModel] = []
         for e in exercises {
@@ -205,7 +213,6 @@ extension YXExerciseServiceImpl {
     
     
     /// 查询单词内容
-    /// - Parameter wordId:
     func _queryWord(wordId: Int) -> YXWordModel? {
         if learnConfig.learnType == .base {
             return wordDao.selectWord(bookId: learnConfig.bookId, wordId: wordId)
@@ -214,7 +221,7 @@ extension YXExerciseServiceImpl {
         }
     }
     
-    
+    /// 打印
     func _printCurrentTurn() {
         let currentGroupIndex = _studyRecord.currentGroup
         let currentTurnIndex = _studyRecord.currentTurn
