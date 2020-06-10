@@ -177,6 +177,8 @@ class YXUserModel: NSObject {
         YYCache.set(nil, forKey: "LastStoreTokenDate")
         YXUserModel.default.currentBookId = nil
         YXWordBookResourceManager.stop    = true
+        YYDataSourceManager.default.close()
+        YYDataSourceQueueManager.default.close()
         YXMediator().loginOut()
         
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)
