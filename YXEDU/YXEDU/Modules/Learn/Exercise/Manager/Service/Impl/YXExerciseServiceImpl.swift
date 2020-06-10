@@ -9,7 +9,7 @@
 import UIKit
 // 供练习VC调用
 class YXExerciseServiceImpl: YXExerciseService {
-    
+
     // ----------------------------
     //MARK: - 属性
     var learnConfig: YXLearnConfig = YXBaseLearnConfig()
@@ -17,6 +17,10 @@ class YXExerciseServiceImpl: YXExerciseService {
     var ruleType: YXExerciseRule = .p0
         
     var progress: YXExerciseProgress = .none
+    
+    var newWordCount: Int { return getNewWordCount() }
+    
+    var reviewWordCount: Int { return getReviewWordCount() }
     
     // ----------------------------
     //MARK: - Private 属性

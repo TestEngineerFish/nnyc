@@ -57,6 +57,11 @@ protocol YXExerciseService {
     /// 练习进度
     var progress: YXExerciseProgress { get }
     
+    /// 获得未学完的新学单词数
+    var newWordCount: Int { get }
+    
+    /// 获得未学完的复习单词数
+    var reviewWordCount: Int { get }
     
     //MARK: - 方法
     // ----------------------------
@@ -87,11 +92,6 @@ protocol YXExerciseService {
     /// 连线题型 ，连线题所有项全部连完
     func updateConnectionExerciseFinishStatus(exerciseModel: YXExerciseModel, right: Bool)
     
-    /// 获得未学完的新学单词数
-    func getNewWordCount() -> Int
-
-    /// 获得未学完的复习单词数
-    func getReviewWordCount() -> Int
 
     /// 上报学习数据
     /// - Parameters:
