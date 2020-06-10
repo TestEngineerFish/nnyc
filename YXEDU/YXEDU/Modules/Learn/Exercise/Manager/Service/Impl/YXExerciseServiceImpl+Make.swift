@@ -163,11 +163,8 @@ extension YXExerciseServiceImpl {
         // 填充word
         connectionExercises = _fillConnectionWordModel(exercises: connectionExercises)
         
-        // 连线题中，是否有单词拼写相同的，如果有都用备选题
-        let sameWords = _sameWords(connectionExercises: connectionExercises)
-        
-        // 有相同拼写，或者连线只有一个，都用备选题
-        if sameWords.count > 0 || connectionExercises.count == 1 {
+        // 连线只有一个，都用备选题
+        if connectionExercises.count == 1 {
             let e = connectionExercises.first
             if var backupExercise = turnDao.selectBackupExercise(studyId: _studyId, exerciseId: e?.eid ?? 0, step: e?.step ?? 0) {
                 backupExercise.word = _queryWord(wordId: backupExercise.wordId)
@@ -185,22 +182,6 @@ extension YXExerciseServiceImpl {
         return nil
     }
     
-    /// 连线题中，是否有单词拼写相同的
-    func _sameWords(connectionExercises: [YXExerciseModel]) -> [Int] {
-        var ids: [Int] = []
-        for exercise in connectionExercises {
-            for e in connectionExercises {
-                if exercise.word?.wordId == e.word?.wordId {
-                    continue
-                }
-                if exercise.word?.word != nil && exercise.word?.word == e.word?.word {
-                    ids.append(exercise.word?.wordId ?? 0)
-                }
-            }
-        }
-        
-        return ids
-    }
     
     
     /// 填充连线题的单词

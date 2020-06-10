@@ -12,7 +12,7 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
     
     func selectCurrentGroup(studyId: Int) -> Int? {
         var step: Int?
-        let sql = YYSQLManager.WordStepSQL.selectCurrentGroup.rawValue
+        let sql = YYSQLManager.WordStepSQL.selectUnfinishMinGroup.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
             return step
         }

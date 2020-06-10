@@ -330,13 +330,10 @@ extension YYSQLManager {
         WHERE exercise_id = ? and step = ?
         """
         
-        case selectCurrentGroup =
+        case selectUnfinishMinGroup =
         """
-        select group_index current_group from all_word_step
+        select min(group_index) current_group from all_word_step
         where (status = 0 or status = 1) and study_id = ?
-        group by group_index
-        order by group_index asc
-        limit 1
         """
         
         
@@ -387,11 +384,9 @@ extension YYSQLManager {
         
         case selectUnfinishMinStep =
         """
-        select step from all_word_step
+        select min(step) step from all_word_step
         where study_id = ? and group_index = ? and backup = 0
         and (status = 0 or status = 1)
-        order by step asc
-        limit 1
         """
         
         case deleteStep =
@@ -423,20 +418,6 @@ extension YYSQLManager {
     }
     
     enum CurrentTurnSQL: String {
-    
-        case selectNewTurn =
-        """
-        select study_id, step_id, step, (select current_turn from study_record where study_id = %d limit 1) turn from (
-            select s.* from all_word_step s inner join all_exercise e on e.exercise_id = s.exercise_id
-            where e.study_id = %d and group_index = %d and s.backup = 0
-            and (s.status = 0 or s.status = 1) and s.status != 3
-            order by s.step desc
-        )
-        where turn >= step
-        group by word_id
-        order by step desc, exercise_id asc
-        """
-        
         
         case insertTurn =
         """

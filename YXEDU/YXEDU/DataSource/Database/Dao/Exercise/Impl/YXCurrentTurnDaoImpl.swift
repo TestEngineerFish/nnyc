@@ -71,8 +71,7 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
         while result.next() {
             es.append(self._createExercise(rs: result))
         }
-        result.close()
-        
+        result.close()        
         return es
     }
     
