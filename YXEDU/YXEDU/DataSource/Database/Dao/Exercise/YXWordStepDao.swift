@@ -51,7 +51,7 @@ protocol YXWordStepDao {
     /// 获取单词的所有已做的练习题，字典返回，用于上报
     /// - Parameter model: 练习对象
     /// - Returns: step结果
-    func getReportSteps(with model: YXExerciseModel) -> [String:Any]
+    func getReportSteps(with model: YXExerciseModel) -> [String:Any?]
 
     /// 删除某一个Step
     /// - Parameter model: 练习对象
