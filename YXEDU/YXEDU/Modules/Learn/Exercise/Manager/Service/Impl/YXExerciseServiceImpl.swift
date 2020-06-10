@@ -127,7 +127,8 @@ class YXExerciseServiceImpl: YXExerciseService {
             YXLog(model.mastered ? "已" : "未", "掌握，移除", model.mastered ? "0":"7", "分题")
             self.stepDao.deleteStep(with: deleteModel)
         }
-        if model.step == 0 && self.ruleType == .p3 && model.mastered  {
+        let skipStep1_4TypeList: [YXExerciseRule] = [.p0, .p3, .p4]
+        if model.step == 0 && skipStep1_4TypeList.contains(self.ruleType) && model.mastered  {
             // 更新S1和S4为跳过
             YXLog("P3，新学已掌握，标记Step1和Step4为跳过")
             self.skipStep1_4(exercise: model)

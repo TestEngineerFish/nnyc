@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXPickWordsBySelfView" customModule="YXEDU" customModuleProvider="target">
             <connections>
+                <outlet property="bottomViewHeight" destination="YFm-Y6-Lh7" id="6KM-rw-EZi"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="peM-Lo-owq"/>
                 <outlet property="tableView" destination="ayv-z8-tCX" id="lzR-31-EdR"/>
             </connections>
@@ -26,7 +27,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="50" estimatedRowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ayv-z8-tCX">
-                    <rect key="frame" x="0.0" y="112.5" width="414" height="783.5"/>
+                    <rect key="frame" x="0.0" y="112.5" width="414" height="715.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wKr-i5-XGh">
@@ -74,7 +75,6 @@
                 <constraint firstItem="Wv5-Yq-YtN" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="73c-yw-eqv"/>
                 <constraint firstAttribute="trailing" secondItem="Wv5-Yq-YtN" secondAttribute="trailing" constant="20" id="AZV-mf-HlD"/>
                 <constraint firstAttribute="trailing" secondItem="wKr-i5-XGh" secondAttribute="trailing" constant="20" id="P6V-YK-ZQ4"/>
-                <constraint firstAttribute="bottom" secondItem="ayv-z8-tCX" secondAttribute="bottom" id="SoD-Sg-bzI"/>
                 <constraint firstItem="sCc-Mv-niR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="UNn-AZ-gaQ"/>
                 <constraint firstAttribute="bottom" secondItem="sCc-Mv-niR" secondAttribute="bottom" id="WXC-wp-70h"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ayv-z8-tCX" secondAttribute="trailing" id="b2h-f3-cGk"/>
@@ -82,10 +82,11 @@
                 <constraint firstItem="ayv-z8-tCX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fvD-06-kiA"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="sCc-Mv-niR" secondAttribute="trailing" id="oFU-pw-PQP"/>
                 <constraint firstItem="wKr-i5-XGh" firstAttribute="top" secondItem="Wv5-Yq-YtN" secondAttribute="bottom" constant="23" id="pW8-Lc-WCc"/>
+                <constraint firstItem="sCc-Mv-niR" firstAttribute="top" secondItem="ayv-z8-tCX" secondAttribute="bottom" id="rq5-Hj-QyP"/>
                 <constraint firstItem="wKr-i5-XGh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="uNy-Xp-Npf"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="139" y="131"/>
+            <point key="canvasLocation" x="137.68115942028987" y="130.58035714285714"/>
         </view>
     </objects>
 </document>
