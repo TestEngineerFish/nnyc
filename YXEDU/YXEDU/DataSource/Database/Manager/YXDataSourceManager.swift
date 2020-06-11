@@ -10,11 +10,8 @@ import FMDB
 import CocoaLumberjack
 
 enum YYDataSourceType: String {
-    /** App内通用数据库 */
-    case normal = "YX.sqlite"
     case word = "YX_Word.sqlite"
 }
-
 
 enum YYSQLError: Error {
     case CreateDatabaseError, CreateTableError
@@ -39,8 +36,6 @@ class YYDataSourceManager: NSObject {
      */
     public func createRunner(type: YYDataSourceType) -> FMDatabase {
         switch type {
-        case .normal:
-            return try! normalRunner()
         case .word:
             return try! wordRunner()
         }
@@ -72,11 +67,6 @@ class YYDataSourceManager: NSObject {
 
 //MARK: +++++++++++++++  private method
 extension YYDataSourceManager {
-    
-    private func normalRunner() throws -> FMDatabase {
-        let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
-        return try createRunner(type: .normal, filePath: filePath, sqls: YYSQLManager.CreateNormalTables)
-    }
     
     private func wordRunner() throws -> FMDatabase {
         let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.word.rawValue)
