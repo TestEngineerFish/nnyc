@@ -246,10 +246,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         return false
     }
     
-    func cleanStudyRecord() {
-        // 这行不能删除掉，在复习计划页删除的时候，_studyRecord还是空的，所以先调用下
-        self._loadStudyRecord()
-                
+    func cleanStudyRecord() {                
         if _studyId > 0 {
             let r1 = studyDao.delete(study: _studyId)
             let r2 = exerciseDao.deleteExercise(study: _studyId)

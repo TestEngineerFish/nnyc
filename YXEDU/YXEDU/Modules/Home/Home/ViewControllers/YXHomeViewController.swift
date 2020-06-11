@@ -22,7 +22,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var wrongWordsCount      = "--"
     private var animationPlayFinished = false
     private var homeModel: YXHomeModel!
-    public var progressManager = YXExcerciseProgressManager()
+    private var service: YXExerciseService = YXExerciseServiceImpl()
     
     @IBOutlet weak var homeEntryView: YXDesignableView!
     @IBOutlet weak var bookNameButton: UIButton!
@@ -199,7 +199,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             guard let userInfomation = response.data else { return }
             self.homeModel = userInfomation
             YXLog("==== 当前用户User ID", self.homeModel?.userId ?? 0)
-
+            
+            self.initService()
             self.adjustStartStudyButtonState()
             self.bookNameButton.setTitle(self.homeModel?.bookName, for: .normal)
             self.unitNameButton.setTitle(self.homeModel?.unitName, for: .normal)
@@ -221,6 +222,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }) { error in
             YXLog("获取主页基础数据失败：", error.localizedDescription)
         }
+    }
+    
+    private func initService() {
+        // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
+        let bookId = self.homeModel?.bookId ?? 0
+        let unitId = self.homeModel?.unitId ?? 0
+        let config = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
+        service.learnConfig = config
+        service.initService()
     }
 
     /// 处理基础信息请求
@@ -314,32 +324,24 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func adjustStartStudyButtonState() {
         if let lastStoredDate = YYCache.object(forKey: "LastStoredDate") as? Date {
             if Calendar.current.isDateInToday(lastStoredDate) {
-                if YXExcerciseProgressManager.isCompletion(bookId: homeModel?.bookId ?? 0, unitId: homeModel?.unitId ?? 0, dataType: .base) {
+                if service.progress == .none {
                     startStudyButton.setTitle("再学一组", for: .normal)
-                    
                 } else {
                     startStudyButton.setTitle("继续学习", for: .normal)
                 }
-                
             } else {
                 startStudyButton.setTitle("开始背单词", for: .normal)
             }
-            
         } else {
             startStudyButton.setTitle("开始背单词", for: .normal)
         }
     }
 
     private func initDataManager() {
-        // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
-        progressManager.bookId = self.homeModel?.bookId
-        progressManager.unitId = self.homeModel?.unitId
-        progressManager.dataType = .base
-        
         if (self.homeModel?.newWords ?? 0) == 0 && (self.homeModel?.reviewWords ?? 0) == 0 {
-            if progressManager.isCompletion() == false {
-                let data = progressManager.loadLocalWordsProgress()
-                countOfWaitForStudyWords.text = "\(data.0.count + data.1.count)"
+            if service.progress == .learning {
+//                let data = progressManager.loadLocalWordsProgress()
+//                countOfWaitForStudyWords.text = "\(data.0.count + data.1.count)"
             }
         }
         
