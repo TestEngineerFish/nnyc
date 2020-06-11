@@ -10,8 +10,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXPickWordsBySelfView" customModule="YXEDU" customModuleProvider="target">
             <connections>
+                <outlet property="bottomView" destination="sCc-Mv-niR" id="C1k-cP-Eta"/>
                 <outlet property="bottomViewHeight" destination="YFm-Y6-Lh7" id="6KM-rw-EZi"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="peM-Lo-owq"/>
+                <outlet property="startButton" destination="Aa0-su-Obj" id="6pc-Tm-c1G"/>
+                <outlet property="startCenterY" destination="yjS-Y7-pF4" id="LRF-E5-Q94"/>
                 <outlet property="tableView" destination="ayv-z8-tCX" id="lzR-31-EdR"/>
             </connections>
         </placeholder>
