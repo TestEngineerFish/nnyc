@@ -168,6 +168,7 @@ class YXUserModel: NSObject {
         self.didLogin = false
         YYCache.set(nil, forKey: "LastStoredDate")
         YYCache.set(nil, forKey: "LastStoreTokenDate")
+        YYCache.set(nil, forKey: "UserUUID")
         YXUserModel.default.currentBookId = nil
         YXWordBookResourceManager.stop    = true
         YYDataSourceManager.default.close()

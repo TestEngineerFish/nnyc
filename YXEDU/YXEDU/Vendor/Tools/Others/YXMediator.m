@@ -119,7 +119,8 @@
 }
 
 -(BOOL)handleOpenUnivrsalLinkURL:(NSUserActivity *)userActivity {
-    if ([userActivity.webpageURL.absoluteString hasSuffix:@"wxa16b70cc1b2c98a0/"]) {
+    NSString *urlPre = [NSString stringWithFormat:@"%@%@", universalLink, wechatId];
+    if ([userActivity.webpageURL.absoluteString hasPrefix:urlPre]) {
         return [[WXApiManager shared] handleOpenUniversalLink:userActivity];
     } else {
         return [TencentOAuth HandleUniversalLink:userActivity.webpageURL];
