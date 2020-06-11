@@ -18,12 +18,33 @@ enum YXLocalKey: String {
     case newFeedbackReply              = "newFeedbackReply"     // 反馈回复消息
     case firstShowHome                 = "kFirstShowHome"       // 首次进入首页
     case taskCenterCanReceive          = "kTaskCenterCanReceive" // 任务中心未领任务
-    
     case makePlanNameIndex             = "YX_Plan_Name_Index"
-    case currentChooseBookId           = "currentChooseBookId" //当前在学的词书ID
     case newLearnReportGIO             = "NewLearnReportGIO" // 新学完成上报GIO
-    case didShowRate = "DidShowRate" // 是否弹过评分弹窗
-    case punchCount = "PunchCount" // 打卡次数大于等于 4，弹出评分弹窗
+    case didShowRate                   = "DidShowRate" // 是否弹过评分弹窗
+    case punchCount                    = "PunchCount" // 打卡次数大于等于 4，弹出评分弹窗
+
+    // ==== UserModel ====
+    case uuid                          = "kUUID"
+    /// 是否已登录
+    case didLogin                      = "kDidLogin"
+    /// 是否使用美式发音
+    case didUseAmericanPronunciation   = "kDidUseAmericanPronunciation"
+    /// 用户Token
+    case userToken                     = "kUserToken"
+    /// 当前用户学习年级
+    case currentGrade                  = "kCurrentGrade"
+    ///当前在学的词书ID
+    case currentChooseBookId           = "currentChooseBookId"
+    /// 当前用户头像
+    case currentAvatarImage            = "kCurrentAvatarImage"
+    /// 用户名称
+    case userName                      = "kUserName"
+    /// 用户头像地址
+    case userAvatarPath                = "kUserAvatarPath"
+    /// 金币使用、获取说明（Web地址）
+    case coinExplainUrl                = "kCoinExplainUrl"
+    /// 游戏挑战规则说明（Web地址）
+    case gameExplainUrl                = "kGameExplainUrl"
 }
 
 

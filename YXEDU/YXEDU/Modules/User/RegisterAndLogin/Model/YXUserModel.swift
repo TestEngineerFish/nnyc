@@ -9,113 +9,106 @@
 class YXUserModel: NSObject {
     @objc static var `default` = YXUserModel()
 
-    private override init() {
-        self.userAvatarImageView = YXKVOImageView()
-        
-        if let didLogin = YYCache.object(forKey: "DidLogin") as? Bool {
-            self.didLogin = didLogin
-        }
-        
-        if let didUseAmericanPronunciation = YYCache.object(forKey: "DidUseAmericanPronunciation") as? Bool {
-            self.didUseAmericanPronunciation = didUseAmericanPronunciation
-        }
-        
-        if let token = YYCache.object(forKey: "UserToken") as? String {
-            self.token = token
-        }
-        
-        if let uuid = YYCache.object(forKey: "UserUUID") as? String {
-            self.uuid = uuid
-        }
-        
-        if let username = YYCache.object(forKey: "UserName") as? String {
-            self.username = username
-        }
-        
-        if let userAvatarPath = YYCache.object(forKey: "UserAvatarPath") as? String {
-            self.userAvatarPath = userAvatarPath
-        }
-
-        if let gameExplainUrl = YYCache.object(forKey: "GameExplainUrl") as? String {
-            self.gameExplainUrl = gameExplainUrl
-        }
-
-        if let coinExplainUrl = YYCache.object(forKey: "CoinExplainUrl") as? String {
-            self.coinExplainUrl = coinExplainUrl
-        }
-        
-        if let reviewNameType = YYCache.object(forKey: "YXReviewNameType") as? Int {
-            self.reviewNameType = YXUserInfomationModel.ReviewNameType(rawValue: reviewNameType) ?? .reviewPlan
-        }
-
-        if let grade = YYCache.object(forKey: "kCurrentGrade") as? Int {
-            self.currentGrade = grade
-        }
-    }
-    
-    var didLogin = false {
-        didSet {
-            YYCache.set(didLogin, forKey: "DidLogin")
-        }
-    }
-    
-    var didUseAmericanPronunciation = false {
-        didSet {
-            YYCache.set(didUseAmericanPronunciation, forKey: "DidUseAmericanPronunciation")
-        }
-    }
-    
-    var token: String? {
-        didSet {
-            YYCache.set(token, forKey: "UserToken")
-        }
-    }
-    
     var uuid: String? {
-        didSet {
-            YYCache.set(uuid, forKey: "UserUUID")
+        set {
+            YYCache.set(newValue, forKey: "kUUID")
+        }
+        get {
+            return YYCache.object(forKey: "kUUID") as? String
         }
     }
-    
-    var username: String? {
-        didSet {
-            YYCache.set(username, forKey: "UserName")
+
+    var didLogin: Bool {
+        set {
+            YYCache.set(newValue, forKey: "DidLogin")
+        }
+        get {
+            return YYCache.object(forKey: "DidLogin") as? Bool ?? false
         }
     }
-    
+
+    var didUseAmericanPronunciation: Bool {
+        set {
+            YYCache.set(newValue, forKey: .didUseAmericanPronunciation)
+        }
+        get {
+            return YYCache.object(forKey: .didUseAmericanPronunciation) as? Bool ?? false
+        }
+    }
+
+    var token: String? {
+        set {
+            YYCache.set(newValue, forKey: .userToken)
+        }
+        get {
+            return YYCache.object(forKey: .userToken) as? String
+        }
+    }
+
+    var userName: String? {
+        set {
+            YYCache.set(newValue, forKey: .userName)
+        }
+
+        get {
+            return YYCache.object(forKey: .userName) as? String
+        }
+    }
+
     var userAvatarPath: String? {
-        didSet {
-            YYCache.set(userAvatarPath, forKey: "UserAvatarPath")
-            
-            userAvatarImageView.showImage(with: userAvatarPath ?? "", placeholder: #imageLiteral(resourceName: "challengeAvatar"), progress: nil) { (image, error, url) in
-                YYCache.set(image, forKey: "UserAvatar")
+        set {
+            YYCache.set(newValue, forKey: .userAvatarPath)
+            do {
+                guard let url = URL(string: newValue ?? ""), let imageData = try? Data(contentsOf: url) else {
+                    return
+                }
+                // 保存当前用户头像
+                self.userAvatarImage = UIImage(data: imageData)
             }
         }
+
+        get {
+            return YYCache.object(forKey: .userAvatarPath) as? String
+        }
     }
-    
-    var userAvatarImageView: YXKVOImageView!
+
+    var userAvatarImage: UIImage? {
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.currentAvatarImage)
+        }
+
+        get {
+            return YYCache.object(forKey: .currentAvatarImage) as? UIImage
+        }
+    }
 
     var coinExplainUrl: String? {
-        didSet {
-            YYCache.set(coinExplainUrl, forKey: "CoinExplainUrl")
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.coinExplainUrl)
+        }
+
+        get {
+            return YYCache.object(forKey: .coinExplainUrl) as? String
         }
     }
 
     var gameExplainUrl: String? {
-        didSet {
-            YYCache.set(gameExplainUrl, forKey: "GameExplainUrl")
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.gameExplainUrl)
         }
-    }
-    
-    var reviewNameType: YXUserInfomationModel.ReviewNameType = .reviewPlan {
-        didSet {
-            YYCache.set(reviewNameType.rawValue, forKey: "YXReviewNameType")
+
+        get {
+            return YYCache.object(forKey: .gameExplainUrl) as? String
         }
     }
 
     var currentGrade: Int? {
-        didSet {
-            YYCache.set(currentGrade, forKey: "kCurrentGrade")
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.currentGrade)
+        }
+
+        get {
+            return YYCache.object(forKey: .currentGrade) as? Int
         }
     }
     
@@ -124,7 +117,7 @@ class YXUserModel: NSObject {
             YYCache.set(newValue, forKey: YXLocalKey.currentChooseBookId)
         }
         get {
-            YYCache.object(forKey: YXLocalKey.currentChooseBookId) as? Int
+            return YYCache.object(forKey: YXLocalKey.currentChooseBookId) as? Int
         }
     }
 
@@ -151,7 +144,7 @@ class YXUserModel: NSObject {
         let request = YXHomeRequest.updateToken
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
             if let date = response.data, let token = date.token, token.isEmpty == false {
-                YXUserModel.default.token = token
+                YXUserModel.default.token  = token
                 YXConfigure.shared().token = YXUserModel.default.token
                 YXConfigure.shared().saveCurrentToken()
 

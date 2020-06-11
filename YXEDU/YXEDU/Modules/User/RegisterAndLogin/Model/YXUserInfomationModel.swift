@@ -22,11 +22,7 @@ struct YXUserInfomationModel: Mappable {
             timeStamp <- map["time"]
         }
     }
-    
-    enum ReviewNameType: Int {
-        case wordList = 0   // 词单
-        case reviewPlan = 1 // 复习计划
-    }
+
     enum ExerciseFillType: Int {
         case keyboard = 0 // 选择填空
         case choose   = 1 // 软键盘输入
@@ -36,7 +32,6 @@ struct YXUserInfomationModel: Mappable {
     var oldUserUpdateMessage: String?
     var coinExplainUrl: String?  //松果币H5文件
     var gameExplainUrl: String? //游戏挑战H5文件
-    var reviewNameType: ReviewNameType = .reviewPlan
     var reminder: YXReminderModel?
 
     init?(map: Map) {

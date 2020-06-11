@@ -65,7 +65,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             
             YXUserModel.default.token = data.token
             YXUserModel.default.uuid  = data.uuid
-            YXUserModel.default.username       = data.info?.username
+            YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
             
             YXConfigure.shared().token = YXUserModel.default.token
@@ -295,7 +295,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             
             YXUserModel.default.token = data.token
             YXUserModel.default.uuid  = data.uuid
-            YXUserModel.default.username = data.info?.username
+            YXUserModel.default.userName = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
             
             YXConfigure.shared().token = YXUserModel.default.token
@@ -359,7 +359,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                 
                                 YXUserModel.default.token = data.token
                                 YXUserModel.default.uuid  = data.uuid
-                                YXUserModel.default.username = data.info?.username
+                                YXUserModel.default.userName = data.info?.username
                                 YXUserModel.default.userAvatarPath = data.info?.avatar
                                 
                                 YXConfigure.shared().token = YXUserModel.default.token

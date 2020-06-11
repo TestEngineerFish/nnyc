@@ -54,8 +54,8 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
         YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { response in
             guard let data = response.data else { return }
 
-            YXUserModel.default.uuid  = data.info?.uuid
-            YXUserModel.default.username       = data.info?.username
+            YXUserModel.default.uuid           = data.info?.uuid
+            YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
             
             YXConfigure.shared().uuid  = YXUserModel.default.uuid

@@ -33,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func initThirdPartyServices() {
         UMConfigure.initWithAppkey(kUmengAppKey, channel: kUmengChannel)
-        QQApiManager.shared().registerQQ("101475072")
-        WXApiManager.shared().registerWX("wxa16b70cc1b2c98a0")
+        QQApiManager.shared().registerQQ(qqId)
+        WXApiManager.shared().registerWX(wechatId)
         Bugly.start(withAppId: kBuglyAppId)
         YXOCLog.shared()?.launch()
         

@@ -37,7 +37,7 @@
 }
 
 - (void)registerWX:(NSString *)appid {
-    [WXApi registerApp:appid universalLink:@"https://nnyc-api.xstudyedu.com/"];
+    [WXApi registerApp:appid universalLink:universalLink];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {

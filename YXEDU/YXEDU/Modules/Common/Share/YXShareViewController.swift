@@ -330,11 +330,11 @@ class YXShareViewController: YXViewController {
     /// 创建学习结果打卡页面
     private func createLearnResultShareImage(_ backgroundImage: UIImage?) -> UIImage? {
 
-        let avatarImage = YXUserModel.default.userAvatarImageView.image == nil ? UIImage(named: "userPlaceHolder") : YXUserModel.default.userAvatarImageView.image
+        let avatarImage = YXUserModel.default.userAvatarImage == nil ? UIImage(named: "userPlaceHolder") : YXUserModel.default.userAvatarImage
         let shareImageView = YXShareImageView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: 518)))
         shareImageView.backgroundImageView.image = backgroundImage
         shareImageView.avatarImageView.image     = avatarImage
-        shareImageView.nameLabel.text            = YXUserModel.default.username
+        shareImageView.nameLabel.text            = YXUserModel.default.userName
         
         let dateFormatter        = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
