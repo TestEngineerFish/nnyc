@@ -17,7 +17,6 @@ struct YXExerciseResultModel: Mappable {
     var unitId: Int?
     var newWordIds: [Int]?
     var reviewWordIds: [Int]?
-    var steps: [[YXExerciseModel]]?
     var groups: [[[YXExerciseModel]]] = []
     var scoreRule: [YXScoreRuleModel] = []
     
@@ -31,8 +30,6 @@ struct YXExerciseResultModel: Mappable {
         unitId        <- map["unit_id"]
         newWordIds    <- map["new_word_list"]
         reviewWordIds <- map["review_word_list"]
-
-        steps         <- map["step_list"]
         scoreRule     <- map["step_score"]
         
         // Mappable库不能解析三维数组，手动解析
