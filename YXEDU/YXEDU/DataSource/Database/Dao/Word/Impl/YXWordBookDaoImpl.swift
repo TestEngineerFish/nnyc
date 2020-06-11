@@ -21,10 +21,10 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             return
         }
         let errorMsg = "当前正在学习中，回滚DB操作，不再写入数据"
-        let deleteWordsSQL = YYSQLManager.WordBookSQL.deleteWord.rawValue
-        let insertWordSQL  = YYSQLManager.WordBookSQL.insertWord.rawValue
-        let deleteBookSQL  = YYSQLManager.WordBookSQL.deleteBook.rawValue
-        let insertBookSQL  = YYSQLManager.WordBookSQL.insertBook.rawValue
+        let deleteWordsSQL = YYSQLManager.WordSQL.deleteWord.rawValue
+        let insertWordSQL  = YYSQLManager.WordSQL.insertWord.rawValue
+        let deleteBookSQL  = YYSQLManager.BookSQL.deleteBook.rawValue
+        let insertBookSQL  = YYSQLManager.BookSQL.insertBook.rawValue
         let deleteWordsParams: [Any] = [bookId]
         let deleteBookParams: [Any]  = [bookId]
         let insertBookParams: [Any]  = [bookId,
@@ -124,8 +124,8 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
     /// 仅测试用，删除所用词书和单词
     func deleteAll() {
-        let deleteBooksSQL = YYSQLManager.WordBookSQL.deleteAllBooks.rawValue
-        let deleteWordsSQL = YYSQLManager.WordBookSQL.deleteAllWords.rawValue
+        let deleteBooksSQL = YYSQLManager.BookSQL.deleteAllBooks.rawValue
+        let deleteWordsSQL = YYSQLManager.WordSQL.deleteAllWords.rawValue
         self.wordRunnerQueue.inTransaction { (db, rollback) in
             db.executeUpdate(deleteBooksSQL, withArgumentsIn: [])
             db.executeUpdate(deleteWordsSQL, withArgumentsIn: [])
@@ -137,7 +137,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
     @discardableResult
     func insertBook(book: YXWordBookModel, async: Bool = false) -> Bool {
-        let sql = YYSQLManager.WordBookSQL.insertBook.rawValue
+        let sql = YYSQLManager.BookSQL.insertBook.rawValue
         let params: [Any?] = [book.bookId,
                               book.bookName,
                               book.bookWordSourcePath,
@@ -155,7 +155,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
     
     func selectBook(bookId: Int) -> YXWordBookModel? {
-        let sql = YYSQLManager.WordBookSQL.selectBook.rawValue
+        let sql = YYSQLManager.BookSQL.selectBook.rawValue
         let params: [Any] = [bookId]
         
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else { return nil }
@@ -177,7 +177,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
     @discardableResult
     func deleteBook(bookId: Int, async: Bool = false) -> Bool {
-        let sql = YYSQLManager.WordBookSQL.deleteBook.rawValue
+        let sql = YYSQLManager.BookSQL.deleteBook.rawValue
         let params: [Any] = [bookId]
         if async {
             self.wordRunnerQueue.inDatabase { (db) in
@@ -191,7 +191,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
     @discardableResult
     func insertWord(word: YXWordModel, async: Bool = false) -> Bool {
-        let sql = YYSQLManager.WordBookSQL.insertWord.rawValue
+        let sql = YYSQLManager.WordSQL.insertWord.rawValue
         let params = self.getWordSQLParams(word: word)
         if async {
             self.wordRunnerQueue.inDatabase { (db) in
@@ -205,7 +205,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
     
     func selectWordByUnitId(unitId: Int) -> [YXWordModel] {
-        let sql = YYSQLManager.WordBookSQL.selectWordByUnitId.rawValue
+        let sql = YYSQLManager.WordSQL.selectWordByUnitId.rawValue
         let params: [Any] = [unitId]
         var wordModelArray = [YXWordModel]()
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
@@ -222,7 +222,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     }
 
     func selectWordByBookId(_ bookId: Int) -> [YXWordModel] {
-        let sql = YYSQLManager.WordBookSQL.selectWordByBookId.rawValue
+        let sql = YYSQLManager.WordSQL.selectWordByBookId.rawValue
         let params: [Any] = [bookId]
         var wordModelArray = [YXWordModel]()
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
@@ -240,7 +240,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
     @discardableResult
     func deleteWords(bookId: Int, async: Bool = false) -> Bool {
-        let sql = YYSQLManager.WordBookSQL.deleteWord.rawValue
+        let sql = YYSQLManager.WordSQL.deleteWord.rawValue
         let params: [Any] = [bookId]
         if async {
             self.wordRunnerQueue.inDatabase { (db) in
@@ -254,7 +254,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     
     func selectBookIdList() -> [Int] {
         var bookIdList = [Int]()
-        let sql = YYSQLManager.WordBookSQL.selectBookIdList.rawValue
+        let sql = YYSQLManager.BookSQL.selectBookIdList.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
             return bookIdList
         }
@@ -267,7 +267,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     
     func selectWord(wordId: Int) -> YXWordModel? {
         
-        let sql = YYSQLManager.WordBookSQL.selectWord.rawValue
+        let sql = YYSQLManager.WordSQL.selectWord.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [wordId]) else {
             return nil
         }
@@ -282,7 +282,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     func selectWord(bookId: Int, wordId: Int) -> YXWordModel? {
 //        YXLog("查找--------------  bookId", bookId, "------------- wordId", wordId )
         
-        let sql = YYSQLManager.WordBookSQL.selectWordByBookIdAndWordId.rawValue
+        let sql = YYSQLManager.WordSQL.selectWordByBookIdAndWordId.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [bookId, wordId]) else {
             return nil
         }

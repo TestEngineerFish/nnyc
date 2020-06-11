@@ -29,8 +29,6 @@ class YYDataSourceQueueManager: NSObject {
      */
     public func createRunner(type: YYDataSourceType) -> FMDatabaseQueue {
         switch type {
-        case .normal:
-            return try! normalRunner()
         case .word:
             return try! wordRunner()
         }
@@ -62,12 +60,6 @@ class YYDataSourceQueueManager: NSObject {
 
 //MARK: +++++++++++++++  private method
 extension YYDataSourceQueueManager {
-
-    private func normalRunner() throws -> FMDatabaseQueue {
-        let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.normal.rawValue)
-        return try createRunner(type: .normal, filePath: filePath, sqls: YYSQLManager.CreateNormalTables)
-    }
-    
     private func wordRunner() throws -> FMDatabaseQueue {
         let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.word.rawValue)
         return try createRunner(type: .word, filePath: filePath, sqls: YYSQLManager.CreateWordTables)

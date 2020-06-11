@@ -120,23 +120,10 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     func normalAnswerAction(exercise model: YXExerciseModel) {
-        // 如果是0、7分题，先移除未做的题
+        // 如果是高中新学、新学列表，先移除未做的题
         if model.type == .newLearnMasterList || model.type == .newLearnJuniorHighSchool {
-            // 查询这个单词是否有0、7分题
-            for index in (1...4) {
-                let amount = self.stepDao.getStepCount(exercise: model.eid, step: index)
-                if amount > 1 {
-                    // 如果有，删除一题
-                    var deleteModel = model
-                    deleteModel.mastered = !model.mastered
-                    deleteModel.step     = index
-                    YXLog(model.mastered ? "已" : "未", "掌握，移除", model.mastered ? "0":"7", "分题")
-                    self.stepDao.deleteStep(with: deleteModel)
-                }
-            }
-
+            self.removeScore0_7Step(exercise: model)
         }
-
         // 更新S1和S4为跳过
         let skipStep1_4TypeList: [YXExerciseRule] = [.p0, .p3, .p4]
         if model.step == 0 && skipStep1_4TypeList.contains(self.ruleType) && model.mastered  {

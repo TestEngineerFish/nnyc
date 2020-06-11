@@ -13,8 +13,8 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
     static let share = YXStepConfigDaoImpl()
 
     func updateTable(_ stepConfigModel: YXStepConfigModel, finished block: ((Bool)->Void)?) {
-        let insertSql    = YYSQLManager.StepConfigSQL.insert.rawValue
-        let deleteAllSql = YYSQLManager.StepConfigSQL.deleteAll.rawValue
+        let insertSql    = YYSQLManager.OptionConfigSQL.insert.rawValue
+        let deleteAllSql = YYSQLManager.OptionConfigSQL.deleteAll.rawValue
 
         self.wordRunnerQueue.inImmediateTransaction { (db, rollback) in
             let deleteSuccess = db.executeUpdate(deleteAllSql, withArgumentsIn: [])
@@ -41,7 +41,7 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
     }
 
     func selecte(step: Int, wordId: Int) -> YXStepModel? {
-        let sql = YYSQLManager.StepConfigSQL.seleteBlackList.rawValue
+        let sql = YYSQLManager.OptionConfigSQL.seleteBlackList.rawValue
         let params = [step, wordId]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return nil

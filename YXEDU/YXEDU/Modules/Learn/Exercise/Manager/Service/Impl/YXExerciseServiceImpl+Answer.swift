@@ -65,6 +65,23 @@ extension YXExerciseServiceImpl {
         }
     }
 
+    /// 移除0分或者7分题
+    /// - Parameter model: 练习对象
+    func removeScore0_7Step(exercise model: YXExerciseModel) {
+        // 查询这个单词是否有0、7分题
+        for index in (1...4) {
+            let amount = self.stepDao.getStepCount(exercise: model.eid, step: index)
+            if amount > 1 {
+                // 如果有，删除一题
+                var deleteModel = model
+                deleteModel.mastered = !model.mastered
+                deleteModel.step     = index
+                YXLog(model.mastered ? "已" : "未", "掌握，移除", model.mastered ? "0":"7", "分题")
+                self.stepDao.deleteStep(with: deleteModel)
+            }
+        }
+    }
+
     /// 扣分逻辑
     private func getReduceScore(exercise model: YXExerciseModel) -> Int {
         let isMastered  = self.exerciseDao.getExerciseMastered(exercise: model.eid)
