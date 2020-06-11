@@ -336,7 +336,7 @@
     // TODO: ---- Event ----
 
     private func uploadGrowing() {
-        YXGrowingManager.share.uploadLearnStop()
+        YXGrowingManager.share.uploadLearnStop(learn: learnConfig)
     }
 
     private func clickTipsBtnEvent() {

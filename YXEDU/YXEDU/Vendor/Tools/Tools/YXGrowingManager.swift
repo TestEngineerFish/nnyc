@@ -18,12 +18,16 @@ struct YXGrowingManager {
     /// 上报练习数量
     var exerciseNumber = 0
 
+    /// 练习出题逻辑管理器
+    var service: YXExerciseService = YXExerciseServiceImpl()
+
+
     // TODO: ---- 事件 ----
 
-    mutating func uploadLearnStop() {
-        guard let _date = startDate else { return }
-        let learnTime = abs(Int(_date.timeIntervalSinceNow))
-        let params    = ["study_break_time":learnTime, "study_break_new_study" : newLearnNumber, "study_break_step": exerciseNumber]
+    mutating func uploadLearnStop(learn config: YXLearnConfig) {
+        guard let _date = self.service.getStartTime(learn: config) else { return }
+        let learnTime   = abs(Int(_date.timeIntervalSinceNow))
+        let params      = ["study_break_time":learnTime, "study_break_new_study" : newLearnNumber, "study_break_step": exerciseNumber]
         Growing.track("study_break", withVariable: params)
         self.newLearnNumber = 0
         self.exerciseNumber = 0

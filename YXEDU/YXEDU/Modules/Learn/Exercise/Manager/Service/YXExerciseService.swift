@@ -55,6 +55,18 @@ protocol YXExerciseService {
     /// 设置开始学习时间
     func setStartTime()
 
+    /// 获得开始学习时间
+    func getStartTime(learn config: YXLearnConfig) -> NSDate?
+
+    /// 获取所有单词总数
+    func getAllWordAmount() -> Int
+
+    /// 获得已学新学单词数量
+    func getNewWordAmount() -> Int
+
+    /// 获得已学复习单词数量
+    func getReviewWordAmount() -> Int
+
     /// 更新学习时间
     func updateDurationTime()
     

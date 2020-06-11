@@ -103,29 +103,51 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return modelList
     }
 
-    func getNewWordCount(studyId: Int) -> Int {
-        var count = 0
-        let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
-        let params: [Any] = [1, studyId]
+    func getUnfinishedNewWordAmount(study id: Int) -> Int {
+        var amount = 0
+        let sql = YYSQLManager.ExerciseSQL.getUnfinishedWordsAmount.rawValue
+        let params: [Any] = [1, id]
         if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
-            count = Int(result.int(forColumn: "count"))
+            amount = Int(result.int(forColumn: "count"))
             result.close()
         }
-        return count
+        return amount
     }
 
-    func getReviewWordCount(studyId: Int) -> Int {
-        var count = 0
-        let sql = YYSQLManager.ExerciseSQL.getWordsCount.rawValue
-        let params: [Any] = [0, studyId]
+    func getFinishedNewWordAmount(study id: Int) -> Int {
+        var amount = 0
+        let sql = YYSQLManager.ExerciseSQL.getFinishedWordsAmount.rawValue
+        let params: [Any] = [1, id]
+        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
+            amount = Int(result.int(forColumn: "count"))
+            result.close()
+        }
+        return amount
+    }
+
+    func getUnfinishedReviewWordAmount(study id: Int) -> Int {
+        var amount = 0
+        let sql = YYSQLManager.ExerciseSQL.getUnfinishedWordsAmount.rawValue
+        let params: [Any] = [0, id]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return 0
         }
         if result.next() {
-            count = Int(result.int(forColumn: "count"))
+            amount = Int(result.int(forColumn: "count"))
         }
         result.close()
-        return count
+        return amount
+    }
+
+    func getFinishedReviewWordAmount(study id: Int) -> Int {
+                var amount = 0
+        let sql = YYSQLManager.ExerciseSQL.getFinishedWordsAmount.rawValue
+        let params: [Any] = [0, id]
+        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
+            amount = Int(result.int(forColumn: "count"))
+            result.close()
+        }
+        return amount
     }
 
     func deleteExercise(study id: Int) -> Bool {
