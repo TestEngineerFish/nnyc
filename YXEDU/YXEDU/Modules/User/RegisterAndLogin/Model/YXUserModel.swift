@@ -145,7 +145,7 @@ class YXUserModel: NSObject {
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
             if let date = response.data, let token = date.token, token.isEmpty == false {
                 YXUserModel.default.token  = token
-                YXConfigure.shared().token = YXUserModel.default.token
+                YXConfigure.shared().saveToken(token)
                 YXConfigure.shared().saveCurrentToken()
 
                 closure?(true)
@@ -165,10 +165,12 @@ class YXUserModel: NSObject {
     
     @objc
     func logout() {
+        YXLog("推出前用户Token=====", YXConfigure.shared().token ?? "")
         self.didLogin = false
         YYCache.set(nil, forKey: "LastStoredDate")
         YYCache.set(nil, forKey: "LastStoreTokenDate")
-        YYCache.set(nil, forKey: "UserUUID")
+        YXUserModel.default.uuid  = nil
+        YXUserModel.default.token = nil
         YXUserModel.default.currentBookId = nil
         YXWordBookResourceManager.stop    = true
         YYDataSourceManager.default.close()

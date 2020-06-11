@@ -67,10 +67,10 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.uuid  = data.uuid
             YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
-            
-            YXConfigure.shared().token = YXUserModel.default.token
+
+            YXConfigure.shared().saveToken(data.token ?? "")
             YXConfigure.shared().uuid  = YXUserModel.default.uuid
-            
+            YXLog("当前用户Token=====", YXConfigure.shared().token ?? "")
             self.checkUserInfomation()
             
         }) { error in
@@ -297,8 +297,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.uuid  = data.uuid
             YXUserModel.default.userName = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
-            
-            YXConfigure.shared().token = YXUserModel.default.token
+
+            YXConfigure.shared().saveToken(data.token ?? "")
             YXConfigure.shared().uuid  = YXUserModel.default.uuid
             
             self.checkUserInfomation()
@@ -362,7 +362,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                 YXUserModel.default.userName = data.info?.username
                                 YXUserModel.default.userAvatarPath = data.info?.avatar
                                 
-                                YXConfigure.shared().token = YXUserModel.default.token
+                                YXConfigure.shared().saveToken(data.token ?? "")
                                 YXConfigure.shared().uuid  = YXUserModel.default.uuid
                                 
                                 YXConfigure.shared().saveCurrentToken()
