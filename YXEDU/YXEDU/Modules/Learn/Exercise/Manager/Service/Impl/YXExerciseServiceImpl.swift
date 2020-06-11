@@ -260,17 +260,19 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     func cleanStudyRecord() {
-        let studyId = _studyRecord.studyId
-        if studyId > 0 {
-            let r1 = studyDao.delete(study: studyId)
-            let r2 = exerciseDao.deleteExercise(study: studyId)
-            let r3 = stepDao.deleteStepWithStudy(study: studyId)
-            let r4 = turnDao.deleteCurrentTurn(studyId: studyId)
+        // 这行不能删除掉，在复习计划页删除的时候，_studyRecord还是空的，所以先调用下
+        self._loadStudyRecord()
+                
+        if _studyId > 0 {
+            let r1 = studyDao.delete(study: _studyId)
+            let r2 = exerciseDao.deleteExercise(study: _studyId)
+            let r3 = stepDao.deleteStepWithStudy(study: _studyId)
+            let r4 = turnDao.deleteCurrentTurn(studyId: _studyId)
             
             YXLog("清除学习记录完成 ", learnConfig.desc)
-            YXLog("删除当前学习记录 studyId=", studyId, r1, r2, r3, r4)
+            YXLog("删除当前学习记录 studyId=", _studyId, r1, r2, r3, r4)
         } else {
-            YXLog("删除当前学习记录失败, studyId=", studyId, learnConfig.desc)
+            YXLog("删除当前学习记录失败, studyId=", _studyId, learnConfig.desc)
         }
     }
 

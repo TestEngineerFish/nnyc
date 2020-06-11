@@ -138,14 +138,15 @@ class YXReviewPlanEditView: YXTopWindowView {
             YXReviewDataManager().resetReviewPlanData(planId: planId) { (result: Bool) in
                 if result {
                     // 清除本地缓存记录
-                    let progressManager = YXExcerciseProgressManager()
-                    progressManager.planId   = planId
-                    progressManager.dataType = .planListenReview
-                    progressManager.completionExercise()
-                    progressManager.completionReport()
-                    progressManager.dataType = .planReview
-                    progressManager.completionExercise()
-                    progressManager.completionReport()
+                    let service = YXExerciseServiceImpl()
+                    
+                    var config: YXLearnConfig = YXListenReviewLearnConfig(planId: planId)
+                    service.learnConfig = config
+                    service.cleanStudyRecord()
+                    
+                    config = YXReviewPlanLearnConfig(planId: planId)
+                    service.learnConfig = config
+                    service.cleanStudyRecord()
 
                     NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
                     NotificationCenter.default.post(name: YXNotification.kRefreshReviewDetailPage, object: nil)

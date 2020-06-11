@@ -25,9 +25,6 @@
     /// 练习出题逻辑管理器
     var service: YXExerciseService = YXExerciseServiceImpl()
     
-    // 数据管理器
-    public var dataManager2: YXExerciseDataManager!
-    
     // 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
     

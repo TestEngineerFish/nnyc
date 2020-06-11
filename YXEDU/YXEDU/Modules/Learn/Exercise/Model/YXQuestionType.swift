@@ -61,3 +61,46 @@ enum YXExerciseRule: String {
     case a1 = "A1"      // 分步新学每组开始学习时，先走新学流程每组新学3个，复习4个新学流程【不能打断】
     case a2 = "A2"      // 分步新学每组开始学习时，先走新学流程每组新学3个，复习4个新学流程【可以打断】
 }
+
+
+@objc enum YXLearnType: Int {
+    case base = 1               // 基础学习
+    case wrong = 2              // 抽查
+    case planListenReview = 3   // 计划——听力复习
+    case planReview = 4         // 计划——复习
+    case aiReview = 5           // 智能复习
+
+    static func transform(raw: Int) -> YXLearnType {
+        switch raw {
+        case 1:
+            return .base
+        case 2:
+            return .wrong
+        case 3:
+            return .planListenReview
+        case 4:
+            return .planReview
+        case 5:
+            return .aiReview
+        default:
+            return .base
+        }
+    }
+    
+    var desc: String {
+        switch self {
+        case .base:
+            return "基础学习1"
+        case .wrong:
+            return "错题本抽查2"
+        case .planListenReview:
+            return "听力复习3"
+        case .planReview:
+            return "复习计划4"
+        case .aiReview:
+            return "智能复习5"
+        default:
+            return "基础学习1"
+        }
+    }
+}
