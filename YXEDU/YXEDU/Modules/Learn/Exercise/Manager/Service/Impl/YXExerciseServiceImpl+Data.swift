@@ -109,9 +109,17 @@ extension YXExerciseServiceImpl {
         guard let groups = _resultModel?.groups else {
             return
         }
+        var _step0WordIds = [Int]()
         for (index, group) in groups.enumerated() {
             for step in group {
-                for subStep in step {
+                for subStep in step {                    
+                    if subStep.step == 0 {
+                        _step0WordIds.append(subStep.wordId)
+                    }
+                    if subStep.isCareScore && subStep.score == 7 && _step0WordIds.contains(subStep.wordId) == false {
+                        continue
+                    }
+                    
                     if _isConnectionType(model: subStep) {
                         var exercise = subStep
                         for item in subStep.option?.firstItems ?? [] {

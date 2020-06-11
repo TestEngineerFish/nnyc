@@ -30,6 +30,7 @@ class YXExerciseServiceImpl: YXExerciseService {
 
     var _wordIdMap = [Int:Int]()
     
+    
     // 当前学习记录
     var _studyRecord = YXStudyRecordModel()
     var _studyId: Int { return _studyRecord.studyId }
