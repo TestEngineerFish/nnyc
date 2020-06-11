@@ -12,24 +12,6 @@ import UIKit
 //C++ ==> Objective-C++ / Objective-C ==> Swift
 //C++ ==> C ==> Swift
 
-//MARK: - 练习单词分类
-/// 练习单词分类
-enum YXExerciseWordType: Int {
-    case new = 1        // 新学
-    case exercise = 2   // 训练
-    case review = 3     // 复习
-    
-    var desc: String {
-        if self == .new {
-            return "新学"
-        } else if self == .exercise {
-            return "训练"
-        } else {
-            return "复习"
-        }
-        
-    }
-}
 
 //MARK: - 练习进度
 

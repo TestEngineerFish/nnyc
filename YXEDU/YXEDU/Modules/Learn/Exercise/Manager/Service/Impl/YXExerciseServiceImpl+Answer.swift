@@ -20,7 +20,7 @@ extension YXExerciseServiceImpl {
         YXLog("删除过期的学习记录", r1, r2, r3, r4)
     }
 
-    /// 更新缓存表
+    /// 当前轮完成后，不是删除数据，而且是改变状态为true
     func updateCurrentTurn(exercise model: YXExerciseModel) {
         let isValidationType =  (model.type == .validationWordAndChinese || model.type == .validationImageAndWord)
         

@@ -29,7 +29,7 @@ struct YXExerciseModel: Mappable {
     
     var n3List: [YXExerciseModel] = []
     
-    /// 问题（使用 word 模型）
+    /// 问题
     var question: YXExerciseQuestionModel?
     /// 选项
     var option: YXExerciseOptionModel?
@@ -42,8 +42,6 @@ struct YXExerciseModel: Mappable {
     // 减分倍数
     var wrongRate = 1
 
-    /// 代移除
-    var questionTypeScore: Int = 0  // 题型分[已掌握7分，不认识0分]
     /// 是否已掌握 [用于双倍扣分，和 P3时跳过s1和s4]
     var mastered: Bool = false
 
@@ -53,29 +51,17 @@ struct YXExerciseModel: Mappable {
     
     var isBackup: Bool = false
     
-    // 是否为跟读流程
-    var isListenAndRepeat = false
-    // 是否为新学单词【跟读和训练】
+    // 是否为新学单词
     var isNewWord: Bool = false
     
-//    var wordType: YXExerciseWordType = .new
     var group: Int = 0
     
     /// 第几步
     var step: Int = 0
-    /// 对错
-    var isRight: Bool?
+
     /// 状态
     var status: YXStepStatus = .normal
-    
-    /// 是否继续做
-    var isContinue: Bool?
-        
-    // 做完
-    var isFinish: Bool = false
 
-    /// 答题结果，是否正确
-    var result: Bool?
     /// 答题错误次数
     var wrongCount: Int = 0
         
@@ -104,14 +90,7 @@ struct YXExerciseModel: Mappable {
         isCareScore <- map["is_care_score"]
         isBackup    <- map["is_backup"]
         isNewWord   <- map["is_new_word"]
-        isListenAndRepeat <- map["is_listen_and_repeat"]
-        
         step       <- map["step"]
-        isRight    <- map["is_right"]
-        isContinue <- map["is_continue"]
-        isFinish   <- map["is_finish"]
-        isCurrentTurnFinish <- map["is_current_turn_finish"]
-        
     }
     
 }
