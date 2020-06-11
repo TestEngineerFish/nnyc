@@ -353,7 +353,6 @@
 		D665A0B82091A43200FBC9D2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D665A0B72091A43100FBC9D2 /* libresolv.tbd */; };
 		D672C2552064D21800696828 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D672C2542064D21800696828 /* libsqlite3.tbd */; };
 		D672C2572064D24D00696828 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D672C2562064D24D00696828 /* CoreTelephony.framework */; };
-		EE04BDBC2366C48200D6713C /* YXExcerciseProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE04BDBB2366C48100D6713C /* YXExcerciseProgressManager.swift */; };
 		EE08F3662372E06B00FA3FDF /* YXWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F3652372E06B00FA3FDF /* YXWordModel.swift */; };
 		EE08F3742372E3C200FA3FDF /* YYNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36A2372E3C200FA3FDF /* YYNetworkService.swift */; };
 		EE08F3752372E3C200FA3FDF /* YYBaseResopnse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08F36C2372E3C200FA3FDF /* YYBaseResopnse.swift */; };
@@ -968,7 +967,6 @@
 		D665A0B72091A43100FBC9D2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		D672C2542064D21800696828 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		D672C2562064D24D00696828 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		EE04BDBB2366C48100D6713C /* YXExcerciseProgressManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXExcerciseProgressManager.swift; sourceTree = "<group>"; };
 		EE08F3652372E06B00FA3FDF /* YXWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordModel.swift; sourceTree = "<group>"; };
 		EE08F36A2372E3C200FA3FDF /* YYNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYNetworkService.swift; sourceTree = "<group>"; };
 		EE08F36C2372E3C200FA3FDF /* YYBaseResopnse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYBaseResopnse.swift; sourceTree = "<group>"; };
@@ -2437,14 +2435,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		EE04BDB62366C40500D6713C /* Progress */ = {
-			isa = PBXGroup;
-			children = (
-				EE04BDBB2366C48100D6713C /* YXExcerciseProgressManager.swift */,
-			);
-			path = Progress;
-			sourceTree = "<group>";
-		};
 		EE04BDB82366C41800D6713C /* Event */ = {
 			isa = PBXGroup;
 			children = (
@@ -2579,6 +2569,7 @@
 				EE1B6961246E6584000EADB2 /* YXExerciseServiceImpl+Answer.swift */,
 				EE4201D5248BB7F200231704 /* YXExerciseServiceImpl+Option.swift */,
 				228105DF248E2C2D0025F03F /* YXExerciseServiceImpl+Report.swift */,
+				EE4E6B1A2398F049002B845A /* YXExerciseOptionManager.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -2709,7 +2700,6 @@
 			children = (
 				22C3A5FC2477C51D0020694E /* YXStepConfigManager.swift */,
 				EE4E6B1C2398F049002B845A /* YXExerciseRequest.swift */,
-				EE4E6B1A2398F049002B845A /* YXExerciseOptionManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -2730,7 +2720,6 @@
 			children = (
 				EE1B6958246E3AF1000EADB2 /* Service */,
 				EE4E6B172398F049002B845A /* Data */,
-				EE04BDB62366C40500D6713C /* Progress */,
 				EE04BDB52366C3FB00D6713C /* View */,
 				EE04BDB82366C41800D6713C /* Event */,
 			);
@@ -4144,7 +4133,6 @@
 				22298BFC237D52FC00F24786 /* YXButton.swift in Sources */,
 				EE5E027D23277D9400655654 /* YXTrace.m in Sources */,
 				EE54F7DA2362AA3100EC605A /* YXBaseQuestionView.swift in Sources */,
-				EE04BDBC2366C48200D6713C /* YXExcerciseProgressManager.swift in Sources */,
 				EE5EF2B72327423F00655654 /* YXMaterialModel.m in Sources */,
 				2218AE4123D1A2A300EF2E42 /* Dictionary+Extension.swift in Sources */,
 				22991073249211CA00F1C198 /* YXDatabaseConfig+StudyRecord.swift in Sources */,
