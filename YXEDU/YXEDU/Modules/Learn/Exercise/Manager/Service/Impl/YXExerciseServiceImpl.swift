@@ -96,10 +96,14 @@ class YXExerciseServiceImpl: YXExerciseService {
         self.studyDao.setStartTime(studyId: _studyId)
     }
 
-    func getStartTime() -> NSDate? {
-        let startTimeStr = self.studyDao.getStartTime(learn: learnConfig)
+    func getStartTime(learn config: YXLearnConfig) -> NSDate? {
+        let startTimeStr = self.studyDao.getStartTime(learn: config)
         let time = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat())
         return time
+    }
+
+    func getAllWordAmount() -> Int {
+        return exerciseDao.getExerciseCount(studyId: _studyId, includeNewWord: true, includeReviewWord: true)
     }
 
     func getNewWordAmount() -> Int {

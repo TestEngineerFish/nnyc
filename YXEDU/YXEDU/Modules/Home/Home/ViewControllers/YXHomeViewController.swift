@@ -340,8 +340,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func initDataManager() {
         if (self.homeModel?.newWords ?? 0) == 0 && (self.homeModel?.reviewWords ?? 0) == 0 {
             if service.progress == .learning {
-//                let data = progressManager.loadLocalWordsProgress()
-//                countOfWaitForStudyWords.text = "\(data.0.count + data.1.count)"
+                let wordAmount = self.service.getAllWordAmount()
+                countOfWaitForStudyWords.text = "\(wordAmount)"
             }
         }
         
