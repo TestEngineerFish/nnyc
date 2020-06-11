@@ -44,7 +44,7 @@ class YXExerciseOptionManager: NSObject {
     }
 
     private func reviewWordOption(exerciseModel: YXExerciseModel)  -> YXExerciseModel? {
-        guard var wordModel = exerciseModel.word else {
+        guard let wordModel = exerciseModel.word else {
             return nil
         }
         // 选项个数
