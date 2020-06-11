@@ -11,10 +11,10 @@ class YXUserModel: NSObject {
 
     var uuid: String? {
         set {
-            YYCache.set(newValue, forKey: "kUUID")
+            YYCache.set(newValue, forKey: "UserUUID")
         }
         get {
-            return YYCache.object(forKey: "kUUID") as? String
+            return YYCache.object(forKey: "UserUUID") as? String
         }
     }
 
