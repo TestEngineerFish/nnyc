@@ -85,10 +85,16 @@ extension YYSQLManager {
         WHERE study_id = ?
         """
 
-        case getWordsCount =
+        case getUnfinishedWordsAmount =
         """
         SELECT count(*) count FROM all_exercise
         WHERE unfinish_count != 0 and is_new = ? and study_id = ?
+        """
+
+        case getFinishedWordsAmount =
+        """
+        SELECT count(*) count FROM all_exercise
+        WHERE unfinish_count = 0 and is_new = ? and study_id = ?
         """
 
         case deleteExerciseWithStudy =
