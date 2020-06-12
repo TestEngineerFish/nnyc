@@ -40,7 +40,7 @@ class YXBaseExerciseDaoImpl: YYDatabase {
         model.wrongCount    = Int(rs.int(forColumn: "wrong_count"))
         model.isBackup      = rs.bool(forColumn: "backup")
         
-        model.rule          = YXExerciseRule(rawValue: rs.string(forColumn: "rule_type") ?? "") ?? .p0
+//        model.rule          = YXExerciseRule(rawValue: rs.string(forColumn: "rule_type") ?? "") ?? .p0
         
         return model
     }

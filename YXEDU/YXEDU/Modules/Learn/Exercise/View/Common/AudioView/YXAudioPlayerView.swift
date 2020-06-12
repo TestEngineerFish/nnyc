@@ -60,9 +60,6 @@ class YXAudioPlayerView: UIView {
         self.audioButton.layer.addFlickerAnimation()
         if YXAVPlayerManager.share.isPlaying {
             YXAVPlayerManager.share.pauseAudio()
-            YXLog("在播放中")
-        } else {
-            YXLog("不在播放中")
         }
         self.delegate?.playAudioStart()
         YXAVPlayerManager.share.playAudio(url) {
