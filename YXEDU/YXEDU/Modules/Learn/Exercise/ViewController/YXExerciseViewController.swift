@@ -208,6 +208,7 @@
     
     /// 切换题目
     private func switchExerciseView() {
+        YXLog("\n\n\n")
         YXLog("==== 切题 ====")
         // 获取题数据
         let data = service.fetchExerciseModel()
@@ -384,7 +385,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     ///答完题回调处理， 正常题型处理（不包括连线题）
     /// - Parameter right:
     func exerciseCompletion(_ exerciseModel: YXExerciseModel, _ right: Bool) {
-        YXLog("回答" + (right ? "正确" : "错误"))
+        YXLog("=============回答" + (right ? "✅" : "❌"))
         // 答题后，数据处理
         self.service.answerAction(exercise: exerciseModel)
         

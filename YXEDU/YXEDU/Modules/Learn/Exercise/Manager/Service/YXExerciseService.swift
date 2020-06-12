@@ -77,7 +77,7 @@ protocol YXExerciseService {
     /// 加载网络数据
     func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?)
     
-    /// 做题动作，不管答题对错，都需要调用次方法修改相关状态
+    /// 做题动作，不管答题对错，都需要调用此方法修改相关状态
     func answerAction(exercise model: YXExerciseModel)
 
     /// 连线题，仅单个选项的做题动作处理

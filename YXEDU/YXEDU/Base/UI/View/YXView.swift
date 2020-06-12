@@ -11,7 +11,9 @@ import UIKit
 class YXView: UIView {
     
     deinit {
+        #if DEBUG
         YXLog(self.classForCoder, "资源释放")
+        #endif        
     }
     
     override init(frame: CGRect) {

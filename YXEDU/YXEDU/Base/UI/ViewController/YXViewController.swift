@@ -16,7 +16,9 @@ class YXViewController: UIViewController {
     }
     
     deinit {
+        #if DEBUG
         YXLog(self.classForCoder, "资源释放")
+        #endif        
 
         if isMonitorNetwork {
             NotificationCenter.default.removeObserver(self, name: YXNotification.kNetwork, object: nil)
