@@ -45,6 +45,8 @@ protocol YXStudyRecordDao {
     ///   - time: 开始学习时间
     func setStartTime(studyId: Int)
 
+    /// 获取主流程当天的最后一次开始学习的时间
+    func getBaseStudyLastStartTime() -> Date?
 
     /// 更新学习持续时长
     /// - Parameters:

@@ -88,11 +88,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let vc = YXExerciseViewController()
             vc.learnConfig = YXBaseLearnConfig(bookId: homeData.bookId ?? 0, unitId: homeData.unitId ?? 0)
             vc.hidesBottomBarWhenPushed = true
-            
-            if YYCache.object(forKey: "StartStudyTime") == nil {
-                YYCache.set(Date(), forKey: "StartStudyTime")
-            }
-            
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

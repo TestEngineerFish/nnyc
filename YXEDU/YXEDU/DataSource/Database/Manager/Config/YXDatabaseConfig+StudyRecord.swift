@@ -73,6 +73,14 @@ extension YYSQLManager {
         WHERE study_id = ?
         """
 
+        case selectLastStartTime =
+        """
+        SELECT * FROM study_record
+        WHERE learn_type = 1
+        ORDER BY create_ts desc
+        LIMIT 1
+        """
+
         case updateStudyCount =
         """
         UPDATE study_record

@@ -69,11 +69,6 @@ class YXAddBookGuideViewController: UIViewController {
                 let vc = YXExerciseViewController()
                 vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
                 vc.hidesBottomBarWhenPushed = true
-                
-                if YYCache.object(forKey: "StartStudyTime") == nil {
-                    YYCache.set(Date(), forKey: "StartStudyTime")
-                }
-                
                 self.navigationController?.pushViewController(vc, animated: true)
                 
             }) { error in

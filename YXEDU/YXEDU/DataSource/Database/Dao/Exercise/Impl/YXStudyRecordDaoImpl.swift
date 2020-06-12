@@ -83,6 +83,20 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         self.wordRunner.executeUpdate(sql, withArgumentsIn: [studyId])
     }
 
+    func getBaseStudyLastStartTime() -> Date? {
+        var time: Date?
+        let sql = YYSQLManager.StudyRecordSQL.selectLastStartTime.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []) else {
+            return time
+        }
+        if result.next() {
+            let dateStr = result.string(forColumn: "create_ts")
+            time = NSDate(string: dateStr, format: NSDate.ymdHmsFormat()) as Date?
+        }
+        result.close()
+        return time?.local()
+    }
+
     func setDurationTime(studyId: Int, duration time: Int) {
         let sql = YYSQLManager.StudyRecordSQL.updateDurationTime.rawValue
         let params: [Any] = [time, studyId]
