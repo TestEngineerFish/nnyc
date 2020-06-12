@@ -212,10 +212,13 @@ extension YXExerciseServiceImpl {
         let currentTurnIndex = _studyRecord.currentTurn
         let currentTurnArray = turnDao.selectCurrentTurn(studyId: _studyId)
         YXLog(String(format: "第\(currentGroupIndex)组, 第\(currentTurnIndex)轮，数量：%ld", currentTurnArray.count))
-        for e in currentTurnArray {
+        for (index, e) in currentTurnArray.enumerated() {
             let word = _queryWord(wordId: e.wordId)
-            YXLog(String(format: "id = %ld, word = %@", e.wordId, word?.word ?? "", "backup = ", e.isBackup))
-            YXLog(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
+            YXLog(String(format: "%ld(%ld)  id = %ld, word = %@, step = %ld, backup = %ld, type = %@, finish = %ld",
+                         index + 1, e.isCurrentTurnFinish, e.wordId, word?.word ?? "", e.step, e.isBackup, e.type.rawValue, e.isCurrentTurnFinish))
+            
+//            YXLog(String(format: "id = %ld, word = %@", e.wordId, word?.word ?? "", "backup = ", e.isBackup))
+//            YXLog(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
         }
     }
 }

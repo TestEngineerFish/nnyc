@@ -208,7 +208,7 @@
     
     /// 切换题目
     private func switchExerciseView() {
-        YXLog("\n\n\n")
+        YXLog("\n=============\n")
         YXLog("==== 切题 ====")
         // 获取题数据
         let data = service.fetchExerciseModel()
@@ -291,7 +291,8 @@
     /// - Parameter exerciseView: 新的练习view
     private func loadExerciseView(exerciseView: YXBaseExerciseView) {
         YXLog("==== 加载练习题 ====")
-        YXLog(String(format: "==== 当前题型:%@，当前单词ID：%d，Step:%d ==== Backup:%d", exerciseView.exerciseModel.type.rawValue, exerciseView.exerciseModel.word?.wordId ?? 0, exerciseView.exerciseModel.step, exerciseView.exerciseModel.isBackup))
+        YXLog(String(format: "==== 当前单词 id：%ld, type：%@，step：%ld，backup：%ld", exerciseView.exerciseModel.wordId,
+                     exerciseView.exerciseModel.type.rawValue, exerciseView.exerciseModel.step,  exerciseView.exerciseModel.isBackup))
         // 是否第一次进来
         var isFirst = true
         if let ceview = exerciseViewArray.first {
