@@ -22,13 +22,12 @@ class YXOCModel: NSObject, Mappable {
     required init?(map: Map) {}
 
     func mapping(map: Map) {
-        summary <- map["summary"]
-        detail <- map["study_detail"]
-
-        date <- map["date"]
-        duration <- map["study_duration"]
+        summary     <- map["summary"]
+        detail      <- map["study_detail"]
+        date        <- map["date"]
+        duration    <- map["study_duration"]
         reviewItems <- map["review_item"]
-        studyItems <- map["review_item"]
+        studyItems  <- map["study_item"]
     }
 }
 
@@ -57,7 +56,7 @@ class YXSummaryDetialModel: NSObject, Mappable {
     required init?(map: Map) {}
 
     func mapping(map: Map) {
-        date <- map["date"]
+        date   <- map["date"]
         status <- map["status"]
     }
 }
@@ -72,8 +71,8 @@ class YXSummaryItemsModel: NSObject, Mappable {
     required init?(map: Map) {}
 
     func mapping(map: Map) {
-        name <- map["name"]
-        num <- map["num"]
+        name     <- map["name"]
+        num      <- map["num"]
         wordList <- map["word_list"]
     }
 }
@@ -96,7 +95,7 @@ class YXSummaryItemsWordModel: NSObject, Mappable {
         partOfSpeechAndMeanings <- map["paraphrase"]
         americanPronunciation   <- map["voice_us"]
         englishPronunciation    <- map["voice_uk"]
-        isComplexWord <- map["is_synthesis"]
+        isComplexWord          <- map["is_synthesis"]
     }
 }
 
@@ -112,6 +111,6 @@ class YXSummaryItemsWordPartOfSpeechAndMeaningModel: NSObject, Mappable {
 
     func mapping(map: Map) {
         partOfSpeech <- map["k"]
-        meaning <- map["v"]
+        meaning      <- map["v"]
     }
 }
