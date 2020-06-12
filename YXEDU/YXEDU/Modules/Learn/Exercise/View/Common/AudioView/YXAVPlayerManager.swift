@@ -87,9 +87,6 @@ class YXAVPlayerManager: NSObject {
     func pauseAudio() {
         if isPlaying {
             self.isPlaying = false
-            if (self.player.currentItem?.asset as? AVURLAsset)?.url.absoluteString.hasSuffix(rightAudioPath ?? "") == .some(true) || (self.player.currentItem?.asset as? AVURLAsset)?.url.absoluteString.hasSuffix(wrongAudioPath ?? "") == .some(true) {
-                return
-            }
             self.player.pause()
         }
     }
@@ -127,6 +124,17 @@ class YXAVPlayerManager: NSObject {
     }
     
     /// TODO: ---- Tools ----
+
+
+    /// 是否正在播放学习结果音频
+    /// - Returns: 是否在播放
+    func isPlayingResult() -> Bool {
+        if self.isPlaying && ((self.player.currentItem?.asset as? AVURLAsset)?.url.absoluteString.hasSuffix(rightAudioPath ?? "") == .some(true) || (self.player.currentItem?.asset as? AVURLAsset)?.url.absoluteString.hasSuffix(wrongAudioPath ?? "") == .some(true)) {
+            return true
+        } else {
+            return false
+        }
+    }
 
     /// 播放答题正确音效
     func playRightAudio() {

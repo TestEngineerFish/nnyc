@@ -269,7 +269,10 @@
                     make.bottom.equalToSuperview()
                 }
             }
-            YXAVPlayerManager.share.pauseAudio()
+            // 停止音频播放
+            if !YXAVPlayerManager.share.isPlayingResult() {
+                YXAVPlayerManager.share.pauseAudio()
+            }
             YXAVPlayerManager.share.finishedBlock = nil
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
             exerciseView.frame = CGRect(x: screenWidth, y: self.headerView.frame.maxY, width: screenWidth, height: exerciseViewHeight)
