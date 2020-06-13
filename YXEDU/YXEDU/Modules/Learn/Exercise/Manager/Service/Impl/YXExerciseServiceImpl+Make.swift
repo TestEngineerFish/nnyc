@@ -217,8 +217,6 @@ extension YXExerciseServiceImpl {
             YXLog(String(format: "%ld(%ld)  id = %ld, word = %@, step = %ld, backup = %ld, type = %@, finish = %ld",
                          index + 1, e.isCurrentTurnFinish, e.wordId, word?.word ?? "", e.step, e.isBackup, e.type.rawValue, e.isCurrentTurnFinish))
             
-//            YXLog(String(format: "id = %ld, word = %@", e.wordId, word?.word ?? "", "backup = ", e.isBackup))
-//            YXLog(String(format: "step = %ld, type = %@, turn_finish = %ld", e.step, e.type.rawValue, e.isCurrentTurnFinish))
         }
     }
 }
