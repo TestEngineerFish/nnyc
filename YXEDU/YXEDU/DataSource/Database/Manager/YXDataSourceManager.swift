@@ -10,7 +10,7 @@ import FMDB
 import CocoaLumberjack
 
 enum YYDataSourceType: String {
-    case word = "YX_Word.sqlite"
+    case word = "YX_Learn_Word.sqlite"
 }
 
 enum YYSQLError: Error {
@@ -81,7 +81,6 @@ extension YYDataSourceManager {
         if let runner = runners[type] {
             return runner
         }
-        YXFileManager.share.moveToNewDataSourcePath()
         let runner = FMDatabase(path: filePath)
         guard runner.open() else {
             DDLogError(String(format:"error open database failed %@", filePath))
