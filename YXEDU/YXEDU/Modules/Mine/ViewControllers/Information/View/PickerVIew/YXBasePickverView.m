@@ -231,15 +231,21 @@
                         }else {
                             array = [string componentsSeparatedByString:@"，"];
                         }
-                        
-                        self.provinceIndex = [self.locationArray[0] indexOfObject:array[0]];
+
+                        if ([self.locationArray containsObject:array[0]]) {
+                            self.provinceIndex = [self.locationArray[0] indexOfObject:array[0]];
+                        } else {
+                            self.provinceIndex = 0;
+                        }
                         [self.customPicker selectRow:self.provinceIndex inComponent:0 animated:YES];
                         [self.customPicker reloadComponent:1];
                         
                         NSArray *citylist = self.locationArray[1];
                         NSArray *cities = citylist[self.provinceIndex];
-                        NSInteger cityIndex = [cities indexOfObject:array[1]];
-                        
+                        NSInteger cityIndex = 0;
+                        if (array.count > 1 && [cities containsObject:array[1]]) {
+                            cityIndex = [cities indexOfObject:array[1]];
+                        }
                         [self.customPicker selectRow:cityIndex inComponent:1 animated:YES];
                     }
                         break;

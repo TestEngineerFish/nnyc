@@ -114,10 +114,10 @@
         birthday = self.userModel.birthday;
     }
     
-    NSString *area = @"未设置";
-    if (![self.userModel.area isEqualToString:@""] && self.userModel.area.length) {
-        area = self.userModel.area;
-    }
+    NSString *area = @"虹口";
+//    if (![self.userModel.area isEqualToString:@""] && self.userModel.area.length) {
+//        area = self.userModel.area;
+//    }
     
     NSString *grade = @"未设置";
     if ([self.userModel.grade isEqualToString:@"1"]) {
