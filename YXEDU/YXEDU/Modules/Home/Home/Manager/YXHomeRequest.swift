@@ -12,13 +12,12 @@ public enum YXHomeRequest: YYBaseRequest {
     case getBaseInfo(userId: String)
     case getBookList
     case report
-    case updateToken
     case task
     case setReminder(dataString: String)
 
     var method: YYHTTPMethod {
         switch self {
-        case .report, .updateToken, .task, .getBaseInfo, .getBookList:
+        case .report, .task, .getBaseInfo, .getBookList:
             return .get
             
         case .setReminder:
@@ -36,8 +35,6 @@ public enum YXHomeRequest: YYBaseRequest {
 
         case .report:
             return YXAPI.Home.report
-        case .updateToken:
-            return YXAPI.User.updateToken
         case .task:
             return YXAPI.Home.task
         case .setReminder:

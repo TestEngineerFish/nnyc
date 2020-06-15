@@ -410,25 +410,4 @@ enum YXMiMeType: String {
         }
         return params.count > 0 ? params : nil
     }
-    
-    
-    public func retryRequest() {
-        
-        //                YXUserModel.default.updateToken { (result) in
-        //                    if result {
-        //                        self.retryRequest()
-        //                    }
-        //                }
-        //                YXTokenExpired.default.addRequest(request: request, response: response, callback: success, fail: fail)
-        
-        
-        
-//        let callback = YXTokenExpired.default.callbacks.first as? ((YYBaseResopnse) -> Void)
-//        let fail = YXTokenExpired.default.fails.first as? ((_ responseError: NSError) -> Void)
-//
-//        if let req = YXTokenExpired.default.requests.first,
-//            let type = YXTokenExpired.default.types.first as? YYBaseResopnse {
-//            self.request(type, request: req, success: callback, fail: fail)
-//        }
-    }
 }

@@ -140,30 +140,6 @@ class YXUserModel: NSObject {
     }
     
     @objc
-    func updateToken(closure: ((_ result: Bool) -> Void)? = nil) {
-        let request = YXHomeRequest.updateToken
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            if let date = response.data, let token = date.token, token.isEmpty == false {
-                YXUserModel.default.token  = token
-                YXConfigure.shared().saveToken(token)
-                YXConfigure.shared().saveCurrentToken()
-
-                closure?(true)
-                
-            } else {
-                YXLog("更新Token失败，退出登录，token为空，data:", response)
-                self.logout()
-                closure?(false)
-            }
-            
-        }) { error in
-            YXLog("更新Token失败，退出登录，error：", error.message)
-            self.logout()
-            closure?(false)
-        }
-    }
-    
-    @objc
     func logout() {
         YXLog("推出前用户Token=====", YXConfigure.shared().token ?? "")
         self.didLogin = false

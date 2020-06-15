@@ -195,7 +195,6 @@
                 DispatchQueue.main.async {
                     self.loadingView?.animationCompleteBlock = { [weak self] in
                         guard let self = self else {return}
-//                        self.dataManager.progressManager.setStartStudyTime()
                         self.switchExerciseView()
                     }
                 }
@@ -306,7 +305,6 @@
         exerciseView.animateAdmission(isFirst, nil)
         
         YYCache.set(true, forKey: .learningState)
-//        self.dataManager.progressManager.setOneExerciseFinishStudyTime()
     }
     
     /// 显示loading动画
@@ -314,17 +312,6 @@
         self.loadingView = YXExerciseLoadingView(type: self.learnConfig.learnType)
         kWindow.addSubview(self.loadingView!)
         self.loadingView?.startAnimation()
-    }
-    
-    private func updateToken() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            YXLog("更新token")
-            self?.updateTokenAction()
-        }
-    }
-    
-    private func updateTokenAction() {
-        YXUserModel.default.updateToken()
     }
 
     // TODO: ---- Notification ----
@@ -566,7 +553,6 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             YXLog("返回首页")
             self.service.updateDurationTime()
             self.uploadGrowing()
-//            self.dataManager.progressManager.setOneExerciseFinishStudyTime()
             
             self.delegate?.backHomeEvent()
             

@@ -53,8 +53,6 @@ struct YXAPI {
     
     //MARK: - 用户模块
     struct User {
-        // 更新 TOKEN
-        static let updateToken = "/api/v1/user/gettoken"
         
         static let getInfo = "/v2/user/getinfo"
         
