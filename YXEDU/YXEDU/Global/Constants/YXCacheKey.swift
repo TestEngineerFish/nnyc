@@ -45,6 +45,10 @@ enum YXLocalKey: String {
     case coinExplainUrl                = "kCoinExplainUrl"
     /// 游戏挑战规则说明（Web地址）
     case gameExplainUrl                = "kGameExplainUrl"
+    /// 是否有新作业
+    case hasNewWork                    = "kHasNewWork"
+    /// 是否已加入班级
+    case hasClass                    = "hasClass"
 }
 
 

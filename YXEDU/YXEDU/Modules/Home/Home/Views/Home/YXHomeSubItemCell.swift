@@ -13,6 +13,7 @@ class YXHomeSubItemCell: UICollectionViewCell {
     @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var newWorkImage: UIImageView!
     
     var dotView = YXRedDotView()
     
@@ -26,7 +27,7 @@ class YXHomeSubItemCell: UICollectionViewCell {
         }
     }
     
-    func setData(_ indexPath: IndexPath) {
+    func setData(_ indexPath: IndexPath, hasClass: Bool) {
         let hideDotView = YXRedDotManager.share.getTaskCenterBadgeNum() <= 0
         switch indexPath.row {
         case 0:
@@ -46,9 +47,10 @@ class YXHomeSubItemCell: UICollectionViewCell {
             self.dotView.isHidden          = true
         case 3:
             self.colorView.backgroundColor = UIColor.hex(0xFFF4E1)
-            self.iconView.image            = #imageLiteral(resourceName: "homeChallenge")
-            self.titleLabel.text           = "单词挑战"
+            self.iconView.image            = #imageLiteral(resourceName: "myClass")
+            self.titleLabel.text           = YXUserModel.default.hasClass ? "我的班级" : "加入班级"
             self.dotView.isHidden          = true
+            self.newWorkImage.isHidden     = !YXUserModel.default.hasNewWork
         default:
             break
         }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -20,6 +20,13 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cOd-Tb-lBi" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="277" height="126"/>
                         <subviews>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newWork" translatesAutoresizingMaskIntoConstraints="NO" id="iQp-2P-Wx5">
+                                <rect key="frame" x="236" y="0.0" width="41" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="ClI-1w-3Zu"/>
+                                    <constraint firstAttribute="width" constant="41" id="ZBL-6V-esO"/>
+                                </constraints>
+                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TS1-5K-eeu">
                                 <rect key="frame" x="77.5" y="41" width="44" height="44"/>
                                 <constraints>
@@ -37,6 +44,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="TS1-5K-eeu" firstAttribute="centerY" secondItem="cOd-Tb-lBi" secondAttribute="centerY" id="64q-vP-JjU"/>
+                            <constraint firstAttribute="trailing" secondItem="iQp-2P-Wx5" secondAttribute="trailing" id="89Y-pT-ti7"/>
+                            <constraint firstItem="iQp-2P-Wx5" firstAttribute="top" secondItem="cOd-Tb-lBi" secondAttribute="top" id="Jx8-Hg-ds6"/>
                             <constraint firstItem="5Un-x2-463" firstAttribute="centerX" secondItem="cOd-Tb-lBi" secondAttribute="centerX" priority="750" id="Lq2-LW-Jpb"/>
                             <constraint firstItem="TS1-5K-eeu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cOd-Tb-lBi" secondAttribute="leading" constant="10" id="M76-cK-uw8"/>
                             <constraint firstItem="5Un-x2-463" firstAttribute="centerY" secondItem="cOd-Tb-lBi" secondAttribute="centerY" id="Nae-Jv-eRL"/>
@@ -61,9 +70,13 @@
             <connections>
                 <outlet property="colorView" destination="cOd-Tb-lBi" id="vx7-RB-7bd"/>
                 <outlet property="iconView" destination="TS1-5K-eeu" id="CaX-ZS-dmc"/>
+                <outlet property="newWorkImage" destination="iQp-2P-Wx5" id="Fwx-hY-VQi"/>
                 <outlet property="titleLabel" destination="5Un-x2-463" id="xBP-i7-kGY"/>
             </connections>
             <point key="canvasLocation" x="302.17391304347831" y="178.79464285714286"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="newWork" width="41" height="41"/>
+    </resources>
 </document>

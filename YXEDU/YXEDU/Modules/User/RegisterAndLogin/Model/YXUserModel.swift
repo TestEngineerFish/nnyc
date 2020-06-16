@@ -8,7 +8,7 @@
 
 class YXUserModel: NSObject {
     @objc static var `default` = YXUserModel()
-
+    /// 当前用户UUID
     var uuid: String? {
         set {
             YYCache.set(newValue, forKey: "UserUUID")
@@ -17,7 +17,7 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: "UserUUID") as? String
         }
     }
-
+    /// 是否已登录
     var didLogin: Bool {
         set {
             YYCache.set(newValue, forKey: "DidLogin")
@@ -26,7 +26,7 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: "DidLogin") as? Bool ?? false
         }
     }
-
+    /// 当前用户是否使用美式发音
     var didUseAmericanPronunciation: Bool {
         set {
             YYCache.set(newValue, forKey: .didUseAmericanPronunciation)
@@ -35,7 +35,7 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .didUseAmericanPronunciation) as? Bool ?? false
         }
     }
-
+    /// 用户Token
     var token: String? {
         set {
             YYCache.set(newValue, forKey: .userToken)
@@ -44,7 +44,7 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .userToken) as? String
         }
     }
-
+    /// 用户名称
     var userName: String? {
         set {
             YYCache.set(newValue, forKey: .userName)
@@ -54,7 +54,7 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .userName) as? String
         }
     }
-
+    /// 用户头像地址
     var userAvatarPath: String? {
         set {
             YYCache.set(newValue, forKey: .userAvatarPath)
@@ -71,7 +71,7 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .userAvatarPath) as? String
         }
     }
-
+    /// 当前用户头像
     var userAvatarImage: UIImage? {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.currentAvatarImage)
@@ -81,7 +81,7 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .currentAvatarImage) as? UIImage
         }
     }
-
+    /// 金币使用、获取说明
     var coinExplainUrl: String? {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.coinExplainUrl)
@@ -91,7 +91,7 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .coinExplainUrl) as? String
         }
     }
-
+    /// 游戏挑战规则说明
     var gameExplainUrl: String? {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.gameExplainUrl)
@@ -101,7 +101,7 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .gameExplainUrl) as? String
         }
     }
-
+    /// 当前学习的年级
     var currentGrade: Int? {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.currentGrade)
@@ -111,13 +111,31 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .currentGrade) as? Int
         }
     }
-    
+    /// 当前学习的书ID
     var currentBookId: Int? {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.currentChooseBookId)
         }
         get {
             return YYCache.object(forKey: YXLocalKey.currentChooseBookId) as? Int
+        }
+    }
+    /// 是否已加入班级
+    var hasClass: Bool {
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.hasClass)
+        }
+        get {
+            return YYCache.object(forKey: YXLocalKey.hasClass) as? Bool ?? false
+        }
+    }
+    /// 是否有新作业
+    var hasNewWork: Bool {
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.hasNewWork)
+        }
+        get {
+            return YYCache.object(forKey: YXLocalKey.hasNewWork) as? Bool ?? false
         }
     }
 

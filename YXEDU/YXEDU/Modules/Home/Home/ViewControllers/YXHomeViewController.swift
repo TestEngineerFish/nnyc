@@ -185,6 +185,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateTaskCenterStatus), name: YXNotification.kUpdateTaskCenterBadge, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(playSquirrelAnimation), name: YXNotification.kSquirrelAnimation, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMyClassStatus), name: YXNotification.kUpdateMyClassStatus, object: nil)
     }
     
     // MARK: ---- Request ----
@@ -353,6 +354,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         YYCache.set(true, forKey: YXLocalKey.firstShowHome)
         self.setSquirrelAnimation()
     }
+
+    @objc private func updateMyClassStatus() {
+        self.subItemCollectionView.reloadData()
+    }
     
     @IBAction func showLearnMap(_ sender: UIButton) {
         self.hidesBottomBarWhenPushed = true
@@ -362,6 +367,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.pushViewController(vc, animated: true)
         self.hidesBottomBarWhenPushed = false
         YXLog("进入单元地图")
+    }
+
+    private func toMyClass() {
+
     }
     
     // MARK: ---- UICollection Delegate & DataSource
@@ -402,12 +411,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         } else {
             if isPad() {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemiPadCell", for: indexPath) as! YXHomeSubItemiPadCell
-                cell.setData(indexPath)
+                cell.setData(indexPath, hasClass: true)
                 return cell
-                
             } else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemCell", for: indexPath) as! YXHomeSubItemCell
-                cell.setData(indexPath)
+                cell.setData(indexPath, hasClass: true)
                 return cell
             }
         }
@@ -439,30 +447,27 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             case 0:
                 self.performSegue(withIdentifier: "TaskCenter", sender: self)
                 break
-                
             case 1:
                 if isPad() {
                     self.performSegue(withIdentifier: "YXStudyReportViewController", sender: self)
-                    
                 } else {
-                    self.performSegue(withIdentifier: "Calendar", sender: self)
+                    self.toMyClass()
                 }
                 break
-                
             case 2:
                 if isPad() {
                     self.performSegue(withIdentifier: "Calendar", sender: self)
-                    
                 } else {
                     self.performSegue(withIdentifier: "YXStudyReportViewController", sender: self)
                 }
                 break
-                
             case 3:
-//                self.performSegue(withIdentifier: "YXWordTestViewController", sender: self)
-                tabBarController?.selectedIndex = 2
+                if isPad() {
+                    self.toMyClass()
+                } else {
+                    self.performSegue(withIdentifier: "Calendar", sender: self)
+                }
                 break
-                
             default:
                 break
             }

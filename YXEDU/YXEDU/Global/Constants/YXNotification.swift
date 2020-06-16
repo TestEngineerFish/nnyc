@@ -33,6 +33,8 @@ struct YXNotification {
     static let kRecordScore              = NSNotification.Name("kRecordScore")
     /// 播放松鼠动画
     static let kSquirrelAnimation        = NSNotification.Name("kSquirrelAnimation")
+    /// 更新我的班级是否有新作业
+    static let kUpdateMyClassStatus      = NSNotification.Name("kUpdateMyClassStatus")
     /// 分享结果
     static let kShareResult              = NSNotification.Name("kShareResult")
     /// 下载单本词书结束
