@@ -27,7 +27,7 @@ class YXHomeSubItemCell: UICollectionViewCell {
         }
     }
     
-    func setData(_ indexPath: IndexPath, hasClass: Bool) {
+    func setData(_ indexPath: IndexPath) {
         let hideDotView = YXRedDotManager.share.getTaskCenterBadgeNum() <= 0
         switch indexPath.row {
         case 0:
@@ -41,16 +41,16 @@ class YXHomeSubItemCell: UICollectionViewCell {
             self.titleLabel.text           = "打卡日历"
             self.dotView.isHidden          = true
         case 2:
-            self.colorView.backgroundColor = UIColor.hex(0xF0F6FF)
-            self.iconView.image            = #imageLiteral(resourceName: "homeReport")
-            self.titleLabel.text           = "学习报告"
-            self.dotView.isHidden          = true
-        case 3:
             self.colorView.backgroundColor = UIColor.hex(0xFFF4E1)
             self.iconView.image            = #imageLiteral(resourceName: "myClass")
             self.titleLabel.text           = YXUserModel.default.hasClass ? "我的班级" : "加入班级"
             self.dotView.isHidden          = true
             self.newWorkImage.isHidden     = !YXUserModel.default.hasNewWork
+        case 3:
+            self.colorView.backgroundColor = UIColor.hex(0xF0F6FF)
+            self.iconView.image            = #imageLiteral(resourceName: "homeReport")
+            self.titleLabel.text           = "学习报告"
+            self.dotView.isHidden          = true
         default:
             break
         }

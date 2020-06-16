@@ -370,7 +370,23 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     private func toMyClass() {
-
+        YXUserModel.default.hasClass = true
+        if YXUserModel.default.hasClass {
+            self.hidesBottomBarWhenPushed = true
+            let vc = YXMyClassViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+            self.hidesBottomBarWhenPushed = false
+        } else {
+            let alertView = YXAlertView(type: .inputable, placeholder: "请输入班级号")
+            alertView.titleLabel.text = "如果您有老师的班级号，输入后即可加入班级"
+            alertView.doneClosure = {(classNumer: String?) in
+                YXLog("班级号：\(classNumer ?? "")")
+            }
+            alertView.textCountLabel.isHidden = true
+            alertView.textMaxLabel.isHidden   = true
+            alertView.alertHeight.constant    = 222
+            alertView.show()
+        }
     }
     
     // MARK: ---- UICollection Delegate & DataSource
@@ -411,11 +427,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         } else {
             if isPad() {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemiPadCell", for: indexPath) as! YXHomeSubItemiPadCell
-                cell.setData(indexPath, hasClass: true)
+                cell.setData(indexPath)
                 return cell
             } else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemCell", for: indexPath) as! YXHomeSubItemCell
-                cell.setData(indexPath, hasClass: true)
+                cell.setData(indexPath)
                 return cell
             }
         }
@@ -451,21 +467,21 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 if isPad() {
                     self.performSegue(withIdentifier: "YXStudyReportViewController", sender: self)
                 } else {
-                    self.toMyClass()
+                    self.performSegue(withIdentifier: "Calendar", sender: self)
                 }
                 break
             case 2:
                 if isPad() {
                     self.performSegue(withIdentifier: "Calendar", sender: self)
                 } else {
-                    self.performSegue(withIdentifier: "YXStudyReportViewController", sender: self)
+                    self.toMyClass()
                 }
                 break
             case 3:
                 if isPad() {
                     self.toMyClass()
                 } else {
-                    self.performSegue(withIdentifier: "Calendar", sender: self)
+                    self.performSegue(withIdentifier: "YXStudyReportViewController", sender: self)
                 }
                 break
             default:

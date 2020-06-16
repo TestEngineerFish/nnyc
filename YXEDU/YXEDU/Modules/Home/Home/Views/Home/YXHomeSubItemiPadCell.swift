@@ -27,7 +27,7 @@ class YXHomeSubItemiPadCell: UICollectionViewCell {
         }
     }
     
-    func setData(_ indexPath: IndexPath, hasClass: Bool) {
+    func setData(_ indexPath: IndexPath) {
         let hideDotView = YXRedDotManager.share.getTaskCenterBadgeNum() <= 0
         switch indexPath.row {
         case 0:

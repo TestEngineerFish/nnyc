@@ -53,6 +53,7 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var textCountLabel: UILabel!
+    @IBOutlet weak var textMaxLabel: UILabel!
     @IBOutlet weak var cancelButtonRightDistance: NSLayoutConstraint!
     @IBOutlet weak var doneButtonLeftDistance: NSLayoutConstraint!
     @IBOutlet weak var alertHeight: NSLayoutConstraint!
