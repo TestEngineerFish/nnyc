@@ -130,7 +130,16 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
                     return 228
 
                 } else {
-                    let countOfRow = Int(count / 3) + (count % 3) - 1
+                    var countOfRow = Int(count / 3)
+                    
+                    if countOfRow != 0 {
+                        countOfRow = countOfRow - 1
+                    }
+                    
+                    if count % 3 != 0 {
+                        countOfRow = countOfRow + 1
+                    }
+                    
                     return CGFloat(228 + (countOfRow * 182))
                 }
 
@@ -153,7 +162,16 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
                 return 228
 
             } else {
-                let countOfRow = Int(count / 3) + (count % 3) - 1
+                var countOfRow = Int(count / 3)
+                    
+                if countOfRow != 0 {
+                    countOfRow = countOfRow - 1
+                }
+                
+                if count % 3 != 0 {
+                    countOfRow = countOfRow + 1
+                }
+                
                 return CGFloat(228 + (countOfRow * 182))
             }
         }
