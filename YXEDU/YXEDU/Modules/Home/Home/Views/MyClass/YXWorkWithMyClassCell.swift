@@ -8,7 +8,23 @@
 
 import Foundation
 
+enum YXWorkCompletionStatus {
+    case unfinished
+    case unreport
+    case finished
+    case delay
+}
+
+enum YXWorkType: Int {
+    case listen   = 0
+    case exercise = 1
+    case punchIn  = 2
+}
+
 class YXWorkWithMyClassCell: UITableViewCell {
+
+    var workCompletion: YXWorkCompletionStatus = .unfinished
+    var workTyep: YXWorkType = .listen
 
     var wrapView: UIView = {
         let view = UIView()
@@ -51,11 +67,12 @@ class YXWorkWithMyClassCell: UITableViewCell {
 
     var actionButton: YXButton = {
         let button = YXButton(.border, frame: .zero)
+        button.cornerRadius     = AdaptSize(15)
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(14))
         return button
     }()
 
-    let progressView = YXReviewProgressView(type: .iKnow)
+    let progressView = YXReviewProgressView(type: .iKnow, cornerRadius: AdaptSize(2))
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -101,10 +118,16 @@ class YXWorkWithMyClassCell: UITableViewCell {
             make.width.equalTo(0)
             make.height.equalTo(AdaptSize(17))
         }
+        progressView.size = CGSize(width: AdaptSize(113), height: AdaptSize(4))
         progressView.snp.makeConstraints { (make) in
             make.centerY.equalTo(progressLabel)
             make.left.equalTo(progressLabel.snp.right).offset(AdaptSize(5))
-            make.size.equalTo(CGSize(width: AdaptSize(113), height: AdaptSize(4)))
+            make.size.equalTo(progressView.size)
+        }
+        actionButton.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().offset(AdaptSize(-15))
+            make.centerY.equalTo(progressLabel)
+            make.size.equalTo(CGSize(width: AdaptSize(95), height: AdaptSize(30)))
         }
     }
 
@@ -115,11 +138,16 @@ class YXWorkWithMyClassCell: UITableViewCell {
         self.actionButton.addTarget(self, action: #selector(actionEvent), for: .touchUpInside)
     }
 
-    func setData() {
+    func setData(indexPath: IndexPath) {
+        let completionList: [YXWorkCompletionStatus] = [.unfinished, .unreport, .finished, .delay]
+        let typeList: [YXWorkType] = [.listen, .listen, .punchIn]
         self.nameLabel.text        = "6月4日单词练习作业"
         self.progressLabel.text    = "完成50%"
-        self.desciptionLabel.text  = "3班 ｜ 3天后截止"
+        self.desciptionLabel.text  = "3班  l  3天后截止"
         self.progressView.progress = 0.5
+        self.workCompletion        = completionList[indexPath.row % completionList.count]
+        self.workTyep              = typeList[indexPath.row % typeList.count]
+
         nameLabel.sizeToFit()
         nameLabel.snp.updateConstraints { (make) in
             make.height.equalTo(nameLabel.height)
@@ -127,6 +155,38 @@ class YXWorkWithMyClassCell: UITableViewCell {
         progressLabel.sizeToFit()
         progressLabel.snp.updateConstraints { (make) in
             make.width.equalTo(progressLabel.width)
+        }
+
+        self.statusImage.isHidden = false
+        switch self.workCompletion {
+        case .unfinished:
+            self.actionButton.type = .border
+            self.actionButton.setStatus(.normal)
+            self.actionButton.setTitle("做作业", for: .normal)
+        case .unreport:
+            self.actionButton.type = .border
+            self.actionButton.setStatus(.normal)
+            self.actionButton.setTitle("去打卡", for: .normal)
+        case .finished:
+            self.actionButton.type = .normal
+            self.statusImage.image = UIImage(named: "work_finished")
+            if self.workTyep == .listen || self.workTyep == .exercise {
+                self.actionButton.setTitleColor(.black2, for: .normal)
+                self.actionButton.layer.borderColor = UIColor.black4.cgColor
+                self.actionButton.layer.borderWidth = AdaptSize(1)
+                self.actionButton.setTitle("查看报告", for: .normal)
+            } else {
+                self.actionButton.backgroundColor = UIColor.hex(0xF4F4F4)
+                self.actionButton.setTitleColor(UIColor.black6, for: .normal)
+                self.actionButton.layer.borderColor = UIColor.clear.cgColor
+                self.actionButton.layer.borderWidth = 0
+                self.actionButton.setTitle("已打卡", for: .normal)
+            }
+        case .delay:
+            self.statusImage.image = UIImage(named: "work_unfinished")
+            self.actionButton.type = .border
+            self.actionButton.setStatus(.normal)
+            self.actionButton.setTitle("补作业", for: .normal)
         }
     }
 

@@ -20,6 +20,8 @@ class YXMyClassTableViewHanderView: YXView {
 
     var joinButton: YXButton = {
         let button = YXButton()
+        button.layer.borderWidth = AdaptSize(0.5)
+        button.layer.borderColor = UIColor.black4.cgColor
         button.setImage(UIImage(named: "review_add_icon"), for: .normal)
         button.setTitle("加入班级", for: .normal)
         button.setTitleColor(UIColor.gray3, for: .normal)
@@ -52,6 +54,7 @@ class YXMyClassTableViewHanderView: YXView {
             make.right.equalToSuperview().offset(AdaptSize(-15))
             make.size.equalTo(CGSize(width: AdaptSize(88), height: AdaptSize(28)))
         }
+        joinButton.cornerRadius = AdaptSize(14)
     }
 
     override func bindProperty() {

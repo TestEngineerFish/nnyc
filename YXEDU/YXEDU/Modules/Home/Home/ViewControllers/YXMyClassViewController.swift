@@ -17,7 +17,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }()
     
     var workTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorColor = .clear
         return tableView
     }()
@@ -69,7 +69,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = YXWorkWithMyClassCell()
-        cell.setData()
+        cell.setData(indexPath: indexPath)
         return cell
     }
 
