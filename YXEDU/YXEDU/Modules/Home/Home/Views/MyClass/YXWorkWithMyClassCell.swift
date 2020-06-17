@@ -149,7 +149,9 @@ class YXWorkWithMyClassCell: UITableViewCell {
         self.nameLabel.text        = nameList[indexPath.row % nameList.count]
         self.progressLabel.text    = "完成50%"
         self.desciptionLabel.text  = "3班  l  3天后截止"
-        self.progressView.progress = 0.5
+        DispatchQueue.main.async {
+            self.progressView.progress = 0.5
+        }
         self.workCompletion        = completionList[indexPath.row % completionList.count]
         self.workTyep              = typeList[indexPath.row % typeList.count]
         self.createSubviews()
