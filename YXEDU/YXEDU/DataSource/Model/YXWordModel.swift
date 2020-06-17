@@ -64,6 +64,8 @@ struct YXWordModel: YXBaseWordModel {
 
     // 默認排序序號
     var index: Int!
+
+    var wordType: YXWordType = .newWord
     
     var column: Int = 0
     var row: Int = 0
@@ -74,8 +76,15 @@ struct YXWordModel: YXBaseWordModel {
         isComplexWord <- map["is_synthesis"]
         bookHash      <- map["book_hash"]
         listenScore   <- map["listen_score"]
+        wordType      <- (map["word_type"], EnumTransform<YXWordType>())
     }
-    
+}
+
+enum YXWordType: Int {
+    /// 新学单词
+    case newWord
+    /// 复习单词
+    case reviewWord
 }
 
 

@@ -9,7 +9,25 @@
 import UIKit
 
 class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
-    
+    func insertWordStep(study recordId: Int, eid: Int, wordModel: YXWordModel, stepModel: YXNewExerciseStepModel) -> Bool {
+        let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
+
+        let params: [Any] = [
+            recordId,
+            eid,
+            wordModel.wordId as Any,
+            wordModel.bookId as Any,
+            wordModel.unitId as Any,
+            stepModel.questionType.rawValue,
+            stepModel.questionModel?.toJSONString() as Any,
+            stepModel.operateModel?.toJSONString() as Any,
+            stepModel.step,
+            stepModel.ruleModel?.toJSONString() as Any,
+        ]
+
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+    }
+
     func selectCurrentGroup(studyId: Int) -> Int? {
         var step: Int?
         let sql = YYSQLManager.WordStepSQL.selectUnfinishMinGroup.rawValue
@@ -82,29 +100,6 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         }
         result.close()
         return nil
-    }
-    
-    
-    func insertWordStep(study recordId: Int, exerciseModel: YXExerciseModel) -> Bool {
-        let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
-        
-        let params: [Any] = [
-            recordId,
-            exerciseModel.eid,
-            exerciseModel.wordId as Any,
-            exerciseModel.word?.bookId as Any,
-            exerciseModel.word?.unitId as Any,
-            exerciseModel.type.rawValue,
-            exerciseModel.question?.toJSONString() as Any,
-            exerciseModel.option?.toJSONString() as Any,
-            exerciseModel.score,
-            exerciseModel.isCareScore,
-            exerciseModel.step,
-            exerciseModel.isBackup,
-            exerciseModel.group,
-        ]
-        
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
     func updateStep(exerciseModel: YXExerciseModel) -> Bool {

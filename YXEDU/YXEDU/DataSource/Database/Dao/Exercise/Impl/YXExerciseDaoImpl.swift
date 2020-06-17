@@ -11,20 +11,18 @@ import FMDB
 
 class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
     
-    func insertExercise(learn config: YXLearnConfig, rule: YXExerciseRule, study recordId: Int, exerciseModel: YXExerciseModel) -> Int {
+    func insertExercise(learnType: YXLearnType, study recordId: Int, wordModel: YXWordModel, nextStep: String) -> Int {
         
         let sql = YYSQLManager.ExerciseSQL.insertExercise.rawValue
         let params: [Any] = [
             recordId,
-            rule.rawValue,
-            config.learnType.rawValue,
-            exerciseModel.word?.wordId as Any,
-            exerciseModel.word?.word as Any,
-            exerciseModel.word?.bookId as Any,
-            exerciseModel.word?.unitId as Any,
-            config.planId as Any,
-            exerciseModel.isNewWord,
-            exerciseModel.unfinishStepCount
+            learnType.rawValue,
+            wordModel.wordId as Any,
+            wordModel.word as Any,
+            wordModel.bookId as Any,
+            wordModel.unitId as Any,
+            wordModel.wordType.rawValue as Any,
+            nextStep as Any
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? Int(self.wordRunner.lastInsertRowId) : 0
     }

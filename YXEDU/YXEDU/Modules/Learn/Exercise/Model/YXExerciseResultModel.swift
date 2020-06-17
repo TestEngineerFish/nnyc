@@ -11,63 +11,103 @@ import ObjectMapper
 
 /// 当天学习数据总模型
 struct YXExerciseResultModel: Mappable {
-    var type: YXLearnType     = .base
-    var ruleType: YXExerciseRule = .p0
-    var bookId: Int?
-    var unitId: Int?
-    var newWordIds: [Int]?
-    var reviewWordIds: [Int]?
-    var groups: [[[YXExerciseModel]]] = []
-    var scoreRule: [YXScoreRuleModel] = []
+    var type: YXLearnType           = .base
+    var ruleType: YXExerciseRule    = .p0
+    var newWordCount: Int           = 0
+    var reviewWordCount: Int        = 0
+    var wordList: [YXNewExerciseWordModel] = []
     
-    init?(map: Map) {
-    }
+    init?(map: Map) {}
     
     mutating func mapping(map: Map) {
-        type          <- (map["review_type"], YXExerciseDataTypeTransform())
-        ruleType      <- (map["learn_rule"], YXExerciseRuleTransform())
-        bookId        <- map["book_id"]
-        unitId        <- map["unit_id"]
-        newWordIds    <- map["new_word_list"]
-        reviewWordIds <- map["review_word_list"]
-        scoreRule     <- map["step_score"]
-        
-        // Mappable库不能解析三维数组，手动解析
-        parserGroup(map: map["group_list"])
-
-    }
-    
-    
-    /// 解析分组数据，Mappable库不能解析三维数组，手动解析
-    /// - Parameter list:
-    mutating func parserGroup(map: Map) {
-        guard let groupAnyArray = map.currentValue as? Array<Any> else {
-            return
-        }
-        
-        for groupAny in groupAnyArray {
-            // 单个group的原始数据
-            guard let groupData = groupAny as? Array<Any> else {
-                continue
-            }
-            var group = [[YXExerciseModel]]()
-            for stepAny in groupData {
-                // 单个step的原始数据
-                guard let stepData = stepAny as? Array<Any> else {
-                    continue
-                }
-                var step = [YXExerciseModel]()
-                for subStep in stepData {
-                    if let subStepJson = subStep as? [String:Any], let exerciseModel = YXExerciseModel(JSON: subStepJson) {
-                        step.append(exerciseModel)
-                    }
-                }
-                group.append(step)
-            }
-            self.groups.append(group)
-        }
+        type            <- (map["review_type"], YXExerciseDataTypeTransform())
+        ruleType        <- (map["learn_rule"], YXExerciseRuleTransform())
+        newWordCount    <- map["new_word_num"]
+        reviewWordCount <- map["review_word_num"]
+        wordList        <- map["rule_list"]
     }
 }
+
+struct YXNewExerciseWordModel: Mappable {
+    var wordModel: YXWordModel?
+    var startStep: String = ""
+    var stepModelList: [YXNewExerciseStepModel] = []
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        wordModel     <- map["word"]
+        startStep     <- map["start"]
+        stepModelList <- map["list"]
+    }
+}
+struct YXNewExerciseStepModel: Mappable {
+    var step: String = ""
+    var questionType: YXQuestionType = .none
+    var questionModel: YXNewExerciseQuestionModel?
+    var operateModel: YXNewExerciseOperateModel?
+    var ruleModel: YXExerciseRuleModel?
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        step          <- map["step_type"]
+        questionType  <- (map["type"], EnumTransform<YXQuestionType>())
+        questionModel <- map["question"]
+        operateModel  <- map["operate"]
+        ruleModel     <- map["rule"]
+    }
+}
+
+struct YXNewExerciseQuestionModel: Mappable {
+    var word: String = ""
+    var extendModel: YXNewExerciseQuestionExtendModel?
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        word        <- map["word"]
+        extendModel <- map["ext"]
+    }
+}
+
+struct YXNewExerciseQuestionExtendModel: Mappable {
+    var optionItemsCount: Int = 0
+    var row: Int              = 0
+    var column: Int           = 0
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        optionItemsCount <- map["select_item_num"]
+        row              <- map["line_row"]
+        column           <- map["line_column"]
+    }
+}
+
+struct YXNewExerciseOperateModel: Mappable {
+    var errorScore: Int     = 0
+    var canNextAction: Bool = false
+    var showDetail: Bool    = false
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        errorScore    <- map["error_score"]
+        canNextAction <- map["click_next_action"]
+        showDetail    <- map["force_show_info"]
+    }
+}
+
+struct YXExerciseRuleModel: Mappable {
+    var errorStep: String = ""
+    var rightStep: String = ""
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        errorStep <- map["1"]
+        rightStep <- map["2"]
+    }
+}
+
+// MARK: ==== Old ===
 
 
 /// 问题数据模型
@@ -115,8 +155,6 @@ struct YXExerciseQuestionExtendModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-//        isNewWord              <- map["is_new_word"]
-//        isOldOrEmptyImage      <- map["is_old_img_or_no_img"]
         power                  <- map["last_score"]
         isShowWordDetail       <- (map["show_info_action"], EnumTransform<YXShowWordDetailType>())
         allowClickNext         <- map["click_next_action"]
@@ -160,49 +198,25 @@ struct YXOptionItemModel: Mappable {
 }
 
 
-
-/// 扣分规则
-struct YXScoreRuleModel: Mappable {
-    /// 扣几分
-    var score: Int  = 3
-    /// 扣分倍数
-    var rate: Int   = 1
-    /// 第几步
-    var step: Int   = 1
-
-    init() {}
-            
-    init?(map: Map) {
-    }
-    
-    mutating func mapping(map: Map) {
-        score <- map["score"]
-        step  <- map["rate"]
-        step  <- map["rate"]
-    }
-}
-
-
 struct YXExerciseDataTypeTransform: TransformType {
-        
+
     typealias Object = YXLearnType
     typealias JSON = Int
-    
+
     init() {}
-    
+
     func transformFromJSON(_ value: Any?) -> YXLearnType? {
         if let v = value as? Int, let state = YXLearnType(rawValue: v) {
             return state
         }
         return .base
     }
-    
+
     func transformToJSON(_ value: YXLearnType?) -> Int? {
         return value?.rawValue
     }
 
 }
-
 
 struct YXExerciseRuleTransform: TransformType {
         

@@ -41,11 +41,10 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return model
     }
 
-    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule, turn: Int) -> Int {
+    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
         var params: [Any] = config.params
         params.insert(type.rawValue, at: 0)
-        params.append(turn)
         params.append(YXExerciseProgress.learning.rawValue)
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params) ? Int(wordRunner.lastInsertRowId) : 0
     }

@@ -16,15 +16,13 @@ extension YYSQLManager {
         """
         INSERT INTO
         study_record(
-            rule_type,
             learn_type,
             book_id,
             unit_id,
             plan_id,
-            current_turn,
             status
         )
-        values(?, ?, ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?)
         """
 
         case selectStudyRecord_Base =

@@ -106,17 +106,13 @@ extension YYSQLManager {
         // 学习记录表
         case studyRecord =
         """
-        CREATE TABLE IF NOT EXISTS study_record (
+        CREATE TABLE IF NOT EXISTS study_record_v1 (
         study_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-        rule_type char(10),
         learn_type integer(1),
         book_id integer(4) NOT NULL DEFAULT(0),
         unit_id integer(4) NOT NULL DEFAULT(0),
         plan_id integer(4) NOT NULL DEFAULT(0),
         status integer(1) NOT NULL DEFAULT(0),
-        current_group integer(1) NOT NULL DEFAULT(0),
-        current_turn integer(2) NOT NULL DEFAULT(-1),
-        study_count integer(1) NOT NULL DEFAULT(1),
         study_duration integer(4) NOT NULL DEFAULT(0),
         start_time integer(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
         create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))
@@ -126,20 +122,17 @@ extension YYSQLManager {
         // 所有的训练
         case allExercise =
         """
-        CREATE TABLE IF NOT EXISTS all_exercise (
+        CREATE TABLE IF NOT EXISTS all_exercise_v1 (
         exercise_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
         study_id integer(8) NOT NULL,
-        rule_type char(10),
         learn_type integer(1) NOT NULL,
         word_id integer NOT NULL,
         word char(128),
         book_id integer(4) NOT NULL DEFAULT(0),
         unit_id integer(8) NOT NULL DEFAULT(0),
-        plan_id integer(8) NOT NULL DEFAULT(0),
-        is_new integer(1) NOT NULL DEFAULT(0),
-        mastered integer(1) NOT NULL DEFAULT(0),
+        word_type integer(1) NOT NULL DEFAULT(0),
         score integer(1) NOT NULL DEFAULT(10),
-        unfinish_count integer(1) NOT NULL DEFAULT(0),
+        next_step text(32) NOT NULL DEFAULT('end')
         create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );
         """
@@ -147,7 +140,7 @@ extension YYSQLManager {
         // 所有单词的步骤
         case allWordStep =
         """
-        CREATE TABLE IF NOT EXISTS all_word_step (
+        CREATE TABLE IF NOT EXISTS all_word_step_v1 (
         step_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
         study_id integer(8) NOT NULL,
         exercise_id integer(8) NOT NULL,
@@ -156,16 +149,11 @@ extension YYSQLManager {
         unit_id integer NOT NULL DEFAULT(0),
         question_type char(10),
         question text,
-        option text,
-        answer text,
-        score integer(1),
-        care_score integer(1) DEFAULT(0),
-        step integer(1),
-        backup integer(1),
-        status integer(1) DEFAULT(0),
+        operate text,
+        step text,
+        rule text,
+        status integer(1) DEFAULT(-1),
         wrong_count integer(2) DEFAULT(0),
-        group_index integer(1) NOT NULL DEFAULT(0),
-        invalid integer(1) DEFAULT(0),
         create_ts text(128) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );
         """
@@ -173,7 +161,7 @@ extension YYSQLManager {
         // 当前轮次表
         case currentTurn =
         """
-        CREATE TABLE IF NOT EXISTS current_turn (
+        CREATE TABLE IF NOT EXISTS current_turn_v1 (
         current_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
         study_id integer NOT NULL,
         word_id integer DEFAULT(0),

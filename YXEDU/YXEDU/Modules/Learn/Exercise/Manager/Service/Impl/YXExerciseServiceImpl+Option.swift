@@ -22,9 +22,4 @@ extension YXExerciseServiceImpl {
     func _processExerciseOption(exercise: YXExerciseModel) -> YXExerciseModel? {
         return _exerciseOptionManange.processReviewWordOption(exercise: exercise)
     }
-    
-    /// 连线题
-    func _processConnectionExerciseOption(exercises: [YXExerciseModel]) -> YXExerciseModel {
-        return _exerciseOptionManange.connectionExercise(exerciseArray: exercises)
-    }
 }

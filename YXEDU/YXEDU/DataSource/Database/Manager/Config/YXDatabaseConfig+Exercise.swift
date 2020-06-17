@@ -17,17 +17,15 @@ extension YYSQLManager {
         insert into
         all_exercise(
             study_id,
-            rule_type,
             learn_type,
             word_id,
             word,
             book_id,
             unit_id,
-            plan_id,
-            is_new,
-            unfinish_count
+            word_type,
+            next_step,
         )
-        values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         case updateScore =

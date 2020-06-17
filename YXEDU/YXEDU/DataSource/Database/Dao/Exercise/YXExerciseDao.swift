@@ -14,9 +14,9 @@ protocol YXExerciseDao {
     /// 添加练习数据
     /// - Parameters:
     ///   - config: 学习配置信息
-    ///   - exerciseModel: 练习对象
+    ///   - wordModel: 单词对象
     @discardableResult
-    func insertExercise(learn config: YXLearnConfig, rule: YXExerciseRule, study recordId: Int, exerciseModel: YXExerciseModel) -> Int
+    func insertExercise(learnType: YXLearnType, study recordId: Int, wordModel: YXWordModel, nextStep: String) -> Int
 
     /// 获得单词是否已掌握
     /// - Parameter id: 练习ID

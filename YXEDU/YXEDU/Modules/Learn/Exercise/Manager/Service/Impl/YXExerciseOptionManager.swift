@@ -271,42 +271,6 @@ class YXExerciseOptionManager: NSObject {
         return exerciseModel
     }
     
-    
-    public func connectionExercise(exerciseArray: [YXExerciseModel]) -> YXExerciseModel {
-
-        var exercise = exerciseArray.first!
-        var option = YXExerciseOptionModel()
-
-        option.firstItems = []
-        option.secondItems = []
-
-        for e in exerciseArray {
-            var item = YXOptionItemModel()
-            item.optionId = e.word?.wordId ?? 0
-            item.content = e.word?.word
-            option.firstItems?.append(item)
-
-
-            var rightItem = YXOptionItemModel()
-            rightItem.optionId = e.word?.wordId ?? 0
-
-            if exercise.type == .connectionWordAndImage {
-                rightItem.content = e.word?.imageUrl
-            } else if exercise.type == .connectionWordAndChinese {
-                rightItem.content = e.word?.meaning
-            }
-
-
-            option.secondItems?.append(rightItem)
-        }
-
-        option.secondItems = option.secondItems?.shuffled()
-
-        exercise.option = option
-
-        return exercise
-    }
-    
     /// 其他新学单词
     /// - Parameter index: 需要排除的
     func otherNewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXExerciseModel] {

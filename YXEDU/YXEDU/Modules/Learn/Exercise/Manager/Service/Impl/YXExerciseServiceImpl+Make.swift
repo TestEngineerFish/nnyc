@@ -112,7 +112,6 @@ extension YXExerciseServiceImpl {
         }
     }
     
-    
     /// 查找一个练习
     func _findExercise() -> YXExerciseModel? {
         guard var exercise = turnDao.selectExercise(studyId: _studyId) else {
@@ -124,15 +123,9 @@ extension YXExerciseServiceImpl {
         if let model = _finedN3Exercise(exercise: exercise) {
             return model
         }
-        
-        if _isConnectionType(model: exercise) {
-            // 连线题
-            return _findConnectionExercise(exercise: exercise)
-        } else {
-            // 正常出题
-            exercise.word = _queryWord(wordId: exercise.wordId)
-            return _processExerciseOption(exercise: exercise)
-        }
+        // 正常出题
+        exercise.word = _queryWord(wordId: exercise.wordId)
+        return _processExerciseOption(exercise: exercise)
     }
     
     
@@ -154,49 +147,7 @@ extension YXExerciseServiceImpl {
         }
         return nil
     }
-    
-    
-    
-    /// 查找一个连线题，有可能是备选题
-    func _findConnectionExercise(exercise: YXExerciseModel) -> YXExerciseModel? {
-        var connectionExercises = turnDao.selectExercise(studyId: _studyId, type: exercise.type, step: exercise.step, size: 4)
-        
-        // 填充word
-        connectionExercises = _fillConnectionWordModel(exercises: connectionExercises)
-        
-        // 连线只有一个，都用备选题
-        if connectionExercises.count == 1 {
-            let e = connectionExercises.first
-            if var backupExercise = turnDao.selectBackupExercise(studyId: _studyId, exerciseId: e?.eid ?? 0, step: e?.step ?? 0) {
-                backupExercise.word = _queryWord(wordId: backupExercise.wordId)
-                return _processExerciseOption(exercise: backupExercise)
-            } else {
-                YXLog("备选题为空， 出错")
-                return nil
-            }
-        }
-        
-        // 正常出连线题
-        if connectionExercises.count > 1 {
-            return _processConnectionExerciseOption(exercises: connectionExercises)
-        }
-        return nil
-    }
-    
-    
-    
-    /// 填充连线题的单词
-    func _fillConnectionWordModel(exercises: [YXExerciseModel]) -> [YXExerciseModel] {
-        var es: [YXExerciseModel] = []
-        for e in exercises {
-            var model = e
-            model.word = _queryWord(wordId: e.wordId)
-            es.append(model)
-        }
-        return es
-    }
-    
-    
+
     /// 查询单词内容
     func _queryWord(wordId: Int) -> YXWordModel? {
         if learnConfig.learnType == .base {
