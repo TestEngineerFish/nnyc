@@ -19,6 +19,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     var workTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorColor = .clear
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
 
@@ -26,6 +27,10 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         self.bindProperty()
         self.createSubviews()
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     private func bindProperty() {
@@ -80,6 +85,6 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return AdaptSize(125)
+        return tableView.estimatedRowHeight
     }
 }

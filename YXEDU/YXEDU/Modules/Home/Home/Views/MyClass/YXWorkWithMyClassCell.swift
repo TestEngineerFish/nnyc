@@ -38,6 +38,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
         label.textColor     = UIColor.black1
         label.font          = UIFont.regularFont(ofSize: AdaptSize(15))
         label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }()
 
@@ -76,7 +77,6 @@ class YXWorkWithMyClassCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.createSubviews()
         self.bindProperty()
     }
 
@@ -92,39 +92,43 @@ class YXWorkWithMyClassCell: UITableViewCell {
         wrapView.addSubview(progressLabel)
         wrapView.addSubview(progressView)
         wrapView.addSubview(actionButton)
-        wrapView.snp.makeConstraints { (make) in
+        wrapView.snp.remakeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
             make.right.equalToSuperview().offset(AdaptSize(-20))
             make.top.equalToSuperview().offset(AdaptSize(7.5))
             make.bottom.equalToSuperview().offset(AdaptSize(-7.5))
         }
-        statusImage.snp.makeConstraints { (make) in
+        statusImage.snp.remakeConstraints { (make) in
             make.top.right.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(46), height: AdaptSize(46)))
         }
-        nameLabel.snp.makeConstraints { (make) in
+        let nameLabelHeight = self.nameLabel.text?.textHeight(font: nameLabel.font, width: screenWidth - AdaptSize(70)) ?? 0
+        nameLabel.snp.remakeConstraints { (make) in
             make.left.top.equalToSuperview().offset(AdaptSize(15))
             make.right.equalToSuperview().offset(AdaptSize(-15))
-            make.height.equalTo(0)
+            make.height.equalTo(nameLabelHeight)
         }
-        desciptionLabel.snp.makeConstraints { (make) in
+        desciptionLabel.snp.remakeConstraints { (make) in
             make.left.equalTo(nameLabel)
             make.top.equalTo(nameLabel.snp.bottom).offset(AdaptSize(5))
             make.right.equalToSuperview().offset(AdaptSize(-15))
-        }
-        progressLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(nameLabel)
-            make.bottom.equalToSuperview().offset(AdaptSize(-15))
-            make.width.equalTo(0)
             make.height.equalTo(AdaptSize(17))
         }
+        progressLabel.sizeToFit()
+        progressLabel.snp.remakeConstraints { (make) in
+            make.left.equalTo(nameLabel)
+            make.height.equalTo(AdaptSize(17))
+            make.bottom.equalToSuperview().offset(AdaptSize(-15))
+            make.width.equalTo(progressLabel.width)
+            make.top.equalTo(desciptionLabel.snp.bottom).offset(AdaptSize(20))
+        }
         progressView.size = CGSize(width: AdaptSize(113), height: AdaptSize(4))
-        progressView.snp.makeConstraints { (make) in
+        progressView.snp.remakeConstraints { (make) in
             make.centerY.equalTo(progressLabel)
             make.left.equalTo(progressLabel.snp.right).offset(AdaptSize(5))
             make.size.equalTo(progressView.size)
         }
-        actionButton.snp.makeConstraints { (make) in
+        actionButton.snp.remakeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptSize(-15))
             make.centerY.equalTo(progressLabel)
             make.size.equalTo(CGSize(width: AdaptSize(95), height: AdaptSize(30)))
@@ -141,21 +145,14 @@ class YXWorkWithMyClassCell: UITableViewCell {
     func setData(indexPath: IndexPath) {
         let completionList: [YXWorkCompletionStatus] = [.unfinished, .unreport, .finished, .delay]
         let typeList: [YXWorkType] = [.listen, .listen, .punchIn]
-        self.nameLabel.text        = "6月4日单词练习作业"
+        let nameList = ["6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业", "6月4日单词练习作业"]
+        self.nameLabel.text        = nameList[indexPath.row % nameList.count]
         self.progressLabel.text    = "完成50%"
         self.desciptionLabel.text  = "3班  l  3天后截止"
         self.progressView.progress = 0.5
         self.workCompletion        = completionList[indexPath.row % completionList.count]
         self.workTyep              = typeList[indexPath.row % typeList.count]
-
-        nameLabel.sizeToFit()
-        nameLabel.snp.updateConstraints { (make) in
-            make.height.equalTo(nameLabel.height)
-        }
-        progressLabel.sizeToFit()
-        progressLabel.snp.updateConstraints { (make) in
-            make.width.equalTo(progressLabel.width)
-        }
+        self.createSubviews()
 
         self.statusImage.isHidden = false
         switch self.workCompletion {

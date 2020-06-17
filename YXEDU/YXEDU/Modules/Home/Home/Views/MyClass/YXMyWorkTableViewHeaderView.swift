@@ -99,4 +99,11 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return AdaptSize(50)
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
+        let vc = YXMyClassDetailViewController()
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
+    }
 }
