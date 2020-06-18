@@ -58,10 +58,10 @@ extension YYSQLManager {
         where s.study_id = ? and s.word_id = ? and s.step = ?
         """
         
-        case selsetSteps =
+        case selectAllSteps =
         """
         SELECT * FROM all_word_step_v1
-        WHERE exercise_id = ? and step != 0
+        WHERE exercise_id = ?
         """
 
 //        case selectStepCount =
@@ -115,10 +115,5 @@ extension YYSQLManager {
          SELECT * FROM all_word_step_v1
          WHERE exercise_id = ? and step = ?
          """
-        case selectExerciseStep =
-        """
-        SELECT * FROM all_word_step_v1
-        WHERE exercise_id = ?
-        """
     }
 }

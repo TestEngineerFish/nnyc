@@ -88,26 +88,40 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return count
     }
 
-    func getExerciseList(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel] {
+//    func getExerciseList(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel] {
+//        var modelList = [YXExerciseModel]()
+//        var sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
+//        if includeNewWord && !includeReviewWord {
+//            // 仅获取新学
+//            sql += " and is_new = 1"
+//        } else if !includeNewWord && includeReviewWord {
+//            // 仅获取复习
+//            sql += " and is_new = 0"
+//        } else if !includeNewWord && !includeReviewWord {
+//            // 都不获取
+//            return []
+//        }
+//        let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId])
+//        while result?.next() == .some(true) {
+//            if let model = self.transformModel(result: result) {
+//                modelList.append(model)
+//            }
+//        }
+//        result?.close()
+//        return modelList
+//    }
+
+    func getAllExerciseList(study id: Int) -> [YXExerciseModel] {
         var modelList = [YXExerciseModel]()
-        var sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
-        if includeNewWord && !includeReviewWord {
-            // 仅获取新学
-            sql += " and is_new = 1"
-        } else if !includeNewWord && includeReviewWord {
-            // 仅获取复习
-            sql += " and is_new = 0"
-        } else if !includeNewWord && !includeReviewWord {
-            // 都不获取
-            return []
+        let sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return modelList
         }
-        let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId])
-        while result?.next() == .some(true) {
-            if let model = self.transformModel(result: result) {
-                modelList.append(model)
-            }
+        while result.next() {
+            let model = self.transformModel(result: result)
+            modelList.append(model)
         }
-        result?.close()
+        result.close()
         return modelList
     }
 
@@ -205,10 +219,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
 
     // MARK: ==== Tools ====
     /// 转换练习模型
-    private func transformModel(result: FMResultSet?) -> YXExerciseModel? {
-        guard let result = result else {
-            return nil
-        }
+    private func transformModel(result: FMResultSet) -> YXExerciseModel {
         var model = YXExerciseModel()
         model.eid          = Int(result.int(forColumn: "exercise_id"))
         model.learnType    = YXLearnType.transform(raw: Int(result.int(forColumn: "learn_type")))

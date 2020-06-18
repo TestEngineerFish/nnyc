@@ -16,7 +16,7 @@ struct YXExerciseReportModel: Mappable {
     var unitId: Int?
     var score: Int = 0
     var errorCount: Int = 0
-    var result: ResultModel?
+    var result: [String:Bool] = [:]
     
     
     init() {}
@@ -32,34 +32,6 @@ struct YXExerciseReportModel: Mappable {
         score      <- map["score"]
         errorCount <- map["error_count"]
         result     <- map["result"]
-    }
-}
-
-struct ResultModel: Mappable {
-
-    var one: Bool?
-    var two: Bool?
-    var three: Bool?
-    var four: Bool?
-
-    init() {}
-
-    init?(map: Map) {
-        self.mapping(map: map)
-    }
-
-    init(dict: [String:Any?]) {
-        one   = dict["1"] as? Bool
-        two   = dict["2"] as? Bool
-        three = dict["3"] as? Bool
-        four  = dict["4"] as? Bool
-    }
-
-    mutating func mapping(map: Map) {
-        one   <- map["1"]
-        two   <- map["2"]
-        three <- map["3"]
-        four  <- map["4"]
     }
 }
 

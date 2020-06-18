@@ -34,7 +34,7 @@ extension YXExerciseServiceImpl {
     }
     
     /// 筛选数据
-    func _filterExercise() {
+    func updateCurrentTurn() {
 
         // 当前轮是否做完(1可能刚进来，2做完)
         if turnDao.selectTurnFinishStatus(studyId: _studyId) {

@@ -73,8 +73,8 @@ class YXExerciseServiceImpl: YXExerciseService {
         // 加载学习记录信息
         self._loadStudyRecord()
         
-        // 筛选数据
-        self._filterExercise()
+        // 更新当前轮数据（如果做完）
+        self.updateCurrentTurn()
         
         // 查找练习
         let model = self._findExercise()
@@ -148,7 +148,6 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 上报关卡
     func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?) {
-        return
         let reportContent = self.getReportJson()
         let duration      = self.getLearnDuration()
         YXLog("====上报数据====")

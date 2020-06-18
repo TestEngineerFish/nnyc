@@ -97,27 +97,20 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func getReportSteps(with model: YXExerciseModel) -> [String:Any?] {
-        let sql = YYSQLManager.WordStepSQL.selsetSteps.rawValue
-        let params: [Any] = [model.eid]
-        var dict = [String:Any]()
+    func getReportSteps(with model: YXExerciseModel) -> [String:Bool] {
+        let sql    = YYSQLManager.WordStepSQL.selectAllSteps.rawValue
+        let params = [model.eid]
+        var dict   = [String:Bool]()
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return dict
         }
         while result.next() {
-            let step       = Int(result.int(forColumn: "step"))
-            let stepResult: Any? = {
-                let status = Int(result.int(forColumn: "status"))
-                // 跳过
-                if status == 3 {
-                    return nil
-                } else {
-                    return Int(result.int(forColumn: "wrong_count")) == 0
-                }
-            }()
-            if step != 0 {
-                dict["\(step)"] = stepResult
-            }
+            let step   = result.string(forColumn: "step") ?? ""
+            let status = Int(result.int(forColumn: "status"))
+            // 未学不上报
+            if status == -1 { continue }
+            let stepResult: Bool = Int(result.int(forColumn: "wrong_count")) == 0
+            dict[step] = stepResult
         }
         result.close()
         return dict
@@ -187,7 +180,7 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
 
     func getExerciseWrongAmount(exercise id: Int) -> Int {
         var amount = 0
-        let sql = YYSQLManager.WordStepSQL.selectExerciseStep.rawValue
+        let sql = YYSQLManager.WordStepSQL.selectAllSteps.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
             return amount
         }

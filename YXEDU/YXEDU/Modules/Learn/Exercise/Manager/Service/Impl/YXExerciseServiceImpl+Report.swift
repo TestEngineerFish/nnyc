@@ -13,7 +13,7 @@ extension YXExerciseServiceImpl {
     func getReportJson() -> String {
         var modelArray = [YXExerciseReportModel]()
         // 获得所有学习的单词单词
-        let exerciseModelList = self.exerciseDao.getExerciseList(studyId: _studyId, includeNewWord: true, includeReviewWord: true)
+        let exerciseModelList = self.exerciseDao.getAllExerciseList(study: _studyId)
 
         exerciseModelList.forEach { (model) in
             let data = self.stepDao.getReportSteps(with: model)
@@ -23,7 +23,7 @@ extension YXExerciseServiceImpl {
             _model.unitId     = model.word?.unitId
             _model.score      = model.score
             _model.errorCount = self.getExerciseWrongAmount(exercise: model.eid)
-            _model.result     = ResultModel(dict: data)
+            _model.result     = data
             modelArray.append(_model)
         }
         return modelArray.toJSONString() ?? ""

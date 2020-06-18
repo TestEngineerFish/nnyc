@@ -61,12 +61,16 @@ protocol YXExerciseDao {
     ///   - includeReviewWord: 是否包含复习
     func getExerciseCount(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> Int
     
-    /// 获得当前学习流程的所有练习
-    /// - Parameters:
-    ///   - config: 学习配置信息
-    ///   - includeNewWord: 是否包含新学单词
-    ///   - includeReviewWord: 是否包含复习单词
-    func getExerciseList(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel]
+//    /// 获得当前学习流程的所有练习
+//    /// - Parameters:
+//    ///   - config: 学习配置信息
+//    ///   - includeNewWord: 是否包含新学单词
+//    ///   - includeReviewWord: 是否包含复习单词
+//    func getExerciseList(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel]
+
+    /// 获得当前学习流程中的练习对象
+    /// - Parameter id: 学习流程ID
+    func getAllExerciseList(study id: Int) -> [YXExerciseModel]
 
     /// 获取未学完的新学单词数量
     func getUnfinishedNewWordAmount(study id: Int) -> Int

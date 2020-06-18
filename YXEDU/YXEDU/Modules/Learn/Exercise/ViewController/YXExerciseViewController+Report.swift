@@ -16,11 +16,6 @@ extension YXExerciseViewController {
         if service.progress == .empty {
             processEmptyData()
         } else {
-            // 没有数据，就是完成了练习
-//            dataManager.progressManager.completionExercise()
-
-//            dataManager.progressManager.setOneExerciseFinishStudyTime()
-            
             // 学完，上报
             submitResult()
         }
