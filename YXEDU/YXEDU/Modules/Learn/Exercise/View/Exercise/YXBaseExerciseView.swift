@@ -33,9 +33,6 @@ protocol YXExerciseViewDelegate: NSObjectProtocol {
 class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YXExerciseViewControllerProtocol {
 
     var exerciseModel: YXExerciseModel
-    
-    /// 是否做错过
-    var isWrong: Bool = false
 
     /// 题目view
     var questionView: YXBaseQuestionView?

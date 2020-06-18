@@ -70,10 +70,10 @@ extension YYSQLManager {
 //        WHERE exercise_id = ? and step = ?
 //        """
 
-        case selectMinStepWrongCount =
-        """
-        select min(step) min_step, wrong_count from all_word_step_v1 where study_id = ? and word_id = ? and step != 0
-        """
+//        case selectMinStepWrongCount =
+//        """
+//        select min(step) min_step, wrong_count from all_word_step_v1 where study_id = ? and word_id = ? and step != 0
+//        """
 
 //        case updatePreviousWrongStatus =
 //        """

@@ -73,22 +73,17 @@ protocol YXExerciseService {
     
     /// 加载网络数据
     func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?)
-    
+
     /// 做题动作，不管答题对错，都需要调用此方法修改相关状态
-    func answerAction(exercise model: YXExerciseModel)
+    /// - Parameters:
+    ///   - model: 练习对象
+    ///   - isRemind: 是否点击的提示
+    func answerAction(exercise model: YXExerciseModel, isRemind: Bool)
 
     /// 上报学习数据
     /// - Parameters:
     ///   - completion: 完成回调
     func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?)
-
-    /// 是否需要显示单词详情页  （仅用在P2规则首次练习）
-    /// 注意：次方法并非通用方法，仅用在P2规则首次练习，因为VC中，做错了直接显示了详情页，没有调这个方法，后续可以考虑合并逻辑
-    /// - Parameters:
-    ///   - wordId: 单词ID
-    ///   - step:   步骤ID
-    func isShowWordDetail(wordId: Int, step: Int) -> Bool
-    
     
     /// 在当前轮次中，是否有连线错误
     /// - Parameters:

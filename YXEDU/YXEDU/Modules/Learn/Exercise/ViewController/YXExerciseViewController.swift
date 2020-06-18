@@ -328,7 +328,7 @@
 
     private func clickTipsBtnEvent() {
         YXLog("点击提示按钮")
-        guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
+        guard var exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
 
         switch exerciseModel.type {
         case .newLearnPrimarySchool, .newLearnPrimarySchool_Group:
@@ -342,11 +342,10 @@
                 self.bottomView.tipsButton.setTitle("收起例句中文", for: .normal)
             }
         default:
-            var _exerciseModel = exerciseModel
-            _exerciseModel.status = .wrong
-            self.service.answerAction(exercise: _exerciseModel)
+            exerciseModel.status = .wrong
+            exerciseModel.wrongCount += 1
+            self.service.answerAction(exercise: exerciseModel, isRemind: true)
         }
-        self.exerciseViewArray[0].isWrong = true
         self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
         self.exerciseViewArray.first?.remindView?.show()
         NotificationCenter.default.post(name: YXNotification.kClickTipsButton, object: nil)
@@ -364,7 +363,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     func exerciseCompletion(_ exerciseModel: YXExerciseModel, _ right: Bool) {
         YXLog("=============回答" + (right ? "✅" : "❌"))
         // 答题后，数据处理
-        self.service.answerAction(exercise: exerciseModel)
+        self.service.answerAction(exercise: exerciseModel, isRemind: false)
         
         // 新学直接切题，不用显示动画后
         if exerciseModel.type == .newLearnPrimarySchool
@@ -373,11 +372,6 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
             || exerciseModel.type == .newLearnMasterList {
             self.switchExerciseView()
             return
-        }
-        
-        // 如果有做错
-        if !right {
-            self.exerciseViewArray.first?.isWrong = true
         }
         
         // 答题后的对错动画
@@ -411,13 +405,11 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
     
     /// 答对处理
     func answerRight() {
-        let e = self.exerciseViewArray.first
-        
-        let isWrong = e?.isWrong ?? false
-        let wordId = e?.exerciseModel.word?.wordId ?? 0
-        let step = 0
-                
-        if isWrong || service.isShowWordDetail(wordId: wordId, step: step) {
+        let exerciseView = self.exerciseViewArray.first
+        let isWrong      = (exerciseView?.exerciseModel.wrongCount ?? 0) > 0
+        let showDetail   = exerciseView?.exerciseModel.operate?.showDetail == .some(true)
+
+        if isWrong || showDetail {
             self.showRemindDetail()
         } else {// 切题
             self.switchExerciseView()

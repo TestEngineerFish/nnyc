@@ -121,23 +121,25 @@ class YXExerciseServiceImpl: YXExerciseService {
         }
     }
 
-    func answerAction(exercise: YXExerciseModel) {
+    func answerAction(exercise: YXExerciseModel, isRemind: Bool = false) {
         if exercise.type == .newLearnMasterList {
             n3AnswerAction(exercise: exercise)
         } else {
-            normalAnswerAction(exercise: exercise)
+            normalAnswerAction(exercise: exercise, isRemind: isRemind)
         }
     }
 
-    func n3AnswerAction(exercise: YXExerciseModel) {
+    private func n3AnswerAction(exercise: YXExerciseModel) {
         for model in exercise.n3List {
-            self.normalAnswerAction(exercise: model)
+            self.normalAnswerAction(exercise: model, isRemind: false)
         }
     }
     
-    func normalAnswerAction(exercise model: YXExerciseModel) {
-        // - 更新缓存表
-        self.updateCurrentTurn(exercise: model)
+    private func normalAnswerAction(exercise model: YXExerciseModel, isRemind: Bool) {
+        if !isRemind {
+            // - 更新缓存表
+            self.updateCurrentTurn(exercise: model)
+        }
         // - 更新Step表
         self.updateStep(exercise: model)
         // - 更新练习表
@@ -181,16 +183,6 @@ class YXExerciseServiceImpl: YXExerciseService {
             YXUtils.showHUD(kWindow, title: error.message)
             completion?(false, [:])
         }
-    }
-    
-    /// 是否显示单词详情页
-    /// P2  跳过新学，做题时首次做新学词题目后无论对错必定出现单词详情
-    func isShowWordDetail(wordId: Int, step: Int) -> Bool {
-        guard let data = stepDao.selectMinStepWrongCount(studyId: _studyId, wordId: wordId) else {
-            return false
-        }
-        
-        return ruleType == .p2 && data.0 == step && data.1 == 0
     }
     
     // 备份，后续显示详情配置到step上后再启用
