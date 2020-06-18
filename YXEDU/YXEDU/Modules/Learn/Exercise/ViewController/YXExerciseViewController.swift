@@ -219,17 +219,18 @@
             model.learnType = learnConfig.learnType
 
             YXRequestLog("==== 题目内容：%@", model.toJSONString() ?? "--")
-            // 小学新学
-            let primaryNewLearnArray: [YXQuestionType] = [.newLearnPrimarySchool_Group, .newLearnPrimarySchool]
             // 新学
-            let newLearnArray: [YXQuestionType]        = [.newLearnJuniorHighSchool] + primaryNewLearnArray
-            // 新学和连线题
-            let hideTipsTypeArray: [YXQuestionType]    = [.validationImageAndWord, .validationWordAndChinese] + newLearnArray
-            // ---- 新学、连线题隐藏提示
-            self.bottomView.tipsButton.isHidden  = hideTipsTypeArray.contains(model.type)
+            let newLearnArray: [YXQuestionType]     = [.newLearnPrimarySchool_Group,
+                                                       .newLearnPrimarySchool,
+                                                       .newLearnJuniorHighSchool,
+                                                       .newLearnMasterList]
+            // 新学和判断题
+            let hideTipsTypeArray: [YXQuestionType] = [.validationImageAndWord, .validationWordAndChinese] + newLearnArray
+            // ---- 新学、判断题隐藏提示
+            self.bottomView.tipsButton.isHidden     = hideTipsTypeArray.contains(model.type)
 
             // 新学流程是否允许打断
-            if model.question?.extend?.allowClickNext ?? false {
+            if model.operate?.canNextAction == .some(true) {
                 self.showRightNextView()
             }
             

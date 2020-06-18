@@ -84,8 +84,11 @@ struct YXNewExerciseQuestionExtendModel: Mappable {
 }
 
 struct YXNewExerciseOperateModel: Mappable {
+    /// 错误是扣的分
     var errorScore: Int     = 0
+    /// 跟读是否允许打断
     var canNextAction: Bool = false
+    /// 做对是否显示详情
     var showDetail: Bool    = false
     init?(map: Map) {}
 

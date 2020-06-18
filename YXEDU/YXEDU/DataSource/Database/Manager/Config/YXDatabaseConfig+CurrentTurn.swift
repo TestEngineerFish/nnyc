@@ -14,16 +14,33 @@ extension YYSQLManager {
         case insertTurn =
         """
         INSERT INTO current_turn_v1(study_id, step_id)
-        SELECT s.study_id study_id, s.step_id
+        SELECT s.study_id study_id, s.step_id step_id
         FROM all_exercise_v1 as e
         JOIN all_word_step_v1 as s on e.exercise_id = s.exercise_id
         WHERE e.study_id = ? and e.next_step = s.step
         ORDER by e.exercise_id
         """
 
+        case insertAllN3 =
+        """
+        INSERT INTO current_turn_v1(study_id, step_id)
+        SELECT s.study_id study_id, s.step_id step_id
+        FROM all_exercise_v1 as e
+        JOIN all_word_step_v1 as s on e.exercise_id = s.exercise_id
+        WHERE e.study_id = ? and s.question_type = 'T-N-3'
+        ORDER by e.exercise_id
+        """
+
+        case nextTurnHasN3Type =
+        """
+        SELECT count(*) > 0 hasN3Type
+        FROM all_exercise_v1 as e
+        JOIN all_word_step_v1 as s on e.exercise_id = s.exercise_id
+        WHERE e.study_id = ? and e.next_step = s.step and s.question_type = 'T-N-3'
+        """
 
         /// 正常查询【未完成的】
-        case selectExercise =
+        case selectAllStep =
         """
         SELECT c.current_id, s.*, e.*
         FROM current_turn_v1 c

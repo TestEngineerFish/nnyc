@@ -232,7 +232,7 @@ class YXExerciseOptionManager: NSObject {
     
     func validReviewWordOption(exercise: YXExerciseModel) -> YXExerciseModel? {
         guard let wordModel = exercise.word else {
-            return nil
+            return exercise
         }
         let wordId = exercise.word?.wordId ?? 0
         var exerciseModel = exercise

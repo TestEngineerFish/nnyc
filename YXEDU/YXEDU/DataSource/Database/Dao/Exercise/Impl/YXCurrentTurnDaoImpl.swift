@@ -15,10 +15,27 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
         let params = [studyId]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
-    
-    
+
+    func nextTurnHasN3Question(study id: Int) -> Bool {
+        var hasN3Type = false
+        let sql = YYSQLManager.CurrentTurnSQL.nextTurnHasN3Type.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return hasN3Type
+        }
+        if result.next() {
+            hasN3Type = result.bool(forColumn: "hasN3Type")
+        }
+        return hasN3Type
+    }
+
+    func insertAllN3Step(study id: Int) -> Bool {
+        let sql = YYSQLManager.CurrentTurnSQL.insertAllN3.rawValue
+        let result = self.wordRunner.executeUpdate(sql, withArgumentsIn: [id])
+        return result
+    }
+
     func selectExercise(studyId: Int) -> YXExerciseModel? {
-        let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue
+        let sql = YYSQLManager.CurrentTurnSQL.selectAllStep.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId, 1]) else {
             return nil
         }
@@ -31,8 +48,8 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
     }
 
     
-    func selectAllExercise(studyId: Int) -> [YXExerciseModel] {
-        let sql = YYSQLManager.CurrentTurnSQL.selectExercise.rawValue
+    func selectAllStep(studyId: Int) -> [YXExerciseModel] {
+        let sql = YYSQLManager.CurrentTurnSQL.selectAllStep.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId, 10000]) else {
             return []
         }

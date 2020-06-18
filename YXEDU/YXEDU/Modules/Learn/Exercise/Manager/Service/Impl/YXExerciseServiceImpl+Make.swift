@@ -41,49 +41,54 @@ extension YXExerciseServiceImpl {
 
             // 清空当前轮
             let r1 = turnDao.deleteCurrentTurn(studyId: _studyId)
+            //  查询下一轮是否包含N3
+            let hasN3 = turnDao.nextTurnHasN3Question(study: _studyId)
+            if hasN3 {
+                // 插入N3题
+                turnDao.insertAllN3Step(study: _studyId)
+            } else {
+                // 插入新的轮
+                turnDao.insertCurrentTurn(studyId: _studyId)
+            }
 
-            // 插入新的轮
-            let r2 = turnDao.insertCurrentTurn(studyId: _studyId)
-
-            YXLog("\n清空当前轮", r1,
-                  "\n插入新的轮 ,study_id:\(_studyId)", r2)
+            YXLog("\n清空当前轮", r1)
         }
     }
     
     /// 查找一个练习
     func _findExercise() -> YXExerciseModel? {
-        guard var exercise = turnDao.selectExercise(studyId: _studyId) else {
+        guard var exerciseModel = turnDao.selectExercise(studyId: _studyId) else {
             YXLog("当前轮没有数据了")
             return nil
         }
-        
-        // 是否有N3的题
-        if let model = _finedN3Exercise(exercise: exercise) {
-            return model
+        if exerciseModel.type == .newLearnMasterList {
+            // -- N3的题
+            let exerciseModel = self._finedN3Exercise(exercise: exerciseModel)
+            return exerciseModel
+        } else {
+            // -- 正常出题
+            // 初始化单词对象
+            exerciseModel.word = self._queryWord(wordId: exerciseModel.wordId)
+            // 初始化选项
+            let exerciseModel = _processExerciseOption(exercise: exerciseModel)
+            return exerciseModel
         }
-        // 正常出题
-        exercise.word = _queryWord(wordId: exercise.wordId)
-        return _processExerciseOption(exercise: exercise)
     }
     
-    
     /// 查找N3题型
-    func _finedN3Exercise(exercise: YXExerciseModel) -> YXExerciseModel? {
-//        if exercise.step == 0 && exercise.type == .newLearnMasterList {
-//            var n3List = [YXExerciseModel]()
-//            let es = turnDao.selectAllExercise(studyId: _studyId)
-//            for e in es {
-//                if e.type == .newLearnMasterList {
-//                    var newE = e
-//                    newE.word = _queryWord(wordId: e.wordId)
-//                    n3List.append(newE)
-//                }
-//            }
-//            var exerciseContainer = exercise
-//            exerciseContainer.n3List = n3List
-//            return exerciseContainer
-//        }
-        return nil
+    func _finedN3Exercise(exercise model: YXExerciseModel) -> YXExerciseModel? {
+        var n3List = [YXExerciseModel]()
+        let es = turnDao.selectAllStep(studyId: _studyId)
+        for e in es {
+            if e.type == .newLearnMasterList {
+                var newE = e
+                newE.word = _queryWord(wordId: e.wordId)
+                n3List.append(newE)
+            }
+        }
+        var exerciseContainer    = model
+        exerciseContainer.n3List = n3List
+        return exerciseContainer
     }
 
     /// 查询单词内容

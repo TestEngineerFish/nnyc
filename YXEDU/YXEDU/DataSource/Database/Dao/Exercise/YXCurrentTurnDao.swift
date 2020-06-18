@@ -11,13 +11,23 @@ import UIKit
 protocol YXCurrentTurnDao {
     
     /// 插入当前轮的数据
+    @discardableResult
     func insertCurrentTurn(studyId: Int) -> Bool
+
+    /// 下一轮是否含有N3题型
+    /// - Parameter id: 学习流程ID
+    func nextTurnHasN3Question(study id: Int) -> Bool
+
+    /// 插入所有未做的N3题型
+    /// - Parameter id: 学习流程ID
+    @discardableResult
+    func insertAllN3Step(study id: Int) -> Bool
 
     /// 正常获取首个未做的练习
     func selectExercise(studyId: Int) -> YXExerciseModel?
     
     /// 获得当前轮的所有数据【未完成的】
-    func selectAllExercise(studyId: Int) -> [YXExerciseModel]
+    func selectAllStep(studyId: Int) -> [YXExerciseModel]
     
 //    /// 获得当前轮的所有数据[【包含完成和未完成，仅用于打印】
 //    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel]
