@@ -30,10 +30,6 @@ enum YXQuestionType: String {
     
     case listenFillWord = "Q-C-9"                         // 听录音输入单词
     
-    //MARK: ---- 连线题
-    case connectionWordAndChinese = "Q-A-9"               // 连接单词和中文
-    case connectionWordAndImage = "Q-A-10"                 // 连接单词和图片
-    
     //MARK: ---- 填空题
     case fillWordAccordingToChinese = "Q-B-1"             // 看中文填空（附加中文，仅点击）
     case fillWordAccordingToListen = "Q-B-2"              // 听录音填空（附加听录音，仅点击）
@@ -43,10 +39,10 @@ enum YXQuestionType: String {
     case fillWordGroup = "Q-B-5"                          // 词组填空（词组）
 
     //MARK: ---- 新学流程
-    case newLearnPrimarySchool = "N-1"                    // 小学新学
+    case newLearnPrimarySchool       = "T-N-1"                    // 小学新学
     case newLearnPrimarySchool_Group = "N-1-1"            // 小学新学(词组)
-    case newLearnJuniorHighSchool = "N-2"                 // 初中新学
-    case newLearnMasterList = "N-3"                       // 掌握列表
+    case newLearnJuniorHighSchool    = "T-N-2"                 // 初中新学
+    case newLearnMasterList          = "T-N-3"                       // 掌握列表
     
     case none = ""
 }

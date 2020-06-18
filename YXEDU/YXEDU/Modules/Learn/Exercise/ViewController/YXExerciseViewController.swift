@@ -249,10 +249,7 @@
                 self.bottomView.tipsButton.setTitle("提示一下", for: .normal)
             }
             self.bottomView.layoutSubviews()
-            
-            // 连线未选中时，禁用提示
-            let tipsEnabled = !(model.type == .connectionWordAndImage || model.type == .connectionWordAndChinese)
-            self.bottomView.tipsButton.isEnabled = tipsEnabled
+
             // 如果是高中新学、新学列表，则隐藏底部栏
             var exerciseViewHeight = YXExerciseConfig.exerciseViewHeight
             if model.type == .newLearnJuniorHighSchool || model.type == .newLearnMasterList {
@@ -278,8 +275,6 @@
             exerciseView.frame = CGRect(x: screenWidth, y: self.headerView.frame.maxY, width: screenWidth, height: exerciseViewHeight)
             self.delegate = exerciseView
             exerciseView.exerciseDelegate = self
-            exerciseView.answerView?.connectionAnswerViewDelegate = self
-
             loadExerciseView(exerciseView: exerciseView)
         } else {
             self.report()
@@ -336,8 +331,6 @@
         guard let exerciseModel = self.exerciseViewArray.first?.exerciseModel, exerciseModel.word != nil else { return }
 
         switch exerciseModel.type {
-        case .connectionWordAndImage, .connectionWordAndChinese :
-            break
         case .newLearnPrimarySchool, .newLearnPrimarySchool_Group:
             guard let exerciseView = self.exerciseViewArray.first as? YXNewLearnPrimarySchoolExerciseView, let questionView = exerciseView.questionView as? YXNewLearnPrimarySchoolQuestionView else {
                 return
@@ -353,10 +346,7 @@
             _exerciseModel.status = .wrong
             self.service.answerAction(exercise: _exerciseModel)
         }
-
-        if exerciseModel.type != .connectionWordAndChinese && exerciseModel.type != .connectionWordAndImage {
-            self.exerciseViewArray[0].isWrong = true
-        }
+        self.exerciseViewArray[0].isWrong = true
         self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
         self.exerciseViewArray.first?.remindView?.show()
         NotificationCenter.default.post(name: YXNotification.kClickTipsButton, object: nil)
@@ -386,7 +376,7 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         }
         
         // 如果有做错
-        if !right && (exerciseModel.type != .connectionWordAndChinese && exerciseModel.type != .connectionWordAndImage) {
+        if !right {
             self.exerciseViewArray.first?.isWrong = true
         }
         
@@ -471,71 +461,6 @@ extension YXExerciseViewController: YXExerciseViewDelegate {
         self.bottomView.nextView.isUserInteractionEnabled = true
     }
 }
-
-extension YXExerciseViewController: YXConnectionAnswerViewDelegate {
-    func connectionViewSelectedStatus(selected: Bool, wordId: Int) {
-        bottomView.tipsButton.isEnabled = selected
-        if selected {
-            remindWordId = wordId
-            self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: false)
-        }
-    }
-    
-    
-    /// 连线题做错后的提示
-    /// - Parameter wordId: 那个做错
-    func remindEvent(wordId: Int) {
-        self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
-        self.exerciseViewArray[0].remindView?.show()
-    }
-    
-    
-    ///答完题回调处理， 仅连线题处理
-    func connectionEvent(wordId: Int, step: Int, right: Bool, type: YXQuestionType, finish: Bool) {
-////        dataManager.connectionAnswerAction(wordId: wordId, step: step, right: right, type: type)
-//        service.connectionAnswerAction(wordId: wordId, step: step, right: right)
-//        
-//        // 只处理做对的情况，做错进入了 remindEvent方法处理
-//        if right {// 连线正确
-//            
-//            // 当前轮次中是否有错, 有错显示详情页
-//            if service.hasErrorInCurrentTurn(wordId: wordId, step: step) {
-//                self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
-//                                
-//                if finish {// 这一题全部连线完后要切题
-////                    dataManager.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
-//                    service.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
-//                    self.exerciseViewArray[0].remindView?.remindDetail {// 显示完详情页，再切题
-//                        self.switchExerciseView()
-//                    }
-//                } else { // 没连完，只显示详情页
-//                    self.exerciseViewArray[0].remindView?.remindDetail()
-//                }
-//            } else { // 没有错时
-//                if finish {// 全部连完，直接切题
-////                    dataManager.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
-//                    service.updateConnectionExerciseFinishStatus(exerciseModel: exerciseViewArray[0].exerciseModel, right: true)
-//                    if service.isShowWordDetail(wordId: wordId, step: step) { // 判断是不是P2类型首次的学习
-//                        self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
-//                        self.exerciseViewArray[0].remindView?.remindDetail {
-//                            self.switchExerciseView()
-//                        }
-//                    } else { // 不是P2类型，直接切题
-//                        self.switchExerciseView()
-//                    }
-//                    
-//                    
-//                } else if service.isShowWordDetail(wordId: wordId, step: step) {// 没有连完，判断是不是P2类型首次的学习
-//                    self.exerciseViewArray[0].remindAction(wordId: wordId, isRemind: true)
-//                    self.exerciseViewArray[0].remindView?.remindDetail()
-//                }
-//            }
-//        }
-//        
-    }
-    
-}
-
 
 extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     func clickHomeBtnEvent() {

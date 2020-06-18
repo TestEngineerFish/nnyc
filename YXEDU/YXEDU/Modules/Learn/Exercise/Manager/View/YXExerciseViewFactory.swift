@@ -49,13 +49,6 @@ struct YXExerciseViewFactory {
         case .listenFillWord:
             return YXListenFillWordExerciseView(exerciseModel: exerciseModel)
 
-        //MARK: connection
-        case .connectionWordAndChinese:
-            return YXConnectionWordAndChineseExerciseView(exerciseModel: exerciseModel)
-        case .connectionWordAndImage:
-            return YXConnectionWordAndImageExerciseView(exerciseModel: exerciseModel)
-
-
         //MARK: fill
         case .fillWordAccordingToChinese:
             return YXFillWordAccordingToChineseExerciseView(exerciseModel: exerciseModel)

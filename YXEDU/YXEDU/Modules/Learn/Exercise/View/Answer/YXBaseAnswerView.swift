@@ -27,7 +27,6 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
 
     weak var delegate: YXAnswerEventProtocol?
     weak var answerDelegate: YXAnswerViewDelegate?
-    weak var connectionAnswerViewDelegate: YXConnectionAnswerViewDelegate?
 
     // 按钮tag偏移量
     let offsetTag    = 100
