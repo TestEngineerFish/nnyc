@@ -40,7 +40,14 @@ extension YYSQLManager {
         WHERE e.word_id = w.wordId and e.unit_id = w.unitId and e.book_id = w.bookId and e.word_type = 0
         """
 
+        case updateNextStep =
+        """
+        UPDATE all_exercise_v1
+        SET next_step = ?
+        WHERE exercise_id = ?
+        """
 
+        
 
         case updateScore =
         """
@@ -63,20 +70,20 @@ extension YYSQLManager {
         WHERE exercise_id = ?
         """
 
-        case updateUnfinishedCount =
-        """
-        UPDATE all_exercise_v1
-        SET unfinish_count =
-        (unfinish_count -
-            (SELECT CASE
-             WHEN unfinish_count > 0
-             THEN ?
-             ELSE 0
-             END
-            )
-        )
-        WHERE exercise_id = ?
-        """
+//        case updateUnfinishedCount =
+//        """
+//        UPDATE all_exercise_v1
+//        SET unfinish_count =
+//        (unfinish_count -
+//            (SELECT CASE
+//             WHEN unfinish_count > 0
+//             THEN ?
+//             ELSE 0
+//             END
+//            )
+//        )
+//        WHERE exercise_id = ?
+//        """
 
         case updateMastered =
         """

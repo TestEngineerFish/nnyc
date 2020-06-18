@@ -19,9 +19,9 @@ protocol YXStudyRecordDao {
     @discardableResult
     func insertStudyRecord(learn config: YXLearnConfig) -> Int
 
-    /// 跟新当前组下标
-    @discardableResult
-    func updateCurrentGroup(studyId: Int, group: Int) -> Bool
+//    /// 跟新当前组下标
+//    @discardableResult
+//    func updateCurrentGroup(studyId: Int, group: Int) -> Bool
 
     /// 更新学习进度
     /// - Parameters:
@@ -29,11 +29,11 @@ protocol YXStudyRecordDao {
     ///   - progress: 进度
     func updateProgress(studyId: Int, progress: YXExerciseProgress) -> Bool
     
-    /// 更新当前轮下标
-    /// - Parameters:
-    ///   - config:
-    ///   - turn:
-    func updateCurrentTurn(studyId: Int, turn: Int?) -> Bool
+//    /// 更新当前轮下标
+//    /// - Parameters:
+//    ///   - config:
+//    ///   - turn:
+//    func updateCurrentTurn(studyId: Int, turn: Int?) -> Bool
 
     /// 添加学习次数
     func addStudyCount(studyId: Int)

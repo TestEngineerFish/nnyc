@@ -91,10 +91,10 @@ extension YYSQLManager {
 
         case stepConfigTable =
         """
-        CREATE TABLE IF NOT EXISTS step_config_table (
+        CREATE TABLE IF NOT EXISTS step_config_table_v1 (
         id integer primary key,
         wordId integer NOT NULL,
-        step integer,
+        type text,
         black_list text
         )
         """
@@ -113,6 +113,7 @@ extension YYSQLManager {
         unit_id integer(4) NOT NULL DEFAULT(0),
         plan_id integer(4) NOT NULL DEFAULT(0),
         status integer(1) NOT NULL DEFAULT(0),
+        study_count integer(1) NOT NULL DEFAULT(0),
         study_duration integer(4) NOT NULL DEFAULT(0),
         start_time integer(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
         create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))
@@ -164,10 +165,7 @@ extension YYSQLManager {
         CREATE TABLE IF NOT EXISTS current_turn_v1 (
         current_id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
         study_id integer NOT NULL,
-        word_id integer DEFAULT(0),
         step_id integer NOT NULL,
-        step integer(1) NOT NULL DEFAULT(0),
-        turn integer(2) NOT NULL DEFAULT(1),
         finish integer(1) NOT NULL DEFAULT(0),
         create_ts text(32) NOT NULL DEFAULT(datetime('now'))
         );

@@ -40,9 +40,9 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
         }
     }
 
-    func selecte(step: Int, wordId: Int) -> YXStepModel? {
+    func selecte(question type:YXQuestionType, wordId: Int) -> YXStepModel? {
         let sql = YYSQLManager.OptionConfigSQL.seleteBlackList.rawValue
-        let params = [step, wordId]
+        let params = [type.rawValue as Any, wordId as Any]
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return nil
         }

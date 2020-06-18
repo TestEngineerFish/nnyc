@@ -18,8 +18,8 @@ protocol YXStepConfigDao {
 
     /// 查询单词记录
     /// - Parameters:
-    ///   - step: 学习步骤
+    ///   - type: 题目类型
     ///   - wordId: 查询单词的ID
-    func selecte(step: Int, wordId: Int) -> YXStepModel?
+    func selecte(question type: YXQuestionType, wordId: Int) -> YXStepModel?
 
 }

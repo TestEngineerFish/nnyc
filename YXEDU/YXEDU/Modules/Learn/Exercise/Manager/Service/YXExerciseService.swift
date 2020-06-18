@@ -33,9 +33,6 @@ protocol YXExerciseService {
     /// 学习配置
     var learnConfig: YXLearnConfig { get set }
     
-    /// 练习规则
-    var ruleType: YXExerciseRule { get }
-    
     /// 练习进度
     var progress: YXExerciseProgress { get }
     
@@ -79,13 +76,6 @@ protocol YXExerciseService {
     
     /// 做题动作，不管答题对错，都需要调用此方法修改相关状态
     func answerAction(exercise model: YXExerciseModel)
-
-    /// 连线题，仅单个选项的做题动作处理
-    func connectionAnswerAction(wordId: Int, step: Int, right: Bool)
-    
-    /// 连线题型 ，连线题所有项全部连完
-    func updateConnectionExerciseFinishStatus(exerciseModel: YXExerciseModel, right: Bool)
-    
 
     /// 上报学习数据
     /// - Parameters:

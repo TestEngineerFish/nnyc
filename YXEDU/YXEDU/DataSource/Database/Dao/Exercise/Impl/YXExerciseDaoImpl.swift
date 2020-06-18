@@ -28,27 +28,36 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return result ? Int(self.wordRunner.lastInsertRowId) : 0
     }
 
-    func getExerciseMastered(exercise id: Int) -> Bool {
-        var isMastered = false
-        let sql = YYSQLManager.ExerciseSQL.selectExerciseInfo.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
-            return isMastered
-        }
-        if result.next() {
-            isMastered = result.bool(forColumn: "mastered")
-        }
-        return isMastered
+    func updateNextStep(exercise id: Int, next step: String) -> Bool {
+        let sql = YYSQLManager.ExerciseSQL.updateNextStep.rawValue
+        let params: [Any] = [step as Any, id as Any]
+        let result = self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        return result
     }
 
-    func updateScore(exercise id: Int, reduceScore: Int) -> Bool {
+
+
+//    func getExerciseMastered(exercise id: Int) -> Bool {
+//        var isMastered = false
+//        let sql = YYSQLManager.ExerciseSQL.selectExerciseInfo.rawValue
+//        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+//            return isMastered
+//        }
+//        if result.next() {
+//            isMastered = result.bool(forColumn: "mastered")
+//        }
+//        return isMastered
+//    }
+
+    func updateScore(exercise id: Int, reduce score: Int) -> Bool {
         let sql = YYSQLManager.ExerciseSQL.updateScore.rawValue
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [reduceScore, reduceScore, id])
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [score, score, id])
     }
 
-    func updateUnfinishedCount(exercise id: Int, reduceCount: Int) -> Bool {
-        let sql = YYSQLManager.ExerciseSQL.updateUnfinishedCount.rawValue
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [reduceCount, id])
-    }
+//    func updateUnfinishedCount(exercise id: Int, reduceCount: Int) -> Bool {
+//        let sql = YYSQLManager.ExerciseSQL.updateUnfinishedCount.rawValue
+//        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [reduceCount, id])
+//    }
 
     func updateMastered(exercise id: Int, isMastered: Bool) -> Bool {
         let sql = YYSQLManager.ExerciseSQL.updateMastered.rawValue
@@ -202,16 +211,12 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         }
         var model = YXExerciseModel()
         model.eid          = Int(result.int(forColumn: "exercise_id"))
-        model.learnType     = YXLearnType.transform(raw: Int(result.int(forColumn: "learn_type")))
+        model.learnType    = YXLearnType.transform(raw: Int(result.int(forColumn: "learn_type")))
         model.word         = YXWordModel()
         model.word?.word   = result.string(forColumn: "word")
         model.word?.wordId = Int(result.int(forColumn: "word_id"))
         model.word?.bookId = Int(result.int(forColumn: "book_id"))
         model.word?.unitId = Int(result.int(forColumn: "unit_id"))
-        model.mastered     = result.bool(forColumn:"mastered")
-        model.score        = Int(result.int(forColumn: "score"))
-        model.isNewWord    = result.bool(forColumn: "is_new")
-        model.unfinishStepCount = Int(result.int(forColumn: "unfinish_count"))
         return model
     }
 

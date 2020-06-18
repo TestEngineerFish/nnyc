@@ -18,7 +18,6 @@ class YXBaseExerciseDaoImpl: YYDatabase {
         model.stepId        = Int(rs.int(forColumn: "step_id"))
         model.wordId        = Int(rs.int(forColumn: "word_id"))
         model.type          = YXQuestionType(rawValue: rs.string(forColumn: "question_type") ?? "") ?? .none
-        model.step          = Int(rs.int(forColumn: "step"))
         model.status        = YXStepStatus.getStatus(Int(rs.int(forColumn: "status")))
         
         // 单词
@@ -31,17 +30,18 @@ class YXBaseExerciseDaoImpl: YYDatabase {
         if let json = rs.string(forColumn: "question") {
             model.question = YXExerciseQuestionModel(JSONString: json)
         }
-        
         // 选项
         if let json = rs.string(forColumn: "option") {
             model.option = YXExerciseOptionModel(JSONString: json)
         }
-        
-        model.wrongCount    = Int(rs.int(forColumn: "wrong_count"))
-        model.isBackup      = rs.bool(forColumn: "backup")
-        
-//        model.rule          = YXExerciseRule(rawValue: rs.string(forColumn: "rule_type") ?? "") ?? .p0
-        
+        if let operateJson = rs.string(forColumn: "operate") {
+            model.operate = YXNewExerciseOperateModel(JSONString: operateJson)
+        }
+        // 跳转规则
+        if let ruleJson = rs.string(forColumn: "rule") {
+            model.ruleModel = YXExerciseRuleModel(JSONString: ruleJson)
+        }
+                
         return model
     }
 }

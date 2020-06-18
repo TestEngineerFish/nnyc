@@ -35,20 +35,20 @@ extension YYSQLManager {
         UPDATE all_word_step_v1
         SET status =
         (SELECT CASE
-            WHEN status = 1
-            THEN 1
+            WHEN status = 0
+            THEN 0
             ELSE ?
             END
         ),
         wrong_count = wrong_count + ?
-        WHERE exercise_id = ? and step = ?
+        WHERE step_id = ?
         """
 
-        case selectUnfinishMinGroup =
-        """
-        select min(group_index) current_group from all_word_step_v1
-        where (status = 0 or status = 1) and study_id = ?
-        """
+//        case selectUnfinishMinGroup =
+//        """
+//        select min(group_index) current_group from all_word_step_v1
+//        where (status = 0 or status = 1) and study_id = ?
+//        """
 
 
         case selectWordStep =
@@ -57,49 +57,29 @@ extension YYSQLManager {
         on e.exercise_id = s.exercise_id
         where s.study_id = ? and s.word_id = ? and s.step = ?
         """
-
-        case selectOriginalWordStepModelByBackup =
-        """
-        select mastered, s.* from all_exercise_v1 e inner join all_word_step_v1 s
-        on e.exercise_id = s.exercise_id and s.backup = 0
-        where s.study_id = ? and s.word_id = ? and s.step = ?
-        """
-
+        
         case selsetSteps =
         """
         SELECT * FROM all_word_step_v1
         WHERE exercise_id = ? and step != 0
         """
 
-        case skipStep1_4 =
-        """
-        UPDATE all_word_step_v1
-        SET status = 3
-        WHERE exercise_id = ? and (step = 1 or step = 4)
-        """
-
-        case selectStep_4Count =
-        """
-        SELECT count(*) count FROM all_word_step_v1
-        WHERE exercise_id = ? and (step = 1 or step = 4)
-        """
-
-        case selectStepCount =
-        """
-        SELECT count(*) count FROM all_word_step_v1
-        WHERE exercise_id = ? and step = ?
-        """
+//        case selectStepCount =
+//        """
+//        SELECT count(*) count FROM all_word_step_v1
+//        WHERE exercise_id = ? and step = ?
+//        """
 
         case selectMinStepWrongCount =
         """
         select min(step) min_step, wrong_count from all_word_step_v1 where study_id = ? and word_id = ? and step != 0
         """
 
-        case updatePreviousWrongStatus =
-        """
-        update all_word_step_v1 set status = 0 where step_id in (select step_id from current_turn where study_id = ?)
-        and status = 1
-        """
+//        case updatePreviousWrongStatus =
+//        """
+//        update all_word_step_v1 set status = 0 where step_id in (select step_id from current_turn where study_id = ?)
+//        and status = 1
+//        """
 
         case selectBackupStep =
         """

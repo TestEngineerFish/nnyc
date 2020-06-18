@@ -11,27 +11,20 @@ import UIKit
 // Step 状态枚举
 enum YXStepStatus: Int {
     /// 未做
-    case normal = 0
-
+    case normal = -1
     /// 做错
-    case wrong  = 1
-    
+    case wrong  = 0
     /// 做对
-    case right  = 2
-    
-    /// 跳过
-    case skip   = 3
+    case right  = 1
     
     static func getStatus(_ value: Int) -> YXStepStatus {
         switch value {
-            case 0:
+            case -1:
                 return .normal
-            case 1:
+            case 0:
                 return .wrong
-            case 2:
+            case 1:
                 return .right
-            case 3:
-                return .skip
             default:
             return .normal
         }

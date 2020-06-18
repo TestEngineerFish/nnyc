@@ -26,25 +26,26 @@ protocol YXExerciseDao {
     /// - Parameter id: 学习流程ID
     func getReviewWordList(study id: Int) -> [YXWordModel]
 
-
-
-
-    /// 获得单词是否已掌握
-    /// - Parameter id: 练习ID
-    func getExerciseMastered(exercise id: Int) -> Bool
+    /// 更新Next Step
+    /// - Parameters:
+    ///   - id: 练习记录ID
+    ///   - step: 下一步Step
+    @discardableResult
+    func updateNextStep(exercise id: Int, next step: String) -> Bool
 
     /// 更新练习得分
-    /// - Parameter id: 练习ID
-    /// - Parameter reduceScore: 减少分数
-    @discardableResult
-    func updateScore(exercise id: Int, reduceScore: Int) -> Bool
-
-    /// 更新未做题数
     /// - Parameters:
     ///   - id: 练习ID
-    ///   - reduceCount: 减少数量
+    ///   - score: 减少分数
     @discardableResult
-    func updateUnfinishedCount(exercise id: Int, reduceCount: Int) -> Bool
+    func updateScore(exercise id: Int, reduce score: Int) -> Bool
+
+//    /// 更新未做题数
+//    /// - Parameters:
+//    ///   - id: 练习ID
+//    ///   - reduceCount: 减少数量
+//    @discardableResult
+//    func updateUnfinishedCount(exercise id: Int, reduceCount: Int) -> Bool
 
     /// 更新是否掌握状态
     /// - Parameters:

@@ -9,6 +9,7 @@
 import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
+
     
     func selectStudyRecordModel(config: YXLearnConfig) -> YXStudyRecordModel? {
         
@@ -27,13 +28,9 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
             model = YXStudyRecordModel()
             model?.learnConfg       = config
             model?.studyId          = Int(result.int(forColumn: "study_id"))
-            model?.ruleType         = YXExerciseRule(rawValue: result.string(forColumn: "rule_type") ?? "") ?? .p0
-            model?.currentGroup     = Int(result.int(forColumn: "current_group"))
-            model?.currentTurn      = Int(result.int(forColumn: "current_turn"))
             model?.studyCount       = Int(result.int(forColumn: "study_count"))
             model?.startTime        = result.string(forColumn: "start_time") ?? ""
             model?.studyDuration    = Int(result.int(forColumn: "study_duration"))
-            
             let progress            = Int(result.int(forColumn: "status"))
             model?.progress         = YXExerciseProgress(rawValue: progress) ?? .none
         }
@@ -49,10 +46,10 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return result ? Int(wordRunner.lastInsertRowId) : 0
     }
 
-    func updateCurrentGroup(studyId: Int, group: Int) -> Bool {
-        let sql = YYSQLManager.StudyRecordSQL.updateCurrentGroup.rawValue
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [group, studyId])
-    }
+//    func updateCurrentGroup(studyId: Int, group: Int) -> Bool {
+//        let sql = YYSQLManager.StudyRecordSQL.updateCurrentGroup.rawValue
+//        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [group, studyId])
+//    }
     
     func updateProgress(studyId: Int, progress: YXExerciseProgress) -> Bool {
         let sql = YYSQLManager.StudyRecordSQL.updateProgress.rawValue
@@ -60,17 +57,17 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     }
     
     
-    func updateCurrentTurn(studyId: Int, turn: Int? = nil) -> Bool {
-        var sql = YYSQLManager.StudyRecordSQL.updateCurrentTurn.rawValue
-        var params: [Any] = [studyId]
-        
-        if let index = turn {
-            sql = YYSQLManager.StudyRecordSQL.updateCurrentTurnByTurn.rawValue
-            params.insert(index, at: 0)
-        }
-        
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
-    }
+//    func updateCurrentTurn(studyId: Int, turn: Int? = nil) -> Bool {
+//        var sql = YYSQLManager.StudyRecordSQL.updateCurrentTurn.rawValue
+//        var params: [Any] = [studyId]
+//        
+//        if let index = turn {
+//            sql = YYSQLManager.StudyRecordSQL.updateCurrentTurnByTurn.rawValue
+//            params.insert(index, at: 0)
+//        }
+//        
+//        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+//    }
 
     func addStudyCount(studyId: Int) {
         let sql = YYSQLManager.StudyRecordSQL.updateStudyCount.rawValue

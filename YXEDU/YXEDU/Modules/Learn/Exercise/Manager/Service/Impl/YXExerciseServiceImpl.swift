@@ -51,7 +51,6 @@ class YXExerciseServiceImpl: YXExerciseService {
         // 2. 加载学习进度
         self._loadStudyPropress()
     }
-
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
@@ -123,30 +122,20 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     func answerAction(exercise: YXExerciseModel) {
-        if exercise.isBackup {
-            if var model = stepDao.selectOriginalWordStepModelByBackup(studyId: _studyId, wordId: exercise.wordId, step: exercise.step) {
-                model.status = exercise.status
-                normalAnswerAction(exercise: model)
-            }
-        } else if exercise.step == 0 && exercise.type == .newLearnMasterList {
+        if exercise.type == .newLearnMasterList {
             n3AnswerAction(exercise: exercise)
         } else {
             normalAnswerAction(exercise: exercise)
         }
     }
+
+    func n3AnswerAction(exercise: YXExerciseModel) {
+        for model in exercise.n3List {
+            self.normalAnswerAction(exercise: model)
+        }
+    }
     
     func normalAnswerAction(exercise model: YXExerciseModel) {
-        // 如果是高中新学、新学列表，先移除未做的题
-        if model.type == .newLearnMasterList || model.type == .newLearnJuniorHighSchool {
-            self.removeScore0_7Step(exercise: model)
-        }
-        // 更新S1和S4为跳过
-        let skipStep1_4TypeList: [YXExerciseRule] = [.p0, .p3, .p4]
-        if model.step == 0 && skipStep1_4TypeList.contains(self.ruleType) && model.mastered  {
-            YXLog("新学已掌握，标记Step1和Step4为跳过，WordID：\(model.wordId)")
-            self.skipStep1_4(exercise: model)
-        }
-        // 保存数据到数据库
         // - 更新缓存表
         self.updateCurrentTurn(exercise: model)
         // - 更新Step表
@@ -156,35 +145,6 @@ class YXExerciseServiceImpl: YXExerciseService {
         // - 更新学习流程表
         self.updateDurationTime()
     }
-    
-    
-    
-    func n3AnswerAction(exercise: YXExerciseModel) {
-        for model in exercise.n3List {
-            self.normalAnswerAction(exercise: model)
-        }
-    }
-    
-    
-    func connectionAnswerAction(wordId: Int, step: Int, right: Bool) {        
-        // 把连线题的子项查出来
-        if var model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
-            model.status = right ? .right : .wrong
-            
-            // - 更新Step表 [更新完成状态 和 错误次数]
-            self.updateStep(exercise: model)
-            
-            // - 更新练习表
-            self.updateExercise(exercise: model)
-        }
-    }
-    
-    func updateConnectionExerciseFinishStatus(exerciseModel: YXExerciseModel, right: Bool) {
-        for item in exerciseModel.option?.firstItems ?? [] {
-            turnDao.updateExerciseFinishStatus(studyId: _studyId, wordId: item.optionId)
-        }
-    }
-    
     
     /// 上报关卡
     func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?) {
@@ -246,7 +206,7 @@ class YXExerciseServiceImpl: YXExerciseService {
                 return true
             case .right:
                 // 答对并且是首次作答，要显示
-                return model.status == .right && model.wrongCount == 0
+                return model.status == .right
             case .wrong:
                 // 答错时显示
                 return model.status == .wrong

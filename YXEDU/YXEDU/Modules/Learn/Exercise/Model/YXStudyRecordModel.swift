@@ -9,19 +9,11 @@
 import UIKit
 
 struct YXStudyRecordModel {
-    var studyId: Int = 0
-    var learnConfg: YXLearnConfig = YXBaseLearnConfig()
-    var ruleType: YXExerciseRule = .p0
-    
-    // 当前组，从0开始
-    var currentGroup: Int = -1
-    
-    /// 当前轮，有s0，从-1开始，没有s0，从0开始
-    var currentTurn: Int = -1
-    
-    var studyCount: Int = 0
+    var studyId: Int      = 0
+    var studyCount: Int   = 0
     var startTime: String = ""
-    var studyDuration = 0
+    var studyDuration     = 0
+    var learnConfg: YXLearnConfig    = YXBaseLearnConfig()
     var progress: YXExerciseProgress = .none
 }
 

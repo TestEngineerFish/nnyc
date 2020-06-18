@@ -97,13 +97,22 @@ struct YXNewExerciseOperateModel: Mappable {
 }
 
 struct YXExerciseRuleModel: Mappable {
-    var errorStep: String = ""
-    var rightStep: String = ""
+    var errorStep: String?
+    var rightStep: String?
+
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
         errorStep <- map["1"]
         rightStep <- map["2"]
+    }
+
+    func getNextStep(isRight: Bool) -> String {
+        if isRight {
+            return rightStep ?? "end"
+        } else {
+            return errorStep ?? "end"
+        }
     }
 }
 

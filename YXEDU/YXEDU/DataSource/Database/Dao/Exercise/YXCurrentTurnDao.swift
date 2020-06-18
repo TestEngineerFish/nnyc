@@ -11,7 +11,7 @@ import UIKit
 protocol YXCurrentTurnDao {
     
     /// 插入当前轮的数据
-    func insertCurrentTurn(studyId: Int, group: Int) -> Bool
+    func insertCurrentTurn(studyId: Int) -> Bool
 
     /// 正常获取首个未做的练习
     func selectExercise(studyId: Int) -> YXExerciseModel?
@@ -19,8 +19,8 @@ protocol YXCurrentTurnDao {
     /// 获得当前轮的所有数据【未完成的】
     func selectAllExercise(studyId: Int) -> [YXExerciseModel]
     
-    /// 获得当前轮的所有数据[【包含完成和未完成，仅用于打印】
-    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel]
+//    /// 获得当前轮的所有数据[【包含完成和未完成，仅用于打印】
+//    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel]
     
     /// 获取连线题
     func selectExercise(studyId: Int, type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel]

@@ -12,20 +12,20 @@ extension YYSQLManager {
     enum OptionConfigSQL: String {
         case insert =
         """
-        INSERT INTO step_config_table
+        INSERT INTO step_config_table_v1
         (wordId, step, black_list)
         VALUES (?, ?, ?)
         """
 
         case seleteBlackList =
         """
-        SELECT * FROM step_config_table
-        WHERE step = ? and wordId = ?
+        SELECT * FROM step_config_table_v1
+        WHERE type = ? and wordId = ?
         """
 
         case deleteAll =
         """
-        delete from step_config_table
+        delete from step_config_table_v1
         """
     }
 }

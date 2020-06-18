@@ -10,9 +10,9 @@ import UIKit
 
 class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
     
-    func insertCurrentTurn(studyId: Int, group: Int) -> Bool {
+    func insertCurrentTurn(studyId: Int) -> Bool {
         let sql = YYSQLManager.CurrentTurnSQL.insertTurn.rawValue
-        let params = [studyId, studyId, group]
+        let params = [studyId]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
     
@@ -45,21 +45,21 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
         return modelList
     }
     
-    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel] {
-        let sql = YYSQLManager.CurrentTurnSQL.selectCurrentTurn.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
-            return []
-        }
-        var modelList = [YXExerciseModel]()
-        while result.next() {
-            var model = self._createExercise(rs: result)
-            model.isCurrentTurnFinish = result.bool(forColumn: "finish")
-            modelList.append(model)
-        }
-        result.close()
-        return modelList
-    }
-    
+//    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel] {
+//        let sql = YYSQLManager.CurrentTurnSQL.selectCurrentTurn.rawValue
+//        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
+//            return []
+//        }
+//        var modelList = [YXExerciseModel]()
+//        while result.next() {
+//            var model = self._createExercise(rs: result)
+//            model.isCurrentTurnFinish = result.bool(forColumn: "finish")
+//            modelList.append(model)
+//        }
+//        result.close()
+//        return modelList
+//    }
+//
     
     func selectExercise(studyId: Int, type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel] {
         let sql = YYSQLManager.CurrentTurnSQL.selectConnectionExercise.rawValue
@@ -91,17 +91,16 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
     
     
     func selectTurnFinishStatus(studyId: Int) -> Bool {
+        var finished = true
         let sql = YYSQLManager.CurrentTurnSQL.selectTurnFinishStatus.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
-            return true
+            return finished
         }
         if result.next() {
-            let finish = result.bool(forColumn: "finish")
-            result.close()
-            return finish
+            finished = result.bool(forColumn: "finish")
         }
         result.close()
-        return true
+        return finished
     }
     
     func updateExerciseFinishStatus(stepId: Int) -> Bool {

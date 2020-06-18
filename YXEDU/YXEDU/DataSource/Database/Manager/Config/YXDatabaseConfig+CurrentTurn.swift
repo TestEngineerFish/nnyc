@@ -13,30 +13,34 @@ extension YYSQLManager {
 
         case insertTurn =
         """
-        insert into current_turn_v1(study_id, word_id, step_id, step, turn)
-        select study_id, word_id, step_id, min(step) step, (select current_turn_v1 from study_record_v1 where study_id = ? limit 1) turn from all_word_step
-        where study_id = ? and group_index = ? and backup = 0
-        and (status = 0 or status = 1) and turn >= step
-        group by word_id
-        order by step desc, exercise_id asc
+        INSERT INTO current_turn_v1(study_id, step_id)
+        SELECT s.study_id study_id, s.step_id
+        FROM all_exercise_v1 as e
+        JOIN all_word_step_v1 as s on e.exercise_id = s.exercise_id
+        WHERE e.study_id = ? and e.next_step = s.step
+        ORDER by e.exercise_id
         """
+
 
         /// 正常查询【未完成的】
         case selectExercise =
         """
-        select c.current_id, s.* from current_turn_v1 c inner join all_word_step s
-        on s.step_id = c.step_id and c.finish = 0 and c.study_id = ?
-        order by c.current_id asc
-        limit ?
+        SELECT c.current_id, s.*, e.*
+        FROM current_turn_v1 c
+        INNER JOIN all_word_step_v1 s
+        INNER JOIN all_exercise_v1 e
+        ON s.step_id = c.step_id AND c.finish = 0 AND c.study_id = ? AND e.exercise_id = s.exercise_id
+        ORDER BY c.current_id ASC
+        LIMIT ?
         """
 
-        /// 正常查询 【当前轮，包括完成和未完成】
-        case selectCurrentTurn =
-        """
-        select c.current_id, c.finish finish, s.* from current_turn_v1 c inner join all_word_step_v1 s
-        on s.step_id = c.step_id and c.study_id = ?
-        order by c.current_id asc
-        """
+//        /// 正常查询 【当前轮，包括完成和未完成】
+//        case selectCurrentTurn =
+//        """
+//        select c.current_id, c.finish finish, s.* from current_turn_v1 c inner join all_word_step_v1 s
+//        on s.step_id = c.step_id and c.study_id = ?
+//        order by c.current_id asc
+//        """
 
         /// 查询连线题
         case selectConnectionExercise =
@@ -56,12 +60,22 @@ extension YYSQLManager {
         """
 
         /// 更新完成状态
-        case updateFinish = "update current_turn_v1 set finish = 1 where step_id = ?"
+        case updateFinish =
+        """
+        UPDATE current_turn_v1
+        SET finish = 1
+        WHERE step_id = ?
+        """
+
         /// 更新完成状态，根据当前轮和单词ID
         case updateFinishByWordId = "update current_turn_v1 set finish = 1 where study_id = ? and word_id = ?"
 
         /// 删除当前轮
-        case deleteCurrentTurn = "delete from current_turn_v1 where study_id = ?"
+        case deleteCurrentTurn =
+        """
+        DELETE FROM current_turn_v1
+        WHERE study_id = ?
+        """
 
         /// 删除过期的轮
         case deleteExpiredTurn = "delete from current_turn_v1 where date(create_ts) < date('now', 'localtime')"

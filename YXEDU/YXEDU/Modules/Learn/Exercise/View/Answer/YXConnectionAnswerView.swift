@@ -47,7 +47,7 @@ class YXConnectionAnswerView: YXBaseAnswerView {
         }
         connectionView?.connectionEvent = { [weak self] (wordId, right, finish) in
             guard let self = self else { return }
-            self.connectionAnswerViewDelegate?.connectionEvent(wordId: wordId, step: self.exerciseModel.step, right: right, type: self.exerciseModel.type, finish: finish)
+//            self.connectionAnswerViewDelegate?.connectionEvent(wordId: wordId, step: self.exerciseModel.step, right: right, type: self.exerciseModel.type, finish: finish)
         }
         
     }

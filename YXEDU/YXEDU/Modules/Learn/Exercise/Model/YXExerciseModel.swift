@@ -13,6 +13,7 @@ struct YXExerciseModel: Mappable {
     // id，数据库自增
     var eid: Int = 0
     var stepId: Int = 0
+    var ruleModel: YXExerciseRuleModel?
     
     // 题型
     var type: YXQuestionType = .none
@@ -31,6 +32,8 @@ struct YXExerciseModel: Mappable {
     var question: YXExerciseQuestionModel?
     /// 选项
     var option: YXExerciseOptionModel?
+    /// 扩展
+    var operate: YXNewExerciseOperateModel?
     /// 答案
     var answers: [Int]?
     /// 得分【这个字段有歧义，开始是当题型分数来使用的，后面做了答题分数在用，后面要改】
@@ -38,36 +41,36 @@ struct YXExerciseModel: Mappable {
     // 做错后要减去多少分
     var wrongScore = 0
     // 减分倍数
-    var wrongRate = 1
+//    var wrongRate = 1
 
     /// 是否已掌握 [用于双倍扣分，和 P3时跳过s1和s4]
     var mastered: Bool = false
 
     //MARK: - 以下几个属性用于本地记录进度时使用
     /// 是否根据得分选择题型
-    var isCareScore: Bool = false
+//    var isCareScore: Bool = false
     
-    var isBackup: Bool = false
+//    var isBackup: Bool = false
     
     // 是否为新学单词
-    var isNewWord: Bool = false
+//    var isNewWord: Bool = false
     
-    var group: Int = 0
+//    var group: Int = 0
     
     /// 第几步
-    var step: Int = 0
+//    var step: Int = 0
 
     /// 状态
     var status: YXStepStatus = .normal
 
-    /// 答题错误次数
+    /// 当前答题错误次数
     var wrongCount: Int = 0
         
     /// 在当前轮中，是否已经完成，（当前轮完成后，不是删除数据，而且是改变状态为true）
-    var isCurrentTurnFinish: Bool = false
+//    var isCurrentTurnFinish: Bool = false
 
 //    未学完的Step数量
-    var unfinishStepCount = 0
+//    var unfinishStepCount = 0
     
     init() {}
     
@@ -83,12 +86,12 @@ struct YXExerciseModel: Mappable {
         option   <- map["option"]
         answers  <- map["answer_list"]
         score    <- map["score"]
-        mastered <- map["mastered"]
-
-        isCareScore <- map["is_care_score"]
-        isBackup    <- map["is_backup"]
-        isNewWord   <- map["is_new_word"]
-        step       <- map["step"]
+//        mastered <- map["mastered"]
+//
+//        isCareScore <- map["is_care_score"]
+//        isBackup    <- map["is_backup"]
+//        isNewWord   <- map["is_new_word"]
+//        step       <- map["step"]
     }
     
 }
