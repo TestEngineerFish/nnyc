@@ -10,8 +10,8 @@ import UIKit
 
 class YXExerciseOptionManager: NSObject {
     
-    private var newWordArray: [YXExerciseModel]    = []
-    private var reviewWordArray: [YXExerciseModel] = []
+    private var newWordArray: [YXWordModel]    = []
+    private var reviewWordArray: [YXWordModel] = []
     
     /// 随机数
     /// - Parameter max: 最大数，不包括这个数
@@ -23,8 +23,8 @@ class YXExerciseOptionManager: NSObject {
     }
     
 
-    func initOption(newArray: [YXExerciseModel], reviewArray: [YXExerciseModel]) {
-        self.newWordArray = newArray
+    func initOption(newArray: [YXWordModel], reviewArray: [YXWordModel]) {
+        self.newWordArray    = newArray
         self.reviewWordArray = reviewArray
     }
     
@@ -79,10 +79,7 @@ class YXExerciseOptionManager: NSObject {
         var tmpOtherNewWordArray = otherNewWordArray
         for _ in otherNewWordArray {
             let randomInt = Int.random(in: 0..<tmpOtherNewWordArray.count)
-            let _wordExerciseModel = tmpOtherNewWordArray[randomInt]
-            guard let otherWordModel = _wordExerciseModel.word else {
-                continue
-            }
+            let otherWordModel = tmpOtherNewWordArray[randomInt]
             // 如果选项单词在题目单词的黑名单中，则不使用
             if YXStepConfigManager.share.onBlockList(step: exerciseModel.step, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
                 continue
@@ -273,32 +270,34 @@ class YXExerciseOptionManager: NSObject {
     
     /// 其他新学单词
     /// - Parameter index: 需要排除的
-    func otherNewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXExerciseModel] {
+    func otherNewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) -> [YXWordModel] {
+        var wordModelList = [YXWordModel]()
         guard let wordModel = wordModel else {
-            return []
+            return wordModelList
         }
-        let array = self.newWordArray.filter { (wordExerciseModel) -> Bool in
+        wordModelList = self.newWordArray.filter { (_wordModel) -> Bool in
             if isCompareImage {
-                return wordExerciseModel.word?.word != wordModel.word
-                    && wordExerciseModel.word?.imageUrl != wordModel.imageUrl
+                return _wordModel.word != wordModel.word
+                    && _wordModel.imageUrl != wordModel.imageUrl
             }
-            return wordExerciseModel.word?.word != wordModel.word
+            return _wordModel.word != wordModel.word
         }
-        return array
+        return wordModelList
     }
     
-    func otherReviewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXExerciseModel] {
+    func otherReviewWordArray(wordModel: YXWordModel?, isCompareImage: Bool = false) ->  [YXWordModel] {
+        var wordModelList = [YXWordModel]()
         guard let wordModel = wordModel else {
-            return []
+            return wordModelList
         }
-        let array = self.reviewWordArray.filter { (wordExerciseModel) -> Bool in
+        wordModelList = self.reviewWordArray.filter { (_wordModel) -> Bool in
             if isCompareImage {
-                return wordExerciseModel.word?.word != wordModel.word
-                    && wordExerciseModel.word?.imageUrl != wordModel.imageUrl
+                return _wordModel.word != wordModel.word
+                    && _wordModel.imageUrl != wordModel.imageUrl
             }
-            return wordExerciseModel.word?.word != wordModel.word
+            return _wordModel.word != wordModel.word
         }
-        return array
+        return wordModelList
     }
 
     /// 获取一个其他单词选项

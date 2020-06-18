@@ -24,8 +24,8 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
             stepModel.step,
             stepModel.ruleModel?.toJSONString() as Any,
         ]
-
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        let result = self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        return result
     }
 
     func selectCurrentGroup(studyId: Int) -> Int? {

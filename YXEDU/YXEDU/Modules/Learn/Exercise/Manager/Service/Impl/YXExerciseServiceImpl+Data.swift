@@ -48,7 +48,7 @@ extension YXExerciseServiceImpl {
     
     /// 处理学习记录
     func _processStudyRecord() -> Int {
-        return self.studyDao.insertStudyRecord(learn: learnConfig, type: ruleType)
+        return self.studyDao.insertStudyRecord(learn: learnConfig)
     }
 
     /// 单词和学习步骤数据
@@ -64,9 +64,6 @@ extension YXExerciseServiceImpl {
             }
             // 插入练习数据
             let exerciseId = exerciseDao.insertExercise(learnType: learnConfig.learnType, study: recordId, wordModel: wordModel, nextStep: exerciseWordModel.startStep)
-
-            // 映射单词ID和表ID
-            self._wordIdMap[wordId] = exerciseId
 
             // 插入Step数据
             exerciseWordModel.stepModelList.forEach { (stepModel) in

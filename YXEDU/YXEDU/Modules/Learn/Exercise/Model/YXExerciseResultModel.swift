@@ -52,7 +52,7 @@ struct YXNewExerciseStepModel: Mappable {
 
     mutating func mapping(map: Map) {
         step          <- map["step_type"]
-        questionType  <- (map["type"], EnumTransform<YXQuestionType>())
+        questionType  <- (map["question_type"], EnumTransform<YXQuestionType>())
         questionModel <- map["question"]
         operateModel  <- map["operate"]
         ruleModel     <- map["rule"]

@@ -17,7 +17,7 @@ protocol YXStudyRecordDao {
     /// - Parameters:
     ///   - config: 学习配置信息
     @discardableResult
-    func insertStudyRecord(learn config: YXLearnConfig, type: YXExerciseRule) -> Int
+    func insertStudyRecord(learn config: YXLearnConfig) -> Int
 
     /// 跟新当前组下标
     @discardableResult

@@ -27,9 +27,6 @@ class YXExerciseServiceImpl: YXExerciseService {
     var _exerciseOptionManange = YXExerciseOptionManager()
     
     var _resultModel: YXExerciseResultModel?
-
-    var _wordIdMap = [Int:Int]()
-    
     
     // 当前学习记录
     var _studyRecord = YXStudyRecordModel()
@@ -191,6 +188,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 上报关卡
     func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?) {
+        return
         let reportContent = self.getReportJson()
         let duration      = self.getLearnDuration()
         YXLog("====上报数据====")

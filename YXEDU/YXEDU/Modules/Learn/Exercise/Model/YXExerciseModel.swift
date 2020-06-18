@@ -8,8 +8,6 @@
 
 import ObjectMapper
 
-
-
 /// 练习数据模型
 struct YXExerciseModel: Mappable {
     // id，数据库自增
@@ -21,7 +19,7 @@ struct YXExerciseModel: Mappable {
     // 学习类型
     var learnType: YXLearnType = .base
     // 练习规则
-    var rule: YXExerciseRule = .p0
+//    var rule: YXExerciseRule = .p0
         
     /// 对应的单词数据
     var wordId: Int = 0

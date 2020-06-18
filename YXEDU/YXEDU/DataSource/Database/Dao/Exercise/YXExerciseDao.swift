@@ -18,6 +18,17 @@ protocol YXExerciseDao {
     @discardableResult
     func insertExercise(learnType: YXLearnType, study recordId: Int, wordModel: YXWordModel, nextStep: String) -> Int
 
+    /// 获得新学单词列表
+    /// - Parameter id: 学习流程ID
+    func getNewWordList(study id: Int) -> [YXWordModel]
+
+    /// 获得复习单词列表
+    /// - Parameter id: 学习流程ID
+    func getReviewWordList(study id: Int) -> [YXWordModel]
+
+
+
+
     /// 获得单词是否已掌握
     /// - Parameter id: 练习ID
     func getExerciseMastered(exercise id: Int) -> Bool
