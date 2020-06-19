@@ -21,13 +21,14 @@ extension YYSQLManager {
         book_id,
         unit_id,
         question_type,
+        question_option,
         question,
         operate,
         step,
         rule
         )
         values(?, ?, ?, ?, ?,
-        ?, ?, ?, ?, ?)
+        ?, ?, ?, ?, ?, ?)
         """
 
         case updateWordStep =

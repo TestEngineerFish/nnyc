@@ -20,8 +20,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     
     func selectStudyRecordModel(learn config: YXLearnConfig) -> YXStudyRecordModel? {
         let sql = YYSQLManager.StudyRecordSQL.selectStudy.rawValue
-        let params = [config.params]
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: config.params) else {
             return nil
         }
         var model: YXStudyRecordModel?

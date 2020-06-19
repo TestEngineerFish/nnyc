@@ -62,11 +62,13 @@ struct YXNewExerciseStepModel: Mappable {
 struct YXNewExerciseQuestionModel: Mappable {
     var word: String = ""
     var extendModel: YXNewExerciseQuestionExtendModel?
+    var option: String = ""
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
         word        <- map["word"]
         extendModel <- map["ext"]
+        option      <- map["option"]
     }
 }
 

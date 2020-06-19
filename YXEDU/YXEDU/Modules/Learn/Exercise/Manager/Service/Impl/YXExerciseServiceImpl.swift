@@ -12,14 +12,11 @@ class YXExerciseServiceImpl: YXExerciseService {
 
     // ----------------------------
     //MARK: - 属性
-    var learnConfig: YXLearnConfig = YXBaseLearnConfig()
-    
-    var ruleType: YXExerciseRule = .p0
-        
+    var learnConfig: YXLearnConfig   = YXBaseLearnConfig()
+    var ruleType: YXExerciseRule     = .p0
     var progress: YXExerciseProgress = .none
     
     var newWordCount: Int { return getNewWordCount() }
-    
     var reviewWordCount: Int { return getReviewWordCount() }
     
     // ----------------------------
@@ -31,7 +28,6 @@ class YXExerciseServiceImpl: YXExerciseService {
     // 当前学习记录
     var _studyRecord = YXStudyRecordModel()
     var _studyId: Int { return _studyRecord.studyId }
-        
 
     /// 本地数据库访问
     var wordDao: YXWordBookDao     = YXWordBookDaoImpl()
@@ -70,8 +66,6 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {        
-        // 加载学习记录信息
-        self._loadStudyRecord()
         
         // 更新当前轮数据（如果做完）
         self.updateCurrentTurn()
@@ -83,7 +77,6 @@ class YXExerciseServiceImpl: YXExerciseService {
         self._printCurrentTurn()
         return model
     }
-    
 
     func addStudyCount() {
         self.studyDao.addStudyCount(study: _studyId)
@@ -153,7 +146,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     /// 上报关卡
-    func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?) {
+    func reportReport(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?) {
         let reportContent = self.getReportJson()
         let duration      = self.getLearnDuration()
         YXLog("====上报数据====")
@@ -178,6 +171,7 @@ class YXExerciseServiceImpl: YXExerciseService {
                     // 记录学完一次主流程，用于首页弹出设置提醒弹框
                     YYCache.set(true, forKey: "DidFinishMainStudyProgress")
                 }
+                
                 // 清除数据库对应数据
                 self.cleanStudyRecord()
             } else {

@@ -149,6 +149,7 @@ extension YYSQLManager {
         book_id integer NOT NULL DEFAULT(0),
         unit_id integer NOT NULL DEFAULT(0),
         question_type char(10),
+        question_option text,
         question text,
         operate text,
         step text,

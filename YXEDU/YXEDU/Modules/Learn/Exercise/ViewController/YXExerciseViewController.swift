@@ -137,24 +137,7 @@
         case .unreport:
             YXLog("本地存在学完未上报的关卡，先加载，再上报")
             YXExerciseViewController.requesting = false
-            self.service.report { (result, dict) in
-                if result {
-                    YXLog("上报关卡成功")
-                    if self.learnConfig.learnType == .base {
-                        // 记录学完一次主流程，用于首页弹出设置提醒弹框
-                        YYCache.set(true, forKey: "DidFinishMainStudyProgress")
-                        let newWordCount    = dict["newWordCount"] ?? 0
-                        let reviewWordCount = dict["reviewWordCount"] ?? 0
-                        self.processBaseExerciseResult(newCount: newWordCount, reviewCount: reviewWordCount)
-                    } else {
-                        self.processReviewResult()
-                    }
-                } else {
-                    YXLog("上报关卡失败")
-                    UIView.toast("上报关卡失败")
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }
+            self.submitResult()
         case .learning:
             YXLog("本地存在未学完的关卡，先加载")
             self.service.setStartTime()
@@ -171,13 +154,13 @@
         }
     }
     
-    
     // 加载当天的学习数据
     private func fetchExerciseData() {
         service.fetchExerciseResultModels { [weak self] (result, msg) in
             guard let self = self else { return }
             YXExerciseViewController.requesting = false
             if result {
+                self.service.initService()
                 DispatchQueue.main.async {
                     self.loadingView?.animationCompleteBlock = { [weak self] in
                         guard let self = self else {return}
@@ -216,7 +199,7 @@
             self.bottomView.tipsButton.isHidden     = hideTipsTypeArray.contains(model.type)
 
             // 新学流程是否允许打断
-            if model.operate?.canNextAction == .some(true) {
+            if model.operate?.canNextAction == .some(true) && (model.type == .newLearnPrimarySchool || model.type == .newLearnPrimarySchool_Group) {
                 self.showRightNextView()
             }
             

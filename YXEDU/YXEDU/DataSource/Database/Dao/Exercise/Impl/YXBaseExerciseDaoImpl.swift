@@ -25,13 +25,14 @@ class YXBaseExerciseDaoImpl: YYDatabase {
         model.word?.wordId  = Int(rs.int(forColumn: "word_id"))
         model.word?.bookId  = Int(rs.int(forColumn: "book_id"))
         model.word?.unitId  = Int(rs.int(forColumn: "unit_id"))
+        model.word?.word    = rs.string(forColumn: "word")
         
         // 问题
         if let json = rs.string(forColumn: "question") {
             model.question = YXExerciseQuestionModel(JSONString: json)
         }
         // 选项
-        if let json = rs.string(forColumn: "option") {
+        if let json = rs.string(forColumn: "question_option") {
             model.option = YXExerciseOptionModel(JSONString: json)
         }
         if let operateJson = rs.string(forColumn: "operate") {

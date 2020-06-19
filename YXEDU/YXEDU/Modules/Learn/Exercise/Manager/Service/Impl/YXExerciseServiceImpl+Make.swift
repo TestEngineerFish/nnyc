@@ -35,10 +35,8 @@ extension YXExerciseServiceImpl {
     
     /// 筛选数据
     func updateCurrentTurn() {
-
         // 当前轮是否做完(1可能刚进来，2做完)
         if turnDao.selectTurnFinishStatus(study: _studyId) {
-
             // 清空当前轮
             let r1 = turnDao.deleteCurrentTurn(study: _studyId)
             //  查询下一轮是否包含N3
@@ -57,7 +55,7 @@ extension YXExerciseServiceImpl {
     
     /// 查找一个练习
     func _findExercise() -> YXExerciseModel? {
-        guard var exerciseModel = turnDao.selectExercise(study: _studyId) else {
+        guard var exerciseModel = turnDao.selectExercise(study: _studyId), let wordId = exerciseModel.word?.wordId else {
             YXLog("当前轮没有数据了")
             return nil
         }
@@ -68,10 +66,10 @@ extension YXExerciseServiceImpl {
         } else {
             // -- 正常出题
             // 初始化单词对象
-            exerciseModel.word = self._queryWord(wordId: exerciseModel.wordId)
-            // 初始化选项
-            let exerciseModel = _processExerciseOption(exercise: exerciseModel)
-            return exerciseModel
+            exerciseModel.word = self._queryWord(wordId: wordId)
+            // 选项初始化
+            let _exerciseModel = _processExerciseOption(exercise: exerciseModel)
+            return _exerciseModel
         }
     }
     
@@ -102,15 +100,10 @@ extension YXExerciseServiceImpl {
     
     /// 打印
     func _printCurrentTurn() {
-//        let currentGroupIndex = _studyRecord.currentGroup
-//        let currentTurnIndex = _studyRecord.currentTurn
-//        let currentTurnArray = turnDao.selectCurrentTurn(studyId: _studyId)
-//        YXLog(String(format: "第\(currentGroupIndex)组, 第\(currentTurnIndex)轮，数量：%ld", currentTurnArray.count))
-//        for (index, e) in currentTurnArray.enumerated() {
-//            let word = _queryWord(wordId: e.wordId)
-//            YXLog(String(format: "%ld(%ld)  id = %ld, word = %@, step = %ld, backup = %ld, type = %@, finish = %ld",
-//                         index + 1, e.isCurrentTurnFinish, e.wordId, word?.word ?? "", e.step, e.isBackup, e.type.rawValue, e.isCurrentTurnFinish))
-//            
-//        }
+        let exerciseModelList = self.turnDao.selectAllExercise(study: _studyId)
+        YXLog("当前轮数据：")
+        exerciseModelList.forEach { (exerciseModel) in
+            YXLog(exerciseModel.type.rawValue, exerciseModel.word?.wordId ?? 0, exerciseModel.word?.word ?? "")
+        }
     }
 }

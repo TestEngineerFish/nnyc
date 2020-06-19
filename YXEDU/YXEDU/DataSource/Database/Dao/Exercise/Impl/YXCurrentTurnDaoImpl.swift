@@ -12,8 +12,7 @@ class YXCurrentTurnDaoImpl: YXBaseExerciseDaoImpl, YXCurrentTurnDao {
     
     func insertCurrentTurn(study id: Int) -> Bool {
         let sql = YYSQLManager.CurrentTurnSQL.insertTurn.rawValue
-        let params = [id]
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [id])
     }
 
     func nextTurnHasN3Question(study id: Int) -> Bool {
