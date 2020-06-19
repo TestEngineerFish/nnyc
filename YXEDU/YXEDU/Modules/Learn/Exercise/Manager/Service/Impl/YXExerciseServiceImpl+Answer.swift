@@ -22,12 +22,12 @@ extension YXExerciseServiceImpl {
 
     /// 当前轮完成后，不是删除数据，而且是改变状态为true
     func updateCurrentTurn(exercise model: YXExerciseModel) {
-        self.turnDao.updateExerciseFinishStatus(stepId: model.stepId)
+        self.turnDao.updateExerciseFinishStatus(step: model.stepId)
     }
 
     /// 更新Step数据库
     func updateStep(exercise model: YXExerciseModel) {
-        self.stepDao.updateStep(exercise: model)
+        self.stepDao.updateStep(status: model.status, step: model.stepId)
     }
 
     /// 减少未做Step的数量

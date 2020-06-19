@@ -47,6 +47,7 @@ protocol YXExerciseService {
     /// 初始化服务
     func initService()
 
+    /// 添加学习次数
     func addStudyCount()
     
     /// 设置开始学习时间
@@ -80,16 +81,16 @@ protocol YXExerciseService {
     ///   - isRemind: 是否点击的提示
     func answerAction(exercise model: YXExerciseModel, isRemind: Bool)
 
+    /// 更新
+    /// - Parameters:
+    ///   - id: 学习流程表ID
+    ///   - status: 学习进度状态
+    func updateStudyProgress(study id: Int, progress status: YXExerciseProgress)
+
     /// 上报学习数据
     /// - Parameters:
     ///   - completion: 完成回调
     func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?)
-    
-    /// 在当前轮次中，是否有连线错误
-    /// - Parameters:
-    ///   - wordId: 单词ID
-    ///   - step:   step
-    func hasErrorInCurrentTurn(wordId: Int, step: Int) -> Bool
     
     /// 删除当前的学习数据
     func cleanStudyRecord()

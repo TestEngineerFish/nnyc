@@ -16,7 +16,7 @@ protocol YXExerciseDao {
     ///   - config: 学习配置信息
     ///   - wordModel: 单词对象
     @discardableResult
-    func insertExercise(learnType: YXLearnType, study recordId: Int, wordModel: YXWordModel, nextStep: String) -> Int
+    func insertExercise(learn type: YXLearnType, study id: Int, word model: YXWordModel, next step: String) -> Int
 
     /// 获得新学单词列表
     /// - Parameter id: 学习流程ID
@@ -25,6 +25,18 @@ protocol YXExerciseDao {
     /// 获得复习单词列表
     /// - Parameter id: 学习流程ID
     func getReviewWordList(study id: Int) -> [YXWordModel]
+
+    /// 获得新学单词数量
+    /// - Parameter id: 学习流程ID
+    func getNewWordExerciseAmount(study id: Int) -> Int
+
+    /// 获得复习单词数量
+    /// - Parameter id: 学习流程ID
+    func getReviewWordExerciseAmount(study id: Int) -> Int
+
+    /// 获得所有单词数量
+    /// - Parameter id: 学习流程ID
+    func getAllWordExerciseAmount(study id: Int) -> Int
 
     /// 更新Next Step
     /// - Parameters:
@@ -39,34 +51,6 @@ protocol YXExerciseDao {
     ///   - score: 减少分数
     @discardableResult
     func updateScore(exercise id: Int, reduce score: Int) -> Bool
-
-//    /// 更新未做题数
-//    /// - Parameters:
-//    ///   - id: 练习ID
-//    ///   - reduceCount: 减少数量
-//    @discardableResult
-//    func updateUnfinishedCount(exercise id: Int, reduceCount: Int) -> Bool
-
-    /// 更新是否掌握状态
-    /// - Parameters:
-    ///   - id: 练习ID
-    ///   - isMastered: 是否掌握
-    @discardableResult
-    func updateMastered(exercise id: Int, isMastered: Bool) -> Bool
-    
-    /// 获得当前学习流程的练习数量
-    /// - Parameters:
-    ///   - config: 练习对象
-    ///   - includeNewWord: 是否包含新学
-    ///   - includeReviewWord: 是否包含复习
-    func getExerciseCount(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> Int
-    
-//    /// 获得当前学习流程的所有练习
-//    /// - Parameters:
-//    ///   - config: 学习配置信息
-//    ///   - includeNewWord: 是否包含新学单词
-//    ///   - includeReviewWord: 是否包含复习单词
-//    func getExerciseList(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel]
 
     /// 获得当前学习流程中的练习对象
     /// - Parameter id: 学习流程ID

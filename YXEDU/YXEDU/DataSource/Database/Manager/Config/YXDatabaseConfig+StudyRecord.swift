@@ -25,24 +25,11 @@ extension YYSQLManager {
         values(?, ?, ?, ?, ?)
         """
 
-        case selectStudyRecord_Base =
+        case selectStudy =
         """
         SELECT * FROM study_record_v1
-        where learn_type = ? and book_id = ? and unit_id = ?
+        WHERE learn_type = ? AND book_id = ? AND unit_id = ? AND plan_id = ?
         """
-
-        case selectStudyRecord_Review =
-        """
-        SELECT * FROM study_record_v1
-        where learn_type = ? and plan_id = ?
-        """
-
-
-//         更新学习的当前组下标
-//        case updateCurrentGroup =
-//        """
-//        update study_record_v1 set current_group = ? where study_id = ?
-//        """
 
         /// 更新学习进度
         case updateProgress =
@@ -50,21 +37,7 @@ extension YYSQLManager {
         update study_record_v1 set status = ? where study_id = ?
         """
 
-//        // 更新学习的当前轮下标，轮参数自增
-//        case updateCurrentTurn =
-//        """
-//        update study_record_v1 set current_turn = current_turn + 1
-//        where study_id = ?
-//        """
-
-//        // 更新学习的当前轮下标，指定轮参数
-//        case updateCurrentTurnByTurn =
-//        """
-//        update study_record_v1 set current_turn = ?
-//        where study_id = ?
-//        """
-
-        case updateStartTime =
+        case setStartTime =
         """
         UPDATE study_record_v1
         SET start_time = datetime('now', 'localtime')
@@ -79,7 +52,7 @@ extension YYSQLManager {
         LIMIT 1
         """
 
-        case updateStudyCount =
+        case addStudyCount =
         """
         UPDATE study_record_v1
         SET study_count = study_count + 1

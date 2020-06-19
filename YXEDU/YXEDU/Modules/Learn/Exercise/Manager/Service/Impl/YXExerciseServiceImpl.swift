@@ -86,11 +86,11 @@ class YXExerciseServiceImpl: YXExerciseService {
     
 
     func addStudyCount() {
-        self.studyDao.addStudyCount(studyId: _studyId)
+        self.studyDao.addStudyCount(study: _studyId)
     }
 
     func setStartTime() {
-        self.studyDao.setStartTime(studyId: _studyId)
+        self.studyDao.setStartTime(study: _studyId)
     }
 
     func getStartTime(learn config: YXLearnConfig) -> NSDate? {
@@ -100,7 +100,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
 
     func getAllWordAmount() -> Int {
-        return exerciseDao.getExerciseCount(studyId: _studyId, includeNewWord: true, includeReviewWord: true)
+        return exerciseDao.getAllWordExerciseAmount(study: _studyId)
     }
 
     func getNewWordAmount() -> Int {
@@ -116,7 +116,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         let startTimeStr = self.studyDao.getStartTime(learn: learnConfig)
         if let startTime = NSDate(string: startTimeStr, format: NSDate.ymdHmsFormat()) {
             let duration = currentTime.timeIntervalSince(startTime as Date)
-            self.studyDao.setDurationTime(studyId: _studyId, duration: Int(duration))
+            self.studyDao.setDurationTime(study: _studyId, duration: Int(duration))
             self.setStartTime()
         }
     }
@@ -147,6 +147,10 @@ class YXExerciseServiceImpl: YXExerciseService {
         // - 更新学习流程表
         self.updateDurationTime()
     }
+
+    func updateStudyProgress(study id: Int, progress status: YXExerciseProgress) {
+        self.studyDao.updateProgress(studyId: id, progress: status)
+    }
     
     /// 上报关卡
     func report(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?) {
@@ -164,9 +168,9 @@ class YXExerciseServiceImpl: YXExerciseService {
             if result {
                 // 获取学习数据
                 let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
-                let studyCount   = self.studyDao.selectStudyRecordModel(config: self.learnConfig)?.studyCount ?? 0
-                newWordCount    = self.exerciseDao.getExerciseCount(studyId: self._studyId, includeNewWord: true, includeReviewWord: false)
-                reviewWordCount = self.exerciseDao.getExerciseCount(studyId: self._studyId, includeNewWord: false, includeReviewWord: true)
+                let studyCount  = self.studyDao.selectStudyCount(learn: self.learnConfig)
+                newWordCount    = self.exerciseDao.getNewWordExerciseAmount(study: self._studyId)
+                reviewWordCount = self.exerciseDao.getReviewWordExerciseAmount(study: self._studyId)
                 // 上报Growing
                 YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, study: studyCount)
                 if self.learnConfig.learnType == .base {
@@ -174,44 +178,17 @@ class YXExerciseServiceImpl: YXExerciseService {
                     // 记录学完一次主流程，用于首页弹出设置提醒弹框
                     YYCache.set(true, forKey: "DidFinishMainStudyProgress")
                 }
-                
                 // 清除数据库对应数据
                 self.cleanStudyRecord()
+            } else {
+                self.studyDao.updateProgress(studyId: self._studyId, progress: .unreport)
             }
             completion?(result, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
         }) { (error) in
+            self.studyDao.updateProgress(studyId: self._studyId, progress: .unreport)
             YXUtils.showHUD(kWindow, title: error.message)
             completion?(false, [:])
         }
-    }
-    
-    // 备份，后续显示详情配置到step上后再启用
-    func isShowWordDetail_backup(wordId: Int, step: Int) -> Bool {
-        if let model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
-            switch model.question?.extend?.isShowWordDetail ?? .none {
-            case .none:
-                // 对错都不显示
-                return false
-            case .all:
-                // 对错都要显示
-                return true
-            case .right:
-                // 答对并且是首次作答，要显示
-                return model.status == .right
-            case .wrong:
-                // 答错时显示
-                return model.status == .wrong
-            }
-        }
-        return false
-    }
-    
-    /// 当前轮，有没有做错
-    func hasErrorInCurrentTurn(wordId: Int, step: Int) -> Bool {
-        if let model = stepDao.selectWordStepModel(studyId: _studyId, wordId: wordId, step: step) {
-            return model.status == .wrong
-        }
-        return false
     }
     
     func cleanStudyRecord() {                
@@ -219,7 +196,7 @@ class YXExerciseServiceImpl: YXExerciseService {
             let r1 = studyDao.delete(study: _studyId)
             let r2 = exerciseDao.deleteExercise(study: _studyId)
             let r3 = stepDao.deleteStepWithStudy(study: _studyId)
-            let r4 = turnDao.deleteCurrentTurn(studyId: _studyId)
+            let r4 = turnDao.deleteCurrentTurn(study: _studyId)
             
             YXLog("清除学习记录完成 ", learnConfig.desc)
             YXLog("删除当前学习记录 studyId=", _studyId, r1, r2, r3, r4)

@@ -40,14 +40,30 @@ extension YYSQLManager {
         WHERE e.word_id = w.wordId and e.unit_id = w.unitId and e.book_id = w.bookId and e.word_type = 0
         """
 
+        case getNewWordExerciseAmount =
+        """
+        SELECT count(*) amount FROM all_exercise_v1
+        WHERE study_id = ? and word_type = 1
+        """
+
+        case getReviewWordExerciseAmount =
+        """
+        SELECT count(*) amount FROM all_exercise_v1
+        WHERE study_id = ? and word_type = 0
+        """
+
+        case getAllWordExerciseAmount =
+        """
+        SELECT count(*) amount FROM all_exercise_v1
+        WHERE study_id = ?
+        """
+
         case updateNextStep =
         """
         UPDATE all_exercise_v1
         SET next_step = ?
         WHERE exercise_id = ?
         """
-
-        
 
         case updateScore =
         """
@@ -64,40 +80,6 @@ extension YYSQLManager {
         WHERE exercise_id = ?
         """
 
-        case selectExerciseInfo =
-        """
-        SELECT * FROM all_exercise_v1
-        WHERE exercise_id = ?
-        """
-
-//        case updateUnfinishedCount =
-//        """
-//        UPDATE all_exercise_v1
-//        SET unfinish_count =
-//        (unfinish_count -
-//            (SELECT CASE
-//             WHEN unfinish_count > 0
-//             THEN ?
-//             ELSE 0
-//             END
-//            )
-//        )
-//        WHERE exercise_id = ?
-//        """
-
-        case updateMastered =
-        """
-        UPDATE all_exercise_v1
-        SET mastered = ?
-        WHERE exercise_id = ?
-        """
-
-        case getExerciseCount =
-        """
-        SELECT count(*) FROM all_exercise_v1
-        WHERE study_id = ?
-        """
-
         case getAllExercise =
         """
         SELECT * FROM all_exercise_v1
@@ -107,13 +89,13 @@ extension YYSQLManager {
         case getUnfinishedWordsAmount =
         """
         SELECT count(*) count FROM all_exercise_v1
-        WHERE unfinish_count != 0 and is_new = ? and study_id = ?
+        WHERE next_step != 'end' and word_type = ? and study_id = ?
         """
 
         case getFinishedWordsAmount =
         """
         SELECT count(*) count FROM all_exercise_v1
-        WHERE unfinish_count = 0 and is_new = ? and study_id = ?
+        WHERE next_step = 'end' and word_type = ? and study_id = ?
         """
 
         case deleteExerciseWithStudy =
@@ -122,8 +104,15 @@ extension YYSQLManager {
         WHERE study_id = ?
         """
 
-        case deleteExpiredExercise = "delete from all_exercise_v1 where date(create_ts) < date('now', 'localtime')"
+        case deleteExpiredExercise =
+        """
+        DELETE FROM all_exercise_v1
+        WHERE date(create_ts) < date('now', 'localtime')
+        """
 
-        case deleteAllExercise = "delete from all_exercise_v1"
+        case deleteAllExercise =
+        """
+        DELETE FROM all_exercise_v1
+        """
     }
 }

@@ -10,46 +10,29 @@ import UIKit
 
 protocol YXWordStepDao {
 
-    // TODO: ==== 查询 ====
-    /// 查询当前未学完的分组下标，nil 分组说明学完了
-    func selectCurrentGroup(studyId: Int) -> Int?
-    /// 查找当前组(group)未做的最小step
-    /// - Parameter studyId:
-//    func selectUnFinishMinStep(studyId: Int, group: Int) -> Int?
-    func selectUnFinishMinStep(studyId: Int, group: Int) -> Int?
-
-    /// 查询一个 练习对象 （当前仅用在了连线题中，查单个的model）
-    func selectWordStepModel(studyId: Int, wordId: Int, step: Int) -> YXExerciseModel?
-    
     // TODO: ==== 插入 ====add
+
     /// 添加练习数据
-    /// - Parameter exerciseModel: 练习
+    /// - Parameters:
+    ///   - studyId: 学习记录ID
+    ///   - exerciseId: 练习记录ID
+    ///   - wordModel: 单词对象
+    ///   - stepModel: 练习步骤对象
     @discardableResult
-    func insertWordStep(study recordId: Int, eid: Int, wordModel: YXWordModel, stepModel: YXNewExerciseStepModel) -> Bool
+    func insertWordStep(studyId: Int, exerciseId: Int, wordModel: YXWordModel, stepModel: YXNewExerciseStepModel) -> Bool
     
     // TODO: ==== 修改/删除 ====
-    /// 更新练习数据状态
-    /// - Parameter model: 练习
-    @discardableResult
-    func updateStep(exercise model: YXExerciseModel) -> Bool
-    
-//    /// 获得单独单词的单独Step的数量
-//    /// - Parameters:
-//    ///   - eid: 练习ID
-//    ///   - step: StepID
-//    func getStepCount(exercise eid: Int, step: Int) -> Int
-    
-//    /// 上一轮做错的状态，重置为未做（status  = 0）
-//    func updatePreviousWrongStatus(studyId: Int) -> Bool
-    
-    /// 获取单词的所有已做的练习题，字典返回，用于上报
-    /// - Parameter model: 练习对象
-    /// - Returns: step结果
-    func getReportSteps(with model: YXExerciseModel) -> [String:Bool]
 
-    /// 删除某一个Step
-    /// - Parameter model: 练习对象
-    func deleteStep(with model: YXExerciseModel)
+    /// 更新练习数据状态
+    /// - Parameters:
+    ///   - status: 状态
+    ///   - id: 练习步骤ID
+    @discardableResult
+    func updateStep(status: YXStepStatus, step id: Int) -> Bool
+
+    /// 获取单词的所有已做的练习题，字典返回，用于上报
+    /// - Parameter id: 练习表ID
+    func getReportSteps(exercise id: Int) -> [String:Bool]
 
     /// 删除一个学习记录的所有学习步骤
     /// - Parameter id: 学习记录ID
@@ -59,10 +42,9 @@ protocol YXWordStepDao {
     /// 清除过期的数据
     @discardableResult
     func deleteExpiredWordStep() -> Bool
-    
+
+    /// 删除所有的练习步骤
     func deleteAllWordStep() -> Bool
-    /// 查询单词得分
-    func selecteWordScore(exercise model: YXExerciseModel) -> Int
 
     /// 获得一个练习单词的总错误数
     /// - Parameter model: 练习表ID

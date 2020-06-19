@@ -24,7 +24,7 @@ extension YXExerciseServiceImpl {
 
     /// 加载学习记录
     func _loadStudyRecord() {
-        if let model = studyDao.selectStudyRecordModel(config: learnConfig) {
+        if let model = studyDao.selectStudyRecordModel(learn: learnConfig) {
             _studyRecord = model
             progress = _studyRecord.progress
             YXLog("查询当前学习记录")
@@ -37,10 +37,10 @@ extension YXExerciseServiceImpl {
     func updateCurrentTurn() {
 
         // 当前轮是否做完(1可能刚进来，2做完)
-        if turnDao.selectTurnFinishStatus(studyId: _studyId) {
+        if turnDao.selectTurnFinishStatus(study: _studyId) {
 
             // 清空当前轮
-            let r1 = turnDao.deleteCurrentTurn(studyId: _studyId)
+            let r1 = turnDao.deleteCurrentTurn(study: _studyId)
             //  查询下一轮是否包含N3
             let hasN3 = turnDao.nextTurnHasN3Question(study: _studyId)
             if hasN3 {
@@ -48,7 +48,7 @@ extension YXExerciseServiceImpl {
                 turnDao.insertAllN3Step(study: _studyId)
             } else {
                 // 插入新的轮
-                turnDao.insertCurrentTurn(studyId: _studyId)
+                turnDao.insertCurrentTurn(study: _studyId)
             }
 
             YXLog("\n清空当前轮", r1)
@@ -57,7 +57,7 @@ extension YXExerciseServiceImpl {
     
     /// 查找一个练习
     func _findExercise() -> YXExerciseModel? {
-        guard var exerciseModel = turnDao.selectExercise(studyId: _studyId) else {
+        guard var exerciseModel = turnDao.selectExercise(study: _studyId) else {
             YXLog("当前轮没有数据了")
             return nil
         }
@@ -78,7 +78,7 @@ extension YXExerciseServiceImpl {
     /// 查找N3题型
     func _finedN3Exercise(exercise model: YXExerciseModel) -> YXExerciseModel? {
         var n3List = [YXExerciseModel]()
-        let es = turnDao.selectAllStep(studyId: _studyId)
+        let es = turnDao.selectAllExercise(study: _studyId)
         for e in es {
             if e.type == .newLearnMasterList {
                 var newE = e

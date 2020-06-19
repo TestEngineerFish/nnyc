@@ -9,9 +9,6 @@
 import Foundation
 
 protocol YXStudyRecordDao {
-    
-    // 查询学习记录对象
-    func selectStudyRecordModel(config: YXLearnConfig) -> YXStudyRecordModel?
 
     /// 插入学习记录
     /// - Parameters:
@@ -19,30 +16,28 @@ protocol YXStudyRecordDao {
     @discardableResult
     func insertStudyRecord(learn config: YXLearnConfig) -> Int
 
-//    /// 跟新当前组下标
-//    @discardableResult
-//    func updateCurrentGroup(studyId: Int, group: Int) -> Bool
+    /// 查询学习记录对象
+    /// - Parameter config: 学习配置信息
+    func selectStudyRecordModel(learn config: YXLearnConfig) -> YXStudyRecordModel?
+
+    /// 查询学习次数
+    /// - Parameter config: 学习配置信息
+    func selectStudyCount(learn config: YXLearnConfig) -> Int
 
     /// 更新学习进度
     /// - Parameters:
     ///   - studyId: 哪个学习
     ///   - progress: 进度
+    @discardableResult
     func updateProgress(studyId: Int, progress: YXExerciseProgress) -> Bool
-    
-//    /// 更新当前轮下标
-//    /// - Parameters:
-//    ///   - config:
-//    ///   - turn:
-//    func updateCurrentTurn(studyId: Int, turn: Int?) -> Bool
 
     /// 添加学习次数
-    func addStudyCount(studyId: Int)
+    /// - Parameter id: 学习记录ID
+    func addStudyCount(study id: Int)
 
     /// 设置开始学习时间
-    /// - Parameters:
-    ///   - config: 学习配置信息
-    ///   - time: 开始学习时间
-    func setStartTime(studyId: Int)
+    /// - Parameter id: 学习记录ID
+    func setStartTime(study id: Int)
 
     /// 获取主流程当天的最后一次开始学习的时间
     func getBaseStudyLastStartTime() -> Date?
@@ -51,7 +46,7 @@ protocol YXStudyRecordDao {
     /// - Parameters:
     ///   - config: 学习配置信息
     ///   - time: 持续时长
-    func setDurationTime(studyId: Int, duration time: Int)
+    func setDurationTime(study id: Int, duration time: Int)
 
     /// 获得开始学习时间
     /// - Parameter config: 学习配置信息
@@ -66,9 +61,10 @@ protocol YXStudyRecordDao {
     @discardableResult
     func delete(study id: Int) -> Bool
         
-    /// 删除过期的学习记录
+    /// 删除过期的学习流程记录
     func deleteExpiredStudyRecord() -> Bool
 
+    /// 删除所有学习流程记录
     func deleteAllStudyRecord() -> Bool
     
 }

@@ -12,7 +12,7 @@ protocol YXCurrentTurnDao {
     
     /// 插入当前轮的数据
     @discardableResult
-    func insertCurrentTurn(studyId: Int) -> Bool
+    func insertCurrentTurn(study id: Int) -> Bool
 
     /// 下一轮是否含有N3题型
     /// - Parameter id: 学习流程ID
@@ -24,32 +24,20 @@ protocol YXCurrentTurnDao {
     func insertAllN3Step(study id: Int) -> Bool
 
     /// 正常获取首个未做的练习
-    func selectExercise(studyId: Int) -> YXExerciseModel?
+    func selectExercise(study id: Int) -> YXExerciseModel?
     
     /// 获得当前轮的所有数据【未完成的】
-    func selectAllStep(studyId: Int) -> [YXExerciseModel]
-    
-//    /// 获得当前轮的所有数据[【包含完成和未完成，仅用于打印】
-//    func selectCurrentTurn(studyId: Int) -> [YXExerciseModel]
-    
-    /// 获取连线题
-    func selectExercise(studyId: Int, type: YXQuestionType, step: Int, size: Int) -> [YXExerciseModel]
-    
-    ///获取备选题型
-    func selectBackupExercise(studyId: Int, exerciseId: Int, step: Int) -> YXExerciseModel?
+    func selectAllExercise(study id: Int) -> [YXExerciseModel]
 
     /// 当前轮是否都完成
-    func selectTurnFinishStatus(studyId: Int) -> Bool
+    func selectTurnFinishStatus(study id: Int) -> Bool
     
     /// 更新完成状态
     @discardableResult
-    func updateExerciseFinishStatus(stepId: Int) -> Bool
-    @discardableResult
-    func updateExerciseFinishStatus(studyId: Int, wordId: Int) -> Bool
-    
+    func updateExerciseFinishStatus(step id: Int) -> Bool
     
     /// 删除当前练习的数据
-    func deleteCurrentTurn(studyId: Int) -> Bool
+    func deleteCurrentTurn(study id: Int) -> Bool
     
     /// 删除过期的轮
     func deleteExpiredTurn() -> Bool

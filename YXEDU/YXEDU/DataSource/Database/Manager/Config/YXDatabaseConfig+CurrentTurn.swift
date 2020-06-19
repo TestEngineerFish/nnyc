@@ -21,6 +21,14 @@ extension YYSQLManager {
         ORDER by e.exercise_id
         """
 
+        case nextTurnHasN3Type =
+        """
+        SELECT count(*) > 0 hasN3Type
+        FROM all_exercise_v1 as e
+        JOIN all_word_step_v1 as s on e.exercise_id = s.exercise_id
+        WHERE e.study_id = ? and e.next_step = s.step and s.question_type = 'T-N-3'
+        """
+
         case insertAllN3 =
         """
         INSERT INTO current_turn_v1(study_id, step_id)
@@ -29,14 +37,6 @@ extension YYSQLManager {
         JOIN all_word_step_v1 as s on e.exercise_id = s.exercise_id
         WHERE e.study_id = ? and s.question_type = 'T-N-3'
         ORDER by e.exercise_id
-        """
-
-        case nextTurnHasN3Type =
-        """
-        SELECT count(*) > 0 hasN3Type
-        FROM all_exercise_v1 as e
-        JOIN all_word_step_v1 as s on e.exercise_id = s.exercise_id
-        WHERE e.study_id = ? and e.next_step = s.step and s.question_type = 'T-N-3'
         """
 
         /// 正常查询【未完成的】
@@ -50,25 +50,6 @@ extension YYSQLManager {
         ORDER BY c.current_id ASC
         LIMIT ?
         """
-
-//        /// 正常查询 【当前轮，包括完成和未完成】
-//        case selectCurrentTurn =
-//        """
-//        select c.current_id, c.finish finish, s.* from current_turn_v1 c inner join all_word_step_v1 s
-//        on s.step_id = c.step_id and c.study_id = ?
-//        order by c.current_id asc
-//        """
-
-        /// 查询连线题
-        case selectConnectionExercise =
-        """
-        select c.current_id, s.* from current_turn_v1 c inner join all_word_step_v1 s
-        on s.step_id = c.step_id and c.finish = 0 and c.study_id = ?
-        where question_type = ? and c.step = ?
-        order by c.current_id asc
-        limit ?
-        """
-
 
         case selectTurnFinishStatus =
         """
@@ -84,9 +65,6 @@ extension YYSQLManager {
         WHERE step_id = ?
         """
 
-        /// 更新完成状态，根据当前轮和单词ID
-        case updateFinishByWordId = "update current_turn_v1 set finish = 1 where study_id = ? and word_id = ?"
-
         /// 删除当前轮
         case deleteCurrentTurn =
         """
@@ -99,8 +77,5 @@ extension YYSQLManager {
 
         /// 删除所有的轮
         case deleteAllTurn = "delete from current_turn_v1"
-
-
-        case updateError = ""
     }
 }

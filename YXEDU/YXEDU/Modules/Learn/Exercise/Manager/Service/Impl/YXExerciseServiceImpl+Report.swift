@@ -16,7 +16,7 @@ extension YXExerciseServiceImpl {
         let exerciseModelList = self.exerciseDao.getAllExerciseList(study: _studyId)
 
         exerciseModelList.forEach { (model) in
-            let data = self.stepDao.getReportSteps(with: model)
+            let data   = self.stepDao.getReportSteps(exercise: model.eid)
             var _model = YXExerciseReportModel()
             _model.wordId     = model.word?.wordId ?? 0
             _model.bookId     = model.word?.bookId

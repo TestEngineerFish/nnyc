@@ -11,118 +11,21 @@ import FMDB
 
 class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
     
-    func insertExercise(learnType: YXLearnType, study recordId: Int, wordModel: YXWordModel, nextStep: String) -> Int {
+    func insertExercise(learn type: YXLearnType, study id: Int, word model: YXWordModel, next step: String) -> Int {
         
         let sql = YYSQLManager.ExerciseSQL.insertExercise.rawValue
         let params: [Any] = [
-            recordId,
-            learnType.rawValue,
-            wordModel.wordId as Any,
-            wordModel.word as Any,
-            wordModel.bookId as Any,
-            wordModel.unitId as Any,
-            wordModel.wordType.rawValue as Any,
-            nextStep as Any
+            id,
+            type.rawValue,
+            model.wordId as Any,
+            model.word as Any,
+            model.bookId as Any,
+            model.unitId as Any,
+            model.wordType.rawValue as Any,
+            step as Any
         ]
         let result = self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
         return result ? Int(self.wordRunner.lastInsertRowId) : 0
-    }
-
-    func updateNextStep(exercise id: Int, next step: String) -> Bool {
-        let sql = YYSQLManager.ExerciseSQL.updateNextStep.rawValue
-        let params: [Any] = [step as Any, id as Any]
-        let result = self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
-        return result
-    }
-
-
-
-//    func getExerciseMastered(exercise id: Int) -> Bool {
-//        var isMastered = false
-//        let sql = YYSQLManager.ExerciseSQL.selectExerciseInfo.rawValue
-//        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
-//            return isMastered
-//        }
-//        if result.next() {
-//            isMastered = result.bool(forColumn: "mastered")
-//        }
-//        return isMastered
-//    }
-
-    func updateScore(exercise id: Int, reduce score: Int) -> Bool {
-        let sql = YYSQLManager.ExerciseSQL.updateScore.rawValue
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [score, score, id])
-    }
-
-//    func updateUnfinishedCount(exercise id: Int, reduceCount: Int) -> Bool {
-//        let sql = YYSQLManager.ExerciseSQL.updateUnfinishedCount.rawValue
-//        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [reduceCount, id])
-//    }
-
-    func updateMastered(exercise id: Int, isMastered: Bool) -> Bool {
-        let sql = YYSQLManager.ExerciseSQL.updateMastered.rawValue
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [isMastered ? 1 : 0, id])
-    }
-
-    
-    func getExerciseCount(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> Int {
-        var sql = YYSQLManager.ExerciseSQL.getExerciseCount.rawValue
-        if includeNewWord && !includeReviewWord {
-            // 仅获取新学
-            sql += " and is_new = 1"
-        } else if !includeNewWord && includeReviewWord {
-            // 仅获取复习
-            sql += " and is_new = 0"
-        } else if !includeNewWord && !includeReviewWord {
-            // 都不获取
-            return 0
-        }
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId]) else {
-            return 0
-        }
-        var count = 0
-        if result.next() {
-            count = Int(result.int(forColumn: "count"))
-        }
-        result.close()
-        return count
-    }
-
-//    func getExerciseList(studyId: Int, includeNewWord: Bool, includeReviewWord: Bool) -> [YXExerciseModel] {
-//        var modelList = [YXExerciseModel]()
-//        var sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
-//        if includeNewWord && !includeReviewWord {
-//            // 仅获取新学
-//            sql += " and is_new = 1"
-//        } else if !includeNewWord && includeReviewWord {
-//            // 仅获取复习
-//            sql += " and is_new = 0"
-//        } else if !includeNewWord && !includeReviewWord {
-//            // 都不获取
-//            return []
-//        }
-//        let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [studyId])
-//        while result?.next() == .some(true) {
-//            if let model = self.transformModel(result: result) {
-//                modelList.append(model)
-//            }
-//        }
-//        result?.close()
-//        return modelList
-//    }
-
-    func getAllExerciseList(study id: Int) -> [YXExerciseModel] {
-        var modelList = [YXExerciseModel]()
-        let sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
-            return modelList
-        }
-        while result.next() {
-            let model = self.transformModel(result: result)
-            modelList.append(model)
-        }
-        result.close()
-        return modelList
     }
 
     func getNewWordList(study id: Int) -> [YXWordModel] {
@@ -151,6 +54,68 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         }
         result.close()
         return wordModelList
+    }
+
+    func getNewWordExerciseAmount(study id: Int) -> Int {
+        var amount = 0
+        let sql = YYSQLManager.ExerciseSQL.getNewWordExerciseAmount.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return amount
+        }
+        if result.next() {
+            amount = Int(result.int(forColumn: "amount"))
+        }
+        return amount
+    }
+
+    func getReviewWordExerciseAmount(study id: Int) -> Int {
+        var amount = 0
+        let sql = YYSQLManager.ExerciseSQL.getReviewWordExerciseAmount.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return amount
+        }
+        if result.next() {
+            amount = Int(result.int(forColumn: "amount"))
+        }
+        return amount
+    }
+
+    func getAllWordExerciseAmount(study id: Int) -> Int {
+        var amount = 0
+        let sql = YYSQLManager.ExerciseSQL.getAllWordExerciseAmount.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return amount
+        }
+        if result.next() {
+            amount = Int(result.int(forColumn: "amount"))
+        }
+        return amount
+    }
+
+    func updateNextStep(exercise id: Int, next step: String) -> Bool {
+        let sql = YYSQLManager.ExerciseSQL.updateNextStep.rawValue
+        let params: [Any] = [step as Any, id as Any]
+        let result = self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
+        return result
+    }
+
+    func updateScore(exercise id: Int, reduce score: Int) -> Bool {
+        let sql = YYSQLManager.ExerciseSQL.updateScore.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [score, score, id])
+    }
+
+    func getAllExerciseList(study id: Int) -> [YXExerciseModel] {
+        var modelList = [YXExerciseModel]()
+        let sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return modelList
+        }
+        while result.next() {
+            let model = self.transformModel(result: result)
+            modelList.append(model)
+        }
+        result.close()
+        return modelList
     }
 
     func getUnfinishedNewWordAmount(study id: Int) -> Int {

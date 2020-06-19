@@ -63,13 +63,6 @@
         }
     }
 
-    override func handleData(withQuery query: [AnyHashable : Any]!) {
-//        let value = (self.query["type"] as? Int) ?? 1
-//        self.dataType = YXExerciseDataType(rawValue: value) ?? .normal
-//        self.bookId = self.query["book_id"] as? Int ?? 0
-//        self.unitId = self.query["unit_id"] as? Int ?? 0
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showLoadAnimation()
@@ -129,8 +122,6 @@
         
         // 如果符合条件，则跳过新学
         if YXConfigure.shared().isSkipNewLearn {
-//            dataManager.skipNewWord()
-            YXLog("跳过新学流程")
             // 跳过上报新学到GIO
             YYCache.set(true, forKey: .newLearnReportGIO)
         } else {
@@ -170,7 +161,6 @@
             self.service.addStudyCount()
             YXExerciseViewController.requesting = false
             self.loadingView?.animationCompleteBlock = { [weak self] in
-//                self?.dataManager.progressManager.setStartStudyTime()
                 self?.switchExerciseView()
             }
         default:
@@ -179,10 +169,6 @@
             self.service.addStudyCount()
             self.fetchExerciseData()
         }
-        
-        
-//        dataManager.progressManager.updateStudyCount()
-        
     }
     
     
