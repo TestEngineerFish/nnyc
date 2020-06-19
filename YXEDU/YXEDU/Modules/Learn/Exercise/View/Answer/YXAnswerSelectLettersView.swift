@@ -30,7 +30,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharac
     }
     
     override func bindProperty() {
-        if self.exerciseModel.question?.extend?.power == .some(10) {
+        if self.exerciseModel.type == .allFillWordByAtLookChinese || self.exerciseModel.type == .allFillAtListen {
             self.addSubview(textField)
             self.isHidden                         = true
             self.textField.delegate               = self
@@ -182,7 +182,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharac
             self.answerDelegate?.answerCompletion(self.exerciseModel, true)
 //            }
         } else {
-            if self.exerciseModel.question?.extend?.power == .some(10) {
+            if self.exerciseModel.type == .allFillWordByAtLookChinese || self.exerciseModel.type == .allFillAtListen {
                 self.isUserInteractionEnabled = true
             } else {
                 // 答题错误

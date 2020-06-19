@@ -52,7 +52,11 @@ struct YXExerciseViewFactory {
         //MARK: fill
         case .fillWordAccordingToChinese:
             return YXFillWordAccordingToChineseExerciseView(exerciseModel: exerciseModel)
+        case .allFillWordByAtLookChinese:
+            return YXFillWordAccordingToChineseExerciseView(exerciseModel: exerciseModel)
         case .fillWordAccordingToListen:
+            return YXFillWordAccordingToListenExerciseView(exerciseModel: exerciseModel)
+        case .allFillAtListen:
             return YXFillWordAccordingToListenExerciseView(exerciseModel: exerciseModel)
         case .fillWordAccordingToImage:
             return YXFillWordAccordingToImageExerciseView(exerciseModel: exerciseModel)
