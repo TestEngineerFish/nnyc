@@ -13,7 +13,7 @@ extension YYSQLManager {
         case insert =
         """
         INSERT INTO step_config_table_v1
-        (wordId, step, black_list)
+        (wordId, type, black_list)
         VALUES (?, ?, ?)
         """
 

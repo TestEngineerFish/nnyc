@@ -21,7 +21,7 @@ struct YXStepConfigModel: Mappable {
 }
 
 struct YXStepModel: Mappable {
-    var step: Int = 0
+    var questionType: YXQuestionType = .none
     var wordIdList: Set<Int> = []
     var tmpList: [Int] = [] {
         didSet {
@@ -33,7 +33,7 @@ struct YXStepModel: Mappable {
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        step    <- map["step"]
-        tmpList <- map["word_ids"]
+        questionType <- (map["question_type"], EnumTransform<YXQuestionType>())
+        tmpList      <- map["word_ids"]
     }
 }

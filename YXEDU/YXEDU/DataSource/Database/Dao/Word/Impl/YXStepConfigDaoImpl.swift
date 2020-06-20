@@ -25,7 +25,7 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
             }
             for (stepIndex, stepModel) in stepConfigModel.stepList.enumerated() {
                 for (wordIndex, wordId) in stepModel.wordIdList.enumerated() {
-                    let insertParams: [Any] = [wordId, stepModel.step, stepModel.wordIdList.sorted().toJson()]
+                    let insertParams: [Any] = [wordId, stepModel.questionType.rawValue, stepModel.wordIdList.sorted().toJson()]
                     let insertSuccess = db.executeUpdate(insertSql, withArgumentsIn: insertParams)
                     if !insertSuccess {
                         YXLog("插入StepConfig失败")
@@ -50,7 +50,7 @@ class YXStepConfigDaoImpl: YYDatabase, YXStepConfigDao {
         var list: Set<Int> = []
         while result.next() {
             model = YXStepModel()
-            model?.step = Int(result.int(forColumn: "step"))
+            model?.questionType = YXQuestionType(rawValue: result.string(forColumn: "type") ?? "") ?? .none
             if let listData = (result.string(forColumn: "black_list") ?? "[]").data(using: .utf8) {
                 do {
                     let _list = try JSONSerialization.jsonObject(with: listData, options: .mutableLeaves) as? [Int]
