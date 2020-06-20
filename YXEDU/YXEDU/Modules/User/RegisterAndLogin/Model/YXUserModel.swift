@@ -159,7 +159,7 @@ class YXUserModel: NSObject {
     
     @objc
     func logout() {
-        YXLog("推出前用户Token=====", YXConfigure.shared().token ?? "")
+        YXLog("推出前用户Token=====", YXUserModel.default.token ?? "")
         self.didLogin = false
         YYCache.set(nil, forKey: "LastStoredDate")
         YYCache.set(nil, forKey: "LastStoreTokenDate")

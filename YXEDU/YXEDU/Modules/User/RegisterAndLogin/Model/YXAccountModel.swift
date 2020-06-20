@@ -36,8 +36,8 @@ struct YXAccountInfoModel: Mappable {
     
     mutating func mapping(map: Map) {
         username <- map["nick"]
-        avatar <- map["avatar"]
-        uuid <- map["uuid"]
+        avatar   <- map["avatar"]
+        uuid     <- map["uuid"]
     }
 }
 

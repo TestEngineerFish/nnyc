@@ -18,7 +18,7 @@
 @end
 
 @implementation YXConfigure
-@synthesize token =_token;
+//@synthesize token =_token;
 @synthesize time = _time;
 @synthesize mobile = _mobile;
 @synthesize uuid = _uuid;
@@ -40,7 +40,7 @@
     self = [super init];
     if (self) {
 //        self.loginModel = [[YXLoginModel alloc]init];
-        _token = [[NSString alloc]init];
+//        _token = [[NSString alloc]init];
     }
     return self;
 }
@@ -73,32 +73,26 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
-//- (void)setToken:(NSString *)token {
+//- (void)saveToken:(NSString *)token {
+//    if (!token) {
+//        token  = @"";
+//    }
 //    _token = token;
 //    [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"token"];
 //    [[NSUserDefaults standardUserDefaults]synchronize];
 //}
 
-- (void)saveToken:(NSString *)token {
-    if (!token) {
-        token  = @"";
-    }
-    _token = token;
-    [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"token"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
+//- (void)saveCurrentToken {
+//    [self saveToken:self.token];
+//}
 
-- (void)saveCurrentToken {
-    [self saveToken:self.token];
-}
-
-- (NSString *)token {
-    if (_token.length) {
-        return _token;
-    }
-    _token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    return _token;
-}
+//- (NSString *)token {
+//    if (_token.length) {
+//        return _token;
+//    }
+//    _token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+//    return _token;
+//}
 
 - (void)setTime:(NSString *)time {
     _time = time;

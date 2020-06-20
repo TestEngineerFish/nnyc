@@ -51,7 +51,6 @@
 - (void)clearData {
     [[YXModelArchiverManager shared] clearAllMemory];
     [YXConfigure shared].mobile = @"";
-    [[YXConfigure shared] saveToken:@""];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kCurrentLearnWordListIdKey];
@@ -63,7 +62,6 @@
 - (void)afterLogout {
     [[YXModelArchiverManager shared] clearAllMemory];
     [YXConfigure shared].mobile = @"";
-    [[YXConfigure shared] saveToken:@""];
     [[YXConfigure shared] loginOut];
     [self clearData];
     
@@ -94,15 +92,15 @@
     _kickedOutAlertVC = alert;
 }
 
-- (void)tokenExpired {
-    if ([YXConfigure shared].token.length) { //  防止被挤掉同时发请求报token失效
-        [self clearData];
-        
-        [[YXUserModel default] logout];
-    } else {
-        [[YXUserModel default] logout];
-    }
-}
+//- (void)tokenExpired {
+//    if ([YXConfigure shared].token.length) { //  防止被挤掉同时发请求报token失效
+//        [self clearData];
+//
+//        [[YXUserModel default] logout];
+//    } else {
+//        [[YXUserModel default] logout];
+//    }
+//}
 
 
 - (void)loginOut {

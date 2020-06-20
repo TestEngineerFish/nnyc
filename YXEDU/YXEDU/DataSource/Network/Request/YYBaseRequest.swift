@@ -40,7 +40,7 @@ protocol YYBaseRequest {
 extension YYBaseRequest {
 
     public var header: [String : String] {
-        let _header = ["NNYC-TOKEN" : YXConfigure.shared().token ?? "",
+        let _header = ["NNYC-TOKEN" : YXUserModel.default.token ?? "",
                        "NNYC-REQUESTTIME" : YXConfigure.shared().time ?? "",
                        "NNYC-PLATFORM" : kPlatformValue,
                        "NNYC-VERSION" : UIDevice().appVersion()?.replacingOccurrences(of: ".", with: "") ?? "",
