@@ -46,19 +46,7 @@ struct YXGrowingManager {
         Growing.track("main_finish_study")
     }
 
-    /// 上传学习规则
-    func uploadExerciseType(_ type: String) {
-        Growing.setPeopleVariableWithKey("main_study_procedure", andStringValue: type)
-    }
-
     // TODO: ---- 用户变量 ----
-
-    /// 七年级跳过新学上报
-    func uploadSkipNewLearn() {
-        guard let grade = YXUserModel.default.currentGrade else { return }
-        let value = YXConfigure.shared().isSkipNewLearn ? "\(grade)年级跳过新学" : "\(grade)年级参照组"
-        Growing.setPeopleVariableWithKey("new_study_skip", andStringValue: value)
-    }
 
     /// 换书时上传书信息
     func uploadChangeBook(grade: String?, versionName: String?) {

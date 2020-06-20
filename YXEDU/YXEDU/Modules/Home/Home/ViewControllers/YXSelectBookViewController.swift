@@ -99,7 +99,6 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
             // ---- Growing ----
             let bookGrade: String? = wordBook.bookGrade == nil ? nil : "\(wordBook.bookGrade ?? 0)"
             YXGrowingManager.share.uploadChangeBook(grade: bookGrade, versionName: wordBook.bookVersionName)
-            YXGrowingManager.share.uploadSkipNewLearn()
             
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in

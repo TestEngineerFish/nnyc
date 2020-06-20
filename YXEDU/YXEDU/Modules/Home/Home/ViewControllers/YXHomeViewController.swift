@@ -204,7 +204,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.studyDataCollectionView.reloadData()
             YXUserModel.default.currentBookId   = self.homeModel.bookId
             YXUserModel.default.currentGrade    = self.homeModel.bookGrade
-            YXConfigure.shared().isSkipNewLearn = self.homeModel?.isSkipNewLearn == .some(1)
             self.handleTabData()
 
             self.initDataManager()
@@ -236,7 +235,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         guard let model = self.homeModel, let grade = model.bookGrade else {
             return
         }
-        YXGrowingManager.share.uploadSkipNewLearn()
         YXGrowingManager.share.uploadChangeBook(grade: "\(grade)", versionName: model.bookVersionName)
     }
     

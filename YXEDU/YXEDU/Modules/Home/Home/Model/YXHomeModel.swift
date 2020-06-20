@@ -23,7 +23,6 @@ struct YXHomeModel: Mappable {
     var collectedWords: Int?
     var wrongWords: Int?
     var learnedWords: Int?
-    var isSkipNewLearn: Int?
     var bookGrade: Int?
     var bookVersionName: String?
     
@@ -47,7 +46,6 @@ struct YXHomeModel: Mappable {
          collectedWords <- map["fav_num"]
          wrongWords <- map["wrong_num"]
          learnedWords <- map["learned_num"]
-         isSkipNewLearn <- map["is_skip_new_word_learn"]
          bookGrade <- map["book_grade"]
          bookVersionName <- map["book_ver_name"]
     }

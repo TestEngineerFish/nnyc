@@ -60,7 +60,6 @@ class YXAddBookGuideViewController: UIViewController {
                 guard let userInfomation = response.data else { return }
 
                 YXUserModel.default.currentGrade    = userInfomation.bookGrade
-                YXConfigure.shared().isSkipNewLearn = userInfomation.isSkipNewLearn == .some(1)
                 
                 YYCache.set(Date(), forKey: "LastStoredDate")
                 YXLog("====新注册 - 开始主流程的学习====")

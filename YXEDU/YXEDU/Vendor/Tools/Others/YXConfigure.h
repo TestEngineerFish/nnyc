@@ -12,8 +12,6 @@
 #define userId [YXConfigure shared].uuid
 
 @interface YXConfigure : NSObject
-// 是否开启新学跳过
-@property (nonatomic, assign) BOOL isSkipNewLearn;
 
 - (void)loginOut;
 

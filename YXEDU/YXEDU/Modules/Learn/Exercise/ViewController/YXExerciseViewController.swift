@@ -117,14 +117,8 @@
     private func initManager() {
         service.learnConfig = self.learnConfig
         service.initService()
-        
-        // 如果符合条件，则跳过新学
-        if YXConfigure.shared().isSkipNewLearn {
-            // 跳过上报新学到GIO
-            YYCache.set(true, forKey: .newLearnReportGIO)
-        } else {
-            YYCache.set(false, forKey: .newLearnReportGIO)
-        }
+
+        YYCache.set(false, forKey: .newLearnReportGIO)
     }
     
     /// 开始学习
@@ -207,7 +201,8 @@
             if newLearnArray.contains(model.type) {
                 YXGrowingManager.share.newLearnNumber += 1
             } else {
-                if !(YYCache.object(forKey: .newLearnReportGIO) as? Bool ?? false) {
+                // 新学完成未上报，则上报Growing
+                if YYCache.object(forKey: .newLearnReportGIO) as? Bool == .some(false) {
                     YXGrowingManager.share.uploadNewLearnFinished()
                 }
                 YXGrowingManager.share.exerciseNumber += 1
