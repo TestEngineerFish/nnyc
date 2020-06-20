@@ -29,7 +29,7 @@ class YXBaseExerciseDaoImpl: YYDatabase {
         
         // 问题
         if let json = rs.string(forColumn: "question") {
-            model.question = YXExerciseQuestionModel(JSONString: json)
+            model.question = YXNewExerciseQuestionModel(JSONString: json)
         }
         // 选项
         if let json = rs.string(forColumn: "question_option") {

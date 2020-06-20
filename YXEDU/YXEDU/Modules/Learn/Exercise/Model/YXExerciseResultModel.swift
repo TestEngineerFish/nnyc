@@ -62,9 +62,9 @@ struct YXNewExerciseStepModel: Mappable {
 struct YXNewExerciseQuestionModel: Mappable {
     var word: String = ""
     var extendModel: YXNewExerciseQuestionExtendModel?
-    var option: String = ""
+    var option: YXExerciseOptionModel?
     init?(map: Map) {}
-
+    init() {}
     mutating func mapping(map: Map) {
         word        <- map["word"]
         extendModel <- map["ext"]
@@ -77,7 +77,7 @@ struct YXNewExerciseQuestionExtendModel: Mappable {
     var row: Int              = 0
     var column: Int           = 0
     init?(map: Map) {}
-
+    init() {}
     mutating func mapping(map: Map) {
         optionItemsCount <- map["select_item_num"]
         row              <- map["line_row"]
@@ -122,59 +122,6 @@ struct YXExerciseRuleModel: Mappable {
 }
 
 // MARK: ==== Old ===
-
-
-/// 问题数据模型
-struct YXExerciseQuestionModel: Mappable {
-
-    var wordId: Int? = -1
-    var word: String?
-    var itemCount: Int = 4
-    var column: Int = 0
-    var row: Int = 0
-    var extend: YXExerciseQuestionExtendModel?
-
-    init() {}
-    
-    init?(map: Map) {
-        mapping(map: map)
-    }
-    
-    mutating func mapping(map: Map) {
-        wordId    <- map["word_id"]
-        word      <- map["word"]
-        itemCount <- map["select_item_num"]
-        column    <- map["column"]
-        row       <- map["row"]
-        extend    <- map["ext"]
-    }
-}
-
-struct YXExerciseQuestionExtendModel: Mappable {
-    
-//    var isNewWord: Bool = false
-//    var isOldOrEmptyImage: Bool = false
-    var power: Int = 0 // 能力值
-    
-    /// 是否显示单词详情页
-    var isShowWordDetail: YXShowWordDetailType = .none
-    
-    /// 新学时，可以点击《下一个》
-    var allowClickNext = false
-    
-    init() {}
-    
-    init?(map: Map) {
-        mapping(map: map)
-    }
-    
-    mutating func mapping(map: Map) {
-        power                  <- map["last_score"]
-        isShowWordDetail       <- (map["show_info_action"], EnumTransform<YXShowWordDetailType>())
-        allowClickNext         <- map["click_next_action"]
-        
-    }
-}
 
 /// 练习选项数据模型
 struct YXExerciseOptionModel: Mappable {

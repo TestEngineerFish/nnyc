@@ -25,11 +25,13 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
     func bindData(_ wordModel: YXGameWordModel) {
         self.selectedWordView.bindData(wordModel)
         var exerciseModel = YXExerciseModel()
-        var questionModel = YXExerciseQuestionModel()
-        questionModel.word     = wordModel.word
-        questionModel.column   = wordModel.column
-        questionModel.row      = wordModel.row
-        exerciseModel.question = questionModel
+        var questionModel = YXNewExerciseQuestionModel()
+        var extendModel   = YXNewExerciseQuestionExtendModel()
+        questionModel.word        = wordModel.word
+        extendModel.column        = wordModel.column
+        extendModel.row           = wordModel.row
+        questionModel.extendModel = extendModel
+        exerciseModel.question    = questionModel
         self.switchAnswerView(exerciseModel)
     }
 
@@ -51,7 +53,7 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
 
     // MARK: ==== Tools ====
     private func switchAnswerView(_ exerciseModel: YXExerciseModel) {
-        guard let wordModel = exerciseModel.question else {
+        guard let questionModel = exerciseModel.question else {
             return
         }
         self.answerView?.removeFromSuperview()
@@ -62,7 +64,7 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
                 return CGSize(width: AdaptSize(288), height: AdaptSize(288))
             }
         }()
-        let config = self.getConfig(wordModel: wordModel, answerViewSize: answerViewSize)
+        let config = self.getConfig(questionModel: questionModel, answerViewSize: answerViewSize)
         answerView = YXAnswerConnectionLettersView(exerciseModel: exerciseModel, config: config)
         answerView?.delegate = selectedWordView
         answerView?.isHidden = true
@@ -76,12 +78,14 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
         self.answerView?.layer.scalingAnimation(0.375, delegate: self)
     }
 
-    private func getConfig(wordModel: YXExerciseQuestionModel, answerViewSize: CGSize) -> YXConnectionLettersConfig {
-
+    private func getConfig(questionModel: YXNewExerciseQuestionModel, answerViewSize: CGSize) -> YXConnectionLettersConfig {
         var config = YXConnectionLettersConfig()
+        guard let extend = questionModel.extendModel else {
+             return config
+         }
         config.itemMargin = AdaptSize(1)
-        let w = (answerViewSize.width + config.itemMargin) / CGFloat(wordModel.column) - config.itemMargin
-        let h = (answerViewSize.height + config.itemMargin) / CGFloat(wordModel.row) - config.itemMargin
+        let w = (answerViewSize.width + config.itemMargin) / CGFloat(extend.column) - config.itemMargin
+        let h = (answerViewSize.height + config.itemMargin) / CGFloat(extend.row) - config.itemMargin
         config.itemSize = CGSize(width: w, height: h)
         config.itemFont = UIFont.pfSCMediumFont(withSize: AdaptFontSize(24))
         config.backgroundNormalImage   = UIImage(named: "gameButtonNormal")

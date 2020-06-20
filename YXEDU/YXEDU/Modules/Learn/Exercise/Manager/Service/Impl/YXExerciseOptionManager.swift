@@ -48,7 +48,7 @@ class YXExerciseOptionManager: NSObject {
             return nil
         }
         // 选项个数
-        let itemCount = exerciseModel.question?.itemCount ?? 4
+        let itemCount = exerciseModel.question?.extendModel?.optionItemsCount ?? 4
 
         var _exerciseModel  = exerciseModel
         var items          = self.filterOtherWord(exerciseModel: _exerciseModel, itemCount: itemCount - 1)

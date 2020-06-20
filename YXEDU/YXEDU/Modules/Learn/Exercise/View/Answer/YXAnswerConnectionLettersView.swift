@@ -66,8 +66,8 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
     var pan: UIPanGestureRecognizer?
 
     init(exerciseModel: YXExerciseModel, config: YXConnectionLettersConfig = YXConnectionLettersConfig()) {
-        itemNumberH = exerciseModel.question?.row ?? 0
-        itemNumberW = exerciseModel.question?.column ?? 0
+        itemNumberH = exerciseModel.question?.extendModel?.row ?? 0
+        itemNumberW = exerciseModel.question?.extendModel?.column ?? 0
         self.config = config
         super.init(exerciseModel: exerciseModel)
         self.backgroundColor = UIColor.clear

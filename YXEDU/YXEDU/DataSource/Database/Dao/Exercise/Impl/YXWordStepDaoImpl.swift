@@ -20,7 +20,7 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
             wordModel.bookId as Any,
             wordModel.unitId as Any,
             stepModel.questionType.rawValue,
-            stepModel.questionModel?.option as Any,
+            stepModel.questionModel?.option?.toJSONString() as Any,
             stepModel.questionModel?.toJSONString() as Any,
             stepModel.operateModel?.toJSONString() as Any,
             stepModel.step,

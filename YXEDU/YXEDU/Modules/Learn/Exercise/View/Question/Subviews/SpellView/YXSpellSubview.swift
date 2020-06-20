@@ -46,20 +46,20 @@ class YXSpellSubview: UIView {
     }
 
     private func bindData() {
-        guard let question = self.exerciseModel.question, let word = question.word else {
+        guard let question = self.exerciseModel.question else {
             return
         }
-        resultArrary = word.formartTag2()
+        resultArrary = question.word.formartTag2()
     }
 
     private func createUI() {
-        guard let array = resultArrary, let question = self.exerciseModel.question, let word = question.word else {
+        guard let array = resultArrary, let question = self.exerciseModel.question else {
             return
         }
         var offset = 0
         for (index, range) in array.enumerated() {
             // 添加可见字母
-            let lackWord = word.substring(fromIndex: offset, length: range.location - offset)
+            let lackWord = question.word.substring(fromIndex: offset, length: range.location - offset)
             if !lackWord.isEmpty {
                 let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
                 wordView.textField.text = lackWord
@@ -69,7 +69,7 @@ class YXSpellSubview: UIView {
                 self.wordViewList.append(wordView)
             }
             // 添加不可见字母
-            var letter2 = word.substring(fromIndex: range.location, length: range.length)
+            var letter2 = question.word.substring(fromIndex: range.location, length: range.length)
             letter2.removeFirst()
             letter2.removeLast()
             if !letter2.isEmpty {
@@ -95,7 +95,7 @@ class YXSpellSubview: UIView {
             offset = range.location + range.length
             if index >= array.count - 1 {
                 // 添加可见字母
-                let lackWord = word.substring(fromIndex: offset, length: word.count - offset)
+                let lackWord = question.word.substring(fromIndex: offset, length: question.word.count - offset)
                 if !lackWord.isEmpty {
                     let wordView = YXLackWordView(frame: CGRect.zero, isTitle: isTitle)
                     wordView.textField.text = lackWord

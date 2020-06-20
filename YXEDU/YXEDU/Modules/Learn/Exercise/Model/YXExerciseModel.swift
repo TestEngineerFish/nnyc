@@ -27,7 +27,7 @@ struct YXExerciseModel: Mappable {
     /// N3题列表
     var n3List: [YXExerciseModel] = []
     /// 问题
-    var question: YXExerciseQuestionModel?
+    var question: YXNewExerciseQuestionModel?
     /// 选项
     var option: YXExerciseOptionModel?
     /// 扩展

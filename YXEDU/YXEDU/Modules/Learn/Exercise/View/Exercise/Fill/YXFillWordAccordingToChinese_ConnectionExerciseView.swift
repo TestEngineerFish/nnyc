@@ -34,7 +34,7 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
     }
     
     override func layoutSubviews() {
-        guard let question = self.exerciseModel.question else {
+        guard let question = self.exerciseModel.question, let extend = question.extendModel else {
             return
         }
         let questionH = AdaptIconSize(110)
@@ -47,8 +47,8 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         let answerViewTop    = AdaptIconSize(35)
         let answerViewBottom = AdaptIconSize(50)
         let answerViewConfit = YXConnectionLettersConfig()
-        let answerViewW = CGFloat(question.column) * (answerViewConfit.itemMargin + answerViewConfit.itemSize.width) - answerViewConfit.itemMargin
-        let answerViewH = CGFloat(question.row) * (answerViewConfit.itemMargin + answerViewConfit.itemSize.height) - answerViewConfit.itemMargin
+        let answerViewW = CGFloat(extend.column) * (answerViewConfit.itemMargin + answerViewConfit.itemSize.width) - answerViewConfit.itemMargin
+        let answerViewH = CGFloat(extend.row) * (answerViewConfit.itemMargin + answerViewConfit.itemSize.height) - answerViewConfit.itemMargin
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(questionView!.snp.bottom).offset(answerViewTop)
