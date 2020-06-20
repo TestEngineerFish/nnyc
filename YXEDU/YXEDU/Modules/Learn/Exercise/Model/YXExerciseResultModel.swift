@@ -114,9 +114,9 @@ struct YXExerciseRuleModel: Mappable {
 
     func getNextStep(isRight: Bool) -> String {
         if isRight {
-            return rightStep ?? "end"
+            return rightStep ?? "END"
         } else {
-            return errorStep ?? "end"
+            return errorStep ?? "END"
         }
     }
 }

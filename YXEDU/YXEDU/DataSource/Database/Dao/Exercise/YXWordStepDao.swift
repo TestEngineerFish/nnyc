@@ -27,12 +27,13 @@ protocol YXWordStepDao {
     /// - Parameters:
     ///   - status: 状态
     ///   - id: 练习步骤ID
+    ///   - count: 增加错误数
     @discardableResult
-    func updateStep(status: YXStepStatus, step id: Int) -> Bool
+    func updateStep(status: YXStepStatus, step id: Int, wrong count: Int) -> Bool
 
     /// 获取单词的所有已做的练习题，字典返回，用于上报
     /// - Parameter id: 练习表ID
-    func getReportSteps(exercise id: Int) -> [String:Bool]
+    func getReportSteps(exercise id: Int) -> [String:Int]
 
     /// 删除一个学习记录的所有学习步骤
     /// - Parameter id: 学习记录ID

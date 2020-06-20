@@ -30,20 +30,20 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         return result
     }  
 
-    func updateStep(status: YXStepStatus, step id: Int) -> Bool {
+    func updateStep(status: YXStepStatus, step id: Int, wrong count: Int) -> Bool {
         let sql = YYSQLManager.WordStepSQL.updateWordStep.rawValue
         let params: [Any] = [
             status.rawValue,
-            status == .wrong ? 1 : 0,
+            count,
             id
         ]
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
     }
 
-    func getReportSteps(exercise id: Int) -> [String:Bool] {
+    func getReportSteps(exercise id: Int) -> [String:Int] {
         let sql    = YYSQLManager.WordStepSQL.selectStepsWithExercise.rawValue
         let params = [id]
-        var dict   = [String:Bool]()
+        var dict   = [String:Int]()
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
             return dict
         }
@@ -51,9 +51,15 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
             let step   = result.string(forColumn: "step") ?? ""
             let status = Int(result.int(forColumn: "status"))
             // 未学不上报
-            if status == -1 { continue }
-            let stepResult: Bool = Int(result.int(forColumn: "wrong_count")) == 0
-            dict[step] = stepResult
+//            if status == -1 { continue }
+            let wrongCount: Int = {
+                var _count = Int(result.int(forColumn: "wrong_count"))
+                if status == 0 {
+                    _count = -1
+                }
+                return _count
+            }()
+            dict[step] = wrongCount
         }
         result.close()
         return dict

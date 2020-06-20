@@ -104,14 +104,14 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [score, score, id])
     }
 
-    func getAllExerciseList(study id: Int) -> [YXExerciseModel] {
-        var modelList = [YXExerciseModel]()
+    func getAllExerciseList(study id: Int) -> [YXExerciseReportModel] {
+        var modelList = [YXExerciseReportModel]()
         let sql = YYSQLManager.ExerciseSQL.getAllExercise.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
             return modelList
         }
         while result.next() {
-            let model = self.transformModel(result: result)
+            let model = self.transformReportModel(result: result)
             modelList.append(model)
         }
         result.close()
@@ -184,15 +184,13 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
 
     // MARK: ==== Tools ====
     /// 转换练习模型
-    private func transformModel(result: FMResultSet) -> YXExerciseModel {
-        var model = YXExerciseModel()
-        model.eid          = Int(result.int(forColumn: "exercise_id"))
-        model.learnType    = YXLearnType.transform(raw: Int(result.int(forColumn: "learn_type")))
-        model.word         = YXWordModel()
-        model.word?.word   = result.string(forColumn: "word")
-        model.word?.wordId = Int(result.int(forColumn: "word_id"))
-        model.word?.bookId = Int(result.int(forColumn: "book_id"))
-        model.word?.unitId = Int(result.int(forColumn: "unit_id"))
+    private func transformReportModel(result: FMResultSet) -> YXExerciseReportModel {
+        var model = YXExerciseReportModel()
+        model.wordId = Int(result.int(forColumn: "word_id"))
+        model.unitId = Int(result.int(forColumn: "unit_id"))
+        model.bookId = Int(result.int(forColumn: "book_id"))
+        model.score  = Int(result.int(forColumn: "score"))
+        model.exerciseId = Int(result.int(forColumn: "exercise_id"))
         return model
     }
 

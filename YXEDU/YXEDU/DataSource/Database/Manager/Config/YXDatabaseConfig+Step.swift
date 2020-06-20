@@ -36,8 +36,8 @@ extension YYSQLManager {
         UPDATE all_word_step_v1
         SET status =
         (SELECT CASE
-        WHEN status = 0
-        THEN 0
+        WHEN status = 1
+        THEN 1
         ELSE ?
         END
         ),

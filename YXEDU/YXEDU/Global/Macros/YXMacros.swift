@@ -49,6 +49,17 @@ public var kSafeBottomMargin:CGFloat {
     }
 }
 
+/// 是否是新学
+/// - Parameter type: 题型
+/// - Returns: 是否是新学
+func isNewLearn(question type: YXQuestionType) -> Bool {
+    let newLearnArray: [YXQuestionType] = [.newLearnPrimarySchool,
+                                           .newLearnPrimarySchool_Group,
+                                           .newLearnJuniorHighSchool,
+                                           .newLearnMasterList]
+    return newLearnArray.contains(type)
+}
+
 public let iPhoneXLater: Bool = {
     return YYDeviceModel.iPhoneXLater_Device
 }()

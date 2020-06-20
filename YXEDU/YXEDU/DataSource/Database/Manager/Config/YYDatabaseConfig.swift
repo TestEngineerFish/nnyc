@@ -154,7 +154,7 @@ extension YYSQLManager {
         operate text,
         step text,
         rule text,
-        status integer(1) DEFAULT(-1),
+        status integer(1) DEFAULT(0),
         wrong_count integer(2) DEFAULT(0),
         create_ts text(128) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );

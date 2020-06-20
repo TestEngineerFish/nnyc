@@ -50,12 +50,12 @@ class YXNewLearnJuniorHighSchool: YXBaseAnswerView {
     }
 
     @objc private func clickMastered() {
-        self.exerciseModel.mastered = true
+        self.exerciseModel.status = .right
         self.answerDelegate?.answerCompletion(self.exerciseModel, true)
     }
 
     @objc private func clickUnknown() {
-        self.exerciseModel.mastered = false
-        self.answerDelegate?.answerCompletion(self.exerciseModel, true)
+        self.exerciseModel.status = .wrong
+        self.answerDelegate?.answerCompletion(self.exerciseModel, false)
     }
 }

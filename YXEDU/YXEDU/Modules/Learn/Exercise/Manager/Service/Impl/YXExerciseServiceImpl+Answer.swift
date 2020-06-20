@@ -27,23 +27,31 @@ extension YXExerciseServiceImpl {
 
     /// 更新Step数据库
     func updateStep(exercise model: YXExerciseModel) {
-        self.stepDao.updateStep(status: model.status, step: model.stepId)
+        let count = isNewLearn(question: model.type) ? 0 : (model.status == .wrong ? 1 : 0)
+        self.stepDao.updateStep(status: model.status, step: model.stepId, wrong: count)
     }
 
-    /// 减少未做Step的数量
     func updateExercise(exercise model: YXExerciseModel) {
-        if model.status == .right {
-            // 更新NextStep
+        if isNewLearn(question: model.type) {
             guard let ruleModel = model.ruleModel else {
                 return
             }
-            let nextStep = ruleModel.getNextStep(isRight: model.wrongCount == 0)
+            let nextStep = ruleModel.getNextStep(isRight: model.status == .right)
             self.exerciseDao.updateNextStep(exercise: model.eid, next: nextStep)
         } else {
-            // 更新得分
-            let score = Int(abs(model.operate?.errorScore ?? 0))
-            self.exerciseDao.updateScore(exercise: model.eid, reduce: score)
-            YXLog("做错扣-\(score)分")
+            if model.status == .right {
+                // 更新NextStep
+                guard let ruleModel = model.ruleModel else {
+                    return
+                }
+                let nextStep = ruleModel.getNextStep(isRight: model.wrongCount == 0)
+                self.exerciseDao.updateNextStep(exercise: model.eid, next: nextStep)
+            } else {
+                // 更新得分
+                let score = Int(abs(model.operate?.errorScore ?? 0))
+                self.exerciseDao.updateScore(exercise: model.eid, reduce: score)
+                YXLog("做错扣-\(score)分")
+            }
         }
     }
 }

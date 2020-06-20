@@ -463,7 +463,6 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     
     func clickSkipBtnEvent() {
         self.delegate?.backHomeEvent()
-//        self.dataManager.skipNewWord()
         self.navigationController?.popViewController(animated: true)
     }
 }

@@ -10,13 +10,13 @@ import ObjectMapper
 
 
 struct YXExerciseReportModel: Mappable {
-    
+    var exerciseId: Int?
     var wordId: Int = -1
     var bookId: Int?
     var unitId: Int?
     var score: Int = 0
     var errorCount: Int = 0
-    var result: [String:Bool] = [:]
+    var result: [String:Int] = [:]
     
     
     init() {}
