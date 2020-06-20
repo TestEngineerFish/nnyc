@@ -48,8 +48,7 @@ class YXAddBookGuideViewController: UIViewController {
         let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let uuid = YXUserModel.default.uuid else { return }
-            YXUserModel.default.currentBookId   = bookId
-            YXStepConfigManager.share.contrastStepConfig()
+            YXUserModel.default.currentBookId = bookId
 
             let taskModel = YXWordBookResourceModel(type: .single, book: bookId) {
                 YXWordBookResourceManager.shared.contrastBookData(by: bookId)
@@ -113,6 +112,8 @@ class YXAddBookGuideViewController: UIViewController {
         selectVersionView.isHidden  = true
         selectBookNameView.isHidden = true
 
+        YXStepConfigManager.share.contrastStepConfig()
+        
         let request = YXHomeRequest.getBookList
         YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { (response) in
             guard let grades = response.dataArray else { return }

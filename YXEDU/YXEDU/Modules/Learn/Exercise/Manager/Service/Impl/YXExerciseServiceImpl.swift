@@ -73,6 +73,14 @@ class YXExerciseServiceImpl: YXExerciseService {
         
         // 打印
         self._printCurrentTurn()
+        // 兼容后台返回错误题型
+        if model?.type == .some(.none) {
+            if var exerciseModel = model {
+                exerciseModel.status = .right
+                self.answerAction(exercise: exerciseModel)
+                return self._findExercise()
+            }
+        }
         return model
     }
 
@@ -172,6 +180,10 @@ class YXExerciseServiceImpl: YXExerciseService {
             self.cleanStudyRecord()
             completion?(response.data, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
         }) { (error) in
+            // 容错处理
+            if reportContent == "[]" {
+                self.cleanStudyRecord()
+            }
             self.studyDao.updateProgress(studyId: self._studyId, progress: .unreport)
             YXUtils.showHUD(kWindow, title: error.message)
             completion?(nil, [:])

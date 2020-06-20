@@ -137,6 +137,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         tabBarController?.tabBar.isHidden = false
         navigationController?.setNavigationBarHidden(true, animated: animated)
         loadData()
+        YXStepConfigManager.share.contrastStepConfig()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
         YXRedDotManager.share.updateTaskCenterBadge()
         
@@ -225,7 +226,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     /// 处理基础信息请求
     private func handleTabData() {
-        YXStepConfigManager.share.contrastStepConfig()
         let taskModel = YXWordBookResourceModel(type: .single, book: self.homeModel.bookId) {
             YXWordBookResourceManager.shared.contrastBookData(by: self.homeModel.bookId)
         }

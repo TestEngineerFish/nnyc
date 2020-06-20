@@ -133,7 +133,7 @@ extension YYSQLManager {
         unit_id integer(8) NOT NULL DEFAULT(0),
         word_type integer(1) NOT NULL DEFAULT(0),
         score integer(1) NOT NULL DEFAULT(10),
-        next_step text(32) NOT NULL DEFAULT('end'),
+        next_step text(32) NOT NULL DEFAULT('END'),
         create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );
         """

@@ -27,8 +27,8 @@ extension YXExerciseServiceImpl {
 
     /// 更新Step数据库
     func updateStep(exercise model: YXExerciseModel) {
-        let count = isNewLearn(question: model.type) ? 0 : (model.status == .wrong ? 1 : 0)
-        self.stepDao.updateStep(status: model.status, step: model.stepId, wrong: count)
+        let wrongCount = (isNewLearn(question: model.type) || model.status == .right) ? 0 : 1
+        self.stepDao.updateStep(status: model.status, step: model.stepId, wrong: wrongCount)
     }
 
     func updateExercise(exercise model: YXExerciseModel) {
