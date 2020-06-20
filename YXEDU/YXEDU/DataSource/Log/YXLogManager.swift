@@ -52,7 +52,7 @@ class YXLogManager: NSObject {
     private func addUserInfo() {
         YXLog("当前UUID：" + (YXUserModel.default.uuid ?? ""))
         YXLog("当前用户名：" + (YXUserModel.default.userName ?? ""))
-        YXLog("当前用户手机号：" + (YXConfigure.shared().mobile ?? ""))
+        YXLog("当前用户手机号：" + (YXUserModel.default.mobile ?? ""))
         YXLog("当前使用App版本：" + UIDevice().appVersion())
     }
 

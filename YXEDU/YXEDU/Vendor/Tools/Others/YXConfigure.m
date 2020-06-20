@@ -20,7 +20,7 @@
 @implementation YXConfigure
 //@synthesize token =_token;
 @synthesize time = _time;
-@synthesize mobile = _mobile;
+//@synthesize mobile = _mobile;
 @synthesize uuid = _uuid;
 @synthesize isShowGuideView = _isShowGuideView;
 @synthesize isUSVoice = _isUSVoice;
@@ -45,13 +45,13 @@
     return self;
 }
 
-- (NSString *)mobile {
-    if (_mobile.length) {
-        return _mobile;
-    }
-    _mobile = [[NSUserDefaults standardUserDefaults]objectForKey:@"mobile"];
-    return _mobile;
-}
+//- (NSString *)mobile {
+//    if (_mobile.length) {
+//        return _mobile;
+//    }
+//    _mobile = [[NSUserDefaults standardUserDefaults]objectForKey:@"mobile"];
+//    return _mobile;
+//}
 
 - (NSString *)uuid {
     if (_uuid.length) {
@@ -67,11 +67,11 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
-- (void)setMobile:(NSString *)mobile {
-    _mobile = mobile;
-    [[NSUserDefaults standardUserDefaults]setObject:mobile forKey:@"mobile"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
+//- (void)setMobile:(NSString *)mobile {
+//    _mobile = mobile;
+//    [[NSUserDefaults standardUserDefaults]setObject:mobile forKey:@"mobile"];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+//}
 
 //- (void)saveToken:(NSString *)token {
 //    if (!token) {

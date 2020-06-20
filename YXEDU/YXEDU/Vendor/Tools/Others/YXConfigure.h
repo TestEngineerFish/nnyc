@@ -18,7 +18,7 @@
 @property (nonatomic, strong, nullable) CLLocation *location;
 //@property (nonatomic, strong, nullable) NSString *token;
 @property (nonatomic, strong, nullable) NSString *uuid;
-@property (nonatomic, strong, nullable) NSString *mobile;
+//@property (nonatomic, strong, nullable) NSString *mobile;
 @property (nonatomic, strong, nullable) NSString *time;
 @property (nonatomic, strong, readonly, nonnull) NSString *deviceId;
 @property (nonatomic, assign) BOOL needSpreadAnimation;

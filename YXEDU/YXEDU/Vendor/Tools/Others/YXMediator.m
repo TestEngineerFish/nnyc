@@ -50,7 +50,6 @@
 
 - (void)clearData {
     [[YXModelArchiverManager shared] clearAllMemory];
-    [YXConfigure shared].mobile = @"";
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kCurrentLearnWordListIdKey];
@@ -61,7 +60,6 @@
 
 - (void)afterLogout {
     [[YXModelArchiverManager shared] clearAllMemory];
-    [YXConfigure shared].mobile = @"";
     [[YXConfigure shared] loginOut];
     [self clearData];
     

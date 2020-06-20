@@ -42,6 +42,7 @@ class YXUserModel: NSObject {
         }
         get {
             var _token = YYCache.object(forKey: .userToken) as? String
+            // 兼容老版本
             if _token == nil || _token == .some("") {
                 _token = UserDefaults.standard.string(forKey: "token")
             }
@@ -56,6 +57,15 @@ class YXUserModel: NSObject {
 
         get {
             return YYCache.object(forKey: .userName) as? String
+        }
+    }
+    var mobile: String? {
+        set {
+            YYCache.set(newValue, forKey: .mobile)
+        }
+
+        get {
+            return YYCache.object(forKey: .mobile) as? String
         }
     }
     /// 用户头像地址
