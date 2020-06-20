@@ -41,7 +41,11 @@ class YXUserModel: NSObject {
             YYCache.set(newValue, forKey: .userToken)
         }
         get {
-            return YYCache.object(forKey: .userToken) as? String
+            var _token = YYCache.object(forKey: .userToken) as? String
+            if _token == nil || _token == .some("") {
+                _token = UserDefaults.standard.string(forKey: "token")
+            }
+            return _token
         }
     }
     /// 用户名称
