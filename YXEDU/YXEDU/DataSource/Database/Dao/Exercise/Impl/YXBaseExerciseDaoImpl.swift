@@ -29,14 +29,14 @@ class YXBaseExerciseDaoImpl: YYDatabase {
         
         // 问题
         if let json = rs.string(forColumn: "question") {
-            model.question = YXNewExerciseQuestionModel(JSONString: json)
+            model.question = YXExerciseQuestionModel(JSONString: json)
         }
         // 选项
         if let json = rs.string(forColumn: "question_option") {
             model.option = YXExerciseOptionModel(JSONString: json)
         }
         if let operateJson = rs.string(forColumn: "operate") {
-            model.operate = YXNewExerciseOperateModel(JSONString: operateJson)
+            model.operate = YXExerciseOperateModel(JSONString: operateJson)
         }
         // 跳转规则
         if let ruleJson = rs.string(forColumn: "rule") {

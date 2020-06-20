@@ -12,26 +12,24 @@ import ObjectMapper
 /// 当天学习数据总模型
 struct YXExerciseResultModel: Mappable {
     var type: YXLearnType           = .base
-    var ruleType: YXExerciseRule    = .p0
     var newWordCount: Int           = 0
     var reviewWordCount: Int        = 0
-    var wordList: [YXNewExerciseWordModel] = []
+    var wordList: [YXExerciseWordModel] = []
     
     init?(map: Map) {}
     
     mutating func mapping(map: Map) {
         type            <- (map["review_type"], YXExerciseDataTypeTransform())
-        ruleType        <- (map["learn_rule"], YXExerciseRuleTransform())
         newWordCount    <- map["new_word_num"]
         reviewWordCount <- map["review_word_num"]
         wordList        <- map["rule_list"]
     }
 }
 
-struct YXNewExerciseWordModel: Mappable {
+struct YXExerciseWordModel: Mappable {
     var wordModel: YXWordModel?
     var startStep: String = ""
-    var stepModelList: [YXNewExerciseStepModel] = []
+    var stepModelList: [YXExerciseStepModel] = []
 
     init?(map: Map) {}
 
@@ -41,11 +39,11 @@ struct YXNewExerciseWordModel: Mappable {
         stepModelList <- map["list"]
     }
 }
-struct YXNewExerciseStepModel: Mappable {
+struct YXExerciseStepModel: Mappable {
     var step: String = ""
     var questionType: YXQuestionType = .none
-    var questionModel: YXNewExerciseQuestionModel?
-    var operateModel: YXNewExerciseOperateModel?
+    var questionModel: YXExerciseQuestionModel?
+    var operateModel: YXExerciseOperateModel?
     var ruleModel: YXExerciseRuleModel?
 
     init?(map: Map) {}
@@ -59,9 +57,9 @@ struct YXNewExerciseStepModel: Mappable {
     }
 }
 
-struct YXNewExerciseQuestionModel: Mappable {
+struct YXExerciseQuestionModel: Mappable {
     var word: String = ""
-    var extendModel: YXNewExerciseQuestionExtendModel?
+    var extendModel: YXExerciseQuestionExtendModel?
     var option: YXExerciseOptionModel?
     init?(map: Map) {}
     init() {}
@@ -72,7 +70,7 @@ struct YXNewExerciseQuestionModel: Mappable {
     }
 }
 
-struct YXNewExerciseQuestionExtendModel: Mappable {
+struct YXExerciseQuestionExtendModel: Mappable {
     var optionItemsCount: Int = 0
     var row: Int              = 0
     var column: Int           = 0
@@ -85,7 +83,7 @@ struct YXNewExerciseQuestionExtendModel: Mappable {
     }
 }
 
-struct YXNewExerciseOperateModel: Mappable {
+struct YXExerciseOperateModel: Mappable {
     /// 错误是扣的分
     var errorScore: Int     = 0
     /// 跟读是否允许打断
@@ -120,8 +118,6 @@ struct YXExerciseRuleModel: Mappable {
         }
     }
 }
-
-// MARK: ==== Old ===
 
 /// 练习选项数据模型
 struct YXExerciseOptionModel: Mappable {
@@ -174,26 +170,6 @@ struct YXExerciseDataTypeTransform: TransformType {
     }
 
     func transformToJSON(_ value: YXLearnType?) -> Int? {
-        return value?.rawValue
-    }
-
-}
-
-struct YXExerciseRuleTransform: TransformType {
-        
-    typealias Object = YXExerciseRule
-    typealias JSON = String
-    
-    init() {}
-    
-    func transformFromJSON(_ value: Any?) -> YXExerciseRule? {
-        if let v = value as? String, let rule = YXExerciseRule(rawValue: v.uppercased()) {
-            return rule
-        }
-        return .p0
-    }
-    
-    func transformToJSON(_ value: YXExerciseRule?) -> String? {
         return value?.rawValue
     }
 

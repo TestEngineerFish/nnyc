@@ -13,9 +13,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     // ----------------------------
     //MARK: - 属性
     var learnConfig: YXLearnConfig   = YXBaseLearnConfig()
-    var ruleType: YXExerciseRule     = .p0
     var progress: YXExerciseProgress = .none
-    
     var newWordCount: Int { return getNewWordCount() }
     var reviewWordCount: Int { return getReviewWordCount() }
     

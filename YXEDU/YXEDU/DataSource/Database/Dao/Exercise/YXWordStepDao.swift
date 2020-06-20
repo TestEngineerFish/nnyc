@@ -19,7 +19,7 @@ protocol YXWordStepDao {
     ///   - wordModel: 单词对象
     ///   - stepModel: 练习步骤对象
     @discardableResult
-    func insertWordStep(studyId: Int, exerciseId: Int, wordModel: YXWordModel, stepModel: YXNewExerciseStepModel) -> Bool
+    func insertWordStep(studyId: Int, exerciseId: Int, wordModel: YXWordModel, stepModel: YXExerciseStepModel) -> Bool
     
     // TODO: ==== 修改/删除 ====
 

@@ -27,11 +27,11 @@ struct YXExerciseModel: Mappable {
     /// N3题列表
     var n3List: [YXExerciseModel] = []
     /// 问题
-    var question: YXNewExerciseQuestionModel?
+    var question: YXExerciseQuestionModel?
     /// 选项
     var option: YXExerciseOptionModel?
     /// 扩展
-    var operate: YXNewExerciseOperateModel?
+    var operate: YXExerciseOperateModel?
     /// 答案
     var answers: [Int]?
     // 做错后要减去多少分

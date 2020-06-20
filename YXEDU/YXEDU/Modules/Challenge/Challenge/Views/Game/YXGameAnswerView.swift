@@ -25,8 +25,8 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
     func bindData(_ wordModel: YXGameWordModel) {
         self.selectedWordView.bindData(wordModel)
         var exerciseModel = YXExerciseModel()
-        var questionModel = YXNewExerciseQuestionModel()
-        var extendModel   = YXNewExerciseQuestionExtendModel()
+        var questionModel = YXExerciseQuestionModel()
+        var extendModel   = YXExerciseQuestionExtendModel()
         questionModel.word        = wordModel.word
         extendModel.column        = wordModel.column
         extendModel.row           = wordModel.row
@@ -78,7 +78,7 @@ class YXGameAnswerView: UIView, CAAnimationDelegate {
         self.answerView?.layer.scalingAnimation(0.375, delegate: self)
     }
 
-    private func getConfig(questionModel: YXNewExerciseQuestionModel, answerViewSize: CGSize) -> YXConnectionLettersConfig {
+    private func getConfig(questionModel: YXExerciseQuestionModel, answerViewSize: CGSize) -> YXConnectionLettersConfig {
         var config = YXConnectionLettersConfig()
         guard let extend = questionModel.extendModel else {
              return config

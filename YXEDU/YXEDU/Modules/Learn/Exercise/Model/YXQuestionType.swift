@@ -17,7 +17,7 @@ enum YXQuestionType: String {
     case newLearnPrimarySchool_Group = "N-1-1" // 小学新学(词组)
     case newLearnJuniorHighSchool    = "T-N-2" // 初中新学
     case newLearnMasterList          = "T-N-3" // 掌握列表
-    
+
     //MARK: ---- 选择题
     case lookWordChooseImage      = "Q-A-1" // 看单词选图片
     case lookExampleChooseImage   = "Q-A-2" // 看例句选图片
@@ -49,18 +49,6 @@ enum YXQuestionType: String {
     
     case none = ""
 }
-
-
-enum YXExerciseRule: String {
-    case p0 = "P0"      // 原始规则
-    case p1 = "P1"      // 跳过新学
-    case p2 = "P2"      // 跳过新学，做题时首次做新学词题目后无论对错必定出现单词详情
-    case p3 = "P3"      // 新学为看所有单词列表
-    case p4 = "P4"      // 分步新学每组新学5个，复习5个每组开始学习时，先走新学流程
-    case a1 = "A1"      // 分步新学每组开始学习时，先走新学流程每组新学3个，复习4个新学流程【不能打断】
-    case a2 = "A2"      // 分步新学每组开始学习时，先走新学流程每组新学3个，复习4个新学流程【可以打断】
-}
-
 
 @objc enum YXLearnType: Int {
     case base = 1               // 基础学习

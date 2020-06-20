@@ -21,8 +21,6 @@ extension YXExerciseServiceImpl {
             return
         }
         
-        self.ruleType = _resultModel?.ruleType ?? .p0
-        
         // 插入学习记录
         let studyId = self._processStudyRecord()
         if studyId == 0 {

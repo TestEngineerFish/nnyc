@@ -10,7 +10,7 @@ import UIKit
 
 class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
 
-    func insertWordStep(studyId: Int, exerciseId: Int, wordModel: YXWordModel, stepModel: YXNewExerciseStepModel) -> Bool {
+    func insertWordStep(studyId: Int, exerciseId: Int, wordModel: YXWordModel, stepModel: YXExerciseStepModel) -> Bool {
         let sql = YYSQLManager.WordStepSQL.insertWordStep.rawValue
 
         let params: [Any] = [
