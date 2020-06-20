@@ -18,6 +18,9 @@ struct YXResultModel: Mappable {
     var imageUrls: [String]?
     
     var credits: Int?
+
+    /// 是否有还有下一组
+    var hasNextGroup: Bool = false
     
     init?(map: Map) {
         self.mapping(map: map)
@@ -25,8 +28,9 @@ struct YXResultModel: Mappable {
     
     mutating func mapping(map: Map) {
         didCollectWord <- map["is_favorite"]
-        token <- map["token"]
-        imageUrls <- map["img_urls"]
-        credits <- map["userCredits"]
+        token          <- map["token"]
+        imageUrls      <- map["img_urls"]
+        credits        <- map["userCredits"]
+        hasNextGroup   <- map["is_next_group"]
     }
 }

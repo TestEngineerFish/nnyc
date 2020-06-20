@@ -65,7 +65,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     /// 获取一个练习数据
-    func fetchExerciseModel() -> YXExerciseModel? {        
+    func fetchExerciseModel() -> YXExerciseModel? {
         
         // 更新当前轮数据（如果做完）
         self.updateCurrentTurn()
@@ -146,42 +146,37 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     /// 上报关卡
-    func reportReport(completion: ((_ result: Bool, _ dict: [String:Int]) -> Void)?) {
+    func reportReport(completion: ((_ result: YXResultModel?, _ dict: [String:Int]) -> Void)?) {
         let reportContent = self.getReportJson()
         let duration      = self.getLearnDuration()
         YXLog("====上报数据====")
         YXLog("new上报内容：" + reportContent)
         YXLog("new学习时长：\(duration)")
         let request = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, time: duration, result: reportContent)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXWordModel>.self, request: request, success: { [weak self] (response) in
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
-            let result = response.dataArray != nil
             var newWordCount    = 0
             var reviewWordCount = 0
-            if result {
-                // 获取学习数据
-                let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
-                let studyCount  = self.studyDao.selectStudyCount(learn: self.learnConfig)
-                newWordCount    = self.exerciseDao.getNewWordExerciseAmount(study: self._studyId)
-                reviewWordCount = self.exerciseDao.getReviewWordExerciseAmount(study: self._studyId)
-                // 上报Growing
-                YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, study: studyCount)
-                if self.learnConfig.learnType == .base {
-                    YXGrowingManager.share.uploadLearnFinished()
-                    // 记录学完一次主流程，用于首页弹出设置提醒弹框
-                    YYCache.set(true, forKey: "DidFinishMainStudyProgress")
-                }
-                
-                // 清除数据库对应数据
-                self.cleanStudyRecord()
-            } else {
-                self.studyDao.updateProgress(studyId: self._studyId, progress: .unreport)
+            // 获取学习数据
+            let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
+            let studyCount  = self.studyDao.selectStudyCount(learn: self.learnConfig)
+            newWordCount    = self.exerciseDao.getNewWordExerciseAmount(study: self._studyId)
+            reviewWordCount = self.exerciseDao.getReviewWordExerciseAmount(study: self._studyId)
+            // 上报Growing
+            YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, study: studyCount)
+            if self.learnConfig.learnType == .base {
+                YXGrowingManager.share.uploadLearnFinished()
+                // 记录学完一次主流程，用于首页弹出设置提醒弹框
+                YYCache.set(true, forKey: "DidFinishMainStudyProgress")
             }
-            completion?(result, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
+
+            // 清除数据库对应数据
+            self.cleanStudyRecord()
+            completion?(response.data, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
         }) { (error) in
             self.studyDao.updateProgress(studyId: self._studyId, progress: .unreport)
             YXUtils.showHUD(kWindow, title: error.message)
-            completion?(false, [:])
+            completion?(nil, [:])
         }
     }
     
@@ -191,7 +186,7 @@ class YXExerciseServiceImpl: YXExerciseService {
             let r2 = exerciseDao.deleteExercise(study: _studyId)
             let r3 = stepDao.deleteStepWithStudy(study: _studyId)
             let r4 = turnDao.deleteCurrentTurn(study: _studyId)
-            
+            self.progress = .none
             YXLog("清除学习记录完成 ", learnConfig.desc)
             YXLog("删除当前学习记录 studyId=", _studyId, r1, r2, r3, r4)
         } else {

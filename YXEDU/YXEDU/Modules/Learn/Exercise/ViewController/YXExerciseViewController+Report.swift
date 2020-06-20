@@ -40,9 +40,23 @@ extension YXExerciseViewController {
     //MARK: submit report
     /// 上报数据
     func submitResult() {
-        self.service.reportReport { (result, dict) in
-            if result {
-                YXLog("上报关卡成功")
+        self.service.reportReport { (resultModel, dict) in
+            guard let model = resultModel else {
+                YXLog("上报关卡失败")
+                UIView.toast("上报关卡失败")
+                self.navigationController?.popViewController(animated: true)
+                return
+            }
+            YXLog("上报关卡成功")
+            self.service.initService()
+            if model.hasNextGroup {
+                YXLog("还有下一组")
+                self.showLoadAnimation()
+                self.loadingView?.downloadCompleteBlock = {
+                    self.startStudy()
+                }
+            } else {
+                YXLog("没有下一组，进入结果页")
                 if self.learnConfig.learnType == .base {
                     let newWordCount    = dict["newWordCount"] ?? 0
                     let reviewWordCount = dict["reviewWordCount"] ?? 0
@@ -50,10 +64,6 @@ extension YXExerciseViewController {
                 } else {
                     self.processReviewResult()
                 }
-            } else {
-                YXLog("上报关卡失败")
-                UIView.toast("上报关卡失败")
-                self.navigationController?.popViewController(animated: true)
             }
         }
     }

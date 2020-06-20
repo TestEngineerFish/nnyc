@@ -50,8 +50,6 @@ class YXWordStepDaoImpl: YXBaseExerciseDaoImpl, YXWordStepDao {
         while result.next() {
             let step   = result.string(forColumn: "step") ?? ""
             let status = Int(result.int(forColumn: "status"))
-            // 未学不上报
-//            if status == -1 { continue }
             let wrongCount: Int = {
                 var _count = Int(result.int(forColumn: "wrong_count"))
                 if status == 0 {

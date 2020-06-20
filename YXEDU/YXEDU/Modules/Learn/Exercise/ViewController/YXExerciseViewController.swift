@@ -38,7 +38,7 @@
     private var switchAnimation = YXSwitchAnimation()
     
     // Load视图
-    private var loadingView: YXExerciseLoadingView?
+    var loadingView: YXExerciseLoadingView?
     
     // 协议
     private weak var delegate: YXExerciseViewControllerProtocol?
@@ -70,8 +70,6 @@
         self.bindProperty()
         self.initManager()
         self.loadingView?.downloadCompleteBlock = {
-            // 开始学习，停止下载
-            YXWordBookResourceManager.stop = true
             self.startStudy()
         }
         YXGrowingManager.share.startDate = NSDate()
@@ -130,8 +128,10 @@
     }
     
     /// 开始学习
-    private func startStudy() {
+    func startStudy() {
         YXLog("====开始学习====")
+        // 开始学习，停止下载
+        YXWordBookResourceManager.stop = true
         YXExerciseViewController.requesting = true
         switch self.service.progress {
         case .unreport:
@@ -255,8 +255,8 @@
     /// - Parameter exerciseView: 新的练习view
     private func loadExerciseView(exerciseView: YXBaseExerciseView) {
         YXLog("==== 加载练习题 ====")
-//        YXLog(String(format: "==== 当前单词 id：%ld, type：%@，step：%ld，backup：%ld", exerciseView.exerciseModel.wordId,
-//                     exerciseView.exerciseModel.type.rawValue, exerciseView.exerciseModel.step,  exerciseView.exerciseModel.isBackup))
+        YXLog(String(format: "==== 当前单词 id：%ld, type：%@，rule：%@", exerciseView.exerciseModel.word?.wordId ?? 0,
+                     exerciseView.exerciseModel.type.rawValue, exerciseView.exerciseModel.ruleModel?.toJSONString() ?? ""))
         // 是否第一次进来
         var isFirst = true
         if let ceview = exerciseViewArray.first {
@@ -273,7 +273,7 @@
     }
     
     /// 显示loading动画
-    private func showLoadAnimation() {
+    func showLoadAnimation() {
         self.loadingView = YXExerciseLoadingView(type: self.learnConfig.learnType)
         kWindow.addSubview(self.loadingView!)
         self.loadingView?.startAnimation()
