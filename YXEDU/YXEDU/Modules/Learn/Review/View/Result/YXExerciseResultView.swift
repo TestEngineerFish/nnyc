@@ -25,6 +25,7 @@ class YXExerciseResultView: YXView {
     var starView      = YXStarView()
     var progressView  = YXReviewProgressView(type: .iKnow, cornerRadius: AdaptIconSize(4))
     var tipsView      = YXReviewResultTipsListView()
+    var remindButton  = UIButton()
     var reportButton  = UIButton()
     var operateButton = UIButton()
     
@@ -55,6 +56,7 @@ class YXExerciseResultView: YXView {
         contentView.addSubview(tipsView)
         contentView.addSubview(reportButton)
         contentView.addSubview(operateButton)
+        contentView.addSubview(remindButton)
     }
     
     override func bindProperty() {
@@ -93,7 +95,14 @@ class YXExerciseResultView: YXView {
         operateButton.setTitleColor(UIColor.white, for: .normal)
         operateButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         operateButton.addTarget(self, action: #selector(clickOperateButton), for: .touchUpInside)
-    
+
+        remindButton.isUserInteractionEnabled = false
+        if model.type == .homework {
+            remindButton.setTitleColor(.orange1, for: .normal)
+            remindButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(13))
+            remindButton.setImage(UIImage(named: "iconRemindIcon"), for: .normal)
+            remindButton.setTitle(" 成为第一位打卡学员吧！", for: .normal)
+        }
     }
     
     override func layoutSubviews() {
@@ -174,6 +183,15 @@ class YXExerciseResultView: YXView {
                 make.bottom.equalTo(-AdaptIconSize(25))
             }
         }
+
+        if model.type == .homework {
+            remindButton.sizeToFit()
+            remindButton.snp.remakeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(tipsView.snp.bottom).offset(AdaptSize(20))
+                make.size.equalTo(remindButton.size)
+            }
+        }
         
         self.layoutIfNeeded()
     }
@@ -200,6 +218,10 @@ class YXExerciseResultView: YXView {
     @objc func clickCloseButton() {
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewDetailPage, object: nil)
+    }
+
+    private func setRemind() {
+
     }
     
     private func setImageValue() {
@@ -281,7 +303,6 @@ class YXExerciseResultView: YXView {
         subTitleLabel.isHidden = subTitleLabel.text?.isEmpty ?? true
     }
     
-    
     private func setProgressViewValue() {
         if !model.state {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
@@ -291,7 +312,6 @@ class YXExerciseResultView: YXView {
             }
         }
     }
-    
     
     private func setShareButtonValue() {                
         if model.state {
@@ -312,7 +332,9 @@ class YXExerciseResultView: YXView {
                 operateButton.setTitle("打卡分享", for: .normal)
             }
         }
-
+        if model.type == .homework {
+            operateButton.setTitle("打卡分享给老师", for: .normal)
+        }
     }
     
     
@@ -430,7 +452,9 @@ class YXExerciseResultView: YXView {
         allHeight += AdaptIconSize(28) + tipsHeight
         
         allHeight += AdaptIconSize(25 + 42 + 25)
-        
+
+        allHeight += model.type == .homework ? AdaptSize(28) : 0
+
         return allHeight
     }
     

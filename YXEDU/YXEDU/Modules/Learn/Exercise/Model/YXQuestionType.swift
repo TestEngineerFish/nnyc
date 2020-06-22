@@ -51,11 +51,12 @@ enum YXQuestionType: String {
 }
 
 @objc enum YXLearnType: Int {
-    case base = 1               // 基础学习
-    case wrong = 2              // 抽查
-    case planListenReview = 3   // 计划——听力复习
-    case planReview = 4         // 计划——复习
-    case aiReview = 5           // 智能复习
+    case base             = 1 // 基础学习
+    case wrong            = 2 // 抽查
+    case planListenReview = 3 // 计划——听力复习
+    case planReview       = 4 // 计划——复习
+    case aiReview         = 5 // 智能复习
+    case homework         = 6 // 课外作业
 
     static func transform(raw: Int) -> YXLearnType {
         switch raw {
@@ -69,6 +70,8 @@ enum YXQuestionType: String {
             return .planReview
         case 5:
             return .aiReview
+        case 6:
+            return .homework
         default:
             return .base
         }
