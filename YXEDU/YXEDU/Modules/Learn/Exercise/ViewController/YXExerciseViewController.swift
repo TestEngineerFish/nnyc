@@ -452,7 +452,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     
     func clickSwitchBtnEvent() {
         self.delegate?.backHomeEvent()
-        self.service.cleanStudyRecord()
+        self.service.cleanStudyRecord(hasNextGroup: false)
         self.navigationController?.popViewController(animated: true)
     }
     

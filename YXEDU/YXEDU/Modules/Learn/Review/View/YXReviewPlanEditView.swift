@@ -143,12 +143,12 @@ class YXReviewPlanEditView: YXTopWindowView {
                     var config: YXLearnConfig = YXListenReviewLearnConfig(planId: planId)
                     service.learnConfig = config
                     service.initService()
-                    service.cleanStudyRecord()
+                    service.cleanStudyRecord(hasNextGroup: false)
                     
                     config = YXReviewPlanLearnConfig(planId: planId)
                     service.learnConfig = config
                     service.initService()
-                    service.cleanStudyRecord()
+                    service.cleanStudyRecord(hasNextGroup: false)
 
                     NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
                     NotificationCenter.default.post(name: YXNotification.kRefreshReviewDetailPage, object: nil)

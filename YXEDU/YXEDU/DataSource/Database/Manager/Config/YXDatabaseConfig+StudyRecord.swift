@@ -34,7 +34,16 @@ extension YYSQLManager {
         /// 更新学习进度
         case updateProgress =
         """
-        update study_record_v1 set status = ? where study_id = ?
+        update study_record_v1
+        SET status = ?
+        WHERE study_id = ?
+        """
+
+        case reset =
+        """
+        update study_record_v1
+        SET status = 0, study_count = 0, study_duration = 0, start_time = datetime('now', 'localtime')
+        WHERE study_id = ?
         """
 
         case setStartTime =

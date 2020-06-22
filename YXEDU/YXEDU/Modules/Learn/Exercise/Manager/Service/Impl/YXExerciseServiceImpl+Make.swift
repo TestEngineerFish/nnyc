@@ -28,8 +28,10 @@ extension YXExerciseServiceImpl {
             _studyRecord = model
             progress = _studyRecord.progress
             YXLog("查询当前学习记录")
+            self.learnConfig.isGenerate = false
         } else {
             YXLog("查询当前学习记录为空：", learnConfig.learnType, learnConfig.bookId, learnConfig.unitId, learnConfig.planId)
+            self.learnConfig.isGenerate = true
         }
     }
     

@@ -51,9 +51,14 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return count
     }
 
-    func updateProgress(studyId: Int, progress: YXExerciseProgress) -> Bool {
+    func updateProgress(study id: Int, progress: YXExerciseProgress) -> Bool {
         let sql = YYSQLManager.StudyRecordSQL.updateProgress.rawValue
-        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [progress.rawValue, studyId])
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [progress.rawValue, id])
+    }
+
+    func reset(study id: Int) -> Bool {
+        let sql = YYSQLManager.StudyRecordSQL.reset.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [id])
     }
     
     func addStudyCount(study id: Int) {

@@ -13,8 +13,8 @@ import UIKit
 enum YXQuestionType: String {
 
     //MARK: ---- 新学流程
+    case newLearnPrimarySchool_Group = "T-N-0" // 小学新学(词组)
     case newLearnPrimarySchool       = "T-N-1" // 小学新学
-    case newLearnPrimarySchool_Group = "N-1-1" // 小学新学(词组)
     case newLearnJuniorHighSchool    = "T-N-2" // 初中新学
     case newLearnMasterList          = "T-N-3" // 掌握列表
 

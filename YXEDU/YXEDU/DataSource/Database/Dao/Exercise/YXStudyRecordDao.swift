@@ -26,10 +26,14 @@ protocol YXStudyRecordDao {
 
     /// 更新学习进度
     /// - Parameters:
-    ///   - studyId: 哪个学习
+    ///   - ID: 学习流程ID
     ///   - progress: 进度
     @discardableResult
-    func updateProgress(studyId: Int, progress: YXExerciseProgress) -> Bool
+    func updateProgress(study id: Int, progress: YXExerciseProgress) -> Bool
+
+    /// 重置学习记录
+    /// - Parameter id: 学习流程ID
+    func reset(study id: Int) -> Bool
 
     /// 添加学习次数
     /// - Parameter id: 学习记录ID

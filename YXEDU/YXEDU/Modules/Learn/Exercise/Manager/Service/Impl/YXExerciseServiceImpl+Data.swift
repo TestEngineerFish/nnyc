@@ -39,7 +39,11 @@ extension YXExerciseServiceImpl {
     
     /// 处理学习记录
     func _processStudyRecord() -> Int {
-        return self.studyDao.insertStudyRecord(learn: learnConfig)
+        if let model = self.studyDao.selectStudyRecordModel(learn: learnConfig) {
+            return model.studyId
+        } else {
+            return self.studyDao.insertStudyRecord(learn: learnConfig)
+        }
     }
 
     /// 单词和学习步骤数据
