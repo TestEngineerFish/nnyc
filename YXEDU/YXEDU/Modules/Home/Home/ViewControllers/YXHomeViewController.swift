@@ -362,6 +362,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     private func toMyClass() {
+        self.hidesBottomBarWhenPushed = true
+        let vc = YXSelectSchoolViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        self.hidesBottomBarWhenPushed = false
+        return
         YXUserModel.default.hasClass = true
         if YXUserModel.default.hasClass {
             self.hidesBottomBarWhenPushed = true
