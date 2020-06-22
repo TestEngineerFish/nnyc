@@ -192,6 +192,10 @@ class YXWorkWithMyClassCell: UITableViewCell {
     // MARK: ==== Event ====
     @objc private func actionEvent() {
         YXLog("查看详情")
+        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
+        let vc = YXMyClassWorkDetailViewController()
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
     }
 
 }

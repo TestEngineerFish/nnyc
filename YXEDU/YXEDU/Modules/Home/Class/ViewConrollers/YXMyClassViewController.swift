@@ -40,6 +40,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         self.customNavigationBar?.leftButtonTitleColor = .white
         self.workTableView.delegate        = self
         self.workTableView.dataSource      = self
+        self.workTableView.register(YXWorkWithMyClassCell.classForCoder(), forCellReuseIdentifier: "kYXWorkWithMyClassCell")
         self.workTableView.backgroundColor = .clear
     }
 
@@ -73,7 +74,9 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = YXWorkWithMyClassCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXWorkWithMyClassCell", for: indexPath) as? YXWorkWithMyClassCell else {
+            return UITableViewCell()
+        }
         cell.setData(indexPath: indexPath)
         return cell
     }

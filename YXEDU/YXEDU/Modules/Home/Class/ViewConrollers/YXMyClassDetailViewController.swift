@@ -86,6 +86,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
     private func bindProprety() {
         self.tableView.delegate   = self
         self.tableView.dataSource = self
+        self.tableView.register(YXMyClassStudentCell.classForCoder(), forCellReuseIdentifier: "kYXMyClassStudentCell")
         self.customNavigationBar?.title = "班级详情"
         self.customNavigationBar?.rightButton.setImage(UIImage(named: "more_black"), for: .normal)
         self.customNavigationBar?.rightButton.addTarget(self, action: #selector(showSheetView), for: .touchUpInside)
@@ -163,7 +164,9 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = YXMyClassStudentCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXMyClassStudentCell", for: indexPath) as? YXMyClassStudentCell else {
+            return UITableViewCell()
+        }
         cell.setData()
         return cell
     }
