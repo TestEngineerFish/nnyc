@@ -110,11 +110,12 @@ class YXMyClassWorkDetailHeaderView: YXView {
         }
     }
 
-    func setData() {
-        self.nameLabel.text = "Sam"
-        self.classNameLabel.text = "班级：3班"
-        self.progressView.progress = 0.5
-        self.descriptionLabel.text = "6月8日完成作业6月8日完成作业6月8日完成作业6月8日完成作业6月8日完成作业6月8日完成作业"
+    func setData(report model: YXMyClassReportModel?) {
+        guard let _model = model else { return }
+        self.nameLabel.text        = _model.studentName
+        self.classNameLabel.text   = "班级：" + _model.grade
+        self.progressView.progress = CGFloat(_model.accuracy) / 100
+        self.descriptionLabel.text = _model.finishedTime + "完成作业"
         let descHeight = self.descriptionLabel.text?.textHeight(font: self.descriptionLabel.font, width: screenWidth - AdaptSize(106)) ?? 0
         self.descriptionLabel.snp.updateConstraints { (make) in
             make.height.equalTo(descHeight)

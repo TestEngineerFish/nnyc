@@ -81,7 +81,7 @@
 		224A2FD6238283C100AD99B0 /* YXLearnMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FD5238283C100AD99B0 /* YXLearnMapModel.swift */; };
 		224AE7002499F6F2009EAB06 /* YXMyClassDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE6FF2499F6F2009EAB06 /* YXMyClassDetailHeaderView.swift */; };
 		224AE702249A00C1009EAB06 /* YXMyClassStudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE701249A00C1009EAB06 /* YXMyClassStudentCell.swift */; };
-		224AE70A24A05777009EAB06 /* YXMyClassWorkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE70924A05777009EAB06 /* YXMyClassWorkDetailViewController.swift */; };
+		224AE70A24A05777009EAB06 /* YXMyClassWorkReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE70924A05777009EAB06 /* YXMyClassWorkReportViewController.swift */; };
 		224AE70C24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE70B24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift */; };
 		224AE70E24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE70D24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift */; };
 		224DF54A23840E6B00D2B0BF /* YXLearnResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */; };
@@ -688,7 +688,7 @@
 		224A2FD5238283C100AD99B0 /* YXLearnMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnMapModel.swift; sourceTree = "<group>"; };
 		224AE6FF2499F6F2009EAB06 /* YXMyClassDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassDetailHeaderView.swift; sourceTree = "<group>"; };
 		224AE701249A00C1009EAB06 /* YXMyClassStudentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassStudentCell.swift; sourceTree = "<group>"; };
-		224AE70924A05777009EAB06 /* YXMyClassWorkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassWorkDetailViewController.swift; sourceTree = "<group>"; };
+		224AE70924A05777009EAB06 /* YXMyClassWorkReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassWorkReportViewController.swift; sourceTree = "<group>"; };
 		224AE70B24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassWorkDetailHeaderView.swift; sourceTree = "<group>"; };
 		224AE70D24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassWorkDetailCell.swift; sourceTree = "<group>"; };
 		224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnResultModel.swift; sourceTree = "<group>"; };
@@ -1586,7 +1586,7 @@
 			children = (
 				22B47C602498B8240089B9D0 /* YXMyClassViewController.swift */,
 				22B47C6B2499E3AF0089B9D0 /* YXMyClassDetailViewController.swift */,
-				224AE70924A05777009EAB06 /* YXMyClassWorkDetailViewController.swift */,
+				224AE70924A05777009EAB06 /* YXMyClassWorkReportViewController.swift */,
 			);
 			path = ViewConrollers;
 			sourceTree = "<group>";
@@ -4616,7 +4616,7 @@
 				2202D27523A9166F00882E5D /* YXGameLaunchView.swift in Sources */,
 				EE5E008A23274FEB00655654 /* YXCalendarStudyDayData.m in Sources */,
 				22A15A7B242F3FCE00AECA0A /* YXReviePlanStudentsListViewController.swift in Sources */,
-				224AE70A24A05777009EAB06 /* YXMyClassWorkDetailViewController.swift in Sources */,
+				224AE70A24A05777009EAB06 /* YXMyClassWorkReportViewController.swift in Sources */,
 				EE4201D6248BB7F300231704 /* YXExerciseServiceImpl+Option.swift in Sources */,
 				224AE70C24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift in Sources */,
 				77706E402372EBCF00149D09 /* YXAlertView.swift in Sources */,

@@ -126,6 +126,36 @@ class YXAlertCheckManager {
             completion?()
         }
     }
+
+    func checkHomework(_ completion: (() -> Void)? ) {
+        let request = YXMyClassRequestManager.remindHomework
+        YYNetworkService.default.request(YYStructResponse<YXMyClassRemindModel>.self, request: request, success: { (response) in
+            guard let model = response.data else {return}
+            let alertView = YXAlertView()
+            alertView.titleLabel.text = "新作业提醒"
+            alertView.descriptionLabel.text = String(format: "%@老师刚刚布置了新作业《%@》，赶紧去看看吧~", model.teacherName, model.workName)
+            alertView.leftButton.isHidden = true
+            alertView.rightOrCenterButton.isHidden = false
+            alertView.shouldOnlyShowOneButton = true
+            alertView.rightOrCenterButton.setTitle("查看作业", for: .normal)
+            alertView.shouldDismissWhenTapBackground = false
+            alertView.tag = YXAlertWeightType.newHomework
+            alertView.doneClosure = { _ in
+                YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
+                let vc = YXMyClassViewController()
+                YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+                YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
+                YXLog("从作业提醒弹框，进入作业列表页")
+            }
+
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
+            YXAlertQueueManager.default.showAlert()
+            completion?()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+            completion?()
+        }
+    }
     
     
     func checkLatestBadgeWhenBackTabPage() {

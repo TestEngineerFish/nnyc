@@ -9,12 +9,14 @@
 import UIKit
 
 struct YXAlertWeightType {
-    static let stopService = 0         // A
-    static let updateVersion = 1       // B
-    static let oldUserTips = 2         // C
-    static let recommendUpdateVersion = 2  // C
-    static let scanCommand = 3             // D
-    static let latestBadge = 4         // E
+    static let stopService            = 0 // A
+    static let updateVersion          = 1 // B
+    static let oldUserTips            = 2 // C
+    static let recommendUpdateVersion = 2 // C
+    static let newHomework            = 3 // D
+    static let scanCommand            = 4 // E
+    static let latestBadge            = 5 // F
+
 }
 
 

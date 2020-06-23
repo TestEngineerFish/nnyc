@@ -14,12 +14,14 @@ public enum YXMyClassRequestManager: YYBaseRequest {
     case classList
     case classDetail(id: Int)
     case leaveClass(id: Int)
+    case workReport(workId: Int, classId: Int)
+    case remindHomework
 }
 
 extension YXMyClassRequestManager {
     var method: YYHTTPMethod {
         switch self {
-        case .workList, .classList, .classDetail, .leaveClass:
+        case .workList, .classList, .classDetail, .leaveClass, .workReport, .remindHomework:
             return .get
         }
     }
@@ -36,6 +38,10 @@ extension YXMyClassRequestManager {
             return YXAPI.MyClass.classDetail
         case .leaveClass:
             return YXAPI.MyClass.leaveClass
+        case .workReport:
+            return YXAPI.MyClass.workReport
+        case .remindHomework:
+            return YXAPI.MyClass.remindHomework
         }
     }
 }
@@ -47,6 +53,8 @@ extension YXMyClassRequestManager {
             return ["class_id" : id]
         case .leaveClass(let id):
             return ["class_id" : id]
+        case .workReport(let workId, let classId):
+            return ["work_id" : workId, "class_id" : classId]
         default:
             return nil
         }

@@ -76,13 +76,12 @@ class YXMyClassWorkDetailCell: UITableViewCell {
         }
     }
 
-    func setData() {
-        self.wordLabel.text    = "Word"
-        self.chineseLabel.text = "是（用于第一人称）"
-        let wrong = true
-        let wrongTextList = ["词义错1次", "拼写错12次"]
+    func setData(word model: YXMyClassReportWordModel) {
+        self.wordLabel.text    = model.word
+        self.chineseLabel.text = String(format: "%@%@", model.paraphrase?.partOfSpeech ?? "", model.paraphrase?.meaning ?? "")
         var offsetY = AdaptSize(0)
-        if wrong {
+        let wrongTextList = model.wrongTextList()
+        if !wrongTextList.isEmpty {
             wrongTextList.forEach { (text) in
                 let iconImageView = UIImageView(image: UIImage(named: "error"))
                 let textLabel: UILabel = {

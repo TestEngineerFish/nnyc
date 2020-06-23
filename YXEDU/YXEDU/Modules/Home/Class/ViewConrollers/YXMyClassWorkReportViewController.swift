@@ -1,5 +1,5 @@
 //
-//  YXMyClassWorkDetailViewController.swift
+//  YXMyClassWorkReportViewController.swift
 //  YXEDU
 //
 //  Created by 沙庭宇 on 2020/6/22.
@@ -8,7 +8,11 @@
 
 import Foundation
 
-class YXMyClassWorkDetailViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
+class YXMyClassWorkReportViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
+
+    var workId: Int?
+    var classId: Int?
+    var reportModel: YXMyClassReportModel?
 
     var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -20,6 +24,7 @@ class YXMyClassWorkDetailViewController: YXViewController, UITableViewDelegate, 
         super.viewDidLoad()
         self.bindProperty()
         self.createSubviews()
+        self.reloadData()
     }
 
     private func bindProperty() {
@@ -37,22 +42,37 @@ class YXMyClassWorkDetailViewController: YXViewController, UITableViewDelegate, 
         }
     }
 
+    // MARK: ==== Request ====
+    private func reloadData() {
+        guard let _workId = self.workId, let _classId = self.classId else {
+            return
+        }
+        let request = YXMyClassRequestManager.workReport(workId: _workId, classId: _classId)
+        YYNetworkService.default.request(YYStructResponse<YXMyClassReportModel>.self, request: request, success: { (response) in
+            self.reportModel = response.data
+            self.tableView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.reportModel?.wordModelList.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = YXMyClassWorkDetailHeaderView()
-        headerView.setData()
+        headerView.setData(report: self.reportModel)
         return headerView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXMyClassWorkDetailCell", for: indexPath) as? YXMyClassWorkDetailCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXMyClassWorkDetailCell", for: indexPath) as? YXMyClassWorkDetailCell, let modelList = self.reportModel?.wordModelList else {
             return UITableViewCell()
         }
-        cell.setData()
+        let model = modelList[indexPath.row]
+        cell.setData(word: model)
         return cell
     }
 

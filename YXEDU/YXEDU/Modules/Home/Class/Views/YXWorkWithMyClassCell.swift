@@ -10,6 +10,8 @@ import Foundation
 
 class YXWorkWithMyClassCell: UITableViewCell {
 
+    var model: YXMyWorkModel?
+
     var wrapView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
@@ -127,6 +129,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
     }
 
     func setData(work model: YXMyWorkModel) {
+        self.model = model
         self.nameLabel.text        = model.workName
         if model.type == .share {
             self.progressLabel.text = String(format: "完成%ld/%ld天", model.shareCount, model.shareAmount)
@@ -198,7 +201,9 @@ class YXWorkWithMyClassCell: UITableViewCell {
     @objc private func actionEvent() {
         YXLog("查看详情")
         YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
-        let vc = YXMyClassWorkDetailViewController()
+        let vc = YXMyClassWorkReportViewController()
+        vc.workId  = model?.workId
+        vc.classId = model?.classId
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
         YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
     }

@@ -62,9 +62,9 @@ struct YXMyClassModel: Mappable {
 
 struct YXMyWorkModel: Mappable {
 
-    var studentId: String?
-    var workId: String?
-    var classId: String?
+    var studentId: Int?
+    var workId: Int?
+    var classId: Int?
     var type: YXHomeworkType = .share
     var status: YXWorkCompletionStatus = .normal
     var shareWorkStatus: YXShareWorkStatusType = .unexpiredUnlearned
@@ -130,5 +130,69 @@ struct YXMyClassStudentInfoModel: Mappable {
         avatarUrl  <- map["avatar"]
         studentId  <- map["student_id"]
         learnCount <- map["study_day"]
+    }
+}
+
+struct YXMyClassReportModel: Mappable {
+    var studentName: String = ""
+    var grade: String = ""
+    var accuracy: Int = 0
+    var finishedTime: String = ""
+    var wordModelList = [YXMyClassReportWordModel]()
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        studentName   <- map["student_name"]
+        grade         <- map["grade"]
+        accuracy      <- map["accuracy"]
+        finishedTime  <- map["finish_work_date"]
+        wordModelList <- map["list"]
+    }
+}
+
+struct YXMyClassReportWordModel: Mappable {
+    var word: String = ""
+    var paraphrase: YXWordPartOfSpeechAndMeaningModel?
+    var meanWrongCount: Int   = 0
+    var spellWrongCount: Int  = 0
+    var listenWrongCount: Int = 0
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        word             <- map["word"]
+        paraphrase       <- map["paraphrase"]
+        meanWrongCount   <- map["word_mean_error"]
+        spellWrongCount  <- map["write_error"]
+        listenWrongCount <- map["listen_error"]
+    }
+
+    func wrongTextList() -> [String] {
+        var textList = [String]()
+        if meanWrongCount > 0 {
+            textList.append("词义错\(meanWrongCount)次")
+        }
+        if spellWrongCount > 0 {
+            textList.append("拼写错\(spellWrongCount)次")
+        }
+        if listenWrongCount > 0 {
+            textList.append("听音错\(listenWrongCount)次")
+        }
+        return textList
+    }
+}
+
+struct YXMyClassRemindModel: Mappable {
+
+    var teacherName: String = ""
+    var workName: String    = ""
+    var workId: Int         = 0
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        teacherName <- map["nick"]
+        workName    <- map["work_name"]
+        workId      <- map["work_id"]
     }
 }
