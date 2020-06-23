@@ -10,7 +10,7 @@ import Foundation
 
 class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataSource {
 
-    var classList = [String]()
+    var classList = [YXMyClassModel]()
 
     var tableViewWarpView: UIView = {
         let view = UIView()
@@ -44,13 +44,17 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
 
     override func createSubviews() {
         super.createSubviews()
-        self.addSubview(tableView)
+        self.addSubview(tableViewWarpView)
+        tableViewWarpView.addSubview(tableView)
         self.addSubview(workTitleLabel)
-        tableView.snp.makeConstraints { (make) in
+        tableViewWarpView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(22))
             make.right.equalToSuperview().offset(AdaptSize(-22))
             make.top.equalToSuperview().offset(AdaptSize(4))
             make.bottom.equalTo(workTitleLabel.snp.top).offset(AdaptSize(-25))
+        }
+        tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
         workTitleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(15))
@@ -58,16 +62,21 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
             make.bottom.equalToSuperview().offset(AdaptSize(-7.5))
         }
         self.tableView.layer.setDefaultShadow(cornerRadius: AdaptSize(12), shadowRadius: 10)
+        self.tableView.layer.masksToBounds = true
+        self.tableViewWarpView.layer.setDefaultShadow(cornerRadius: AdaptSize(12), shadowRadius: 10)
     }
 
     override func bindProperty() {
         super.bindProperty()
-        self.tableView.delegate   = self
-        self.tableView.dataSource = self
+        self.backgroundColor           = .clear
+        self.tableView.delegate        = self
+        self.tableView.dataSource      = self
     }
 
-    func setDate(classList: [String]) {
-        self.classList = classList
+    // MARK: ==== Event ====
+
+    func setDate(class modelList: [YXMyClassModel]) {
+        self.classList = modelList
         self.tableView.reloadData()
     }
 
@@ -83,12 +92,13 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text      = classList[indexPath.row]
+        cell.textLabel?.text      = classList[indexPath.row].name
         cell.textLabel?.font      = UIFont.regularFont(ofSize: AdaptFontSize(15))
         cell.textLabel?.textColor = UIColor.black2
         cell.accessoryType        = .disclosureIndicator
         cell.separatorInset       = UIEdgeInsets(top: 0, left: AdaptSize(15), bottom: 0, right: AdaptSize(15))
         cell.selectionStyle       = .none
+        cell.backgroundColor      = .clear
         return cell
     }
 

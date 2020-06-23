@@ -25,7 +25,20 @@ struct YXUserDataManager {
         }
     }
 
-    
-
-
+    /// 加入班级
+    /// - Parameters:
+    ///   - code: 班级号
+    ///   - finishBlock: 加入后的事件
+    func joinClass(code: String?) {
+        guard let _code = code, !_code.trimed.isEmpty else {
+            YXUtils.showHUD(nil, title: "班级号不能为空")
+            return
+        }
+        let request = YXHomeRequest.joinClass(code: _code.trimed)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            NotificationCenter.default.post(name: YXNotification.kJoinClass, object: nil)
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
 }

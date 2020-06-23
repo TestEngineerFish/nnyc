@@ -8,23 +8,7 @@
 
 import Foundation
 
-enum YXWorkCompletionStatus {
-    case unfinished
-    case unreport
-    case finished
-    case delay
-}
-
-enum YXWorkType: Int {
-    case listen   = 0
-    case exercise = 1
-    case punchIn  = 2
-}
-
 class YXWorkWithMyClassCell: UITableViewCell {
-
-    var workCompletion: YXWorkCompletionStatus = .unfinished
-    var workTyep: YXWorkType = .listen
 
     var wrapView: UIView = {
         let view = UIView()
@@ -142,50 +126,71 @@ class YXWorkWithMyClassCell: UITableViewCell {
         self.actionButton.addTarget(self, action: #selector(actionEvent), for: .touchUpInside)
     }
 
-    func setData(indexPath: IndexPath) {
-        let completionList: [YXWorkCompletionStatus] = [.unfinished, .unreport, .finished, .delay]
-        let typeList: [YXWorkType] = [.listen, .listen, .punchIn]
-        let nameList = ["6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业6月4日单词练习作业", "6月4日单词练习作业"]
-        self.nameLabel.text        = nameList[indexPath.row % nameList.count]
-        self.progressLabel.text    = "完成50%"
-        self.desciptionLabel.text  = "3班  l  3天后截止"
-        DispatchQueue.main.async {
-            self.progressView.progress = 0.5
+    func setData(work model: YXMyWorkModel) {
+        self.nameLabel.text        = model.workName
+        if model.type == .share {
+            self.progressLabel.text = String(format: "完成%ld/%ld天", model.shareCount, model.shareAmount)
+        } else {
+            self.progressLabel.text = String(format: "完成%ld%@", model.progress * 100, "%")
         }
-        self.workCompletion        = completionList[indexPath.row % completionList.count]
-        self.workTyep              = typeList[indexPath.row % typeList.count]
+        self.desciptionLabel.text  = String(format: "%@ l %@", model.className, model.timeStr)
+        DispatchQueue.main.async {
+            self.progressView.progress = model.progress
+        }
         self.createSubviews()
 
-        self.statusImage.isHidden = false
-        switch self.workCompletion {
-        case .unfinished:
-            self.actionButton.type = .border
-            self.actionButton.setStatus(.normal)
-            self.actionButton.setTitle("做作业", for: .normal)
-        case .unreport:
-            self.actionButton.type = .border
-            self.actionButton.setStatus(.normal)
-            self.actionButton.setTitle("去打卡", for: .normal)
-        case .finished:
-            self.actionButton.type = .normal
-            self.statusImage.image = UIImage(named: "work_finished")
-            if self.workTyep == .listen || self.workTyep == .exercise {
-                self.actionButton.setTitleColor(.black2, for: .normal)
-                self.actionButton.layer.borderColor = UIColor.black4.cgColor
-                self.actionButton.layer.borderWidth = AdaptSize(1)
-                self.actionButton.setTitle("查看报告", for: .normal)
-            } else {
+        if model.type == .share {
+            switch model.shareWorkStatus {
+            case .unexpiredUnlearned, .unexpiredLearnedUnshare:
+                self.statusImage.isHidden  = true
+                self.actionButton.isHidden = false
+                self.actionButton.type = .border
+                self.actionButton.setStatus(.normal)
+                self.actionButton.setTitle("去打卡", for: .normal)
+            case .unexpiredLearnedShare:
+                self.statusImage.isHidden  = false
+                self.actionButton.isHidden = false
+                self.statusImage.image    = UIImage(named: "work_finished")
+                self.actionButton.type    = .normal
                 self.actionButton.backgroundColor = UIColor.hex(0xF4F4F4)
                 self.actionButton.setTitleColor(UIColor.black6, for: .normal)
                 self.actionButton.layer.borderColor = UIColor.clear.cgColor
                 self.actionButton.layer.borderWidth = 0
                 self.actionButton.setTitle("已打卡", for: .normal)
+            case .beExpiredUnfinished:
+                self.statusImage.isHidden  = false
+                self.actionButton.isHidden = true
+                self.statusImage.image     = UIImage(named: "work_unfinished")
+            case .beExpiredFinished:
+                self.statusImage.isHidden  = false
+                self.actionButton.isHidden = true
+                self.statusImage.image     = UIImage(named: "work_finished")
             }
-        case .delay:
-            self.statusImage.image = UIImage(named: "work_unfinished")
-            self.actionButton.type = .border
-            self.actionButton.setStatus(.normal)
-            self.actionButton.setTitle("补作业", for: .normal)
+        } else {
+            switch model.exerciseWorkStatus {
+            case .unexpiredUnfinished:
+                self.statusImage.isHidden  = true
+                self.actionButton.isHidden = false
+                self.actionButton.type = .border
+                self.actionButton.setStatus(.normal)
+                self.actionButton.setTitle("做作业", for: .normal)
+            case .unexpiredFinished, .beExpiredFinished:
+                self.statusImage.isHidden  = false
+                self.actionButton.isHidden = false
+                self.statusImage.image = UIImage(named: "work_finished")
+                self.actionButton.type = .normal
+                self.actionButton.setTitleColor(.black2, for: .normal)
+                self.actionButton.layer.borderColor = UIColor.black4.cgColor
+                self.actionButton.layer.borderWidth = AdaptSize(1)
+                self.actionButton.setTitle("查看报告", for: .normal)
+            case .beExpiredUnfinished:
+                self.statusImage.isHidden  = false
+                self.actionButton.isHidden = false
+                self.statusImage.image = UIImage(named: "work_unfinished")
+                self.actionButton.type = .border
+                self.actionButton.setStatus(.normal)
+                self.actionButton.setTitle("补作业", for: .normal)
+            }
         }
     }
 

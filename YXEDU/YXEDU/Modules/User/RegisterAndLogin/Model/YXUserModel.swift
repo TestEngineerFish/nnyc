@@ -135,12 +135,12 @@ class YXUserModel: NSObject {
         }
     }
     /// 是否已加入班级
-    var hasClass: Bool {
+    var isJoinClass: Bool {
         set {
-            YYCache.set(newValue, forKey: YXLocalKey.hasClass)
+            YYCache.set(newValue, forKey: YXLocalKey.isJoinClass)
         }
         get {
-            return YYCache.object(forKey: YXLocalKey.hasClass) as? Bool ?? false
+            return YYCache.object(forKey: YXLocalKey.isJoinClass) as? Bool ?? false
         }
     }
     /// 是否有新作业

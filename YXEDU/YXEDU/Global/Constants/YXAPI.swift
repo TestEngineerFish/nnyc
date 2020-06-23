@@ -42,13 +42,12 @@ struct YXAPI {
     //MARK: - 主页
     struct Home {
         static let getBaseInfo = "/api/v1/learn/getbaseinfo"
-        
         static let report = "/api/v1/user/learnreport"
         static let task   = "/api/v1/user/task/available"
-        
         static let setReminder = "/api/v1/user/setting"
-        
         static let getBookList = "/api/v1/book/getbooklist"
+        /// 加入班级
+        static let joinClass = "/api/v1/class/add"
     }
     
     //MARK: - 用户模块
@@ -266,6 +265,14 @@ struct YXAPI {
         static let searchSchool = "/api/v1/school/list"
         /// 提交学生所属的学校
         static let submit = "/api/v1/school/create"
+    }
+
+    // MARK: - MyClass
+    struct MyClass {
+        /// 作业列表接口
+        static let workList  = "/api/v1/class/work/list"
+        /// 班级列表接口
+        static let classList = "/api/v1/class/list"
     }
 }
 

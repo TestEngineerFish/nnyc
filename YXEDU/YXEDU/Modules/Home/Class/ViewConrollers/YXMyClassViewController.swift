@@ -23,10 +23,14 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         return tableView
     }()
 
+    var classModelList = [YXMyClassModel]()
+    var workModelList  = [YXMyWorkModel]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bindProperty()
         self.createSubviews()
+        self.reloadData()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -42,6 +46,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         self.workTableView.dataSource      = self
         self.workTableView.register(YXWorkWithMyClassCell.classForCoder(), forCellReuseIdentifier: "kYXWorkWithMyClassCell")
         self.workTableView.backgroundColor = .clear
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: YXNotification.kJoinClass, object: nil)
     }
 
     private func createSubviews() {
@@ -61,15 +66,47 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         }
     }
 
+    // MARK: ==== Request ====
+    private func requestClassList() {
+        let request = YXMyClassRequestManager.classList
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXMyClassModel>.self, request: request, success: { (response) in
+            guard let modelList = response.dataArray else {
+                return
+            }
+            self.classModelList = modelList
+            self.workTableView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
+    private func requestWorkList() {
+        let request = YXMyClassRequestManager.workList
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXMyWorkModel>.self, request: request, success: { (response) in
+            guard let modelList = response.dataArray else {
+                return
+            }
+            self.workModelList = modelList
+            self.workTableView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
+    // MARK: ==== Event ====
+    @objc private func reloadData() {
+        self.requestClassList()
+        self.requestWorkList()
+    }
+
     // MARK: ==== UITableViewDateSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.workModelList.count
     }
-    var classList = ["2班", "8090班", "1115班"]
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = YXMyWorkTableViewHeaderView()
-        headerView.setDate(classList: classList)
+        headerView.setDate(class: self.classModelList)
         return headerView
     }
 
@@ -77,12 +114,13 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXWorkWithMyClassCell", for: indexPath) as? YXWorkWithMyClassCell else {
             return UITableViewCell()
         }
-        cell.setData(indexPath: indexPath)
+        let model = self.workModelList[indexPath.row]
+        cell.setData(work: model)
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let count  = classList.count > 3 ? 3 : classList.count
+        let count  = self.classModelList.count > 3 ? 3 : self.classModelList.count
         let amount = CGFloat(96 + count * 50)
         return AdaptSize(amount)
     }

@@ -85,6 +85,8 @@
 		224AE70C24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE70B24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift */; };
 		224AE70E24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE70D24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift */; };
 		224DF54A23840E6B00D2B0BF /* YXLearnResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */; };
+		224F2D3024A1E3DD00B00E1E /* YXMyClassModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F2D2F24A1E3DD00B00E1E /* YXMyClassModel.swift */; };
+		224F2D3224A1EE0100B00E1E /* YXMyClassRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F2D3124A1EE0100B00E1E /* YXMyClassRequestManager.swift */; };
 		2252B50824455DD9002AE9F2 /* YXRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252B50724455DD9002AE9F2 /* YXRecordView.swift */; };
 		2252B50B24459448002AE9F2 /* YXUserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252B50A24459448002AE9F2 /* YXUserDataManager.swift */; };
 		2252B50D24469CD1002AE9F2 /* YXGrowingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252B50C24469CD1002AE9F2 /* YXGrowingManager.swift */; };
@@ -690,6 +692,8 @@
 		224AE70B24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassWorkDetailHeaderView.swift; sourceTree = "<group>"; };
 		224AE70D24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassWorkDetailCell.swift; sourceTree = "<group>"; };
 		224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnResultModel.swift; sourceTree = "<group>"; };
+		224F2D2F24A1E3DD00B00E1E /* YXMyClassModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassModel.swift; sourceTree = "<group>"; };
+		224F2D3124A1EE0100B00E1E /* YXMyClassRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassRequestManager.swift; sourceTree = "<group>"; };
 		2252B50724455DD9002AE9F2 /* YXRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRecordView.swift; sourceTree = "<group>"; };
 		2252B50A24459448002AE9F2 /* YXUserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserDataManager.swift; sourceTree = "<group>"; };
 		2252B50C24469CD1002AE9F2 /* YXGrowingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXGrowingManager.swift; sourceTree = "<group>"; };
@@ -1604,6 +1608,7 @@
 		224AE70624A056D8009EAB06 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				224F2D2F24A1E3DD00B00E1E /* YXMyClassModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1611,6 +1616,7 @@
 		224AE70724A056DD009EAB06 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				224F2D3124A1EE0100B00E1E /* YXMyClassRequestManager.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -4359,6 +4365,7 @@
 				77AA41C524065A6700473A71 /* YXGuideModel.swift in Sources */,
 				222AED89239F3AEE00E2E489 /* YXReviewSelectedWordCell.swift in Sources */,
 				CF0BD8CD240134A400FE9AA6 /* YXRedDotView.swift in Sources */,
+				224F2D3224A1EE0100B00E1E /* YXMyClassRequestManager.swift in Sources */,
 				773452CA236A7EFA00801FDD /* YXAccountInfoView.swift in Sources */,
 				EE54F7CE2362AA3100EC605A /* YXExerciseViewFactory.swift in Sources */,
 				22F8212123B34B4800CC3379 /* YXMakeReviewPlanViewController.swift in Sources */,
@@ -4631,6 +4638,7 @@
 				77252A7123628909007D86A0 /* YXSelectGradeView.swift in Sources */,
 				77F69A7A23617CCB00E55185 /* YXHomeStudyDataCell.swift in Sources */,
 				EE5E00FB23274FEC00655654 /* YXFeedSendModel.m in Sources */,
+				224F2D3024A1E3DD00B00E1E /* YXMyClassModel.swift in Sources */,
 				EE5EF20323273BAE00655654 /* NSArray+YR.m in Sources */,
 				EE5EFCE923274E5500655654 /* YXTipsBaseView.m in Sources */,
 				CF0BD8D42402720700FE9AA6 /* YXFeedbackCell.swift in Sources */,

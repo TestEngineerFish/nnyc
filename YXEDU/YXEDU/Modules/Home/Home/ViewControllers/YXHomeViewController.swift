@@ -181,6 +181,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         NotificationCenter.default.addObserver(self, selector: #selector(updateTaskCenterStatus), name: YXNotification.kUpdateTaskCenterBadge, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(playSquirrelAnimation), name: YXNotification.kSquirrelAnimation, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateMyClassStatus), name: YXNotification.kUpdateMyClassStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMyClassStatus), name: YXNotification.kJoinClass, object: nil)
     }
     
     // MARK: ---- Request ----
@@ -202,10 +203,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
             self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
             self.studyDataCollectionView.reloadData()
+
             YXUserModel.default.currentBookId   = self.homeModel.bookId
             YXUserModel.default.currentGrade    = self.homeModel.bookGrade
-            self.handleTabData()
+            YXUserModel.default.isJoinClass     = self.homeModel.isJoinClass
+            YXUserModel.default.hasNewWork      = self.homeModel.hasHomework
 
+            self.handleTabData()
             self.initDataManager()
             self.uploadGrowing()
             
@@ -367,8 +371,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        self.hidesBottomBarWhenPushed = false
 //        return
-        YXUserModel.default.hasClass = true
-        if YXUserModel.default.hasClass {
+        if YXUserModel.default.isJoinClass {
             self.hidesBottomBarWhenPushed = true
             let vc = YXMyClassViewController()
             self.navigationController?.pushViewController(vc, animated: true)
@@ -377,7 +380,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let alertView = YXAlertView(type: .inputable, placeholder: "请输入班级号")
             alertView.titleLabel.text = "如果您有老师的班级号，输入后即可加入班级"
             alertView.doneClosure = {(classNumer: String?) in
-                YXLog("班级号：\(classNumer ?? "")")
+                YXUserDataManager.share.joinClass(code: classNumer)
             }
             alertView.textCountLabel.isHidden = true
             alertView.textMaxLabel.isHidden   = true
