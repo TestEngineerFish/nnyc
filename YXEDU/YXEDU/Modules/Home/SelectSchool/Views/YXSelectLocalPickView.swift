@@ -132,34 +132,25 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        var title = ""
-        var selectFirst = pickerView.selectedRow(inComponent: 0)
-        if selectFirst >= self.cityList.count {
-            selectFirst = 0
-        }
-        let cityModel  = self.cityList[selectFirst]
-        var selectSecond = pickerView.selectedRow(inComponent: 1)
-        if selectSecond >= cityModel.areaList.count {
-            selectSecond = 0
-        }
-        let areaModel  = cityModel.areaList[selectSecond]
-        var selectThirdly = pickerView.selectedRow(inComponent: 2)
-        if selectThirdly >= areaModel.localList.count {
-            selectThirdly = 0
-        }
-        let localModel = areaModel.localList[selectThirdly]
         switch component {
         case 0:
-            title = cityModel.name
+            let cityModel = self.cityList[row]
+            return cityModel.name
         case 1:
-            title = areaModel.name
+            let cityIndex  = pickerView.selectedRow(inComponent: 0)
+            let cityModel  = self.cityList[cityIndex]
+            let areaModel  = cityModel.areaList[row]
+            return areaModel.name
         case 2:
-            title = localModel.name
+            let cityIndex  = pickerView.selectedRow(inComponent: 0)
+            let cityModel  = self.cityList[cityIndex]
+            let areaIndex  = pickerView.selectedRow(inComponent: 1)
+            let areaModel  = cityModel.areaList[areaIndex]
+            let localModel = areaModel.localList[row]
+            return localModel.name
         default:
-            title = ""
+            return ""
         }
-        YXLog(title)
-        return title
     }
 
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
