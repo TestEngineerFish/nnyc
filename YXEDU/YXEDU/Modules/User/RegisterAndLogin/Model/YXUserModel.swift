@@ -134,6 +134,15 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: YXLocalKey.currentChooseBookId) as? Int
         }
     }
+
+    var isJoinSchool: Bool {
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.isJoinSchool)
+        }
+        get {
+            return YYCache.object(forKey: YXLocalKey.isJoinSchool) as? Bool ?? false
+        }
+    }
     /// 是否已加入班级
     var isJoinClass: Bool {
         set {

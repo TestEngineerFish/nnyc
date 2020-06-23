@@ -27,22 +27,24 @@ struct YXReviewResultModel: Mappable {
     /// 完成状态
     var state: Bool = false
     var words: [YXWordModel]?
+    var sharedPeople: Int = 0
     
     init?(map: Map) {
     }
 
     mutating func mapping(map: Map) {
         processStatus <- map["count_status"]
-        state <- map["plan_status"]
-        type <- (map["learn_type"], EnumTransform<YXLearnType>())
-        planName <- map["learn_name"]
-        allWordNum <- map["all_words_num"]
-        knowWordNum <- map["know_words_num"]
+        state         <- map["plan_status"]
+        type          <- (map["learn_type"], EnumTransform<YXLearnType>())
+        planName      <- map["learn_name"]
+        allWordNum    <- map["all_words_num"]
+        knowWordNum   <- map["know_words_num"]
         remainWordNum <- map["remain_words_num"]
-        score <- map["score"]
-        studyDay <- map["study_day"]
-        isShowCoin <- map["is_show_coin"]
-        words <- map["list"]
+        score         <- map["score"]
+        studyDay      <- map["study_day"]
+        isShowCoin    <- map["is_show_coin"]
+        words         <- map["list"]
+        sharedPeople  <- map["which_people"]
     }
     
 }
@@ -81,6 +83,7 @@ struct YXExerciseResultDisplayModel {
     /// 需要加强的单词
     var words: [YXWordModel]?
     var unitList: [YXLearnMapUnitModel]?
+    var sharedPeople: Int = 0
     
     static func displayModel(model: YXReviewResultModel) -> YXExerciseResultDisplayModel {
         var displayModel = YXExerciseResultDisplayModel()
@@ -95,7 +98,7 @@ struct YXExerciseResultDisplayModel {
         displayModel.isShowCoin = model.isShowCoin
         displayModel.state = model.state
         displayModel.words = model.words
-        
+        displayModel.sharedPeople = model.sharedPeople
         return displayModel
     }
     

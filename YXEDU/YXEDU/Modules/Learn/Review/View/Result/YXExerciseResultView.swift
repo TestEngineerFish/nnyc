@@ -101,7 +101,11 @@ class YXExerciseResultView: YXView {
             remindButton.setTitleColor(.orange1, for: .normal)
             remindButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(13))
             remindButton.setImage(UIImage(named: "iconRemindIcon"), for: .normal)
-            remindButton.setTitle(" 成为第一位打卡学员吧！", for: .normal)
+            if model.sharedPeople == 0 {
+                remindButton.setTitle(" 成为第一位打卡学员吧！", for: .normal)
+            } else {
+                remindButton.setTitle(" \(model.sharedPeople)人已打卡", for: .normal)
+            }
         }
     }
     

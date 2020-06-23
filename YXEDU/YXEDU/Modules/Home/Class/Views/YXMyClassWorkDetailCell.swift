@@ -112,7 +112,7 @@ class YXMyClassWorkDetailCell: UITableViewCell {
             let textLabel: UILabel = {
                 let label = UILabel()
                 label.text          = "全对"
-                label.textColor     = UIColor.red1
+                label.textColor     = UIColor.hex(0x7ACC33)
                 label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
                 label.textAlignment = .left
                 return label

@@ -180,7 +180,8 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
     }
 
     func toNextView() {
-
+        let vc = YXAddBookGuideViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     // MARK: ==== Request ====

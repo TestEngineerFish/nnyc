@@ -154,9 +154,8 @@ class YXExerciseResultViewController: YXViewController {
         YXReviewDataManager().fetchReviewResult(type: dataType, planId: planId) { [weak self] (resultModel, error) in
             guard let self = self else {return}
             
-            if var model = resultModel {                             
+            if var model = resultModel {
                 model.planId = self.planId
-
                 let m = YXExerciseResultDisplayModel.displayModel(model: model)
                 self.model = m
                 self.initResultView()
@@ -164,7 +163,6 @@ class YXExerciseResultViewController: YXViewController {
                 UIView.toast("请求数据失败")
                 self.navigationController?.popViewController(animated: true)
             }
-            
         }
     }
 

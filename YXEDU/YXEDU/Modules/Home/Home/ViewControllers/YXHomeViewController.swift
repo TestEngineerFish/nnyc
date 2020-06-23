@@ -245,7 +245,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func checkUserState() {
         YXUserDataManager.share.updateUserInfomation { [weak self] (userInfomation) in
             guard let self = self else { return }
-            if userInfomation.didSelectBook == 0 {
+            if !YXUserModel.default.isJoinSchool {
+                let vc = YXSelectSchoolViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else if userInfomation.didSelectBook == 0 {
                 self.performSegue(withIdentifier: "AddBookGuide", sender: self)
             } else {
                 self.navigationController?.interactivePopGestureRecognizer?.delegate = nil

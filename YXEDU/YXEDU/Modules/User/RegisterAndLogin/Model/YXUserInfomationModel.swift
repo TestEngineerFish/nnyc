@@ -32,6 +32,7 @@ struct YXUserInfomationModel: Mappable {
     var oldUserUpdateMessage: String?
     var coinExplainUrl: String?  //松果币H5文件
     var gameExplainUrl: String? //游戏挑战H5文件
+    var isJoinSchool: Bool = true
     var reminder: YXReminderModel?
 
     init?(map: Map) {
@@ -45,5 +46,6 @@ struct YXUserInfomationModel: Mappable {
         coinExplainUrl       <- map["coin_explain_url"]
         gameExplainUrl       <- map["game_explain_url"]
         reminder             <- map["learn_remind"]
+        isJoinSchool         <- map["is_join_school"]
     }
 }

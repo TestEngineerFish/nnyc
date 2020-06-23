@@ -51,6 +51,8 @@ enum YXLocalKey: String {
     case hasNewWork                    = "kHasNewWork"
     /// 是否已加入班级
     case isJoinClass                   = "kIsJoinClass"
+    /// 是否加入了学校
+    case isJoinSchool                  = "kIsJoinSchool"
 }
 
 
