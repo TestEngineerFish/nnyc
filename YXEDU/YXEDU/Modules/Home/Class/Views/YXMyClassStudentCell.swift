@@ -11,6 +11,7 @@ import Foundation
 class YXMyClassStudentCell: UITableViewCell {
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
+        imageView.image = UIImage(named: "userPlaceHolder")
         return imageView
     }()
     var nameLabel: UILabel = {
@@ -29,6 +30,11 @@ class YXMyClassStudentCell: UITableViewCell {
         label.textAlignment = .right
         return label
     }()
+    var lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black4
+        return view
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,6 +50,7 @@ class YXMyClassStudentCell: UITableViewCell {
         self.addSubview(avatarImageView)
         self.addSubview(nameLabel)
         self.addSubview(descLabel)
+        self.addSubview(lineView)
         avatarImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
             make.size.equalTo(CGSize(width: AdaptSize(48), height: AdaptSize(48)))
@@ -61,11 +68,18 @@ class YXMyClassStudentCell: UITableViewCell {
             make.width.equalTo(AdaptSize(73))
             make.height.equalTo(AdaptSize(17))
         }
+        lineView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(78))
+            make.right.equalToSuperview().offset(AdaptSize(-15))
+            make.height.equalTo(AdaptSize(0.5))
+            make.bottom.equalToSuperview()
+        }
         avatarImageView.layer.cornerRadius  = AdaptSize(24)
         avatarImageView.layer.masksToBounds = true
     }
 
     private func bindProperty() {
+        self.selectionStyle = .none
         self.separatorInset = UIEdgeInsets(top: 0, left: AdaptSize(78), bottom: 0, right: AdaptSize(15))
     }
 

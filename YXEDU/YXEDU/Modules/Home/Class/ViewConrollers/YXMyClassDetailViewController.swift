@@ -13,6 +13,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
     var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
+        tableView.separatorColor = .clear
         return tableView
     }()
 
