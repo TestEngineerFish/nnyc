@@ -246,8 +246,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         YXUserDataManager.share.updateUserInfomation { [weak self] (userInfomation) in
             guard let self = self else { return }
             if !YXUserModel.default.isJoinSchool {
+                self.hidesBottomBarWhenPushed = true
                 let vc = YXSelectSchoolViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
+                self.hidesBottomBarWhenPushed = false
             } else if userInfomation.didSelectBook == 0 {
                 self.performSegue(withIdentifier: "AddBookGuide", sender: self)
             } else {

@@ -40,12 +40,12 @@ struct YXUserInfomationModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
+        isJoinSchool         <- map["is_join_school"]
         oldUserUpdateMessage <- map["old_user_update_msg"]
         didBindPhone         <- map["is_bind_mobile"]
         didSelectBook        <- map["is_selected_book"]
         coinExplainUrl       <- map["coin_explain_url"]
         gameExplainUrl       <- map["game_explain_url"]
         reminder             <- map["learn_remind"]
-        isJoinSchool         <- map["is_join_school"]
     }
 }
