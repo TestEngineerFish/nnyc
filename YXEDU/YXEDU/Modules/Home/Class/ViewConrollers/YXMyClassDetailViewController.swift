@@ -10,7 +10,6 @@ import Foundation
 
 class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var dataList = [1, 2, 3]
     var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
@@ -52,10 +51,14 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         return button
     }()
 
+    var classId: Int?
+    var classDetailModel: YXMyClassDetailModel?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubviews()
         self.bindProprety()
+        self.requestData()
     }
 
     private func createSubviews() {
@@ -94,6 +97,18 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         self.backgroundView.addGestureRecognizer(hideTap)
         self.leaveButton.addTarget(self, action: #selector(leaveClass), for: .touchUpInside)
         self.cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
+    }
+
+    // MARK: ==== Request ====
+    private func requestData() {
+        guard let id = self.classId else { return }
+        let request = YXMyClassRequestManager.classDetail(id: id)
+        YYNetworkService.default.request(YYStructResponse<YXMyClassDetailModel>.self, request: request, success: { (response) in
+            self.classDetailModel = response.data
+            self.tableView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
     }
 
     // TODO: ==== Event ====
@@ -146,7 +161,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
     // MARK: ==== UITableViewDelegate && UITableViewDataSource ====
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.classDetailModel?.studentModelList.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -159,15 +174,16 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = YXMyClassDetailHeaderView()
-        headerView.setData()
+        headerView.setData(class: self.classDetailModel)
         return headerView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXMyClassStudentCell", for: indexPath) as? YXMyClassStudentCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXMyClassStudentCell", for: indexPath) as? YXMyClassStudentCell, let detailModel = self.classDetailModel else {
             return UITableViewCell()
         }
-        cell.setData()
+        let model = detailModel.studentModelList[indexPath.row]
+        cell.setData(student: model)
         return cell
     }
 }

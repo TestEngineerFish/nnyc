@@ -138,13 +138,16 @@ class YXMyClassDetailHeaderView: YXView {
         self.copyButton.addTarget(self, action: #selector(copyNumber), for: .touchUpInside)
     }
 
-    func setData() {
-        self.numberLabel.text = "5121654"
-        let subtitleLabelAttriText = NSMutableAttributedString(string: "班级成员 （20）", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black3, NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(14))])
+    func setData(class model: YXMyClassDetailModel?) {
+        guard let _model = model else {
+            return
+        }
+        self.numberLabel.text = _model.code
+        let subtitleLabelAttriText = NSMutableAttributedString(string: "班级成员 （\(_model.studentCount)）", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black3, NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(14))])
         subtitleLabelAttriText.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.mediumFont(ofSize: AdaptFontSize(15))], range: NSRange(location: 0, length: 4))
         self.subtitleLabel.attributedText = subtitleLabelAttriText
-        self.nameLabel.text     = "班级名称班级名称班级名称班级名称班级名称班级名称班级名称班级名称班级名称班级名称班级名称班级名称班级名称班级名称"
-        self.campusLabel.text   = "松鼠AI家校通测试校区"
+        self.nameLabel.text     = _model.className
+        self.campusLabel.text   = _model.schoolName
         self.createSubviews()
     }
 

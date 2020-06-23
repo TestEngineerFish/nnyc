@@ -270,9 +270,11 @@ struct YXAPI {
     // MARK: - MyClass
     struct MyClass {
         /// 作业列表接口
-        static let workList  = "/api/v1/class/work/list"
+        static let workList    = "/api/v1/class/work/list"
         /// 班级列表接口
-        static let classList = "/api/v1/class/list"
+        static let classList   = "/api/v1/class/list"
+        /// 班级详情
+        static let classDetail = "/api/v1/class/detail"
     }
 }
 

@@ -12,12 +12,13 @@ import Foundation
 public enum YXMyClassRequestManager: YYBaseRequest {
     case workList
     case classList
+    case classDetail(id: Int)
 }
 
 extension YXMyClassRequestManager {
     var method: YYHTTPMethod {
         switch self {
-        case .workList, .classList:
+        case .workList, .classList, .classDetail:
             return .get
         }
     }
@@ -30,6 +31,8 @@ extension YXMyClassRequestManager {
             return YXAPI.MyClass.workList
         case .classList:
             return YXAPI.MyClass.classList
+        case .classDetail:
+            return YXAPI.MyClass.classDetail
         }
     }
 }
@@ -37,6 +40,8 @@ extension YXMyClassRequestManager {
 extension YXMyClassRequestManager {
     var parameters: [String : Any?]? {
         switch self {
+        case .classDetail(let id):
+            return ["class_id" : id]
         default:
             return nil
         }

@@ -97,3 +97,38 @@ struct YXMyWorkModel: Mappable {
         }
     }
 }
+
+struct YXMyClassDetailModel: Mappable {
+
+    var code: String       = ""
+    var className: String  = ""
+    var schoolName: String = ""
+    var studentCount: Int  = 0
+    var studentModelList   = [YXMyClassStudentInfoModel]()
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        code             <- map["class_code"]
+        className        <- map["class_name"]
+        schoolName       <- map["school_name"]
+        studentCount     <- map["count_student"]
+        studentModelList <- map["student_info"]
+    }
+}
+
+struct YXMyClassStudentInfoModel: Mappable {
+
+    var name: String      = ""
+    var avatarUrl: String = ""
+    var studentId: Int    = 0
+    var learnCount: Int   = 0
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        name       <- map["nick"]
+        avatarUrl  <- map["avatar"]
+        studentId  <- map["student_id"]
+        learnCount <- map["study_day"]
+    }
+}

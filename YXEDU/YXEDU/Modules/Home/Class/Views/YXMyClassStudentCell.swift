@@ -61,15 +61,17 @@ class YXMyClassStudentCell: UITableViewCell {
             make.width.equalTo(AdaptSize(73))
             make.height.equalTo(AdaptSize(17))
         }
+        avatarImageView.layer.cornerRadius  = AdaptSize(24)
+        avatarImageView.layer.masksToBounds = true
     }
 
     private func bindProperty() {
         self.separatorInset = UIEdgeInsets(top: 0, left: AdaptSize(78), bottom: 0, right: AdaptSize(15))
     }
 
-    func setData() {
-        self.avatarImageView.showImage(with: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1601482904,1022427523&fm=26&gp=0.jpg", placeholder: UIImage(named: "userPlaceHolder"), progress: nil, completion: nil)
-        self.nameLabel.text = "王大锤"
-        self.descLabel.text = "本月学习18天"
+    func setData(student model: YXMyClassStudentInfoModel) {
+        self.avatarImageView.showImage(with: model.avatarUrl, placeholder: UIImage(named: "userPlaceHolder"), progress: nil, completion: nil)
+        self.nameLabel.text = model.name
+        self.descLabel.text = "本月学习\(model.learnCount)天"
     }
 }
