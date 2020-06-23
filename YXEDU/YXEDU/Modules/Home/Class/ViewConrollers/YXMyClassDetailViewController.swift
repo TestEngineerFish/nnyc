@@ -95,7 +95,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         self.customNavigationBar?.rightButton.addTarget(self, action: #selector(showSheetView), for: .touchUpInside)
         let hideTap = UITapGestureRecognizer(target: self, action: #selector(hideSheepView))
         self.backgroundView.addGestureRecognizer(hideTap)
-        self.leaveButton.addTarget(self, action: #selector(leaveClass), for: .touchUpInside)
+        self.leaveButton.addTarget(self, action: #selector(leaveAction), for: .touchUpInside)
         self.cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
     }
 
@@ -106,6 +106,18 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         YYNetworkService.default.request(YYStructResponse<YXMyClassDetailModel>.self, request: request, success: { (response) in
             self.classDetailModel = response.data
             self.tableView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
+    private func leaveClass() {
+        guard let id = self.classId else { return }
+        let request = YXMyClassRequestManager.leaveClass(id: id)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            self.navigationController?.popViewController(animated: true)
+            // 刷新列表
+            NotificationCenter.default.post(name: YXNotification.kJoinClass, object: nil)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
@@ -137,7 +149,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         }
     }
 
-    @objc private func leaveClass() {
+    @objc private func leaveAction() {
         self.hideSheepView()
         let alertView = YXAlertView(type: .normal)
         alertView.descriptionLabel.text = "是否确认退出班级？"
@@ -148,7 +160,9 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         alertView.rightOrCenterButton.setTitleColor(UIColor.black1, for: .normal)
         alertView.rightOrCenterButton.backgroundColor   = UIColor.clear
         alertView.rightOrCenterButton.layer.borderColor = UIColor.black6.cgColor
+        alertView.rightOrCenterButton.layer.borderWidth = AdaptSize(0.5)
         alertView.cancleClosure = {
+            self.leaveClass()
             YXLog("退出班级")
         }
         alertView.show()

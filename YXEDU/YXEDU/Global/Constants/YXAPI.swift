@@ -275,6 +275,8 @@ struct YXAPI {
         static let classList   = "/api/v1/class/list"
         /// 班级详情
         static let classDetail = "/api/v1/class/detail"
+        /// 退出班级
+        static let leaveClass  = "/api/v1/class/delete"
     }
 }
 
