@@ -21,7 +21,7 @@ class YXMyClassDetailHeaderView: YXView {
 
     var numberTitleLabel: UILabel = {
         let label = UILabel()
-        label.text          = "班号"
+        label.text          = "班号："
         label.textColor     = UIColor.black3
         label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .center

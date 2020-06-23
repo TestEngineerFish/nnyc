@@ -62,9 +62,9 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         let request = YXRegisterAndLoginRequest.login(platfrom: "mobile", phoneNumber: phoneNumberTextField.text ?? "", code: authCodeTextField.text ?? "")
         YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let data = response.data else { return }
-            
-            YXUserModel.default.token = data.token
+
             YXUserModel.default.uuid  = data.uuid
+            YXUserModel.default.token = data.token
             YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
 
@@ -291,9 +291,9 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         let request = YXRegisterAndLoginRequest.thirdLogin(platfrom: self.platform, openId: (userInfo["openID"] as? String) ?? "", code: (userInfo["token"] as? String) ?? "")
         YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let data = response.data else { return }
-            
-            YXUserModel.default.token = data.token
+
             YXUserModel.default.uuid  = data.uuid
+            YXUserModel.default.token = data.token
             YXUserModel.default.userName = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
 
@@ -354,9 +354,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                     CLShanYanSDKManager.finishAuthControllerCompletion(nil)
                                     return
                                 }
-                                
-                                YXUserModel.default.token = data.token
                                 YXUserModel.default.uuid  = data.uuid
+                                YXUserModel.default.token = data.token
                                 YXUserModel.default.userName = data.info?.username
                                 YXUserModel.default.userAvatarPath = data.info?.avatar
 
