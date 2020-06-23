@@ -254,11 +254,18 @@ struct YXAPI {
 
     // MARK: - Calendar
     struct Calendar {
-
         /// 获得月报学习时间列表
         static let getMonthly = "/api/v1/daily/getmonthly"
         
         static let getDayInfo = "/api/v1/daily/getdayinfo"
+    }
+
+    // MARK: - Search School
+    struct SelectSchool {
+        /// 搜索学校列表
+        static let searchSchool = "/api/v1/school/list"
+        /// 提交学生所属的学校
+        static let submit = "/api/v1/school/create"
     }
 }
 

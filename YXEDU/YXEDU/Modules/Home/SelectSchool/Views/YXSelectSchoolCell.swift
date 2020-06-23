@@ -51,15 +51,16 @@ class YXSelectSchoolCell: UITableViewCell {
         }
     }
 
-    func setData(school name: String) {
-        self.nameLable.text = name
-        let nameLabelHeight = name.textHeight(font: nameLable.font, width: screenWidth - AdaptSize(66))
+    func setData(school model: YXLocalModel) {
+        self.nameLable.text = model.name
+        let nameLabelHeight = model.name.textHeight(font: nameLable.font, width: screenWidth - AdaptSize(66))
         self.nameLable.snp.updateConstraints { (make) in
             make.height.equalTo(nameLabelHeight)
         }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
         self.nameLable.textColor    = selected ? UIColor.black1 : UIColor.gray3
         self.iconImageView.isHidden = !selected
     }

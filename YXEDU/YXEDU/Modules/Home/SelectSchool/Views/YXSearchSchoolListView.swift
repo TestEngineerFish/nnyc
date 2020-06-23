@@ -8,7 +8,7 @@
 
 import Foundation
 
-class YXSearchSchoolListView: YXView, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class YXSearchSchoolListView: YXView {
 
     var cancelButton: UIButton = {
         let button = UIButton()
@@ -72,9 +72,6 @@ class YXSearchSchoolListView: YXView, UITextFieldDelegate, UITableViewDelegate, 
     override func bindProperty() {
         super.bindProperty()
         self.backgroundColor      = .white
-        self.textField.delegate   = self
-        self.tableView.delegate   = self
-        self.tableView.dataSource = self
         self.searchBackgroundView.layer.cornerRadius  = AdaptSize(6)
         self.searchBackgroundView.layer.masksToBounds = true
         self.tableView.register(YXSelectSchoolCell.classForCoder(), forCellReuseIdentifier: "kYXSelectSchoolCell")
@@ -132,26 +129,5 @@ class YXSearchSchoolListView: YXView, UITextFieldDelegate, UITableViewDelegate, 
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(searchBackgroundView.snp.bottom)
         }
-    }
-
-    // MARK: ==== UITableViewDelegate && UITableViewDataSource ====
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXSelectSchoolCell", for: indexPath) as? YXSelectSchoolCell else {
-            return UITableViewCell()
-        }
-        cell.setData(school: "学校名称学校名称学校名称学校名称学校名称学校名称学校名称学校名称学校名称学校名称学校名称学校名称学校名称学校名称学校名称")
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.estimatedRowHeight
     }
 }

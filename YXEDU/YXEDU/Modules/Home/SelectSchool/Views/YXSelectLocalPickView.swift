@@ -8,7 +8,7 @@
 
 import Foundation
 
-class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSource {
+class YXSelectLocalPickView: YXView {
     var cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("取消", for: .normal)
@@ -41,8 +41,6 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
         return pickerView
     }()
 
-    var cityList = [YXCityModel]()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.bindProperty()
@@ -56,20 +54,6 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
     override func bindProperty() {
         super.bindProperty()
         self.backgroundColor     = .white
-        self.pickerView.delegate = self
-        self.cityList.removeAll()
-        do {
-            let path = Bundle.main.path(forResource: "city", ofType: "json") ?? ""
-            let data = try Data(contentsOf: URL(fileURLWithPath: path))
-            let jsonArray = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? Array<[String:Any]>
-            jsonArray?.forEach({ (dict:[String:Any]) in
-                if let cityModel = YXCityModel(JSON: dict) {
-                    self.cityList.append(cityModel)
-                }
-            })
-        } catch {
-            cityList = []
-        }
     }
 
     override func createSubviews() {
@@ -106,68 +90,4 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
         }
     }
 
-    // MARK: ==== UIPickerViewDelegate && UIPickerViewDataSource ====
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 3
-    }
-
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if self.cityList.isEmpty {
-            return 0
-        }
-        switch component {
-        case 0:
-            return self.cityList.count
-        case 1:
-            let cityModel = self.cityList[pickerView.selectedRow(inComponent: 0)]
-            return cityModel.areaList.count
-        case 2:
-            let cityModel = self.cityList[pickerView.selectedRow(inComponent: 0)]
-            let areaModel = cityModel.areaList[pickerView.selectedRow(inComponent: 1)]
-            return areaModel.localList.count
-        default:
-            return 0
-        }
-
-    }
-
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch component {
-        case 0:
-            let cityModel = self.cityList[row]
-            return cityModel.name
-        case 1:
-            let cityIndex  = pickerView.selectedRow(inComponent: 0)
-            let cityModel  = self.cityList[cityIndex]
-            let areaModel  = cityModel.areaList[row]
-            return areaModel.name
-        case 2:
-            let cityIndex  = pickerView.selectedRow(inComponent: 0)
-            let cityModel  = self.cityList[cityIndex]
-            let areaIndex  = pickerView.selectedRow(inComponent: 1)
-            let areaModel  = cityModel.areaList[areaIndex]
-            let localModel = areaModel.localList[row]
-            return localModel.name
-        default:
-            return ""
-        }
-    }
-
-    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        return screenWidth / 3
-    }
-
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return AdaptSize(47)
-    }
-
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if component == 0 {
-            self.pickerView.reloadComponent(1)
-            self.pickerView.reloadComponent(2)
-        } else if component == 1 {
-            self.pickerView.reloadComponent(2)
-        }
-        YXLog(row)
-    }
 }

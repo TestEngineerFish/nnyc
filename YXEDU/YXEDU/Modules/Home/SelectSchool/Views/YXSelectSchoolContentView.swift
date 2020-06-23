@@ -139,9 +139,25 @@ class YXSelectSchoolContentView: YXView {
             make.top.equalTo(localBottomLineView.snp.bottom).offset(AdaptSize(20))
         }
         schoolBottomLineView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
+            make.left.right.equalTo(schoolLabel)
             make.height.equalTo(AdaptSize(0.5))
             make.top.equalTo(schoolLabel.snp.bottom).offset(AdaptSize(10))
+        }
+    }
+
+    // MARK: ==== Event ====
+    func setSelectLocal(local: String?) {
+        self.localLabel.text      = local
+        self.localLabel.textColor = UIColor.black1
+    }
+
+    func setSelectSchool(school: String?) {
+        if school == nil {
+            self.schoolLabel.text      = "请选择学校名称，优先安排试听课"
+            self.schoolLabel.textColor = UIColor.black6
+        } else {
+            self.schoolLabel.text      = school
+            self.schoolLabel.textColor = UIColor.black1
         }
     }
 }

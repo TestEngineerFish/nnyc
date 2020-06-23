@@ -161,6 +161,7 @@
 		22E70D4924A0D45A0039C634 /* YXSelectLocalPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E70D4824A0D45A0039C634 /* YXSelectLocalPickView.swift */; };
 		22E70D4B24A0D50C0039C634 /* city.json in Resources */ = {isa = PBXBuildFile; fileRef = 22E70D4A24A0D50C0039C634 /* city.json */; };
 		22E70D4D24A0D5E70039C634 /* YXCityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E70D4C24A0D5E70039C634 /* YXCityModel.swift */; };
+		22E70D4F24A1ABF30039C634 /* YXSelectSchoolRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E70D4E24A1ABF20039C634 /* YXSelectSchoolRequestManager.swift */; };
 		22E9FFC42473BF6B006B6F60 /* YXOCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E9FFC32473BF6B006B6F60 /* YXOCModel.swift */; };
 		22E9FFC62473BF80006B6F60 /* YXOCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E9FFC52473BF80006B6F60 /* YXOCRequest.swift */; };
 		22EA336F24A091380034CD7E /* YXSelectSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EA336E24A091380034CD7E /* YXSelectSchoolViewController.swift */; };
@@ -769,6 +770,7 @@
 		22E70D4824A0D45A0039C634 /* YXSelectLocalPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectLocalPickView.swift; sourceTree = "<group>"; };
 		22E70D4A24A0D50C0039C634 /* city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.json; sourceTree = "<group>"; };
 		22E70D4C24A0D5E70039C634 /* YXCityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCityModel.swift; sourceTree = "<group>"; };
+		22E70D4E24A1ABF20039C634 /* YXSelectSchoolRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectSchoolRequestManager.swift; sourceTree = "<group>"; };
 		22E9FFB824738570006B6F60 /* YXNetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNetworkRequest.swift; sourceTree = "<group>"; };
 		22E9FFBA247387AA006B6F60 /* YXNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNetworkModel.swift; sourceTree = "<group>"; };
 		22E9FFC32473BF6B006B6F60 /* YXOCModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXOCModel.swift; sourceTree = "<group>"; };
@@ -1934,6 +1936,7 @@
 		22EA337424A091940034CD7E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				22E70D4E24A1ABF20039C634 /* YXSelectSchoolRequestManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -4578,6 +4581,7 @@
 				7709753323992FF70071A779 /* YXWordDetailFeaturedView.swift in Sources */,
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
 				224A2FC7238233E100AD99B0 /* YXTaskMapView.swift in Sources */,
+				22E70D4F24A1ABF30039C634 /* YXSelectSchoolRequestManager.swift in Sources */,
 				77B0A59B23ACB4750093A181 /* YXSettingsViewController.swift in Sources */,
 				77626BF0239DFE1100B9407A /* YXWordListViewController.swift in Sources */,
 				77F69A662361499E00E55185 /* YXSelectBookViewController.swift in Sources */,
