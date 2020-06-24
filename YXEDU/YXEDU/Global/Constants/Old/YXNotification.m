@@ -17,7 +17,6 @@ NSString *const kSaveWordListSuccessNotify      = @"SaveWordListSuccessNotify";
 NSString *const kYXShareCallBackNotify          = @"YXShareCallBackNotify";
 NSString *const kOffNetworkNotify               = @"OffNetworkNotify";
 NSString *const kNetworkConnectedNotify         = @"NetworkConnectedNotify";
-NSString *const kLogoutNotify                   = @"LogoutNotify";
 NSString *const kUploadExericiseResultNotify    = @"UploadExericiseResultNotify";
 NSString *const kDailyCheckInNotify             = @"DailyCheckInNotify";//每天是否签到
 

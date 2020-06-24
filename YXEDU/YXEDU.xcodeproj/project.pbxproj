@@ -510,9 +510,7 @@
 		EE5EF25C232740B800655654 /* UIViewController+YXTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF24C232740B700655654 /* UIViewController+YXTrace.m */; };
 		EE5EF25D232740B800655654 /* UIColor+YXCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF24E232740B700655654 /* UIColor+YXCustom.m */; };
 		EE5EF25E232740B800655654 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF24F232740B800655654 /* NSDate+Extension.m */; };
-		EE5EF2B42327423F00655654 /* YXModelArchiverManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF2A82327423F00655654 /* YXModelArchiverManager.m */; };
 		EE5EF2B52327423F00655654 /* YXFileDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF2A92327423F00655654 /* YXFileDBManager.m */; };
-		EE5EF2B62327423F00655654 /* YXInterfaceCacheService.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF2AB2327423F00655654 /* YXInterfaceCacheService.m */; };
 		EE5EF2B72327423F00655654 /* YXMaterialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EF2AE2327423F00655654 /* YXMaterialModel.m */; };
 		EE5EFC4C23274BBB00655654 /* YXPolicyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3823274BBB00655654 /* YXPolicyVC.m */; };
 		EE5EFC5823274D0F00655654 /* nnyc_dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE5EFC5623274D0F00655654 /* nnyc_dev.plist */; };
@@ -1175,11 +1173,7 @@
 		EE5EF24F232740B800655654 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		EE5EF250232740B800655654 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		EE5EF2A62327423F00655654 /* YXFileDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXFileDBManager.h; sourceTree = "<group>"; };
-		EE5EF2A72327423F00655654 /* YXInterfaceCacheService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXInterfaceCacheService.h; sourceTree = "<group>"; };
-		EE5EF2A82327423F00655654 /* YXModelArchiverManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXModelArchiverManager.m; sourceTree = "<group>"; };
 		EE5EF2A92327423F00655654 /* YXFileDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXFileDBManager.m; sourceTree = "<group>"; };
-		EE5EF2AA2327423F00655654 /* YXModelArchiverManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXModelArchiverManager.h; sourceTree = "<group>"; };
-		EE5EF2AB2327423F00655654 /* YXInterfaceCacheService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXInterfaceCacheService.m; sourceTree = "<group>"; };
 		EE5EF2AD2327423F00655654 /* YXMaterialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXMaterialModel.h; sourceTree = "<group>"; };
 		EE5EF2AE2327423F00655654 /* YXMaterialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXMaterialModel.m; sourceTree = "<group>"; };
 		EE5EFC3823274BBB00655654 /* YXPolicyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPolicyVC.m; sourceTree = "<group>"; };
@@ -3348,10 +3342,6 @@
 				EE772109237C1F8400CD632E /* YYMediaCache.swift */,
 				EE5EF2A62327423F00655654 /* YXFileDBManager.h */,
 				EE5EF2A92327423F00655654 /* YXFileDBManager.m */,
-				EE5EF2A72327423F00655654 /* YXInterfaceCacheService.h */,
-				EE5EF2AB2327423F00655654 /* YXInterfaceCacheService.m */,
-				EE5EF2AA2327423F00655654 /* YXModelArchiverManager.h */,
-				EE5EF2A82327423F00655654 /* YXModelArchiverManager.m */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -4199,7 +4189,6 @@
 				EE1E4A8A23694343007D248F /* YXLookWordChooseChineseExerciseView.swift in Sources */,
 				22EA336F24A091380034CD7E /* YXSelectSchoolViewController.swift in Sources */,
 				EE1E4A8E2369438C007D248F /* YXLookChineseChooseWordExerciseView.swift in Sources */,
-				EE5EF2B42327423F00655654 /* YXModelArchiverManager.m in Sources */,
 				22E9FFC62473BF80006B6F60 /* YXOCRequest.swift in Sources */,
 				2248AE3B239DEDDC003AADCF /* YXReviewWordViewCell.swift in Sources */,
 				EE6FB0B42366E95F00E96015 /* YXExerciseBottomView.swift in Sources */,
@@ -4530,7 +4519,6 @@
 				EE54F7E12362AA3100EC605A /* YXWordQuestionView.swift in Sources */,
 				22D6FA0023BDCAC900B05BC8 /* YXMakeReviewGuideView.swift in Sources */,
 				CF0BD8D22402715B00FE9AA6 /* YXFeedbackListViewController.swift in Sources */,
-				EE5EF2B62327423F00655654 /* YXInterfaceCacheService.m in Sources */,
 				224A2FCD238234C300AD99B0 /* YXTools.swift in Sources */,
 				77D2150C2367D7BA00E5FBF1 /* YXUserModel.swift in Sources */,
 				EE1E4A9C236948AB007D248F /* YXValidationWordAndChineseExerciseView.swift in Sources */,

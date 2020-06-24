@@ -183,9 +183,9 @@ class YXUserModel: NSObject {
         YYCache.set(nil, forKey: "LastStoredDate")
         YYCache.set(nil, forKey: "LastStoreTokenDate")
         YXUserModel.default.uuid  = nil
-        YXUserModel.default.token = nil
-        YXUserModel.default.currentBookId = nil
+        // 停止资源管理器队列任务
         YXWordBookResourceManager.stop    = true
+        // 断开数据库连接
         YYDataSourceManager.default.close()
         YYDataSourceQueueManager.default.close()
         YXMediator().loginOut()

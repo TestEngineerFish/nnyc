@@ -22,8 +22,6 @@ UIKIT_EXTERN NSString *const kOffNetworkNotify;
 UIKIT_EXTERN NSString *const kNetworkConnectedNotify;
 UIKIT_EXTERN NSString *const kUploadExericiseResultNotify;
 
-UIKIT_EXTERN NSString *const kLogoutNotify;
-
 UIKIT_EXTERN NSString *const kDailyCheckInNotify;//每天是否签到
 
 

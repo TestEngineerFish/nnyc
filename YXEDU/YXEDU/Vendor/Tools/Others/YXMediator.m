@@ -16,7 +16,6 @@
 #import "YXAPI.h"
 #import "NetWorkRechable.h"
 #import "YXUtils.h"
-#import "YXModelArchiverManager.h"
 #import "SJCall.h"
 #import "YXVersionModel.h"
 
@@ -48,8 +47,6 @@
 }
 
 - (void)clearData {
-    [[YXModelArchiverManager shared] clearAllMemory];
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kCurrentLearnWordListIdKey];
     [defaults setObject:kDefaultWordListName forKey:kUnfinishedWordListNameKey];
@@ -57,7 +54,6 @@
 }
 
 - (void)afterLogout {
-    [[YXModelArchiverManager shared] clearAllMemory];
     [self clearData];
     
     [[YXUserModel default] logout];
