@@ -185,7 +185,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateTaskCenterStatus), name: YXNotification.kUpdateTaskCenterBadge, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(playSquirrelAnimation), name: YXNotification.kSquirrelAnimation, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateMyClassStatus), name: YXNotification.kUpdateMyClassStatus, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateMyClassStatus), name: YXNotification.kJoinClass, object: nil)
     }
     
@@ -217,7 +216,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.handleTabData()
             self.initDataManager()
             self.uploadGrowing()
-            
+            self.subItemCollectionView.reloadData()
         }) { error in
             YXLog("获取主页基础数据失败：", error.localizedDescription)
         }
@@ -362,7 +361,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     @objc private func updateMyClassStatus() {
-        self.subItemCollectionView.reloadData()
+        self.loadData()
     }
     
     @IBAction func showLearnMap(_ sender: UIButton) {
@@ -390,6 +389,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 YXUserDataManager.share.joinClass(code: classNumer) { (result) in
                     if result {
                         alertView.removeFromSuperview()
+                        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
+                        let vc = YXMyClassViewController()
+                        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+                        YRRouter.sharedInstance().currentNavigationController()?.hidesBottomBarWhenPushed = false
                     }
                 }
                 YXLog("班级号：\(classNumer ?? "")")

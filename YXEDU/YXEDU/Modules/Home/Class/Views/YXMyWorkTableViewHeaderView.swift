@@ -82,7 +82,7 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
 
     // MARK: ==== UITableViewDeletegate && UITableViewDataSource ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.classList.count > 3 ? 3 : self.classList.count
+        return self.classList.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

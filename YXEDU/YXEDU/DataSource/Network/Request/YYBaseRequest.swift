@@ -41,7 +41,7 @@ extension YYBaseRequest {
 
     public var header: [String : String] {
         let _header = ["NNYC-TOKEN" : YXUserModel.default.token ?? "",
-                       "NNYC-REQUESTTIME" : YXConfigure.shared().time ?? "",
+                       "NNYC-REQUESTTIME" : YXUserModel.default.time,
                        "NNYC-PLATFORM" : kPlatformValue,
                        "NNYC-VERSION" : UIDevice().appVersion()?.replacingOccurrences(of: ".", with: "") ?? "",
                        "NNYC-VERSION-NAME" : UIDevice().appVersion() ?? ""]

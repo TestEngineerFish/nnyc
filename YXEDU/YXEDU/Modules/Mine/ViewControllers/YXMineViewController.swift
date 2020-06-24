@@ -342,13 +342,11 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             let alertController = UIAlertController(title: "选择音标和发音", message: nil, preferredStyle: .actionSheet)
             let englishAction = UIAlertAction(title: "英式音标和发音", style: .default) { (action) in
                 YXUserModel.default.didUseAmericanPronunciation = false
-                YXConfigure.shared().isUSVoice = false
                 self.loadData()
             }
             
             let usAction = UIAlertAction(title: "美式音标和发音", style: .default) { (action) in
                 YXUserModel.default.didUseAmericanPronunciation = true
-                YXConfigure.shared().isUSVoice = true
                 self.loadData()
             }
             

@@ -178,6 +178,7 @@ class YXExerciseServiceImpl: YXExerciseService {
 
             // 清除数据库对应数据
             self.cleanStudyRecord(hasNextGroup: response.data?.hasNextGroup ?? false)
+            self._loadStudyRecord()
             completion?(response.data, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
         }) { (error) in
             // 容错处理

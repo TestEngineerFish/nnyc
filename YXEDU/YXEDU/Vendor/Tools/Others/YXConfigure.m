@@ -19,11 +19,11 @@
 
 @implementation YXConfigure
 //@synthesize token =_token;
-@synthesize time = _time;
+//@synthesize time = _time;
 //@synthesize mobile = _mobile;
-@synthesize uuid = _uuid;
-@synthesize isShowGuideView = _isShowGuideView;
-@synthesize isUSVoice = _isUSVoice;
+//@synthesize uuid = _uuid;
+//@synthesize isShowGuideView = _isShowGuideView;
+//@synthesize isUSVoice = _isUSVoice;
 //@synthesize learningModel = _learningModel;
 
 + (instancetype)shared {
@@ -53,19 +53,19 @@
 //    return _mobile;
 //}
 
-- (NSString *)uuid {
-    if (_uuid.length) {
-        return _uuid;
-    }
-    _uuid = [[NSUserDefaults standardUserDefaults]objectForKey:@"uuid"];
-    return _uuid;
-}
-
-- (void)setUuid:(NSString *)uuid {
-    _uuid = uuid;
-    [[NSUserDefaults standardUserDefaults]setObject:uuid forKey:@"uuid"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
+//- (NSString *)uuid {
+//    if (_uuid.length) {
+//        return _uuid;
+//    }
+//    _uuid = [[NSUserDefaults standardUserDefaults]objectForKey:@"uuid"];
+//    return _uuid;
+//}
+//
+//- (void)setUuid:(NSString *)uuid {
+//    _uuid = uuid;
+//    [[NSUserDefaults standardUserDefaults]setObject:uuid forKey:@"uuid"];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+//}
 
 //- (void)setMobile:(NSString *)mobile {
 //    _mobile = mobile;
@@ -94,45 +94,45 @@
 //    return _token;
 //}
 
-- (void)setTime:(NSString *)time {
-    _time = time;
-    [[NSUserDefaults standardUserDefaults]setObject:time forKey:@"time"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
+//- (void)setTime:(NSString *)time {
+//    _time = time;
+//    [[NSUserDefaults standardUserDefaults]setObject:time forKey:@"time"];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+//}
 
-- (NSString *)time {
-    if (_time.length) {
-        return _time;
-    }
-    _time = [NSString stringWithFormat:@"%d", (int)[[NSDate alloc] init].timeIntervalSince1970];
-    return _time;
-}
+//- (NSString *)time {
+//    if (_time.length) {
+//        return _time;
+//    }
+//    _time = [NSString stringWithFormat:@"%d", (int)[[NSDate alloc] init].timeIntervalSince1970];
+//    return _time;
+//}
 
 - (NSString *)deviceId {
     return [YXUtils UUID];
 }
 
-- (BOOL)isShowGuideView {
-    _isShowGuideView = [[NSUserDefaults standardUserDefaults]boolForKey:@"isShowGuideView"];
-    return _isShowGuideView;
-}
+//- (BOOL)isShowGuideView {
+//    _isShowGuideView = [[NSUserDefaults standardUserDefaults]boolForKey:@"isShowGuideView"];
+//    return _isShowGuideView;
+//}
+//
+//- (void)setIsShowGuideView:(BOOL)isShowGuideView {
+//    _isShowGuideView = isShowGuideView;
+//    [[NSUserDefaults standardUserDefaults]setBool:isShowGuideView forKey:@"isShowGuideView"];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+//}
 
-- (void)setIsShowGuideView:(BOOL)isShowGuideView {
-    _isShowGuideView = isShowGuideView;
-    [[NSUserDefaults standardUserDefaults]setBool:isShowGuideView forKey:@"isShowGuideView"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
-
-- (BOOL)isUSVoice {
-    _isUSVoice = [[NSUserDefaults standardUserDefaults]boolForKey:@"isUSVoice"];
-    return _isUSVoice;
-}
-
-- (void)setIsUSVoice:(BOOL)isUSVoice {
-    _isUSVoice = isUSVoice;
-    [[NSUserDefaults standardUserDefaults]setBool:isUSVoice forKey:@"isUSVoice"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
+//- (BOOL)isUSVoice {
+//    _isUSVoice = [[NSUserDefaults standardUserDefaults]boolForKey:@"isUSVoice"];
+//    return _isUSVoice;
+//}
+//
+//- (void)setIsUSVoice:(BOOL)isUSVoice {
+//    _isUSVoice = isUSVoice;
+//    [[NSUserDefaults standardUserDefaults]setBool:isUSVoice forKey:@"isUSVoice"];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+//}
 
 // 设置学习的model
 //- (void)setLearningModel:(YXBookModel *)learningModel {
@@ -147,17 +147,17 @@
 //    return [[YXInterfaceCacheService shared]read:STRCAT(@"learningModel", userId)];
 //}
 
-- (void)setWordsInfos:(NSMutableArray *)wordsInfos {
-    _wordsInfos = [wordsInfos copy];
-    _wordsIds = nil;
-}
-
-- (NSArray *)wordsIds {
-    if (!_wordsIds) {
-        _wordsIds = [_wordsInfos valueForKey:@"wordid"];
-    }
-    return _wordsIds;
-}
+//- (void)setWordsInfos:(NSMutableArray *)wordsInfos {
+//    _wordsInfos = [wordsInfos copy];
+//    _wordsIds = nil;
+//}
+//
+//- (NSArray *)wordsIds {
+//    if (!_wordsIds) {
+//        _wordsIds = [_wordsInfos valueForKey:@"wordid"];
+//    }
+//    return _wordsIds;
+//}
 
 - (void)loginOut {
     [kNotificationCenter postNotificationName:kLogoutNotify object:nil];

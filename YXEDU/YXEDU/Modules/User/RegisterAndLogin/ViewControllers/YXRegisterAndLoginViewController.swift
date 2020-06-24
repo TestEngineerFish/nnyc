@@ -68,7 +68,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
 
-            YXConfigure.shared().uuid  = YXUserModel.default.uuid
             YXLog("当前用户Token=====", YXUserModel.default.token ?? "")
             self.checkUserInfomation()
             
@@ -301,9 +300,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.token = data.token
             YXUserModel.default.userName = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
-
-            YXConfigure.shared().uuid  = YXUserModel.default.uuid
-            
             self.checkUserInfomation()
             
         }) { error in
@@ -363,9 +359,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                 YXUserModel.default.token = data.token
                                 YXUserModel.default.userName = data.info?.username
                                 YXUserModel.default.userAvatarPath = data.info?.avatar
-
-                                YXConfigure.shared().uuid  = YXUserModel.default.uuid
-
                                 YXUserModel.default.didLogin = true
                                 Growing.setUserId(YXUserModel.default.uuid ?? "")
                                 YXUserModel.default.login()

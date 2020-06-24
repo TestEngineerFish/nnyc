@@ -68,6 +68,11 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .mobile) as? String
         }
     }
+    var time: String {
+        get {
+            return String(format: "%ld", Int(Date().timeIntervalSince1970))
+        }
+    }
     /// 用户头像地址
     var userAvatarPath: String? {
         set {

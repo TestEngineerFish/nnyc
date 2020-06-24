@@ -48,7 +48,6 @@ extension YXExerciseViewController {
                 return
             }
             YXLog("上报关卡成功")
-            self.service.initService()
             if model.hasNextGroup {
                 YXLog("还有下一组")
                 self.showLoadAnimation()
