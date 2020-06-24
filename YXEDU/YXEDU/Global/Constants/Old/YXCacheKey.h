@@ -18,9 +18,6 @@ UIKIT_EXTERN NSString *const kPlatformValue;
 
 UIKIT_EXTERN NSString *const kHadShowQuestionHintsAlertKey;
 
-
-UIKIT_EXTERN NSString * const kUnfinishedWordListNameKey;
-UIKIT_EXTERN NSString * const kCurrentLearnWordListIdKey;
 UIKIT_EXTERN NSString * const kDefaultWordListName;
 UIKIT_EXTERN NSString * const kWordListGuideViewShowedKey;
 UIKIT_EXTERN NSString * const kCheckIfShowedCareerGuide;

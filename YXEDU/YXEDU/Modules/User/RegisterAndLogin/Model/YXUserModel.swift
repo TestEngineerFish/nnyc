@@ -188,7 +188,6 @@ class YXUserModel: NSObject {
         // 断开数据库连接
         YYDataSourceManager.default.close()
         YYDataSourceQueueManager.default.close()
-        YXMediator().loginOut()
         
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)
         let navigationController = storyboard.instantiateViewController(withIdentifier: "YXRegistrationAndLoginNavigationController") as? UINavigationController

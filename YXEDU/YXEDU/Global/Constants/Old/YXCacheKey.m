@@ -19,8 +19,6 @@ NSString *const kPlatformValue = @"iOS";
 
 NSString *const kHadShowQuestionHintsAlertKey   = @"HadShowQuestionHintsAlertKey";
 
-NSString * const kUnfinishedWordListNameKey     = @"UnfinishedWordListNameKey";
 NSString * const kDefaultWordListName           = @"DefaultWordListName";
-NSString * const kCurrentLearnWordListIdKey     = @"CurrentLearnWordListIdKey";
 NSString * const kWordListGuideViewShowedKey    = @"WordListGuideViewShowedKey";
 NSString * const kCheckIfShowedCareerGuide      = @"CheckIfShowedCareerGuide";

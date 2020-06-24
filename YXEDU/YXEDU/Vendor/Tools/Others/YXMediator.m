@@ -46,21 +46,12 @@
     return shared;
 }
 
-- (void)clearData {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:kCurrentLearnWordListIdKey];
-    [defaults setObject:kDefaultWordListName forKey:kUnfinishedWordListNameKey];
-
-}
-
 - (void)afterLogout {
-    [self clearData];
-    
+
     [[YXUserModel default] logout];
 }
 
 - (void)userKickedOut {
-    [self clearData];
     
     if (_kickedOutAlertVC) {
         return;
@@ -81,10 +72,6 @@
         [mainWindow.rootViewController presentViewController:alert animated:YES completion:nil];
     }
     _kickedOutAlertVC = alert;
-}
-
-- (void)loginOut {
-    [self clearData];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {

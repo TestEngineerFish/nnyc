@@ -9,7 +9,6 @@
 #import "YXNOSignalVC.h"
 #import "BSCommon.h"
 #import "NSString+YR.h"
-#import "YXMediator.h"
 #import "NetWorkRechable.h"
 #import "YXAPI.h"
 
