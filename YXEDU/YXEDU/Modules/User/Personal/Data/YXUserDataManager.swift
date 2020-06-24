@@ -29,15 +29,17 @@ struct YXUserDataManager {
     /// - Parameters:
     ///   - code: 班级号
     ///   - finishBlock: 加入后的事件
-    func joinClass(code: String?) {
-        guard let _code = code, !_code.trimed.isEmpty else {
-            YXUtils.showHUD(nil, title: "班级号不能为空")
+    func joinClass(code: String?, complate: ((Bool)->Void)?) {
+        guard let _code = code, !_code.trimed.isEmpty, _code != "请输入班级号" else {
+            YXUtils.showHUD(nil, title: "请输入班级号")
             return
         }
         let request = YXHomeRequest.joinClass(code: _code.trimed)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            complate?(true)
             NotificationCenter.default.post(name: YXNotification.kJoinClass, object: nil)
         }) { (error) in
+            complate?(false)
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }

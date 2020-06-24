@@ -67,8 +67,14 @@ class YXMyClassTableViewHanderView: YXView {
     @objc private func joinClass() {
         let alertView = YXAlertView(type: .inputable, placeholder: "请输入班级号")
         alertView.titleLabel.text = "如果您有老师的班级号，输入后即可加入班级"
+        alertView.shouldOnlyShowOneButton = false
+        alertView.shouldClose = false
         alertView.doneClosure = {(classNumer: String?) in
-            YXUserDataManager.share.joinClass(code: classNumer)
+            YXUserDataManager.share.joinClass(code: classNumer) { (result) in
+                if result {
+                    alertView.removeFromSuperview()
+                }
+            }
             YXLog("班级号：\(classNumer ?? "")")
         }
         alertView.textCountLabel.isHidden = true

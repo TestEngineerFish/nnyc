@@ -376,11 +376,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     private func toMyClass() {
-//        self.hidesBottomBarWhenPushed = true
-//        let vc = YXSelectSchoolViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
-//        self.hidesBottomBarWhenPushed = false
-//        return
         if YXUserModel.default.isJoinClass {
             self.hidesBottomBarWhenPushed = true
             let vc = YXMyClassViewController()
@@ -389,8 +384,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         } else {
             let alertView = YXAlertView(type: .inputable, placeholder: "请输入班级号")
             alertView.titleLabel.text = "如果您有老师的班级号，输入后即可加入班级"
+            alertView.shouldOnlyShowOneButton = false
+            alertView.shouldClose = false
             alertView.doneClosure = {(classNumer: String?) in
-                YXUserDataManager.share.joinClass(code: classNumer)
+                YXUserDataManager.share.joinClass(code: classNumer) { (result) in
+                    if result {
+                        alertView.removeFromSuperview()
+                    }
+                }
+                YXLog("班级号：\(classNumer ?? "")")
             }
             alertView.textCountLabel.isHidden = true
             alertView.textMaxLabel.isHidden   = true
