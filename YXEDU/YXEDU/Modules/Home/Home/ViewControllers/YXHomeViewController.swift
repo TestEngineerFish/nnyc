@@ -83,7 +83,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             alertView.show()
             
         } else {
-            YYCache.set(Date(), forKey: "LastStoredDate")
+            YXUserModel.default.lastStoredDate = Date()
             YXLog(String(format: "开始学习书(%ld),第(%ld)单元", homeData.bookId ?? 0, homeData.unitId ?? 0))
             let vc = YXExerciseViewController()
             vc.learnConfig = YXBaseLearnConfig(bookId: homeData.bookId ?? 0, unitId: homeData.unitId ?? 0)
@@ -323,7 +323,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     private func adjustStartStudyButtonState() {
-        if let lastStoredDate = YYCache.object(forKey: "LastStoredDate") as? Date {
+        if let lastStoredDate = YXUserModel.default.lastStoredDate {
             if Calendar.current.isDateInToday(lastStoredDate) {
                 if service.progress == .none {
                     startStudyButton.setTitle("再学一组", for: .normal)

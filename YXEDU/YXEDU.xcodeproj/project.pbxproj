@@ -598,7 +598,6 @@
 		EED3D4252331DE2D00121218 /* YXEvnOC.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4242331DE2D00121218 /* YXEvnOC.m */; };
 		EEE8E99A23CF38C900729463 /* YXTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE8E99923CF38C900729463 /* YXTest.swift */; };
 		EEE8E99C23D0594F00729463 /* YXReviewResultStarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE8E99B23D0594E00729463 /* YXReviewResultStarView.swift */; };
-		EEE8EA2123D328D700729463 /* YXTokenExpired.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE8EA2023D328D600729463 /* YXTokenExpired.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1312,7 +1311,6 @@
 		EED3D4242331DE2D00121218 /* YXEvnOC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXEvnOC.m; sourceTree = "<group>"; };
 		EEE8E99923CF38C900729463 /* YXTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTest.swift; sourceTree = "<group>"; };
 		EEE8E99B23D0594E00729463 /* YXReviewResultStarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewResultStarView.swift; sourceTree = "<group>"; };
-		EEE8EA2023D328D600729463 /* YXTokenExpired.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTokenExpired.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3323,7 +3321,6 @@
 			isa = PBXGroup;
 			children = (
 				22E9FFC22473BF36006B6F60 /* Model */,
-				EEE8EA1F23D328AC00729463 /* Expired */,
 				EEACEB3423A22B1E0036B3A2 /* Check */,
 				EE08F3702372E3C200FA3FDF /* Error */,
 				EE08F36D2372E3C200FA3FDF /* Request */,
@@ -3815,14 +3812,6 @@
 			path = YRRouter;
 			sourceTree = "<group>";
 		};
-		EEE8EA1F23D328AC00729463 /* Expired */ = {
-			isa = PBXGroup;
-			children = (
-				EEE8EA2023D328D600729463 /* YXTokenExpired.swift */,
-			);
-			path = Expired;
-			sourceTree = "<group>";
-		};
 		EEF29A89236AC81C00CDC312 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -4307,7 +4296,6 @@
 				77B0A5B523B20C8A0093A181 /* YXWordBookDownloadModel.swift in Sources */,
 				2299106D2492115B00F1C198 /* YXDatabaseConfig+CurrentTurn.swift in Sources */,
 				77D2778123B37D0B00AA4BF2 /* YXBadgeCell.swift in Sources */,
-				EEE8EA2123D328D700729463 /* YXTokenExpired.swift in Sources */,
 				EE1E4AAA236AA455007D248F /* YXListenQuestionView.swift in Sources */,
 				EEE8E99A23CF38C900729463 /* YXTest.swift in Sources */,
 				CFB11BEA2414953E00B29B62 /* YXStarView.swift in Sources */,

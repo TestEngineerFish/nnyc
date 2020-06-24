@@ -25,7 +25,6 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: nil) { (error) in
                 YXUtils.showHUD(kWindow, title: error.message)
             }
-            
             YXUserModel.default.logout()
         }
         

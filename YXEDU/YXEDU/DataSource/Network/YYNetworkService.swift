@@ -376,8 +376,7 @@ enum YXMiMeType: String {
         } else {
             if responseStatusCode == 10002 {
                 // 上层已处理
-//                YXLog("Token过期 10002")
-//                YXMediator.shared()?.tokenExpired()
+                YXLog("Token过期 10002")
             } else if responseStatusCode == 6666 {
                 // 停服
                 let serviceStop = YXNotification.kServiceStop

@@ -60,16 +60,14 @@ class YXAddBookGuideViewController: UIViewController {
             YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { (response) in
                 guard let userInfomation = response.data else { return }
 
-                YXUserModel.default.currentGrade    = userInfomation.bookGrade
-                
-                YYCache.set(Date(), forKey: "LastStoredDate")
+                YXUserModel.default.currentGrade   = userInfomation.bookGrade
+                YXUserModel.default.lastStoredDate = Date()
                 YXLog("====新注册 - 开始主流程的学习====")
                 YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
                 let vc = YXExerciseViewController()
                 vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
                 vc.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(vc, animated: true)
-                
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
             }

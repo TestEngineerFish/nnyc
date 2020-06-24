@@ -238,8 +238,6 @@ extension YYEnvChangeViewController {
             }
         }
 
-        
-        
         if (YXUserModel.default.token?.count ?? 0) > 0 {
             let request = YXRegisterAndLoginRequest.logout
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: nil) { (error) in

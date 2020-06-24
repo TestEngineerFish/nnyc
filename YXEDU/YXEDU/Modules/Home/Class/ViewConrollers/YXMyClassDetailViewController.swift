@@ -153,7 +153,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
     @objc private func leaveAction() {
         self.hideSheepView()
         let alertView = YXAlertView(type: .normal)
-        alertView.descriptionLabel.text = "是否确认退出班级？"
+        alertView.descriptionLabel.text = "退出班级后您所有的相关作业班级信息都将丢失，是否确认？"
         alertView.leftButton.setTitle("退出", for: .normal)
         alertView.leftButton.layer.borderColor = UIColor.red1.cgColor
         alertView.leftButton.setTitleColor(UIColor.red1, for: .normal)

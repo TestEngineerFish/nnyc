@@ -157,6 +157,20 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: YXLocalKey.hasNewWork) as? Bool ?? false
         }
     }
+    /// 最后一次主流程学习的时间
+    var lastStoredDate: Date? {
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.lastStoredDate)
+        }
+        get {
+            var _data =  YYCache.object(forKey: YXLocalKey.lastStoredDate) as? Date
+            // 兼容老版本
+            if _data == nil {
+                _data = UserDefaults.standard.object(forKey: "LastStoredDate") as? Date
+            }
+            return _data
+        }
+    }
 
     func login() {
         let storyboard = UIStoryboard(name:"Main", bundle: nil)
@@ -164,7 +178,6 @@ class YXUserModel: NSObject {
         UIApplication.shared.keyWindow?.rootViewController = tabBarController
         
         self.didLogin = true
-        YXWordBookResourceManager.stop = false
         // 登录后设置别名给友盟
         let alias = YXUserModel.default.uuid ?? ""
         UMessage.setAlias(alias, type: kUmengAliasType) { (response, error) in
@@ -180,11 +193,9 @@ class YXUserModel: NSObject {
     func logout() {
         YXLog("推出前用户Token=====", YXUserModel.default.token ?? "")
         self.didLogin = false
-        YYCache.set(nil, forKey: "LastStoredDate")
-        YYCache.set(nil, forKey: "LastStoreTokenDate")
-        YXUserModel.default.uuid  = nil
+        self.uuid     = nil
         // 停止资源管理器队列任务
-        YXWordBookResourceManager.stop    = true
+        YXWordBookResourceManager.stop = true
         // 断开数据库连接
         YYDataSourceManager.default.close()
         YYDataSourceQueueManager.default.close()

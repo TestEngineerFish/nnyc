@@ -355,9 +355,9 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                     CLShanYanSDKManager.finishAuthControllerCompletion(nil)
                                     return
                                 }
-                                YXUserModel.default.uuid  = data.uuid
-                                YXUserModel.default.token = data.token
-                                YXUserModel.default.userName = data.info?.username
+                                YXUserModel.default.uuid           = data.uuid
+                                YXUserModel.default.token          = data.token
+                                YXUserModel.default.userName       = data.info?.username
                                 YXUserModel.default.userAvatarPath = data.info?.avatar
                                 YXUserModel.default.didLogin = true
                                 Growing.setUserId(YXUserModel.default.uuid ?? "")
