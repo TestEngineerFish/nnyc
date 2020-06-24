@@ -12,7 +12,6 @@
 #import "BSRootVC.h"
 #import "YRRouter.h"
 #import "YXUtils.h"
-#import "YXLogoutModel.h"
 #import <CoreLocation/CoreLocation.h>
 #import "YXAccount.h"
 #import "YXMediator.h"

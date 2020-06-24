@@ -458,8 +458,6 @@
 		EE5E00FA23274FEC00655654 /* YXPersonalFeedBackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFC723274FEA00655654 /* YXPersonalFeedBackVC.m */; };
 		EE5E00FB23274FEC00655654 /* YXFeedSendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFC923274FEA00655654 /* YXFeedSendModel.m */; };
 		EE5E00FC23274FEC00655654 /* YXFeedBackSelectImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFCC23274FEA00655654 /* YXFeedBackSelectImageView.m */; };
-		EE5E00FD23274FEC00655654 /* YXLogoutModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFD123274FEA00655654 /* YXLogoutModel.m */; };
-		EE5E00FE23274FEC00655654 /* YXPersonalBindModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFD223274FEA00655654 /* YXPersonalBindModel.m */; };
 		EE5E01162327533E00655654 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = EE5E01152327533E00655654 /* location.json */; };
 		EE5E0168232754FA00655654 /* BaiduLocManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0136232754FA00655654 /* BaiduLocManager.m */; };
 		EE5E016C232754FA00655654 /* YXOCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0141232754FA00655654 /* YXOCLog.m */; };
@@ -1233,10 +1231,6 @@
 		EE5EFFCA23274FEA00655654 /* YXFeedSendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXFeedSendModel.h; sourceTree = "<group>"; };
 		EE5EFFCC23274FEA00655654 /* YXFeedBackSelectImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXFeedBackSelectImageView.m; sourceTree = "<group>"; };
 		EE5EFFCD23274FEA00655654 /* YXFeedBackSelectImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXFeedBackSelectImageView.h; sourceTree = "<group>"; };
-		EE5EFFCF23274FEA00655654 /* YXLogoutModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXLogoutModel.h; sourceTree = "<group>"; };
-		EE5EFFD023274FEA00655654 /* YXPersonalBindModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalBindModel.h; sourceTree = "<group>"; };
-		EE5EFFD123274FEA00655654 /* YXLogoutModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXLogoutModel.m; sourceTree = "<group>"; };
-		EE5EFFD223274FEA00655654 /* YXPersonalBindModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonalBindModel.m; sourceTree = "<group>"; };
 		EE6C7D1723B0A073009DCC0C /* YXReviewPlanShareDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanShareDetailViewController.swift; sourceTree = "<group>"; };
 		EE6C7D1923B0A785009DCC0C /* YXTopWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTopWindowView.swift; sourceTree = "<group>"; };
 		EE6C7D1B23B0B7DD009DCC0C /* YXReviewPlanDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanDetailModel.swift; sourceTree = "<group>"; };
@@ -3474,7 +3468,6 @@
 			children = (
 				2252B5092445941D002AE9F2 /* Data */,
 				EE5EFF9C23274FEA00655654 /* PersonCenterURLs.h */,
-				EE5EFFCE23274FEA00655654 /* Model */,
 			);
 			path = Personal;
 			sourceTree = "<group>";
@@ -3592,17 +3585,6 @@
 				CF0BD8D32402720700FE9AA6 /* YXFeedbackCell.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		EE5EFFCE23274FEA00655654 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				EE5EFFCF23274FEA00655654 /* YXLogoutModel.h */,
-				EE5EFFD023274FEA00655654 /* YXPersonalBindModel.h */,
-				EE5EFFD123274FEA00655654 /* YXLogoutModel.m */,
-				EE5EFFD223274FEA00655654 /* YXPersonalBindModel.m */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		EE6C7D2123B0F303009DCC0C /* Result */ = {
@@ -4233,7 +4215,6 @@
 				EE7721002379333100CD632E /* YXKVOImageView.swift in Sources */,
 				EEACEB5623A4F0F30036B3A2 /* YYScrollRefreshAnimator.swift in Sources */,
 				22DEA77023B9914300E30FB7 /* YXShareCodeView.swift in Sources */,
-				EE5E00FD23274FEC00655654 /* YXLogoutModel.m in Sources */,
 				EE1E4AA223694D01007D248F /* YXFillWordAccordingToListenExerciseView.swift in Sources */,
 				EE5E0170232754FA00655654 /* YXUtils.m in Sources */,
 				2279F257236D544F0080A0B2 /* YXWordButton.swift in Sources */,
@@ -4351,7 +4332,6 @@
 				CF0BD8CA2401096800FE9AA6 /* YXRedDotManager.swift in Sources */,
 				EED3D41C2331D04B00121218 /* NSString+Router.m in Sources */,
 				2202D27923AB71DF00882E5D /* YXCacheKey.swift in Sources */,
-				EE5E00FE23274FEC00655654 /* YXPersonalBindModel.m in Sources */,
 				22C3A5FD2477C51D0020694E /* YXStepConfigManager.swift in Sources */,
 				EE7E1D0A236367A000600A88 /* YXExerciseHeaderView.swift in Sources */,
 				22164C0B23A1190D00E9252D /* YXCountDownView.swift in Sources */,
