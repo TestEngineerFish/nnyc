@@ -2595,13 +2595,6 @@
 			path = User;
 			sourceTree = "<group>";
 		};
-		EE1506032474E6FA008F9CC4 /* Word */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Word;
-			sourceTree = "<group>";
-		};
 		EE1506042474E702008F9CC4 /* Challenge */ = {
 			isa = PBXGroup;
 			children = (
@@ -3131,7 +3124,6 @@
 			children = (
 				EE1506022474E6ED008F9CC4 /* User */,
 				77F69A602361492500E55185 /* Home */,
-				EE1506032474E6FA008F9CC4 /* Word */,
 				EE1506062474E748008F9CC4 /* Learn */,
 				EE1506042474E702008F9CC4 /* Challenge */,
 				771512DC236710F200F6D400 /* Mine */,

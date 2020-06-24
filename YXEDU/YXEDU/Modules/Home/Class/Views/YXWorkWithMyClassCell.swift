@@ -200,10 +200,42 @@ class YXWorkWithMyClassCell: UITableViewCell {
     // MARK: ==== Event ====
     @objc private func actionEvent() {
         YXLog("查看详情")
+        guard let _model = self.model else {
+            return
+        }
+        let shareStatusList: [YXShareWorkStatusType] = [.unexpiredUnlearned,
+                                                        .unexpiredLearnedUnshare,]
+        let exerciseStatusList: [YXExerciseWorkStatusTypes] = [.unexpiredUnfinished,
+                                                               .beExpiredUnfinished]
+        let checkReport: [YXExerciseWorkStatusTypes] = [.unexpiredFinished, .beExpiredFinished]
+        // 已完成
+        if _model.type == .share {
+            if shareStatusList.contains(_model.shareWorkStatus) {
+                // 打卡学习
+                self.startExercise(work: _model.workId ?? 0)
+            }
+        } else {
+            if checkReport.contains(_model.exerciseWorkStatus) {
+                // 查看报告
+                YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
+                let vc = YXMyClassWorkReportViewController()
+                vc.workId  = model?.workId
+                vc.classId = model?.classId
+                YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+                YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
+            } else if exerciseStatusList.contains(_model.exerciseWorkStatus) {
+                // 做、补作业
+                self.startExercise(work: _model.workId ?? 0)
+            }
+        }
+    }
+
+    /// 开始学习
+    private func startExercise(work id: Int) {
+        YXLog(String(format: "==== 开始做作业，作业ID：%ld ====", id))
         YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
-        let vc = YXMyClassWorkReportViewController()
-        vc.workId  = model?.workId
-        vc.classId = model?.classId
+        let vc = YXExerciseViewController()
+        vc.learnConfig = YXBaseLearnConfig(bookId: 0, unitId: 0, learnType: .homework)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
         YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
     }
