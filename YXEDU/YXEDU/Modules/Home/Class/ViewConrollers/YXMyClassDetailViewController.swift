@@ -155,15 +155,17 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         let alertView = YXAlertView(type: .normal)
         alertView.titleLabel.text = "退出班级后您所有的相关作业班级信息都将丢失，是否确认？"
         alertView.descriptionLabel.text = ""
-        alertView.leftButton.setTitle("退出", for: .normal)
-        alertView.leftButton.layer.borderColor = UIColor.red1.cgColor
-        alertView.leftButton.setTitleColor(UIColor.red1, for: .normal)
-        alertView.rightOrCenterButton.setTitle("点错了", for: .normal)
-        alertView.rightOrCenterButton.setTitleColor(UIColor.black1, for: .normal)
-        alertView.rightOrCenterButton.backgroundColor   = UIColor.clear
-        alertView.rightOrCenterButton.layer.borderColor = UIColor.black6.cgColor
+        alertView.rightOrCenterButton.setTitle("退出班级", for: .normal)
+        alertView.rightOrCenterButton.backgroundColor   = .clear
+        alertView.rightOrCenterButton.layer.borderColor = UIColor.red1.cgColor
         alertView.rightOrCenterButton.layer.borderWidth = AdaptSize(0.5)
-        alertView.cancleClosure = {
+        alertView.rightOrCenterButton.setTitleColor(UIColor.red1, for: .normal)
+        alertView.leftButton.setTitle("取消", for: .normal)
+        alertView.leftButton.setTitleColor(UIColor.black1, for: .normal)
+        alertView.leftButton.backgroundColor   = UIColor.clear
+        alertView.leftButton.layer.borderColor = UIColor.black6.cgColor
+        alertView.leftButton.layer.borderWidth = AdaptSize(0.5)
+        alertView.doneClosure = { _ in
             self.leaveClass()
             YXLog("退出班级")
         }
