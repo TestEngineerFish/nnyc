@@ -68,7 +68,7 @@ extension YXExerciseServiceImpl {
         } else {
             // -- 正常出题
             // 初始化单词对象
-            exerciseModel.word = self._queryWord(wordId: wordId)
+            exerciseModel.word = self._queryWord(wordId: wordId, bookId: exerciseModel.word?.bookId ?? 0)
             // 选项初始化
             let _exerciseModel = _processExerciseOption(exercise: exerciseModel)
             return _exerciseModel
@@ -82,7 +82,7 @@ extension YXExerciseServiceImpl {
         for e in es {
             if e.type == .newLearnMasterList {
                 var newE = e
-                newE.word = _queryWord(wordId: e.wordId)
+                newE.word = _queryWord(wordId: e.wordId, bookId: e.word?.bookId ?? 0)
                 n3List.append(newE)
             }
         }
@@ -92,9 +92,9 @@ extension YXExerciseServiceImpl {
     }
 
     /// 查询单词内容
-    func _queryWord(wordId: Int) -> YXWordModel? {
-        if learnConfig.learnType == .base {
-            return wordDao.selectWord(bookId: learnConfig.bookId, wordId: wordId)
+    func _queryWord(wordId: Int, bookId: Int) -> YXWordModel? {
+        if learnConfig.learnType == .base || learnConfig.learnType == .homework {
+            return wordDao.selectWord(bookId: bookId, wordId: wordId)
         } else {
             return wordDao.selectWord(wordId: wordId)
         }

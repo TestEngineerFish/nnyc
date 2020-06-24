@@ -134,7 +134,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
         if model.type == .share {
             self.progressLabel.text = String(format: "完成%ld/%ld天", model.shareCount, model.shareAmount)
         } else {
-            self.progressLabel.text = String(format: "完成%ld%@", model.progress * 100, "%")
+            self.progressLabel.text = String(format: "完成%0.0f%@", model.progress * 100, "%")
         }
         self.desciptionLabel.text  = String(format: "%@ l %@", model.className, model.timeStr)
         DispatchQueue.main.async {
@@ -212,7 +212,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
         if _model.type == .share {
             if shareStatusList.contains(_model.shareWorkStatus) {
                 // 打卡学习
-                self.startExercise(work: _model.workId ?? 0)
+                self.startExercise(work: _model.workId ?? 0, bookId: _model.bookId)
             }
         } else {
             if checkReport.contains(_model.exerciseWorkStatus) {
@@ -225,14 +225,20 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
             } else if exerciseStatusList.contains(_model.exerciseWorkStatus) {
                 // 做、补作业
-                self.startExercise(work: _model.workId ?? 0)
+                self.startExercise(work: _model.workId ?? 0, bookId: _model.bookId)
             }
         }
     }
 
     /// 开始学习
-    private func startExercise(work id: Int) {
+    private func startExercise(work id: Int, bookId: Int) {
         YXLog(String(format: "==== 开始做作业，作业ID：%ld ====", id))
+        // 下载词书
+        let taskModel = YXWordBookResourceModel(type: .single, book: bookId) {
+            YXWordBookResourceManager.shared.contrastBookData(by: bookId)
+        }
+        YXWordBookResourceManager.shared.addTask(model: taskModel)
+        // 跳转学习
         YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
         let vc = YXExerciseViewController()
         vc.learnConfig = YXBaseLearnConfig(bookId: 0, unitId: 0, learnType: .homework)

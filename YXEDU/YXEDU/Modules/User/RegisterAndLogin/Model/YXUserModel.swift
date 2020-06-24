@@ -178,6 +178,7 @@ class YXUserModel: NSObject {
         UIApplication.shared.keyWindow?.rootViewController = tabBarController
         
         self.didLogin = true
+        YXWordBookResourceManager.stop = false
         // 登录后设置别名给友盟
         let alias = YXUserModel.default.uuid ?? ""
         UMessage.setAlias(alias, type: kUmengAliasType) { (response, error) in
