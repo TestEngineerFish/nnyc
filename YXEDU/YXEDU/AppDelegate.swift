@@ -85,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /** 每次启动时，都执行，但这个方法太过灵敏，App显示通知栏、双击home等情况，App没有完全退到后台时，也会调用，因此只是App每次启动时调用一次 */
     func applicationDidBecomeActive(_ application: UIApplication) {
         // 仅刚启动时调用一次
+        YXLogManager.share.addInfo()
         YXAlertQueueManager.default.start()
     }
 

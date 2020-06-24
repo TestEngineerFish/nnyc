@@ -43,7 +43,7 @@ class YXLogManager: NSObject {
     }
 
     // MARK: ==== Event ====
-    private func addInfo() {
+    func addInfo() {
         self.addUserInfo()
         self.addDeviceInfo()
     }

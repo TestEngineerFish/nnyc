@@ -121,10 +121,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             startStudyButtonBottomOffset.constant = 44
             studyDataCollectionViewBottomOffset.constant = 36
         }
-        
+
         self.checkUserState()
         self.setSquirrelAnimation()
         self.registerNotification()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.checkGuide()
     }
     
     deinit {
@@ -241,25 +246,25 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         YXGrowingManager.share.uploadChangeBook(grade: "\(grade)", versionName: model.bookVersionName)
     }
+
+    private func checkGuide() {
+        if (YYCache.object(forKey: .isShowSelectSchool) as? Bool) == .some(true) {
+            self.hidesBottomBarWhenPushed = true
+            let vc = YXSelectSchoolViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+            self.hidesBottomBarWhenPushed = false
+        } else if (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(true) {
+            self.performSegue(withIdentifier: "AddBookGuide", sender: self)
+        } else {
+            self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        }
+    }
     
     private func checkUserState() {
-        YXUserDataManager.share.updateUserInfomation { [weak self] (userInfomation) in
-            guard let self = self else { return }
-            if !YXUserModel.default.isJoinSchool {
-                self.hidesBottomBarWhenPushed = true
-                let vc = YXSelectSchoolViewController()
-                self.navigationController?.pushViewController(vc, animated: true)
-                self.hidesBottomBarWhenPushed = false
-            } else if userInfomation.didSelectBook == 0 {
-                self.performSegue(withIdentifier: "AddBookGuide", sender: self)
-            } else {
-                self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-            }
-
+        YXUserDataManager.share.updateUserInfomation { (userInfomation) in
             if userInfomation.reminder?.didOpen == 1, let time = userInfomation.reminder?.timeStamp {
                 UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "Reminder")
                 UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "DidShowSetupReminderAlert")
-
             } else {
                 YYCache.set(nil, forKey: "DidFinishMainStudyProgress")
                 UserDefaults.standard.set(nil, forKey: "Reminder")

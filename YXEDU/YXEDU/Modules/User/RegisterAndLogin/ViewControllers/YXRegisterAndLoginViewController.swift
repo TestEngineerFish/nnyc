@@ -105,7 +105,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         phoneNumberTextField.delegate = self
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
         authCodeTextField.addTarget(self, action: #selector(changeAuthCodeTextField), for: UIControl.Event.editingChanged)
-        if let phoneNumber = YYCache.object(forKey: "PhoneNumber") as? String {
+        if let phoneNumber = YXUserModel.default.mobile {
             phoneNumberTextField.text = phoneNumber
             sendSMSButton.isUserInteractionEnabled = true
             sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
@@ -244,11 +244,16 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     /// 更新用户信息
     private func checkUserInfomation() {
         YXUserDataManager.share.updateUserInfomation { [weakSelf = self] (userInfomation) in
+            if !userInfomation.isJoinSchool {
+                YYCache.set(true, forKey: YXLocalKey.isShowSelectSchool)
+            } else if userInfomation.didSelectBook == 0 {
+                YYCache.set(true, forKey: YXLocalKey.isShowSelectBool)
+            }
             guard userInfomation.didBindPhone == 1 else {
                 weakSelf.performSegue(withIdentifier: "Bind", sender: weakSelf)
                 return
             }
-            YYCache.set(weakSelf.phoneNumberTextField.text, forKey: "PhoneNumber")
+            YXUserModel.default.mobile = weakSelf.phoneNumberTextField.text
             YXAlertQueueManager.default.restart()
             YXUserModel.default.login()
         }

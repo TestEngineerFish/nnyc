@@ -180,6 +180,7 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
     }
 
     func toNextView() {
+        YYCache.set(false, forKey: .isShowSelectSchool)
         let storyboard = UIStoryboard(name:"Home", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "kYXAddBookGuideViewController")
         self.navigationController?.pushViewController(vc, animated: true)

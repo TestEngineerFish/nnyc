@@ -45,6 +45,7 @@ class YXAddBookGuideViewController: UIViewController {
 
     @IBAction func start(_ sender: Any) {
         guard let book = selectBook, let bookId = book.bookId, let units = book.units, units.count > 0, let unitId = units.first?.unitId else { return }
+        YYCache.set(false, forKey: .isShowSelectBool)
         let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let uuid = YXUserModel.default.uuid else { return }
@@ -81,6 +82,7 @@ class YXAddBookGuideViewController: UIViewController {
     
     @IBAction func goHome(_ sender: Any) {
         guard let book = selectBook, let bookId = book.bookId, let units = book.units, units.count > 0, let unitId = units.first?.unitId else { return }
+        YYCache.set(false, forKey: .isShowSelectBool)
         let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }

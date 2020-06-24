@@ -19,7 +19,6 @@ struct YXUserDataManager {
 
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
-            YXUserModel.default.isJoinSchool   = userInfomation.isJoinSchool
             finishBlock?(userInfomation)
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
