@@ -6,7 +6,7 @@
 //  Copyright © 2018 YueRen. All rights reserved.
 //
 
-import Foundation
+import ObjectMapper
 
 let kSault = "NvYP1OeQZqzJdxt8"
 
@@ -114,3 +114,39 @@ extension YYBaseRequest {
 }
 
 
+extension YYBaseRequest {
+    
+    func execute<T: Mappable>(_ type: T.Type, completion:((_ model: T?, _ errorMsg: String?) -> Void)?) {
+        YYNetworkService.default.request(YYStructResponse<T>.self, request: self, success: { (response) in
+            completion?(response.data, nil)
+        }) { (error) in
+            completion?(nil, error.message)
+        }
+    }
+    
+    func execute<T: Mappable>(_ type: T.Type, success:((_ model: T?) -> Void)? = nil, fail: ((_ errorMsg: String?) -> Void)? = nil) {
+        YYNetworkService.default.request(YYStructResponse<T>.self, request: self, success: { (response) in
+            success?(response.data)
+        }) { (error) in
+            fail?(error.message)
+        }
+    }
+    
+    func executeArray<T: Mappable>(_ type: T.Type, completion:((_ model: [T]?, _ errorMsg: String?) -> Void)?) {
+        YYNetworkService.default.request(YYStructDataArrayResponse<T>.self, request: self, success: { (response) in
+            completion?(response.dataArray, nil)
+        }) { (error) in
+            completion?(nil, error.message)
+        }
+    }
+    
+    
+    func executeArray<T: Mappable>(_ type: T.Type, success:((_ model: [T]?) -> Void)? = nil, fail: ((_ errorMsg: String?) -> Void)? = nil) {
+        YYNetworkService.default.request(YYStructDataArrayResponse<T>.self, request: self, success: { (response) in
+            success?(response.dataArray)
+        }) { (error) in
+            fail?(error.message)
+        }
+    }
+    
+}

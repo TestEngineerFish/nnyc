@@ -51,14 +51,14 @@ class YXExerciseServiceImpl: YXExerciseService {
     func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let planId = learnConfig.planId == 0 ? nil : learnConfig.planId
         let request = YXExerciseRequest.exercise(isGenerate: learnConfig.isGenerate, type: learnConfig.learnType.rawValue, planId: planId)
-        YYNetworkService.default.request(YYStructResponse<YXExerciseResultModel>.self, request: request, success: { [weak self] (response) in
-            self?._resultModel = response.data
+        request.execute(YXExerciseResultModel.self, success: { [weak self] (model) in
+            self?._resultModel = model
             self?._processData {
                 completion?(true, nil)
             }
-        }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
-            completion?(false, error.message)
+        }) { (msg) in
+            YXUtils.showHUD(kWindow, title: msg)
+            completion?(false, msg)
         }
     }
     
