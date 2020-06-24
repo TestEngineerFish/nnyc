@@ -463,7 +463,6 @@
 		EE5E01162327533E00655654 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = EE5E01152327533E00655654 /* location.json */; };
 		EE5E0168232754FA00655654 /* BaiduLocManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0136232754FA00655654 /* BaiduLocManager.m */; };
 		EE5E016C232754FA00655654 /* YXOCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0141232754FA00655654 /* YXOCLog.m */; };
-		EE5E016D232754FA00655654 /* YXConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0143232754FA00655654 /* YXConfigure.m */; };
 		EE5E016E232754FA00655654 /* YXUserSaveTool.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E0148232754FA00655654 /* YXUserSaveTool.m */; };
 		EE5E016F232754FA00655654 /* YXMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E014A232754FA00655654 /* YXMediator.m */; };
 		EE5E0170232754FA00655654 /* YXUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5E014B232754FA00655654 /* YXUtils.m */; };
@@ -1072,13 +1071,11 @@
 		EE5E0137232754FA00655654 /* BaiduLocManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduLocManager.h; sourceTree = "<group>"; };
 		EE5E0141232754FA00655654 /* YXOCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXOCLog.m; sourceTree = "<group>"; };
 		EE5E0142232754FA00655654 /* YXUserSaveTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXUserSaveTool.h; sourceTree = "<group>"; };
-		EE5E0143232754FA00655654 /* YXConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXConfigure.m; sourceTree = "<group>"; };
 		EE5E0144232754FA00655654 /* YXCrashReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCrashReport.h; sourceTree = "<group>"; };
 		EE5E0145232754FA00655654 /* YXUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXUtils.h; sourceTree = "<group>"; };
 		EE5E0146232754FA00655654 /* YXMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXMediator.h; sourceTree = "<group>"; };
 		EE5E0147232754FA00655654 /* YXOCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXOCLog.h; sourceTree = "<group>"; };
 		EE5E0148232754FA00655654 /* YXUserSaveTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXUserSaveTool.m; sourceTree = "<group>"; };
-		EE5E0149232754FA00655654 /* YXConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXConfigure.h; sourceTree = "<group>"; };
 		EE5E014A232754FA00655654 /* YXMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXMediator.m; sourceTree = "<group>"; };
 		EE5E014B232754FA00655654 /* YXUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXUtils.m; sourceTree = "<group>"; };
 		EE5E014C232754FA00655654 /* YXCrashReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCrashReport.m; sourceTree = "<group>"; };
@@ -2987,8 +2984,6 @@
 		EE5E0140232754FA00655654 /* Others */ = {
 			isa = PBXGroup;
 			children = (
-				EE5E0149232754FA00655654 /* YXConfigure.h */,
-				EE5E0143232754FA00655654 /* YXConfigure.m */,
 				EE5E0144232754FA00655654 /* YXCrashReport.h */,
 				EE5E014C232754FA00655654 /* YXCrashReport.m */,
 				EE5E0146232754FA00655654 /* YXMediator.h */,
@@ -4375,7 +4370,6 @@
 				EE4584E923B3ACEF00E45367 /* YXReviewResultModel.swift in Sources */,
 				EE88DF5923AF871E004DFF10 /* YXReviewPlanCommandView.swift in Sources */,
 				EE54F7CF2362AA3100EC605A /* YXExerciseViewEvent.swift in Sources */,
-				EE5E016D232754FA00655654 /* YXConfigure.m in Sources */,
 				EE5EF20623273BAE00655654 /* UIImageView+YR.m in Sources */,
 				EE5EFCD123274E5500655654 /* YXBaseWebViewController.m in Sources */,
 				EED3D41D2331D04B00121218 /* YRRouter.m in Sources */,

@@ -8,7 +8,6 @@
 
 #import "YXInterfaceCacheService.h"
 #import "YXModelArchiverManager.h"
-#import "YXConfigure.h"
 #import "YXAPI.h"
 
 @interface YXInterfaceCacheService ()

@@ -13,7 +13,7 @@
 #import "YRRouter.h"
 #import "YXUtils.h"
 #import "YXLogoutModel.h"
-#import "YXConfigure.h"
+#import <CoreLocation/CoreLocation.h>
 #import "YXAccount.h"
 #import "YXMediator.h"
 #import "YXNotification.h"

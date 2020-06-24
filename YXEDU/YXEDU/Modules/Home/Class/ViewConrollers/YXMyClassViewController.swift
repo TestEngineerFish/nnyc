@@ -75,6 +75,9 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
             }
             self.classModelList = modelList
             self.workTableView.reloadData()
+            if self.classModelList.isEmpty {
+                self.navigationController?.popViewController(animated: true)
+            }
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }

@@ -13,7 +13,6 @@
 #import "BaiduLocManager.h"
 #import "IQKeyboardManager.h"
 #import "BSCommon.h"
-#import "YXConfigure.h"
 #import "YXAPI.h"
 #import "NetWorkRechable.h"
 #import "YXUtils.h"
@@ -54,13 +53,11 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kCurrentLearnWordListIdKey];
     [defaults setObject:kDefaultWordListName forKey:kUnfinishedWordListNameKey];
-    
-    [[YXConfigure shared] loginOut];
+
 }
 
 - (void)afterLogout {
     [[YXModelArchiverManager shared] clearAllMemory];
-    [[YXConfigure shared] loginOut];
     [self clearData];
     
     [[YXUserModel default] logout];
@@ -89,17 +86,6 @@
     }
     _kickedOutAlertVC = alert;
 }
-
-//- (void)tokenExpired {
-//    if ([YXConfigure shared].token.length) { //  防止被挤掉同时发请求报token失效
-//        [self clearData];
-//
-//        [[YXUserModel default] logout];
-//    } else {
-//        [[YXUserModel default] logout];
-//    }
-//}
-
 
 - (void)loginOut {
     [self clearData];

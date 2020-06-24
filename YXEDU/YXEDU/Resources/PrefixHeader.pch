@@ -16,7 +16,6 @@
 #import "BSCommon.h"
 #import "UIColor+YXCustom.h"
 #import "UIImageView+WebCache.h"
-#import "YXConfigure.h"
 #import "MJExtension.h"
 #import "UIView+Layout.h"
 
