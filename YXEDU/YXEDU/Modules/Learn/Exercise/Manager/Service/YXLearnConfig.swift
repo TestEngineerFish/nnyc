@@ -22,9 +22,6 @@ protocol YXLearnConfig {
 
     /// 学习类型
     var learnType: YXLearnType { get set }
-
-    /// 是否重新生成题型
-    var isGenerate: Bool { get set }
 }
 
 extension YXLearnConfig {
@@ -42,7 +39,6 @@ class YXLearnConfigImpl: YXLearnConfig {
     var unitId: Int = 0
     var planId: Int = 0
     var learnType: YXLearnType = .base
-    var isGenerate: Bool = false
     
     init(bookId: Int, unitId: Int, planId: Int, learnType: YXLearnType) {
         self.bookId     = bookId

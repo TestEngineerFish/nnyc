@@ -122,7 +122,7 @@
     }
     
     /// 开始学习
-    func startStudy() {
+    func startStudy(isGenerate: Bool = true) {
         YXLog("====开始学习====")
         // 开始学习，停止下载
         YXWordBookResourceManager.stop = true
@@ -144,13 +144,13 @@
             YXLog("未开始学习，请求学习数据")
             self.service.setStartTime()
             self.service.addStudyCount()
-            self.fetchExerciseData()
+            self.fetchExerciseData(isGenerate: isGenerate)
         }
     }
     
     // 加载当天的学习数据
-    private func fetchExerciseData() {
-        service.fetchExerciseResultModels { [weak self] (result, msg) in
+    private func fetchExerciseData(isGenerate: Bool) {
+        service.fetchExerciseResultModels(isGenerate: isGenerate) { [weak self] (result, msg) in
             guard let self = self else { return }
             YXExerciseViewController.requesting = false
             if result {

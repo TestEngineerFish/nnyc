@@ -48,9 +48,9 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
-    func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+    func fetchExerciseResultModels(isGenerate: Bool = true, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
         let planId = learnConfig.planId == 0 ? nil : learnConfig.planId
-        let request = YXExerciseRequest.exercise(isGenerate: learnConfig.isGenerate, type: learnConfig.learnType.rawValue, planId: planId)
+        let request = YXExerciseRequest.exercise(isGenerate: isGenerate, type: learnConfig.learnType.rawValue, planId: planId)
         request.execute(YXExerciseResultModel.self, success: { [weak self] (model) in
             self?._resultModel = model
             self?._processData {

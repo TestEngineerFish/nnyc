@@ -52,7 +52,7 @@ extension YXExerciseViewController {
                 YXLog("还有下一组")
                 self.showLoadAnimation()
                 self.loadingView?.downloadCompleteBlock = {
-                    self.startStudy()
+                    self.startStudy(isGenerate: false)
                 }
             } else {
                 YXLog("没有下一组，进入结果页")
