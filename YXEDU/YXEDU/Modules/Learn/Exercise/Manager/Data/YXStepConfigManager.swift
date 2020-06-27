@@ -51,12 +51,17 @@ class YXStepConfigManager {
 
     /// 混淆单词是否在当前单词的黑名单中
     /// - Parameters:
-    ///   - type: 题目类型
+    ///   - step: 题目步骤
     ///   - wordId: 单词ID
     ///   - otherWordId: 对比单词ID
     /// - Returns: 是否在当前单词的黑名单中
-    func onBlockList(question type: YXQuestionType, wordId: Int?, otherWordId: Int?) -> Bool {
-        guard let _wordId = wordId, let _otherWordId = otherWordId, let model = YXStepConfigDaoImpl.share.selecte(question: type, wordId: _wordId) else {
+    func onBlockList(exercise step: String, wordId: Int?, otherWordId: Int?) -> Bool {
+        guard let stepRange = step.textRegex(pattern: "(?<=-).*(?=-)").first else {
+            return false
+        }
+        let _stepStr = step.substring(fromIndex: stepRange.location, length: stepRange.length)
+        let _stepInt = Int(_stepStr) ?? 0
+        guard let _wordId = wordId, let _otherWordId = otherWordId, let model = YXStepConfigDaoImpl.share.selecte(exercise: _stepInt, wordId: _wordId) else {
             return false
         }
         return model.wordIdList.contains(_otherWordId)

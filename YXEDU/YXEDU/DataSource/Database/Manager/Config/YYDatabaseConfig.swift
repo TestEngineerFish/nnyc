@@ -94,7 +94,7 @@ extension YYSQLManager {
         CREATE TABLE IF NOT EXISTS step_config_table_v1 (
         id integer primary key,
         wordId integer NOT NULL,
-        type text,
+        step integer,
         black_list text
         )
         """

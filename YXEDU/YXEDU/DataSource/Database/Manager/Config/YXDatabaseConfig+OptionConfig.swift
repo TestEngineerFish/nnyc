@@ -13,14 +13,14 @@ extension YYSQLManager {
         case insert =
         """
         INSERT INTO step_config_table_v1
-        (wordId, type, black_list)
+        (wordId, step, black_list)
         VALUES (?, ?, ?)
         """
 
         case seleteBlackList =
         """
         SELECT * FROM step_config_table_v1
-        WHERE type = ? and wordId = ?
+        WHERE step = ? and wordId = ?
         """
 
         case deleteAll =

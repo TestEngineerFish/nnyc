@@ -14,6 +14,8 @@ struct YXExerciseModel: Mappable {
     var eid: Int = 0
     /// 练习步骤表ID
     var stepId: Int = 0
+    /// Step步骤
+    var step: String = ""
     /// 做题后事件规则对象
     var ruleModel: YXExerciseRuleModel?
     /// 题型

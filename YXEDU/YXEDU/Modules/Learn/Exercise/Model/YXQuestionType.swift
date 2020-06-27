@@ -44,8 +44,8 @@ enum YXQuestionType: String {
     case listenFillWord      = "Q-C-9" // 听录音输入单词
 
     //MARK: ---- 全拼题
-    case allFillWordByAtLookChinese = "Q-D-1" // 看词义全拼单词
-    case allFillAtListen            = "Q-D-2" //听读音全拼单词
+    case allFillWordByAtLookChinese = "Q-B-1-H" // 看词义全拼单词
+    case allFillAtListen            = "Q-B-2-H" //听读音全拼单词
     
     case none = ""
 }

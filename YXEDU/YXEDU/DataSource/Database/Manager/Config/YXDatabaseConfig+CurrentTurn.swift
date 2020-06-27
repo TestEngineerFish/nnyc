@@ -17,7 +17,7 @@ extension YYSQLManager {
         SELECT s.study_id study_id, s.step_id step_id
         FROM all_exercise_v1 as e
         JOIN all_word_step_v1 as s on e.exercise_id = s.exercise_id
-        WHERE e.study_id = ? and e.next_step = s.step
+        WHERE e.study_id = ? AND e.next_step = s.step
         ORDER by e.exercise_id
         """
 

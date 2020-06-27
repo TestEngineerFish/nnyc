@@ -81,7 +81,7 @@ class YXExerciseOptionManager: NSObject {
             let randomInt = Int.random(in: 0..<tmpOtherNewWordArray.count)
             let otherWordModel = tmpOtherNewWordArray[randomInt]
             // 如果选项单词在题目单词的黑名单中，则不使用
-            if YXStepConfigManager.share.onBlockList(question: exerciseModel.type, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
+            if YXStepConfigManager.share.onBlockList(exercise: exerciseModel.step, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
                 continue
             }
             if !whiteList.contains(otherWordModel.word) {
@@ -111,7 +111,7 @@ class YXExerciseOptionManager: NSObject {
                             continue
                         }
                         // 如果选项单词在题目单词的黑名单中，则不使用
-                        if YXStepConfigManager.share.onBlockList(question: exerciseModel.type, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
+                        if YXStepConfigManager.share.onBlockList(exercise: exerciseModel.step, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
                             continue
                         }
                         items.append(itemModel)
@@ -138,7 +138,7 @@ class YXExerciseOptionManager: NSObject {
                             continue
                         }
                         // 如果选项单词在题目单词的黑名单中，则不使用
-                        if YXStepConfigManager.share.onBlockList(question: exerciseModel.type, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
+                        if YXStepConfigManager.share.onBlockList(exercise: exerciseModel.step, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
                             continue
                         }
                         items.append(itemModel)
@@ -170,7 +170,7 @@ class YXExerciseOptionManager: NSObject {
                                 continue
                             }
                             // 如果选项单词在题目单词的黑名单中，则不使用
-                            if YXStepConfigManager.share.onBlockList(question: exerciseModel.type, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
+                            if YXStepConfigManager.share.onBlockList(exercise: exerciseModel.step, wordId: exerciseModel.word?.wordId, otherWordId: otherWordModel.wordId) {
                                 continue
                             }
                             items.append(itemModel)
