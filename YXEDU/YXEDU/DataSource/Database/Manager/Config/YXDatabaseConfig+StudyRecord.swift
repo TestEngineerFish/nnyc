@@ -20,15 +20,16 @@ extension YYSQLManager {
             book_id,
             unit_id,
             plan_id,
+            homework_id,
             status
         )
-        values(?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?)
         """
 
         case selectStudy =
         """
         SELECT * FROM study_record_v1
-        WHERE learn_type = ? AND book_id = ? AND unit_id = ? AND plan_id = ?
+        WHERE learn_type = ? AND book_id = ? AND unit_id = ? AND plan_id = ? AND homework_id = ?
         """
 
         /// 更新学习进度

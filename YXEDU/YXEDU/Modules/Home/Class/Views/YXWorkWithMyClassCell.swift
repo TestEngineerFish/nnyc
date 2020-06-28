@@ -131,7 +131,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
     func setData(work model: YXMyWorkModel) {
         self.model = model
         self.nameLabel.text        = model.workName
-        if model.type == .share {
+        if model.type == .punch {
             self.progressLabel.text = String(format: "完成%ld/%ld天", model.shareCount, model.shareAmount)
         } else {
             self.progressLabel.text = String(format: "完成%0.0f%@", model.progress * 100, "%")
@@ -142,7 +142,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
         }
         self.createSubviews()
 
-        if model.type == .share {
+        if model.type == .punch {
             switch model.shareWorkStatus {
             case .unexpiredUnlearned, .unexpiredLearnedUnshare:
                 self.statusImage.isHidden  = true
@@ -209,10 +209,10 @@ class YXWorkWithMyClassCell: UITableViewCell {
                                                                .beExpiredUnfinished]
         let checkReport: [YXExerciseWorkStatusTypes] = [.unexpiredFinished, .beExpiredFinished]
         // 已完成
-        if _model.type == .share {
+        if _model.type == .punch {
             if shareStatusList.contains(_model.shareWorkStatus) {
                 // 打卡学习
-                self.startExercise(work: _model.workId ?? 0, bookId: _model.bookId)
+                self.startExercise(learn: .homeworkPunch)
             }
         } else {
             if checkReport.contains(_model.exerciseWorkStatus) {
@@ -225,23 +225,31 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
             } else if exerciseStatusList.contains(_model.exerciseWorkStatus) {
                 // 做、补作业
-                self.startExercise(work: _model.workId ?? 0, bookId: _model.bookId)
+                if _model.type == .listen {
+                    self.startExercise(learn: .homeworkListen)
+                } else {
+                    self.startExercise(learn: .homeworkWord)
+                }
+                
             }
         }
     }
 
     /// 开始学习
-    private func startExercise(work id: Int, bookId: Int) {
-        YXLog(String(format: "==== 开始做作业，作业ID：%ld ====", id))
+    private func startExercise(learn type: YXLearnType) {
+        guard let _model = self.model, let workId = _model.workId else {
+            return
+        }
+        YXLog(String(format: "==== 开始做作业，作业ID：%ld ====", workId))
         // 下载词书
-        let taskModel = YXWordBookResourceModel(type: .single, book: bookId) {
-            YXWordBookResourceManager.shared.contrastBookData(by: bookId)
+        let taskModel = YXWordBookResourceModel(type: .single, book: _model.bookId) {
+            YXWordBookResourceManager.shared.contrastBookData(by: _model.bookId)
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         // 跳转学习
         YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
         let vc = YXExerciseViewController()
-        vc.learnConfig = YXBaseLearnConfig(bookId: 0, unitId: 0, learnType: .homework)
+        vc.learnConfig = YXHomeworkLearnConfig(learn: type, homeworkId: workId)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
         YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
     }

@@ -10,7 +10,7 @@ import ObjectMapper
 
 enum YXHomeworkType: Int {
     /// 打卡
-    case share  = 1
+    case punch  = 1
     /// 听写
     case listen = 2
     /// 单词练习
@@ -65,7 +65,7 @@ struct YXMyWorkModel: Mappable {
     var studentId: Int?
     var workId: Int?
     var classId: Int?
-    var type: YXHomeworkType = .share
+    var type: YXHomeworkType = .punch
     var status: YXWorkCompletionStatus = .normal
     var shareWorkStatus: YXShareWorkStatusType = .unexpiredUnlearned
     var exerciseWorkStatus: YXExerciseWorkStatusTypes = .unexpiredUnfinished
@@ -92,7 +92,7 @@ struct YXMyWorkModel: Mappable {
         shareAmount <- map["day_num"]
         timeStr     <- map["date_desc"]
         bookId      <- map["book_id"]
-        if type == .share {
+        if type == .punch {
             shareWorkStatus    <- (map["no_status"], EnumTransform<YXShareWorkStatusType>())
         } else {
             exerciseWorkStatus <- (map["no_status"], EnumTransform<YXExerciseWorkStatusTypes>())

@@ -97,7 +97,7 @@ class YXExerciseResultView: YXView {
         operateButton.addTarget(self, action: #selector(clickOperateButton), for: .touchUpInside)
 
         remindButton.isUserInteractionEnabled = false
-        if model.type == .homework {
+        if model.type.isHomework() {
             remindButton.setTitleColor(.orange1, for: .normal)
             remindButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(13))
             remindButton.setImage(UIImage(named: "iconRemindIcon"), for: .normal)
@@ -188,7 +188,7 @@ class YXExerciseResultView: YXView {
             }
         }
 
-        if model.type == .homework {
+        if model.type.isHomework() {
             remindButton.sizeToFit()
             remindButton.snp.remakeConstraints { (make) in
                 make.centerX.equalToSuperview()
@@ -336,7 +336,7 @@ class YXExerciseResultView: YXView {
                 operateButton.setTitle("打卡分享", for: .normal)
             }
         }
-        if model.type == .homework {
+        if model.type.isHomework() {
             operateButton.setTitle("打卡分享给老师", for: .normal)
         }
     }
@@ -457,7 +457,7 @@ class YXExerciseResultView: YXView {
         
         allHeight += AdaptIconSize(25 + 42 + 25)
 
-        allHeight += model.type == .homework ? AdaptSize(28) : 0
+        allHeight += model.type.isHomework() ? AdaptSize(28) : 0
 
         return allHeight
     }

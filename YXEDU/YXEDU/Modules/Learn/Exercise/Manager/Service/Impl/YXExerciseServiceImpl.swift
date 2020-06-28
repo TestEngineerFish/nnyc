@@ -53,6 +53,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         let request = YXExerciseRequest.exercise(isGenerate: isGenerate, type: learnConfig.learnType.rawValue, planId: planId)
         request.execute(YXExerciseResultModel.self, success: { [weak self] (model) in
             self?._resultModel = model
+            YXGrowingManager.share.uploadExerciseType(model?.rule ?? "")
             self?._processData {
                 completion?(true, nil)
             }

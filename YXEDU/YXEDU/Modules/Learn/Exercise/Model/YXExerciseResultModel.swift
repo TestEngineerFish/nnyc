@@ -11,6 +11,7 @@ import ObjectMapper
 
 /// 当天学习数据总模型
 struct YXExerciseResultModel: Mappable {
+    var rule: String                = ""
     var type: YXLearnType           = .base
     var newWordCount: Int           = 0
     var reviewWordCount: Int        = 0
@@ -19,6 +20,7 @@ struct YXExerciseResultModel: Mappable {
     init?(map: Map) {}
     
     mutating func mapping(map: Map) {
+        rule            <- map["learn_rule"]
         type            <- (map["review_type"], YXExerciseDataTypeTransform())
         newWordCount    <- map["new_word_num"]
         reviewWordCount <- map["review_word_num"]

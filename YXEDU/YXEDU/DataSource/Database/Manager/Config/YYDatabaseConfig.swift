@@ -112,6 +112,7 @@ extension YYSQLManager {
         book_id integer(4) NOT NULL DEFAULT(0),
         unit_id integer(4) NOT NULL DEFAULT(0),
         plan_id integer(4) NOT NULL DEFAULT(0),
+        homework_id integer(4) NOT NULL DEFAULT(0),
         status integer(1) NOT NULL DEFAULT(0),
         study_count integer(1) NOT NULL DEFAULT(0),
         study_duration integer(4) NOT NULL DEFAULT(0),

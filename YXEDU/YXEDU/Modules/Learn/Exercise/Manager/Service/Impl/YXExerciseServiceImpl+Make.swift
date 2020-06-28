@@ -91,7 +91,7 @@ extension YXExerciseServiceImpl {
 
     /// 查询单词内容
     func _queryWord(wordId: Int, bookId: Int) -> YXWordModel? {
-        if learnConfig.learnType == .base || learnConfig.learnType == .homework {
+        if learnConfig.learnType == .base || learnConfig.learnType.isHomework() {
             return wordDao.selectWord(bookId: bookId, wordId: wordId)
         } else {
             return wordDao.selectWord(wordId: wordId)
