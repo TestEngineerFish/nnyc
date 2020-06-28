@@ -23,7 +23,7 @@ extension YXExerciseViewController {
     
         
     func processEmptyData() {
-        service.cleanStudyRecord(hasNextGroup: false)
+        service.cleanStudyRecord()
 
         if learnConfig.learnType == .aiReview {
             let nrView = YXNotReviewWordView()
@@ -50,10 +50,7 @@ extension YXExerciseViewController {
             YXLog("上报关卡成功")
             if model.hasNextGroup {
                 YXLog("还有下一组")
-                self.showLoadAnimation()
-                self.loadingView?.downloadCompleteBlock = {
-                    self.startStudy(isGenerate: false)
-                }
+                self.startStudy(isGenerate: false)
             } else {
                 YXLog("没有下一组，进入结果页")
                 if self.learnConfig.learnType == .base {

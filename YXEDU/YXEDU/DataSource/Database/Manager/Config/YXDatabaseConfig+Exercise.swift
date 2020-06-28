@@ -40,18 +40,6 @@ extension YYSQLManager {
         WHERE e.word_id = w.wordId and e.unit_id = w.unitId and e.book_id = w.bookId and e.word_type = 0
         """
 
-        case getNewWordExerciseAmount =
-        """
-        SELECT count(*) amount FROM all_exercise_v1
-        WHERE study_id = ? and word_type = 1
-        """
-
-        case getReviewWordExerciseAmount =
-        """
-        SELECT count(*) amount FROM all_exercise_v1
-        WHERE study_id = ? and word_type = 0
-        """
-
         case getAllWordExerciseAmount =
         """
         SELECT count(*) amount FROM all_exercise_v1

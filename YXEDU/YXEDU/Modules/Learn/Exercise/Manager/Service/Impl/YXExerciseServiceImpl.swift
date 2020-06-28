@@ -162,13 +162,11 @@ class YXExerciseServiceImpl: YXExerciseService {
         let request = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, time: duration, result: reportContent)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
-            var newWordCount    = 0
-            var reviewWordCount = 0
             // 获取学习数据
             let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
             let studyCount  = self.studyDao.selectStudyCount(learn: self.learnConfig)
-            newWordCount    = self.exerciseDao.getNewWordExerciseAmount(study: self._studyId)
-            reviewWordCount = self.exerciseDao.getReviewWordExerciseAmount(study: self._studyId)
+            let newWordCount    = self.studyDao.getNewWordCount(study: self._studyId)
+            let reviewWordCount = self.studyDao.getReviewWordCount(study: self._studyId)
             // 上报Growing
             YXGrowingManager.share.biReport(learn: self.learnConfig, duration: duration, study: studyCount)
             if self.learnConfig.learnType == .base {
@@ -178,13 +176,12 @@ class YXExerciseServiceImpl: YXExerciseService {
             }
 
             // 清除数据库对应数据
-            self.cleanStudyRecord(hasNextGroup: response.data?.hasNextGroup ?? false)
-            self._loadStudyRecord()
+            self.cleanStudyRecord()
             completion?(response.data, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
         }) { (error) in
             // 容错处理
             if reportContent == "[]" {
-                self.cleanStudyRecord(hasNextGroup: false)
+                self.cleanStudyRecord()
             }
             self.studyDao.updateProgress(study: self._studyId, progress: .unreport)
             YXUtils.showHUD(kWindow, title: error.message)
@@ -192,14 +189,9 @@ class YXExerciseServiceImpl: YXExerciseService {
         }
     }
     
-    func cleanStudyRecord(hasNextGroup: Bool) {
+    func cleanStudyRecord() {
         if _studyId > 0 {
-            var r1 = false
-            if hasNextGroup {
-                r1 = studyDao.reset(study: _studyId)
-            } else {
-                r1 = studyDao.delete(study: _studyId)
-            }
+            let r1 = studyDao.delete(study: _studyId)
             let r2 = exerciseDao.deleteExercise(study: _studyId)
             let r3 = stepDao.deleteStepWithStudy(study: _studyId)
             let r4 = turnDao.deleteCurrentTurn(study: _studyId)

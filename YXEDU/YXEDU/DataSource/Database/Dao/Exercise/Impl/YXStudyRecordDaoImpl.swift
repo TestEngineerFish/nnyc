@@ -9,11 +9,13 @@
 import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
-
-    func insertStudyRecord(learn config: YXLearnConfig) -> Int {
+    
+    func insertStudyRecord(learn config: YXLearnConfig, newWordCount: Int, reviewWordCount: Int) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
         var params: [Any] = config.params
         params.append(YXExerciseProgress.learning.rawValue)
+        params.append(newWordCount)
+        params.append(reviewWordCount)
         let result = self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
         return result ? Int(wordRunner.lastInsertRowId) : 0
     }
@@ -97,6 +99,30 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
 
     func getDurationTime(learn config: YXLearnConfig) -> Int {
         return self.selectStudyRecordModel(learn: config)?.studyDuration ?? 0
+    }
+    
+    func getNewWordCount(study id: Int) -> Int {
+        var count = 0
+        let sql = YYSQLManager.StudyRecordSQL.selectStudyWithID.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return count
+        }
+        if result.next() {
+            count = Int(result.int(forColumn: "new_word_count"))
+        }
+        return count
+    }
+    
+    func getReviewWordCount(study id: Int) -> Int {
+        var count = 0
+        let sql = YYSQLManager.StudyRecordSQL.selectStudyWithID.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return 0
+        }
+        if result.next() {
+            count = Int(result.int(forColumn: "review_word_count"))
+        }
+        return count
     }
 
     func delete(study id: Int) -> Bool {

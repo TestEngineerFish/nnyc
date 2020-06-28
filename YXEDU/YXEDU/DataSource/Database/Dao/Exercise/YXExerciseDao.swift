@@ -26,14 +26,6 @@ protocol YXExerciseDao {
     /// - Parameter id: 学习流程ID
     func getReviewWordList(study id: Int) -> [YXWordModel]
 
-    /// 获得新学单词数量
-    /// - Parameter id: 学习流程ID
-    func getNewWordExerciseAmount(study id: Int) -> Int
-
-    /// 获得复习单词数量
-    /// - Parameter id: 学习流程ID
-    func getReviewWordExerciseAmount(study id: Int) -> Int
-
     /// 获得所有单词数量
     /// - Parameter id: 学习流程ID
     func getAllWordExerciseAmount(study id: Int) -> Int

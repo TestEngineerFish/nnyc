@@ -32,7 +32,7 @@ extension YXLearnConfig {
         return [learnType.rawValue, bookId, unitId, planId, homeworkId]
     }
     var desc: String {
-        return String("LearnConfig - type: \(learnType.desc), bookId: \(bookId), unitId: \(unitId), planId: \(planId)")
+        return String("LearnConfig - type: \(learnType.desc), bookId: \(bookId), unitId: \(unitId), planId: \(planId), homeworkId: \(homeworkId)")
     }
 }
 

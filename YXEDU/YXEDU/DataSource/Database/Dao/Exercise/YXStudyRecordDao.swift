@@ -13,8 +13,10 @@ protocol YXStudyRecordDao {
     /// 插入学习记录
     /// - Parameters:
     ///   - config: 学习配置信息
+    /// - Parameter newWordCount: 总新学单词数量
+    /// - Parameter reviewWordCount: 总复习单词数量
     @discardableResult
-    func insertStudyRecord(learn config: YXLearnConfig) -> Int
+    func insertStudyRecord(learn config: YXLearnConfig, newWordCount: Int, reviewWordCount: Int) -> Int
 
     /// 查询学习记录对象
     /// - Parameter config: 学习配置信息
@@ -59,6 +61,14 @@ protocol YXStudyRecordDao {
     /// 获得学习持续时间
     /// - Parameter config: 学习配置信息
     func getDurationTime(learn config: YXLearnConfig) -> Int
+    
+    /// 获得新单词数量
+    /// - Parameter id: 学习Id
+    func getNewWordCount(study id: Int) -> Int
+    
+    /// 获得复习单词数量
+    /// - Parameter id: 学习Id
+    func getReviewWordCount(study id: Int) -> Int
 
     /// 删除学习记录
     /// - Parameter id: 学习记录的ID

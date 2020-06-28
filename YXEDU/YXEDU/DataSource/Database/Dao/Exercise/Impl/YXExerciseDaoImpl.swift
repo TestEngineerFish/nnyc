@@ -56,30 +56,6 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return wordModelList
     }
 
-    func getNewWordExerciseAmount(study id: Int) -> Int {
-        var amount = 0
-        let sql = YYSQLManager.ExerciseSQL.getNewWordExerciseAmount.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
-            return amount
-        }
-        if result.next() {
-            amount = Int(result.int(forColumn: "amount"))
-        }
-        return amount
-    }
-
-    func getReviewWordExerciseAmount(study id: Int) -> Int {
-        var amount = 0
-        let sql = YYSQLManager.ExerciseSQL.getReviewWordExerciseAmount.rawValue
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
-            return amount
-        }
-        if result.next() {
-            amount = Int(result.int(forColumn: "amount"))
-        }
-        return amount
-    }
-
     func getAllWordExerciseAmount(study id: Int) -> Int {
         var amount = 0
         let sql = YYSQLManager.ExerciseSQL.getAllWordExerciseAmount.rawValue

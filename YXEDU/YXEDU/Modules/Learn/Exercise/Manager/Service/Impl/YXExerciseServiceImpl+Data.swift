@@ -42,7 +42,7 @@ extension YXExerciseServiceImpl {
         if let model = self.studyDao.selectStudyRecordModel(learn: learnConfig) {
             return model.studyId
         } else {
-            return self.studyDao.insertStudyRecord(learn: learnConfig)
+            return self.studyDao.insertStudyRecord(learn: learnConfig, newWordCount: self._resultModel?.newWordCount ?? 0, reviewWordCount: self._resultModel?.reviewWordCount ?? 0)
         }
     }
 

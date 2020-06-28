@@ -21,9 +21,11 @@ extension YYSQLManager {
             unit_id,
             plan_id,
             homework_id,
-            status
+            status,
+            new_word_count,
+            review_word_count
         )
-        values(?, ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         case selectStudy =
@@ -32,6 +34,12 @@ extension YYSQLManager {
         WHERE learn_type = ? AND book_id = ? AND unit_id = ? AND plan_id = ? AND homework_id = ?
         """
 
+        case selectStudyWithID =
+        """
+        SELECT * FROM study_record_v1
+        WHERE study_id = ?
+        """
+        
         /// 更新学习进度
         case updateProgress =
         """

@@ -115,6 +115,8 @@ extension YYSQLManager {
         homework_id integer(4) NOT NULL DEFAULT(0),
         status integer(1) NOT NULL DEFAULT(0),
         study_count integer(1) NOT NULL DEFAULT(0),
+        new_word_count integer(1) NOT NULL DEFAULT(0),
+        review_word_count integer(1) NOT NULL DEFAULT(0),
         study_duration integer(4) NOT NULL DEFAULT(0),
         start_time integer(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
         create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))

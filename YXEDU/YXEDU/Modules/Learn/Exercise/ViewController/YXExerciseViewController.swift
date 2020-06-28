@@ -155,11 +155,15 @@
             YXExerciseViewController.requesting = false
             if result {
                 self.service.initService()
-                DispatchQueue.main.async {
-                    self.loadingView?.animationCompleteBlock = { [weak self] in
-                        guard let self = self else {return}
-                        self.switchExerciseView()
+                if isGenerate {
+                    DispatchQueue.main.async {
+                        self.loadingView?.animationCompleteBlock = { [weak self] in
+                            guard let self = self else {return}
+                            self.switchExerciseView()
+                        }
                     }
+                } else {
+                    self.switchExerciseView()
                 }
             } else {
                 UIView.toast("加载数据失败")
@@ -452,7 +456,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     
     func clickSwitchBtnEvent() {
         self.delegate?.backHomeEvent()
-        self.service.cleanStudyRecord(hasNextGroup: false)
+        self.service.cleanStudyRecord()
         self.navigationController?.popViewController(animated: true)
     }
     
