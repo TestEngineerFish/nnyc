@@ -346,6 +346,7 @@
 		CF4F3743242DEC4A00CA0C0B /* YXReviewResultTipsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F3742242DEC4A00CA0C0B /* YXReviewResultTipsListView.swift */; };
 		CF53B4902406717C00625892 /* UITabBarItem+BadgeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */; };
 		CF53B49524067CA200625892 /* YXFeedbackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF53B49424067CA200625892 /* YXFeedbackData.swift */; };
+		CF673B5424A8747100183E33 /* YXMyClassTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF673B5324A8747100183E33 /* YXMyClassTableViewFooterView.swift */; };
 		CF8F08C6242665B00067A004 /* YXLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8F08C5242665B00067A004 /* YXLogFormatter.m */; };
 		CFB11BE724137E2600B29B62 /* YXNewLearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB11BE624137E2600B29B62 /* YXNewLearnView.swift */; };
 		CFB11BEA2414953E00B29B62 /* YXStarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB11BE92414953E00B29B62 /* YXStarView.swift */; };
@@ -964,6 +965,7 @@
 		CF53B48E2406717C00625892 /* UITabBarItem+BadgeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+BadgeValue.m"; sourceTree = "<group>"; };
 		CF53B48F2406717C00625892 /* UITabBarItem+BadgeValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+BadgeValue.h"; sourceTree = "<group>"; };
 		CF53B49424067CA200625892 /* YXFeedbackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YXFeedbackData.swift; path = YXEDU/Modules/Mine/ViewControllers/FeedBack/Data/YXFeedbackData.swift; sourceTree = SOURCE_ROOT; };
+		CF673B5324A8747100183E33 /* YXMyClassTableViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassTableViewFooterView.swift; sourceTree = "<group>"; };
 		CF8F08C4242665B00067A004 /* YXLogFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXLogFormatter.h; sourceTree = "<group>"; };
 		CF8F08C5242665B00067A004 /* YXLogFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXLogFormatter.m; sourceTree = "<group>"; };
 		CFB11BE624137E2600B29B62 /* YXNewLearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnView.swift; sourceTree = "<group>"; };
@@ -1584,6 +1586,7 @@
 				224AE701249A00C1009EAB06 /* YXMyClassStudentCell.swift */,
 				224AE70B24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift */,
 				224AE70D24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift */,
+				CF673B5324A8747100183E33 /* YXMyClassTableViewFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4173,6 +4176,7 @@
 				22E9FFC62473BF80006B6F60 /* YXOCRequest.swift in Sources */,
 				2248AE3B239DEDDC003AADCF /* YXReviewWordViewCell.swift in Sources */,
 				EE6FB0B42366E95F00E96015 /* YXExerciseBottomView.swift in Sources */,
+				CF673B5424A8747100183E33 /* YXMyClassTableViewFooterView.swift in Sources */,
 				224A2FBF238233CC00AD99B0 /* YXSexangleView.swift in Sources */,
 				77626BFF239E310300B9407A /* YXWordListHeaderView.swift in Sources */,
 				22D50B3723BB203000AB2421 /* YXShareRequest.swift in Sources */,

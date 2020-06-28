@@ -39,8 +39,6 @@ enum YXLocalKey: String {
     case currentAvatarImage            = "kCurrentAvatarImage"
     /// 用户名称
     case userName                      = "kUserName"
-    /// 手机号
-    case mobile                        = "kMobile"
     /// 用户头像地址
     case userAvatarPath                = "kUserAvatarPath"
     /// 金币使用、获取说明（Web地址）

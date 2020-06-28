@@ -84,7 +84,11 @@ class YXMyClassStudentCell: UITableViewCell {
     }
 
     func setData(student model: YXMyClassStudentInfoModel) {
-        self.avatarImageView.showImage(with: model.avatarUrl, placeholder: UIImage(named: "userPlaceHolder"), progress: nil, completion: nil)
+        if !model.avatarUrl.isEmpty {
+            self.avatarImageView.showImage(with: model.avatarUrl, placeholder: UIImage(named: "userPlaceHolder"), progress: nil, completion: nil)
+        } else {
+            self.avatarImageView.image = UIImage(named: "userPlaceHolder")
+        }
         self.nameLabel.text = model.name
         self.descLabel.text = "本月学习\(model.learnCount)天"
     }

@@ -45,7 +45,11 @@ struct YXGrowingManager {
     func uploadLearnFinished() {
         Growing.track("main_finish_study")
     }
-
+    
+    /// 上传学习规则
+    func uploadExerciseType(_ type: String) {
+        Growing.setPeopleVariableWithKey("main_study_procedure", andStringValue: type)
+    }
     // TODO: ---- 用户变量 ----
 
     /// 换书时上传书信息

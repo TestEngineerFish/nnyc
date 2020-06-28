@@ -61,11 +61,11 @@ class YXUserModel: NSObject {
     }
     var mobile: String? {
         set {
-            YYCache.set(newValue, forKey: .mobile)
+            YYCache.set(newValue, forKey: "kMobile")
         }
 
         get {
-            return YYCache.object(forKey: .mobile) as? String
+            return YYCache.object(forKey: "kMobile") as? String
         }
     }
     var time: String {

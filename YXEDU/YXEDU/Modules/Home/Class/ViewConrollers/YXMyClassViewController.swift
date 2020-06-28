@@ -131,4 +131,13 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.estimatedRowHeight
     }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return self.workModelList.isEmpty ? AdaptSize(232) : .zero
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = YXMyClassTableViewFooterView()
+        return footerView
+    }
 }
