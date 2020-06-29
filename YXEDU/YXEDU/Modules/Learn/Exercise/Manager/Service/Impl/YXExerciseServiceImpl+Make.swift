@@ -80,7 +80,8 @@ extension YXExerciseServiceImpl {
         for e in es {
             if e.type == .newLearnMasterList {
                 var newE = e
-                newE.word = _queryWord(wordId: e.wordId, bookId: e.word?.bookId ?? 0)
+                newE.word   = _queryWord(wordId: e.wordId, bookId: e.word?.bookId ?? 0)
+                newE.status = .wrong // 默认未掌握
                 n3List.append(newE)
             }
         }

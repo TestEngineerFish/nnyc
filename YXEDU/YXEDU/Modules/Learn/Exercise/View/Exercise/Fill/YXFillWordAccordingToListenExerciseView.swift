@@ -25,6 +25,7 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
         answerView?.delegate       = questionView
         answerView?.answerDelegate = self
         (answerView as! YXAnswerSelectLettersView).textField.showRemindButton { [weak self] (button) in
+            self?.answerView?.answerCompletion(right: false)
             self?.remindView?.show()
         }
         

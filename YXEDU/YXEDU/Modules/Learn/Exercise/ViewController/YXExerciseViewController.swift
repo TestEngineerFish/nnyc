@@ -303,7 +303,6 @@
             exerciseModel.wrongCount += 1
             self.service.answerAction(exercise: exerciseModel, isRemind: true)
         }
-        self.exerciseViewArray[0].remindAction(wordId: self.remindWordId, isRemind: true)
         self.exerciseViewArray.first?.remindView?.show()
         NotificationCenter.default.post(name: YXNotification.kClickTipsButton, object: nil)
     }

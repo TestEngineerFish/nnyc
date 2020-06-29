@@ -158,12 +158,6 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
         }
     }
     
-    
-    /// 提示，目前仅连线题使用
-    /// - Parameter wordId:
-    func remindAction(wordId: Int, isRemind: Bool){}
-    
-    
     // MARK: ==== YXAnswerViewDelegate ====
 
     func answerCompletion(_ exerciseModel: YXExerciseModel, _ right: Bool) {
