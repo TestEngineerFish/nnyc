@@ -32,12 +32,11 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
     public var remindSteps: [[YXRemindType]] = []
     public var exerciseModel: YXExerciseModel
     
-    private var remindLabel = UILabel()
-
-    private var titleLabel = UILabel()
-    private var imageView = YXKVOImageView()
+    private var remindLabel     = UILabel()
+    private var titleLabel      = UILabel()
+    private var imageView       = YXKVOImageView()
     private var audioPlayerView = YXAudioPlayerView()
-    
+    private var isShowDetail    = false
     /// 当前提示到哪一步了，默认从第一个开始提示
     public var currentRemindIndex = -1
     
@@ -179,7 +178,10 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
             case .exampleChinese:
                 remindExampleChinese()
             default:
-                remindDetail()
+                /// 已显示，则不再显示
+                if !isShowDetail {
+                    remindDetail()
+                }
             }
         }
         
@@ -271,17 +273,18 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         titleLabel.text = chineseExample
         setAllSubviewStatus()
     }
-    
-    
+
     public func remindDetail(completion: (() -> Void)? = nil) {
         guard let word = exerciseModel.word else { return }
         NotificationCenter.default.post(name: YXNotification.kShowWordDetailPage, object: nil)
         let detailView = YXWordDetailTipView(word: word)
         detailView.dismissClosure = {
             completion?()
+            self.isShowDetail = false
             NotificationCenter.default.post(name: YXNotification.kCloseWordDetailPage, object: nil)
         }
         detailView.showWithAnimation()
+        self.isShowDetail = true
     }
 
     private func remindNextStep() {

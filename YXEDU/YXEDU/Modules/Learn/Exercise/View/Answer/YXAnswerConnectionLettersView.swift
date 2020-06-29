@@ -398,7 +398,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
                     letterBtn.status = .right
                 }
             }
-            self.answerDelegate?.answerCompletion(self.exerciseModel, true)
+            self.answerCompletion(right: true)
         } else {
             // 答题错误
             self.selectedBtnArray.forEach { (letterBtn) in
@@ -413,7 +413,7 @@ class YXAnswerConnectionLettersView: YXBaseAnswerView {
                     }
                 }
             }
-            self.answerDelegate?.answerCompletion(self.exerciseModel, false)
+            self.answerCompletion(right: false)
         }
         if let button = self.selectedBtnArray.first {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + config.resultAnimationTime) {

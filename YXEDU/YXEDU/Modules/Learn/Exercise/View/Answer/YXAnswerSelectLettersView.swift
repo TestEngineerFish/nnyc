@@ -166,21 +166,8 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharac
     private func showResult(errorList list: [Int]) {
         self.isUserInteractionEnabled = false
         if list.isEmpty {
-            // 答题正确
-//            self.selectedBtnArray.forEach { (button) in
-//                button.status = .right
-//            }
-            // 如果是Q-B-1，则需要播放语音
-//            if self.exerciseModel.type == .fillWordAccordingToChinese, let urlStr = self.exerciseModel.word?.voice, let url = URL(string: urlStr) {
-//                YXAVPlayerManager.share.playAudio(url) { [weak self] in
-//                    guard let self = self else {return}
-//                    YXAVPlayerManager.share.finishedBlock = nil
-//                    self.answerDelegate?.answerCompletion(self.exerciseModel, true)
-//                }
-//            } else {
             self.textField.resignFirstResponder()
-            self.answerDelegate?.answerCompletion(self.exerciseModel, true)
-//            }
+            self.answerCompletion(right: true)
         } else {
             if self.exerciseModel.type == .allFillWordByAtLookChinese || self.exerciseModel.type == .allFillAtListen {
                 self.isUserInteractionEnabled = true
@@ -200,7 +187,7 @@ class YXAnswerSelectLettersView: YXBaseAnswerView, UITextFieldDelegate, YXCharac
                     }
                 }
             }
-            self.answerDelegate?.answerCompletion(self.exerciseModel, false)
+            self.answerCompletion(right: false)
         }
     }
     

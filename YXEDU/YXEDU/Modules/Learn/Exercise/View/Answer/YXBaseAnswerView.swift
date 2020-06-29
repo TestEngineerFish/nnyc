@@ -54,7 +54,6 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
         if !right {
             exerciseModel.wrongCount += 1
         }
-
         self.answerDelegate?.answerCompletion(exerciseModel, right)
     }
 
