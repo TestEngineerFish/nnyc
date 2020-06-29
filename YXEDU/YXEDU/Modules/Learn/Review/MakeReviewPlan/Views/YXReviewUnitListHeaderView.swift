@@ -19,6 +19,11 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     var model: YXReviewUnitModel?
     weak var delegate: YXReviewUnitListHeaderProtocol?
 
+    var cusContentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.hex(0xF2F2F2)
+        return view
+    }()
     var unitNameLabel: UILabel = {
         let label = UILabel()
         label.textColor     = UIColor.black2
@@ -54,7 +59,6 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        self.contentView.backgroundColor = UIColor.hex(0xF2F2F2)
         self.isUserInteractionEnabled    = true
         self.setSubviews()
     }
@@ -95,13 +99,14 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     }
 
     private func setSubviews() {
-        self.contentView.addSubview(unitNameLabel)
-        self.contentView.addSubview(statisticsLabel)
-        self.contentView.addSubview(checkAllButton)
-        self.contentView.addSubview(arrowImageView)
+        self.addSubview(cusContentView)
+        cusContentView.addSubview(unitNameLabel)
+        cusContentView.addSubview(statisticsLabel)
+        cusContentView.addSubview(checkAllButton)
+        cusContentView.addSubview(arrowImageView)
         self.addSubview(bottomView)
 
-        self.contentView.snp.remakeConstraints { (make) in
+        self.cusContentView.snp.remakeConstraints { (make) in
             make.left.top.right.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.top).priorityHigh()
         }

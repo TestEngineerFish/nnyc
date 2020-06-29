@@ -261,7 +261,8 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return AdaptIconSize(58)
+        let unitModel = self.unitModelList[indexPath.section]
+        return unitModel.list.isEmpty ? .zero : AdaptIconSize(58)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

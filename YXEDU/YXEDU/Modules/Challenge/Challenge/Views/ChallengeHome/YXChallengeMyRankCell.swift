@@ -222,7 +222,7 @@ class YXChallengeMyRankCell: UIView {
         }
 
         nameLabel.sizeToFit()
-        nameLabel.snp.makeConstraints { (make) in
+        nameLabel.snp.remakeConstraints { (make) in
             make.bottom.equalTo(avatarImageView.snp.centerY)
             make.left.equalTo(avatarImageView.snp.right).offset(AdaptSize(16))
             make.width.equalTo(nameLabel.width)
@@ -238,7 +238,7 @@ class YXChallengeMyRankCell: UIView {
 
         heraldLabel.sizeToFit()
         heraldLabel.snp.makeConstraints { (make) in
-            make.top.centerY.equalTo(nameLabel)
+            make.centerY.equalTo(nameLabel)
             make.size.equalTo(heraldLabel.size)
             make.right.equalToSuperview().offset(AdaptSize(-12))
         }
