@@ -13,7 +13,7 @@ import UIKit
 protocol YXAnswerViewDelegate: NSObjectProtocol {
     /// 答题完成时，对错的结果回调
     /// - Parameter right: 是否答对
-    func answerCompletion(_ exerciseModel: YXExerciseModel, _ right: Bool)
+    func answerCompletion(right: Bool)
 
     ///  切换问题
     /// - returns: 是否切题成功,如果是最后一题,则切题失败
@@ -50,11 +50,7 @@ class YXBaseAnswerView: YXView, YXAudioPlayerViewDelegate {
 
     // 答题完成时，子类必须调用该方法
     func answerCompletion(right: Bool) {
-        exerciseModel.status = right ? .right : .wrong
-        if !right {
-            exerciseModel.wrongCount += 1
-        }
-        self.answerDelegate?.answerCompletion(exerciseModel, right)
+        self.answerDelegate?.answerCompletion(right: right)
     }
 
     // MARK: YXAudioPlayerViewDelegate

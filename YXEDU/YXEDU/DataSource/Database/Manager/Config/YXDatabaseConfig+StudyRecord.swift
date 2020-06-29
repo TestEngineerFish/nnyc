@@ -16,14 +16,14 @@ extension YYSQLManager {
         """
         INSERT INTO
         study_record_v1(
-            learn_type,
-            book_id,
-            unit_id,
-            plan_id,
-            homework_id,
-            status,
-            new_word_count,
-            review_word_count
+        learn_type,
+        book_id,
+        unit_id,
+        plan_id,
+        homework_id,
+        status,
+        new_word_count,
+        review_word_count
         )
         values(?, ?, ?, ?, ?, ?, ?, ?)
         """

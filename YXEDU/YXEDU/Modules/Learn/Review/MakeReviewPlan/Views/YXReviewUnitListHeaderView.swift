@@ -99,7 +99,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     }
 
     private func setSubviews() {
-        self.addSubview(cusContentView)
+        self.contentView.addSubview(cusContentView)
         cusContentView.addSubview(unitNameLabel)
         cusContentView.addSubview(statisticsLabel)
         cusContentView.addSubview(checkAllButton)
@@ -108,14 +108,14 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
 
         self.cusContentView.snp.remakeConstraints { (make) in
             make.left.top.right.equalToSuperview()
-            make.bottom.equalTo(bottomView.snp.top).priorityHigh()
+            make.bottom.equalTo(bottomView.snp.top)
         }
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(AdaptSize(5))
         }
         self.unitNameLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(AdaptSize(22))
+            make.left.equalToSuperview().offset(AdaptSize(22))
             make.centerY.height.equalToSuperview()
             make.right.equalTo(self.statisticsLabel.snp.left)
         }
