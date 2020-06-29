@@ -250,4 +250,8 @@ class YXWorkWithMyClassCell: UITableViewCell {
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 
+    private func punch() {
+        // 打卡分享
+    }
+
 }

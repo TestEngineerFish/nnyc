@@ -54,9 +54,12 @@ class YXAlertQueueManager: NSObject {
         }
         
         alertView?.closeEvent = { [weak self] in
-            self?.alertArray.remove(at: index)
+            guard let self = self else { return }
+            if self.alertArray.count > index {
+                self.alertArray.remove(at: index)
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self?.showAlert()
+                self.showAlert()
             }
         }
         alertView?.show()
@@ -71,7 +74,7 @@ class YXAlertQueueManager: NSObject {
         // 创建并发队列
         let queue = DispatchQueue.global()
         
-        // 如果登陆过
+        // 如果登录过
         if YXUserModel.default.didLogin {
             group.enter()
             queue.async(group: group) {

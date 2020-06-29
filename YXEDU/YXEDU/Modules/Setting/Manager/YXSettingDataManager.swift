@@ -21,7 +21,6 @@ struct YXSettingDataManager {
         }
     }
     
-    
     func checkCommand(command: String, completion: ((_ model: YXReviewPlanCommandModel?, _ errorMsg: String?) -> Void)?) {
         let request = YXSettingRequest.checkCommand(command: command)
         YYNetworkService.default.request(YYStructResponse<YXReviewPlanCommandModel>.self, request: request, success: { (response) in
