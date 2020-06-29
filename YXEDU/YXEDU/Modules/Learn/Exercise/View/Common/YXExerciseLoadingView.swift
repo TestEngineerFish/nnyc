@@ -9,7 +9,14 @@
 import UIKit
 import Lottie
 
-class YXExerciseLoadingView: UIView, CAAnimationDelegate {
+protocol YXExerciseLoadingViewDelegate: NSObjectProtocol {
+    /// 词书下载完成
+    func downloadComplete()
+    /// 进度条动画执行完成
+    func animationComplete()
+}
+
+class YXExerciseLoadingView: YXView, CAAnimationDelegate {
     var progressLayer  = CAGradientLayer()
     var dotLayer       = CAGradientLayer()
     let descLabel      = UILabel()
@@ -24,10 +31,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     var status         = YXExerciseLoadingEnum.normal
     var isLoading      = false // 动画运行中
     var progressWidth  = AdaptIconSize(181.5)
-    /// 词书下载完成
-    var downloadCompleteBlock: (()->Void)?
-    /// 进度条动画执行完成
-    var animationCompleteBlock: (()->Void)?
+    weak var delegate: YXExerciseLoadingViewDelegate?
     var timer: Timer?
     
     enum YXExerciseLoadingSpeedEnum: CGFloat {
@@ -86,9 +90,11 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         exercisType = type
         super.init(frame: kWindow.bounds)
         self.createSubviews()
+        YXLog("\(self)，被加载")
     }
     
     deinit {
+        YXLog("\(self)，被释放")
         self.timer?.invalidate()
         self.timer = nil
     }
@@ -97,22 +103,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func registerNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(downloadSingleFinished), name: YXNotification.kDownloadSingleFinished, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(downloadAllFinished), name: YXNotification.kDownloadAllFinished, object: nil)
-    }
-    
-    @objc
-    private func downloadSingleFinished() {
-        self.status = .requestIng
-    }
-    
-    @objc
-    private func downloadAllFinished() {
-        self.status = .requestIng
-    }
-    
-    private func createSubviews() {
+    override func createSubviews() {
         self.backgroundColor = UIColor.white
         
         let headerView = self.createHeaderView()
@@ -214,35 +205,42 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         
         return fooderView
     }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.stopAnimation()
+        self.delegate?.animationComplete()
+    }
     
     // MARK: ==== Event ====
     func startAnimation() {
-        let _timer = Timer(timeInterval: timeInterval, repeats: true, block: { (timer) in
-            self.addStepTime    += self.timeInterval
-            self.addLoadingTime += self.timeInterval
+        self.timer = Timer(timeInterval: timeInterval, repeats: true, block: { [weakself = self] (timer) in
+            weakself.addStepTime    += weakself.timeInterval
+            weakself.addLoadingTime += weakself.timeInterval
             // 更新提示文案
-            if self.addStepTime >= self.stepTimeOut {
+            if weakself.addStepTime >= weakself.stepTimeOut {
                 //                YXLog("加载超时，更新文案")
                 DispatchQueue.main.async {
-                    self.descLabel.text = self.status.getDesction()
+                    weakself.descLabel.text = weakself.status.getDesction()
                 }
             }
-            if self.addLoadingTime > self.loadingTimeOut {
-                self.stopAnimation()
+            if weakself.addLoadingTime > weakself.loadingTimeOut {
+                weakself.stopAnimation()
                 DispatchQueue.main.async {
                     UIView().currentViewController?.navigationController?.popToRootViewController(animated: true)
                     YXUtils.showHUD(kWindow, title: "当前网速较慢，建议稍后重试")
                 }
             }
-            self.updateValue()
+            weakself.updateValue()
         })
-        RunLoop.current.add(_timer, forMode: .common)
-        self.timer = _timer
+        RunLoop.current.add(timer!, forMode: .common)
     }
     
     func stopAnimation() {
         self.timer?.invalidate()
         self.timer = nil
+        self.dotLayer.removeAllAnimations()
+        self.progressLayer.mask?.removeAllAnimations()
         self.removeFromSuperview()
     }
     
@@ -264,8 +262,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             }
             if singleDownloadFinished {
                 YXLog("当前词书下载完成，开始主流程的学习")
-                self.downloadCompleteBlock?()
-                self.downloadCompleteBlock = nil
+                self.delegate?.downloadComplete()
                 self.speed  = .highSpeed
                 // 请求之前需要先下载完词书
                 if YXExerciseViewController.requesting != nil {
@@ -287,8 +284,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             }
             // 所有任务下载完成，才可以进入下一步
             if YXWordBookResourceManager.taskList.isEmpty {
-                self.downloadCompleteBlock?()
-                self.downloadCompleteBlock = nil
+                self.delegate?.downloadComplete()
                 self.speed  = .highSpeed
                 // 请求之前需要先下载完词书
                 if YXExerciseViewController.requesting != nil {
@@ -312,7 +308,9 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         // 执行动画
         if self.status != originStatus {
             self.isLoading = true
-            self.showAnimation()
+            DispatchQueue.main.async {
+                self.showAnimation()
+            }
         }
     }
     
@@ -320,14 +318,16 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
     private func showAnimation() {
         YXLog("开始加载动画，当前状态\(self.status)")
         let dotAnimation = CABasicAnimation(keyPath: "position.x")
-        let dotFrom: CGFloat = {
+        let dotFrom: CGFloat = { [weak self] in
+            guard let self = self else { return .zero }
             if self.fromRatio > .zero {
                 return progressWidth * CGFloat(self.fromRatio)
             } else {
                 return .zero
             }
         }()
-        let dotTo: CGFloat = {
+        let dotTo: CGFloat = { [weak self] in
+            guard let self = self else { return .zero }
             if self.toRatio > .zero {
                 return progressWidth * CGFloat(self.toRatio)
             } else {
@@ -353,7 +353,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
         proMaskLayer.lineJoin    = .round
         proMaskLayer.strokeColor = UIColor.blue.cgColor
         proMaskLayer.fillColor   = nil
-        self.progressLayer.mask = proMaskLayer
+        self.progressLayer.mask  = proMaskLayer
         
         let proAnimation = CABasicAnimation(keyPath: "strokeEnd")
         proAnimation.fromValue      = self.fromRatio
@@ -377,7 +377,7 @@ class YXExerciseLoadingView: UIView, CAAnimationDelegate {
             self.addStepTime = 0
             if self.toRatio >= 1.0 {
                 self.stopAnimation()
-                self.animationCompleteBlock?()
+                self.delegate?.animationComplete()
             }
         }
     }

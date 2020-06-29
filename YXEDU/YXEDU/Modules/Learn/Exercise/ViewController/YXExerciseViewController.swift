@@ -57,7 +57,7 @@
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.loadingView?.removeFromSuperview()
+        self.loadingView = nil
         if self.learnConfig.learnType == .base {
             YXWordBookResourceManager.stop = false
         }
@@ -69,9 +69,6 @@
         self.createSubviews()
         self.bindProperty()
         self.initManager()
-        self.loadingView?.downloadCompleteBlock = {
-            self.startStudy()
-        }
         YXGrowingManager.share.startDate = NSDate()
     }
     
@@ -137,9 +134,6 @@
             self.service.setStartTime()
             self.service.addStudyCount()
             YXExerciseViewController.requesting = false
-            self.loadingView?.animationCompleteBlock = { [weak self] in
-                self?.switchExerciseView()
-            }
         default:
             YXLog("未开始学习，请求学习数据")
             self.service.setStartTime()
@@ -155,14 +149,7 @@
             YXExerciseViewController.requesting = false
             if result {
                 self.service.initService()
-                if isGenerate {
-                    DispatchQueue.main.async {
-                        self.loadingView?.animationCompleteBlock = { [weak self] in
-                            guard let self = self else {return}
-                            self.switchExerciseView()
-                        }
-                    }
-                } else {
+                if !isGenerate {
                     self.switchExerciseView()
                 }
             } else {
@@ -274,6 +261,7 @@
     /// 显示loading动画
     func showLoadAnimation() {
         self.loadingView = YXExerciseLoadingView(type: self.learnConfig.learnType)
+        self.loadingView?.delegate = self
         kWindow.addSubview(self.loadingView!)
         self.loadingView?.startAnimation()
     }
@@ -489,5 +477,15 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
         answerView.answerCompletion(right: true)
     }
 }
+
+ extension YXExerciseViewController: YXExerciseLoadingViewDelegate {
+    func downloadComplete() {
+        self.startStudy()
+    }
+
+    func animationComplete() {
+        self.switchExerciseView()
+    }
+ }
 
 

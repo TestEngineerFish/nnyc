@@ -65,7 +65,7 @@ class YXMyClassStudentCell: UITableViewCell {
         descLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(AdaptSize(-20))
-            make.width.equalTo(AdaptSize(73))
+            make.width.equalTo(AdaptSize(isPad() ? 115 : 73))
             make.height.equalTo(AdaptSize(17))
         }
         lineView.snp.makeConstraints { (make) in
