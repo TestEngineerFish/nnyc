@@ -94,17 +94,6 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         return modelList
     }
 
-    func getUnfinishedNewWordAmount(study id: Int) -> Int {
-        var amount = 0
-        let sql = YYSQLManager.ExerciseSQL.getUnfinishedWordsAmount.rawValue
-        let params: [Any] = [1, id]
-        if let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params), result.next() {
-            amount = Int(result.int(forColumn: "count"))
-            result.close()
-        }
-        return amount
-    }
-
     func getFinishedNewWordAmount(study id: Int) -> Int {
         var amount = 0
         let sql = YYSQLManager.ExerciseSQL.getFinishedWordsAmount.rawValue
@@ -113,20 +102,6 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             amount = Int(result.int(forColumn: "count"))
             result.close()
         }
-        return amount
-    }
-
-    func getUnfinishedReviewWordAmount(study id: Int) -> Int {
-        var amount = 0
-        let sql = YYSQLManager.ExerciseSQL.getUnfinishedWordsAmount.rawValue
-        let params: [Any] = [0, id]
-        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: params) else {
-            return 0
-        }
-        if result.next() {
-            amount = Int(result.int(forColumn: "count"))
-        }
-        result.close()
         return amount
     }
 

@@ -74,12 +74,6 @@ extension YYSQLManager {
         WHERE study_id = ?
         """
 
-        case getUnfinishedWordsAmount =
-        """
-        SELECT count(*) count FROM all_exercise_v1
-        WHERE next_step != 'END' and word_type = ? and study_id = ?
-        """
-
         case getFinishedWordsAmount =
         """
         SELECT count(*) count FROM all_exercise_v1

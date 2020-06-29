@@ -23,7 +23,7 @@ extension YXExerciseViewController {
     
         
     func processEmptyData() {
-        service.cleanStudyRecord()
+        service.cleanStudyRecord(hasNextGroup: false)
 
         if learnConfig.learnType == .aiReview {
             let nrView = YXNotReviewWordView()

@@ -23,9 +23,11 @@ extension YYSQLManager {
         homework_id,
         status,
         new_word_count,
-        review_word_count
+        unlearned_new_word_count,
+        review_word_count,
+        unlearned_review_word_count
         )
-        values(?, ?, ?, ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         case selectStudy =
@@ -43,15 +45,41 @@ extension YYSQLManager {
         /// 更新学习进度
         case updateProgress =
         """
-        update study_record_v1
+        UPDATE study_record_v1
         SET status = ?
+        WHERE study_id = ?
+        """
+
+        case updateUnlearnedNewWordCount =
+        """
+        UPDATE study_record_v1
+        SET unlearned_new_word_count =
+        (SELECT CASE
+        WHEN unlearned_new_word_count <= 0
+        THEN 0
+        ELSE unlearned_new_word_count - 1
+        END
+        )
+        WHERE study_id = ?
+        """
+
+        case updateUnlearnedReviewWordCount =
+        """
+        UPDATE study_record_v1
+        SET unlearned_review_word_count =
+        (SELECT CASE
+        WHEN unlearned_review_word_count <= 0
+        THEN 0
+        ELSE unlearned_review_word_count - 1
+        END
+        )
         WHERE study_id = ?
         """
 
         case reset =
         """
         update study_record_v1
-        SET status = 0, study_count = 0, study_duration = 0, start_time = datetime('now', 'localtime')
+        SET status = 0, study_count = 0, study_duration = 0
         WHERE study_id = ?
         """
 

@@ -82,9 +82,9 @@ struct YXWordModel: YXBaseWordModel {
 
 enum YXWordType: Int {
     /// 新学单词
-    case newWord
+    case newWord = 1
     /// 复习单词
-    case reviewWord
+    case reviewWord = 0
 }
 
 

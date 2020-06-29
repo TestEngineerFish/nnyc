@@ -101,7 +101,7 @@ protocol YXExerciseService {
     // TODO: ====  清除数据 ====
 
     /// 删除当前的学习数据
-    func cleanStudyRecord()
+    func cleanStudyRecord(hasNextGroup: Bool)
 
     /// 删除所有的学习数据
     func cleanAllStudyRecord()

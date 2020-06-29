@@ -33,11 +33,11 @@ extension YXExerciseServiceImpl {
     }
 
     func getNewWordCount() -> Int {
-        return self.exerciseDao.getUnfinishedNewWordAmount(study: _studyId)
+        return self.studyDao.getUnlearnedNewWordCount(study: _studyId)
     }
 
     func getReviewWordCount() -> Int {
-        return self.exerciseDao.getUnfinishedReviewWordAmount(study: _studyId)
+        return self.studyDao.getUnlearnedReviewWordCount(study: _studyId)
     }
 
     func getExerciseWrongAmount(exercise id: Int) -> Int {

@@ -31,10 +31,11 @@ extension YXExerciseServiceImpl {
         self.stepDao.updateStep(status: model.status, step: model.stepId, wrong: wrongCount)
     }
 
-    func updateExercise(exercise model: YXExerciseModel) {
+    func updateExercise(exercise model: YXExerciseModel) -> Bool {
+        var stepEnd = false
         if isNewLearn(question: model.type) {
             guard let ruleModel = model.ruleModel else {
-                return
+                return stepEnd
             }
             let nextStep = ruleModel.getNextStep(isRight: model.status == .right)
             self.exerciseDao.updateNextStep(exercise: model.eid, next: nextStep)
@@ -42,9 +43,10 @@ extension YXExerciseServiceImpl {
             if model.status == .right {
                 // 更新NextStep
                 guard let ruleModel = model.ruleModel else {
-                    return
+                    return stepEnd
                 }
                 let nextStep = ruleModel.getNextStep(isRight: model.wrongCount == 0)
+                stepEnd = nextStep == "END" ? true : false
                 self.exerciseDao.updateNextStep(exercise: model.eid, next: nextStep)
             } else {
                 // 更新得分
@@ -53,6 +55,7 @@ extension YXExerciseServiceImpl {
                 YXLog("做错扣-\(score)分")
             }
         }
+        return stepEnd
     }
 }
 

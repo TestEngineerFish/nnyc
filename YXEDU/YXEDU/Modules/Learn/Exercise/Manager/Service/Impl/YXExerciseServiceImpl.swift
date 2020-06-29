@@ -121,6 +121,16 @@ class YXExerciseServiceImpl: YXExerciseService {
         }
     }
 
+    /// 减少未学数量
+    /// - Parameter isNewWord: 是否是新学单词
+    func reduceUnlearnedCountWithStudy(isNewWord: Bool) {
+        if isNewWord {
+            self.studyDao.reduceUnlearnedNewWordCount(study: _studyId)
+        } else {
+            self.studyDao.reduceUnlearnedReviewWordCount(study: _studyId)
+        }
+    }
+
     func answerAction(exercise: YXExerciseModel, isRemind: Bool = false) {
         if exercise.type == .newLearnMasterList {
             n3AnswerAction(exercise: exercise)
@@ -143,9 +153,12 @@ class YXExerciseServiceImpl: YXExerciseService {
         // - 更新Step表
         self.updateStep(exercise: model)
         // - 更新练习表
-        self.updateExercise(exercise: model)
+        let stepEnd = self.updateExercise(exercise: model)
         // - 更新学习流程表
         self.updateDurationTime()
+        if stepEnd {
+            self.reduceUnlearnedCountWithStudy(isNewWord: model.word?.wordType == .some(.newWord))
+        }
     }
 
     func updateStudyProgress(study id: Int, progress status: YXExerciseProgress) {
@@ -159,7 +172,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         YXLog("====上报数据====")
         YXLog("new上报内容：" + reportContent)
         YXLog("new学习时长：\(duration)")
-        let request = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, time: duration, result: reportContent)
+        let request = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, reviewId: learnConfig.planId, time: duration, result: reportContent)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
             // 获取学习数据
@@ -174,9 +187,9 @@ class YXExerciseServiceImpl: YXExerciseService {
                 // 记录学完一次主流程，用于首页弹出设置提醒弹框
                 YYCache.set(true, forKey: "DidFinishMainStudyProgress")
             }
-
             // 清除数据库对应数据
-            self.cleanStudyRecord()
+            self.cleanStudyRecord(hasNextGroup: response.data?.hasNextGroup ?? false)
+            self._loadStudyRecord()
             completion?(response.data, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
         }) { (error) in
             // 容错处理
@@ -189,9 +202,14 @@ class YXExerciseServiceImpl: YXExerciseService {
         }
     }
     
-    func cleanStudyRecord() {
+    func cleanStudyRecord(hasNextGroup: Bool = false) {
         if _studyId > 0 {
-            let r1 = studyDao.delete(study: _studyId)
+            var r1 = false
+            if hasNextGroup {
+                r1 = studyDao.reset(study: _studyId)
+            } else {
+                r1 = studyDao.delete(study: _studyId)
+            }
             let r2 = exerciseDao.deleteExercise(study: _studyId)
             let r3 = stepDao.deleteStepWithStudy(study: _studyId)
             let r4 = turnDao.deleteCurrentTurn(study: _studyId)

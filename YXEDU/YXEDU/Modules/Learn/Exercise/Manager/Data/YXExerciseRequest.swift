@@ -12,7 +12,7 @@ public enum YXExerciseRequest: YYBaseRequest {
     case exercise(isGenerate: Bool, type: Int, planId: Int?)
     case learnMap(bookId: Int)
     case learnResult(bookId: Int, unitId: Int)
-    case report(type: Int, time: Int, result: String)
+    case report(type: Int, reviewId: Int, time: Int, result: String)
     case addUserBook(userId: String, bookId: Int, unitId: Int)
     case reportListenScore(wordId: Int, score: Int)
     case stepConfig
@@ -58,8 +58,8 @@ extension YXExerciseRequest {
             return ["book_id" : bookId, "unit_id" : unitId]
         case .addUserBook(let userId, let bookId, let unitId):
             return ["user_id":userId, "book_id":bookId, "unit_id":unitId]
-        case .report(let type, let time, let result):
-            return ["learn_type" : type, "cost_time" : time, "learn_result" : result]
+        case .report(let type, let reviewId, let time, let result):
+            return ["learn_type" : type, "cost_time" : time, "learn_result" : result, "review_id" : reviewId]
         case .reportListenScore(let wordId, let score):
             return ["word_id" : wordId, "listen_score" : score]
         default:

@@ -15,6 +15,8 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         var params: [Any] = config.params
         params.append(YXExerciseProgress.learning.rawValue)
         params.append(newWordCount)
+        params.append(newWordCount)
+        params.append(reviewWordCount)
         params.append(reviewWordCount)
         let result = self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
         return result ? Int(wordRunner.lastInsertRowId) : 0
@@ -56,6 +58,16 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     func updateProgress(study id: Int, progress: YXExerciseProgress) -> Bool {
         let sql = YYSQLManager.StudyRecordSQL.updateProgress.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [progress.rawValue, id])
+    }
+
+    func reduceUnlearnedNewWordCount(study id: Int) -> Bool {
+        let sql = YYSQLManager.StudyRecordSQL.updateUnlearnedNewWordCount.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [id])
+    }
+
+    func reduceUnlearnedReviewWordCount(study id: Int) -> Bool {
+        let sql = YYSQLManager.StudyRecordSQL.updateUnlearnedReviewWordCount.rawValue
+        return self.wordRunner.executeUpdate(sql, withArgumentsIn: [id])
     }
 
     func reset(study id: Int) -> Bool {
@@ -112,6 +124,18 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         }
         return count
     }
+
+    func getUnlearnedNewWordCount(study id: Int) -> Int {
+        var count = 0
+        let sql = YYSQLManager.StudyRecordSQL.selectStudyWithID.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return 0
+        }
+        if result.next() {
+            count = Int(result.int(forColumn: "unlearned_new_word_count"))
+        }
+        return count
+    }
     
     func getReviewWordCount(study id: Int) -> Int {
         var count = 0
@@ -121,6 +145,18 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         }
         if result.next() {
             count = Int(result.int(forColumn: "review_word_count"))
+        }
+        return count
+    }
+
+    func getUnlearnedReviewWordCount(study id: Int) -> Int {
+        var count = 0
+        let sql = YYSQLManager.StudyRecordSQL.selectStudyWithID.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return 0
+        }
+        if result.next() {
+            count = Int(result.int(forColumn: "unlearned_review_word_count"))
         }
         return count
     }

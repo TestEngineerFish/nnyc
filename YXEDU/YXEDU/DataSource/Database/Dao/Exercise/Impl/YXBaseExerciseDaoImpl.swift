@@ -26,6 +26,7 @@ class YXBaseExerciseDaoImpl: YYDatabase {
         model.word?.bookId  = Int(rs.int(forColumn: "book_id"))
         model.word?.unitId  = Int(rs.int(forColumn: "unit_id"))
         model.word?.word    = rs.string(forColumn: "word")
+        model.word?.wordType = YXWordType(rawValue: Int(rs.int(forColumn: "word_type"))) ?? .newWord
         
         // 问题
         if let json = rs.string(forColumn: "question") {
