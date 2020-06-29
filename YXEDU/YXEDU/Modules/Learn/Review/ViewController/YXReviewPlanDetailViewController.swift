@@ -143,7 +143,6 @@ class YXReviewPlanDetailViewController: YXViewController {
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXListenReviewLearnConfig(planId: planId)
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         YXLog("====开始听写练习====")
     }
@@ -156,7 +155,6 @@ class YXReviewPlanDetailViewController: YXViewController {
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()        
         vc.learnConfig = YXReviewPlanLearnConfig(planId: planId)
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         YXLog("====开始复习计划复习====")
     }

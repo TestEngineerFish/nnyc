@@ -217,12 +217,10 @@ class YXWorkWithMyClassCell: UITableViewCell {
         } else {
             if checkReport.contains(_model.exerciseWorkStatus) {
                 // 查看报告
-                YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
                 let vc = YXMyClassWorkReportViewController()
                 vc.workId  = model?.workId
                 vc.classId = model?.classId
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-                YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
             } else if exerciseStatusList.contains(_model.exerciseWorkStatus) {
                 // 做、补作业
                 if _model.type == .listen {
@@ -247,11 +245,9 @@ class YXWorkWithMyClassCell: UITableViewCell {
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         // 跳转学习
-        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
         let vc = YXExerciseViewController()
         vc.learnConfig = YXHomeworkLearnConfig(learn: type, homeworkId: workId)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
     }
 
 }

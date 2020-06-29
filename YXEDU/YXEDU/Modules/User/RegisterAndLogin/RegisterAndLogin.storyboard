@@ -11,7 +11,7 @@
         <!--Navigation Controller-->
         <scene sceneID="HXt-kj-Oyr">
             <objects>
-                <navigationController storyboardIdentifier="YXRegistrationAndLoginNavigationController" id="Go0-rq-G8F" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="YXRegistrationAndLoginNavigationController" id="Go0-rq-G8F" customClass="YXNavigationController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" shadowImage="nil" id="QGd-KK-3a8">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>

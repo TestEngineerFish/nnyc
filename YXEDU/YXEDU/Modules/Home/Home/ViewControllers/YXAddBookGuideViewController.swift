@@ -66,7 +66,6 @@ class YXAddBookGuideViewController: UIViewController {
                 YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
                 let vc = YXExerciseViewController()
                 vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
-                vc.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)

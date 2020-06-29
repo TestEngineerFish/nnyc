@@ -72,17 +72,14 @@ extension YXExerciseViewController {
         vc.unitId = service.learnConfig.unitId
         vc.newLearnAmount = newCount
         vc.reviewLearnAmount = reviewCount
-        vc.hidesBottomBarWhenPushed = true
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
-    
     
     /// 处理复习结果页
     func processReviewResult() {
         let vc = YXExerciseResultViewController()
         vc.dataType = learnConfig.learnType
-        vc.planId   = learnConfig.planId 
-        vc.hidesBottomBarWhenPushed = true
+        vc.planId   = learnConfig.planId
         self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }

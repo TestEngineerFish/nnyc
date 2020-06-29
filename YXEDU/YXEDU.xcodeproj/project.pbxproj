@@ -84,6 +84,7 @@
 		224AE70A24A05777009EAB06 /* YXMyClassWorkReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE70924A05777009EAB06 /* YXMyClassWorkReportViewController.swift */; };
 		224AE70C24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE70B24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift */; };
 		224AE70E24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224AE70D24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift */; };
+		224DEB9B24A9DA9000512DFB /* YXNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224DEB9A24A9DA9000512DFB /* YXNavigationController.swift */; };
 		224DF54A23840E6B00D2B0BF /* YXLearnResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */; };
 		224F2D3024A1E3DD00B00E1E /* YXMyClassModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F2D2F24A1E3DD00B00E1E /* YXMyClassModel.swift */; };
 		224F2D3224A1EE0100B00E1E /* YXMyClassRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F2D3124A1EE0100B00E1E /* YXMyClassRequestManager.swift */; };
@@ -686,6 +687,7 @@
 		224AE70924A05777009EAB06 /* YXMyClassWorkReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassWorkReportViewController.swift; sourceTree = "<group>"; };
 		224AE70B24A05902009EAB06 /* YXMyClassWorkDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassWorkDetailHeaderView.swift; sourceTree = "<group>"; };
 		224AE70D24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassWorkDetailCell.swift; sourceTree = "<group>"; };
+		224DEB9A24A9DA9000512DFB /* YXNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNavigationController.swift; sourceTree = "<group>"; };
 		224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXLearnResultModel.swift; sourceTree = "<group>"; };
 		224F2D2F24A1E3DD00B00E1E /* YXMyClassModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassModel.swift; sourceTree = "<group>"; };
 		224F2D3124A1EE0100B00E1E /* YXMyClassRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassRequestManager.swift; sourceTree = "<group>"; };
@@ -3704,6 +3706,7 @@
 				EE5E025B2327793600655654 /* BSRootVC.h */,
 				EE5E025E2327793700655654 /* BSRootVC.m */,
 				CF18D1B4240FDF9200C10237 /* YXTabBarController.swift */,
+				224DEB9A24A9DA9000512DFB /* YXNavigationController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -4431,6 +4434,7 @@
 				EE1B695A246E3B6C000EADB2 /* YXExerciseService.swift in Sources */,
 				2290EACF23701210000BCA47 /* YXNewLearnJuniorHighSchoolExerciseView.swift in Sources */,
 				7786B6D02361C3820027D0E3 /* YXGroupWordBookCell.swift in Sources */,
+				224DEB9B24A9DA9000512DFB /* YXNavigationController.swift in Sources */,
 				77342BAF2473A8730082C771 /* YXVersionModel.m in Sources */,
 				771E88682362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift in Sources */,
 				224A2FC6238233E100AD99B0 /* YXLearningResultHeaderView.swift in Sources */,

@@ -87,7 +87,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             YXLog(String(format: "开始学习书(%ld),第(%ld)单元", homeData.bookId ?? 0, homeData.unitId ?? 0))
             let vc = YXExerciseViewController()
             vc.learnConfig = YXBaseLearnConfig(bookId: homeData.bookId ?? 0, unitId: homeData.unitId ?? 0)
-            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -248,10 +247,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     private func checkGuide() {
         if (YYCache.object(forKey: .isShowSelectSchool) as? Bool) == .some(true) {
-            self.hidesBottomBarWhenPushed = true
             let vc = YXSelectSchoolViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-            self.hidesBottomBarWhenPushed = false
         } else if (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(true) {
             self.performSegue(withIdentifier: "AddBookGuide", sender: self)
         } else {
@@ -365,21 +362,17 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     @IBAction func showLearnMap(_ sender: UIButton) {
-        self.hidesBottomBarWhenPushed = true
         let vc = YXLearnMapViewController()
         vc.bookId = self.homeModel?.bookId
         vc.unitId = self.homeModel?.unitId
         self.navigationController?.pushViewController(vc, animated: true)
-        self.hidesBottomBarWhenPushed = false
         YXLog("进入单元地图")
     }
 
     private func toMyClass() {
         if YXUserModel.default.isJoinClass {
-            self.hidesBottomBarWhenPushed = true
             let vc = YXMyClassViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-            self.hidesBottomBarWhenPushed = false
         } else {
             let alertView = YXAlertView(type: .inputable, placeholder: "请输入班级号")
             alertView.titleLabel.text = "如果您有老师的班级号，输入后即可加入班级"
@@ -389,10 +382,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 YXUserDataManager.share.joinClass(code: classNumer) { (result) in
                     if result {
                         alertView.removeFromSuperview()
-                        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
                         let vc = YXMyClassViewController()
                         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-                        YRRouter.sharedInstance().currentNavigationController()?.hidesBottomBarWhenPushed = false
                     }
                 }
                 YXLog("班级号：\(classNumer ?? "")")

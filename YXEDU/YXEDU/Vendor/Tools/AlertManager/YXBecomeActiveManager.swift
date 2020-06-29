@@ -71,11 +71,8 @@ class YXBecomeActiveManager: NSObject {
     
     private func goToReviewPlanDetail(planId: Int, fromUser: String?) {
         let vc = YXReviewPlanShareDetailViewController()
-        vc.hidesBottomBarWhenPushed = true
         vc.planId = planId
         vc.fromUser = fromUser
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-        
-//        YRRouter.openURL("", query: ["plan_id" : planId], animated: true)
     }
 }

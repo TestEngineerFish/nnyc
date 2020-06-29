@@ -12,7 +12,7 @@
         <!--Navigation Controller-->
         <scene sceneID="M1e-9l-YrO">
             <objects>
-                <navigationController id="HHy-oc-jhr" sceneMemberID="viewController">
+                <navigationController id="HHy-oc-jhr" customClass="YXNavigationController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="doY-P9-MUk">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1376,7 +1376,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="i5p-fi-cOn"/>
+        <segue reference="bec-xo-IUQ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="MineBigLogo" width="93" height="122"/>

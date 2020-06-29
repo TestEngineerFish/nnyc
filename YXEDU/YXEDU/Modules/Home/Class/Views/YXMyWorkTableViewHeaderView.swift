@@ -111,10 +111,8 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
         let vc = YXMyClassDetailViewController()
         vc.classId = self.classList[indexPath.row].id
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-        YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
     }
 }

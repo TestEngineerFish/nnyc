@@ -125,7 +125,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        let vc = YXShareViewController()
 //        vc.gameModel = YXGameResultModel()
 //        vc.shareType = .learnResult
-//        vc.hidesBottomBarWhenPushed = true
 //        self.navigationController?.pushViewController(vc, animated: true)
 
 //        let vc = YXLearningResultViewController()
@@ -133,7 +132,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        vc.unitId = 436
 //        vc.newLearnAmount    = 19
 //        vc.reviewLearnAmount = 10
-//        vc.hidesBottomBarWhenPushed = true
 //        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
 //        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
@@ -181,7 +179,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     private func playGame() {
         let vc = YXGameViewController()
-        vc.hidesBottomBarWhenPushed = true
         vc.gameLineId = self.challengeModel?.gameInfo?.gameLinedId
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -189,7 +186,6 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     @objc private func previousRank() {
         let vc = YXPreviousRankViewController()
         vc.gameVersion = 2
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

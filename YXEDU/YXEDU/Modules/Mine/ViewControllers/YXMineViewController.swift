@@ -232,7 +232,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     // MARK: ---- Event ----
     @objc private func pushBadgeListVC() {
         let vc = YXBadgeListViewController()
-        vc.hidesBottomBarWhenPushed = true
         var acquireBadgeList    = [YXBadgeModel]()
         var notAcquireBadgeList = [YXBadgeModel]()
         badgeModelList.forEach { (model) in

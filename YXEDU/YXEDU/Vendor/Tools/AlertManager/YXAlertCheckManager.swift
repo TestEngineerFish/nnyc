@@ -141,10 +141,8 @@ class YXAlertCheckManager {
             alertView.shouldDismissWhenTapBackground = false
             alertView.tag = YXAlertWeightType.newHomework
             alertView.doneClosure = { _ in
-                YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = true
                 let vc = YXMyClassViewController()
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-                YRRouter.sharedInstance().currentViewController()?.hidesBottomBarWhenPushed = false
                 YXLog("从作业提醒弹框，进入作业列表页")
             }
 

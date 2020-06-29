@@ -184,7 +184,6 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         let model = modelList[indexPath.row]
         let vc = YXReviewPlanDetailViewController()
         vc.planId = model.planId
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -241,7 +240,6 @@ extension YXReviewViewController {
         
         let vc = YXReviewPlanDetailViewController()
         vc.planId = model.planId
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -259,7 +257,6 @@ extension YXReviewViewController {
             YXWordBookResourceManager.shared.addTask(model: taskModel)
             let vc = YXExerciseViewController()
             vc.learnConfig = YXAIReviewLearnConfig()
-            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
             YXLog("==== 开始智能复习 ====")
         } else {
@@ -277,30 +274,25 @@ extension YXReviewViewController {
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXReviewPlanLearnConfig(planId: planId)
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         YXLog("==== 开始复习计划复习 ====")
     }
     
     /// 开始听力 —— 复习计划
     func startListenPlanEvent(planId: Int) {
-//        let url = "exercise/study?type=" + "\(YXExerciseDataType.listenReview.rawValue)"
-//        YRRouter.openURL(url, query: nil, animated: true)
         let taskModel = YXWordBookResourceModel(type: .all) {
             YXWordBookResourceManager.shared.contrastBookData()
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXListenReviewLearnConfig(planId: planId)
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         YXLog("==== 开始听力复习 ====")
     }
     
     func createReviewEvent() {
         let vc = YXMakeReviewPlanViewController()
-        vc.delegate                 = self
-        vc.hidesBottomBarWhenPushed = true
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

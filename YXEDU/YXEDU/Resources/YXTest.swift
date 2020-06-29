@@ -39,8 +39,6 @@ class YXTest: NSObject {
         vc.unitId = 436
         vc.newLearnAmount = 10
         vc.reviewLearnAmount = 5
-                            
-        vc.hidesBottomBarWhenPushed = true
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
@@ -61,11 +59,9 @@ class YXTest: NSObject {
     
     
     func newResultVC() {
-//        let m = YXExerciseResultDisplayModel.displayModel(model: model)
         let vc = YXExerciseResultViewController()
         vc.dataType = .aiReview
         vc.planId = 13
-        vc.hidesBottomBarWhenPushed = true
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }

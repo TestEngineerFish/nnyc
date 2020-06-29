@@ -99,7 +99,6 @@ class YXExerciseResultViewController: YXViewController {
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = learnConfig
-        vc.hidesBottomBarWhenPushed = true
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     

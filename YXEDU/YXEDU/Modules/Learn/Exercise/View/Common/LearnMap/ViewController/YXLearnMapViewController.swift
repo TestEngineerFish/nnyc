@@ -163,7 +163,6 @@ class YXLearnMapViewController: UIViewController {
             YRRouter.popViewController(false)
             let vc = YXExerciseViewController()
             vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
-            vc.hidesBottomBarWhenPushed = true
             YXLog("==== 从地图页选择单元学习 ====")
             YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: false)
         }) { (error) in

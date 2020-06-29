@@ -107,7 +107,7 @@
         <!--学习-->
         <scene sceneID="yYR-rI-Gxx">
             <objects>
-                <navigationController id="y1G-4r-ZDj" sceneMemberID="viewController">
+                <navigationController id="y1G-4r-ZDj" customClass="YXNavigationController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="学习" image="tabLearn" selectedImage="tabLearnSelected" id="YlJ-gd-SKR"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="D96-NT-1dR">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
