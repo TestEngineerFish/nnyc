@@ -76,10 +76,12 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             make.left.bottom.right.equalToSuperview()
             make.top.equalToSuperview().offset(5)
         })
-        rightContentView.snp.makeConstraints({ (make) in
-            make.top.bottom.right.equalToSuperview()
-            make.left.equalTo(leftContentView.snp.right)
-        })
+        if rightContentView.superview != nil {
+            rightContentView.snp.makeConstraints({ (make) in
+                make.top.bottom.right.equalToSuperview()
+                make.left.equalTo(leftContentView.snp.right)
+            })
+        }
     }
 
     deinit {
