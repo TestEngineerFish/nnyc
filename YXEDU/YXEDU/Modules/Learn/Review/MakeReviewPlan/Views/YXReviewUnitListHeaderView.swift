@@ -70,13 +70,7 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
     func bindData(_ model: YXReviewUnitModel) {
         self.model              = model
         self.unitNameLabel.text = model.name
-    }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        guard let model = self.model else {
-            return
-        }
         if model.isOpenUp {
             self.arrowImageView.transform = CGAffineTransform(rotationAngle: .pi)
         } else {
@@ -96,15 +90,20 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         let checkAllText = model.isSelectedAll ? "取消全选" : "全选"
         self.checkAllButton.setTitle(checkAllText, for: .normal)
         self.checkAllButton.isHidden = !model.isOpenUp
+
+        self.unitNameLabel.sizeToFit()
+        self.unitNameLabel.snp.updateConstraints { (make) in
+            make.width.equalTo(self.unitNameLabel.width)
+        }
     }
 
     private func setSubviews() {
-        self.contentView.addSubview(cusContentView)
+        self.addSubview(cusContentView)
+        self.addSubview(bottomView)
         cusContentView.addSubview(unitNameLabel)
         cusContentView.addSubview(statisticsLabel)
         cusContentView.addSubview(checkAllButton)
         cusContentView.addSubview(arrowImageView)
-        self.addSubview(bottomView)
 
         self.cusContentView.snp.remakeConstraints { (make) in
             make.left.top.right.equalToSuperview()
@@ -112,30 +111,27 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         }
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(AdaptSize(5))
+            make.height.equalToSuperview().multipliedBy(0.125)
         }
         self.unitNameLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(22))
             make.centerY.height.equalToSuperview()
-            make.right.equalTo(self.statisticsLabel.snp.left)
+            make.width.equalTo(0)
         }
-
+        self.statisticsLabel.snp.makeConstraints { (make) in
+            make.centerY.height.equalToSuperview()
+            make.left.equalTo(self.unitNameLabel.snp.right)
+            make.right.equalTo(self.checkAllButton.snp.left).offset(AdaptSize(-5))
+        }
         self.arrowImageView.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptIconSize(-18))
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptIconSize(18), height: AdaptIconSize(18)))
         }
-
         self.checkAllButton.snp.makeConstraints { (make) in
             make.right.equalTo(self.arrowImageView.snp.left).offset(AdaptSize(-21))
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(60), height: AdaptSize(18)))
-        }
-
-        self.statisticsLabel.snp.makeConstraints { (make) in
-            make.centerY.height.equalToSuperview()
-            make.right.lessThanOrEqualTo(self.checkAllButton.snp.left).offset(AdaptSize(-5))
-            make.width.greaterThanOrEqualTo(AdaptSize(55)).priorityHigh()
         }
 
         self.checkAllButton.addTarget(self, action: #selector(clickCheckAllBtn(_:)), for: .touchUpInside)

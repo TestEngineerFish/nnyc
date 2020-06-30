@@ -75,7 +75,7 @@ enum YXQuestionType: String {
         case .homeworkPunch:
             return "打卡作业6"
         case .homeworkListen:
-            return "听写作业7"
+            return "听写作业9"
         case .homeworkWord:
             return "单词作业8"
         default:

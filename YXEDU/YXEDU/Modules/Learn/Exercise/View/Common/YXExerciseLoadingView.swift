@@ -205,12 +205,6 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
         
         return fooderView
     }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        self.stopAnimation()
-        self.delegate?.animationComplete()
-    }
     
     // MARK: ==== Event ====
     func startAnimation() {
