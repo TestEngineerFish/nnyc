@@ -84,12 +84,6 @@ protocol YXExerciseService {
     /// 获取所有单词总数
     func getAllWordAmount() -> Int
 
-    /// 获得已学新学单词数量
-    func getNewWordAmount() -> Int
-
-    /// 获得已学复习单词数量
-    func getReviewWordAmount() -> Int
-
     /// 更新学习时间
     func updateDurationTime()
 

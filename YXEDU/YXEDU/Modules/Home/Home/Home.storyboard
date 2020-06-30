@@ -469,6 +469,7 @@
                         <outlet property="subItemCollectionView" destination="q7v-mq-Dhk" id="dcr-FN-BY1"/>
                         <outlet property="subItemCollectionViewHeight" destination="8rc-ny-2CG" id="CNy-mR-u2Q"/>
                         <outlet property="unitNameButton" destination="gMI-oo-EEp" id="38q-y3-OV9"/>
+                        <outlet property="unlearnedTitleLabel" destination="ife-Vw-839" id="Lak-Uq-i5V"/>
                         <segue destination="LEE-do-1y0" kind="show" identifier="TaskCenter" id="7f4-4r-z67"/>
                         <segue destination="tQ4-Ah-3Gu" kind="show" identifier="Calendar" id="fSi-bJ-cQk"/>
                         <segue destination="N4y-4U-KXc" kind="show" identifier="YXStudyReportViewController" id="f6j-pj-jMh"/>

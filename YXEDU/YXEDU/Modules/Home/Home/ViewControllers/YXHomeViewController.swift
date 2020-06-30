@@ -30,6 +30,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var startStudyButton: YXDesignableButton!
     @IBOutlet weak var changeBookButton: UIButton!
     @IBOutlet weak var unitNameButton: UIButton!
+    @IBOutlet weak var unlearnedTitleLabel: UILabel!
     @IBOutlet weak var countOfWaitForStudyWords: YXDesignableLabel!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var studyDataCollectionView: UICollectionView!
@@ -199,8 +200,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.adjustStartStudyButtonState()
             self.bookNameButton.setTitle(self.homeModel?.bookName, for: .normal)
             self.unitNameButton.setTitle(self.homeModel?.unitName, for: .normal)
-            self.countOfWaitForStudyWords.text = "\((self.homeModel?.newWords ?? 0) + (self.homeModel?.reviewWords ?? 0))"
             self.progressBar.setProgress(Float(self.homeModel?.unitProgress ?? 0), animated: true)
+            let countData = self.getUnlearnWordCount(home: self.homeModel)
+            self.countOfWaitForStudyWords.text = "\(countData.0 + countData.1)"
+            if countData.0 == 0 {
+                self.unlearnedTitleLabel.text = "待复习"
+            } else {
+                self.unlearnedTitleLabel.text = "待学习"
+            }
             
             self.learnedWordsCount   = "\(self.homeModel?.learnedWords ?? 0)"
             self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
@@ -218,6 +225,18 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.subItemCollectionView.reloadData()
         }) { error in
             YXLog("获取主页基础数据失败：", error.localizedDescription)
+        }
+    }
+
+    private func getUnlearnWordCount(home model: YXHomeModel) -> (Int, Int) {
+        let service = YXExerciseServiceImpl()
+        let config  = YXBaseLearnConfig(bookId: model.bookId ?? 0, unitId: model.unitId ?? 0, learnType: .base, homeworkId: 0)
+        if let studyModel = service.studyDao.selectStudyRecordModel(learn: config) {
+            let newCount = service.studyDao.getUnlearnedNewWordCount(study: studyModel.studyId)
+            let reviewCount = service.studyDao.getUnlearnedReviewWordCount(study: studyModel.studyId)
+            return (newCount, reviewCount)
+        } else {
+            return (model.newWords ?? 0, model.reviewWords ?? 0)
         }
     }
     

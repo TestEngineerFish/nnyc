@@ -103,14 +103,6 @@ class YXExerciseServiceImpl: YXExerciseService {
         return exerciseDao.getAllWordExerciseAmount(study: _studyId)
     }
 
-    func getNewWordAmount() -> Int {
-        return self.exerciseDao.getFinishedNewWordAmount(study: _studyId)
-    }
-
-    func getReviewWordAmount() -> Int {
-        return self.exerciseDao.getFinishedReviewWordAmount(study: _studyId)
-    }
-
     func updateDurationTime() {
         let currentTime  = Date()
         let startTimeStr = self.studyDao.getStartTime(learn: learnConfig)

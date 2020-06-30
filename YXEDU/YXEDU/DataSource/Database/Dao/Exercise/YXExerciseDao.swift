@@ -48,12 +48,6 @@ protocol YXExerciseDao {
     /// - Parameter id: 学习流程ID
     func getAllExerciseList(study id: Int) -> [YXExerciseReportModel]
 
-    /// 获取已学完的新学单词数量
-    func getFinishedNewWordAmount(study id: Int) -> Int
-
-    /// 获取已学完的复习单词数量
-    func getFinishedReviewWordAmount(study id: Int) -> Int
-
     /// 删除一个学习记录所有单词
     /// - Parameter id: 学习记录ID
     @discardableResult

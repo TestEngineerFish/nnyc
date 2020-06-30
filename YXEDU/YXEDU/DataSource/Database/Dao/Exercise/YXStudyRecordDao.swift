@@ -76,7 +76,7 @@ protocol YXStudyRecordDao {
     /// - Parameter id: 学习Id
     func getNewWordCount(study id: Int) -> Int
 
-    /// 获取已学习的新学单词数量
+    /// 获取未学习的新学单词数量
     /// - Parameter id: 学习ID
     func getUnlearnedNewWordCount(study id: Int) -> Int
     
