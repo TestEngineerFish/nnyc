@@ -57,8 +57,8 @@ enum YXQuestionType: String {
     case planReview       = 4 // 计划——复习
     case aiReview         = 5 // 智能复习
     case homeworkPunch    = 6 // 课外作业,打卡练习
-    case homeworkListen   = 7 // 课外作业,听写练习
     case homeworkWord     = 8 // 课外作业,单词练习
+    case homeworkListen   = 9 // 课外作业,听写练习
     
     var desc: String {
         switch self {
@@ -72,6 +72,12 @@ enum YXQuestionType: String {
             return "复习计划4"
         case .aiReview:
             return "智能复习5"
+        case .homeworkPunch:
+            return "打卡作业6"
+        case .homeworkListen:
+            return "听写作业7"
+        case .homeworkWord:
+            return "单词作业8"
         default:
             return "基础学习1"
         }

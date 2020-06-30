@@ -57,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)
             let navigationController = storyboard.instantiateViewController(withIdentifier: "YXRegistrationAndLoginNavigationController") as? UINavigationController
             window?.rootViewController = navigationController
-            
             window?.makeKeyAndVisible()
         }
     }

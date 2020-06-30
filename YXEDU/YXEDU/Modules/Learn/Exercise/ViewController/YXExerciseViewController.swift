@@ -116,6 +116,8 @@
         service.initService()
         YXExerciseViewController.requesting = true
         YYCache.set(false, forKey: .newLearnReportGIO)
+        let log = String(format: "==== 开始%@学习, 配置信息：%@ ====", self.learnConfig.learnType.desc, self.learnConfig.desc)
+        YXLog(log)
     }
     
     /// 开始学习
@@ -170,7 +172,8 @@
         // - 更新待学习数
         headerView.learningProgress = "\(self.service.newWordCount)"
         headerView.reviewProgress   = "\(self.service.reviewWordCount)"
-        
+        YXLog("未新学单词数：" + (headerView.learningProgress ?? ""))
+        YXLog("未复习单词数：" + (headerView.reviewProgress ?? ""))
         if var model = data {
             model.learnType = learnConfig.learnType
 
