@@ -203,15 +203,14 @@ class YXWorkWithMyClassCell: UITableViewCell {
         guard let _model = self.model else {
             return
         }
-        let shareStatusList: [YXShareWorkStatusType] = [.unexpiredUnlearned,
-                                                        .unexpiredLearnedUnshare,]
         let exerciseStatusList: [YXExerciseWorkStatusTypes] = [.unexpiredUnfinished,
                                                                .beExpiredUnfinished]
         let checkReport: [YXExerciseWorkStatusTypes] = [.unexpiredFinished, .beExpiredFinished]
         // 已完成
         if _model.type == .punch {
-            if shareStatusList.contains(_model.shareWorkStatus) {
-                // 打卡学习
+            if _model.shareWorkStatus == .unexpiredLearnedUnshare {
+                self.punch()
+            } else {
                 self.startExercise(learn: .homeworkPunch)
             }
         } else {
@@ -246,12 +245,21 @@ class YXWorkWithMyClassCell: UITableViewCell {
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         // 跳转学习
         let vc = YXExerciseViewController()
-        vc.learnConfig = YXHomeworkLearnConfig(learn: type, homeworkId: workId)
+        vc.learnConfig = YXLearnConfigImpl(bookId: _model.bookId, unitId: _model.unitId, planId: 0, learnType: .homeworkPunch, homeworkId: workId)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 
     private func punch() {
+        guard let _model = self.model, let workId = _model.workId else {
+            return
+        }
         // 打卡分享
+        let shareVC = YXShareViewController()
+        shareVC.wordId      = workId
+        shareVC.shareType   = .homeworkResult
+        shareVC.wordsAmount = _model.studyWordCount
+        shareVC.daysAmount  = _model.studyDayCount
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(shareVC, animated: true)
     }
 
 }

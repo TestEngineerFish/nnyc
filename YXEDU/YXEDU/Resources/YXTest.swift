@@ -35,8 +35,7 @@ class YXTest: NSObject {
     // 处理基本练习结果页
     func processBaseExerciseResult() {
         let vc = YXLearningResultViewController()
-        vc.bookId = 41
-        vc.unitId = 436
+        vc.learnConfig = YXLearnConfigImpl(bookId: 41, unitId: 436, planId: 0, learnType: .base, homeworkId: 0)
         vc.newLearnAmount = 10
         vc.reviewLearnAmount = 5
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
@@ -60,8 +59,7 @@ class YXTest: NSObject {
     
     func newResultVC() {
         let vc = YXExerciseResultViewController()
-        vc.dataType = .aiReview
-        vc.planId = 13
+        vc.config = YXLearnConfigImpl(bookId: 0, unitId: 0, planId: 13, learnType: .aiReview, homeworkId: 0)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }

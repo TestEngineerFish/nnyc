@@ -19,6 +19,8 @@ enum YXShareImageType: Int {
     case listenReviewResult = 4
     /// 挑战结果分享
     case challengeResult    = 5
+    /// 课外作业
+    case homeworkResult     = 6
 }
 
 class YXShareViewController: YXViewController {
@@ -101,6 +103,7 @@ class YXShareViewController: YXViewController {
 
     var wordsAmount = 0
     var daysAmount  = 0
+    var wordId: Int = 0
     var hideCoin    = true
     var gameModel: YXGameResultModel?
     var shareType: YXShareImageType = .challengeResult
@@ -125,7 +128,7 @@ class YXShareViewController: YXViewController {
             guard let self = self else { return }
             // 挑战分享不算打卡
             if self.shareType != .challengeResult {
-                self.punch(channel)
+                self.punch(channel, word: self.wordId)
             }
         }
     }
@@ -223,7 +226,7 @@ class YXShareViewController: YXViewController {
 
                 DispatchQueue.main.async() {
                     switch self.shareType {
-                    case .learnResult:
+                    case .learnResult, .homeworkResult:
                         self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
                     case .aiReviewReuslt:
                         self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)
@@ -243,9 +246,9 @@ class YXShareViewController: YXViewController {
         }
     }
 
-    private func punch(_ channel: YXShareChannel) {
+    private func punch(_ channel: YXShareChannel, word id: Int) {
 
-        let request = YXShareRequest.punch(type: channel.rawValue)
+        let request = YXShareRequest.punch(type: channel.rawValue, wordId: id)
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else { return }
             var isFinished = false
@@ -295,7 +298,7 @@ class YXShareViewController: YXViewController {
         getBackgroundImage(from: currentBackgroundImageUrl) { backgroundImage in
             DispatchQueue.main.async() {
                 switch self.shareType {
-                case .learnResult:
+                case .learnResult, .homeworkResult:
                     self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
                 case .aiReviewReuslt:
                     self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)

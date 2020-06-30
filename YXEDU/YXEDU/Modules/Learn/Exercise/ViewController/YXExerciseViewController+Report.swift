@@ -53,7 +53,7 @@ extension YXExerciseViewController {
                 self.startStudy(isGenerate: false)
             } else {
                 YXLog("没有下一组，进入结果页")
-                if self.learnConfig.learnType == .base {
+                if self.learnConfig.learnType == .base || self.learnConfig.learnType == .homeworkPunch {
                     let newWordCount    = dict["newWordCount"] ?? 0
                     let reviewWordCount = dict["reviewWordCount"] ?? 0
                     self.processBaseExerciseResult(newCount: newWordCount, reviewCount: reviewWordCount)
@@ -68,9 +68,8 @@ extension YXExerciseViewController {
     // 处理基本练习结果页
     func processBaseExerciseResult(newCount: Int, reviewCount: Int) {
         let vc = YXLearningResultViewController()
-        vc.bookId = service.learnConfig.bookId
-        vc.unitId = service.learnConfig.unitId
-        vc.newLearnAmount = newCount
+        vc.learnConfig       = service.learnConfig
+        vc.newLearnAmount    = newCount
         vc.reviewLearnAmount = reviewCount
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
@@ -78,8 +77,7 @@ extension YXExerciseViewController {
     /// 处理复习结果页
     func processReviewResult() {
         let vc = YXExerciseResultViewController()
-        vc.dataType = learnConfig.learnType
-        vc.planId   = learnConfig.planId
+        vc.config = learnConfig
         self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }

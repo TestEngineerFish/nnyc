@@ -99,13 +99,6 @@ class YXListenReviewLearnConfig: YXReviewPlanLearnConfig {
     }
 }
 
-/// 听力复习配置
-class YXHomeworkLearnConfig: YXBaseLearnConfig {
-    init(learn type: YXLearnType = .homeworkPunch, homeworkId: Int) {
-        super.init(learnType: type, homeworkId: homeworkId)
-    }
-}
-
 
 
 

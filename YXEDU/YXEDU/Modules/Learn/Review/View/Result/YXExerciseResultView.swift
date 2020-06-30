@@ -257,20 +257,23 @@ class YXExerciseResultView: YXView {
     
     private func setTitleValue() {
         if model.state {
-            if model.type == .base {
+            switch model.type {
+            case .base:
                 if model.score <= 1 {
                     titleLabel.text = "恭喜完成\(model.title ?? "")学习"
                 } else {
                     titleLabel.text = "\(model.title ?? "")学习完成"
-                }                
-            } else if model.type == .aiReview {
+                }
+            case .aiReview:
                 titleLabel.text = "恭喜完成智能复习"
-            } else if model.type == .planListenReview {
+            case .planListenReview:
                 titleLabel.text = "恭喜完成\(model.title ?? "")的听力"
-            } else if model.type == .planReview {
+            case .planReview, .homeworkWord, .homeworkListen, .homeworkPunch:
                 titleLabel.text = "恭喜完成\(model.title ?? "")的学习"
-            } else if model.type == .wrong {
+            case .wrong:
                 titleLabel.text = "恭喜完成抽查复习"
+            default:
+                break
             }
         } else {
             titleLabel.attributedText = attrString()
@@ -319,28 +322,28 @@ class YXExerciseResultView: YXView {
     
     private func setShareButtonValue() {                
         if model.state {
-            if model.type == .wrong {
+            switch model.type {
+            case .wrong:
                 operateButton.setTitle("完成", for: .normal)
-            } else {
+            case .homeworkWord, .homeworkListen, .homeworkPunch:
+                operateButton.setTitle("打卡分享给老师", for: .normal)
+            default:
                 operateButton.setTitle("打卡分享", for: .normal)
             }
             if !isHiddenReportButton {
                 reportButton.setTitle("分享学习报告", for: .normal)
             }
         } else {
-            if model.type == .planListenReview {
+            switch model.type {
+            case .planListenReview:
                 operateButton.setTitle("继续听写", for: .normal)
-            } else if model.type == .planReview {
+            case .planReview, .homeworkListen, .homeworkWord:
                 operateButton.setTitle("继续学习", for: .normal)
-            } else {
+            default:
                 operateButton.setTitle("打卡分享", for: .normal)
             }
         }
-        if model.type.isHomework() {
-            operateButton.setTitle("打卡分享给老师", for: .normal)
-        }
     }
-    
     
     private func createDataSource() -> [(String, Int, Bool)] {
         var ds: [(String, Int, Bool)] = []
@@ -419,7 +422,8 @@ class YXExerciseResultView: YXView {
     }
     
     private var isHiddenReportButton: Bool {
-        return !(model.state && (model.type == .planReview || model.type == .planListenReview))
+        let hideReportTypeArray: [YXLearnType] = [.planReview, .planListenReview, .homeworkWord, .homeworkListen]
+        return !(model.state && hideReportTypeArray.contains(model.type))
     }
     
     

@@ -11,9 +11,8 @@ import UIKit
 
 /// 复习结果页（除基础学习外）
 class YXExerciseResultViewController: YXViewController {
-    
-    var dataType: YXLearnType = .planReview
-    var planId: Int = 0
+
+    var config: YXLearnConfig?
     
     var model: YXExerciseResultDisplayModel?
     var resultView: YXExerciseResultView?
@@ -88,17 +87,15 @@ class YXExerciseResultViewController: YXViewController {
     
     private func reviewEvent() {
         YRRouter.popViewController(false)
-        
-        let planId = model?.id ?? 0
-        let learnType = model?.type ?? .aiReview
-        let learnConfig = YXReviewLearnConfig(planId: planId, learnType: learnType)
-
+        guard let _config = config else {
+            return
+        }
         let taskModel = YXWordBookResourceModel(type: .all) {
             YXWordBookResourceManager.shared.contrastBookData()
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
-        vc.learnConfig = learnConfig
+        vc.learnConfig = _config
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
@@ -150,11 +147,12 @@ class YXExerciseResultViewController: YXViewController {
     // MAKE: ---- Request ----
     
     func fetchData() {
-        YXReviewDataManager().fetchReviewResult(type: dataType, planId: planId) { [weak self] (resultModel, error) in
+        guard let config = self.config else {return}
+        YXReviewDataManager().fetchReviewResult(type: config.learnType, planId: config.planId) { [weak self] (resultModel, error) in
             guard let self = self else {return}
             
             if var model = resultModel {
-                model.planId = self.planId
+                model.planId = config.planId
                 let m = YXExerciseResultDisplayModel.displayModel(model: model)
                 self.model = m
                 self.initResultView()

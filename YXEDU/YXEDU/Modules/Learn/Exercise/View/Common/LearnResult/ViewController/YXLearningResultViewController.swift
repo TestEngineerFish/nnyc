@@ -8,19 +8,18 @@
 
 import UIKit
 
-
+/// 主流程学习结果页
 class YXLearningResultViewController: YXViewController {
     
     var backButton = BiggerClickAreaButton()
     var headerView: YXExerciseResultView?
     var contentScrollView = UIScrollView()
 
-    var currentUnitIndex = 0
-    var requestCount = 0
-    var newLearnAmount: Int = 0 // 新学单词数
+    var currentUnitIndex       = 0
+    var requestCount           = 0
+    var newLearnAmount: Int    = 0 // 新学单词数
     var reviewLearnAmount: Int = 0 // 复习单词数量
-    var bookId: Int? // 书ID
-    var unitId: Int? // 单元ID
+    var learnConfig: YXLearnConfig?
     var model: YXLearnResultModel?
 
     var shareFinished = false
@@ -152,10 +151,10 @@ class YXLearningResultViewController: YXViewController {
     
 
     private func bindData() {
-        guard let bookId = self.bookId, let unitId = self.unitId else {
+        guard let config = learnConfig else {
             return
         }
-        let request = YXExerciseRequest.learnResult(bookId: bookId, unitId: unitId)
+        let request = YXExerciseRequest.learnResult(bookId: config.bookId, unitId: config.unitId)
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else {
                 return
@@ -174,7 +173,7 @@ class YXLearningResultViewController: YXViewController {
                 self.model = response.data
                 if let _unitModelList = self.model?.unitList {
                     for (index, unitModel) in _unitModelList.enumerated() {
-                        if unitModel.unitID == unitId {
+                        if unitModel.unitID == config.unitId {
                             self.currentUnitIndex = index + 1
                         }
                     }
@@ -189,7 +188,7 @@ class YXLearningResultViewController: YXViewController {
 
     /// 学习新单元
     private func learnUnit(_ unitId: Int) {
-        guard let uuidStr = YXUserModel.default.uuid, let bookId = self.bookId else {
+        guard let uuidStr = YXUserModel.default.uuid, let bookId = self.learnConfig?.bookId else {
             return
         }
         let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: bookId, unitId: unitId)
@@ -202,12 +201,11 @@ class YXLearningResultViewController: YXViewController {
 
     // MARK: Event
     @objc private func backClick() {
-//        NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
         self.navigationController?.popToRootViewController(animated: false)
     }
     
     @objc private func punchEvent() {
-        guard let model = self.model else {
+        guard let model = self.model, let config = learnConfig else {
             YXUtils.showHUD(kWindow, title: "数据请求失败，请稍后再试～")
             return
         }
@@ -218,8 +216,8 @@ class YXLearningResultViewController: YXViewController {
         } else {
             shareVC.hideCoin = !model.isShowCoin
         }
-        
-        shareVC.shareType   = .learnResult
+        shareVC.wordId      = config.homeworkId
+        shareVC.shareType   = config.learnType == .base ? .learnResult : .homeworkResult
         shareVC.wordsAmount = model.allWordCount
         shareVC.daysAmount  = model.studyDay
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(shareVC, animated: true)

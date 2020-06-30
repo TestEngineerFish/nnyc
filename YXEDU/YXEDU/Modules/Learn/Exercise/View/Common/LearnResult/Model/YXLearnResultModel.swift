@@ -32,7 +32,6 @@ struct YXLearnResultModel: Mappable {
 
     mutating func mapping(map: Map) {
         countStatus      <- map["count_status"]
-        
         status           <- map["status"]
         unitName         <- map["unit_name"]
         allWordCount     <- map["all_words_num"]

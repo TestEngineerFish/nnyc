@@ -59,25 +59,6 @@ enum YXQuestionType: String {
     case homeworkPunch    = 6 // 课外作业,打卡练习
     case homeworkListen   = 7 // 课外作业,听写练习
     case homeworkWord     = 8 // 课外作业,单词练习
-
-//    static func transform(raw: Int) -> YXLearnType {
-//        switch raw {
-//        case 1:
-//            return .base
-//        case 2:
-//            return .wrong
-//        case 3:
-//            return .planListenReview
-//        case 4:
-//            return .planReview
-//        case 5:
-//            return .aiReview
-//        case 6:
-//            return .home
-//        default:
-//            return .base
-//        }
-//    }
     
     var desc: String {
         switch self {
