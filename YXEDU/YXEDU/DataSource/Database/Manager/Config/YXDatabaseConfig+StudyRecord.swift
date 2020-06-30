@@ -50,7 +50,7 @@ extension YYSQLManager {
         WHERE study_id = ?
         """
 
-        case updateUnlearnedNewWordCount =
+        case reduceUnlearnedNewWordCount =
         """
         UPDATE study_record_v1
         SET unlearned_new_word_count =
@@ -63,7 +63,7 @@ extension YYSQLManager {
         WHERE study_id = ?
         """
 
-        case updateUnlearnedReviewWordCount =
+        case reduceUnlearnedReviewWordCount =
         """
         UPDATE study_record_v1
         SET unlearned_review_word_count =

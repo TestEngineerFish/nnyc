@@ -66,7 +66,8 @@ class YXLearningResultViewController: YXViewController {
         self.view.addSubview(self.contentScrollView)
         
         // 结果视图
-        let newModel = YXExerciseResultDisplayModel.displayModel(newStudyWordCount: newLearnAmount, reviewWordCount: reviewLearnAmount, model: model!)
+        var newModel = YXExerciseResultDisplayModel.displayModel(newStudyWordCount: newLearnAmount, reviewWordCount: reviewLearnAmount, model: model!)
+        newModel.type = learnConfig?.learnType ?? .base
         headerView = YXExerciseResultView(model: newModel)
         self.contentScrollView.addSubview(headerView!)
         

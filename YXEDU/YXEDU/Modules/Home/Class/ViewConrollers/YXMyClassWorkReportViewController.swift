@@ -44,10 +44,10 @@ class YXMyClassWorkReportViewController: YXViewController, UITableViewDelegate, 
 
     // MARK: ==== Request ====
     private func reloadData() {
-        guard let _workId = self.workId, let _classId = self.classId else {
+        guard let _workId = self.workId else {
             return
         }
-        let request = YXMyClassRequestManager.workReport(workId: _workId, classId: _classId)
+        let request = YXMyClassRequestManager.workReport(workId: _workId)
         YYNetworkService.default.request(YYStructResponse<YXMyClassReportModel>.self, request: request, success: { (response) in
             self.reportModel = response.data
             self.tableView.reloadData()

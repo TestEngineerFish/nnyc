@@ -61,12 +61,12 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     }
 
     func reduceUnlearnedNewWordCount(study id: Int) -> Bool {
-        let sql = YYSQLManager.StudyRecordSQL.updateUnlearnedNewWordCount.rawValue
+        let sql = YYSQLManager.StudyRecordSQL.reduceUnlearnedNewWordCount.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [id])
     }
 
     func reduceUnlearnedReviewWordCount(study id: Int) -> Bool {
-        let sql = YYSQLManager.StudyRecordSQL.updateUnlearnedReviewWordCount.rawValue
+        let sql = YYSQLManager.StudyRecordSQL.reduceUnlearnedReviewWordCount.rawValue
         return self.wordRunner.executeUpdate(sql, withArgumentsIn: [id])
     }
 

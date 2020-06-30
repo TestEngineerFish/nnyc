@@ -14,8 +14,6 @@
 			<string>YWFeedbackViewController</string>
 			<key>word/detail</key>
 			<string>YXWordDetailViewControllerNew</string>
-			<key>user/worknotice</key>
-			<string>YXMyClassViewController</string>
 		</dict>
 	</dict>
 	<key>exercise/study</key>
@@ -26,5 +24,7 @@
 	<string>YWWebViewController</string>
 	<key>feedback/message</key>
 	<string>YXFeedbackListViewController</string>
+	<key>user/worknotice</key>
+	<string>YXMyClassViewController</string>
 </dict>
 </plist>

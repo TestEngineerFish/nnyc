@@ -14,7 +14,7 @@ public enum YXMyClassRequestManager: YYBaseRequest {
     case classList
     case classDetail(id: Int)
     case leaveClass(id: Int)
-    case workReport(workId: Int, classId: Int)
+    case workReport(workId: Int)
     case remindHomework
 }
 
@@ -53,8 +53,8 @@ extension YXMyClassRequestManager {
             return ["class_id" : id]
         case .leaveClass(let id):
             return ["class_id" : id]
-        case .workReport(let workId, let classId):
-            return ["work_id" : workId, "class_id" : classId]
+        case .workReport(let workId):
+            return ["work_id" : workId]
         default:
             return nil
         }

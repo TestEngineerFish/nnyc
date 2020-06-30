@@ -9,7 +9,7 @@
 import UIKit
 
 public enum YXExerciseRequest: YYBaseRequest {
-    case exercise(isGenerate: Bool, type: Int, planId: Int?)
+    case exercise(isGenerate: Bool, type: Int, reviewId: Int?)
     case learnMap(bookId: Int)
     case learnResult(bookId: Int, unitId: Int)
     case report(type: Int, reviewId: Int, time: Int, result: String)

@@ -97,7 +97,7 @@ class YXExerciseResultView: YXView {
         operateButton.addTarget(self, action: #selector(clickOperateButton), for: .touchUpInside)
 
         remindButton.isUserInteractionEnabled = false
-        if model.type.isHomework() {
+        if model.type == .homeworkPunch {
             remindButton.setTitleColor(.orange1, for: .normal)
             remindButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(13))
             remindButton.setImage(UIImage(named: "iconRemindIcon"), for: .normal)
@@ -325,8 +325,10 @@ class YXExerciseResultView: YXView {
             switch model.type {
             case .wrong:
                 operateButton.setTitle("完成", for: .normal)
-            case .homeworkWord, .homeworkListen, .homeworkPunch:
+            case .homeworkPunch:
                 operateButton.setTitle("打卡分享给老师", for: .normal)
+            case .homeworkWord, .homeworkListen:
+                operateButton.setTitle("查看作业报告", for: .normal)
             default:
                 operateButton.setTitle("打卡分享", for: .normal)
             }
@@ -335,9 +337,9 @@ class YXExerciseResultView: YXView {
             }
         } else {
             switch model.type {
-            case .planListenReview:
+            case .planListenReview, .homeworkListen:
                 operateButton.setTitle("继续听写", for: .normal)
-            case .planReview, .homeworkListen, .homeworkWord:
+            case .planReview, .homeworkWord:
                 operateButton.setTitle("继续学习", for: .normal)
             default:
                 operateButton.setTitle("打卡分享", for: .normal)
@@ -422,7 +424,7 @@ class YXExerciseResultView: YXView {
     }
     
     private var isHiddenReportButton: Bool {
-        let hideReportTypeArray: [YXLearnType] = [.planReview, .planListenReview, .homeworkWord, .homeworkListen]
+        let hideReportTypeArray: [YXLearnType] = [.planReview]
         return !(model.state && hideReportTypeArray.contains(model.type))
     }
     

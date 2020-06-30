@@ -218,7 +218,6 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 // 查看报告
                 let vc = YXMyClassWorkReportViewController()
                 vc.workId  = model?.workId
-                vc.classId = model?.classId
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
             } else if exerciseStatusList.contains(_model.exerciseWorkStatus) {
                 // 做、补作业
@@ -245,7 +244,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
         YXWordBookResourceManager.shared.addTask(model: taskModel)
         // 跳转学习
         let vc = YXExerciseViewController()
-        vc.learnConfig = YXLearnConfigImpl(bookId: _model.bookId, unitId: _model.unitId, planId: 0, learnType: .homeworkPunch, homeworkId: workId)
+        vc.learnConfig = YXLearnConfigImpl(bookId: _model.bookId, unitId: _model.unitId, planId: 0, learnType: type, homeworkId: workId)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 

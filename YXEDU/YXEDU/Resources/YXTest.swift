@@ -43,7 +43,7 @@ class YXTest: NSObject {
     
      /// 处理复习结果页
     func processReviewResult() {
-        YXReviewDataManager().fetchReviewResult(type: .aiReview, planId: 13) { (resultModel, error) in
+        YXReviewDataManager().fetchReviewResult(type: .aiReview, reviewId: 13) { (resultModel, error) in
 //            guard let self = self else {return}
 
             if let _ = resultModel {

@@ -114,16 +114,18 @@
     private func initManager() {
         service.learnConfig = self.learnConfig
         service.initService()
-
+        YXExerciseViewController.requesting = true
         YYCache.set(false, forKey: .newLearnReportGIO)
     }
     
     /// 开始学习
     func startStudy(isGenerate: Bool = true) {
+//        YXExerciseViewController.requesting = false
+//        self.processBaseExerciseResult(newCount: 11, reviewCount: 10)
+//        return
         YXLog("====开始学习====")
         // 开始学习，停止下载
         YXWordBookResourceManager.stop = true
-        YXExerciseViewController.requesting = true
         switch self.service.progress {
         case .unreport:
             YXLog("本地存在学完未上报的关卡，先加载，再上报")

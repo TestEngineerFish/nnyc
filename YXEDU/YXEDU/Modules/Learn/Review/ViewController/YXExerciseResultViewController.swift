@@ -78,8 +78,19 @@ class YXExerciseResultViewController: YXViewController {
     private func processEvent() {
         if model?.type == .wrong {
             YRRouter.popViewController(true)
-        } else if model?.type == .base || (model?.state ?? false) {
-            self.shareEvent()
+        } else if model?.state == .some(true){
+            switch model?.type ?? .base {
+            case .base, .homeworkPunch:
+                self.shareEvent()
+            case .homeworkListen, .homeworkWord:
+                /// 查看作业报告
+                let vc = YXMyClassWorkReportViewController()
+                vc.workId = config?.homeworkId
+                self.navigationController?.pushViewController(vc, animated: true)
+            default:
+                break
+            }
+
         } else {
             self.reviewEvent()
         }
@@ -148,11 +159,12 @@ class YXExerciseResultViewController: YXViewController {
     
     func fetchData() {
         guard let config = self.config else {return}
-        YXReviewDataManager().fetchReviewResult(type: config.learnType, planId: config.planId) { [weak self] (resultModel, error) in
+        let reviewId = config.learnType.isHomework() ? config.homeworkId : config.planId
+        YXReviewDataManager().fetchReviewResult(type: config.learnType, reviewId: reviewId) { [weak self] (resultModel, error) in
             guard let self = self else {return}
             
             if var model = resultModel {
-                model.planId = config.planId
+                model.planId = config.learnType.isHomework() ? config.homeworkId : config.planId
                 let m = YXExerciseResultDisplayModel.displayModel(model: model)
                 self.model = m
                 self.initResultView()
