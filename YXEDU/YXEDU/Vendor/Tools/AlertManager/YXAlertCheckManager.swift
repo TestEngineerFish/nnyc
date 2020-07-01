@@ -84,7 +84,7 @@ class YXAlertCheckManager {
     /// 老用户提示
     func checkOldUser(_ completion: (() -> Void)? ) {
         YXUserDataManager.share.updateUserInfomation { (userInfomation) in
-            if userInfomation.oldUserUpdateMessage?.isNotEmpty ?? false {
+            if userInfomation?.oldUserUpdateMessage?.isNotEmpty ?? false {
                 let alertView = YXOldUserUpdateView()
                 alertView.closure = {
                     YXSettingDataManager().reportOldUserTips { (model, msg) in
@@ -130,7 +130,10 @@ class YXAlertCheckManager {
     func checkHomework(_ completion: (() -> Void)? ) {
         let request = YXMyClassRequestManager.remindHomework
         YYNetworkService.default.request(YYStructResponse<YXMyClassRemindModel>.self, request: request, success: { (response) in
-            guard let model = response.data else {return}
+            guard let model = response.data else {
+                completion?()
+                return
+            }
             let alertView = YXAlertView()
             alertView.titleLabel.text = "新作业提醒"
             alertView.descriptionLabel.text = String(format: "%@老师刚刚布置了新作业《%@》，赶紧去看看吧~", model.teacherName, model.workName)

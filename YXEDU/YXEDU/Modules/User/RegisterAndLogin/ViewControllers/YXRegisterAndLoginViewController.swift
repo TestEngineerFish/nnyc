@@ -243,12 +243,15 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     /// 更新用户信息
     private func checkUserInfomation() {
         YXUserDataManager.share.updateUserInfomation { [weakSelf = self] (userInfomation) in
-            if !userInfomation.isJoinSchool {
+            guard let _userInfomation = userInfomation else {
+                return
+            }
+            if !_userInfomation.isJoinSchool {
                 YYCache.set(true, forKey: YXLocalKey.isShowSelectSchool)
-            } else if userInfomation.didSelectBook == 0 {
+            } else if _userInfomation.didSelectBook == 0 {
                 YYCache.set(true, forKey: YXLocalKey.isShowSelectBool)
             }
-            guard userInfomation.didBindPhone == 1 else {
+            guard _userInfomation.didBindPhone == 1 else {
                 weakSelf.performSegue(withIdentifier: "Bind", sender: weakSelf)
                 return
             }

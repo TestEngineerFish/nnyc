@@ -277,7 +277,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     private func checkUserState() {
         YXUserDataManager.share.updateUserInfomation { (userInfomation) in
-            if userInfomation.reminder?.didOpen == 1, let time = userInfomation.reminder?.timeStamp {
+            if userInfomation?.reminder?.didOpen == 1, let time = userInfomation?.reminder?.timeStamp {
                 UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "Reminder")
                 UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "DidShowSetupReminderAlert")
             } else {

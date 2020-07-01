@@ -12,15 +12,18 @@ struct YXUserDataManager {
     static let share = YXUserDataManager()
 
     /// 更新用户信息
-    func updateUserInfomation(_ finishBlock: ((YXUserInfomationModel)->Void)?) {
+    func updateUserInfomation(_ finishBlock: ((YXUserInfomationModel?)->Void)?) {
         let request = YXRegisterAndLoginRequest.userInfomation
         YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
-            guard let userInfomation = response.data else { return }
-
+            guard let userInfomation = response.data else {
+                finishBlock?(nil)
+                return
+            }
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
             finishBlock?(userInfomation)
         }) { error in
+            finishBlock?(nil)
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
