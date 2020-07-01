@@ -306,6 +306,8 @@
         default:
             exerciseModel.status = .wrong
             exerciseModel.wrongCount += 1
+            // 修改当前对象
+            self.exerciseViewArray.first?.exerciseModel.wrongCount += 1
             self.service.answerAction(exercise: exerciseModel, isRemind: true)
         }
         self.exerciseViewArray.first?.remindView?.show()
