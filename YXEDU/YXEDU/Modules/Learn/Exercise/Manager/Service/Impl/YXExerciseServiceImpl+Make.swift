@@ -78,13 +78,13 @@ extension YXExerciseServiceImpl {
     /// 查找N3题型
     func _finedN3Exercise(exercise model: YXExerciseModel) -> YXExerciseModel? {
         var n3List = [YXExerciseModel]()
-        let es = turnDao.selectAllExercise(study: _studyId)
-        for e in es {
-            if e.type == .newLearnMasterList {
-                var newE = e
-                newE.word   = _queryWord(wordId: e.wordId, bookId: e.word?.bookId ?? 0)
-                newE.status = .wrong // 默认未掌握
-                n3List.append(newE)
+        let exerciseModelList = turnDao.selectAllExercise(study: _studyId)
+        for exerciseModel in exerciseModelList {
+            if exerciseModel.type == .newLearnMasterList && exerciseModel.status != .right {
+                var newExerciseModel    = exerciseModel
+                newExerciseModel.word   = _queryWord(wordId: exerciseModel.wordId, bookId: exerciseModel.word?.bookId ?? 0)
+                newExerciseModel.status = .wrong // 默认未掌握
+                n3List.append(newExerciseModel)
             }
         }
         var exerciseContainer    = model

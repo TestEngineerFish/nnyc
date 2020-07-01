@@ -16,19 +16,6 @@ enum YXStepStatus: Int {
     case wrong  = 1
     /// 做对
     case right  = 2
-    
-    static func getStatus(_ value: Int) -> YXStepStatus {
-        switch value {
-            case -1:
-                return .normal
-            case 0:
-                return .wrong
-            case 1:
-                return .right
-            default:
-            return .normal
-        }
-    }
 }
 
 /// 显示详情类型

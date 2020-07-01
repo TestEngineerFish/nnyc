@@ -34,8 +34,8 @@ extension YYSQLManager {
         INSERT INTO current_turn_v1(study_id, step_id)
         SELECT s.study_id study_id, s.step_id step_id
         FROM all_exercise_v1 as e
-        JOIN all_word_step_v1 as s on e.exercise_id = s.exercise_id
-        WHERE e.study_id = ? and s.question_type = 'T-N-3'
+        JOIN all_word_step_v1 as s ON e.exercise_id = s.exercise_id
+        WHERE e.study_id = ? AND s.question_type = 'T-N-3' AND s.status != 2
         ORDER by e.exercise_id
         """
 

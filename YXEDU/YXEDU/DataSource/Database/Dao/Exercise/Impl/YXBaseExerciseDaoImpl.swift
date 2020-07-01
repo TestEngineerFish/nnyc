@@ -18,7 +18,7 @@ class YXBaseExerciseDaoImpl: YYDatabase {
         model.stepId        = Int(rs.int(forColumn: "step_id"))
         model.wordId        = Int(rs.int(forColumn: "word_id"))
         model.type          = YXQuestionType(rawValue: rs.string(forColumn: "question_type") ?? "") ?? .none
-        model.status        = YXStepStatus.getStatus(Int(rs.int(forColumn: "status")))
+        model.status        = YXStepStatus(rawValue: Int(rs.int(forColumn: "status"))) ?? .normal
         model.step          = rs.string(forColumn: "step") ?? ""
         // 单词
         model.word          = YXWordModel()

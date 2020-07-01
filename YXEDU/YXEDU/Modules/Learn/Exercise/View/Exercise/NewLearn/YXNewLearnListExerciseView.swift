@@ -13,7 +13,8 @@ class YXNewLearnListExerciseView: YXBaseExerciseView {
     override func createSubview() {
         questionView = YXPickWordsBySelfView(frame: .zero, exerciseModel: exerciseModel) { (_exerciseModel) in
             YXLog("已选择，开始学习")
-            self.answerCompletion(right: true)
+            guard let model = self.questionView?.exerciseModel else { return }
+            self.answerCompletion(exercise: model, right: true)
         }
         questionView?.layer.removeShadow()
         self.addSubview(questionView!)

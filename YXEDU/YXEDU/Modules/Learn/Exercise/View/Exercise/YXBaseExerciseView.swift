@@ -160,7 +160,8 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     
     // MARK: ==== YXAnswerViewDelegate ====
 
-    func answerCompletion(right: Bool) {
+    func answerCompletion(exercise model: YXExerciseModel, right: Bool) {
+        self.exerciseModel = model
         self.exerciseModel.status = right ? .right : .wrong
         if !right {
             self.exerciseModel.wrongCount += 1
