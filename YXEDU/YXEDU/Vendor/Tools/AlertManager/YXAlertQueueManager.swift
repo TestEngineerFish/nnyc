@@ -33,7 +33,7 @@ class YXAlertQueueManager: NSObject {
         self.processQueue()
     }
     
-    // 登陆后再调用一次
+    // 登录后再调用一次
     public func restart() {
         self.processQueue()
     }

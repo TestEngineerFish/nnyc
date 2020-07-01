@@ -24,7 +24,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }()
 
     var classModelList = [YXMyClassModel]()
-    var workModelList  = [YXMyWorkModel]()
+    var workListModel: YXMyWorkListModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,11 +85,11 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
 
     private func requestWorkList() {
         let request = YXMyClassRequestManager.workList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXMyWorkModel>.self, request: request, success: { (response) in
-            guard let modelList = response.dataArray else {
+        YYNetworkService.default.request(YYStructResponse<YXMyWorkListModel>.self, request: request, success: { (response) in
+            guard let listModel = response.data else {
                 return
             }
-            self.workModelList = modelList
+            self.workListModel = listModel
             self.workTableView.reloadData()
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -104,7 +104,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
 
     // MARK: ==== UITableViewDateSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.workModelList.count
+        return self.workListModel?.workModelList.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -114,11 +114,11 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXWorkWithMyClassCell", for: indexPath) as? YXWorkWithMyClassCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXWorkWithMyClassCell", for: indexPath) as? YXWorkWithMyClassCell, let listModel = self.workListModel else {
             return UITableViewCell()
         }
-        let model = self.workModelList[indexPath.row]
-        cell.setData(work: model)
+        let model = listModel.workModelList[indexPath.row]
+        cell.setData(work: model, hashDic: listModel.bookHash)
         return cell
     }
 
@@ -133,7 +133,10 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return self.workModelList.isEmpty ? AdaptSize(232) : .zero
+        guard let workModelList = self.workListModel?.workModelList, !workModelList.isEmpty else {
+            return AdaptSize(232)
+        }
+        return .zero
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

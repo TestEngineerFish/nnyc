@@ -60,6 +60,17 @@ struct YXMyClassModel: Mappable {
     }
 }
 
+struct YXMyWorkListModel: Mappable {
+    var bookHash: [String:String]      = [:]
+    var workModelList: [YXMyWorkModel] = []
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        bookHash      <- map["hashkey"]
+        workModelList <- map["list"]
+    }
+}
+
 struct YXMyWorkModel: Mappable {
 
     var studentId: Int?

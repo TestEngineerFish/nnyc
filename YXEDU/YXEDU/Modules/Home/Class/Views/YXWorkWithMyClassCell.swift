@@ -11,6 +11,7 @@ import Foundation
 class YXWorkWithMyClassCell: UITableViewCell {
 
     var model: YXMyWorkModel?
+    var hashDic: [String:String] = [:]
 
     var wrapView: UIView = {
         let view = UIView()
@@ -128,8 +129,9 @@ class YXWorkWithMyClassCell: UITableViewCell {
         self.actionButton.addTarget(self, action: #selector(actionEvent), for: .touchUpInside)
     }
 
-    func setData(work model: YXMyWorkModel) {
-        self.model = model
+    func setData(work model: YXMyWorkModel, hashDic:[String:String]) {
+        self.model   = model
+        self.hashDic = hashDic
         self.nameLabel.text        = model.workName
         if model.type == .punch {
             self.progressLabel.text = String(format: "完成%ld/%ld天", model.shareCount, model.shareAmount)
@@ -237,14 +239,8 @@ class YXWorkWithMyClassCell: UITableViewCell {
             return
         }
         YXLog(String(format: "==== 开始做作业，作业ID：%ld ====", workId))
-
-        _model.bookIdList.forEach { (id) in
-            // 下载词书
-            let taskModel = YXWordBookResourceModel(type: .single, book: id) {
-                YXWordBookResourceManager.shared.contrastBookData(by: id)
-            }
-            YXWordBookResourceManager.shared.addTask(model: taskModel)
-        }
+        let dataList = self.getBookHashDic()
+        YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList)
 
         // 跳转学习
         let vc = YXExerciseViewController()
@@ -265,6 +261,20 @@ class YXWorkWithMyClassCell: UITableViewCell {
         shareVC.wordsAmount = _model.studyWordCount
         shareVC.daysAmount  = _model.studyDayCount
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(shareVC, animated: true)
+    }
+
+    // MARK: ==== Tools ====
+    private func getBookHashDic() -> [(Int, String)] {
+        var bookHash = [(Int, String)]()
+        guard let _model = self.model else {
+            return bookHash
+        }
+        _model.bookIdList.forEach { (bookId) in
+            if let hash = self.hashDic["\(bookId)"] {
+                bookHash.append((bookId,hash))
+            }
+        }
+        return bookHash
     }
 
 }
