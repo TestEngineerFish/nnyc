@@ -29,6 +29,9 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
         willSet {
             self.contentView.setSelectSchool(school: newValue?.name)
         }
+        didSet {
+            self.willSchoolModel = nil
+        }
     }
     var selectLocalModel: YXLocalModel? {
         willSet {
@@ -137,9 +140,6 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
 
     @objc private func downSelectSchool() {
         self.selectSchoolModel = self.willSchoolModel
-        self.searchView.textField.text = nil
-        self.schoolModelList.removeAll()
-        self.searchView.tableView.reloadData()
         self.hideSelectSchoolView()
     }
 
@@ -156,9 +156,15 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
 
     @objc private func hideSelectSchoolView() {
         self.searchView.textField.resignFirstResponder()
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25, animations: {
             self.backgroundView.layer.opacity = 0.0
             self.searchView.transform         = .identity
+        }) { (finished) in
+            if finished {
+                self.searchView.textField.text = nil
+                self.schoolModelList.removeAll()
+                self.searchView.tableView.reloadData()
+            }
         }
     }
 
