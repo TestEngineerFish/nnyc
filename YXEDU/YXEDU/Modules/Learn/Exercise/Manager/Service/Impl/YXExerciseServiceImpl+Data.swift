@@ -30,6 +30,9 @@ extension YXExerciseServiceImpl {
 
         // 插入单词数据
         self._processExercise(study: studyId)
+
+        // 更新记录状态
+        self.studyDao.updateProgress(study: studyId, progress: .learning)
         
         // 加载答题选项
         self._loadExerciseOption()

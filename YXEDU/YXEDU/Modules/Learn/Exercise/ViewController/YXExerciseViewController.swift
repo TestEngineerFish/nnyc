@@ -121,7 +121,7 @@
     }
     
     /// 开始学习
-    func startStudy(isGenerate: Bool = true) {
+    func startStudy() {
 //        YXExerciseViewController.requesting = false
 //        self.processBaseExerciseResult(newCount: 11, reviewCount: 10)
 //        return
@@ -142,13 +142,13 @@
             YXLog("未开始学习，请求学习数据")
             self.service.setStartTime()
             self.service.addStudyCount()
-            self.fetchExerciseData(isGenerate: isGenerate)
+            self.fetchExerciseData()
         }
     }
     
     // 加载当天的学习数据
-    private func fetchExerciseData(isGenerate: Bool) {
-        service.fetchExerciseResultModels(isGenerate: isGenerate) { [weak self] (result, msg) in
+    private func fetchExerciseData() {
+        service.fetchExerciseResultModels { [weak self] (result, msg, isGenerate) in
             guard let self = self else { return }
             YXExerciseViewController.requesting = false
             if result {

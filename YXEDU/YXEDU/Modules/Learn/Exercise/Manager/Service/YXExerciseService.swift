@@ -50,9 +50,8 @@ protocol YXExerciseService {
     
     /// 加载网络数据
     /// - Parameters:
-    ///   - isGenerate: 是否重新生成题型
     ///   - completion: 完成回调
-    func fetchExerciseResultModels(isGenerate: Bool, completion: ((_ result: Bool, _ msg: String?) -> Void)?)
+    func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?, _ isGenerate: Bool) -> Void)?)
 
     /// 获取一个练习数据
     /// - returns: 练习对象，如果做完则返回nil

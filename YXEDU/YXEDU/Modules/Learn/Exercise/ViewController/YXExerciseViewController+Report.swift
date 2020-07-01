@@ -51,7 +51,7 @@ extension YXExerciseViewController {
             if model.hasNextGroup {
                 YXLog("还有下一组")
                 YXExerciseViewController.requesting = true
-                self.startStudy(isGenerate: false)
+                self.startStudy()
             } else {
                 YXLog("没有下一组，进入结果页")
                 if self.learnConfig.learnType == .base || self.learnConfig.learnType == .homeworkPunch {

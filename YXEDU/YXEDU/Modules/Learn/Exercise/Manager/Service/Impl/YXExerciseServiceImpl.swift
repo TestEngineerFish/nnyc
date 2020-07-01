@@ -48,18 +48,19 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
-    func fetchExerciseResultModels(isGenerate: Bool = true, completion: ((_ result: Bool, _ msg: String?) -> Void)?) {
+    func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?, _ isGenerate: Bool) -> Void)?) {
         let reviewId = learnConfig.learnType.isHomework() ? learnConfig.homeworkId : learnConfig.planId
+        let isGenerate = self.studyDao.selectStudyRecordModel(learn: learnConfig) == nil ? true : false
         let request = YXExerciseRequest.exercise(isGenerate: isGenerate, type: learnConfig.learnType.rawValue, reviewId: reviewId)
         request.execute(YXExerciseResultModel.self, success: { [weak self] (model) in
             self?._resultModel = model
             YXGrowingManager.share.uploadExerciseType(model?.rule ?? "")
             self?._processData {
-                completion?(true, nil)
+                completion?(true, nil, isGenerate)
             }
         }) { (msg) in
             YXUtils.showHUD(kWindow, title: msg)
-            completion?(false, msg)
+            completion?(false, msg, isGenerate)
         }
     }
     
