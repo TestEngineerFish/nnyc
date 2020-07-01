@@ -60,6 +60,7 @@ class YXSelectSchoolContentView: YXView {
     var submitButton: YXButton = {
         let button = YXButton(.theme, frame: .zero)
         button.setTitle("提交", for: .normal)
+        button.setStatus(.disable)
         return button
     }()
     var bottomImageView: UIImageView = {
@@ -155,9 +156,11 @@ class YXSelectSchoolContentView: YXView {
         if school == nil {
             self.schoolLabel.text      = "请选择学校名称，优先安排试听课"
             self.schoolLabel.textColor = UIColor.black6
+            self.submitButton.setStatus(.disable)
         } else {
-            self.schoolLabel.text      = school
-            self.schoolLabel.textColor = UIColor.black1
+            self.schoolLabel.text       = school
+            self.schoolLabel.textColor  = UIColor.black1
+            self.submitButton.setStatus(.normal)
         }
     }
 }

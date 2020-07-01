@@ -120,6 +120,10 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
     }
 
     @objc private func clickSchool() {
+        if self.selectLocalModel == nil {
+            YXUtils.showHUD(kWindow, title: "请先选择学校地址")
+            return
+        }
         self.searchView.tableView.reloadData()
         UIView.animate(withDuration: 0.25, animations: {
             self.backgroundView.layer.opacity = 1.0
@@ -133,6 +137,9 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
 
     @objc private func downSelectSchool() {
         self.selectSchoolModel = self.willSchoolModel
+        self.searchView.textField.text = nil
+        self.schoolModelList.removeAll()
+        self.searchView.tableView.reloadData()
         self.hideSelectSchoolView()
     }
 
@@ -166,6 +173,8 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
         guard var school = textField.text else {
             return
         }
+        self.schoolModelList.removeAll()
+        self.searchView.tableView.reloadData()
         school = school.trimed
         if school != "" {
             self.searchSchool(name: school)
