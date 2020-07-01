@@ -46,11 +46,10 @@ class YXBecomeActiveManager: NSObject {
                         YXAlertQueueManager.default.addAlert(alertView: commandView)
                         completion?()
                     }
+                    UIPasteboard.general.string = ""
                 } else {
                     completion?()
                 }
-                
-                UIPasteboard.general.string = ""
             }
         } else {
             completion?()

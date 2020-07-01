@@ -22,7 +22,9 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
 
     let searchViewH     = screenHeight * 0.92
     let pickerViewH     = AdaptSize(318)
-    var cityList        = [YXCityModel]()
+    var citiesArray  = [YXCityModel]()  // 省
+    var areasArray     = [YXAreaModel]()  // 市
+    var localsArray   = [YXLocalModel]() // 区
     var schoolModelList = [YXLocalModel]()
     var willSchoolModel: YXLocalModel?
     var selectSchoolModel: YXLocalModel? {
@@ -35,14 +37,7 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
     }
     var selectLocalModel: YXLocalModel? {
         willSet {
-            let cityIndex  = self.pickerView.pickerView.selectedRow(inComponent: 0)
-            let cityModel  = self.cityList[cityIndex]
-            let areaIndex  = self.pickerView.pickerView.selectedRow(inComponent: 1)
-            let areaModel  = cityModel.areaList[areaIndex]
-            let localIndex = self.pickerView.pickerView.selectedRow(inComponent: 2)
-            let localModel = areaModel.localList[localIndex]
-            let localStr   = String(format: "%@%@%@", cityModel.name, areaModel.name, localModel.name)
-            self.contentView.setSelectLocal(local: localStr)
+            self.contentView.setSelectLocal(local: localName)
         }
         didSet {
             if selectLocalModel?.id != oldValue?.id {
@@ -53,11 +48,11 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
     var localName: String {
         get {
             let cityIndex  = self.pickerView.pickerView.selectedRow(inComponent: 0)
-            let cityModel  = self.cityList[cityIndex]
+            let cityModel  = self.citiesArray[cityIndex]
             let areaIndex  = self.pickerView.pickerView.selectedRow(inComponent: 1)
-            let areaModel  = cityModel.areaList[areaIndex]
+            let areaModel  = self.areasArray[areaIndex]
             let localIndex = self.pickerView.pickerView.selectedRow(inComponent: 2)
-            let localModel = areaModel.localList[localIndex]
+            let localModel = self.localsArray[localIndex]
             return String(format: "%@%@%@", cityModel.name, areaModel.name, localModel.name)
         }
     }
@@ -84,19 +79,21 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
         self.searchView.clipRectCorner(directionList: [.topLeft, .topRight], cornerRadius: AdaptSize(5))
         self.pickerView.clipRectCorner(directionList: [.topLeft, .topRight], cornerRadius: AdaptSize(5))
         self.searchView.textField.addTarget(self, action: #selector(seachSchool(_:)), for: .editingChanged)
-        self.cityList.removeAll()
+        self.citiesArray.removeAll()
         do {
             let path = Bundle.main.path(forResource: "city", ofType: "json") ?? ""
             let data = try Data(contentsOf: URL(fileURLWithPath: path))
             let jsonArray = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? Array<[String:Any]>
             jsonArray?.forEach({ (dict:[String:Any]) in
                 if let cityModel = YXCityModel(JSON: dict) {
-                    self.cityList.append(cityModel)
+                    self.citiesArray.append(cityModel)
                 }
             })
         } catch {
-            cityList = []
+            self.citiesArray = []
         }
+        self.areasArray    = self.citiesArray.first?.areaList ?? []
+        self.localsArray  = self.areasArray.first?.localList ?? []
     }
 
     private func createSubviews() {
@@ -144,12 +141,12 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
     }
 
     @objc private func downSelectLocal() {
-        let cityIndex  = self.pickerView.pickerView.selectedRow(inComponent: 0)
-        let cityModel  = self.cityList[cityIndex]
-        let areaIndex  = self.pickerView.pickerView.selectedRow(inComponent: 1)
-        let areaModel  = cityModel.areaList[areaIndex]
+//        let cityIndex  = self.pickerView.pickerView.selectedRow(inComponent: 0)
+//        let cityModel  = self.procincesArray[cityIndex]
+//        let areaIndex  = self.pickerView.pickerView.selectedRow(inComponent: 1)
+//        let areaModel  = self.citiesArray[areaIndex]
         let localIndex = self.pickerView.pickerView.selectedRow(inComponent: 2)
-        let localModel = areaModel.localList[localIndex]
+        let localModel = self.localsArray[localIndex]
         self.selectLocalModel = localModel
         self.hideSelectLocalView()
     }
@@ -237,41 +234,31 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if self.cityList.isEmpty {
+        if self.citiesArray.isEmpty {
             return 0
         }
         switch component {
         case 0:
-            return self.cityList.count
+            return self.citiesArray.count
         case 1:
-            let cityModel = self.cityList[pickerView.selectedRow(inComponent: 0)]
-            return cityModel.areaList.count
+            return self.areasArray.count
         case 2:
-            let cityModel = self.cityList[pickerView.selectedRow(inComponent: 0)]
-            let areaModel = cityModel.areaList[pickerView.selectedRow(inComponent: 1)]
-            return areaModel.localList.count
+            return self.localsArray.count
         default:
             return 0
         }
-
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component {
         case 0:
-            let cityModel = self.cityList[row]
+            let cityModel = self.citiesArray[row]
             return cityModel.name
         case 1:
-            let cityIndex  = pickerView.selectedRow(inComponent: 0)
-            let cityModel  = self.cityList[cityIndex]
-            let areaModel  = cityModel.areaList[row]
+            let areaModel = self.areasArray[row]
             return areaModel.name
         case 2:
-            let cityIndex  = pickerView.selectedRow(inComponent: 0)
-            let cityModel  = self.cityList[cityIndex]
-            let areaIndex  = pickerView.selectedRow(inComponent: 1)
-            let areaModel  = cityModel.areaList[areaIndex]
-            let localModel = areaModel.localList[row]
+            let localModel = self.localsArray[row]
             return localModel.name
         default:
             return ""
@@ -288,10 +275,15 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
-            pickerView.reloadComponent(1)
-            pickerView.reloadComponent(2)
+            if row < self.citiesArray.count {
+                self.areasArray = self.citiesArray[row].areaList
+                pickerView.reloadComponent(1)
+            }
         } else if component == 1 {
-            pickerView.reloadComponent(2)
+            if row < self.areasArray.count {
+                self.localsArray = self.areasArray[row].localList
+                pickerView.reloadComponent(2)
+            }
         }
     }
     

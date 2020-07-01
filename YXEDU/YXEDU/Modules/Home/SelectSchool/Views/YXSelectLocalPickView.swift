@@ -38,6 +38,7 @@ class YXSelectLocalPickView: YXView {
     }()
     var pickerView: UIPickerView = {
         let pickerView = UIPickerView()
+        pickerView.isMultipleTouchEnabled = false
         return pickerView
     }()
 
