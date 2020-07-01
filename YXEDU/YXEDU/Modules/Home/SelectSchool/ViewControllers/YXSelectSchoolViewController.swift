@@ -278,6 +278,11 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
             if row < self.citiesArray.count {
                 self.areasArray = self.citiesArray[row].areaList
                 pickerView.reloadComponent(1)
+                let areaIndex = pickerView.selectedRow(inComponent: 1)
+                if areaIndex < self.areasArray.count {
+                    self.localsArray = self.areasArray[areaIndex].localList
+                    pickerView.reloadComponent(2)
+                }
             }
         } else if component == 1 {
             if row < self.areasArray.count {

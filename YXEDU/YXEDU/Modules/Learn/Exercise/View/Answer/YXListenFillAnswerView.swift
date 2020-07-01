@@ -215,8 +215,9 @@ class YXListenFillAnswerLineView: YXView {
             }
 
         }
-        
-        viewWidth = lastView!.origin.x + lastView!.size.width
+        if lastView != nil {
+            viewWidth = lastView!.origin.x + lastView!.size.width
+        }
     }
 
     

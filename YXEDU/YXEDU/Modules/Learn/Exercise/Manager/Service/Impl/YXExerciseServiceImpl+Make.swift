@@ -68,7 +68,9 @@ extension YXExerciseServiceImpl {
             // 初始化单词对象
             var _wordModel = self._queryWord(wordId: wordId, bookId: exerciseModel.word?.bookId ?? 0)
             _wordModel?.wordType = exerciseModel.word?.wordType ?? .newWord
-            exerciseModel.word  = _wordModel
+            if _wordModel != nil {
+                exerciseModel.word  = _wordModel
+            }
             // 选项初始化
             let _exerciseModel = _processExerciseOption(exercise: exerciseModel)
             return _exerciseModel

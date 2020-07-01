@@ -237,14 +237,20 @@ class YXWorkWithMyClassCell: UITableViewCell {
             return
         }
         YXLog(String(format: "==== 开始做作业，作业ID：%ld ====", workId))
-        // 下载词书
-        let taskModel = YXWordBookResourceModel(type: .single, book: _model.bookId) {
-            YXWordBookResourceManager.shared.contrastBookData(by: _model.bookId)
+
+        _model.bookIdList.forEach { (id) in
+            // 下载词书
+            let taskModel = YXWordBookResourceModel(type: .single, book: id) {
+                YXWordBookResourceManager.shared.contrastBookData(by: id)
+            }
+            YXWordBookResourceManager.shared.addTask(model: taskModel)
         }
-        YXWordBookResourceManager.shared.addTask(model: taskModel)
+
         // 跳转学习
         let vc = YXExerciseViewController()
-        vc.learnConfig = YXLearnConfigImpl(bookId: _model.bookId, unitId: _model.unitId, planId: 0, learnType: type, homeworkId: workId)
+        let bookId = type == .homeworkPunch ? (_model.bookIdList.first ?? 0) : 0
+        let unitId = type == .homeworkPunch ? _model.unitId : 0
+        vc.learnConfig = YXLearnConfigImpl(bookId: bookId, unitId: unitId, planId: 0, learnType: type, homeworkId: workId)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 

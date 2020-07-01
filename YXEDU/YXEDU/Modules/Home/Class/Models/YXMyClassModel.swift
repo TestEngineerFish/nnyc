@@ -75,7 +75,7 @@ struct YXMyWorkModel: Mappable {
     var className: String = ""
     var shareAmount: Int  = 0
     var timeStr: String   = ""
-    var bookId: Int       = 0
+    var bookIdList        = [Int]()
     var unitId: Int       = 0
     var studyWordCount    = 0
     var studyDayCount     = 0
@@ -93,7 +93,7 @@ struct YXMyWorkModel: Mappable {
         className   <- map["class_name"]
         shareAmount <- map["day_num"]
         timeStr     <- map["date_desc"]
-        bookId      <- map["book_id"]
+        bookIdList  <- map["book_id"]
         unitId      <- map["unit_id"]
         studyWordCount <- map[""]
         studyDayCount  <- map[""]
