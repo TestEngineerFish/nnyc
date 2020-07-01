@@ -104,7 +104,7 @@ struct YXMyWorkModel: Mappable {
         className   <- map["class_name"]
         shareAmount <- map["day_num"]
         timeStr     <- map["date_desc"]
-        bookIdList  <- map["book_id"]
+        bookIdList  <- map["book_id_list"]
         unitId      <- map["unit_id"]
         studyWordCount <- map[""]
         studyDayCount  <- map[""]
