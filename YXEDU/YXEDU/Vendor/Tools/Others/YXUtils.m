@@ -146,6 +146,7 @@
     if (!view) {
         view = [UIApplication sharedApplication].keyWindow;
     }
+    if (view == nil) { return; }
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     // Configure for text only and offset down
     hud.mode = MBProgressHUDModeText;
