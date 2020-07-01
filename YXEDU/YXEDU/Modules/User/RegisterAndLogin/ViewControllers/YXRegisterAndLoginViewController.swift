@@ -247,9 +247,10 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 return
             }
             if !_userInfomation.isJoinSchool {
-                YYCache.set(true, forKey: YXLocalKey.isShowSelectSchool)
-            } else if _userInfomation.didSelectBook == 0 {
-                YYCache.set(true, forKey: YXLocalKey.isShowSelectBool)
+                YYCache.set(true, forKey: .isShowSelectSchool)
+            }
+            if _userInfomation.didSelectBook == 0 {
+                YYCache.set(true, forKey: .isShowSelectBool)
             }
             guard _userInfomation.didBindPhone == 1 else {
                 weakSelf.performSegue(withIdentifier: "Bind", sender: weakSelf)

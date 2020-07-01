@@ -196,9 +196,13 @@ class YXSelectSchoolViewController: YXViewController, UIPickerViewDelegate, UIPi
 
     func toNextView() {
         YYCache.set(false, forKey: .isShowSelectSchool)
-        let storyboard = UIStoryboard(name:"Home", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "kYXAddBookGuideViewController")
-        self.navigationController?.pushViewController(vc, animated: true)
+        if (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(true) {
+            let storyboard = UIStoryboard(name:"Home", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "kYXAddBookGuideViewController")
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
 
     // MARK: ==== Request ====
