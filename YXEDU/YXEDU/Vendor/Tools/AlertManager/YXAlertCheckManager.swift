@@ -135,13 +135,13 @@ class YXAlertCheckManager {
                 return
             }
             let alertView = YXAlertView()
-            alertView.titleLabel.text = "新作业提醒"
             alertView.descriptionLabel.text = String(format: "%@老师刚刚布置了新作业《%@》，赶紧去看看吧~", model.teacherName, model.workName)
-            alertView.leftButton.isHidden = true
-            alertView.rightOrCenterButton.isHidden = false
-            alertView.shouldOnlyShowOneButton = true
-            alertView.rightOrCenterButton.setTitle("查看作业", for: .normal)
+            alertView.titleLabel.text                = "新作业提醒"
+            alertView.leftButton.isHidden            = true
+            alertView.rightOrCenterButton.isHidden   = false
+            alertView.shouldOnlyShowOneButton        = true
             alertView.shouldDismissWhenTapBackground = false
+            alertView.rightOrCenterButton.setTitle("查看作业", for: .normal)
             alertView.tag = YXAlertWeightType.newHomework
             alertView.doneClosure = { _ in
                 let vc = YXMyClassViewController()
@@ -150,7 +150,6 @@ class YXAlertCheckManager {
             }
 
             YXAlertQueueManager.default.addAlert(alertView: alertView)
-            YXAlertQueueManager.default.showAlert()
             completion?()
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
