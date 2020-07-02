@@ -465,8 +465,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        self.toMyClass()
-//        return
         if collectionView.tag == 1 {
             switch indexPath.row {
             case 0:

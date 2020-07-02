@@ -239,6 +239,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
             return
         }
         YXLog(String(format: "==== 开始做作业，作业ID：%ld ====", workId))
+        YXWordBookResourceManager.stop = false
         let dataList = self.getBookHashDic()
         YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
 
