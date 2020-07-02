@@ -57,7 +57,6 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
             YXUserModel.default.uuid           = data.info?.uuid
             YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
-            YXUserModel.default.token          = data.token
             
             YXUserModel.default.didLogin = true
             Growing.setUserId(YXUserModel.default.uuid ?? "")
