@@ -89,9 +89,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     /// 保存词单
       /// - Parameters:
       ///   - dataList: 需要保存的数据
-      func saveReviewPlan(dataList: [(Int, String)]) {
-          YXLog("词单的词书列表", dataList)
-        let task = YXWordBookResourceModel(type: .reviewPlan) {
+    func saveReviewPlan(dataList: [(Int, String)], type: YXDownloadType = .reviewPlan, word id: Int = 0) {
+        YXLog("词单的词书列表", dataList)
+        let task = YXWordBookResourceModel(type: type, workId: id) {
              YXLog("词书下载完成，开始检测和下载词单的词书")
             YXWordBookResourceManager.downloadDataList += self.getUpdateList(dataList: dataList)
             self.downloadProcessor()
@@ -132,10 +132,19 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     /// 添加任务
     func addTask(model: YXWordBookResourceModel) {
         var existed = false
+        // 任务是否已存在
         YXWordBookResourceManager.taskList.forEach { (_model) in
             if _model.type == model.type {
-                existed = true
-                return
+                // 如果是作业类型，则需要匹配作业ID
+                if _model.type == .homework {
+                    if  _model.workId == model.workId {
+                        existed = true
+                        return
+                    }
+                } else {
+                    existed = true
+                    return
+                }
             }
         }
         if !existed {
@@ -244,13 +253,15 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     }
 }
 
+enum YXDownloadType: Int {
+    case single
+    case all
+    case reviewPlan
+    case homework
+}
+
 ///  下载对象
 class YXWordBookResourceModel: NSObject {
-    enum YXDownloadType: Int {
-        case single
-        case all
-        case reviewPlan
-    }
     enum YXDownloadStatus: Int {
         case normal
         case downloading
@@ -258,6 +269,7 @@ class YXWordBookResourceModel: NSObject {
     }
     var bookId: Int?
     var type: YXDownloadType
+    var workId: Int = 0 // 作业ID
     var status: YXDownloadStatus {
         didSet {
             if status == .finished {
@@ -272,6 +284,9 @@ class YXWordBookResourceModel: NSObject {
                 case .reviewPlan:
                     YXLog("所有词单下载完成")
                     NotificationCenter.default.post(name: YXNotification.kDownloadReviewPlanFinished, object: nil)
+                case .homework:
+                    YXLog("作业下载完成")
+                    NotificationCenter.default.post(name: YXNotification.kDownloadReviewPlanFinished, object: nil)
                 }
 
             }
@@ -279,9 +294,10 @@ class YXWordBookResourceModel: NSObject {
     }
     var eventBlock: (()->Void)
 
-    init(type: YXDownloadType, book id: Int? = -1, block: @escaping (()->Void)) {
+    init(type: YXDownloadType, book id: Int? = -1, workId: Int = 0, block: @escaping (()->Void)) {
         self.type       = type
         self.bookId     = id
+        self.workId     = workId
         self.status     = .normal
         self.eventBlock = block
         super.init()

@@ -41,6 +41,8 @@ struct YXNotification {
     static let kDownloadAllFinished        = NSNotification.Name("kDownloadAllFinished")
     /// 下载所有词单结束
     static let kDownloadReviewPlanFinished = NSNotification.Name("kDownloadReviewPlanFinished")
+    /// 下载作业结束
+    static let kDownloadHomeworkFinished   = NSNotification.Name("kDownloadHomeworkFinished")
     /// 新学单词已掌握
     static let kNewWordMastered            = NSNotification.Name("kNewWordMastered")
     /// 加入班级

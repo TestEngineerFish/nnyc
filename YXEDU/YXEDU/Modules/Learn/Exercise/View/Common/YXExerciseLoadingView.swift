@@ -278,9 +278,10 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
             }
             // 所有任务下载完成，才可以进入下一步
             if YXWordBookResourceManager.taskList.isEmpty {
+                YXLog("词书已下载，可以请求学习数据了")
                 self.delegate?.downloadComplete()
                 self.speed  = .highSpeed
-                // 请求之前需要先下载完词书
+                // 是否已请求到数据
                 if YXExerciseViewController.requesting != nil {
                     if YXExerciseViewController.requesting == .some(true) {
                         self.status = .requestIng

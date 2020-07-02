@@ -37,23 +37,23 @@ class YXHomeSubItemiPadCell: UICollectionViewCell {
             self.dotView.isHidden          = hideDotView
             self.newWorkImage.isHidden     = true
         case 1:
-            self.colorView.backgroundColor = UIColor.hex(0xF0F6FF)
-            self.iconView.image            = #imageLiteral(resourceName: "homeReport")
-            self.titleLabel.text           = "学习报告"
-            self.dotView.isHidden          = true
-            self.newWorkImage.isHidden     = true
-        case 2:
             self.colorView.backgroundColor = UIColor.hex(0xE8F6EA)
             self.iconView.image            = #imageLiteral(resourceName: "homeCalendar")
             self.titleLabel.text           = "打卡日历"
             self.dotView.isHidden          = true
             self.newWorkImage.isHidden     = true
+        case 2:
+            self.colorView.backgroundColor = UIColor.hex(0xF0F6FF)
+            self.iconView.image            = #imageLiteral(resourceName: "homeReport")
+            self.titleLabel.text           = "学习报告"
+            self.dotView.isHidden          = true
+            self.newWorkImage.isHidden     = true
         case 3:
             self.colorView.backgroundColor = UIColor.hex(0xFFF4E1)
-            self.iconView.image            = #imageLiteral(resourceName: "myClass")
-            self.titleLabel.text           = YXUserModel.default.isJoinClass ? "我的班级" : "加入班级"
+            self.iconView.image            = #imageLiteral(resourceName: "homeChallenge")
+            self.titleLabel.text           = "单词挑战"
             self.dotView.isHidden          = true
-            self.newWorkImage.isHidden     = !YXUserModel.default.hasNewWork
+            self.newWorkImage.isHidden     = true
         default:
             break
         }
