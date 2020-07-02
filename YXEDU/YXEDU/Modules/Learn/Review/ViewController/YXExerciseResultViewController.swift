@@ -80,17 +80,14 @@ class YXExerciseResultViewController: YXViewController {
             YRRouter.popViewController(true)
         } else if model?.state == .some(true){
             switch model?.type ?? .base {
-            case .base, .homeworkPunch:
-                self.shareEvent()
             case .homeworkListen, .homeworkWord:
                 /// 查看作业报告
                 let vc = YXMyClassWorkReportViewController()
                 vc.workId = config?.homeworkId
                 self.navigationController?.pushViewController(vc, animated: true)
             default:
-                break
+                self.shareEvent()
             }
-
         } else {
             self.reviewEvent()
         }

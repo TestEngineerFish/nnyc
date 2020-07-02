@@ -38,15 +38,10 @@ class YXUserModel: NSObject {
     /// 用户Token
     var token: String? {
         set {
-            YYCache.set(newValue, forKey: .userToken)
+            UserDefaults.standard.set(newValue, forKey: "token")
         }
         get {
-            var _token = YYCache.object(forKey: .userToken) as? String
-            // 兼容老版本
-            if _token == nil || _token == .some("") {
-                _token = UserDefaults.standard.string(forKey: "token")
-            }
-            return _token
+            return UserDefaults.standard.string(forKey: "token")
         }
     }
     /// 用户名称

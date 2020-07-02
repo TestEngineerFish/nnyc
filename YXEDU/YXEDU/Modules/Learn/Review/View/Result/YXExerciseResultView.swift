@@ -424,8 +424,7 @@ class YXExerciseResultView: YXView {
     }
     
     private var isHiddenReportButton: Bool {
-        let hideReportTypeArray: [YXLearnType] = [.planReview]
-        return !(model.state && hideReportTypeArray.contains(model.type))
+        return !(model.state && (model.type == .planReview || model.type == .planListenReview))
     }
     
     

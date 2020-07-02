@@ -67,7 +67,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.token = data.token
             YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
-
+            
             YXLog("当前用户Token=====", YXUserModel.default.token ?? "")
             self.checkUserInfomation()
             
