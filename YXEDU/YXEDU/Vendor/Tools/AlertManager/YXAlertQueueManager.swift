@@ -99,13 +99,13 @@ class YXAlertQueueManager: NSObject {
                     group.leave()
                 }
             }
-            group.enter()
-            queue.async(group: group) {
-                YXAlertCheckManager.default.checkHomework {
-                    YXLog("====================== 检查作业提醒结束")
-                    group.leave()
-                }
-            }
+//            group.enter()
+//            queue.async(group: group) {
+//                YXAlertCheckManager.default.checkHomework {
+//                    YXLog("====================== 检查作业提醒结束")
+//                    group.leave()
+//                }
+//            }
         }
         
         group.enter()
