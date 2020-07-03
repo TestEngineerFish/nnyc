@@ -501,11 +501,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 if isPad() {
                     self.performSegue(withIdentifier: "Calendar", sender: self)
                 } else {
-                    self.performSegue(withIdentifier: "YXStudyReportViewController", sender: self)
+                    self.toMyClass()
                 }
                 break
             case 3:
-                tabBarController?.selectedIndex = 2
+                if isPad() {
+                    self.toMyClass()
+                } else {
+                    self.performSegue(withIdentifier: "YXStudyReportViewController", sender: self)
+                }
                 break
             default:
                 break

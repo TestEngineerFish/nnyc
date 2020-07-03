@@ -13,6 +13,10 @@ import GrowingCoreKit
 import GrowingAutoTrackKit
 //import AdSupport
 
+#if DEBUG
+import EchoSDK
+#endif
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     public static let `default` = UIApplication.shared.delegate as! AppDelegate
@@ -37,6 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApiManager.shared().registerWX(wechatId)
         Bugly.start(withAppId: kBuglyAppId)
         YXOCLog.shared()?.launch()
+        #if DEBUG
+        ECOClient.shared()?.start()
+        #endif
         
         #if !DEBUG  // 正式环境才开启统计
         Growing.start(withAccountId: kGrowingIOID)
