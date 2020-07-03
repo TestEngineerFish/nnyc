@@ -46,6 +46,10 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
