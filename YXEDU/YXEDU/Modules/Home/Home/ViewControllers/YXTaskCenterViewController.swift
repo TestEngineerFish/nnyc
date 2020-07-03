@@ -49,26 +49,19 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.createSubviews()
+        self.bindProperty()
+        self.requestPunchData()
+        self.requestTaskList()
+    }
 
+    private func createSubviews() {
         dailyDataCollectionView.register(UINib(nibName: "YXTaskCenterDateCell", bundle: nil), forCellWithReuseIdentifier: "YXTaskCenterDateCell")
         taskTableView.register(UINib(nibName: "YXTaskCenterCell", bundle: nil), forCellReuseIdentifier: "YXTaskCenterCell")
-        
-        let punchDataRequest = YXTaskCenterRequest.punchData
-        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: punchDataRequest, success: { (response) in
-            self.taskCenterData = response.data
-            self.reloadDailyData()
-        }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
-        }
-        
-        let taskListRequest = YXTaskCenterRequest.taskList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXTaskListModel>.self, request: taskListRequest, success: { (response) in
-            self.taskLists = response.dataArray ?? []
-            self.taskTableViewHeight.constant = CGFloat(self.taskLists.count * 172)
-            self.taskTableView.reloadData()
-        }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
-        }
+    }
+
+    private func bindProperty() {
+        NotificationCenter.default.addObserver(self, selector: #selector(completedTask(notification:)), name: YXNotification.kCompletedTask, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -169,21 +162,72 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             self.integralLabel.countFromCurrent(to: Float(integral), duration: 1)
         }
 
-        self.totalPunchLabel.text = "\(punchCount)"
+        self.totalPunchLabel.text   = "\(punchCount)"
         self.weekendPunchLabel.text = "\(exIntegral)"
 
         self.dailyDataCollectionView.reloadData()
     }
-    
 
-    
+    // MARK: ==== Notification ====
+    @objc private func completedTask(notification: Notification) {
+        if let taskId = notification.userInfo?["id"] as? Int, let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let didRepeat = notification.userInfo?["didRepeat"] as? Bool, let integral = notification.userInfo?["integral"] as? Int {
+            self.completed(task: taskId, indexPath: indexPath, didRepeat: didRepeat, integral: integral)
+        }
+    }
+
+    // MARK: ==== Request ====
+
+    private func completed(task id: Int, indexPath: IndexPath, didRepeat: Bool, integral: Int) {
+        let request = YXTaskCenterRequest.getIntegral(taskId: id)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            self.requestTaskList()
+            if didRepeat {
+                self.taskLists[indexPath.row].list?[indexPath.row].state = 2
+                self.taskTableView.reloadData()
+            } else {
+                YXRedDotManager.share.updateTaskCenterBadge()
+                self.taskLists[indexPath.section].list?.remove(at: indexPath.row)
+                self.taskTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
+            }
+            if let currentIntegral = Int(self.integralLabel.text ?? "0") {
+                self.integralLabel.countFromCurrent(to: Float(currentIntegral + integral), duration: 1)
+                YXToastView().showCoinView(integral)
+            }
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
+    private func requestPunchData() {
+        let punchDataRequest = YXTaskCenterRequest.punchData
+        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: punchDataRequest, success: { (response) in
+            self.taskCenterData = response.data
+            self.reloadDailyData()
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
+    private func requestTaskList() {
+        let taskListRequest = YXTaskCenterRequest.taskList
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXTaskListModel>.self, request: taskListRequest, success: { (response) in
+            self.taskLists = response.dataArray ?? []
+            self.taskTableViewHeight.constant = CGFloat(self.taskLists.count * 172)
+            self.taskTableView.reloadData()
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
     // MARK：- table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskLists.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "YXTaskCenterCell", for: indexPath) as! YXTaskCenterCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXTaskCenterCell", for: indexPath) as? YXTaskCenterCell else {
+            return UITableViewCell()
+        }
         let taskList = taskLists[indexPath.row]
         
         if (taskList.list?.count ?? 0) > 0 {
@@ -192,205 +236,117 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         } else {
             cell.titleLabel.text = " "
         }
-
-        cell.collectionView.tag = indexPath.row
-        cell.collectionView.delegate = self
-        cell.collectionView.dataSource = self
-        cell.collectionView.register(UINib(nibName: "YXTaskCenterCardCell", bundle: nil), forCellWithReuseIdentifier: "YXTaskCenterCardCell")
-        cell.collectionView.reloadData()
-        
+        let taskListModel = self.taskLists[indexPath.row]
+        cell.setData(taskList: taskListModel, indexPath: indexPath)
         return cell
     }
     
-    
-    
     // MARK：- collection view
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView.tag == 999 {
-            return dailyDatas.count
-
-        } else {
-            let taskList = taskLists[collectionView.tag]
-            return taskList.list?.count ?? 0
-        }
+        return dailyDatas.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView.tag == 999 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterDateCell", for: indexPath) as! YXTaskCenterDateCell
-            let dailyData = dailyDatas[indexPath.row]
-            
-            cell.weekLabel.text = dailyData.weekName
-            
-            switch dailyData.dailyStatus {
-            case .yesterday:
-                cell.containerView.backgroundColor = UIColor.hex(0xF3F3F3)
-                cell.containerView.borderWidth = 0
-                cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
-                cell.integralLabel.textColor = UIColor.hex(0xD0D0D0)
-                cell.weekLabel.textColor = UIColor.hex(0xCDB291)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterDateCell", for: indexPath) as! YXTaskCenterDateCell
+        let dailyData = dailyDatas[indexPath.row]
 
-                if dailyData.didPunchIn == 1 {
-                    cell.noCoinView.isHidden = true
-                    cell.coinImageView.isHidden = false
-                    cell.coinImageView.image = #imageLiteral(resourceName: "coinGot")
+        cell.weekLabel.text = dailyData.weekName
 
-                } else {
-                    cell.noCoinView.isHidden = false
-                    cell.coinImageView.isHidden = true
-                }
-                
+        switch dailyData.dailyStatus {
+        case .yesterday:
+            cell.containerView.backgroundColor = UIColor.hex(0xF3F3F3)
+            cell.containerView.borderWidth = 0
+            cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
+            cell.integralLabel.textColor = UIColor.hex(0xD0D0D0)
+            cell.weekLabel.textColor = UIColor.hex(0xCDB291)
+
+            if dailyData.didPunchIn == 1 {
+                cell.noCoinView.isHidden = true
+                cell.coinImageView.isHidden = false
+                cell.coinImageView.image = #imageLiteral(resourceName: "coinGot")
+
+            } else {
+                cell.noCoinView.isHidden = false
+                cell.coinImageView.isHidden = true
+            }
+
+            cell.leftLittlecoinImageView.isHidden = true
+            cell.rightLittlecoinImageView.isHidden = true
+            cell.giftImageView.isHidden = true
+            break
+
+        case .today:
+            cell.weekLabel.text = "今天"
+
+            cell.containerView.backgroundColor = UIColor.hex(0xFFF7EC)
+            cell.containerView.borderWidth = 1
+            cell.containerView.borderColor = UIColor.hex(0xFFA913)
+            cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
+            cell.integralLabel.textColor = UIColor.hex(0xFF8000)
+            cell.weekLabel.textColor = UIColor.hex(0xFF8000)
+            cell.noCoinView.isHidden = true
+            cell.coinImageView.isHidden = false
+
+            if dailyData.didPunchIn == 1 {
+                cell.coinImageView.image = #imageLiteral(resourceName: "coinGot")
+
                 cell.leftLittlecoinImageView.isHidden = true
                 cell.rightLittlecoinImageView.isHidden = true
                 cell.giftImageView.isHidden = true
-                break
-                
-            case .today:
-                cell.weekLabel.text = "今天"
 
-                cell.containerView.backgroundColor = UIColor.hex(0xFFF7EC)
-                cell.containerView.borderWidth = 1
-                cell.containerView.borderColor = UIColor.hex(0xFFA913)
-                cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
-                cell.integralLabel.textColor = UIColor.hex(0xFF8000)
-                cell.weekLabel.textColor = UIColor.hex(0xFF8000)
-                cell.noCoinView.isHidden = true
-                cell.coinImageView.isHidden = false
-
-                if dailyData.didPunchIn == 1 {
-                    cell.coinImageView.image = #imageLiteral(resourceName: "coinGot")
-                    
-                    cell.leftLittlecoinImageView.isHidden = true
-                    cell.rightLittlecoinImageView.isHidden = true
-                    cell.giftImageView.isHidden = true
-
-                } else {
-                    if indexPath.row == 6 {
-                        cell.leftLittlecoinImageView.isHidden = false
-                        cell.rightLittlecoinImageView.isHidden = false
-                        cell.giftImageView.isHidden = false
-
-                    } else {
-                        cell.coinImageView.image = #imageLiteral(resourceName: "coin")
-                        cell.leftLittlecoinImageView.isHidden = true
-                        cell.rightLittlecoinImageView.isHidden = true
-                        cell.giftImageView.isHidden = true
-                    }
-                }
-                
-                break
-                
-            case .tomorrow:
-                cell.containerView.backgroundColor = UIColor.hex(0xFFF7EC)
-                cell.containerView.borderWidth = 0
-                cell.integralLabel.textColor = UIColor.hex(0xFF8000)
-                cell.weekLabel.textColor = UIColor.hex(0xCDB291)
-                cell.noCoinView.isHidden = true
-                cell.coinImageView.isHidden = false
-                cell.coinImageView.image = #imageLiteral(resourceName: "coin")
-
+            } else {
                 if indexPath.row == 6 {
                     cell.leftLittlecoinImageView.isHidden = false
                     cell.rightLittlecoinImageView.isHidden = false
-                    
-                    if cell.integralLabel.text == "--" {
-                        cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
-                        
-                    } else {
-                        cell.integralLabel.countFromCurrent(to: Float(dailyData.integral ?? 0), duration: 1, anySymbol: "+")
-                    }
-                    
                     cell.giftImageView.isHidden = false
 
                 } else {
-                    cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
-                    
+                    cell.coinImageView.image = #imageLiteral(resourceName: "coin")
                     cell.leftLittlecoinImageView.isHidden = true
                     cell.rightLittlecoinImageView.isHidden = true
                     cell.giftImageView.isHidden = true
                 }
-                
-                break
             }
-            
-            return cell
-            
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterCardCell", for: indexPath) as! YXTaskCenterCardCell
-            let taskList = taskLists[collectionView.tag]
-            let task = taskList.list?[indexPath.row]
-            
-            cell.titleLabel.text = task?.name
-            cell.rewardLabel.text = "+\(task?.integral ?? 0)"
-            cell.taskType = YXTaskCardType(rawValue: task?.taskType  ?? 0) ?? .smartReview
-            cell.cardStatus = YXTaskCardStatus(rawValue: task?.state ?? 0) ?? .incomplete
-            cell.didRepeat = taskList.typeName == "每日任务" ? true : false
-            cell.adjustCell()
+            break
 
-            cell.todoClosure = {
-                switch cell.cardStatus {
-                case .incomplete:
-                    switch task?.actionType {
-                    case 0:
-                        self.tabBarController?.selectedIndex = 0
-                        self.navigationController?.popToRootViewController(animated: true)
-                        break
-                        
-                    case 1:
-                        self.tabBarController?.selectedIndex = 2
-                        self.navigationController?.popToRootViewController(animated: true)
-                        break
+        case .tomorrow:
+            cell.containerView.backgroundColor = UIColor.hex(0xFFF7EC)
+            cell.containerView.borderWidth = 0
+            cell.integralLabel.textColor = UIColor.hex(0xFF8000)
+            cell.weekLabel.textColor = UIColor.hex(0xCDB291)
+            cell.noCoinView.isHidden = true
+            cell.coinImageView.isHidden = false
+            cell.coinImageView.image = #imageLiteral(resourceName: "coin")
 
-                    case 2:
-                        self.tabBarController?.selectedIndex = 0
-                        self.navigationController?.popToRootViewController(animated: true)
-                        break
-                        
-                    default:
-                        break
-                    }
-                    break
-                    
-                case .completed:
-                    let request = YXTaskCenterRequest.getIntegral(taskId: task?.id ?? 0)
-                    YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                        
-                        if cell.didRepeat {
-                            self.taskLists[collectionView.tag].list?[indexPath.row].state = 2
-                            self.taskTableView.reloadData()
+            if indexPath.row == 6 {
+                cell.leftLittlecoinImageView.isHidden = false
+                cell.rightLittlecoinImageView.isHidden = false
 
-                        } else {
-                            YXRedDotManager.share.updateTaskCenterBadge()
-                            self.taskLists[collectionView.tag].list?.remove(at: indexPath.row)
-                            self.taskTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
-                        }
-                        
-                        if let currentIntegral = Int(self.integralLabel.text ?? "0") {
-                            self.integralLabel.countFromCurrent(to: Float(currentIntegral + (task?.integral ?? 0)), duration: 1)
-                            YXToastView().showCoinView(task?.integral ?? 0)
-                        }
+                if cell.integralLabel.text == "--" {
+                    cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
 
-                    }) { error in
-                        YXUtils.showHUD(kWindow, title: error.message)
-                    }
-                    break
-                    
-                default:
-                    break
+                } else {
+                    cell.integralLabel.countFromCurrent(to: Float(dailyData.integral ?? 0), duration: 1, anySymbol: "+")
                 }
+
+                cell.giftImageView.isHidden = false
+
+            } else {
+                cell.integralLabel.text = "+\(dailyData.integral ?? 0)"
+
+                cell.leftLittlecoinImageView.isHidden = true
+                cell.rightLittlecoinImageView.isHidden = true
+                cell.giftImageView.isHidden = true
             }
-            
-            return cell
+
+            break
         }
+
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView.tag == 999 {
-            let width  = (screenWidth - 60) / 7
-            return CGSize(width: width, height: 90)
-
-        } else {
-            return CGSize(width: 170, height: 110)
-        }
+        let width  = (screenWidth - 60) / 7
+        return CGSize(width: width, height: 90)
     }
 }

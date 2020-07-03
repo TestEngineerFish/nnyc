@@ -18,6 +18,14 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
         label.textAlignment = .center
         return label
     }()
+    var remindLabel: UILabel = {
+        let label = UILabel()
+        label.text          = ""
+        label.textColor     = UIColor.hex(0xC9823D).withAlphaComponent(0.3)
+        label.font          = UIFont.pfSCMediumFont(withSize: AdaptFontSize(20))
+        label.textAlignment = .center
+        return label
+    }()
     var wordModel: YXGameWordModel?
     var selectedButtonList = [YXLetterButton]()
     final let maxWidth = AdaptSize(isPad() ? 220 : 162)
@@ -35,18 +43,28 @@ class YXGameQuestionSubview: UIView, YXAnswerEventProtocol {
     }
 
     func bindData(_ wordModel: YXGameWordModel) {
-        selectedButtonList  = []
-        self.wordLabel.text = ""
-        self.wordModel      = wordModel
+        selectedButtonList    = []
+        self.wordLabel.text   = ""
+        self.wordModel        = wordModel
+        self.remindLabel.text = wordModel.word
     }
 
     private func createSubviews() {
         self.addSubview(wordLabel)
+        self.addSubview(remindLabel)
         wordLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(15))
             make.right.equalToSuperview().offset(AdaptSize(-15))
             make.top.bottom.equalToSuperview()
         }
+        remindLabel.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(15))
+            make.right.equalToSuperview().offset(AdaptSize(-15))
+            make.top.bottom.equalToSuperview()
+        }
+        #if !DEBUG
+        remindLabel.isHidden = true
+        #endif
     }
 
     override func layoutIfNeeded() {

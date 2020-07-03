@@ -29,11 +29,11 @@ enum YXTaskCardStatus: Int {
 }
 
 class YXTaskCenterCardCell: UICollectionViewCell {
-    var todoClosure: (() -> Void)?
     
     var didRepeat = false
     var taskType: YXTaskCardType = .smartReview
     var cardStatus: YXTaskCardStatus = .incomplete
+    var taskModel: YXTaskModel?
 
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -51,6 +51,11 @@ class YXTaskCenterCardCell: UICollectionViewCell {
         shadowView.layer.shadowOpacity = 0.1
         shadowView.layer.shadowRadius  = 5
         shadowView.layer.masksToBounds = false
+    }
+
+    func setData(task model: YXTaskModel?, indexPath: IndexPath) {
+        self.taskModel = model
+        self.indexPath = indexPath
     }
 
     func adjustCell() {
@@ -132,8 +137,39 @@ class YXTaskCenterCardCell: UICollectionViewCell {
         todoButton.imageEdgeInsets.left    = todoButton.titleLabel!.bounds.width + 4
         todoButton.imageEdgeInsets.right   = -4
     }
-    
+    var indexPath: IndexPath?
     @IBAction func todo(_ sender: Any) {
-        todoClosure?()
+        switch cardStatus {
+        case .incomplete:
+            switch taskModel?.actionType {
+            case 0:
+                YRRouter.sharedInstance().currentViewController()?.tabBarController?.selectedIndex = 0
+                YRRouter.sharedInstance().currentNavigationController()?.popToRootViewController(animated: true)
+                break
+
+            case 1:
+                YRRouter.sharedInstance().currentViewController()?.tabBarController?.selectedIndex = 2
+                YRRouter.sharedInstance().currentNavigationController()?.popToRootViewController(animated: true)
+                break
+
+            case 2:
+                YRRouter.sharedInstance().currentViewController()?.tabBarController?.selectedIndex = 0
+                YRRouter.sharedInstance().currentNavigationController()?.popToRootViewController(animated: true)
+                break
+
+            default:
+                break
+            }
+            break
+
+        case .completed:
+            let dict = ["id"        :taskModel?.id ?? 0,
+                        "indexPath" : indexPath as Any,
+                        "didRepeat" : didRepeat,
+                        "integral"  : taskModel?.integral as Any] as [String : Any]
+            NotificationCenter.default.post(name: YXNotification.kCompletedTask, object: nil, userInfo: dict)
+        default:
+            break
+        }
     }
 }

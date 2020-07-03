@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YXOCLog.shared()?.launch()
         #if DEBUG
         ECOClient.shared()?.start()
+        
         #endif
         
         #if !DEBUG  // 正式环境才开启统计

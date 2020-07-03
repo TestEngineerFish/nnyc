@@ -27,6 +27,8 @@ struct YXNotification {
     static let kCloseWordDetailPage        = NSNotification.Name("kCloseWordDetailPage")
     /// 更新反馈回复红点
     static let kUpdateFeedbackReplyBadge   = NSNotification.Name("kUpdateFeedbackReplyBadge")
+    /// 领取任务
+    static let kCompletedTask              = NSNotification.Name("kCompletedTask")
     /// 更新任务中心小红点
     static let kUpdateTaskCenterBadge      = NSNotification.Name("kUpdateTaskCenterBadge")
     /// 跟读得分
