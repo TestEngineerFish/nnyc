@@ -97,14 +97,7 @@ class YXShareViewController: YXViewController {
         return shareView
     }()
 
-//    let qrCodeImage: UIImage? = {
-//        if let image = SGQRCodeObtain.generateQRCode(withData: "https://apps.apple.com/cn/app/id1379948642", size: 65, logoImage: UIImage(named: "gameShareLogo"), ratio: 0.25, logoImageCornerRadius: 0, logoImageBorderWidth: 0, logoImageBorderColor: .clear) {
-//            return image
-//        } else {
-//            return UIImage(named: "shareQRCode")
-//        }
-//    }()
-    let qrCodeImage = UIImage(named: "shareQRCode")
+    var qrCodeImage = UIImage(named: "shareQRCode")
     
     private var backgroundImageUrls: [String]?
     private var currentBackgroundImageUrl: String?
