@@ -96,6 +96,14 @@ class YXShareViewController: YXViewController {
         let shareView = YXShareDefaultView(frame: CGRect.zero)
         return shareView
     }()
+
+    let qrcordImage: UIImage? = {
+        if let image = SGQRCodeObtain.generateQRCode(withData: "https://apps.apple.com/cn/app/id1379948642", size: 65, logoImage: UIImage(named: "gameShareLogo"), ratio: 0.25, logoImageCornerRadius: 0, logoImageBorderWidth: 0, logoImageBorderColor: .clear) {
+            return image
+        } else {
+            return UIImage(named: "shareQRCode")
+        }
+    }()
     
     private var backgroundImageUrls: [String]?
     private var currentBackgroundImageUrl: String?
@@ -338,7 +346,7 @@ class YXShareViewController: YXViewController {
         shareImageView.backgroundImageView.image = backgroundImage
         shareImageView.avatarImageView.image     = avatarImage
         shareImageView.nameLabel.text            = YXUserModel.default.userName
-        
+        shareImageView.qrCodeImageView.image     = self.qrcordImage
         let dateFormatter        = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
         dateFormatter.locale     = Locale(identifier: "en")
@@ -418,7 +426,6 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .left
             return label
         }()
-        let qrcordImage = UIImage(named: "shareQRCode")
         let qrcordLabel: UILabel = {
             let label = UILabel()
             label.text          = "扫码下载  智能背词"
@@ -507,7 +514,6 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .left
             return label
         }()
-        let qrcordImage = UIImage(named: "shareQRCode")
         let qrcordLabel: UILabel = {
             let label = UILabel()
             label.text          = "扫码下载  智能背词"
@@ -596,7 +602,6 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .left
             return label
         }()
-        let qrcordImage = UIImage(named: "shareQRCode")
         let qrcordLabel: UILabel = {
             let label = UILabel()
             label.text          = "扫码下载  智能背词"
@@ -665,7 +670,6 @@ class YXShareViewController: YXViewController {
             label.textAlignment  = .left
             return label
         }()
-        let qrcordImage = UIImage(named: "shareQRCode")
         let qrcordLabel: UILabel = {
             let label = UILabel()
             label.text          = "扫码下载  智能背词"

@@ -17,6 +17,7 @@ class YXShareImageView: UIView {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var wordCountLabel: UILabel!
     @IBOutlet weak var dayCountLabel: UILabel!
+    @IBOutlet weak var qrCodeImageView: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -16,6 +16,7 @@
                 <outlet property="dateLabel" destination="ija-Dt-lgd" id="XxQ-MW-kS7"/>
                 <outlet property="dayCountLabel" destination="y9d-Ki-cfi" id="UDg-iP-JZd"/>
                 <outlet property="nameLabel" destination="gjl-TN-X5f" id="RTq-wS-c2h"/>
+                <outlet property="qrCodeImageView" destination="OgY-Lf-T5r" id="Zn5-jH-hhp"/>
                 <outlet property="wordCountLabel" destination="YBU-sK-uRB" id="JZn-lT-pvk"/>
             </connections>
         </placeholder>

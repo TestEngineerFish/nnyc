@@ -64,5 +64,6 @@
 #import "YRWebViewJSBridge.h"
 #import "YRWebViewJSAction.h"
 #import "FMResultSet.h"
+#import "SGQRCode.h"
 
 
