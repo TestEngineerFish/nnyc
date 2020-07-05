@@ -36,8 +36,8 @@ static NSMutableArray<YRWebViewJSAction *> *jsActionContainer;
     }
     
     /*解析 action    callBack   params 三个参数  */
-    NSString *action = messageBody[@"action"];
-    NSString *callback = messageBody[@"callback"];
+    NSString *action     = messageBody[@"action"];
+    NSString *callback   = messageBody[@"callback"];
     NSDictionary *params = messageBody[@"params"];
 
     // 实例化JSAction
