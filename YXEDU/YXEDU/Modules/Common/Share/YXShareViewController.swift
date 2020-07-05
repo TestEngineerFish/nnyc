@@ -97,13 +97,14 @@ class YXShareViewController: YXViewController {
         return shareView
     }()
 
-    let qrcordImage: UIImage? = {
-        if let image = SGQRCodeObtain.generateQRCode(withData: "https://apps.apple.com/cn/app/id1379948642", size: 65, logoImage: UIImage(named: "gameShareLogo"), ratio: 0.25, logoImageCornerRadius: 0, logoImageBorderWidth: 0, logoImageBorderColor: .clear) {
-            return image
-        } else {
-            return UIImage(named: "shareQRCode")
-        }
-    }()
+//    let qrCodeImage: UIImage? = {
+//        if let image = SGQRCodeObtain.generateQRCode(withData: "https://apps.apple.com/cn/app/id1379948642", size: 65, logoImage: UIImage(named: "gameShareLogo"), ratio: 0.25, logoImageCornerRadius: 0, logoImageBorderWidth: 0, logoImageBorderColor: .clear) {
+//            return image
+//        } else {
+//            return UIImage(named: "shareQRCode")
+//        }
+//    }()
+    let qrCodeImage = UIImage(named: "shareQRCode")
     
     private var backgroundImageUrls: [String]?
     private var currentBackgroundImageUrl: String?
@@ -346,7 +347,7 @@ class YXShareViewController: YXViewController {
         shareImageView.backgroundImageView.image = backgroundImage
         shareImageView.avatarImageView.image     = avatarImage
         shareImageView.nameLabel.text            = YXUserModel.default.userName
-        shareImageView.qrCodeImageView.image     = self.qrcordImage
+        shareImageView.qrCodeImageView.image     = self.qrCodeImage
         let dateFormatter        = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
         dateFormatter.locale     = Locale(identifier: "en")
@@ -443,7 +444,7 @@ class YXShareViewController: YXViewController {
         lableContainer.layer.render(in: UIGraphicsGetCurrentContext()!)
         contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
-        qrcordImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
+        qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
         qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
         guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
             return nil
@@ -531,7 +532,7 @@ class YXShareViewController: YXViewController {
         lableContainer.layer.render(in: UIGraphicsGetCurrentContext()!)
         contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
-        qrcordImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
+        qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
         qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
         guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
             return nil
@@ -619,7 +620,7 @@ class YXShareViewController: YXViewController {
         lableContainer.layer.render(in: UIGraphicsGetCurrentContext()!)
         contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
-        qrcordImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
+        qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
         qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
         guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
             return nil
@@ -690,7 +691,7 @@ class YXShareViewController: YXViewController {
         rankLabel.drawText(in: CGRect(x: 45, y: 455, width: 47, height: 28))
         questionAmountLabel.drawText(in: CGRect(x: 125, y: 449, width: 66, height: 21))
         consumeTimeLabel.drawText(in: CGRect(x: 125, y: 474, width: 89, height: 21))
-        qrcordImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
+        qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
         qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
         treeBranchImage?.draw(in: CGRect(x: 265, y: 314, width: 110, height: 123))
         guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
