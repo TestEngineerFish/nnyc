@@ -234,7 +234,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 wordListView.shouldShowBottomView = true
                 wordListView.type                 = .wrongWords
                 self.wordListViews[indexPath.row] = wordListView
-                self.wordListViews[indexPath.row]?.startReviewClosure   = {
+                self.wordListViews[indexPath.row]?.startReviewClosure = {
                     let taskModel = YXWordBookResourceModel(type: .all) {
                         YXWordBookResourceManager.shared.contrastBookData()
                     }

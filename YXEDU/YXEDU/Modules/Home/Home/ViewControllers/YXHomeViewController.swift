@@ -265,7 +265,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     private func checkGuide() {
-        if (YYCache.object(forKey: .isShowSelectSchool) as? Bool) == .some(true) {
+        if (YYCache.object(forKey: .isShowSelectSchool) as? Bool) != .some(true) {
             let vc = YXSelectSchoolViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         } else if (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(true) {

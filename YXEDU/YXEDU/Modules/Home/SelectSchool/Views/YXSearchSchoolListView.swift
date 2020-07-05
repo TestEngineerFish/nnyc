@@ -8,8 +8,29 @@
 
 import Foundation
 
-class YXSearchSchoolListView: YXView {
+protocol YXSearchSchoolDelegate: NSObjectProtocol {
+    func selectSchool(school model: YXLocalModel?)
+}
 
+class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource {
+
+    var type: YXSceneType
+    var schoolModelList = [YXLocalModel]()
+    var selectLocalModel: YXLocalModel?
+    var willSchoolModel: YXLocalModel?
+    var selectSchoolModel: YXLocalModel? {
+        didSet {
+            self.willSchoolModel = nil
+        }
+    }
+    weak var delegate: YXSearchSchoolDelegate?
+
+    var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        view.layer.opacity   = 0.0
+        return view
+    }()
     var cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("取消", for: .normal)
@@ -59,8 +80,10 @@ class YXSearchSchoolListView: YXView {
         return tableView
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(type: YXSceneType) {
+        self.type = type
+        let _frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: screenHeight * 0.92)
+        super.init(frame: _frame)
         self.bindProperty()
         self.createSubviews()
     }
@@ -71,10 +94,16 @@ class YXSearchSchoolListView: YXView {
 
     override func bindProperty() {
         super.bindProperty()
+        self.tableView.delegate   = self
+        self.tableView.dataSource = self
         self.backgroundColor      = .white
         self.searchBackgroundView.layer.cornerRadius  = AdaptSize(6)
         self.searchBackgroundView.layer.masksToBounds = true
         self.tableView.register(YXSelectSchoolCell.classForCoder(), forCellReuseIdentifier: "kYXSelectSchoolCell")
+        self.cancelButton.addTarget(self, action: #selector(hide), for: .touchUpInside)
+        self.downButton.addTarget(self, action: #selector(downSelectSchool), for: .touchUpInside)
+        self.clipRectCorner(directionList: [.topLeft, .topRight], cornerRadius: AdaptSize(5))
+        self.textField.addTarget(self, action: #selector(seachSchool(_:)), for: .editingChanged)
     }
 
     override func createSubviews() {
@@ -129,5 +158,101 @@ class YXSearchSchoolListView: YXView {
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(searchBackgroundView.snp.bottom)
         }
+    }
+
+    // MARK: ==== Event ====
+    func show(selectLocal model: YXLocalModel) {
+        self.selectLocalModel = model
+        UIView.animate(withDuration: 0.25, animations: {
+            self.backgroundView.layer.opacity = 1.0
+            self.transform = CGAffineTransform(translationX: 0, y: -self.height)
+        }) { (finished) in
+            if finished {
+                self.textField.becomeFirstResponder()
+            }
+        }
+    }
+
+    @objc func hide() {
+        self.textField.resignFirstResponder()
+        UIView.animate(withDuration: 0.25, animations: {
+            self.backgroundView.layer.opacity = 0.0
+            self.transform = .identity
+        }) { (finished) in
+            if finished {
+                self.textField.text = nil
+                self.schoolModelList.removeAll()
+                self.tableView.reloadData()
+            }
+        }
+    }
+
+    @objc private func downSelectSchool() {
+        self.selectSchoolModel = self.willSchoolModel
+        self.hide()
+        if type == .normal {
+            self.delegate?.selectSchool(school: self.selectSchoolModel)
+        } else {
+            // H5交互
+        }
+    }
+
+    @objc private func seachSchool(_ textField: UITextField) {
+        guard var school = textField.text else {
+            return
+        }
+        self.schoolModelList.removeAll()
+        self.tableView.reloadData()
+        school = school.trimed
+        if school != "" {
+            self.searchSchool(name: school)
+        }
+    }
+
+    // MARK: ==== Request ====
+    private func searchSchool(name: String) {
+        guard let model = self.selectLocalModel else {
+            return
+        }
+        let request = YXSelectSchoolRequestManager.searchSchool(name: name, areaId: model.id)
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXLocalModel>.self, request: request, success: { (response) in
+            guard let modelList = response.dataArray else {
+                return
+            }
+            self.schoolModelList = modelList
+            self.tableView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
+
+    // MARK: ==== UITableViewDelegate && UITableViewDataSource ====
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.schoolModelList.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXSelectSchoolCell", for: indexPath) as? YXSelectSchoolCell else {
+            return UITableViewCell()
+        }
+        let schoolModel = self.schoolModelList[indexPath.row]
+        cell.setData(school: schoolModel)
+        if .some(schoolModel.id) == self.selectSchoolModel?.id {
+            cell.setSelected(true, animated: false)
+        }
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.estimatedRowHeight
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.willSchoolModel = self.schoolModelList[indexPath.row]
     }
 }
