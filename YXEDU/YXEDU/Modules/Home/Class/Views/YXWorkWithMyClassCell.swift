@@ -151,12 +151,14 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 self.actionButton.isHidden = false
                 self.actionButton.type = .border
                 self.actionButton.setStatus(.normal)
+                self.actionButton.setTitleColor(.orange1, for: .normal)
                 self.actionButton.setTitle("去打卡", for: .normal)
             case .unexpiredLearnedShare:
                 self.statusImage.isHidden  = false
                 self.actionButton.isHidden = false
                 self.statusImage.image    = UIImage(named: "work_finished")
                 self.actionButton.type    = .normal
+                self.actionButton.setTitleColor(.black6, for: .normal)
                 self.actionButton.backgroundColor = UIColor.hex(0xF4F4F4)
                 self.actionButton.setTitleColor(UIColor.black6, for: .normal)
                 self.actionButton.layer.borderColor = UIColor.clear.cgColor
@@ -178,12 +180,15 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 self.actionButton.isHidden = false
                 self.actionButton.type = .border
                 self.actionButton.setStatus(.normal)
+                self.actionButton.setTitleColor(.orange1, for: .normal)
                 self.actionButton.setTitle("做作业", for: .normal)
             case .unexpiredFinished, .beExpiredFinished:
                 self.statusImage.isHidden  = false
                 self.actionButton.isHidden = false
                 self.statusImage.image = UIImage(named: "work_finished")
                 self.actionButton.type = .normal
+                self.actionButton.setStatus(.normal)
+                self.actionButton.setTitleColor(.black1, for: .normal)
                 self.actionButton.setTitleColor(.black2, for: .normal)
                 self.actionButton.layer.borderColor = UIColor.black4.cgColor
                 self.actionButton.layer.borderWidth = AdaptSize(1)
@@ -194,6 +199,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 self.statusImage.image = UIImage(named: "work_unfinished")
                 self.actionButton.type = .border
                 self.actionButton.setStatus(.normal)
+                self.actionButton.setTitleColor(.orange1, for: .normal)
                 self.actionButton.setTitle("补作业", for: .normal)
             }
         }

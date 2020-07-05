@@ -45,6 +45,8 @@
 		22298C00237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22298BFF237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift */; };
 		222AED88239F3AEE00E2E489 /* YXReviewSelectedWordsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AED86239F3AEE00E2E489 /* YXReviewSelectedWordsListView.swift */; };
 		222AED89239F3AEE00E2E489 /* YXReviewSelectedWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AED87239F3AEE00E2E489 /* YXReviewSelectedWordCell.swift */; };
+		222AFBAB24B1861E001C894C /* YXWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AFBAA24B1861E001C894C /* YXWebView.swift */; };
+		222AFBAD24B186A5001C894C /* YXWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AFBAC24B186A5001C894C /* YXWebViewController.swift */; };
 		223D2682239B4A70008DED9E /* BPItemContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D267E239B4A70008DED9E /* BPItemContentView.swift */; };
 		223D2683239B4A70008DED9E /* BPSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D267F239B4A70008DED9E /* BPSegmentView.swift */; };
 		223D2684239B4A70008DED9E /* BPSegmentControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D2680239B4A70008DED9E /* BPSegmentControllerView.swift */; };
@@ -517,7 +519,6 @@
 		EE5EFC4C23274BBB00655654 /* YXPolicyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC3823274BBB00655654 /* YXPolicyVC.m */; };
 		EE5EFC5823274D0F00655654 /* nnyc_dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE5EFC5623274D0F00655654 /* nnyc_dev.plist */; };
 		EE5EFC5923274D0F00655654 /* nnyc_dis.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE5EFC5723274D0F00655654 /* nnyc_dis.plist */; };
-		EE5EFCD123274E5500655654 /* YXBaseWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFC9423274E5500655654 /* YXBaseWebViewController.m */; };
 		EE5EFCE723274E5500655654 /* YXCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFCC323274E5500655654 /* YXCustomButton.m */; };
 		EE5EFCE923274E5500655654 /* YXTipsBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFCC523274E5500655654 /* YXTipsBaseView.m */; };
 		EE6C7D1823B0A073009DCC0C /* YXReviewPlanShareDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C7D1723B0A073009DCC0C /* YXReviewPlanShareDetailViewController.swift */; };
@@ -647,6 +648,8 @@
 		22298BFF237D7BFC00F24786 /* YXNewLearnPrimarySchoolWordGroupQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearnPrimarySchoolWordGroupQuestionView.swift; sourceTree = "<group>"; };
 		222AED86239F3AEE00E2E489 /* YXReviewSelectedWordsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewSelectedWordsListView.swift; sourceTree = "<group>"; };
 		222AED87239F3AEE00E2E489 /* YXReviewSelectedWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewSelectedWordCell.swift; sourceTree = "<group>"; };
+		222AFBAA24B1861E001C894C /* YXWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebView.swift; sourceTree = "<group>"; };
+		222AFBAC24B186A5001C894C /* YXWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebViewController.swift; sourceTree = "<group>"; };
 		223D267E239B4A70008DED9E /* BPItemContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPItemContentView.swift; sourceTree = "<group>"; };
 		223D267F239B4A70008DED9E /* BPSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSegmentView.swift; sourceTree = "<group>"; };
 		223D2680239B4A70008DED9E /* BPSegmentControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSegmentControllerView.swift; sourceTree = "<group>"; };
@@ -1183,8 +1186,6 @@
 		EE5EFC4923274BBB00655654 /* YXPolicyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPolicyVC.h; sourceTree = "<group>"; };
 		EE5EFC5623274D0F00655654 /* nnyc_dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = nnyc_dev.plist; sourceTree = "<group>"; };
 		EE5EFC5723274D0F00655654 /* nnyc_dis.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = nnyc_dis.plist; sourceTree = "<group>"; };
-		EE5EFC8E23274E5500655654 /* YXBaseWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXBaseWebViewController.h; sourceTree = "<group>"; };
-		EE5EFC9423274E5500655654 /* YXBaseWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXBaseWebViewController.m; sourceTree = "<group>"; };
 		EE5EFCA723274E5500655654 /* YXCustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCustomButton.h; sourceTree = "<group>"; };
 		EE5EFCAE23274E5500655654 /* YXTipsBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTipsBaseView.h; sourceTree = "<group>"; };
 		EE5EFCC323274E5500655654 /* YXCustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCustomButton.m; sourceTree = "<group>"; };
@@ -3365,8 +3366,6 @@
 			children = (
 				221E77A424359183000377DB /* YXNOSignalVC.h */,
 				221E77A524359183000377DB /* YXNOSignalVC.m */,
-				EE5EFC8E23274E5500655654 /* YXBaseWebViewController.h */,
-				EE5EFC9423274E5500655654 /* YXBaseWebViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3693,6 +3692,7 @@
 				EEACEB2923A1DFB20036B3A2 /* YYCustomNavigationBar.swift */,
 				EEACEB9223AA27930036B3A2 /* YXTableViewCell.swift */,
 				EE6C7D1923B0A785009DCC0C /* YXTopWindowView.swift */,
+				222AFBAA24B1861E001C894C /* YXWebView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3707,6 +3707,7 @@
 				EE5E025E2327793700655654 /* BSRootVC.m */,
 				CF18D1B4240FDF9200C10237 /* YXTabBarController.swift */,
 				224DEB9A24A9DA9000512DFB /* YXNavigationController.swift */,
+				222AFBAC24B186A5001C894C /* YXWebViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -4178,6 +4179,7 @@
 				779ED54224349AB300E452E3 /* JSActionType.swift in Sources */,
 				EE5E008F23274FEB00655654 /* YXCalendarChartView.m in Sources */,
 				EE1B6954246C2A91000EADB2 /* YXExerciseDao.swift in Sources */,
+				222AFBAB24B1861E001C894C /* YXWebView.swift in Sources */,
 				EE5E009123274FEB00655654 /* YXCalendarBookCell.m in Sources */,
 				CF4F3741242DD45F00CA0C0B /* YXUnitMapView.swift in Sources */,
 				7748D15E239F3F4700182611 /* YXWordListRequest.swift in Sources */,
@@ -4341,7 +4343,6 @@
 				EE88DF5923AF871E004DFF10 /* YXReviewPlanCommandView.swift in Sources */,
 				EE54F7CF2362AA3100EC605A /* YXExerciseViewEvent.swift in Sources */,
 				EE5EF20623273BAE00655654 /* UIImageView+YR.m in Sources */,
-				EE5EFCD123274E5500655654 /* YXBaseWebViewController.m in Sources */,
 				EED3D41D2331D04B00121218 /* YRRouter.m in Sources */,
 				77342B7F247270590082C771 /* YXLoginModel.swift in Sources */,
 				2205A9362361B06100C6E674 /* CALayer+Extension.swift in Sources */,
@@ -4470,6 +4471,7 @@
 				EE5EF20823273BAE00655654 /* NSTimer+YR.m in Sources */,
 				EE5E027123277CD600655654 /* YXIconfont.m in Sources */,
 				77B7C6EE23A7254200149ACE /* YXTaskCenterViewController.swift in Sources */,
+				222AFBAD24B186A5001C894C /* YXWebViewController.swift in Sources */,
 				EE7721222388D58200CD632E /* YXSwitchAnimation.swift in Sources */,
 				EE4C7CDB236817550092751D /* YXLookWordChooseImageExerciseView.swift in Sources */,
 				228105DE2487E21F0025F03F /* YXStudyRecordDao.swift in Sources */,
@@ -4775,7 +4777,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -4822,7 +4827,10 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";

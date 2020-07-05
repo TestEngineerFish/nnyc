@@ -300,7 +300,6 @@ class YXExerciseResultView: YXView {
                     subTitleLabel.text = " 太棒了，获得了3星呢！"
                 }
             }
-            
         } else {
             if model.type == .base {
                 subTitleLabel.text = " 学得不错，继续学习就可以推进这个单元的进度哦~"

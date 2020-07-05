@@ -30,7 +30,6 @@
 #import "UIImageView+WebCache.h"
 #import "YXPersonalInformationVC.h"
 #import "YXCalendarViewController.h"
-#import "YXBaseWebViewController.h"
 #import "YXReportErrorView.h"
 #import "FSCalendar.h"
 

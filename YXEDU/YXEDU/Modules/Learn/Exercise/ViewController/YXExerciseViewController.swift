@@ -123,7 +123,10 @@
     /// 开始学习
     func startStudy() {
 //        YXExerciseViewController.requesting = false
+        // 主流程、打卡作业结果页
 //        self.processBaseExerciseResult(newCount: 11, reviewCount: 10)
+        // 非主流程
+//        self.processReviewResult()
 //        return
         YXLog("====开始学习====")
         // 开始学习，停止下载
