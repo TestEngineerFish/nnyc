@@ -19,6 +19,12 @@ struct YXUserDataManager {
                 finishBlock?(nil)
                 return
             }
+            if !userInfomation.isJoinSchool {
+                YYCache.set(true, forKey: .isShowSelectSchool)
+            }
+            if userInfomation.didSelectBook == 0 {
+                YYCache.set(true, forKey: .isShowSelectBool)
+            }
             YXUserModel.default.coinExplainUrl = userInfomation.coinExplainUrl
             YXUserModel.default.gameExplainUrl = userInfomation.gameExplainUrl
             finishBlock?(userInfomation)

@@ -246,12 +246,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             guard let _userInfomation = userInfomation else {
                 return
             }
-            if !_userInfomation.isJoinSchool {
-                YYCache.set(true, forKey: .isShowSelectSchool)
-            }
-            if _userInfomation.didSelectBook == 0 {
-                YYCache.set(true, forKey: .isShowSelectBool)
-            }
             guard _userInfomation.didBindPhone == 1 else {
                 weakSelf.performSegue(withIdentifier: "Bind", sender: weakSelf)
                 return
@@ -365,8 +359,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                 YXUserModel.default.userAvatarPath = data.info?.avatar
                                 YXUserModel.default.didLogin = true
                                 Growing.setUserId(YXUserModel.default.uuid ?? "")
-                                YXUserModel.default.login()
-                                
+                                self.checkUserInfomation()
                             }) { error in
                                 YXUtils.showHUD(kWindow, title: error.message)
                                 CLShanYanSDKManager.finishAuthControllerCompletion(nil)

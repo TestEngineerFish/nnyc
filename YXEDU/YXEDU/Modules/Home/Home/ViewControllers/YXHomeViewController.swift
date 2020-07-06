@@ -285,8 +285,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 UserDefaults.standard.set(nil, forKey: "Reminder")
                 UserDefaults.standard.set(nil, forKey: "DidShowSetupReminderAlert")
             }
-
             Growing.setPeopleVariableWithKey("cidan", andStringValue: "0")
+            self.checkGuide()
         }
     }
     
