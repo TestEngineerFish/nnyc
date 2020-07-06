@@ -98,7 +98,8 @@ class YXShareViewController: YXViewController {
     }()
 
     var qrCodeImage = UIImage(named: "shareQRCode")
-    
+    var bookId: Int = 0
+    var learnType: YXLearnType?
     private var backgroundImageUrls: [String]?
     private var currentBackgroundImageUrl: String?
     private var currentBackgroundImageIndex = 0
@@ -248,8 +249,7 @@ class YXShareViewController: YXViewController {
     }
 
     private func punch(_ channel: YXShareChannel) {
-
-        let request = YXShareRequest.punch(type: channel.rawValue)
+        let request = YXShareRequest.punch(type: channel.rawValue, bookId: self.bookId, learnType: self.learnType?.rawValue ?? 0)
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else { return }
             var isFinished = false

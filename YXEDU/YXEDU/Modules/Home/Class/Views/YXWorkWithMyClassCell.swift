@@ -259,11 +259,13 @@ class YXWorkWithMyClassCell: UITableViewCell {
     }
 
     private func punch() {
-        guard let _model = self.model, let workId = _model.workId else {
+        guard let _model = self.model else {
             return
         }
         // 打卡分享
         let shareVC = YXShareViewController()
+        shareVC.bookId      = _model.bookIdList.first ?? 0
+        shareVC.learnType   = _model.type.learnType()
         shareVC.shareType   = .homeworkResult
         shareVC.wordsAmount = _model.studyWordCount
         shareVC.daysAmount  = _model.studyDayCount

@@ -15,6 +15,17 @@ enum YXHomeworkType: Int {
     case listen = 2
     /// 单词练习
     case word   = 3
+
+    func learnType() -> YXLearnType {
+        switch self {
+        case .punch:
+            return .homeworkPunch
+        case .listen:
+            return .homeworkListen
+        case .word:
+            return .homeworkWord
+        }
+    }
 }
 
 enum YXWorkCompletionStatus: Int {

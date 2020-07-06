@@ -10,7 +10,7 @@ import Foundation
 
 
 public enum YXShareRequest: YYBaseRequest {
-    case punch(type: Int) // 1 分享到qq 2 分享到微信好友 3分享到朋友圈
+    case punch(type: Int, bookId: Int, learnType: Int) // 1 分享到qq 2 分享到微信好友 3分享到朋友圈
     case changeBackgroundImage(type: Int)
 
     var method: YYHTTPMethod {
@@ -35,8 +35,8 @@ public enum YXShareRequest: YYBaseRequest {
 
     public var parameters: [String : Any?]? {
         switch self {
-        case .punch(let type):
-            return ["type" : type]
+        case .punch(let type, let bookId, let learnType):
+            return ["type" : type, "bookId" : bookId, "learn_type" : learnType]
             
         case .changeBackgroundImage(let type):
             return ["type" : type]

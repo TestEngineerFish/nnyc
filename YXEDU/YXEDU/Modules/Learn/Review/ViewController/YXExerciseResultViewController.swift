@@ -129,6 +129,8 @@ class YXExerciseResultViewController: YXViewController {
         } else {
             shareVC.hideCoin = !(model?.isShowCoin ?? false)
         }
+        shareVC.bookId      = config?.bookId ?? 0
+        shareVC.learnType   = config?.learnType
         shareVC.shareType   = shareType()
         shareVC.wordsAmount = model?.reviewWordNum ?? 0
         shareVC.daysAmount  = model?.studyDay ?? 0

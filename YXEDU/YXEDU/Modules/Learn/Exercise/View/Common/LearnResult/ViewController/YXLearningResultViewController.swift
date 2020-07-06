@@ -217,6 +217,8 @@ class YXLearningResultViewController: YXViewController {
         } else {
             shareVC.hideCoin = !model.isShowCoin
         }
+        shareVC.bookId      = config.bookId
+        shareVC.learnType   = config.learnType
         shareVC.shareType   = config.learnType == .base ? .learnResult : .homeworkResult
         shareVC.wordsAmount = model.allWordCount
         shareVC.daysAmount  = model.studyDay
