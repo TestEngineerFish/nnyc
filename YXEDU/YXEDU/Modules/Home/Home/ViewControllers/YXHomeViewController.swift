@@ -43,6 +43,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var startStudyButtonBottomOffset: NSLayoutConstraint!
     @IBOutlet weak var studyDataCollectionViewBottomOffset: NSLayoutConstraint!
     @IBOutlet weak var subItemCollectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var activityView: UIView!
+    @IBOutlet weak var activityViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var collectionViewTop: NSLayoutConstraint!
 
     var squirrelAnimationView: AnimationView?
     
@@ -124,13 +127,9 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
         self.checkUserState()
         self.setSquirrelAnimation()
+        self.setActivityView()
         self.registerNotification()
     }
-
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        self.checkGuide()
-//    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -301,6 +300,25 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     // MARK: ---- Tools ----
+
+    private func setActivityView() {
+        self.activityViewHeight.constant = 0
+        self.collectionViewTop.constant  = 0
+        return
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.text          = "念念有词全国单词达人挑战赛"
+            label.textColor     = UIColor.white
+            label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(20))
+            label.textAlignment = .center
+            return label
+        }()
+        self.activityView.layer.setDefaultShadow()
+        self.activityView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
     
     private func setSquirrelAnimation() {
         if self.squirrelAnimationView?.superview != nil {
