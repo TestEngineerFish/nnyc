@@ -105,7 +105,6 @@ class YXShareViewController: YXViewController {
 
     var wordsAmount = 0
     var daysAmount  = 0
-    var wordId: Int = 0
     var hideCoin    = true
     var gameModel: YXGameResultModel?
     var shareType: YXShareImageType = .challengeResult
@@ -130,7 +129,7 @@ class YXShareViewController: YXViewController {
             guard let self = self else { return }
             // 挑战分享不算打卡
             if self.shareType != .challengeResult {
-                self.punch(channel, word: self.wordId)
+                self.punch(channel)
             }
         }
     }
@@ -171,8 +170,8 @@ class YXShareViewController: YXViewController {
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(headerView.snp.bottom)
         }
-
-        let imageViewSize = CGSize(width: AdaptIconSize(319), height: AdaptIconSize(436))
+        let imageViewW = AdaptIconSize(319) * headerViewH/AdaptIconSize(436)
+        let imageViewSize = CGSize(width: imageViewW, height: headerViewH)
         shareImageBorderView.size = imageViewSize
         shareImageBorderView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
@@ -248,9 +247,9 @@ class YXShareViewController: YXViewController {
         }
     }
 
-    private func punch(_ channel: YXShareChannel, word id: Int) {
+    private func punch(_ channel: YXShareChannel) {
 
-        let request = YXShareRequest.punch(type: channel.rawValue, wordId: id)
+        let request = YXShareRequest.punch(type: channel.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else { return }
             var isFinished = false

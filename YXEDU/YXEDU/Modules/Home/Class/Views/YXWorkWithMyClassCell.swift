@@ -125,6 +125,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
     private func bindProperty() {
         self.selectionStyle = .none
         self.backgroundColor = UIColor.white
+        self.progressView.showAnimation = false
         self.wrapView.layer.setDefaultShadow(cornerRadius: 12, shadowRadius: 10)
         self.actionButton.addTarget(self, action: #selector(actionEvent), for: .touchUpInside)
     }
@@ -140,7 +141,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
         }
         self.desciptionLabel.text  = String(format: "%@ l %@", model.className, model.timeStr)
         DispatchQueue.main.async {
-            self.progressView.progress = model.progress
+            self.progressView.progress = model.progress / 100
         }
         self.createSubviews()
 
@@ -263,7 +264,6 @@ class YXWorkWithMyClassCell: UITableViewCell {
         }
         // 打卡分享
         let shareVC = YXShareViewController()
-        shareVC.wordId      = workId
         shareVC.shareType   = .homeworkResult
         shareVC.wordsAmount = _model.studyWordCount
         shareVC.daysAmount  = _model.studyDayCount

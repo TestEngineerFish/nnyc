@@ -129,9 +129,9 @@ class YXExerciseResultViewController: YXViewController {
         } else {
             shareVC.hideCoin = !(model?.isShowCoin ?? false)
         }
-        shareVC.shareType = shareType()
+        shareVC.shareType   = shareType()
         shareVC.wordsAmount = model?.reviewWordNum ?? 0
-        shareVC.daysAmount = model?.studyDay ?? 0
+        shareVC.daysAmount  = model?.studyDay ?? 0
         self.navigationController?.pushViewController(shareVC, animated: true)
     }
 

@@ -488,7 +488,7 @@ class YXReviewProgressView: YXView {
     public var progress: CGFloat = 0 {
         didSet { self.bindData() }
     }
-    
+    var showAnimation = true
     private var type: YXReviewProgressViewType = .familiar
     private var progressView = UIView()
     private var cornerRadius: CGFloat = AdaptIconSize(5)
@@ -527,9 +527,12 @@ class YXReviewProgressView: YXView {
     
     override func bindData() {
         progressView.frame = CGRect(x: 0, y: 0, width: 0, height: self.height)
-        
-        UIView.animate(withDuration: 0.6) {[weak self] in
-            guard let self = self else { return }
+        if showAnimation {
+            UIView.animate(withDuration: 0.6) {[weak self] in
+                guard let self = self else { return }
+                self.progressView.width = self.progress * self.width
+            }
+        } else {
             self.progressView.width = self.progress * self.width
         }
     }
