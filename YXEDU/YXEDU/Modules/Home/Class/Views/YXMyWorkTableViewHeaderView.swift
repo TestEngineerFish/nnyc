@@ -71,6 +71,7 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
         self.backgroundColor           = .clear
         self.tableView.delegate        = self
         self.tableView.dataSource      = self
+        self.tableView.register(YXMyClassTableViewClassCell.classForCoder(), forCellReuseIdentifier: "kYXMyClassTableViewClassCell")
     }
 
     // MARK: ==== Event ====
@@ -91,14 +92,10 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text      = classList[indexPath.row].name
-        cell.textLabel?.font      = UIFont.regularFont(ofSize: AdaptFontSize(15))
-        cell.textLabel?.textColor = UIColor.black2
-        cell.accessoryType        = .disclosureIndicator
-        cell.separatorInset       = UIEdgeInsets(top: 0, left: AdaptSize(15), bottom: 0, right: AdaptSize(15))
-        cell.selectionStyle       = .none
-        cell.backgroundColor      = .clear
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXMyClassTableViewClassCell") as? YXMyClassTableViewClassCell else {
+            return UITableViewCell()
+        }
+        cell.setData(model: classList[indexPath.row])
         return cell
     }
 

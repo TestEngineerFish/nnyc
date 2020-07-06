@@ -437,8 +437,11 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             self.uploadGrowing()
             
             self.delegate?.backHomeEvent()
-            
-            self.navigationController?.popToRootViewController(animated: false)
+            if self.learnConfig.learnType.isHomework() {
+                self.navigationController?.popViewController(animated: false)
+            } else {
+                self.navigationController?.popToRootViewController(animated: false)
+            }
         }
         alertView.cancleClosure = { [weak self] in
             guard let self = self, self == UIView().currentViewController else {

@@ -62,6 +62,7 @@ struct YXMyClassModel: Mappable {
 
     var id: Int?
     var name: String = ""
+    var isNew: Bool  = false
 
     init?(map: Map) {}
 

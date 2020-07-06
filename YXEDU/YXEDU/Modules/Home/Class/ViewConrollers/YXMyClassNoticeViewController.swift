@@ -9,11 +9,12 @@
 import Foundation
 
 class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITableViewDataSource  {
-    var tableView = UITableView(frame: .zero, style: .grouped)
+    var tableView = UITableView(frame: .zero, style: .plain)
     var noticeModelList = [YXMyClassNoticeModel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.createSubviews()
         self.bindProperty()
         self.requestData()
     }
@@ -23,10 +24,24 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
             var model = YXMyClassNoticeModel()
             model.content = "暑假作业已发放，请大家注意及时查收，暑假作业已发放，请大家注意及时查收"
             model.time    = "6月12号"
+            model.isNew   = index < 4
             noticeModelList.append(model)
         }
         self.customNavigationBar?.title = "班级通知"
+        self.customNavigationBar?.backgroundColor = .white
+        self.tableView.delegate   = self
+        self.tableView.dataSource = self
+        self.tableView.backgroundColor = .white
         self.tableView.register(YXMyClassNoticeCell.classForCoder(), forCellReuseIdentifier: "kYXMyClassNoticeCell")
+    }
+
+    private func createSubviews() {
+        self.view.addSubview(tableView)
+        self.view.sendSubviewToBack(tableView)
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(kNavHeight)
+            make.left.bottom.right.equalToSuperview()
+        }
     }
 
     // MARK: ==== Request ====

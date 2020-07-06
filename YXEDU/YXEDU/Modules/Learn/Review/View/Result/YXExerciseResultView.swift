@@ -236,12 +236,12 @@ class YXExerciseResultView: YXView {
             } else {
                 let score = model.score == 0 ? 1 : model.score
                 self.starView.showLearnResultView(starNum: score)
-                if score <= 1 {
-                    imageView.image = UIImage(named: "review_result_1star")
+                if score < 1 {
+                    imageView.image = UIImage(named: "learnResult0")
                 } else {
-                    if model.type == .base {
+                    if model.type == .base || model.type == .homeworkPunch {
                         imageView.image = UIImage(named: "review_result_base_\(model.score)star")
-                    } else if model.type == .planListenReview {
+                    } else if model.type == .planListenReview || model.type == .homeworkListen {
                         imageView.image = UIImage(named: "review_result_listen_\(model.score)star")
                     } else {// 计划或者智能
                         imageView.image = UIImage(named: "review_result_\(model.score)star")

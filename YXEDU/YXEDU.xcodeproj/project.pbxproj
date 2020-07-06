@@ -50,6 +50,7 @@
 		222AFBAF24B1E27F001C894C /* YXMyClassNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AFBAE24B1E27E001C894C /* YXMyClassNoticeViewController.swift */; };
 		222AFBB124B1E30B001C894C /* YXMyClassNoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AFBB024B1E30B001C894C /* YXMyClassNoticeModel.swift */; };
 		222AFBB324B1E374001C894C /* YXMyClassNoticeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AFBB224B1E374001C894C /* YXMyClassNoticeCell.swift */; };
+		222AFBB524B356CB001C894C /* YXMyClassTableViewClassCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AFBB424B356CB001C894C /* YXMyClassTableViewClassCell.swift */; };
 		223D2682239B4A70008DED9E /* BPItemContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D267E239B4A70008DED9E /* BPItemContentView.swift */; };
 		223D2683239B4A70008DED9E /* BPSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D267F239B4A70008DED9E /* BPSegmentView.swift */; };
 		223D2684239B4A70008DED9E /* BPSegmentControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D2680239B4A70008DED9E /* BPSegmentControllerView.swift */; };
@@ -656,6 +657,7 @@
 		222AFBAE24B1E27E001C894C /* YXMyClassNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassNoticeViewController.swift; sourceTree = "<group>"; };
 		222AFBB024B1E30B001C894C /* YXMyClassNoticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassNoticeModel.swift; sourceTree = "<group>"; };
 		222AFBB224B1E374001C894C /* YXMyClassNoticeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassNoticeCell.swift; sourceTree = "<group>"; };
+		222AFBB424B356CB001C894C /* YXMyClassTableViewClassCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassTableViewClassCell.swift; sourceTree = "<group>"; };
 		223D267E239B4A70008DED9E /* BPItemContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPItemContentView.swift; sourceTree = "<group>"; };
 		223D267F239B4A70008DED9E /* BPSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSegmentView.swift; sourceTree = "<group>"; };
 		223D2680239B4A70008DED9E /* BPSegmentControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSegmentControllerView.swift; sourceTree = "<group>"; };
@@ -1598,6 +1600,7 @@
 				224AE70D24A05D85009EAB06 /* YXMyClassWorkDetailCell.swift */,
 				CF673B5324A8747100183E33 /* YXMyClassTableViewFooterView.swift */,
 				222AFBB224B1E374001C894C /* YXMyClassNoticeCell.swift */,
+				222AFBB424B356CB001C894C /* YXMyClassTableViewClassCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4644,6 +4647,7 @@
 				22E9FFC42473BF6B006B6F60 /* YXOCModel.swift in Sources */,
 				EE88DF5323AF5BEC004DFF10 /* YXSettingRequest.swift in Sources */,
 				22DC471F2388064E002F7120 /* YXChineseFillConnectionLetterQuestionView.swift in Sources */,
+				222AFBB524B356CB001C894C /* YXMyClassTableViewClassCell.swift in Sources */,
 				EE5EF21323273BAE00655654 /* NSData+YR.m in Sources */,
 				2218AE3623D07CC600EF2E42 /* YXLogManager.swift in Sources */,
 				EE1B69732473DB55000EADB2 /* YXLearnConfig.swift in Sources */,

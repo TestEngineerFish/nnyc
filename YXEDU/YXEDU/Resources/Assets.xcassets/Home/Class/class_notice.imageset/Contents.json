@@ -1,16 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "消息.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "review_result_2star@2x.png",
+      "filename" : "消息@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "review_result_2star@3x.png",
+      "filename" : "消息@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

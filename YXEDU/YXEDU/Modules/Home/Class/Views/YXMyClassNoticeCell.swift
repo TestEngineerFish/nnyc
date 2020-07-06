@@ -16,6 +16,7 @@ class YXMyClassNoticeCell: UITableViewCell {
         label.textColor     = UIColor.black1
         label.font          = UIFont.regularFont(ofSize: AdaptFontSize(15))
         label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }()
     var timeLabel: UILabel = {
@@ -23,7 +24,7 @@ class YXMyClassNoticeCell: UITableViewCell {
         label.text          = ""
         label.textColor     = UIColor.black3
         label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
-        label.textAlignment = .center
+        label.textAlignment = .left
         return label
     }()
 
@@ -41,29 +42,31 @@ class YXMyClassNoticeCell: UITableViewCell {
         self.separatorInset = UIEdgeInsets(top: 0, left: AdaptSize(20), bottom: 0, right: AdaptSize(20))
         let contentH = self.contentLabel.text?.textHeight(font: contentLabel.font, width: screenWidth - AdaptSize(40)) ?? 0
         if redDotView.isHidden {
-            contentLabel.snp.makeConstraints { (make) in
+            contentLabel.snp.remakeConstraints { (make) in
                 make.top.equalToSuperview().offset(AdaptSize(20))
                 make.left.equalToSuperview().offset(AdaptSize(20))
                 make.right.equalToSuperview().offset(AdaptSize(-20))
                 make.height.equalTo(contentH)
             }
         } else {
-            redDotView.snp.makeConstraints { (make) in
+            redDotView.snp.remakeConstraints { (make) in
                 make.left.equalToSuperview().offset(AdaptSize(20))
                 make.size.equalTo(CGSize(width: AdaptSize(6), height: AdaptSize(6)))
                 make.top.equalToSuperview().offset(AdaptSize(30))
             }
-            contentLabel.snp.makeConstraints { (make) in
+            contentLabel.snp.remakeConstraints { (make) in
                 make.top.equalToSuperview().offset(AdaptSize(20))
-                make.left.equalTo(redDotView.snp.right).offset(AdaptSize(10))
+                make.left.equalTo(redDotView.snp.right).offset(AdaptSize(5))
                 make.right.equalToSuperview().offset(AdaptSize(-20))
                 make.height.equalTo(contentH)
             }
         }
-        timeLabel.snp.makeConstraints { (make) in
-             make.left.equalToSuperview().offset(AdaptSize(20))
-             make.top.equalTo(contentLabel.snp.bottom).offset(AdaptSize(10))
-             make.right.equalToSuperview().offset(AdaptSize(-20))
-         }
+        timeLabel.snp.remakeConstraints { (make) in
+            make.left.equalTo(contentLabel)
+            make.top.equalTo(contentLabel.snp.bottom).offset(AdaptSize(10))
+            make.right.equalToSuperview().offset(AdaptSize(-20))
+            make.height.equalTo(AdaptSize(18))
+            make.bottom.equalToSuperview().offset(AdaptSize(-20))
+        }
     }
 }
