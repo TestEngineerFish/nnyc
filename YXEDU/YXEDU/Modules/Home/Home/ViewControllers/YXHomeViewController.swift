@@ -127,10 +127,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.registerNotification()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.checkGuide()
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        self.checkGuide()
+//    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -277,7 +277,17 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     private func checkUserState() {
         YXUserDataManager.share.updateUserInfomation { (userInfomation) in
-            if userInfomation?.reminder?.didOpen == 1, let time = userInfomation?.reminder?.timeStamp {
+            guard let _userInfomation = userInfomation else {
+                return
+            }
+            if !_userInfomation.isJoinSchool {
+                YYCache.set(true, forKey: .isShowSelectSchool)
+            }
+            if _userInfomation.didSelectBook == 0 {
+                YYCache.set(true, forKey: .isShowSelectBool)
+            }
+
+            if _userInfomation.reminder?.didOpen == 1, let time = _userInfomation.reminder?.timeStamp {
                 UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "Reminder")
                 UserDefaults.standard.set(Date(timeIntervalSince1970: time), forKey: "DidShowSetupReminderAlert")
             } else {
