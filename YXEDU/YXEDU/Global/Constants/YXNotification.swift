@@ -48,6 +48,6 @@ struct YXNotification {
     /// 新学单词已掌握
     static let kNewWordMastered            = NSNotification.Name("kNewWordMastered")
     /// 加入班级
-    static let kJoinClass                  = NSNotification.Name("kJoinClass")
+    static let kReloadClassList            = NSNotification.Name("kReloadClassList")
     
 }

@@ -54,6 +54,9 @@ extension YXExerciseViewController {
                 self.startStudy()
             } else {
                 YXLog("没有下一组，进入结果页")
+                if self.learnConfig.learnType.isHomework() {
+                    NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
+                }
                 if self.learnConfig.learnType == .base || self.learnConfig.learnType == .homeworkPunch {
                     let newWordCount    = dict["newWordCount"] ?? 0
                     let reviewWordCount = dict["reviewWordCount"] ?? 0

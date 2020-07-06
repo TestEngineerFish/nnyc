@@ -136,7 +136,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
         if model.type == .punch {
             self.progressLabel.text = String(format: "完成%ld/%ld天", model.shareCount, model.shareAmount)
         } else {
-            self.progressLabel.text = String(format: "完成%0.0f%@", model.progress * 100, "%")
+            self.progressLabel.text = String(format: "完成%0.0f%@", model.progress, "%")
         }
         self.desciptionLabel.text  = String(format: "%@ l %@", model.className, model.timeStr)
         DispatchQueue.main.async {
@@ -225,7 +225,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
             if checkReport.contains(_model.exerciseWorkStatus) {
                 // 查看报告
                 let vc = YXMyClassWorkReportViewController()
-                vc.workId  = model?.workId
+                vc.workId = model?.workId
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
             } else if exerciseStatusList.contains(_model.exerciseWorkStatus) {
                 // 做、补作业

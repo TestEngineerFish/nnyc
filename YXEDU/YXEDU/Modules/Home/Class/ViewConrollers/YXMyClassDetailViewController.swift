@@ -118,7 +118,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
             self.navigationController?.popViewController(animated: true)
             // 刷新列表
-            NotificationCenter.default.post(name: YXNotification.kJoinClass, object: nil)
+            NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }

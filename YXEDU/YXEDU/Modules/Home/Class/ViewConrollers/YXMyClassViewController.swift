@@ -46,7 +46,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         self.workTableView.dataSource      = self
         self.workTableView.register(YXWorkWithMyClassCell.classForCoder(), forCellReuseIdentifier: "kYXWorkWithMyClassCell")
         self.workTableView.backgroundColor = .clear
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: YXNotification.kJoinClass, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: YXNotification.kReloadClassList, object: nil)
     }
 
     private func createSubviews() {

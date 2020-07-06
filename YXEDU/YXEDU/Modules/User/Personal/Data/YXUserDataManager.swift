@@ -40,7 +40,7 @@ struct YXUserDataManager {
         let request = YXHomeRequest.joinClass(code: _code.trimed)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
             complate?(true)
-            NotificationCenter.default.post(name: YXNotification.kJoinClass, object: nil)
+            NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
         }) { (error) in
             complate?(false)
             YXUtils.showHUD(kWindow, title: error.message)

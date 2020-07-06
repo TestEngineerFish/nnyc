@@ -185,7 +185,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateTaskCenterStatus), name: YXNotification.kUpdateTaskCenterBadge, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(playSquirrelAnimation), name: YXNotification.kSquirrelAnimation, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateMyClassStatus), name: YXNotification.kJoinClass, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMyClassStatus), name: YXNotification.kReloadClassList, object: nil)
     }
     
     // MARK: ---- Request ----
