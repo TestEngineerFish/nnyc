@@ -18,6 +18,9 @@ extension YXExerciseServiceImpl {
             YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(learnConfig.learnType)")
             progress = .empty
             completion?()
+            if let bookModel = self.wordDao.selectBook(bookId: learnConfig.bookId), learnConfig.learnType == .homeworkPunch {
+                YXAlertManager().showNoLearningContent(book: bookModel)
+            }
             return
         }
         

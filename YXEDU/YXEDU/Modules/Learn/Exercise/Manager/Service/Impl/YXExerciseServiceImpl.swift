@@ -53,9 +53,13 @@ class YXExerciseServiceImpl: YXExerciseService {
         let isGenerate = self.studyDao.selectStudyRecordModel(learn: learnConfig) == nil ? true : false
         let request = YXExerciseRequest.exercise(isGenerate: isGenerate, type: learnConfig.learnType.rawValue, reviewId: reviewId)
         request.execute(YXExerciseResultModel.self, success: { [weak self] (model) in
-            self?._resultModel = model
+            guard let self = self else {
+                return
+            }
+            self._resultModel = model
             YXGrowingManager.share.uploadExerciseType(model?.rule ?? "")
-            self?._processData {
+
+            self._processData {
                 completion?(true, nil, isGenerate)
             }
         }) { (msg) in

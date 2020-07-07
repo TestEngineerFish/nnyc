@@ -9,11 +9,14 @@
 import UIKit
 import Lottie
 
-protocol YXExerciseLoadingViewDelegate: NSObjectProtocol {
-    /// 词书下载完成
-    func downloadComplete()
+protocol YXExerciseAnimationCompleteDelegate: NSObjectProtocol {
     /// 进度条动画执行完成
     func animationComplete()
+}
+
+protocol YXExerciseDownloadCompleteDelegate: NSObjectProtocol {
+    /// 词书下载完成
+    func downloadComplete()
 }
 
 class YXExerciseLoadingView: YXView, CAAnimationDelegate {
@@ -31,7 +34,8 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
     var status         = YXExerciseLoadingEnum.normal
     var isLoading      = false // 动画运行中
     var progressWidth  = AdaptIconSize(181.5)
-    weak var delegate: YXExerciseLoadingViewDelegate?
+    weak var animationCompleteDelegate: YXExerciseAnimationCompleteDelegate?
+    weak var downloadCompleteDelegate: YXExerciseDownloadCompleteDelegate?
     var timer: Timer?
     
     enum YXExerciseLoadingSpeedEnum: CGFloat {
@@ -256,7 +260,8 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
             }
             if singleDownloadFinished {
                 YXLog("当前词书下载完成，开始主流程的学习")
-                self.delegate?.downloadComplete()
+                self.downloadCompleteDelegate?.downloadComplete()
+                self.downloadCompleteDelegate = nil
                 self.speed  = .highSpeed
                 // 请求之前需要先下载完词书
                 if YXExerciseViewController.requesting != nil {
@@ -279,7 +284,8 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
             // 所有任务下载完成，才可以进入下一步
             if YXWordBookResourceManager.taskList.isEmpty {
                 YXLog("词书已下载，可以请求学习数据了")
-                self.delegate?.downloadComplete()
+                self.downloadCompleteDelegate?.downloadComplete()
+                self.downloadCompleteDelegate = nil
                 self.speed  = .highSpeed
                 // 是否已请求到数据
                 if YXExerciseViewController.requesting != nil {
@@ -372,7 +378,8 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
             self.addStepTime = 0
             if self.toRatio >= 1.0 {
                 self.stopAnimation()
-                self.delegate?.animationComplete()
+                self.animationCompleteDelegate?.animationComplete()
+                self.animationCompleteDelegate = nil
             }
         }
     }

@@ -269,7 +269,8 @@
     /// 显示loading动画
     func showLoadAnimation() {
         self.loadingView = YXExerciseLoadingView(type: self.learnConfig.learnType)
-        self.loadingView?.delegate = self
+        self.loadingView?.downloadCompleteDelegate  = self
+        self.loadingView?.animationCompleteDelegate = self
         kWindow.addSubview(self.loadingView!)
         self.loadingView?.startAnimation()
     }
@@ -490,7 +491,7 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
     }
 }
 
- extension YXExerciseViewController: YXExerciseLoadingViewDelegate {
+ extension YXExerciseViewController: YXExerciseAnimationCompleteDelegate, YXExerciseDownloadCompleteDelegate {
     func downloadComplete() {
         self.startStudy()
     }

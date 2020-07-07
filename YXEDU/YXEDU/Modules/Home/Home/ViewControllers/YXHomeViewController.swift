@@ -313,6 +313,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             label.textAlignment = .center
             return label
         }()
+        let tapAction = UITapGestureRecognizer(target: self, action: #selector(toActivity))
+        self.activityView.addGestureRecognizer(tapAction)
         self.activityView.layer.setDefaultShadow()
         self.activityView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) in
@@ -442,6 +444,12 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             alertView.alertHeight.constant    = 222
             alertView.show()
         }
+    }
+
+    @objc private func toActivity() {
+        let vc = YXWebViewController()
+
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     // MARK: ---- UICollection Delegate & DataSource
