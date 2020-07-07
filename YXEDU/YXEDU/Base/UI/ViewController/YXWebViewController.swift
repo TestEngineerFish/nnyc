@@ -34,6 +34,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         webView?.uiDelegate         = self
         webView?.navigationDelegate = self
         webView?.scrollView.bounces = false
+        webView?.isMultipleTouchEnabled = false
         webView?.scrollView.showsHorizontalScrollIndicator = false
         webView?.scrollView.showsVerticalScrollIndicator   = false
         webView?.allowsBackForwardNavigationGestures = false
