@@ -381,7 +381,7 @@ enum YXMiMeType: String {
                 // 停服
                 let serviceStop = YXNotification.kServiceStop
                 NotificationCenter.default.post(name: serviceStop, object: baseResponse.statusMessage)
-            
+
             } else if responseStatusCode == 10003 {
                 YXMediator.shared().userKickedOut()
             }
