@@ -41,10 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApiManager.shared().registerWX(wechatId)
         Bugly.start(withAppId: kBuglyAppId)
         YXOCLog.shared()?.launch()
-        #if DEBUG
-        ECOClient.shared()?.start()
-        
-        #endif
+//        #if DEBUG
+//        ECOClient.shared()?.start()
+//        #endif
         
         #if !DEBUG  // 正式环境才开启统计
         Growing.start(withAccountId: kGrowingIOID)
