@@ -68,8 +68,7 @@ class YXWordTestViewController: UIViewController {
 
 extension YXWordTestViewController: YRWebViewJSBridgeDelegate {
     func relationActionHandleClass() -> [String : YRWebViewJSActionDelegate.Type]? {
-        return [WebViewActionType.share.rawValue : YRWebViewShareAction.self,
-                WebViewActionType.close.rawValue : YRWebViewCloseAction.self]
+        return [WebViewActionType.share.rawValue : YRWebViewShareAction.self]
     }
 }
 

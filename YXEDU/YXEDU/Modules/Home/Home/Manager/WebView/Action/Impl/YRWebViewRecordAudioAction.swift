@@ -17,5 +17,6 @@ class YRWebViewShareAction: YRWebViewJSAction {
         if let json = self.params as? [String: Any] {
             actionModel = ShareActionModel(JSON: json)
         }
+        
     }
 }
