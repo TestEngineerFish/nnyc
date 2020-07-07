@@ -45,7 +45,7 @@ class YXSelectSchoolContentView: YXView {
     }()
     var schoolLabel: UILabel = {
         let label = UILabel()
-        label.text          = "请选择学校名称，优先安排试听课"
+        label.text          = "请选择学校名称"
         label.textColor     = UIColor.black6
         label.font          = UIFont.regularFont(ofSize: AdaptFontSize(14))
         label.textAlignment = .left
@@ -154,7 +154,7 @@ class YXSelectSchoolContentView: YXView {
 
     func setSelectSchool(school: String?) {
         if school == nil {
-            self.schoolLabel.text      = "请选择学校名称，优先安排试听课"
+            self.schoolLabel.text      = "请选择学校名称"
             self.schoolLabel.textColor = UIColor.black6
             self.submitButton.setStatus(.disable)
         } else {

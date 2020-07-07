@@ -253,6 +253,7 @@ enum YXMiMeType: String {
         let requestStr = request.url?.absoluteString ?? ""
         YXRequestLog(String(format: "POST = request url:%@ params:%@", requestStr))
         let dataResquest = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
+            YXRequestLog("unique_id:", response.response?.allHeaderFields["unique_id"] as? String ?? "")
             switch response.result {
             case .success(var x):
                 x.response = response.response
@@ -295,10 +296,10 @@ enum YXMiMeType: String {
 
         task.responseObject { (response: DataResponse <T>) in
             let requestStr = request.url.absoluteString
+            YXRequestLog("unique_id:", response.response?.allHeaderFields["unique_id"] as? String ?? "")
             switch response.result {
             case .success(var x):
                 if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8), !request.url.absoluteString.hasSuffix(YXAPI.Word.getBookWords) {
-
                     YXRequestLog(String(format: "【Success】 request url: %@, respnseObject: %@", request.url.absoluteString, dataStr))
                 }
                 x.response = response.response
