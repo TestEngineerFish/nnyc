@@ -17,8 +17,12 @@ class YXWebViewShareAction: YRWebViewJSAction {
             let shareView = YXShareDefaultView()
             // 分享完成后的回调
             shareView.completeBlock = { (channel: YXShareChannel, result: Bool) in
+                guard let callBackStr = self.callback else {
+                    return
+                }
                 let resultDic = ["result":result]
-                self.jsBridge.webView?.evaluateJavaScript(resultDic.toJson(), completionHandler: nil)
+                let funcStr = String(format: "%@('%@')", callBackStr, resultDic.toJson())
+                self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
             }
             self.getShareImage { (shareImage) in
                 guard let _shareImage = shareImage else {

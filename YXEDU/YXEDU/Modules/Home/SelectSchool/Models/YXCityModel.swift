@@ -37,6 +37,9 @@ struct YXAreaModel: Mappable {
 struct YXLocalModel: Mappable {
     var id: Int      = 0
     var name: String = ""
+
+    init() {}
+
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {

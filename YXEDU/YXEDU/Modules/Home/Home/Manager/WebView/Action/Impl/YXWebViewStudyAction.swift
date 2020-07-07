@@ -15,8 +15,12 @@ class YXWebViewStudyAction: YRWebViewJSAction {
         let bookId = YXUserModel.default.currentBookId ?? 0
         let unitId = YXUserModel.default.currentUnitId ?? 0
         vc.backAction = { (result: Bool) in
+            guard let callBackStr = self.callback else {
+                return
+            }
             let resultDic = ["result":result]
-            self.jsBridge.webView?.evaluateJavaScript(resultDic.toJson(), completionHandler: nil)
+            let funcStr = String(format: "%@('%@')", callBackStr, resultDic.toJson())
+            self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
         }
         vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId, homeworkId: 0)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)

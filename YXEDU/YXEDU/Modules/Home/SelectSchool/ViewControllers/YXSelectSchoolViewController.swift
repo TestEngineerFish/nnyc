@@ -11,8 +11,8 @@ import Foundation
 class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewProtocol, YXSearchSchoolDelegate {
 
     var contentView = YXSelectSchoolContentView()
-    var searchView  = YXSearchSchoolListView(type: .normal)
-    var pickerView  = YXSelectLocalPickView(type: .normal)
+    var searchView  = YXSearchSchoolListView()
+    var pickerView  = YXSelectLocalPickView()
     var selectSchoolModel: YXLocalModel?
     var selectLocalModel: YXLocalModel? {
         didSet {
@@ -30,6 +30,8 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
     }
 
     deinit {
+        self.pickerView.delegate = nil
+        self.searchView.delegate = nil
         self.pickerView.removeFromSuperview()
         self.searchView.removeFromSuperview()
     }
@@ -46,8 +48,6 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
 
     private func createSubviews() {
         self.view.addSubview(contentView)
-        self.view.addSubview(searchView)
-        self.view.addSubview(pickerView)
         contentView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }

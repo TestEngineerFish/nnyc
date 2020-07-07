@@ -8,18 +8,11 @@
 
 import Foundation
 
-enum YXSceneType: Int {
-    case normal
-    case web
-}
-
 protocol YXSelectLocalPickerViewProtocol: NSObjectProtocol {
     func selectedLocal(local model:YXLocalModel, name: String)
 }
 
 class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSource {
-
-    var type: YXSceneType
     var citiesArray = [YXCityModel]()  // 省
     var areasArray  = [YXAreaModel]()  // 市
     var localsArray = [YXLocalModel]() // 区
@@ -76,8 +69,7 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
         return pickerView
     }()
 
-    init(type: YXSceneType) {
-        self.type = type
+    init() {
         let _frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: AdaptSize(318))
         super.init(frame: _frame)
         self.bindProperty()
@@ -115,11 +107,16 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
 
     override func createSubviews() {
         super.createSubviews()
+        kWindow.addSubview(self.backgroundView)
+        kWindow.addSubview(self)
         self.addSubview(cancelButton)
         self.addSubview(titleLabel)
         self.addSubview(downButton)
         self.addSubview(lineView)
         self.addSubview(pickerView)
+        self.backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
         titleLabel.sizeToFit()
         titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -165,11 +162,7 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
     @objc private func downSelectLocal() {
         let localIndex = self.pickerView.selectedRow(inComponent: 2)
         let localModel = self.localsArray[localIndex]
-        if type == .normal {
-            self.delegate?.selectedLocal(local: localModel, name: self.localName)
-        } else {
-            // H5交互
-        }
+        self.delegate?.selectedLocal(local: localModel, name: self.localName)
         self.hide()
     }
 

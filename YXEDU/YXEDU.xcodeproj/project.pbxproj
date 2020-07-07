@@ -290,7 +290,6 @@
 		779DC500242C833200673ED5 /* YXSetReminderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779DC4FF242C833200673ED5 /* YXSetReminderView.xib */; };
 		779ED53B24349AB300E452E3 /* YRWebViewJSBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 779ED52B24349AB300E452E3 /* YRWebViewJSBridge.m */; };
 		779ED54024349AB300E452E3 /* YRWebViewJSAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53524349AB300E452E3 /* YRWebViewJSAction.m */; };
-		779ED54124349AB300E452E3 /* JSBridgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53824349AB300E452E3 /* JSBridgeModel.swift */; };
 		779ED54224349AB300E452E3 /* JSActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53924349AB300E452E3 /* JSActionType.swift */; };
 		779ED54324349AB300E452E3 /* ShareActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ED53A24349AB300E452E3 /* ShareActionModel.swift */; };
 		779F2C57245FBBC9007D3034 /* YXHomeSubItemiPadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779F2C55245FBBC8007D3034 /* YXHomeSubItemiPadCell.swift */; };
@@ -918,7 +917,6 @@
 		779ED52C24349AB300E452E3 /* YRWebViewJSBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRWebViewJSBridge.h; sourceTree = "<group>"; };
 		779ED53524349AB300E452E3 /* YRWebViewJSAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRWebViewJSAction.m; sourceTree = "<group>"; };
 		779ED53624349AB300E452E3 /* YRWebViewJSAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRWebViewJSAction.h; sourceTree = "<group>"; };
-		779ED53824349AB300E452E3 /* JSBridgeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSBridgeModel.swift; sourceTree = "<group>"; };
 		779ED53924349AB300E452E3 /* JSActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSActionType.swift; sourceTree = "<group>"; };
 		779ED53A24349AB300E452E3 /* ShareActionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareActionModel.swift; sourceTree = "<group>"; };
 		779F2C55245FBBC8007D3034 /* YXHomeSubItemiPadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeSubItemiPadCell.swift; sourceTree = "<group>"; };
@@ -2337,7 +2335,6 @@
 		779ED53724349AB300E452E3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				779ED53824349AB300E452E3 /* JSBridgeModel.swift */,
 				779ED53924349AB300E452E3 /* JSActionType.swift */,
 				779ED53A24349AB300E452E3 /* ShareActionModel.swift */,
 			);
@@ -4592,7 +4589,6 @@
 				EE5E00F123274FEC00655654 /* YXBasePickverView.m in Sources */,
 				222AED88239F3AEE00E2E489 /* YXReviewSelectedWordsListView.swift in Sources */,
 				EE5EF1FF23273BAE00655654 /* YRError.m in Sources */,
-				779ED54124349AB300E452E3 /* JSBridgeModel.swift in Sources */,
 				EE54F7D12362AA3100EC605A /* YXQuestionType.swift in Sources */,
 				EE6FB0B62367129700E96015 /* UIVIew+Extension.swift in Sources */,
 				2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */,

@@ -14,7 +14,6 @@ protocol YXSearchSchoolDelegate: NSObjectProtocol {
 
 class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource {
 
-    var type: YXSceneType
     var schoolModelList = [YXLocalModel]()
     var selectLocalModel: YXLocalModel?
     var willSchoolModel: YXLocalModel?
@@ -80,8 +79,7 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
         return tableView
     }()
 
-    init(type: YXSceneType) {
-        self.type = type
+    init() {
         let _frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: screenHeight * 0.92)
         super.init(frame: _frame)
         self.bindProperty()
@@ -108,6 +106,8 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
 
     override func createSubviews() {
         super.createSubviews()
+        kWindow.addSubview(self.backgroundView)
+        kWindow.addSubview(self)
         self.addSubview(cancelButton)
         self.addSubview(titleLabel)
         self.addSubview(downButton)
@@ -116,6 +116,9 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
         searchBackgroundView.addSubview(searchImageView)
         searchBackgroundView.addSubview(textField)
         self.addSubview(tableView)
+        self.backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
         titleLabel.sizeToFit()
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(AdaptSize(13))
@@ -190,11 +193,7 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
     @objc private func downSelectSchool() {
         self.selectSchoolModel = self.willSchoolModel
         self.hide()
-        if type == .normal {
-            self.delegate?.selectSchool(school: self.selectSchoolModel)
-        } else {
-            // H5交互
-        }
+        self.delegate?.selectSchool(school: self.selectSchoolModel)
     }
 
     @objc private func seachSchool(_ textField: UITextField) {
