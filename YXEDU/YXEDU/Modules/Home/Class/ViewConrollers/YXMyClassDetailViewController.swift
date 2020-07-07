@@ -54,6 +54,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
 
     var noticeButton: UIButton = {
         let button = UIButton()
+        button.isHidden = true
         button.setImage(UIImage(named: "class_notice"), for: .normal)
         return button
     }()
