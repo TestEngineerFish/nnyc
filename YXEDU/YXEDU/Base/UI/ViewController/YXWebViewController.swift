@@ -11,8 +11,6 @@ import UIKit
 class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, YRWebViewJSBridgeDelegate {
 
     let appJS     = "ssaiAppJS"
-    let uaTag     = " SSAI_iOS"
-    let userAgent = "navigator.userAgent"
     var webView: YXWebView?
     var requestUrlStr: String?
     var customTitle: String?
@@ -36,6 +34,8 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         webView?.uiDelegate         = self
         webView?.navigationDelegate = self
         webView?.scrollView.bounces = false
+        webView?.scrollView.showsHorizontalScrollIndicator = false
+        webView?.scrollView.showsVerticalScrollIndicator   = false
         webView?.allowsBackForwardNavigationGestures = false
 
         jsBridge.delegate = self
@@ -77,6 +77,16 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
 
     // MARK: ==== WKNavigationDelegate ====
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        self.webView?.reload()
+        webView.reload()
+    }
+
+    // MARK: ==== YRWebViewJSBridgeDelegate ====
+    func relationActionHandleClass() -> [String : YRWebViewJSActionDelegate.Type]? {
+        let list =  [WebViewActionType.share.rawValue : YXWebViewShareAction.self,
+                     WebViewActionType.study.rawValue : YXWebViewStudyAction.self,
+                     WebViewActionType.selectSchool.rawValue : YXWebViewSelectSchool.self,
+                     WebViewActionType.selectAddress.rawValue : YXWebViewSelectAddress.self,
+                     WebViewActionType.appInfo.rawValue : YXWebViewAppInfoAction.self]
+        return list
     }
 }

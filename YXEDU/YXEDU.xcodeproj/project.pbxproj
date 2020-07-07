@@ -180,6 +180,7 @@
 		22E9FFC62473BF80006B6F60 /* YXOCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E9FFC52473BF80006B6F60 /* YXOCRequest.swift */; };
 		22EA336F24A091380034CD7E /* YXSelectSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EA336E24A091380034CD7E /* YXSelectSchoolViewController.swift */; };
 		22EA337624A094A10034CD7E /* YXSelectSchoolContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EA337524A094A10034CD7E /* YXSelectSchoolContentView.swift */; };
+		22EA9CE324B4AC340045923F /* YXWebViewAppInfoAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EA9CE224B4AC340045923F /* YXWebViewAppInfoAction.swift */; };
 		22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */; };
 		22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */; };
 		22ED54A92367076B00011B82 /* YXAnswerConnectionLettersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A82367076B00011B82 /* YXAnswerConnectionLettersView.swift */; };
@@ -796,6 +797,7 @@
 		22E9FFC52473BF80006B6F60 /* YXOCRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXOCRequest.swift; sourceTree = "<group>"; };
 		22EA336E24A091380034CD7E /* YXSelectSchoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectSchoolViewController.swift; sourceTree = "<group>"; };
 		22EA337524A094A10034CD7E /* YXSelectSchoolContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectSchoolContentView.swift; sourceTree = "<group>"; };
+		22EA9CE224B4AC340045923F /* YXWebViewAppInfoAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebViewAppInfoAction.swift; sourceTree = "<group>"; };
 		22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionMeaningView.swift; sourceTree = "<group>"; };
 		22ED549C2366D80400011B82 /* YXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXModel.h; sourceTree = "<group>"; };
 		22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YXModel.m"; sourceTree = "<group>"; };
@@ -2328,6 +2330,7 @@
 				222AFBBA24B47CAF001C894C /* YXWebViewStudyAction.swift */,
 				222AFBBC24B47CCD001C894C /* YXWebViewSelectSchool.swift */,
 				222AFBBE24B47CDE001C894C /* YXWebViewSelectAddress.swift */,
+				22EA9CE224B4AC340045923F /* YXWebViewAppInfoAction.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -4492,6 +4495,7 @@
 				EE5E027123277CD600655654 /* YXIconfont.m in Sources */,
 				77B7C6EE23A7254200149ACE /* YXTaskCenterViewController.swift in Sources */,
 				222AFBAD24B186A5001C894C /* YXWebViewController.swift in Sources */,
+				22EA9CE324B4AC340045923F /* YXWebViewAppInfoAction.swift in Sources */,
 				EE7721222388D58200CD632E /* YXSwitchAnimation.swift in Sources */,
 				EE4C7CDB236817550092751D /* YXLookWordChooseImageExerciseView.swift in Sources */,
 				228105DE2487E21F0025F03F /* YXStudyRecordDao.swift in Sources */,

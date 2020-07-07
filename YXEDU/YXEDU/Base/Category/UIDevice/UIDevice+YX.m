@@ -241,6 +241,6 @@
     CGFloat scale_screen = [UIScreen mainScreen].scale;
     int width = size_screen.width*scale_screen;
     int height = size_screen.height*scale_screen;
-    return [NSString stringWithFormat:@"%d*%d", height, width];
+    return [NSString stringWithFormat:@"%dx%d", width, height];
 }
 @end

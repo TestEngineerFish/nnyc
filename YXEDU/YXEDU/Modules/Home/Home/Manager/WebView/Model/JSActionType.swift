@@ -13,4 +13,5 @@ enum WebViewActionType: String {
     case study         = "study"
     case selectSchool  = "selectSchool"
     case selectAddress = "selectAddress"
+    case appInfo       = "appInfo"
 }
