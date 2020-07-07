@@ -14,12 +14,15 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
     let uaTag     = " SSAI_iOS"
     let userAgent = "navigator.userAgent"
     var webView: YXWebView?
+    var requestUrlStr: String?
+    var customTitle: String?
     let jsBridge = YRWebViewJSBridge()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bindProperty()
         self.createSubviews()
+        self.loadWebView()
     }
 
     private func bindProperty() {
@@ -37,19 +40,29 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
 
         jsBridge.delegate = self
         jsBridge.webView  = webView
+        if let _title = self.customTitle {
+            self.customNavigationBar?.title = _title
+        }
     }
 
     private func createSubviews() {
         self.view.addSubview(webView!)
+        self.view.sendSubviewToBack(webView!)
         webView?.snp.makeConstraints({ (make) in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().offset(kNavHeight)
+            make.left.right.bottom.equalToSuperview()
         })
     }
 
     // MARK: ==== Event ====
 
     private func loadWebView() {
-
+        guard let urlStr = self.requestUrlStr, let url = URL(string: urlStr) else {
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
+        let requestUrl = URLRequest(url: url)
+        self.webView?.load(requestUrl)
     }
 
     // MARK: ==== WKScriptMessageHandler ====

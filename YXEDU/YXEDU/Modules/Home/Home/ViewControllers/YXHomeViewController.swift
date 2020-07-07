@@ -448,7 +448,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     @objc private func toActivity() {
         let vc = YXWebViewController()
-
+        vc.customTitle   = "全国单词达人挑战赛"
+        vc.requestUrlStr = "https://www.taobao.com"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

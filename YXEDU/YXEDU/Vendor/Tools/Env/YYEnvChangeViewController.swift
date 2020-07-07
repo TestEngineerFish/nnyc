@@ -131,9 +131,9 @@ typealias YYEVC = YYEnvChangeViewController
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.title = "选择环境"
-//        self.customNavigationBar?.title = "选择环境"
+//        self.navigationController?.navigationBar.isHidden = false
+//        self.navigationController?.title = "选择环境"
+        self.customNavigationBar?.title = "选择环境"
 
         self.view.addSubview(self.tableView)
         self.view.backgroundColor = white1
