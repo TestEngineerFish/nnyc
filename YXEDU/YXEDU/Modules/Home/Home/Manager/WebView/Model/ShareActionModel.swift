@@ -8,13 +8,20 @@
 import ObjectMapper
 
 struct ShareActionModel: Mappable {
-    var image: String?
+
+    enum YXWebShareType: Int {
+        case wechat   = 1 // 微信
+        case timeLine = 2 // 朋友圈
+        case qq       = 3 // QQ
+        case qzone    = 4 // QQ空间
+    }
+    var type: YXWebShareType?
     
     init?(map: Map) {
         self.mapping(map: map)
     }
     
     mutating func mapping(map: Map) {
-        image <- map["image"]
+        type <- (map["type"], EnumTransform<YXWebShareType>())
     }
 }

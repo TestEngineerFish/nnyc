@@ -338,8 +338,10 @@ class YXExerciseResultView: YXView {
             switch model.type {
             case .planListenReview, .homeworkListen:
                 operateButton.setTitle("继续听写", for: .normal)
-            case .planReview, .homeworkWord:
+            case .planReview:
                 operateButton.setTitle("继续学习", for: .normal)
+            case .homeworkWord:
+                operateButton.setTitle("继续做作业", for: .normal)
             default:
                 operateButton.setTitle("打卡分享", for: .normal)
             }
