@@ -12,7 +12,8 @@
 typedef NS_ENUM(NSInteger, YXSharePalform) {
     YXShareWXSession,
     YXShareWXTimeLine,
-    YXShareQQ
+    YXShareQQ,
+    YXShareQzone
 };
 
 typedef NS_ENUM(NSInteger, ChatType) {

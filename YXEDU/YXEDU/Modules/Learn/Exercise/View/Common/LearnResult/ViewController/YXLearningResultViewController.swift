@@ -26,6 +26,9 @@ class YXLearningResultViewController: YXViewController {
     var loadingView = YXExerciseResultLoadingView()
     var unitMapView: YXUnitMapView?
 
+    /// 返回事件（WebView活动）
+    var backAction: ((Bool)->Void)?
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
@@ -202,6 +205,7 @@ class YXLearningResultViewController: YXViewController {
 
     // MARK: Event
     @objc private func backClick() {
+        self.backAction?(true)
         self.navigationController?.popToRootViewController(animated: false)
     }
     

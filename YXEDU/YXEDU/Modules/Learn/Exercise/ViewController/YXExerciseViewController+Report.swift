@@ -75,6 +75,7 @@ extension YXExerciseViewController {
         vc.learnConfig       = service.learnConfig
         vc.newLearnAmount    = newCount
         vc.reviewLearnAmount = reviewCount
+        vc.backAction        = self.backAction
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     

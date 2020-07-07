@@ -35,6 +35,8 @@ enum YXLocalKey: String {
     case currentGrade                  = "kCurrentGrade"
     ///当前在学的词书ID
     case currentChooseBookId           = "currentChooseBookId"
+    /// 当前学习的单元ID
+    case currentUnitId                 = "kcurrentUnitId"
     /// 当前用户头像
     case currentAvatarImage            = "kCurrentAvatarImage"
     /// 用户名称

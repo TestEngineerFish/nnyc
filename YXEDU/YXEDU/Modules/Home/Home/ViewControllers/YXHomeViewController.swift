@@ -212,7 +212,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
             self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
             self.studyDataCollectionView.reloadData()
-
+            YXUserModel.default.currentUnitId   = self.homeModel.unitId
             YXUserModel.default.currentBookId   = self.homeModel.bookId
             YXUserModel.default.currentGrade    = self.homeModel.bookGrade
             YXUserModel.default.isJoinClass     = self.homeModel.isJoinClass

@@ -122,10 +122,10 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     @objc private func clickPlayButton(){
 
 //        let vc = YXReviewPlanReportViewController()
-//        let vc = YXShareViewController()
+        let vc = YXShareViewController()
 //        vc.gameModel = YXGameResultModel()
-//        vc.shareType = .learnResult
-//        self.navigationController?.pushViewController(vc, animated: true)
+        vc.shareType = .learnResult
+        self.navigationController?.pushViewController(vc, animated: true)
 
 //        let vc = YXLearningResultViewController()
 //        vc.bookId = 41
@@ -133,7 +133,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 //        vc.newLearnAmount    = 19
 //        vc.reviewLearnAmount = 10
 //        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-//        return
+        return
         guard let challengeModel = self.challengeModel, let gameInfo = challengeModel.gameInfo, let userModel = challengeModel.userModel else {
             return
         }

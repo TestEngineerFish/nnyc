@@ -134,6 +134,15 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: YXLocalKey.currentChooseBookId) as? Int
         }
     }
+    /// 当前学习的单元ID
+    var currentUnitId: Int? {
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.currentUnitId)
+        }
+        get {
+            return YYCache.object(forKey: YXLocalKey.currentUnitId) as? Int
+        }
+    }
     /// 是否已加入班级
     var isJoinClass: Bool {
         set {

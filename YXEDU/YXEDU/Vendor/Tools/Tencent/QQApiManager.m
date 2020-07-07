@@ -189,8 +189,13 @@
                                                             title:title
                                                       description:desc];
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:imageObj];
-    QQApiSendResultCode retCode = [QQApiInterface sendReq:req];
-    YXLog(@"QQ分享Image返回Code%ld", (long)retCode);
+    if (platform == YXShareQzone) {
+        QQApiSendResultCode retCode = [QQApiInterface SendReqToQZone:req];
+        YXLog(@"QQ空间分享Image返回Code%ld", (long)retCode);
+    } else {
+        QQApiSendResultCode retCode = [QQApiInterface sendReq:req];
+        YXLog(@"QQ分享Image返回Code%ld", (long)retCode);
+    }
 }
 
 - (void)shareUrl:(NSString *)urlStr

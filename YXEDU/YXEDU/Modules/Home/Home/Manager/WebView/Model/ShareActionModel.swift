@@ -14,8 +14,21 @@ struct ShareActionModel: Mappable {
         case timeLine = 2 // 朋友圈
         case qq       = 3 // QQ
         case qzone    = 4 // QQ空间
+
+        func getShareChannel() -> YXShareChannel {
+            switch self {
+            case .wechat:
+                return .wechat
+            case .timeLine:
+                return .timeLine
+            case .qq:
+                return .qq
+            case .qzone:
+                return .qzone
+            }
+        }
     }
-    var type: YXWebShareType?
+    var type: YXWebShareType = .wechat
     
     init?(map: Map) {
         self.mapping(map: map)

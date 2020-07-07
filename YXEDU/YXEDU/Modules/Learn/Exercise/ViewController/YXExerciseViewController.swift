@@ -25,26 +25,26 @@
     /// 练习出题逻辑管理器
     var service: YXExerciseService = YXExerciseServiceImpl()
     
-    // 练习view容器，用于动画切题
+    /// 练习view容器，用于动画切题
     private var exerciseViewArray: [YXBaseExerciseView] = []
     
-    // 顶部view
+    /// 顶部view
     private var headerView = YXExerciseHeaderView()
     
-    // 底部view
+    /// 底部view
     private var bottomView = YXExerciseBottomView()
     
     /// 切题动画
     private var switchAnimation = YXSwitchAnimation()
     
-    // Load视图
+    /// Load视图
     var loadingView: YXExerciseLoadingView?
     
-    // 协议
+    /// 协议
     private weak var delegate: YXExerciseViewControllerProtocol?
-    
-    /// 哪个单词的提示，仅连线题使用
-    private var remindWordId: Int = -1
+
+    /// 返回事件（WebView活动）
+    var backAction: ((Bool)->Void)?
 
     /// 是否在请求接口中，用于Loading页面的状态更新
     static var requesting: Bool?
@@ -436,7 +436,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             YXLog("返回首页")
             self.service.updateDurationTime()
             self.uploadGrowing()
-            
+            self.backAction?(false)
             self.delegate?.backHomeEvent()
             if self.learnConfig.learnType.isHomework() {
                 self.navigationController?.popViewController(animated: false)
