@@ -62,6 +62,15 @@ class YXAlertQueueManager: NSObject {
                 self.showAlert()
             }
         }
+//        // 如果当前页面是班级列表，则不显示新作业弹框
+//        if alertView?.tag == .some(YXAlertWeightType.newHomework) && YRRouter.sharedInstance().currentViewController()?.isKind(of: YXMyClassViewController.classForCoder()) == .some(true) {
+//            if self.alertArray.count > index {
+//                self.alertArray.remove(at: index)
+//            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+//                self.showAlert()
+//            }
+//        }
         alertView?.show()
         
     }
