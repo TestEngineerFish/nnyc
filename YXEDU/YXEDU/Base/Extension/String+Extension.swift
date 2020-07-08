@@ -116,6 +116,11 @@ public extension String {
         return scan.scanInt(&val) && scan.isAtEnd
     }
 
+    /// 是否是纯数字
+    func isPureNumbers() -> Bool {
+        return self.trimmingCharacters(in: CharacterSet.decimalDigits).trimed.isEmpty
+    }
+
     /// 是否包含英文字符,仅限:[A-Za-z]
     ///
     /// 也可用于匹配密码是否符合要求,可通过符合条件的count来做比较(数字+英文的可结合isContainNumber()函数)
