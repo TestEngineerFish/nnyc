@@ -206,7 +206,7 @@ class YXLearningResultViewController: YXViewController {
     // MARK: Event
     @objc private func backClick() {
         self.backAction?(true)
-        self.navigationController?.popToRootViewController(animated: false)
+        self.navigationController?.popViewController(animated: false)
     }
     
     @objc private func punchEvent() {

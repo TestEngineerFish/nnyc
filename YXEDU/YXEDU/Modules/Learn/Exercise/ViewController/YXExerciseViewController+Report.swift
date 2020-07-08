@@ -76,6 +76,7 @@ extension YXExerciseViewController {
         vc.newLearnAmount    = newCount
         vc.reviewLearnAmount = reviewCount
         vc.backAction        = self.backAction
+        self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
