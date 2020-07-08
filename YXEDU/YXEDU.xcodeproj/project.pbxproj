@@ -180,6 +180,8 @@
 		22E9FFC62473BF80006B6F60 /* YXOCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E9FFC52473BF80006B6F60 /* YXOCRequest.swift */; };
 		22EA336F24A091380034CD7E /* YXSelectSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EA336E24A091380034CD7E /* YXSelectSchoolViewController.swift */; };
 		22EA337624A094A10034CD7E /* YXSelectSchoolContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EA337524A094A10034CD7E /* YXSelectSchoolContentView.swift */; };
+		22EA5DD024B601A50062E412 /* YXWebViewMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EA5DCF24B601A50062E412 /* YXWebViewMenuAction.swift */; };
+		22EA5DD224B602300062E412 /* MenuActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EA5DD124B602300062E412 /* MenuActionModel.swift */; };
 		22EA9CE324B4AC340045923F /* YXWebViewAppInfoAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EA9CE224B4AC340045923F /* YXWebViewAppInfoAction.swift */; };
 		22ED5492236684D000011B82 /* YXQuestionMeaningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */; };
 		22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22ED54A22366DD6B00011B82 /* NSObject+YXModel.m */; };
@@ -797,6 +799,8 @@
 		22E9FFC52473BF80006B6F60 /* YXOCRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXOCRequest.swift; sourceTree = "<group>"; };
 		22EA336E24A091380034CD7E /* YXSelectSchoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectSchoolViewController.swift; sourceTree = "<group>"; };
 		22EA337524A094A10034CD7E /* YXSelectSchoolContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectSchoolContentView.swift; sourceTree = "<group>"; };
+		22EA5DCF24B601A50062E412 /* YXWebViewMenuAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebViewMenuAction.swift; sourceTree = "<group>"; };
+		22EA5DD124B602300062E412 /* MenuActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuActionModel.swift; sourceTree = "<group>"; };
 		22EA9CE224B4AC340045923F /* YXWebViewAppInfoAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebViewAppInfoAction.swift; sourceTree = "<group>"; };
 		22ED5491236684D000011B82 /* YXQuestionMeaningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXQuestionMeaningView.swift; sourceTree = "<group>"; };
 		22ED549C2366D80400011B82 /* YXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXModel.h; sourceTree = "<group>"; };
@@ -2331,6 +2335,7 @@
 				222AFBBC24B47CCD001C894C /* YXWebViewSelectSchool.swift */,
 				222AFBBE24B47CDE001C894C /* YXWebViewSelectAddress.swift */,
 				22EA9CE224B4AC340045923F /* YXWebViewAppInfoAction.swift */,
+				22EA5DCF24B601A50062E412 /* YXWebViewMenuAction.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -2340,6 +2345,7 @@
 			children = (
 				779ED53924349AB300E452E3 /* JSActionType.swift */,
 				779ED53A24349AB300E452E3 /* ShareActionModel.swift */,
+				22EA5DD124B602300062E412 /* MenuActionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4371,6 +4377,7 @@
 				779D73DA2404ED5D00E461E2 /* YXAgreementVC.m in Sources */,
 				22991069249210FD00F1C198 /* YXDatabaseConfig+Book.swift in Sources */,
 				2205A93A2361C88900C6E674 /* Iconfont.swift in Sources */,
+				22EA5DD024B601A50062E412 /* YXWebViewMenuAction.swift in Sources */,
 				224DF54A23840E6B00D2B0BF /* YXLearnResultModel.swift in Sources */,
 				EE5EF20723273BAE00655654 /* NSDictionary+YR.m in Sources */,
 				EE3DAB9D2375122300B2FF40 /* YXWordBookDao.swift in Sources */,
@@ -4477,6 +4484,7 @@
 				222AFBB724B42382001C894C /* YXAlertManager.swift in Sources */,
 				224A2FC6238233E100AD99B0 /* YXLearningResultHeaderView.swift in Sources */,
 				2205A93C2361C92500C6E674 /* UIFont+Extension.swift in Sources */,
+				22EA5DD224B602300062E412 /* MenuActionModel.swift in Sources */,
 				22164C0F23A11E4200E9252D /* YXChallengeStartButton.swift in Sources */,
 				EEA50FE023BA3C7400518BE8 /* YXAlertQueueManager.swift in Sources */,
 				EEACEB21239F9DBA0036B3A2 /* YXViewController.swift in Sources */,

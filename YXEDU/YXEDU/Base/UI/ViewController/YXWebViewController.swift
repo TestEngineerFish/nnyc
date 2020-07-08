@@ -21,6 +21,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         self.bindProperty()
         self.createSubviews()
         self.loadWebView()
+        NotificationCenter.default.post(name: YXNotification.kShowRightButton, object: nil, userInfo: ["event":"menuEvent"])
     }
 
     private func bindProperty() {
@@ -44,6 +45,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         if let _title = self.customTitle {
             self.customNavigationBar?.title = _title
         }
+//        NotificationCenter.default.addObserver(self, selector: #selector(showRuleButton(notification:)), name: YXNotification.kShowRightButton, object: nil)
     }
 
     private func createSubviews() {
@@ -53,6 +55,21 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
             make.top.equalToSuperview().offset(kNavHeight)
             make.left.right.bottom.equalToSuperview()
         })
+    }
+
+    // MARK: ==== Notification ====
+
+    @objc private func showRuleButton(notification: Notification) {
+        guard let funcStr = notification.userInfo?["event"] as? String else {
+            return
+        }
+        self.customNavigationBar?.rightButton.setTitle("规则", for: .normal)
+        self.customNavigationBar?.rightButton.setTitleColor(.orange1, for: .normal)
+        self.customNavigationBar?.rightButtonAction = {
+            DispatchQueue.main.async {
+                self.jsBridge.webView?.evaluateJavaScript(funcStr + "()", completionHandler: nil)
+            }
+        }
     }
 
     // MARK: ==== Event ====
