@@ -14,9 +14,7 @@ class YXWebViewSelectAddress: YRWebViewJSAction, YXSelectLocalPickerViewProtocol
 
     override func action() {
         super.action()
-        if let addressId = self.params["address_id"] as? Int {
-            self.showSelectSchoolView(local: addressId)
-        }
+        self.showSelectSchoolView()
     }
 
     deinit {
@@ -25,9 +23,7 @@ class YXWebViewSelectAddress: YRWebViewJSAction, YXSelectLocalPickerViewProtocol
     }
 
     // MARK: ==== Event ====
-    private func showSelectSchoolView(local id: Int) {
-        var localModel = YXLocalModel()
-        localModel.id  = id
+    private func showSelectSchoolView() {
         selectView.delegate = self
         selectView.show()
     }
