@@ -13,9 +13,9 @@ import GrowingCoreKit
 import GrowingAutoTrackKit
 //import AdSupport
 
-#if DEBUG
-import EchoSDK
-#endif
+//#if DEBUG
+//import EchoSDK
+//#endif
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

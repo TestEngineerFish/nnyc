@@ -46,6 +46,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var activityView: UIView!
     @IBOutlet weak var activityViewHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionViewTop: NSLayoutConstraint!
+    @IBOutlet weak var activityViewTop: NSLayoutConstraint!
 
     var squirrelAnimationView: AnimationView?
     
@@ -305,20 +306,52 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.activityViewHeight.constant = 0
         self.collectionViewTop.constant  = 0
         return
-        let titleLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "念念有词全国单词达人挑战赛"
-            label.textColor     = UIColor.white
-            label.font          = UIFont.pfSCSemiboldFont(withSize: AdaptFontSize(20))
-            label.textAlignment = .center
-            return label
+        // CreateSubviews
+        let bannerH = (screenWidth - 40)/335*80
+        self.activityViewHeight.constant = bannerH
+        let bannerImageView: UIImageView = {
+            let imageView = UIImageView()
+            imageView.image = UIImage(named: "activityBanner")
+            return imageView
         }()
+        self.activityView.addSubview(bannerImageView)
+        bannerImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        // BindProperty
         let tapAction = UITapGestureRecognizer(target: self, action: #selector(toActivity))
         self.activityView.addGestureRecognizer(tapAction)
-        self.activityView.layer.setDefaultShadow()
-        self.activityView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+        if true {
+            let bubbleImageView: UIImageView = {
+                let imageView = UIImageView()
+                imageView.image = UIImage(named: "activityBubble")
+                imageView.isUserInteractionEnabled = true
+                return imageView
+            }()
+            let bubbleButton: UIButton = {
+                let button = UIButton()
+                button.setImage(UIImage(named: "activityArrow"), for: .normal)
+                button.setTitle("奖励待领取", for: .normal)
+                button.setTitleColor(UIColor.hex(0x361211), for: .normal)
+                button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptFontSize(12))
+                button.imageEdgeInsets = UIEdgeInsets(top: 0, left: AdaptIconSize(78), bottom: 0, right: 0)
+                button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: AdaptIconSize(13))
+                return button
+            }()
+            self.view.addSubview(bubbleImageView)
+            bubbleImageView.addSubview(bubbleButton)
+            bubbleImageView.snp.makeConstraints { (make) in
+                make.right.equalTo(self.activityView)
+                make.top.equalTo(self.activityView).offset(AdaptSize(-20))
+                make.size.equalTo(CGSize(width: AdaptIconSize(98), height: AdaptIconSize(30)))
+            }
+            bubbleButton.snp.makeConstraints { (make) in
+                make.left.top.right.equalToSuperview()
+                make.bottom.equalToSuperview().offset(AdaptSize(-2))
+            }
+            // BindProperty
+            self.activityViewTop.constant = isPad() ? AdaptSize(45) : AdaptSize(30)
+            bubbleButton.addTarget(self, action: #selector(toActivity), for: .touchUpInside)
         }
     }
     
