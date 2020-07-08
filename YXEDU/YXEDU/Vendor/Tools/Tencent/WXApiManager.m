@@ -41,11 +41,29 @@
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
-    return [WXApi handleOpenURL:url delegate:self];
+    [WXApi startLogByLevel:WXLogLevelDetail logBlock:^(NSString * _Nonnull log) {
+        YXLog(@"WeChatSDKLog: %@", log);
+    }];
+    BOOL ret = [WXApi registerApp:wechatId universalLink:universalLink];
+    if ([WXApi handleOpenURL:url delegate:self]) {
+        YXLog(@"handleOpenURL: %@", url.absoluteString);
+    }
+    return YES;
 }
 
 - (BOOL)handleOpenUniversalLink:(NSUserActivity *)userActivity {
-    return [WXApi handleOpenUniversalLink:userActivity delegate:self];
+    //开启SDK Log
+    [WXApi startLogByLevel:WXLogLevelDetail logBlock:^(NSString *log) {
+        NSLog(@"WeChatSDK: %@", log);
+    }];
+
+    // 在调用WXApi的handle方法前，须先调用registerApp注册。ret为注册结果，若注册失败，请根据sdk的log排查原因
+    BOOL ret = [WXApi registerApp:wechatId universalLink:universalLink];
+    if ([WXApi handleOpenUniversalLink:userActivity delegate:self]) {
+        /// handled by OpenSDK
+        YXLog(@"handleOpenUniversalLinkURL");
+    }
+    return YES;
 }
 
 - (void)wxLogin {
@@ -100,6 +118,17 @@
 -(void)onReq:(BaseReq*)req{
     YXLog(@"----");
     YXLog(@"%@",req);
+    //获取开放标签传递的extinfo数据逻辑
+    if ([req isKindOfClass:[LaunchFromWXReq class]])
+    {
+        if ([req isKindOfClass:[SendMessageToWXReq class]]) {
+            SendMessageToWXReq *sendMsgReq = (SendMessageToWXReq *)req;
+            WXMediaMessage *msg = sendMsgReq.message;
+            NSString *openID = req.openID;
+            NSString *extinfo = msg.messageExt;
+            // handle...
+        }
+    }
 }
 
 

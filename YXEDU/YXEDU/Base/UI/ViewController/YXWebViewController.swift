@@ -10,7 +10,7 @@ import UIKit
 
 class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, YRWebViewJSBridgeDelegate {
 
-    let appJS     = "ssaiAppJS"
+    let appJS     = "nnycAppJS"
     var webView: YXWebView?
     var requestUrlStr: String?
     var customTitle: String?
