@@ -92,7 +92,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     func saveReviewPlan(dataList: [(Int, String)], type: YXDownloadType = .reviewPlan, word id: Int = 0) {
         YXLog("词单的词书列表", dataList)
         let task = YXWordBookResourceModel(type: type, workId: id) {
-             YXLog("词书下载完成，开始检测和下载词单的词书")
+            YXLog("词书下载完成，开始检测和下载词单的词书")
             YXWordBookResourceManager.downloadDataList += self.getUpdateList(dataList: dataList)
             self.downloadProcessor()
         }

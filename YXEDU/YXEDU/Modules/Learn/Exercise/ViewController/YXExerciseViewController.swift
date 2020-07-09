@@ -58,9 +58,7 @@
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.loadingView = nil
-        if self.learnConfig.learnType == .base {
-            YXWordBookResourceManager.stop = false
-        }
+        YXWordBookResourceManager.stop = false
     }
 
     override func viewDidLoad() {

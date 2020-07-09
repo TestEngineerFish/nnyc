@@ -249,8 +249,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
         guard let _model = self.model, let workId = _model.workId else {
             return
         }
-        YXLog(String(format: "==== 开始做作业，作业ID：%ld ====", workId))
-        YXWordBookResourceManager.stop = false
+        YXLog(String(format: "==== 开始做%@，作业ID：%ld ====", type.desc, workId))
         let dataList = self.getBookHashDic()
         YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
 

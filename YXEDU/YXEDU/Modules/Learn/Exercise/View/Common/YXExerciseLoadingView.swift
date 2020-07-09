@@ -98,7 +98,6 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
     }
     
     deinit {
-        YXLog("\(self)，被释放")
         self.timer?.invalidate()
         self.timer = nil
     }
