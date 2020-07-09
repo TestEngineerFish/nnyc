@@ -24,14 +24,14 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         NotificationCenter.default.post(name: YXNotification.kShowRightButton, object: nil, userInfo: ["event":"menuEvent"])
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.webView?.configuration.userContentController.add(self, name: appJS)
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.webView?.uiDelegate = nil
-        self.webView?.navigationDelegate = nil
-        self.webView?.configuration.userContentController.removeAllUserScripts()
-        self.jsBridge.webView = nil
-        self.jsBridge.delegate = nil
-        self.webView = nil
+        self.webView?.configuration.userContentController.removeScriptMessageHandler(forName: appJS)
     }
 
     deinit {
@@ -40,7 +40,6 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
 
     private func bindProperty() {
         let userContentController = WKUserContentController()
-        userContentController.add(self, name: appJS)
 
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = userContentController
@@ -81,8 +80,10 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         self.customNavigationBar?.rightButtonTitleColor = .orange1
         self.customNavigationBar?.rightButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(15))
         self.customNavigationBar?.rightButton.sizeToFit()
-        self.customNavigationBar?.rightButtonAction = {
-            DispatchQueue.main.async {
+        self.customNavigationBar?.rightButtonAction = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.jsBridge.webView?.evaluateJavaScript(funcStr + "()", completionHandler: nil)
             }
         }
