@@ -39,6 +39,8 @@ class YXMyClassWorkDetailCell: UITableViewCell {
         }
     }
 
+    let customTag = 100
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.bindProperty()
@@ -77,13 +79,18 @@ class YXMyClassWorkDetailCell: UITableViewCell {
     }
 
     func setData(word model: YXMyClassReportWordModel) {
+        self.removeCustomSubviews()
+        var _customTag = self.customTag
         self.wordLabel.text    = model.word
         self.chineseLabel.text = String(format: "%@%@", model.paraphrase?.partOfSpeech ?? "", model.paraphrase?.meaning ?? "")
         var offsetY = AdaptSize(0)
         let wrongTextList = model.wrongTextList()
         if !wrongTextList.isEmpty {
             wrongTextList.forEach { (text) in
+                _customTag += 1
                 let iconImageView = UIImageView(image: UIImage(named: "error"))
+                iconImageView.tag = _customTag
+                _customTag += 1
                 let textLabel: UILabel = {
                     let label = UILabel()
                     label.text          = text
@@ -92,6 +99,7 @@ class YXMyClassWorkDetailCell: UITableViewCell {
                     label.textAlignment = .left
                     return label
                 }()
+                textLabel.tag = _customTag
                 resultView.addSubview(iconImageView)
                 resultView.addSubview(textLabel)
                 iconImageView.snp.makeConstraints { (make) in
@@ -108,7 +116,10 @@ class YXMyClassWorkDetailCell: UITableViewCell {
                 offsetY += AdaptSize(21)
             }
         } else {
+            _customTag += 1
             let iconImageView = UIImageView(image: UIImage(named: "success"))
+            iconImageView.tag = _customTag
+            _customTag += 1
             let textLabel: UILabel = {
                 let label = UILabel()
                 label.text          = "全对"
@@ -117,6 +128,7 @@ class YXMyClassWorkDetailCell: UITableViewCell {
                 label.textAlignment = .left
                 return label
             }()
+            textLabel.tag = _customTag
             resultView.addSubview(iconImageView)
             resultView.addSubview(textLabel)
             iconImageView.snp.makeConstraints { (make) in
@@ -135,4 +147,12 @@ class YXMyClassWorkDetailCell: UITableViewCell {
         self.resultViewHeight = offsetY - AdaptSize(5)
     }
 
+    // MARK: ==== Tools ====
+    private func removeCustomSubviews() {
+        for subview in self.resultView.subviews {
+            if subview.tag > self.customTag {
+                subview.removeFromSuperview()
+            }
+        }
+    }
 }
