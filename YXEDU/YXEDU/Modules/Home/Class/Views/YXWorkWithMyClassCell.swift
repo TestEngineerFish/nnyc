@@ -197,10 +197,10 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 self.actionButton.type = .normal
                 self.actionButton.setStatus(.normal)
                 self.actionButton.setTitleColor(.black1, for: .normal)
-                self.actionButton.setTitleColor(.black2, for: .normal)
                 self.actionButton.layer.borderColor = UIColor.black4.cgColor
                 self.actionButton.layer.borderWidth = AdaptSize(1)
                 self.actionButton.setTitle("查看报告", for: .normal)
+                self.actionButton.backgroundColor = UIColor.white
                 self.actionButton.isUserInteractionEnabled = true
             case .beExpiredUnfinished:
                 self.statusImage.isHidden  = false

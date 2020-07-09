@@ -11,7 +11,7 @@ import UIKit
 public enum YXExerciseRequest: YYBaseRequest {
     case exercise(isGenerate: Bool, type: Int, reviewId: Int?)
     case learnMap(bookId: Int)
-    case learnResult(bookId: Int, unitId: Int)
+    case learnResult(bookId: Int, unitId: Int, wordId: Int)
     case report(type: Int, reviewId: Int, time: Int, result: String)
     case addUserBook(userId: String, bookId: Int, unitId: Int)
     case reportListenScore(wordId: Int, score: Int)
@@ -54,8 +54,8 @@ extension YXExerciseRequest {
             return ["is_generate" : isGenerate, "learn_type" : type, "review_id" : planId]
         case .learnMap(let bookId):
             return ["book_id" : bookId]
-        case .learnResult(let bookId, let unitId):
-            return ["book_id" : bookId, "unit_id" : unitId]
+        case .learnResult(let bookId, let unitId, let workId):
+            return ["book_id" : bookId, "unit_id" : unitId, "work_id" : workId]
         case .addUserBook(let userId, let bookId, let unitId):
             return ["user_id":userId, "book_id":bookId, "unit_id":unitId]
         case .report(let type, let reviewId, let time, let result):

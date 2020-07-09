@@ -158,7 +158,7 @@ class YXLearningResultViewController: YXViewController {
         guard let config = learnConfig else {
             return
         }
-        let request = YXExerciseRequest.learnResult(bookId: config.bookId, unitId: config.unitId)
+        let request = YXExerciseRequest.learnResult(bookId: config.bookId, unitId: config.unitId, wordId: config.homeworkId)
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else {
                 return
