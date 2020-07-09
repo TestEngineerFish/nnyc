@@ -285,11 +285,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             guard let _userInfomation = userInfomation else {
                 return
             }
-            if !_userInfomation.isJoinSchool {
+            if _userInfomation.isJoinSchool {
+                YYCache.set(false, forKey: .isShowSelectSchool)
+            } else {
                 YYCache.set(true, forKey: .isShowSelectSchool)
             }
             if _userInfomation.didSelectBook == 0 {
                 YYCache.set(true, forKey: .isShowSelectBool)
+            } else {
+                YYCache.set(false, forKey: .isShowSelectBool)
             }
 
             if _userInfomation.reminder?.didOpen == 1, let time = _userInfomation.reminder?.timeStamp {
