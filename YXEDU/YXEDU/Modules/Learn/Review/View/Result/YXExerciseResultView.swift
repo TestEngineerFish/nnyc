@@ -192,7 +192,7 @@ class YXExerciseResultView: YXView {
             remindButton.sizeToFit()
             remindButton.snp.remakeConstraints { (make) in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(tipsView.snp.bottom).offset(AdaptSize(20))
+                make.bottom.equalTo(operateButton.snp.top).offset(AdaptSize(-10))
                 make.size.equalTo(remindButton.size)
             }
         }
@@ -465,7 +465,7 @@ class YXExerciseResultView: YXView {
         
         allHeight += AdaptIconSize(25 + 42 + 25)
 
-        allHeight += model.type.isHomework() ? AdaptSize(28) : 0
+        allHeight += model.type == .homeworkPunch ? AdaptIconSize(28) : 0
 
         return allHeight
     }

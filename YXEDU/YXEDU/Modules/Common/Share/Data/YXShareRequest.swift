@@ -36,7 +36,7 @@ public enum YXShareRequest: YYBaseRequest {
     public var parameters: [String : Any?]? {
         switch self {
         case .punch(let type, let bookId, let learnType):
-            return ["type" : type, "bookId" : bookId, "learn_type" : learnType]
+            return ["type" : type, "book_id" : bookId, "learn_type" : learnType]
             
         case .changeBackgroundImage(let type):
             return ["type" : type]
