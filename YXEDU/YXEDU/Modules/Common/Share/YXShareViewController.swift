@@ -271,6 +271,7 @@ class YXShareViewController: YXViewController {
             } else {
                 YXLog("打卡分享失败")
             }
+            NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
             NotificationCenter.default.post(name: YXNotification.kShareResult, object: nil, userInfo: ["isFinished":isFinished])
             
         }) { (error) in
