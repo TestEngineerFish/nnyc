@@ -148,8 +148,9 @@ class YXWorkWithMyClassCell: UITableViewCell {
         if model.type == .punch {
             switch model.shareWorkStatus {
             case .unexpiredUnlearned, .unexpiredLearnedUnshare:
-                self.statusImage.isHidden  = true
-                self.actionButton.isHidden = false
+                self.actionButton.isUserInteractionEnabled = true
+                self.actionButton.isHidden  = false
+                self.actionButton.isEnabled = true
                 self.actionButton.type = .border
                 self.actionButton.setStatus(.normal)
                 self.actionButton.setTitleColor(.orange1, for: .normal)
@@ -169,6 +170,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 self.actionButton.layer.borderColor = UIColor.clear.cgColor
                 self.actionButton.layer.borderWidth = 0
                 self.actionButton.setTitle("今日已打卡", for: .normal)
+                self.actionButton.isUserInteractionEnabled = false
             case .beExpiredUnfinished:
                 self.statusImage.isHidden  = false
                 self.actionButton.isHidden = true
@@ -187,6 +189,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 self.actionButton.setStatus(.normal)
                 self.actionButton.setTitleColor(.orange1, for: .normal)
                 self.actionButton.setTitle("做作业", for: .normal)
+                self.actionButton.isUserInteractionEnabled = true
             case .unexpiredFinished, .beExpiredFinished:
                 self.statusImage.isHidden  = false
                 self.actionButton.isHidden = false
@@ -198,6 +201,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 self.actionButton.layer.borderColor = UIColor.black4.cgColor
                 self.actionButton.layer.borderWidth = AdaptSize(1)
                 self.actionButton.setTitle("查看报告", for: .normal)
+                self.actionButton.isUserInteractionEnabled = true
             case .beExpiredUnfinished:
                 self.statusImage.isHidden  = false
                 self.actionButton.isHidden = false
@@ -206,6 +210,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 self.actionButton.setStatus(.normal)
                 self.actionButton.setTitleColor(.orange1, for: .normal)
                 self.actionButton.setTitle("补作业", for: .normal)
+                self.actionButton.isUserInteractionEnabled = true
             }
         }
     }
