@@ -105,21 +105,21 @@ struct YXMyWorkModel: Mappable {
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        studentId   <- map["student_id"]
-        workId      <- map["work_id"]
-        classId     <- map["class_id"]
-        type        <- (map["type"], EnumTransform<YXHomeworkType>())
-        status      <- (map["status"], EnumTransform<YXWorkCompletionStatus>())
-        progress    <- map["progress"]
-        shareCount  <- map["clock_day_num"]
-        workName    <- map["work_name"]
-        className   <- map["class_name"]
-        shareAmount <- map["day_num"]
-        timeStr     <- map["date_desc"]
-        bookIdList  <- map["book_id_list"]
-        unitId      <- map["unit_id"]
-        studyWordCount <- map[""]
-        studyDayCount  <- map[""]
+        studentId      <- map["student_id"]
+        workId         <- map["work_id"]
+        classId        <- map["class_id"]
+        type           <- (map["type"], EnumTransform<YXHomeworkType>())
+        status         <- (map["status"], EnumTransform<YXWorkCompletionStatus>())
+        progress       <- map["progress"]
+        shareCount     <- map["clock_day_num"]
+        workName       <- map["work_name"]
+        className      <- map["class_name"]
+        shareAmount    <- map["day_num"]
+        timeStr        <- map["date_desc"]
+        bookIdList     <- map["book_id_list"]
+        unitId         <- map["unit_id"]
+        studyWordCount <- map["study_words"]
+        studyDayCount  <- map["study_days"]
         if type == .punch {
             shareWorkStatus    <- (map["no_status"], EnumTransform<YXShareWorkStatusType>())
         } else {
