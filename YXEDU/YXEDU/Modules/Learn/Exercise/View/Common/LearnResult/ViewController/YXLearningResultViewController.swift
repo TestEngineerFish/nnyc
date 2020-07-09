@@ -223,7 +223,7 @@ class YXLearningResultViewController: YXViewController {
         }
         shareVC.bookId      = config.bookId
         shareVC.learnType   = config.learnType
-        shareVC.shareType   = config.learnType == .base ? .learnResult : .homeworkResult
+        shareVC.shareType   = .learnResult
         shareVC.wordsAmount = model.allWordCount
         shareVC.daysAmount  = model.studyDay
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(shareVC, animated: true)

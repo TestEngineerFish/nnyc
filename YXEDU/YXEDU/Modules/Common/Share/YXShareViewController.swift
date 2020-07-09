@@ -19,8 +19,6 @@ enum YXShareImageType: Int {
     case listenReviewResult = 4
     /// 挑战结果分享
     case challengeResult    = 5
-    /// 课外作业
-    case homeworkResult     = 6
 }
 
 class YXShareViewController: YXViewController {
@@ -228,7 +226,7 @@ class YXShareViewController: YXViewController {
 
                 DispatchQueue.main.async() {
                     switch self.shareType {
-                    case .learnResult, .homeworkResult:
+                    case .learnResult:
                         self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
                     case .aiReviewReuslt:
                         self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)
@@ -299,7 +297,7 @@ class YXShareViewController: YXViewController {
         getBackgroundImage(from: currentBackgroundImageUrl) { backgroundImage in
             DispatchQueue.main.async() {
                 switch self.shareType {
-                case .learnResult, .homeworkResult:
+                case .learnResult:
                     self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
                 case .aiReviewReuslt:
                     self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)

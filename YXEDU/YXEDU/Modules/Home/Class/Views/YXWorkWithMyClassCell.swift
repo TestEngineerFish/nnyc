@@ -270,7 +270,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
         let shareVC = YXShareViewController()
         shareVC.bookId      = _model.bookIdList.first ?? 0
         shareVC.learnType   = _model.type.learnType()
-        shareVC.shareType   = .homeworkResult
+        shareVC.shareType   = .learnResult
         shareVC.wordsAmount = _model.studyWordCount
         shareVC.daysAmount  = _model.studyDayCount
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(shareVC, animated: true)
