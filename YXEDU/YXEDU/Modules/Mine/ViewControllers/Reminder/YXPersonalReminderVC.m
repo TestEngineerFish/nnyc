@@ -99,13 +99,13 @@
         make.top.equalTo(intervalView.mas_bottom);
     }];
     _bottomView = bottomView;
-    
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"Reminder"] == nil) {
+
+    if ([YXSetReminderView getReminderDate] == nil) {
         self.remindDate = nil;
         [self.isReminderSwitch setOn:NO];
         
     } else {
-        self.remindDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"Reminder"];
+        self.remindDate = [YXSetReminderView getReminderDate];
         [self.isReminderSwitch setOn:YES];
     }
     
@@ -194,13 +194,11 @@
         }];
         
         [YXSetReminderView didSetReminderWithDidOpen:1 time:[NSNumber numberWithDouble:[self.datePicker.date timeIntervalSince1970]]];
-        [[NSUserDefaults standardUserDefaults] setObject:self.datePicker.date forKey:@"Reminder"];
-        [[NSUserDefaults standardUserDefaults] setObject:self.datePicker.date forKey:@"DidShowSetupReminderAlert"];
+        [YXSetReminderView setReminderTimeWithDate: self.datePicker.date];
 
     } else {
         [YXSetReminderView didSetReminderWithDidOpen:0 time:0];
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"Reminder"];
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"DidShowSetupReminderAlert"];
+        [YXSetReminderView setReminderTimeWithDate: nil];
     }
         
     [self.navigationController popViewControllerAnimated:YES];

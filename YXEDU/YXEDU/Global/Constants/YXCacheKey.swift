@@ -22,6 +22,8 @@ enum YXLocalKey: String {
     case newLearnReportGIO             = "NewLearnReportGIO" // 新学完成上报GIO
     case didShowRate                   = "DidShowRate" // 是否弹过评分弹窗
     case punchCount                    = "PunchCount" // 打卡次数大于等于 4，弹出评分弹窗
+    case didShowSetupReminderAlert     = "DidShowSetupReminderAlert" // 是否已展示提示弹框
+    case reminder                      = "Reminder" // 提示学习时间
 
     // ==== UserModel ====
     case uuid                          = "kUUID"

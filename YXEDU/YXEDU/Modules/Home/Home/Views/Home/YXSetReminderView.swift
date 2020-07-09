@@ -47,9 +47,8 @@ class YXSetReminderView: YXTopWindowView {
         alertView.shouldOnlyShowOneButton = true
         alertView.rightOrCenterButton.setTitle("好的", for: .normal)
         alertView.show()
-        
-        UserDefaults.standard.set(timePicker.date, forKey: "DidShowSetupReminderAlert")
 
+        YYCache.set(timePicker.date, forKey: .didShowSetupReminderAlert)
         YXSetReminderView.didSetReminder(didOpen: 0)
         self.removeFromSuperview()
     }
@@ -67,8 +66,8 @@ class YXSetReminderView: YXTopWindowView {
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         notificationCenter.add(request)
         
-        UserDefaults.standard.set(timePicker.date, forKey: "DidShowSetupReminderAlert")
-        UserDefaults.standard.set(timePicker.date, forKey: "Reminder")
+        YYCache.set(timePicker.date, forKey: .didShowSetupReminderAlert)
+        YYCache.set(timePicker.date, forKey: .reminder)
         
         YXSetReminderView.didSetReminder(didOpen: 1, time: NSNumber(value: timePicker.date.timeIntervalSince1970))
         self.removeFromSuperview()
@@ -78,6 +77,17 @@ class YXSetReminderView: YXTopWindowView {
     class func didSetReminder(didOpen: Int, time: NSNumber = 0) {
         let jsonString = "{\"is_open\":\(didOpen),\"time\":\(time.doubleValue)}"
         self.requestReportNotification(dataString: "{\"learn_remind\": \(jsonString)}")
+    }
+
+    @objc
+    class func setReminderTime(date: Date?) {
+        YYCache.set(date, forKey: .didShowSetupReminderAlert)
+        YYCache.set(date, forKey: .reminder)
+    }
+
+    @objc
+    class func getReminderDate() -> Date? {
+       return YYCache.object(forKey: .reminder) as? Date
     }
 
     class func requestReportNotification(dataString: String) {

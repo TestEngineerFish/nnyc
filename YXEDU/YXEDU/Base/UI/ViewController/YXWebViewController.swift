@@ -26,7 +26,12 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        self.webView?.uiDelegate = nil
+        self.webView?.navigationDelegate = nil
+        self.webView?.configuration.userContentController.removeAllUserScripts()
         self.jsBridge.webView = nil
+        self.jsBridge.delegate = nil
+        self.webView = nil
     }
 
     deinit {

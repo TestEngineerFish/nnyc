@@ -30,9 +30,9 @@ struct YXUserInfomationModel: Mappable {
     var didBindPhone: Int?
     var didSelectBook: Int?
     var oldUserUpdateMessage: String?
-    var coinExplainUrl: String?  //松果币H5文件
-    var gameExplainUrl: String? //游戏挑战H5文件
-    var isJoinSchool: Bool = true
+    var coinExplainUrl: String?  // 松果币H5文件
+    var gameExplainUrl: String? // 游戏挑战H5文件
+    var isJoinSchool: Bool = true // 是否已加入学校
     var reminder: YXReminderModel?
 
     init?(map: Map) {

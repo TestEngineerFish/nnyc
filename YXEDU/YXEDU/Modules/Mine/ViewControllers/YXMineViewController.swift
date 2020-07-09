@@ -187,7 +187,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
 
         // 每日提醒
         let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
-        if let date = UserDefaults.standard.object(forKey: "Reminder") as? Date {
+        if let date = YYCache.object(forKey: .reminder) as? Date {
             let dateFormatter = DateFormatter()
             dateFormatter.timeStyle = .short
             remindLabel?.text = dateFormatter.string(from: date)
