@@ -24,6 +24,15 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         NotificationCenter.default.post(name: YXNotification.kShowRightButton, object: nil, userInfo: ["event":"menuEvent"])
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.jsBridge.webView = nil
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     private func bindProperty() {
         let userContentController = WKUserContentController()
         userContentController.add(self, name: appJS)
@@ -45,7 +54,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         if let _title = self.customTitle {
             self.customNavigationBar?.title = _title
         }
-//        NotificationCenter.default.addObserver(self, selector: #selector(showRuleButton(notification:)), name: YXNotification.kShowRightButton, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showRuleButton(notification:)), name: YXNotification.kShowRightButton, object: nil)
     }
 
     private func createSubviews() {
@@ -63,8 +72,10 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         guard let funcStr = notification.userInfo?["event"] as? String else {
             return
         }
-        self.customNavigationBar?.rightButton.setTitle("规则", for: .normal)
-        self.customNavigationBar?.rightButton.setTitleColor(.orange1, for: .normal)
+        self.customNavigationBar?.rightButtonTitle      = "规则"
+        self.customNavigationBar?.rightButtonTitleColor = .orange1
+        self.customNavigationBar?.rightButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(15))
+        self.customNavigationBar?.rightButton.sizeToFit()
         self.customNavigationBar?.rightButtonAction = {
             DispatchQueue.main.async {
                 self.jsBridge.webView?.evaluateJavaScript(funcStr + "()", completionHandler: nil)

@@ -283,7 +283,7 @@ class YXExerciseResultView: YXView {
     private func setSubTitleValue() {
         
         if model.state {// 学完
-            if model.type == .base {
+            if model.type == .base || model.type == .homeworkPunch {
                 if model.score <= 1 {
                     subTitleLabel.text = " 有些单词还掌握的不太好呢\n再练习一下吧~"
                 } else if model.score == 2 {
@@ -301,7 +301,7 @@ class YXExerciseResultView: YXView {
                 }
             }
         } else {
-            if model.type == .base {
+            if model.type == .base || model.type == .homeworkPunch {
                 subTitleLabel.text = " 学得不错，继续学习就可以推进这个单元的进度哦~"
             }
         }
