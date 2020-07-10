@@ -22,6 +22,11 @@ class YXMyClassTableViewClassCell: UITableViewCell {
         imageView.image = UIImage(named: "arrow_right_gray")
         return imageView
     }()
+    var lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.hex(0xEEEEEE)
+        return view
+    }()
     let redDot = YXRedDotView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -44,10 +49,11 @@ class YXMyClassTableViewClassCell: UITableViewCell {
     }
 
     private func createSubviews() {
-        self.separatorInset = UIEdgeInsets(top: 0, left: AdaptSize(15), bottom: 0, right: AdaptSize(-15))
+        self.separatorInset = UIEdgeInsets(top: 0, left: AdaptSize(1000), bottom: 0, right: 0)
         self.addSubview(nameLabel)
         self.addSubview(redDot)
         self.addSubview(arrowImageView)
+        self.addSubview(lineView)
         nameLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.height.equalTo(AdaptSize(21))
@@ -63,6 +69,12 @@ class YXMyClassTableViewClassCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(8), height: AdaptSize(15)))
             make.right.equalToSuperview().offset(AdaptSize(-15))
+        }
+        lineView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(15))
+            make.right.equalToSuperview().offset(AdaptSize(-15))
+            make.height.equalTo(0.5)
+            make.bottom.equalToSuperview()
         }
     }
 }

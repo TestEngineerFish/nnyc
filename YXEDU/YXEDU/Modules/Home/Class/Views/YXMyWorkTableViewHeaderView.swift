@@ -57,8 +57,8 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
             make.edges.equalToSuperview()
         }
         workTitleLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(15))
-            make.right.equalToSuperview().offset(AdaptSize(-15))
+            make.left.equalToSuperview().offset(AdaptSize(20))
+            make.right.equalToSuperview().offset(AdaptSize(-20))
             make.bottom.equalToSuperview().offset(AdaptSize(-7.5))
         }
         self.tableView.layer.setDefaultShadow(cornerRadius: AdaptSize(12), shadowRadius: 10)

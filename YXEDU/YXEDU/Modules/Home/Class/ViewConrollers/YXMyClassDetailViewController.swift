@@ -154,7 +154,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         self.sheetView.frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: AdaptSize(100) + kSafeBottomMargin)
         UIView.animate(withDuration: 0.25) {
             self.backgroundView.layer.opacity = 1.0
-            self.sheetView.transform = CGAffineTransform(translationX: 0, y: AdaptSize(-100))
+            self.sheetView.transform = CGAffineTransform(translationX: 0, y: AdaptSize(-100) - kSafeBottomMargin)
         }
     }
 

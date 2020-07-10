@@ -21,6 +21,9 @@ struct YXResultModel: Mappable {
 
     /// 是否有还有下一组
     var hasNextGroup: Bool = false
+
+    /// 二维码地址
+    var imageUrlStr: String = ""
     
     init?(map: Map) {
         self.mapping(map: map)
@@ -32,5 +35,6 @@ struct YXResultModel: Mappable {
         imageUrls      <- map["img_urls"]
         credits        <- map["userCredits"]
         hasNextGroup   <- map["is_next_group"]
+        imageUrlStr    <- map["image_url"]
     }
 }

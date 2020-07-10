@@ -45,12 +45,12 @@ class YXMyClassTableViewHanderView: YXView {
         self.addSubview(joinButton)
         myClassLabel.sizeToFit()
         myClassLabel.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            make.centerY.equalToSuperview().offset(AdaptSize(3))
             make.left.equalToSuperview().offset(AdaptSize(15))
             make.size.equalTo(myClassLabel.size)
         }
         joinButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
+            make.centerY.equalTo(myClassLabel)
             make.right.equalToSuperview().offset(AdaptSize(-15))
             make.size.equalTo(CGSize(width: AdaptSize(88), height: AdaptSize(28)))
         }

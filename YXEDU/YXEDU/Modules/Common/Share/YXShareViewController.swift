@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 enum YXShareImageType: Int {
     /// 学习结果分享
@@ -94,7 +95,7 @@ class YXShareViewController: YXViewController {
         let shareView = YXShareDefaultView(frame: CGRect.zero)
         return shareView
     }()
-
+    var loadingView = UIActivityIndicatorView(style: .gray)
     var qrCodeImage = UIImage(named: "shareQRCode")
     var bookId: Int = 0
     var learnType: YXLearnType?
@@ -112,7 +113,9 @@ class YXShareViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
+//        self.setQRCodeImage {
         self.getBackgroundImageList()
+//        }
         self.bindProperty()
         self.createSubviews()
     }
@@ -141,6 +144,7 @@ class YXShareViewController: YXViewController {
 
         headerView.addSubview(shareImageBorderView)
         shareImageBorderView.addSubview(shareImageView)
+        shareImageView.addSubview(loadingView)
         footerView.addSubview(shareTypeBorderView)
 
         shareTypeBorderView.addSubview(leftLineView)
@@ -179,6 +183,10 @@ class YXShareViewController: YXViewController {
         shareImageView.size = imageViewSize
         shareImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
+        }
+        loadingView.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: AdaptIconSize(45), height: AdaptIconSize(45)))
+            make.center.equalToSuperview()
         }
 
         shareTypeBorderView.snp.makeConstraints { (make) in
@@ -223,8 +231,8 @@ class YXShareViewController: YXViewController {
             self.currentBackgroundImageIndex = Int.random(in: 0..<imageUrls.count)
             self.currentBackgroundImageUrl   = self.backgroundImageUrls?[self.currentBackgroundImageIndex]
             self.getBackgroundImage(from: self.currentBackgroundImageUrl) { backgroundImage in
-
                 DispatchQueue.main.async() {
+                    self.loadingView.stopAnimating()
                     switch self.shareType {
                     case .learnResult:
                         self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
@@ -328,6 +336,25 @@ class YXShareViewController: YXViewController {
             
             completeClosure(UIImage(data: data))
         }).resume()
+    }
+
+    private func setQRCodeImage(complete block:(()->Void)?) {
+        self.loadingView.startAnimating()
+        let request = YXShareRequest.getQRCode
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            guard let model = response.data else {
+                return
+            }
+            YXLog("1")
+            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { (image, data, error, result) in
+                if let _image = image {
+                    self.qrCodeImage = _image
+                }
+                block?()
+            })
+        }) { (error) in
+            YXUtils.showHUD(self.view, title: error.message)
+        }
     }
     
     /// 创建学习结果打卡页面

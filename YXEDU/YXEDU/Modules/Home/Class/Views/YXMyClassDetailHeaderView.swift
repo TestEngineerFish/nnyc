@@ -31,7 +31,7 @@ class YXMyClassDetailHeaderView: YXView {
     var numberLabel: UILabel = {
         let label = UILabel()
         label.textColor     = .orange1
-        label.font          = .regularFont(ofSize: AdaptFontSize(13))
+        label.font          = .mediumFont(ofSize: AdaptIconSize(13))
         label.textAlignment = .left
         return label
     }()
@@ -107,7 +107,7 @@ class YXMyClassDetailHeaderView: YXView {
         }
         self.copyButton.sizeToFit()
         self.copyButton.snp.remakeConstraints { (make) in
-            make.left.equalTo(numberLabel.snp.right).offset(AdaptSize(13))
+            make.left.equalTo(numberLabel.snp.right).offset(AdaptSize(8))
             make.centerY.equalTo(numberTitleLabel)
             make.width.equalTo(AdaptSize(28))
             make.height.equalTo(AdaptSize(15))

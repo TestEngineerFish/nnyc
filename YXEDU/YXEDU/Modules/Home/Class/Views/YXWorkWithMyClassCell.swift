@@ -131,17 +131,24 @@ class YXWorkWithMyClassCell: UITableViewCell {
     }
 
     func setData(work model: YXMyWorkModel, hashDic:[String:String]) {
-        self.model   = model
-        self.hashDic = hashDic
-        self.nameLabel.text        = model.workName
+        self.model          = model
+        self.hashDic        = hashDic
+        self.nameLabel.text = model.workName
+        var progress        = model.progress / 100
         if model.type == .punch {
             self.progressLabel.text = String(format: "完成%ld/%ld天", model.shareCount, model.shareAmount)
+            if model.shareAmount > 0 {
+                progress = CGFloat(model.shareCount) / CGFloat(model.shareAmount)
+            } else {
+                progress = 1.0
+            }
         } else {
             self.progressLabel.text = String(format: "完成%0.0f%@", model.progress, "%")
         }
         self.desciptionLabel.text  = String(format: "%@ l %@", model.className, model.timeStr)
+        progress = progress > 1 ? 1 : progress
         DispatchQueue.main.async {
-            self.progressView.progress = model.progress / 100
+            self.progressView.progress = progress
         }
         self.createSubviews()
 

@@ -218,6 +218,8 @@ struct YXAPI {
         static let punch = "/api/v1/user/punch/clock"
         
         static let changeBackgroundImage = "api/v1/learn/changebackground"
+        /// 获取二维码
+        static let getQRCode = "/api/v1/activity/getqrcode"
     }
     
     //MARK: - 设置模块

@@ -32,7 +32,7 @@ class YXMyClassStudentCell: UITableViewCell {
     }()
     var lineView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.black4
+        view.backgroundColor = UIColor.hex(0xEEEEEE)
         return view
     }()
 

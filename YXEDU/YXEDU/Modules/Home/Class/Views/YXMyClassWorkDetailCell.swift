@@ -61,13 +61,13 @@ class YXMyClassWorkDetailCell: UITableViewCell {
         self.addSubview(chineseLabel)
         self.addSubview(resultView)
         wordLabel.snp.makeConstraints { (make) in
-            make.left.top.equalToSuperview().offset(AdaptSize(20))
+            make.left.top.equalToSuperview().offset(AdaptSize(15))
             make.right.equalToSuperview().offset(AdaptSize(-132))
             make.height.equalTo(AdaptSize(24))
         }
         chineseLabel.snp.makeConstraints { (make) in
             make.left.right.equalTo(wordLabel)
-            make.top.equalTo(wordLabel.snp.bottom).offset(AdaptSize(5))
+            make.height.equalTo(AdaptSize(18))
             make.bottom.equalToSuperview().offset(AdaptSize(-15))
         }
         resultView.snp.makeConstraints { (make) in
