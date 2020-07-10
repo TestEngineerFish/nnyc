@@ -69,7 +69,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.userAvatarPath = data.info?.avatar
             
             YXLog("当前用户Token=====", YXUserModel.default.token ?? "")
-            self.checkUserInfomation()
+            self.uploadAppInfo()
             
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -239,6 +239,24 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
+
+    /// 上传剪切板和设备信息
+    private func uploadAppInfo() {
+        guard let clipboard = UIPasteboard.general.string else {
+            self.checkUserInfomation()
+            return
+        }
+        let platform  = "iOS"
+        let systemVer = UIDevice().sysVersion() ?? ""
+        let screen    = UIDevice().screenResolution() ?? ""
+        let request = YXRegisterAndLoginRequest.uploadAppInfo(clipboard: clipboard, platform: platform, systomVersion: systemVer, screen: screen)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            self.checkUserInfomation()
+        }) { (error) in
+            YXLog("上报设备信息失败")
+            self.checkUserInfomation()
+        }
+    }
     
     /// 更新用户信息
     private func checkUserInfomation() {
@@ -294,12 +312,11 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let data = response.data else { return }
 
-            YXUserModel.default.uuid  = data.uuid
-            YXUserModel.default.token = data.token
-            YXUserModel.default.userName = data.info?.username
+            YXUserModel.default.uuid           = data.uuid
+            YXUserModel.default.token          = data.token
+            YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
-            self.checkUserInfomation()
-            
+            self.uploadAppInfo()
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }
@@ -359,7 +376,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                 YXUserModel.default.userAvatarPath = data.info?.avatar
                                 YXUserModel.default.didLogin = true
                                 Growing.setUserId(YXUserModel.default.uuid ?? "")
-                                self.checkUserInfomation()
+                                self.uploadAppInfo()
                             }) { error in
                                 YXUtils.showHUD(kWindow, title: error.message)
                                 CLShanYanSDKManager.finishAuthControllerCompletion(nil)

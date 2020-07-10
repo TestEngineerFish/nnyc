@@ -20,7 +20,6 @@ public enum YXHomeRequest: YYBaseRequest {
         switch self {
         case .report, .task, .getBaseInfo, .getBookList, .joinClass:
             return .get
-            
         case .setReminder:
             return .post
         }
@@ -42,10 +41,10 @@ public enum YXHomeRequest: YYBaseRequest {
             return YXAPI.Home.joinClass
         }
     }
-    
+
     var parameters: [String : Any?]? {
         switch self {
-            case .getBaseInfo(let userId):
+        case .getBaseInfo(let userId):
             return ["user_id": userId]
         case .setReminder(let dataString):
             return ["data": dataString]

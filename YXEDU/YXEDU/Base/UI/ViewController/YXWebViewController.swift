@@ -15,6 +15,15 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
     var requestUrlStr: String?
     var customTitle: String?
     let jsBridge = YRWebViewJSBridge()
+    var callBackDic = [String:String]()
+
+    var rightButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("规则", for: .normal)
+        button.setTitleColor(UIColor.orange1, for: .normal)
+        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(15))
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +45,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+        self.rightButton.removeFromSuperview()
     }
 
     private func bindProperty() {
@@ -76,20 +86,29 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         guard let funcStr = notification.userInfo?["event"] as? String else {
             return
         }
-        self.customNavigationBar?.rightButtonTitle      = "规则"
-        self.customNavigationBar?.rightButtonTitleColor = .orange1
-        self.customNavigationBar?.rightButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptSize(15))
-        self.customNavigationBar?.rightButton.sizeToFit()
-        self.customNavigationBar?.rightButtonAction = { [weak self] in
-            guard let self = self else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.jsBridge.webView?.evaluateJavaScript(funcStr + "()", completionHandler: nil)
-            }
+        self.callBackDic["rule"] = funcStr
+        self.rightButton.removeFromSuperview()
+        self.customNavigationBar?.addSubview(self.rightButton)
+        self.rightButton.sizeToFit()
+        self.rightButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().offset(AdaptSize(-15))
+            make.size.equalTo(self.rightButton.size)
         }
+        self.rightButton.addTarget(self, action: #selector(showRule), for: .touchUpInside)
     }
 
     // MARK: ==== Event ====
+
+    @objc private func showRule() {
+        guard let _funcStr = self.callBackDic["rule"] else {
+            return
+        }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.jsBridge.webView?.evaluateJavaScript(_funcStr + "()", completionHandler: nil)
+        }
+    }
 
     private func loadWebView() {
         guard let urlStr = self.requestUrlStr, let url = URL(string: urlStr) else {

@@ -19,10 +19,11 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
     case bind(platfrom: String, phoneNumber: String, code: String)
     case bind2(platfrom: String, openId: String, code: String)
     case unbind(platfrom: String)
+    case uploadAppInfo(clipboard: String, platform: String, systomVersion: String, screen: String)
 
     var method: YYHTTPMethod {
         switch self {
-        case .sendSms, .login, .logout, .thirdLogin, .bind, .bind2, .unbind:
+        case .sendSms, .login, .logout, .thirdLogin, .bind, .bind2, .unbind, .uploadAppInfo:
             return .post
             
         case .userInfomation, .SYGetPhoneNumber, .SYLogin:
@@ -58,6 +59,9 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
             
         case .unbind:
             return YXAPI.RegisterAndLogin.unbind
+
+        case .uploadAppInfo:
+            return YXAPI.RegisterAndLogin.upladAppInfo
         }
     }
     
@@ -85,7 +89,9 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
             
         case .unbind(let platfrom):
             return ["unbind_pf": platfrom]
-            
+
+        case .uploadAppInfo(let clipboard, let platform, let systomVersion, let screen):
+            return ["clipboard" : clipboard, "platform" : platform, "system_version" : systomVersion, "screen" : screen]
             
         default:
             return nil

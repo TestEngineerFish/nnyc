@@ -31,6 +31,8 @@ struct YXAPI {
         static let bind2 = "/v1/user/bind"
         
         static let unbind = "/v1/user/unbind"
+        /// app上报剪贴板信息接口
+        static let upladAppInfo = "/api/v1/campus/appreport"
     }
 
     // MARK: - 网络

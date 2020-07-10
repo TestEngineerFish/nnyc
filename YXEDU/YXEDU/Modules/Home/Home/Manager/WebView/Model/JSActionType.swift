@@ -9,7 +9,7 @@
 import UIKit
 
 enum WebViewActionType: String {
-    case share         = "share"
+    case share         = "shareActivity"
     case study         = "study"
     case selectSchool  = "selectSchool"
     case selectAddress = "selectAddress"

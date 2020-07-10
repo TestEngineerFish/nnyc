@@ -41,9 +41,9 @@ class YXWebViewShareAction: YRWebViewJSAction {
         let request = YXShareRequest.changeBackgroundImage(type: YXShareChannel.timeLine.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { response in
             guard let result = response.data, let imageStr = result.imageUrls?.first else { return }
-            YXKVOImageView().sd_setImage(with: URL(string: imageStr)) { (shareImage, error, type, url) in
-                block?(shareImage)
-            }
+            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: imageStr), completed: { (image, data, error, result) in
+                block?(image)
+            })
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
