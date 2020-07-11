@@ -98,10 +98,10 @@ class YXExerciseResultViewController: YXViewController {
         guard let _config = config else {
             return
         }
-        let taskModel = YXWordBookResourceModel(type: .all) {
-            YXWordBookResourceManager.shared.contrastBookData()
-        }
-        YXWordBookResourceManager.shared.addTask(model: taskModel)
+//        let taskModel = YXWordBookResourceModel(type: .all) {
+//            YXWordBookResourceManager.shared.contrastBookData()
+//        }
+//        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = _config
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
