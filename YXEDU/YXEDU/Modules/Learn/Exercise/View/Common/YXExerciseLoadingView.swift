@@ -288,6 +288,7 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
                 self.speed  = .highSpeed
                 // 是否已请求到数据
                 if YXExerciseViewController.requesting != nil {
+                    YXLog("开始加载学习数据")
                     if YXExerciseViewController.requesting == .some(true) {
                         self.status = .requestIng
                         self.speed  = .normal

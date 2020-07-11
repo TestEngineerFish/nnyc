@@ -228,7 +228,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 wordListView.shouldShowBottomView = false
                 wordListView.type                 = .collected
                 self.wordListViews[indexPath.row] = wordListView
-                wordListView.requestWordsList(page: 1)
+//                wordListView.requestWordsList(page: 1)
             case 3:
                 wordListView.shouldShowEditButton = false
                 wordListView.shouldShowBottomView = true
@@ -243,7 +243,7 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                     exerciseViewController.learnConfig = YXWrongLearnConfig()
                     self.navigationController?.pushViewController(exerciseViewController, animated: true)
                 }
-                self.requestWrongWordsList()
+//                self.requestWrongWordsList()
             default:
                 break
             }

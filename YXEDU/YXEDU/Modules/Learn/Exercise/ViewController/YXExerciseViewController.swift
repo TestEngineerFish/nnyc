@@ -59,6 +59,8 @@
         super.viewDidDisappear(animated)
         self.loadingView = nil
         YXWordBookResourceManager.stop = false
+        YXAVPlayerManager.share.finishedBlock = nil
+        YXAVPlayerManager.share.pauseAudio()
     }
 
     override func viewDidLoad() {
