@@ -131,7 +131,7 @@ class YXExerciseResultView: YXView {
             make.width.equalTo(AdaptIconSize(94))
             make.height.equalTo(AdaptIconSize(45))
         }
-        
+        titleLabel.sizeToFit()
         titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(AdaptIconSize(11))
             make.left.equalTo(AdaptIconSize(35))
@@ -433,7 +433,7 @@ class YXExerciseResultView: YXView {
     
     private func titleHeight() -> CGFloat {
         let font = UIFont.regularFont(ofSize: AdaptFontSize(17))
-        let titleWidth = screenWidth - AdaptIconSize(40)
+        let titleWidth = screenWidth - AdaptIconSize(112)
         
         if let text = titleLabel.text {
             return text.textHeight(font: font, width: titleWidth)
