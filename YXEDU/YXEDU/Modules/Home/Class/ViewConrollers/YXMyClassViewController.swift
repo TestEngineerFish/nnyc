@@ -129,7 +129,13 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.estimatedRowHeight
+        let defautlH = AdaptSize(104)
+        guard let listModel = self.workListModel else {
+            return defautlH + AdaptSize(21)
+        }
+        let name = listModel.workModelList[indexPath.row].workName
+        let nameLabelHeight = name.textHeight(font: UIFont.regularFont(ofSize: AdaptSize(15)), width: screenWidth - AdaptSize(70))
+        return defautlH + nameLabelHeight
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

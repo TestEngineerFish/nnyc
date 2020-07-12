@@ -76,6 +76,7 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
     var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
+        tableView.estimatedRowHeight = AdaptSize(50)
         return tableView
     }()
 
@@ -232,7 +233,7 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXSelectSchoolCell", for: indexPath) as? YXSelectSchoolCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXSelectSchoolCell") as? YXSelectSchoolCell else {
             return UITableViewCell()
         }
         let schoolModel = self.schoolModelList[indexPath.row]
@@ -248,7 +249,9 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.estimatedRowHeight
+        let name = self.schoolModelList[indexPath.row].name
+        let nameLabelHeight = name.textHeight(font: UIFont.regularFont(ofSize: AdaptFontSize(14)), width: screenWidth - AdaptSize(65))
+        return nameLabelHeight + AdaptSize(30)
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
