@@ -78,6 +78,8 @@
 		224529042327A82500510507 /* YYDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529032327A82500510507 /* YYDatabase.swift */; };
 		224529092327A86A00510507 /* YYDatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224529082327A86A00510507 /* YYDatabaseConfig.swift */; };
 		2246134724332A1200A848FF /* YXFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2246134624332A1200A848FF /* YXFileManager.swift */; };
+		2247360224BC52AD00745612 /* YXWebActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247360124BC52AD00745612 /* YXWebActionManager.swift */; };
+		2247360424BC53C200745612 /* YXWebActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247360324BC53C200745612 /* YXWebActionModel.swift */; };
 		2248AE3B239DEDDC003AADCF /* YXReviewWordViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248AE3A239DEDDC003AADCF /* YXReviewWordViewCell.swift */; };
 		2248C9F123B1B08F009342A5 /* YXChallengeMyRankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248C9F023B1B08F009342A5 /* YXChallengeMyRankCell.swift */; };
 		224A2FBF238233CC00AD99B0 /* YXSexangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FBB238233CC00AD99B0 /* YXSexangleView.swift */; };
@@ -692,6 +694,8 @@
 		224529032327A82500510507 /* YYDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabase.swift; sourceTree = "<group>"; };
 		224529082327A86A00510507 /* YYDatabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YYDatabaseConfig.swift; sourceTree = "<group>"; };
 		2246134624332A1200A848FF /* YXFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFileManager.swift; sourceTree = "<group>"; };
+		2247360124BC52AD00745612 /* YXWebActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebActionManager.swift; sourceTree = "<group>"; };
+		2247360324BC53C200745612 /* YXWebActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebActionModel.swift; sourceTree = "<group>"; };
 		2248AE3A239DEDDC003AADCF /* YXReviewWordViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewWordViewCell.swift; sourceTree = "<group>"; };
 		2248C9F023B1B08F009342A5 /* YXChallengeMyRankCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeMyRankCell.swift; sourceTree = "<group>"; };
 		224A2FBB238233CC00AD99B0 /* YXSexangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXSexangleView.swift; sourceTree = "<group>"; };
@@ -3036,6 +3040,8 @@
 				EE5E015A232754FA00655654 /* QQApiManager.h */,
 				EE5E015B232754FA00655654 /* WXApiManager.m */,
 				EE5E015C232754FA00655654 /* QQApiManager.m */,
+				2247360124BC52AD00745612 /* YXWebActionManager.swift */,
+				2247360324BC53C200745612 /* YXWebActionModel.swift */,
 			);
 			path = Tencent;
 			sourceTree = "<group>";
@@ -4341,6 +4347,7 @@
 				220E6747236BE1F5001C794A /* Optional+Extension.swift in Sources */,
 				EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */,
 				77B0A5B523B20C8A0093A181 /* YXWordBookDownloadModel.swift in Sources */,
+				2247360224BC52AD00745612 /* YXWebActionManager.swift in Sources */,
 				2299106D2492115B00F1C198 /* YXDatabaseConfig+CurrentTurn.swift in Sources */,
 				77D2778123B37D0B00AA4BF2 /* YXBadgeCell.swift in Sources */,
 				EE1E4AAA236AA455007D248F /* YXListenQuestionView.swift in Sources */,
@@ -4499,6 +4506,7 @@
 				EE54F7D42362AA3100EC605A /* YXRightOrWrongAnswerView.swift in Sources */,
 				22164C0223A0DA9A00E9252D /* YXChallengeViewController.swift in Sources */,
 				EE5EF20023273BAE00655654 /* YRNetworkManager+Cache.m in Sources */,
+				2247360424BC53C200745612 /* YXWebActionModel.swift in Sources */,
 				77342B89247289780082C771 /* YXAccountModel.swift in Sources */,
 				77163C6724517641002A41E3 /* YXStudyReportModel.swift in Sources */,
 				22298BFA237D4D2200F24786 /* YXNewLearnJuniorHighSchoolAnswerView.swift in Sources */,

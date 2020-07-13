@@ -469,15 +469,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             alertView.titleLabel.text = "请输入班级号或作业提取码"
             alertView.shouldOnlyShowOneButton = true
             alertView.shouldClose = false
-            alertView.doneClosure = {(classNumer: String?) in
-                YXUserDataManager.share.joinClass(code: classNumer) { (result) in
+            alertView.doneClosure = {(classNumber: String?) in
+                YXUserDataManager.share.joinClass(code: classNumber) { (result) in
                     if result {
                         alertView.removeFromSuperview()
                         let vc = YXMyClassViewController()
                         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
                     }
                 }
-                YXLog("班级号：\(classNumer ?? "")")
+                YXLog("班级号：\(classNumber ?? "")")
             }
             alertView.clearButton.isHidden    = true
             alertView.textField.keyboardType  = .numberPad

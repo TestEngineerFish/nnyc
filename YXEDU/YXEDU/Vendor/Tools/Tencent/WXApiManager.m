@@ -126,7 +126,9 @@
             WXMediaMessage *msg = sendMsgReq.message;
             NSString *openID = req.openID;
             NSString *extinfo = msg.messageExt;
-            // handle...
+//             handle...
+            [[YXWebActionManager share] progressWXReqWithExtion:extinfo];
+//            [[YXWebViewController alloc] init] 
         }
     }
 }
