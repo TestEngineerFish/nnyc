@@ -46,4 +46,5 @@ struct YXAppleModel {
     var name: String
     var email: String
     var identityToken: Data?
+    var authorizationCode: Data?
 }

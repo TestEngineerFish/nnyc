@@ -35,6 +35,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     @IBOutlet weak var wechatButton: UIButton!
     @IBOutlet weak var qqButton: UIButton!
+    @IBOutlet weak var appleButton: UIButton!
     @IBOutlet weak var fastLoginLabel: UILabel!
     @IBOutlet weak var fastLoginLeftLineView: UIView!
     @IBOutlet weak var fastLoginRightLineView: UIView!
@@ -92,8 +93,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     @IBAction func showPolicy(_ sender: UIButton) {
         navigationController?.pushViewController(YXPolicyVC(), animated: true)
     }
-    
-    
     
     // MARK: -
     override func viewDidLoad() {
@@ -212,34 +211,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
         }
     }
-    
-    private func sendSMS() {
-        let request = YXRegisterAndLoginRequest.sendSms(phoneNumber: phoneNumberTextField.text ?? "", loginType: "login", SlidingVerificationCode: slidingVerificationCode)
-        YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let slidingVerificationCodeModel = response.data else { return }
-            
-            if slidingVerificationCodeModel.isSuccessSendSms == 1 {
-                self.slidingVerificationCode = nil
-                
-                self.startCountingDown()
-                self.authCodeTextField.becomeFirstResponder()
-                
-            } else if slidingVerificationCodeModel.shouldShowSlidingVerification == 1 {
-                self.authCodeTextField.resignFirstResponder()
-                
-                RegisterSliderView.show(.puzzle) { (isSuccess) in
-                    if isSuccess {
-                        self.slidingVerificationCode = slidingVerificationCodeModel.slidingVerificationCode
-                        self.sendSMS()
-                    } else {
-                        YXLog("滑动解锁失败")
-                    }
-                }
-            }
-        }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
-        }
-    }
+
+    // MARK: ==== Request ====
 
     /// 上传剪切板和设备信息
     private func uploadAppInfo() {
@@ -256,6 +229,34 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         }) { (error) in
             YXLog("上报设备信息失败")
             self.checkUserInfomation()
+        }
+    }
+
+    private func sendSMS() {
+        let request = YXRegisterAndLoginRequest.sendSms(phoneNumber: phoneNumberTextField.text ?? "", loginType: "login", SlidingVerificationCode: slidingVerificationCode)
+        YYNetworkService.default.request(YYStructResponse<YXSlidingVerificationCodeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let slidingVerificationCodeModel = response.data else { return }
+
+            if slidingVerificationCodeModel.isSuccessSendSms == 1 {
+                self.slidingVerificationCode = nil
+
+                self.startCountingDown()
+                self.authCodeTextField.becomeFirstResponder()
+
+            } else if slidingVerificationCodeModel.shouldShowSlidingVerification == 1 {
+                self.authCodeTextField.resignFirstResponder()
+
+                RegisterSliderView.show(.puzzle) { (isSuccess) in
+                    if isSuccess {
+                        self.slidingVerificationCode = slidingVerificationCodeModel.slidingVerificationCode
+                        self.sendSMS()
+                    } else {
+                        YXLog("滑动解锁失败")
+                    }
+                }
+            }
+        }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
     
@@ -290,16 +291,23 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     private func checkThirdPartyApp() {        
-        let canOpenQQ     = YXCheckApp.canOpen(type: .qq)
-        let canOpenWechat = YXCheckApp.canOpen(type: .wechatSession)
-        
-        if !canOpenQQ && !canOpenWechat {
+        let canOpenQQ          = YXCheckApp.canOpen(type: .qq)
+        let canOpenWechat      = YXCheckApp.canOpen(type: .wechatSession)
+        let canOpenApple: Bool = {
+            if #available(iOS 13.0, *) {
+                return true
+            } else {
+                return false
+            }
+        }()
+        if !canOpenQQ && !canOpenWechat && !canOpenApple {
             fastLoginLeftLineView.isHidden  = true
             fastLoginRightLineView.isHidden = true
             fastLoginLabel.isHidden         = true
         }
-        
-        qqButton.isHidden = !canOpenQQ
+
+        appleButton.isHidden  = !canOpenApple
+        qqButton.isHidden     = !canOpenQQ
         wechatButton.isHidden = !canOpenWechat
     }
     
@@ -452,15 +460,20 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             let lineView2 = UIView()
             lineView2.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
             
-            let qqLoginButton = UIButton()
+            let qqLoginButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 40, height: 40)))
             qqLoginButton.tag = 1
             qqLoginButton.setImage(#imageLiteral(resourceName: "QQ"), for: .normal)
             qqLoginButton.addTarget(self, action: #selector(self.clickOtherLoginButton), for: .touchUpInside)
             
-            let wechatLoginButton = UIButton()
+            let wechatLoginButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 40, height: 40)))
             wechatLoginButton.tag = 2
             wechatLoginButton.setImage(#imageLiteral(resourceName: "Wechat"), for: .normal)
             wechatLoginButton.addTarget(self, action: #selector(self.clickOtherLoginButton), for: .touchUpInside)
+
+            let appleLoginButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 40, height: 40)))
+            appleLoginButton.tag = 3
+            appleLoginButton.setImage(UIImage(named: "apple"), for: .normal)
+            appleLoginButton.addTarget(self, action: #selector(self.clickOtherLoginButton), for: .touchUpInside)
             
             view.addSubview(containerView)
             containerView.snp.makeConstraints { (make) in
@@ -513,20 +526,34 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 make.height.equalTo(0.5)
                 make.width.equalTo(58)
             }
-            
-            view.addSubview(qqLoginButton)
-            qqLoginButton.snp.makeConstraints { (make) in
-                make.top.equalTo(lineView1.snp.bottom).offset(32)
-                make.height.width.equalTo(40)
-                make.centerX.equalTo(lineView1).offset(20)
+
+            let otherLoginView = UIStackView(arrangedSubviews: [qqLoginButton, wechatLoginButton, appleLoginButton])
+            otherLoginView.distribution = .equalSpacing
+            view.addSubview(otherLoginView)
+            otherLoginView.snp.makeConstraints { (make) in
+                make.width.equalTo(208)
+                make.height.equalTo(40)
+                make.top.equalTo(quickLoginLabel.snp.bottom).offset(20)
+                make.centerX.equalToSuperview()
             }
-            
-            view.addSubview(wechatLoginButton)
-            wechatLoginButton.snp.makeConstraints { (make) in
-                make.top.equalTo(lineView2.snp.bottom).offset(32)
-                make.height.width.equalTo(40)
-                make.centerX.equalTo(lineView2).offset(-20)
+            let canOpenQQ          = YXCheckApp.canOpen(type: .qq)
+            let canOpenWechat      = YXCheckApp.canOpen(type: .wechatSession)
+            let canOpenApple: Bool = {
+                if #available(iOS 13.0, *) {
+                    return true
+                } else {
+                    return false
+                }
+            }()
+            if !canOpenQQ && !canOpenWechat && !canOpenApple {
+                lineView1.isHidden  = true
+                lineView2.isHidden = true
+                quickLoginLabel.isHidden         = true
             }
+
+            appleLoginButton.isHidden  = !canOpenApple
+            qqLoginButton.isHidden     = !canOpenQQ
+            wechatLoginButton.isHidden = !canOpenWechat
         }
         
         return configure
@@ -536,26 +563,15 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         CLShanYanSDKManager.finishAuthController(animated: false) {
             if sender.tag == 1 {
                 self.loginWithQQ(sender)
-                
             } else if sender.tag == 2 {
-                if #available(iOS 13.0, *) {
-                    self.signInWithApple()
-                } else {
-                    // Fallback on earlier versions
-                }
-                //                self.loginWithWechat(sender)
+                self.loginWithWechat(sender)
+            } else if sender.tag == 3 {
+                self.loginWithApple(sender)
             }
         }
     }
 
-
-}
-
-@available(iOS 13.0, *)
-extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-
-    /// 苹果登录
-    @objc private func signInWithApple() {
+    @IBAction func loginWithApple(_ sender: UIButton) {
         if #available(iOS 13.0, *) {
             let provider = ASAuthorizationAppleIDProvider()
             let request  = provider.createRequest()
@@ -564,47 +580,48 @@ extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, A
             controller.delegate = self
             controller.presentationContextProvider = self
             controller.performRequests()
-        } else {
-            // Fallback on earlier versions
         }
-
     }
+}
+
+@available(iOS 13.0, *)
+extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
 
     // MARK: ==== ASAuthorizationControllerDelegate ====
     @available(iOS 13.0, *)
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-
+        YXLog("Sign in with apple error:\(error)")
     }
 
     @available(iOS 13.0, *)
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         // 新用户
         if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            let userIdentifier = credential.user
-            let identityToken  = credential.identityToken
-            let userEmail      = credential.email ?? ""
-            let userName       = (credential.fullName?.familyName ?? "") + (credential.fullName?.givenName ?? "")
-            self.appleModel = YXAppleModel(user: userIdentifier, name: userName, email: userEmail, identityToken: identityToken)
+            let userIdentifier    = credential.user
+            let identityToken     = credential.identityToken
+            let authorizationCode = credential.authorizationCode
+            let userEmail         = credential.email ?? ""
+            let userName          = (credential.fullName?.familyName ?? "") + (credential.fullName?.givenName ?? "")
+            self.appleModel = YXAppleModel(user: userIdentifier, name: userName, email: userEmail, identityToken: identityToken, authorizationCode: authorizationCode)
 
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             appleIDProvider.getCredentialState(forUserID: userIdentifier) {  (credentialState, error) in
-                YXLog("credential.user:\(credential.user)")
-                YXLog("credential.identityToken:\(credential.identityToken)")
-                YXLog("credential.email:\(credential.email)")
-                YXLog("credential.fullName\(credential.fullName)")
+//                YXLog("credential.user:\(credential.user)")
+//                YXLog("credential.identityToken:\(credential.identityToken)")
+//                YXLog("credential.email:\(credential.email)")
+//                YXLog("credential.fullName\(credential.fullName)")
+//                YXLog("credential.authorizationCode\(credential.authorizationCode)")
                 switch credentialState {
                 case .authorized:
                     // The Apple ID credential is valid.
+                    // 与后台交互
                     break
-
                 case .revoked:
-                    // The Apple ID credential is revoked.
+                    YXUtils.showHUD(kWindow, title: "Apple账户失效，请重试，或更换其他登录方式")
                     break
-
                 case .notFound:
-                    // No credential was found, so show the sign-in UI.
+                    YXUtils.showHUD(kWindow, title: "Apple账户尚未绑定，请重试，或更换其他登录方式")
                     break
-
                 default:
                     break
                 }
