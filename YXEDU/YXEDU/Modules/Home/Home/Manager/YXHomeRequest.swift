@@ -14,7 +14,7 @@ public enum YXHomeRequest: YYBaseRequest {
     case report
     case task
     case setReminder(dataString: String)
-    case joinClass(code: String)
+    case joinClass(classCode: String, workCode: String)
 
     var method: YYHTTPMethod {
         switch self {
@@ -48,8 +48,8 @@ public enum YXHomeRequest: YYBaseRequest {
             return ["user_id": userId]
         case .setReminder(let dataString):
             return ["data": dataString]
-        case .joinClass(let code):
-            return ["class_code" : code]
+        case .joinClass(let classCode, let workCode):
+            return ["class_code" : classCode, "work_code" : workCode]
         default:
             return nil
         }
