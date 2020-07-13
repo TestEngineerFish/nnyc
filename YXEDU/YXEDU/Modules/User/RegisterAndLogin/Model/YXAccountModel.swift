@@ -41,6 +41,9 @@ struct YXAccountInfoModel: Mappable {
     }
 }
 
-//struct YXTextModel: Mappable {
-//
-//}
+struct YXAppleModel {
+    var user: String
+    var name: String
+    var email: String
+    var identityToken: Data?
+}

@@ -18,6 +18,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     var shouldShowShanYan = true
     var platform: String!
+    var appleModel: YXAppleModel?
     
     private var timer: Timer?
     private var countingDown = 60
@@ -323,7 +324,6 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     }
     
     
-    
     // MARK: - 闪验
     private func initShanYan() {
         CLShanYanSDKManager.initWithAppId("OoCjBtLT") { (result) in
@@ -361,7 +361,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                         struct PhoneNumber: Codable {
                             let data: [String]?
                         }
-                                                
+
                         do {
                             let responseObject = try JSONDecoder().decode(PhoneNumber.self, from: data)
                             let request = YXRegisterAndLoginRequest.SYLogin(phoneNumber: responseObject.data?[0] ?? "")
@@ -538,8 +538,86 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 self.loginWithQQ(sender)
                 
             } else if sender.tag == 2 {
-                self.loginWithWechat(sender)
+                if #available(iOS 13.0, *) {
+                    self.signInWithApple()
+                } else {
+                    // Fallback on earlier versions
+                }
+                //                self.loginWithWechat(sender)
             }
         }
+    }
+
+
+}
+
+@available(iOS 13.0, *)
+extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+
+    /// 苹果登录
+    @objc private func signInWithApple() {
+        if #available(iOS 13.0, *) {
+            let provider = ASAuthorizationAppleIDProvider()
+            let request  = provider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            let controller = ASAuthorizationController(authorizationRequests: [request])
+            controller.delegate = self
+            controller.presentationContextProvider = self
+            controller.performRequests()
+        } else {
+            // Fallback on earlier versions
+        }
+
+    }
+
+    // MARK: ==== ASAuthorizationControllerDelegate ====
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+
+    }
+
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        // 新用户
+        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let userIdentifier = credential.user
+            let identityToken  = credential.identityToken
+            let userEmail      = credential.email ?? ""
+            let userName       = (credential.fullName?.familyName ?? "") + (credential.fullName?.givenName ?? "")
+            self.appleModel = YXAppleModel(user: userIdentifier, name: userName, email: userEmail, identityToken: identityToken)
+
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            appleIDProvider.getCredentialState(forUserID: userIdentifier) {  (credentialState, error) in
+                YXLog("credential.user:\(credential.user)")
+                YXLog("credential.identityToken:\(credential.identityToken)")
+                YXLog("credential.email:\(credential.email)")
+                YXLog("credential.fullName\(credential.fullName)")
+                switch credentialState {
+                case .authorized:
+                    // The Apple ID credential is valid.
+                    break
+
+                case .revoked:
+                    // The Apple ID credential is revoked.
+                    break
+
+                case .notFound:
+                    // No credential was found, so show the sign-in UI.
+                    break
+
+                default:
+                    break
+                }
+            }
+        } else if let credential = authorization.credential as? ASPasswordCredential {
+            // 老用户
+            let userIdentifier = credential.user
+
+        }
+    }
+
+    // MARK: ==== ASAuthorizationControllerPresentationContextProviding ====
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return kWindow
     }
 }

@@ -65,5 +65,6 @@
 #import "YRWebViewJSAction.h"
 #import "FMResultSet.h"
 #import "SGQRCode.h"
+#import <AuthenticationServices/AuthenticationServices.h>
 
 
