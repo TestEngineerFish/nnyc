@@ -20,8 +20,8 @@ struct YXAccountModel: Mappable {
     
     mutating func mapping(map: Map) {
         token <- map["token"]
-        uuid <- map["uuid"]
-        info <- map["user_info"]
+        uuid  <- map["uuid"]
+        info  <- map["user_info"]
     }
 }
 

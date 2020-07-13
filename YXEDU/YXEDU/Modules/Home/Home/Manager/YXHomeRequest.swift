@@ -16,10 +16,11 @@ public enum YXHomeRequest: YYBaseRequest {
     case setReminder(dataString: String)
     case joinClass(classCode: String, workCode: String)
     case activityInfo
+    case addFriend(id: Int, channel: Int)
 
     var method: YYHTTPMethod {
         switch self {
-        case .report, .task, .getBaseInfo, .getBookList, .joinClass, .activityInfo:
+        case .report, .task, .getBaseInfo, .getBookList, .joinClass, .activityInfo, .addFriend:
             return .get
         case .setReminder:
             return .post
@@ -42,6 +43,8 @@ public enum YXHomeRequest: YYBaseRequest {
             return YXAPI.Home.joinClass
         case .activityInfo:
             return YXAPI.Home.activityInfo
+        case .addFriend:
+            return YXAPI.Home.addFriend
         }
     }
 
@@ -53,6 +56,8 @@ public enum YXHomeRequest: YYBaseRequest {
             return ["data": dataString]
         case .joinClass(let classCode, let workCode):
             return ["class_code" : classCode, "work_code" : workCode]
+        case .addFriend(let id, let channel):
+            return ["friend_id" : id, "channel" : channel]
         default:
             return nil
         }

@@ -31,7 +31,7 @@ class YXWebActionManager: NSObject {
         }
 
         switch model.action {
-        case "join_class", "add_word":
+        case "join_class", "add_work":
             let classNumber = model.params
             // 加入班级
             YXUserDataManager.share.joinClass(code: classNumber) { (result) in
@@ -41,6 +41,7 @@ class YXWebActionManager: NSObject {
             }
             break
         case "make_team":
+            self.addFriend(user: model.params, channel: 1, complete: nil)
             break
         default:
             break
@@ -62,6 +63,19 @@ class YXWebActionManager: NSObject {
             }
         default:
             break
+        }
+    }
+
+    private func addFriend(user id: String, channel: Int, complete block: (()->Void)?) {
+        guard let userId = Int(id) else {
+            return
+        }
+        let request = YXHomeRequest.addFriend(id: userId, channel: channel)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            YXLog("添加好友成功")
+            block?()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 }

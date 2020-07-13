@@ -78,7 +78,6 @@ class YXMyClassTableViewHanderView: YXView {
             YXLog("班级号：\(classNumber ?? "")")
         }
         alertView.clearButton.isHidden    = true
-        alertView.textField.keyboardType  = .numberPad
         alertView.textCountLabel.isHidden = true
         alertView.textMaxLabel.isHidden   = true
         alertView.alertHeight.constant    = 222

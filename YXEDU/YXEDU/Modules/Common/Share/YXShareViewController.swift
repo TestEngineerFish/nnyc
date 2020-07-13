@@ -113,9 +113,9 @@ class YXShareViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
-//        self.setQRCodeImage {
-        self.getBackgroundImageList()
-//        }
+        self.setQRCodeImage {
+            self.getBackgroundImageList()
+        }
         self.bindProperty()
         self.createSubviews()
     }
@@ -345,7 +345,6 @@ class YXShareViewController: YXViewController {
             guard let model = response.data else {
                 return
             }
-            YXLog("1")
             SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { (image, data, error, result) in
                 if let _image = image {
                     self.qrCodeImage = _image

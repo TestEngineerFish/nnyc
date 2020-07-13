@@ -30,7 +30,6 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         self.bindProperty()
         self.createSubviews()
         self.loadWebView()
-        NotificationCenter.default.post(name: YXNotification.kShowRightButton, object: nil, userInfo: ["event":"menuEvent"])
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -46,6 +45,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
     deinit {
         NotificationCenter.default.removeObserver(self)
         self.rightButton.removeFromSuperview()
+        self.webView?.removeObserver(self, forKeyPath: "title")
     }
 
     private func bindProperty() {
@@ -62,6 +62,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         webView?.scrollView.showsHorizontalScrollIndicator = false
         webView?.scrollView.showsVerticalScrollIndicator   = false
         webView?.allowsBackForwardNavigationGestures = false
+        webView?.addObserver(self, forKeyPath: "title", options: .new, context: nil)
 
         jsBridge.delegate = self
         jsBridge.webView  = webView
@@ -142,5 +143,14 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
                      WebViewActionType.selectAddress.rawValue : YXWebViewSelectAddress.self,
                      WebViewActionType.appInfo.rawValue : YXWebViewAppInfoAction.self]
         return list
+    }
+
+    // MARK: ==== KVO ====
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "title" {
+            self.customNavigationBar?.title = self.webView?.title
+        } else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+        }
     }
 }

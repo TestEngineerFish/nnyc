@@ -627,11 +627,11 @@ extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, A
             self.appleModel = YXAppleModel(user: userIdentifier, name: userName, email: userEmail, identityToken: identityToken, authorizationCode: authorizationCode)
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             appleIDProvider.getCredentialState(forUserID: userIdentifier) {  (credentialState, error) in
-//                YXLog("credential.user:\(credential.user)")
-//                YXLog("credential.identityToken:\(credential.identityToken)")
-//                YXLog("credential.email:\(credential.email)")
-//                YXLog("credential.fullName\(credential.fullName)")
-//                YXLog("credential.authorizationCode\(credential.authorizationCode)")
+                YXLog("credential.user:\(credential.user)")
+                YXLog("credential.identityToken:\(credential.identityToken)")
+                YXLog("credential.email:\(credential.email)")
+                YXLog("credential.fullName\(credential.fullName)")
+                YXLog("credential.authorizationCode\(credential.authorizationCode)")
                 switch credentialState {
                 case .authorized:
                     // The Apple ID credential is valid.

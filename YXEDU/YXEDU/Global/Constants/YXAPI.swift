@@ -52,6 +52,8 @@ struct YXAPI {
         static let joinClass = "/api/v1/class/add"
         /// 返回活动信息
         static let activityInfo = "/api/v1/activity/index"
+        /// 添加好友
+        static let addFriend = "/api/v1/activity/addfriend"
     }
     
     //MARK: - 用户模块
@@ -221,7 +223,7 @@ struct YXAPI {
     struct Share {
         static let punch = "/api/v1/user/punch/clock"
         
-        static let changeBackgroundImage = "api/v1/learn/changebackground"
+        static let changeBackgroundImage = "/api/v1/learn/changebackground"
         /// 获取二维码
         static let getQRCode = "/api/v1/activity/getqrcode"
     }

@@ -507,7 +507,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 YXLog("班级号：\(classNumber ?? "")")
             }
             alertView.clearButton.isHidden    = true
-            alertView.textField.keyboardType  = .numberPad
             alertView.textCountLabel.isHidden = true
             alertView.textMaxLabel.isHidden   = true
             alertView.alertHeight.constant    = 222
@@ -523,7 +522,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.bubbleImageView?.isHidden = true
         }
         let vc = YXWebViewController()
-        vc.customTitle   = "全国单词达人挑战赛"
+//        vc.customTitle   = "全国单词达人挑战赛"
         vc.requestUrlStr = "http://10.173.4.150:8080"
         self.navigationController?.pushViewController(vc, animated: true)
     }
