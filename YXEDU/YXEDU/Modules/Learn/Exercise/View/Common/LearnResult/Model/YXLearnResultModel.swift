@@ -39,6 +39,6 @@ struct YXLearnResultModel: Mappable {
         score         <- map["score"]
         unitList      <- map["list"]
         studyDay      <- map["study_day"]
-        isAction      <- map[""]
+        isAction      <- map["activity_clock_notice"]
     }
 }

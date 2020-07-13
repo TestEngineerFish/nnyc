@@ -20,6 +20,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorColor = .clear
         tableView.showsVerticalScrollIndicator = false
+        tableView.estimatedRowHeight = AdaptSize(125)
         return tableView
     }()
 
@@ -126,16 +127,6 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         let count  = self.classModelList.count > 3 ? 3 : self.classModelList.count
         let amount = CGFloat(96 + count * 50)
         return AdaptSize(amount)
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let defautlH = AdaptSize(104)
-        guard let listModel = self.workListModel else {
-            return defautlH + AdaptSize(21)
-        }
-        let name = listModel.workModelList[indexPath.row].workName
-        let nameLabelHeight = name.textHeight(font: UIFont.regularFont(ofSize: AdaptSize(15)), width: screenWidth - AdaptSize(70))
-        return defautlH + nameLabelHeight
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

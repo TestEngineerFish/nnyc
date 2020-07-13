@@ -248,12 +248,6 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
         return UIView()
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let name = self.schoolModelList[indexPath.row].name
-        let nameLabelHeight = name.textHeight(font: UIFont.regularFont(ofSize: AdaptFontSize(14)), width: screenWidth - AdaptSize(65))
-        return nameLabelHeight + AdaptSize(30)
-    }
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.willSchoolModel = self.schoolModelList[indexPath.row]
     }

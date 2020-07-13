@@ -454,7 +454,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
 
         } else {
             return 356
-//            return tableView.estimatedRowHeight
         }
     }
     

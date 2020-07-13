@@ -22,7 +22,7 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
     private func bindProperty() {
         for index in 0..<10 {
             var model = YXMyClassNoticeModel()
-            model.content = "暑假作业已发放，请大家注意及时查收，暑假作业已发放，请大家注意及时查收"
+            model.content = index == 3 ? "暑假作业已发放，请大家注意及时查收，暑假作业已发放，请大家注意及时查收暑假作业已发放，请大家注意及时查收，暑假作业已发放，请大家注意及时查收" : "暑假作业已发放，请大家注意及时查收"
             model.time    = "6月12号"
             model.isNew   = index < 4
             noticeModelList.append(model)
@@ -32,6 +32,7 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.backgroundColor = .white
+        self.tableView.estimatedRowHeight = AdaptSize(50)
         self.tableView.register(YXMyClassNoticeCell.classForCoder(), forCellReuseIdentifier: "kYXMyClassNoticeCell")
     }
 
@@ -61,10 +62,6 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
         let model = self.noticeModelList[indexPath.row]
         cell.setData(model: model)
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.estimatedRowHeight
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
