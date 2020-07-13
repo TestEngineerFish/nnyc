@@ -97,14 +97,26 @@ class YXExerciseResultView: YXView {
         operateButton.addTarget(self, action: #selector(clickOperateButton), for: .touchUpInside)
 
         remindButton.isUserInteractionEnabled = false
-        if model.type == .homeworkPunch {
+        remindButton.isHidden = true
+        
+        if model.type == .homeworkPunch || (model.isAction && model.type == .base) {
+            remindButton.isHidden = false
             remindButton.setTitleColor(.orange1, for: .normal)
             remindButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(13))
             remindButton.setImage(UIImage(named: "iconRemindIcon"), for: .normal)
-            if model.sharedPeople == 0 {
-                remindButton.setTitle(" 成为第一位打卡学员吧！", for: .normal)
+            // 活动内
+            if model.isAction {
+                remindButton.setTitle(" 打卡完成单词挑战赛目标", for: .normal)
+                operateButton.setBackgroundImage(UIImage(named: "punchBgImage"), for: .normal)
+                operateButton.backgroundColor = .clear
+                operateButton.setTitleColor(.clear, for: .normal)
             } else {
-                remindButton.setTitle(" \(model.sharedPeople)人已打卡", for: .normal)
+                // 作业打卡
+                if model.sharedPeople == 0 {
+                    remindButton.setTitle(" 成为第一位打卡学员吧！", for: .normal)
+                } else {
+                    remindButton.setTitle(" \(model.sharedPeople)人已打卡", for: .normal)
+                }
             }
         }
     }
@@ -188,7 +200,7 @@ class YXExerciseResultView: YXView {
             }
         }
 
-        if model.type.isHomework() {
+        if !remindButton.isHidden {
             remindButton.sizeToFit()
             remindButton.snp.remakeConstraints { (make) in
                 make.centerX.equalToSuperview()
@@ -465,7 +477,7 @@ class YXExerciseResultView: YXView {
         
         allHeight += AdaptIconSize(25 + 42 + 25)
 
-        allHeight += model.type == .homeworkPunch ? AdaptIconSize(28) : 0
+        allHeight += !self.remindButton.isHidden ? AdaptIconSize(28) : 0
 
         return allHeight
     }

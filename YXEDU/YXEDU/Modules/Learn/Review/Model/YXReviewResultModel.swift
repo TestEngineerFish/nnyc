@@ -84,6 +84,9 @@ struct YXExerciseResultDisplayModel {
     var words: [YXWordModel]?
     var unitList: [YXLearnMapUnitModel]?
     var sharedPeople: Int = 0
+
+    /// 是否在活动时间内
+    var isAction: Bool = false
     
     static func displayModel(model: YXReviewResultModel) -> YXExerciseResultDisplayModel {
         var displayModel = YXExerciseResultDisplayModel()
@@ -118,9 +121,9 @@ struct YXExerciseResultDisplayModel {
         displayModel.score = model.score
         
         displayModel.isShowCoin = model.isShowCoin
-        displayModel.state = model.status
-        displayModel.unitList = model.unitList
-        
+        displayModel.state      = model.status
+        displayModel.unitList   = model.unitList
+        displayModel.isAction   = model.isAction
         return displayModel
     }
 }

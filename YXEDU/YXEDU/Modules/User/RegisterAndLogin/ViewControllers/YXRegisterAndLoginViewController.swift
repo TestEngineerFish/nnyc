@@ -306,7 +306,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             fastLoginLabel.isHidden         = true
         }
 
-        appleButton.isHidden  = !canOpenApple
+        appleButton.isHidden  = true
         qqButton.isHidden     = !canOpenQQ
         wechatButton.isHidden = !canOpenWechat
     }
@@ -551,7 +551,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 quickLoginLabel.isHidden         = true
             }
 
-            appleLoginButton.isHidden  = !canOpenApple
+            appleLoginButton.isHidden  = true
             qqLoginButton.isHidden     = !canOpenQQ
             wechatLoginButton.isHidden = !canOpenWechat
         }
