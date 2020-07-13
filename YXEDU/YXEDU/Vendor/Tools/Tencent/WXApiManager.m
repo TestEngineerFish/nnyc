@@ -44,6 +44,7 @@
     [WXApi startLogByLevel:WXLogLevelDetail logBlock:^(NSString * _Nonnull log) {
         YXLog(@"WeChatSDKLog: %@", log);
     }];
+    [[YXWebActionManager share] progressWXReqWithExtion:url.absoluteString];
     BOOL ret = [WXApi registerApp:wechatId universalLink:universalLink];
     if ([WXApi handleOpenURL:url delegate:self]) {
         YXLog(@"handleOpenURL: %@", url.absoluteString);
@@ -124,11 +125,9 @@
         if ([req isKindOfClass:[SendMessageToWXReq class]]) {
             SendMessageToWXReq *sendMsgReq = (SendMessageToWXReq *)req;
             WXMediaMessage *msg = sendMsgReq.message;
-            NSString *openID = req.openID;
-            NSString *extinfo = msg.messageExt;
-//             handle...
+            NSString *openID    = req.openID;
+            NSString *extinfo   = msg.messageExt;
             [[YXWebActionManager share] progressWXReqWithExtion:extinfo];
-//            [[YXWebViewController alloc] init] 
         }
     }
 }

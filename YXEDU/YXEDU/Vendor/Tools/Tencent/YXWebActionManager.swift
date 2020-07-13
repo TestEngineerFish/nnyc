@@ -14,13 +14,22 @@ class YXWebActionManager: NSObject {
 
     @objc
     func progressWXReq(extion info: String) {
-        // 拦截
-        guard YXUserModel.default.didLogin else {
+        let dict = ["open_app_action":"join_class", "open_app_scheme" : "/class/list", "action_params" : "6344121"]
+        let _info = dict.toJson()
+        guard let model = YXWXWebModel(JSONString: _info) else {
             return
         }
-        guard let model = YXWXWebModel(JSONString: info) else {
+        // 状态拦截
+        guard YXUserModel.default.didLogin, (YYCache.object(forKey: .isShowSelectSchool) as? Bool) == .some(false), (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(false) else {
+            YXLog("状态拦截")
             return
         }
+        // 页面拦截
+        guard let currentVC = YRRouter.sharedInstance().currentViewController(), !currentVC.isKind(of: YXBindPhoneViewController.classForCoder()), !currentVC.isKind(of: YXExerciseViewController.classForCoder()) else {
+            YXLog("页面拦截")
+            return
+        }
+
         switch model.action {
         case "join_class", "add_word":
             let classNumber = model.params

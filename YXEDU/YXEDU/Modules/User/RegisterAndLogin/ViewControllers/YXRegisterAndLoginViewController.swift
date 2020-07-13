@@ -306,7 +306,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             fastLoginLabel.isHidden         = true
         }
 
-        appleButton.isHidden  = true
+        appleButton.isHidden  = !canOpenApple
         qqButton.isHidden     = !canOpenQQ
         wechatButton.isHidden = !canOpenWechat
     }
@@ -327,6 +327,26 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.userAvatarPath = data.info?.avatar
             self.uploadAppInfo()
         }) { error in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
+    private func appleLogin() {
+        guard let model = self.appleModel, let token = model.identityToken, let tokenStr = String(data: token, encoding: .utf8) else {
+            YXLog("苹果登录失败，请重试")
+            YXUtils.showHUD(kWindow, title: "Apple登录失败，请重试")
+            return
+        }
+        let request = YXRegisterAndLoginRequest.appleLogin(userId: model.user, token: tokenStr, fullName: model.name)
+        YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let data = response.data else { return }
+
+            YXUserModel.default.uuid           = data.uuid
+            YXUserModel.default.token          = data.token
+            YXUserModel.default.userName       = data.info?.username
+            YXUserModel.default.userAvatarPath = data.info?.avatar
+            self.uploadAppInfo()
+        }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
@@ -546,12 +566,12 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 }
             }()
             if !canOpenQQ && !canOpenWechat && !canOpenApple {
-                lineView1.isHidden  = true
-                lineView2.isHidden = true
-                quickLoginLabel.isHidden         = true
+                lineView1.isHidden       = true
+                lineView2.isHidden       = true
+                quickLoginLabel.isHidden = true
             }
 
-            appleLoginButton.isHidden  = true
+            appleLoginButton.isHidden  = !canOpenApple
             qqLoginButton.isHidden     = !canOpenQQ
             wechatLoginButton.isHidden = !canOpenWechat
         }
@@ -602,8 +622,9 @@ extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, A
             let authorizationCode = credential.authorizationCode
             let userEmail         = credential.email ?? ""
             let userName          = (credential.fullName?.familyName ?? "") + (credential.fullName?.givenName ?? "")
+            let tokenStr = String(data: identityToken!, encoding: .utf8) ?? ""
+            YXLog("Apple Token:" + tokenStr)
             self.appleModel = YXAppleModel(user: userIdentifier, name: userName, email: userEmail, identityToken: identityToken, authorizationCode: authorizationCode)
-
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             appleIDProvider.getCredentialState(forUserID: userIdentifier) {  (credentialState, error) in
 //                YXLog("credential.user:\(credential.user)")
@@ -614,7 +635,7 @@ extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, A
                 switch credentialState {
                 case .authorized:
                     // The Apple ID credential is valid.
-                    // 与后台交互
+                    self.appleLogin()
                     break
                 case .revoked:
                     YXUtils.showHUD(kWindow, title: "Apple账户失效，请重试，或更换其他登录方式")

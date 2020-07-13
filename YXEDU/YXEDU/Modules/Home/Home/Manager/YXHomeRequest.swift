@@ -15,10 +15,11 @@ public enum YXHomeRequest: YYBaseRequest {
     case task
     case setReminder(dataString: String)
     case joinClass(classCode: String, workCode: String)
+    case activityInfo
 
     var method: YYHTTPMethod {
         switch self {
-        case .report, .task, .getBaseInfo, .getBookList, .joinClass:
+        case .report, .task, .getBaseInfo, .getBookList, .joinClass, .activityInfo:
             return .get
         case .setReminder:
             return .post
@@ -39,6 +40,8 @@ public enum YXHomeRequest: YYBaseRequest {
             return YXAPI.Home.setReminder
         case .joinClass:
             return YXAPI.Home.joinClass
+        case .activityInfo:
+            return YXAPI.Home.activityInfo
         }
     }
 

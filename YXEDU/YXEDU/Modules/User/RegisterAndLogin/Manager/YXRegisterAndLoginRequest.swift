@@ -12,6 +12,7 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
     case sendSms(phoneNumber: String, loginType: String, SlidingVerificationCode: String?)
     case login(platfrom: String, phoneNumber: String, code: String)
     case thirdLogin(platfrom: String, openId: String, code: String)
+    case appleLogin(userId: String, token: String, fullName: String)
     case userInfomation
     case logout
     case SYGetPhoneNumber(token: String)
@@ -23,7 +24,7 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
 
     var method: YYHTTPMethod {
         switch self {
-        case .sendSms, .login, .logout, .thirdLogin, .bind, .bind2, .unbind, .uploadAppInfo:
+        case .sendSms, .login, .logout, .thirdLogin, .bind, .bind2, .unbind, .uploadAppInfo, .appleLogin:
             return .post
             
         case .userInfomation, .SYGetPhoneNumber, .SYLogin:
@@ -33,7 +34,7 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
     
     var path: String {
         switch self {
-        case .login, .thirdLogin:
+        case .login, .thirdLogin, .appleLogin:
             return YXAPI.RegisterAndLogin.login
             
         case .sendSms:
@@ -72,6 +73,9 @@ public enum YXRegisterAndLoginRequest: YYBaseRequest {
             
         case .thirdLogin(let platfrom, let openId, let code):
             return ["pf": platfrom, "openid": openId, "code": code]
+
+        case .appleLogin(let userId, let token, let fullName):
+            return ["pf": "ios", "openid": userId, "code": token, "fullname" : fullName]
             
         case .sendSms(let phoneNumber, let loginType, let SlidingVerificationCode):
             if let SlidingVerificationCode = SlidingVerificationCode {

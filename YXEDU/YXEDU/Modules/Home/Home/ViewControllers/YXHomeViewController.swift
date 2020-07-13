@@ -22,6 +22,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var wrongWordsCount      = "--"
     private var animationPlayFinished = false
     private var homeModel: YXHomeModel!
+    private var activityModel: YXActivityModel?
     private var service: YXExerciseService = YXExerciseServiceImpl()
     
     @IBOutlet weak var homeEntryView: YXDesignableView!
@@ -47,6 +48,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var activityViewHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionViewTop: NSLayoutConstraint!
     @IBOutlet weak var activityViewTop: NSLayoutConstraint!
+    var bubbleImageView: UIImageView?
 
     var squirrelAnimationView: AnimationView?
     
@@ -128,7 +130,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
         self.checkUserState()
         self.setSquirrelAnimation()
-        self.setActivityView()
         self.registerNotification()
     }
     
@@ -142,6 +143,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         tabBarController?.tabBar.isHidden = false
         navigationController?.setNavigationBarHidden(true, animated: animated)
         loadData()
+        self.requestActivity()
         YXStepConfigManager.share.contrastStepConfig()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
         YXRedDotManager.share.updateTaskCenterBadge()
@@ -233,6 +235,19 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
+    private func requestActivity() {
+        let request = YXHomeRequest.activityInfo
+        YYNetworkService.default.request(YYStructResponse<YXActivityModel>.self, request: request, success: { (response) in
+            guard let model = response.data else {
+                return
+            }
+            self.activityModel = model
+            self.setActivityView()
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
     private func getUnlearnWordCount(home model: YXHomeModel) -> (Int, Int) {
         let service = YXExerciseServiceImpl()
         let config  = YXBaseLearnConfig(bookId: model.bookId ?? 0, unitId: model.unitId ?? 0, learnType: .base, homeworkId: 0)
@@ -310,57 +325,69 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     // MARK: ---- Tools ----
-
     private func setActivityView() {
-        self.activityViewHeight.constant = 0
-        self.collectionViewTop.constant  = 0
-        return
-        // CreateSubviews
-        let bannerH = (screenWidth - 40)/335*80
-        self.activityViewHeight.constant = bannerH
-        let bannerImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.image = UIImage(named: "activityBanner")
-            return imageView
-        }()
-        self.activityView.addSubview(bannerImageView)
-        bannerImageView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+        guard let model = self.activityModel else {
+            return
         }
-        // BindProperty
-        let tapAction = UITapGestureRecognizer(target: self, action: #selector(toActivity))
-        self.activityView.addGestureRecognizer(tapAction)
-        if true {
-            let bubbleImageView: UIImageView = {
+        if model.isAction {
+            // CreateSubviews
+            let bannerH = (screenWidth - 40)/335*80
+            self.activityViewHeight.constant = bannerH
+            let bannerImageView: UIImageView = {
                 let imageView = UIImageView()
-                imageView.image = UIImage(named: "activityBubble")
-                imageView.isUserInteractionEnabled = true
+                imageView.image = UIImage(named: "activityBanner")
                 return imageView
             }()
-            let bubbleButton: UIButton = {
-                let button = UIButton()
-                button.setImage(UIImage(named: "activityArrow"), for: .normal)
-                button.setTitle("奖励待领取", for: .normal)
-                button.setTitleColor(UIColor.hex(0x361211), for: .normal)
-                button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptFontSize(12))
-                button.imageEdgeInsets = UIEdgeInsets(top: 0, left: AdaptIconSize(78), bottom: 0, right: 0)
-                button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: AdaptIconSize(13))
-                return button
-            }()
-            self.view.addSubview(bubbleImageView)
-            bubbleImageView.addSubview(bubbleButton)
-            bubbleImageView.snp.makeConstraints { (make) in
-                make.right.equalTo(self.activityView)
-                make.top.equalTo(self.activityView).offset(AdaptSize(-20))
-                make.size.equalTo(CGSize(width: AdaptIconSize(98), height: AdaptIconSize(30)))
-            }
-            bubbleButton.snp.makeConstraints { (make) in
-                make.left.top.right.equalToSuperview()
-                make.bottom.equalToSuperview().offset(AdaptSize(-2))
+            self.activityView.addSubview(bannerImageView)
+            bannerImageView.snp.makeConstraints { (make) in
+                make.edges.equalToSuperview()
             }
             // BindProperty
-            self.activityViewTop.constant = isPad() ? AdaptSize(45) : AdaptSize(30)
-            bubbleButton.addTarget(self, action: #selector(toActivity), for: .touchUpInside)
+            let tapAction = UITapGestureRecognizer(target: self, action: #selector(toActivity))
+            self.activityView.addGestureRecognizer(tapAction)
+            if model.hadReward || model.hadNewFriend {
+                self.bubbleImageView?.removeFromSuperview()
+                self.bubbleImageView = {
+                    let imageView = UIImageView()
+                    imageView.image = UIImage(named: "activityBubble")
+                    imageView.isUserInteractionEnabled = true
+                    return imageView
+                }()
+                let bubbleButton: UIButton = {
+                    let button = UIButton()
+                    button.setImage(UIImage(named: "activityArrow"), for: .normal)
+                    button.setTitleColor(UIColor.hex(0x361211), for: .normal)
+                    button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptFontSize(12))
+                    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: AdaptIconSize(78), bottom: 0, right: 0)
+                    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: AdaptIconSize(13))
+                    return button
+                }()
+                if model.hadReward {
+                    bubbleButton.setTitle("奖励待领取", for: .normal)
+                } else if model.hadNewFriend {
+                    bubbleButton.setTitle("新好友加入", for: .normal)
+                } else {
+                    bubbleButton.isHidden    = true
+                    bubbleImageView?.isHidden = true
+                }
+                self.view.addSubview(bubbleImageView!)
+                self.bubbleImageView?.addSubview(bubbleButton)
+                self.bubbleImageView?.snp.makeConstraints { (make) in
+                    make.right.equalTo(self.activityView)
+                    make.top.equalTo(self.activityView).offset(AdaptSize(-20))
+                    make.size.equalTo(CGSize(width: AdaptIconSize(98), height: AdaptIconSize(30)))
+                }
+                bubbleButton.snp.makeConstraints { (make) in
+                    make.left.top.right.equalToSuperview()
+                    make.bottom.equalToSuperview().offset(AdaptSize(-2))
+                }
+                // BindProperty
+                self.activityViewTop.constant = isPad() ? AdaptSize(45) : AdaptSize(30)
+                bubbleButton.addTarget(self, action: #selector(toActivity), for: .touchUpInside)
+            }
+        } else {
+            self.activityViewHeight.constant = 0
+            self.collectionViewTop.constant  = 0
         }
     }
     
@@ -489,6 +516,12 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     @objc private func toActivity() {
+        guard let model = self.activityModel else {
+            return
+        }
+        if !model.hadReward && model.hadNewFriend {
+            self.bubbleImageView?.isHidden = true
+        }
         let vc = YXWebViewController()
         vc.customTitle   = "全国单词达人挑战赛"
         vc.requestUrlStr = "http://10.173.4.150:8080"

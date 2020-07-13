@@ -38,8 +38,8 @@ struct YXUserDataManager {
             return
         }
         _code = _code.trimed
-        let classCode = _code.isPureNumbers() ? "" : _code
-        let workCode  = _code.isPureNumbers() ? _code : ""
+        let classCode = _code.isPureNumbers() ? _code : ""
+        let workCode  = _code.isPureNumbers() ? "" : _code
         let request = YXHomeRequest.joinClass(classCode: classCode, workCode: workCode)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
             complate?(true)

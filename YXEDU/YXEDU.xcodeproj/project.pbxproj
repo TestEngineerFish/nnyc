@@ -80,6 +80,7 @@
 		2246134724332A1200A848FF /* YXFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2246134624332A1200A848FF /* YXFileManager.swift */; };
 		2247360224BC52AD00745612 /* YXWebActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247360124BC52AD00745612 /* YXWebActionManager.swift */; };
 		2247360424BC53C200745612 /* YXWebActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247360324BC53C200745612 /* YXWebActionModel.swift */; };
+		2247360624BC7F8400745612 /* YXActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247360524BC7F8400745612 /* YXActivityModel.swift */; };
 		2248AE3B239DEDDC003AADCF /* YXReviewWordViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248AE3A239DEDDC003AADCF /* YXReviewWordViewCell.swift */; };
 		2248C9F123B1B08F009342A5 /* YXChallengeMyRankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248C9F023B1B08F009342A5 /* YXChallengeMyRankCell.swift */; };
 		224A2FBF238233CC00AD99B0 /* YXSexangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A2FBB238233CC00AD99B0 /* YXSexangleView.swift */; };
@@ -696,6 +697,7 @@
 		2246134624332A1200A848FF /* YXFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFileManager.swift; sourceTree = "<group>"; };
 		2247360124BC52AD00745612 /* YXWebActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebActionManager.swift; sourceTree = "<group>"; };
 		2247360324BC53C200745612 /* YXWebActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebActionModel.swift; sourceTree = "<group>"; };
+		2247360524BC7F8400745612 /* YXActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXActivityModel.swift; sourceTree = "<group>"; };
 		2248AE3A239DEDDC003AADCF /* YXReviewWordViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXReviewWordViewCell.swift; sourceTree = "<group>"; };
 		2248C9F023B1B08F009342A5 /* YXChallengeMyRankCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeMyRankCell.swift; sourceTree = "<group>"; };
 		224A2FBB238233CC00AD99B0 /* YXSexangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXSexangleView.swift; sourceTree = "<group>"; };
@@ -2423,6 +2425,7 @@
 				77AA41C424065A6700473A71 /* YXGuideModel.swift */,
 				221E77A724372069000377DB /* YXWordListModel.swift */,
 				77163C6624517641002A41E3 /* YXStudyReportModel.swift */,
+				2247360524BC7F8400745612 /* YXActivityModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4261,6 +4264,7 @@
 				2218AE4123D1A2A300EF2E42 /* Dictionary+Extension.swift in Sources */,
 				22991073249211CA00F1C198 /* YXDatabaseConfig+StudyRecord.swift in Sources */,
 				EE5E00F823274FEC00655654 /* YXPersonalReminderVC.m in Sources */,
+				2247360624BC7F8400745612 /* YXActivityModel.swift in Sources */,
 				EEACEB06239E62160036B3A2 /* YXReviewViewController.swift in Sources */,
 				77B0A5B323B1E53B0093A181 /* YXWordBookRequest.swift in Sources */,
 				77626C04239E37E600B9407A /* YXWordListEditCell.swift in Sources */,

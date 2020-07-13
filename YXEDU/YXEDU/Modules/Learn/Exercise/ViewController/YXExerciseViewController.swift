@@ -43,9 +43,6 @@
     /// 协议
     private weak var delegate: YXExerciseViewControllerProtocol?
 
-    /// 返回事件（WebView活动）
-    var backAction: ((Bool)->Void)?
-
     /// 是否在请求接口中，用于Loading页面的状态更新
     static var requesting: Bool?
     static var selectWord: Bool?
@@ -436,7 +433,6 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             YXLog("返回首页")
             self.service.updateDurationTime()
             self.uploadGrowing()
-            self.backAction?(false)
             self.delegate?.backHomeEvent()
             if self.learnConfig.learnType.isHomework() {
                 self.navigationController?.popViewController(animated: false)

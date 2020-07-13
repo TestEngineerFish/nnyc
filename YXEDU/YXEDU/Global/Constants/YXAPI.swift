@@ -50,6 +50,8 @@ struct YXAPI {
         static let getBookList = "/api/v1/book/getbooklist"
         /// 加入班级
         static let joinClass = "/api/v1/class/add"
+        /// 返回活动信息
+        static let activityInfo = "/api/v1/activity/index"
     }
     
     //MARK: - 用户模块
