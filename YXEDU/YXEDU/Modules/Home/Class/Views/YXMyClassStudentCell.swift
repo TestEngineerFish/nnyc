@@ -11,7 +11,7 @@ import Foundation
 class YXMyClassStudentCell: UITableViewCell {
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
-        imageView.image = UIImage(named: "userPlaceHolder")
+        imageView.image = UIImage(named: "challengeAvatar")
         return imageView
     }()
     var nameLabel: UILabel = {
@@ -85,9 +85,9 @@ class YXMyClassStudentCell: UITableViewCell {
 
     func setData(student model: YXMyClassStudentInfoModel) {
         if !model.avatarUrl.isEmpty {
-            self.avatarImageView.showImage(with: model.avatarUrl, placeholder: UIImage(named: "userPlaceHolder"), progress: nil, completion: nil)
+            self.avatarImageView.showImage(with: model.avatarUrl, placeholder: UIImage(named: "challengeAvatar"), progress: nil, completion: nil)
         } else {
-            self.avatarImageView.image = UIImage(named: "userPlaceHolder")
+            self.avatarImageView.image = UIImage(named: "challengeAvatar")
         }
         self.nameLabel.text = model.name
         self.descLabel.text = "本月学习\(model.learnCount)天"

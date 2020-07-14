@@ -41,7 +41,7 @@ class YXAvatarPinView: UIView {
         if let avatarPath = YXUserModel.default.userAvatarPath, !avatarPath.isEmpty {
             avatarImageView.showImage(with: avatarPath)
         } else {
-            avatarImageView.image = UIImage(named: "userPlaceHolder")
+            avatarImageView.image = UIImage(named: "challengeAvatar")
         }
         imageView.addSubview(avatarImageView)
         avatarImageView.frame = CGRect(x: 0, y: 0, width: AdaptIconSize(24), height: AdaptIconSize(24))

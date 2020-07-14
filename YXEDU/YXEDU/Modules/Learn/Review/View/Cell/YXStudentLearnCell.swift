@@ -19,7 +19,7 @@ class YXStudentLearnCell: UICollectionViewCell {
 
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
-        imageView.image = UIImage(named: "userPlaceHolder")
+        imageView.image = UIImage(named: "challengeAvatar")
         imageView.layer.cornerRadius  = AdaptIconSize(25)
         imageView.layer.masksToBounds = true
         return imageView

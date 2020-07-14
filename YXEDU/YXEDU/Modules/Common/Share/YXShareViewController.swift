@@ -359,7 +359,7 @@ class YXShareViewController: YXViewController {
     /// 创建学习结果打卡页面
     private func createLearnResultShareImage(_ backgroundImage: UIImage?) -> UIImage? {
 
-        let avatarImage = YXUserModel.default.userAvatarImage == nil ? UIImage(named: "userPlaceHolder") : YXUserModel.default.userAvatarImage
+        let avatarImage = YXUserModel.default.userAvatarImage == nil ? UIImage(named: "challengeAvatar") : YXUserModel.default.userAvatarImage
         let shareImageView = YXShareImageView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: 518)))
         shareImageView.backgroundImageView.image = backgroundImage
         shareImageView.avatarImageView.image     = avatarImage
