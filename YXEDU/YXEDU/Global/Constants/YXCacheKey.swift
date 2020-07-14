@@ -27,6 +27,8 @@ enum YXLocalKey: String {
 
     // ==== UserModel ====
     case uuid                          = "kUUID"
+    /// 当前用户ID
+    case userId                        = "uid"
     /// 是否已登录
     case didLogin                      = "kDidLogin"
     /// 是否使用美式发音

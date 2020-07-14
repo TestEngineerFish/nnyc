@@ -14,6 +14,7 @@ class YXWebViewAppInfoAction: YRWebViewJSAction {
         guard let callBackStr = self.callback else {
             return
         }
+        let userId     = YXUserModel.default.userId ?? 0
         let appVersion = UIDevice().appVersion() ?? ""
         let osVersion  = UIDevice().sysVersion() ?? ""
         let platform   = "iOS"
@@ -25,7 +26,8 @@ class YXWebViewAppInfoAction: YRWebViewJSAction {
                           "platform"    : platform,
                           "screen"      : screen,
                           "token"       : token,
-                          "app_key"     : appKey]
+                          "app_key"     : appKey,
+                          "uid"         : userId]
         let funcStr    = String(format: "%@('%@')", callBackStr, resultDic.toJson())
         DispatchQueue.main.async {
             self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
