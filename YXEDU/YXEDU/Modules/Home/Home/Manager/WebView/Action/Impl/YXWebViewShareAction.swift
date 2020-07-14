@@ -14,6 +14,18 @@ class YXWebViewShareAction: YRWebViewJSAction {
         super.action()
 
         if let json = self.params as? [String: Any], let actionModel = ShareActionModel(JSON: json) {
+            // 是否安装判断
+            if actionModel.type.getShareChannel() == .wechat || actionModel.type.getShareChannel() == .timeLine {
+                if WXApiManager.shared()?.wxIsInstalled() == .some(false) {
+                    YXUtils.showHUD(kWindow, title: "你未安装微信，暂时无法分享")
+                    return
+                }
+            } else if actionModel.type.getShareChannel() == .qq || actionModel.type.getShareChannel() == .qzone {
+                if !TencentOAuth.iphoneQQInstalled() && !TencentOAuth.iphoneTIMInstalled() {
+                    YXUtils.showHUD(kWindow, title: "你未安装QQ，暂时无法分享")
+                    return
+                }
+            }
             let shareView = YXShareDefaultView()
             // 分享完成后的回调
             shareView.completeBlock = { (channel: YXShareChannel, result: Bool) in
