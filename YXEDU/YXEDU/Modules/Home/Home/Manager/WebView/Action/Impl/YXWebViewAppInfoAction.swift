@@ -27,12 +27,11 @@ class YXWebViewAppInfoAction: YRWebViewJSAction {
                           "screen"      : screen,
                           "token"       : token,
                           "app_key"     : appKey,
-                          "uid"         : userId]
+                          "uid"         : userId] as [String : Any]
         let funcStr    = String(format: "%@('%@')", callBackStr, resultDic.toJson())
         DispatchQueue.main.async {
             self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
         }
-
     }
 
 }
