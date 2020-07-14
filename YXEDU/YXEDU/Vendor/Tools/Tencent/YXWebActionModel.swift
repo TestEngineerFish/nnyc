@@ -13,13 +13,15 @@ struct YXWXWebModel: Mappable {
     var action: String = ""
     var scheme: String = ""
     var params: String = ""
+    var channel: Int   = 0
 
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        action <- map["open_app_action"]
-        scheme <- map["open_app_scheme"]
-        params <- map["action_params"]
+        action  <- map["open_app_action"]
+        scheme  <- map["open_app_scheme"]
+        params  <- map["action_params"]
+        channel <- map["channel"]
     }
 }
 

@@ -14,8 +14,6 @@ class YXWebActionManager: NSObject {
 
     @objc
     func progressWXReq(extion info: String) {
-//        let dict = ["open_app_action":"join_class", "open_app_scheme" : "/class/list", "action_params" : "6344121"]
-//        let _info = dict.toJson()
         guard let model = YXWXWebModel(JSONString: info) else {
             return
         }
@@ -41,7 +39,7 @@ class YXWebActionManager: NSObject {
             }
             break
         case "make_team":
-            self.addFriend(user: model.params, channel: 1, complete: nil)
+            self.addFriend(user: model.params, channel: model.channel, complete: nil)
             break
         default:
             break
