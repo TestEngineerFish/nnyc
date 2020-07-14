@@ -330,7 +330,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         guard let model = self.activityModel else {
             return
         }
-        if model.isAction {
+        if model.isShow {
             // CreateSubviews
             let bannerH = (screenWidth - 40)/335*80
             self.activityViewHeight.constant = bannerH
@@ -347,6 +347,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let tapAction = UITapGestureRecognizer(target: self, action: #selector(toActivity))
             self.activityView.addGestureRecognizer(tapAction)
             self.bubbleImageView?.removeFromSuperview()
+            // 活动未开始，不展示小气泡
+            if !model.isAction {
+                return
+            }
             self.bubbleImageView = {
                 let imageView = UIImageView()
                 imageView.image = UIImage(named: "activityBubble")
@@ -366,12 +370,15 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 bubbleButton.setTitle("奖励待领取", for: .normal)
             } else if model.hadNewFriend {
                 bubbleButton.setTitle("新好友加入", for: .normal)
-            } else {
-                if model.taskFinished {
-                    bubbleButton.setTitle("今日打卡\(model.punchToday)/\(model.punchAmount)", for: .normal)
-                } else {
+            } else if !model.taskFinished {
+                if model.punchToday == 0 {
                     bubbleButton.setTitle("今日未打卡", for: .normal)
+                } else {
+                    bubbleButton.setTitle("今日打卡\(model.punchToday)/\(model.punchAmount)", for: .normal)
                 }
+            } else {
+                bubbleButton.isHidden          = true
+                self.bubbleImageView?.isHidden = true
             }
             self.view.addSubview(bubbleImageView!)
             self.bubbleImageView?.addSubview(bubbleButton)
@@ -496,7 +503,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         } else {
             let alertView = YXAlertView(type: .inputable, placeholder: "输入班级号或作业提取码")
             alertView.titleLabel.text = "请输入班级号或作业提取码"
-            alertView.shouldOnlyShowOneButton = true
+            alertView.shouldOnlyShowOneButton = false
             alertView.shouldClose = false
             alertView.doneClosure = {(classNumber: String?) in
                 YXUserDataManager.share.joinClass(code: classNumber) { (result) in
@@ -527,6 +534,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         //        vc.customTitle   = "全国单词达人挑战赛"
         //        vc.requestUrlStr = "http://10.173.4.150:8080"
         vc.requestUrlStr = "http://nnyc-api-test.xstudyedu.com/api/activity/activity.html"
+//        vc.requestUrlStr = model.urlStr
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

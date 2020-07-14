@@ -222,7 +222,7 @@ class YXUserModel: NSObject {
 
     /// 上传剪切板和设备信息
     private func uploadAppInfo() {
-        guard let clipboard = UIPasteboard.general.string else {
+        guard let clipboard = UIPasteboard.general.string, clipboard.count == 26 else {
             return
         }
         let platform  = "iOS"

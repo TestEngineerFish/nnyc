@@ -67,7 +67,7 @@ class YXMyClassTableViewHanderView: YXView {
     @objc private func joinClass() {
         let alertView = YXAlertView(type: .inputable, placeholder: "输入班级号或作业提取码")
         alertView.titleLabel.text = "请输入班级号或作业提取码"
-        alertView.shouldOnlyShowOneButton = true
+        alertView.shouldOnlyShowOneButton = false
         alertView.shouldClose = false
         alertView.doneClosure = {(classNumber: String?) in
             YXUserDataManager.share.joinClass(code: classNumber) { (result) in

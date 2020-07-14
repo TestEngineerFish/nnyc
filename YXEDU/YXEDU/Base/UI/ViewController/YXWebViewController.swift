@@ -135,6 +135,10 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         webView.reload()
     }
 
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        YXLog("页面加载完成✅")
+    }
+
     // MARK: ==== YRWebViewJSBridgeDelegate ====
     func relationActionHandleClass() -> [String : YRWebViewJSActionDelegate.Type]? {
         let list =  [WebViewActionType.share.rawValue : YXWebViewShareAction.self,
