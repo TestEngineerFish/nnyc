@@ -367,8 +367,11 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 } else if model.hadNewFriend {
                     bubbleButton.setTitle("新好友加入", for: .normal)
                 } else {
-                    bubbleButton.isHidden    = true
-                    bubbleImageView?.isHidden = true
+                    if model.taskFinished {
+                        bubbleButton.setTitle("今日打卡\(model.punchToday)/\(model.punchAmount)", for: .normal)
+                    } else {
+                        bubbleButton.setTitle("今日未打卡", for: .normal)
+                    }
                 }
                 self.view.addSubview(bubbleImageView!)
                 self.bubbleImageView?.addSubview(bubbleButton)
@@ -523,7 +526,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         let vc = YXWebViewController()
 //        vc.customTitle   = "全国单词达人挑战赛"
-        vc.requestUrlStr = "http://10.173.4.150:8080"
+//        vc.requestUrlStr = "http://10.173.4.150:8080"
+        vc.requestUrlStr = "http://nnyc-api-test.xstudyedu.com/api/activity/activity.html"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -38,10 +38,10 @@ class YXWebViewShareAction: YRWebViewJSAction {
     // MARK: ==== Event ====
     /// 获取分享图片
     private func getShareImage(complete block: ((UIImage?)->Void)?) {
-        let request = YXShareRequest.changeBackgroundImage(type: YXShareChannel.timeLine.rawValue)
+        let request = YXShareRequest.getActivityShareImage
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { response in
-            guard let result = response.data, let imageStr = result.imageUrls?.first else { return }
-            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: imageStr), completed: { (image, data, error, result) in
+            guard let model = response.data else { return }
+            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { (image, data, error, result) in
                 block?(image)
             })
         }) { (error) in

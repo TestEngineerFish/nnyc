@@ -226,6 +226,8 @@ struct YXAPI {
         static let changeBackgroundImage = "/api/v1/learn/changebackground"
         /// 获取二维码
         static let getQRCode = "/api/v1/activity/getqrcode"
+        /// 获取活动分享图
+        static let getActivityShareImage = "/api/v1/activity/getpostqrcode"
     }
     
     //MARK: - 设置模块
