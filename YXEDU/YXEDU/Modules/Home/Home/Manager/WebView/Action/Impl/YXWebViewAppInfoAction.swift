@@ -21,13 +21,15 @@ class YXWebViewAppInfoAction: YRWebViewJSAction {
         let screen     = UIDevice().screenResolution() ?? ""
         let token      = YXUserModel.default.token ?? ""
         let appKey     = kSault
-        let resultDic  = ["app_version" : appVersion,
-                          "os_version"  : osVersion,
-                          "platform"    : platform,
-                          "screen"      : screen,
-                          "token"       : token,
-                          "app_key"     : appKey,
-                          "uid"         : userId] as [String : Any]
+        let grade      = YXUserModel.default.currentGrade ?? 0
+        let resultDic  = ["app_version"   : appVersion,
+                          "os_version"    : osVersion,
+                          "platform"      : platform,
+                          "screen"        : screen,
+                          "token"         : token,
+                          "app_key"       : appKey,
+                          "uid"           : userId,
+                          "current_grade" : grade] as [String : Any]
         let funcStr    = String(format: "%@('%@')", callBackStr, resultDic.toJson())
         DispatchQueue.main.async {
             self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
