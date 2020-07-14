@@ -35,6 +35,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.webView?.configuration.userContentController.removeScriptMessageHandler(forName: appJS)
         self.webView?.configuration.userContentController.add(self, name: appJS)
     }
 
