@@ -32,6 +32,18 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
         return label
     }()
 
+    var joinButton: UIButton = {
+        let button = UIButton()
+        button.layer.borderWidth = AdaptSize(0.5)
+        button.layer.borderColor = UIColor.black4.cgColor
+        button.setImage(UIImage(named: "review_add_icon"), for: .normal)
+        button.backgroundColor = .white
+        button.setTitle("提取作业", for: .normal)
+        button.setTitleColor(UIColor.gray3, for: .normal)
+        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(13))
+        return button
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.bindProperty()
@@ -47,6 +59,7 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
         self.addSubview(tableViewWarpView)
         tableViewWarpView.addSubview(tableView)
         self.addSubview(workTitleLabel)
+        self.addSubview(joinButton)
         tableViewWarpView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(22))
             make.right.equalToSuperview().offset(AdaptSize(-22))
@@ -61,6 +74,12 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
             make.right.equalToSuperview().offset(AdaptSize(-20))
             make.bottom.equalToSuperview().offset(AdaptSize(-7.5))
         }
+        joinButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(workTitleLabel)
+            make.right.equalToSuperview().offset(AdaptSize(-40))
+            make.size.equalTo(CGSize(width: AdaptSize(88), height: AdaptSize(28)))
+        }
+        joinButton.layer.cornerRadius = AdaptSize(14)
         self.tableView.layer.setDefaultShadow(cornerRadius: AdaptSize(12), shadowRadius: 10)
         self.tableView.layer.masksToBounds = true
         self.tableViewWarpView.layer.setDefaultShadow(cornerRadius: AdaptSize(12), shadowRadius: 10)
@@ -72,6 +91,7 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
         self.tableView.delegate        = self
         self.tableView.dataSource      = self
         self.tableView.register(YXMyClassTableViewClassCell.classForCoder(), forCellReuseIdentifier: "kYXMyClassTableViewClassCell")
+        self.joinButton.addTarget(self, action: #selector(joinClass), for: .touchUpInside)
     }
 
     // MARK: ==== Event ====
@@ -79,6 +99,26 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
     func setDate(class modelList: [YXMyClassModel]) {
         self.classList = modelList
         self.tableView.reloadData()
+    }
+
+    @objc private func joinClass() {
+        let alertView = YXAlertView(type: .inputable, placeholder: "输入班级号或作业提取码")
+        alertView.titleLabel.text = "请输入班级号或作业提取码"
+        alertView.shouldOnlyShowOneButton = false
+        alertView.shouldClose = false
+        alertView.doneClosure = {(classNumber: String?) in
+            YXUserDataManager.share.joinClass(code: classNumber) { (result) in
+                if result {
+                    alertView.removeFromSuperview()
+                }
+            }
+            YXLog("班级号：\(classNumber ?? "")")
+        }
+        alertView.clearButton.isHidden    = true
+        alertView.textCountLabel.isHidden = true
+        alertView.textMaxLabel.isHidden   = true
+        alertView.alertHeight.constant    = 222
+        alertView.show()
     }
 
     // MARK: ==== UITableViewDeletegate && UITableViewDataSource ====
