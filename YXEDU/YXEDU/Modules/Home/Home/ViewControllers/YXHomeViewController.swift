@@ -347,8 +347,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let tapAction = UITapGestureRecognizer(target: self, action: #selector(toActivity))
             self.activityView.addGestureRecognizer(tapAction)
             self.bubbleImageView?.removeFromSuperview()
-            // 活动未开始，不展示小气泡
-            if !model.isAction {
+            // 活动未开始或者未参加，不展示小气泡
+            if !model.isAction || !model.isJoin {
                 return
             }
             self.bubbleImageView = {

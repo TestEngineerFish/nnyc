@@ -12,6 +12,7 @@ struct YXActivityModel: Mappable {
     var isShow: Bool       = false
     var isAction: Bool     = false
     var taskFinished: Bool = false
+    var isJoin: Bool       = false
     var title: String      = ""
     var hadNewFriend: Bool = false
     var hadReward: Bool    = false
@@ -30,6 +31,7 @@ struct YXActivityModel: Mappable {
         punchAmount  <- map["need_clock_num"]
         punchToday   <- map["today_clock_num"]
         urlStr       <- map["activity_url"]
+        isJoin       <- map["join_status"]
     }
 
 
