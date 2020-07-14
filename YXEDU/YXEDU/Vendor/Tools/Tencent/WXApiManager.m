@@ -44,7 +44,6 @@
     [WXApi startLogByLevel:WXLogLevelDetail logBlock:^(NSString * _Nonnull log) {
         YXLog(@"WeChatSDKLog: %@", log);
     }];
-    [[YXWebActionManager share] progressWXReqWithExtion:url.absoluteString];
     BOOL ret = [WXApi registerApp:wechatId universalLink:universalLink];
     if ([WXApi handleOpenURL:url delegate:self]) {
         YXLog(@"handleOpenURL: %@", url.absoluteString);
@@ -122,13 +121,11 @@
     //获取开放标签传递的extinfo数据逻辑
     if ([req isKindOfClass:[LaunchFromWXReq class]])
     {
-        if ([req isKindOfClass:[SendMessageToWXReq class]]) {
-            SendMessageToWXReq *sendMsgReq = (SendMessageToWXReq *)req;
-            WXMediaMessage *msg = sendMsgReq.message;
-            NSString *openID    = req.openID;
-            NSString *extinfo   = msg.messageExt;
-            [[YXWebActionManager share] progressWXReqWithExtion:extinfo];
-        }
+        LaunchFromWXReq *wxReq = (LaunchFromWXReq *)req;
+        WXMediaMessage *msg = wxReq.message;
+        NSString *openID = wxReq.openID;
+        NSString *extinfo = wxReq.message.messageExt;
+        [[YXWebActionManager share] progressWXReqWithExtion:extinfo];
     }
 }
 

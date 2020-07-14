@@ -321,11 +321,11 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         let request = YXRegisterAndLoginRequest.appleLogin(userId: model.user, token: tokenStr, fullName: model.name)
         YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let data = response.data else { return }
-
             YXUserModel.default.uuid           = data.uuid
             YXUserModel.default.token          = data.token
             YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
+            self.platform = "apple"
             self.checkUserInfomation()
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -603,19 +603,16 @@ extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, A
             let authorizationCode = credential.authorizationCode
             let userEmail         = credential.email ?? ""
             let userName          = (credential.fullName?.familyName ?? "") + (credential.fullName?.givenName ?? "")
-            let tokenStr = String(data: identityToken!, encoding: .utf8) ?? ""
-            YXLog("Apple Token:" + tokenStr)
+//            if let tokenData = identityToken, let codeData = authorizationCode {
+//                let tokenStr = String(data: tokenData, encoding: .utf8) ?? ""
+//                let codeStr  = String(data: codeData, encoding: .utf8) ?? ""
+//                YXLog(String(format: "User ID:%@\nApple Token:%@\nAuthorization Code:%@\n", userIdentifier, tokenStr, codeStr))
+//            }
             self.appleModel = YXAppleModel(user: userIdentifier, name: userName, email: userEmail, identityToken: identityToken, authorizationCode: authorizationCode)
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             appleIDProvider.getCredentialState(forUserID: userIdentifier) {  (credentialState, error) in
-                YXLog("credential.user:\(credential.user)")
-                YXLog("credential.identityToken:\(credential.identityToken)")
-                YXLog("credential.email:\(credential.email)")
-                YXLog("credential.fullName\(credential.fullName)")
-                YXLog("credential.authorizationCode\(credential.authorizationCode)")
                 switch credentialState {
                 case .authorized:
-                    // The Apple ID credential is valid.
                     self.appleLogin()
                     break
                 case .revoked:
@@ -630,7 +627,7 @@ extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, A
             }
         } else if let credential = authorization.credential as? ASPasswordCredential {
             // 老用户
-            let userIdentifier = credential.user
+//            let userIdentifier = credential.user
 
         }
     }

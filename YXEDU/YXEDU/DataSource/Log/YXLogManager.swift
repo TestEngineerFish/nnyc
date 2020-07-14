@@ -50,6 +50,7 @@ class YXLogManager: NSObject {
 
     /// 添加用户信息
     private func addUserInfo() {
+        YXLog("当前用户UserID：\(YXUserModel.default.userId ?? 0)")
         YXLog("当前UUID：" + (YXUserModel.default.uuid ?? ""))
         YXLog("当前用户名：" + (YXUserModel.default.userName ?? ""))
         YXLog("当前用户手机号：" + (YXUserModel.default.mobile ?? ""))

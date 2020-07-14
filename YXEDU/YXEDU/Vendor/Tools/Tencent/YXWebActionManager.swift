@@ -14,9 +14,9 @@ class YXWebActionManager: NSObject {
 
     @objc
     func progressWXReq(extion info: String) {
-        let dict = ["open_app_action":"join_class", "open_app_scheme" : "/class/list", "action_params" : "6344121"]
-        let _info = dict.toJson()
-        guard let model = YXWXWebModel(JSONString: _info) else {
+//        let dict = ["open_app_action":"join_class", "open_app_scheme" : "/class/list", "action_params" : "6344121"]
+//        let _info = dict.toJson()
+        guard let model = YXWXWebModel(JSONString: info) else {
             return
         }
         // 状态拦截
