@@ -44,8 +44,10 @@ class YXWebViewShareAction: YRWebViewJSAction {
             guard let model = response.data else { return }
             SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { (image, data, error, result) in
                 block?(image)
+                YXUtils.hideHUD(kWindow)
             })
         }) { (error) in
+            YXUtils.hideHUD(kWindow)
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }

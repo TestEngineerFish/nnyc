@@ -533,8 +533,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         let vc = YXWebViewController()
         //        vc.customTitle   = "全国单词达人挑战赛"
         //        vc.requestUrlStr = "http://10.173.4.150:8080"
-        vc.requestUrlStr = "http://nnyc-api-test.xstudyedu.com/api/activity/activity.html"
-//        vc.requestUrlStr = model.urlStr
+//        vc.requestUrlStr = "http://nnyc-api-test.xstudyedu.com/api/activity/activity.html"
+        vc.requestUrlStr = model.urlStr
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -21,8 +21,8 @@ struct YXActivityModel: Mappable {
 
     init?(map: Map) {}
     mutating func mapping(map: Map) {
-        isShow       <- map["activity_status"]
-        isAction     <- map["show_status"]
+        isAction     <- map["activity_status"]
+        isShow       <- map["show_status"]
         taskFinished <- map["task_status"]
         title        <- map["title"]
         hadNewFriend <- map["had_new_friend"]

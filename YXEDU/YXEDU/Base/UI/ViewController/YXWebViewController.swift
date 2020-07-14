@@ -17,6 +17,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
     let jsBridge = YRWebViewJSBridge()
     var callBackDic = [String:String]()
 
+    let loadingView = UIActivityIndicatorView()
     var rightButton: UIButton = {
         let button = UIButton()
         button.setTitle("规则", for: .normal)
@@ -70,14 +71,19 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
             self.customNavigationBar?.title = _title
         }
         NotificationCenter.default.addObserver(self, selector: #selector(showRuleButton(notification:)), name: YXNotification.kShowRightButton, object: nil)
+        self.loadingView.hidesWhenStopped = true
     }
 
     private func createSubviews() {
         self.view.addSubview(webView!)
+        self.view.addSubview(loadingView)
         self.view.sendSubviewToBack(webView!)
         webView?.snp.makeConstraints({ (make) in
             make.top.equalToSuperview().offset(kNavHeight)
             make.left.right.bottom.equalToSuperview()
+        })
+        loadingView.snp.makeConstraints({ (make) in
+            make.center.equalToSuperview()
         })
     }
 
@@ -116,6 +122,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
             self.navigationController?.popViewController(animated: true)
             return
         }
+        self.loadingView.startAnimating()
         let requestUrl = URLRequest(url: url)
         self.webView?.load(requestUrl)
     }
@@ -136,6 +143,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.loadingView.stopAnimating()
         YXLog("页面加载完成✅")
     }
 
