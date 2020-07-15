@@ -222,12 +222,15 @@ class YXUserModel: NSObject {
 
     /// 上传剪切板和设备信息
     private func uploadAppInfo() {
-        guard let clipboard = UIPasteboard.general.string, clipboard.count == 26 else {
+        guard var clipboard = UIPasteboard.general.string else {
             return
         }
         let platform  = "iOS"
         let systemVer = UIDevice().sysVersion() ?? ""
         let screen    = UIDevice().screenResolution() ?? ""
+        if clipboard.count != 26 {
+            clipboard = ""
+        }
         let request = YXRegisterAndLoginRequest.uploadAppInfo(clipboard: clipboard, platform: platform, systomVersion: systemVer, screen: screen)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
 
