@@ -192,7 +192,6 @@ class YXUserModel: NSObject {
         
         self.didLogin = true
         YXWordBookResourceManager.stop = false
-        self.uploadAppInfo()
         // 登录后设置别名给友盟
         let alias = YXUserModel.default.uuid ?? ""
         UMessage.setAlias(alias, type: kUmengAliasType) { (response, error) in
@@ -218,24 +217,5 @@ class YXUserModel: NSObject {
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)
         let navigationController = storyboard.instantiateViewController(withIdentifier: "YXRegistrationAndLoginNavigationController") as? UINavigationController
         UIApplication.shared.keyWindow?.rootViewController = navigationController
-    }
-
-    /// 上传剪切板和设备信息
-    private func uploadAppInfo() {
-        guard var clipboard = UIPasteboard.general.string else {
-            return
-        }
-        let platform  = "iOS"
-        let systemVer = UIDevice().sysVersion() ?? ""
-        let screen    = UIDevice().screenResolution() ?? ""
-        if clipboard.count != 26 {
-            clipboard = ""
-        }
-        let request = YXRegisterAndLoginRequest.uploadAppInfo(clipboard: clipboard, platform: platform, systomVersion: systemVer, screen: screen)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-
-        }) { (error) in
-            YXLog("上报设备信息失败")
-        }
     }
 }

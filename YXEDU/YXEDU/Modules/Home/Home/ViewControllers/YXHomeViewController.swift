@@ -249,6 +249,25 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
+    /// 上传剪切板和设备信息
+    private func uploadAppInfo() {
+        guard var clipboard = UIPasteboard.general.string else {
+            return
+        }
+        let platform  = "0"
+        let systemVer = UIDevice().sysVersion() ?? ""
+        let screen    = UIDevice().screenResolution() ?? ""
+        if clipboard.count != 26 {
+            clipboard = ""
+        }
+        let request = YXRegisterAndLoginRequest.uploadAppInfo(clipboard: clipboard, platform: platform, systomVersion: systemVer, screen: screen)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+
+        }) { (error) in
+            YXLog("上报设备信息失败")
+        }
+    }
+
     private func getUnlearnWordCount(home model: YXHomeModel) -> (Int, Int) {
         let service = YXExerciseServiceImpl()
         let config  = YXBaseLearnConfig(bookId: model.bookId ?? 0, unitId: model.unitId ?? 0, learnType: .base, homeworkId: 0)
@@ -308,6 +327,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
             if _userInfomation.didSelectBook == 0 {
                 YYCache.set(true, forKey: .isShowSelectBool)
+                self.uploadAppInfo()
             } else {
                 YYCache.set(false, forKey: .isShowSelectBool)
             }
