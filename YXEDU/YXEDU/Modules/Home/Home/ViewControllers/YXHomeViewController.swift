@@ -354,6 +354,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             // CreateSubviews
             let bannerH = (screenWidth - 40)/335*80
             self.activityViewHeight.constant = bannerH
+            self.collectionViewTop.constant = 25
             let bannerImageView: UIImageView = {
                 let imageView = UIImageView()
                 imageView.image = UIImage(named: "activityBanner")
