@@ -270,15 +270,14 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         if requestType < 0 { return }
         
         if requestType == 0 {
-            if page <= 1 {
-                self.words.removeAll()
-            }
-            
             let request = YXWordListRequest.collectionWordList(type: requestType, page: page)
             YYNetworkService.default.request(YYStructResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
                 guard let self = self, let model = response.data else { return }
                 self.currentPage         = model.page
                 self.haveMore            = model.haveMore
+                if page <= 1 {
+                    self.words.removeAll()
+                }
                 self.words              += model.wordModelList
                 self.wordCountLabel.text = "\(model.total)"
                 self.tableView.reloadData()
