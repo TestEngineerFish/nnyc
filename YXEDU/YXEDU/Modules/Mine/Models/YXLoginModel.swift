@@ -44,16 +44,16 @@ struct YXNewLoginUserInfoModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        avatar                       <- map["avatar"]
-        nick                  <- map["nick"]
-        sex                     <- map["sex"]
-        area              <- map["area"]
-        mobile                       <- map["mobile"]
-        uuid                  <- map["uuid"]
-        userBind                     <- map["userBind"]
-        birthday              <- map["birthday"]
-        speech              <- map["speech"]
-        grade              <- map["grade"]
-        punchDays              <- map["punchDays"]
+        avatar    <- map["avatar"]
+        nick      <- map["nick"]
+        sex       <- map["sex"]
+        area      <- map["area"]
+        mobile    <- map["mobile"]
+        uuid      <- map["uuid"]
+        userBind  <- map["userBind"]
+        birthday  <- map["birthday"]
+        speech    <- map["speech"]
+        grade     <- map["grade"]
+        punchDays <- map["punchDays"]
     }
 }

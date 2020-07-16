@@ -154,7 +154,19 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         self.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), placeholderImage: #imageLiteral(resourceName: "challengeAvatar"), completed: nil)
         self.nameLabel.text     = YXUserModel.default.userName
         if let garde = loginModel.user?.grade, !garde.isEmpty {
-            self.nameLabel.text = (YXUserModel.default.userName ?? "") + "   " + garde + "年级"
+            let gradeStr: String = {
+                guard let gardeInt = Int(garde), gardeInt > 9 else {
+                    return garde + "年级"
+                }
+                if gardeInt <= 12 {
+                    return "高中"
+                } else if gardeInt < 16 {
+                    return "大学"
+                } else {
+                    return "其他"
+                }
+            }()
+            self.nameLabel.text = (YXUserModel.default.userName ?? "") + "   " + gradeStr
         }
         self.calendarLabel.text = "\(loginModel.user?.punchDays ?? 0)"
 
