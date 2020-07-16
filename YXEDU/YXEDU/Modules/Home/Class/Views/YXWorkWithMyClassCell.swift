@@ -158,7 +158,8 @@ class YXWorkWithMyClassCell: UITableViewCell {
                 self.actionButton.isUserInteractionEnabled = true
                 self.actionButton.isHidden  = false
                 self.actionButton.isEnabled = true
-                self.actionButton.type = .border
+                self.statusImage.isHidden   = true
+                self.actionButton.type      = .border
                 self.actionButton.setStatus(.normal)
                 self.actionButton.setTitleColor(.orange1, for: .normal)
                 if model.shareWorkStatus == .unexpiredUnlearned {
@@ -167,10 +168,9 @@ class YXWorkWithMyClassCell: UITableViewCell {
                     self.actionButton.setTitle("去打卡", for: .normal)
                 }
             case .unexpiredLearnedShare:
-                self.statusImage.isHidden  = false
+                self.statusImage.isHidden  = true
                 self.actionButton.isHidden = false
-                self.statusImage.image    = UIImage(named: "work_finished")
-                self.actionButton.type    = .normal
+                self.actionButton.type     = .normal
                 self.actionButton.setTitleColor(.black6, for: .normal)
                 self.actionButton.backgroundColor = UIColor.hex(0xF4F4F4)
                 self.actionButton.setTitleColor(UIColor.black6, for: .normal)
