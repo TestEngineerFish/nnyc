@@ -27,14 +27,26 @@ class YXWebActionManager: NSObject {
             YXLog("页面拦截")
             return
         }
-
         switch model.action {
-        case "join_class", "add_work":
+        case "join_class":
             let classNumber = model.params
-            // 加入班级
-            YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                if result {
-                    self.toVC(scheme: model.scheme)
+            self.showAlert(title: "是否加入班级", description: "班级号：\(classNumber)", downTitle: "加入") {
+                // 加入班级
+                YXUserDataManager.share.joinClass(code: classNumber) { (result) in
+                    if result {
+                        self.toVC(scheme: model.scheme)
+                    }
+                }
+            }
+            break
+        case "add_work":
+            let classNumber = model.params
+            self.showAlert(title: "提取作业", description: "作业码：\(classNumber)", downTitle: "提取") {
+                // 加入班级
+                YXUserDataManager.share.joinClass(code: classNumber) { (result) in
+                    if result {
+                        self.toVC(scheme: model.scheme)
+                    }
                 }
             }
             break
@@ -75,5 +87,16 @@ class YXWebActionManager: NSObject {
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
+    }
+
+    private func showAlert(title: String, description: String, downTitle: String, finished: (()->Void)?) {
+        let alertView = YXAlertView()
+        alertView.titleLabel.text       = title
+        alertView.descriptionLabel.text = description
+        alertView.rightOrCenterButton.setTitle(downTitle, for: .normal)
+        alertView.doneClosure = { _ in
+            finished?()
+        }
+        alertView.show()
     }
 }
