@@ -139,7 +139,7 @@
     } else if ([self.userModel.grade isEqualToString:@"9"]) {
         grade = @"九年级";
     } else if ([self.userModel.grade isEqualToString:@"10"]) {
-        grade = @"其他";
+        grade = @"高中";
     }
     
     self.allRightDetails = @[@[@"", name, sex],@[birthday, area, grade]];
