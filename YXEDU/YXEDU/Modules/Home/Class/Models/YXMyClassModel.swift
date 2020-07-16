@@ -102,6 +102,7 @@ struct YXMyWorkModel: Mappable {
     var unitId: Int       = 0
     var studyWordCount    = 0
     var studyDayCount     = 0
+    var bookHash          = [String:String]()
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
@@ -120,6 +121,7 @@ struct YXMyWorkModel: Mappable {
         unitId         <- map["unit_id"]
         studyWordCount <- map["study_words"]
         studyDayCount  <- map["study_days"]
+        bookHash       <- map["hashkey"]
         if type == .punch {
             shareWorkStatus    <- (map["no_status"], EnumTransform<YXShareWorkStatusType>())
         } else {

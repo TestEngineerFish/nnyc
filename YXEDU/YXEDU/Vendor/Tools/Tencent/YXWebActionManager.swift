@@ -32,8 +32,8 @@ class YXWebActionManager: NSObject {
             let classNumber = model.params
             self.showAlert(title: "是否加入班级", description: "班级号：\(classNumber)", downTitle: "加入") {
                 // 加入班级
-                YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                    if result {
+                YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
+                    if workModel != nil {
                         self.toVC(scheme: model.scheme)
                     }
                 }
@@ -42,10 +42,24 @@ class YXWebActionManager: NSObject {
         case "add_work":
             let classNumber = model.params
             self.showAlert(title: "提取作业", description: "作业码：\(classNumber)", downTitle: "提取") {
-                // 加入班级
-                YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                    if result {
+                // 添加作业
+                YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
+                    if workModel != nil {
                         self.toVC(scheme: model.scheme)
+                    }
+                    return
+                    if let _workModel = workModel {
+                        self.toVC(scheme: model.scheme)
+                        YXLog(String(format: "==== 提取作业 开始做%@，作业ID：%ld ====", _workModel.type.learnType().desc, _workModel.workId ?? 0))
+                        let dataList = self.getBookHashDic(_workModel)
+                        YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
+                        // 跳转学习
+                        let vc         = YXExerciseViewController()
+                        let bookId     = (_workModel.type == .punch) ? (_workModel.bookIdList.first ?? 0) : 0
+                        let unitId     = _workModel.type == .punch ? _workModel.unitId : 0
+                        let learnType  = _workModel.type.learnType()
+                        vc.learnConfig = YXLearnConfigImpl(bookId: bookId, unitId: unitId, planId: 0, learnType: learnType, homeworkId: _workModel.workId ?? 0)
+                        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
                     }
                 }
             }
@@ -98,5 +112,16 @@ class YXWebActionManager: NSObject {
             finished?()
         }
         alertView.show()
+    }
+
+    // MARK: ==== Tools ====
+    private func getBookHashDic(_ model: YXMyWorkModel) -> [(Int, String)] {
+        var bookHash = [(Int, String)]()
+        model.bookIdList.forEach { (bookId) in
+            if let hash = model.bookHash["\(bookId)"] {
+                bookHash.append((bookId,hash))
+            }
+        }
+        return bookHash
     }
 }

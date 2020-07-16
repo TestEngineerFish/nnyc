@@ -32,6 +32,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
 
     var leaveButton: UIButton = {
         let button = UIButton()
+        button.isHidden = true
         button.setTitle("退出班级", for: .normal)
         button.setTitleColor(UIColor.red1, for: .normal)
         button.titleLabel?.font = .regularFont(ofSize: AdaptFontSize(15))

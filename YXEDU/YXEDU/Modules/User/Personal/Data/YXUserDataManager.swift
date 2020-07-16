@@ -32,7 +32,7 @@ struct YXUserDataManager {
     /// - Parameters:
     ///   - code: 班级号
     ///   - finishBlock: 加入后的事件
-    func joinClass(code: String?, complate: ((Bool)->Void)?) {
+    func joinClass(code: String?, complate: ((YXMyWorkModel?)->Void)?) {
         guard var _code = code, !_code.trimed.isEmpty, _code != "输入班级号或作业提取码" else {
             YXUtils.showHUD(nil, title: "请输入班级号或作业提取码")
             return
@@ -41,11 +41,11 @@ struct YXUserDataManager {
         let classCode = _code.isPureNumbers() ? _code : ""
         let workCode  = _code.isPureNumbers() ? "" : _code
         let request = YXHomeRequest.joinClass(classCode: classCode, workCode: workCode)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            complate?(true)
+        YYNetworkService.default.request(YYStructResponse<YXMyWorkModel>.self, request: request, success: { (response) in
+            complate?(response.data)
             NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
         }) { (error) in
-            complate?(false)
+            complate?(nil)
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }

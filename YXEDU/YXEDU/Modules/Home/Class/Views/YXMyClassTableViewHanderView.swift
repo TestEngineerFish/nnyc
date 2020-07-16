@@ -71,7 +71,7 @@ class YXMyClassTableViewHanderView: YXView {
         alertView.shouldClose = false
         alertView.doneClosure = {(classNumber: String?) in
             YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                if result {
+                if result != nil {
                     alertView.removeFromSuperview()
                 }
             }
