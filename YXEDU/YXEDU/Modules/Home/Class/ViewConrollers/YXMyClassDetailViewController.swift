@@ -32,7 +32,6 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
 
     var leaveButton: UIButton = {
         let button = UIButton()
-        button.isHidden = true
         button.setTitle("退出班级", for: .normal)
         button.setTitleColor(UIColor.red1, for: .normal)
         button.titleLabel?.font = .regularFont(ofSize: AdaptFontSize(15))
@@ -112,8 +111,8 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         self.tableView.dataSource = self
         self.tableView.register(YXMyClassStudentCell.classForCoder(), forCellReuseIdentifier: "kYXMyClassStudentCell")
         self.customNavigationBar?.title = "班级详情"
-        self.customNavigationBar?.rightButton.setImage(UIImage(named: "more_black"), for: .normal)
-        self.customNavigationBar?.rightButton.addTarget(self, action: #selector(showSheetView), for: .touchUpInside)
+//        self.customNavigationBar?.rightButton.setImage(UIImage(named: "more_black"), for: .normal)
+//        self.customNavigationBar?.rightButton.addTarget(self, action: #selector(showSheetView), for: .touchUpInside)
         self.noticeButton.addTarget(self, action: #selector(showNoticeList), for: .touchUpInside)
         let hideTap = UITapGestureRecognizer(target: self, action: #selector(hideSheepView))
         self.backgroundView.addGestureRecognizer(hideTap)
