@@ -124,6 +124,7 @@ struct YXExerciseResultDisplayModel {
         displayModel.state      = model.status
         displayModel.unitList   = model.unitList
         displayModel.isAction   = model.isAction
+        displayModel.sharedPeople = model.sharedPeople
         return displayModel
     }
 }

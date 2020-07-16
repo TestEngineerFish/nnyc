@@ -26,6 +26,7 @@ struct YXLearnResultModel: Mappable {
     var score: Int         = 0
     var status: Bool       = false
     var isAction:Bool      = false
+    var sharedPeople: Int  = 0
     
     init?(map: Map) {}
 
@@ -40,5 +41,6 @@ struct YXLearnResultModel: Mappable {
         unitList      <- map["list"]
         studyDay      <- map["study_day"]
         isAction      <- map["activity_clock_notice"]
+        sharedPeople  <- map["which_people"]
     }
 }
