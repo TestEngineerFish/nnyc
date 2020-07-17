@@ -17,10 +17,11 @@ public enum YXHomeRequest: YYBaseRequest {
     case joinClass(classCode: String, workCode: String)
     case activityInfo
     case addFriend(id: Int, channel: Int)
+    case workCodeDidExpired(workCode: String)
 
     var method: YYHTTPMethod {
         switch self {
-        case .report, .task, .getBaseInfo, .getBookList, .joinClass, .activityInfo, .addFriend:
+        case .report, .task, .getBaseInfo, .getBookList, .joinClass, .activityInfo, .addFriend, .workCodeDidExpired:
             return .get
         case .setReminder:
             return .post
@@ -45,6 +46,8 @@ public enum YXHomeRequest: YYBaseRequest {
             return YXAPI.Home.activityInfo
         case .addFriend:
             return YXAPI.Home.addFriend
+        case .workCodeDidExpired:
+            return YXAPI.Home.workCodeDidExpired
         }
     }
 
@@ -55,9 +58,19 @@ public enum YXHomeRequest: YYBaseRequest {
         case .setReminder(let dataString):
             return ["data": dataString]
         case .joinClass(let classCode, let workCode):
-            return ["class_code" : classCode, "work_code" : workCode]
+            if classCode.isEmpty {
+                return ["work_code": workCode]
+                
+            } else {
+                return ["class_code": classCode]
+            }
+            
         case .addFriend(let id, let channel):
             return ["friend_id" : id, "channel" : channel]
+            
+        case .workCodeDidExpired(let workCode):
+            return ["work_code" : workCode]
+            
         default:
             return nil
         }

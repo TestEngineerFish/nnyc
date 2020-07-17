@@ -54,6 +54,8 @@ struct YXAPI {
         static let activityInfo = "/api/v1/activity/index"
         /// 添加好友
         static let addFriend = "/api/v1/activity/addfriend"
+        
+        static let workCodeDidExpired = "/api/v1/class/workcode/expire"
     }
     
     //MARK: - 用户模块

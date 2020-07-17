@@ -25,6 +25,8 @@ struct YXResultModel: Mappable {
     /// 二维码地址
     var imageUrlStr: String = ""
     
+    var didExpired: Int?
+
     init?(map: Map) {
         self.mapping(map: map)
     }
@@ -36,5 +38,6 @@ struct YXResultModel: Mappable {
         credits        <- map["userCredits"]
         hasNextGroup   <- map["is_next_group"]
         imageUrlStr    <- map["image_url"]
+        didExpired    <- map["work_code_expire"]
     }
 }
