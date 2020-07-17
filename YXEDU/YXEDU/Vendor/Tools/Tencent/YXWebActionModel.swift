@@ -14,6 +14,8 @@ struct YXWXWebModel: Mappable {
     var scheme: String = ""
     var params: String = ""
     var channel: Int   = 0
+    var name: String = ""
+    var teacherName: String = ""
 
     init?(map: Map) {}
 
@@ -22,6 +24,8 @@ struct YXWXWebModel: Mappable {
         scheme  <- map["open_app_scheme"]
         params  <- map["action_params"]
         channel <- map["channel"]
+        name <- map["name"]
+        teacherName <- map["teacher_name"]
     }
 }
 

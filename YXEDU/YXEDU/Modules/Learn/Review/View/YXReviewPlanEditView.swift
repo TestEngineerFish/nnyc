@@ -11,7 +11,9 @@ import UIKit
 class YXReviewPlanEditView: YXTopWindowView {
     
     var reviewPlanModel: YXReviewPlanDetailModel?
-    
+    var showClassDetailclosure: (() -> Void)?
+    var addClassDetailclosure: (() -> Void)?
+
     /// 智能复习
     var editButton   = UIButton()
     var resetButton  = UIButton()
@@ -73,34 +75,67 @@ class YXReviewPlanEditView: YXTopWindowView {
             make.top.equalTo(AS(kNavHeight))
             make.right.equalTo(AS(-20))
             make.width.equalTo(AdaptIconSize(117))
-            make.height.equalTo(AdaptIconSize(120))
+            
+            if showClassDetailclosure == nil, addClassDetailclosure == nil {
+                make.height.equalTo(AdaptIconSize(120))
+
+            } else {
+                make.height.equalTo(AdaptIconSize(88))
+            }
         }
+        
         editButton.sizeToFit()
         editButton.snp.makeConstraints { (make) in
             make.top.equalTo(AdaptIconSize(15))
             make.centerX.equalToSuperview()
-            make.width.equalTo(editButton.width)
+
+            if showClassDetailclosure == nil, addClassDetailclosure == nil {
+                make.width.equalTo(editButton.width)
+            }
+            
             make.height.equalTo(AdaptIconSize(20))
         }
+        
         resetButton.sizeToFit()
         resetButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.width.equalTo(resetButton.width)
+            
+            if showClassDetailclosure == nil, addClassDetailclosure == nil {
+                make.width.equalTo(resetButton.width)
+            }
+            
             make.height.equalTo(AdaptIconSize(20))
             make.top.equalTo(editButton.snp.bottom).offset(AdaptIconSize(15))
         }
-        removeButton.sizeToFit()
-        removeButton.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.width.equalTo(removeButton.width)
-            make.height.equalTo(AdaptIconSize(20))
-            make.top.equalTo(resetButton.snp.bottom).offset(AdaptIconSize(15))
-        }
 
+        if showClassDetailclosure != nil, addClassDetailclosure != nil {
+            removeButton.removeFromSuperview()
+            
+            editButton.setTitle(" 班级详情", for: .normal)
+            editButton.setImage(#imageLiteral(resourceName: "班级详情"), for: .normal)
+            
+            resetButton.setTitle(" 添加班级", for: .normal)
+            resetButton.setImage(#imageLiteral(resourceName: "添加班级"), for: .normal)
+            
+        } else {
+            removeButton.sizeToFit()
+            removeButton.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.width.equalTo(removeButton.width)
+                make.height.equalTo(AdaptIconSize(20))
+                make.top.equalTo(resetButton.snp.bottom).offset(AdaptIconSize(15))
+            }
+        }
     }
 
 
     @objc private func clickEditButton() {
+        if showClassDetailclosure != nil {
+            showClassDetailclosure?()
+            self.removeFromSuperview()
+            return
+        }
+        
         let pid = self.reviewPlanModel?.planId ?? 0
         
         // 显示弹框
@@ -128,6 +163,12 @@ class YXReviewPlanEditView: YXTopWindowView {
     }
 
     @objc private func clickResetButton() {
+        if addClassDetailclosure != nil {
+            addClassDetailclosure?()
+            self.removeFromSuperview()
+            return
+        }
+        
         let alertView = YXAlertView()
         alertView.shouldOnlyShowOneButton = false
         alertView.descriptionLabel.text = "确定要重置这个词单的学习进度么？重置后不可恢复，需要重新学习"

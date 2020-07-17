@@ -30,7 +30,7 @@ class YXWebActionManager: NSObject {
         switch model.action {
         case "join_class":
             let classNumber = model.params
-            self.showAlert(title: "是否加入班级", description: "班级号：\(classNumber)", downTitle: "加入") {
+            self.showAlert(title: "加入班级", description: "是否加入\(model.teacherName)老师创建的班级：\(model.name)", downTitle: "加入") {
                 // 加入班级
                 YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
                     if workModel != nil {
@@ -41,13 +41,13 @@ class YXWebActionManager: NSObject {
             break
         case "add_work":
             let classNumber = model.params
-            self.showAlert(title: "提取作业", description: "作业码：\(classNumber)", downTitle: "提取") {
+            self.showAlert(title: "提取作业", description: "\(model.teacherName)老师布置了作业：\(model.name)，赶紧去完成吧", downTitle: "去做作业") {
                 // 添加作业
                 YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
-                    if workModel != nil {
-                        self.toVC(scheme: model.scheme)
-                    }
-                    return
+//                    if workModel != nil {
+//                        self.toVC(scheme: model.scheme)
+//                    }
+//                    return
                     if let _workModel = workModel {
                         self.toVC(scheme: model.scheme)
                         YXLog(String(format: "==== 提取作业 开始做%@，作业ID：%ld ====", _workModel.type.learnType().desc, _workModel.workId ?? 0))

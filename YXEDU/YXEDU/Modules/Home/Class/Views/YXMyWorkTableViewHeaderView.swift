@@ -56,19 +56,19 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
 
     override func createSubviews() {
         super.createSubviews()
-        self.addSubview(tableViewWarpView)
-        tableViewWarpView.addSubview(tableView)
+//        self.addSubview(tableViewWarpView)
+//        tableViewWarpView.addSubview(tableView)
         self.addSubview(workTitleLabel)
         self.addSubview(joinButton)
-        tableViewWarpView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(22))
-            make.right.equalToSuperview().offset(AdaptSize(-22))
-            make.top.equalToSuperview().offset(AdaptSize(4))
-            make.bottom.equalTo(workTitleLabel.snp.top).offset(AdaptSize(-25))
-        }
-        tableView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
+//        tableViewWarpView.snp.makeConstraints { (make) in
+//            make.left.equalToSuperview().offset(AdaptSize(22))
+//            make.right.equalToSuperview().offset(AdaptSize(-22))
+//            make.top.equalToSuperview().offset(AdaptSize(4))
+//            make.bottom.equalTo(workTitleLabel.snp.top).offset(AdaptSize(-25))
+//        }
+//        tableView.snp.makeConstraints { (make) in
+//            make.edges.equalToSuperview()
+//        }
         workTitleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
             make.right.equalToSuperview().offset(AdaptSize(-20))
@@ -76,13 +76,13 @@ class YXMyWorkTableViewHeaderView: YXView, UITableViewDelegate, UITableViewDataS
         }
         joinButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(workTitleLabel)
-            make.right.equalToSuperview().offset(AdaptSize(-40))
+            make.right.equalToSuperview().offset(AdaptSize(-20))
             make.size.equalTo(CGSize(width: AdaptSize(88), height: AdaptSize(28)))
         }
         joinButton.layer.cornerRadius = AdaptSize(14)
-        self.tableView.layer.setDefaultShadow(cornerRadius: AdaptSize(12), shadowRadius: 10)
-        self.tableView.layer.masksToBounds = true
-        self.tableViewWarpView.layer.setDefaultShadow(cornerRadius: AdaptSize(12), shadowRadius: 10)
+//        self.tableView.layer.setDefaultShadow(cornerRadius: AdaptSize(12), shadowRadius: 10)
+//        self.tableView.layer.masksToBounds = true
+//        self.tableViewWarpView.layer.setDefaultShadow(cornerRadius: AdaptSize(12), shadowRadius: 10)
     }
 
     override func bindProperty() {

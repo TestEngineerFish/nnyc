@@ -10,6 +10,8 @@ import Foundation
 
 class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
 
+    var moreButton = UIButton()
+
     var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.orange1
@@ -32,6 +34,63 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         self.bindProperty()
         self.createSubviews()
         self.reloadData()
+        
+        self.addMoreButton()
+    }
+    
+    private func addMoreButton() {
+        moreButton.setImage(UIImage(named: "more"), for: .normal)
+        
+        self.customNavigationBar?.addSubview(moreButton)
+        moreButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalTo(-15)
+            make.size.equalTo(CGSize(width: 20, height: 22))
+        }
+        
+        moreButton.addTarget(self, action: #selector(showMoreOption), for: .touchUpInside)
+    }
+    
+    @objc
+    private func showMoreOption() {
+        if classModelList.count == 1 {
+            let editView = YXReviewPlanEditView(point: CGPoint(x: 0, y: 0))
+            
+            editView.showClassDetailclosure = {
+                let classDetailViewController = YXMyClassDetailViewController()
+                classDetailViewController.classId = self.classModelList[0].id
+                
+                self.navigationController?.pushViewController(classDetailViewController, animated: true)
+            }
+            
+            editView.addClassDetailclosure = {
+                let alertView = YXAlertView(type: .inputable, placeholder: "输入班级号或作业提取码")
+                alertView.titleLabel.text = "请输入班级号或作业提取码"
+                alertView.shouldOnlyShowOneButton = false
+                alertView.shouldClose = false
+                alertView.doneClosure = {(classNumber: String?) in
+                    YXUserDataManager.share.joinClass(code: classNumber) { (result) in
+                        if result != nil {
+                            alertView.removeFromSuperview()
+                        }
+                    }
+                    YXLog("班级号：\(classNumber ?? "")")
+                }
+                alertView.clearButton.isHidden    = true
+                alertView.textCountLabel.isHidden = true
+                alertView.textMaxLabel.isHidden   = true
+                alertView.alertHeight.constant    = 222
+                alertView.show()
+            }
+            
+            editView.show()
+            
+        } else {
+            let classListViewController = YXMyClassListViewController()
+            classListViewController.classList = self.classModelList
+            
+            navigationController?.pushViewController(classListViewController, animated: true)
+        }
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -56,7 +115,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         backgroundView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalToSuperview()
-            make.height.equalTo(AdaptSize(58) + kNavHeight)
+            make.height.equalTo(kNavHeight)
         }
         workTableView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(kNavHeight)
@@ -71,14 +130,22 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     private func requestClassList() {
         let request = YXMyClassRequestManager.classList
         YYNetworkService.default.request(YYStructDataArrayResponse<YXMyClassModel>.self, request: request, success: { (response) in
-            guard let modelList = response.dataArray else {
-                return
+            guard let modelList = response.dataArray else { return }
+            
+            if modelList.count == 1 {
+                self.customNavigationBar?.title = modelList[0].name
+
+            } else if modelList.count > 1 {
+                self.customNavigationBar?.title = "\(modelList.count)个班级"
+
             }
+            
             self.classModelList = modelList
-            self.workTableView.reloadData()
-            if self.classModelList.isEmpty {
-                self.navigationController?.popViewController(animated: true)
-            }
+
+//            if self.classModelList.isEmpty {
+//                self.navigationController?.popViewController(animated: true)
+//            }
+            
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
@@ -110,8 +177,17 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = YXMyWorkTableViewHeaderView()
-        headerView.setDate(class: self.classModelList)
+//        headerView.setDate(class: self.classModelList)
         return headerView
+//
+//        let view = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 44))
+//
+//        let label = UILabel(frame: CGRect(x: 20, y: 0, width: screenWidth - 40, height: 44))
+//        label.text = "班级作业"
+//
+//        view.addSubview(label)
+//
+//        return view
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -124,9 +200,11 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let count  = self.classModelList.count > 3 ? 3 : self.classModelList.count
-        let amount = CGFloat(96 + count * 50)
-        return AdaptSize(amount)
+//        let count  = self.classModelList.count > 3 ? 3 : self.classModelList.count
+//        let amount = CGFloat(96 + count * 50)
+//        return AdaptSize(amount)
+        
+        return 44
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

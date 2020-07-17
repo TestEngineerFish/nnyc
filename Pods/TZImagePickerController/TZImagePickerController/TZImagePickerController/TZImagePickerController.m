@@ -4,7 +4,7 @@
 //
 //  Created by 谭真 on 15/12/24.
 //  Copyright © 2015年 谭真. All rights reserved.
-//  version 3.3.1 - 2020.02.13
+//  version 3.4.0 - 2020.07.16
 //  更多信息，请前往项目的github地址：https://github.com/banchichen/TZImagePickerController
 
 #import "TZImagePickerController.h"
@@ -33,6 +33,7 @@
 /// Default is 4, Use in photos collectionView in TZPhotoPickerController
 /// 默认4列, TZPhotoPickerController中的照片collectionView
 @property (nonatomic, assign) NSInteger columnNumber;
+@property (nonatomic, assign) NSInteger HUDTimeoutCount; ///< 超时隐藏HUD计数
 @end
 
 @implementation TZImagePickerController
@@ -262,6 +263,7 @@
 }
 
 - (void)configDefaultSetting {
+    self.autoSelectCurrentWhenDone = YES;
     self.timeout = 15;
     self.photoWidth = 828.0;
     self.photoPreviewMaxWidth = 600;
@@ -447,10 +449,15 @@
     [self.view setNeedsLayout];
     
     // if over time, dismiss HUD automatic
+    self.HUDTimeoutCount++;
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.timeout * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf hideProgressHUD];
+        strongSelf.HUDTimeoutCount--;
+        if (strongSelf.HUDTimeoutCount <= 0) {
+            strongSelf.HUDTimeoutCount = 0;
+            [strongSelf hideProgressHUD];
+        }
     });
 }
 
@@ -700,7 +707,7 @@
 @end
 
 
-@interface TZAlbumPickerController ()<UITableViewDataSource,UITableViewDelegate> {
+@interface TZAlbumPickerController ()<UITableViewDataSource, UITableViewDelegate, PHPhotoLibraryChangeObserver> {
     UITableView *_tableView;
 }
 @property (nonatomic, strong) NSMutableArray *albumArr;
@@ -710,6 +717,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
     self.isFirstAppear = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -779,6 +787,7 @@
 }
 
 - (void)dealloc {
+    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
     // NSLog(@"%@ dealloc",NSStringFromClass(self.class));
 }
 
@@ -788,6 +797,14 @@
         return tzImagePicker.statusBarStyle;
     }
     return [super preferredStatusBarStyle];
+}
+
+#pragma mark - PHPhotoLibraryChangeObserver
+
+- (void)photoLibraryDidChange:(PHChange *)changeInstance {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self configTableView];
+    });
 }
 
 #pragma mark - Layout
@@ -905,6 +922,14 @@
     textAttrs[NSForegroundColorAttributeName] = tzImagePickerVc.barItemTextColor;
     textAttrs[NSFontAttributeName] = tzImagePickerVc.barItemTextFont;
     [item setTitleTextAttributes:textAttrs forState:UIControlStateNormal];
+}
+
++ (BOOL)isICloudSyncError:(NSError *)error {
+    if (!error) return NO;
+    if ([error.domain isEqualToString:@"CKErrorDomain"] || [error.domain isEqualToString:@"CloudPhotoLibraryErrorDomain"]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

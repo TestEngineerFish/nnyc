@@ -9,6 +9,21 @@
 import Foundation
 
 class YXMyClassStudentCell: UITableViewCell {
+    var rankImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    var rankLabel: UILabel = {
+        let label = UILabel()
+        label.text          = ""
+        label.textColor     = UIColor.gray3
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(18))
+        label.textAlignment = .left
+        return label
+    }()
+    
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
         imageView.image = UIImage(named: "challengeAvatar")
@@ -47,12 +62,25 @@ class YXMyClassStudentCell: UITableViewCell {
     }
 
     private func createSubviews() {
+        self.addSubview(rankImageView)
+        self.addSubview(rankLabel)
         self.addSubview(avatarImageView)
         self.addSubview(nameLabel)
         self.addSubview(descLabel)
         self.addSubview(lineView)
-        avatarImageView.snp.makeConstraints { (make) in
+        
+        rankImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
+            make.size.equalTo(CGSize(width: AdaptSize(32), height: AdaptSize(23)))
+            make.centerY.equalToSuperview()
+        }
+        
+        rankLabel.snp.makeConstraints { (make) in
+            make.center.equalTo(rankImageView)
+        }
+        
+        avatarImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(rankImageView.snp.right).offset(AdaptSize(20))
             make.size.equalTo(CGSize(width: AdaptSize(48), height: AdaptSize(48)))
             make.centerY.equalToSuperview()
         }
@@ -83,7 +111,24 @@ class YXMyClassStudentCell: UITableViewCell {
         self.separatorInset = UIEdgeInsets(top: 0, left: AdaptSize(78), bottom: 0, right: AdaptSize(15))
     }
 
-    func setData(student model: YXMyClassStudentInfoModel) {
+    func setData(student model: YXMyClassStudentInfoModel, index: Int) {
+        if index == 0 {
+            self.rankImageView.image = #imageLiteral(resourceName: "1")
+            self.rankLabel.text = ""
+            
+        } else if index == 1 {
+            self.rankImageView.image = #imageLiteral(resourceName: "2")
+            self.rankLabel.text = ""
+
+        } else if index == 2 {
+            self.rankImageView.image = #imageLiteral(resourceName: "3")
+            self.rankLabel.text = ""
+
+        } else {
+            self.rankImageView.image = nil
+            self.rankLabel.text = "\(index + 1)"
+        }
+        
         if !model.avatarUrl.isEmpty {
             self.avatarImageView.showImage(with: model.avatarUrl, placeholder: UIImage(named: "challengeAvatar"), progress: nil, completion: nil)
         } else {

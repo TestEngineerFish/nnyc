@@ -94,19 +94,19 @@ class YXMyClassWorkDetailCell: UITableViewCell {
                 let textLabel: UILabel = {
                     let label = UILabel()
                     label.text          = text
-                    label.textColor     = UIColor.red1
+                    label.textColor     = UIColor.gray1
                     label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
                     label.textAlignment = .left
                     return label
                 }()
                 textLabel.tag = _customTag
-                resultView.addSubview(iconImageView)
+//                resultView.addSubview(iconImageView)
                 resultView.addSubview(textLabel)
-                iconImageView.snp.makeConstraints { (make) in
-                    make.left.equalToSuperview()
-                    make.top.equalToSuperview().offset(AdaptSize(offsetY))
-                    make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(16)))
-                }
+//                iconImageView.snp.makeConstraints { (make) in
+//                    make.left.equalToSuperview()
+//                    make.top.equalToSuperview().offset(AdaptSize(offsetY))
+//                    make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(16)))
+//                }
                 textLabel.snp.makeConstraints { (make) in
                     make.left.equalTo(iconImageView.snp.right).offset(AdaptSize(4))
                     make.centerY.equalTo(iconImageView)

@@ -226,7 +226,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
             return UITableViewCell()
         }
         let model = detailModel.studentModelList[indexPath.row]
-        cell.setData(student: model)
+        cell.setData(student: model, index: indexPath.row)
         return cell
     }
 }
