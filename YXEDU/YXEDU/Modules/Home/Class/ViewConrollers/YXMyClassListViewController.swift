@@ -31,7 +31,7 @@ class YXMyClassListViewController: YXViewController, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         
-        addClassButton.setTitle("添加班级", for: .normal)
+        addClassButton.setTitle("加入班级", for: .normal)
         addClassButton.titleLabel?.font = .regularFont(ofSize: 14)
         addClassButton.setTitleColor(UIColor.gray3, for: .normal)
         
