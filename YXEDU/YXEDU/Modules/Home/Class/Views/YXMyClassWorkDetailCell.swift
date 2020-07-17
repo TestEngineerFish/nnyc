@@ -100,19 +100,20 @@ class YXMyClassWorkDetailCell: UITableViewCell {
                     return label
                 }()
                 textLabel.tag = _customTag
-//                resultView.addSubview(iconImageView)
+                resultView.addSubview(iconImageView)
                 resultView.addSubview(textLabel)
-//                iconImageView.snp.makeConstraints { (make) in
-//                    make.left.equalToSuperview()
-//                    make.top.equalToSuperview().offset(AdaptSize(offsetY))
-//                    make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(16)))
-//                }
+                iconImageView.snp.makeConstraints { (make) in
+                    make.left.equalToSuperview()
+                    make.top.equalToSuperview().offset(AdaptSize(offsetY))
+                    make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(16)))
+                }
                 textLabel.snp.makeConstraints { (make) in
-                    make.left.equalTo(iconImageView.snp.right).offset(AdaptSize(4))
+//                    make.left.equalTo(iconImageView.snp.right).offset(AdaptSize(4))
                     make.centerY.equalTo(iconImageView)
                     make.height.equalTo(AdaptSize(18))
-                    make.right.equalToSuperview()
+                    make.right.equalToSuperview().offset(AdaptSize(-20))
                 }
+                iconImageView.isHidden = true
                 offsetY += AdaptSize(21)
             }
         } else {
@@ -131,19 +132,22 @@ class YXMyClassWorkDetailCell: UITableViewCell {
             textLabel.tag = _customTag
             resultView.addSubview(iconImageView)
             resultView.addSubview(textLabel)
+     
+            textLabel.snp.makeConstraints { (make) in
+                make.centerY.equalTo(iconImageView)
+                make.height.equalTo(AdaptSize(18))
+                make.right.equalToSuperview().offset(AdaptSize(-20))
+            }
+            
             iconImageView.snp.makeConstraints { (make) in
-                make.left.equalToSuperview()
+                make.right.equalTo(textLabel.snp.left).offset(AdaptSize(-4))
                 make.top.equalToSuperview()
                 make.size.equalTo(CGSize(width: AdaptSize(16), height: AdaptSize(16)))
             }
-            textLabel.snp.makeConstraints { (make) in
-                make.left.equalTo(iconImageView.snp.right).offset(AdaptSize(4))
-                make.centerY.equalTo(iconImageView)
-                make.height.equalTo(AdaptSize(18))
-                make.right.equalToSuperview()
-            }
+            
             offsetY += AdaptSize(21)
         }
+        
         self.resultViewHeight = offsetY - AdaptSize(5)
     }
 
