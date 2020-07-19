@@ -75,7 +75,7 @@ extension YXExerciseViewController {
         vc.learnConfig       = service.learnConfig
         vc.newLearnAmount    = newCount
         vc.reviewLearnAmount = reviewCount
-        self.navigationController?.popViewController(animated: false)
+//        self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
@@ -83,7 +83,7 @@ extension YXExerciseViewController {
     func processReviewResult() {
         let vc = YXExerciseResultViewController()
         vc.config = learnConfig
-        self.navigationController?.popViewController(animated: false)
+//        self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }

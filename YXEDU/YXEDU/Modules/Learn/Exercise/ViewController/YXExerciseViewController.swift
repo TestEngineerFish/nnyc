@@ -435,7 +435,9 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             self.uploadGrowing()
             self.delegate?.backHomeEvent()
             if self.learnConfig.learnType.isHomework() {
-                self.navigationController?.popViewController(animated: false)
+                self.popTo(targetClass: YXMyClassViewController.classForCoder(), animation: false)
+            } else if self.learnConfig.learnType == .wrong {
+                self.popTo(targetClass: YXWordListViewController.classForCoder(), animation: false)
             } else {
                 self.navigationController?.popToRootViewController(animated: false)
             }
@@ -454,12 +456,12 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
     func clickSwitchBtnEvent() {
         self.delegate?.backHomeEvent()
         self.service.cleanStudyRecord(hasNextGroup: false)
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     func clickSkipBtnEvent() {
         self.delegate?.backHomeEvent()
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: false)
     }
 }
  

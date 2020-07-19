@@ -78,3 +78,22 @@ extension YXViewController {
         self.monitorNetwork(isReachable: YYNetworkService.default.isReachable)
     }
 }
+
+extension YXViewController {
+    func popTo(targetClass: AnyClass, animation: Bool) {
+        var targetVC: UIViewController?
+        if let _navigationController = self.navigationController {
+            for _vc in _navigationController.viewControllers {
+                if _vc.classForCoder == targetClass {
+                    targetVC = _vc
+                    break
+                }
+            }
+        }
+        if let _targetVc = targetVC {
+            self.navigationController?.popToViewController(_targetVc, animated: animation)
+        } else {
+            self.navigationController?.popViewController(animated: animation)
+        }
+    }
+}

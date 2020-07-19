@@ -48,6 +48,16 @@ class YXExerciseResultViewController: YXViewController {
             make.centerX.width.equalToSuperview()
             make.height.equalTo(AdaptIconSize(117))
         }
+        self.customNavigationBar?.leftButtonAction = { [weak self] in
+            guard let self = self else { return }
+            if self.config?.learnType.isHomework() == .some(true) {
+                self.popTo(targetClass: YXMyClassViewController.classForCoder(), animation: false)
+            } else if self.config?.learnType == .some(.wrong) {
+                self.popTo(targetClass: YXWordListViewController.classForCoder(), animation: false)
+            } else {
+                self.navigationController?.popToRootViewController(animated: false)
+            }
+        }
     }
     
     private func initResultView() {
@@ -94,14 +104,9 @@ class YXExerciseResultViewController: YXViewController {
     }
     
     private func reviewEvent() {
-        YRRouter.popViewController(false)
         guard let _config = config else {
             return
         }
-//        let taskModel = YXWordBookResourceModel(type: .all) {
-//            YXWordBookResourceManager.shared.contrastBookData()
-//        }
-//        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = _config
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)

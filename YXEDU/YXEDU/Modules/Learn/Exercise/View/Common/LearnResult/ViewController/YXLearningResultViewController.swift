@@ -14,23 +14,23 @@ class YXLearningResultViewController: YXViewController {
     var backButton = BiggerClickAreaButton()
     var headerView: YXExerciseResultView?
     var contentScrollView = UIScrollView()
-
+    
     var currentUnitIndex       = 0
     var requestCount           = 0
     var newLearnAmount: Int    = 0 // 新学单词数
     var reviewLearnAmount: Int = 0 // 复习单词数量
     var learnConfig: YXLearnConfig?
     var model: YXLearnResultModel?
-
+    
     var shareFinished = false
     var loadingView = YXExerciseResultLoadingView()
     var unitMapView: YXUnitMapView?
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -51,17 +51,17 @@ class YXLearningResultViewController: YXViewController {
             self.bindData()
         }
     }
-
+    
     private func loadSubViews() {
         createSubviews()
         bindProperty()
         setLayout()
     }
-
+    
     override func addNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(shareResult(notification:)), name: YXNotification.kShareResult, object: nil)
     }
-
+    
     private func createSubviews() {
         self.view.addSubview(self.contentScrollView)
         
@@ -73,11 +73,11 @@ class YXLearningResultViewController: YXViewController {
         
         // 返回按钮
         self.view.addSubview(backButton)
- 
+        
         // 设置任务地图
         self.initUnitMap()
     }
-
+    
     private func initUnitMap() {
         guard let model = self.model, let resultView = self.headerView else {return}
         let mapSize: CGSize = {
@@ -90,7 +90,7 @@ class YXLearningResultViewController: YXViewController {
             }
         }()
         self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: self.currentUnitIndex, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
-//        self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: 6, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
+        //        self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: 6, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
         self.contentScrollView.addSubview(unitMapView!)
         unitMapView!.snp.makeConstraints { (make) in
             make.size.equalTo(mapSize)
@@ -135,7 +135,7 @@ class YXLearningResultViewController: YXViewController {
         
         self.contentScrollView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
         self.contentScrollView.contentSize = CGSize(width: screenWidth, height: contentHeight)
-
+        
         backButton.snp.makeConstraints { (make) in
             make.left.equalTo(AdaptIconSize(14))
             make.top.equalTo(AS(32 + kSafeBottomMargin))
@@ -150,7 +150,7 @@ class YXLearningResultViewController: YXViewController {
         }
     }
     
-
+    
     private func bindData() {
         guard let config = learnConfig else {
             return
@@ -179,14 +179,14 @@ class YXLearningResultViewController: YXViewController {
                         }
                     }
                 }
-
+                
                 self.loadSubViews()
             }
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
-
+    
     /// 学习新单元
     private func learnUnit(_ unitId: Int) {
         guard let uuidStr = YXUserModel.default.uuid, let bookId = self.learnConfig?.bookId else {
@@ -199,10 +199,16 @@ class YXLearningResultViewController: YXViewController {
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
-
+    
     // MARK: Event
     @objc private func backClick() {
-        self.navigationController?.popViewController(animated: false)
+        if self.learnConfig?.learnType.isHomework() == .some(true) {
+            self.popTo(targetClass: YXMyClassViewController.classForCoder(), animation: false)
+        } else if self.learnConfig?.learnType == .some(.wrong) {
+            self.popTo(targetClass: YXWordListViewController.classForCoder(), animation: false)
+        } else  {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
     
     @objc private func punchEvent() {
@@ -224,7 +230,7 @@ class YXLearningResultViewController: YXViewController {
         shareVC.daysAmount  = model.studyDay
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(shareVC, animated: true)
     }
-
+    
     // MARK: ---- Notification ----
     @objc private func shareResult(notification: Notification) {
         guard let dict = notification.userInfo as? [String:AnyHashable], let isFinised = dict["isFinished"] as? Bool else {
