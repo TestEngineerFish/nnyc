@@ -16,6 +16,7 @@ struct YXAlertManager {
         alertView.rightOrCenterButton.setTitle("跳过今日学习", for: .normal)
         alertView.doneClosure = { _ in
             YXLog("跳过今日打卡学习")
+            NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
             self.skipPunchLearn(book: model.bookId ?? 0)
         }
         alertView.adjustAlertHeight()
