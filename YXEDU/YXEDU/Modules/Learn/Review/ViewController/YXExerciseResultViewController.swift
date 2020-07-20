@@ -87,7 +87,7 @@ class YXExerciseResultViewController: YXViewController {
     
     private func processEvent() {
         if model?.type == .wrong {
-            YRRouter.popViewController(true)
+            self.popTo(targetClass: YXWordListViewController.classForCoder(), animation: false)
         } else if model?.state == .some(true){
             switch model?.type ?? .base {
             case .homeworkListen, .homeworkWord:
