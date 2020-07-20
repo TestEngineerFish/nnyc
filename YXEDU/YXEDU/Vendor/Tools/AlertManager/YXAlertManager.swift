@@ -16,7 +16,6 @@ struct YXAlertManager {
         alertView.rightOrCenterButton.setTitle("跳过今日学习", for: .normal)
         alertView.doneClosure = { _ in
             YXLog("跳过今日打卡学习")
-            NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
             self.skipPunchLearn(book: model.bookId ?? 0)
         }
         alertView.adjustAlertHeight()
@@ -36,6 +35,7 @@ struct YXAlertManager {
                     YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： 1")
                     YYCache.set(1, forKey: YXLocalKey.punchCount)
                 }
+                NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
             } else {
                 YXLog("打卡分享失败")
             }
