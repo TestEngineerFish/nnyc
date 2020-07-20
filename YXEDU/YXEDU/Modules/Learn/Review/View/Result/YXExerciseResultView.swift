@@ -105,7 +105,7 @@ class YXExerciseResultView: YXView {
             remindButton.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(13))
             remindButton.setImage(UIImage(named: "iconRemindIcon"), for: .normal)
             // 活动内
-            if model.isAction {
+            if model.isAction && model.type == .base {
                 remindButton.setTitle(" 打卡完成单词挑战赛目标", for: .normal)
                 operateButton.setBackgroundImage(UIImage(named: "punchBgImage"), for: .normal)
                 operateButton.backgroundColor = .clear

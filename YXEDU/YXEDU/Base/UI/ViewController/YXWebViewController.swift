@@ -124,8 +124,9 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
             return
         }
         self.loadingView.startAnimating()
-        let requestUrl = URLRequest(url: url)
+        let requestUrl = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 15.0)
         self.webView?.load(requestUrl)
+        
     }
 
     // MARK: ==== WKScriptMessageHandler ====
