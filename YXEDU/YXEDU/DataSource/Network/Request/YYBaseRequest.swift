@@ -101,9 +101,8 @@ extension YYBaseRequest {
         sign.append("\(kSault)@")
         
         if let token = _header["NNYC-TOKEN"], token.count > 0 {
-            sign.append("#\(token)#")
+            sign.append("@\(token)")
         }
-                
         if let data = sign.data(using: .utf8) as NSData? {
             _header["NNYC-SIGN"] = data.md5String()
         }
