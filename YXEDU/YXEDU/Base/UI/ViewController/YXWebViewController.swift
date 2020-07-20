@@ -47,7 +47,15 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
     deinit {
         NotificationCenter.default.removeObserver(self)
         self.rightButton.removeFromSuperview()
+        self.clearCacheData()
         self.webView?.removeObserver(self, forKeyPath: "title")
+    }
+
+    private func clearCacheData() {
+        let dateFrom = Date(timeIntervalSince1970: 0)
+        WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: dateFrom) {
+            YXLog("WKWebView清除缓存完毕！")
+        }
     }
 
     private func bindProperty() {
@@ -126,7 +134,6 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
         self.loadingView.startAnimating()
         let requestUrl = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 15.0)
         self.webView?.load(requestUrl)
-        
     }
 
     // MARK: ==== WKScriptMessageHandler ====
