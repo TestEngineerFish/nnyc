@@ -54,9 +54,7 @@ class YXMyClassListViewController: YXViewController, UITableViewDelegate, UITabl
         alertView.shouldClose = false
         alertView.doneClosure = {(classNumber: String?) in
             YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                if result != nil {
-                    alertView.removeFromSuperview()
-                }
+                alertView.removeFromSuperview()
             }
             YXLog("班级号：\(classNumber ?? "")")
         }
