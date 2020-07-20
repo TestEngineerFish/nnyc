@@ -30,7 +30,14 @@ class YXWebActionManager: NSObject {
         switch model.action {
         case "join_class":
             let classNumber = model.params
-            self.showAlert(title: "加入班级", description: "是否加入\(model.teacherName)老师创建的班级：\(model.name)", downTitle: "加入") {
+            let descriptionStr: String = {
+                if model.teacherName.isEmpty {
+                    return "是否确认加入班级"
+                } else {
+                    return "是否加入\(model.teacherName)老师创建的班级：\(model.name)"
+                }
+            }()
+            self.showAlert(title: "加入班级", description: descriptionStr, downTitle: "加入") {
                 // 加入班级
                 YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
                     self.toVC(scheme: model.scheme)
@@ -43,8 +50,14 @@ class YXWebActionManager: NSObject {
             let request = YXHomeRequest.workCodeDidExpired(workCode: classNumber)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
                 if let didExpired = response.data?.didExpired, didExpired == 0 {
-                    
-                    self.showAlert(title: "提取作业", description: "\(model.teacherName)老师布置了作业：\(model.name)，赶紧去完成吧", downTitle: "去做作业") {
+                    let descriptionStr: String = {
+                        if model.teacherName.isEmpty {
+                            return "是否确认提取作业"
+                        } else {
+                            return "\(model.teacherName)老师布置了作业：\(model.name)，赶紧去完成吧"
+                        }
+                    }()
+                    self.showAlert(title: "提取作业", description: descriptionStr, downTitle: "去做作业") {
                         // 添加作业
                         YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
                             if let _workModel = workModel {
