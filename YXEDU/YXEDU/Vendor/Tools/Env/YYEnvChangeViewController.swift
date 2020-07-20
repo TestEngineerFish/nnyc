@@ -237,20 +237,7 @@ extension YYEnvChangeViewController {
                 exit(0)
             }
         }
-
-        if (YXUserModel.default.token?.count ?? 0) > 0 {
-            let request = YXRegisterAndLoginRequest.logout
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: nil) { (error) in
-                YXUtils.showHUD(kWindow, title: error.message)
-            }
-            
-            YXUserModel.default.logout()
-            UserDefaults.standard.set("", forKey: kDailyCheckInNotify)
-            UserDefaults.standard.synchronize()
-            
-            exitBlock()
-            
-        } else {
+        YXUserModel.default.logout {
             exitBlock()
         }
     }

@@ -18,7 +18,6 @@ NSString *const kYXShareCallBackNotify          = @"YXShareCallBackNotify";
 NSString *const kOffNetworkNotify               = @"OffNetworkNotify";
 NSString *const kNetworkConnectedNotify         = @"NetworkConnectedNotify";
 NSString *const kUploadExericiseResultNotify    = @"UploadExericiseResultNotify";
-NSString *const kDailyCheckInNotify             = @"DailyCheckInNotify";//每天是否签到
 
 NSString *const kReloadRankNotify               = @"ReloadRankNotify";
 NSString *const kUpdateFeedbackReplyBadge       = @"kUpdateFeedbackReplyBadge";

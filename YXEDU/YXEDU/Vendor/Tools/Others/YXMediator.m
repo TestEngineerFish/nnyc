@@ -55,7 +55,7 @@
     UIWindow *mainWindow = app.window;
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您的账号已在其他设备登录" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [[YXUserModel default] logout];
+        [[YXUserModel default] logoutWithForce:NO finished:nil];
     }];
     [alert addAction:cancelAction];
     

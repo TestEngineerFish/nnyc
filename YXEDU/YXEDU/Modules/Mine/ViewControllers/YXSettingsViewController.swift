@@ -21,10 +21,6 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
         let alertView = YXAlertView()
         alertView.descriptionLabel.text = "您确定要退出登录吗？"
         alertView.doneClosure = { _ in
-            let request = YXRegisterAndLoginRequest.logout
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: nil) { (error) in
-                YXUtils.showHUD(kWindow, title: error.message)
-            }
             YXUserModel.default.logout()
         }
         

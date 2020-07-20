@@ -203,17 +203,36 @@ class YXUserModel: NSObject {
         }
     }
     
-    @objc
-    func logout() {
+
+    /// 退出登录
+    /// - Parameter force: 是否强制退出
+    @objc func logout(force:Bool = true, finished block: (()->Void)? = nil) {
+        if force {
+            let request = YXRegisterAndLoginRequest.logout
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+                self.logoutAfterEvent()
+                block?()
+            }) { (error) in
+                YXUtils.showHUD(kWindow, title: error.message)
+            }
+        } else {
+            self.logoutAfterEvent()
+            block?()
+        }
+    }
+
+    /// 登出后清理本地数据
+    private func logoutAfterEvent() {
         YXLog("推出前用户Token=====", YXUserModel.default.token ?? "")
         self.didLogin = false
         self.uuid     = nil
+        self.token    = nil
         // 停止资源管理器队列任务
         YXWordBookResourceManager.stop = true
         // 断开数据库连接
         YYDataSourceManager.default.close()
         YYDataSourceQueueManager.default.close()
-        
+
         let storyboard = UIStoryboard(name:"RegisterAndLogin", bundle: nil)
         let navigationController = storyboard.instantiateViewController(withIdentifier: "YXRegistrationAndLoginNavigationController") as? UINavigationController
         UIApplication.shared.keyWindow?.rootViewController = navigationController
