@@ -251,7 +251,7 @@ enum YXMiMeType: String {
 
     private func postBody <T> (_ type: T.Type, request: URLRequest, success: @escaping (_ response: T, _ httpStatusCode: Int) -> Void?, fail: @escaping (_ error: NSError) -> Void?) -> YYTaskRequest where T: YYBaseResopnse {
         let requestStr = request.url?.absoluteString ?? ""
-        YXRequestLog(String(format: "POST = request url:%@ params:%@", requestStr))
+        YXRequestLog(String(format: "POST = request url:%@ params:%@", requestStr, request.allHTTPHeaderFields?.toJson() ?? ""))
         let dataResquest = sessionManager.request(request).responseObject { (response: DataResponse<T>) in
             YXRequestLog("unique_id:", response.response?.allHeaderFields["unique_id"] as? String ?? "")
             switch response.result {
@@ -294,7 +294,8 @@ enum YXMiMeType: String {
         let header = request.handleHeader(parameters: params)
         let encoding: ParameterEncoding = (request.method == .get) ? URLEncoding.default : URLEncoding.httpBody
         let method = HTTPMethod(rawValue: request.method.rawValue) ?? .get
-        YXRequestLog(String(format: "%@ = request url:%@ params:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? ""))
+        let requestStr = request.url.absoluteString
+        YXRequestLog(String(format: "%@ = request url:%@ params:%@", method.rawValue, requestStr, params?.toJson() ?? ""))
         let task = sessionManager.request(request.url, method: method, parameters: params, encoding: encoding, headers: header)
 
         task.responseObject { (response: DataResponse <T>) in
@@ -303,7 +304,7 @@ enum YXMiMeType: String {
             switch response.result {
             case .success(var x):
                 if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8), !request.url.absoluteString.hasSuffix(YXAPI.Word.getBookWords) {
-                    YXRequestLog(String(format: "【Success】 request url: %@, respnseObject: %@", request.url.absoluteString, dataStr))
+                    YXRequestLog(String(format: "【Success】 request url: %@, respnseObject: %@", requestStr, dataStr))
                 }
                 x.response = response.response
                 x.request  = response.request
@@ -320,7 +321,7 @@ enum YXMiMeType: String {
 
             case .failure(let error):
                 let msg = (error as NSError).message
-                YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, request.url.absoluteString, params?.toJson() ?? "", msg))
+                YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, requestStr, params?.toJson() ?? "", msg))
                 fail(error as NSError)
                 self.clearCountAction(requestStr)
             }
