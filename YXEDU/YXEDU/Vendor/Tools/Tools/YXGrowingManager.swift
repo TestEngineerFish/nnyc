@@ -62,6 +62,13 @@ struct YXGrowingManager {
         }
     }
 
+    /// 上报新的用户变量 new_study_tutorial，使用新流程的用户上报1，默认为0
+    /// - Parameter isNew: 是否使用新流程
+    func uploadNewStudy(isNew: Bool) {
+        let numberValue = isNew ? NSNumber(value: 1) : NSNumber(value: 0)
+        Growing.setPeopleVariableWithKey("new_study_tutorial", andNumberValue: numberValue)
+    }
+
     /// 数据打点
     func biReport(learn config: YXLearnConfig, duration: Int,  study count: Int) {
           var typeName = "主流程"
