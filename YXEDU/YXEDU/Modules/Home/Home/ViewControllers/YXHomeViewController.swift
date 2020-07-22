@@ -90,11 +90,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             alertView.show()
             
         } else {
-            YXUserModel.default.lastStoredDate = Date()
-            YXLog(String(format: "开始学习书(%ld),第(%ld)单元", homeData.bookId ?? 0, homeData.unitId ?? 0))
-            let vc = YXExerciseViewController()
-            vc.learnConfig = YXBaseLearnConfig(bookId: homeData.bookId ?? 0, unitId: homeData.unitId ?? 0)
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.study(focus: false)
         }
     }
     
@@ -158,7 +154,6 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
         }
 
-        
         if !self.animationPlayFinished {
             self.setSquirrelAnimation()
         }
@@ -193,6 +188,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         NotificationCenter.default.addObserver(self, selector: #selector(updateTaskCenterStatus), name: YXNotification.kUpdateTaskCenterBadge, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(playSquirrelAnimation), name: YXNotification.kSquirrelAnimation, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateMyClassStatus), name: YXNotification.kReloadClassList, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newUserStudy), name: YXNotification.kNewStudyExerciseFinished, object: nil)
     }
     
     // MARK: ---- Request ----
@@ -220,12 +216,18 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
             self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
             self.studyDataCollectionView.reloadData()
-            YXUserModel.default.userId          = self.homeModel.userId
-            YXUserModel.default.currentUnitId   = self.homeModel.unitId
-            YXUserModel.default.currentBookId   = self.homeModel.bookId
-            YXUserModel.default.currentGrade    = self.homeModel.bookGrade
-            YXUserModel.default.isJoinClass     = self.homeModel.isJoinClass
-            YXUserModel.default.hasNewWork      = self.homeModel.hasHomework
+
+            YXUserModel.default.userId        = self.homeModel.userId
+            YXUserModel.default.currentUnitId = self.homeModel.unitId
+            YXUserModel.default.currentBookId = self.homeModel.bookId
+            YXUserModel.default.currentGrade  = self.homeModel.bookGrade
+            YXUserModel.default.isJoinClass   = self.homeModel.isJoinClass
+            YXUserModel.default.hasNewWork    = self.homeModel.hasHomework
+
+            // 如果卸载重新安装的用户，同时请求cofig和baseInfo接口，cofig接口先返回则还没有获取到当前用户选择的词书和单元，所以在这里做一个通知处理
+            if !YXUserModel.default.isFinishedNewUserStudy {
+                NotificationCenter.default.post(name: YXNotification.kNewStudyExerciseFinished, object: nil)
+            }
 
             self.handleTabData()
             self.initDataManager()
@@ -310,6 +312,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.navigationController?.pushViewController(vc, animated: true)
         } else if (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(true) {
             self.performSegue(withIdentifier: "AddBookGuide", sender: self)
+        } else if !YXUserModel.default.isFinishedNewUserStudy {
+            self.newUserStudy()
         } else {
             self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         }
@@ -320,16 +324,14 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             guard let _userInfomation = userInfomation else {
                 return
             }
-            if _userInfomation.isJoinSchool {
-                YYCache.set(false, forKey: .isShowSelectSchool)
+
+            YYCache.set(!_userInfomation.isJoinSchool, forKey: .isShowSelectSchool)
+            YXUserModel.default.isFinishedNewUserStudy = _userInfomation.isFinishedNewStudy
+            if _userInfomation.didSelectBook {
+                YYCache.set(false, forKey: .isShowSelectBool)
             } else {
-                YYCache.set(true, forKey: .isShowSelectSchool)
-            }
-            if _userInfomation.didSelectBook == 0 {
                 YYCache.set(true, forKey: .isShowSelectBool)
                 self.uploadAppInfo()
-            } else {
-                YYCache.set(false, forKey: .isShowSelectBool)
             }
 
             if _userInfomation.reminder?.didOpen == 1, let time = _userInfomation.reminder?.timeStamp {
@@ -494,6 +496,20 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
         // 保持当前选中的词书
         YYCache.set(self.homeModel?.bookId, forKey: .currentChooseBookId)
     }
+
+    private func study(focus: Bool) {
+        guard let homeData = self.homeModel else {
+            return
+        }
+        NotificationCenter.default.removeObserver(self, name: YXNotification.kNewStudyExerciseFinished, object: nil)
+
+        YXUserModel.default.lastStoredDate = Date()
+        YXLog(String(format: "开始学习书(%ld),第(%ld)单元", homeData.bookId ?? 0, homeData.unitId ?? 0))
+        let vc = YXExerciseViewController()
+        vc.isFocusStudy = focus
+        vc.learnConfig = YXBaseLearnConfig(bookId: homeData.bookId ?? 0, unitId: homeData.unitId ?? 0)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     // MARK: ---- Event ----
     @objc private func updateTaskCenterStatus() {
@@ -507,6 +523,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     @objc private func updateMyClassStatus() {
         self.loadData()
+    }
+
+    @objc private func newUserStudy() {
+        self.study(focus: true)
     }
     
     @IBAction func showLearnMap(_ sender: UIButton) {

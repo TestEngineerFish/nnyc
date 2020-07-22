@@ -55,6 +55,8 @@ enum YXLocalKey: String {
     case hasNewWork                    = "kHasNewWork"
     /// 是否已加入班级
     case isJoinClass                   = "kIsJoinClass"
+    /// 是否完成新用户学习流程
+    case isFinishedNewUserStudy        = "kIsFinishedNewUserStudy"
     /// 是否需要显示选择学校
     case isShowSelectSchool            = "kIsShowSelectSchool"
     /// 是否需要显示选择词书

@@ -176,5 +176,10 @@ class YXExerciseHeaderView: UIView {
     @objc func clickSkipButton() {
         self.delegate?.clickSkipBtnEvent()
     }
+
+    // MARK: ==== Event ====
+    func focusStudy() {
+        self.backButton.isHidden = true
+    }
     
 }

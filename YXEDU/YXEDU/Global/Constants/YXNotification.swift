@@ -51,5 +51,7 @@ struct YXNotification {
     static let kReloadClassList            = NSNotification.Name("kReloadClassList")
     /// 显示web页右上方的按钮
     static let kShowRightButton            = NSNotification.Name("kShowRightButton")
+    /// 开始新学学习流程
+    static let kNewStudyExerciseFinished   = NSNotification.Name("kNewStudyExerciseFinished")
     
 }

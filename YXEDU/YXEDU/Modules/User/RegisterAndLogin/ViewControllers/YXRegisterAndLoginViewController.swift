@@ -247,7 +247,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             guard let _userInfomation = userInfomation else {
                 return
             }
-            guard _userInfomation.didBindPhone == 1 else {
+            guard _userInfomation.didBindPhone else {
                 weakSelf.performSegue(withIdentifier: "Bind", sender: weakSelf)
                 return
             }
