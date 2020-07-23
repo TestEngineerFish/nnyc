@@ -9,35 +9,25 @@
 import UIKit
 import MBProgressHUD
 
-class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
 
-    @IBAction func back(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
-    }
-    
     @IBAction func logout(_ sender: Any) {
         let alertView = YXAlertView()
         alertView.descriptionLabel.text = "您确定要退出登录吗？"
         alertView.doneClosure = { _ in
             YXUserModel.default.logout()
         }
-        
         alertView.show()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.customNavigationBar?.title = "设置"
+        self.viewTopConstraint.constant = kNavBarHeight
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
 
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,9 +36,6 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
-//        case 0:
-//            return tableView.dequeueReusableCell(withIdentifier: "CellOne")!
-            
         case 0:
             return tableView.dequeueReusableCell(withIdentifier: "CellTwo")!
             

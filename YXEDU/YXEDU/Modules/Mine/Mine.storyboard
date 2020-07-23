@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HHy-oc-jhr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HHy-oc-jhr">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -70,7 +70,7 @@
             </objects>
             <point key="canvasLocation" x="-2959" y="2396"/>
         </scene>
-        <!--关于我们-->
+        <!--About Us View Controller-->
         <scene sceneID="9K4-ed-Q2i">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="s7t-zN-0Ja" customClass="YXAboutUsViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -174,13 +174,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xuW-Dh-b82"/>
                     </view>
-                    <navigationItem key="navigationItem" title="关于我们" id="ids-B7-tV5">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="back" id="ibP-Vf-uwB">
-                            <connections>
-                                <action selector="back:" destination="s7t-zN-0Ja" id="bWk-lr-OkE"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="buildLabel" destination="aux-7m-DMZ" id="TKV-6e-U0v"/>
                         <outlet property="copyrightLabel" destination="WmH-WJ-oag" id="nkp-V9-Dks"/>
@@ -220,7 +213,7 @@
             </objects>
             <point key="canvasLocation" x="-2154" y="2396"/>
         </scene>
-        <!--设置-->
+        <!--Settings View Controller-->
         <scene sceneID="D7F-m9-5uG">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="xaY-84-PMC" customClass="YXSettingsViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -621,15 +614,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nJV-df-Tfo"/>
                     </view>
-                    <navigationItem key="navigationItem" title="设置" id="fdZ-HI-Im2">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="nRN-xz-DJJ">
-                            <connections>
-                                <action selector="back:" destination="xaY-84-PMC" id="Hmm-pA-KXU"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="l3L-5F-dZQ" id="xPy-XY-T94"/>
+                        <outlet property="viewTopConstraint" destination="vsM-kB-PuH" id="2Ai-vm-tl4"/>
                         <segue destination="s7t-zN-0Ja" kind="show" identifier="AboutUs" id="Uzs-9t-EKE"/>
                         <segue destination="Mzn-Dp-KYl" kind="show" identifier="PrivacyPolicy" id="2IH-EH-Kgl"/>
                         <segue destination="qtl-Ce-pZ3" kind="show" identifier="UserAgreement" id="bec-xo-IUQ"/>

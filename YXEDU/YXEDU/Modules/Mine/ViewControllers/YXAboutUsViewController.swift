@@ -8,16 +8,12 @@
 
 import UIKit
 
-class YXAboutUsViewController: UIViewController {
+class YXAboutUsViewController: YXViewController {
     @IBOutlet weak var copyrightLabel: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
 
     @IBOutlet weak var buildLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
-
-    @IBAction func back(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
-    }
     
     @IBAction func showUserAgreement(_ sender: UITapGestureRecognizer) {
         performSegue(withIdentifier: "UserAgreement", sender: nil)
@@ -25,6 +21,7 @@ class YXAboutUsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.customNavigationBar?.title = "关于我们"
         versionLabel.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
         let year = Calendar.current.component(.year, from: Date())
         copyrightLabel.text = "Copyright @2018-\(year) 念念有词"
@@ -40,18 +37,6 @@ class YXAboutUsViewController: UIViewController {
     }
 
     @objc private func reportLog(_ tapGes: UITapGestureRecognizer) {
-//        YXLogManager.share.report(true)
         YXWordBookDaoImpl().deleteAll()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

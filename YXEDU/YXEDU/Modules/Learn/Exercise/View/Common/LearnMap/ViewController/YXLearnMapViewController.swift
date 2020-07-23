@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXLearnMapViewController: UIViewController {
+class YXLearnMapViewController: YXViewController {
 
     var mapModelList: [YXLearnMapUnitModel]?
 
@@ -19,13 +19,9 @@ class YXLearnMapViewController: UIViewController {
     var bookId: Int?
     var unitId: Int?
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.customNavigationBar?.isHidden = true
         self.view.backgroundColor = UIColor.white
         self.bindData()
         self.createSubviews()
