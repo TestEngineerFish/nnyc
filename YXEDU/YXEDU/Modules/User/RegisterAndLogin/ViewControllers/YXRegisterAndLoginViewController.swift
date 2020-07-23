@@ -17,7 +17,7 @@ public let heightOfSafeBotom: CGFloat = heightOfStateBar == 44 ? 34 : 0
 class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
     
     var shouldShowShanYan = true
-    var platform: String!
+    var platform: String?
     var appleModel: YXAppleModel?
     
     private var timer: Timer?
@@ -134,19 +134,20 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Bind" {
-            let controller = segue.destination as! YXBindPhoneViewController
+            guard let controller = segue.destination as? YXBindPhoneViewController else {
+                return
+            }
             controller.platform = platform
         }
     }
     
     @objc
     private func changePhoneNumberTextField() {
-        if var phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false {
+        if let phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false {
             clearPhoneNumberTextFieldButton.isHidden = false
             
             if phoneNumber.count >= 11 {
                 phoneNumberTextField.text = phoneNumber.substring(maxIndex: 11)
-                phoneNumber = phoneNumberTextField.text!
                 
                 sendSMSButton.isUserInteractionEnabled = true
                 sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
@@ -169,14 +170,11 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
     
     @objc
     private func changeAuthCodeTextField() {
-        if var authCode = authCodeTextField.text, authCode.count >= 6 {
+        if let authCode = authCodeTextField.text, authCode.count >= 6 {
             authCodeTextField.text = authCode.substring(maxIndex: 6)
-            authCode = authCodeTextField.text!
-            
             if let phoneNumber = phoneNumberTextField.text, phoneNumber.count == 11 {
                 loginButton.isUserInteractionEnabled = true
             }
-            
         } else {
             loginButton.isUserInteractionEnabled = false
         }
@@ -298,7 +296,7 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
         guard let userInfo = notification.userInfo else { return }
         self.platform = userInfo["platfrom"] as? String
         
-        let request = YXRegisterAndLoginRequest.thirdLogin(platfrom: self.platform, openId: (userInfo["openID"] as? String) ?? "", code: (userInfo["token"] as? String) ?? "")
+        let request = YXRegisterAndLoginRequest.thirdLogin(platfrom: self.platform ?? "", openId: (userInfo["openID"] as? String) ?? "", code: (userInfo["token"] as? String) ?? "")
         YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let data = response.data else { return }
 
@@ -420,17 +418,17 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
         configure.clAppPrivacySecond = ["《隐私政策》", URL(string: "\(YXEvnOC.baseUrl())/privacy.html")!]
         
         let layoutConfigure = CLOrientationLayOut()
-        layoutConfigure.clLayoutPhoneCenterX = NSNumber(0)
-        layoutConfigure.clLayoutPhoneCenterY = NSNumber(-84)
-        layoutConfigure.clLayoutSloganCenterX = NSNumber(0)
-        layoutConfigure.clLayoutSloganCenterY = NSNumber(-52)
-        layoutConfigure.clLayoutLoginBtnCenterX = NSNumber(0)
-        layoutConfigure.clLayoutLoginBtnCenterY = NSNumber(16)
+        layoutConfigure.clLayoutPhoneCenterX      = NSNumber(0)
+        layoutConfigure.clLayoutPhoneCenterY      = NSNumber(-84)
+        layoutConfigure.clLayoutSloganCenterX     = NSNumber(0)
+        layoutConfigure.clLayoutSloganCenterY     = NSNumber(-52)
+        layoutConfigure.clLayoutLoginBtnCenterX   = NSNumber(0)
+        layoutConfigure.clLayoutLoginBtnCenterY   = NSNumber(16)
         layoutConfigure.clLayoutAppPrivacyCenterX = NSNumber(0)
         layoutConfigure.clLayoutAppPrivacyCenterY = NSNumber(64)
-        layoutConfigure.clLayoutAppPrivacyWidth = NSNumber(value: Float(screenWidth - 80))
-        layoutConfigure.clLayoutAppPrivacyHeight = NSNumber(40)
-        configure.clOrientationLayOutPortrait = layoutConfigure
+        layoutConfigure.clLayoutAppPrivacyWidth   = NSNumber(value: Float(screenWidth - 80))
+        layoutConfigure.clLayoutAppPrivacyHeight  = NSNumber(40)
+        configure.clOrientationLayOutPortrait     = layoutConfigure
         
         configure.customAreaView = { view in
             let iconBackgroundImageView = UIImageView()

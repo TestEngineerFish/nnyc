@@ -153,18 +153,18 @@ extension UIView {
         
         if (border == nil) {
             border = CAShapeLayer()
-            border!.name = self.bezierPathIdentifier
+            border?.name = self.bezierPathIdentifier
             self.layer.addSublayer(border!)
         }
         
-        border!.frame = self.bounds
+        border?.frame = self.bounds
         let pathUsingCorrectInsetIfAny =
             UIBezierPath(roundedRect: border!.bounds, cornerRadius:self.layer.cornerRadius)
         
-        border!.path = pathUsingCorrectInsetIfAny.cgPath
-        border!.fillColor = UIColor.clear.cgColor
-        border!.strokeColor = color.cgColor
-        border!.lineWidth = width * 2
+        border?.path = pathUsingCorrectInsetIfAny.cgPath
+        border?.fillColor = UIColor.clear.cgColor
+        border?.strokeColor = color.cgColor
+        border?.lineWidth = width * 2
         
     }
     

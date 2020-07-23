@@ -63,7 +63,7 @@ struct YXWordModel: YXBaseWordModel {
     var isSelected = false
 
     // 默認排序序號
-    var index: Int!
+    var index: Int?
 
     var wordType: YXWordType = .newWord
     

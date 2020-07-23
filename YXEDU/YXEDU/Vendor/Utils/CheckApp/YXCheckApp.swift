@@ -20,7 +20,10 @@ struct YXCheckApp {
         }
         
         let appScheme = "wechat://"
-        return UIApplication.shared.canOpenURL(URL(string: appScheme)!)
+        guard let url = URL(string: appScheme) else {
+            return false
+        }
+        return UIApplication.shared.canOpenURL(url)
     }
     
     

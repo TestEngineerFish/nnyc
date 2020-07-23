@@ -23,7 +23,7 @@ enum YXMiMeType: String {
     public let networkManager = NetworkReachabilityManager()
     
     private let maxOperationCount: Int = 3
-    private let timeout: TimeInterval = 15
+    private let timeout: TimeInterval  = 15
 
     
     private var sessionManager: SessionManager!
@@ -82,10 +82,10 @@ enum YXMiMeType: String {
             request = YXOCRequest.changeName(name: params["name"] as? String ?? "")
             
         case .changeAvatar:
-            request = YXOCRequest.changeAvatar(file: params["file"] as! Data)
+            request = YXOCRequest.changeAvatar(file: (params["file"] as? Data) ?? Data())
             
         case .changeUserInfo:
-            request = YXOCRequest.changeUserInfo(params: params as? [String : Any?] ?? ["": nil])
+            request = YXOCRequest.changeUserInfo(params: params as [String : Any?])
         }
         
         if isUpload {
@@ -209,13 +209,13 @@ enum YXMiMeType: String {
             
             // 文件数据 （先放前面）
             if fileData is String {
-                multipartFormData.append(URL(fileURLWithPath:(fileData as! String)), withName: name, fileName: fileName, mimeType: mimeType)
+                multipartFormData.append(URL(fileURLWithPath:(fileData as? String ?? "")), withName: name, fileName: fileName, mimeType: mimeType)
                 
             } else if fileData is Data {
-                multipartFormData.append(fileData as! Data, withName: name, fileName: fileName, mimeType: mimeType)
+                multipartFormData.append(fileData as? Data ?? Data(), withName: name, fileName: fileName, mimeType: mimeType)
                 
             } else if fileData is [Data] {
-                for data in fileData as! [Data] {
+                for data in (fileData as? [Data] ?? []) {
                     multipartFormData.append(data, withName: name, fileName: fileName, mimeType: mimeType)
                 }
             }

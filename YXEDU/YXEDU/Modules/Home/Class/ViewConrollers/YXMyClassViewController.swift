@@ -119,8 +119,9 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
             make.top.equalToSuperview().offset(kNavHeight)
             make.left.right.bottom.equalToSuperview()
         }
-        if self.customNavigationBar != nil {
-            self.view.bringSubviewToFront(self.customNavigationBar!)
+
+        if let navBar = self.customNavigationBar {
+            self.view.bringSubviewToFront(navBar)
         }
     }
 

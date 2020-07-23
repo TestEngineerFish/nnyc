@@ -27,7 +27,7 @@ public extension String {
         var lowSurrogate = char32 & 0x3FF
         lowSurrogate += 0xDC00
 
-        return String(utf16CodeUnits: [highSurrogate, lowSurrogate] as! [unichar], count: 2)
+        return String(utf16CodeUnits: [highSurrogate, lowSurrogate] as? [unichar] ?? [], count: 2)
     }
 
     static func stringWithUTF16Char(char16: UTF16Char) -> String {
@@ -55,9 +55,9 @@ public extension String {
     /// 获取指定范围的内容
     func substring(fromIndex minIndex: Int, toIndex maxIndex: Int) -> String {
         let start = index(startIndex, offsetBy: minIndex)
-        let end   = index(startIndex, offsetBy: maxIndex, limitedBy: endIndex)
+        let end   = index(startIndex, offsetBy: maxIndex, limitedBy: endIndex) ?? start
 
-        let range = start ..< end!
+        let range = start ..< end
         return String(self[range])
     }
 
@@ -176,7 +176,9 @@ public extension String {
 
     func pregReplace(pattern: String, with: String,
                      options: NSRegularExpression.Options = []) -> String {
-        let regex = try! NSRegularExpression(pattern: pattern, options: options)
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else {
+            return ""
+        }
         return regex.stringByReplacingMatches(in: self, options: [],
                                               range: NSMakeRange(0, self.count),
                                               withTemplate: with)
@@ -343,7 +345,9 @@ extension String {
         let digestLength = Int(CC_MD5_DIGEST_LENGTH)
         let result       = UnsafeMutablePointer<UInt8>.allocate(capacity: 16)
 
-        CC_MD5(str!, strLength, result)
+        guard let _str = str else { return "" }
+
+        CC_MD5(_str, strLength, result)
         for i in 0..<digestLength {
             hash.appendFormat("%02x", result[i])
         }
@@ -353,10 +357,13 @@ extension String {
 
     /// 获取SHA1值
     func sha1() -> String {
-        let data = self.data(using: String.Encoding.utf8)
+        guard let data = self.data(using: String.Encoding.utf8) else {
+            YXLog("SHA1失败！")
+            return ""
+        }
         var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
-        let newData = NSData(data: data!)
-        CC_SHA1(newData.bytes, CC_LONG(data!.count), &digest)
+        let newData = NSData(data: data)
+        CC_SHA1(newData.bytes, CC_LONG(data.count), &digest)
         let output = NSMutableString(capacity: Int(CC_SHA1_DIGEST_LENGTH))
         for byte in digest {
             output.appendFormat("%02x", byte)
@@ -372,10 +379,12 @@ extension String {
     /// - parameter key: 用作加密的密钥
     /// - returns: 返回加密之后的32位字符串
     func hmac(algorithm: HMACAlgorithm, key: String) -> String {
-        let cKey = key.cString(using: String.Encoding.utf8)
-        let cData = self.cString(using: String.Encoding.utf8)
+        guard let cKey = key.cString(using: String.Encoding.utf8), let cData = self.cString(using: String.Encoding.utf8) else {
+            YXLog("HMAC失败")
+            return ""
+        }
         var result = [CUnsignedChar](repeating: 0, count: algorithm.digestLength())
-        CCHmac(algorithm.toCCHmacAlgorithm(), cKey, strlen(cKey!), cData, strlen(cData!), &result)
+        CCHmac(algorithm.toCCHmacAlgorithm(), cKey, strlen(cKey), cData, strlen(cData), &result)
         let hmacData = Data(bytes: result, count: algorithm.digestLength())
         let hmacBase64 = hmacData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength76Characters)
         return hmacBase64

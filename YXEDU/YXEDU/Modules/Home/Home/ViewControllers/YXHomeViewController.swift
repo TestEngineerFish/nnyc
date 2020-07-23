@@ -21,7 +21,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
     private var collectedWordsCount  = "--"
     private var wrongWordsCount      = "--"
     private var animationPlayFinished = false
-    private var homeModel: YXHomeModel!
+    private var homeModel: YXHomeModel?
     private var activityModel: YXActivityModel?
     private var service: YXExerciseService = YXExerciseServiceImpl()
     
@@ -104,10 +104,12 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         lineView.backgroundColor = UIColor.hex(0xDCDCDC)
         self.tabBarController?.tabBar.addSubview(lineView)
 
-        progressBar.layer.cornerRadius = 5
-        progressBar.clipsToBounds = true
-        progressBar.layer.sublayers![1].cornerRadius = 5
+        progressBar.layer.cornerRadius        = 5
+        progressBar.clipsToBounds             = true
         progressBar.subviews[1].clipsToBounds = true
+        if (progressBar.layer.sublayers?.count ?? 0) > 1 {
+            progressBar.layer.sublayers![1].cornerRadius = 5
+        }
 
         studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
         subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
@@ -180,8 +182,9 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         guard let identifier = segue.identifier else { return }
         let identifierList = ["LearnedWords", "FavoritesWords", "WrongWords", "WordList"]
         if identifierList.contains(identifier) {
-            let destinationViewController = segue.destination as! YXWordListViewController
-            destinationViewController.wordListType = wordListType
+            if let destinationViewController = segue.destination as? YXWordListViewController {
+                destinationViewController.wordListType = wordListType
+            }
         }
     }
     
@@ -197,8 +200,8 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
     // MARK: ---- Request ----
     private func loadData() {
         let request = YXHomeRequest.getBaseInfo(userId: YXUserModel.default.uuid ?? "")
-        YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { (response) in
-            guard let userInfomation = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let userInfomation = response.data else { return }
             self.homeModel = userInfomation
             YXLog("==== 当前用户User ID", self.homeModel?.userId ?? 0)
             
@@ -207,7 +210,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             self.bookNameButton.setTitle(self.homeModel?.bookName, for: .normal)
             self.unitNameButton.setTitle(self.homeModel?.unitName, for: .normal)
             self.progressBar.setProgress(Float(self.homeModel?.unitProgress ?? 0), animated: true)
-            let countData = self.getUnlearnWordCount(home: self.homeModel)
+            let countData = self.getUnlearnWordCount(home: userInfomation)
             self.countOfWaitForStudyWords.text = "\(countData.0 + countData.1)"
             if countData.0 == 0 {
                 self.unlearnedTitleLabel.text = "待复习"
@@ -220,12 +223,12 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
             self.studyDataCollectionView.reloadData()
 
-            YXUserModel.default.userId        = self.homeModel.userId
-            YXUserModel.default.currentUnitId = self.homeModel.unitId
-            YXUserModel.default.currentBookId = self.homeModel.bookId
-            YXUserModel.default.currentGrade  = self.homeModel.bookGrade
-            YXUserModel.default.isJoinClass   = self.homeModel.isJoinClass
-            YXUserModel.default.hasNewWork    = self.homeModel.hasHomework
+            YXUserModel.default.userId        = self.homeModel?.userId
+            YXUserModel.default.currentUnitId = self.homeModel?.unitId
+            YXUserModel.default.currentBookId = self.homeModel?.bookId
+            YXUserModel.default.currentGrade  = self.homeModel?.bookGrade
+            YXUserModel.default.isJoinClass   = self.homeModel?.isJoinClass ?? false
+            YXUserModel.default.hasNewWork    = self.homeModel?.hasHomework ?? false
 
             // 如果卸载重新安装的用户，同时请求cofig和baseInfo接口，cofig接口先返回则还没有获取到当前用户选择的词书和单元，所以在这里做一个通知处理
             if !YXUserModel.default.isFinishedNewUserStudy {
@@ -296,8 +299,8 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 
     /// 处理基础信息请求
     private func handleTabData() {
-        let taskModel = YXWordBookResourceModel(type: .single, book: self.homeModel.bookId) {
-            YXWordBookResourceManager.shared.contrastBookData(by: self.homeModel.bookId)
+        let taskModel = YXWordBookResourceModel(type: .single, book: self.homeModel?.bookId) {
+            YXWordBookResourceManager.shared.contrastBookData(by: self.homeModel?.bookId)
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
     }
@@ -456,8 +459,10 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             }
         }
         YYCache.set(false, forKey: YXLocalKey.firstShowHome)
-        self.homeEntryView.insertSubview(squirrelAnimationView!, at: 1)
-        squirrelAnimationView!.snp.makeConstraints { (make) in
+        if let animationView = self.squirrelAnimationView {
+            self.homeEntryView.insertSubview(animationView, at: 1)
+        }
+        squirrelAnimationView?.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
         squirrelAnimationView?.play(completion: { (isFinished) in

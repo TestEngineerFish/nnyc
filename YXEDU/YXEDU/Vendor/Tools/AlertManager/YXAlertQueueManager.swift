@@ -47,7 +47,7 @@ class YXAlertQueueManager: NSObject {
         var index = -1
         var alertView: YXTopWindowView?
         for (i, alert) in alertArray.enumerated() {
-            if alertView == nil || alert.tag < alertView!.tag {
+            if alertView == nil || alert.tag < (alertView?.tag ?? 0) {
                 alertView = alert
                 index = i
             }

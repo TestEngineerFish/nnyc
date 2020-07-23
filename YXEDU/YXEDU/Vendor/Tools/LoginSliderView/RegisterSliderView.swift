@@ -755,7 +755,7 @@ extension UIImage {
         UIGraphicsEndImageContext()
 
         image = image?.resizableImage(withCapInsets: UIEdgeInsets(top: cornerRadius, left: cornerRadius, bottom: cornerRadius, right: cornerRadius))
-        return image!
+        return image ?? UIImage()
     }
 }
 

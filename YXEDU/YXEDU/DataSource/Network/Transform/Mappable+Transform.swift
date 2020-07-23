@@ -10,18 +10,16 @@ import Foundation
 import ObjectMapper
 
 let transformIntToBool = TransformOf<Bool, Int>(fromJSON: { (value: Int?) -> Bool? in
-    if value == nil {
+    guard let _value = value else {
         return false
-    }else{
-        return value! > 0 ? true : false
     }
+    return _value > 0
     
 }, toJSON: { (value: Bool?) -> Int? in
-    if value == nil {
+    guard let _value = value else {
         return 0
-    }else {
-        return value! == false ? 0 : 1
     }
+    return _value ? 1 : 0
 })
 
 let transformInt = TransformOf<String, Int>(fromJSON: { (value: Int?) -> String? in
@@ -54,7 +52,10 @@ let transformDouble = TransformOf<String, Double>(fromJSON: { (value: Double?) -
     }
     return nil
 }, toJSON: { (value: String?) -> Double? in
-    return Double(value!)
+    guard let _value = value else {
+        return .zero
+    }
+    return Double(_value)
 })
 
 let transformFloat = TransformOf<String, Float>(fromJSON: { (value: Float?) -> String? in
@@ -63,7 +64,10 @@ let transformFloat = TransformOf<String, Float>(fromJSON: { (value: Float?) -> S
     }
     return nil
 }, toJSON: { (value: String?) -> Float? in
-    return Float(value!)
+    guard let _value = value else {
+        return .zero
+    }
+    return Float(_value)
 })
 
 let transformBool = TransformOf<String, Bool>(fromJSON: { (value: Bool?) -> String? in
@@ -72,5 +76,8 @@ let transformBool = TransformOf<String, Bool>(fromJSON: { (value: Bool?) -> Stri
     }
     return nil
 }, toJSON: { (value: String?) -> Bool? in
-    return Bool(value!)
+    guard let _value = value else {
+        return false
+    }
+    return Bool(_value)
 })

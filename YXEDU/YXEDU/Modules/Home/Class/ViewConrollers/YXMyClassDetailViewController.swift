@@ -78,10 +78,12 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         self.sheetView.addSubview(cancelButton)
         self.customNavigationBar?.addSubview(noticeButton)
         noticeButton.addSubview(redDotView)
-        self.noticeButton.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.right.equalTo(self.customNavigationBar!.rightButton.snp.left).offset(AdaptSize(-15))
-            make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
+        if self.customNavigationBar != nil {
+            self.noticeButton.snp.makeConstraints { (make) in
+                make.centerY.equalToSuperview()
+                make.right.equalTo(self.customNavigationBar!.rightButton.snp.left).offset(AdaptSize(-15))
+                make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
+            }
         }
         self.redDotView.snp.makeConstraints { (make) in
             make.size.equalTo(redDotView.size)

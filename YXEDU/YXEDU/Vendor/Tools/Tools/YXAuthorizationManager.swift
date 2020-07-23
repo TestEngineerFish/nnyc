@@ -214,15 +214,10 @@ extension YXAuthorizationManager {
 
     // MARK: 跳转到APP内设置界面
     class func jumpToAppSetting() {
-        let appSetting = URL(string: UIApplication.openSettingsURLString)
-
-        if appSetting != nil {
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(appSetting!, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(appSetting!)
-            }
+        guard let appSetting = URL(string: UIApplication.openSettingsURLString) else {
+            return
         }
+        UIApplication.shared.open(appSetting, options: [:], completionHandler: nil)
     }
 
     /** 跳转定位服务设置界面 ，使用私有链接，被拒绝了，因此只能提示，不能跳转 */

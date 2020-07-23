@@ -163,12 +163,12 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         var book: YXWordBookModel?
         if result.next() {
             book = YXWordBookModel()
-            book!.bookId = Int(result.int(forColumn: "bookId"))
-            book!.bookName = result.string(forColumn: "bookName")
-            book!.bookWordSourcePath = result.string(forColumn: "bookSource")
-            book!.bookHash = result.string(forColumn: "bookHash")
-            book!.gradeId = Int(result.int(forColumn: "gradeId"))
-            book!.gradeType = Int(result.int(forColumn: "gradeType"))
+            book?.bookId             = Int(result.int(forColumn: "bookId"))
+            book?.bookName           = result.string(forColumn: "bookName")
+            book?.bookWordSourcePath = result.string(forColumn: "bookSource")
+            book?.bookHash           = result.string(forColumn: "bookHash")
+            book?.gradeId            = Int(result.int(forColumn: "gradeId"))
+            book?.gradeType          = Int(result.int(forColumn: "gradeType"))
         }
         
         result.close()
@@ -352,15 +352,15 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     private func createWordModel(result: FMResultSet) -> YXWordModel {
         var word = YXWordModel()
         
-        let partOfSpeechAndMeaningsDataString: String! = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]")
-        let deformationsDataString: String!    = (result.string(forColumn: "deformations") ?? "[]")
-        let examplessDatStringa: String!       = (result.string(forColumn: "examples") ?? "[]")
-        let fixedMatchsDataString: String!     = (result.string(forColumn: "fixedMatchs") ?? "[]")
-        let commonPhrasesDataString: String!   = (result.string(forColumn: "commonPhrases") ?? "[]")
-        let wordAnalysisDataString: String!    = (result.string(forColumn: "wordAnalysis") ?? "[]")
-        let detailedSyntaxsDataString: String! = (result.string(forColumn: "detailedSyntaxs") ?? "[]")
-        let synonymsData: Data! = (result.string(forColumn: "synonyms") ?? "[]").data(using: .utf8)!
-        let antonymsData: Data! = (result.string(forColumn: "antonyms") ?? "[]").data(using: .utf8)!
+        let partOfSpeechAndMeaningsDataString: String = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]")
+        let deformationsDataString: String    = (result.string(forColumn: "deformations") ?? "[]")
+        let examplessDatStringa: String       = (result.string(forColumn: "examples") ?? "[]")
+        let fixedMatchsDataString: String     = (result.string(forColumn: "fixedMatchs") ?? "[]")
+        let commonPhrasesDataString: String   = (result.string(forColumn: "commonPhrases") ?? "[]")
+        let wordAnalysisDataString: String    = (result.string(forColumn: "wordAnalysis") ?? "[]")
+        let detailedSyntaxsDataString: String = (result.string(forColumn: "detailedSyntaxs") ?? "[]")
+        let synonymsData: Data = (result.string(forColumn: "synonyms") ?? "[]").data(using: .utf8) ?? Data()
+        let antonymsData: Data = (result.string(forColumn: "antonyms") ?? "[]").data(using: .utf8) ?? Data()
 
         word.wordId                  = Int(result.int(forColumn: "wordId"))
         word.word                    = result.string(forColumn: "word")
@@ -376,8 +376,8 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         word.commonPhrases           = [YXWordCommonPhrasesModel](JSONString: commonPhrasesDataString)
         word.wordAnalysis            = [YXWordAnalysisModel](JSONString: wordAnalysisDataString)
         word.detailedSyntaxs         = [YXWordDetailedSyntaxModel](JSONString: detailedSyntaxsDataString)
-        word.synonyms                = try? (JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers) as! [String])
-        word.antonyms                = try? (JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers) as! [String])
+        word.synonyms                = (try? JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers)) as? [String]
+        word.antonyms                = (try? JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers)) as? [String]
         word.gradeId                 = Int(result.int(forColumn: "gradeId"))
         word.gardeType               = Int(result.int(forColumn: "gardeType"))
         word.bookId                  = Int(result.int(forColumn: "bookId"))

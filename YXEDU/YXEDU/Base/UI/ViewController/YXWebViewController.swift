@@ -84,10 +84,13 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
     }
 
     private func createSubviews() {
-        self.view.addSubview(webView!)
+        guard let _webView = self.webView else {
+            return
+        }
+        self.view.addSubview(_webView)
         self.view.addSubview(loadingView)
-        self.view.sendSubviewToBack(webView!)
-        webView?.snp.makeConstraints({ (make) in
+        self.view.sendSubviewToBack(_webView)
+        _webView.snp.makeConstraints({ (make) in
             make.top.equalToSuperview().offset(kNavHeight)
             make.left.right.bottom.equalToSuperview()
         })

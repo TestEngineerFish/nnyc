@@ -29,39 +29,44 @@ public extension UIFont {
         static let DINAlternateBold: String = "DINAlternate-Bold"
     }
     
-   @objc class func regularFont(ofSize size: CGFloat) -> UIFont {
-        if #available(iOS 9.0, *) {
-           return UIFont(name: FontFamilyName.PingFangTCRegular, size: size)!
+    @objc class func regularFont(ofSize size: CGFloat) -> UIFont {
+        if let font = UIFont(name: FontFamilyName.PingFangTCRegular, size: size) {
+            return font
+        } else {
+            return UIFont.systemFont(ofSize:size)
         }
-        return UIFont.systemFont(ofSize:size)
     }
     
     @objc class func mediumFont(ofSize size: CGFloat) -> UIFont {
-        if #available(iOS 9.0, *) {
-            return UIFont(name: FontFamilyName.PingFangTCMedium, size: size)!
+        if let font = UIFont(name: FontFamilyName.PingFangTCMedium, size: size) {
+            return font
+        } else {
+            return UIFont.systemFont(ofSize:size)
         }
-        return UIFont.systemFont(ofSize:size)
     }
     
     @objc class func semiboldFont(ofSize size: CGFloat) -> UIFont {
-        if #available(iOS 9.0, *) {
-            return UIFont(name: FontFamilyName.PingFangTCSemibold, size: size)!
+        if let font = UIFont(name: FontFamilyName.PingFangTCSemibold, size: size) {
+            return font
+        } else {
+            return UIFont.systemFont(ofSize:size)
         }
-        return UIFont.systemFont(ofSize:size)
     }
     
     @objc class func lightFont(ofSize size: CGFloat) -> UIFont {
-        if #available(iOS 9.0, *) {
-            return UIFont(name: FontFamilyName.PingFangTCLight, size: size)!
+        if let font = UIFont(name: FontFamilyName.PingFangTCLight, size: size) {
+            return font
+        } else {
+            return UIFont.systemFont(ofSize:size)
         }
-        return UIFont.systemFont(ofSize:size)
     }
     
     @objc class func DINAlternateBold(ofSize size: CGFloat) -> UIFont {
-        if #available(iOS 9.0, *) {
-            return UIFont(name: FontFamilyName.DINAlternateBold, size: size)!
+        if let font = UIFont(name: FontFamilyName.DINAlternateBold, size: size) {
+            return font
+        } else {
+            return UIFont.systemFont(ofSize:size)
         }
-        return UIFont.systemFont(ofSize:size)
     }
     
 }
