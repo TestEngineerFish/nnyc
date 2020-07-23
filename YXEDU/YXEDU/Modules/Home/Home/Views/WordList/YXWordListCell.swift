@@ -50,7 +50,8 @@ class YXWordListCell: UITableViewCell {
                 pronunciationUrl = URL(string: englishPronunciationUrl)
             }
             
-            YXAVPlayerManager.share.playAudio(pronunciationUrl) {
+            YXAVPlayerManager.share.playAudio(pronunciationUrl) { [weak self] in
+                guard let self = self else { return }
                 self.playAuoidButton.layer.removeFlickerAnimation()
             }
         }

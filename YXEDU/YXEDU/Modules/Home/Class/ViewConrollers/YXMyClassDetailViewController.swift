@@ -78,12 +78,12 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         self.sheetView.addSubview(cancelButton)
         self.customNavigationBar?.addSubview(noticeButton)
         noticeButton.addSubview(redDotView)
-        noticeButton.snp.makeConstraints { (make) in
+        self.noticeButton.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.right.equalTo(self.customNavigationBar!.rightButton.snp.left).offset(AdaptSize(-15))
             make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
         }
-        redDotView.snp.makeConstraints { (make) in
+        self.redDotView.snp.makeConstraints { (make) in
             make.size.equalTo(redDotView.size)
             make.top.right.equalToSuperview()
         }
@@ -124,7 +124,8 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
     private func requestData() {
         guard let id = self.classId else { return }
         let request = YXMyClassRequestManager.classDetail(id: id)
-        YYNetworkService.default.request(YYStructResponse<YXMyClassDetailModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXMyClassDetailModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.classDetailModel = response.data
             self.tableView.reloadData()
         }) { (error) in
@@ -135,7 +136,8 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
     private func leaveClass() {
         guard let id = self.classId else { return }
         let request = YXMyClassRequestManager.leaveClass(id: id)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.navigationController?.popViewController(animated: true)
             // 刷新列表
             NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
@@ -152,7 +154,8 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
             make.edges.equalToSuperview()
         }
         self.sheetView.frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: AdaptSize(100) + kSafeBottomMargin)
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.layer.opacity = 1.0
             self.sheetView.transform = CGAffineTransform(translationX: 0, y: AdaptSize(-100) - kSafeBottomMargin)
         }
@@ -164,10 +167,12 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
     }
 
     @objc private func hideSheepView() {
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.layer.opacity = 0.0
             self.sheetView.transform = .identity
-        }) { (finished) in
+        }) { [weak self] (finished) in
+            guard let self = self else { return }
             if finished {
                 self.backgroundView.removeFromSuperview()
                 self.sheetView.removeFromSuperview()
@@ -190,7 +195,8 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         alertView.leftButton.backgroundColor   = UIColor.clear
         alertView.leftButton.layer.borderColor = UIColor.black6.cgColor
         alertView.leftButton.layer.borderWidth = AdaptSize(0.5)
-        alertView.doneClosure = { _ in
+        alertView.doneClosure = { [weak self] (text: String?) in
+            guard let self = self else { return }
             self.leaveClass()
             YXLog("退出班级")
         }

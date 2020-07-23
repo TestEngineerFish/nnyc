@@ -173,8 +173,10 @@ class YXAddBookGuideViewController: UIViewController {
             self.chengeCenter()
         }
         
-        selectGradeView.editClosure = {
-            UIView.animate(withDuration: 0.4) {
+        selectGradeView.editClosure = { [weak self] in
+            guard let self = self else { return }
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectGradeViewHeight.constant = self.gradeHeight
                 self.selectVersionViewTopOffSet.constant = 88
                 self.selectVersionView.alpha = 0
@@ -220,8 +222,10 @@ class YXAddBookGuideViewController: UIViewController {
             self.chengeCenter()
         }
         
-        selectVersionView.editClosure = {
-            UIView.animate(withDuration: 0.4) {
+        selectVersionView.editClosure = { [weak self] in
+            guard let self = self else { return }
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectVersionViewTopOffSet.constant = 0
                 self.selectVersionViewHeight.constant = self.versionHeight
                 self.selectBookNameViewTopOffSet.constant = 88
@@ -264,8 +268,10 @@ class YXAddBookGuideViewController: UIViewController {
             }
         }
         
-        selectBookNameView.editClosure = {
-            UIView.animate(withDuration: 0.4) {
+        selectBookNameView.editClosure = { [weak self] in
+            guard let self = self else { return }
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectBookNameViewHeight.constant = self.bookNameHeight
                 self.view.layoutIfNeeded()
             }
