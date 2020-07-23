@@ -69,11 +69,13 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 alertView.leftButton.setTitle("换单元", for: .normal)
                 alertView.rightOrCenterButton.setTitle("换本书学", for: .normal)
                 
-                alertView.cancleClosure = {
+                alertView.cancleClosure = { [weak self] in
+                    guard let self = self else { return }
                     self.showLearnMap(alertView.rightOrCenterButton)
                 }
                 
-                alertView.doneClosure = { _ in
+                alertView.doneClosure = { [weak self] (text: String?) in
+                    guard let self = self else { return }
                     YXLog("更换词书")
                     self.performSegue(withIdentifier: "AddBookFromHome", sender: self)
                 }
@@ -81,7 +83,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 YXLog("当前单元\(homeData.unitName ?? "")暂时没有需要新学或复习的单词")
                 alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
                 alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
-                alertView.doneClosure = { _ in
+                alertView.doneClosure = { [weak self] (text: String?) in
+                    guard let self = self else { return }
                     self.showLearnMap(alertView.rightOrCenterButton)
                 }
             }

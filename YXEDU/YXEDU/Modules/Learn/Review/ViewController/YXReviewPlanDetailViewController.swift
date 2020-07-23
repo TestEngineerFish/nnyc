@@ -112,7 +112,8 @@ class YXReviewPlanDetailViewController: YXViewController {
                 self.wordListView.words = detailModel?.words ?? []
                 
                 self.headerView.detailModel = detailModel
-                self.headerView.statusClosure = {
+                self.headerView.statusClosure = { [weak self] in
+                    guard let self = self else { return }
                     let reviePlanStudentsListViewController = YXReviePlanStudentsListViewController()
                     reviePlanStudentsListViewController.planId = self.planId
                     reviePlanStudentsListViewController.reviewPlanName = detailModel?.planName ?? ""
@@ -126,7 +127,8 @@ class YXReviewPlanDetailViewController: YXViewController {
                     YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
                 }
                 
-                self.headerView.shareClosure = {
+                self.headerView.shareClosure = { [weak self] in
+                    guard let self = self else { return }
                     self.share()
                 }
                 
@@ -184,7 +186,6 @@ class YXReviewPlanDetailViewController: YXViewController {
         YXSettingDataManager().fetchShareCommand(planId: planId) { (model, msg) in
             if let commandModel = model, let content = commandModel.content {
                 YXShareCodeView.share.showView(content)
-                
             } else {
                 UIView.toast(msg)
             }

@@ -95,17 +95,20 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
     
     func configHeaderView() {
         self.headerView.startReviewEvent = { [weak self] in
-            self?.startReviewEvent()
+            guard let self = self else { return }
+            self.startReviewEvent()
         }
         self.headerView.createReviewPlanEvent = { [weak self] in
-            self?.createReviewEvent()
+            guard let self = self else { return }
+            self.createReviewEvent()
         }
     }
     
     func configFooterView() {
         self.footerView.size = CGSize(width: screenWidth, height: AdaptIconSize(72))
         self.footerView.createReviewPlanEvent = { [weak self] in
-            self?.createReviewEvent()
+            guard let self = self else { return }
+            self.createReviewEvent()
         }
     }
     
@@ -168,10 +171,12 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         let model = modelList[indexPath.row]
         cell.setData(model)
         cell.startListenPlanEvent = { [weak self] in
-            self?.startListenPlanEvent(planId: model.planId)
+            guard let self = self else { return }
+            self.startListenPlanEvent(planId: model.planId)
         }
         cell.startReviewPlanEvent = { [weak self] in
-            self?.startReviewPlanEvent(planId: model.planId)
+            guard let self = self else { return }
+            self.startReviewPlanEvent(planId: model.planId)
         }
         return cell
     }
@@ -227,10 +232,12 @@ extension YXReviewViewController {
         
         _cell.reviewPlanModel = model
         _cell.startListenPlanEvent = { [weak self] in
-            self?.startListenPlanEvent(planId: model.planId)
+            guard let self = self else { return }
+            self.startListenPlanEvent(planId: model.planId)
         }
         _cell.startReviewPlanEvent = { [weak self] in
-            self?.startReviewPlanEvent(planId: model.planId)
+            guard let self = self else { return }
+            self.startReviewPlanEvent(planId: model.planId)
         }
     }
     
