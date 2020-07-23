@@ -142,7 +142,8 @@ class YXAddBookGuideViewController: UIViewController {
         selectGradeView.select(grades)
         selectGradeView.collectionView.collectionViewLayout.prepare()
         selectGradeViewHeight.constant = gradeHeight
-        selectGradeView.selectedClosure = {
+        selectGradeView.selectedClosure = { [weak self] in
+            guard let self = self else { return }
             self.versions = []
 
             if let selectedIndex = self.selectGradeView.selectedIndex {
@@ -193,7 +194,8 @@ class YXAddBookGuideViewController: UIViewController {
         selectVersionView.descriptionLabel.isHidden = false
         selectVersionView.descriptionLabel.text = "教材不断添加中,如果没有看到您的教材,可以 选择通用版学习哦~"
         selectVersionView.select(versions)
-        selectVersionView.selectedClosure = {
+        selectVersionView.selectedClosure = { [weak self] in
+            guard let self = self else { return }
             self.bookNames = []
 
             if let gradeIndex = self.selectGradeView.selectedIndex, let versionIndex = self.selectVersionView.selectedIndex {
@@ -240,7 +242,8 @@ class YXAddBookGuideViewController: UIViewController {
         selectBookNameView.alpha = 0
         selectBookNameView.titleLabel.text = "词书"
         selectBookNameView.select(bookNames)
-        selectBookNameView.selectedClosure = {
+        selectBookNameView.selectedClosure = { [weak self] in
+            guard let self = self else { return }
             if let gradeIndex = self.selectGradeView.selectedIndex, let bookIndex = self.selectBookNameView.selectedIndex  {
                 let grade = self.dataSource[gradeIndex]
                 

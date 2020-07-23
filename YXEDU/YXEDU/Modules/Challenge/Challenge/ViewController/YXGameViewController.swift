@@ -187,7 +187,8 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
         alertView.descriptionLabel.text = "挑战尚未完成，是否退出并放弃本次挑战？"
         alertView.leftButton.setTitle("确定退出", for: .normal)
         alertView.rightOrCenterButton.setTitle("继续挑战", for: .normal)
-        alertView.cancleClosure = {
+        alertView.cancleClosure = { [weak self] in
+            guard let self = self else { return }
             YXLog("游戏：返回首页")
             self.navigationController?.popViewController(animated: true)
         }

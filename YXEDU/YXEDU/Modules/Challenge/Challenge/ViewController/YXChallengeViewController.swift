@@ -142,7 +142,8 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         case .lock:
             let alertView = YXAlertView(type: .normal)
             alertView.descriptionLabel.text = "确定花费\(gameInfo.unlockCoin)松鼠币解锁游戏吗？"
-            alertView.doneClosure = { _ in
+            alertView.doneClosure = { [weak self] (text: String?) in
+                guard let self = self else { return }
                 if userModel.myCoins >= gameInfo.unlockCoin {
                     self.requestUnlockGame()
                 } else {
@@ -155,14 +156,16 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             alertView.descriptionLabel.text = "背完今天的单词可以获得一次免费挑战机会！"
             alertView.leftButton.setTitle("直接挑战", for: .normal)
             alertView.rightOrCenterButton.setTitle("去背单词", for: .normal)
-            alertView.cancleClosure = {
+            alertView.cancleClosure = { [weak self] in
+                guard let self = self else { return }
                 if userModel.myCoins >= gameInfo.unitCoin {
                     self.playGame()
                 } else {
                     self.showGoldLackAlert()
                 }
             }
-            alertView.doneClosure = { _ in
+            alertView.doneClosure = { [weak self] (text: String?) in
+                guard let self = self else { return }
                 self.tabBarController?.selectedIndex = 0
             }
             alertView.show()
