@@ -665,7 +665,7 @@
             </objects>
             <point key="canvasLocation" x="1181" y="1643"/>
         </scene>
-        <!--任务中心-->
+        <!--Task Center View Controller-->
         <scene sceneID="6pL-bl-kzi">
             <objects>
                 <viewController storyboardIdentifier="YXTaskCenterViewController" hidesBottomBarWhenPushed="YES" id="LEE-do-1y0" customClass="YXTaskCenterViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -880,18 +880,6 @@
                         <viewLayoutGuide key="safeArea" id="Fjr-c0-p0B"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="任务中心" id="RCA-7z-YQm">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="JQ1-OS-mHD">
-                            <connections>
-                                <action selector="back:" destination="LEE-do-1y0" id="e2R-W6-1jb"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="questionIcon" id="v6d-yp-0Mv">
-                            <connections>
-                                <action selector="tapQuestionIcon:" destination="LEE-do-1y0" id="rhr-ms-b8d"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dailyDataCollectionView" destination="ehO-sS-3Q7" id="rNh-AK-sV0"/>
@@ -900,6 +888,7 @@
                         <outlet property="taskTableView" destination="QCw-nq-3Yn" id="iuV-Dh-nft"/>
                         <outlet property="taskTableViewHeight" destination="rhs-4d-YZT" id="Zff-wG-PMQ"/>
                         <outlet property="totalPunchLabel" destination="Qjr-mO-jkS" id="ohx-VW-C33"/>
+                        <outlet property="viewTopConstraint" destination="hf7-Ru-q3G" id="g4y-gP-eDi"/>
                         <outlet property="weekendPunchLabel" destination="WV7-wa-UtC" id="JC6-KN-d0a"/>
                     </connections>
                 </viewController>
@@ -1916,7 +1905,6 @@
         <image name="homeProgressBarTrack" width="259" height="8"/>
         <image name="homeSearch" width="22" height="22"/>
         <image name="linkBar" width="16" height="41"/>
-        <image name="questionIcon" width="22" height="22"/>
         <image name="reportBackground" width="376" height="422"/>
         <image name="tabLearn" width="27" height="27"/>
         <image name="tabLearnSelected" width="27" height="27"/>

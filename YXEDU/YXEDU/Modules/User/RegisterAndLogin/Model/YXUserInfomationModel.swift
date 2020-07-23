@@ -29,7 +29,7 @@ struct YXUserInfomationModel: Mappable {
     var didBindPhone: Bool  = true // 是否已绑定手机号
     var didSelectBook: Bool = true // 是否已选择词书
     var isJoinSchool: Bool  = true // 是否已加入学校
-    var isFinishedNewStudy  = true // 是否完成新用户学习流程
+    var isNewUser:Bool      = true // 是否是新用户
     var reminder: YXReminderModel?
 
     init?(map: Map) {
@@ -44,6 +44,6 @@ struct YXUserInfomationModel: Mappable {
         coinExplainUrl       <- map["coin_explain_url"]
         gameExplainUrl       <- map["game_explain_url"]
         reminder             <- map["learn_remind"]
-        isFinishedNewStudy   <- map["newUserStudyFinished"]
+        isNewUser            <- map["is_new_study"]
     }
 }

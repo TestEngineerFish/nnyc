@@ -329,7 +329,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             }
 
             YYCache.set(!_userInfomation.isJoinSchool, forKey: .isShowSelectSchool)
-            YXUserModel.default.isFinishedNewUserStudy = _userInfomation.isFinishedNewStudy
+            YXUserModel.default.isFinishedNewUserStudy = !_userInfomation.isNewUser
             if _userInfomation.didSelectBook {
                 YYCache.set(false, forKey: .isShowSelectBool)
             } else {

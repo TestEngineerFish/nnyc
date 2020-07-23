@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
+class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     
     var fromYXSquirrelCoinViewController = false
     private var taskCenterData: YXTaskCenterDataModel!
@@ -22,14 +22,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var weekendPunchLabel: UILabel!
     @IBOutlet weak var taskTableView: UITableView!
     @IBOutlet weak var taskTableViewHeight: NSLayoutConstraint!
-    
-    @IBAction func back(_ sender: UIBarButtonItem) {
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-    @IBAction func tapQuestionIcon(_ sender: UIBarButtonItem) {
-        YXAlertWebView.share.show(YXUserModel.default.coinExplainUrl ?? "")
-    }
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
     
     @IBAction func punchIn(_ sender: Any) {
         let request = YXTaskCenterRequest.punchIn
@@ -60,22 +53,20 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     }
 
     private func createSubviews() {
+        self.customNavigationBar?.title = "任务中心"
+        self.customNavigationBar?.titleColor = .white
+        self.customNavigationBar?.leftButton.setTitleColor(.white, for: .normal)
+        self.customNavigationBar?.rightButton.setImage(#imageLiteral(resourceName: "questionIcon"), for: .normal)
+        self.customNavigationBar?.rightButtonAction = {
+            YXAlertWebView.share.show(YXUserModel.default.coinExplainUrl ?? "")
+        }
+        self.viewTopConstraint.constant = kNavHeight
         dailyDataCollectionView.register(UINib(nibName: "YXTaskCenterDateCell", bundle: nil), forCellWithReuseIdentifier: "YXTaskCenterDateCell")
         taskTableView.register(UINib(nibName: "YXTaskCenterCell", bundle: nil), forCellReuseIdentifier: "YXTaskCenterCell")
     }
 
     private func bindProperty() {
         NotificationCenter.default.addObserver(self, selector: #selector(completedTask(notification:)), name: YXNotification.kCompletedTask, object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barStyle = .black
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-
-        self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xFFA83E)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
-        self.navigationController?.navigationBar.tintColor = UIColor.white
     }
 
     override func viewWillDisappear(_ animated: Bool) {
