@@ -9,10 +9,6 @@
 import UIKit
 
 class YXWordDetailViewControllerNew: YXViewController {
-    lazy var backButton: UIBarButtonItem = {
-        let item = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back(_:)))
-        return item
-    }()
     
     var rightBarView: UIView = {
         let view = UIView()
@@ -36,6 +32,10 @@ class YXWordDetailViewControllerNew: YXViewController {
         self.bindProperty()
         self.requestWordDetail()
     }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: YXNotification.kRecordScore, object: nil)
+    }
     
     private func createSubviews() {
         self.customNavigationBar?.addSubview(rightBarView)
@@ -50,16 +50,7 @@ class YXWordDetailViewControllerNew: YXViewController {
     // MARK: ---- Event ----
     private func bindProperty() {
         self.title = "单词列表"
-//        self.collectionButton.addTarget(self, action: #selector(collectWord(_:)), for: .touchUpInside)
-//        self.feedbackButton.addTarget(self, action: #selector(feedbackWord(_:)), for: .touchUpInside)
-//        self.relearnButton.addTarget(self, action: #selector(relearnWord(_:)), for: .touchUpInside)
         NotificationCenter.default.addObserver(self, selector: #selector(updateRecordScore(_:)), name: YXNotification.kRecordScore, object: nil)
-    }
-    
-    private func updateBarStatus() {
-        guard let wordModel = self.wordModel else {
-            return
-        }
     }
     
     // MARK: --- Notifcation ----
@@ -68,7 +59,6 @@ class YXWordDetailViewControllerNew: YXViewController {
             return
         }
         self.wordModel?.listenScore = newScore
-        self.updateBarStatus()
     }
     
     // MARK: ---- Request ----
@@ -80,25 +70,10 @@ class YXWordDetailViewControllerNew: YXViewController {
             word.isComplexWord  = self.isComplexWord
             self.wordModel      = word
             self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: kNavHeight, width: screenWidth, height: screenHeight - kNavHeight), word: word)
-            self.updateBarStatus()
             self.view.addSubview(self.wordDetailView)
         }) { error in
             YXLog("查询单词:\(self.wordId)详情失败， error:\(error)")
             YXUtils.showHUD(kWindow, title: error.message)
         }
     }
-    
-    // MARK: ---- Event ----
-    
-    @objc private func back(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func relearnWord(_ sender: UIBarButtonItem) {
-        guard let wordModel = self.wordModel else {
-            return
-        }
-        YXNewLearnView(wordModel: wordModel).show()
-    }
-    
 }

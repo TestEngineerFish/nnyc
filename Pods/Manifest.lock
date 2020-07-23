@@ -19,6 +19,7 @@ PODS:
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 3.3)
   - BMKLocationKit (1.8.5)
+  - BSBacktraceLogger (0.0.1)
   - Bugly (2.5.2)
   - CL_ShanYanSDK (2.3.1.2)
   - CocoaAsyncSocket (7.6.4)
@@ -29,6 +30,91 @@ PODS:
     - CocoaLumberjack/Core
   - DACircularProgress (2.3.1)
   - DZNEmptyDataSet (1.8.1)
+  - EchoSDK (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/Plugins (= 0.0.3)
+  - EchoSDK/ClientSDK (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/Core
+  - EchoSDK/Core (0.0.3):
+    - CocoaAsyncSocket
+  - EchoSDK/Plugins (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+    - EchoSDK/Plugins/Basic (= 0.0.3)
+    - EchoSDK/Plugins/Crash (= 0.0.3)
+    - EchoSDK/Plugins/GeneralLog (= 0.0.3)
+    - EchoSDK/Plugins/MemoryLeak (= 0.0.3)
+    - EchoSDK/Plugins/MockGPS (= 0.0.3)
+    - EchoSDK/Plugins/Network (= 0.0.3)
+    - EchoSDK/Plugins/Notification (= 0.0.3)
+    - EchoSDK/Plugins/NSLog (= 0.0.3)
+    - EchoSDK/Plugins/NSUserDefaults (= 0.0.3)
+    - EchoSDK/Plugins/UI (= 0.0.3)
+    - EchoSDK/Plugins/ViewBorder (= 0.0.3)
+    - EchoSDK/Plugins/Watchdog (= 0.0.3)
+  - EchoSDK/Plugins/Basic (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+  - EchoSDK/Plugins/Crash (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+  - EchoSDK/Plugins/GeneralLog (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+    - fishhook
+  - EchoSDK/Plugins/MemoryLeak (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+    - MLeaksFinder
+    - RSSwizzle
+  - EchoSDK/Plugins/MockGPS (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+    - EchoSDK/Plugins/Basic
+    - JZLocationConverter
+  - EchoSDK/Plugins/Network (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+    - EchoSDK/Plugins/Basic
+  - EchoSDK/Plugins/Notification (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+    - EchoSDK/Plugins/Basic
+  - EchoSDK/Plugins/NSLog (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+    - EchoSDK/Plugins/Basic
+    - fishhook
+  - EchoSDK/Plugins/NSUserDefaults (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+  - EchoSDK/Plugins/UI (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+  - EchoSDK/Plugins/ViewBorder (0.0.3):
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+    - EchoSDK/Plugins/Basic
+  - EchoSDK/Plugins/Watchdog (0.0.3):
+    - BSBacktraceLogger
+    - CocoaAsyncSocket
+    - EchoSDK/ClientSDK
+    - EchoSDK/Core
+  - FBRetainCycleDetector (0.1.4)
+  - fishhook (0.2)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -40,6 +126,7 @@ PODS:
     - Growing (= 2.8.15)
   - HWWeakTimer (1.0)
   - IQKeyboardManager (6.2.1)
+  - JZLocationConverter (1.0.0)
   - Kingfisher (5.9.0):
     - Kingfisher/Core (= 5.9.0)
   - Kingfisher/Core (5.9.0)
@@ -56,8 +143,11 @@ PODS:
   - MBProgressHUD (1.2.0)
   - MJExtension (3.2.1)
   - MJRefresh (3.4.1)
+  - MLeaksFinder (1.0.0):
+    - FBRetainCycleDetector
   - ObjectMapper (3.3.0)
   - Reachability (3.2)
+  - RSSwizzle (0.1.0)
   - SDCycleScrollView (1.75):
     - SDWebImage (>= 4.0.0)
   - SDWebImage (4.4.8):
@@ -92,6 +182,7 @@ DEPENDENCIES:
   - CocoaLumberjack/Swift
   - DACircularProgress (~> 2.3.1)
   - DZNEmptyDataSet
+  - EchoSDK
   - FMDB
   - FSCalendar
   - GrowingAutoTrackKit
@@ -131,12 +222,16 @@ SPEC REPOS:
     - Alamofire
     - AlamofireObjectMapper
     - BMKLocationKit
+    - BSBacktraceLogger
     - Bugly
     - CL_ShanYanSDK
     - CocoaAsyncSocket
     - CocoaLumberjack
     - DACircularProgress
     - DZNEmptyDataSet
+    - EchoSDK
+    - FBRetainCycleDetector
+    - fishhook
     - FMDB
     - FSCalendar
     - Growing
@@ -144,6 +239,7 @@ SPEC REPOS:
     - GrowingCoreKit
     - HWWeakTimer
     - IQKeyboardManager
+    - JZLocationConverter
     - Kingfisher
     - KTVCocoaHTTPServer
     - KTVHTTPCache
@@ -154,8 +250,10 @@ SPEC REPOS:
     - MBProgressHUD
     - MJExtension
     - MJRefresh
+    - MLeaksFinder
     - ObjectMapper
     - Reachability
+    - RSSwizzle
     - SDCycleScrollView
     - SDWebImage
     - SGQRCode
@@ -178,12 +276,16 @@ SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AlamofireObjectMapper: 3395e698901d8b0e6f48b7d0c43bd47875325102
   BMKLocationKit: fd3d6b4a9a3a1a2763819f56b780bda5fc5b8726
+  BSBacktraceLogger: 06b983ee93a9f87d957960e9c73d660d5966b447
   Bugly: dbac48b55ad469a97cc4321045cd50df8f63d44f
   CL_ShanYanSDK: 0fdb4b821bffd46c3ba381752059c920b2a9fed4
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLumberjack: b17ae15142558d08bbacf69775fa10c4abbebcc9
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  EchoSDK: 0618fe300c6e88239bde807e8a452bd79ca10c18
+  FBRetainCycleDetector: 46f8179bbb1c587deee3ea838a1a3ee02acf5015
+  fishhook: ea19933abfe8f2f52c55fd8b6e2718467d3ebc89
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
   Growing: ffcd0ca9fd20e5c853de31e69e4a2a542412c44e
@@ -191,6 +293,7 @@ SPEC CHECKSUMS:
   GrowingCoreKit: 5b9ada602ec7c17deaced05d626eb0fcd5dfe94a
   HWWeakTimer: 79488095ef2dd8937f94b676d12bd5fa954486e6
   IQKeyboardManager: 964638372b4a61892cc74fdfa6fd26de8c9464a2
+  JZLocationConverter: 3d816bee6484aed9c155a6045a02ce444833e2f0
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   KTVCocoaHTTPServer: df8d7b861e603ff8037e9b2138aca2563a6b768d
   KTVHTTPCache: 588c3eb16f6bd1e6fde1e230dabfb7bd4e490a4d
@@ -201,8 +304,10 @@ SPEC CHECKSUMS:
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJExtension: 635f2c663dcb1bf76fa4b715b2570a5710aec545
   MJRefresh: 3153c59a363159092c08b2177ec3a7d09f90bfaf
+  MLeaksFinder: 8c435bd2f6d070af18cff082b503b21adc130fc0
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  RSSwizzle: d561958f595028bfcef98c7d55c318b3878a61c6
   SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
   SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   SGQRCode: bf02d60e18d6660a9d75ff1c8b9b467f064f054e
@@ -220,6 +325,6 @@ SPEC CHECKSUMS:
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: e4fc2de93a23751928984622fb805877fd193598
+PODFILE CHECKSUM: 1f0789e4498422123bf3f5ee6e43e7e7fb798b24
 
 COCOAPODS: 1.8.4

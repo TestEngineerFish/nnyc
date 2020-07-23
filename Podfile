@@ -9,7 +9,7 @@ project 'YXEDU/YXEDU.project'
 #################################
 target 'YXEDU' do 
      platform :ios, '10.0'
-#     pod 'EchoSDK', :configurations => ["Debug"]
+     pod 'EchoSDK', :configurations => ["Debug"]
      pod 'MBProgressHUD'
      pod 'SSKeychain'
      pod 'CocoaLumberjack'

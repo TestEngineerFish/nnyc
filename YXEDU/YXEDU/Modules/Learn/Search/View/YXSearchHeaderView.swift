@@ -7,16 +7,19 @@
 //
 
 import UIKit
+protocol YXSearchHeaderViewProtocol: NSObjectProtocol {
+    func searchWord(_ text: String)
+}
 
 class YXSearchHeaderView: YXView {
     
-    var searchEvent: ((_ text: String) -> Void)?
+    weak var delegate: YXSearchHeaderViewProtocol?
     var searchTextFeild = UITextField()
-    var cancelButton = UIButton()
+    var cancelButton    = UIButton()
     
     deinit {
         self.cancelButton.removeTarget(self, action: #selector(clickCancelButton), for: .touchUpInside)
-        searchTextFeild.removeTarget(self, action: #selector(didSearchTextFeildChanged), for: .editingChanged)
+        self.searchTextFeild.removeTarget(self, action: #selector(didSearchTextFeildChanged), for: .editingChanged)
     }
     
     override init(frame: CGRect) {
@@ -28,7 +31,6 @@ class YXSearchHeaderView: YXView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     override func createSubviews() {
         self.addSubview(searchTextFeild)
@@ -43,23 +45,22 @@ class YXSearchHeaderView: YXView {
         cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.addTarget(self, action: #selector(clickCancelButton), for: .touchUpInside)
         
-        searchTextFeild.backgroundColor = UIColor.white
+        searchTextFeild.backgroundColor     = UIColor.white
         searchTextFeild.layer.masksToBounds = true
-        searchTextFeild.layer.cornerRadius = AS(17)
+        searchTextFeild.layer.cornerRadius  = AS(17)
+        searchTextFeild.placeholder         = "请输入要查询的单词"
+        searchTextFeild.textColor           = UIColor.black1
+        searchTextFeild.font                = UIFont.regularFont(ofSize: AdaptFontSize(15))
+        searchTextFeild.clearButtonMode     = .always
+        searchTextFeild.leftView            = UIView(frame: CGRect(x: 0, y: 0, width: AS(20), height: 0))
+        searchTextFeild.leftViewMode        = .always
         searchTextFeild.addTarget(self, action: #selector(didSearchTextFeildChanged), for: .editingChanged)
-        searchTextFeild.placeholder = "请输入要查询的单词"
-        searchTextFeild.textColor = UIColor.black1
-        searchTextFeild.font = UIFont.regularFont(ofSize: AdaptFontSize(15))
-        searchTextFeild.clearButtonMode = .always
-        searchTextFeild.leftView = UIView(frame: CGRect(x: 0, y: 0, width: AS(20), height: 0))
-        searchTextFeild.leftViewMode = .always
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
-            self?.searchTextFeild.becomeFirstResponder()
+            guard let self = self else { return}
+            self.searchTextFeild.becomeFirstResponder()
         }
-        
     }
-    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -78,17 +79,15 @@ class YXSearchHeaderView: YXView {
         }
     }
     
-    
     @objc func clickCancelButton() {
         YRRouter.popViewController(true)
     }
-    
     
     @objc func didSearchTextFeildChanged() {
         guard let text = searchTextFeild.text else {
             return
         }
-        self.searchEvent?(text)
+        self.delegate?.searchWord(text)
         YXLog(text)
     }
     
