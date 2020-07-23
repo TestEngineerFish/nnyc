@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y1G-4r-ZDj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y1G-4r-ZDj">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -497,7 +497,7 @@
             </objects>
             <point key="canvasLocation" x="-2133.59375" y="139.453125"/>
         </scene>
-        <!--单词列表-->
+        <!--Word List View Controller-->
         <scene sceneID="WnR-X0-yQ5">
             <objects>
                 <viewController storyboardIdentifier="YXWordListViewController" hidesBottomBarWhenPushed="YES" id="I2c-Ah-MPk" customClass="YXWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -507,13 +507,6 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="otH-NK-pmI"/>
                     </view>
-                    <navigationItem key="navigationItem" title="单词列表" id="snY-ih-MCg">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="SrR-bp-N0i">
-                            <connections>
-                                <action selector="back:" destination="I2c-Ah-MPk" id="nHX-tK-uBD"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <segue destination="qql-3G-E8i" kind="show" identifier="EditWordList" id="VmI-1Q-DHB"/>
                         <segue destination="DDF-Ya-OXu" kind="show" identifier="WordDetail" id="dp4-Yn-e9M"/>
@@ -523,7 +516,7 @@
             </objects>
             <point key="canvasLocation" x="-1307" y="906"/>
         </scene>
-        <!-- - -->
+        <!--Edit Word List View Controller-->
         <scene sceneID="Gzi-3n-2en">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="qql-3G-E8i" customClass="YXEditWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -631,19 +624,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dUi-4q-OPp"/>
                     </view>
-                    <navigationItem key="navigationItem" title="--" id="uWl-Hc-CiU">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="JGQ-FV-IL7">
-                            <connections>
-                                <action selector="back:" destination="qql-3G-E8i" id="eb4-Mj-djL"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="bottomView" destination="Xem-R2-0tJ" id="tGb-hq-Etp"/>
                         <outlet property="bottonViewHeight" destination="dzw-AK-Xc4" id="3c1-E3-tlq"/>
                         <outlet property="headerLabel" destination="bWe-xp-pKr" id="wCP-mH-X21"/>
                         <outlet property="redButton" destination="FvO-ki-r1j" id="acO-db-wbf"/>
                         <outlet property="tableView" destination="0lM-4x-gHK" id="3Da-7N-jXK"/>
+                        <outlet property="viewTopConstraint" destination="VhR-3l-1Pa" id="wFi-nF-2HM"/>
                         <outlet property="wordCountLabel" destination="dj4-OR-aCX" id="2Vh-VN-vTE"/>
                     </connections>
                 </viewController>
@@ -1896,6 +1883,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="bookCollectionView" destination="uLc-Pb-8Fk" id="DMH-Q3-qVK"/>
+                        <outlet property="bookListTopConstraint" destination="xda-C5-4P3" id="KiF-El-F6a"/>
                         <outlet property="bookNameLabel" destination="HDr-t4-dya" id="xRE-b5-ZwE"/>
                         <outlet property="countOfDaysForStudyLabel" destination="cGX-xW-xgL" id="XHB-mS-GXd"/>
                         <outlet property="countOfWordsForStudyLabel" destination="LBE-z2-CqE" id="pBU-dp-bmA"/>
@@ -1913,7 +1901,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="jpj-5D-5QG"/>
-        <segue reference="ISO-bD-fBo"/>
+        <segue reference="kVR-sK-4gc"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow_right" width="8" height="15"/>

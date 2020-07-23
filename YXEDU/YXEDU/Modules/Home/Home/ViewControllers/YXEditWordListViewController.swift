@@ -30,7 +30,7 @@ struct CollectWord: Mappable {
     }
 }
 
-class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class YXEditWordListViewController: YXViewController, YXWordListEditCellProtocol, UITableViewDelegate, UITableViewDataSource {
 
     var editWordListType: YXEditWordListType!
     var words: [YXWordModel] = []
@@ -41,11 +41,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var redButton: YXDesignableButton!
     @IBOutlet weak var bottomView: YXDesignableView!
     @IBOutlet weak var bottonViewHeight: NSLayoutConstraint!
-    
-    @IBAction func back(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
-    }
-    
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
+
     @IBAction func tapRedButton(_ sender: Any) {
         var collectWords: [CollectWord] = []
         
@@ -63,7 +60,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
             guard collectWords.count > 0, let cancleCollectWordInfoString = collectWords.toJSONString(), cancleCollectWordInfoString.isEmpty == false else { return }
             
             let request = YXWordListRequest.cancleCollectWord(wordIds: cancleCollectWordInfoString)
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self else { return }
                 self.navigationController?.popViewController(animated: true)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
@@ -82,7 +80,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
             guard wrongWordIds.count > 0, let wrongWordIdsData = try? JSONSerialization.data(withJSONObject: wrongWordIds, options: .prettyPrinted), let string = String(data: wrongWordIdsData, encoding: .utf8) else { return }
             
             let request = YXWordListRequest.deleteWrongWord(wordIds: string)
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self else { return }
                 self.navigationController?.popViewController(animated: true)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
@@ -92,7 +91,8 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.customNavigationBar?.title = "收藏夹"
+        self.viewTopConstraint.constant = kNavBarHeight
         bottonViewHeight.constant = bottonViewHeight.constant + kSafeBottomMargin
         
         tableView.register(UINib(nibName: "YXWordListEditCell", bundle: nil), forCellReuseIdentifier: "YXWordListEditCell")
@@ -120,63 +120,28 @@ class YXEditWordListViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEditCell", for: indexPath) as! YXWordListEditCell
-        let word = words[indexPath.row]
-        
-        cell.wordLabel.text = word.word
-        
-        if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
-            var text = ""
-
-            for index in 0..<partOfSpeechAndMeanings.count {
-                guard let partOfSpeech = partOfSpeechAndMeanings[index].partOfSpeech, let meaning = partOfSpeechAndMeanings[index].meaning else { continue }
-                
-                if index == 0 {
-                    text = partOfSpeech + meaning
-                    
-                } else {
-                    text = text + "；" + partOfSpeech + meaning
-                }
-            }
-            
-            cell.meaningLabel.text = text
-        }
-        
-        cell.americanPronunciation = word.americanPronunciation
-        cell.englishPronunciation = word.englishPronunciation
-        
-        if word.hidePartOfSpeechAndMeanings {
-            cell.meaningLabelMask.image = #imageLiteral(resourceName: "wordListMask")
-            
-        } else {
-            cell.meaningLabelMask.image = nil
-        }
-        
-        cell.removeMaskClosure = {
-            self.words[indexPath.row].hidePartOfSpeechAndMeanings = !self.words[indexPath.row].hidePartOfSpeechAndMeanings
-            tableView.reloadRows(at: [indexPath], with: .none)
-        }
-        
-        if word.isSelected {
-            cell.selectButton.setImage(#imageLiteral(resourceName: "word_selected"), for: .normal)
-            
-        } else {
-            cell.selectButton.setImage(#imageLiteral(resourceName: "word_unselected"), for: .normal)
-        }
-        
-        cell.selectClosure = {
-            self.words[indexPath.row].isSelected = !self.words[indexPath.row].isSelected
-            tableView.reloadRows(at: [indexPath], with: .none)
-            
-            var count = 0
-            for word in self.words {
-                if word.isSelected {
-                    count = count + 1
-                }
-                
-                self.wordCountLabel.text = "\(count)"
-            }
-        }
-        
+        let wordModel = words[indexPath.row]
+        cell.delegate = self
+        cell.setData(word: wordModel, indexPath: indexPath)
         return cell
+    }
+
+    // MARK: ==== YXWordListEditCellProtocol ====
+    func selectCell(indexPath: IndexPath) {
+        self.words[indexPath.row].isSelected = !self.words[indexPath.row].isSelected
+        self.tableView.reloadData()
+
+        var count = 0
+        for word in self.words {
+            if word.isSelected {
+                count = count + 1
+            }
+            self.wordCountLabel.text = "\(count)"
+        }
+    }
+
+    func removeMask(indexPath: IndexPath) {
+        self.words[indexPath.row].hidePartOfSpeechAndMeanings = !self.words[indexPath.row].hidePartOfSpeechAndMeanings
+        self.tableView.reloadData()
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import GrowingCoreKit
 
-class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class YXAddBookViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
     private var grades: [YXGradeWordBookListModel] = []
     private var filterGrades: [YXGradeWordBookListModel] = []
     private var filterVersion = "所有版本"
@@ -34,6 +34,7 @@ class YXAddBookViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.customNavigationBar?.isHidden = true
         tableView.register(UINib(nibName: "YXGroupWordBookCell", bundle: nil), forCellReuseIdentifier: "YXGroupWordBookCell")
         loadData()
     }

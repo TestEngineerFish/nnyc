@@ -8,7 +8,7 @@
 import GrowingCoreKit
 import UIKit
 
-class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class YXSelectBookViewController: YXViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private var wordBookStateModels: YXWordBookStatusModel!
     private var wordBookModels: [YXWordBookModel] = []
@@ -22,7 +22,8 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var countOfWordsForStudyLabel: UILabel!
     @IBOutlet weak var startStudyButton: YXDesignableButton!
     
-     @IBAction func back(_ sender: UIBarButtonItem) {
+    @IBOutlet weak var bookListTopConstraint: NSLayoutConstraint!
+    @IBAction func back(_ sender: UIBarButtonItem) {
          navigationController?.popViewController(animated: true)
      }
      
@@ -119,7 +120,8 @@ class YXSelectBookViewController: UIViewController, UICollectionViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.customNavigationBar?.title = "选择词书2"
+        self.bookListTopConstraint.constant = kNavBarHeight
         bookCollectionView.register(UINib(nibName: "YXWordBookCell", bundle: nil), forCellWithReuseIdentifier: "YXWordBookCell")
     }
     

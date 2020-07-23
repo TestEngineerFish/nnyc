@@ -13,7 +13,7 @@ import GrowingAutoTrackKit
 import StoreKit
 
 @objc
-class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private var wordListType: YXWordListType = .learned
     
@@ -99,7 +99,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.customNavigationBar?.isHidden = true
         let lineView = UIView(frame: CGRect(x: 0, y: -0.5, width: screenWidth, height: 0.5))
         lineView.backgroundColor = UIColor.hex(0xDCDCDC)
         self.tabBarController?.tabBar.addSubview(lineView)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXAddBookGuideViewController: UIViewController {
+class YXAddBookGuideViewController: YXViewController {
     private var dataSource: [YXGradeWordBookListModel] = []
     private var selectBook: YXWordBookModel?
     private var selectGrade: YXGradeWordBookListModel?
@@ -105,11 +105,11 @@ class YXAddBookGuideViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         selectGradeView.isHidden    = true
         selectVersionView.isHidden  = true
         selectBookNameView.isHidden = true
-
+        self.customNavigationBar?.isHidden = true
         YXStepConfigManager.share.contrastStepConfig()
         
         let request = YXHomeRequest.getBookList

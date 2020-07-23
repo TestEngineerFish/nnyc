@@ -18,7 +18,7 @@ enum YXWordListType: Int {
 
 }
 
-class YXWordListViewController: UIViewController, BPSegmentDataSource {
+class YXWordListViewController: YXViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
 
@@ -73,10 +73,6 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     private var wordListViews: [YXWordListView?] = [nil, nil, nil, nil]
     
-    @IBAction func back(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-    }
-    
     override func handleData(withQuery query: [AnyHashable : Any]!) {
         self.wordListType = (query["type"] as? YXWordListType) ?? .learned
     }
@@ -87,10 +83,15 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .orange1
+        self.customNavigationBar?.title = "单词列表"
+        self.customNavigationBar?.titleColor = .white
+        self.customNavigationBar?.leftButton.setTitleColor(.white, for: .normal)
+
         var config = BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0, firstIndexPath: IndexPath(item: wordListType.rawValue, section: 0))
         config.headerBackgroundColor  = UIColor.orange1
         config.contentBackgroundColor = UIColor.orange1
-        wordListControllerView = BPSegmentControllerView(config, frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
+        wordListControllerView = BPSegmentControllerView(config, frame: CGRect(x: 0, y: kNavHeight, width: screenWidth, height: screenHeight - kNavHeight))
         wordListControllerView.delegate = self
         wordListControllerView.reloadData()
         

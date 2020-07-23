@@ -14,7 +14,7 @@ public let heightOfStateBar = UIApplication.shared.statusBarFrame.height
 public let heightOfNavigationBar = heightOfStateBar + 44
 public let heightOfSafeBotom: CGFloat = heightOfStateBar == 44 ? 34 : 0
 
-class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
+class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
     
     var shouldShowShanYan = true
     var platform: String!
@@ -99,7 +99,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         if shouldShowShanYan {
             initShanYan()
         }
-        
+        self.customNavigationBar?.isHidden = true
         phoneNumberTextField.delegate = self
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
         authCodeTextField.addTarget(self, action: #selector(changeAuthCodeTextField), for: UIControl.Event.editingChanged)

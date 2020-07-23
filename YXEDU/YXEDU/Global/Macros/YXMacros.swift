@@ -18,10 +18,17 @@ public var kStatusBarHeight:CGFloat {
     }
 }
 
-/// Navigation Bar 高度
+/// Navigation Bar + 状态栏 高度
 public var kNavHeight:CGFloat {
     get {
         return kStatusBarHeight + 44.0
+    }
+}
+
+/// Navigation Bar 高度
+public var kNavBarHeight:CGFloat {
+    get {
+        return 44.0
     }
 }
 
