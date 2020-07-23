@@ -265,7 +265,6 @@
 		77626C09239E428700B9407A /* YXWordListEmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77626C07239E428600B9407A /* YXWordListEmptyCell.xib */; };
 		77626C0B239E439200B9407A /* YXWordListOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77626C0A239E439200B9407A /* YXWordListOrderView.swift */; };
 		77626C0D239E439E00B9407A /* YXWordListOrderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77626C0C239E439E00B9407A /* YXWordListOrderView.xib */; };
-		776278BF24347347001A56C3 /* YXWordTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776278BE24347347001A56C3 /* YXWordTestViewController.swift */; };
 		776F747D238BC5FE0027D166 /* YXMineRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F747C238BC5FE0027D166 /* YXMineRequest.swift */; };
 		776F7480238BC7690027D166 /* YXBadgeListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F747F238BC7690027D166 /* YXBadgeListModel.swift */; };
 		77706E402372EBCF00149D09 /* YXAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77706E3F2372EBCF00149D09 /* YXAlertView.swift */; };
@@ -897,7 +896,6 @@
 		77626C07239E428600B9407A /* YXWordListEmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordListEmptyCell.xib; sourceTree = "<group>"; };
 		77626C0A239E439200B9407A /* YXWordListOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordListOrderView.swift; sourceTree = "<group>"; };
 		77626C0C239E439E00B9407A /* YXWordListOrderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXWordListOrderView.xib; sourceTree = "<group>"; };
-		776278BE24347347001A56C3 /* YXWordTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordTestViewController.swift; sourceTree = "<group>"; };
 		776F747C238BC5FE0027D166 /* YXMineRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMineRequest.swift; sourceTree = "<group>"; };
 		776F747F238BC7690027D166 /* YXBadgeListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBadgeListModel.swift; sourceTree = "<group>"; };
 		77706E3F2372EBCF00149D09 /* YXAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAlertView.swift; sourceTree = "<group>"; };
@@ -2464,7 +2462,6 @@
 				77626BEF239DFE1100B9407A /* YXWordListViewController.swift */,
 				77626BF1239E1FE800B9407A /* YXEditWordListViewController.swift */,
 				77B7C6ED23A7254200149ACE /* YXTaskCenterViewController.swift */,
-				776278BE24347347001A56C3 /* YXWordTestViewController.swift */,
 				77163C592450399C002A41E3 /* YXReportViewController.swift */,
 			);
 			path = ViewControllers;
@@ -4260,7 +4257,6 @@
 				EE5EF254232740B800655654 /* UIView+SnapShot.m in Sources */,
 				EE5E0179232754FA00655654 /* NetWorkRechable.m in Sources */,
 				CFB11BE724137E2600B29B62 /* YXNewLearnView.swift in Sources */,
-				776278BF24347347001A56C3 /* YXWordTestViewController.swift in Sources */,
 				22298BFC237D52FC00F24786 /* YXButton.swift in Sources */,
 				EE5E027D23277D9400655654 /* YXTrace.m in Sources */,
 				EE54F7DA2362AA3100EC605A /* YXBaseQuestionView.swift in Sources */,
@@ -4833,7 +4829,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -4880,7 +4879,10 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";

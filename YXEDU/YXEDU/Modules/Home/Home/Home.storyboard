@@ -487,7 +487,6 @@
                         <segue destination="LEE-do-1y0" kind="show" identifier="TaskCenter" id="7f4-4r-z67"/>
                         <segue destination="tQ4-Ah-3Gu" kind="show" identifier="Calendar" id="fSi-bJ-cQk"/>
                         <segue destination="N4y-4U-KXc" kind="show" identifier="YXStudyReportViewController" id="f6j-pj-jMh"/>
-                        <segue destination="xWi-kI-jZm" kind="show" identifier="YXWordTestViewController" id="Ah7-hX-NCL"/>
                         <segue destination="I2c-Ah-MPk" kind="show" identifier="WordList" id="29y-bx-HQj"/>
                         <segue destination="JnP-zA-VAP" kind="show" identifier="AddBookGuide" animates="NO" id="u2y-xU-85A"/>
                         <segue destination="KRx-zx-laN" kind="show" identifier="AddBookFromHome" id="ISO-bD-fBo"/>
@@ -648,22 +647,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNV-CJ-22v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="345" y="905"/>
-        </scene>
-        <!--Word Test View Controller-->
-        <scene sceneID="mtK-Au-Hw8">
-            <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="xWi-kI-jZm" customClass="YXWordTestViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="WRG-hW-siD">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="mfh-Zp-1Sj"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="8I8-72-fCe"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="79f-Yn-87C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1181" y="1643"/>
         </scene>
         <!--Task Center View Controller-->
         <scene sceneID="6pL-bl-kzi">
@@ -912,7 +895,7 @@
             </objects>
             <point key="canvasLocation" x="-481" y="1643"/>
         </scene>
-        <!--学习报告-->
+        <!--Study Report View Controller-->
         <scene sceneID="xuf-Ul-yqQ">
             <objects>
                 <viewController storyboardIdentifier="YXStudyReportViewController" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="N4y-4U-KXc" customClass="YXStudyReportViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -1468,18 +1451,10 @@
                             <constraint firstItem="QgR-Hf-YNx" firstAttribute="leading" secondItem="DkU-qf-7AE" secondAttribute="leading" id="B1F-eX-CFe"/>
                             <constraint firstItem="DkU-qf-7AE" firstAttribute="trailing" secondItem="iob-Xj-Pe9" secondAttribute="trailing" id="C1A-g1-4lH"/>
                             <constraint firstItem="DkU-qf-7AE" firstAttribute="trailing" secondItem="QgR-Hf-YNx" secondAttribute="trailing" id="eDM-yL-NpT"/>
-                            <constraint firstItem="iob-Xj-Pe9" firstAttribute="top" secondItem="DkU-qf-7AE" secondAttribute="top" id="iB2-km-fWb"/>
+                            <constraint firstItem="iob-Xj-Pe9" firstAttribute="top" secondItem="QgR-Hf-YNx" secondAttribute="top" id="iB2-km-fWb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DkU-qf-7AE"/>
                     </view>
-                    <navigationItem key="navigationItem" title="学习报告" id="gB2-Rd-ERc">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="EOR-dX-9QP">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="back:" destination="N4y-4U-KXc" id="iue-pg-Gad"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="avatarImageView" destination="9cl-Ya-2Aj" id="fiH-wC-lqm"/>
                         <outlet property="betterWordsCountButton" destination="jeA-kR-uN3" id="oFT-kJ-ObW"/>
@@ -1504,6 +1479,7 @@
                         <outlet property="studyWordsCountPercentLabel" destination="jsy-wE-cmd" id="qJL-JK-sib"/>
                         <outlet property="switchDateButton" destination="llo-x9-Hch" id="ZSe-kx-bCk"/>
                         <outlet property="switchDateButtonImage" destination="pvx-kG-kZs" id="eI0-My-Qda"/>
+                        <outlet property="viewTopConstraint" destination="9uH-Ke-KXe" id="xyL-h2-0Qi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A50-CF-bF8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1890,7 +1866,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="jpj-5D-5QG"/>
-        <segue reference="kVR-sK-4gc"/>
+        <segue reference="ISO-bD-fBo"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow_right" width="8" height="15"/>

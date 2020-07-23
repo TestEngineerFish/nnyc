@@ -9,7 +9,7 @@
 import UIKit
 
 @objc
-class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class YXStudyReportViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
 
     private var studyResult: YXStudyReportResultModel?
     private var studyContent: [YXStudyReportResultContentModel]?
@@ -39,22 +39,21 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var studyDaysCountPercentLabel: UILabel!
     @IBOutlet weak var studyDaysCountImageView: UIImageView!
     @IBOutlet weak var blankView: YXStudyReportBlankView!
-    
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor = UIColor.hex(0xFFA83E)
+        self.customNavigationBar?.title = "学习报告"
+        self.customNavigationBar?.titleColor = .white
+        self.customNavigationBar?.leftButton.setTitleColor(.white, for: .normal)
+        self.viewTopConstraint.constant = kNavHeight
         studyContentTableView.register(UINib(nibName: "YXStudyReportContentCell", bundle: nil), forCellReuseIdentifier: "YXStudyReportContentCell")
         fetchStudyReport(withDate: selectDate)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barStyle = .black
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-
-        self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xFFA83E)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
-        self.navigationController?.navigationBar.tintColor = UIColor.white
         
         if canSelectDate == false {
             switchDateButton.isHidden = true
@@ -62,15 +61,6 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             
             reportDateLabelCenter.isActive = true
         }
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.navigationController?.navigationBar.barStyle = .default
-        self.navigationController?.navigationBar.barTintColor = UIColor.white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        self.navigationController?.navigationBar.tintColor = UIColor.black
     }
     
     private func fetchStudyReport(withDate date: TimeInterval) {
