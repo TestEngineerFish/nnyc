@@ -216,25 +216,29 @@ class YXShareDefaultView: UIView {
         switch channel {
         case .qq:
             QQApiManager.shared()?.share(image, toPaltform: .QQ, title: "", describution: "", shareBusiness: "")
-            QQApiManager.shared()?.finishBlock = { (obj1: Any, obj2: Any, result: Bool) in
+            QQApiManager.shared()?.finishBlock = { [weak self] (obj1: Any, obj2: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.qq, result)
             }
             finishedBlock?(.qq)
         case .qzone:
             QQApiManager.shared()?.share(image, toPaltform: .qzone, title: "", describution: "", shareBusiness: "")
-            QQApiManager.shared()?.finishBlock = { (obj1: Any, obj2: Any, result: Bool) in
+            QQApiManager.shared()?.finishBlock = { [weak self] (obj1: Any, obj2: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.qzone, result)
             }
             finishedBlock?(.qzone)
         case .wechat:
             WXApiManager.shared()?.share(image, toPaltform: .wxSession, title: "", describution: "", shareBusiness: "")
-            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+            WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.wechat, result)
             }
             finishedBlock?(.wechat)
         case .timeLine:
             WXApiManager.shared()?.share(image, toPaltform: .wxTimeLine, title: "", describution: "", shareBusiness: "")
-            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+            WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.timeLine, result)
             }
             finishedBlock?(.timeLine)
@@ -245,7 +249,8 @@ class YXShareDefaultView: UIView {
         switch channel {
         case .qq:
             QQApiManager.shared()?.shareUrl(urlStr, previewImage: previewImage, title: title, describution: description, shareBusiness: "shareBusiness")
-            QQApiManager.shared()?.finishBlock = { (obj1: Any, obj2: Any, result: Bool) in
+            QQApiManager.shared()?.finishBlock = { [weak self] (obj1: Any, obj2: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.qq, result)
             }
             finishedBlock?(.qq)
@@ -253,13 +258,15 @@ class YXShareDefaultView: UIView {
             break
         case .wechat:
             WXApiManager.shared()?.shareUrl(urlStr, toPaltform: .wxSession, previewImage: previewImage, title: title, description: description, shareBusiness: "shareBusiness")
-            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+            WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.wechat, result)
             }
             finishedBlock?(.wechat)
         case .timeLine:
             WXApiManager.shared()?.shareUrl(urlStr, toPaltform: .wxTimeLine, previewImage: previewImage, title: title, description: description, shareBusiness: "shareBusiness")
-            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+            WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.timeLine, result)
             }
             finishedBlock?(.timeLine)
