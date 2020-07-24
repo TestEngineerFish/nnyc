@@ -194,11 +194,10 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         NotificationCenter.default.addObserver(self, selector: #selector(updateTaskCenterStatus), name: YXNotification.kUpdateTaskCenterBadge, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(playSquirrelAnimation), name: YXNotification.kSquirrelAnimation, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateMyClassStatus), name: YXNotification.kReloadClassList, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(newUserStudy), name: YXNotification.kNewStudyExerciseFinished, object: nil)
     }
     
     // MARK: ---- Request ----
-    private func loadData() {
+    private func loadData(finished block: (()->Void)? = nil) {
         let request = YXHomeRequest.getBaseInfo(userId: YXUserModel.default.uuid ?? "")
         YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let userInfomation = response.data else { return }
@@ -230,15 +229,11 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             YXUserModel.default.isJoinClass   = self.homeModel?.isJoinClass ?? false
             YXUserModel.default.hasNewWork    = self.homeModel?.hasHomework ?? false
 
-            // 如果卸载重新安装的用户，同时请求cofig和baseInfo接口，cofig接口先返回则还没有获取到当前用户选择的词书和单元，所以在这里做一个通知处理
-            if !YXUserModel.default.isFinishedNewUserStudy {
-                NotificationCenter.default.post(name: YXNotification.kNewStudyExerciseFinished, object: nil)
-            }
-
             self.handleTabData()
             self.initDataManager()
             self.uploadGrowing()
             self.subItemCollectionView.reloadData()
+            block?()
         }) { error in
             YXLog("获取主页基础数据失败：", error.localizedDescription)
         }
@@ -319,7 +314,15 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         } else if (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(true) {
             self.performSegue(withIdentifier: "AddBookGuide", sender: self)
         } else if !YXUserModel.default.isFinishedNewUserStudy {
-            self.newUserStudy()
+            // 如果还未加载词书数据，则先加载
+            if YXUserModel.default.currentBookId != nil && YXUserModel.default.currentUnitId != nil {
+                self.newUserStudy()
+            } else {
+                self.loadData { [weak self] in
+                    guard let self = self else { return }
+                    self.newUserStudy()
+                }
+            }
         } else {
             self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         }
@@ -509,7 +512,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         guard let homeData = self.homeModel else {
             return
         }
-        NotificationCenter.default.removeObserver(self, name: YXNotification.kNewStudyExerciseFinished, object: nil)
 
         YXUserModel.default.lastStoredDate = Date()
         YXLog(String(format: "开始学习书(%ld),第(%ld)单元", homeData.bookId ?? 0, homeData.unitId ?? 0))
